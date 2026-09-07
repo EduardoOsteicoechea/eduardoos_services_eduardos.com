@@ -4,46 +4,46 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial">
+    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial" title="Tutorial">
       <span class="material-symbols-outlined" aria-hidden="true">help</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar">
+    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar" title="Toggle tracker sidebar">
       <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="font-up" aria-label="Increase tracker font">
+    <button class="icon-btn" type="button" data-tracker-cmd="font-up" aria-label="Increase tracker font" title="Increase tracker font">
       <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="font-down" aria-label="Decrease tracker font">
+    <button class="icon-btn" type="button" data-tracker-cmd="font-down" aria-label="Decrease tracker font" title="Decrease tracker font">
       <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="upload" aria-label="Load local .ereport">
+    <button class="icon-btn" type="button" data-tracker-cmd="upload" aria-label="Load local .ereport" title="Load local .ereport">
       <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="add-section" aria-label="Add main section">
+    <button class="icon-btn" type="button" data-tracker-cmd="add-section" aria-label="Add main section" title="Add main section">
       <span class="material-symbols-outlined" aria-hidden="true">playlist_add</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" aria-label="Clear tracker">
+    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" aria-label="Clear tracker" title="Clear tracker">
       <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress">
+    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress" title="Progress">
       <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report">
+    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report" title="Download report">
       <span class="material-symbols-outlined" aria-hidden="true">download</span>
     </button>
-    <a class="icon-btn" href="/ereport" data-route aria-label="Open hub">
+    <a class="icon-btn" href="/ereport" data-route aria-label="Open hub" title="Open hub">
       <span class="material-symbols-outlined" aria-hidden="true">home_work</span>
     </a>
-    <button class="icon-btn" type="button" data-open-modal="tema" aria-label="Edit report name">
+    <button class="icon-btn" type="button" data-open-modal="tema" aria-label="Edit report name" title="Edit report name">
       <span class="material-symbols-outlined" aria-hidden="true">edit</span>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="save" aria-label="Save now">
+    <button class="icon-btn" type="button" data-open-modal="save" aria-label="Save now" title="Save now">
       <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="share" aria-label="Invite collaborator">
+    <button class="icon-btn" type="button" data-open-modal="share" aria-label="Invite collaborator" title="Invite collaborator">
       <span class="material-symbols-outlined" aria-hidden="true">share</span>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="historial" aria-label="Version history">
+    <button class="icon-btn" type="button" data-open-modal="historial" aria-label="Version history" title="Version history">
       <span class="material-symbols-outlined" aria-hidden="true">history</span>
     </button>
   </Fragment>
@@ -61,7 +61,12 @@ import Layout from "../../layouts/Layout.astro";
     </div>
     <div class="ereport-modal" data-modal="tema" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-tema-title">
-        <h2 id="ereport-tema-title">Report name</h2>
+        <header class="ereport-modal-toolbar">
+          <h2 id="ereport-tema-title">Report name</h2>
+          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
         <form data-tema-form>
           <label>
             Tema
@@ -73,14 +78,24 @@ import Layout from "../../layouts/Layout.astro";
     </div>
     <div class="ereport-modal" data-modal="save" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-save-title">
-        <h2 id="ereport-save-title">Save</h2>
+        <header class="ereport-modal-toolbar">
+          <h2 id="ereport-save-title">Save</h2>
+          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
         <p class="hint">Autosave writes this report to the VPS filesystem. Manual save collects the tracker now.</p>
         <button type="button" data-save-now>Save now</button>
       </div>
     </div>
     <div class="ereport-modal" data-modal="share" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-share-title">
-        <h2 id="ereport-share-title">Invite</h2>
+        <header class="ereport-modal-toolbar">
+          <h2 id="ereport-share-title">Invite</h2>
+          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
         <form data-share-form>
           <label>
             Email
@@ -93,7 +108,12 @@ import Layout from "../../layouts/Layout.astro";
     </div>
     <div class="ereport-modal" data-modal="historial" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-history-title">
-        <h2 id="ereport-history-title">History</h2>
+        <header class="ereport-modal-toolbar">
+          <h2 id="ereport-history-title">History</h2>
+          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
         <ul class="ereport-list" data-history-list></ul>
       </div>
     </div>
@@ -116,6 +136,7 @@ import Layout from "../../layouts/Layout.astro";
   import {
     startTrackerHost,
     trackerCommandMessage,
+    trackerConfigMessage,
     trackerLoadMessage,
     type TrackerCommand,
   } from "../../lib/ereport-workspace";
@@ -130,10 +151,72 @@ import Layout from "../../layouts/Layout.astro";
     let payload: EreportPayload | null = null;
     let tema = "";
     let host: ReturnType<typeof startTrackerHost> | null = null;
+    const pendingCmds: TrackerCommand[] = [];
 
     const closeModals = () => {
       root.querySelectorAll("[data-modal]").forEach((node) => {
         if (node instanceof HTMLElement) node.hidden = true;
+      });
+    };
+
+    const modalIsOpen = () =>
+      [...root.querySelectorAll("[data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden);
+
+    const sendCmd = (command: TrackerCommand) => {
+      if (host) {
+        host.post(trackerCommandMessage(command));
+        return;
+      }
+      pendingCmds.push(command);
+    };
+
+    const attachHost = (nextPayload: EreportPayload | null) => {
+      if (!(iframe instanceof HTMLIFrameElement) || !orgId || !reportId) return;
+      if (!host) {
+        host = startTrackerHost(iframe, {
+          origin: window.location.origin,
+          uploadUrl: ownerImageUploadPath(orgId, reportId),
+          csrf: rememberedCsrf(),
+          payload: nextPayload,
+          handlers: {
+            onCloudSave: (next) => {
+              void persist(next);
+            },
+            onError: (message) => setBanner(root, message, "err"),
+          },
+        });
+        iframe.src = "/ereport-tracker.html";
+        for (const command of pendingCmds.splice(0)) {
+          host.post(trackerCommandMessage(command));
+        }
+        return;
+      }
+      host.post(trackerConfigMessage(ownerImageUploadPath(orgId, reportId), rememberedCsrf()));
+      if (nextPayload) host.post(trackerLoadMessage(nextPayload));
+    };
+
+    const openModal = (name: string) => {
+      closeModals();
+      const modal = root.querySelector(`[data-modal="${name}"]`);
+      if (!(modal instanceof HTMLElement)) return;
+      modal.hidden = false;
+      const closeBtn = modal.querySelector("[data-close-modal]");
+      if (closeBtn instanceof HTMLElement) closeBtn.focus();
+      if (name !== "historial") return;
+      void listReportHistory(orgId, reportId).then((hist) => {
+        const list = root.querySelector("[data-history-list]");
+        if (!(list instanceof HTMLElement)) return;
+        list.replaceChildren();
+        for (const item of hist.data.items || []) {
+          const li = document.createElement("li");
+          li.textContent = `${item.tema} · ${item.source} · ${item.createdAt}`;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = "Restore";
+          btn.dataset.restore = item.id;
+          li.append(btn);
+          list.append(li);
+        }
       });
     };
 
@@ -158,6 +241,7 @@ import Layout from "../../layouts/Layout.astro";
         return;
       }
       await refreshCsrf();
+      attachHost(null);
       const res = await fetchOrgReport(orgId, reportId);
       if (res.status !== 200 || !res.data.payload || !res.data.meta) {
         reportFailure(copy, res.status, res.data, "");
@@ -170,55 +254,41 @@ import Layout from "../../layouts/Layout.astro";
         reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
       };
       setBanner(root, "Editing on the VPS filesystem.", "ok");
-      if (iframe instanceof HTMLIFrameElement) {
-        host = startTrackerHost(iframe, {
-          origin: window.location.origin,
-          uploadUrl: ownerImageUploadPath(orgId, reportId),
-          csrf: rememberedCsrf(),
-          payload,
-          handlers: {
-            onCloudSave: (next) => {
-              void persist(next);
-            },
-            onError: (message) => setBanner(root, message, "err"),
-          },
-        });
-        iframe.src = "/ereport-tracker.html";
-      }
+      attachHost(payload);
     });
 
     document.addEventListener("click", (event) => {
       const node = event.target;
       if (!(node instanceof Element)) return;
+      if (node.closest("[data-close-modal]")) {
+        closeModals();
+        return;
+      }
+      const overlay = node.closest("[data-modal]");
+      if (overlay instanceof HTMLElement && node === overlay) {
+        closeModals();
+        return;
+      }
       const cmd = node.closest("[data-tracker-cmd]");
-      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd && host) {
-        host.post(trackerCommandMessage(cmd.dataset.trackerCmd as TrackerCommand));
+      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
+        sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
         return;
       }
       const modalBtn = node.closest("[data-open-modal]");
       if (modalBtn instanceof HTMLElement && modalBtn.dataset.openModal) {
-        closeModals();
-        const modal = root.querySelector(`[data-modal="${modalBtn.dataset.openModal}"]`);
-        if (modal instanceof HTMLElement) modal.hidden = false;
-        if (modalBtn.dataset.openModal === "historial") {
-          void listReportHistory(orgId, reportId).then((hist) => {
-            const list = root.querySelector("[data-history-list]");
-            if (!(list instanceof HTMLElement)) return;
-            list.replaceChildren();
-            for (const item of hist.data.items || []) {
-              const li = document.createElement("li");
-              li.textContent = `${item.tema} · ${item.source} · ${item.createdAt}`;
-              const btn = document.createElement("button");
-              btn.type = "button";
-              btn.textContent = "Restore";
-              btn.dataset.restore = item.id;
-              li.append(btn);
-              list.append(li);
-            }
-          });
-        }
+        openModal(modalBtn.dataset.openModal);
       }
     });
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Escape" || !modalIsOpen()) return;
+        event.stopPropagation();
+        closeModals();
+      },
+      true,
+    );
 
     root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();

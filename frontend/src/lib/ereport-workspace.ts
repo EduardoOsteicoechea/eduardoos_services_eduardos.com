@@ -88,20 +88,34 @@ export function startTrackerHost(
   },
 ): { post: (msg: Record<string, unknown>) => void; destroy: () => void } {
   let timer = 0;
+  let ready = false;
+  const queued: Record<string, unknown>[] = [];
   const delay = opts.autoSaveMs ?? 100;
-  const post = (msg: Record<string, unknown>) => {
+  const send = (msg: Record<string, unknown>) => {
     iframe.contentWindow?.postMessage(msg, opts.origin);
+  };
+  const post = (msg: Record<string, unknown>) => {
+    if (!ready || !iframe.contentWindow) {
+      queued.push(msg);
+      return;
+    }
+    send(msg);
   };
   const onMessage = (ev: MessageEvent) => {
     handleTrackerMessage(ev, opts.origin, {
       ...opts.handlers,
       onBooted: () => {
+        ready = true;
         if (opts.payload) {
-          post(trackerLoadMessage(opts.payload));
+          send(trackerLoadMessage(opts.payload));
         }
-        post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-        post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
-        post(trackerConfigMessage(opts.uploadUrl, opts.csrf));
+        send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+        send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
+        send(trackerConfigMessage(opts.uploadUrl, opts.csrf));
+        const waiting = queued.splice(0);
+        for (const msg of waiting) {
+          send(msg);
+        }
         opts.handlers.onBooted?.();
       },
       onCloudSave: (payload) => {

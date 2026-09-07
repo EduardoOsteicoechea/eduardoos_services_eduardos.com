@@ -4,16 +4,16 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport invite · Eduardoos" page="ereport-invite">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial">
+    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial" title="Tutorial">
       <span class="material-symbols-outlined" aria-hidden="true">help</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar">
+    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar" title="Toggle tracker sidebar">
       <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress">
+    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress" title="Progress">
       <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report">
+    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report" title="Download report">
       <span class="material-symbols-outlined" aria-hidden="true">download</span>
     </button>
   </Fragment>
@@ -77,6 +77,15 @@ import Layout from "../../layouts/Layout.astro";
     let host: ReturnType<typeof startTrackerHost> | null = null;
     let activeReportId = "";
     let payload: EreportPayload | null = null;
+    const pendingCmds: TrackerCommand[] = [];
+
+    const sendCmd = (command: TrackerCommand) => {
+      if (host) {
+        host.post(trackerCommandMessage(command));
+        return;
+      }
+      pendingCmds.push(command);
+    };
 
     const setStatus = (text: string, kind = "") => {
       if (banner instanceof HTMLElement) {
@@ -127,6 +136,9 @@ import Layout from "../../layouts/Layout.astro";
           },
         });
         iframe.src = "/ereport-tracker.html";
+        for (const command of pendingCmds.splice(0)) {
+          host.post(trackerCommandMessage(command));
+        }
       }
     };
 
@@ -213,8 +225,8 @@ import Layout from "../../layouts/Layout.astro";
       const node = event.target;
       if (!(node instanceof Element)) return;
       const cmd = node.closest("[data-tracker-cmd]");
-      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd && host) {
-        host.post(trackerCommandMessage(cmd.dataset.trackerCmd as TrackerCommand));
+      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
+        sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
       }
     });
   });

@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { isEreportOwnerPath, isPublicEreportInvitePath, readInviteParams, workspaceHref } from "./ereport-routes";
-import { handleTrackerMessage, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
+import { handleTrackerMessage, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -87,5 +87,47 @@ describe("tracker host bridge", () => {
     });
     expect(usesFilesystemImageRef({ id: "img-1", url: "/api/ereport/orgs/o/reports/r/images/img-1" })).toBe(true);
     expect(usesFilesystemImageRef({ dataUrl: "data:image/png;base64,aaa" })).toBe(false);
+  });
+
+  it("queues host commands until the tracker iframe boots", () => {
+    const posted: unknown[] = [];
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const win = iframe.contentWindow;
+    if (!win) {
+      document.body.replaceChildren();
+      throw new Error("expected iframe contentWindow");
+    }
+    win.postMessage = ((msg: unknown) => {
+      posted.push(msg);
+    }) as typeof win.postMessage;
+    const host = startTrackerHost(iframe, {
+      origin: "https://eduardoos.com",
+      uploadUrl: "/api/ereport/orgs/o/reports/r/images",
+      csrf: "csrf",
+      payload: null,
+      handlers: { onCloudSave: () => undefined, onError: () => undefined },
+    });
+    host.post({ target: "ereport-tracker", type: "command", command: "tutorial" });
+    expect(posted).toEqual([]);
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        origin: "https://eduardoos.com",
+        data: { source: "ereport-tracker", type: "booted" },
+      }),
+    );
+    expect(posted.some((msg) => (msg as { command?: string }).command === "tutorial")).toBe(true);
+    host.destroy();
+    document.body.replaceChildren();
+  });
+});
+
+describe("eReport workspace chrome", () => {
+  it("gives every workspace modal a close control and hover titles on DHS icons", () => {
+    const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
+    expect(workspaceSrc.match(/data-close-modal/g)?.length).toBeGreaterThanOrEqual(4);
+    expect(workspaceSrc).toContain('title="Tutorial"');
+    expect(workspaceSrc).toContain('title="Save now"');
+    expect(workspaceSrc).toContain("keydown");
   });
 });

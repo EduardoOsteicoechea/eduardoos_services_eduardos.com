@@ -92,6 +92,7 @@ function syncCollapseButton(): void {
     const hideLabel = button.dataset.labelHide || "Hide header";
     const showLabel = button.dataset.labelShow || "Show header";
     button.setAttribute("aria-label", collapsed ? showLabel : hideLabel);
+    button.setAttribute("title", collapsed ? showLabel : hideLabel);
     button.setAttribute("aria-pressed", collapsed ? "true" : "false");
   }
   if (icon instanceof HTMLElement) {
@@ -214,9 +215,18 @@ export async function refreshAuthChrome(): Promise<void> {
   applySessionAvatar(authed ? data.avatar : null);
 }
 
+function syncIconButtonTitles(): void {
+  document.querySelectorAll(".icon-btn[aria-label]").forEach((node) => {
+    if (node instanceof HTMLElement && !node.getAttribute("title")) {
+      node.setAttribute("title", node.getAttribute("aria-label") || "");
+    }
+  });
+}
+
 function restoreChromeAfterNavigation(): void {
   applyHeaderCollapsed(headerCollapsed(), false);
   syncExpanded();
+  syncIconButtonTitles();
   paintSessionAvatar(lastSessionAvatar);
   startAgentChat();
   void refreshAuthChrome();

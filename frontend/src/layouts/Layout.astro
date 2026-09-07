@@ -50,29 +50,29 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
     <div class="shell">
       <header class="app-header">
         <div class="header-nav" data-header-chrome>
-          <a class="header-logo icon-btn" href="/" data-route aria-label="Home">
+          <a class="header-logo icon-btn" href="/" data-route aria-label="Home" title="Home">
             <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
           </a>
-          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open main menu">
+          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open main menu" title="Open main menu">
             <span class="material-symbols-outlined" aria-hidden="true">menu</span>
           </button>
         </div>
-        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu" transition:persist="header-session">
+        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu" title="Open session menu" transition:persist="header-session">
           <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
           <img class="header-session-photo" data-session-avatar hidden alt="" />
         </button>
-        <button class="agent-fab icon-btn" data-header-chrome type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent">
+        <button class="agent-fab icon-btn" data-header-chrome type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
           <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
         </button>
         <div class="header-collapse">
           <span class="header-collapse-line" aria-hidden="true"></span>
-          <button class="header-collapse-btn" type="button" aria-pressed="false" data-label-hide="Hide header" data-label-show="Show header" aria-label="Hide header">
+          <button class="header-collapse-btn" type="button" aria-pressed="false" data-label-hide="Hide header" data-label-show="Show header" aria-label="Hide header" title="Hide header">
             <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
           </button>
         </div>
         {showDhs ? (
           <div class="header-dhs" data-header-chrome>
-            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open page actions">
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open page actions" title="Open page actions">
               <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
             </button>
           </div>
@@ -81,13 +81,13 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
 
       <aside id="main-menu" class="sidebar-left" hidden>
         <header class="sidebar-toolbar">
-          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size">
+          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size" title="Decrease font size">
             <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
           </button>
-          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size">
+          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size" title="Increase font size">
             <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
           </button>
-          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme">
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
             <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
           </button>
         </header>
