@@ -1,0 +1,265 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
+  <Fragment slot="dhs">
+    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial">
+      <span class="material-symbols-outlined" aria-hidden="true">help</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar">
+      <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="font-up" aria-label="Increase tracker font">
+      <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="font-down" aria-label="Decrease tracker font">
+      <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="upload" aria-label="Load local .ereport">
+      <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" aria-label="Clear tracker">
+      <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress">
+      <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report">
+      <span class="material-symbols-outlined" aria-hidden="true">download</span>
+    </button>
+    <a class="icon-btn" href="/ereport" data-route aria-label="Open hub">
+      <span class="material-symbols-outlined" aria-hidden="true">home_work</span>
+    </a>
+    <button class="icon-btn" type="button" data-open-modal="tema" aria-label="Edit report name">
+      <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+    </button>
+    <button class="icon-btn" type="button" data-open-modal="save" aria-label="Save now">
+      <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+    </button>
+    <button class="icon-btn" type="button" data-open-modal="share" aria-label="Invite collaborator">
+      <span class="material-symbols-outlined" aria-hidden="true">share</span>
+    </button>
+    <button class="icon-btn" type="button" data-open-modal="historial" aria-label="Version history">
+      <span class="material-symbols-outlined" aria-hidden="true">history</span>
+    </button>
+  </Fragment>
+
+  <section class="ereport-workspace" data-ereport-workspace>
+    <p class="status" data-banner>Loading session…</p>
+    <p class="panel" data-guest-fallback hidden>
+      Sign in to open this report.
+      <span class="hint session-links">
+        <a href="/session" data-route>Sign in</a>
+      </span>
+    </p>
+    <div class="ereport-workspace-body" data-authed-panel hidden>
+      <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
+    </div>
+    <div class="ereport-modal" data-modal="tema" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-tema-title">
+        <h2 id="ereport-tema-title">Report name</h2>
+        <form data-tema-form>
+          <label>
+            Tema
+            <input name="tema" maxlength="200" required />
+          </label>
+          <button type="submit">Save name</button>
+        </form>
+      </div>
+    </div>
+    <div class="ereport-modal" data-modal="save" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-save-title">
+        <h2 id="ereport-save-title">Save</h2>
+        <p class="hint">Autosave writes this report to the VPS filesystem. Manual save collects the tracker now.</p>
+        <button type="button" data-save-now>Save now</button>
+      </div>
+    </div>
+    <div class="ereport-modal" data-modal="share" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-share-title">
+        <h2 id="ereport-share-title">Invite</h2>
+        <form data-share-form>
+          <label>
+            Email
+            <input name="email" type="email" required />
+          </label>
+          <button type="submit">Send 1-hour invite</button>
+        </form>
+        <p class="hint" data-share-link hidden></p>
+      </div>
+    </div>
+    <div class="ereport-modal" data-modal="historial" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-history-title">
+        <h2 id="ereport-history-title">History</h2>
+        <ul class="ereport-list" data-history-list></ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    createReportInvite,
+    fetchOrgReport,
+    listReportHistory,
+    ownerImageUploadPath,
+    refreshCsrf,
+    rememberedCsrf,
+    restoreReportHistory,
+    saveOrgReport,
+    updateEreportOrgs,
+    type EreportPayload,
+  } from "../../lib/ereport";
+  import {
+    startTrackerHost,
+    trackerCommandMessage,
+    trackerLoadMessage,
+    type TrackerCommand,
+  } from "../../lib/ereport-workspace";
+  import { reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
+
+  const root = document.querySelector("[data-ereport-workspace]");
+  if (root instanceof HTMLElement) {
+    const copy = sessionCopy();
+    const params = new URLSearchParams(window.location.search);
+    const orgId = params.get("org")?.trim() || "";
+    const reportId = params.get("report")?.trim() || "";
+    const iframe = root.querySelector("[data-tracker]");
+    let payload: EreportPayload | null = null;
+    let tema = "";
+    let host: ReturnType<typeof startTrackerHost> | null = null;
+
+    const closeModals = () => {
+      root.querySelectorAll("[data-modal]").forEach((node) => {
+        if (node instanceof HTMLElement) node.hidden = true;
+      });
+    };
+
+    const persist = async (next: EreportPayload) => {
+      payload = next;
+      const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
+      tema = nextTema;
+      const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
+      const orgName = String(next.orgName || "").trim();
+      if (res.status < 300 && orgName) {
+        await updateEreportOrgs([{ id: orgId, name: orgName }]);
+      }
+      const message = reportFailure(copy, res.status, res.data, "Saved.");
+      if (message.kind === "err") setBanner(root, message.text, message.kind);
+      else setBanner(root, "Autosaved.", "ok");
+    };
+
+    void requireAuth(root, copy).then(async (me) => {
+      if (!me) return;
+      if (!orgId || !reportId) {
+        setBanner(root, "Missing organization or report.", "err");
+        return;
+      }
+      await refreshCsrf();
+      const res = await fetchOrgReport(orgId, reportId);
+      if (res.status !== 200 || !res.data.payload || !res.data.meta) {
+        reportFailure(copy, res.status, res.data, "");
+        setBanner(root, res.data.message || "Report not found.", "err");
+        return;
+      }
+      tema = res.data.meta.tema;
+      payload = {
+        ...res.data.payload,
+        reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
+      };
+      setBanner(root, "Editing on the VPS filesystem.", "ok");
+      if (iframe instanceof HTMLIFrameElement) {
+        host = startTrackerHost(iframe, {
+          origin: window.location.origin,
+          uploadUrl: ownerImageUploadPath(orgId, reportId),
+          csrf: rememberedCsrf(),
+          payload,
+          handlers: {
+            onCloudSave: (next) => {
+              void persist(next);
+            },
+            onError: (message) => setBanner(root, message, "err"),
+          },
+        });
+        iframe.src = "/ereport-tracker.html";
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const node = event.target;
+      if (!(node instanceof Element)) return;
+      const cmd = node.closest("[data-tracker-cmd]");
+      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd && host) {
+        host.post(trackerCommandMessage(cmd.dataset.trackerCmd as TrackerCommand));
+        return;
+      }
+      const modalBtn = node.closest("[data-open-modal]");
+      if (modalBtn instanceof HTMLElement && modalBtn.dataset.openModal) {
+        closeModals();
+        const modal = root.querySelector(`[data-modal="${modalBtn.dataset.openModal}"]`);
+        if (modal instanceof HTMLElement) modal.hidden = false;
+        if (modalBtn.dataset.openModal === "historial") {
+          void listReportHistory(orgId, reportId).then((hist) => {
+            const list = root.querySelector("[data-history-list]");
+            if (!(list instanceof HTMLElement)) return;
+            list.replaceChildren();
+            for (const item of hist.data.items || []) {
+              const li = document.createElement("li");
+              li.textContent = `${item.tema} · ${item.source} · ${item.createdAt}`;
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.textContent = "Restore";
+              btn.dataset.restore = item.id;
+              li.append(btn);
+              list.append(li);
+            }
+          });
+        }
+      }
+    });
+
+    root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement) || !payload) return;
+      tema = String(new FormData(form).get("tema") || tema);
+      payload = { ...payload, reportName: tema };
+      host?.post(trackerLoadMessage(payload));
+      await persist(payload);
+      closeModals();
+    });
+
+    root.querySelector("[data-save-now]")?.addEventListener("click", async () => {
+      if (payload) await persist(payload);
+      closeModals();
+    });
+
+    root.querySelector("[data-share-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const email = String(new FormData(form).get("email") || "");
+      const res = await createReportInvite(orgId, reportId, email);
+      const message = reportFailure(copy, res.status, res.data, "Invite sent.");
+      setBanner(root, message.text, message.kind);
+      const link = root.querySelector("[data-share-link]");
+      if (link instanceof HTMLElement && res.data.link) {
+        link.hidden = false;
+        link.textContent = res.data.link;
+      }
+    });
+
+    root.addEventListener("click", async (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLElement) || !node.dataset.restore) return;
+      const res = await restoreReportHistory(orgId, reportId, node.dataset.restore);
+      const message = reportFailure(copy, res.status, res.data, "Restored.");
+      setBanner(root, message.text, message.kind);
+      if (res.status === 200 && res.data.payload) {
+        payload = res.data.payload;
+        host?.post(trackerLoadMessage(payload));
+        closeModals();
+      }
+    });
+  }
+</script>

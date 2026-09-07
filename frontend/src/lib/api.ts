@@ -128,6 +128,10 @@ export async function apiGet<T>(path: string): Promise<T> {
   return data;
 }
 
+export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(path, init);
+}
+
 export function getHealth(): Promise<HealthResponse> {
   return apiGet<HealthResponse>("/health");
 }
@@ -169,6 +173,41 @@ export async function patchJSON<T = MeResponse>(path: string, body: Record<strin
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+}
+
+export async function putJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(path, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function deleteJSON<T = MeResponse>(path: string): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(path, { method: "DELETE" });
+}
+
+export async function uploadFile<T = APIErrorBody>(path: string, file: File, field = "file"): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  await getCsrf();
+  const body = new FormData();
+  body.append(field, file);
+  const headers = new Headers();
+  headers.set("Accept", "application/json");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  const response = await fetch(apiUrl(path), {
+    method: "POST",
+    credentials: "include",
+    headers,
+    body,
+  });
+  const data = await parseJSON<T & APIErrorBody>(response);
+  const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
+  if (requestId) {
+    data.request_id = requestId;
+  }
+  return { status: response.status, data, requestId };
 }
 
 export async function loginAdmin(email: string, password: string, _csrf?: string): Promise<{ status: number; data: MeResponse; requestId: string }> {

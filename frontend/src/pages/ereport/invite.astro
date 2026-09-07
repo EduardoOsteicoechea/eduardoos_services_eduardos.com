@@ -1,0 +1,221 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eReport invite · Eduardoos" page="ereport-invite">
+  <Fragment slot="dhs">
+    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial">
+      <span class="material-symbols-outlined" aria-hidden="true">help</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar">
+      <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress">
+      <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report">
+      <span class="material-symbols-outlined" aria-hidden="true">download</span>
+    </button>
+  </Fragment>
+
+  <section class="session-grid ereport-invite" data-ereport-invite>
+    <h1>eReport invite</h1>
+    <p class="lede">No Eduardo OS account is required. Prove the invited email with a one-time code, then edit in the full Issue Tracker.</p>
+    <p class="status" data-banner>Checking invite…</p>
+
+    <form class="panel" data-otp-form hidden>
+      <label>
+        Invited email
+        <input name="email" type="email" required autocomplete="email" />
+      </label>
+      <button type="submit" data-otp-send>Email a code</button>
+      <label>
+        One-time code
+        <input name="otp" inputmode="numeric" maxlength="8" autocomplete="one-time-code" />
+      </label>
+      <button type="button" data-otp-verify>Verify and open tracker</button>
+    </form>
+
+    <div class="panel" data-org-reports hidden>
+      <h2>Reports in this organization</h2>
+      <ul class="ereport-list" data-invite-reports></ul>
+    </div>
+  </section>
+  <section class="ereport-workspace" data-invite-editor hidden>
+    <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
+  </section>
+</Layout>
+
+<script>
+  import {
+    fetchInvitePreview,
+    fetchInviteReport,
+    inviteImageUploadPath,
+    refreshCsrf,
+    rememberedCsrf,
+    requestInviteOTP,
+    saveInviteReport,
+    verifyInviteOTP,
+    type EreportPayload,
+    type ReportCard,
+  } from "../../lib/ereport";
+  import { isPublicEreportInvitePath, readInviteParams } from "../../lib/ereport-routes";
+  import { startTrackerHost, trackerCommandMessage, type TrackerCommand } from "../../lib/ereport-workspace";
+  import { showErrorModal } from "../../lib/error-modal";
+
+  const root = document.querySelector("[data-ereport-invite]");
+  if (root instanceof HTMLElement) {
+    if (!isPublicEreportInvitePath(window.location.pathname)) {
+      showErrorModal({ message: "This invite route is public and should not require a site account." });
+    }
+    const { inviteId, secret } = readInviteParams(window.location.search, window.location.pathname);
+    const banner = root.querySelector("[data-banner]");
+    const otpForm = root.querySelector("[data-otp-form]");
+    const reportsBox = root.querySelector("[data-org-reports]");
+    const editor = document.querySelector("[data-invite-editor]");
+    const iframe = document.querySelector("[data-tracker]");
+    let host: ReturnType<typeof startTrackerHost> | null = null;
+    let activeReportId = "";
+    let payload: EreportPayload | null = null;
+
+    const setStatus = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const openTracker = async (reportId: string) => {
+      await refreshCsrf();
+      const res = await fetchInviteReport(reportId);
+      if (res.status !== 200 || !res.data.payload) {
+        showErrorModal({
+          message: res.data.message || "Could not open the invited report.",
+          requestId: res.data.request_id,
+          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+        });
+        return;
+      }
+      activeReportId = reportId;
+      payload = res.data.payload;
+      if (root instanceof HTMLElement) root.hidden = true;
+      if (editor instanceof HTMLElement) editor.hidden = false;
+      if (iframe instanceof HTMLIFrameElement) {
+        host?.destroy();
+        host = startTrackerHost(iframe, {
+          origin: window.location.origin,
+          uploadUrl: inviteImageUploadPath(reportId),
+          csrf: rememberedCsrf(),
+          payload,
+          handlers: {
+            onCloudSave: (next) => {
+              payload = next;
+              void saveInviteReport(reportId, {
+                payload: next,
+                tema: String(next.reportName || next.appTitle || "").trim(),
+              }).then((saved) => {
+                if (saved.status >= 300) {
+                  showErrorModal({
+                    message: saved.data.message || "Could not save.",
+                    requestId: saved.data.request_id,
+                    details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
+                  });
+                }
+              });
+            },
+            onError: (message) => showErrorModal({ message }),
+          },
+        });
+        iframe.src = "/ereport-tracker.html";
+      }
+    };
+
+    const paintReports = (reports: ReportCard[]) => {
+      const list = root.querySelector("[data-invite-reports]");
+      if (!(list instanceof HTMLElement) || !(reportsBox instanceof HTMLElement)) return;
+      reportsBox.hidden = reports.length === 0;
+      list.replaceChildren();
+      for (const report of reports) {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = report.tema || report.id;
+        btn.dataset.openInviteReport = report.id;
+        li.append(btn);
+        list.append(li);
+      }
+    };
+
+    const bootInvite = async () => {
+      if (!inviteId || !secret) {
+        setStatus("This invite link is missing.", "err");
+        return;
+      }
+      const preview = await fetchInvitePreview(inviteId, secret);
+      if (preview.status !== 200) {
+        setStatus(preview.data.message || "Invite not found.", "err");
+        return;
+      }
+      if (preview.data.expired) {
+        setStatus("This invite has expired.", "err");
+        return;
+      }
+      setStatus("Enter the invited email to receive a one-time code.", "ok");
+      if (otpForm instanceof HTMLElement) otpForm.hidden = false;
+    };
+    void bootInvite();
+
+    otpForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(otpForm instanceof HTMLFormElement)) return;
+      const email = String(new FormData(otpForm).get("email") || "");
+      const res = await requestInviteOTP(inviteId, email, secret);
+      if (res.status >= 300) {
+        showErrorModal({
+          message: res.data.message || "Could not send a code.",
+          requestId: res.data.request_id,
+          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+        });
+        return;
+      }
+      setStatus("If that mailbox matches the invite, a code was sent.", "ok");
+    });
+
+    root.querySelector("[data-otp-verify]")?.addEventListener("click", async () => {
+      if (!(otpForm instanceof HTMLFormElement)) return;
+      const data = new FormData(otpForm);
+      const res = await verifyInviteOTP(inviteId, String(data.get("email") || ""), String(data.get("otp") || ""), secret);
+      if (res.status !== 200) {
+        showErrorModal({
+          message: res.data.message || "Verification failed.",
+          requestId: res.data.request_id,
+          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+        });
+        return;
+      }
+      if (res.data.reports?.length) {
+        setStatus("Choose a report to edit.", "ok");
+        paintReports(res.data.reports);
+        return;
+      }
+      if (res.data.invite?.reportId) {
+        await openTracker(res.data.invite.reportId);
+      }
+    });
+
+    root.addEventListener("click", (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLElement) || !node.dataset.openInviteReport) return;
+      void openTracker(node.dataset.openInviteReport);
+    });
+
+    document.addEventListener("click", (event) => {
+      const node = event.target;
+      if (!(node instanceof Element)) return;
+      const cmd = node.closest("[data-tracker-cmd]");
+      if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd && host) {
+        host.post(trackerCommandMessage(cmd.dataset.trackerCmd as TrackerCommand));
+      }
+    });
+  }
+</script>

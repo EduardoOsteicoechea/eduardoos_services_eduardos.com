@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="API docs · Eduardoos">
+  <section class="session-grid" data-api-docs>
+    <h1>External API</h1>
+    <p class="lede">
+      Public catalog for API-key clients. Signed-in site users keep cookie and CSRF authentication.
+      eReport bytes live on the VPS filesystem, not S3, and not in MongoDB.
+    </p>
+    <p class="status" data-banner>Loading catalog…</p>
+    <pre class="panel" data-docs></pre>
+  </section>
+</Layout>
+
+<script>
+  import { fetchAPIDocs } from "../lib/ereport";
+  import { showErrorModal } from "../lib/error-modal";
+
+  const root = document.querySelector("[data-api-docs]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const docs = root.querySelector("[data-docs]");
+    void (async () => {
+      const res = await fetchAPIDocs();
+      if (res.status !== 200) {
+        if (banner instanceof HTMLElement) {
+          banner.textContent = res.data.message || "Could not load API docs.";
+          banner.className = "status err";
+        }
+        showErrorModal({
+          message: res.data.message || "Could not load API docs.",
+          requestId: res.data.request_id,
+          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+        });
+        return;
+      }
+      if (docs instanceof HTMLElement) {
+        if (banner instanceof HTMLElement) {
+          banner.textContent = "Live catalog from GET /api/v1/docs.";
+          banner.className = "status ok";
+        }
+        docs.textContent = JSON.stringify(res.data, null, 2);
+      }
+    })();
+  }
+</script>

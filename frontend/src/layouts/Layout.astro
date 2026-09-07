@@ -5,20 +5,43 @@ import "../styles/global.css";
 type Props = {
   title: string;
   description?: string;
+  page?: string;
 };
 
-const { title, description = "Personal site of Eduardo Osteicoechea." } = Astro.props;
+const {
+  title,
+  description = "Eduardo Osteicoechea — AEC Technologist. Licensed Building Architect, BIM practitioner, and full-stack developer.",
+  page = "",
+} = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
-const showDhs = path === "/diagnostics";
+const hasDhsSlot = Astro.slots.has("dhs");
+const showDhs = hasDhsSlot || path === "/diagnostics";
+const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-page={htmlPage || undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" sizes="180x180" />
+    <link
+      rel="shortcut icon"
+      href="/favicon-32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+    <meta
+      name="google-site-verification"
+      content="RQdklgFawBo75p5tN7wranunENDjUu27gol9MENm-SM"
+    />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>{title}</title>
     <ClientRouter />
@@ -78,6 +101,14 @@ const showDhs = path === "/diagnostics";
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
+          <a href="/ereport" data-route aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
+            eReport
+          </a>
+          <a href="/api-docs" data-route aria-current={path === "/api-docs" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">api</span>
+            API docs
+          </a>
           <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
             Diagnostics
@@ -120,9 +151,13 @@ const showDhs = path === "/diagnostics";
 
       {showDhs ? (
         <aside id="dynamic-header" class="sidebar-left" hidden>
-          <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
-            <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
-          </a>
+          {hasDhsSlot ? (
+            <slot name="dhs" />
+          ) : (
+            <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
+              <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+            </a>
+          )}
         </aside>
       ) : null}
 

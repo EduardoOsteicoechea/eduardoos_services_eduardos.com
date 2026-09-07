@@ -1,0 +1,502 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eReport · Eduardoos" page="ereport">
+  <Fragment slot="dhs">
+    <button class="icon-btn" type="button" data-hub-view="dashboard" aria-label="Dashboard">
+      <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+    </button>
+    <button class="icon-btn" type="button" data-hub-view="orgs" aria-label="Organizations">
+      <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
+    </button>
+    <button class="icon-btn" type="button" data-hub-view="register" aria-label="New organization">
+      <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
+    </button>
+    <button class="icon-btn" type="button" data-hub-view="new-report" aria-label="New report">
+      <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
+    </button>
+    <button class="icon-btn" type="button" data-hub-view="recent" aria-label="Recent reports">
+      <span class="material-symbols-outlined" aria-hidden="true">history</span>
+    </button>
+    <button class="icon-btn" type="button" data-hub-view="manage" aria-label="Manage organizations">
+      <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+    </button>
+  </Fragment>
+
+  <section class="session-grid ereport-hub" data-ereport-hub>
+    <h1>eReport</h1>
+    <p class="lede">Organization reports stored on this site’s VPS filesystem. Create and import require an active eReport subscription.</p>
+    <p class="status" data-banner>Loading session…</p>
+    <p class="panel" data-guest-fallback hidden>
+      Sign in to open your eReport hub.
+      <span class="hint session-links">
+        <a href="/session" data-route>Sign in</a>
+      </span>
+    </p>
+    <div data-authed-panel hidden>
+      <p class="hint" data-create-hint hidden>Create and import are locked until this account has an eReport entitlement.</p>
+
+      <div class="panel" data-view="dashboard">
+        <h2>Dashboard</h2>
+        <div class="ereport-cards">
+          <button type="button" data-hub-view="orgs">Orgs</button>
+          <button type="button" data-hub-view="register">New org</button>
+          <button type="button" data-hub-view="recent">Recent reports</button>
+          <button type="button" data-hub-view="new-report">New report</button>
+          <button type="button" data-hub-view="manage">Manage</button>
+        </div>
+      </div>
+
+      <div class="panel" data-view="register" hidden>
+        <h2>New organization</h2>
+        <form data-register-form>
+          <label>
+            Organization name
+            <input name="name" required maxlength="120" />
+          </label>
+          <label>
+            First report name
+            <input name="firstReportName" required maxlength="200" />
+          </label>
+          <button type="submit" data-needs-create>Create org + first report</button>
+        </form>
+      </div>
+
+      <div class="panel" data-view="new-report" hidden>
+        <h2>New report</h2>
+        <form data-report-form>
+          <label>
+            Organization
+            <select name="orgId" required data-org-select></select>
+          </label>
+          <label>
+            Report name
+            <input name="tema" required maxlength="200" />
+          </label>
+          <button type="submit" data-needs-create>Create report</button>
+          <button type="button" data-import-btn data-needs-create>Import .ereport</button>
+          <input type="file" accept=".ereport,application/json" data-import-file hidden />
+        </form>
+      </div>
+
+      <div class="panel" data-view="orgs" hidden>
+        <h2>Organizations</h2>
+        <ul class="ereport-list" data-org-list></ul>
+        <div data-org-detail hidden>
+          <h3 data-org-detail-name></h3>
+          <div class="session-links">
+            <button type="button" data-org-panel="edit">Edit</button>
+            <button type="button" data-org-panel="reports">Reports</button>
+            <button type="button" data-org-panel="invite">Invite</button>
+          </div>
+          <form data-rename-form hidden>
+            <label>
+              Name
+              <input name="name" required maxlength="120" />
+            </label>
+            <button type="submit">Save name</button>
+          </form>
+          <form data-org-invite-form hidden>
+            <label>
+              Invite email
+              <input name="email" type="email" required />
+            </label>
+            <label>
+              Duration (hours, 1–720)
+              <input name="hours" type="number" min="1" max="720" value="24" />
+            </label>
+            <button type="submit">Send org invite</button>
+          </form>
+          <p class="hint" data-invite-link hidden></p>
+          <ul class="ereport-list" data-report-list></ul>
+        </div>
+      </div>
+
+      <div class="panel" data-view="recent" hidden>
+        <h2>Recent reports</h2>
+        <ul class="ereport-list" data-recent-list></ul>
+      </div>
+
+      <div class="panel" data-view="manage" hidden>
+        <h2>Manage organizations</h2>
+        <ul class="ereport-list" data-manage-list></ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    createEreportOrg,
+    createOrgInvite,
+    createOrgReport,
+    createReportInvite,
+    deleteEreportOrg,
+    deleteOrgReport,
+    fetchEreportAccess,
+    fetchEreportOrg,
+    fetchEreportOrgs,
+    importOrgReport,
+    updateEreportOrgs,
+    workspaceHref,
+    type OrgCard,
+    type RecentReportCard,
+    type ReportCard,
+  } from "../../lib/ereport";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+
+  const root = document.querySelector("[data-ereport-hub]");
+  if (root instanceof HTMLElement) {
+    const copy = sessionCopy();
+    let canCreate = false;
+    let ownerSafe = "";
+    let orgs: OrgCard[] = [];
+    let recent: RecentReportCard[] = [];
+    let activeOrgId = "";
+    let reports: ReportCard[] = [];
+
+    const fail = (status: number, data: { message?: string; request_id?: string; error?: string; debug?: string }, success: string) =>
+      reportFailure(copy, status, data, success);
+
+    const setView = (view: string) => {
+      root.querySelectorAll("[data-view]").forEach((node) => {
+        if (node instanceof HTMLElement) node.hidden = node.dataset.view !== view;
+      });
+    };
+
+    const fillOrgSelect = () => {
+      const select = root.querySelector("[data-org-select]");
+      if (!(select instanceof HTMLSelectElement)) return;
+      const visible = orgs.filter((o) => !o.hidden);
+      select.innerHTML = `<option value="">Select an organization…</option>${visible
+        .map((o) => `<option value="${o.id}">${o.name}</option>`)
+        .join("")}`;
+    };
+
+    const paintList = (selector: string, items: Array<{ id: string; label: string; href?: string; extra?: string }>) => {
+      const list = root.querySelector(selector);
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      for (const item of items) {
+        const li = document.createElement("li");
+        if (item.href) {
+          const a = document.createElement("a");
+          a.href = item.href;
+          a.dataset.route = "";
+          a.textContent = item.label;
+          li.append(a);
+        } else {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = item.label;
+          btn.dataset.openOrg = item.id;
+          li.append(btn);
+        }
+        if (item.extra) {
+          const extra = document.createElement("span");
+          extra.className = "hint";
+          extra.textContent = item.extra;
+          li.append(extra);
+        }
+        list.append(li);
+      }
+    };
+
+    const paintManage = () => {
+      const list = root.querySelector("[data-manage-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      const sorted = [...orgs].sort((a, b) => a.order - b.order);
+      for (const org of sorted) {
+        const li = document.createElement("li");
+        const name = document.createElement("strong");
+        name.textContent = org.name + (org.hidden ? " (hidden)" : "");
+        const hide = document.createElement("button");
+        hide.type = "button";
+        hide.textContent = org.hidden ? "Show" : "Hide";
+        hide.dataset.hideOrg = org.id;
+        const up = document.createElement("button");
+        up.type = "button";
+        up.textContent = "Up";
+        up.dataset.moveOrg = org.id;
+        up.dataset.dir = "-1";
+        const down = document.createElement("button");
+        down.type = "button";
+        down.textContent = "Down";
+        down.dataset.moveOrg = org.id;
+        down.dataset.dir = "1";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.textContent = "Delete";
+        del.dataset.deleteOrg = org.id;
+        li.append(name, hide, up, down, del);
+        list.append(li);
+      }
+    };
+
+    const paintReports = () => {
+      const list = root.querySelector("[data-report-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      for (const report of reports) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = workspaceHref(activeOrgId, report.id, ownerSafe);
+        a.dataset.route = "";
+        a.textContent = report.tema || report.id;
+        const invite = document.createElement("button");
+        invite.type = "button";
+        invite.textContent = "Invite";
+        invite.dataset.inviteReport = report.id;
+        const del = document.createElement("button");
+        del.type = "button";
+        del.textContent = "Delete";
+        del.dataset.deleteReport = report.id;
+        li.append(a, invite, del);
+        list.append(li);
+      }
+    };
+
+    const reload = async () => {
+      const access = await fetchEreportAccess();
+      canCreate = Boolean(access.status === 200 && access.data.canCreate);
+      ownerSafe = access.data.ownerSafe || "";
+      const hint = root.querySelector("[data-create-hint]");
+      if (hint instanceof HTMLElement) hint.hidden = canCreate;
+      root.querySelectorAll("[data-needs-create]").forEach((node) => {
+        if (node instanceof HTMLButtonElement) node.disabled = !canCreate;
+      });
+      const orgsRes = await fetchEreportOrgs();
+      if (orgsRes.status !== 200) {
+        fail(orgsRes.status, orgsRes.data, "");
+        return;
+      }
+      ownerSafe = orgsRes.data.ownerSafe || ownerSafe;
+      orgs = orgsRes.data.orgs || [];
+      recent = orgsRes.data.recentReports || [];
+      fillOrgSelect();
+      paintList(
+        "[data-org-list]",
+        orgs.filter((o) => !o.hidden).map((o) => ({ id: o.id, label: o.name })),
+      );
+      paintList(
+        "[data-recent-list]",
+        recent.map((r) => ({
+          id: r.id,
+          label: `${r.tema} · ${r.orgName || r.orgId}`,
+          href: workspaceHref(r.orgId, r.id, ownerSafe),
+        })),
+      );
+      paintManage();
+    };
+
+    const openOrg = async (orgId: string) => {
+      activeOrgId = orgId;
+      const res = await fetchEreportOrg(orgId);
+      if (res.status !== 200) {
+        fail(res.status, res.data, "");
+        return;
+      }
+      reports = res.data.reports || [];
+      const detail = root.querySelector("[data-org-detail]");
+      const name = root.querySelector("[data-org-detail-name]");
+      if (detail instanceof HTMLElement) detail.hidden = false;
+      if (name instanceof HTMLElement) name.textContent = res.data.org?.name || orgId;
+      paintReports();
+      setView("orgs");
+    };
+
+    void requireAuth(root, copy).then(async (me) => {
+      if (!me) return;
+      setBanner(root, "Signed in.", "ok");
+      await reload();
+    });
+
+    document.addEventListener("click", (event) => {
+      const node = event.target;
+      if (!(node instanceof Element)) return;
+      const viewBtn = node.closest("[data-hub-view]");
+      if (viewBtn instanceof HTMLElement && viewBtn.dataset.hubView) {
+        setView(viewBtn.dataset.hubView);
+        return;
+      }
+    });
+
+    root.addEventListener("click", async (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLElement)) return;
+      if (node.dataset.openOrg) {
+        await openOrg(node.dataset.openOrg);
+        return;
+      }
+      if (node.dataset.orgPanel) {
+        const rename = root.querySelector("[data-rename-form]");
+        const invite = root.querySelector("[data-org-invite-form]");
+        if (rename instanceof HTMLElement) rename.hidden = node.dataset.orgPanel !== "edit";
+        if (invite instanceof HTMLElement) invite.hidden = node.dataset.orgPanel !== "invite";
+        return;
+      }
+      if (node.dataset.inviteReport && activeOrgId) {
+        const email = window.prompt("Invite email (1 hour edit access)");
+        if (!email) return;
+        const res = await createReportInvite(activeOrgId, node.dataset.inviteReport, email.trim());
+        const message = fail(res.status, res.data, "Invite sent.");
+        setBanner(root, message.text, message.kind);
+        const link = root.querySelector("[data-invite-link]");
+        if (link instanceof HTMLElement && res.data.link) {
+          link.hidden = false;
+          link.textContent = res.data.link;
+        }
+        return;
+      }
+      if (node.dataset.deleteReport && activeOrgId) {
+        if (!window.confirm("Delete this report? This cannot be undone.")) return;
+        const res = await deleteOrgReport(activeOrgId, node.dataset.deleteReport);
+        const message = fail(res.status, res.data, "Report deleted.");
+        setBanner(root, message.text, message.kind);
+        if (res.status === 200) await openOrg(activeOrgId);
+        return;
+      }
+      if (node.dataset.hideOrg) {
+        const org = orgs.find((o) => o.id === node.dataset.hideOrg);
+        if (!org) return;
+        const res = await updateEreportOrgs([{ id: org.id, hidden: !org.hidden, order: org.order }]);
+        const message = fail(res.status, res.data, "Organization updated.");
+        setBanner(root, message.text, message.kind);
+        if (res.status === 200) await reload();
+        return;
+      }
+      if (node.dataset.moveOrg) {
+        const dir = Number(node.dataset.dir);
+        const sorted = [...orgs].sort((a, b) => a.order - b.order);
+        const idx = sorted.findIndex((o) => o.id === node.dataset.moveOrg);
+        const swap = sorted[idx + dir];
+        if (!swap || !sorted[idx]) return;
+        const res = await updateEreportOrgs([
+          { id: sorted[idx].id, order: swap.order, hidden: sorted[idx].hidden },
+          { id: swap.id, order: sorted[idx].order, hidden: swap.hidden },
+        ]);
+        const message = fail(res.status, res.data, "Order updated.");
+        setBanner(root, message.text, message.kind);
+        if (res.status === 200) await reload();
+        return;
+      }
+      if (node.dataset.deleteOrg) {
+        if (!window.confirm("Delete this organization and its reports?")) return;
+        const res = await deleteEreportOrg(node.dataset.deleteOrg);
+        const message = fail(res.status, res.data, "Organization deleted.");
+        setBanner(root, message.text, message.kind);
+        if (res.status === 200) {
+          activeOrgId = "";
+          await reload();
+          setView("manage");
+        }
+      }
+    });
+
+    root.querySelector("[data-register-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canCreate) {
+        showErrorModal({ message: "An eReport subscription is required to create organizations." });
+        return;
+      }
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const data = new FormData(form);
+      const res = await createEreportOrg(String(data.get("name") || ""), String(data.get("firstReportName") || ""));
+      setBusy(form, false);
+      const message = fail(res.status, res.data, "Organization created.");
+      setBanner(root, message.text, message.kind);
+      if (res.status === 201 && res.data.report && res.data.org) {
+        window.location.href = workspaceHref(res.data.org.id, res.data.report.id, res.data.report.ownerSafe || ownerSafe);
+        return;
+      }
+      if (res.status === 201) await reload();
+    });
+
+    root.querySelector("[data-report-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canCreate) {
+        showErrorModal({ message: "An eReport subscription is required to create reports." });
+        return;
+      }
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const data = new FormData(form);
+      const orgId = String(data.get("orgId") || "");
+      const res = await createOrgReport(orgId, String(data.get("tema") || ""));
+      setBusy(form, false);
+      const message = fail(res.status, res.data, "Report created.");
+      setBanner(root, message.text, message.kind);
+      if (res.status === 201 && res.data.meta) {
+        window.location.href = workspaceHref(orgId, res.data.meta.id, res.data.meta.ownerSafe || ownerSafe);
+      }
+    });
+
+    root.querySelector("[data-import-btn]")?.addEventListener("click", () => {
+      const input = root.querySelector("[data-import-file]");
+      if (input instanceof HTMLInputElement) input.click();
+    });
+
+    root.querySelector("[data-import-file]")?.addEventListener("change", async (event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement) || !input.files?.[0]) return;
+      if (!canCreate) {
+        showErrorModal({ message: "An eReport subscription is required to import reports." });
+        return;
+      }
+      const form = root.querySelector("[data-report-form]");
+      const orgId = form instanceof HTMLFormElement ? String(new FormData(form).get("orgId") || "") : "";
+      if (!orgId) {
+        showErrorModal({ message: "Select an organization first." });
+        return;
+      }
+      try {
+        const text = await input.files[0].text();
+        const payload = JSON.parse(text) as Record<string, unknown>;
+        if (!Array.isArray(payload.sections)) throw new Error("invalid");
+        const tema = String(payload.reportName || payload.reportNumber || input.files[0].name.replace(/\.ereport$/i, "") || "Importado");
+        const res = await importOrgReport(orgId, tema, payload);
+        const message = fail(res.status, res.data, "Report imported.");
+        setBanner(root, message.text, message.kind);
+        if (res.status === 201 && res.data.meta) {
+          window.location.href = workspaceHref(orgId, res.data.meta.id, res.data.meta.ownerSafe || ownerSafe);
+        }
+      } catch {
+        showErrorModal({ message: "That file is not a valid .ereport payload." });
+      }
+    });
+
+    root.querySelector("[data-rename-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!activeOrgId) return;
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const name = String(new FormData(form).get("name") || "").trim();
+      const res = await updateEreportOrgs([{ id: activeOrgId, name }]);
+      const message = fail(res.status, res.data, "Organization renamed.");
+      setBanner(root, message.text, message.kind);
+      if (res.status === 200) await reload();
+    });
+
+    root.querySelector("[data-org-invite-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!activeOrgId) return;
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const data = new FormData(form);
+      const res = await createOrgInvite(activeOrgId, String(data.get("email") || ""), Number(data.get("hours") || 24));
+      const message = fail(res.status, res.data, "Invite sent.");
+      setBanner(root, message.text, message.kind);
+      const link = root.querySelector("[data-invite-link]");
+      if (link instanceof HTMLElement && res.data.link) {
+        link.hidden = false;
+        link.textContent = res.data.link;
+      }
+    });
+  }
+</script>

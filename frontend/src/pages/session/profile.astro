@@ -43,13 +43,28 @@ import Layout from "../../layouts/Layout.astro";
       </form>
       <p class="hint session-links">
         <a href="/session/change-password" data-route>Change password</a>
+        <a href="/api-docs" data-route>API docs</a>
       </p>
+      <div data-apikeys>
+        <h2>API keys</h2>
+        <p class="hint">Keys are shown once. They require the api product entitlement. External clients use Bearer keys only for /api/v1; signed-in pages keep cookie auth.</p>
+        <form data-apikey-form>
+          <label>
+            Label
+            <input name="label" required maxlength="80" />
+          </label>
+          <button type="submit">Create key</button>
+        </form>
+        <p class="hint" data-apikey-secret hidden></p>
+        <ul class="ereport-list" data-apikey-list></ul>
+      </div>
     </div>
   </section>
 </Layout>
 
 <script>
   import { deleteAvatar, getCsrf, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
+  import { createAPIKey, listAPIKeys, revokeAPIKey } from "../../lib/ereport";
   import { showErrorModal } from "../../lib/error-modal";
   import { fillProfile, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
@@ -61,6 +76,7 @@ import Layout from "../../layouts/Layout.astro";
       if (me) {
         fillProfile(root, me);
         setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
+        await paintKeys();
       }
     });
     root.querySelector("[data-profile-form]")?.addEventListener("submit", async (event) => {
@@ -103,6 +119,50 @@ import Layout from "../../layouts/Layout.astro";
       const message = reportFailure(copy, result.status, result.data, "Avatar removed.");
       setBanner(root, message.text, message.kind);
       if (result.status === 200) fillProfile(root, result.data);
+    });
+
+    const paintKeys = async () => {
+      const list = root.querySelector("[data-apikey-list]");
+      if (!(list instanceof HTMLElement)) return;
+      const res = await listAPIKeys();
+      list.replaceChildren();
+      if (res.status !== 200) return;
+      for (const key of res.data.keys || []) {
+        const li = document.createElement("li");
+        li.textContent = `${key.label} · ${key.prefix}`;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "Revoke";
+        btn.dataset.revokeKey = key.id;
+        li.append(btn);
+        list.append(li);
+      }
+    };
+
+    root.querySelector("[data-apikey-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const result = await createAPIKey(String(new FormData(form).get("label") || ""));
+      setBusy(form, false);
+      const message = reportFailure(copy, result.status, result.data, "API key created.");
+      setBanner(root, message.text, message.kind);
+      const secret = root.querySelector("[data-apikey-secret]");
+      if (secret instanceof HTMLElement && result.data.key) {
+        secret.hidden = false;
+        secret.textContent = result.data.key;
+      }
+      if (result.status === 201) await paintKeys();
+    });
+
+    root.addEventListener("click", async (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLElement) || !node.dataset.revokeKey) return;
+      const result = await revokeAPIKey(node.dataset.revokeKey);
+      const message = reportFailure(copy, result.status, result.data, "API key revoked.");
+      setBanner(root, message.text, message.kind);
+      if (result.status === 200) await paintKeys();
     });
   }
 </script>

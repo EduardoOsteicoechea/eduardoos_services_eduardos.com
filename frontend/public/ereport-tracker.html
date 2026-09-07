@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eReport — Issue Tracker</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+:root {
+  --bg: #ffffff;
+  --ink: #000000;
+  --muted: #555555;
+  --card: #ffffff;
+  --surface: #f3f3f3;
+  --line: #cccccc;
+  --shadow: 0 0.125rem 0 rgba(0,0,0,.06), 0 0.5rem 1.25rem rgba(0,0,0,.08);
+  --success: #2e7d32;
+  --success-bg: #e8f5e9;
+  --danger: #c62828;
+  --danger-bg: #ffebee;
+  --warning: #f9a825;
+  --warning-bg: #fff8e1;
+  --neutral: #9e9e9e;
+  --neutral-bg: #eeeeee;
+  --inverse-bg: #000000;
+  --inverse-ink: #ffffff;
+  --font: "Segoe UI", "Candara", "Calibri", sans-serif;
+  --sidebar-w: 24.5rem;
+  --topbar-h: 0rem;
+  --base: 1rem;
+  --sticky-sec-h: 3.5rem;
+  --sticky-sub-h: 2.75rem;
+  --radius: 3px;
+  --section-head-bg: #dcdcdc;
+  /* Spec 063: match site root (16px × scale); rem children keep proportions. */
+  --site-text-scale: 1;
+}
+html {
+  font-size: calc(16px * var(--site-text-scale, 1));
+  scroll-behavior: smooth;
+}
+body.theme-dark {
+  --bg: #000000;
+  --ink: #ffffff;
+  --muted: #bdbdbd;
+  --card: #121212;
+  --surface: #1a1a1a;
+  --line: #444444;
+  --shadow: 0 0.125rem 0 rgba(255,255,255,.04), 0 0.5rem 1.25rem rgba(0,0,0,.55);
+  --success: #66bb6a;
+  --success-bg: #0d2818;
+  --danger: #ef5350;
+  --danger-bg: #2a0f0f;
+  --warning: #ffca28;
+  --warning-bg: #2a2208;
+  --neutral: #757575;
+  --neutral-bg: #2a2a2a;
+  --inverse-bg: #ffffff;
+  --inverse-ink: #000000;
+  --section-head-bg: #1f1f1f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--base);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.45;
+}
+body.sidebar-collapsed { --sidebar-w: 0rem; }
+
+/* Topbar removed (spec 025/049 amend 2026-09-03) — tools live in site HDS. */
+#ereport-file { display: none; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--sidebar-w);
+  min-height: 100vh;
+  transition: grid-template-columns .2s ease;
+}
+.main-col {
+  min-width: 0;
+  padding: 1.25rem;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+body.sidebar-collapsed .layout { grid-template-columns: minmax(0, 1fr) 0fr; }
+body.sidebar-collapsed .sidebar {
+  overflow: hidden; border: 0; padding: 0; opacity: 0; pointer-events: none; width: 0;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: var(--sidebar-w);
+  background: var(--bg);
+  color: var(--ink);
+  border-left: 0.125rem solid var(--line);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.sidebar-header {
+  flex: 0 0 auto;
+  padding: 0.65rem 0.7rem;
+  border-bottom: 0.125rem solid color-mix(in srgb, var(--ink) 25%, transparent);
+  font-size: 1.365rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.sidebar-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#nav-rail {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.35rem 0;
+}
+.nav-sec {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-bottom: 0.0625rem solid color-mix(in srgb, var(--ink) 20%, transparent);
+  padding: 0.35rem 0.45rem 0.5rem;
+}
+.nav-sec:last-child { border-bottom: none; }
+.nav-sec-label {
+  flex: 0 0 auto;
+  font-size: 0.91875rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  padding: 0 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-dots {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  padding: 0.45rem 0.35rem;
+  scrollbar-width: thin;
+}
+.nav-dot {
+  width: 1.071rem; height: 1.071rem; padding: 0;
+  border-radius: 2px;
+  background: var(--neutral);
+  border: 0.0625rem solid color-mix(in srgb, var(--ink) 55%, transparent);
+  cursor: pointer; flex: 0 0 auto;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.nav-dot.is-aprobado { background: var(--success-bg); border-color: var(--success); }
+.nav-dot.is-reprobado { background: var(--danger-bg); border-color: var(--danger); }
+.nav-dot.is-no_aplica { background: #3a3a3a; border-color: #6b6b6b; opacity: 0.75; }
+.nav-dot.is-none { background: var(--warning-bg); border-color: var(--warning); }
+.nav-dot:hover, .nav-dot:focus-visible {
+  outline: none; transform: scale(1.06);
+  box-shadow: 0 0 0 0.05rem var(--warning);
+}
+.nav-dot.is-active-group { box-shadow: 0 0 0 0.05rem var(--warning); }
+.nav-dot.is-active {
+  transform: scale(1.175);
+  box-shadow: 0 0 0 0.07rem var(--warning);
+  z-index: 1;
+}
+.nav-sec.is-active .nav-sec-label { color: var(--warning); }
+.sidebar-footer {
+  flex: 0 0 auto;
+  display: flex; gap: 0.4rem; justify-content: center;
+  padding: 0.55rem;
+  border-top: 0.125rem solid color-mix(in srgb, var(--ink) 25%, transparent);
+}
+.sidebar-footer button {
+  width: 2.2rem; height: 2.2rem; padding: 0; border-radius: var(--radius);
+  background: transparent; color: var(--ink);
+  border: 0.125rem solid color-mix(in srgb, var(--ink) 55%, transparent);
+  cursor: pointer; font-size: 1.1rem; font-weight: 700;
+}
+
+.nav-tip {
+  position: fixed; z-index: 80; max-width: min(28rem, calc(100vw - 5rem));
+  background: var(--bg); color: var(--ink);
+  padding: 0.5rem 0.65rem; border-radius: var(--radius); font-size: 1.3125rem; line-height: 1.35;
+  border: 0.0625rem solid var(--line);
+  border-left: 0.1875rem solid var(--warning); box-shadow: var(--shadow);
+  pointer-events: none; display: none;
+}
+.nav-tip.show { display: block; }
+.nav-tip .nav-tip-sub { display: block; font-weight: 700; margin-bottom: 0.15rem; color: var(--warning); }
+.nav-tip .nav-tip-name { display: block; }
+
+.panel {
+  background: var(--card);
+  border: 0.125rem solid var(--ink);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.9rem;
+  box-shadow: var(--shadow);
+}
+#meta-panel {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.panel > h2 { margin: 0 0 0.6rem; font-size: 1.05rem; color: var(--ink); }
+.howto ol { margin: 0.5rem 0 0; padding-left: 1.2rem; color: var(--muted); font-size: 0.92rem; }
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+label.field { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; color: var(--muted); }
+label.field input[readonly] { opacity: 0.92; cursor: default; }
+.criteria-field { grid-column: 1 / -1; }
+.criteria-editor {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;
+  border: 0.0625rem solid var(--line); border-radius: var(--radius);
+  padding: 0.45rem 0.55rem; background: var(--card); min-height: 2.5rem;
+}
+.criteria-chip {
+  display: inline-flex; align-items: center; gap: 0.2rem;
+  padding: 0.2rem 0.4rem 0.2rem 0.55rem; border-radius: var(--radius);
+  border: 0.0625rem solid var(--line); background: var(--surface); color: var(--ink);
+  font-size: 0.85rem;
+}
+.criteria-chip button {
+  width: 1.25rem; height: 1.25rem; padding: 0; border: none; background: transparent;
+  color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius);
+}
+.criteria-chip button:hover { color: var(--danger); }
+.criteria-add-row { display: flex; gap: 0.35rem; flex: 1; min-width: 10rem; }
+.criteria-add-row input {
+  flex: 1; min-width: 0; font: inherit; font-size: 0.9rem; color: var(--ink);
+  border: 0.0625rem solid var(--line); border-radius: var(--radius);
+  padding: 0.35rem 0.5rem; background: var(--card);
+}
+.criteria-add-row button {
+  width: 2rem; min-width: 2rem; height: 2rem; padding: 0; border-radius: var(--radius);
+  border: 0.0625rem solid var(--line); background: var(--card); color: var(--ink);
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+label.field input, label.field textarea, .nombre-input,
+.inplace input, .inplace textarea,
+.group-title-input {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  border: 0.0625rem solid var(--line); border-radius: var(--radius);
+  padding: 0.5rem 0.65rem; background: var(--card);
+}
+.inplace input, .inplace textarea { width: 100%; }
+
+button, .btn {
+  font: inherit; cursor: pointer; border-radius: var(--radius);
+  border: 0.0625rem solid transparent; padding: 0.4rem 0.6rem;
+  background: var(--inverse-bg); color: var(--inverse-ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 0;
+  font-size: 0.86rem; line-height: 1; white-space: nowrap;
+}
+button.secondary { background: var(--card); color: var(--ink); border-color: var(--line); }
+button.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+button.danger { background: var(--card); color: var(--danger); border-color: var(--danger); }
+button.warn-hot {
+  background: var(--warning); color: #000; border-color: var(--warning); font-weight: 700;
+}
+button:disabled { opacity: .5; cursor: not-allowed; }
+.btn-ico { font-size: 1.05rem; line-height: 1; color: inherit; }
+button.has-label { gap: 0.35rem; }
+
+.section-block {
+  margin-top: 1.75rem;
+  scroll-margin-top: 0.75rem;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+.section-block > .section-title {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 35;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  margin: 0; padding: 0.85rem 1rem;
+  background: var(--section-head-bg);
+  color: var(--ink);
+  border: 0.125rem solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 0.15rem 0.45rem rgba(0,0,0,.18);
+}
+.section-title-main {
+  display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1;
+}
+.section-block > .section-title h2 {
+  margin: 0; font-size: 1.35rem; font-weight: 750; letter-spacing: -0.02em;
+  color: var(--ink); line-height: 1.15;
+}
+.collapse-toggle {
+  flex: 0 0 auto;
+  width: 1.5rem; height: 1.5rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: inherit;
+  border: 0.0625rem solid color-mix(in srgb, currentColor 40%, transparent);
+  border-radius: var(--radius); cursor: pointer;
+  font-size: 0.85rem; line-height: 1; font-weight: 700;
+}
+.collapse-toggle:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+.section-title .collapse-toggle { color: var(--ink); border-color: var(--line); }
+.group-head .collapse-toggle,
+.item-top .collapse-toggle { color: var(--ink); border-color: var(--line); }
+.section-block.is-collapsed > .section-body { display: none; }
+.group-block.is-collapsed > .group-body { display: none; }
+.item-card.is-collapsed > .item-body { display: none; }
+.item-card.is-collapsed { padding-bottom: 0.35rem; }
+/* Tree rails: dashed verticals under collapse toggles + extra left indent */
+.section-body {
+  --tree-toggle-center: 1.75rem; /* section-title pad-left 1rem + half of 1.5rem toggle */
+  --tree-pad: 1.85rem;
+  position: relative;
+  margin-left: var(--tree-toggle-center);
+  padding: 1.4rem 1.4rem 1.4rem var(--tree-pad);
+  background: transparent;
+  display: flex; flex-direction: column; gap: 1.4rem;
+  border-left: 0.1rem dashed color-mix(in srgb, var(--ink) 38%, transparent);
+}
+.group-body {
+  --tree-toggle-center: 1.6rem; /* group-head pad-left 0.85rem + half toggle */
+  --tree-pad: 1.75rem;
+  position: relative;
+  margin-left: var(--tree-toggle-center);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.65rem 0.65rem 0.65rem var(--tree-pad);
+  border-left: 0.1rem dashed color-mix(in srgb, var(--ink) 38%, transparent);
+}
+.group-block {
+  position: relative;
+}
+.group-block::before,
+.item-card::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--tree-pad, 1.85rem));
+  width: var(--tree-pad, 1.85rem);
+  border-top: 0.1rem dashed color-mix(in srgb, var(--ink) 38%, transparent);
+  pointer-events: none;
+}
+.group-block::before {
+  top: calc(0.7rem + 0.75rem); /* group-head vertical pad + half toggle */
+}
+.item-card::before {
+  --tree-pad: 1.75rem;
+  top: calc(0.65rem + 0.75rem); /* item-card pad + half toggle */
+}
+.section-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.section-actions .hint { color: var(--muted); font-size: 0.8rem; }
+.section-actions button.danger {
+  background: transparent; color: var(--danger); border-color: var(--line);
+  width: 2rem; height: 2rem; padding: 0;
+}
+
+.group-block, .subcontainer {
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  box-shadow: none;
+  scroll-margin-top: calc(var(--topbar-h) + var(--sticky-sec-h) + 0.5rem);
+}
+.group-head {
+  position: sticky;
+  top: calc(var(--topbar-h) + var(--sticky-sec-h));
+  z-index: 34;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  padding: 0.7rem 0.85rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 0.125rem solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 0.12rem 0.4rem rgba(0,0,0,.12);
+}
+.group-head-main {
+  display: flex; align-items: center; gap: 0.45rem; min-width: 0; flex: 1;
+}
+.group-head .inplace-title { flex: 1; min-width: 0; }
+.group-head .inplace-title .inplace-view {
+  margin: 0; font-size: 1rem; font-weight: 700; color: var(--ink);
+}
+.group-actions { display: flex; gap: 0.35rem; }
+.group-actions button { width: 1.9rem; height: 1.9rem; padding: 0; }
+
+.item-card {
+  position: relative;
+  margin: 0;
+  padding: 0.65rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: none;
+  scroll-margin-top: calc(var(--topbar-h) + var(--sticky-sec-h) + var(--sticky-sub-h) + 0.5rem);
+}
+.item-card.is-aprobado { background: var(--success-bg); box-shadow: inset 0.25rem 0 0 var(--success); }
+.item-card.is-reprobado { background: var(--danger-bg); box-shadow: inset 0.25rem 0 0 var(--danger); }
+.item-card.is-none {
+  background: var(--warning-bg);
+  box-shadow: inset 0.25rem 0 0 var(--warning);
+}
+.item-card.is-no_aplica {
+  background: #1e1e1e;
+  box-shadow: inset 0.25rem 0 0 #6b6b6b;
+  opacity: 0.62;
+  filter: grayscale(0.85);
+}
+body:not(.theme-dark) .item-card.is-no_aplica {
+  background: #ececec;
+  box-shadow: inset 0.25rem 0 0 #9e9e9e;
+  opacity: 0.72;
+  filter: grayscale(0.7);
+}
+
+.item-top { display: flex; gap: 0.4rem; align-items: center; padding: 0 0 0.35rem; }
+.item-top .inplace-nombre { flex: 1; min-width: 0; }
+.item-top .inplace-nombre .inplace-view {
+  min-height: 0;
+  padding: 0.2rem 0.4rem;
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+.item-top .inplace-nombre input.nombre-input {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+.item-top .lbl-inline {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); flex: 0 0 auto;
+}
+.item-top button {
+  width: 1.25rem; height: 1.25rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.item-top button .btn-ico,
+.item-top button .material-icons {
+  font-size: 0.9rem;
+  width: 1em; height: 1em;
+  line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  padding: 0;
+  align-items: stretch;
+  width: 100%;
+}
+.qa-pair {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  gap: 0.65rem;
+}
+.qa-half {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+}
+.qa-half + .qa-half { border-left: none; }
+.col { display: flex; flex-direction: column; gap: 0.3rem; min-height: 100%; }
+.col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.col-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap;
+}
+.col-head .lbl { flex: 0 0 auto; }
+.meta-bar {
+  display: grid;
+  grid-template-columns: 20% minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: start;
+  width: 100%;
+}
+.meta-bar-time { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.meta-bar-imgs { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.moment-input {
+  width: 100%;
+  max-width: none;
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.3rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+}
+.inplace { position: relative; min-width: 0; }
+.col > .inplace { flex: 1; display: flex; flex-direction: column; }
+.inplace.is-editing { display: flex; flex-direction: column; }
+.inplace-view {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+  cursor: text;
+  border: 0.0625rem solid transparent;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  min-height: 5.5rem;
+  color: var(--ink);
+  background: transparent;
+}
+.inplace-title .inplace-view {
+  min-height: 0;
+  padding: 0.15rem 0.25rem;
+}
+.inplace-view:hover, .inplace-view:focus-visible {
+  border-color: var(--line);
+  outline: none;
+  background: var(--card);
+}
+.inplace-view .ph { color: var(--muted); font-weight: 400; }
+.inplace.is-editing .inplace-view { display: none; }
+.inplace textarea {
+  flex: 1; min-height: 5.5rem; resize: vertical; width: 100%;
+}
+.col-status {
+  width: auto;
+  min-width: 0;
+  justify-self: end;
+  margin: 0;
+  padding: 0;
+  justify-content: stretch;
+}
+.col-status .status-stack {
+  flex: 1;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+.status-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  padding: 0;
+}
+.status-box-main { min-height: 2.4rem; }
+.status-criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+.status-criteria-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+.status-criteria-label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  max-width: 4.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-status {
+  width: 2.1rem; min-width: 2.1rem; height: 2.1rem; padding: 0; border-radius: var(--radius);
+  background: var(--card); color: var(--ink); border: 0.0625rem solid var(--line);
+  font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.btn-status-crit {
+  width: 1.55rem; min-width: 1.55rem; height: 1.55rem;
+  opacity: 0.78;
+}
+.btn-status-crit .material-icons,
+.btn-status-crit .btn-ico { font-size: 0.95rem; }
+.btn-status .material-icons,
+.btn-status .btn-ico {
+  font-size: 1.15rem;
+  width: 1em; height: 1em;
+  line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-status.aprobado { background: var(--success); border-color: var(--success); color: #fff; opacity: 1; }
+.btn-status.reprobado { background: var(--danger); border-color: var(--danger); color: #fff; opacity: 1; }
+.btn-status.no_aplica { background: #757575; border-color: #757575; color: #fff; opacity: 1; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr)); gap: 0.3rem; margin-top: 0.25rem; }
+.thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+.thumbs img, .thumb-wrap img {
+  width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
+  border: 0.0625rem solid var(--line); cursor: zoom-in; background: var(--surface);
+  display: block;
+}
+.thumb-del {
+  position: absolute; top: 0.1rem; right: 0.1rem;
+  width: 1.15rem; height: 1.15rem; padding: 0;
+  border-radius: var(--radius); cursor: pointer; z-index: 2;
+  background: var(--danger); color: #fff;
+  border: 0.0625rem solid #fff; font-size: 0.85rem; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.thumb-del:hover { filter: brightness(1.1); }
+.img-input { font-size: 0.75rem; width: 100%; }
+
+.footer-bar {
+  margin-top: 1.5rem; padding: 1rem 1.1rem;
+  background: var(--card); border: 0.125rem solid var(--ink); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+.stat-box { border: 0.125rem solid var(--line); border-radius: var(--radius); padding: 0.75rem 0.85rem; background: var(--card); }
+.stat-box h3 { margin: 0 0 0.4rem; font-size: 0.92rem; color: var(--ink); }
+.stat-box ul { margin: 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.88rem; }
+.save-row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; justify-content: space-between; }
+.save-row .hint { color: var(--muted); font-size: 0.85rem; }
+#btn-save { font-size: 0.95rem; padding: 0.6rem 0.9rem; }
+
+.toast {
+  position: fixed; right: 1rem; bottom: 1rem; background: var(--inverse-bg); color: var(--inverse-ink);
+  padding: 0.6rem 0.85rem; border-radius: var(--radius); display: none; z-index: 50; max-width: 22rem;
+  border-left: 0.25rem solid var(--warning); font-size: 0.85rem;
+}
+.toast.is-success { border-left-color: var(--success); }
+.toast.is-danger { border-left-color: var(--danger); }
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,.72);
+  display: none; align-items: center; justify-content: center; z-index: 60; padding: 1.25rem;
+}
+.modal.open { display: flex; }
+.modal-card {
+  background: var(--card); border-radius: var(--radius); max-width: min(57.5rem, 96vw);
+  width: 100%; padding: 0.85rem; box-shadow: var(--shadow);
+}
+.modal-card img { width: 100%; max-height: 70vh; object-fit: contain; background: #111; border-radius: var(--radius); }
+.modal-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; gap: 0.5rem; }
+
+@media (max-width: 68rem) {
+  .item-row { grid-template-columns: 1fr auto; }
+  .qa-pair { grid-template-columns: 1fr; }
+  .qa-half + .qa-half { border-left: none; border-top: none; }
+  .meta-bar { grid-template-columns: 1fr; }
+  .meta-grid, .stats { grid-template-columns: 1fr; }
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .sidebar {
+    position: fixed; right: 0; top: var(--topbar-h); z-index: 42;
+    width: min(28rem, 80vw);
+  }
+  body.sidebar-collapsed .sidebar {
+    transform: translateX(105%); width: min(28rem, 80vw); opacity: 1; pointer-events: none;
+  }
+}
+.material-icons {
+  font-size: 1.25rem; line-height: 1; vertical-align: middle;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.collapse-toggle .material-icons { font-size: 1.1rem; }
+.btn-status .material-icons { font-size: 1.15rem; }
+.item-top .material-icons, .group-actions .material-icons, .section-actions .material-icons { font-size: 1.05rem; }
+.item-top .material-icons { font-size: 0.9rem; }
+.thumb-del .material-icons { font-size: 0.95rem; }
+.icon-btn {
+  width: 2.1rem; height: 2.1rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--ink);
+  border: 0.0625rem solid var(--line); border-radius: var(--radius); cursor: pointer;
+}
+.icon-btn:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); }
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.modal-head h2 { margin: 0; font-size: 1.1rem; color: var(--ink); }
+.modal-card.modal-card-sm { max-width: min(36rem, 96vw); }
+.modal-card.modal-card-md { max-width: min(42rem, 96vw); }
+.modal-actions {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end;
+  margin-top: 1rem; align-items: center;
+}
+.modal-actions .hint { margin-right: auto; color: var(--muted); font-size: 0.85rem; }
+.howto-modal-body ol { margin: 0.5rem 0 0; padding-left: 1.2rem; color: var(--muted); font-size: 0.92rem; }
+.progress-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 40rem) {
+  .progress-stats { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .topbar, .sidebar, .howto, .group-actions, .section-actions button, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
+  .section-body, .group-body, .item-body { display: block !important; }
+  .layout { display: block; }
+  .main-col { max-width: none; padding: 0; }
+  .panel, .group-block, .section-block { box-shadow: none; }
+}
+</style>
+</head>
+<body class="theme-dark">
+<!-- Topbar removed — tools mount in site HDS; keep hidden file input for upload command. -->
+<input type="file" id="ereport-file" accept=".ereport" />
+
+<div class="layout">
+  <div class="main-col">
+    <section id="meta-panel">
+      <div class="meta-grid">
+        <label class="field">Organization
+          <input type="text" id="org-name" placeholder="Org / client name" />
+        </label>
+        <label class="field">Report name
+          <input type="text" id="report-name" placeholder="Report title" />
+        </label>
+        <label class="field">Report Date
+          <input type="date" id="report-date" />
+        </label>
+        <label class="field">Report Code
+          <input type="text" id="report-number" readonly tabindex="-1" placeholder="Auto from report name + timestamp" />
+        </label>
+        <div class="field criteria-field">
+          <span>Validation criteria</span>
+          <div class="criteria-editor" id="criteria-editor" aria-label="Validation criteria"></div>
+        </div>
+      </div>
+    </section>
+
+    <main id="app"></main>
+  </div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Sidebar de navegación">
+    <div class="sidebar-body">
+      <nav id="nav-rail" aria-label="Incidencias por sección"></nav>
+    </div>
+    <div class="sidebar-footer">
+      <button type="button" id="scroll-top" title="Ir arriba" aria-label="Ir arriba"><span class="material-icons">keyboard_arrow_up</span></button>
+      <button type="button" id="scroll-bottom" title="Ir abajo" aria-label="Ir abajo"><span class="material-icons">keyboard_arrow_down</span></button>
+    </div>
+  </aside>
+</div>
+
+<div id="nav-tip" class="nav-tip" role="tooltip"></div>
+
+<div class="modal" id="howto-modal" role="dialog" aria-modal="true" aria-labelledby="howto-title">
+  <div class="modal-card modal-card-sm">
+    <div class="modal-head">
+      <h2 id="howto-title">Qué es y cómo usarla</h2>
+      <button type="button" class="icon-btn" id="howto-close" title="Cerrar" aria-label="Cerrar"><span class="material-icons">close</span></button>
+    </div>
+    <div class="howto-modal-body">
+      <ol>
+        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> add per-issue review rows.</li>
+        <li>Usá los iconos del menú superior del sitio para tamaño de fuente, cargar <strong>.ereport</strong>, limpiar, ver progreso o <strong>guardar todo</strong>. El tema claro/oscuro sigue el interruptor del menú global del sitio.</li>
+        <li>El sidebar derecho navega por cada incidencia (tooltip: subartículo + nombre).</li>
+        <li>Al guardar se exportan <strong>.ereport + HTML + PDF</strong>. Las imágenes van en base64 dentro del .ereport.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="progress-modal" role="dialog" aria-modal="true" aria-labelledby="progress-title">
+  <div class="modal-card modal-card-md">
+    <div class="modal-head">
+      <h2 id="progress-title">Progreso del reporte</h2>
+      <button type="button" class="icon-btn" id="progress-close" title="Cerrar" aria-label="Cerrar"><span class="material-icons">close</span></button>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-box">
+        <h3>Qué se llenó / qué falta</h3>
+        <ul id="fill-status"></ul>
+      </div>
+      <div class="stat-box">
+        <h3>Al guardar se generará</h3>
+        <ul id="export-preview"></ul>
+      </div>
+    </div>
+    <div class="modal-actions" id="progress-modal-actions"></div>
+  </div>
+</div>
+
+<div class="modal" id="img-modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>Evidencia</h2>
+      <button type="button" class="icon-btn" id="modal-close" title="Cerrar" aria-label="Cerrar"><span class="material-icons">close</span></button>
+    </div>
+    <img id="modal-img" alt="Evidencia" />
+    <div class="modal-nav">
+      <button type="button" class="secondary" id="modal-prev"><span class="material-icons">chevron_left</span></button>
+      <span id="modal-count"></span>
+      <button type="button" class="secondary" id="modal-next"><span class="material-icons">chevron_right</span></button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "groups": [{"id": "group-1", "title": "General", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}]}]}</script>
+<script src="/vendor/html2canvas.min.js"></script>
+<script src="/vendor/jspdf.umd.min.js"></script>
+<script>
+const EMBEDDED_DATA = JSON.parse(document.getElementById("embedded-json").textContent);
+
+let state = normalizeState(structuredClone(EMBEDDED_DATA));
+let modalCtx = { images: [], index: 0 };
+const collapseState = {
+  sections: new Set(),
+  groups: new Set(),
+  items: new Set()
+};
+
+function syncCollapseToState() {
+  state.collapse = {
+    sections: [...collapseState.sections],
+    groups: [...collapseState.groups],
+    items: [...collapseState.items]
+  };
+}
+function applyCollapseFromState() {
+  const c = state.collapse || {};
+  collapseState.sections = new Set(Array.isArray(c.sections) ? c.sections : []);
+  collapseState.groups = new Set(Array.isArray(c.groups) ? c.groups : []);
+  collapseState.items = new Set(Array.isArray(c.items) ? c.items : []);
+}
+function seedCollapsedHierarchy() {
+  collapseState.sections.clear();
+  collapseState.groups.clear();
+  collapseState.items.clear();
+  (state.sections || []).forEach(sec => {
+    if (sec.id) collapseState.sections.add(sec.id);
+    (sec.groups || []).forEach(grp => {
+      if (grp.id) collapseState.groups.add(grp.id);
+    });
+  });
+  syncCollapseToState();
+}
+if (state.collapse == null) seedCollapsedHierarchy();
+else applyCollapseFromState();
+
+function isCollapsed(kind, id) {
+  return collapseState[kind] && collapseState[kind].has(id);
+}
+function expandGroupItems(gid) {
+  const grp = (state.sections || []).flatMap(s => s.groups || []).find(g => g.id === gid);
+  (grp && grp.items || []).forEach(it => {
+    if (it && it.id) collapseState.items.delete(it.id);
+  });
+}
+function toggleCollapse(kind, id) {
+  collectFromDom();
+  const set = collapseState[kind];
+  if (!set) return;
+  if (set.has(id)) {
+    set.delete(id);
+    if (kind === "groups") expandGroupItems(id);
+  } else {
+    set.add(id);
+  }
+  syncCollapseToState();
+  render();
+}
+function ensureExpandedForItem(sid, gid, iid) {
+  let changed = false;
+  if (collapseState.sections.has(sid)) { collapseState.sections.delete(sid); changed = true; }
+  if (collapseState.groups.has(gid)) { collapseState.groups.delete(gid); changed = true; }
+  if (collapseState.items.has(iid)) { collapseState.items.delete(iid); changed = true; }
+  if (changed) expandGroupItems(gid);
+  return changed;
+}
+function mi(name) {
+  return `<span class="material-icons" aria-hidden="true">${name}</span>`;
+}
+function collapseChevron(collapsed) {
+  return mi(collapsed ? "chevron_right" : "expand_more");
+}
+
+/**
+ * datetime-local only accepts YYYY-MM-DDTHH:mm. Seeds/API often store YYYY-MM-DD.
+ * Without coercion the control stays empty and collectFromDom wipes dates (spec 062).
+ */
+function toDateTimeLocalValue(raw) {
+  if (raw == null) return "";
+  const s = String(raw).trim();
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s + "T00:00";
+  const m = s.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
+  if (m) return m[1] + "T" + m[2];
+  return s;
+}
+
+/** Persist control value; midnight date-only coercion keeps YYYY-MM-DD round-trip. */
+function fromDateTimeLocalValue(raw) {
+  const s = String(raw == null ? "" : raw).trim();
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}T00:00(:00)?$/.test(s)) return s.slice(0, 10);
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)) return s.slice(0, 16);
+  return s;
+}
+
+function normalizeItem(it) {
+  const sol = it.imagesSolucion != null ? it.imagesSolucion : (it.images || []);
+  const criteriaStatus = {};
+  if (it.criteriaStatus && typeof it.criteriaStatus === "object" && !Array.isArray(it.criteriaStatus)) {
+    Object.keys(it.criteriaStatus).forEach((k) => {
+      const v = it.criteriaStatus[k];
+      criteriaStatus[k] = (v === "aprobado" || v === "reprobado" || v === "no_aplica") ? v : "";
+    });
+  }
+  return {
+    id: it.id || uid("item"),
+    nombre: it.nombre || "",
+    incidencia: it.incidencia || it.queja || "",
+    fechaIncidencia: it.fechaIncidencia || "",
+    status: it.status || "",
+    criteriaStatus,
+    solucion: it.solucion || "",
+    fechaSolucion: it.fechaSolucion || "",
+    imagesIncidencia: it.imagesIncidencia || it.imagesQueja || [],
+    imagesSolucion: sol,
+    images: sol
+  };
+}
+function normalizeState(data) {
+  if (!data || typeof data !== "object") data = {};
+  if (data.theme !== "light" && data.theme !== "dark") data.theme = "dark";
+  if (data.reportName == null) data.reportName = data.appTitle || "";
+  if (data.orgName == null) data.orgName = "";
+  if (data.appTitle == null) data.appTitle = data.reportName || "Issue Tracker";
+  if (data.reportDate == null) data.reportDate = "";
+  if (data.reportNumber == null) data.reportNumber = "";
+  if (!Array.isArray(data.validationCriteria)) {
+    data.validationCriteria = [];
+  } else {
+    data.validationCriteria = data.validationCriteria.map((s) => String(s || "").trim()).filter(Boolean);
+  }
+  if (!Object.prototype.hasOwnProperty.call(data, "collapse") || data.collapse == null) {
+    data.collapse = null;
+  } else {
+    const c = data.collapse;
+    data.collapse = {
+      sections: Array.isArray(c.sections) ? c.sections.map(String) : [],
+      groups: Array.isArray(c.groups) ? c.groups.map(String) : [],
+      items: Array.isArray(c.items) ? c.items.map(String) : []
+    };
+  }
+  (data.sections || []).forEach(sec => {
+    (sec.groups || []).forEach(grp => {
+      grp.items = (grp.items || []).map(normalizeItem);
+    });
+  });
+  return data;
+}
+
+function applyTheme() {
+  /* Visual theme only — no local toggle; host / site Header drives light|dark. */
+  const dark = state.theme !== "light";
+  document.body.classList.toggle("theme-dark", dark);
+}
+function setTheme(theme) {
+  state.theme = theme === "light" ? "light" : "dark";
+  applyTheme();
+}
+
+function uid(prefix) {
+  return prefix + "-" + Math.random().toString(36).slice(2, 9);
+}
+
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.style.display = "block";
+  setTimeout(() => { el.style.display = "none"; }, 3200);
+}
+
+function sanitizeReportNamePart(raw) {
+  const s = String(raw || "").trim().replace(/[^\w.\-]+/g, "_").replace(/_+/g, "_").replace(/^_|_$/g, "");
+  return s || "Report";
+}
+
+function formatReportCodeStamp(d) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return (
+    d.getFullYear() +
+    pad(d.getMonth() + 1) +
+    pad(d.getDate()) +
+    "_" +
+    pad(d.getHours()) +
+    pad(d.getMinutes()) +
+    pad(d.getSeconds())
+  );
+}
+
+function buildReportCode() {
+  const name = state.reportName || state.appTitle || "";
+  return sanitizeReportNamePart(name) + "_" + formatReportCodeStamp(new Date());
+}
+
+function refreshReportCode(opts) {
+  const silent = opts && opts.silent;
+  const code = buildReportCode();
+  state.reportNumber = code;
+  const n = document.getElementById("report-number");
+  if (n) n.value = code;
+  if (!silent) updateStatus();
+}
+
+function effectiveStatus(item) {
+  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
+  if (!labels.length) return item.status || "";
+  const map = item.criteriaStatus || {};
+  const values = labels.map((label) => map[label] || "");
+  if (values.some((v) => !v)) return item.status || "";
+  if (values.every((v) => v === "no_aplica")) return "no_aplica";
+  if (values.some((v) => v === "reprobado")) return "reprobado";
+  const hasApproved = values.some((v) => v === "aprobado");
+  const onlyApprovedOrDisabled = values.every((v) => v === "aprobado" || v === "no_aplica");
+  if (hasApproved && onlyApprovedOrDisabled) return "aprobado";
+  return item.status || "";
+}
+
+function renderCriteriaEditor() {
+  const host = document.getElementById("criteria-editor");
+  if (!host) return;
+  if (!Array.isArray(state.validationCriteria)) state.validationCriteria = [];
+  const chips = state.validationCriteria.map((label, idx) => `
+    <span class="criteria-chip" data-idx="${idx}">
+      <span title="${escapeAttr(label)}">${escapeHtml(label)}</span>
+      <button type="button" data-act="crit-remove" data-idx="${idx}" title="Remove criterion" aria-label="Remove ${escapeAttr(label)}">${mi("close")}</button>
+    </span>
+  `).join("");
+  host.innerHTML = chips + `
+    <div class="criteria-add-row">
+      <input type="text" id="criteria-add-input" placeholder="e.g. RVT2025" maxlength="64" />
+      <button type="button" id="criteria-add-btn" title="Add criterion" aria-label="Add criterion">${mi("add")}</button>
+    </div>
+  `;
+  host.querySelectorAll('[data-act="crit-remove"]').forEach((btn) => {
+    btn.onclick = () => {
+      const i = Number(btn.dataset.idx);
+      const removed = state.validationCriteria[i];
+      state.validationCriteria.splice(i, 1);
+      (state.sections || []).forEach((sec) => {
+        (sec.groups || []).forEach((grp) => {
+          (grp.items || []).forEach((it) => {
+            if (it.criteriaStatus && removed in it.criteriaStatus) delete it.criteriaStatus[removed];
+          });
+        });
+      });
+      renderCriteriaEditor();
+      render();
+      updateStatus();
+    };
+  });
+  const addInput = host.querySelector("#criteria-add-input");
+  const addBtn = host.querySelector("#criteria-add-btn");
+  const add = () => {
+    const label = String(addInput.value || "").trim();
+    if (!label) return;
+    if (state.validationCriteria.includes(label)) {
+      addInput.value = "";
+      return;
+    }
+    state.validationCriteria.push(label);
+    addInput.value = "";
+    renderCriteriaEditor();
+    render();
+    updateStatus();
+  };
+  if (addBtn) addBtn.onclick = add;
+  if (addInput) addInput.onkeydown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      add();
+    }
+  };
+}
+
+function bindMeta() {
+  const d = document.getElementById("report-date");
+  const n = document.getElementById("report-number");
+  const rn = document.getElementById("report-name");
+  const on = document.getElementById("org-name");
+  d.value = state.reportDate || "";
+  if (rn) rn.value = state.reportName || state.appTitle || "";
+  if (on) on.value = state.orgName || "";
+  refreshReportCode({ silent: true });
+  if (n) n.value = state.reportNumber || "";
+  d.onchange = () => { state.reportDate = d.value; updateStatus(); };
+  if (rn) rn.oninput = () => {
+    state.reportName = rn.value;
+    state.appTitle = rn.value;
+    refreshReportCode({ silent: true });
+    updateStatus();
+  };
+  if (on) on.oninput = () => { state.orgName = on.value; updateStatus(); };
+  renderCriteriaEditor();
+}
+
+let reportCodeTimer = 0;
+if (!window.__ereportCodeTimerStarted) {
+  window.__ereportCodeTimerStarted = true;
+  reportCodeTimer = setInterval(() => refreshReportCode({ silent: true }), 1000);
+}
+
+function readInplace(el) {
+  if (!el) return "";
+  const field = el.querySelector("input, textarea");
+  if (field) return field.value;
+  return el._value != null ? el._value : "";
+}
+
+function setInplaceView(el, value, placeholder) {
+  const view = el.querySelector(".inplace-view");
+  if (!view) return;
+  const v = value || "";
+  el._value = v;
+  if (v.trim()) {
+    view.textContent = v;
+  } else {
+    view.innerHTML = `<span class="ph">${escapeHtml(placeholder || "")}</span>`;
+  }
+}
+
+function renderInplace(kind, cls, value, placeholder) {
+  const v = value || "";
+  const empty = !v.trim();
+  const body = empty
+    ? `<span class="ph">${escapeHtml(placeholder || "")}</span>`
+    : escapeHtml(v);
+  return `<div class="inplace ${cls}" data-kind="${kind}" tabindex="0"><div class="inplace-view">${body}</div></div>`;
+}
+
+function activateInplace(el, onCommit) {
+  if (!el || el.classList.contains("is-editing")) return;
+  const kind = el.dataset.kind || "input";
+  const current = el._value != null ? el._value : "";
+  el.classList.add("is-editing");
+  const field = document.createElement(kind === "textarea" ? "textarea" : "input");
+  if (kind !== "textarea") field.type = "text";
+  field.value = current;
+  if (kind === "textarea") {
+    field.className = el.classList.contains("inplace-incidencia") ? "ta-incidencia" : "ta-sol";
+  } else if (el.classList.contains("inplace-title")) {
+    field.className = "group-title-input";
+  } else if (el.classList.contains("inplace-nombre")) {
+    field.className = "nombre-input";
+  }
+  el.appendChild(field);
+  field.focus();
+  field.select();
+  field.addEventListener("input", () => {
+    if (typeof window.__ereportScheduleCloudSave === "function") {
+      window.__ereportScheduleCloudSave();
+    }
+  });
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    const next = kind === "textarea" ? field.value : field.value.trim();
+    field.remove();
+    el.classList.remove("is-editing");
+    const ph = el.dataset.placeholder || "";
+    setInplaceView(el, next, ph);
+    if (onCommit) onCommit(next);
+  };
+  field.addEventListener("blur", finish);
+  field.addEventListener("keydown", (e) => {
+    if (kind !== "textarea" && e.key === "Enter") {
+      e.preventDefault();
+      field.blur();
+    }
+    if (e.key === "Escape") {
+      field.value = current;
+      field.blur();
+    }
+  });
+}
+
+function bindInplace(el, placeholder, onCommit) {
+  if (!el) return;
+  el.dataset.placeholder = placeholder || "";
+  if (el._value == null) {
+    const view = el.querySelector(".inplace-view");
+    const ph = view && view.querySelector(".ph");
+    el._value = ph ? "" : (view ? view.textContent : "");
+  }
+  const start = () => activateInplace(el, onCommit);
+  el.querySelector(".inplace-view").onclick = start;
+  el.onkeydown = (e) => {
+    if (e.target !== el) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      start();
+    }
+  };
+}
+
+function collectFromDom() {
+  state.reportDate = document.getElementById("report-date").value || "";
+  const nEl = document.getElementById("report-number");
+  if (nEl && nEl.value) state.reportNumber = nEl.value;
+  else if (!state.reportNumber) state.reportNumber = buildReportCode();
+  const rnEl = document.getElementById("report-name");
+  const onEl = document.getElementById("org-name");
+  state.reportName = rnEl ? (rnEl.value || "") : (state.reportName || "");
+  state.orgName = onEl ? (onEl.value || "") : (state.orgName || "");
+  if (state.reportName) state.appTitle = state.reportName;
+  if (!Array.isArray(state.validationCriteria)) state.validationCriteria = [];
+  state.theme = document.body.classList.contains("theme-dark") ? "dark" : "light";
+  syncCollapseToState();
+  document.querySelectorAll(".group-block").forEach(block => {
+    const secEl = block.closest(".section-block");
+    if (!secEl) return;
+    const sid = secEl.dataset.section;
+    const gid = block.dataset.group;
+    const sec = state.sections.find(s => s.id === sid);
+    const grp = sec && sec.groups.find(g => g.id === gid);
+    if (!grp) return;
+    const titleEl = block.querySelector(".inplace-title");
+    if (titleEl) grp.title = readInplace(titleEl);
+  });
+  document.querySelectorAll(".item-card").forEach(card => {
+    const sid = card.dataset.section;
+    const gid = card.dataset.group;
+    const iid = card.dataset.item;
+    const sec = state.sections.find(s => s.id === sid);
+    const grp = sec && sec.groups.find(g => g.id === gid);
+    const item = grp && grp.items.find(i => i.id === iid);
+    if (!item) return;
+    item.nombre = readInplace(card.querySelector(".inplace-nombre")).trim();
+    item.incidencia = readInplace(card.querySelector(".inplace-incidencia"));
+    item.fechaIncidencia = fromDateTimeLocalValue(card.querySelector(".fecha-incidencia")?.value);
+    item.solucion = readInplace(card.querySelector(".inplace-solucion"));
+    item.fechaSolucion = fromDateTimeLocalValue(card.querySelector(".fecha-solucion")?.value);
+    if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
+  });
+}
+
+function setStatus(sid, gid, iid, status) {
+  collectFromDom();
+  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  item.status = item.status === status ? "" : status;
+  render();
+}
+
+function setCriteriaStatus(sid, gid, iid, label, status) {
+  collectFromDom();
+  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
+  item.criteriaStatus[label] = item.criteriaStatus[label] === status ? "" : status;
+  render();
+}
+
+function addItem(sid, gid) {
+  collectFromDom();
+  const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
+  grp.items.push(normalizeItem({ id: uid(gid) }));
+  render();
+}
+
+function removeItem(sid, gid, iid) {
+  collectFromDom();
+  const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
+  if (grp.items.length <= 1) {
+    grp.items[0] = normalizeItem({ id: uid(gid) });
+  } else {
+    grp.items = grp.items.filter(i => i.id !== iid);
+  }
+  render();
+}
+
+function clearGroup(sid, gid) {
+  if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
+  collectFromDom();
+  const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
+  grp.items = [normalizeItem({ id: uid(gid) })];
+  render();
+}
+
+function clearSection(sid) {
+  if (!confirm("¿Vaciar todas las incidencias de esta sección?")) return;
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  sec.groups.forEach(grp => {
+    grp.items = [normalizeItem({ id: uid(grp.id) })];
+  });
+  render();
+}
+
+function imageSrc(im) {
+  return (im && (im.url || im.dataUrl)) || "";
+}
+
+var imageUpload = { url: "", csrf: "" };
+
+async function uploadImageFile(file) {
+  if (!imageUpload.url) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ source: "ereport-tracker", type: "error", message: "Image upload is not configured." }, "*");
+    }
+    return null;
+  }
+  const body = new FormData();
+  body.append("file", file);
+  const headers = { Accept: "application/json" };
+  if (imageUpload.csrf) headers["X-CSRF-Token"] = imageUpload.csrf;
+  const res = await fetch(imageUpload.url, { method: "POST", credentials: "include", headers, body });
+  const data = await res.json().catch(() => ({}));
+  if (res.status < 200 || res.status >= 300) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ source: "ereport-tracker", type: "error", message: data.message || "Image upload failed." }, "*");
+    }
+    return null;
+  }
+  return { id: data.id, mime: data.mime, name: data.name || file.name, url: data.url };
+}
+
+function onImagesSelected(sid, gid, iid, which, fileList) {
+  const files = Array.from(fileList || []);
+  if (!files.length) return;
+  collectFromDom();
+  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
+  let pending = files.length;
+  files.forEach(file => {
+    uploadImageFile(file).then(ref => {
+      if (ref) {
+        item[key].push(ref);
+        if (key === "imagesSolucion") item.images = item.imagesSolucion;
+      }
+      pending -= 1;
+      if (pending === 0) render();
+    });
+  });
+}
+
+function removeImage(sid, gid, iid, which, idx) {
+  collectFromDom();
+  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  if (!item) return;
+  const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
+  const list = item[key] || [];
+  if (idx < 0 || idx >= list.length) return;
+  list.splice(idx, 1);
+  if (key === "imagesSolucion") item.images = item.imagesSolucion;
+  render();
+}
+
+function openModal(images, index) {
+  if (!images || !images.length) return;
+  modalCtx = { images, index };
+  const modal = document.getElementById("img-modal");
+  document.getElementById("modal-img").src = imageSrc(images[index]);
+  document.getElementById("modal-count").textContent = (index + 1) + " / " + images.length;
+  modal.classList.add("open");
+}
+
+function stepModal(delta) {
+  if (!modalCtx.images.length) return;
+  modalCtx.index = (modalCtx.index + delta + modalCtx.images.length) % modalCtx.images.length;
+  openModal(modalCtx.images, modalCtx.index);
+}
+
+function renderThumbs(images, cls, which) {
+  return (images || []).map((im, idx) => `
+    <div class="thumb-wrap">
+      <img src="${imageSrc(im)}" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" class="thumb ${cls}" />
+      <button type="button" class="thumb-del" data-act="del-img" data-which="${which}" data-idx="${idx}" title="Eliminar imagen" aria-label="Eliminar imagen">${mi("close")}</button>
+    </div>
+  `).join("");
+}
+
+function statusToneClass(status) {
+  if (status === "aprobado") return " is-aprobado";
+  if (status === "reprobado") return " is-reprobado";
+  if (status === "no_aplica") return " is-no_aplica";
+  return " is-none";
+}
+
+function navDotClass(status) {
+  if (status === "aprobado") return "is-aprobado";
+  if (status === "reprobado") return "is-reprobado";
+  if (status === "no_aplica") return "is-no_aplica";
+  return "is-none";
+}
+
+function renderStatusTrio(active, btnClass, dataActAttr) {
+  const acts = [
+    { act: "aprobado", icon: "check", title: "Aprobado" },
+    { act: "reprobado", icon: "close", title: "Reprobado" },
+    { act: "no_aplica", icon: "remove", title: "No aplica / fuera de entrega" }
+  ];
+  return acts.map((a) => `
+    <button type="button" class="btn-status ${btnClass} ${(active === a.act) ? a.act : ""}" ${dataActAttr}="${a.act}" title="${a.title}" aria-label="${a.title}">
+      ${mi(a.icon)}
+    </button>
+  `).join("");
+}
+
+function renderItem(sec, grp, item) {
+  const eff = effectiveStatus(item);
+  const tone = statusToneClass(eff);
+  const collapsed = isCollapsed("items", item.id);
+  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
+  const critMap = item.criteriaStatus || {};
+  const criteriaBlock = labels.length ? `
+        <div class="status-criteria" aria-label="Validation criteria">
+          ${labels.map((label) => `
+            <div class="status-criteria-row" data-crit-label="${escapeAttr(label)}">
+              <span class="status-criteria-label" title="${escapeAttr(label)}">${escapeHtml(label)}</span>
+              <div class="status-box">
+                ${renderStatusTrio(critMap[label] || "", "btn-status-crit", "data-crit-act")}
+              </div>
+            </div>
+          `).join("")}
+        </div>` : "";
+  return `
+  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${item.id}" data-section="${sec.id}" data-group="${grp.id}" data-item="${item.id}">
+    <div class="item-top">
+      <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
+      ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
+      <button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>
+    </div>
+    <div class="item-body">
+    <div class="item-row">
+      <div class="qa-pair">
+        <div class="qa-half">
+          <div class="col col-incidencia">
+            ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
+            <div class="meta-bar">
+              <div class="meta-bar-time">
+                <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
+              </div>
+              <div class="meta-bar-imgs">
+                <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
+                <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="qa-half">
+          <div class="col col-sol">
+            ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
+            <div class="meta-bar">
+              <div class="meta-bar-time">
+                <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
+              </div>
+              <div class="meta-bar-imgs">
+                <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
+                <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col col-status">
+        <div class="status-stack">
+          ${criteriaBlock}
+          <div class="status-box status-box-main">
+            ${renderStatusTrio(item.status || "", "btn-status-main", "data-act")}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>`;
+}
+
+function shortNavLabel(sec) {
+  const id = (sec.id || "").toLowerCase();
+  if (id.includes("fix") || id.includes("global")) return "Gen";
+  if (id.includes("urban") || id.includes("cur")) return "CUR";
+  if (id.includes("edific") || id.includes("ced") || id.includes("ce")) return "CED";
+  return (sec.title || "Sec").slice(0, 3);
+}
+
+function itemNavName(item) {
+  const nom = (item.nombre || "").trim();
+  if (nom) return nom;
+  const q = (item.incidencia || "").trim().split(/\n/)[0].trim();
+  if (q) return q.length > 90 ? q.slice(0, 87) + "…" : q;
+  return "Sin nombre";
+}
+
+function showNavTip(btn) {
+  const tip = document.getElementById("nav-tip");
+  if (!tip) return;
+  const sub = btn.dataset.sub || "";
+  const name = btn.dataset.name || "";
+  tip.innerHTML = `<span class="nav-tip-sub">${escapeHtml(sub)}</span><span class="nav-tip-name">${escapeHtml(name)}</span>`;
+  tip.classList.add("show");
+  const r = btn.getBoundingClientRect();
+  const tw = tip.offsetWidth || 200;
+  const th = tip.offsetHeight || 40;
+  let left = r.left - tw - 10;
+  let top = r.top + r.height / 2 - th / 2;
+  if (left < 8) left = 8;
+  if (top < 8) top = 8;
+  if (top + th > window.innerHeight - 8) top = window.innerHeight - th - 8;
+  tip.style.left = left + "px";
+  tip.style.top = top + "px";
+}
+
+function hideNavTip() {
+  const tip = document.getElementById("nav-tip");
+  if (tip) tip.classList.remove("show");
+}
+
+function renderNavRail() {
+  const rail = document.getElementById("nav-rail");
+  if (!rail) return;
+  rail.innerHTML = state.sections.map(sec => `
+    <div class="nav-sec" data-section="${sec.id}" title="${escapeAttr(sec.title)}">
+      <div class="nav-sec-label">${escapeHtml(shortNavLabel(sec))} · ${escapeHtml(sec.title)}</div>
+      <div class="nav-dots">
+      ${(sec.groups || []).flatMap(grp =>
+        (grp.items || []).map(item => `
+          <button type="button" class="nav-dot ${navDotClass(effectiveStatus(item))}"
+            data-target="item-${item.id}"
+            data-group="${escapeAttr(grp.id)}"
+            data-sub="${escapeAttr(grp.title)}"
+            data-name="${escapeAttr(itemNavName(item))}"
+            aria-label="${escapeAttr(grp.title + " · " + itemNavName(item))}"></button>
+        `)
+      ).join("")}
+      </div>
+    </div>
+  `).join("");
+  rail.querySelectorAll(".nav-dot").forEach(btn => {
+    btn.onclick = () => {
+      const target = btn.dataset.target;
+      const el = document.getElementById(target);
+      if (!el) return;
+      const sid = el.dataset.section;
+      const gid = el.dataset.group;
+      const iid = el.dataset.item;
+      if (ensureExpandedForItem(sid, gid, iid)) {
+        collectFromDom();
+        render();
+        requestAnimationFrame(() => {
+          document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      } else {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    btn.onmouseenter = () => showNavTip(btn);
+    btn.onmouseleave = () => hideNavTip();
+    btn.onfocus = () => showNavTip(btn);
+    btn.onblur = () => hideNavTip();
+  });
+  updateActiveNav();
+}
+
+function scrollSpyTopOffset() {
+  return 58;
+}
+
+function updateActiveNav() {
+  const items = [...document.querySelectorAll(".item-card")];
+  if (!items.length) return;
+  const line = scrollSpyTopOffset();
+  let current = null;
+  for (const el of items) {
+    if (el.getBoundingClientRect().top <= line) current = el;
+    else break;
+  }
+  if (!current) current = items[0];
+  const itemId = current.id;
+  const groupId = current.closest(".group-block")?.dataset.group || "";
+  document.querySelectorAll(".nav-dot").forEach(btn => {
+    const isItem = btn.dataset.target === itemId;
+    const isGroup = groupId && btn.dataset.group === groupId;
+    btn.classList.toggle("is-active", isItem);
+    btn.classList.toggle("is-active-group", isGroup && !isItem);
+  });
+  document.querySelectorAll(".nav-sec").forEach(sec => {
+    sec.classList.toggle("is-active", !!sec.querySelector(".nav-dot.is-active"));
+  });
+  const active = document.querySelector(".nav-dot.is-active");
+  if (active) {
+    const dots = active.closest(".nav-dots");
+    if (dots) {
+      const dr = dots.getBoundingClientRect();
+      const ar = active.getBoundingClientRect();
+      if (ar.top < dr.top || ar.bottom > dr.bottom || ar.left < dr.left || ar.right > dr.right) {
+        active.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }
+  }
+}
+
+let scrollSpyRaf = 0;
+window.addEventListener("scroll", () => {
+  if (scrollSpyRaf) return;
+  scrollSpyRaf = requestAnimationFrame(() => {
+    scrollSpyRaf = 0;
+    updateActiveNav();
+  });
+}, { passive: true });
+window.addEventListener("resize", () => {
+  updateActiveNav();
+  syncStickyOffsets();
+});
+
+function itemValue(sid, gid, iid, key) {
+  const item = state.sections.find(s => s.id === sid)?.groups.find(g => g.id === gid)?.items.find(i => i.id === iid);
+  return (item && item[key]) || "";
+}
+
+function syncStickyOffsets() {
+  const secTitle = document.querySelector(".section-block:not(.is-collapsed) > .section-title")
+    || document.querySelector(".section-block > .section-title");
+  const subHead = document.querySelector(".group-block:not(.is-collapsed) > .group-head")
+    || document.querySelector(".group-block > .group-head");
+  if (secTitle) {
+    document.documentElement.style.setProperty("--sticky-sec-h", secTitle.offsetHeight + "px");
+  }
+  if (subHead) {
+    document.documentElement.style.setProperty("--sticky-sub-h", subHead.offsetHeight + "px");
+  }
+}
+
+function render() {
+  const root = document.getElementById("app");
+  root.innerHTML = state.sections.map(sec => {
+    const secCollapsed = isCollapsed("sections", sec.id);
+    return `
+    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${sec.id}" data-section="${sec.id}">
+      <div class="section-title">
+        <div class="section-title-main">
+          <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
+          <h2>${escapeHtml(sec.title)}</h2>
+        </div>
+        <div class="section-actions">
+          <span class="hint">${sec.kind === "funcionalidades" ? "Por funcionalidad" : "Por subartículo"}</span>
+          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección">
+            ${mi("delete")}
+          </button>
+        </div>
+      </div>
+      <div class="section-body">
+      ${sec.groups.map(grp => {
+        const grpCollapsed = isCollapsed("groups", grp.id);
+        return `
+        <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${grp.id}" data-group="${grp.id}">
+          <div class="group-head">
+            <div class="group-head-main">
+              <button type="button" class="collapse-toggle" data-collapse="groups" data-id="${escapeAttr(grp.id)}" title="Colapsar/expandir subartículo" aria-expanded="${grpCollapsed ? "false" : "true"}">${collapseChevron(grpCollapsed)}</button>
+              ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
+            </div>
+            <div class="group-actions">
+              <button type="button" class="ghost" data-act="add-item" title="Agregar fila">${mi("add")}</button>
+              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo">${mi("delete")}</button>
+            </div>
+          </div>
+          <div class="group-body">
+          ${(grp.items || []).map(it => renderItem(sec, grp, it)).join("")}
+          </div>
+        </div>
+      `;
+      }).join("")}
+      </div>
+    </section>
+  `;
+  }).join("");
+
+  root.querySelectorAll("[data-collapse]").forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      toggleCollapse(btn.dataset.collapse, btn.dataset.id);
+    };
+  });
+
+  root.querySelectorAll(".item-card").forEach(card => {
+    const sid = card.dataset.section, gid = card.dataset.group, iid = card.dataset.item;
+    card.querySelectorAll(".btn-status-main").forEach(btn => {
+      btn.onclick = () => setStatus(sid, gid, iid, btn.dataset.act);
+    });
+    card.querySelectorAll(".status-criteria-row").forEach(row => {
+      const label = row.dataset.critLabel;
+      row.querySelectorAll(".btn-status-crit").forEach(btn => {
+        btn.onclick = () => setCriteriaStatus(sid, gid, iid, label, btn.dataset.critAct);
+      });
+    });
+    card.querySelector('[data-act="remove"]').onclick = () => removeItem(sid, gid, iid);
+    card.querySelector(".img-incidencia").onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
+    card.querySelector(".img-sol").onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
+    card.querySelectorAll(".thumb-del").forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        removeImage(sid, gid, iid, btn.dataset.which, Number(btn.dataset.idx));
+      };
+    });
+    card.querySelectorAll(".thumb-q").forEach(img => {
+      img.onclick = () => {
+        const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+        openModal(item.imagesIncidencia, Number(img.dataset.idx));
+      };
+    });
+    card.querySelectorAll(".thumb-s").forEach(img => {
+      img.onclick = () => {
+        const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+        openModal(item.imagesSolucion, Number(img.dataset.idx));
+      };
+    });
+    card.querySelector(".fecha-incidencia").onchange = () => updateStatus();
+    card.querySelector(".fecha-solucion").onchange = () => updateStatus();
+    const nomEl = card.querySelector(".inplace-nombre");
+    const incEl = card.querySelector(".inplace-incidencia");
+    const solEl = card.querySelector(".inplace-solucion");
+    if (nomEl) {
+      nomEl._value = itemValue(sid, gid, iid, "nombre");
+      bindInplace(nomEl, "Nombre corto de la incidencia", () => {
+        updateStatus();
+        renderNavRail();
+      });
+    }
+    if (incEl) { incEl._value = itemValue(sid, gid, iid, "incidencia"); bindInplace(incEl, "Descripción de la incidencia", () => updateStatus()); }
+    if (solEl) { solEl._value = itemValue(sid, gid, iid, "solucion"); bindInplace(solEl, "Qué se hizo / cómo se resolvió", () => updateStatus()); }
+  });
+
+  root.querySelectorAll(".group-block").forEach(block => {
+    const titleEl = block.querySelector(".inplace-title");
+    if (!titleEl) return;
+    const sec = block.closest(".section-block");
+    const sid = sec && sec.dataset.section;
+    const gid = block.dataset.group;
+    const grp = state.sections.find(s => s.id === sid)?.groups.find(g => g.id === gid);
+    titleEl._value = (grp && grp.title) || "";
+    bindInplace(titleEl, "Nombre del subartículo / feature", (v) => {
+      if (grp) grp.title = v;
+      updateStatus();
+      renderNavRail();
+    });
+  });
+
+  root.querySelectorAll('[data-act="add-item"]').forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      addItem(sec.dataset.section, block.dataset.group);
+    };
+  });
+  root.querySelectorAll('[data-act="clear-group"]').forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      clearGroup(sec.dataset.section, block.dataset.group);
+    };
+  });
+  root.querySelectorAll('[data-act="clear-section"]').forEach(btn => {
+    btn.onclick = () => clearSection(btn.closest(".section-block").dataset.section);
+  });
+  renderNavRail();
+  updateStatus();
+  syncStickyOffsets();
+}
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+}
+function escapeAttr(s) { return escapeHtml(s).replace(/\n/g, " "); }
+
+function itemComplete(it) {
+  const eff = effectiveStatus(it);
+  return !!(it.incidencia && it.incidencia.trim()) && !!(it.solucion && it.solucion.trim()) &&
+    (eff === "aprobado" || eff === "reprobado" || eff === "no_aplica");
+}
+function itemStarted(it) {
+  const hasCrit = it.criteriaStatus && Object.keys(it.criteriaStatus).some((k) => !!it.criteriaStatus[k]);
+  return !!(it.nombre && it.nombre.trim()) || !!(it.incidencia && it.incidencia.trim()) ||
+    !!(it.solucion && it.solucion.trim()) || !!it.status || hasCrit ||
+    (it.imagesIncidencia && it.imagesIncidencia.length) || (it.imagesSolucion && it.imagesSolucion.length);
+}
+
+function updateStatus() {
+  collectFromDom();
+  let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, na = 0;
+  const missingList = [];
+  state.sections.forEach(sec => {
+    sec.groups.forEach(grp => {
+      (grp.items || []).forEach((it, idx) => {
+        total += 1;
+        const eff = effectiveStatus(it);
+        if (itemComplete(it)) {
+          filled += 1;
+          if (eff === "aprobado") approved += 1;
+          if (eff === "reprobado") rejected += 1;
+          if (eff === "no_aplica") na += 1;
+        } else {
+          missing += 1;
+          const label = (it.nombre && it.nombre.trim()) || `fila ${idx + 1}`;
+          missingList.push(`${grp.title} · ${label}${itemStarted(it) ? "" : " (vacía)"}`);
+        }
+      });
+    });
+  });
+  const metaOk = !!(state.reportDate && state.reportNumber && state.reportNumber.trim());
+  document.getElementById("fill-status").innerHTML = `
+    <li>Meta reporte: ${metaOk ? "completa" : "falta fecha y/o código"}</li>
+    <li>Filas completas: <strong>${filled}</strong> / ${total}</li>
+    <li>Aprobadas: ${approved} · Reprobadas: ${rejected} · No aplica: ${na}</li>
+    <li>Pendientes: ${missing}${missingList.length ? " — " + missingList.slice(0, 8).join("; ") + (missingList.length > 8 ? "…" : "") : ""}</li>
+  `;
+  const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_");
+  document.getElementById("export-preview").innerHTML = `
+    <li><code>reporte_qa_${escapeHtml(safeName)}.ereport</code></li>
+    <li><code>reporte_qa_${escapeHtml(safeName)}.html</code></li>
+    <li><code>reporte_qa_${escapeHtml(safeName)}.pdf</code></li>
+  `;
+}
+
+function downloadBlob(filename, blob) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+function buildSavedHtml(data) {
+  const node = document.getElementById("embedded-json");
+  const prev = node.textContent;
+  node.textContent = JSON.stringify(data);
+  const html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  node.textContent = prev;
+  return html;
+}
+
+function imgGrid(images) {
+  if (!images || !images.length) return "";
+  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">`;
+  images.forEach(im => {
+    html += `<img src="${imageSrc(im)}" style="width:100%;height:140px;object-fit:cover;border-radius:3px;border:1px solid #ccc" />`;
+  });
+  return html + `</div>`;
+}
+
+function buildPdfReportElement(data) {
+  const el = document.createElement("div");
+  el.style.cssText = "width:900px;padding:24px;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
+  const prevCriteria = state.validationCriteria;
+  state.validationCriteria = Array.isArray(data.validationCriteria) ? data.validationCriteria : [];
+  let html = `<div style="background:#000000;color:#ffffff;padding:16px 18px;border-radius:3px;border-bottom:4px solid #f9a825">
+      <h1 style="margin:0 0 6px;font-size:22px">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
+      <p style="margin:0 0 4px;opacity:.9"><strong>Organization:</strong> ${escapeHtml(data.orgName || "—")}</p>
+      <p style="margin:0;opacity:.9"><strong>Report Date:</strong> ${escapeHtml(data.reportDate || "—")}
+      &nbsp;·&nbsp; <strong>Report Code:</strong> ${escapeHtml(data.reportNumber || "—")}</p>
+    </div>`;
+  data.sections.forEach(sec => {
+    html += `<h2 style="margin:22px 0 8px;border-bottom:3px solid #000000;padding-bottom:4px;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    sec.groups.forEach(grp => {
+      html += `<h3 style="margin:14px 0 6px;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      (grp.items || []).forEach((it, idx) => {
+        if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
+        const eff = effectiveStatus(it);
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const name = (it.nombre && it.nombre.trim()) || `Fila ${idx + 1}`;
+        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
+        const critLabels = state.validationCriteria || [];
+        const critLine = critLabels.length
+          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${critLabels.map((lab) => {
+              const v = (it.criteriaStatus && it.criteriaStatus[lab]) || "";
+              const labSt = v === "aprobado" ? "OK" : v === "reprobado" ? "FAIL" : v === "no_aplica" ? "N/A" : "—";
+              return `${escapeHtml(lab)}:${labSt}`;
+            }).join(" · ")}</div>`
+          : "";
+        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg};opacity:${eff === "no_aplica" ? "0.75" : "1"}">
+          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+          ${critLine}
+          <p style="margin:8px 0 4px"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+          ${imgGrid(it.imagesIncidencia)}
+          <p style="margin:8px 0 4px"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          ${imgGrid(it.imagesSolucion)}
+        </div>`;
+      });
+    });
+  });
+  state.validationCriteria = prevCriteria;
+  el.innerHTML = html;
+  return el;
+}
+
+async function saveAll() {
+  collectFromDom();
+  updateStatus();
+  const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_") || "sin-numero";
+  const base = "reporte_qa_" + safeName;
+  const data = structuredClone(state);
+
+  downloadBlob(base + ".ereport", new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+  downloadBlob(base + ".html", new Blob([buildSavedHtml(data)], { type: "text/html;charset=utf-8" }));
+
+  try {
+    const host = document.createElement("div");
+    host.style.cssText = "position:fixed;left:-10000px;top:0;";
+    const report = buildPdfReportElement(data);
+    host.appendChild(report);
+    document.body.appendChild(host);
+    const canvas = await html2canvas(report, { scale: 1.5, useCORS: true, backgroundColor: "#ffffff" });
+    document.body.removeChild(host);
+    const img = canvas.toDataURL("image/jpeg", 0.92);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const margin = 28;
+    const usableW = pageW - margin * 2;
+    const imgH = canvas.height * (usableW / canvas.width);
+    let heightLeft = imgH;
+    let position = margin;
+    pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
+    heightLeft -= (pageH - margin * 2);
+    while (heightLeft > 0) {
+      position = margin - (imgH - heightLeft);
+      pdf.addPage();
+      pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
+      heightLeft -= (pageH - margin * 2);
+    }
+    pdf.save(base + ".pdf");
+  } catch (err) {
+    console.error(err);
+    toast(".ereport y HTML OK. PDF falló. Abrí impresión como respaldo.");
+    const w = window.open("", "_blank");
+    if (w) {
+      w.document.write("<html><head><title>PDF</title></head><body>" + buildPdfReportElement(data).innerHTML + "</body></html>");
+      w.document.close();
+      w.focus();
+      w.print();
+    }
+  }
+  toast("Exportación iniciada: .ereport + HTML + PDF");
+}
+
+function loadEreportFile(file) {
+  const name = (file && file.name) || "";
+  if (!/\.ereport$/i.test(name)) {
+    toast("Solo se admiten archivos .ereport");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data.sections || !Array.isArray(data.sections)) throw new Error("sin sections[]");
+      state = normalizeState(data);
+      if (state.collapse == null) seedCollapsedHierarchy();
+      else applyCollapseFromState();
+      applyTheme();
+      bindMeta();
+      render();
+      toast("Reporte .ereport cargado");
+      if (typeof window.__ereportScheduleCloudSave === "function") {
+        window.__ereportScheduleCloudSave();
+      }
+      /* Ask host to re-apply site theme (file may carry its own theme field). */
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ source: "ereport-tracker", type: "loaded" }, "*");
+      }
+    } catch (e) {
+      toast(".ereport inválido: " + e.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function emptyLikeEmbedded() {
+  const data = structuredClone(EMBEDDED_DATA);
+  data.reportDate = "";
+  data.reportNumber = "";
+  data.reportName = "";
+  data.orgName = "";
+  data.validationCriteria = [];
+  data.theme = "dark";
+  data.collapse = null;
+  (data.sections || []).forEach(sec => {
+    (sec.groups || []).forEach(grp => {
+      grp.items = [normalizeItem({ id: uid(grp.id || "item") })];
+    });
+  });
+  return normalizeState(data);
+}
+
+var TEXT_SCALE_STEPS = [0.85, 0.925, 1, 1.075, 1.15, 1.25, 1.4];
+
+function nearestTextScale(value) {
+  var best = 1;
+  var bestDist = Number.POSITIVE_INFINITY;
+  for (var i = 0; i < TEXT_SCALE_STEPS.length; i += 1) {
+    var step = TEXT_SCALE_STEPS[i];
+    var dist = Math.abs(step - value);
+    if (dist < bestDist) {
+      best = step;
+      bestDist = dist;
+    }
+  }
+  return best;
+}
+
+function readSiteTextScale() {
+  var raw = getComputedStyle(document.documentElement).getPropertyValue("--site-text-scale").trim();
+  var n = parseFloat(raw);
+  return nearestTextScale(Number.isFinite(n) ? n : 1);
+}
+
+function applySiteTextScale(scale) {
+  document.documentElement.style.setProperty(
+    "--site-text-scale",
+    String(nearestTextScale(Number(scale) || 1)),
+  );
+}
+
+function toggleSidebar() {
+  document.body.classList.toggle("sidebar-collapsed");
+}
+function fontUp() {
+  var cur = readSiteTextScale();
+  var idx = TEXT_SCALE_STEPS.indexOf(cur);
+  if (idx < 0) idx = TEXT_SCALE_STEPS.indexOf(1);
+  applySiteTextScale(TEXT_SCALE_STEPS[Math.min(TEXT_SCALE_STEPS.length - 1, idx + 1)]);
+}
+function fontDown() {
+  var cur = readSiteTextScale();
+  var idx = TEXT_SCALE_STEPS.indexOf(cur);
+  if (idx < 0) idx = TEXT_SCALE_STEPS.indexOf(1);
+  applySiteTextScale(TEXT_SCALE_STEPS[Math.max(0, idx - 1)]);
+}
+function triggerUpload() {
+  document.getElementById("ereport-file").click();
+}
+function clearAllReport() {
+  if (!confirm("¿Limpiar todos los datos del reporte?")) return;
+  state = emptyLikeEmbedded();
+  seedCollapsedHierarchy();
+  applyTheme();
+  bindMeta();
+  render();
+  toast("Reporte limpiado");
+}
+
+applyTheme();
+document.getElementById("ereport-file").onchange = () => {
+  const input = document.getElementById("ereport-file");
+  const f = input.files && input.files[0];
+  if (f) loadEreportFile(f);
+  input.value = "";
+};
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove("open");
+}
+function openModalById(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add("open");
+}
+function closeProgressModal() { closeModal("progress-modal"); }
+function openProgressModal(mode) {
+  updateStatus();
+  const title = document.getElementById("progress-title");
+  const actions = document.getElementById("progress-modal-actions");
+  if (mode === "save") {
+    title.textContent = "Guardar reporte";
+    actions.innerHTML = `
+      <span class="hint" id="save-hint">Los archivos se descargan en tu carpeta de Descargas.</span>
+      <button type="button" class="secondary" id="progress-cancel">Cancelar</button>
+      <button type="button" class="warn-hot has-label" id="progress-confirm">${mi("save")} Aceptar y guardar</button>
+    `;
+    actions.querySelector("#progress-cancel").onclick = () => closeProgressModal();
+    actions.querySelector("#progress-confirm").onclick = () => {
+      closeProgressModal();
+      saveAll();
+    };
+  } else {
+    title.textContent = "Progreso del reporte";
+    actions.innerHTML = `
+      <button type="button" class="icon-btn" id="progress-close-only" title="Cerrar" aria-label="Cerrar">${mi("close")}</button>
+    `;
+    actions.querySelector("#progress-close-only").onclick = () => closeProgressModal();
+  }
+  openModalById("progress-modal");
+}
+
+/** Host HDS → iframe command bridge (spec 025 §4). */
+function runHostCommand(command) {
+  switch (command) {
+    case "tutorial": openModalById("howto-modal"); break;
+    case "toggle-sidebar": toggleSidebar(); break;
+    case "font-up": fontUp(); break;
+    case "font-down": fontDown(); break;
+    case "upload": triggerUpload(); break;
+    case "clear-all": clearAllReport(); break;
+    case "progress": openProgressModal("info"); break;
+    case "save-export": openProgressModal("save"); break;
+    default: break;
+  }
+}
+
+document.getElementById("howto-close").onclick = () => closeModal("howto-modal");
+document.getElementById("howto-modal").addEventListener("click", (e) => {
+  if (e.target.id === "howto-modal") closeModal("howto-modal");
+});
+document.getElementById("progress-close").onclick = () => closeProgressModal();
+document.getElementById("progress-modal").addEventListener("click", (e) => {
+  if (e.target.id === "progress-modal") closeProgressModal();
+});
+document.getElementById("scroll-top").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+document.getElementById("scroll-bottom").onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+document.getElementById("modal-close").onclick = () => closeModal("img-modal");
+document.getElementById("modal-prev").onclick = () => stepModal(-1);
+document.getElementById("modal-next").onclick = () => stepModal(1);
+document.getElementById("img-modal").addEventListener("click", (e) => {
+  if (e.target.id === "img-modal") closeModal("img-modal");
+});
+
+bindMeta();
+render();
+updateStatus();
+</script>
+<script>
+/* Eduardo OS host bridge — cloud save + load from parent iframe */
+(function () {
+  var autoSaveEnabled = false;
+  var cloudSaveTimer = 0;
+
+  function emit(type, extra) {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(Object.assign({ source: "ereport-tracker", type: type }, extra || {}), "*");
+    }
+  }
+
+  function scheduleCloudSave() {
+    if (!autoSaveEnabled) return;
+    if (!window.parent || window.parent === window) return;
+    clearTimeout(cloudSaveTimer);
+    cloudSaveTimer = setTimeout(function () {
+      try {
+        collectFromDom();
+        emit("cloud-save", { payload: structuredClone(state) });
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+    }, 500);
+  }
+  window.__ereportScheduleCloudSave = scheduleCloudSave;
+
+  var origUpdateStatus = updateStatus;
+  updateStatus = function () {
+    origUpdateStatus.apply(this, arguments);
+    scheduleCloudSave();
+  };
+
+  var origSaveAll = saveAll;
+  saveAll = async function () {
+    try { collectFromDom(); } catch (e) {}
+    emit("cloud-save", { payload: structuredClone(state) });
+    return origSaveAll.apply(this, arguments);
+  };
+
+  window.addEventListener("message", function (ev) {
+    var d = ev.data;
+    if (!d || d.target !== "ereport-tracker") return;
+    if (d.type === "load") {
+      autoSaveEnabled = false;
+      try {
+        state = normalizeState(d.payload || {});
+        if (state.collapse == null) seedCollapsedHierarchy();
+        else applyCollapseFromState();
+        applyTheme();
+        bindMeta();
+        render();
+        autoSaveEnabled = true;
+        emit("loaded", {});
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+    }
+    if (d.type === "collect") {
+      try {
+        collectFromDom();
+        emit("state", { payload: structuredClone(state) });
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+    }
+    if (d.type === "theme") {
+      setTheme(d.dark ? "dark" : "light");
+    }
+    if (d.type === "text-scale") {
+      applySiteTextScale(Number(d.scale) || 1);
+    }
+    if (d.type === "config") {
+      imageUpload.url = String(d.uploadUrl || "");
+      imageUpload.csrf = String(d.csrf || "");
+    }
+    if (d.type === "command" && d.command) {
+      try {
+        runHostCommand(String(d.command));
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+    }
+  });
+  emit("booted", {});
+})();
+</script>
+
+</body>
+</html>
