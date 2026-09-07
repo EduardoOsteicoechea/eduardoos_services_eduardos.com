@@ -692,9 +692,20 @@ h2 {
   align-items: center;
 }
 
+html[data-page="ereport-workspace"],
+html[data-page="ereport-invite"] {
+  height: 100%;
+}
+
+html[data-page="ereport-workspace"] body,
+html[data-page="ereport-invite"] body {
+  height: 100%;
+}
+
 html[data-page="ereport-workspace"] .shell,
 html[data-page="ereport-invite"] .shell {
   min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -707,12 +718,55 @@ html[data-page="ereport-invite"] main {
   min-height: 0;
 }
 
+html[data-page="ereport-workspace"] main {
+  padding: 0;
+}
+
+@media (max-width: 47.999rem) {
+  html[data-page="ereport-workspace"] main {
+    padding: var(--mobile-header-height) 0 0;
+  }
+
+  html[data-header-collapsed="true"][data-page="ereport-workspace"] main {
+    padding-top: calc(var(--mobile-header-height) * 0.25);
+  }
+}
+
+@media (min-width: 48rem) {
+  html[data-page="ereport-workspace"] main {
+    padding: 0 0 0 var(--rail-width);
+  }
+
+  html[data-header-collapsed="true"][data-page="ereport-workspace"] main {
+    padding-left: calc(var(--rail-width) * 0.25);
+  }
+}
+
 .ereport-workspace {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
   gap: var(--space-padding);
+}
+
+html[data-page="ereport-workspace"] .ereport-workspace {
+  position: relative;
+  gap: 0;
+}
+
+html[data-page="ereport-workspace"] .ereport-workspace > .status {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: var(--space-padding);
+  pointer-events: none;
+}
+
+html[data-page="ereport-workspace"] .ereport-workspace > .status.ok {
+  display: none;
 }
 
 .ereport-workspace-body {
@@ -728,6 +782,13 @@ html[data-page="ereport-invite"] main {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-surface);
+}
+
+html[data-page="ereport-workspace"] .ereport-iframe {
+  min-height: 0;
+  align-self: stretch;
+  border: 0;
+  border-radius: 0;
 }
 
 .ereport-modal {

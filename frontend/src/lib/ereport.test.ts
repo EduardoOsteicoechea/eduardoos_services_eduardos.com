@@ -24,6 +24,13 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("[data-ereport-hub]");
   });
 
+  it("bleeds the workspace to the header with no extra main padding", () => {
+    const css = readFileSync(join(here, "../styles/global.css"), "utf8");
+    expect(css).toMatch(/html\[data-page="ereport-workspace"\] main \{\s*padding: 0;/);
+    expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
+    expect(css).toContain("padding: 0 0 0 var(--rail-width)");
+  });
+
   it("keeps create-org, existing reports, and org lists visible on the hub", () => {
     const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
     expect(hubSrc).toContain('data-view="register"');
