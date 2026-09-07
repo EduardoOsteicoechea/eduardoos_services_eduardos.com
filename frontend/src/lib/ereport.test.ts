@@ -2,7 +2,16 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { isEreportOwnerPath, isPublicEreportInvitePath, readInviteParams, TRACKER_SRC, workspaceHref } from "./ereport-routes";
+import {
+  isEreportOwnerPath,
+  isPublicEreportInvitePath,
+  prettyHubHref,
+  prettyWorkspaceHref,
+  readInviteParams,
+  readPrettyEreportPath,
+  TRACKER_SRC,
+  workspaceHref,
+} from "./ereport-routes";
 import { bumpUiScale, handleTrackerMessage, SITE_TEXT_SCALE_STEPS, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -199,6 +208,33 @@ describe("eReport workspace chrome", () => {
     expect(css).toContain("--br: 3.44px");
     expect(css).toContain("#f2f3f6");
     expect(css).toContain("Kumbh Sans");
+  });
+
+  it("reads pretty hub and workspace URLs without shadowing real routes", () => {
+    expect(prettyHubHref("a_at_b.com")).toBe("/ereport/a_at_b.com");
+    expect(prettyHubHref("")).toBe("/ereport");
+    expect(prettyWorkspaceHref("a_at_b.com", "rep-1")).toBe("/ereport/a_at_b.com/rep-1");
+    expect(readPrettyEreportPath("/ereport/a_at_b.com")).toEqual({ ownerSafe: "a_at_b.com", reportId: "" });
+    expect(readPrettyEreportPath("/ereport/a_at_b.com/rep-1")).toEqual({ ownerSafe: "a_at_b.com", reportId: "rep-1" });
+    for (const reserved of ["/ereport", "/ereport/workspace", "/ereport/invite", "/ereport/invite/abc", "/ereport/tracker.html"]) {
+      expect(readPrettyEreportPath(reserved)).toEqual({ ownerSafe: "", reportId: "" });
+    }
+    expect(isEreportOwnerPath("/ereport/a_at_b.com")).toBe(true);
+    expect(isPublicEreportInvitePath("/ereport/invite/abc")).toBe(true);
+  });
+
+  it("serves the pretty URLs from nginx without swallowing the tracker or invite", () => {
+    const conf = readFileSync(join(here, "../../../docs/nginx/eduardoos.com.conf"), "utf8");
+    expect(conf).toContain("location = /ereport/tracker.html");
+    expect(conf).toContain('location ~ "^/ereport/invite/[^/]+$"');
+    expect(conf).toContain('location ~ "^/ereport/(?!workspace$|invite$|tracker\\.html$)[^/]+$"');
+    expect(conf).toContain('location ~ "^/ereport/(?!workspace/|invite/)[^/]+/[^/]+$"');
+    // Exact and invite locations must be declared before the catch-all pretty regexes.
+    expect(conf.indexOf("location = /ereport/tracker.html")).toBeLessThan(conf.indexOf('location ~ "^/ereport/(?!workspace$'));
+    expect(conf.indexOf('location ~ "^/ereport/invite/[^/]+$"')).toBeLessThan(
+      conf.indexOf('location ~ "^/ereport/(?!workspace/|invite/)'),
+    );
+    expect(conf).not.toContain("location /media/");
   });
 
   it("cache-busts the tracker canvas from one shared constant", () => {

@@ -62,7 +62,7 @@ import Layout from "../../layouts/Layout.astro";
         <p class="hint">Salir al hub no guarda en silencio los cambios pendientes en la nube.</p>
         <div class="ereport-modal-actions">
           <button class="btn" type="button" data-close-modal>Seguir editando</button>
-          <a class="btn btn--primary" href="/ereport" data-route>Ir al hub</a>
+          <a class="btn btn--primary" href="/ereport" data-route data-hub-link>Ir al hub</a>
         </div>
       </div>
     </div>
@@ -126,6 +126,8 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import {
     createReportInvite,
+    fetchEreportOrg,
+    fetchEreportOrgs,
     fetchOrgReport,
     listReportHistory,
     ownerImageUploadPath,
@@ -136,7 +138,7 @@ import Layout from "../../layouts/Layout.astro";
     updateEreportOrgs,
     type EreportPayload,
   } from "../../lib/ereport";
-  import { TRACKER_SRC } from "../../lib/ereport-routes";
+  import { prettyHubHref, readPrettyEreportPath, TRACKER_SRC } from "../../lib/ereport-routes";
   import {
     bumpUiScale,
     resolveUiScale,
@@ -152,8 +154,10 @@ import Layout from "../../layouts/Layout.astro";
   onBoundPageReady("[data-ereport-workspace]", (root) => {
     const copy = sessionCopy();
     const params = new URLSearchParams(window.location.search);
-    const orgId = params.get("org")?.trim() || "";
-    const reportId = params.get("report")?.trim() || "";
+    const pretty = readPrettyEreportPath(window.location.pathname);
+    let orgId = params.get("org")?.trim() || "";
+    let reportId = params.get("report")?.trim() || pretty.reportId;
+    let ownerSafe = params.get("user")?.trim() || pretty.ownerSafe;
     const iframe = root.querySelector("[data-tracker]");
     let payload: EreportPayload | null = null;
     let tema = "";
@@ -303,12 +307,39 @@ import Layout from "../../layouts/Layout.astro";
       return true;
     };
 
+    /** Pretty `/ereport/{user}/{id}` carries no org, so find the one holding this report. */
+    const resolveOrgId = async (report: string): Promise<string> => {
+      const listed = await fetchEreportOrgs();
+      if (listed.status !== 200) return "";
+      ownerSafe = listed.data.ownerSafe || ownerSafe;
+      const recent = (listed.data.recentReports || []).find((item) => item.id === report);
+      if (recent) return recent.orgId;
+      for (const org of listed.data.orgs || []) {
+        if (disposed) return "";
+        const detail = await fetchEreportOrg(org.id);
+        if (detail.status === 200 && (detail.data.reports || []).some((item) => item.id === report)) {
+          return org.id;
+        }
+      }
+      return "";
+    };
+
+    const pointHubLink = () => {
+      const link = root.querySelector("[data-hub-link]");
+      if (link instanceof HTMLAnchorElement) link.href = prettyHubHref(ownerSafe);
+    };
+
     void requireAuth(root, copy).then(async (me) => {
       if (!me || disposed) return;
+      if (!orgId && reportId) {
+        orgId = await resolveOrgId(reportId);
+        if (disposed) return;
+      }
       if (!orgId || !reportId) {
         setBanner(root, "Missing organization or report.", "err");
         return;
       }
+      pointHubLink();
       await refreshCsrf();
       if (disposed) return;
       const res = await fetchOrgReport(orgId, reportId);
@@ -318,6 +349,8 @@ import Layout from "../../layouts/Layout.astro";
         setBanner(root, res.data.message || "Report not found.", "err");
         return;
       }
+      ownerSafe = res.data.meta.ownerSafe || ownerSafe;
+      pointHubLink();
       tema = res.data.meta.tema;
       payload = {
         ...res.data.payload,
