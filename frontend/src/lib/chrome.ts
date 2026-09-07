@@ -93,7 +93,7 @@ function syncCollapseButton(): void {
     button.setAttribute("aria-pressed", collapsed ? "true" : "false");
   }
   if (icon instanceof HTMLElement) {
-    icon.textContent = collapsed ? "left_panel_open" : "left_panel_close";
+    icon.textContent = collapsed ? "chevron_right" : "chevron_left";
   }
 }
 

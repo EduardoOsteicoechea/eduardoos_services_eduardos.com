@@ -7,7 +7,8 @@
   --sidebar-width: 20rem;
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
-  --button-size-sm: calc(var(--button-size) / 2);
+  --rail-button-size: var(--button-size);
+  --button-size-sm: calc(var(--rail-button-size) * 0.5);
   --rail-gap: 0.5rem;
   --rail-group-gap: 1rem;
   --font-size-xs: 0.75rem;
@@ -89,6 +90,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  overflow-x: hidden;
   background: var(--color-bg);
   color: var(--color-text);
 }
@@ -110,6 +112,7 @@ a {
   position: fixed;
   z-index: 20;
   display: flex;
+  overflow: visible;
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
 }
@@ -134,17 +137,22 @@ a {
 }
 
 .header-collapse {
-  display: flex;
-  align-items: center;
+  position: relative;
+  align-self: stretch;
+  flex-shrink: 0;
+  z-index: 30;
+  overflow: visible;
 }
 
 .header-collapse-line {
+  position: absolute;
   background: var(--color-border);
+  pointer-events: none;
 }
 
 .header-collapse-btn {
-  width: var(--button-size-sm);
-  height: var(--button-size-sm);
+  width: calc(var(--rail-button-size) * 0.5);
+  height: calc(var(--rail-button-size) * 0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -154,6 +162,16 @@ a {
   border: var(--border-width) solid var(--color-border);
   border-radius: 50%;
   cursor: pointer;
+  z-index: 31;
+}
+
+.header-collapse-btn:hover {
+  background: var(--color-accent);
+}
+
+.header-collapse-btn:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--border-width);
 }
 
 .header-collapse-btn .material-symbols-outlined {
@@ -376,16 +394,24 @@ h2 {
   }
 
   .header-collapse {
-    flex-direction: row;
+    flex: 1;
+    min-width: calc(var(--rail-button-size) * 0.5);
   }
 
   .header-collapse-line {
-    width: var(--rail-group-gap);
+    left: 0;
+    right: 0;
+    top: calc((var(--header-size) - var(--border-width)) / 2);
     height: var(--border-width);
   }
 
+  .header-collapse-btn {
+    position: absolute;
+    top: calc((var(--header-size) - var(--rail-button-size) * 0.5) / 2);
+    right: 0;
+  }
+
   .header-dhs {
-    margin-left: auto;
     display: flex;
     flex-direction: row;
     gap: var(--rail-gap);
@@ -421,6 +447,17 @@ h2 {
     display: none;
   }
 
+  html[data-header-collapsed="true"] .header-collapse {
+    flex: none;
+    min-width: 0;
+  }
+
+  html[data-header-collapsed="true"] .header-collapse-btn {
+    position: static;
+    top: auto;
+    right: auto;
+  }
+
   html[data-header-collapsed="true"] main {
     padding-top: calc(var(--button-size-sm) + var(--space-padding) * 2);
   }
@@ -452,12 +489,21 @@ h2 {
   }
 
   .header-collapse {
-    flex-direction: column;
+    height: calc(var(--rail-button-size) * 0.5);
+    margin-top: var(--rail-group-gap);
   }
 
   .header-collapse-line {
-    width: var(--border-width);
-    height: var(--rail-group-gap);
+    left: 0;
+    right: 0;
+    top: calc((var(--rail-button-size) * 0.5 - var(--border-width)) / 2);
+    height: var(--border-width);
+  }
+
+  .header-collapse-btn {
+    position: absolute;
+    top: 0;
+    right: calc(var(--rail-button-size) * -0.25);
   }
 
   .header-dhs {
@@ -490,6 +536,11 @@ h2 {
   html[data-header-collapsed="true"] .app-header {
     width: calc(var(--button-size-sm) + var(--space-padding));
     padding: var(--space-padding) 0;
+    overflow: visible;
+  }
+
+  html[data-header-collapsed="true"] .header-collapse {
+    margin-top: 0;
   }
 
   html[data-header-collapsed="true"] .header-collapse-line {
