@@ -23,7 +23,7 @@ eduardoos.com/
 | API releases | `/opt/apps/eduardoos/releases/<git-sha>/api` |
 | Live API symlink | `/opt/apps/eduardoos/current` → release dir |
 | Live binary | `/opt/apps/eduardoos/current/api` |
-| Secrets file | `/etc/eduardoos.com-api.env` |
+| Secrets file | `/etc/eduardoos-api.env` |
 | systemd unit | `eduardoos-api.service` |
 
 The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay in environment variables on the server.
@@ -32,9 +32,11 @@ The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay i
 
 This site follows the parent-workspace contract [`.cursor/rules/auth-security.mdc`](../.cursor/rules/auth-security.mdc). Users, JWTs, refresh tokens, and cookies are local to `eduardoos.com`. Frontend route guards are UX only. Real authorization decisions are enforced by this site’s Go API.
 
+Locked specification (milestone-1 decisions approved; do not implement application code until an implementation task): [`docs/specs/001-authentication-and-profiles.md`](docs/specs/001-authentication-and-profiles.md).
+
 ## Uploaded media storage
 
-This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`.
+This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media (when implemented) is `backend/.data/media` and must be Git-ignored. They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`.
 
 ## Email, OTP, and notifications
 
@@ -129,13 +131,13 @@ sudo mkdir -p /var/www/eduardoos.com/html
 
 Backend release directories already exist and are owned by `deploy`. CI only creates a unique folder under `/opt/apps/eduardoos/releases/` and never creates `/opt/apps` or `/opt/apps/eduardoos`.
 
-2. The live unit on the VPS is `eduardoos-api.service`. It executes `/opt/apps/eduardoos/current/api` and loads `/etc/eduardoos.com-api.env`.
+2. The live unit on the VPS is `eduardoos-api.service`. It executes `/opt/apps/eduardoos/current/api` and loads `/etc/eduardoos-api.env`.
 
 3. Create secrets (never commit this file):
 
 ```bash
-sudo install -m 600 /dev/null /etc/eduardoos.com-api.env
-sudo tee /etc/eduardoos.com-api.env >/dev/null <<'EOF'
+sudo install -m 600 /dev/null /etc/eduardoos-api.env
+sudo tee /etc/eduardoos-api.env >/dev/null <<'EOF'
 PORT=8081
 MONGO_URI=mongodb+srv://USER:PASSWORD@cluster.mongodb.net/eduardoos?retryWrites=true&w=majority
 EOF
@@ -173,7 +175,7 @@ server {
 }
 ```
 
-`proxy_pass` with a trailing slash forwards `/api/health` to `/health`. Put TLS in front of this server (Certbot or your existing HTTPS terminator). The API itself must stay on `127.0.0.1`.
+`proxy_pass` must **preserve** the `/api/` prefix (implementation stage). The trailing-slash example below is the current README sketch and must be corrected when auth is implemented so `/api/auth/me` reaches Go `/api/auth/me`. Direct local health remains `http://127.0.0.1:8081/health`. Put TLS in front of this server (Certbot or your existing HTTPS terminator). The API itself must stay on `127.0.0.1`.
 
 6. Install the GitHub Actions **public** key in `~/.ssh/authorized_keys` for the same Linux user as `VPS_USER` (often `root` on a new VPS). `VPS_SSH_KEY` must be the matching **private** key, including the `BEGIN` / `END` lines.
 
@@ -211,7 +213,7 @@ ssh-keyscan -p "$VPS_PORT" "$VPS_HOST"
 
 Paste the output as the secret. The workflow writes that file and sets `StrictHostKeyChecking=yes`. Host-key checking is never disabled.
 
-Do not store MongoDB URIs or `.env` contents as frontend env vars. Keep database credentials only in `/etc/eduardoos.com-api.env` (and optionally a GitHub secret if you later add a migrate job — not used by this workflow).
+Do not store MongoDB URIs or `.env` contents as frontend env vars. Keep database credentials only in `/etc/eduardoos-api.env` (and optionally a GitHub secret if you later add a migrate job — not used by this workflow).
 
 ## Deployment
 
