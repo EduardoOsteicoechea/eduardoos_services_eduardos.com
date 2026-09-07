@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"strings"
@@ -14,14 +16,35 @@ func main() {
 		log.Fatal("JWT_SECRET is required when COOKIE_SECURE=true")
 	}
 
-	ctx := context.Background()
-	store, err := openStore(ctx, cfg)
+	command, confirmBackup := parseAPICommand(os.Args[1:])
+	logger := newJSONLogger()
+	setupCtx, cancel := context.WithTimeout(context.Background(), migrationSetupTimeout)
+	defer cancel()
+
+	store, err := openStore(setupCtx, cfg)
 	if err != nil {
 		log.Fatal("database unavailable")
 	}
-	defer func() { _ = store.Close(ctx) }()
-	if err := store.EnsureIndexes(ctx); err != nil {
-		log.Fatal("database unavailable")
+	defer func() { _ = store.Close(context.Background()) }()
+
+	switch command {
+	case "migrate-status":
+		if err := logMigrationStatus(setupCtx, store, logger); err != nil {
+			logger.Error("database_setup_failed", slog.String("reason", migrationReason(err)))
+			os.Exit(1)
+		}
+		return
+	case "migrate-destructive":
+		if err := store.ApplyDestructiveMigrations(setupCtx, logger, cfg.AppEnv, confirmBackup); err != nil {
+			logger.Error("database_setup_failed", slog.String("reason", migrationReason(err)))
+			os.Exit(1)
+		}
+		return
+	}
+
+	if err := store.ApplySafeMigrations(setupCtx, logger, cfg.AppEnv); err != nil {
+		logger.Error("database_setup_failed", slog.String("reason", migrationReason(err)))
+		os.Exit(1)
 	}
 
 	app := newAppWithStore(cfg, store)
@@ -33,6 +56,24 @@ func main() {
 	log.Printf("%s api listening on %s", siteName, cfg.ListenAddr)
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
+	}
+}
+
+func parseAPICommand(args []string) (command, confirmBackup string) {
+	command = "serve"
+	if len(args) == 0 {
+		return command, ""
+	}
+	switch args[0] {
+	case "migrate-status", "migrate-destructive":
+		command = args[0]
+		fs := flag.NewFlagSet(command, flag.ContinueOnError)
+		fs.SetOutput(os.Stderr)
+		fs.StringVar(&confirmBackup, "confirm-backup", "", "")
+		_ = fs.Parse(args[1:])
+		return command, confirmBackup
+	default:
+		return command, ""
 	}
 }
 

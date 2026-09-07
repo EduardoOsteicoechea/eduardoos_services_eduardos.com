@@ -40,6 +40,43 @@ Canonical session paths (Astro `trailingSlash: never`): `/session` (sign in), `/
 
 Bootstrap an admin **only** when the database has no `admin` user and `BOOTSTRAP_ADMIN_EMAIL` / `BOOTSTRAP_ADMIN_PASSWORD` (or, for local migration, `ADMIN_EMAIL` / `ADMIN_PASSWORD`) are set. The process never reseeds that password on later startups. After the first admin exists, **remove** `BOOTSTRAP_ADMIN_PASSWORD` and `ADMIN_PASSWORD` from `/etc/eduardoos-api.env`.
 
+## Database setup
+
+Database setup is automatic on API startup. The Go API connects with `MONGO_URI` and the locked database name `eduardoos`. It creates required collections and indexes and applies safe, ordered schema migrations. No manual MongoDB Compass collection or index creation is required.
+
+Atlas only needs a database user with `readWrite` on `eduardoos` and the VPS public IP allowlisted. GitHub Actions does not create collections, indexes, or users.
+
+Collections provisioned on startup: `users`, `auth_sessions`, `email_verification_otps`, `password_reset_tokens`, `csrf_challenges`, `schema_migrations`.
+
+Safe migrations run automatically. Destructive migrations never run on startup. There are no destructive migrations in this release. A future drop/rebuild would require an Atlas backup (or `mongodump`) and then:
+
+```bash
+/opt/apps/eduardoos/current/api migrate-destructive --confirm-backup=I_HAVE_A_BACKUP
+```
+
+Inspect migration status without printing secrets, documents, or credentials:
+
+```bash
+/opt/apps/eduardoos/current/api migrate-status
+```
+
+That command logs only migration id, description, checksum, timestamp, and the destructive flag. In Compass or `mongosh`, open database `eduardoos` and inspect `schema_migrations` the same way. Do not dump `users`, sessions, or OTP collections to the terminal.
+
+Backup before any future destructive migration:
+
+1. Take an Atlas snapshot of this cluster (or the `eduardoos` database).
+2. Optionally dump without printing the URI:
+
+```bash
+set -a
+. /etc/eduardoos-api.env
+set +a
+mongodump --uri="$MONGO_URI" --db=eduardoos --out="$HOME/backups/eduardoos-$(date -u +%Y%m%dT%H%M%SZ)"
+unset MONGO_URI SMTP_PASSWORD JWT_SECRET
+```
+
+Do not `echo` or `cat` the env file. Tests use an in-memory store or `eduardoos_gotest` and never migrate the production database.
+
 ## Uploaded media storage
 
 This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media is `backend/.data/media` (Git-ignored). They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`. Do not expose a public `/media/` alias; private avatars are authorized by Go and delivered with Nginx `X-Accel-Redirect` to `/internal-media/`.

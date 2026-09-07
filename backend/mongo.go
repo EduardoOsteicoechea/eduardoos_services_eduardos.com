@@ -27,55 +27,17 @@ func newMongoStore(ctx context.Context, cfg config) (*mongoStore, error) {
 	return &mongoStore{client: client, db: client.Database(cfg.MongoDatabase)}, nil
 }
 
-func (s *mongoStore) users() *mongo.Collection     { return s.db.Collection("users") }
-func (s *mongoStore) sessions() *mongo.Collection  { return s.db.Collection("auth_sessions") }
-func (s *mongoStore) emailOTPs() *mongo.Collection { return s.db.Collection("email_verification_otps") }
-func (s *mongoStore) resetOTPs() *mongo.Collection { return s.db.Collection("password_reset_tokens") }
-func (s *mongoStore) csrf() *mongo.Collection      { return s.db.Collection("csrf_challenges") }
+func (s *mongoStore) users() *mongo.Collection     { return s.db.Collection(colUsers) }
+func (s *mongoStore) sessions() *mongo.Collection  { return s.db.Collection(colSessions) }
+func (s *mongoStore) emailOTPs() *mongo.Collection { return s.db.Collection(colEmailOTPs) }
+func (s *mongoStore) resetOTPs() *mongo.Collection { return s.db.Collection(colResetOTPs) }
+func (s *mongoStore) csrf() *mongo.Collection      { return s.db.Collection(colCSRF) }
 
 func (s *mongoStore) otpCol(purpose string) *mongo.Collection {
 	if purpose == otpPasswordReset {
 		return s.resetOTPs()
 	}
 	return s.emailOTPs()
-}
-
-func (s *mongoStore) EnsureIndexes(ctx context.Context) error {
-	_, err := s.users().Indexes().CreateMany(ctx, []mongo.IndexModel{
-		{Keys: bson.D{{Key: "email_normalized", Value: 1}}, Options: options.Index().SetUnique(true)},
-		{Keys: bson.D{{Key: "username_normalized", Value: 1}}, Options: options.Index().SetUnique(true)},
-		{Keys: bson.D{{Key: "status", Value: 1}}},
-		{Keys: bson.D{{Key: "role", Value: 1}}},
-	})
-	if err != nil {
-		return err
-	}
-	ttl := options.Index().SetExpireAfterSeconds(0)
-	_, err = s.sessions().Indexes().CreateMany(ctx, []mongo.IndexModel{
-		{Keys: bson.D{{Key: "session_id", Value: 1}}, Options: options.Index().SetUnique(true)},
-		{Keys: bson.D{{Key: "refresh_token_hash", Value: 1}}, Options: options.Index().SetUnique(true)},
-		{Keys: bson.D{{Key: "family_id", Value: 1}}},
-		{Keys: bson.D{{Key: "user_id", Value: 1}}},
-		{Keys: bson.D{{Key: "expires_at", Value: 1}}, Options: ttl},
-	})
-	if err != nil {
-		return err
-	}
-	otpIndexes := []mongo.IndexModel{
-		{Keys: bson.D{{Key: "otp_hash", Value: 1}}, Options: options.Index().SetUnique(true)},
-		{Keys: bson.D{{Key: "email_normalized", Value: 1}}},
-		{Keys: bson.D{{Key: "expires_at", Value: 1}}, Options: options.Index().SetExpireAfterSeconds(0)},
-	}
-	if _, err := s.emailOTPs().Indexes().CreateMany(ctx, otpIndexes); err != nil {
-		return err
-	}
-	if _, err := s.resetOTPs().Indexes().CreateMany(ctx, otpIndexes); err != nil {
-		return err
-	}
-	_, err = s.csrf().Indexes().CreateMany(ctx, []mongo.IndexModel{
-		{Keys: bson.D{{Key: "expires_at", Value: 1}}, Options: options.Index().SetExpireAfterSeconds(0)},
-	})
-	return err
 }
 
 func (s *mongoStore) Close(ctx context.Context) error {

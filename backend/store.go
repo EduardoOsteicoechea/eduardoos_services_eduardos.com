@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"sync"
 	"time"
 )
@@ -124,7 +125,9 @@ func (c *CSRFChallenge) clone() *CSRFChallenge {
 }
 
 type DataStore interface {
-	EnsureIndexes(ctx context.Context) error
+	ApplySafeMigrations(ctx context.Context, log *slog.Logger, appEnv string) error
+	ApplyDestructiveMigrations(ctx context.Context, log *slog.Logger, appEnv, confirmBackup string) error
+	MigrationStatus(ctx context.Context) ([]schemaMigrationRecord, error)
 	Close(ctx context.Context) error
 	InsertUser(ctx context.Context, user *User) error
 	UpdateUser(ctx context.Context, user *User) error
@@ -169,8 +172,7 @@ func newMemoryStore() *memoryStore {
 	}
 }
 
-func (s *memoryStore) EnsureIndexes(context.Context) error { return nil }
-func (s *memoryStore) Close(context.Context) error         { return nil }
+func (s *memoryStore) Close(context.Context) error { return nil }
 
 func (s *memoryStore) InsertUser(_ context.Context, user *User) error {
 	s.mu.Lock()
