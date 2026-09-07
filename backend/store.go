@@ -155,17 +155,27 @@ type DataStore interface {
 	InvalidateOTPs(ctx context.Context, purpose, emailNorm string) error
 	InsertCSRF(ctx context.Context, challenge *CSRFChallenge) error
 	CSRFByID(ctx context.Context, id string) (*CSRFChallenge, error)
+	UpsertEntitlement(ctx context.Context, ent *Entitlement) error
+	EntitlementsByUser(ctx context.Context, userID string) ([]*Entitlement, error)
+	InsertAPIKey(ctx context.Context, key *APIKeyRecord) error
+	UpdateAPIKey(ctx context.Context, key *APIKeyRecord) error
+	APIKeyByID(ctx context.Context, id string) (*APIKeyRecord, error)
+	APIKeyByHash(ctx context.Context, hash string) (*APIKeyRecord, error)
+	APIKeysByUser(ctx context.Context, userID string) ([]*APIKeyRecord, error)
 }
 
 type memoryStore struct {
-	mu       sync.Mutex
-	users    map[string]*User
-	email    map[string]string
-	username map[string]string
-	sessions map[string]*Session
-	refresh  map[string]string
-	otps     map[string]*OTPRecord
-	csrf     map[string]*CSRFChallenge
+	mu           sync.Mutex
+	users        map[string]*User
+	email        map[string]string
+	username     map[string]string
+	sessions     map[string]*Session
+	refresh      map[string]string
+	otps         map[string]*OTPRecord
+	csrf         map[string]*CSRFChallenge
+	entitlements map[string]*Entitlement
+	apiKeys      map[string]*APIKeyRecord
+	apiKeyHash   map[string]string
 }
 
 func newMemoryStore() *memoryStore {
@@ -175,8 +185,11 @@ func newMemoryStore() *memoryStore {
 		username: map[string]string{},
 		sessions: map[string]*Session{},
 		refresh:  map[string]string{},
-		otps:     map[string]*OTPRecord{},
-		csrf:     map[string]*CSRFChallenge{},
+		otps:         map[string]*OTPRecord{},
+		csrf:         map[string]*CSRFChallenge{},
+		entitlements: map[string]*Entitlement{},
+		apiKeys:      map[string]*APIKeyRecord{},
+		apiKeyHash:   map[string]string{},
 	}
 }
 
@@ -395,6 +408,80 @@ func (s *memoryStore) CSRFByID(_ context.Context, id string) (*CSRFChallenge, er
 		return nil, errNotFound
 	}
 	return ch.clone(), nil
+}
+
+func (s *memoryStore) UpsertEntitlement(_ context.Context, ent *Entitlement) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.entitlements[ent.ID] = ent.clone()
+	return nil
+}
+
+func (s *memoryStore) EntitlementsByUser(_ context.Context, userID string) ([]*Entitlement, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := []*Entitlement{}
+	for _, ent := range s.entitlements {
+		if ent.UserID == userID {
+			out = append(out, ent.clone())
+		}
+	}
+	return out, nil
+}
+
+func (s *memoryStore) InsertAPIKey(_ context.Context, key *APIKeyRecord) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.apiKeys[key.ID] = key.clone()
+	s.apiKeyHash[key.SecretHash] = key.ID
+	return nil
+}
+
+func (s *memoryStore) UpdateAPIKey(_ context.Context, key *APIKeyRecord) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	old, ok := s.apiKeys[key.ID]
+	if !ok {
+		return errNotFound
+	}
+	if old.SecretHash != key.SecretHash {
+		delete(s.apiKeyHash, old.SecretHash)
+		s.apiKeyHash[key.SecretHash] = key.ID
+	}
+	s.apiKeys[key.ID] = key.clone()
+	return nil
+}
+
+func (s *memoryStore) APIKeyByID(_ context.Context, id string) (*APIKeyRecord, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	key, ok := s.apiKeys[id]
+	if !ok {
+		return nil, errNotFound
+	}
+	return key.clone(), nil
+}
+
+func (s *memoryStore) APIKeyByHash(_ context.Context, hash string) (*APIKeyRecord, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	id, ok := s.apiKeyHash[hash]
+	if !ok {
+		return nil, errNotFound
+	}
+	return s.apiKeys[id].clone(), nil
+}
+
+func (s *memoryStore) APIKeysByUser(_ context.Context, userID string) ([]*APIKeyRecord, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := []*APIKeyRecord{}
+	for _, key := range s.apiKeys {
+		if key.UserID == userID {
+			out = append(out, key.clone())
+		}
+	}
+	return out, nil
 }
 
 type AuditEvent struct {

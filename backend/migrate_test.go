@@ -103,8 +103,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 	if err := applySchemaMigrations(ctx, log, applier, "test", safeSchemaMigrations(), false, ""); err != nil {
 		t.Fatalf("second apply: %v", err)
 	}
-	if len(applier.records) != 1 {
-		t.Fatalf("expected one migration record, got %d", len(applier.records))
+	if len(applier.records) != 2 {
+		t.Fatalf("expected two migration records, got %d", len(applier.records))
 	}
 	if applier.records["001_initial_auth_schema"].Checksum == "" {
 		t.Fatal("missing checksum")
@@ -124,8 +124,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 
 func TestIndexDefinitionsMatchContract(t *testing.T) {
 	migrations := safeSchemaMigrations()
-	if len(migrations) != 1 {
-		t.Fatalf("expected one safe migration, got %d", len(migrations))
+	if len(migrations) != 2 {
+		t.Fatalf("expected two safe migrations, got %d", len(migrations))
 	}
 	m := migrations[0]
 	assertUnique := func(collection, field string) {
@@ -167,10 +167,12 @@ func TestIndexDefinitionsMatchContract(t *testing.T) {
 	if !ok || !resetHash.Unique {
 		t.Fatal("reset OTP hash must be unique")
 	}
-	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs}
+	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colEntitlements, colAPIKeys}
 	have := map[string]bool{}
-	for _, name := range m.Collections {
-		have[name] = true
+	for _, mig := range migrations {
+		for _, name := range mig.Collections {
+			have[name] = true
+		}
 	}
 	for _, name := range required {
 		if !have[name] {
@@ -377,7 +379,7 @@ func TestMongoIntegrationProvisioningIsolatedDatabase(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colSchemaMigrations}
+	want := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colSchemaMigrations, colEntitlements, colAPIKeys}
 	for _, name := range want {
 		found := false
 		for _, have := range names {

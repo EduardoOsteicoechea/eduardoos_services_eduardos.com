@@ -21,6 +21,8 @@ const (
 	colEmailOTPs          = "email_verification_otps"
 	colResetOTPs          = "password_reset_tokens"
 	colCSRF               = "csrf_challenges"
+	colEntitlements       = "entitlements"
+	colAPIKeys            = "api_keys"
 	colSchemaMigrations   = "schema_migrations"
 	confirmBackupToken    = "I_HAVE_A_BACKUP"
 	testDatabaseSuffix    = "_gotest"
@@ -116,25 +118,39 @@ func safeSchemaMigrations() []schemaMigration {
 			{Collection: collection, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt()},
 		}
 	}
-	return []schemaMigration{{
-		ID:          "001_initial_auth_schema",
-		Description: "Create users, sessions, OTP, CSRF collections and required indexes",
-		Collections: []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colCSRF},
-		Indexes: append([]indexSpec{
-			{Collection: colUsers, Keys: bson.D{{Key: "email_normalized", Value: 1}}, Unique: true},
-			{Collection: colUsers, Keys: bson.D{{Key: "username_normalized", Value: 1}}, Unique: true},
-			{Collection: colUsers, Keys: bson.D{{Key: "status", Value: 1}}},
-			{Collection: colUsers, Keys: bson.D{{Key: "role", Value: 1}}},
-			{Collection: colUsers, Keys: bson.D{{Key: "avatar_key", Value: 1}}, Sparse: true},
-			{Collection: colSessions, Keys: bson.D{{Key: "session_id", Value: 1}}, Unique: true},
-			{Collection: colSessions, Keys: bson.D{{Key: "refresh_token_hash", Value: 1}}, Unique: true},
-			{Collection: colSessions, Keys: bson.D{{Key: "family_id", Value: 1}}},
-			{Collection: colSessions, Keys: bson.D{{Key: "user_id", Value: 1}}},
-			{Collection: colSessions, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt()},
-		}, append(append(otpIndexes(colEmailOTPs), otpIndexes(colResetOTPs)...), indexSpec{
-			Collection: colCSRF, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt(),
-		})...),
-	}}
+	return []schemaMigration{
+		{
+			ID:          "001_initial_auth_schema",
+			Description: "Create users, sessions, OTP, CSRF collections and required indexes",
+			Collections: []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colCSRF},
+			Indexes: append([]indexSpec{
+				{Collection: colUsers, Keys: bson.D{{Key: "email_normalized", Value: 1}}, Unique: true},
+				{Collection: colUsers, Keys: bson.D{{Key: "username_normalized", Value: 1}}, Unique: true},
+				{Collection: colUsers, Keys: bson.D{{Key: "status", Value: 1}}},
+				{Collection: colUsers, Keys: bson.D{{Key: "role", Value: 1}}},
+				{Collection: colUsers, Keys: bson.D{{Key: "avatar_key", Value: 1}}, Sparse: true},
+				{Collection: colSessions, Keys: bson.D{{Key: "session_id", Value: 1}}, Unique: true},
+				{Collection: colSessions, Keys: bson.D{{Key: "refresh_token_hash", Value: 1}}, Unique: true},
+				{Collection: colSessions, Keys: bson.D{{Key: "family_id", Value: 1}}},
+				{Collection: colSessions, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colSessions, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt()},
+			}, append(append(otpIndexes(colEmailOTPs), otpIndexes(colResetOTPs)...), indexSpec{
+				Collection: colCSRF, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt(),
+			})...),
+		},
+		{
+			ID:          "002_ereport_platform_keys",
+			Description: "Create entitlements and API keys collections for eReport platform checks",
+			Collections: []string{colEntitlements, colAPIKeys},
+			Indexes: []indexSpec{
+				{Collection: colEntitlements, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "product", Value: 1}}},
+				{Collection: colEntitlements, Keys: bson.D{{Key: "expires_at", Value: 1}}, Sparse: true},
+				{Collection: colAPIKeys, Keys: bson.D{{Key: "secret_hash", Value: 1}}, Unique: true},
+				{Collection: colAPIKeys, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colAPIKeys, Keys: bson.D{{Key: "prefix", Value: 1}}},
+			},
+		},
+	}
 }
 
 func destructiveSchemaMigrations() []schemaMigration {

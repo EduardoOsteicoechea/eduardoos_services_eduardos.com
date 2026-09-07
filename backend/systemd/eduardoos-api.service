@@ -14,6 +14,8 @@ RestartSec=3
 NoNewPrivileges=true
 PrivateTmp=true
 UMask=0027
+# After applying on the VPS (do not edit the live unit from CI):
+# ReadWritePaths=/var/www/eduardoos.com/media
 
 [Install]
 WantedBy=multi-user.target

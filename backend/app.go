@@ -28,6 +28,11 @@ type App struct {
 	emailSiteLimit  *limiter
 	aiAdminLimit    *limiter
 	aiSiteLimit     *limiter
+	inviteOTPLimit  *limiter
+	inviteVerifyLim *limiter
+	apiKeyLimit     *limiter
+	ereport         *ereportFS
+	failClosedEnt   bool
 }
 
 func newApp(cfg config) *App {
@@ -41,7 +46,20 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.MediaRoot == "" {
 		cfg.MediaRoot = ".data/media"
 	}
+	if cfg.EreportMediaRoot == "" {
+		cfg.EreportMediaRoot = cfg.MediaRoot + "/ereport"
+	}
+	if cfg.EreportMaxImageBytes <= 0 {
+		cfg.EreportMaxImageBytes = defaultMaxImageBytes
+	}
+	if cfg.EreportMaxImageEdge <= 0 {
+		cfg.EreportMaxImageEdge = defaultMaxImageEdge
+	}
+	if cfg.EreportMaxPayloadBytes <= 0 {
+		cfg.EreportMaxPayloadBytes = defaultMaxPayloadBytes
+	}
 	_ = os.MkdirAll(cfg.MediaRoot, 0750)
+	_ = os.MkdirAll(cfg.EreportMediaRoot, 0750)
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:             cfg,
@@ -64,6 +82,10 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		emailSiteLimit:  newLimiter(emailSiteWindow, emailSiteMax),
 		aiAdminLimit:    newLimiter(aiAdminWindow, aiAdminMax),
 		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
+		inviteOTPLimit:  newLimiter(time.Hour, 8),
+		inviteVerifyLim: newLimiter(15*time.Minute, 10),
+		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
+		ereport:         newEreportFS(cfg.EreportMediaRoot),
 	}
 	httpClient := newHTTPClient()
 	app.chat["deepseek"] = openAICompatClient{
@@ -106,5 +128,45 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/profile/avatar", a.getAvatarHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
+
+	mux.HandleFunc("GET /api/ereport/access", a.ereportAccessHandler)
+	mux.HandleFunc("GET /api/ereport/orgs", a.ereportGetOrgsHandler)
+	mux.HandleFunc("POST /api/ereport/orgs", a.ereportCreateOrgHandler)
+	mux.HandleFunc("PUT /api/ereport/orgs", a.ereportPutOrgsHandler)
+	mux.HandleFunc("GET /api/ereport/orgs/{orgId}", a.ereportGetOrgHandler)
+	mux.HandleFunc("DELETE /api/ereport/orgs/{orgId}", a.ereportDeleteOrgHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports", a.ereportCreateReportHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/import", a.ereportImportReportHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/invites", a.ereportCreateOrgInviteHandler)
+	mux.HandleFunc("GET /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportGetReportHandler)
+	mux.HandleFunc("PUT /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportPutReportHandler)
+	mux.HandleFunc("DELETE /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportDeleteReportHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports/{reportId}/invites", a.ereportCreateReportInviteHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports/{reportId}/images", a.ereportUploadImageHandler)
+	mux.HandleFunc("GET /api/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}", a.ereportGetImageHandler)
+	mux.HandleFunc("GET /api/ereport/orgs/{orgId}/reports/{reportId}/history", a.ereportListHistoryHandler)
+	mux.HandleFunc("GET /api/ereport/orgs/{orgId}/reports/{reportId}/history/{snapshotId}", a.ereportGetHistoryHandler)
+	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports/{reportId}/history/{snapshotId}/restore", a.ereportRestoreHistoryHandler)
+
+	mux.HandleFunc("GET /api/ereport/invites/{inviteId}", a.ereportGetInviteHandler)
+	mux.HandleFunc("POST /api/ereport/invites/{inviteId}/otp", a.ereportInviteOTPHandler)
+	mux.HandleFunc("POST /api/ereport/invites/{inviteId}/verify", a.ereportInviteVerifyHandler)
+	mux.HandleFunc("GET /api/ereport/invite-session", a.ereportInviteSessionHandler)
+	mux.HandleFunc("GET /api/ereport/invite-session/reports/{reportId}", a.ereportInviteGetReportHandler)
+	mux.HandleFunc("PUT /api/ereport/invite-session/reports/{reportId}", a.ereportInvitePutReportHandler)
+	mux.HandleFunc("POST /api/ereport/invite-session/reports/{reportId}/images", a.ereportInviteUploadImageHandler)
+	mux.HandleFunc("GET /api/ereport/invite-session/reports/{reportId}/images/{imageId}", a.ereportInviteGetImageHandler)
+
+	mux.HandleFunc("GET /api/apikeys", a.listAPIKeysHandler)
+	mux.HandleFunc("POST /api/apikeys", a.createAPIKeyHandler)
+	mux.HandleFunc("DELETE /api/apikeys/{id}", a.deleteAPIKeyHandler)
+
+	mux.HandleFunc("GET /api/v1/docs", a.v1DocsHandler)
+	mux.HandleFunc("GET /api/v1/ereport/access", a.withAPIKey(productEreport, a.ereportV1AccessHandler))
+	mux.HandleFunc("GET /api/v1/ereport/orgs", a.withAPIKey(productEreport, a.ereportV1OrgsHandler))
+	mux.HandleFunc("GET /api/v1/ereport/library", a.withAPIKey(productEreport, a.ereportV1LibraryHandler))
+	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports", a.withAPIKey(productEreport, a.ereportV1OrgReportsHandler))
+	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1GetReportHandler))
+	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1PostReportHandler))
 	return a.withObservability(mux)
 }

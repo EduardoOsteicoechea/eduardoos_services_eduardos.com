@@ -27,11 +27,15 @@ func newMongoStore(ctx context.Context, cfg config) (*mongoStore, error) {
 	return &mongoStore{client: client, db: client.Database(cfg.MongoDatabase)}, nil
 }
 
-func (s *mongoStore) users() *mongo.Collection     { return s.db.Collection(colUsers) }
-func (s *mongoStore) sessions() *mongo.Collection  { return s.db.Collection(colSessions) }
-func (s *mongoStore) emailOTPs() *mongo.Collection { return s.db.Collection(colEmailOTPs) }
-func (s *mongoStore) resetOTPs() *mongo.Collection { return s.db.Collection(colResetOTPs) }
-func (s *mongoStore) csrf() *mongo.Collection      { return s.db.Collection(colCSRF) }
+func (s *mongoStore) users() *mongo.Collection       { return s.db.Collection(colUsers) }
+func (s *mongoStore) sessions() *mongo.Collection    { return s.db.Collection(colSessions) }
+func (s *mongoStore) emailOTPs() *mongo.Collection   { return s.db.Collection(colEmailOTPs) }
+func (s *mongoStore) resetOTPs() *mongo.Collection   { return s.db.Collection(colResetOTPs) }
+func (s *mongoStore) csrf() *mongo.Collection        { return s.db.Collection(colCSRF) }
+func (s *mongoStore) entitlements() *mongo.Collection {
+	return s.db.Collection(colEntitlements)
+}
+func (s *mongoStore) apiKeys() *mongo.Collection { return s.db.Collection(colAPIKeys) }
 
 func (s *mongoStore) otpCol(purpose string) *mongo.Collection {
 	if purpose == otpPasswordReset {
@@ -230,4 +234,81 @@ func (s *mongoStore) CSRFByID(ctx context.Context, id string) (*CSRFChallenge, e
 		return nil, err
 	}
 	return &ch, nil
+}
+
+func (s *mongoStore) UpsertEntitlement(ctx context.Context, ent *Entitlement) error {
+	_, err := s.entitlements().ReplaceOne(ctx, bson.M{"_id": ent.ID}, ent, options.Replace().SetUpsert(true))
+	return err
+}
+
+func (s *mongoStore) EntitlementsByUser(ctx context.Context, userID string) ([]*Entitlement, error) {
+	cur, err := s.entitlements().Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var out []*Entitlement
+	if err := cur.All(ctx, &out); err != nil {
+		return nil, err
+	}
+	if out == nil {
+		out = []*Entitlement{}
+	}
+	return out, nil
+}
+
+func (s *mongoStore) InsertAPIKey(ctx context.Context, key *APIKeyRecord) error {
+	_, err := s.apiKeys().InsertOne(ctx, key)
+	return err
+}
+
+func (s *mongoStore) UpdateAPIKey(ctx context.Context, key *APIKeyRecord) error {
+	res, err := s.apiKeys().ReplaceOne(ctx, bson.M{"_id": key.ID}, key)
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errNotFound
+	}
+	return nil
+}
+
+func (s *mongoStore) APIKeyByID(ctx context.Context, id string) (*APIKeyRecord, error) {
+	var key APIKeyRecord
+	err := s.apiKeys().FindOne(ctx, bson.M{"_id": id}).Decode(&key)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &key, nil
+}
+
+func (s *mongoStore) APIKeyByHash(ctx context.Context, hash string) (*APIKeyRecord, error) {
+	var key APIKeyRecord
+	err := s.apiKeys().FindOne(ctx, bson.M{"secret_hash": hash}).Decode(&key)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &key, nil
+}
+
+func (s *mongoStore) APIKeysByUser(ctx context.Context, userID string) ([]*APIKeyRecord, error) {
+	cur, err := s.apiKeys().Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var out []*APIKeyRecord
+	if err := cur.All(ctx, &out); err != nil {
+		return nil, err
+	}
+	if out == nil {
+		out = []*APIKeyRecord{}
+	}
+	return out, nil
 }

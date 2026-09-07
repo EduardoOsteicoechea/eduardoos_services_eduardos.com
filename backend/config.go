@@ -30,6 +30,11 @@ type config struct {
 	BootstrapAdminEmail    string
 	BootstrapAdminPassword string
 	MediaRoot              string
+	EreportMediaRoot       string
+	EreportMaxImageBytes   int64
+	EreportMaxImageEdge    int
+	EreportMaxPayloadBytes int64
+	PublicBaseURL          string
 	SMTPHost               string
 	SMTPPort               string
 	SMTPUsername           string
@@ -102,6 +107,11 @@ func loadConfig() config {
 		}
 	}
 
+	ereportRoot := strings.TrimSpace(os.Getenv("EREPORT_MEDIA_ROOT"))
+	if ereportRoot == "" {
+		ereportRoot = media + "/ereport"
+	}
+
 	return config{
 		ListenAddr:             listenHost + ":" + port,
 		MongoURI:               os.Getenv("MONGO_URI"),
@@ -117,6 +127,11 @@ func loadConfig() config {
 		BootstrapAdminEmail:    strings.TrimSpace(os.Getenv("BOOTSTRAP_ADMIN_EMAIL")),
 		BootstrapAdminPassword: os.Getenv("BOOTSTRAP_ADMIN_PASSWORD"),
 		MediaRoot:              media,
+		EreportMediaRoot:       ereportRoot,
+		EreportMaxImageBytes:   envInt64("EREPORT_MAX_IMAGE_BYTES", defaultMaxImageBytes),
+		EreportMaxImageEdge:    int(envInt64("EREPORT_MAX_IMAGE_EDGE", int64(defaultMaxImageEdge))),
+		EreportMaxPayloadBytes: envInt64("EREPORT_MAX_PAYLOAD_BYTES", defaultMaxPayloadBytes),
+		PublicBaseURL:          strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_BASE_URL")), "/"),
 		SMTPHost:               os.Getenv("SMTP_HOST"),
 		SMTPPort:               os.Getenv("SMTP_PORT"),
 		SMTPUsername:           os.Getenv("SMTP_USERNAME"),
