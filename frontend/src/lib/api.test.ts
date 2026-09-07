@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { currentCsrf, getCsrf, getMe, patchJSON, postJSON, resetCsrfMemory } from "./api";
+import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, resetCsrfMemory } from "./api";
 
 function jsonResponse(status: number, body: unknown, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
@@ -50,14 +50,15 @@ describe("api csrf and errors", () => {
         jsonResponse(200, { id: "member-1", email: "a@b.c" }, { "X-Request-ID": "rid-login-1" }),
       );
     vi.stubGlobal("fetch", fetchMock);
-    const result = await postJSON("/auth/login", { email: "a@b.c", password: "secret" });
+    const result = await postJSON("/auth/login", loginPayload("a@b.c", "secret"));
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock.mock.calls[0][0]).toBe("/api/auth/csrf");
     const loginInit = fetchMock.mock.calls[1][1];
     expect(fetchMock.mock.calls[1][0]).toBe("/api/auth/login");
     expect(loginInit.credentials).toBe("include");
+    expect(loginInit.headers.get("Content-Type")).toBe("application/json");
     expect(loginInit.headers.get("X-CSRF-Token")).toBe("fresh-token");
-    expect(JSON.parse(loginInit.body).password).toBe("secret");
+    expect(JSON.parse(loginInit.body)).toEqual({ identifier: "a@b.c", password: "secret" });
     expect(result.requestId).toBe("rid-login-1");
   });
 
@@ -69,7 +70,7 @@ describe("api csrf and errors", () => {
         jsonResponse(401, { error: "invalid_credentials", message: "Sign-in failed.", request_id: "rid-fail-1" }, { "X-Request-ID": "rid-fail-1" }),
       );
     vi.stubGlobal("fetch", fetchMock);
-    const result = await postJSON("/auth/login", { email: "a@b.c", password: "wrong" });
+    const result = await postJSON("/auth/login", loginPayload("a@b.c", "wrong"));
     expect(result.status).toBe(401);
     expect(result.data.error).toBe("invalid_credentials");
     expect(result.data.message).toBe("Sign-in failed.");
@@ -123,5 +124,15 @@ describe("api csrf and errors", () => {
     await getCsrf();
     expect(currentCsrf()).toBe("memory-token");
     expect(currentCsrf()).not.toBe("cookie-token");
+  });
+
+  it("login payload contract is identifier plus password", () => {
+    expect(loginPayload("  Member@Eduardoos.com  ", "correct-horse-battery")).toEqual({
+      identifier: "Member@Eduardoos.com",
+      password: "correct-horse-battery",
+    });
+    expect(JSON.stringify(loginPayload("member", "correct-horse-battery"))).toBe(
+      '{"identifier":"member","password":"correct-horse-battery"}',
+    );
   });
 });

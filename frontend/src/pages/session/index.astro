@@ -30,7 +30,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { getCsrf, postJSON, type MeResponse } from "../../lib/api";
-  import { afterAuthChange, reportFailure, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { afterAuthChange, loginBodyFromForm, reportFailure, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
   import { go } from "../../lib/router";
 
   const root = document.querySelector("[data-session]");
@@ -41,10 +41,8 @@ import Layout from "../../layouts/Layout.astro";
       event.preventDefault();
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement)) return;
+      const body = loginBodyFromForm(form);
       setBusy(form, true);
-      const ident = String(new FormData(form).get("identifier") ?? "").trim();
-      const password = String(new FormData(form).get("password") ?? "");
-      const body = ident.includes("@") ? { email: ident, password } : { username: ident, password };
       const result = await postJSON<MeResponse>("/auth/login", body);
       setBusy(form, false);
       const message = reportFailure(copy, result.status, result.data, "Signed in.");

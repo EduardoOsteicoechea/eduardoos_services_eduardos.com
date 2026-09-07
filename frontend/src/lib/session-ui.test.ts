@@ -1,8 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("./api", () => ({
-  getMe: vi.fn(),
-}));
+vi.mock("./api", async () => {
+  const actual = await vi.importActual<typeof import("./api")>("./api");
+  return { ...actual, getMe: vi.fn() };
+});
 
 vi.mock("./chrome", () => ({
   refreshAuthChrome: vi.fn(),
@@ -14,7 +15,7 @@ vi.mock("./router", () => ({
 
 import { getMe } from "./api";
 import { go } from "./router";
-import { reportFailure, requireGuest, sessionCopy } from "./session-ui";
+import { reportFailure, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -84,5 +85,25 @@ describe("session forms", () => {
     const register = reportFailure(copy, 200, { error: undefined, message: undefined }, "If that email can be used, a verification code was sent.");
     expect(register.kind).toBe("ok");
     expect(register.text).toContain("verification");
+  });
+
+  it("reads identifier and password after setBusy without sending email or username fields", () => {
+    document.body.innerHTML = `
+      <form data-login>
+        <input name="identifier" value="member@eduardoos.com" />
+        <input name="password" value="correct-horse-battery" />
+        <button type="submit">Sign in</button>
+      </form>
+    `;
+    const form = document.querySelector("[data-login]") as HTMLFormElement;
+    const body = loginBodyFromForm(form);
+    setBusy(form, true);
+    const afterBusy = loginBodyFromForm(form);
+    expect(body).toEqual({ identifier: "member@eduardoos.com", password: "correct-horse-battery" });
+    expect(afterBusy).toEqual(body);
+    expect(body).not.toHaveProperty("email");
+    expect(body).not.toHaveProperty("username");
+    expect(form.querySelector("button")?.disabled).toBe(true);
+    expect((form.elements.namedItem("identifier") as HTMLInputElement).disabled).toBe(false);
   });
 });

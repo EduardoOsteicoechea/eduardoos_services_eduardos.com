@@ -45,7 +45,7 @@ func TestRegisterVerifyLoginUsername(t *testing.T) {
 	if user.Status != statusVerified || !user.EmailVerified {
 		t.Fatalf("expected verified, got %+v", user)
 	}
-	login := app.anonPOST(t, "/api/auth/login", `{"username":"newuser","password":"correct-horse-battery"}`)
+	login := app.anonPOST(t, "/api/auth/login", `{"identifier":"newuser","password":"correct-horse-battery"}`)
 	if login.Code != http.StatusOK {
 		t.Fatalf("username login: %d %s", login.Code, login.Body.String())
 	}
@@ -69,7 +69,7 @@ func TestPasswordLengthEightSucceedsSevenFails(t *testing.T) {
 	if verify.Code != http.StatusOK {
 		t.Fatalf("verify 8-char: %d %s", verify.Code, verify.Body.String())
 	}
-	login := app.anonPOST(t, "/api/auth/login", `{"email":"eight8@eduardoos.com","password":"abcdefgh"}`)
+	login := app.anonPOST(t, "/api/auth/login", `{"identifier":"eight8@eduardoos.com","password":"abcdefgh"}`)
 	if login.Code != http.StatusOK {
 		t.Fatalf("login 8-char: %d %s", login.Code, login.Body.String())
 	}
@@ -170,7 +170,7 @@ func TestOTPExpiryReuseAndAttempts(t *testing.T) {
 func TestPendingLoginIsGeneric(t *testing.T) {
 	app := newTestApp(true)
 	app.anonPOST(t, "/api/auth/register", `{"email":"pend@eduardoos.com","username":"penduser","password":"correct-horse-battery"}`)
-	login := app.anonPOST(t, "/api/auth/login", `{"email":"pend@eduardoos.com","password":"correct-horse-battery"}`)
+	login := app.anonPOST(t, "/api/auth/login", `{"identifier":"pend@eduardoos.com","password":"correct-horse-battery"}`)
 	if login.Code != http.StatusUnauthorized || !strings.Contains(login.Body.String(), "invalid_credentials") {
 		t.Fatalf("pending login: %d %s", login.Code, login.Body.String())
 	}
@@ -181,15 +181,15 @@ func TestPendingLoginIsGeneric(t *testing.T) {
 
 func TestLoginEmailAndBadCredentials(t *testing.T) {
 	app := newTestApp(true)
-	ok := app.anonPOST(t, "/api/auth/login", `{"email":"admin@eduardoos.com","password":"correct-horse-battery"}`)
+	ok := app.anonPOST(t, "/api/auth/login", `{"identifier":"admin@eduardoos.com","password":"correct-horse-battery"}`)
 	if ok.Code != http.StatusOK {
 		t.Fatalf("admin login: %d %s", ok.Code, ok.Body.String())
 	}
-	bad := app.anonPOST(t, "/api/auth/login", `{"email":"admin@eduardoos.com","password":"wrong-password-12"}`)
+	bad := app.anonPOST(t, "/api/auth/login", `{"identifier":"admin@eduardoos.com","password":"wrong-password-12"}`)
 	if bad.Code != http.StatusUnauthorized {
 		t.Fatalf("bad password: %d", bad.Code)
 	}
-	unknown := app.anonPOST(t, "/api/auth/login", `{"email":"nobody@eduardoos.com","password":"correct-horse-battery"}`)
+	unknown := app.anonPOST(t, "/api/auth/login", `{"identifier":"nobody@eduardoos.com","password":"correct-horse-battery"}`)
 	if unknown.Code != http.StatusUnauthorized {
 		t.Fatalf("unknown: %d", unknown.Code)
 	}
@@ -349,7 +349,7 @@ func TestPasswordResetRevokesAndLeavesLoggedOut(t *testing.T) {
 	if meRec.Code != http.StatusUnauthorized {
 		t.Fatalf("old session after reset: %d", meRec.Code)
 	}
-	login := app.anonPOST(t, "/api/auth/login", `{"email":"member@eduardoos.com","password":"new-horse-battery"}`)
+	login := app.anonPOST(t, "/api/auth/login", `{"identifier":"member@eduardoos.com","password":"new-horse-battery"}`)
 	if login.Code != http.StatusOK {
 		t.Fatalf("login after reset: %d %s", login.Code, login.Body.String())
 	}
@@ -466,7 +466,7 @@ func TestLoginRateLimit(t *testing.T) {
 	app := newTestApp(true)
 	var last *httptest.ResponseRecorder
 	for i := 0; i < 6; i++ {
-		last = app.anonPOST(t, "/api/auth/login", `{"email":"admin@eduardoos.com","password":"wrong-password-12"}`)
+		last = app.anonPOST(t, "/api/auth/login", `{"identifier":"admin@eduardoos.com","password":"wrong-password-12"}`)
 	}
 	if last.Code != http.StatusTooManyRequests {
 		t.Fatalf("expected 429, got %d", last.Code)
@@ -659,7 +659,7 @@ func TestWWWOriginRejectedOnLogin(t *testing.T) {
 	app.Handler().ServeHTTP(csrfRec, httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil))
 	var body map[string]string
 	_ = json.NewDecoder(csrfRec.Body).Decode(&body)
-	req := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"email":"admin@eduardoos.com","password":"correct-horse-battery"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":}"admin@eduardoos.com","password":"correct-horse-battery"}`))
 	req.Header.Set("Origin", "https://www.eduardoos.com")
 	req.Header.Set("X-CSRF-Token", body["csrf"])
 	copyCookies(req, csrfRec)

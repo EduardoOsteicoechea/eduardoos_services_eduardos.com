@@ -389,32 +389,42 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	ip := clientIP(r.RemoteAddr)
 	var body struct {
-		Email    string `json:"email"`
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Identifier string `json:"identifier"`
+		Password   string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		a.logValidation(r, "invalid_json")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
-	emailDisplay, emailNorm, emailOK := normalizeEmail(body.Email)
-	_ = emailDisplay
-	usernameNorm, usernameOK := normalizeUsername(body.Username)
-	hasEmail := strings.TrimSpace(body.Email) != ""
-	hasUser := strings.TrimSpace(body.Username) != ""
-	if hasEmail == hasUser {
+	identifier := strings.TrimSpace(body.Identifier)
+	if identifier == "" {
+		a.logValidation(r, "missing_identifier")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	if body.Password == "" {
+		a.logValidation(r, "missing_password")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	hasEmail := strings.Contains(identifier, "@")
+	var emailNorm, usernameNorm string
+	var emailOK, usernameOK bool
+	if hasEmail {
+		_, emailNorm, emailOK = normalizeEmail(identifier)
+	} else {
+		usernameNorm, usernameOK = normalizeUsername(identifier)
+	}
 	ident := emailNorm
-	if hasUser {
+	if !hasEmail {
 		ident = usernameNorm
 	}
 	if !a.loginIPLimit.allow(ip) || !a.loginIDLimit.allow(ident) {
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
-	if (hasEmail && !emailOK) || (hasUser && !usernameOK) {
+	if (hasEmail && !emailOK) || (!hasEmail && !usernameOK) {
 		a.dummyPasswordCheck(body.Password)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return

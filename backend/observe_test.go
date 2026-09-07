@@ -81,7 +81,7 @@ func TestGuestMeDoesNotInvalidateCSRF(t *testing.T) {
 		t.Fatalf("me: %d", meRec.Code)
 	}
 
-	login := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"email":"member@eduardoos.com","password":"correct-horse-battery"}`))
+	login := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":"member@eduardoos.com","password":"correct-horse-battery"}`))
 	login.Header.Set("Content-Type", "application/json")
 	login.Header.Set("Origin", app.cfg.AllowedOrigins[0])
 	login.Header.Set("X-CSRF-Token", csrfBody["csrf"])
@@ -198,7 +198,7 @@ func TestLoginAuditHasNoPassword(t *testing.T) {
 	app := newTestApp(true)
 	var buf bytes.Buffer
 	app.log = slog.New(slog.NewJSONHandler(&buf, nil))
-	rec := app.anonPOST(t, "/api/auth/login", `{"email":"member@eduardoos.com","password":"wrong-password-value"}`)
+	rec := app.anonPOST(t, "/api/auth/login", `{"identifier":"member@eduardoos.com","password":"wrong-password-value"}`)
 	if rec.Code != http.StatusUnauthorized {
 		t.Fatalf("login fail: %d", rec.Code)
 	}
@@ -214,5 +214,59 @@ func TestLoginAuditHasNoPassword(t *testing.T) {
 	}
 	if !found {
 		t.Fatal("missing login failure audit")
+	}
+}
+
+func TestLoginIdentifierPayloadSucceeds(t *testing.T) {
+	app := newTestApp(true)
+	emailLogin := app.anonPOST(t, "/api/auth/login", `{"identifier":"member@eduardoos.com","password":"correct-horse-battery"}`)
+	if emailLogin.Code != http.StatusOK {
+		t.Fatalf("email identifier: %d %s", emailLogin.Code, emailLogin.Body.String())
+	}
+	userLogin := app.anonPOST(t, "/api/auth/login", `{"identifier":"member","password":"correct-horse-battery"}`)
+	if userLogin.Code != http.StatusOK {
+		t.Fatalf("username identifier: %d %s", userLogin.Code, userLogin.Body.String())
+	}
+}
+
+func TestLoginMissingFieldsAreInvalidRequest(t *testing.T) {
+	app := newTestApp(true)
+	var buf bytes.Buffer
+	app.log = slog.New(slog.NewJSONHandler(&buf, nil))
+	emptyIdent := app.anonPOST(t, "/api/auth/login", `{"identifier":"","password":"correct-horse-battery"}`)
+	if emptyIdent.Code != http.StatusBadRequest {
+		t.Fatalf("missing identifier: %d", emptyIdent.Code)
+	}
+	emptyPass := app.anonPOST(t, "/api/auth/login", `{"identifier":"member@eduardoos.com","password":""}`)
+	if emptyPass.Code != http.StatusBadRequest {
+		t.Fatalf("missing password: %d", emptyPass.Code)
+	}
+	legacy := app.anonPOST(t, "/api/auth/login", `{"email":"member@eduardoos.com","password":"correct-horse-battery"}`)
+	if legacy.Code != http.StatusBadRequest {
+		t.Fatalf("legacy email field must not login: %d", legacy.Code)
+	}
+	out := buf.String()
+	if !strings.Contains(out, "missing_identifier") || !strings.Contains(out, "missing_password") {
+		t.Fatalf("expected validation reason codes: %s", out)
+	}
+	if strings.Contains(out, "member@eduardoos.com") || strings.Contains(out, "correct-horse-battery") {
+		t.Fatalf("validation log leaked identifier or password: %s", out)
+	}
+}
+
+func TestLoginInvalidJSONLogsReason(t *testing.T) {
+	app := newTestApp(true)
+	var buf bytes.Buffer
+	app.log = slog.New(slog.NewJSONHandler(&buf, nil))
+	rec := app.anonPOST(t, "/api/auth/login", `{not-json`)
+	if rec.Code != http.StatusUnauthorized {
+		t.Fatalf("invalid json: %d", rec.Code)
+	}
+	out := buf.String()
+	if !strings.Contains(out, "invalid_json") {
+		t.Fatalf("expected invalid_json: %s", out)
+	}
+	if strings.Contains(out, "{not-json") {
+		t.Fatalf("logged request body: %s", out)
 	}
 }

@@ -57,6 +57,15 @@ export function resetCsrfMemory(): void {
   csrfToken = "";
 }
 
+export type LoginPayload = {
+  identifier: string;
+  password: string;
+};
+
+export function loginPayload(identifier: string, password: string): LoginPayload {
+  return { identifier: identifier.trim(), password };
+}
+
 async function parseJSON<T>(response: Response): Promise<T> {
   const text = await response.text();
   if (!text) {
@@ -148,7 +157,7 @@ export async function patchJSON<T = MeResponse>(path: string, body: Record<strin
 }
 
 export async function loginAdmin(email: string, password: string, _csrf?: string): Promise<{ status: number; data: MeResponse; requestId: string }> {
-  return postJSON<MeResponse>("/auth/login", { email, password });
+  return postJSON<MeResponse>("/auth/login", loginPayload(email, password));
 }
 
 export async function postDiagnostics(path: string, _csrf: string, body: Record<string, string>): Promise<{ status: number; data: DiagnosticsResult; requestId: string }> {

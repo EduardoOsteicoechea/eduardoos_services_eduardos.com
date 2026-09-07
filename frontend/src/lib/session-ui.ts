@@ -1,4 +1,4 @@
-import { getMe, type MeResponse } from "./api";
+import { getMe, loginPayload, type MeResponse } from "./api";
 import { refreshAuthChrome } from "./chrome";
 import { showErrorModal } from "./error-modal";
 import { go } from "./router";
@@ -61,11 +61,17 @@ export function setBanner(root: ParentNode, text: string, kind = ""): void {
 }
 
 export function setBusy(form: HTMLFormElement, busy: boolean): void {
-  form.querySelectorAll("button, input").forEach((node) => {
-    if (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) {
+  form.setAttribute("aria-busy", busy ? "true" : "false");
+  form.querySelectorAll("button").forEach((node) => {
+    if (node instanceof HTMLButtonElement) {
       node.disabled = busy;
     }
   });
+}
+
+export function loginBodyFromForm(form: HTMLFormElement): { identifier: string; password: string } {
+  const data = new FormData(form);
+  return loginPayload(String(data.get("identifier") ?? ""), String(data.get("password") ?? ""));
 }
 
 function messageForCode(copy: SessionCopy, code: string | undefined, fallback: string): string {

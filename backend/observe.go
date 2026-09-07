@@ -102,6 +102,14 @@ func (a *App) logRequest(r *http.Request, status int, dur time.Duration) {
 	)
 }
 
+func (a *App) logValidation(r *http.Request, reason string) {
+	a.log.Info("validation",
+		slog.String("request_id", requestIDFrom(r, nil)),
+		slog.String("route", r.URL.Path),
+		slog.String("reason", reason),
+	)
+}
+
 func (a *App) logUnexpected(r *http.Request, kind, stack string) {
 	a.log.Error("unexpected_error",
 		slog.String("request_id", requestIDFrom(r, nil)),
