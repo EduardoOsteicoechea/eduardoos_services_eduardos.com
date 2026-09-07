@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -30,6 +31,7 @@ type ChatMessage struct {
 type ChatClient interface {
 	Chat(ctx context.Context, prompt string) (ChatResult, error)
 	Complete(ctx context.Context, system string, history []ChatMessage) (ChatResult, error)
+	Stream(ctx context.Context, system string, history []ChatMessage, emit func(string) error) (ChatResult, error)
 }
 
 type recordingChat struct {
@@ -58,6 +60,19 @@ func (c *recordingChat) Complete(_ context.Context, system string, history []Cha
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
 	return ChatResult{Text: c.text, Usage: c.usage}, nil
+}
+
+func (c *recordingChat) Stream(ctx context.Context, system string, history []ChatMessage, emit func(string) error) (ChatResult, error) {
+	result, err := c.Complete(ctx, system, history)
+	if err != nil {
+		return result, err
+	}
+	if emit != nil {
+		if err := emit(result.Text); err != nil {
+			return ChatResult{}, err
+		}
+	}
+	return result, nil
 }
 
 type openAICompatClient struct {
@@ -156,6 +171,107 @@ func (c openAICompatClient) Complete(ctx context.Context, system string, history
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
 	return ChatResult{Text: text, Usage: parsed.Usage}, nil
+}
+
+func (c openAICompatClient) Stream(ctx context.Context, system string, history []ChatMessage, emit func(string) error) (ChatResult, error) {
+	if c.apiKey == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	messages := []map[string]string{{"role": "system", "content": system}}
+	for _, item := range history {
+		if item.Role != "user" && item.Role != "assistant" {
+			continue
+		}
+		content := strings.TrimSpace(item.Content)
+		if content == "" {
+			continue
+		}
+		messages = append(messages, map[string]string{"role": item.Role, "content": content})
+	}
+	payload := map[string]any{
+		"model":      c.model,
+		"messages":   messages,
+		"max_tokens": 512,
+		"stream":     true,
+	}
+	if c.name == "kimi" {
+		delete(payload, "max_tokens")
+		payload["max_completion_tokens"] = 512
+		payload["reasoning_effort"] = "low"
+	} else {
+		payload["temperature"] = 0.2
+	}
+	body, err := json.Marshal(payload)
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/chat/completions", bytes.NewReader(body))
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	req.Header.Set("Authorization", "Bearer "+c.apiKey)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := c.http.Do(req)
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 1<<20))
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	reader := bufio.NewReader(resp.Body)
+	var full strings.Builder
+	for {
+		line, err := reader.ReadString('\n')
+		if err != nil && err != io.EOF {
+			return ChatResult{}, fmt.Errorf("provider unavailable")
+		}
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "data:") {
+			data := strings.TrimSpace(strings.TrimPrefix(trimmed, "data:"))
+			if data == "[DONE]" {
+				break
+			}
+			var parsed struct {
+				Choices []struct {
+					Delta struct {
+						Content string `json:"content"`
+					} `json:"delta"`
+				} `json:"choices"`
+			}
+			if json.Unmarshal([]byte(data), &parsed) == nil && len(parsed.Choices) > 0 {
+				delta := parsed.Choices[0].Delta.Content
+				if delta != "" {
+					full.WriteString(delta)
+					if emit != nil {
+						if err := emit(delta); err != nil {
+							return ChatResult{}, err
+						}
+					}
+				}
+			}
+		}
+		if err == io.EOF {
+			break
+		}
+	}
+	text := sanitizeModelText(full.String())
+	if text == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	return ChatResult{Text: text}, nil
+}
+
+func sanitizeModelDelta(text string) string {
+	var b strings.Builder
+	for _, r := range text {
+		if r < 32 && r != '\n' && r != '\t' {
+			continue
+		}
+		b.WriteRune(r)
+	}
+	return b.String()
 }
 
 func sanitizeModelText(text string) string {

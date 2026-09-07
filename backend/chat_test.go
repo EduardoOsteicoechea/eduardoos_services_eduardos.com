@@ -69,6 +69,22 @@ func TestPublicChatProviderFailureIsSafe(t *testing.T) {
 	}
 }
 
+func TestPublicChatStreamAndRefusesImmoralPromptLeak(t *testing.T) {
+	app := newTestApp(true)
+	if !strings.Contains(strings.ToLower(siteSystemPrompt), "immoral") && !strings.Contains(strings.ToLower(siteSystemPrompt), "inmoral") {
+		t.Fatal("site prompt must refuse immoral replies")
+	}
+	rec := app.anonPOST(t, "/api/chat", `{"message":"hello","stream":true}`)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("stream: %d %s", rec.Code, rec.Body.String())
+	}
+	raw := rec.Body.String()
+	assertNoSecrets(t, raw)
+	if !strings.Contains(raw, `"delta":`) || !strings.Contains(raw, `"done":true`) {
+		t.Fatalf("expected SSE deltas, got %s", raw)
+	}
+}
+
 func TestPublicChatRateLimit(t *testing.T) {
 	app := newTestApp(true)
 	for i := 0; i < publicChatIPMax; i++ {

@@ -4,6 +4,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -30,6 +31,7 @@ type publicChatTurn struct {
 type publicChatRequest struct {
 	Message string           `json:"message"`
 	History []publicChatTurn `json:"history"`
+	Stream  bool             `json:"stream"`
 }
 
 func sanitizeChatTurns(raw []publicChatTurn) []ChatMessage {
@@ -49,6 +51,20 @@ func sanitizeChatTurns(raw []publicChatTurn) []ChatMessage {
 		out = append(out, ChatMessage{Role: role, Content: content})
 	}
 	return out
+}
+
+func writeSSE(w http.ResponseWriter, payload any) error {
+	raw, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+	if _, err := fmt.Fprintf(w, "data: %s\n\n", raw); err != nil {
+		return err
+	}
+	if flusher, ok := w.(http.Flusher); ok {
+		flusher.Flush()
+	}
+	return nil
 }
 
 func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +102,36 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 	history = append(history, ChatMessage{Role: "user", Content: message})
 	ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
 	defer cancel()
+	if body.Stream {
+		rid := requestIDFrom(r, w)
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("X-Accel-Buffering", "no")
+		w.WriteHeader(http.StatusOK)
+		result, err := client.Stream(ctx, siteSystemPrompt, history, func(delta string) error {
+			clean := sanitizeModelDelta(delta)
+			if clean == "" {
+				return nil
+			}
+			return writeSSE(w, map[string]any{"delta": clean})
+		})
+		if err != nil {
+			a.auditEventExtra(r, "public-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
+			_ = writeSSE(w, map[string]any{
+				"ok": false, "error": "provider_unavailable",
+				"request_id": rid,
+				"message":    "The assistant could not reply.",
+			})
+			return
+		}
+		a.auditEventExtra(r, "public-chat", "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
+		_ = writeSSE(w, map[string]any{
+			"ok": true, "done": true,
+			"request_id": rid,
+			"text":       sanitizeModelText(result.Text),
+		})
+		return
+	}
 	result, err := client.Complete(ctx, siteSystemPrompt, history)
 	if err != nil {
 		a.auditEventExtra(r, "public-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))

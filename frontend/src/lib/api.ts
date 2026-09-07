@@ -208,6 +208,88 @@ export async function postJSON<T = MeResponse>(path: string, body: Record<string
   });
 }
 
+export async function postChatStream(
+  message: string,
+  history: ChatTurn[],
+  onDelta: (delta: string) => void,
+): Promise<{ status: number; data: ChatResponse; requestId: string }> {
+  await getCsrf();
+  const headers = new Headers();
+  headers.set("Accept", "text/event-stream");
+  headers.set("Content-Type", "application/json");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  const controller = new AbortController();
+  const timer = globalThis.setTimeout(() => controller.abort(), 45000);
+  try {
+    const response = await fetch(apiUrl("/chat"), {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: JSON.stringify({ message, history, stream: true }),
+      signal: controller.signal,
+    });
+    const requestId = response.headers.get("X-Request-ID") || "";
+    const type = response.headers.get("Content-Type") || "";
+    if (!type.includes("event-stream")) {
+      const data = await parseJSON<ChatResponse>(response);
+      if (!data.request_id && requestId) {
+        data.request_id = requestId;
+      }
+      return { status: response.status, data, requestId: data.request_id || requestId };
+    }
+    const reader = response.body?.getReader();
+    if (!reader) {
+      return { status: response.status, data: { error: "provider_unavailable", message: "The assistant could not reply." }, requestId };
+    }
+    const decoder = new TextDecoder();
+    let buf = "";
+    let final: ChatResponse = { ok: true };
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) {
+        break;
+      }
+      buf += decoder.decode(value, { stream: true });
+      const parts = buf.split("\n\n");
+      buf = parts.pop() || "";
+      for (const part of parts) {
+        const line = part.split("\n").find((item) => item.startsWith("data:"));
+        if (!line) {
+          continue;
+        }
+        try {
+          const payload = JSON.parse(line.slice(5).trim()) as ChatResponse & { delta?: string; done?: boolean };
+          if (payload.delta) {
+            onDelta(payload.delta);
+          }
+          if (payload.done || payload.ok === false || payload.error) {
+            final = payload;
+          }
+          if (payload.request_id) {
+            final.request_id = payload.request_id;
+          }
+        } catch {
+          /* ignore a partial event */
+        }
+      }
+    }
+    return { status: response.status, data: final, requestId: final.request_id || requestId };
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      return {
+        status: 0,
+        data: { error: "internal_error", message: "Could not reach the API." },
+        requestId: "",
+      };
+    }
+    throw err;
+  } finally {
+    globalThis.clearTimeout(timer);
+  }
+}
+
 export async function postChat(message: string, history: ChatTurn[]): Promise<{ status: number; data: ChatResponse; requestId: string }> {
   await getCsrf();
   const headers = new Headers();
