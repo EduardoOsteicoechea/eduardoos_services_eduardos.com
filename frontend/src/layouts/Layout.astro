@@ -9,6 +9,7 @@ type Props = {
 
 const { title, description = "Personal site of Eduardo Osteicoechea." } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const showDhs = path === "/diagnostics";
 ---
 
 <!doctype html>
@@ -25,18 +26,30 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
   <body>
     <div class="shell">
       <header class="app-header">
-        <a class="header-logo icon-btn" href="/" data-route aria-label="Eduardoos">
-          <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
-        </a>
-        <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-label="Open main menu">
-          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
-        </button>
-        <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-label="Open page actions">
-          <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
-        </button>
-        <a class="header-avatar icon-btn" href="/session" data-route data-guest-href="/session" data-authed-href="/session/profile" data-guest-label="Sign in" data-authed-label="Profile" aria-label="Sign in">
+        <div class="header-nav" data-header-chrome>
+          <a class="header-logo icon-btn" href="/" data-route aria-label="Home">
+            <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+          </a>
+          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open main menu">
+            <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+          </button>
+        </div>
+        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu">
           <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
-        </a>
+        </button>
+        <div class="header-collapse">
+          <span class="header-collapse-line" aria-hidden="true"></span>
+          <button class="header-collapse-btn" type="button" aria-pressed="false" data-label-hide="Hide header" data-label-show="Show header" aria-label="Hide header">
+            <span class="material-symbols-outlined" aria-hidden="true">left_panel_close</span>
+          </button>
+        </div>
+        {showDhs ? (
+          <div class="header-dhs" data-header-chrome>
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open page actions">
+              <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
+            </button>
+          </div>
+        ) : null}
       </header>
 
       <aside id="main-menu" class="sidebar-left" hidden>
@@ -64,6 +77,15 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
+          <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+            Diagnostics
+          </a>
+        </nav>
+      </aside>
+
+      <aside id="session-menu" class="sidebar-left" hidden>
+        <nav aria-label="Session">
           <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">login</span>
             Sign in
@@ -92,34 +114,22 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
             <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             Sign out
           </button>
-          <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
-            Diagnostics
-          </a>
         </nav>
       </aside>
 
-      <aside id="dynamic-header" class="sidebar-left" hidden>
-        {path === "/diagnostics" ? (
+      {showDhs ? (
+        <aside id="dynamic-header" class="sidebar-left" hidden>
           <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
           </a>
-        ) : path.startsWith("/session") ? (
-          <a class="icon-btn" href="/session" data-route aria-label="Session">
-            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
-          </a>
-        ) : (
-          <a class="icon-btn" href="/about" data-route aria-label="About">
-            <span class="material-symbols-outlined" aria-hidden="true">info</span>
-          </a>
-        )}
-      </aside>
+        </aside>
+      ) : null}
 
       <main>
         <slot />
       </main>
 
-      <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-label="Open AI agent">
+      <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent">
         <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
       </button>
       <aside id="agent-sidebar" class="sidebar-right" hidden>

@@ -7,6 +7,9 @@
   --sidebar-width: 20rem;
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
+  --button-size-sm: calc(var(--button-size) / 2);
+  --rail-gap: 0.5rem;
+  --rail-group-gap: 1rem;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
@@ -122,6 +125,49 @@ a {
   background: var(--color-button-bg);
   border: var(--border-width) solid var(--color-border);
   border-radius: 50%;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.header-collapse {
+  display: flex;
+  align-items: center;
+}
+
+.header-collapse-line {
+  background: var(--color-border);
+}
+
+.header-collapse-btn {
+  width: var(--button-size-sm);
+  height: var(--button-size-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--color-button-fg);
+  background: var(--color-button-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.header-collapse-btn .material-symbols-outlined {
+  font-size: calc(var(--icon-size) / 2);
+}
+
+.sidebar-left[hidden],
+.sidebar-right[hidden],
+[data-header-chrome][hidden] {
+  display: none;
+}
+
+#dynamic-header {
+  overflow-y: auto;
 }
 
 .material-symbols-outlined {
@@ -317,16 +363,33 @@ h2 {
     width: auto;
     flex-direction: row;
     align-items: center;
+    gap: 0;
     padding: 0 var(--space-padding);
   }
 
-  .header-logo {
-    margin-right: var(--space-margin);
+  .header-nav {
+    flex-direction: row;
   }
 
-  .header-dynamic {
+  .header-session {
+    margin-left: var(--rail-group-gap);
+  }
+
+  .header-collapse {
+    flex-direction: row;
+  }
+
+  .header-collapse-line {
+    width: var(--rail-group-gap);
+    height: var(--border-width);
+  }
+
+  .header-dhs {
     margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    gap: var(--rail-gap);
+    overflow-x: auto;
   }
 
   .sidebar-left,
@@ -346,6 +409,26 @@ h2 {
   main {
     padding-top: calc(var(--header-size) + var(--space-padding));
   }
+
+  html[data-header-collapsed="true"] .app-header {
+    right: auto;
+    width: calc(var(--button-size-sm) + var(--space-padding) * 2);
+    height: calc(var(--button-size-sm) + var(--space-padding));
+    padding: 0 var(--space-padding);
+  }
+
+  html[data-header-collapsed="true"] .header-collapse-line {
+    display: none;
+  }
+
+  html[data-header-collapsed="true"] main {
+    padding-top: calc(var(--button-size-sm) + var(--space-padding) * 2);
+  }
+
+  html[data-header-collapsed="true"] .sidebar-left,
+  html[data-header-collapsed="true"] .sidebar-right {
+    top: calc(var(--button-size-sm) + var(--space-padding));
+  }
 }
 
 @media (min-width: 48rem) {
@@ -356,20 +439,36 @@ h2 {
     width: var(--header-size);
     flex-direction: column;
     align-items: center;
+    gap: 0;
     padding: var(--space-padding) 0;
   }
 
-  .header-menu {
-    margin-top: var(--space-margin);
+  .header-nav {
+    flex-direction: column;
   }
 
-  .header-dynamic {
-    margin-top: auto;
-    margin-bottom: auto;
+  .header-session {
+    margin-top: var(--rail-group-gap);
   }
 
-  .header-avatar {
-    margin-top: auto;
+  .header-collapse {
+    flex-direction: column;
+  }
+
+  .header-collapse-line {
+    width: var(--border-width);
+    height: var(--rail-group-gap);
+  }
+
+  .header-dhs {
+    margin-top: var(--rail-group-gap);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--rail-gap);
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
   }
 
   .sidebar-left {
@@ -386,6 +485,23 @@ h2 {
 
   main {
     padding-left: calc(var(--header-size) + var(--space-padding));
+  }
+
+  html[data-header-collapsed="true"] .app-header {
+    width: calc(var(--button-size-sm) + var(--space-padding));
+    padding: var(--space-padding) 0;
+  }
+
+  html[data-header-collapsed="true"] .header-collapse-line {
+    display: none;
+  }
+
+  html[data-header-collapsed="true"] main {
+    padding-left: calc(var(--button-size-sm) + var(--space-padding) * 2);
+  }
+
+  html[data-header-collapsed="true"] .sidebar-left {
+    left: calc(var(--button-size-sm) + var(--space-padding));
   }
 }
 
