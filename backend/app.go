@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log/slog"
 	"net/http"
 	"os"
 	"time"
@@ -8,6 +9,7 @@ import (
 
 type App struct {
 	cfg             config
+	log             *slog.Logger
 	store           DataStore
 	mailer          Mailer
 	chat            map[string]ChatClient
@@ -43,6 +45,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:             cfg,
+		log:             newJSONLogger(),
 		store:           store,
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
@@ -103,5 +106,5 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/profile/avatar", a.getAvatarHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
-	return mux
+	return a.withObservability(mux)
 }

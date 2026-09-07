@@ -1,4 +1,5 @@
 import { getMe, postJSON } from "./api";
+import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
@@ -97,16 +98,27 @@ function syncCollapseButton(): void {
   }
 }
 
+function setChromeHidden(node: Element | null, hidden: boolean): void {
+  if (!(node instanceof HTMLElement)) {
+    return;
+  }
+  node.hidden = hidden;
+  if ("inert" in node) {
+    node.inert = hidden;
+  }
+}
+
 function applyHeaderCollapsed(collapsed: boolean, focusToggle: boolean): void {
   document.documentElement.dataset.headerCollapsed = collapsed ? "true" : "false";
   document.querySelectorAll("[data-header-chrome]").forEach((node) => {
-    if (node instanceof HTMLElement) {
-      node.hidden = collapsed;
-      if ("inert" in node) {
-        node.inert = collapsed;
-      }
-    }
+    setChromeHidden(node, collapsed);
   });
+  setChromeHidden(document.querySelector(".agent-fab"), collapsed);
+  if (collapsed) {
+    closeLeft();
+    setPanelHidden("agent-sidebar", true);
+    syncExpanded();
+  }
   syncCollapseButton();
   if (focusToggle) {
     const toggle = document.querySelector(".header-collapse-btn");
@@ -118,9 +130,6 @@ function applyHeaderCollapsed(collapsed: boolean, focusToggle: boolean): void {
 
 function setHeaderCollapsed(collapsed: boolean): void {
   applyHeaderCollapsed(collapsed, true);
-  closeLeft();
-  setPanelHidden("agent-sidebar", true);
-  syncExpanded();
 }
 
 function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
@@ -171,7 +180,16 @@ export function startChrome(): void {
       if (node?.closest("[data-logout]")) {
         event.preventDefault();
         void (async () => {
-          await postJSON("/auth/logout", {});
+          const result = await postJSON("/auth/logout", {});
+          if (result.status < 200 || result.status >= 300) {
+            showErrorModal({
+              message: result.data.message || (document.documentElement.lang.startsWith("es") ? "Algo salió mal." : "Something went wrong."),
+              requestId: result.data.request_id,
+              details: result.data.request_id ? `request_id=${result.data.request_id}` : "",
+              debug: result.data.debug,
+            });
+            return;
+          }
           await refreshAuthChrome();
           closeLeft();
           go("/session");

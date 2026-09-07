@@ -15,7 +15,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !a.registerLimit.allow(clientIP(r.RemoteAddr)) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	var body struct {
@@ -24,13 +24,13 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	email, emailNorm, emailOK := normalizeEmail(body.Email)
 	username, userOK := normalizeUsername(body.Username)
 	if !emailOK || !userOK || !validPassword(body.Password) {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if existing, err := a.store.UserByEmail(r.Context(), emailNorm); err == nil && existing != nil {
@@ -39,7 +39,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	hash, err := hashPassword(body.Password)
 	if err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	now := time.Now().UTC()
@@ -61,15 +61,16 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if errors.Is(err, errDuplicateUsername) {
-			a.writeSafeError(w, http.StatusConflict, "conflict")
+			a.writeSafeError(w, r, http.StatusConflict, "conflict")
 			return
 		}
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if code, err := a.issueOTP(user, otpEmailVerify, emailNorm); err == nil {
 		_ = a.sendOTPMail(email, otpEmailVerify, code)
 	}
+	a.auditEvent(r, "register", "accepted", user.ID)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -82,7 +83,7 @@ func (a *App) verifyEmailHandler(w http.ResponseWriter, r *http.Request) {
 		OTP   string `json:"otp"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	_, emailNorm, ok := normalizeEmail(body.Email)
@@ -92,7 +93,7 @@ func (a *App) verifyEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	otp, err := a.consumeOTP(otpEmailVerify, emailNorm, body.OTP)
 	if errors.Is(err, errOTPLocked) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	if err != nil {
@@ -115,6 +116,7 @@ func (a *App) verifyEmailHandler(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 		return
 	}
+	a.auditEvent(r, "verify_email", "success", user.ID)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -126,17 +128,17 @@ func (a *App) resendVerificationHandler(w http.ResponseWriter, r *http.Request) 
 		Email string `json:"email"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	_, emailNorm, ok := normalizeEmail(body.Email)
 	if !ok {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	ip := clientIP(r.RemoteAddr)
 	if !a.resendIPLimit.allow(ip) || !a.resendIDLimit.allow(emailNorm) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	user, err := a.store.UserByEmail(r.Context(), emailNorm)
@@ -154,11 +156,11 @@ func (a *App) changePasswordHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	user := a.currentUser(r)
 	if user == nil {
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if !a.profileLimit.allow(user.ID) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	var body struct {
@@ -166,29 +168,30 @@ func (a *App) changePasswordHandler(w http.ResponseWriter, r *http.Request) {
 		NewPassword     string `json:"new_password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || !validPassword(body.NewPassword) {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if !verifyPassword(user.PasswordHash, body.CurrentPassword) {
-		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	hash, err := hashPassword(body.NewPassword)
 	if err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	user.PasswordHash = hash
 	user.UpdatedAt = time.Now().UTC()
 	if err := a.store.UpdateUser(r.Context(), user); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	_ = a.store.RevokeUserSessions(r.Context(), user.ID, "password_change")
 	if _, err := a.issueSession(w, user); err != nil {
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	a.auditEvent(r, "change_password", "success", user.ID)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -200,17 +203,17 @@ func (a *App) requestPasswordResetHandler(w http.ResponseWriter, r *http.Request
 		Email string `json:"email"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	_, emailNorm, ok := normalizeEmail(body.Email)
 	if !ok {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	ip := clientIP(r.RemoteAddr)
 	if !a.resetIPLimit.allow(ip) || !a.resetIDLimit.allow(emailNorm) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	user, err := a.store.UserByEmail(r.Context(), emailNorm)
@@ -219,6 +222,7 @@ func (a *App) requestPasswordResetHandler(w http.ResponseWriter, r *http.Request
 			_ = a.sendOTPMail(user.Email, otpPasswordReset, code)
 		}
 	}
+	a.auditEvent(r, "password_reset_request", "accepted", "")
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -232,7 +236,7 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		NewPassword string `json:"new_password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	_, emailNorm, ok := normalizeEmail(body.Email)
@@ -241,12 +245,12 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !validPassword(body.NewPassword) {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	otp, err := a.consumeOTP(otpPasswordReset, emailNorm, body.OTP)
 	if errors.Is(err, errOTPLocked) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	if err != nil {
@@ -268,6 +272,7 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 	_ = a.store.UpdateUser(r.Context(), user)
 	_ = a.store.RevokeUserSessions(r.Context(), user.ID, "reset")
 	a.clearAuthCookies(w)
+	a.auditEvent(r, "password_reset", "success", user.ID)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 

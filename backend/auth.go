@@ -319,14 +319,10 @@ func (a *App) validCSRF(r *http.Request) bool {
 
 func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
 	if !a.validOrigin(r) || !a.validCSRF(r) {
-		a.writeSafeError(w, http.StatusForbidden, "forbidden")
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return false
 	}
 	return true
-}
-
-func (a *App) writeSafeError(w http.ResponseWriter, status int, code string) {
-	writeJSON(w, status, map[string]string{"error": code})
 }
 
 func (a *App) safeProfile(user *User) map[string]any {
@@ -360,18 +356,12 @@ func (a *App) csrfHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) meHandler(w http.ResponseWriter, r *http.Request) {
-	csrf := a.mintCSRF(w, r)
 	user := a.currentUser(r)
 	if user == nil {
-		writeJSON(w, http.StatusUnauthorized, map[string]string{
-			"error": "unauthorized",
-			"csrf":  csrf,
-		})
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
-	body := a.safeProfile(user)
-	body["csrf"] = csrf
-	writeJSON(w, http.StatusOK, body)
+	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
 func (a *App) lookupLoginUser(email, username string) *User {
@@ -404,7 +394,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	emailDisplay, emailNorm, emailOK := normalizeEmail(body.Email)
@@ -413,7 +403,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	hasEmail := strings.TrimSpace(body.Email) != ""
 	hasUser := strings.TrimSpace(body.Username) != ""
 	if hasEmail == hasUser {
-		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	ident := emailNorm
@@ -421,12 +411,12 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		ident = usernameNorm
 	}
 	if !a.loginIPLimit.allow(ip) || !a.loginIDLimit.allow(ident) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	if (hasEmail && !emailOK) || (hasUser && !usernameOK) {
 		a.dummyPasswordCheck(body.Password)
-		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	user := a.lookupLoginUser(emailNorm, usernameNorm)
@@ -434,13 +424,16 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		if user == nil {
 			a.dummyPasswordCheck(body.Password)
 		}
-		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		a.auditEvent(r, "login", "failure", "")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	if _, err := a.issueSession(w, user); err != nil {
-		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		a.auditEvent(r, "login", "failure", "")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
+	a.auditEvent(r, "login", "success", user.ID)
 	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
@@ -456,6 +449,7 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	a.clearAuthCookies(w)
+	a.auditEvent(r, "logout", "success", "")
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -466,42 +460,42 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie(a.refreshCookieName())
 	if err != nil || cookie.Value == "" {
 		a.clearAuthCookies(w)
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	hash := a.hashOpaque("refresh", cookie.Value)
 	sess, err := a.store.SessionByRefreshHash(r.Context(), hash)
 	if err != nil {
 		a.clearAuthCookies(w)
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if sess.Revoked {
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "reuse")
 		a.clearAuthCookies(w)
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	now := time.Now().UTC()
 	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "expired")
 		a.clearAuthCookies(w)
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if !a.refreshLimit.allow(sess.SessionID) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	user, err := a.store.UserByID(r.Context(), sess.UserID)
 	if err != nil || user.Status != statusVerified {
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "disable")
 		a.clearAuthCookies(w)
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if _, err := a.rotateSession(w, sess, user); err != nil {
-		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	writeJSON(w, http.StatusOK, a.safeProfile(user))

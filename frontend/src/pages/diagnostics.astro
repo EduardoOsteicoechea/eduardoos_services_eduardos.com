@@ -50,7 +50,8 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { getMe, loginAdmin, postDiagnostics } from "../lib/api";
+  import { getCsrf, getMe, loginAdmin, postDiagnostics } from "../lib/api";
+  import { showErrorModal } from "../lib/error-modal";
 
   const root = document.querySelector("[data-diagnostics]");
   if (root instanceof HTMLElement) {
@@ -62,7 +63,6 @@ import Layout from "../layouts/Layout.astro";
     const provider = root.querySelector("[data-provider]");
     const prompt = root.querySelector("[data-prompt]");
     const aiOut = root.querySelector("[data-ai-out]");
-    let csrf = "";
 
     const setBanner = (text: string, kind = "") => {
       if (!(banner instanceof HTMLElement)) {
@@ -86,13 +86,36 @@ import Layout from "../layouts/Layout.astro";
       }
     };
 
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
     const applyMe = async () => {
       const { status, data } = await getMe();
-      csrf = data.csrf || "";
-      if (status === 401 || data.role !== "admin") {
+      if (status === 401) {
         showTools(false);
         showLogin(true);
-        setBanner(status === 401 ? "Sign in with an administrator account." : "Unauthorized.", "err");
+        setBanner("Sign in with an administrator account.");
+        document.querySelector("#nav-diagnostics")?.setAttribute("hidden", "");
+        document.querySelector("[data-admin-only]")?.setAttribute("hidden", "");
+        return;
+      }
+      if (status !== 200) {
+        showTools(false);
+        showLogin(true);
+        fail(data.message || "Could not load the session.", data.request_id, data.debug);
+        return;
+      }
+      if (data.role !== "admin") {
+        showTools(false);
+        showLogin(true);
+        fail("Unauthorized.", data.request_id, data.debug);
         document.querySelector("#nav-diagnostics")?.setAttribute("hidden", "");
         document.querySelector("[data-admin-only]")?.setAttribute("hidden", "");
         return;
@@ -104,30 +127,30 @@ import Layout from "../layouts/Layout.astro";
       setBanner(`Signed in as ${data.email}. Diagnostics are enforced by the Go API.`, "ok");
     };
 
-    const handleResult = (status: number, data: { ok?: boolean; error?: string; request_id?: string }, okText: string) => {
+    const handleResult = (status: number, data: { ok?: boolean; error?: string; message?: string; request_id?: string; debug?: string }, okText: string) => {
       if (status === 404) {
         showTools(false);
-        setBanner("Diagnostics are disabled on this API.", "err");
+        fail(data.message || "Diagnostics are disabled on this API.", data.request_id, data.debug);
         return;
       }
       if (status === 401 || status === 403) {
         showTools(false);
         showLogin(true);
-        setBanner("Unauthorized.", "err");
+        fail(data.message || "Unauthorized.", data.request_id, data.debug);
         return;
       }
-      if (status === 429) {
-        setBanner(`Rate limited. Request ${data.request_id ?? ""}.`.trim(), "err");
+      if (status >= 400) {
+        fail(data.message || "Something went wrong.", data.request_id, data.debug);
         return;
       }
       if (!data.ok) {
-        setBanner(`Failed. Request ${data.request_id ?? ""}.`.trim(), "err");
+        fail(data.message || `Failed. Request ${data.request_id ?? ""}`.trim(), data.request_id, data.debug);
         return;
       }
       setBanner(`${okText} Request ${data.request_id ?? ""}.`.trim(), "ok");
     };
 
-    void applyMe();
+    void getCsrf().then(() => applyMe());
 
     loginForm?.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -136,10 +159,9 @@ import Layout from "../layouts/Layout.astro";
       }
       const form = new FormData(loginForm);
       setBanner("Signing in…");
-      const result = await loginAdmin(String(form.get("email") ?? ""), String(form.get("password") ?? ""), csrf);
+      const result = await loginAdmin(String(form.get("email") ?? ""), String(form.get("password") ?? ""));
       if (result.status !== 200) {
-        setBanner("Sign-in failed.", "err");
-        csrf = (await getMe()).data.csrf || csrf;
+        fail(result.data.message || "Sign-in failed.", result.data.request_id, result.data.debug);
         return;
       }
       await applyMe();
@@ -147,7 +169,7 @@ import Layout from "../layouts/Layout.astro";
 
     emailBtn?.addEventListener("click", async () => {
       setBanner("Sending test email…");
-      const result = await postDiagnostics("/admin/diagnostics/email-test", csrf, {});
+      const result = await postDiagnostics("/admin/diagnostics/email-test", "", {});
       handleResult(result.status, result.data, "Test email accepted.");
     });
 
@@ -155,7 +177,7 @@ import Layout from "../layouts/Layout.astro";
       const text = prompt instanceof HTMLTextAreaElement ? prompt.value.trim() : "";
       const selected = provider instanceof HTMLSelectElement ? provider.value : "deepseek";
       if (!text) {
-        setBanner("Enter a short prompt.", "err");
+        fail("Enter a short prompt.");
         return;
       }
       setBanner("Testing AI chat…");
@@ -163,7 +185,7 @@ import Layout from "../layouts/Layout.astro";
         aiOut.hidden = true;
         aiOut.textContent = "";
       }
-      const result = await postDiagnostics("/admin/diagnostics/ai-chat-test", csrf, {
+      const result = await postDiagnostics("/admin/diagnostics/ai-chat-test", "", {
         provider: selected,
         prompt: text,
       });

@@ -89,8 +89,8 @@ func TestDiagnosticsDisabledIs404(t *testing.T) {
 	if rec.Code != http.StatusNotFound {
 		t.Fatalf("expected 404, got %d body %s", rec.Code, rec.Body.String())
 	}
-	if !strings.Contains(rec.Body.String(), "not found") {
-		t.Fatalf("expected generic not found, got %s", rec.Body.String())
+	if !strings.Contains(strings.ToLower(rec.Body.String()), `"error":"not_found"`) {
+		t.Fatalf("expected generic not_found, got %s", rec.Body.String())
 	}
 	assertNoSecrets(t, rec.Body.String())
 }
@@ -257,6 +257,7 @@ func newTestApp(enable bool) *App {
 		JWTSecret:         "test-jwt-secret-not-for-production",
 		JWTIssuer:         jwtIssuer,
 		JWTAudience:       jwtAudience,
+		AppEnv:            "production",
 		EnableDiagnostics: enable,
 		MediaRoot:         filepath.Join(os.TempDir(), "eduardoos-media-test"),
 		AllowedOrigins:    []string{"https://eduardoos.com", "http://127.0.0.1:4321"},

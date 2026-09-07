@@ -33,7 +33,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { getCsrf, postJSON, type MeResponse } from "../../lib/api";
-  import { genericMessage, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { reportFailure, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
   const root = document.querySelector("[data-session]");
   if (root instanceof HTMLElement) {
@@ -51,7 +51,7 @@ import Layout from "../../layouts/Layout.astro";
         password: String(data.get("password") ?? ""),
       });
       setBusy(form, false);
-      const message = genericMessage(copy, result.status, result.data, "If that email can be used, a verification code was sent.");
+      const message = reportFailure(copy, result.status, result.data, "If that email can be used, a verification code was sent.");
       setBanner(root, message.text, message.kind);
     });
   }

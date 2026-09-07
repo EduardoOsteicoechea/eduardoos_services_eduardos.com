@@ -49,7 +49,8 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { deleteAvatar, getCsrf, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
-  import { fillProfile, genericMessage, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { fillProfile, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
   const root = document.querySelector("[data-session]");
   if (root instanceof HTMLElement) {
@@ -75,7 +76,7 @@ import Layout from "../../layouts/Layout.astro";
         phone,
       });
       setBusy(form, false);
-      const message = genericMessage(copy, result.status, result.data, "Profile saved.");
+      const message = reportFailure(copy, result.status, result.data, "Profile saved.");
       setBanner(root, message.text, message.kind);
       if (result.status === 200) fillProfile(root, result.data);
     });
@@ -86,18 +87,19 @@ import Layout from "../../layouts/Layout.astro";
       const fileInput = form.elements.namedItem("file");
       if (!(fileInput instanceof HTMLInputElement) || !fileInput.files?.[0]) {
         setBanner(root, "Choose an image file.", "err");
+        showErrorModal({ message: "Choose an image file." });
         return;
       }
       setBusy(form, true);
       const result = await uploadAvatar(fileInput.files[0]);
       setBusy(form, false);
-      const message = genericMessage(copy, result.status, result.data, "Avatar updated.");
+      const message = reportFailure(copy, result.status, result.data, "Avatar updated.");
       setBanner(root, message.text, message.kind);
       if (result.status === 200) fillProfile(root, result.data);
     });
     root.querySelector("[data-avatar-delete]")?.addEventListener("click", async () => {
       const result = await deleteAvatar();
-      const message = genericMessage(copy, result.status, result.data, "Avatar removed.");
+      const message = reportFailure(copy, result.status, result.data, "Avatar removed.");
       setBanner(root, message.text, message.kind);
       if (result.status === 200) fillProfile(root, result.data);
     });

@@ -1,5 +1,6 @@
 import { getMe, type MeResponse } from "./api";
 import { refreshAuthChrome } from "./chrome";
+import { showErrorModal } from "./error-modal";
 import { go } from "./router";
 
 export type SessionCopy = {
@@ -67,25 +68,50 @@ export function setBusy(form: HTMLFormElement, busy: boolean): void {
   });
 }
 
+function messageForCode(copy: SessionCopy, code: string | undefined, fallback: string): string {
+  switch (code) {
+    case "rate_limited":
+      return copy.tooMany;
+    case "conflict":
+      return copy.conflict;
+    case "payload_too_large":
+      return copy.tooLarge;
+    case "forbidden":
+      return copy.rejected;
+    case "invalid_credentials":
+      return copy.signInFailed;
+    case "unauthorized":
+      return copy.unauthorizedShort;
+    case "invalid_request":
+      return copy.checkForm;
+    default:
+      return fallback;
+  }
+}
+
 export function genericMessage(
   copy: SessionCopy,
   status: number,
   data: MeResponse,
   success: string,
 ): { text: string; kind: string } {
-  if (status === 429) return { text: copy.tooMany, kind: "err" };
-  if (status === 409) return { text: copy.conflict, kind: "err" };
-  if (status === 413) return { text: copy.tooLarge, kind: "err" };
-  if (status === 403) return { text: copy.rejected, kind: "err" };
-  if (status === 401) {
-    return {
-      text: data.error === "invalid_credentials" ? copy.signInFailed : copy.unauthorizedShort,
-      kind: "err",
-    };
-  }
-  if (status === 400) return { text: copy.checkForm, kind: "err" };
   if (status >= 200 && status < 300) return { text: success, kind: "ok" };
-  return { text: copy.genericError, kind: "err" };
+  const fromApi = (data.message || "").trim();
+  const text = fromApi || messageForCode(copy, data.error, copy.genericError);
+  return { text, kind: "err" };
+}
+
+export function reportFailure(copy: SessionCopy, status: number, data: MeResponse, success: string): { text: string; kind: string } {
+  const message = genericMessage(copy, status, data, success);
+  if (message.kind === "err") {
+    showErrorModal({
+      message: message.text,
+      requestId: data.request_id,
+      details: [`error=${data.error || "unknown"}`, data.request_id ? `request_id=${data.request_id}` : ""].filter(Boolean).join("\n"),
+      debug: data.debug,
+    });
+  }
+  return message;
 }
 
 export function fillProfile(root: ParentNode, data: MeResponse): void {
@@ -116,13 +142,19 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
 
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
   setBanner(root, copy.loading);
-  const { status } = await getMe();
+  const { status, data } = await getMe();
   if (status === 200) {
     go("/session/profile");
     return false;
   }
   if (status !== 401) {
     setBanner(root, copy.loadError, "err");
+    showErrorModal({
+      message: data.message || copy.loadError,
+      requestId: data.request_id,
+      details: data.request_id ? `request_id=${data.request_id}` : "",
+      debug: data.debug,
+    });
     return true;
   }
   setBanner(root, copy.signInPrompt);
@@ -134,10 +166,22 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
   const { status, data } = await getMe();
   const fallback = root.querySelector("[data-guest-fallback]");
   const panel = root.querySelector("[data-authed-panel]");
-  if (status !== 200) {
+  if (status === 401) {
     if (fallback instanceof HTMLElement) fallback.hidden = false;
     if (panel instanceof HTMLElement) panel.hidden = true;
     setBanner(root, copy.unauthorized, "err");
+    return null;
+  }
+  if (status !== 200) {
+    if (fallback instanceof HTMLElement) fallback.hidden = false;
+    if (panel instanceof HTMLElement) panel.hidden = true;
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({
+      message: data.message || copy.loadError,
+      requestId: data.request_id,
+      details: data.request_id ? `request_id=${data.request_id}` : "",
+      debug: data.debug,
+    });
     return null;
   }
   if (fallback instanceof HTMLElement) fallback.hidden = true;

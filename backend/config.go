@@ -23,6 +23,7 @@ type config struct {
 	JWTIssuer              string
 	JWTAudience            string
 	SecureCookies          bool
+	AppEnv                 string
 	EnableDiagnostics      bool
 	AdminEmail             string
 	AdminPassword          string
@@ -83,6 +84,15 @@ func loadConfig() config {
 		from = "noreply@" + siteName
 	}
 
+	appEnv := strings.ToLower(strings.TrimSpace(os.Getenv("APP_ENV")))
+	if appEnv == "" {
+		if envBool("COOKIE_SECURE", false) {
+			appEnv = "production"
+		} else {
+			appEnv = "development"
+		}
+	}
+
 	media := strings.TrimSpace(os.Getenv("MEDIA_ROOT"))
 	if media == "" {
 		if envBool("COOKIE_SECURE", false) {
@@ -100,6 +110,7 @@ func loadConfig() config {
 		JWTIssuer:              issuer,
 		JWTAudience:            audience,
 		SecureCookies:          envBool("COOKIE_SECURE", false),
+		AppEnv:                 appEnv,
 		EnableDiagnostics:      envBool("ENABLE_ADMIN_DIAGNOSTICS", false),
 		AdminEmail:             strings.TrimSpace(os.Getenv("ADMIN_EMAIL")),
 		AdminPassword:          os.Getenv("ADMIN_PASSWORD"),
@@ -121,6 +132,7 @@ func loadConfig() config {
 		AllowedOrigins: []string{
 			"https://" + siteName,
 			"http://127.0.0.1:4321",
+			"http://localhost:4321",
 			"http://127.0.0.1:" + port,
 		},
 	}
