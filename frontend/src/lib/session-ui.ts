@@ -158,53 +158,89 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
   applySessionAvatar(data.avatar);
 }
 
+function currentSessionPath(): string {
+  return location.pathname.replace(/\/+$/, "") || "/";
+}
+
+export function onSessionPageReady(init: (root: HTMLElement) => void): void {
+  const expectedPath = currentSessionPath();
+  const start = () => {
+    if (currentSessionPath() !== expectedPath) {
+      return;
+    }
+    const root = document.querySelector("[data-session]");
+    if (!(root instanceof HTMLElement) || root.dataset.bound === "true") {
+      return;
+    }
+    root.dataset.bound = "true";
+    init(root);
+  };
+  document.addEventListener("astro:page-load", start);
+  document.addEventListener("astro:after-swap", start);
+  start();
+}
+
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
   setBanner(root, copy.loading);
-  const { status, data } = await getMe();
-  if (status === 200) {
-    go("/session/profile");
-    return false;
-  }
-  if (status !== 401) {
+  try {
+    const { status, data } = await getMe();
+    if (status === 200) {
+      go("/session/profile");
+      return false;
+    }
+    if (status !== 401) {
+      setBanner(root, copy.loadError, "err");
+      showErrorModal({
+        message: data.message || copy.loadError,
+        requestId: data.request_id,
+        details: data.request_id ? `request_id=${data.request_id}` : "",
+        debug: data.debug,
+      });
+      return true;
+    }
+    setBanner(root, copy.signInPrompt);
+    return true;
+  } catch {
     setBanner(root, copy.loadError, "err");
-    showErrorModal({
-      message: data.message || copy.loadError,
-      requestId: data.request_id,
-      details: data.request_id ? `request_id=${data.request_id}` : "",
-      debug: data.debug,
-    });
+    showErrorModal({ message: copy.loadError });
     return true;
   }
-  setBanner(root, copy.signInPrompt);
-  return true;
 }
 
 export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise<MeResponse | null> {
   setBanner(root, copy.loading);
-  const { status, data } = await getMe();
   const fallback = root.querySelector("[data-guest-fallback]");
   const panel = root.querySelector("[data-authed-panel]");
-  if (status === 401) {
-    if (fallback instanceof HTMLElement) fallback.hidden = false;
-    if (panel instanceof HTMLElement) panel.hidden = true;
-    setBanner(root, copy.unauthorized, "err");
-    return null;
-  }
-  if (status !== 200) {
+  try {
+    const { status, data } = await getMe();
+    if (status === 401) {
+      if (fallback instanceof HTMLElement) fallback.hidden = false;
+      if (panel instanceof HTMLElement) panel.hidden = true;
+      setBanner(root, copy.unauthorized, "err");
+      return null;
+    }
+    if (status !== 200) {
+      if (fallback instanceof HTMLElement) fallback.hidden = false;
+      if (panel instanceof HTMLElement) panel.hidden = true;
+      setBanner(root, copy.loadError, "err");
+      showErrorModal({
+        message: data.message || copy.loadError,
+        requestId: data.request_id,
+        details: data.request_id ? `request_id=${data.request_id}` : "",
+        debug: data.debug,
+      });
+      return null;
+    }
+    if (fallback instanceof HTMLElement) fallback.hidden = true;
+    if (panel instanceof HTMLElement) panel.hidden = false;
+    return data;
+  } catch {
     if (fallback instanceof HTMLElement) fallback.hidden = false;
     if (panel instanceof HTMLElement) panel.hidden = true;
     setBanner(root, copy.loadError, "err");
-    showErrorModal({
-      message: data.message || copy.loadError,
-      requestId: data.request_id,
-      details: data.request_id ? `request_id=${data.request_id}` : "",
-      debug: data.debug,
-    });
+    showErrorModal({ message: copy.loadError });
     return null;
   }
-  if (fallback instanceof HTMLElement) fallback.hidden = true;
-  if (panel instanceof HTMLElement) panel.hidden = false;
-  return data;
 }
 
 export async function afterAuthChange(): Promise<void> {

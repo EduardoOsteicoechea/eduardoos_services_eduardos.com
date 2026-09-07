@@ -17,7 +17,7 @@ vi.mock("./router", () => ({
 import { getMe } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, profileAvatarURL, reportFailure, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
+import { fillProfile, onSessionPageReady, profileAvatarURL, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -145,5 +145,23 @@ describe("session forms", () => {
     expect((root.querySelector("[data-avatar-fallback]") as HTMLElement).hidden).toBe(false);
     fillProfile(root, { username: "member", avatar: "/api/profile/avatar?v=100" });
     expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=100");
+  });
+
+  it("boots a new session root after client navigation", () => {
+    const seen: HTMLElement[] = [];
+    onSessionPageReady((root) => seen.push(root));
+    expect(seen).toHaveLength(1);
+    document.body.innerHTML = `<section data-session><p data-banner>Loading session…</p></section>`;
+    document.dispatchEvent(new Event("astro:after-swap"));
+    expect(seen).toHaveLength(2);
+    expect(seen[1].querySelector("[data-banner]")?.textContent).toBe("Loading session…");
+  });
+
+  it("does not leave Loading session when getMe throws", async () => {
+    vi.mocked(getMe).mockRejectedValue(new Error("network"));
+    const root = document.querySelector("[data-session]") as HTMLElement;
+    const me = await requireAuth(root, sessionCopy());
+    expect(me).toBeNull();
+    expect(root.querySelector("[data-banner]")?.textContent).toBe("Could not load the session.");
   });
 });

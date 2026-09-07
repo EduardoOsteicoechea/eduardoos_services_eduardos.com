@@ -63,22 +63,70 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { deleteAvatar, getCsrf, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
-  import { createAPIKey, listAPIKeys, revokeAPIKey } from "../../lib/ereport";
+  import { deleteAvatar, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
-  import { fillProfile, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { fillProfile, onSessionPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
-  const root = document.querySelector("[data-session]");
-  if (root instanceof HTMLElement) {
+  onSessionPageReady((root) => {
     const copy = sessionCopy();
-    void getCsrf().then(async () => {
+    void (async () => {
       const me = await requireAuth(root, copy);
       if (me) {
-        fillProfile(root, me);
-        setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
-        await paintKeys();
+        try {
+          fillProfile(root, me);
+          setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
+        } catch {
+          setBanner(root, copy.loadError, "err");
+        }
+        try {
+          const { createAPIKey, listAPIKeys, revokeAPIKey } = await import("../../lib/ereport");
+          const paintKeys = async () => {
+            const list = root.querySelector("[data-apikey-list]");
+            if (!(list instanceof HTMLElement)) return;
+            const res = await listAPIKeys();
+            list.replaceChildren();
+            if (res.status !== 200) return;
+            for (const key of res.data.keys || []) {
+              const li = document.createElement("li");
+              li.textContent = `${key.label} · ${key.prefix}`;
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.textContent = "Revoke";
+              btn.dataset.revokeKey = key.id;
+              li.append(btn);
+              list.append(li);
+            }
+          };
+          await paintKeys();
+          root.querySelector("[data-apikey-form]")?.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            if (!(form instanceof HTMLFormElement)) return;
+            setBusy(form, true);
+            const result = await createAPIKey(String(new FormData(form).get("label") || ""));
+            setBusy(form, false);
+            const message = reportFailure(copy, result.status, result.data, "API key created.");
+            setBanner(root, message.text, message.kind);
+            const secret = root.querySelector("[data-apikey-secret]");
+            if (secret instanceof HTMLElement && result.data.key) {
+              secret.hidden = false;
+              secret.textContent = result.data.key;
+            }
+            if (result.status === 201) await paintKeys();
+          });
+          root.addEventListener("click", async (event) => {
+            const node = event.target;
+            if (!(node instanceof HTMLElement) || !node.dataset.revokeKey) return;
+            const result = await revokeAPIKey(node.dataset.revokeKey);
+            const message = reportFailure(copy, result.status, result.data, "API key revoked.");
+            setBanner(root, message.text, message.kind);
+            if (result.status === 200) await paintKeys();
+          });
+        } catch {
+          /* API keys are optional; session must still load. */
+        }
       }
-    });
+    })();
     root.querySelector("[data-profile-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
@@ -120,49 +168,5 @@ import Layout from "../../layouts/Layout.astro";
       setBanner(root, message.text, message.kind);
       if (result.status === 200) fillProfile(root, result.data);
     });
-
-    const paintKeys = async () => {
-      const list = root.querySelector("[data-apikey-list]");
-      if (!(list instanceof HTMLElement)) return;
-      const res = await listAPIKeys();
-      list.replaceChildren();
-      if (res.status !== 200) return;
-      for (const key of res.data.keys || []) {
-        const li = document.createElement("li");
-        li.textContent = `${key.label} · ${key.prefix}`;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = "Revoke";
-        btn.dataset.revokeKey = key.id;
-        li.append(btn);
-        list.append(li);
-      }
-    };
-
-    root.querySelector("[data-apikey-form]")?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement)) return;
-      setBusy(form, true);
-      const result = await createAPIKey(String(new FormData(form).get("label") || ""));
-      setBusy(form, false);
-      const message = reportFailure(copy, result.status, result.data, "API key created.");
-      setBanner(root, message.text, message.kind);
-      const secret = root.querySelector("[data-apikey-secret]");
-      if (secret instanceof HTMLElement && result.data.key) {
-        secret.hidden = false;
-        secret.textContent = result.data.key;
-      }
-      if (result.status === 201) await paintKeys();
-    });
-
-    root.addEventListener("click", async (event) => {
-      const node = event.target;
-      if (!(node instanceof HTMLElement) || !node.dataset.revokeKey) return;
-      const result = await revokeAPIKey(node.dataset.revokeKey);
-      const message = reportFailure(copy, result.status, result.data, "API key revoked.");
-      setBanner(root, message.text, message.kind);
-      if (result.status === 200) await paintKeys();
-    });
-  }
+  });
 </script>

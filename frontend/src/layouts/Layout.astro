@@ -61,6 +61,9 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
           <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
           <img class="header-session-photo" data-session-avatar hidden alt="" />
         </button>
+        <button class="agent-fab icon-btn" data-header-chrome type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent">
+          <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
+        </button>
         <div class="header-collapse">
           <span class="header-collapse-line" aria-hidden="true"></span>
           <button class="header-collapse-btn" type="button" aria-pressed="false" data-label-hide="Hide header" data-label-show="Show header" aria-label="Hide header">
@@ -165,9 +168,6 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
         <slot />
       </main>
 
-      <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent">
-        <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
-      </button>
       <aside id="agent-sidebar" class="sidebar-right" hidden>
         <p>The AI agent talks only through this site’s API.</p>
       </aside>

@@ -272,10 +272,7 @@ html[data-header-collapsed="true"] .sidebar-right {
 }
 
 .agent-fab {
-  position: fixed;
-  z-index: 20;
-  right: var(--space-margin);
-  bottom: var(--space-margin);
+  flex-shrink: 0;
 }
 
 main {
@@ -426,6 +423,10 @@ h2 {
     margin-left: var(--rail-group-gap);
   }
 
+  .agent-fab {
+    margin-left: var(--rail-gap);
+  }
+
   .header-collapse {
     flex: 1;
     min-width: calc(var(--rail-button-size) * 0.5);
@@ -524,6 +525,10 @@ h2 {
 
   .header-session {
     margin-top: var(--rail-group-gap);
+  }
+
+  .agent-fab {
+    margin-top: var(--rail-gap);
   }
 
   .header-collapse {

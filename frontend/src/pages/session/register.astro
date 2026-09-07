@@ -32,13 +32,12 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { getCsrf, postJSON, type MeResponse } from "../../lib/api";
-  import { reportFailure, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { postJSON, type MeResponse } from "../../lib/api";
+  import { reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
-  const root = document.querySelector("[data-session]");
-  if (root instanceof HTMLElement) {
+  onSessionPageReady((root) => {
     const copy = sessionCopy();
-    void getCsrf().then(() => requireGuest(root, copy));
+    void requireGuest(root, copy);
     root.querySelector("[data-register]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
@@ -54,5 +53,5 @@ import Layout from "../../layouts/Layout.astro";
       const message = reportFailure(copy, result.status, result.data, "If that email can be used, a verification code was sent.");
       setBanner(root, message.text, message.kind);
     });
-  }
+  });
 </script>
