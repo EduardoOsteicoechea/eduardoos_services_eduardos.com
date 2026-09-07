@@ -335,8 +335,8 @@ func (a *App) safeProfile(user *User) map[string]any {
 		phone = user.Phone
 	}
 	var avatar any
-	if user.AvatarKey != "" {
-		avatar = "/api/profile/avatar"
+	if href := avatarAPIHref(user); href != "" {
+		avatar = href
 	}
 	return map[string]any{
 		"id":             user.ID,

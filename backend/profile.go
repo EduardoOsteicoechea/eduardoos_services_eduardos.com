@@ -140,14 +140,23 @@ func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	relative := "avatars/" + randomID(16) + kind.ext
+	relative, err := newAvatarRelPath(kind.ext)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
 	if err := writeAvatarFile(a.cfg.MediaRoot, relative, data); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	old := user.AvatarKey
+	now := time.Now().UTC()
 	user.AvatarKey = relative
-	user.UpdatedAt = time.Now().UTC()
+	user.AvatarContentType = kind.mime
+	user.AvatarBytes = int64(len(data))
+	user.AvatarFilename = filepath.Base(relative)
+	user.AvatarUpdatedAt = &now
+	user.UpdatedAt = now
 	if err := a.store.UpdateUser(r.Context(), user); err != nil {
 		removeAvatarFile(a.cfg.MediaRoot, relative)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -175,6 +184,10 @@ func (a *App) deleteAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	old := user.AvatarKey
 	user.AvatarKey = ""
+	user.AvatarContentType = ""
+	user.AvatarBytes = 0
+	user.AvatarFilename = ""
+	user.AvatarUpdatedAt = nil
 	user.UpdatedAt = time.Now().UTC()
 	if err := a.store.UpdateUser(r.Context(), user); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -191,18 +204,8 @@ func (a *App) getAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
-	if user.AvatarKey == "" {
+	if user.AvatarKey == "" || !safeAvatarRel.MatchString(user.AvatarKey) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not found")
-		return
-	}
-	if strings.Contains(user.AvatarKey, "..") || filepath.IsAbs(user.AvatarKey) {
-		a.writeSafeError(w, r, http.StatusNotFound, "not found")
-		return
-	}
-	if a.cfg.SecureCookies {
-		w.Header().Set("X-Accel-Redirect", "/internal-media/"+strings.TrimPrefix(user.AvatarKey, "/"))
-		w.Header().Set("Content-Type", avatarContentType(user.AvatarKey))
-		w.WriteHeader(http.StatusOK)
 		return
 	}
 	full := filepath.Join(a.cfg.MediaRoot, filepath.FromSlash(user.AvatarKey))
@@ -210,7 +213,18 @@ func (a *App) getAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not found")
 		return
 	}
-	w.Header().Set("Content-Type", avatarContentType(user.AvatarKey))
+	ctype := user.AvatarContentType
+	if ctype == "" {
+		ctype = avatarContentType(user.AvatarKey)
+	}
+	w.Header().Set("Content-Type", ctype)
+	w.Header().Set("Cache-Control", "private, no-store")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	if a.cfg.SecureCookies {
+		w.Header().Set("X-Accel-Redirect", "/internal-media/"+user.AvatarKey)
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 	http.ServeFile(w, r, full)
 }
 

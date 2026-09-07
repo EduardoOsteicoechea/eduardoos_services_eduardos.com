@@ -44,6 +44,10 @@ type User struct {
 	DisplayName        string     `bson:"display_name,omitempty"`
 	Phone              string     `bson:"phone,omitempty"`
 	AvatarKey          string     `bson:"avatar_key,omitempty"`
+	AvatarContentType  string     `bson:"avatar_content_type,omitempty"`
+	AvatarBytes        int64      `bson:"avatar_bytes,omitempty"`
+	AvatarFilename     string     `bson:"avatar_filename,omitempty"`
+	AvatarUpdatedAt    *time.Time `bson:"avatar_updated_at,omitempty"`
 	CreatedAt          time.Time  `bson:"created_at"`
 	UpdatedAt          time.Time  `bson:"updated_at"`
 	DisabledAt         *time.Time `bson:"disabled_at,omitempty"`
@@ -57,6 +61,10 @@ func (u *User) clone() *User {
 	if u.DisabledAt != nil {
 		t := *u.DisabledAt
 		cp.DisabledAt = &t
+	}
+	if u.AvatarUpdatedAt != nil {
+		t := *u.AvatarUpdatedAt
+		cp.AvatarUpdatedAt = &t
 	}
 	return &cp
 }

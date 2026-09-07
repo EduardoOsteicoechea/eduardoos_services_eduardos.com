@@ -2,18 +2,23 @@ package main
 
 import (
 	"bytes"
+	"crypto/rand"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"image"
 	_ "image/jpeg"
 	_ "image/png"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
 var errAvatarInvalid = errors.New("invalid avatar")
 var errAvatarTooLarge = errors.New("avatar too large")
+
+var safeAvatarRel = regexp.MustCompile(`^avatars/[A-Za-z0-9._-]+\.(jpg|png|webp)$`)
 
 type avatarKind struct {
 	ext  string
@@ -29,6 +34,9 @@ func detectAvatar(data []byte) (avatarKind, error) {
 	}
 	lower := bytes.ToLower(data[:min(512, len(data))])
 	if bytes.HasPrefix(data, []byte("GIF87a")) || bytes.HasPrefix(data, []byte("GIF89a")) {
+		return avatarKind{}, errAvatarInvalid
+	}
+	if bytes.HasPrefix(data, []byte{0x4d, 0x5a}) || bytes.HasPrefix(data, []byte{0x7f, 0x45, 0x4c, 0x46}) {
 		return avatarKind{}, errAvatarInvalid
 	}
 	if bytes.Contains(lower, []byte("<svg")) || bytes.Contains(lower, []byte("<?xml")) {
@@ -110,19 +118,41 @@ func min(a, b int) int {
 	return b
 }
 
+func newAvatarRelPath(ext string) (string, error) {
+	var b [16]byte
+	if _, err := rand.Read(b[:]); err != nil {
+		return "", err
+	}
+	b[6] = (b[6] & 0x0f) | 0x40
+	b[8] = (b[8] & 0x3f) | 0x80
+	name := fmt.Sprintf("%x-%x-%x-%x-%x%s", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16], ext)
+	rel := "avatars/" + name
+	if !safeAvatarRel.MatchString(rel) {
+		return "", errAvatarInvalid
+	}
+	return rel, nil
+}
+
+func avatarAPIHref(user *User) string {
+	if user == nil || user.AvatarKey == "" {
+		return ""
+	}
+	stamp := user.UpdatedAt.UTC()
+	if user.AvatarUpdatedAt != nil {
+		stamp = user.AvatarUpdatedAt.UTC()
+	}
+	return fmt.Sprintf("/api/profile/avatar?v=%d", stamp.UnixMilli())
+}
+
 func writeAvatarFile(root, relative string, data []byte) error {
-	if strings.Contains(relative, "..") || filepath.IsAbs(relative) {
+	if !safeAvatarRel.MatchString(relative) {
 		return errAvatarInvalid
 	}
+	if err := os.MkdirAll(filepath.Join(root, "avatars"), 0750); err != nil {
+		return err
+	}
 	full := filepath.Join(root, filepath.FromSlash(relative))
-	if err := os.MkdirAll(filepath.Dir(full), 0750); err != nil {
-		return err
-	}
-	tmpDir := filepath.Join(root, ".tmp")
-	if err := os.MkdirAll(tmpDir, 0750); err != nil {
-		return err
-	}
-	tmp, err := os.CreateTemp(tmpDir, "avatar-")
+	tmp, err := os.CreateTemp(os.TempDir(), "avatar-")
 	if err != nil {
 		return err
 	}
@@ -137,7 +167,10 @@ func writeAvatarFile(root, relative string, data []byte) error {
 	if err := tmp.Close(); err != nil {
 		return err
 	}
-	return os.Rename(tmpName, full)
+	if err := os.Rename(tmpName, full); err != nil {
+		return err
+	}
+	return os.Chmod(full, 0640)
 }
 
 func removeAvatarFile(root, relative string) {

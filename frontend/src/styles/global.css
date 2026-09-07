@@ -323,6 +323,11 @@ h2 {
   object-fit: cover;
 }
 
+.session-avatar-fallback {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
 .diag label,
 .session-grid label {
   display: flex;

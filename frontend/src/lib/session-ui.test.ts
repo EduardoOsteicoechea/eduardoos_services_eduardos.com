@@ -15,7 +15,7 @@ vi.mock("./router", () => ({
 
 import { getMe } from "./api";
 import { go } from "./router";
-import { reportFailure, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
+import { fillProfile, profileAvatarURL, reportFailure, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -105,5 +105,42 @@ describe("session forms", () => {
     expect(body).not.toHaveProperty("username");
     expect(form.querySelector("button")?.disabled).toBe(true);
     expect((form.elements.namedItem("identifier") as HTMLInputElement).disabled).toBe(false);
+  });
+
+  it("renders the API avatar URL and never a public /media/ path", () => {
+    document.body.innerHTML = `
+      <section data-session>
+        <p data-profile-summary></p>
+        <form data-profile-form>
+          <input name="display_name" />
+          <input name="username" />
+          <input name="phone" />
+        </form>
+        <img data-avatar-img hidden alt="Profile photo" />
+        <p data-avatar-fallback hidden>No profile photo</p>
+      </section>
+    `;
+    const root = document.querySelector("[data-session]") as HTMLElement;
+    fillProfile(root, {
+      email: "member@eduardoos.com",
+      username: "member",
+      display_name: "Member One",
+      phone: "+14155552671",
+      role: "user",
+      avatar: "/api/profile/avatar?v=99",
+    });
+    const img = root.querySelector("[data-avatar-img]") as HTMLImageElement;
+    expect(img.hidden).toBe(false);
+    expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=99");
+    expect(img.src).toContain("/api/profile/avatar");
+    expect(img.src).not.toContain("/media/");
+    expect(profileAvatarURL("/media/avatars/x.jpg")).toBeNull();
+    expect(profileAvatarURL("https://evil.example/api/profile/avatar")).toBeNull();
+    fillProfile(root, { username: "member", avatar: "/media/avatars/x.jpg" });
+    expect(img.hidden).toBe(true);
+    expect(img.getAttribute("src")).toBeNull();
+    expect((root.querySelector("[data-avatar-fallback]") as HTMLElement).hidden).toBe(false);
+    fillProfile(root, { username: "member", avatar: "/api/profile/avatar?v=100" });
+    expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=100");
   });
 });

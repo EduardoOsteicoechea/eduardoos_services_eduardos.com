@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, resetCsrfMemory } from "./api";
+import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, resetCsrfMemory, uploadAvatar } from "./api";
 
 function jsonResponse(status: number, body: unknown, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
@@ -124,6 +124,25 @@ describe("api csrf and errors", () => {
     await getCsrf();
     expect(currentCsrf()).toBe("memory-token");
     expect(currentCsrf()).not.toBe("cookie-token");
+  });
+
+  it("uploads avatars to /api/profile/avatar with csrf and credentials", async () => {
+    resetCsrfMemory();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "token-avatar" }))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { username: "member", avatar: "/api/profile/avatar?v=7" }, { "X-Request-ID": "rid-av" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await uploadAvatar(new File([new Uint8Array([1, 2, 3])], "face.jpg", { type: "image/jpeg" }));
+    expect(fetchMock.mock.calls[0][0]).toBe("/api/auth/csrf");
+    expect(fetchMock.mock.calls[1][0]).toBe("/api/profile/avatar");
+    expect(fetchMock.mock.calls[1][1].credentials).toBe("include");
+    expect(fetchMock.mock.calls[1][1].headers.get("X-CSRF-Token")).toBe("token-avatar");
+    expect(fetchMock.mock.calls[1][1].headers.get("Content-Type")).toBeNull();
+    expect(result.data.avatar).toBe("/api/profile/avatar?v=7");
+    expect(JSON.stringify(result.data)).not.toMatch(/\/media\/|\/var\/www|password|jwt/i);
   });
 
   it("login payload contract is identifier plus password", () => {

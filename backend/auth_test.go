@@ -421,7 +421,8 @@ func TestAvatarValidationAndPrivateGet(t *testing.T) {
 	}
 	var body map[string]any
 	_ = json.NewDecoder(ok.Body).Decode(&body)
-	if body["avatar"] != "/api/profile/avatar" {
+	avatarURL, _ := body["avatar"].(string)
+	if !strings.HasPrefix(avatarURL, "/api/profile/avatar?v=") {
 		t.Fatalf("avatar url %v", body["avatar"])
 	}
 	if strings.Contains(ok.Body.String(), app.cfg.MediaRoot) || strings.Contains(ok.Body.String(), "..") {

@@ -120,6 +120,21 @@ export function reportFailure(copy: SessionCopy, status: number, data: MeRespons
   return message;
 }
 
+export function profileAvatarURL(avatar: string | null | undefined): string | null {
+  if (!avatar) {
+    return null;
+  }
+  try {
+    const url = new URL(avatar, "https://local.invalid");
+    if (url.origin !== "https://local.invalid" || url.pathname !== "/api/profile/avatar") {
+      return null;
+    }
+    return `/api/profile/avatar${url.search}`;
+  } catch {
+    return null;
+  }
+}
+
 export function fillProfile(root: ParentNode, data: MeResponse): void {
   const summary = root.querySelector("[data-profile-summary]");
   if (summary instanceof HTMLElement) {
@@ -135,13 +150,22 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
     if (phone instanceof HTMLInputElement) phone.value = data.phone ?? "";
   }
   const avatarImg = root.querySelector("[data-avatar-img]");
+  const fallback = root.querySelector("[data-avatar-fallback]");
+  const src = profileAvatarURL(data.avatar);
   if (avatarImg instanceof HTMLImageElement) {
-    if (data.avatar) {
-      avatarImg.src = `/api/profile/avatar?ts=${Date.now()}`;
+    if (src) {
+      avatarImg.onerror = () => {
+        avatarImg.removeAttribute("src");
+        avatarImg.hidden = true;
+        if (fallback instanceof HTMLElement) fallback.hidden = false;
+      };
+      avatarImg.src = src;
       avatarImg.hidden = false;
+      if (fallback instanceof HTMLElement) fallback.hidden = true;
     } else {
       avatarImg.removeAttribute("src");
       avatarImg.hidden = true;
+      if (fallback instanceof HTMLElement) fallback.hidden = false;
     }
   }
 }
