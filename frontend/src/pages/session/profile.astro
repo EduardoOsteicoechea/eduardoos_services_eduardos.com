@@ -28,8 +28,11 @@ import Layout from "../../layouts/Layout.astro";
           <input name="username" required minlength="3" maxlength="32" pattern="[a-z0-9_]+" />
         </label>
         <label>
-          Phone (E.164)
-          <input name="phone" placeholder="+15551234567" />
+          Phone
+          <span class="phone-field">
+            <select name="phone_region" data-phone-region aria-label="Country or region"></select>
+            <input name="phone_national" data-phone-national inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="[0-9]*" placeholder="5551234567" />
+          </span>
         </label>
         <button type="button" data-profile-save>Save profile</button>
       </form>

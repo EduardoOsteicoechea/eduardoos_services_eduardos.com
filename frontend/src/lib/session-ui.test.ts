@@ -17,7 +17,7 @@ vi.mock("./router", () => ({
 import { getMe, postJSON } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm, startProfileActions } from "./session-ui";
+import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sanitizePhoneNational, sessionCopy, setBusy, loginBodyFromForm, splitE164, startProfileActions } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -114,22 +114,35 @@ describe("session forms", () => {
       <form data-profile-form>
         <input name="display_name" value=" Member One " />
         <input name="username" value="member" />
-        <input name="phone" value=" +1 415 555 2671 " />
+        <select name="phone_region" data-phone-region>
+          <option value="+1" selected>+1</option>
+        </select>
+        <input name="phone_national" data-phone-national value="415 555 2671" />
       </form>
     `;
     const form = document.querySelector("[data-profile-form]") as HTMLFormElement;
     expect(profilePatchBody(form)).toEqual({
       display_name: "Member One",
       username: "member",
-      phone: "+1 415 555 2671",
+      phone: "+14155552671",
     });
     (form.querySelector("[name='display_name']") as HTMLInputElement).value = "";
-    (form.querySelector("[name='phone']") as HTMLInputElement).value = "";
+    (form.querySelector("[name='phone_national']") as HTMLInputElement).value = "";
     expect(profilePatchBody(form)).toEqual({
       display_name: null,
       username: "member",
       phone: null,
     });
+  });
+
+  it("keeps + out of the national phone input and splits stored E.164", () => {
+    const input = document.createElement("input");
+    input.value = "+58-412-1234567";
+    sanitizePhoneNational(input);
+    expect(input.value).toBe("584121234567");
+    expect(input.value).not.toContain("+");
+    expect(splitE164("+584121234567")).toEqual({ region: "+58", national: "4121234567" });
+    expect(splitE164("+14155552671")).toEqual({ region: "+1", national: "4155552671" });
   });
 
   it("renders the API avatar URL and never a public /media/ path", () => {
@@ -139,7 +152,8 @@ describe("session forms", () => {
         <form data-profile-form>
           <input name="display_name" />
           <input name="username" />
-          <input name="phone" />
+          <select name="phone_region" data-phone-region></select>
+          <input name="phone_national" data-phone-national />
         </form>
         <img data-avatar-img hidden alt="Profile photo" />
         <p data-avatar-fallback hidden>No profile photo</p>
@@ -154,6 +168,8 @@ describe("session forms", () => {
       role: "user",
       avatar: "/api/profile/avatar?v=99",
     });
+    expect((root.querySelector("[data-phone-region]") as HTMLSelectElement).value).toBe("+1");
+    expect((root.querySelector("[data-phone-national]") as HTMLInputElement).value).toBe("4155552671");
     const img = root.querySelector("[data-avatar-img]") as HTMLImageElement;
     expect(img.hidden).toBe(false);
     expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=99");
@@ -214,7 +230,10 @@ describe("session forms", () => {
         <form data-profile-form>
           <input name="display_name" value="Saved Name" />
           <input name="username" value="member" required minlength="3" />
-          <input name="phone" value="+14155552671" />
+          <select name="phone_region" data-phone-region>
+            <option value="+1" selected>+1</option>
+          </select>
+          <input name="phone_national" data-phone-national value="4155552671" />
           <button type="button" data-profile-save>Save profile</button>
         </form>
       </section>

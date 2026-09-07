@@ -420,6 +420,29 @@ h2 {
   font-size: var(--font-size-sm);
 }
 
+.phone-field {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--rail-gap);
+}
+
+.session-grid .phone-field select,
+.session-grid .phone-field input {
+  align-self: auto;
+  margin-top: 0;
+}
+
+.session-grid .phone-field select {
+  flex: 0 0 14rem;
+  width: 14rem;
+}
+
+.session-grid .phone-field input {
+  flex: 1;
+  min-width: 0;
+}
+
 .diag input,
 .diag select,
 .diag textarea,
@@ -863,9 +886,23 @@ html[data-page="ereport-workspace"] .ereport-iframe {
   align-items: center;
   justify-content: center;
   padding: var(--space-padding);
+  background: var(--color-bg);
 }
 
 .ereport-modal[hidden] {
   display: none;
+}
+
+.ereport-modal-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-padding);
+  margin: 0 0 var(--space-margin);
+}
+
+.ereport-modal-toolbar h2 {
+  flex: 1;
+  margin: 0;
+  font-size: var(--font-size-lg);
 }
 

@@ -24,7 +24,42 @@ export type SessionCopy = {
   unauthorizedShort: string;
   checkForm: string;
   genericError: string;
+  phoneRegionRequired: string;
+  phoneInvalid: string;
 };
+
+export type PhoneRegion = { code: string; en: string; es: string };
+
+export const PHONE_REGIONS: PhoneRegion[] = [
+  { code: "+54", en: "Argentina", es: "Argentina" },
+  { code: "+61", en: "Australia", es: "Australia" },
+  { code: "+591", en: "Bolivia", es: "Bolivia" },
+  { code: "+55", en: "Brazil", es: "Brasil" },
+  { code: "+1", en: "Canada / United States", es: "Canadá / EE. UU." },
+  { code: "+56", en: "Chile", es: "Chile" },
+  { code: "+86", en: "China", es: "China" },
+  { code: "+57", en: "Colombia", es: "Colombia" },
+  { code: "+506", en: "Costa Rica", es: "Costa Rica" },
+  { code: "+53", en: "Cuba", es: "Cuba" },
+  { code: "+593", en: "Ecuador", es: "Ecuador" },
+  { code: "+503", en: "El Salvador", es: "El Salvador" },
+  { code: "+34", en: "Spain", es: "España" },
+  { code: "+33", en: "France", es: "Francia" },
+  { code: "+49", en: "Germany", es: "Alemania" },
+  { code: "+502", en: "Guatemala", es: "Guatemala" },
+  { code: "+504", en: "Honduras", es: "Honduras" },
+  { code: "+91", en: "India", es: "India" },
+  { code: "+39", en: "Italy", es: "Italia" },
+  { code: "+52", en: "Mexico", es: "México" },
+  { code: "+505", en: "Nicaragua", es: "Nicaragua" },
+  { code: "+507", en: "Panama", es: "Panamá" },
+  { code: "+595", en: "Paraguay", es: "Paraguay" },
+  { code: "+51", en: "Peru", es: "Perú" },
+  { code: "+351", en: "Portugal", es: "Portugal" },
+  { code: "+44", en: "United Kingdom", es: "Reino Unido" },
+  { code: "+598", en: "Uruguay", es: "Uruguay" },
+  { code: "+58", en: "Venezuela", es: "Venezuela" },
+];
 
 const en: SessionCopy = {
   loading: "Loading session…",
@@ -39,6 +74,8 @@ const en: SessionCopy = {
   unauthorizedShort: "Unauthorized.",
   checkForm: "Check the form and try again.",
   genericError: "Something went wrong.",
+  phoneRegionRequired: "Choose a region for the phone number.",
+  phoneInvalid: "Enter a valid phone number.",
 };
 
 const es: SessionCopy = {
@@ -54,6 +91,8 @@ const es: SessionCopy = {
   unauthorizedShort: "No autorizado.",
   checkForm: "Revisa el formulario e inténtalo de nuevo.",
   genericError: "Algo salió mal.",
+  phoneRegionRequired: "Elige una región para el teléfono.",
+  phoneInvalid: "Introduce un teléfono válido.",
 };
 
 export function sessionCopy(): SessionCopy {
@@ -89,6 +128,101 @@ export function guardSessionSubmit(event: Event): HTMLFormElement | null {
   return form instanceof HTMLFormElement ? form : null;
 }
 
+export function digitsOnlyPhone(raw: string): string {
+  return raw.replace(/\D/g, "");
+}
+
+export function composeE164(region: string, national: string): string | null {
+  const code = region.trim();
+  const digits = digitsOnlyPhone(national);
+  if (!digits) {
+    return null;
+  }
+  if (!/^\+[1-9]\d{0,2}$/.test(code)) {
+    return null;
+  }
+  return `${code}${digits}`;
+}
+
+export function splitE164(phone: string | null | undefined): { region: string; national: string } {
+  const digits = digitsOnlyPhone(phone ?? "");
+  if (!digits) {
+    return { region: "", national: "" };
+  }
+  const value = `+${digits}`;
+  const codes = PHONE_REGIONS.map((region) => region.code).sort((a, b) => b.length - a.length);
+  for (const code of codes) {
+    if (value.startsWith(code)) {
+      return { region: code, national: value.slice(code.length) };
+    }
+  }
+  const match = value.match(/^\+([1-9]\d{0,2})(\d+)$/);
+  if (match) {
+    return { region: `+${match[1]}`, national: match[2] };
+  }
+  return { region: "", national: digits };
+}
+
+export function paintPhoneRegions(select: HTMLSelectElement, selected = ""): void {
+  const spanish = document.documentElement.lang.startsWith("es");
+  const regions = [...PHONE_REGIONS].sort((a, b) => {
+    const left = spanish ? a.es : a.en;
+    const right = spanish ? b.es : b.en;
+    return left.localeCompare(right, spanish ? "es" : "en");
+  });
+  select.replaceChildren();
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = spanish ? "Región" : "Region";
+  select.append(blank);
+  for (const region of regions) {
+    const option = document.createElement("option");
+    option.value = region.code;
+    option.textContent = `${spanish ? region.es : region.en} (${region.code})`;
+    select.append(option);
+  }
+  if (selected && !regions.some((region) => region.code === selected)) {
+    const extra = document.createElement("option");
+    extra.value = selected;
+    extra.textContent = selected;
+    select.append(extra);
+  }
+  select.value = selected;
+}
+
+export function sanitizePhoneNational(input: HTMLInputElement): void {
+  const next = digitsOnlyPhone(input.value);
+  if (input.value !== next) {
+    input.value = next;
+  }
+}
+
+export function syncPhoneValidity(form: HTMLFormElement): void {
+  const national = form.querySelector("[data-phone-national]");
+  if (!(national instanceof HTMLInputElement)) {
+    return;
+  }
+  sanitizePhoneNational(national);
+  const copy = sessionCopy();
+  const region = form.querySelector("[data-phone-region]");
+  const regionValue = region instanceof HTMLSelectElement ? region.value.trim() : "";
+  const digits = national.value;
+  if (!digits) {
+    national.setCustomValidity("");
+    return;
+  }
+  if (!regionValue) {
+    national.setCustomValidity(copy.phoneRegionRequired);
+    return;
+  }
+  const composed = composeE164(regionValue, digits);
+  if (!composed || !/^\+[1-9]\d{7,14}$/.test(composed)) {
+    national.setCustomValidity(copy.phoneInvalid);
+    return;
+  }
+  national.setCustomValidity("");
+}
+
 export function profilePatchBody(form: HTMLFormElement): {
   display_name: string | null;
   username: string;
@@ -96,11 +230,10 @@ export function profilePatchBody(form: HTMLFormElement): {
 } {
   const data = new FormData(form);
   const displayName = String(data.get("display_name") ?? "").trim();
-  const phone = String(data.get("phone") ?? "").trim();
   return {
     display_name: displayName === "" ? null : displayName,
     username: String(data.get("username") ?? "").trim(),
-    phone: phone === "" ? null : phone,
+    phone: composeE164(String(data.get("phone_region") ?? ""), String(data.get("phone_national") ?? "")),
   };
 }
 
@@ -159,10 +292,13 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
   if (form instanceof HTMLFormElement) {
     const display = form.querySelector("[name='display_name']");
     const username = form.querySelector("[name='username']");
-    const phone = form.querySelector("[name='phone']");
+    const region = form.querySelector("[data-phone-region]");
+    const national = form.querySelector("[data-phone-national]");
+    const parts = splitE164(data.phone);
     if (display instanceof HTMLInputElement) display.value = data.display_name ?? "";
     if (username instanceof HTMLInputElement) username.value = data.username ?? "";
-    if (phone instanceof HTMLInputElement) phone.value = data.phone ?? "";
+    if (region instanceof HTMLSelectElement) paintPhoneRegions(region, parts.region);
+    if (national instanceof HTMLInputElement) national.value = parts.national;
   }
   const avatarImg = root.querySelector("[data-avatar-img]");
   const fallback = root.querySelector("[data-avatar-fallback]");
@@ -303,6 +439,7 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
   }
   const copy = sessionCopy();
   const actions = profileActionCopy();
+  syncPhoneValidity(form);
   if (!form.reportValidity()) {
     return;
   }
@@ -332,6 +469,41 @@ export function startProfileActions(): void {
     return;
   }
   window.__profileActionsStarted = true;
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLInputElement) || !node.matches("[data-phone-national]")) {
+        return;
+      }
+      if (event.key === "+" || event.key === "Add") {
+        event.preventDefault();
+      }
+    },
+    true,
+  );
+
+  document.addEventListener(
+    "beforeinput",
+    (event) => {
+      const node = event.target;
+      if (!(node instanceof HTMLInputElement) || !node.matches("[data-phone-national]")) {
+        return;
+      }
+      if (event.data?.includes("+")) {
+        event.preventDefault();
+      }
+    },
+    true,
+  );
+
+  document.addEventListener("input", (event) => {
+    const node = event.target;
+    if (node instanceof HTMLInputElement && node.matches("[data-phone-national]")) {
+      sanitizePhoneNational(node);
+    }
+  });
 
   document.addEventListener(
     "submit",
