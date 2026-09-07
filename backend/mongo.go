@@ -71,9 +71,31 @@ func (s *mongoStore) InsertUser(ctx context.Context, user *User) error {
 	return err
 }
 
+func userUpdateSet(user *User) bson.M {
+	return bson.M{
+		"email":               user.Email,
+		"email_normalized":    user.EmailNormalized,
+		"username":            user.Username,
+		"username_normalized": user.UsernameNormalized,
+		"password_hash":       user.PasswordHash,
+		"role":                user.Role,
+		"status":              user.Status,
+		"email_verified":      user.EmailVerified,
+		"display_name":        user.DisplayName,
+		"phone":               user.Phone,
+		"avatar_key":          user.AvatarKey,
+		"avatar_content_type": user.AvatarContentType,
+		"avatar_bytes":        user.AvatarBytes,
+		"avatar_filename":     user.AvatarFilename,
+		"avatar_updated_at":   user.AvatarUpdatedAt,
+		"updated_at":          user.UpdatedAt,
+		"disabled_at":         user.DisabledAt,
+	}
+}
+
 func (s *mongoStore) UpdateUser(ctx context.Context, user *User) error {
 	user.UpdatedAt = time.Now().UTC()
-	res, err := s.users().ReplaceOne(ctx, bson.M{"_id": user.ID}, user)
+	res, err := s.users().UpdateOne(ctx, bson.M{"_id": user.ID}, bson.M{"$set": userUpdateSet(user)})
 	if err != nil {
 		if isDup(err) {
 			return errDuplicateUsername

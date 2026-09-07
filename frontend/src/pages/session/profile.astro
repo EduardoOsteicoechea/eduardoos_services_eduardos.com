@@ -18,7 +18,7 @@ import Layout from "../../layouts/Layout.astro";
       <p class="hint" data-profile-summary></p>
       <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
       <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
-      <form data-profile-form>
+      <form method="post" data-profile-form data-astro-reload>
         <label>
           Display name
           <input name="display_name" maxlength="80" />
@@ -33,7 +33,7 @@ import Layout from "../../layouts/Layout.astro";
         </label>
         <button type="submit">Save profile</button>
       </form>
-      <form data-avatar-form>
+      <form method="post" data-avatar-form data-astro-reload>
         <label>
           Avatar (JPEG, PNG, or WebP)
           <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
@@ -65,7 +65,7 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { deleteAvatar, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
-  import { fillProfile, onSessionPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { fillProfile, guardSessionSubmit, onSessionPageReady, profilePatchBody, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
   onSessionPageReady((root) => {
     const copy = sessionCopy();
@@ -128,27 +128,23 @@ import Layout from "../../layouts/Layout.astro";
       }
     })();
     root.querySelector("[data-profile-form]")?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement)) return;
+      const form = guardSessionSubmit(event);
+      if (!form) return;
       setBusy(form, true);
-      const data = new FormData(form);
-      const phone = String(data.get("phone") ?? "").trim();
-      const displayName = String(data.get("display_name") ?? "").trim();
-      const result = await patchJSON<MeResponse>("/profile", {
-        display_name: displayName === "" ? null : displayName,
-        username: String(data.get("username") ?? ""),
-        phone,
-      });
+      try {
+        const result = await patchJSON<MeResponse>("/profile", profilePatchBody(form));
+        const message = reportFailure(copy, result.status, result.data, "Profile saved.");
+        setBanner(root, message.text, message.kind);
+        if (result.status === 200) fillProfile(root, result.data);
+      } catch {
+        setBanner(root, copy.loadError, "err");
+        showErrorModal({ message: copy.loadError });
+      }
       setBusy(form, false);
-      const message = reportFailure(copy, result.status, result.data, "Profile saved.");
-      setBanner(root, message.text, message.kind);
-      if (result.status === 200) fillProfile(root, result.data);
     });
     root.querySelector("[data-avatar-form]")?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement)) return;
+      const form = guardSessionSubmit(event);
+      if (!form) return;
       const fileInput = form.elements.namedItem("file");
       if (!(fileInput instanceof HTMLInputElement) || !fileInput.files?.[0]) {
         setBanner(root, "Choose an image file.", "err");

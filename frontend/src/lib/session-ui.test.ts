@@ -17,7 +17,7 @@ vi.mock("./router", () => ({
 import { getMe } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, onSessionPageReady, profileAvatarURL, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
+import { fillProfile, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -107,6 +107,29 @@ describe("session forms", () => {
     expect(body).not.toHaveProperty("username");
     expect(form.querySelector("button")?.disabled).toBe(true);
     expect((form.elements.namedItem("identifier") as HTMLInputElement).disabled).toBe(false);
+  });
+
+  it("sends display name and phone for profile save", () => {
+    document.body.innerHTML = `
+      <form data-profile-form>
+        <input name="display_name" value=" Member One " />
+        <input name="username" value="member" />
+        <input name="phone" value=" +1 415 555 2671 " />
+      </form>
+    `;
+    const form = document.querySelector("[data-profile-form]") as HTMLFormElement;
+    expect(profilePatchBody(form)).toEqual({
+      display_name: "Member One",
+      username: "member",
+      phone: "+1 415 555 2671",
+    });
+    (form.querySelector("[name='display_name']") as HTMLInputElement).value = "";
+    (form.querySelector("[name='phone']") as HTMLInputElement).value = "";
+    expect(profilePatchBody(form)).toEqual({
+      display_name: null,
+      username: "member",
+      phone: null,
+    });
   });
 
   it("renders the API avatar URL and never a public /media/ path", () => {

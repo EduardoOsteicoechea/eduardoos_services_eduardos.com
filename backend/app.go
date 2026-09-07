@@ -123,6 +123,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/auth/request-password-reset", a.requestPasswordResetHandler)
 	mux.HandleFunc("POST /api/auth/reset-password", a.resetPasswordHandler)
 	mux.HandleFunc("PATCH /api/profile", a.patchProfileHandler)
+	mux.HandleFunc("POST /api/profile", a.patchProfileHandler)
 	mux.HandleFunc("POST /api/profile/avatar", a.uploadAvatarHandler)
 	mux.HandleFunc("DELETE /api/profile/avatar", a.deleteAvatarHandler)
 	mux.HandleFunc("GET /api/profile/avatar", a.getAvatarHandler)

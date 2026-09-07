@@ -76,6 +76,28 @@ export function loginBodyFromForm(form: HTMLFormElement): { identifier: string; 
   return loginPayload(String(data.get("identifier") ?? ""), String(data.get("password") ?? ""));
 }
 
+export function guardSessionSubmit(event: Event): HTMLFormElement | null {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  const form = event.currentTarget;
+  return form instanceof HTMLFormElement ? form : null;
+}
+
+export function profilePatchBody(form: HTMLFormElement): {
+  display_name: string | null;
+  username: string;
+  phone: string | null;
+} {
+  const data = new FormData(form);
+  const displayName = String(data.get("display_name") ?? "").trim();
+  const phone = String(data.get("phone") ?? "").trim();
+  return {
+    display_name: displayName === "" ? null : displayName,
+    username: String(data.get("username") ?? "").trim(),
+    phone: phone === "" ? null : phone,
+  };
+}
+
 function messageForCode(copy: SessionCopy, code: string | undefined, fallback: string): string {
   switch (code) {
     case "rate_limited":
@@ -129,9 +151,9 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
   }
   const form = root.querySelector("[data-profile-form]");
   if (form instanceof HTMLFormElement) {
-    const display = form.elements.namedItem("display_name");
-    const username = form.elements.namedItem("username");
-    const phone = form.elements.namedItem("phone");
+    const display = form.querySelector("[name='display_name']");
+    const username = form.querySelector("[name='username']");
+    const phone = form.querySelector("[name='phone']");
     if (display instanceof HTMLInputElement) display.value = data.display_name ?? "";
     if (username instanceof HTMLInputElement) username.value = data.username ?? "";
     if (phone instanceof HTMLInputElement) phone.value = data.phone ?? "";

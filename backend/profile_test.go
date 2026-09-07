@@ -51,6 +51,28 @@ func TestProfilePersistsAcrossAPIRestart(t *testing.T) {
 	assertNoSecrets(t, got.Body.String())
 }
 
+func TestProfileKeepsFieldsAfterPasswordChange(t *testing.T) {
+	app := newTestApp(true)
+	req, rec := app.memberPOST(t, "/api/profile", `{"display_name":"Keep Me","username":"keptuser","phone":"+14155552671"}`)
+	req.Method = http.MethodPatch
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("patch: %d %s", rec.Code, rec.Body.String())
+	}
+	pass, rec2 := app.memberPOST(t, "/api/auth/change-password", `{"current_password":"correct-horse-battery","new_password":"new-horse-battery1"}`)
+	app.Handler().ServeHTTP(rec2, pass)
+	if rec2.Code != http.StatusOK {
+		t.Fatalf("password: %d %s", rec2.Code, rec2.Body.String())
+	}
+	user, err := app.store.UserByEmail(context.Background(), strings.ToLower(memberEmail()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if user.DisplayName != "Keep Me" || user.Phone != "+14155552671" || user.Username != "keptuser" {
+		t.Fatalf("password change dropped profile: %+v", user)
+	}
+}
+
 func TestProfileUsernameUniqueness(t *testing.T) {
 	app := newTestApp(true)
 	req, rec := app.memberPOST(t, "/api/profile", `{"username":"siteadmin"}`)

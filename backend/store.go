@@ -41,8 +41,8 @@ type User struct {
 	Role               string     `bson:"role"`
 	Status             string     `bson:"status"`
 	EmailVerified      bool       `bson:"email_verified"`
-	DisplayName        string     `bson:"display_name,omitempty"`
-	Phone              string     `bson:"phone,omitempty"`
+	DisplayName        string     `bson:"display_name"`
+	Phone              string     `bson:"phone"`
 	AvatarKey          string     `bson:"avatar_key,omitempty"`
 	AvatarContentType  string     `bson:"avatar_content_type,omitempty"`
 	AvatarBytes        int64      `bson:"avatar_bytes,omitempty"`
