@@ -124,7 +124,7 @@ jobs:
           PORT="${VPS_PORT:-22}"
           RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
           ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SERVICE}'"
-          if ! ${RSH} "${VPS_USER}@${VPS_HOST}" "curl --fail http://127.0.0.1:${API_PORT}/health"; then
+          if ! ${RSH} "${VPS_USER}@${VPS_HOST}" "set -eu; i=0; while [ \"\$i\" -lt 30 ]; do if systemctl is-active --quiet '${SERVICE}' && curl --fail --silent --show-error http://127.0.0.1:${API_PORT}/health; then exit 0; fi; i=\$((i+1)); sleep 1; done; exit 1"; then
             ${RSH} "${VPS_USER}@${VPS_HOST}" "systemctl status '${SERVICE}' --no-pager" || true
             ${RSH} "${VPS_USER}@${VPS_HOST}" "journalctl -u '${SERVICE}' -n 100 --no-pager" || true
             exit 1
