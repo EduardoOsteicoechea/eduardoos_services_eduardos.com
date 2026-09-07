@@ -3,14 +3,19 @@ package main
 import "testing"
 
 func TestKimiChatPayloadOmitsTemperature(t *testing.T) {
-	c := openAICompatClient{name: "kimi", model: "kimi-k2.6"}
+	c := openAICompatClient{name: "kimi", model: "kimi-k3"}
 	payload := c.chatPayload("hello")
 	if _, ok := payload["temperature"]; ok {
-		t.Fatal("kimi-k2.6 rejects any temperature value")
+		t.Fatal("kimi-k3 rejects any temperature value")
 	}
-	thinking, ok := payload["thinking"].(map[string]string)
-	if !ok || thinking["type"] != "disabled" {
-		t.Fatalf("expected thinking disabled, got %#v", payload["thinking"])
+	if _, ok := payload["thinking"]; ok {
+		t.Fatal("kimi-k3 rejects the k2.x thinking flag")
+	}
+	if payload["reasoning_effort"] != "low" {
+		t.Fatalf("expected low reasoning effort, got %#v", payload["reasoning_effort"])
+	}
+	if payload["model"] != "kimi-k3" {
+		t.Fatalf("model %v", payload["model"])
 	}
 }
 

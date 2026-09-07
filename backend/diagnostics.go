@@ -127,7 +127,11 @@ func (a *App) aiChatTestHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(r.Context(), 12*time.Second)
+	timeout := 12 * time.Second
+	if provider == "kimi" {
+		timeout = 45 * time.Second
+	}
+	ctx, cancel := context.WithTimeout(r.Context(), timeout)
 	defer cancel()
 	result, err := client.Chat(ctx, prompt)
 	if err != nil {

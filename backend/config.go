@@ -81,7 +81,7 @@ func loadConfig() config {
 	}
 	kimiModel := strings.TrimSpace(os.Getenv("KIMI_MODEL"))
 	if kimiModel == "" {
-		kimiModel = "kimi-k2.6"
+		kimiModel = "kimi-k3"
 	}
 
 	from := strings.TrimSpace(os.Getenv("SMTP_FROM_ADDRESS"))

@@ -62,8 +62,10 @@ func (c openAICompatClient) chatPayload(prompt string) map[string]any {
 		"max_tokens": 256,
 	}
 	if c.name == "kimi" {
-		// kimi-k2.6 rejects temperature/top_p and thinks by default (slow + empty content).
-		payload["thinking"] = map[string]string{"type": "disabled"}
+		// kimi-k3 rejects temperature and the k2.x thinking flag; it always reasons.
+		delete(payload, "max_tokens")
+		payload["max_completion_tokens"] = 256
+		payload["reasoning_effort"] = "low"
 		return payload
 	}
 	payload["temperature"] = 0.2
@@ -107,7 +109,11 @@ func (c openAICompatClient) Chat(ctx context.Context, prompt string) (ChatResult
 	if err := json.Unmarshal(raw, &parsed); err != nil || len(parsed.Choices) == 0 {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	return ChatResult{Text: parsed.Choices[0].Message.Content, Usage: parsed.Usage}, nil
+	text := strings.TrimSpace(parsed.Choices[0].Message.Content)
+	if text == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	return ChatResult{Text: text, Usage: parsed.Usage}, nil
 }
 
 func sanitizeModelText(text string) string {
@@ -131,5 +137,5 @@ func sanitizeModelText(text string) string {
 }
 
 func newHTTPClient() *http.Client {
-	return &http.Client{Timeout: 12 * time.Second}
+	return &http.Client{Timeout: 45 * time.Second}
 }

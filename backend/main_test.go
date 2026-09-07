@@ -252,23 +252,23 @@ func TestUnverifiedEmailIsNotSent(t *testing.T) {
 
 func newTestApp(enable bool) *App {
 	cfg := config{
-		ListenAddr:        "127.0.0.1:8081",
-		MongoDatabase:     mongoDatabase,
-		JWTSecret:         "test-jwt-secret-not-for-production",
-		JWTIssuer:         jwtIssuer,
-		JWTAudience:       jwtAudience,
-		AppEnv:            "production",
-		EnableDiagnostics: enable,
-		MediaRoot:         filepath.Join(os.TempDir(), "eduardoos-media-test-"+randomID(6)),
-		EreportMediaRoot:  "",
+		ListenAddr:             "127.0.0.1:8081",
+		MongoDatabase:          mongoDatabase,
+		JWTSecret:              "test-jwt-secret-not-for-production",
+		JWTIssuer:              jwtIssuer,
+		JWTAudience:            jwtAudience,
+		AppEnv:                 "production",
+		EnableDiagnostics:      enable,
+		MediaRoot:              filepath.Join(os.TempDir(), "eduardoos-media-test-"+randomID(6)),
+		EreportMediaRoot:       "",
 		EreportMaxImageBytes:   defaultMaxImageBytes,
 		EreportMaxImageEdge:    defaultMaxImageEdge,
 		EreportMaxPayloadBytes: defaultMaxPayloadBytes,
-		AllowedOrigins:    []string{"https://eduardoos.com", "http://127.0.0.1:4321"},
-		DeepSeekBaseURL:   "https://api.deepseek.com",
-		DeepSeekModel:     "deepseek-v4-flash",
-		KimiBaseURL:       "https://api.moonshot.ai/v1",
-		KimiModel:         "kimi-k2.6",
+		AllowedOrigins:         []string{"https://eduardoos.com", "http://127.0.0.1:4321"},
+		DeepSeekBaseURL:        "https://api.deepseek.com",
+		DeepSeekModel:          "deepseek-v4-flash",
+		KimiBaseURL:            "https://api.moonshot.ai/v1",
+		KimiModel:              "kimi-k3",
 	}
 	app := newApp(cfg)
 	app.mailer = &recordingMailer{}
