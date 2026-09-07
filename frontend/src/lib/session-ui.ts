@@ -26,6 +26,7 @@ export type SessionCopy = {
   genericError: string;
   phoneRegionRequired: string;
   phoneInvalid: string;
+  profilePersistFailed: string;
 };
 
 export type PhoneRegion = { code: string; en: string; es: string };
@@ -76,6 +77,7 @@ const en: SessionCopy = {
   genericError: "Something went wrong.",
   phoneRegionRequired: "Choose a region for the phone number.",
   phoneInvalid: "Enter a valid phone number.",
+  profilePersistFailed: "The profile did not persist on the server. Try again.",
 };
 
 const es: SessionCopy = {
@@ -93,6 +95,7 @@ const es: SessionCopy = {
   genericError: "Algo salió mal.",
   phoneRegionRequired: "Elige una región para el teléfono.",
   phoneInvalid: "Introduce un teléfono válido.",
+  profilePersistFailed: "El perfil no se guardó en el servidor. Inténtalo de nuevo.",
 };
 
 export function sessionCopy(): SessionCopy {
@@ -454,7 +457,53 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
     fillProfile(root, result.data);
     const confirmed = await getMe();
     if (confirmed.status === 200) {
+      const savedName = result.data.display_name ?? "";
+      const savedPhone = result.data.phone ?? "";
+      if ((confirmed.data.display_name ?? "") !== savedName || (confirmed.data.phone ?? "") !== savedPhone) {
+        setBanner(root, copy.profilePersistFailed, "err");
+        showErrorModal({
+          message: copy.profilePersistFailed,
+          requestId: confirmed.requestId,
+          details: confirmed.requestId ? `request_id=${confirmed.requestId}` : "",
+        });
+        return;
+      }
       fillProfile(root, confirmed.data);
+    }
+  } catch {
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({ message: copy.loadError });
+  } finally {
+    setBusy(form, false);
+  }
+}
+
+async function persistLoginForm(form: HTMLFormElement): Promise<void> {
+  const root = form.closest("[data-session]");
+  if (!(root instanceof HTMLElement)) {
+    return;
+  }
+  const copy = sessionCopy();
+  if (!form.reportValidity()) {
+    return;
+  }
+  const body = loginBodyFromForm(form);
+  if (!body.identifier || body.password.length < 8) {
+    const password = form.elements.namedItem("password");
+    if (password instanceof HTMLInputElement) {
+      password.focus();
+    }
+    return;
+  }
+  setBusy(form, true);
+  try {
+    const result = await postJSON<MeResponse>("/auth/login", body);
+    const signedIn = document.documentElement.lang.startsWith("es") ? "Sesión iniciada." : "Signed in.";
+    const message = reportFailure(copy, result.status, result.data, signedIn);
+    setBanner(root, message.text, message.kind);
+    if (result.status === 200) {
+      await afterAuthChange();
+      go("/session/profile");
     }
   } catch {
     setBanner(root, copy.loadError, "err");
@@ -509,11 +558,18 @@ export function startProfileActions(): void {
     "submit",
     (event) => {
       const form = event.target;
-      if (!(form instanceof HTMLFormElement) || !form.matches("[data-profile-form], [data-avatar-form]")) {
+      if (
+        !(form instanceof HTMLFormElement) ||
+        !form.matches("[data-login], [data-profile-form], [data-avatar-form]")
+      ) {
         return;
       }
       event.preventDefault();
       event.stopImmediatePropagation();
+      if (form.matches("[data-login]")) {
+        void persistLoginForm(form);
+        return;
+      }
       if (form.matches("[data-profile-form]")) {
         void persistProfileForm(form);
         return;
@@ -526,6 +582,15 @@ export function startProfileActions(): void {
   document.addEventListener("click", (event) => {
     const node = event.target;
     if (!(node instanceof Element)) {
+      return;
+    }
+    const login = node.closest("[data-session-login]");
+    if (login) {
+      const form = login.closest("[data-login]");
+      if (form instanceof HTMLFormElement) {
+        event.preventDefault();
+        void persistLoginForm(form);
+      }
       return;
     }
     const save = node.closest("[data-profile-save]");

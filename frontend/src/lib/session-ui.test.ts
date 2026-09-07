@@ -249,4 +249,31 @@ describe("session forms", () => {
     });
     expect(document.querySelector("[data-banner]")?.textContent).toBe("Profile saved.");
   });
+
+  it("signs in from the persistent layout click listener", async () => {
+    vi.mocked(postJSON).mockResolvedValue({
+      status: 200,
+      requestId: "rid-login",
+      data: { email: "member@eduardoos.com", username: "member", role: "user" },
+    });
+    document.body.innerHTML = `
+      <section data-session>
+        <p data-banner></p>
+        <form data-login>
+          <input name="identifier" value="member@eduardoos.com" required />
+          <input name="password" value="correct-horse-battery" required minlength="8" />
+          <button type="button" data-session-login>Sign in</button>
+        </form>
+      </section>
+    `;
+    startProfileActions();
+    (document.querySelector("[data-session-login]") as HTMLButtonElement).click();
+    await vi.waitFor(() => {
+      expect(postJSON).toHaveBeenCalledWith("/auth/login", {
+        identifier: "member@eduardoos.com",
+        password: "correct-horse-battery",
+      });
+      expect(go).toHaveBeenCalledWith("/session/profile");
+    });
+  });
 });

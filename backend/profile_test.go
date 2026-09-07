@@ -83,6 +83,22 @@ func TestProfileAcceptsStrippedAPIPath(t *testing.T) {
 	}
 }
 
+func TestAdminProfilePersists(t *testing.T) {
+	app := newTestApp(true)
+	req, rec := app.authedPOST(t, adminEmail(), "/api/profile", `{"display_name":"Admin Name","username":"siteadmin","phone":"+584121234567"}`)
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("admin patch: %d %s", rec.Code, rec.Body.String())
+	}
+	user, err := app.store.UserByEmail(context.Background(), strings.ToLower(adminEmail()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if user.DisplayName != "Admin Name" || user.Phone != "+584121234567" {
+		t.Fatalf("admin profile did not persist: %+v", user)
+	}
+}
+
 func TestProfileKeepsFieldsAfterPasswordChange(t *testing.T) {
 	app := newTestApp(true)
 	req, rec := app.memberPOST(t, "/api/profile", `{"display_name":"Keep Me","username":"keptuser","phone":"+14155552671"}`)

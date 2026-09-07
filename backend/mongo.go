@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -94,24 +95,35 @@ func userUpdateSet(user *User) bson.M {
 	}
 }
 
+func userLookupFilter(id, emailNorm string) bson.M {
+	ors := make([]bson.M, 0, 3)
+	if strings.TrimSpace(id) != "" {
+		ors = append(ors, bson.M{"_id": id})
+		if oid, err := primitive.ObjectIDFromHex(id); err == nil {
+			ors = append(ors, bson.M{"_id": oid})
+		}
+	}
+	if email := strings.TrimSpace(emailNorm); email != "" {
+		ors = append(ors, bson.M{"email_normalized": email})
+	}
+	if len(ors) == 0 {
+		return bson.M{"_id": ""}
+	}
+	if len(ors) == 1 {
+		return ors[0]
+	}
+	return bson.M{"$or": ors}
+}
+
 func (s *mongoStore) UpdateUser(ctx context.Context, user *User) error {
 	user.UpdatedAt = time.Now().UTC()
 	set := userUpdateSet(user)
-	res, err := s.users().UpdateOne(ctx, bson.M{"_id": user.ID}, bson.M{"$set": set})
+	res, err := s.users().UpdateOne(ctx, userLookupFilter(user.ID, user.EmailNormalized), bson.M{"$set": set})
 	if err != nil {
 		if isDup(err) {
 			return errDuplicateUsername
 		}
 		return err
-	}
-	if res.MatchedCount == 0 && strings.TrimSpace(user.EmailNormalized) != "" {
-		res, err = s.users().UpdateOne(ctx, bson.M{"email_normalized": user.EmailNormalized}, bson.M{"$set": set})
-		if err != nil {
-			if isDup(err) {
-				return errDuplicateUsername
-			}
-			return err
-		}
 	}
 	if res.MatchedCount == 0 {
 		return errNotFound
@@ -121,7 +133,7 @@ func (s *mongoStore) UpdateUser(ctx context.Context, user *User) error {
 
 func (s *mongoStore) UserByID(ctx context.Context, id string) (*User, error) {
 	var user User
-	err := s.users().FindOne(ctx, bson.M{"_id": id}).Decode(&user)
+	err := s.users().FindOne(ctx, userLookupFilter(id, "")).Decode(&user)
 	if errors.Is(err, mongo.ErrNoDocuments) {
 		return nil, errNotFound
 	}

@@ -91,8 +91,22 @@ func (a *App) patchProfileHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	a.auditEvent(r, "profile_update", "success", user.ID)
-	writeJSON(w, http.StatusOK, a.safeProfile(user))
+	fresh, err := a.store.UserByID(r.Context(), user.ID)
+	if err != nil {
+		fresh, err = a.store.UserByEmail(r.Context(), user.EmailNormalized)
+	}
+	if err != nil {
+		a.logUnexpected(r, "profile_reload", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if fresh.DisplayName != user.DisplayName || fresh.Phone != user.Phone || fresh.Username != user.Username {
+		a.logUnexpected(r, "profile_persist_mismatch", "store did not keep profile fields")
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "profile_update", "success", fresh.ID)
+	writeJSON(w, http.StatusOK, a.safeProfile(fresh))
 }
 
 func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
