@@ -154,6 +154,14 @@ a {
   display: none;
 }
 
+[data-close-menu] {
+  display: none;
+}
+
+.header-menu-svg[hidden] {
+  display: none;
+}
+
 .header-nav {
   display: flex;
   align-items: center;

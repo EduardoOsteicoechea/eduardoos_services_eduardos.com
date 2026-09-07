@@ -1799,7 +1799,6 @@ function render() {
   `;
   }).join("") + `
     <div class="app-actions">
-      <button type="button" class="ghost" data-act="add-section" title="Add main section">${mi("playlist_add")} Main section</button>
     </div>
   `;}
 
@@ -2277,6 +2276,13 @@ function runHostCommand(command) {
 document.getElementById("howto-close").onclick = () => closeModal("howto-modal");
 document.getElementById("howto-modal").addEventListener("click", (e) => {
   if (e.target.id === "howto-modal") closeModal("howto-modal");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  ["howto-modal", "progress-modal", "img-modal"].forEach((id) => {
+    const modal = document.getElementById(id);
+    if (modal && modal.classList.contains("open")) closeModal(id);
+  });
 });
 document.getElementById("progress-close").onclick = () => closeProgressModal();
 document.getElementById("progress-modal").addEventListener("click", (e) => {

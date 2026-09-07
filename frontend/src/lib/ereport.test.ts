@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { isEreportOwnerPath, isPublicEreportInvitePath, readInviteParams, workspaceHref } from "./ereport-routes";
-import { handleTrackerMessage, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
+import { bumpUiScale, handleTrackerMessage, SITE_TEXT_SCALE_STEPS, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -123,11 +123,30 @@ describe("tracker host bridge", () => {
 });
 
 describe("eReport workspace chrome", () => {
-  it("gives every workspace modal a close control and hover titles on DHS icons", () => {
+  it("follows 073 HDS inventory: no add-section, green cloud-save only, Escape + backdrop", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
-    expect(workspaceSrc.match(/data-close-modal/g)?.length).toBeGreaterThanOrEqual(4);
-    expect(workspaceSrc).toContain('title="Tutorial"');
-    expect(workspaceSrc).toContain('title="Save now"');
+    expect(workspaceSrc).not.toContain("add-section");
+    expect(workspaceSrc).not.toContain("playlist_add");
+    expect(workspaceSrc).toContain("ereport-hds-cloud-save");
+    expect(workspaceSrc).toContain('title="Cómo usarla"');
+    expect(workspaceSrc).toContain('title="Guardar en nube"');
+    expect(workspaceSrc).toContain('data-modal="hub"');
     expect(workspaceSrc).toContain("keydown");
+    expect(workspaceSrc).toContain("data-tracker-cmd=\"save-export\"");
+    expect(workspaceSrc).not.toMatch(/save-export[\s\S]{0,80}ereport-hds-cloud-save/);
+    const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
+    expect(css).toContain("--br: 3.44px");
+    expect(css).toContain("#f2f3f6");
+    expect(css).toContain("Kumbh Sans");
+  });
+
+  it("steps site text scale on 073 bounds without touching tracker hex", () => {
+    document.documentElement.dataset.page = "ereport-workspace";
+    document.documentElement.style.setProperty("--site-text-scale", "1");
+    expect(bumpUiScale(1)).toBe(1.05);
+    expect(bumpUiScale(-20)).toBe(SITE_TEXT_SCALE_STEPS[0]);
+    document.documentElement.removeAttribute("data-page");
+    document.documentElement.style.removeProperty("--site-text-scale");
+    localStorage.removeItem("site-text-scale");
   });
 });

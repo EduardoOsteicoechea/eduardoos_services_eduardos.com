@@ -19,10 +19,39 @@ export type TrackerHostHandlers = {
   onState?: (payload: Record<string, unknown>) => void;
 };
 
+export const SITE_TEXT_SCALE_STEPS = [0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4] as const;
+
+export function readSiteTextScale(root: HTMLElement = document.documentElement): number {
+  const stored = Number.parseFloat(root.style.getPropertyValue("--site-text-scale") || localStorage.getItem("site-text-scale") || "");
+  if (Number.isFinite(stored) && stored > 0) {
+    return stored;
+  }
+  const token = Number.parseFloat(getComputedStyle(root).getPropertyValue("--site-text-scale"));
+  return Number.isFinite(token) && token > 0 ? token : 1;
+}
+
+export function bumpUiScale(delta: number, root: HTMLElement = document.documentElement): number {
+  const current = readSiteTextScale(root);
+  const index = SITE_TEXT_SCALE_STEPS.findIndex((step) => Math.abs(step - current) < 0.001);
+  const at = index >= 0 ? index : SITE_TEXT_SCALE_STEPS.indexOf(1);
+  const next = SITE_TEXT_SCALE_STEPS[Math.min(SITE_TEXT_SCALE_STEPS.length - 1, Math.max(0, at + delta))];
+  root.style.setProperty("--site-text-scale", String(next));
+  localStorage.setItem("site-text-scale", String(next));
+  window.dispatchEvent(new CustomEvent("ereport-ui-scale", { detail: { scale: next } }));
+  return next;
+}
+
 export function resolveUiScale(root: HTMLElement = document.documentElement): number {
+  if ((root.dataset.page || "").startsWith("ereport")) {
+    return readSiteTextScale(root);
+  }
   const raw = getComputedStyle(root).fontSize;
   const px = Number.parseFloat(raw);
   return Number.isFinite(px) && px > 0 ? px / 16 : 1;
+}
+
+export function trackerCollectMessage(): Record<string, unknown> {
+  return { target: "ereport-tracker", type: "collect" };
 }
 
 export function siteIsDark(root: HTMLElement = document.documentElement): boolean {

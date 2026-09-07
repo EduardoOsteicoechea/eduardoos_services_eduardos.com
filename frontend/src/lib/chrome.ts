@@ -1,5 +1,6 @@
 import { getMe, postJSON, profileAvatarURL } from "./api";
 import { startAgentChat } from "./chat";
+import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
@@ -38,13 +39,41 @@ function syncExpanded(): void {
   for (const [selector, id] of pairs) {
     const button = document.querySelector(selector);
     if (button instanceof HTMLElement) {
-      button.setAttribute("aria-expanded", panelOpen(id) ? "true" : "false");
+      const open = panelOpen(id);
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+      if (selector === ".header-dynamic" && isEreportPage()) {
+        button.setAttribute("aria-label", open ? "Close tools" : "Open tools");
+        button.setAttribute("title", open ? "Close tools" : "Open tools");
+        const icon = button.querySelector(".material-symbols-outlined");
+        if (icon instanceof HTMLElement) {
+          icon.textContent = open ? "close" : "tune";
+        }
+      }
+      if (selector === ".header-menu" && isEreportPage()) {
+        button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        button.setAttribute("title", open ? "Close menu" : "Open menu");
+        const path = button.querySelector(".header-menu-svg path");
+        if (path instanceof SVGPathElement) {
+          path.setAttribute("d", open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16");
+        }
+      }
     }
   }
 }
 
+function isEreportPage(): boolean {
+  return (document.documentElement.dataset.page || "").startsWith("ereport");
+}
+
+function isPhoneChrome(): boolean {
+  return window.matchMedia("(max-width: 47.999rem)").matches;
+}
+
 function closeLeft(except?: string): void {
   for (const id of LEFT_PANELS) {
+    if (id === "dynamic-header" && isEreportPage() && !isPhoneChrome()) {
+      continue;
+    }
     if (id !== except) {
       setPanelHidden(id, true);
     }
@@ -74,6 +103,10 @@ function applyFont(size: string): void {
 }
 
 function cycleFont(delta: number): void {
+  if (isEreportPage()) {
+    bumpUiScale(delta);
+    return;
+  }
   const current = localStorage.getItem("root-font-size") || "1rem";
   const index = Math.max(0, FONT_STEPS.indexOf(current));
   const next = FONT_STEPS[Math.min(FONT_STEPS.length - 1, Math.max(0, index + delta))];
@@ -213,6 +246,10 @@ export async function refreshAuthChrome(): Promise<void> {
     }
   });
   applySessionAvatar(authed ? data.avatar : null);
+  const session = document.querySelector(".header-session");
+  if (isEreportPage() && session instanceof HTMLElement) {
+    session.hidden = !authed;
+  }
 }
 
 function syncIconButtonTitles(): void {
@@ -223,8 +260,32 @@ function syncIconButtonTitles(): void {
   });
 }
 
+function syncEreportChrome(): void {
+  if (!isEreportPage()) {
+    return;
+  }
+  applyHeaderCollapsed(false, false);
+  document.documentElement.style.fontSize = "";
+  setChromeHidden(document.querySelector(".agent-fab"), true);
+  setChromeHidden(document.querySelector(".header-collapse"), true);
+  const opener = document.querySelector(".header-dynamic");
+  if (!isPhoneChrome()) {
+    setPanelHidden("dynamic-header", false);
+    if (opener instanceof HTMLElement) {
+      opener.hidden = true;
+    }
+  } else if (opener instanceof HTMLElement) {
+    opener.hidden = false;
+  }
+  const storedScale = localStorage.getItem("site-text-scale");
+  if (storedScale) {
+    document.documentElement.style.setProperty("--site-text-scale", storedScale);
+  }
+}
+
 function restoreChromeAfterNavigation(): void {
   applyHeaderCollapsed(headerCollapsed(), false);
+  syncEreportChrome();
   syncExpanded();
   syncIconButtonTitles();
   paintSessionAvatar(lastSessionAvatar);
@@ -297,10 +358,21 @@ export function startChrome(): void {
         cycleFont(1);
         return;
       }
+      if (node?.closest("[data-close-menu]")) {
+        closeLeft();
+        return;
+      }
+      if (node?.closest("[data-open-agent]")) {
+        event.preventDefault();
+        closeLeft();
+        togglePanel("agent-sidebar");
+        return;
+      }
       if (node?.closest("[data-theme-toggle]")) {
         const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
         document.documentElement.dataset.theme = next;
         localStorage.setItem("theme", next);
+        window.dispatchEvent(new CustomEvent("ereport-theme"));
         return;
       }
       if (node?.closest("a[data-route]") && node.closest(".sidebar-left, .sidebar-right")) {

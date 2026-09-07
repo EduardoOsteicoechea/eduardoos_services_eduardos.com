@@ -4,22 +4,22 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport · Eduardoos" page="ereport">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-hub-view="dashboard" aria-label="Dashboard">
+    <button class="icon-btn" type="button" data-hub-view="dashboard" title="Dashboard" aria-label="Dashboard">
       <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
     </button>
-    <button class="icon-btn" type="button" data-hub-view="orgs" aria-label="Organizations">
+    <button class="icon-btn" type="button" data-hub-view="orgs" title="Orgs" aria-label="Orgs">
       <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
     </button>
-    <button class="icon-btn" type="button" data-hub-view="register" aria-label="New organization">
+    <button class="icon-btn" type="button" data-hub-view="register" title="New org" aria-label="New org">
       <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
     </button>
-    <button class="icon-btn" type="button" data-hub-view="new-report" aria-label="New report">
+    <button class="icon-btn" type="button" data-hub-view="new-report" title="New report" aria-label="New report">
       <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
     </button>
-    <button class="icon-btn" type="button" data-hub-view="recent" aria-label="Recent reports">
+    <button class="icon-btn" type="button" data-hub-view="recent" title="Recent" aria-label="Recent">
       <span class="material-symbols-outlined" aria-hidden="true">history</span>
     </button>
-    <button class="icon-btn" type="button" data-hub-view="manage" aria-label="Manage organizations">
+    <button class="icon-btn" type="button" data-hub-view="manage" title="Manage" aria-label="Manage">
       <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
     </button>
   </Fragment>
@@ -164,6 +164,12 @@ import Layout from "../../layouts/Layout.astro";
       if (panel instanceof HTMLElement) {
         panel.scrollIntoView({ block: "start" });
       }
+      document.querySelectorAll("[data-hub-view]").forEach((btn) => {
+        if (btn instanceof HTMLElement) {
+          if (btn.dataset.hubView === view) btn.setAttribute("aria-pressed", "true");
+          else btn.removeAttribute("aria-pressed");
+        }
+      });
     };
 
     const fillOrgSelect = () => {

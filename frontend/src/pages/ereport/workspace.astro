@@ -4,47 +4,44 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" aria-label="Tutorial" title="Tutorial">
+    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
       <span class="material-symbols-outlined" aria-hidden="true">help</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" aria-label="Toggle tracker sidebar" title="Toggle tracker sidebar">
+    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
       <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="font-up" aria-label="Increase tracker font" title="Increase tracker font">
+    <button class="icon-btn" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
       <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="font-down" aria-label="Decrease tracker font" title="Decrease tracker font">
+    <button class="icon-btn" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
       <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="upload" aria-label="Load local .ereport" title="Load local .ereport">
+    <button class="icon-btn" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
       <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="add-section" aria-label="Add main section" title="Add main section">
-      <span class="material-symbols-outlined" aria-hidden="true">playlist_add</span>
-    </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" aria-label="Clear tracker" title="Clear tracker">
+    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
       <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="progress" aria-label="Progress" title="Progress">
+    <button class="icon-btn" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
       <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="save-export" aria-label="Download report" title="Download report">
+    <button class="icon-btn" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
       <span class="material-symbols-outlined" aria-hidden="true">download</span>
     </button>
-    <a class="icon-btn" href="/ereport" data-route aria-label="Open hub" title="Open hub">
-      <span class="material-symbols-outlined" aria-hidden="true">home_work</span>
-    </a>
-    <button class="icon-btn" type="button" data-open-modal="tema" aria-label="Edit report name" title="Edit report name">
-      <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+    <button class="icon-btn" type="button" data-open-modal="hub" title="Hub" aria-label="Abrir hub">
+      <svg class="ereport-hds-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="save" aria-label="Save now" title="Save now">
-      <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+    <button class="icon-btn" type="button" data-open-modal="tema" title="Editar tema" aria-label="Editar tema">
+      <svg class="ereport-hds-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4.5-1 11-11-3.5-3.5-11 11L4 20z" /></svg>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="share" aria-label="Invite collaborator" title="Invite collaborator">
-      <span class="material-symbols-outlined" aria-hidden="true">share</span>
+    <button class="icon-btn ereport-hds-cloud-save" type="button" data-open-modal="save" title="Guardar en nube" aria-label="Guardar en nube">
+      <svg class="ereport-hds-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a5 5 0 0 0 0-10 6 6 0 0 0-11.2 1.8A4 4 0 0 0 7 18z" /></svg>
     </button>
-    <button class="icon-btn" type="button" data-open-modal="historial" aria-label="Version history" title="Version history">
-      <span class="material-symbols-outlined" aria-hidden="true">history</span>
+    <button class="icon-btn" type="button" data-open-modal="share" title="Compartir" aria-label="Compartir con usuarios">
+      <svg class="ereport-hds-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4" /></svg>
+    </button>
+    <button class="icon-btn" type="button" data-open-modal="historial" title="Historial" aria-label="Historial de versiones API">
+      <svg class="ereport-hds-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" /><path d="M12 8v5l3 2" /></svg>
     </button>
   </Fragment>
 
@@ -59,62 +56,68 @@ import Layout from "../../layouts/Layout.astro";
     <div class="ereport-workspace-body" data-authed-panel hidden>
       <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
     </div>
+    <div class="ereport-modal" data-modal="hub" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-hub-title">
+        <h2 id="ereport-hub-title">Hub eReport</h2>
+        <p class="hint">Salir al hub no guarda en silencio los cambios pendientes en la nube.</p>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-close-modal>Seguir editando</button>
+          <a class="btn btn--primary" href="/ereport" data-route>Ir al hub</a>
+        </div>
+      </div>
+    </div>
     <div class="ereport-modal" data-modal="tema" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-tema-title">
-        <header class="ereport-modal-toolbar">
-          <h2 id="ereport-tema-title">Report name</h2>
-          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-        </header>
+        <h2 id="ereport-tema-title">Tema del reporte</h2>
         <form data-tema-form>
           <label>
             Tema
-            <input name="tema" maxlength="200" required />
+            <input id="ereport-modal-tema" name="tema" maxlength="200" required />
           </label>
-          <button type="submit">Save name</button>
+          <div class="ereport-modal-actions">
+            <button class="btn" type="button" data-close-modal>Cerrar</button>
+            <button class="btn btn--primary" type="submit" data-tema-save>Guardar tema</button>
+          </div>
         </form>
       </div>
     </div>
     <div class="ereport-modal" data-modal="save" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-save-title">
-        <header class="ereport-modal-toolbar">
-          <h2 id="ereport-save-title">Save</h2>
-          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-        </header>
-        <p class="hint">Autosave writes this report to the VPS filesystem. Manual save collects the tracker now.</p>
-        <button type="button" data-save-now>Save now</button>
+        <h2 id="ereport-save-title">Guardar en nube</h2>
+        <p class="hint">El autoguardado escribe este reporte en el filesystem del VPS. Guardar ahora recoge el tracker en este momento.</p>
+        <p class="ereport-hub__error" data-save-error hidden></p>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-close-modal>Cerrar</button>
+          <button class="btn btn--primary" type="button" data-save-now>Guardar ahora</button>
+        </div>
       </div>
     </div>
     <div class="ereport-modal" data-modal="share" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-share-title">
-        <header class="ereport-modal-toolbar">
-          <h2 id="ereport-share-title">Invite</h2>
-          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-        </header>
+        <h2 id="ereport-share-title">Compartir</h2>
         <form data-share-form>
           <label>
             Email
             <input name="email" type="email" required />
           </label>
-          <button type="submit">Send 1-hour invite</button>
+          <button class="btn" type="submit">Añadir</button>
         </form>
+        <ul class="ereport-list" data-share-list></ul>
         <p class="hint" data-share-link hidden></p>
+        <p class="ereport-hub__error" data-share-error hidden></p>
+        <div class="ereport-modal-actions">
+          <button class="btn btn--primary" type="button" data-close-modal>Listo</button>
+        </div>
       </div>
     </div>
     <div class="ereport-modal" data-modal="historial" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-history-title">
-        <header class="ereport-modal-toolbar">
-          <h2 id="ereport-history-title">History</h2>
-          <button class="icon-btn" type="button" data-close-modal aria-label="Close" title="Close">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-        </header>
+        <h2 id="ereport-history-title">Historial API</h2>
         <ul class="ereport-list" data-history-list></ul>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-history-refresh>Actualizar</button>
+          <button class="btn btn--primary" type="button" data-close-modal>Cerrar</button>
+        </div>
       </div>
     </div>
   </section>
@@ -134,7 +137,11 @@ import Layout from "../../layouts/Layout.astro";
     type EreportPayload,
   } from "../../lib/ereport";
   import {
+    bumpUiScale,
+    resolveUiScale,
+    siteIsDark,
     startTrackerHost,
+    trackerCollectMessage,
     trackerCommandMessage,
     trackerConfigMessage,
     trackerLoadMessage,
@@ -151,16 +158,21 @@ import Layout from "../../layouts/Layout.astro";
     let payload: EreportPayload | null = null;
     let tema = "";
     let host: ReturnType<typeof startTrackerHost> | null = null;
+    let saving = false;
     const pendingCmds: TrackerCommand[] = [];
+    const invited = new Set<string>();
 
     const closeModals = () => {
-      root.querySelectorAll("[data-modal]").forEach((node) => {
+      document.querySelectorAll("[data-modal]").forEach((node) => {
         if (node instanceof HTMLElement) node.hidden = true;
+      });
+      document.querySelectorAll("[data-open-modal]").forEach((btn) => {
+        if (btn instanceof HTMLElement) btn.removeAttribute("aria-pressed");
       });
     };
 
     const modalIsOpen = () =>
-      [...root.querySelectorAll("[data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden);
+      [...document.querySelectorAll("[data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden);
 
     const sendCmd = (command: TrackerCommand) => {
       if (host) {
@@ -180,7 +192,10 @@ import Layout from "../../layouts/Layout.astro";
           payload: nextPayload,
           handlers: {
             onCloudSave: (next) => {
-              void persist(next);
+              void persist(next, { silent: true });
+            },
+            onState: (next) => {
+              void persist(next, { fromCollect: true });
             },
             onError: (message) => setBanner(root, message, "err"),
           },
@@ -195,16 +210,9 @@ import Layout from "../../layouts/Layout.astro";
       if (nextPayload) host.post(trackerLoadMessage(nextPayload));
     };
 
-    const openModal = (name: string) => {
-      closeModals();
-      const modal = root.querySelector(`[data-modal="${name}"]`);
-      if (!(modal instanceof HTMLElement)) return;
-      modal.hidden = false;
-      const closeBtn = modal.querySelector("[data-close-modal]");
-      if (closeBtn instanceof HTMLElement) closeBtn.focus();
-      if (name !== "historial") return;
+    const loadHistory = () => {
       void listReportHistory(orgId, reportId).then((hist) => {
-        const list = root.querySelector("[data-history-list]");
+        const list = document.querySelector("[data-history-list]");
         if (!(list instanceof HTMLElement)) return;
         list.replaceChildren();
         for (const item of hist.data.items || []) {
@@ -212,7 +220,8 @@ import Layout from "../../layouts/Layout.astro";
           li.textContent = `${item.tema} · ${item.source} · ${item.createdAt}`;
           const btn = document.createElement("button");
           btn.type = "button";
-          btn.textContent = "Restore";
+          btn.className = "btn";
+          btn.textContent = "Restaurar";
           btn.dataset.restore = item.id;
           li.append(btn);
           list.append(li);
@@ -220,7 +229,26 @@ import Layout from "../../layouts/Layout.astro";
       });
     };
 
-    const persist = async (next: EreportPayload) => {
+    const openModal = (name: string) => {
+      closeModals();
+      const modal = document.querySelector(`[data-modal="${name}"]`);
+      if (!(modal instanceof HTMLElement)) return;
+      if (modal.parentElement !== document.body) {
+        document.body.append(modal);
+      }
+      modal.hidden = false;
+      document.querySelector(`[data-open-modal="${name}"]`)?.setAttribute("aria-pressed", "true");
+      if (name === "tema") {
+        const input = modal.querySelector("#ereport-modal-tema");
+        if (input instanceof HTMLInputElement) {
+          input.value = tema;
+          input.focus();
+        }
+      }
+      if (name === "historial") loadHistory();
+    };
+
+    const persist = async (next: EreportPayload, opts: { silent?: boolean; fromCollect?: boolean } = {}) => {
       payload = next;
       const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       tema = nextTema;
@@ -230,8 +258,22 @@ import Layout from "../../layouts/Layout.astro";
         await updateEreportOrgs([{ id: orgId, name: orgName }]);
       }
       const message = reportFailure(copy, res.status, res.data, "Saved.");
-      if (message.kind === "err") setBanner(root, message.text, message.kind);
+      const saveErr = document.querySelector("[data-save-error]");
+      if (message.kind === "err") {
+        setBanner(root, message.text, message.kind);
+        if (saveErr instanceof HTMLElement && !opts.silent) {
+          saveErr.hidden = false;
+          saveErr.textContent = message.text;
+        }
+        return false;
+      }
+      if (saveErr instanceof HTMLElement) {
+        saveErr.hidden = true;
+        saveErr.textContent = "";
+      }
+      if (!opts.silent) setBanner(root, opts.fromCollect ? "Saved." : "Autosaved.", "ok");
       else setBanner(root, "Autosaved.", "ok");
+      return true;
     };
 
     void requireAuth(root, copy).then(async (me) => {
@@ -269,9 +311,19 @@ import Layout from "../../layouts/Layout.astro";
         closeModals();
         return;
       }
+      const scaleBtn = node.closest("[data-site-scale]");
+      if (scaleBtn instanceof HTMLElement && scaleBtn.dataset.siteScale) {
+        const scale = bumpUiScale(Number(scaleBtn.dataset.siteScale) || 0);
+        host?.post({ target: "ereport-tracker", type: "text-scale", scale });
+        return;
+      }
       const cmd = node.closest("[data-tracker-cmd]");
       if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
         sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
+        if (cmd.dataset.trackerCmd === "toggle-sidebar") {
+          const pressed = cmd.getAttribute("aria-pressed") === "true";
+          cmd.setAttribute("aria-pressed", pressed ? "false" : "true");
+        }
         return;
       }
       const modalBtn = node.closest("[data-open-modal]");
@@ -290,30 +342,84 @@ import Layout from "../../layouts/Layout.astro";
       true,
     );
 
+    document.addEventListener("ereport-ui-scale", () => {
+      host?.post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
+    });
+    document.addEventListener("ereport-theme", () => {
+      host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+    });
+
     root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement) || !payload) return;
+      if (!(form instanceof HTMLFormElement) || !payload || saving) return;
+      const saveBtn = form.querySelector("[data-tema-save]");
       tema = String(new FormData(form).get("tema") || tema);
       payload = { ...payload, reportName: tema };
+      saving = true;
+      if (saveBtn instanceof HTMLButtonElement) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Guardando…";
+      }
       host?.post(trackerLoadMessage(payload));
-      await persist(payload);
+      const ok = await persist(payload);
+      saving = false;
+      if (saveBtn instanceof HTMLButtonElement) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Guardar tema";
+      }
+      if (ok) closeModals();
+    });
+
+    document.querySelector("[data-save-now]")?.addEventListener("click", async () => {
+      const btn = document.querySelector("[data-save-now]");
+      if (saving) return;
+      saving = true;
+      if (btn instanceof HTMLButtonElement) btn.disabled = true;
+      host?.post(trackerCollectMessage());
+      if (payload) await persist(payload, { fromCollect: true });
+      saving = false;
+      if (btn instanceof HTMLButtonElement) btn.disabled = false;
       closeModals();
     });
 
-    root.querySelector("[data-save-now]")?.addEventListener("click", async () => {
-      if (payload) await persist(payload);
-      closeModals();
+    document.querySelector("[data-history-refresh]")?.addEventListener("click", () => {
+      loadHistory();
     });
 
     root.querySelector("[data-share-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement)) return;
-      const email = String(new FormData(form).get("email") || "");
+      const email = String(new FormData(form).get("email") || "").trim();
+      const err = document.querySelector("[data-share-error]");
       const res = await createReportInvite(orgId, reportId, email);
       const message = reportFailure(copy, res.status, res.data, "Invite sent.");
-      setBanner(root, message.text, message.kind);
+      if (message.kind === "err") {
+        setBanner(root, message.text, message.kind);
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = message.text;
+        }
+        return;
+      }
+      if (err instanceof HTMLElement) err.hidden = true;
+      invited.add(email);
+      const list = root.querySelector("[data-share-list]");
+      if (list instanceof HTMLElement) {
+        const li = document.createElement("li");
+        li.textContent = `${email} `;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "btn";
+        remove.textContent = "Quitar";
+        remove.addEventListener("click", () => {
+          invited.delete(email);
+          li.remove();
+        });
+        li.append(remove);
+        list.append(li);
+      }
       const link = root.querySelector("[data-share-link]");
       if (link instanceof HTMLElement && res.data.link) {
         link.hidden = false;
@@ -321,9 +427,10 @@ import Layout from "../../layouts/Layout.astro";
       }
     });
 
-    root.addEventListener("click", async (event) => {
+    document.addEventListener("click", async (event) => {
       const node = event.target;
       if (!(node instanceof HTMLElement) || !node.dataset.restore) return;
+      if (!window.confirm("¿Restaurar esta versión? Se guardará la actual primero.")) return;
       const res = await restoreReportHistory(orgId, reportId, node.dataset.restore);
       const message = reportFailure(copy, res.status, res.data, "Restored.");
       setBanner(root, message.text, message.kind);

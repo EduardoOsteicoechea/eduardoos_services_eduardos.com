@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
+import "../styles/ereport-chrome.css";
 
 type Props = {
   title: string;
@@ -17,6 +18,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const hasDhsSlot = Astro.slots.has("dhs");
 const showDhs = hasDhsSlot || path === "/diagnostics";
 const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
+const isEreport = htmlPage.startsWith("ereport");
 ---
 
 <!doctype html>
@@ -43,6 +45,9 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
       content="RQdklgFawBo75p5tN7wranunENDjUu27gol9MENm-SM"
     />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    {isEreport ? (
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:YOPQ,wght@300,400..700&display=swap" />
+    ) : null}
     <title>{title}</title>
     <ClientRouter />
   </head>
@@ -50,14 +55,29 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
     <div class="shell">
       <header class="app-header">
         <div class="header-nav" data-header-chrome>
-          <a class="header-logo icon-btn" href="/" data-route aria-label="Home" title="Home">
-            <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+          <a class="header-logo icon-btn" href="/" data-route aria-label={isEreport ? "Eduardo OS home" : "Home"} title={isEreport ? undefined : "Home"}>
+            {isEreport ? (
+              <img class="header-logo-img" src="/favicon-48.png" alt="" />
+            ) : (
+              <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+            )}
           </a>
-          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open main menu" title="Open main menu">
-            <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
+            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
+            {isEreport ? (
+              <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            ) : null}
           </button>
         </div>
-        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu" title="Open session menu" transition:persist="header-session">
+        {isEreport ? (
+          <div class="ereport-guest-auth" data-guest-only>
+            <a class="btn" href="/session/register" data-route>Register</a>
+            <a class="btn btn--primary" href="/session" data-route>Log in</a>
+          </div>
+        ) : null}
+        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Account menu" title="Account" transition:persist="header-session">
           <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
           <img class="header-session-photo" data-session-avatar hidden alt="" />
         </button>
@@ -72,8 +92,8 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
         </div>
         {showDhs ? (
           <div class="header-dhs" data-header-chrome>
-            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open page actions" title="Open page actions">
-              <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
+              <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
             </button>
           </div>
         ) : null}
@@ -89,6 +109,9 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
           </button>
           <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
             <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+          </button>
+          <button class="icon-btn" type="button" data-close-menu aria-label="Close menu" title="Close menu">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
           </button>
         </header>
         <nav aria-label="Primary">
@@ -116,6 +139,10 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
             Diagnostics
           </a>
+          <button type="button" data-open-agent data-admin-only hidden>
+            <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+            Agent Sandbox
+          </button>
         </nav>
       </aside>
 

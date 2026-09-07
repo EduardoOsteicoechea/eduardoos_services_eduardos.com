@@ -1,0 +1,394 @@
+/* 073 — eReport host chrome only. Do not apply these tokens inside the tracker iframe. */
+
+html[data-page^="ereport"] {
+  --bg: #0e1116;
+  --fg: #e8eaef;
+  --site-body-bg: var(--bg);
+  --site-body-fg: var(--fg);
+  --site-surface: color-mix(in srgb, var(--bg) 88%, var(--fg) 12%);
+  --site-surface-muted: color-mix(in srgb, var(--bg) 82%, var(--fg) 18%);
+  --site-muted-fg: color-mix(in srgb, var(--fg) 55%, var(--bg) 45%);
+  --site-meta-fg: color-mix(in srgb, var(--fg) 68%, var(--bg) 32%);
+  --btn-blue: #2563eb;
+  --btn-blue-fg: #ffffff;
+  --site-accent: var(--btn-blue);
+  --site-accent-fg: var(--btn-blue-fg);
+  --border_001: none;
+  --site-input-border: color-mix(in srgb, var(--fg) 28%, transparent);
+  --btn-green: #16a34a;
+  --btn-green-fg: #ffffff;
+  --btn-red: #dc2626;
+  --site-danger: var(--btn-red);
+  --btn-red-fg: #ffffff;
+  --btn-yellow: #ca8a04;
+  --btn-yellow-fg: #141820;
+  --site-input-bg: #252a33;
+  --glassed_background: color-mix(in srgb, var(--bg) 86%, transparent);
+  --site-focus-ring: color-mix(in srgb, var(--site-accent) 45%, transparent);
+  --br: 3.44px;
+  --bmh: 36px;
+  --bmw: 36px;
+  --p2: 0.75rem;
+  --m1: 0.5rem;
+  --ui-scale: 1.3333;
+  --chrome-control-size: 48px;
+  --header-dynamic-control-size: var(--chrome-control-size);
+  --header_width: calc(var(--chrome-control-size) + 1.25rem);
+  --site-text-scale: 1;
+  --font-brand: "Kumbh Sans", system-ui, sans-serif;
+  --font-sans: var(--font-brand);
+  --font-display: var(--font-brand);
+  --font-body: var(--font-brand);
+  --font-utility: var(--font-brand);
+  --font-heading: var(--font-brand);
+  --font-lg: 1.125rem;
+  --color-bg: var(--site-body-bg);
+  --color-surface: var(--site-surface);
+  --color-text: var(--site-body-fg);
+  --color-muted: var(--site-muted-fg);
+  --color-accent: var(--site-accent);
+  --color-border: var(--site-input-border);
+  --color-ok: var(--btn-green);
+  --color-err: var(--btn-red);
+  --color-button-bg: var(--site-surface);
+  --color-button-fg: var(--site-body-fg);
+  --border-radius: var(--br);
+  --font-family: var(--font-brand);
+  --rail-width: var(--header_width);
+  --mobile-header-height: var(--chrome-control-size);
+  font-family: var(--font-brand);
+  font-size: calc(16px * var(--site-text-scale));
+}
+
+html[data-page^="ereport"][data-theme="light"] {
+  --bg: #f2f3f6;
+  --fg: #141820;
+  --site-surface: color-mix(in srgb, var(--bg) 92%, var(--fg) 8%);
+  --site-input-border: color-mix(in srgb, var(--fg) 18%, transparent);
+  --site-input-bg: #ffffff;
+  --glassed_background: color-mix(in srgb, var(--bg) 88%, transparent);
+}
+
+@media (min-width: 68.75rem) {
+  html[data-page^="ereport"] {
+    --ui-scale: 1;
+    --chrome-control-size: 36px;
+  }
+}
+
+html[data-page^="ereport"] .app-header {
+  background: var(--glassed_background);
+  backdrop-filter: blur(12px);
+  border: var(--border_001);
+}
+
+html[data-page^="ereport"] .agent-fab,
+html[data-page^="ereport"] .header-collapse {
+  display: none;
+}
+
+html[data-page^="ereport"] .header-logo {
+  background: transparent;
+  border: var(--border_001);
+  width: var(--chrome-control-size);
+  height: var(--chrome-control-size);
+  border-radius: var(--br);
+}
+
+html[data-page^="ereport"] .header-logo:hover {
+  background: color-mix(in srgb, var(--site-accent) 12%, transparent);
+}
+
+html[data-page^="ereport"] .header-logo-img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+}
+
+html[data-page^="ereport"] .header-logo .material-symbols-outlined,
+html[data-page^="ereport"] .header-menu-symbol {
+  display: none;
+}
+
+html[data-page^="ereport"] .header-menu-svg {
+  display: block;
+  width: 55%;
+  height: 55%;
+}
+
+html[data-page^="ereport"] .header-menu {
+  width: var(--chrome-control-size);
+  height: var(--chrome-control-size);
+  border-radius: var(--br);
+  background: transparent;
+  border: var(--border_001);
+  color: var(--site-body-fg);
+}
+
+html[data-page^="ereport"] .header-menu:hover {
+  color: var(--btn-blue);
+}
+
+html[data-page^="ereport"] .header-session {
+  width: var(--chrome-control-size);
+  height: var(--chrome-control-size);
+  border-radius: 50%;
+  background: var(--site-accent);
+  color: var(--site-accent-fg);
+  border: 2px solid var(--site-surface);
+  outline: 1px solid color-mix(in srgb, var(--fg) 32%, transparent);
+  overflow: hidden;
+}
+
+html[data-page^="ereport"] .header-session:hover {
+  filter: brightness(1.06);
+  outline-color: var(--site-accent);
+}
+
+html[data-page^="ereport"] .header-session-photo {
+  width: var(--chrome-control-size);
+  height: var(--chrome-control-size);
+  border-radius: 50%;
+}
+
+html[data-page^="ereport"] .header-dynamic {
+  width: var(--chrome-control-size);
+  height: var(--chrome-control-size);
+  border-radius: var(--br);
+  background: var(--site-surface);
+  border: 1px solid var(--site-input-border);
+  color: var(--site-body-fg);
+}
+
+html[data-page^="ereport"] .header-dynamic[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--site-accent) 18%, var(--site-surface));
+}
+
+html[data-page^="ereport"] .ereport-guest-auth {
+  display: flex;
+  gap: 0.35rem;
+}
+
+html[data-page^="ereport"] .ereport-guest-auth[hidden] {
+  display: none;
+}
+
+html[data-page^="ereport"] #dynamic-header .icon-btn,
+html[data-page^="ereport"] #dynamic-header a.icon-btn {
+  width: var(--header-dynamic-control-size);
+  height: var(--header-dynamic-control-size);
+  border-radius: var(--br);
+  background: var(--site-surface);
+  border: 1px solid var(--site-input-border);
+  color: var(--site-body-fg);
+}
+
+html[data-page^="ereport"] #dynamic-header .icon-btn:hover {
+  border-color: var(--site-accent);
+  color: var(--site-accent);
+}
+
+html[data-page^="ereport"] #dynamic-header .icon-btn[aria-pressed="true"],
+html[data-page^="ereport"] #dynamic-header .icon-btn[data-active] {
+  background: var(--site-accent);
+  border-color: var(--site-accent);
+  color: var(--site-accent-fg);
+}
+
+html[data-page^="ereport"] #dynamic-header .icon-btn:disabled {
+  opacity: 0.45;
+}
+
+html[data-page^="ereport"] #dynamic-header .icon-btn .material-symbols-outlined {
+  font-size: 56%;
+  font-variation-settings: "FILL" 0, "wght" 400, "opsz" 24;
+}
+
+html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
+  width: 51%;
+  height: 51%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+}
+
+html[data-page^="ereport"] .ereport-hds-cloud-save {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #fff;
+}
+
+html[data-page^="ereport"] .ereport-hds-cloud-save:hover,
+html[data-page^="ereport"] .ereport-hds-cloud-save[aria-pressed="true"] {
+  background: #1b5e20;
+  border-color: #1b5e20;
+  color: #fff;
+}
+
+html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn {
+  min-width: var(--bmw);
+  min-height: var(--bmh);
+  border-radius: var(--br);
+  background: var(--site-surface-muted);
+}
+
+html[data-page^="ereport"] [data-close-menu] {
+  display: inline-flex;
+}
+
+html[data-page^="ereport"] .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--bmh);
+  padding: 0 var(--p2);
+  gap: var(--m1);
+  font: inherit;
+  color: var(--site-body-fg);
+  background: var(--site-surface);
+  border: 1px solid var(--site-input-border);
+  border-radius: var(--br);
+}
+
+html[data-page^="ereport"] .btn--primary,
+html[data-page^="ereport"] .btn--blue {
+  background: var(--btn-blue);
+  border-color: var(--btn-blue);
+  color: var(--btn-blue-fg);
+}
+
+html[data-page^="ereport"] .btn:disabled {
+  opacity: 0.55;
+}
+
+html[data-page^="ereport"] .ereport-modal {
+  background: rgba(12, 18, 22, 0.55);
+}
+
+html[data-page^="ereport"] .ereport-modal .panel {
+  width: min(100%, 26rem);
+  max-height: min(88dvh, 36rem);
+  margin: 0;
+  padding: 1.1rem 1.15rem 1rem;
+  overflow: auto;
+  background: var(--site-body-bg);
+  border-radius: var(--br);
+}
+
+html[data-page^="ereport"] .ereport-modal h2 {
+  margin: 0 0 var(--space-margin);
+  font-size: var(--font-lg);
+  font-weight: 650;
+}
+
+html[data-page^="ereport"] .ereport-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: var(--space-margin);
+}
+
+html[data-page^="ereport"] .ereport-modal input {
+  min-height: var(--bmh);
+  padding: 0 var(--p2);
+  color: var(--site-body-fg);
+  background: var(--site-input-bg);
+  border: 1px solid var(--site-input-border);
+  border-radius: var(--br);
+}
+
+html[data-page^="ereport"] .ereport-hub__error {
+  color: var(--site-danger);
+}
+
+@media (max-width: 47.999rem) {
+  html[data-page^="ereport"] .app-header {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  html[data-page^="ereport"] .header-dhs {
+    margin-left: 0.25rem;
+  }
+
+  html[data-page^="ereport"] #dynamic-header {
+    width: calc(var(--chrome-control-size) + 1.5rem + 10px);
+    padding: 0.45rem;
+    gap: 0.45rem;
+    background: var(--site-surface);
+  }
+
+  html[data-page^="ereport"] .site-header__backdrop,
+  html[data-page^="ereport"] .header-dynamic-menu__phone-backdrop {
+    background: color-mix(in srgb, var(--site-body-fg) 28%, transparent);
+  }
+}
+
+@media (min-width: 48rem) {
+  html[data-page^="ereport"] .app-header {
+    width: var(--header_width);
+    background: transparent;
+    backdrop-filter: none;
+    gap: 0.65rem;
+    padding: 0.65rem 0;
+  }
+
+  html[data-page^="ereport"] .header-nav {
+    gap: 0.65rem;
+  }
+
+  html[data-page^="ereport"] .header-session {
+    margin-top: 0.65rem;
+  }
+
+  html[data-page^="ereport"] .header-menu {
+    background: var(--site-surface);
+    border: 1px solid var(--site-input-border);
+  }
+
+  html[data-page^="ereport"] .header-dynamic {
+    display: none;
+  }
+
+  html[data-page^="ereport"] #dynamic-header,
+  html[data-page^="ereport"] #dynamic-header[hidden] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    z-index: 21;
+    top: calc(var(--chrome-control-size) * 3 + 2.6rem);
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: var(--header_width);
+    max-height: calc(100% - (var(--chrome-control-size) * 3 + 3rem));
+    overflow: auto;
+    padding: 0.65rem 0 0.45rem;
+    gap: 0.45rem;
+    background: transparent;
+    border: var(--border_001);
+    box-shadow: none;
+  }
+
+  html[data-page^="ereport"] #dynamic-header::before {
+    content: "";
+    display: block;
+    width: calc(var(--chrome-control-size) * 0.7);
+    height: 1px;
+    margin: 0 0 0.2rem;
+    background: var(--site-input-border);
+  }
+
+  html[data-page^="ereport"] #main-menu {
+    left: var(--header_width);
+  }
+
+  html[data-page^="ereport"] main {
+    padding-left: calc(var(--header_width) + var(--space-padding));
+  }
+
+  html[data-page^="ereport-workspace"] main {
+    padding: 0 0 0 var(--header_width);
+  }
+}
