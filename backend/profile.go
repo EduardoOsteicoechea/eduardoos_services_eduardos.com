@@ -87,7 +87,8 @@ func (a *App) patchProfileHandler(w http.ResponseWriter, r *http.Request) {
 			a.writeSafeError(w, r, http.StatusConflict, "conflict")
 			return
 		}
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		a.logUnexpected(r, "profile_update", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	a.auditEvent(r, "profile_update", "success", user.ID)

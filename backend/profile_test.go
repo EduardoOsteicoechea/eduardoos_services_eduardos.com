@@ -51,6 +51,38 @@ func TestProfilePersistsAcrossAPIRestart(t *testing.T) {
 	assertNoSecrets(t, got.Body.String())
 }
 
+func TestProfilePOSTPersistsFields(t *testing.T) {
+	app := newTestApp(true)
+	req, rec := app.memberPOST(t, "/api/profile", `{"display_name":"Posted Name","username":"keptuser","phone":"+14155552671"}`)
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("post: %d %s", rec.Code, rec.Body.String())
+	}
+	user, err := app.store.UserByEmail(context.Background(), strings.ToLower(memberEmail()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if user.DisplayName != "Posted Name" || user.Phone != "+14155552671" {
+		t.Fatalf("post did not persist: %+v", user)
+	}
+}
+
+func TestProfileAcceptsStrippedAPIPath(t *testing.T) {
+	app := newTestApp(true)
+	req, rec := app.memberPOST(t, "/profile", `{"display_name":"Stripped Path","username":"keptuser","phone":"+14155552671"}`)
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("stripped post: %d %s", rec.Code, rec.Body.String())
+	}
+	user, err := app.store.UserByEmail(context.Background(), strings.ToLower(memberEmail()))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if user.DisplayName != "Stripped Path" {
+		t.Fatalf("stripped path did not persist: %+v", user)
+	}
+}
+
 func TestProfileKeepsFieldsAfterPasswordChange(t *testing.T) {
 	app := newTestApp(true)
 	req, rec := app.memberPOST(t, "/api/profile", `{"display_name":"Keep Me","username":"keptuser","phone":"+14155552671"}`)

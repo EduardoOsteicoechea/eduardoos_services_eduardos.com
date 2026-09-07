@@ -193,8 +193,10 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
     <script>
       import { startChrome } from "../lib/chrome";
       import { startErrorModal } from "../lib/error-modal";
+      import { startProfileActions } from "../lib/session-ui";
       startErrorModal();
       startChrome();
+      startProfileActions();
     </script>
   </body>
 </html>

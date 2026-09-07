@@ -18,7 +18,7 @@ import Layout from "../../layouts/Layout.astro";
       <p class="hint" data-profile-summary></p>
       <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
       <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
-      <form method="post" data-profile-form data-astro-reload>
+      <form data-profile-form>
         <label>
           Display name
           <input name="display_name" maxlength="80" />
@@ -31,14 +31,14 @@ import Layout from "../../layouts/Layout.astro";
           Phone (E.164)
           <input name="phone" placeholder="+15551234567" />
         </label>
-        <button type="submit">Save profile</button>
+        <button type="button" data-profile-save>Save profile</button>
       </form>
-      <form method="post" data-avatar-form data-astro-reload>
+      <form data-avatar-form>
         <label>
           Avatar (JPEG, PNG, or WebP)
           <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
         </label>
-        <button type="submit">Upload avatar</button>
+        <button type="button" data-avatar-upload>Upload avatar</button>
         <button type="button" data-avatar-delete>Remove avatar</button>
       </form>
       <p class="hint session-links">
@@ -63,9 +63,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { deleteAvatar, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
-  import { showErrorModal } from "../../lib/error-modal";
-  import { fillProfile, guardSessionSubmit, onSessionPageReady, profilePatchBody, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { fillProfile, onSessionPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
   onSessionPageReady((root) => {
     const copy = sessionCopy();
@@ -127,42 +125,5 @@ import Layout from "../../layouts/Layout.astro";
         }
       }
     })();
-    root.querySelector("[data-profile-form]")?.addEventListener("submit", async (event) => {
-      const form = guardSessionSubmit(event);
-      if (!form) return;
-      setBusy(form, true);
-      try {
-        const result = await patchJSON<MeResponse>("/profile", profilePatchBody(form));
-        const message = reportFailure(copy, result.status, result.data, "Profile saved.");
-        setBanner(root, message.text, message.kind);
-        if (result.status === 200) fillProfile(root, result.data);
-      } catch {
-        setBanner(root, copy.loadError, "err");
-        showErrorModal({ message: copy.loadError });
-      }
-      setBusy(form, false);
-    });
-    root.querySelector("[data-avatar-form]")?.addEventListener("submit", async (event) => {
-      const form = guardSessionSubmit(event);
-      if (!form) return;
-      const fileInput = form.elements.namedItem("file");
-      if (!(fileInput instanceof HTMLInputElement) || !fileInput.files?.[0]) {
-        setBanner(root, "Choose an image file.", "err");
-        showErrorModal({ message: "Choose an image file." });
-        return;
-      }
-      setBusy(form, true);
-      const result = await uploadAvatar(fileInput.files[0]);
-      setBusy(form, false);
-      const message = reportFailure(copy, result.status, result.data, "Avatar updated.");
-      setBanner(root, message.text, message.kind);
-      if (result.status === 200) fillProfile(root, result.data);
-    });
-    root.querySelector("[data-avatar-delete]")?.addEventListener("click", async () => {
-      const result = await deleteAvatar();
-      const message = reportFailure(copy, result.status, result.data, "Avatar removed.");
-      setBanner(root, message.text, message.kind);
-      if (result.status === 200) fillProfile(root, result.data);
-    });
   });
 </script>

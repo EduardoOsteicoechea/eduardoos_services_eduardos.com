@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
-  return { ...actual, getMe: vi.fn() };
+  return { ...actual, getMe: vi.fn(), postJSON: vi.fn() };
 });
 
 vi.mock("./chrome", () => ({
@@ -14,10 +14,10 @@ vi.mock("./router", () => ({
   go: vi.fn(),
 }));
 
-import { getMe } from "./api";
+import { getMe, postJSON } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
+import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm, startProfileActions } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -196,5 +196,38 @@ describe("session forms", () => {
     const me = await requireAuth(root, sessionCopy());
     expect(me).toBeNull();
     expect(root.querySelector("[data-banner]")?.textContent).toBe("Could not load the session.");
+  });
+
+  it("saves profile from the persistent layout click listener", async () => {
+    const saved = {
+      email: "member@eduardoos.com",
+      username: "member",
+      display_name: "Saved Name",
+      phone: "+14155552671",
+      role: "user",
+    };
+    vi.mocked(postJSON).mockResolvedValue({ status: 200, requestId: "rid-save", data: saved });
+    vi.mocked(getMe).mockResolvedValue({ status: 200, requestId: "rid-me", data: saved });
+    document.body.innerHTML = `
+      <section data-session>
+        <p data-banner></p>
+        <form data-profile-form>
+          <input name="display_name" value="Saved Name" />
+          <input name="username" value="member" required minlength="3" />
+          <input name="phone" value="+14155552671" />
+          <button type="button" data-profile-save>Save profile</button>
+        </form>
+      </section>
+    `;
+    startProfileActions();
+    (document.querySelector("[data-profile-save]") as HTMLButtonElement).click();
+    await vi.waitFor(() => {
+      expect(postJSON).toHaveBeenCalledWith("/profile", {
+        display_name: "Saved Name",
+        username: "member",
+        phone: "+14155552671",
+      });
+    });
+    expect(document.querySelector("[data-banner]")?.textContent).toBe("Profile saved.");
   });
 });

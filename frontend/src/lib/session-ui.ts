@@ -1,4 +1,10 @@
-import { getMe, loginPayload, profileAvatarURL, type MeResponse } from "./api";
+import { deleteAvatar, getMe, loginPayload, postJSON, profileAvatarURL, uploadAvatar, type MeResponse } from "./api";
+
+declare global {
+  interface Window {
+    __profileActionsStarted?: boolean;
+  }
+}
 import { applySessionAvatar, refreshAuthChrome } from "./chrome";
 import { showErrorModal } from "./error-modal";
 import { go } from "./router";
@@ -271,4 +277,156 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
 
 export async function afterAuthChange(): Promise<void> {
   await refreshAuthChrome();
+}
+
+function profileActionCopy(): { saved: string; avatarUpdated: string; avatarRemoved: string; chooseImage: string } {
+  if (document.documentElement.lang.startsWith("es")) {
+    return {
+      saved: "Perfil guardado.",
+      avatarUpdated: "Avatar actualizado.",
+      avatarRemoved: "Avatar eliminado.",
+      chooseImage: "Elige un archivo de imagen.",
+    };
+  }
+  return {
+    saved: "Profile saved.",
+    avatarUpdated: "Avatar updated.",
+    avatarRemoved: "Avatar removed.",
+    chooseImage: "Choose an image file.",
+  };
+}
+
+async function persistProfileForm(form: HTMLFormElement): Promise<void> {
+  const root = form.closest("[data-session]");
+  if (!(root instanceof HTMLElement)) {
+    return;
+  }
+  const copy = sessionCopy();
+  const actions = profileActionCopy();
+  if (!form.reportValidity()) {
+    return;
+  }
+  setBusy(form, true);
+  try {
+    const result = await postJSON<MeResponse>("/profile", profilePatchBody(form));
+    const message = reportFailure(copy, result.status, result.data, actions.saved);
+    setBanner(root, message.text, message.kind);
+    if (result.status !== 200) {
+      return;
+    }
+    fillProfile(root, result.data);
+    const confirmed = await getMe();
+    if (confirmed.status === 200) {
+      fillProfile(root, confirmed.data);
+    }
+  } catch {
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({ message: copy.loadError });
+  } finally {
+    setBusy(form, false);
+  }
+}
+
+export function startProfileActions(): void {
+  if (window.__profileActionsStarted) {
+    return;
+  }
+  window.__profileActionsStarted = true;
+
+  document.addEventListener(
+    "submit",
+    (event) => {
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement) || !form.matches("[data-profile-form], [data-avatar-form]")) {
+        return;
+      }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (form.matches("[data-profile-form]")) {
+        void persistProfileForm(form);
+        return;
+      }
+      void persistAvatarForm(form);
+    },
+    true,
+  );
+
+  document.addEventListener("click", (event) => {
+    const node = event.target;
+    if (!(node instanceof Element)) {
+      return;
+    }
+    const save = node.closest("[data-profile-save]");
+    if (save) {
+      const form = save.closest("[data-profile-form]");
+      if (form instanceof HTMLFormElement) {
+        event.preventDefault();
+        void persistProfileForm(form);
+      }
+      return;
+    }
+    const upload = node.closest("[data-avatar-upload]");
+    if (upload) {
+      const form = upload.closest("[data-avatar-form]");
+      if (form instanceof HTMLFormElement) {
+        event.preventDefault();
+        void persistAvatarForm(form);
+      }
+      return;
+    }
+    const remove = node.closest("[data-avatar-delete]");
+    if (remove) {
+      event.preventDefault();
+      void persistAvatarDelete(remove);
+    }
+  });
+}
+
+async function persistAvatarForm(form: HTMLFormElement): Promise<void> {
+  const root = form.closest("[data-session]");
+  if (!(root instanceof HTMLElement)) {
+    return;
+  }
+  const copy = sessionCopy();
+  const actions = profileActionCopy();
+  const fileInput = form.querySelector("[name='file']");
+  if (!(fileInput instanceof HTMLInputElement) || !fileInput.files?.[0]) {
+    setBanner(root, actions.chooseImage, "err");
+    showErrorModal({ message: actions.chooseImage });
+    return;
+  }
+  setBusy(form, true);
+  try {
+    const result = await uploadAvatar(fileInput.files[0]);
+    const message = reportFailure(copy, result.status, result.data, actions.avatarUpdated);
+    setBanner(root, message.text, message.kind);
+    if (result.status === 200) {
+      fillProfile(root, result.data);
+    }
+  } catch {
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({ message: copy.loadError });
+  } finally {
+    setBusy(form, false);
+  }
+}
+
+async function persistAvatarDelete(trigger: Element): Promise<void> {
+  const root = trigger.closest("[data-session]");
+  if (!(root instanceof HTMLElement)) {
+    return;
+  }
+  const copy = sessionCopy();
+  const actions = profileActionCopy();
+  try {
+    const result = await deleteAvatar();
+    const message = reportFailure(copy, result.status, result.data, actions.avatarRemoved);
+    setBanner(root, message.text, message.kind);
+    if (result.status === 200) {
+      fillProfile(root, result.data);
+    }
+  } catch {
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({ message: copy.loadError });
+  }
 }

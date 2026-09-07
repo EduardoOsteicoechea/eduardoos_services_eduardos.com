@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -95,12 +96,22 @@ func userUpdateSet(user *User) bson.M {
 
 func (s *mongoStore) UpdateUser(ctx context.Context, user *User) error {
 	user.UpdatedAt = time.Now().UTC()
-	res, err := s.users().UpdateOne(ctx, bson.M{"_id": user.ID}, bson.M{"$set": userUpdateSet(user)})
+	set := userUpdateSet(user)
+	res, err := s.users().UpdateOne(ctx, bson.M{"_id": user.ID}, bson.M{"$set": set})
 	if err != nil {
 		if isDup(err) {
 			return errDuplicateUsername
 		}
 		return err
+	}
+	if res.MatchedCount == 0 && strings.TrimSpace(user.EmailNormalized) != "" {
+		res, err = s.users().UpdateOne(ctx, bson.M{"email_normalized": user.EmailNormalized}, bson.M{"$set": set})
+		if err != nil {
+			if isDup(err) {
+				return errDuplicateUsername
+			}
+			return err
+		}
 	}
 	if res.MatchedCount == 0 {
 		return errNotFound
