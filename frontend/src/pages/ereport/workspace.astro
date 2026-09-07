@@ -136,16 +136,16 @@ import Layout from "../../layouts/Layout.astro";
     updateEreportOrgs,
     type EreportPayload,
   } from "../../lib/ereport";
+  import { TRACKER_SRC } from "../../lib/ereport-routes";
   import {
     bumpUiScale,
     resolveUiScale,
     siteIsDark,
     startTrackerHost,
-    trackerCollectMessage,
     trackerCommandMessage,
-    trackerConfigMessage,
     trackerLoadMessage,
     type TrackerCommand,
+    type TrackerHost,
   } from "../../lib/ereport-workspace";
   import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
 
@@ -157,22 +157,52 @@ import Layout from "../../layouts/Layout.astro";
     const iframe = root.querySelector("[data-tracker]");
     let payload: EreportPayload | null = null;
     let tema = "";
-    let host: ReturnType<typeof startTrackerHost> | null = null;
+    let host: TrackerHost | null = null;
     let saving = false;
+    let disposed = false;
     const pendingCmds: TrackerCommand[] = [];
     const invited = new Set<string>();
+    const disposers: Array<() => void> = [];
+
+    const onDoc = <K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (event: DocumentEventMap[K]) => void,
+      options?: boolean | AddEventListenerOptions,
+    ) => {
+      document.addEventListener(type, listener as EventListener, options);
+      disposers.push(() => document.removeEventListener(type, listener as EventListener, options));
+    };
 
     const closeModals = () => {
-      document.querySelectorAll("[data-modal]").forEach((node) => {
+      root.querySelectorAll("[data-modal]").forEach((node) => {
         if (node instanceof HTMLElement) node.hidden = true;
+      });
+      document.querySelectorAll("body > [data-modal]").forEach((node) => {
+        if (node instanceof HTMLElement) {
+          node.hidden = true;
+          if (!root.contains(node)) root.append(node);
+        }
       });
       document.querySelectorAll("[data-open-modal]").forEach((btn) => {
         if (btn instanceof HTMLElement) btn.removeAttribute("aria-pressed");
       });
     };
 
+    const dispose = () => {
+      if (disposed) return;
+      disposed = true;
+      closeModals();
+      host?.destroy();
+      host = null;
+      for (const stop of disposers.splice(0)) stop();
+      delete root.dataset.bound;
+    };
+
+    onDoc("astro:before-swap", dispose, { once: true });
+
     const modalIsOpen = () =>
-      [...document.querySelectorAll("[data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden);
+      [...root.querySelectorAll("[data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden) ||
+      [...document.querySelectorAll("body > [data-modal]")].some((node) => node instanceof HTMLElement && !node.hidden);
 
     const sendCmd = (command: TrackerCommand) => {
       if (host) {
@@ -182,37 +212,31 @@ import Layout from "../../layouts/Layout.astro";
       pendingCmds.push(command);
     };
 
-    const attachHost = (nextPayload: EreportPayload | null) => {
-      if (!(iframe instanceof HTMLIFrameElement) || !orgId || !reportId) return;
-      if (!host) {
-        host = startTrackerHost(iframe, {
-          origin: window.location.origin,
-          uploadUrl: ownerImageUploadPath(orgId, reportId),
-          csrf: rememberedCsrf(),
-          payload: nextPayload,
-          handlers: {
-            onCloudSave: (next) => {
-              void persist(next, { silent: true });
-            },
-            onState: (next) => {
-              void persist(next, { fromCollect: true });
-            },
-            onError: (message) => setBanner(root, message, "err"),
+    const attachHost = (nextPayload: EreportPayload) => {
+      if (disposed || !(iframe instanceof HTMLIFrameElement) || !orgId || !reportId) return;
+      host?.destroy();
+      host = startTrackerHost(iframe, {
+        origin: window.location.origin,
+        uploadUrl: ownerImageUploadPath(orgId, reportId),
+        csrf: rememberedCsrf(),
+        payload: nextPayload,
+        handlers: {
+          onCloudSave: (next) => {
+            void persist(next, { silent: true });
           },
-        });
-        iframe.src = "/ereport-tracker.html";
-        for (const command of pendingCmds.splice(0)) {
-          host.post(trackerCommandMessage(command));
-        }
-        return;
+          onError: (message) => setBanner(root, message, "err"),
+        },
+      });
+      iframe.src = TRACKER_SRC;
+      for (const command of pendingCmds.splice(0)) {
+        host.post(trackerCommandMessage(command));
       }
-      host.post(trackerConfigMessage(ownerImageUploadPath(orgId, reportId), rememberedCsrf()));
-      if (nextPayload) host.post(trackerLoadMessage(nextPayload));
     };
 
     const loadHistory = () => {
       void listReportHistory(orgId, reportId).then((hist) => {
-        const list = document.querySelector("[data-history-list]");
+        if (disposed) return;
+        const list = root.querySelector("[data-history-list]") || document.querySelector("[data-history-list]");
         if (!(list instanceof HTMLElement)) return;
         list.replaceChildren();
         for (const item of hist.data.items || []) {
@@ -231,7 +255,7 @@ import Layout from "../../layouts/Layout.astro";
 
     const openModal = (name: string) => {
       closeModals();
-      const modal = document.querySelector(`[data-modal="${name}"]`);
+      const modal = root.querySelector(`[data-modal="${name}"]`) || document.querySelector(`[data-modal="${name}"]`);
       if (!(modal instanceof HTMLElement)) return;
       if (modal.parentElement !== document.body) {
         document.body.append(modal);
@@ -249,16 +273,18 @@ import Layout from "../../layouts/Layout.astro";
     };
 
     const persist = async (next: EreportPayload, opts: { silent?: boolean; fromCollect?: boolean } = {}) => {
+      if (disposed) return false;
       payload = next;
       const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       tema = nextTema;
       const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
+      if (disposed) return false;
       const orgName = String(next.orgName || "").trim();
       if (res.status < 300 && orgName) {
         await updateEreportOrgs([{ id: orgId, name: orgName }]);
       }
       const message = reportFailure(copy, res.status, res.data, "Saved.");
-      const saveErr = document.querySelector("[data-save-error]");
+      const saveErr = root.querySelector("[data-save-error]") || document.querySelector("[data-save-error]");
       if (message.kind === "err") {
         setBanner(root, message.text, message.kind);
         if (saveErr instanceof HTMLElement && !opts.silent) {
@@ -277,14 +303,15 @@ import Layout from "../../layouts/Layout.astro";
     };
 
     void requireAuth(root, copy).then(async (me) => {
-      if (!me) return;
+      if (!me || disposed) return;
       if (!orgId || !reportId) {
         setBanner(root, "Missing organization or report.", "err");
         return;
       }
       await refreshCsrf();
-      attachHost(null);
+      if (disposed) return;
       const res = await fetchOrgReport(orgId, reportId);
+      if (disposed) return;
       if (res.status !== 200 || !res.data.payload || !res.data.meta) {
         reportFailure(copy, res.status, res.data, "");
         setBanner(root, res.data.message || "Report not found.", "err");
@@ -299,7 +326,8 @@ import Layout from "../../layouts/Layout.astro";
       attachHost(payload);
     });
 
-    document.addEventListener("click", (event) => {
+    onDoc("click", (event) => {
+      if (disposed) return;
       const node = event.target;
       if (!(node instanceof Element)) return;
       if (node.closest("[data-close-modal]")) {
@@ -332,27 +360,27 @@ import Layout from "../../layouts/Layout.astro";
       }
     });
 
-    document.addEventListener(
+    onDoc(
       "keydown",
       (event) => {
-        if (event.key !== "Escape" || !modalIsOpen()) return;
+        if (disposed || event.key !== "Escape" || !modalIsOpen()) return;
         event.stopPropagation();
         closeModals();
       },
       true,
     );
 
-    document.addEventListener("ereport-ui-scale", () => {
-      host?.post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
-    });
-    document.addEventListener("ereport-theme", () => {
-      host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-    });
+    const onScale = () => host?.post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
+    const onTheme = () => host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+    document.addEventListener("ereport-ui-scale", onScale);
+    document.addEventListener("ereport-theme", onTheme);
+    disposers.push(() => document.removeEventListener("ereport-ui-scale", onScale));
+    disposers.push(() => document.removeEventListener("ereport-theme", onTheme));
 
     root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement) || !payload || saving) return;
+      if (!(form instanceof HTMLFormElement) || !payload || saving || disposed) return;
       const saveBtn = form.querySelector("[data-tema-save]");
       tema = String(new FormData(form).get("tema") || tema);
       payload = { ...payload, reportName: tema };
@@ -362,7 +390,7 @@ import Layout from "../../layouts/Layout.astro";
         saveBtn.textContent = "Guardando…";
       }
       host?.post(trackerLoadMessage(payload));
-      const ok = await persist(payload);
+      const ok = await persist(payload, { fromCollect: true });
       saving = false;
       if (saveBtn instanceof HTMLButtonElement) {
         saveBtn.disabled = false;
@@ -371,28 +399,58 @@ import Layout from "../../layouts/Layout.astro";
       if (ok) closeModals();
     });
 
-    document.querySelector("[data-save-now]")?.addEventListener("click", async () => {
-      const btn = document.querySelector("[data-save-now]");
-      if (saving) return;
-      saving = true;
-      if (btn instanceof HTMLButtonElement) btn.disabled = true;
-      host?.post(trackerCollectMessage());
-      if (payload) await persist(payload, { fromCollect: true });
-      saving = false;
-      if (btn instanceof HTMLButtonElement) btn.disabled = false;
-      closeModals();
-    });
-
-    document.querySelector("[data-history-refresh]")?.addEventListener("click", () => {
-      loadHistory();
+    onDoc("click", async (event) => {
+      if (disposed) return;
+      const node = event.target;
+      if (!(node instanceof Element)) return;
+      const saveNow = node.closest("[data-save-now]");
+      if (saveNow) {
+        const btn = saveNow instanceof HTMLButtonElement ? saveNow : null;
+        if (saving || !host) return;
+        saving = true;
+        if (btn) btn.disabled = true;
+        try {
+          const collected = await host.collect();
+          await persist(collected, { fromCollect: true });
+          closeModals();
+        } catch {
+          setBanner(root, "Could not collect the report from the tracker.", "err");
+        } finally {
+          saving = false;
+          if (btn) btn.disabled = false;
+        }
+        return;
+      }
+      if (node.closest("[data-history-refresh]")) {
+        loadHistory();
+        return;
+      }
+      if (!(node instanceof HTMLElement) || !node.dataset.restore) return;
+      if (!window.confirm("¿Restaurar esta versión? Se guardará la actual primero.")) return;
+      if (host) {
+        try {
+          const collected = await host.collect();
+          await persist(collected, { silent: true });
+        } catch {
+          /* best-effort current save before restore */
+        }
+      }
+      const res = await restoreReportHistory(orgId, reportId, node.dataset.restore);
+      const message = reportFailure(copy, res.status, res.data, "Restored.");
+      setBanner(root, message.text, message.kind);
+      if (res.status === 200 && res.data.payload) {
+        payload = res.data.payload;
+        host?.post(trackerLoadMessage(payload));
+        closeModals();
+      }
     });
 
     root.querySelector("[data-share-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement)) return;
+      if (!(form instanceof HTMLFormElement) || disposed) return;
       const email = String(new FormData(form).get("email") || "").trim();
-      const err = document.querySelector("[data-share-error]");
+      const err = root.querySelector("[data-share-error]") || document.querySelector("[data-share-error]");
       const res = await createReportInvite(orgId, reportId, email);
       const message = reportFailure(copy, res.status, res.data, "Invite sent.");
       if (message.kind === "err") {
@@ -424,20 +482,6 @@ import Layout from "../../layouts/Layout.astro";
       if (link instanceof HTMLElement && res.data.link) {
         link.hidden = false;
         link.textContent = res.data.link;
-      }
-    });
-
-    document.addEventListener("click", async (event) => {
-      const node = event.target;
-      if (!(node instanceof HTMLElement) || !node.dataset.restore) return;
-      if (!window.confirm("¿Restaurar esta versión? Se guardará la actual primero.")) return;
-      const res = await restoreReportHistory(orgId, reportId, node.dataset.restore);
-      const message = reportFailure(copy, res.status, res.data, "Restored.");
-      setBanner(root, message.text, message.kind);
-      if (res.status === 200 && res.data.payload) {
-        payload = res.data.payload;
-        host?.post(trackerLoadMessage(payload));
-        closeModals();
       }
     });
   });

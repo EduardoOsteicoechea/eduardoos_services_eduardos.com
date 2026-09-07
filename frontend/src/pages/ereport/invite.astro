@@ -59,7 +59,7 @@ import Layout from "../../layouts/Layout.astro";
     type EreportPayload,
     type ReportCard,
   } from "../../lib/ereport";
-  import { isPublicEreportInvitePath, readInviteParams } from "../../lib/ereport-routes";
+  import { isPublicEreportInvitePath, readInviteParams, TRACKER_SRC } from "../../lib/ereport-routes";
   import { startTrackerHost, trackerCommandMessage, type TrackerCommand } from "../../lib/ereport-workspace";
   import { showErrorModal } from "../../lib/error-modal";
   import { onBoundPageReady } from "../../lib/session-ui";
@@ -135,7 +135,7 @@ import Layout from "../../layouts/Layout.astro";
             onError: (message) => showErrorModal({ message }),
           },
         });
-        iframe.src = "/ereport-tracker.html";
+        iframe.src = TRACKER_SRC;
         for (const command of pendingCmds.splice(0)) {
           host.post(trackerCommandMessage(command));
         }

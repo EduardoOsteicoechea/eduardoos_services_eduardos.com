@@ -297,6 +297,17 @@ html[data-page^="ereport"] .product-dash > h1 {
   font-weight: 650;
 }
 
+html[data-page^="ereport"] .product-dash .hint {
+  color: var(--site-muted-fg);
+  font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] [data-org-detail-name] {
+  margin: var(--p3) 0 0;
+  font-size: var(--font-base);
+  font-weight: 650;
+}
+
 html[data-page^="ereport"] .product-dash__section-title {
   margin: 0;
   font-size: var(--font-base);

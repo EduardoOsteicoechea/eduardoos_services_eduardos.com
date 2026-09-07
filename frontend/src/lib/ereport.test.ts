@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { isEreportOwnerPath, isPublicEreportInvitePath, readInviteParams, workspaceHref } from "./ereport-routes";
+import { isEreportOwnerPath, isPublicEreportInvitePath, readInviteParams, TRACKER_SRC, workspaceHref } from "./ereport-routes";
 import { bumpUiScale, handleTrackerMessage, SITE_TEXT_SCALE_STEPS, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -154,6 +154,15 @@ describe("eReport workspace chrome", () => {
     expect(css).toContain("--br: 3.44px");
     expect(css).toContain("#f2f3f6");
     expect(css).toContain("Kumbh Sans");
+  });
+
+  it("cache-busts the tracker canvas from one shared constant", () => {
+    expect(TRACKER_SRC).toMatch(/^\/ereport-tracker\.html\?v=\w+$/);
+    for (const page of ["workspace", "invite"]) {
+      const src = readFileSync(join(here, `../pages/ereport/${page}.astro`), "utf8");
+      expect(src).toContain("iframe.src = TRACKER_SRC");
+      expect(src).not.toContain('iframe.src = "/ereport-tracker.html"');
+    }
   });
 
   it("steps site text scale on 073 bounds without touching tracker hex", () => {
