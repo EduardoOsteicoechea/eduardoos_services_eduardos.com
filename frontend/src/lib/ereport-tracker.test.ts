@@ -13,6 +13,15 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('src="/vendor/jspdf.umd.min.js"');
   });
 
+  it("can add a main section and a section-level open issue", () => {
+    expect(tracker).toContain('data-act="add-section"');
+    expect(tracker).toContain("function addSection(");
+    expect(tracker).toContain("function addSectionItem(");
+    expect(tracker).toContain('data-act="add-section-item"');
+    expect(tracker).toContain('const SECTION_ITEMS = "__section__"');
+    expect(tracker).toContain("sec.items");
+  });
+
   it("uploads new images as files and keeps legacy dataUrl only as a display fallback", () => {
     expect(tracker).toContain("uploadImageFile");
     expect(tracker).toContain("imageSrc");

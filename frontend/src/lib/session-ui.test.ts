@@ -17,7 +17,7 @@ vi.mock("./router", () => ({
 import { getMe } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
+import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -178,6 +178,16 @@ describe("session forms", () => {
     document.dispatchEvent(new Event("astro:after-swap"));
     expect(seen).toHaveLength(2);
     expect(seen[1].querySelector("[data-banner]")?.textContent).toBe("Loading session…");
+  });
+
+  it("boots a new eReport hub after client navigation", () => {
+    document.body.innerHTML = `<section data-ereport-hub><p data-banner>Loading session…</p></section>`;
+    const seen: HTMLElement[] = [];
+    onBoundPageReady("[data-ereport-hub]", (root) => seen.push(root));
+    expect(seen).toHaveLength(1);
+    document.body.innerHTML = `<section data-ereport-hub><p data-banner>Loading session…</p></section>`;
+    document.dispatchEvent(new Event("astro:after-swap"));
+    expect(seen).toHaveLength(2);
   });
 
   it("does not leave Loading session when getMe throws", async () => {

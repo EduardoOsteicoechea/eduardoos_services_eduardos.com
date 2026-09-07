@@ -14,6 +14,7 @@ describe("api csrf and errors", () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     vi.unstubAllGlobals();
     resetCsrfMemory();
   });
@@ -28,6 +29,24 @@ describe("api csrf and errors", () => {
     expect(url).toBe("/api/auth/csrf");
     expect(init.credentials).toBe("include");
     expect(init.method).toBe("GET");
+  });
+
+  it("does not leave session fetches hanging when the API never answers", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn().mockImplementation((_url: string, init: RequestInit) => {
+      return new Promise((_, reject) => {
+        init.signal?.addEventListener("abort", () => {
+          reject(new DOMException("Aborted", "AbortError"));
+        });
+      });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const pending = getMe();
+    await vi.advanceTimersByTimeAsync(12000);
+    const result = await pending;
+    expect(result.status).toBe(0);
+    expect(result.data.error).toBe("internal_error");
+    vi.useRealTimers();
   });
 
   it("does not treat 401 /api/auth/me as a csrf source", async () => {

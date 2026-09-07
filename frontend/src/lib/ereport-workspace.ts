@@ -8,7 +8,8 @@ export type TrackerCommand =
   | "upload"
   | "clear-all"
   | "progress"
-  | "save-export";
+  | "save-export"
+  | "add-section";
 
 export type TrackerHostHandlers = {
   onBooted?: () => void;

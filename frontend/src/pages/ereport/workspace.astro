@@ -19,6 +19,9 @@ import Layout from "../../layouts/Layout.astro";
     <button class="icon-btn" type="button" data-tracker-cmd="upload" aria-label="Load local .ereport">
       <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
     </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="add-section" aria-label="Add main section">
+      <span class="material-symbols-outlined" aria-hidden="true">playlist_add</span>
+    </button>
     <button class="icon-btn" type="button" data-tracker-cmd="clear-all" aria-label="Clear tracker">
       <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
     </button>
@@ -116,10 +119,9 @@ import Layout from "../../layouts/Layout.astro";
     trackerLoadMessage,
     type TrackerCommand,
   } from "../../lib/ereport-workspace";
-  import { reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
+  import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
 
-  const root = document.querySelector("[data-ereport-workspace]");
-  if (root instanceof HTMLElement) {
+  onBoundPageReady("[data-ereport-workspace]", (root) => {
     const copy = sessionCopy();
     const params = new URLSearchParams(window.location.search);
     const orgId = params.get("org")?.trim() || "";
@@ -261,5 +263,5 @@ import Layout from "../../layouts/Layout.astro";
         closeModals();
       }
     });
-  }
+  });
 </script>

@@ -184,13 +184,13 @@ function currentSessionPath(): string {
   return location.pathname.replace(/\/+$/, "") || "/";
 }
 
-export function onSessionPageReady(init: (root: HTMLElement) => void): void {
+export function onBoundPageReady(selector: string, init: (root: HTMLElement) => void): void {
   const expectedPath = currentSessionPath();
   const start = () => {
     if (currentSessionPath() !== expectedPath) {
       return;
     }
-    const root = document.querySelector("[data-session]");
+    const root = document.querySelector(selector);
     if (!(root instanceof HTMLElement) || root.dataset.bound === "true") {
       return;
     }
@@ -200,6 +200,10 @@ export function onSessionPageReady(init: (root: HTMLElement) => void): void {
   document.addEventListener("astro:page-load", start);
   document.addEventListener("astro:after-swap", start);
   start();
+}
+
+export function onSessionPageReady(init: (root: HTMLElement) => void): void {
+  onBoundPageReady("[data-session]", init);
 }
 
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {

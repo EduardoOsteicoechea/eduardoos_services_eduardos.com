@@ -145,10 +145,9 @@ import Layout from "../../layouts/Layout.astro";
     type ReportCard,
   } from "../../lib/ereport";
   import { showErrorModal } from "../../lib/error-modal";
-  import { reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
-  const root = document.querySelector("[data-ereport-hub]");
-  if (root instanceof HTMLElement) {
+  onBoundPageReady("[data-ereport-hub]", (root) => {
     const copy = sessionCopy();
     let canCreate = false;
     let ownerSafe = "";
@@ -498,5 +497,5 @@ import Layout from "../../layouts/Layout.astro";
         link.textContent = res.data.link;
       }
     });
-  }
+  });
 </script>

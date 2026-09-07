@@ -374,6 +374,10 @@ button.has-label { gap: 0.35rem; }
 }
 .section-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
 .section-actions .hint { color: var(--muted); font-size: 0.8rem; }
+.section-open { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+.section-open-label { color: var(--muted); font-size: 0.8rem; }
+.app-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 0; }
+.app-actions .ghost { display: inline-flex; align-items: center; gap: 0.35rem; }
 .section-actions button.danger {
   background: transparent; color: var(--danger); border-color: var(--line);
   width: 2rem; height: 2rem; padding: 0;
@@ -728,7 +732,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 
 @media print {
-  .topbar, .sidebar, .howto, .group-actions, .section-actions button, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
+  .topbar, .sidebar, .howto, .group-actions, .section-actions button, .app-actions, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
   .section-body, .group-body, .item-body { display: block !important; }
   .layout { display: block; }
   .main-col { max-width: none; padding: 0; }
@@ -787,7 +791,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     </div>
     <div class="howto-modal-body">
       <ol>
-        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> add per-issue review rows.</li>
+        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> add per-issue review rows. Add a <strong>main section</strong> or a <strong>section open issue</strong> from the section header.</li>
         <li>Usá los iconos del menú superior del sitio para tamaño de fuente, cargar <strong>.ereport</strong>, limpiar, ver progreso o <strong>guardar todo</strong>. El tema claro/oscuro sigue el interruptor del menú global del sitio.</li>
         <li>El sidebar derecho navega por cada incidencia (tooltip: subartículo + nombre).</li>
         <li>Al guardar se exportan <strong>.ereport + HTML + PDF</strong>. Las imágenes van en base64 dentro del .ereport.</li>
@@ -981,11 +985,36 @@ function normalizeState(data) {
     };
   }
   (data.sections || []).forEach(sec => {
-    (sec.groups || []).forEach(grp => {
+    if (!Array.isArray(sec.groups)) sec.groups = [];
+    sec.items = (sec.items || []).map(normalizeItem);
+    sec.groups.forEach(grp => {
       grp.items = (grp.items || []).map(normalizeItem);
     });
   });
   return data;
+}
+
+const SECTION_ITEMS = "__section__";
+
+function ensureSectionItems(sec) {
+  if (!sec) return [];
+  if (!Array.isArray(sec.items)) sec.items = [];
+  return sec.items;
+}
+
+function locateItem(sid, gid, iid) {
+  const sec = (state.sections || []).find(s => s.id === sid);
+  if (!sec) return null;
+  if (gid === SECTION_ITEMS) {
+    const list = ensureSectionItems(sec);
+    const item = list.find(i => i.id === iid);
+    return item ? { sec, gid, item, list, grp: { id: SECTION_ITEMS, title: "Open issues", items: list } } : null;
+  }
+  const grp = (sec.groups || []).find(g => g.id === gid);
+  if (!grp) return null;
+  if (!Array.isArray(grp.items)) grp.items = [];
+  const item = grp.items.find(i => i.id === iid);
+  return item ? { sec, gid, item, list: grp.items, grp } : null;
 }
 
 function applyTheme() {
@@ -1252,18 +1281,24 @@ function collectFromDom() {
     const sid = secEl.dataset.section;
     const gid = block.dataset.group;
     const sec = state.sections.find(s => s.id === sid);
-    const grp = sec && sec.groups.find(g => g.id === gid);
+    const grp = sec && (sec.groups || []).find(g => g.id === gid);
     if (!grp) return;
     const titleEl = block.querySelector(".inplace-title");
     if (titleEl) grp.title = readInplace(titleEl);
+  });
+  document.querySelectorAll(".section-block").forEach(block => {
+    const sid = block.dataset.section;
+    const sec = state.sections.find(s => s.id === sid);
+    if (!sec) return;
+    const titleEl = block.querySelector(".inplace-section-title");
+    if (titleEl) sec.title = readInplace(titleEl);
   });
   document.querySelectorAll(".item-card").forEach(card => {
     const sid = card.dataset.section;
     const gid = card.dataset.group;
     const iid = card.dataset.item;
-    const sec = state.sections.find(s => s.id === sid);
-    const grp = sec && sec.groups.find(g => g.id === gid);
-    const item = grp && grp.items.find(i => i.id === iid);
+    const found = locateItem(sid, gid, iid);
+    const item = found && found.item;
     if (!item) return;
     item.nombre = readInplace(card.querySelector(".inplace-nombre")).trim();
     item.incidencia = readInplace(card.querySelector(".inplace-incidencia"));
@@ -1276,33 +1311,69 @@ function collectFromDom() {
 
 function setStatus(sid, gid, iid, status) {
   collectFromDom();
-  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
-  item.status = item.status === status ? "" : status;
+  const found = locateItem(sid, gid, iid);
+  if (!found) return;
+  found.item.status = found.item.status === status ? "" : status;
   render();
 }
 
 function setCriteriaStatus(sid, gid, iid, label, status) {
   collectFromDom();
-  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
-  if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
-  item.criteriaStatus[label] = item.criteriaStatus[label] === status ? "" : status;
+  const found = locateItem(sid, gid, iid);
+  if (!found) return;
+  if (!found.item.criteriaStatus || typeof found.item.criteriaStatus !== "object") found.item.criteriaStatus = {};
+  found.item.criteriaStatus[label] = found.item.criteriaStatus[label] === status ? "" : status;
   render();
 }
 
 function addItem(sid, gid) {
   collectFromDom();
+  if (gid === SECTION_ITEMS) {
+    addSectionItem(sid);
+    return;
+  }
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
   grp.items.push(normalizeItem({ id: uid(gid) }));
   render();
 }
 
+function addSection() {
+  collectFromDom();
+  const n = (state.sections || []).length + 1;
+  const id = uid("section");
+  state.sections.push({
+    id,
+    title: n + ". New section",
+    kind: "funcionalidades",
+    items: [],
+    groups: []
+  });
+  collapseState.sections.delete(id);
+  syncCollapseToState();
+  render();
+}
+
+function addSectionItem(sid) {
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  const list = ensureSectionItems(sec);
+  list.push(normalizeItem({ id: uid("open") }));
+  collapseState.sections.delete(sid);
+  syncCollapseToState();
+  render();
+}
+
 function removeItem(sid, gid, iid) {
   collectFromDom();
-  const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  if (grp.items.length <= 1) {
-    grp.items[0] = normalizeItem({ id: uid(gid) });
+  const found = locateItem(sid, gid, iid);
+  if (!found) return;
+  if (gid === SECTION_ITEMS) {
+    found.sec.items = found.list.filter(i => i.id !== iid);
+  } else if (found.list.length <= 1) {
+    found.list[0] = normalizeItem({ id: uid(gid) });
   } else {
-    grp.items = grp.items.filter(i => i.id !== iid);
+    found.grp.items = found.list.filter(i => i.id !== iid);
   }
   render();
 }
@@ -1319,6 +1390,7 @@ function clearSection(sid) {
   if (!confirm("¿Vaciar todas las incidencias de esta sección?")) return;
   collectFromDom();
   const sec = state.sections.find(s => s.id === sid);
+  sec.items = [];
   sec.groups.forEach(grp => {
     grp.items = [normalizeItem({ id: uid(grp.id) })];
   });
@@ -1357,7 +1429,9 @@ function onImagesSelected(sid, gid, iid, which, fileList) {
   const files = Array.from(fileList || []);
   if (!files.length) return;
   collectFromDom();
-  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  const found = locateItem(sid, gid, iid);
+  const item = found && found.item;
+  if (!item) return;
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
   let pending = files.length;
   files.forEach(file => {
@@ -1374,7 +1448,8 @@ function onImagesSelected(sid, gid, iid, which, fileList) {
 
 function removeImage(sid, gid, iid, which, idx) {
   collectFromDom();
-  const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
+  const found = locateItem(sid, gid, iid);
+  const item = found && found.item;
   if (!item) return;
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
   const list = item[key] || [];
@@ -1551,8 +1626,17 @@ function renderNavRail() {
     <div class="nav-sec" data-section="${sec.id}" title="${escapeAttr(sec.title)}">
       <div class="nav-sec-label">${escapeHtml(shortNavLabel(sec))} · ${escapeHtml(sec.title)}</div>
       <div class="nav-dots">
-      ${(sec.groups || []).flatMap(grp =>
-        (grp.items || []).map(item => `
+      ${[
+        ...(sec.items || []).map(item => `
+          <button type="button" class="nav-dot ${navDotClass(effectiveStatus(item))}"
+            data-target="item-${item.id}"
+            data-group="${SECTION_ITEMS}"
+            data-sub="Open issues"
+            data-name="${escapeAttr(itemNavName(item))}"
+            aria-label="${escapeAttr("Open issues · " + itemNavName(item))}"></button>
+        `),
+        ...(sec.groups || []).flatMap(grp =>
+          (grp.items || []).map(item => `
           <button type="button" class="nav-dot ${navDotClass(effectiveStatus(item))}"
             data-target="item-${item.id}"
             data-group="${escapeAttr(grp.id)}"
@@ -1560,7 +1644,8 @@ function renderNavRail() {
             data-name="${escapeAttr(itemNavName(item))}"
             aria-label="${escapeAttr(grp.title + " · " + itemNavName(item))}"></button>
         `)
-      ).join("")}
+        )
+      ].join("")}
       </div>
     </div>
   `).join("");
@@ -1642,8 +1727,8 @@ window.addEventListener("resize", () => {
 });
 
 function itemValue(sid, gid, iid, key) {
-  const item = state.sections.find(s => s.id === sid)?.groups.find(g => g.id === gid)?.items.find(i => i.id === iid);
-  return (item && item[key]) || "";
+  const found = locateItem(sid, gid, iid);
+  return (found && found.item && found.item[key]) || "";
 }
 
 function syncStickyOffsets() {
@@ -1668,16 +1753,23 @@ function render() {
       <div class="section-title">
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
-          <h2>${escapeHtml(sec.title)}</h2>
+          ${renderInplace("input", "inplace-section-title", sec.title || "", "Main section name")}
         </div>
         <div class="section-actions">
           <span class="hint">${sec.kind === "funcionalidades" ? "Por funcionalidad" : "Por subartículo"}</span>
+          <button type="button" class="ghost" data-act="add-section-item" title="Add open issue">
+            ${mi("add")}
+          </button>
           <button type="button" class="danger" data-act="clear-section" title="Vaciar sección">
             ${mi("delete")}
           </button>
         </div>
       </div>
       <div class="section-body">
+      <div class="section-open">
+        <div class="section-open-label">Open issues</div>
+        ${(sec.items || []).map(it => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: sec.items }, it)).join("")}
+      </div>
       ${sec.groups.map(grp => {
         const grpCollapsed = isCollapsed("groups", grp.id);
         return `
@@ -1701,7 +1793,11 @@ function render() {
       </div>
     </section>
   `;
-  }).join("");
+  }).join("") + `
+    <div class="app-actions">
+      <button type="button" class="ghost" data-act="add-section" title="Add main section">${mi("playlist_add")} Main section</button>
+    </div>
+  `;}
 
   root.querySelectorAll("[data-collapse]").forEach(btn => {
     btn.onclick = (e) => {
@@ -1732,14 +1828,14 @@ function render() {
     });
     card.querySelectorAll(".thumb-q").forEach(img => {
       img.onclick = () => {
-        const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
-        openModal(item.imagesIncidencia, Number(img.dataset.idx));
+        const item = locateItem(sid, gid, iid)?.item;
+        if (item) openModal(item.imagesIncidencia, Number(img.dataset.idx));
       };
     });
     card.querySelectorAll(".thumb-s").forEach(img => {
       img.onclick = () => {
-        const item = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid).items.find(i => i.id === iid);
-        openModal(item.imagesSolucion, Number(img.dataset.idx));
+        const item = locateItem(sid, gid, iid)?.item;
+        if (item) openModal(item.imagesSolucion, Number(img.dataset.idx));
       };
     });
     card.querySelector(".fecha-incidencia").onchange = () => updateStatus();
@@ -1790,6 +1886,23 @@ function render() {
   root.querySelectorAll('[data-act="clear-section"]').forEach(btn => {
     btn.onclick = () => clearSection(btn.closest(".section-block").dataset.section);
   });
+  root.querySelectorAll('[data-act="add-section-item"]').forEach(btn => {
+    btn.onclick = () => addSectionItem(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="add-section"]').forEach(btn => {
+    btn.onclick = () => addSection();
+  });
+  root.querySelectorAll(".section-block").forEach(block => {
+    const titleEl = block.querySelector(".inplace-section-title");
+    if (!titleEl) return;
+    const sec = state.sections.find(s => s.id === block.dataset.section);
+    titleEl._value = (sec && sec.title) || "";
+    bindInplace(titleEl, "Main section name", (v) => {
+      if (sec) sec.title = v;
+      updateStatus();
+      renderNavRail();
+    });
+  });
   renderNavRail();
   updateStatus();
   syncStickyOffsets();
@@ -1816,9 +1929,7 @@ function updateStatus() {
   collectFromDom();
   let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, na = 0;
   const missingList = [];
-  state.sections.forEach(sec => {
-    sec.groups.forEach(grp => {
-      (grp.items || []).forEach((it, idx) => {
+  const countItem = (it, idx, labelPrefix) => {
         total += 1;
         const eff = effectiveStatus(it);
         if (itemComplete(it)) {
@@ -1828,10 +1939,14 @@ function updateStatus() {
           if (eff === "no_aplica") na += 1;
         } else {
           missing += 1;
-          const label = (it.nombre && it.nombre.trim()) || `fila ${idx + 1}`;
-          missingList.push(`${grp.title} · ${label}${itemStarted(it) ? "" : " (vacía)"}`);
+          const label = (it.nombre && it.nombre.trim()) || `${labelPrefix} ${idx + 1}`;
+          missingList.push(label);
         }
-      });
+  };
+  state.sections.forEach(sec => {
+    (sec.items || []).forEach((it, idx) => countItem(it, idx, "open issue"));
+    sec.groups.forEach(grp => {
+      (grp.items || []).forEach((it, idx) => countItem(it, idx, (grp.title || "group") + " · fila"));
     });
   });
   const metaOk = !!(state.reportDate && state.reportNumber && state.reportNumber.trim());
@@ -1888,6 +2003,24 @@ function buildPdfReportElement(data) {
     </div>`;
   data.sections.forEach(sec => {
     html += `<h2 style="margin:22px 0 8px;border-bottom:3px solid #000000;padding-bottom:4px;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    if ((sec.items || []).length) {
+      html += `<h3 style="margin:14px 0 6px;color:#000000">Open issues</h3>`;
+      (sec.items || []).forEach((it, idx) => {
+        if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
+        const eff = effectiveStatus(it);
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const name = (it.nombre && it.nombre.trim()) || `Open issue ${idx + 1}`;
+        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
+        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
+          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+          <p style="margin:8px 0 4px"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+          ${imgGrid(it.imagesIncidencia)}
+          <p style="margin:8px 0 4px"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          ${imgGrid(it.imagesSolucion)}
+        </div>`;
+      });
+    }
     sec.groups.forEach(grp => {
       html += `<h3 style="margin:14px 0 6px;color:#000000">${escapeHtml(grp.title)}</h3>`;
       (grp.items || []).forEach((it, idx) => {
@@ -2014,6 +2147,7 @@ function emptyLikeEmbedded() {
   data.theme = "dark";
   data.collapse = null;
   (data.sections || []).forEach(sec => {
+    sec.items = [];
     (sec.groups || []).forEach(grp => {
       grp.items = [normalizeItem({ id: uid(grp.id || "item") })];
     });
@@ -2131,6 +2265,7 @@ function runHostCommand(command) {
     case "clear-all": clearAllReport(); break;
     case "progress": openProgressModal("info"); break;
     case "save-export": openProgressModal("save"); break;
+    case "add-section": addSection(); break;
     default: break;
   }
 }

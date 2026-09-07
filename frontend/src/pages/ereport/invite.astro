@@ -62,9 +62,9 @@ import Layout from "../../layouts/Layout.astro";
   import { isPublicEreportInvitePath, readInviteParams } from "../../lib/ereport-routes";
   import { startTrackerHost, trackerCommandMessage, type TrackerCommand } from "../../lib/ereport-workspace";
   import { showErrorModal } from "../../lib/error-modal";
+  import { onBoundPageReady } from "../../lib/session-ui";
 
-  const root = document.querySelector("[data-ereport-invite]");
-  if (root instanceof HTMLElement) {
+  onBoundPageReady("[data-ereport-invite]", (root) => {
     if (!isPublicEreportInvitePath(window.location.pathname)) {
       showErrorModal({ message: "This invite route is public and should not require a site account." });
     }
@@ -217,5 +217,5 @@ import Layout from "../../layouts/Layout.astro";
         host.post(trackerCommandMessage(cmd.dataset.trackerCmd as TrackerCommand));
       }
     });
-  }
+  });
 </script>

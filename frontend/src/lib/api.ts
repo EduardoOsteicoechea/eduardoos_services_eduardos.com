@@ -97,6 +97,22 @@ function isUnsafe(method: string): boolean {
   return method !== "GET" && method !== "HEAD";
 }
 
+const apiTimeoutMs = 12000;
+
+function timeoutSignal(existing?: AbortSignal | null): { signal: AbortSignal; cancel: () => void } {
+  const controller = new AbortController();
+  const timer = globalThis.setTimeout(() => controller.abort(), apiTimeoutMs);
+  const cancel = () => globalThis.clearTimeout(timer);
+  if (existing) {
+    if (existing.aborted) {
+      controller.abort();
+    } else {
+      existing.addEventListener("abort", () => controller.abort(), { once: true });
+    }
+  }
+  return { signal: controller.signal, cancel };
+}
+
 async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   const headers = new Headers(init.headers);
   headers.set("Accept", "application/json");
@@ -107,17 +123,32 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
       headers.set("X-CSRF-Token", csrfToken);
     }
   }
-  const response = await fetch(apiUrl(path), {
-    ...init,
-    headers,
-    credentials: "include",
-  });
-  const data = await parseJSON<T & APIErrorBody>(response);
-  const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
-  if (!data.request_id && requestId) {
-    data.request_id = requestId;
+  const timed = timeoutSignal(init.signal);
+  try {
+    const response = await fetch(apiUrl(path), {
+      ...init,
+      headers,
+      credentials: "include",
+      signal: timed.signal,
+    });
+    const data = await parseJSON<T & APIErrorBody>(response);
+    const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
+    if (!data.request_id && requestId) {
+      data.request_id = requestId;
+    }
+    return { status: response.status, data, requestId };
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      return {
+        status: 0,
+        data: { error: "internal_error", message: "Could not reach the API." } as T & APIErrorBody,
+        requestId: "",
+      };
+    }
+    throw err;
+  } finally {
+    timed.cancel();
   }
-  return { status: response.status, data, requestId };
 }
 
 export async function apiGet<T>(path: string): Promise<T> {

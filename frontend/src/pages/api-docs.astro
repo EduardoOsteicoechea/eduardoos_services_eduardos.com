@@ -17,9 +17,9 @@ import Layout from "../layouts/Layout.astro";
 <script>
   import { fetchAPIDocs } from "../lib/ereport";
   import { showErrorModal } from "../lib/error-modal";
+  import { onBoundPageReady } from "../lib/session-ui";
 
-  const root = document.querySelector("[data-api-docs]");
-  if (root instanceof HTMLElement) {
+  onBoundPageReady("[data-api-docs]", (root) => {
     const banner = root.querySelector("[data-banner]");
     const docs = root.querySelector("[data-docs]");
     void (async () => {
@@ -44,5 +44,5 @@ import Layout from "../layouts/Layout.astro";
         docs.textContent = JSON.stringify(res.data, null, 2);
       }
     })();
-  }
+  });
 </script>

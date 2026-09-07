@@ -18,6 +18,12 @@ describe("eReport public invite routing", () => {
     expect(isEreportOwnerPath("/ereport/workspace")).toBe(true);
   });
 
+  it("rebinds the hub after client navigation", () => {
+    const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
+    expect(hubSrc).toContain("onBoundPageReady");
+    expect(hubSrc).toContain("[data-ereport-hub]");
+  });
+
   it("does not AuthGate the invite page", () => {
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
     expect(inviteSrc).not.toContain("requireAuth");
