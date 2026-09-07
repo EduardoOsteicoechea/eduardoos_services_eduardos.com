@@ -24,6 +24,18 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("[data-ereport-hub]");
   });
 
+  it("keeps create-org, existing reports, and org lists visible on the hub", () => {
+    const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
+    expect(hubSrc).toContain('data-view="register"');
+    expect(hubSrc).toContain('data-view="recent"');
+    expect(hubSrc).toContain('data-view="orgs"');
+    expect(hubSrc).toContain("data-register-form");
+    expect(hubSrc).toContain("data-recent-list");
+    expect(hubSrc).not.toMatch(/data-view="register" hidden/);
+    expect(hubSrc).not.toMatch(/data-view="recent" hidden/);
+    expect(hubSrc).not.toMatch(/data-view="orgs" hidden/);
+  });
+
   it("does not AuthGate the invite page", () => {
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
     expect(inviteSrc).not.toContain("requireAuth");

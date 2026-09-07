@@ -40,47 +40,20 @@ import Layout from "../../layouts/Layout.astro";
       <div class="panel" data-view="dashboard">
         <h2>Dashboard</h2>
         <div class="ereport-cards">
-          <button type="button" data-hub-view="orgs">Orgs</button>
-          <button type="button" data-hub-view="register">New org</button>
-          <button type="button" data-hub-view="recent">Recent reports</button>
+          <button type="button" data-hub-view="recent">Reports</button>
+          <button type="button" data-hub-view="orgs">Organizations</button>
+          <button type="button" data-hub-view="register">New organization</button>
           <button type="button" data-hub-view="new-report">New report</button>
           <button type="button" data-hub-view="manage">Manage</button>
         </div>
       </div>
 
-      <div class="panel" data-view="register" hidden>
-        <h2>New organization</h2>
-        <form data-register-form>
-          <label>
-            Organization name
-            <input name="name" required maxlength="120" />
-          </label>
-          <label>
-            First report name
-            <input name="firstReportName" required maxlength="200" />
-          </label>
-          <button type="submit" data-needs-create>Create org + first report</button>
-        </form>
+      <div class="panel" data-view="recent">
+        <h2>Existing reports</h2>
+        <ul class="ereport-list" data-recent-list></ul>
       </div>
 
-      <div class="panel" data-view="new-report" hidden>
-        <h2>New report</h2>
-        <form data-report-form>
-          <label>
-            Organization
-            <select name="orgId" required data-org-select></select>
-          </label>
-          <label>
-            Report name
-            <input name="tema" required maxlength="200" />
-          </label>
-          <button type="submit" data-needs-create>Create report</button>
-          <button type="button" data-import-btn data-needs-create>Import .ereport</button>
-          <input type="file" accept=".ereport,application/json" data-import-file hidden />
-        </form>
-      </div>
-
-      <div class="panel" data-view="orgs" hidden>
+      <div class="panel" data-view="orgs">
         <h2>Organizations</h2>
         <ul class="ereport-list" data-org-list></ul>
         <div data-org-detail hidden>
@@ -113,12 +86,39 @@ import Layout from "../../layouts/Layout.astro";
         </div>
       </div>
 
-      <div class="panel" data-view="recent" hidden>
-        <h2>Recent reports</h2>
-        <ul class="ereport-list" data-recent-list></ul>
+      <div class="panel" data-view="register">
+        <h2>New organization</h2>
+        <form data-register-form>
+          <label>
+            Organization name
+            <input name="name" required maxlength="120" />
+          </label>
+          <label>
+            First report name
+            <input name="firstReportName" required maxlength="200" />
+          </label>
+          <button type="submit" data-needs-create>Create org + first report</button>
+        </form>
       </div>
 
-      <div class="panel" data-view="manage" hidden>
+      <div class="panel" data-view="new-report">
+        <h2>New report</h2>
+        <form data-report-form>
+          <label>
+            Organization
+            <select name="orgId" required data-org-select></select>
+          </label>
+          <label>
+            Report name
+            <input name="tema" required maxlength="200" />
+          </label>
+          <button type="submit" data-needs-create>Create report</button>
+          <button type="button" data-import-btn data-needs-create>Import .ereport</button>
+          <input type="file" accept=".ereport,application/json" data-import-file hidden />
+        </form>
+      </div>
+
+      <div class="panel" data-view="manage">
         <h2>Manage organizations</h2>
         <ul class="ereport-list" data-manage-list></ul>
       </div>
@@ -160,9 +160,10 @@ import Layout from "../../layouts/Layout.astro";
       reportFailure(copy, status, data, success);
 
     const setView = (view: string) => {
-      root.querySelectorAll("[data-view]").forEach((node) => {
-        if (node instanceof HTMLElement) node.hidden = node.dataset.view !== view;
-      });
+      const panel = root.querySelector(`[data-view="${view}"]`);
+      if (panel instanceof HTMLElement) {
+        panel.scrollIntoView({ block: "start" });
+      }
     };
 
     const fillOrgSelect = () => {
@@ -174,10 +175,21 @@ import Layout from "../../layouts/Layout.astro";
         .join("")}`;
     };
 
-    const paintList = (selector: string, items: Array<{ id: string; label: string; href?: string; extra?: string }>) => {
+    const paintList = (
+      selector: string,
+      items: Array<{ id: string; label: string; href?: string; extra?: string }>,
+      emptyText: string,
+    ) => {
       const list = root.querySelector(selector);
       if (!(list instanceof HTMLElement)) return;
       list.replaceChildren();
+      if (items.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = emptyText;
+        list.append(empty);
+        return;
+      }
       for (const item of items) {
         const li = document.createElement("li");
         if (item.href) {
@@ -208,6 +220,13 @@ import Layout from "../../layouts/Layout.astro";
       if (!(list instanceof HTMLElement)) return;
       list.replaceChildren();
       const sorted = [...orgs].sort((a, b) => a.order - b.order);
+      if (sorted.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No organizations yet. Create one below.";
+        list.append(empty);
+        return;
+      }
       for (const org of sorted) {
         const li = document.createElement("li");
         const name = document.createElement("strong");
@@ -239,6 +258,13 @@ import Layout from "../../layouts/Layout.astro";
       const list = root.querySelector("[data-report-list]");
       if (!(list instanceof HTMLElement)) return;
       list.replaceChildren();
+      if (reports.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "This organization has no reports yet.";
+        list.append(empty);
+        return;
+      }
       for (const report of reports) {
         const li = document.createElement("li");
         const a = document.createElement("a");
@@ -279,6 +305,7 @@ import Layout from "../../layouts/Layout.astro";
       paintList(
         "[data-org-list]",
         orgs.filter((o) => !o.hidden).map((o) => ({ id: o.id, label: o.name })),
+        "No organizations yet. Create one below.",
       );
       paintList(
         "[data-recent-list]",
@@ -287,11 +314,14 @@ import Layout from "../../layouts/Layout.astro";
           label: `${r.tema} · ${r.orgName || r.orgId}`,
           href: workspaceHref(r.orgId, r.id, ownerSafe),
         })),
+        "No reports yet. Create an organization or a report below.",
       );
       paintManage();
+      const selected = orgs.find((o) => o.id === activeOrgId && !o.hidden) || orgs.find((o) => !o.hidden);
+      if (selected) await openOrg(selected.id, false);
     };
 
-    const openOrg = async (orgId: string) => {
+    const openOrg = async (orgId: string, scroll = true) => {
       activeOrgId = orgId;
       const res = await fetchEreportOrg(orgId);
       if (res.status !== 200) {
@@ -304,13 +334,17 @@ import Layout from "../../layouts/Layout.astro";
       if (detail instanceof HTMLElement) detail.hidden = false;
       if (name instanceof HTMLElement) name.textContent = res.data.org?.name || orgId;
       paintReports();
-      setView("orgs");
+      if (scroll) setView("orgs");
     };
 
     void requireAuth(root, copy).then(async (me) => {
       if (!me) return;
       setBanner(root, "Signed in.", "ok");
-      await reload();
+      try {
+        await reload();
+      } catch {
+        setBanner(root, copy.loadError, "err");
+      }
     });
 
     document.addEventListener("click", (event) => {
