@@ -12,11 +12,11 @@ import (
 
 func main() {
 	cfg := loadConfig()
-	if cfg.SecureCookies && strings.TrimSpace(os.Getenv("JWT_SECRET")) == "" {
+	command, confirmBackup := parseAPICommand(os.Args[1:])
+	if command == "serve" && cfg.SecureCookies && strings.TrimSpace(os.Getenv("JWT_SECRET")) == "" {
 		log.Fatal("JWT_SECRET is required when COOKIE_SECURE=true")
 	}
 
-	command, confirmBackup := parseAPICommand(os.Args[1:])
 	logger := newJSONLogger()
 	setupCtx, cancel := context.WithTimeout(context.Background(), migrationSetupTimeout)
 	defer cancel()
@@ -37,6 +37,12 @@ func main() {
 	case "migrate-destructive":
 		if err := store.ApplyDestructiveMigrations(setupCtx, logger, cfg.AppEnv, confirmBackup); err != nil {
 			logger.Error("database_setup_failed", slog.String("reason", migrationReason(err)))
+			os.Exit(1)
+		}
+		return
+	case "ereport-import":
+		if err := runEreportImportCLI(setupCtx, cfg, store, os.Args[2:]); err != nil {
+			logger.Error("ereport_import_failed", slog.String("reason", err.Error()))
 			os.Exit(1)
 		}
 		return
@@ -72,6 +78,8 @@ func parseAPICommand(args []string) (command, confirmBackup string) {
 		fs.StringVar(&confirmBackup, "confirm-backup", "", "")
 		_ = fs.Parse(args[1:])
 		return command, confirmBackup
+	case "ereport-import":
+		return "ereport-import", ""
 	default:
 		return command, ""
 	}

@@ -518,6 +518,80 @@ func TestMergeAPIPayload_AddItemRejectsMutation(t *testing.T) {
 	}
 }
 
+func TestEreportImportFromFilesUsesUserIDNotEmail(t *testing.T) {
+	app := newTestApp(false)
+	user := app.mustUser("member@eduardoos.com")
+	dir := t.TempDir()
+	metaPath := filepath.Join(dir, "meta.json")
+	payloadPath := filepath.Join(dir, "report.json")
+	if err := os.WriteFile(metaPath, []byte(`{
+		"id":"4120fcdf-b872-4493-9c3f-785e6c282809",
+		"tema":"eduardoos.com_fixes",
+		"ownerEmail":"eduardooost@gmail.com",
+		"ownerSafe":"eduardooost_at_gmail.com",
+		"createdAt":"2026-08-20T16:06:54Z",
+		"updatedAt":"2026-08-20T16:06:54Z"
+	}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(payloadPath, []byte(`{
+		"appTitle":"Issue Tracker",
+		"reportDate":"",
+		"reportNumber":"",
+		"sections":[{"id":"section-a","kind":"funcionalidades","title":"1. Product / platform","groups":[{"id":"group-1","title":"General","items":[{"id":"group-1-item-1","incidencia":"","images":[]}]}]}]
+	}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := importEreportFromFiles(context.Background(), app.store, app.ereport, ereportImportArgs{
+		Email: "member@eduardoos.com", MetaPath: metaPath, PayloadPath: payloadPath, OrgName: "eduardoos.com",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.OwnerUserID != user.ID || result.ReportID != "4120fcdf-b872-4493-9c3f-785e6c282809" {
+		t.Fatalf("ids: %+v", result)
+	}
+	if !strings.Contains(result.ViewPath, "org="+result.OrgID) || !strings.Contains(result.ViewPath, "report="+result.ReportID) {
+		t.Fatalf("view path: %s", result.ViewPath)
+	}
+
+	meta, payload, err := app.ereport.loadReport(user.ID, result.OrgID, result.ReportID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if meta.Tema != "eduardoos.com_fixes" || payload["reportName"] != "eduardoos.com_fixes" {
+		t.Fatalf("payload: tema=%s name=%v", meta.Tema, payload["reportName"])
+	}
+	if payload["orgName"] != "eduardoos.com" {
+		t.Fatalf("orgName: %v", payload["orgName"])
+	}
+
+	rootEntries, err := os.ReadDir(app.cfg.EreportMediaRoot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range rootEntries {
+		name := entry.Name()
+		if strings.Contains(name, "@") || strings.Contains(name, "gmail") || strings.Contains(name, "eduardooost") || strings.Contains(name, "_at_") {
+			t.Fatalf("email leaked into owner dir: %s", name)
+		}
+		if name != user.ID {
+			t.Fatalf("owner dir %s want %s", name, user.ID)
+		}
+	}
+
+	again, err := importEreportFromFiles(context.Background(), app.store, app.ereport, ereportImportArgs{
+		Email: "member@eduardoos.com", MetaPath: metaPath, PayloadPath: payloadPath, OrgName: "eduardoos.com",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if again.OrgID != result.OrgID || again.ReportID != result.ReportID {
+		t.Fatalf("reimport changed ids: %+v %+v", result, again)
+	}
+}
+
 func tinyPNG() []byte {
 	return []byte{
 		0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,

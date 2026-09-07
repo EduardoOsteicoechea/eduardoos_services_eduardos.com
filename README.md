@@ -62,6 +62,16 @@ Inspect migration status without printing secrets, documents, or credentials:
 /opt/apps/eduardoos/current/api migrate-status
 ```
 
+Import a legacy `meta.json` + `report.json` pair onto that account’s filesystem tree (lookup is by email; directories use the immutable user id only):
+
+```bash
+/opt/apps/eduardoos/current/api ereport-import \
+  --email=user@example.com \
+  --meta=/path/meta.json \
+  --payload=/path/report.json \
+  --org-name=eduardoos.com
+```
+
 That command logs only migration id, description, checksum, timestamp, and the destructive flag. In Compass or `mongosh`, open database `eduardoos` and inspect `schema_migrations` the same way. Do not dump `users`, sessions, or OTP collections to the terminal.
 
 Backup before any future destructive migration:
