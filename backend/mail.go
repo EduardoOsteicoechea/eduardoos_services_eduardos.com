@@ -50,13 +50,51 @@ type smtpMailer struct {
 	cfg config
 }
 
+func sanitizeSMTPName(name string) string {
+	name = strings.ReplaceAll(name, "\r", "")
+	name = strings.ReplaceAll(name, "\n", "")
+	return strings.ReplaceAll(name, "\"", "")
+}
+
+func smtpUsesStartTLS(port string) bool {
+	switch strings.TrimSpace(port) {
+	case "25", "587", "2525":
+		return true
+	default:
+		return false
+	}
+}
+
+func smtpIdentities(cfg config) (headerFrom, envelopeFrom string) {
+	configured := strings.TrimSpace(cfg.SMTPFromAddress)
+	user := strings.TrimSpace(cfg.SMTPUsername)
+	name := sanitizeSMTPName(strings.TrimSpace(cfg.SMTPFromName))
+	envelopeFrom = configured
+	if envelopeFrom == "" {
+		envelopeFrom = user
+	}
+	// Gmail and similar hosts only accept MAIL FROM / From of the authenticated mailbox.
+	if strings.Contains(user, "@") && configured != "" && !strings.EqualFold(configured, user) {
+		envelopeFrom = user
+	}
+	if name != "" && envelopeFrom != "" {
+		headerFrom = name + " <" + envelopeFrom + ">"
+	} else {
+		headerFrom = envelopeFrom
+	}
+	return headerFrom, envelopeFrom
+}
+
 func (m smtpMailer) Send(to, subject, body string) error {
 	if m.cfg.SMTPHost == "" || m.cfg.SMTPPort == "" {
 		return fmt.Errorf("smtp not configured")
 	}
-	from := m.cfg.SMTPFromAddress
+	headerFrom, envelopeFrom := smtpIdentities(m.cfg)
+	if envelopeFrom == "" {
+		return fmt.Errorf("smtp not configured")
+	}
 	msg := strings.Join([]string{
-		"From: " + from,
+		"From: " + headerFrom,
 		"To: " + to,
 		"Subject: " + subject,
 		"MIME-Version: 1.0",
@@ -64,10 +102,10 @@ func (m smtpMailer) Send(to, subject, body string) error {
 		"",
 		body,
 	}, "\r\n")
-	if m.cfg.SMTPPort == "587" {
-		return m.sendStartTLS(to, from, msg)
+	if smtpUsesStartTLS(m.cfg.SMTPPort) {
+		return m.sendStartTLS(to, envelopeFrom, msg)
 	}
-	return m.sendImplicitTLS(to, from, msg)
+	return m.sendImplicitTLS(to, envelopeFrom, msg)
 }
 
 func (m smtpMailer) sendImplicitTLS(to, from, msg string) error {

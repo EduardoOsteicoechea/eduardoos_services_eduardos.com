@@ -52,19 +52,29 @@ type openAICompatClient struct {
 	http    *http.Client
 }
 
-func (c openAICompatClient) Chat(ctx context.Context, prompt string) (ChatResult, error) {
-	if c.apiKey == "" {
-		return ChatResult{}, fmt.Errorf("provider unavailable")
-	}
+func (c openAICompatClient) chatPayload(prompt string) map[string]any {
 	payload := map[string]any{
 		"model": c.model,
 		"messages": []map[string]string{
 			{"role": "system", "content": "You are a connectivity test. Reply in one short sentence. Do not request tools or secrets."},
 			{"role": "user", "content": prompt},
 		},
-		"max_tokens":  256,
-		"temperature": 0.2,
+		"max_tokens": 256,
 	}
+	if c.name == "kimi" {
+		// kimi-k2.6 rejects temperature/top_p and thinks by default (slow + empty content).
+		payload["thinking"] = map[string]string{"type": "disabled"}
+		return payload
+	}
+	payload["temperature"] = 0.2
+	return payload
+}
+
+func (c openAICompatClient) Chat(ctx context.Context, prompt string) (ChatResult, error) {
+	if c.apiKey == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	payload := c.chatPayload(prompt)
 	body, err := json.Marshal(payload)
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")

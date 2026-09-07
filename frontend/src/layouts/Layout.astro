@@ -57,7 +57,7 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
             <span class="material-symbols-outlined" aria-hidden="true">menu</span>
           </button>
         </div>
-        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu">
+        <button class="header-session icon-btn" data-header-chrome type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Open session menu" transition:persist="header-session">
           <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
           <img class="header-session-photo" data-session-avatar hidden alt="" />
         </button>

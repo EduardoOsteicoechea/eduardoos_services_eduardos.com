@@ -144,6 +144,8 @@ function sessionButton(): HTMLElement | null {
   return node instanceof HTMLElement ? node : null;
 }
 
+let lastSessionAvatar: string | null = null;
+
 function showSessionIcon(): void {
   const button = sessionButton();
   const photo = document.querySelector("[data-session-avatar]");
@@ -158,8 +160,7 @@ function showSessionIcon(): void {
   }
 }
 
-export function applySessionAvatar(avatar?: string | null): void {
-  const src = profileAvatarURL(avatar);
+function paintSessionAvatar(src: string | null): void {
   const button = sessionButton();
   const photo = document.querySelector("[data-session-avatar]");
   const icon = document.querySelector("[data-session-icon]");
@@ -172,6 +173,11 @@ export function applySessionAvatar(avatar?: string | null): void {
     showSessionIcon();
     return;
   }
+  if (photo.getAttribute("src") === src && !photo.hidden) {
+    if (icon instanceof HTMLElement) icon.hidden = true;
+    button?.setAttribute("data-has-avatar", "true");
+    return;
+  }
   photo.onerror = () => {
     showSessionIcon();
   };
@@ -179,6 +185,11 @@ export function applySessionAvatar(avatar?: string | null): void {
   photo.hidden = false;
   if (icon instanceof HTMLElement) icon.hidden = true;
   button?.setAttribute("data-has-avatar", "true");
+}
+
+export function applySessionAvatar(avatar?: string | null): void {
+  lastSessionAvatar = profileAvatarURL(avatar);
+  paintSessionAvatar(lastSessionAvatar);
 }
 
 export async function refreshAuthChrome(): Promise<void> {
@@ -205,6 +216,7 @@ export async function refreshAuthChrome(): Promise<void> {
 function restoreChromeAfterNavigation(): void {
   applyHeaderCollapsed(headerCollapsed(), false);
   syncExpanded();
+  paintSessionAvatar(lastSessionAvatar);
   void refreshAuthChrome();
 }
 

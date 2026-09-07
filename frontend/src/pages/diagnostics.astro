@@ -144,7 +144,12 @@ import Layout from "../layouts/Layout.astro";
         return;
       }
       if (!data.ok) {
-        fail(data.message || `Failed. Request ${data.request_id ?? ""}`.trim(), data.request_id, data.debug);
+        const byError: Record<string, string> = {
+          email_unverified: "The administrator email is not verified.",
+          email_failed: "The test email could not be sent.",
+          provider_unavailable: "The AI provider did not respond.",
+        };
+        fail(byError[data.error ?? ""] || data.message || `Failed. Request ${data.request_id ?? ""}`.trim(), data.request_id, data.debug);
         return;
       }
       setBanner(`${okText} Request ${data.request_id ?? ""}.`.trim(), "ok");

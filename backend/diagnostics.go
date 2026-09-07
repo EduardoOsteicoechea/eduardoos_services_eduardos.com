@@ -60,7 +60,10 @@ func (a *App) emailTestHandler(w http.ResponseWriter, r *http.Request) {
 	requestID := requestIDFrom(r, w)
 	if !user.EmailVerified || user.Email == "" {
 		a.auditEvent(r, "email-test", "denied", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{"ok": false, "request_id": requestID})
+		writeJSON(w, http.StatusOK, map[string]any{
+			"ok": false, "error": "email_unverified", "request_id": requestID,
+			"message": "The administrator email is not verified.",
+		})
 		return
 	}
 	if !a.emailAdminLimit.allow(user.ID) || !a.emailSiteLimit.allow("site") {
@@ -76,7 +79,10 @@ func (a *App) emailTestHandler(w http.ResponseWriter, r *http.Request) {
 	body := "This is an administrator diagnostics test for " + siteName + " at " + time.Now().UTC().Format(time.RFC3339) + ".\n"
 	if err := a.mailer.Send(user.Email, subject, body); err != nil {
 		a.auditEvent(r, "email-test", "failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{"ok": false, "request_id": requestID})
+		writeJSON(w, http.StatusOK, map[string]any{
+			"ok": false, "error": "email_failed", "request_id": requestID,
+			"message": "The test email could not be sent.",
+		})
 		return
 	}
 	a.auditEvent(r, "email-test", "sent", user.ID)
@@ -126,7 +132,10 @@ func (a *App) aiChatTestHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := client.Chat(ctx, prompt)
 	if err != nil {
 		a.auditEventExtra(r, "ai-chat-test", "failed", user.ID, provider, utf8.RuneCountInString(prompt))
-		writeJSON(w, http.StatusOK, map[string]any{"ok": false, "request_id": requestID, "error": "provider_unavailable"})
+		writeJSON(w, http.StatusOK, map[string]any{
+			"ok": false, "error": "provider_unavailable", "request_id": requestID,
+			"message": "The AI provider did not respond.",
+		})
 		return
 	}
 	a.auditEventExtra(r, "ai-chat-test", "ok", user.ID, provider, utf8.RuneCountInString(prompt))

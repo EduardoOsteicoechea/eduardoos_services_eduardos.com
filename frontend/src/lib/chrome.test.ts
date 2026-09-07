@@ -41,6 +41,7 @@ describe("session header avatar", () => {
   });
 
   afterEach(() => {
+    applySessionAvatar(null);
     vi.clearAllMocks();
     document.body.innerHTML = "";
     window.__chromeStarted = false;
@@ -90,10 +91,35 @@ describe("session header avatar", () => {
 
     mountChrome({ guestVisible: true });
     document.dispatchEvent(new Event("astro:after-swap"));
+    expect(document.querySelector("[data-session-avatar]")?.getAttribute("src")).toBe("/api/profile/avatar?v=8");
+    expect(document.querySelector(".header-session")?.getAttribute("data-has-avatar")).toBe("true");
     await vi.waitFor(() => {
       expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
       expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
       expect(document.querySelector(".header-session")?.getAttribute("data-has-avatar")).toBe("true");
+    });
+  });
+
+  it("keeps the last session photo visible before /me returns after a swap", async () => {
+    applySessionAvatar("/api/profile/avatar?v=9");
+    let resolveMe: (value: Awaited<ReturnType<typeof getMe>>) => void = () => {};
+    vi.mocked(getMe).mockReturnValue(
+      new Promise((resolve) => {
+        resolveMe = resolve;
+      }),
+    );
+    startChrome();
+    mountChrome({ guestVisible: true });
+    document.dispatchEvent(new Event("astro:after-swap"));
+    expect(document.querySelector("[data-session-avatar]")?.getAttribute("src")).toBe("/api/profile/avatar?v=9");
+    expect(document.querySelector(".header-session")?.getAttribute("data-has-avatar")).toBe("true");
+    resolveMe({
+      status: 200,
+      requestId: "rid-hold",
+      data: { id: "member-1", role: "user", avatar: "/api/profile/avatar?v=9" },
+    });
+    await vi.waitFor(() => {
+      expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
     });
   });
 });
