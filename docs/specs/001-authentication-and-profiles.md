@@ -1,12 +1,12 @@
 # 001 — Authentication and profiles
 
-Status: **specification lock**. Milestone-1 decisions 1–21 are approved. Do not implement application code until an implementation task is requested.
+Status: **specification lock**. Milestone-1 decisions 1–21 remain approved. The **2026-09-07 amendment** updates decision 4 (password minimum **8**), adds decisions 22–23 (canonical session routes and main-menu session links), and is the implementation contract for those changes.
 
 This document is the implementation contract for **eduardoos.com**. The same security contract applies to `turquesa.shop`, `iglesiabiblicapalabraviva.com`, and `creevzla.org`, each in its own repository, process, database, secrets, cookies, media root, and user base. There is no SSO, no shared JWT secret, no shared session store, and no cross-domain cookies.
 
 Parent-workspace rules remain in force: `.cursor/rules/auth-security.mdc`, `.cursor/rules/media-storage.mdc`, `.cursor/rules/email-otp-notifications.mdc`, `.cursor/rules/ai-agents.mdc`. If this spec and a parent rule disagree, follow the **stricter** control. Milestone-1 decisions below are the approved resolution for this site.
 
-This task does **not** change application behavior. The sections marked “Current implementation (do not treat as the target)” describe what the code does today.
+The 2026-09-07 amendment **does** change approved password, session-route, and menu requirements. Apply those changes in application code only after this document is committed. The sections marked “Current implementation (do not treat as the target)” describe the pre-auth milestone; they are historical.
 
 ## 1. Site identity (this repository only)
 
@@ -37,7 +37,7 @@ These replace the previous open-decision list for this milestone.
 1. **Avatars are private.** Only the owner may retrieve, update, or delete their avatar. Delivery is authorized Go API + Nginx internal/`X-Accel-Redirect`. Public avatars are out of scope until a later approved feature.
 2. **Avatar limits:** maximum **5 MiB**; maximum **2048×2048** pixels; **JPEG, PNG, and WebP** only. Reject GIF, SVG, HTML, XML, JavaScript, executables, invalid magic bytes, and malformed images. Do not trust client `Content-Type` or filename.
 3. **Refresh sessions:** 30-day **rolling** expiry (successful refresh may extend `expires_at`, never past the absolute cap); **90-day absolute** lifetime from family creation. Immediate family revocation on logout, password reset, detected refresh-token reuse, account disable, or explicit admin action. MongoDB TTL cleans expired `auth_sessions` (and OTP/reset) documents.
-4. **Password policy:** minimum **12** characters, maximum **128** characters, hashed with **Argon2id**. No extra composition rules (no required classes, no arbitrary complexity scoring).
+4. **Password policy:** minimum **8** characters, maximum **128** characters, hashed with **Argon2id**. No extra composition rules (no required classes, no arbitrary complexity scoring). (Amended 2026-09-07; previously 12.)
 5. **Phone** is optional and **not verified** in this milestone. When supplied, normalize and validate **E.164** (`+` and digits only after normalize; country code required). Reject letters, spaces-only, and values that cannot be normalized to E.164.
 6. **Username:** trim, lowercase to `username_normalized`, unique per this site’s database, **3–32** characters, `^[a-z0-9_]+$` only.
 7. **Display name:** optional. When supplied, trim; **1–80** visible characters; reject empty-after-trim and Unicode control characters (Cc / C0/C1 controls, including DEL).
@@ -62,6 +62,19 @@ These replace the previous open-decision list for this milestone.
 19. **After password reset:** revoke all session families and **leave the user logged out**. Require a fresh login. Do not set new auth cookies on reset success.
 20. **Nginx** must **preserve the `/api/` prefix** when proxying. Go public routes are mounted under `/api/...`. Direct local health remains `GET /health` (and may keep `GET /api/health`). **Do not change Nginx in this documentation task.** Update Nginx only during implementation, with tests that public `https://<domain>/api/...` reaches the matching Go handler.
 21. **No `www` origins** in this milestone. Apex domain only. Host-only cookies (`__Host-` / no `Domain`). If `www` is served later, **redirect `www` to apex before** any application auth cookies or CSRF are issued.
+22. **Canonical session UI paths** use Astro `trailingSlash: "never"`. Documented paths have **no** trailing slash. Nginx `try_files` may also serve a trailing-slash URL. Every required flow is its own page, reachable through visible links/buttons:
+
+    | Path | Audience | Purpose |
+    | --- | --- | --- |
+    | `/session` | public | Sign in |
+    | `/session/register` | public | Create account |
+    | `/session/verify-email` | public | Verify email and resend OTP |
+    | `/session/forgot-password` | public | Request password-reset OTP |
+    | `/session/reset-password` | public | Reset password with OTP |
+    | `/session/profile` | authenticated | Own profile, phone, and avatar |
+    | `/session/change-password` | authenticated | Authenticated password change |
+
+23. **Main-menu session navigation is UX-only.** The Go API remains the authority. Unauthenticated menus visibly include Sign in, Create account, Verify email, and Forgot password (localized labels allowed). Authenticated menus visibly include Profile, Change password, and Sign out. Those links use the paths in decision 22. Sign out calls `POST /api/auth/logout`, clears UI session state, and redirects to `/session`.
 
 ## 2. Current implementation (do not treat as the target)
 
@@ -85,7 +98,7 @@ Today this API is an **in-process** diagnostics login, not the MongoDB auth syst
 
 - email
 - username (unique)
-- password (Argon2id hash only; never stored or logged in plaintext)
+- password (Argon2id hash only; never stored or logged in plaintext). Length **8–128** characters.
 
 Email handling:
 
@@ -155,7 +168,7 @@ Logout of all sessions is not in the required API list; password change and pass
 `POST /api/auth/change-password` requires a valid access session, CSRF, Origin/Referer, current password, and new password.
 
 - Verify current password. Failure: generic `invalid_credentials` (do not say which field).
-- Hash the new password with Argon2id. Length **12–128** characters. No extra composition rules.
+- Hash the new password with Argon2id. Length **8–128** characters. No extra composition rules.
 - Revoke **all** refresh-token families for that user.
 - Issue **one** new session (new family) on success so the current browser stays signed in.
 - Never log passwords.
@@ -263,7 +276,7 @@ Deny-by-default:
 - Resource access requires **both** role/permission **and** ownership (or an explicit admin permission on that resource).
 - A `user` may read/update **only** their own profile and avatar.
 - An `admin` may **not** read, update, or delete another user’s profile or avatar in this milestone. Diagnostics remain admin-only.
-- Frontend route guards (`/diagnostics`, future `/session`) are UX only.
+- Frontend route guards (`/diagnostics`, `/session/profile`, `/session/change-password`) are UX only. Canonical session paths are in locked decision 22.
 
 No hard-coded administrator email allowlist.
 
@@ -425,6 +438,8 @@ Request:
 ```json
 {"email": "", "username": "", "password": ""}
 ```
+
+Password length **8–128**.
 
 **200** generic (including duplicate email):
 
@@ -634,6 +649,7 @@ Go tests on this API, with SMTP and AI mocked as today:
 19. No tokens in `localStorage` / `sessionStorage`.
 20. Bootstrap creates the first admin only once; later bootstrap env does not mint admins.
 21. Diagnostics remain 404 when `ENABLE_ADMIN_DIAGNOSTICS` is false; when true, still admin + CSRF.
+22. Password of **8** characters is accepted; **7** characters is rejected on register, change-password, reset-password, and bootstrap-admin validation. Maximum remains 128.
 
 ## 11. Rollout and backward compatibility
 
@@ -663,6 +679,6 @@ Nginx, systemd `EnvironmentFile` path, and Git ignore for `backend/.data/media` 
 
 ## Open decisions requiring approval
 
-None remaining for this milestone. Decisions 1–21 are recorded in **Locked decisions (approved)**.
+None remaining for this milestone. Decisions 1–23 are recorded in **Locked decisions (approved)**.
 
-Do not implement authentication application code until an implementation task is requested.
+Application code must match this document, including the 2026-09-07 password, session-route, and menu amendment.

@@ -34,6 +34,10 @@ This site follows the parent-workspace contract [`.cursor/rules/auth-security.md
 
 Locked specification: [`docs/specs/001-authentication-and-profiles.md`](docs/specs/001-authentication-and-profiles.md). Cookie authentication, MongoDB users/sessions, email OTP, and private avatars are implemented. Nginx templates live in [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf).
 
+Passwords are **8–128** characters and hashed with Argon2id. `BOOTSTRAP_ADMIN_PASSWORD` and `ADMIN_PASSWORD` must meet that length when set.
+
+Canonical session paths (Astro `trailingSlash: never`): `/session` (sign in), `/session/register`, `/session/verify-email`, `/session/forgot-password`, `/session/reset-password`, `/session/profile`, `/session/change-password`.
+
 Bootstrap an admin **only** when the database has no `admin` user and `BOOTSTRAP_ADMIN_EMAIL` / `BOOTSTRAP_ADMIN_PASSWORD` (or, for local migration, `ADMIN_EMAIL` / `ADMIN_PASSWORD`) are set. The process never reseeds that password on later startups. After the first admin exists, **remove** `BOOTSTRAP_ADMIN_PASSWORD` and `ADMIN_PASSWORD` from `/etc/eduardoos-api.env`.
 
 ## Uploaded media storage
