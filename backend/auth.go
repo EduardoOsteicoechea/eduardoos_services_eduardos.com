@@ -1,9 +1,16 @@
 package main
 
 import (
+	"context"
+	"crypto/hmac"
 	"crypto/rand"
+	"crypto/sha256"
+	"crypto/subtle"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -17,6 +24,7 @@ type contextKey string
 const userContextKey contextKey = "user"
 
 type authClaims struct {
+	SID string `json:"sid"`
 	jwt.RegisteredClaims
 }
 
@@ -26,6 +34,31 @@ func randomID(n int) string {
 	return hex.EncodeToString(buf)
 }
 
+func randomOTP() (string, error) {
+	var n uint32
+	buf := make([]byte, 4)
+	if _, err := rand.Read(buf); err != nil {
+		return "", err
+	}
+	n = uint32(buf[0])<<24 | uint32(buf[1])<<16 | uint32(buf[2])<<8 | uint32(buf[3])
+	return fmt.Sprintf("%06d", n%1000000), nil
+}
+
+func (a *App) hashOpaque(purpose, value string) string {
+	mac := hmac.New(sha256.New, []byte(a.cfg.JWTSecret))
+	_, _ = io.WriteString(mac, purpose)
+	_, _ = io.WriteString(mac, ":")
+	_, _ = io.WriteString(mac, value)
+	return hex.EncodeToString(mac.Sum(nil))
+}
+
+func hmacEqual(a, b string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	return subtle.ConstantTimeCompare([]byte(a), []byte(b)) == 1
+}
+
 func (a *App) accessCookieName() string {
 	if a.cfg.SecureCookies {
 		return "__Host-access"
@@ -33,11 +66,18 @@ func (a *App) accessCookieName() string {
 	return "access"
 }
 
-func (a *App) csrfCookieName() string {
+func (a *App) refreshCookieName() string {
 	if a.cfg.SecureCookies {
-		return "__Host-csrf"
+		return "__Host-refresh"
 	}
-	return "csrf"
+	return "refresh"
+}
+
+func (a *App) csrfBindCookieName() string {
+	if a.cfg.SecureCookies {
+		return "__Host-csrfbind"
+	}
+	return "csrfbind"
 }
 
 func (a *App) setCookie(w http.ResponseWriter, name, value string, maxAge int) {
@@ -57,15 +97,15 @@ func (a *App) clearCookie(w http.ResponseWriter, name string) {
 }
 
 func (a *App) signAccess(userID, sessionID string) (string, error) {
-	now := time.Now()
+	now := time.Now().UTC()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, authClaims{
+		SID: sessionID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    a.cfg.JWTIssuer,
 			Subject:   userID,
 			Audience:  jwt.ClaimStrings{a.cfg.JWTAudience},
 			IssuedAt:  jwt.NewNumericDate(now),
-			ExpiresAt: jwt.NewNumericDate(now.Add(15 * time.Minute)),
-			ID:        sessionID,
+			ExpiresAt: jwt.NewNumericDate(now.Add(accessTTL)),
 		},
 	})
 	return token.SignedString([]byte(a.cfg.JWTSecret))
@@ -82,13 +122,13 @@ func (a *App) parseAccess(raw string) (*authClaims, error) {
 		return nil, err
 	}
 	claims, ok := token.Claims.(*authClaims)
-	if !ok || !token.Valid {
+	if !ok || !token.Valid || claims.Subject == "" || claims.SID == "" {
 		return nil, jwt.ErrTokenInvalidClaims
 	}
 	return claims, nil
 }
 
-func (a *App) currentUser(r *http.Request) *User {
+func (a *App) currentSession(r *http.Request) *Session {
 	cookie, err := r.Cookie(a.accessCookieName())
 	if err != nil || cookie.Value == "" {
 		return nil
@@ -97,56 +137,131 @@ func (a *App) currentUser(r *http.Request) *User {
 	if err != nil {
 		return nil
 	}
-	sess := a.sessions.get(claims.ID)
-	if sess == nil || sess.Revoked || time.Now().After(sess.ExpiresAt) || sess.UserID != claims.Subject {
+	sess, err := a.store.SessionByID(r.Context(), claims.SID)
+	if err != nil || sess.Revoked || sess.UserID != claims.Subject {
 		return nil
 	}
-	user := a.users.get(claims.Subject)
-	if user == nil {
+	now := time.Now().UTC()
+	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
+		return nil
+	}
+	return sess
+}
+
+func (a *App) currentUser(r *http.Request) *User {
+	sess := a.currentSession(r)
+	if sess == nil {
+		return nil
+	}
+	user, err := a.store.UserByID(r.Context(), sess.UserID)
+	if err != nil || user.Status == statusDisabled {
 		return nil
 	}
 	return user
 }
 
-func (a *App) currentSession(r *http.Request) *Session {
-	cookie, err := r.Cookie(a.accessCookieName())
-	if err != nil {
-		return nil
-	}
-	claims, err := a.parseAccess(cookie.Value)
-	if err != nil {
-		return nil
-	}
-	return a.sessions.get(claims.ID)
-}
-
 func (a *App) issueSession(w http.ResponseWriter, user *User) (*Session, error) {
+	now := time.Now().UTC()
+	csrf := randomID(16)
+	refresh := randomID(32)
 	sess := &Session{
-		ID:        randomID(16),
-		UserID:    user.ID,
-		CSRF:      randomID(16),
-		ExpiresAt: time.Now().Add(15 * time.Minute),
+		SessionID:         randomID(16),
+		FamilyID:          randomID(16),
+		UserID:            user.ID,
+		RefreshTokenHash:  a.hashOpaque("refresh", refresh),
+		CSRFHash:          a.hashOpaque("csrf", csrf),
+		CSRF:              csrf,
+		ExpiresAt:         now.Add(refreshRolling),
+		AbsoluteExpiresAt: now.Add(refreshAbsolute),
+		FamilyCreatedAt:   now,
+		CreatedAt:         now,
+		LastUsedAt:        now,
 	}
-	a.sessions.put(sess)
-	token, err := a.signAccess(user.ID, sess.ID)
+	if err := a.store.InsertSession(context.Background(), sess); err != nil {
+		return nil, err
+	}
+	token, err := a.signAccess(user.ID, sess.SessionID)
 	if err != nil {
 		return nil, err
 	}
-	a.setCookie(w, a.accessCookieName(), token, int((15 * time.Minute).Seconds()))
-	a.setCookie(w, a.csrfCookieName(), sess.CSRF, int((15 * time.Minute).Seconds()))
+	a.setCookie(w, a.accessCookieName(), token, int(accessTTL.Seconds()))
+	a.setCookie(w, a.refreshCookieName(), refresh, int(refreshRolling.Seconds()))
 	return sess, nil
 }
 
-func (a *App) ensureCSRF(w http.ResponseWriter, r *http.Request) string {
-	if sess := a.currentSession(r); sess != nil && sess.CSRF != "" {
-		a.setCookie(w, a.csrfCookieName(), sess.CSRF, int((15 * time.Minute).Seconds()))
-		return sess.CSRF
+func (a *App) rotateSession(w http.ResponseWriter, old *Session, user *User) (*Session, error) {
+	now := time.Now().UTC()
+	csrf := old.CSRF
+	if csrf == "" {
+		csrf = randomID(16)
 	}
-	if cookie, err := r.Cookie(a.csrfCookieName()); err == nil && cookie.Value != "" {
-		return cookie.Value
+	refresh := randomID(32)
+	capAt := old.FamilyCreatedAt.Add(refreshAbsolute)
+	expires := now.Add(refreshRolling)
+	if expires.After(capAt) {
+		expires = capAt
 	}
+	next := &Session{
+		SessionID:         randomID(16),
+		FamilyID:          old.FamilyID,
+		UserID:            user.ID,
+		RefreshTokenHash:  a.hashOpaque("refresh", refresh),
+		CSRFHash:          a.hashOpaque("csrf", csrf),
+		CSRF:              csrf,
+		ExpiresAt:         expires,
+		AbsoluteExpiresAt: old.AbsoluteExpiresAt,
+		FamilyCreatedAt:   old.FamilyCreatedAt,
+		CreatedAt:         now,
+		LastUsedAt:        now,
+	}
+	old.Revoked = true
+	old.RevokeReason = "rotation"
+	old.ReplacedBySessionID = next.SessionID
+	if err := a.store.UpdateSession(context.Background(), old); err != nil {
+		return nil, err
+	}
+	if err := a.store.InsertSession(context.Background(), next); err != nil {
+		return nil, err
+	}
+	token, err := a.signAccess(user.ID, next.SessionID)
+	if err != nil {
+		return nil, err
+	}
+	a.setCookie(w, a.accessCookieName(), token, int(accessTTL.Seconds()))
+	a.setCookie(w, a.refreshCookieName(), refresh, int(time.Until(expires).Seconds()))
+	return next, nil
+}
+
+func (a *App) clearAuthCookies(w http.ResponseWriter) {
+	a.clearCookie(w, a.accessCookieName())
+	a.clearCookie(w, a.refreshCookieName())
+	a.clearCookie(w, a.csrfBindCookieName())
+}
+
+func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 	token := randomID(16)
-	a.setCookie(w, a.csrfCookieName(), token, int((15 * time.Minute).Seconds()))
+	hash := a.hashOpaque("csrf", token)
+	if sess := a.currentSession(r); sess != nil {
+		sess.CSRFHash = hash
+		sess.CSRF = token
+		_ = a.store.UpdateSession(r.Context(), sess)
+		return token
+	}
+	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
+		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil && !sess.Revoked {
+			sess.CSRFHash = hash
+			sess.CSRF = token
+			_ = a.store.UpdateSession(r.Context(), sess)
+			return token
+		}
+	}
+	challenge := &CSRFChallenge{
+		ID:        randomID(16),
+		Hash:      hash,
+		ExpiresAt: time.Now().UTC().Add(2 * time.Hour),
+	}
+	_ = a.store.InsertCSRF(r.Context(), challenge)
+	a.setCookie(w, a.csrfBindCookieName(), challenge.ID, int((2 * time.Hour).Seconds()))
 	return token
 }
 
@@ -182,22 +297,70 @@ func (a *App) validCSRF(r *http.Request) bool {
 	if header == "" {
 		return false
 	}
+	want := a.hashOpaque("csrf", header)
 	if sess := a.currentSession(r); sess != nil {
-		return header == sess.CSRF
+		return hmacEqual(want, sess.CSRFHash)
 	}
-	cookie, err := r.Cookie(a.csrfCookieName())
-	if err != nil {
+	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
+		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
+			return hmacEqual(want, sess.CSRFHash)
+		}
+	}
+	cookie, err := r.Cookie(a.csrfBindCookieName())
+	if err != nil || cookie.Value == "" {
 		return false
 	}
-	return header == cookie.Value
+	ch, err := a.store.CSRFByID(r.Context(), cookie.Value)
+	if err != nil || time.Now().UTC().After(ch.ExpiresAt) {
+		return false
+	}
+	return hmacEqual(want, ch.Hash)
+}
+
+func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, http.StatusForbidden, "forbidden")
+		return false
+	}
+	return true
 }
 
 func (a *App) writeSafeError(w http.ResponseWriter, status int, code string) {
 	writeJSON(w, status, map[string]string{"error": code})
 }
 
+func (a *App) safeProfile(user *User) map[string]any {
+	var display any
+	if user.DisplayName != "" {
+		display = user.DisplayName
+	}
+	var phone any
+	if user.Phone != "" {
+		phone = user.Phone
+	}
+	var avatar any
+	if user.AvatarKey != "" {
+		avatar = "/api/profile/avatar"
+	}
+	return map[string]any{
+		"id":             user.ID,
+		"email":          user.Email,
+		"username":       user.Username,
+		"display_name":   display,
+		"phone":          phone,
+		"role":           user.Role,
+		"status":         user.Status,
+		"email_verified": user.EmailVerified,
+		"avatar":         avatar,
+	}
+}
+
+func (a *App) csrfHandler(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]string{"csrf": a.mintCSRF(w, r)})
+}
+
 func (a *App) meHandler(w http.ResponseWriter, r *http.Request) {
-	csrf := a.ensureCSRF(w, r)
+	csrf := a.mintCSRF(w, r)
 	user := a.currentUser(r)
 	if user == nil {
 		writeJSON(w, http.StatusUnauthorized, map[string]string{
@@ -206,34 +369,71 @@ func (a *App) meHandler(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	writeJSON(w, http.StatusOK, map[string]any{
-		"id":             user.ID,
-		"email":          user.Email,
-		"role":           user.Role,
-		"email_verified": user.EmailVerified,
-		"csrf":           csrf,
-	})
+	body := a.safeProfile(user)
+	body["csrf"] = csrf
+	writeJSON(w, http.StatusOK, body)
+}
+
+func (a *App) lookupLoginUser(email, username string) *User {
+	if email != "" {
+		user, err := a.store.UserByEmail(context.Background(), email)
+		if err != nil {
+			return nil
+		}
+		return user
+	}
+	user, err := a.store.UserByUsername(context.Background(), username)
+	if err != nil {
+		return nil
+	}
+	return user
+}
+
+func (a *App) dummyPasswordCheck(password string) {
+	_ = verifyPassword(a.dummyHash, password)
 }
 
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
-	if !a.validOrigin(r) || !a.validCSRF(r) {
-		a.writeSafeError(w, http.StatusForbidden, "forbidden")
+	if !a.requireUnsafe(w, r) {
 		return
 	}
-	if !a.loginLimit.allow(r.RemoteAddr) {
-		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
-		return
-	}
+	ip := clientIP(r.RemoteAddr)
 	var body struct {
 		Email    string `json:"email"`
+		Username string `json:"username"`
 		Password string `json:"password"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
-	user := a.users.byEmail(strings.TrimSpace(body.Email))
-	if user == nil || !verifyPassword(user.PasswordHash, body.Password) {
+	emailDisplay, emailNorm, emailOK := normalizeEmail(body.Email)
+	_ = emailDisplay
+	usernameNorm, usernameOK := normalizeUsername(body.Username)
+	hasEmail := strings.TrimSpace(body.Email) != ""
+	hasUser := strings.TrimSpace(body.Username) != ""
+	if hasEmail == hasUser {
+		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	ident := emailNorm
+	if hasUser {
+		ident = usernameNorm
+	}
+	if !a.loginIPLimit.allow(ip) || !a.loginIDLimit.allow(ident) {
+		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		return
+	}
+	if (hasEmail && !emailOK) || (hasUser && !usernameOK) {
+		a.dummyPasswordCheck(body.Password)
+		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
+		return
+	}
+	user := a.lookupLoginUser(emailNorm, usernameNorm)
+	if user == nil || user.Status != statusVerified || !verifyPassword(user.PasswordHash, body.Password) {
+		if user == nil {
+			a.dummyPasswordCheck(body.Password)
+		}
 		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
@@ -241,23 +441,139 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
-	writeJSON(w, http.StatusOK, map[string]any{
-		"id":             user.ID,
-		"email":          user.Email,
-		"role":           user.Role,
-		"email_verified": user.EmailVerified,
-	})
+	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
 func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
-	if !a.validOrigin(r) || !a.validCSRF(r) {
-		a.writeSafeError(w, http.StatusForbidden, "forbidden")
+	if !a.requireUnsafe(w, r) {
 		return
 	}
 	if sess := a.currentSession(r); sess != nil {
-		a.sessions.revoke(sess.ID)
+		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
+	} else if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
+		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
+			_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
+		}
 	}
-	a.clearCookie(w, a.accessCookieName())
-	a.clearCookie(w, a.csrfCookieName())
+	a.clearAuthCookies(w)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
+
+func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	cookie, err := r.Cookie(a.refreshCookieName())
+	if err != nil || cookie.Value == "" {
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	hash := a.hashOpaque("refresh", cookie.Value)
+	sess, err := a.store.SessionByRefreshHash(r.Context(), hash)
+	if err != nil {
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	if sess.Revoked {
+		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "reuse")
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	now := time.Now().UTC()
+	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
+		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "expired")
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	if !a.refreshLimit.allow(sess.SessionID) {
+		a.writeSafeError(w, http.StatusTooManyRequests, "rate_limited")
+		return
+	}
+	user, err := a.store.UserByID(r.Context(), sess.UserID)
+	if err != nil || user.Status != statusVerified {
+		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "disable")
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	if _, err := a.rotateSession(w, sess, user); err != nil {
+		a.writeSafeError(w, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	writeJSON(w, http.StatusOK, a.safeProfile(user))
+}
+
+func (a *App) issueOTP(user *User, purpose, emailNorm string) (string, error) {
+	code, err := randomOTP()
+	if err != nil {
+		return "", err
+	}
+	_ = a.store.InvalidateOTPs(context.Background(), purpose, emailNorm)
+	now := time.Now().UTC()
+	rec := &OTPRecord{
+		ID:              randomID(12),
+		Purpose:         purpose,
+		EmailNormalized: emailNorm,
+		UserID:          user.ID,
+		OTPHash:         a.hashOpaque("otp:"+purpose+":"+emailNorm, code),
+		ExpiresAt:       now.Add(otpTTL),
+		CreatedAt:       now,
+	}
+	if err := a.store.InsertOTP(context.Background(), rec); err != nil {
+		return "", err
+	}
+	return code, nil
+}
+
+func (a *App) sendOTPMail(to, purpose, code string) error {
+	subject := "Your verification code"
+	intro := "email verification"
+	if purpose == otpPasswordReset {
+		subject = "Your password reset code"
+		intro = "password reset"
+	}
+	body := "Your " + intro + " code expires in 10 minutes.\n\n" + code + "\n"
+	return a.mailer.Send(to, subject, body)
+}
+
+func (a *App) consumeOTP(purpose, emailNorm, code string) (*OTPRecord, error) {
+	otp, err := a.store.LatestOTP(context.Background(), purpose, emailNorm)
+	if err != nil {
+		return nil, errNotFound
+	}
+	if otp.ConsumedAt != nil {
+		return nil, errNotFound
+	}
+	if otp.Attempts >= otpMaxAttempts {
+		return nil, errOTPLocked
+	}
+	if time.Now().UTC().After(otp.ExpiresAt) {
+		return nil, errOTPExpired
+	}
+	want := a.hashOpaque("otp:"+purpose+":"+emailNorm, strings.TrimSpace(code))
+	if !hmacEqual(want, otp.OTPHash) {
+		otp.Attempts++
+		if otp.Attempts >= otpMaxAttempts {
+			now := time.Now().UTC()
+			otp.ConsumedAt = &now
+		}
+		_ = a.store.UpdateOTP(context.Background(), otp)
+		if otp.Attempts >= otpMaxAttempts {
+			return nil, errOTPLocked
+		}
+		return nil, errNotFound
+	}
+	now := time.Now().UTC()
+	otp.ConsumedAt = &now
+	_ = a.store.UpdateOTP(context.Background(), otp)
+	return otp, nil
+}
+
+var (
+	errOTPExpired = errors.New("otp expired")
+	errOTPLocked  = errors.New("otp locked")
+)

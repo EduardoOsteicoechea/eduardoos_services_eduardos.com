@@ -2,17 +2,26 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"time"
 )
 
 type App struct {
 	cfg             config
-	users           *userStore
-	sessions        *sessionStore
+	store           DataStore
 	mailer          Mailer
 	chat            map[string]ChatClient
 	audit           *auditStore
-	loginLimit      *limiter
+	dummyHash       string
+	loginIPLimit    *limiter
+	loginIDLimit    *limiter
+	registerLimit   *limiter
+	resendIPLimit   *limiter
+	resendIDLimit   *limiter
+	resetIPLimit    *limiter
+	resetIDLimit    *limiter
+	refreshLimit    *limiter
+	profileLimit    *limiter
 	emailAdminLimit *limiter
 	emailSiteLimit  *limiter
 	aiAdminLimit    *limiter
@@ -20,17 +29,34 @@ type App struct {
 }
 
 func newApp(cfg config) *App {
+	return newAppWithStore(cfg, newMemoryStore())
+}
+
+func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.JWTSecret == "" {
 		cfg.JWTSecret = randomID(32)
 	}
+	if cfg.MediaRoot == "" {
+		cfg.MediaRoot = ".data/media"
+	}
+	_ = os.MkdirAll(cfg.MediaRoot, 0750)
+	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:             cfg,
-		users:           newUserStore(),
-		sessions:        newSessionStore(),
+		store:           store,
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
 		audit:           newAuditStore(),
-		loginLimit:      newLimiter(15*time.Minute, 10),
+		dummyHash:       dummy,
+		loginIPLimit:    newLimiter(15*time.Minute, 5),
+		loginIDLimit:    newLimiter(15*time.Minute, 5),
+		registerLimit:   newLimiter(time.Hour, 3),
+		resendIPLimit:   newLimiter(time.Hour, 3),
+		resendIDLimit:   newLimiter(time.Hour, 3),
+		resetIPLimit:    newLimiter(time.Hour, 3),
+		resetIDLimit:    newLimiter(time.Hour, 3),
+		refreshLimit:    newLimiter(time.Minute, 30),
+		profileLimit:    newLimiter(time.Hour, 20),
 		emailAdminLimit: newLimiter(emailAdminWindow, 1),
 		emailSiteLimit:  newLimiter(emailSiteWindow, emailSiteMax),
 		aiAdminLimit:    newLimiter(aiAdminWindow, aiAdminMax),
@@ -51,25 +77,8 @@ func newApp(cfg config) *App {
 		model:   cfg.KimiModel,
 		http:    httpClient,
 	}
-	app.seedAdmin()
+	app.bootstrapAdmin()
 	return app
-}
-
-func (a *App) seedAdmin() {
-	if a.cfg.AdminEmail == "" || a.cfg.AdminPassword == "" {
-		return
-	}
-	hash, err := hashPassword(a.cfg.AdminPassword)
-	if err != nil {
-		return
-	}
-	a.users.put(&User{
-		ID:            randomID(8),
-		Email:         a.cfg.AdminEmail,
-		PasswordHash:  hash,
-		Role:          "admin",
-		EmailVerified: true,
-	})
 }
 
 func (a *App) Handler() http.Handler {
@@ -77,9 +86,21 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /health", healthHandler)
 	mux.HandleFunc("GET /api/health", healthHandler)
 	mux.HandleFunc("GET /api/info", infoHandler)
+	mux.HandleFunc("GET /api/auth/csrf", a.csrfHandler)
 	mux.HandleFunc("GET /api/auth/me", a.meHandler)
+	mux.HandleFunc("POST /api/auth/register", a.registerHandler)
+	mux.HandleFunc("POST /api/auth/verify-email", a.verifyEmailHandler)
+	mux.HandleFunc("POST /api/auth/resend-verification", a.resendVerificationHandler)
 	mux.HandleFunc("POST /api/auth/login", a.loginHandler)
+	mux.HandleFunc("POST /api/auth/refresh", a.refreshHandler)
 	mux.HandleFunc("POST /api/auth/logout", a.logoutHandler)
+	mux.HandleFunc("POST /api/auth/change-password", a.changePasswordHandler)
+	mux.HandleFunc("POST /api/auth/request-password-reset", a.requestPasswordResetHandler)
+	mux.HandleFunc("POST /api/auth/reset-password", a.resetPasswordHandler)
+	mux.HandleFunc("PATCH /api/profile", a.patchProfileHandler)
+	mux.HandleFunc("POST /api/profile/avatar", a.uploadAvatarHandler)
+	mux.HandleFunc("DELETE /api/profile/avatar", a.deleteAvatarHandler)
+	mux.HandleFunc("GET /api/profile/avatar", a.getAvatarHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
 	return mux

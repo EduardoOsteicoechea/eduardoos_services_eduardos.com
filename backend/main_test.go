@@ -2,9 +2,12 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -233,6 +236,9 @@ func TestUnverifiedEmailIsNotSent(t *testing.T) {
 	app := newTestApp(true)
 	admin := app.mustUser("admin@eduardoos.com")
 	admin.EmailVerified = false
+	if err := app.store.UpdateUser(context.Background(), admin); err != nil {
+		t.Fatal(err)
+	}
 	mailer := app.mailer.(*recordingMailer)
 	req, rec := app.adminPOST(t, "/api/admin/diagnostics/email-test", `{}`)
 	app.Handler().ServeHTTP(rec, req)
@@ -247,10 +253,12 @@ func TestUnverifiedEmailIsNotSent(t *testing.T) {
 func newTestApp(enable bool) *App {
 	cfg := config{
 		ListenAddr:        "127.0.0.1:8081",
+		MongoDatabase:     mongoDatabase,
 		JWTSecret:         "test-jwt-secret-not-for-production",
 		JWTIssuer:         jwtIssuer,
 		JWTAudience:       jwtAudience,
 		EnableDiagnostics: enable,
+		MediaRoot:         filepath.Join(os.TempDir(), "eduardoos-media-test"),
 		AllowedOrigins:    []string{"https://eduardoos.com", "http://127.0.0.1:4321"},
 		DeepSeekBaseURL:   "https://api.deepseek.com",
 		DeepSeekModel:     "deepseek-v4-flash",
@@ -261,18 +269,27 @@ func newTestApp(enable bool) *App {
 	app.mailer = &recordingMailer{}
 	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: "deepseek-ok", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 1}}
 	app.chat["kimi"] = &recordingChat{provider: "kimi", text: "kimi-ok", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 2}}
-	hash, err := hashPassword("correct-horse")
+	hash, err := hashPassword("correct-horse-battery")
 	if err != nil {
 		panic(err)
 	}
-	app.users.put(&User{ID: "admin-1", Email: "admin@eduardoos.com", PasswordHash: hash, Role: "admin", EmailVerified: true})
-	app.users.put(&User{ID: "member-1", Email: "member@eduardoos.com", PasswordHash: hash, Role: "member", EmailVerified: true})
+	now := time.Now().UTC()
+	_ = app.store.InsertUser(context.Background(), &User{
+		ID: "admin-1", Email: "admin@eduardoos.com", EmailNormalized: "admin@eduardoos.com",
+		Username: "siteadmin", UsernameNormalized: "siteadmin", PasswordHash: hash,
+		Role: roleAdmin, Status: statusVerified, EmailVerified: true, CreatedAt: now, UpdatedAt: now,
+	})
+	_ = app.store.InsertUser(context.Background(), &User{
+		ID: "member-1", Email: "member@eduardoos.com", EmailNormalized: "member@eduardoos.com",
+		Username: "member", UsernameNormalized: "member", PasswordHash: hash,
+		Role: roleUser, Status: statusVerified, EmailVerified: true, CreatedAt: now, UpdatedAt: now,
+	})
 	return app
 }
 
 func (a *App) mustUser(email string) *User {
-	user := a.users.byEmail(email)
-	if user == nil {
+	user, err := a.store.UserByEmail(context.Background(), strings.ToLower(email))
+	if err != nil {
 		panic("missing user")
 	}
 	return user
@@ -312,7 +329,7 @@ func (a *App) authedPOST(t *testing.T, email, path, body string) (*http.Request,
 func assertNoSecrets(t *testing.T, raw string) {
 	t.Helper()
 	lower := strings.ToLower(raw)
-	for _, needle := range []string{"smtp_password", "mongo_uri", "mongodb+srv", "sk-", "deepseek_api_key", "kimi_api_key", "jwt_secret", "correct-horse"} {
+	for _, needle := range []string{"smtp_password", "mongo_uri", "mongodb+srv", "sk-", "deepseek_api_key", "kimi_api_key", "jwt_secret", "correct-horse-battery", "test-jwt-secret"} {
 		if strings.Contains(lower, needle) {
 			t.Fatalf("response leaked %q: %s", needle, raw)
 		}

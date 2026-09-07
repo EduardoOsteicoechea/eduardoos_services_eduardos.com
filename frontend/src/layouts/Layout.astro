@@ -24,36 +24,87 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
   </head>
   <body>
     <div class="shell">
-      <header class="nav">
-        <a class="brand" href="/" data-route>Eduardoos</a>
-        <nav class="links" aria-label="Primary">
-          <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>Home</a>
-          <a href="/about" data-route aria-current={path === "/about" ? "page" : undefined}>About</a>
-          <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>Contact</a>
-          <a id="nav-diagnostics" href="/diagnostics" data-route hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
+      <header class="app-header">
+        <a class="header-logo icon-btn" href="/" data-route aria-label="Eduardoos">
+          <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+        </a>
+        <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-label="Open main menu">
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </button>
+        <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-label="Open page actions">
+          <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
+        </button>
+        <a class="header-avatar icon-btn" href="/session" data-route aria-label="Session">
+          <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+        </a>
+      </header>
+
+      <aside id="main-menu" class="sidebar-left" hidden>
+        <header class="sidebar-toolbar">
+          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+          </button>
+          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+          </button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme">
+            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+          </button>
+        </header>
+        <nav aria-label="Primary">
+          <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">home</span>
+            Home
+          </a>
+          <a href="/about" data-route aria-current={path === "/about" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">info</span>
+            About
+          </a>
+          <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+            Contact
+          </a>
+          <a href="/session" data-route aria-current={path === "/session" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+            Session
+          </a>
+          <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
             Diagnostics
           </a>
         </nav>
-      </header>
+      </aside>
+
+      <aside id="dynamic-header" class="sidebar-left" hidden>
+        {path === "/diagnostics" ? (
+          <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
+            <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+          </a>
+        ) : path === "/session" ? (
+          <a class="icon-btn" href="/session" data-route aria-label="Session">
+            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+          </a>
+        ) : (
+          <a class="icon-btn" href="/about" data-route aria-label="About">
+            <span class="material-symbols-outlined" aria-hidden="true">info</span>
+          </a>
+        )}
+      </aside>
+
       <main>
         <slot />
       </main>
-      <footer class="footer">eduardoos.com</footer>
+
+      <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-label="Open AI agent">
+        <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>
+      </button>
+      <aside id="agent-sidebar" class="sidebar-right" hidden>
+        <p>The AI agent talks only through this site’s API.</p>
+      </aside>
     </div>
     <script>
-      import { startClientRouting } from "../lib/router";
-      import { getMe } from "../lib/api";
-      startClientRouting();
-      const stored = localStorage.getItem("theme");
-      if (stored === "light" || stored === "dark") {
-        document.documentElement.dataset.theme = stored;
-      }
-      void getMe().then(({ status, data }) => {
-        if (status === 200 && data.role === "admin") {
-          document.querySelector("#nav-diagnostics")?.removeAttribute("hidden");
-        }
-      });
+      import { startChrome } from "../lib/chrome";
+      startChrome();
     </script>
   </body>
 </html>

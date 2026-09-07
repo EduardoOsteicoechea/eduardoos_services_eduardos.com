@@ -54,7 +54,6 @@ func (m smtpMailer) Send(to, subject, body string) error {
 	if m.cfg.SMTPHost == "" || m.cfg.SMTPPort == "" {
 		return fmt.Errorf("smtp not configured")
 	}
-	addr := net.JoinHostPort(m.cfg.SMTPHost, m.cfg.SMTPPort)
 	from := m.cfg.SMTPFromAddress
 	msg := strings.Join([]string{
 		"From: " + from,
@@ -65,20 +64,49 @@ func (m smtpMailer) Send(to, subject, body string) error {
 		"",
 		body,
 	}, "\r\n")
+	if m.cfg.SMTPPort == "587" {
+		return m.sendStartTLS(to, from, msg)
+	}
+	return m.sendImplicitTLS(to, from, msg)
+}
 
+func (m smtpMailer) sendImplicitTLS(to, from, msg string) error {
+	addr := net.JoinHostPort(m.cfg.SMTPHost, m.cfg.SMTPPort)
 	dialer := &net.Dialer{Timeout: 10 * time.Second}
 	conn, err := tls.DialWithDialer(dialer, "tcp", addr, &tls.Config{ServerName: m.cfg.SMTPHost, MinVersion: tls.VersionTLS12})
 	if err != nil {
 		return fmt.Errorf("smtp unavailable")
 	}
 	defer conn.Close()
-
 	client, err := smtp.NewClient(conn, m.cfg.SMTPHost)
 	if err != nil {
 		return fmt.Errorf("smtp unavailable")
 	}
 	defer client.Close()
+	return m.finishSMTP(client, to, from, msg)
+}
 
+func (m smtpMailer) sendStartTLS(to, from, msg string) error {
+	addr := net.JoinHostPort(m.cfg.SMTPHost, m.cfg.SMTPPort)
+	conn, err := net.DialTimeout("tcp", addr, 10*time.Second)
+	if err != nil {
+		return fmt.Errorf("smtp unavailable")
+	}
+	defer conn.Close()
+	client, err := smtp.NewClient(conn, m.cfg.SMTPHost)
+	if err != nil {
+		return fmt.Errorf("smtp unavailable")
+	}
+	defer client.Close()
+	if ok, _ := client.Extension("STARTTLS"); ok {
+		if err := client.StartTLS(&tls.Config{ServerName: m.cfg.SMTPHost, MinVersion: tls.VersionTLS12}); err != nil {
+			return fmt.Errorf("smtp unavailable")
+		}
+	}
+	return m.finishSMTP(client, to, from, msg)
+}
+
+func (m smtpMailer) finishSMTP(client *smtp.Client, to, from, msg string) error {
 	if m.cfg.SMTPUsername != "" {
 		auth := smtp.PlainAuth("", m.cfg.SMTPUsername, m.cfg.SMTPPassword, m.cfg.SMTPHost)
 		if err := client.Auth(auth); err != nil {

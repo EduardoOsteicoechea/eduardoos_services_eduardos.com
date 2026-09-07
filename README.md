@@ -32,11 +32,13 @@ The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay i
 
 This site follows the parent-workspace contract [`.cursor/rules/auth-security.mdc`](../.cursor/rules/auth-security.mdc). Users, JWTs, refresh tokens, and cookies are local to `eduardoos.com`. Frontend route guards are UX only. Real authorization decisions are enforced by this site’s Go API.
 
-Locked specification (milestone-1 decisions approved; do not implement application code until an implementation task): [`docs/specs/001-authentication-and-profiles.md`](docs/specs/001-authentication-and-profiles.md).
+Locked specification: [`docs/specs/001-authentication-and-profiles.md`](docs/specs/001-authentication-and-profiles.md). Cookie authentication, MongoDB users/sessions, email OTP, and private avatars are implemented. Nginx templates live in [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf).
+
+Bootstrap an admin **only** when the database has no `admin` user and `BOOTSTRAP_ADMIN_EMAIL` / `BOOTSTRAP_ADMIN_PASSWORD` (or, for local migration, `ADMIN_EMAIL` / `ADMIN_PASSWORD`) are set. The process never reseeds that password on later startups. After the first admin exists, **remove** `BOOTSTRAP_ADMIN_PASSWORD` and `ADMIN_PASSWORD` from `/etc/eduardoos-api.env`.
 
 ## Uploaded media storage
 
-This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media (when implemented) is `backend/.data/media` and must be Git-ignored. They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`.
+This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media is `backend/.data/media` (Git-ignored). They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`. Do not expose a public `/media/` alias; private avatars are authorized by Go and delivered with Nginx `X-Accel-Redirect` to `/internal-media/`.
 
 ## Email, OTP, and notifications
 
@@ -50,7 +52,7 @@ This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](
 
 `/diagnostics` and `POST /api/admin/diagnostics/*` are admin-only. The Go API enforces JWT, `admin` role, and CSRF. The page is UX only.
 
-Diagnostics are **off by default**. Locally, set `ENABLE_ADMIN_DIAGNOSTICS=true` in `backend/.env` or the parent workspace `.env`, plus `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `JWT_SECRET`, SMTP, and AI keys as needed. Seeded admin users are created only from those env values. Production enablement is manual: add `ENABLE_ADMIN_DIAGNOSTICS=true` to `/etc/eduardoos-api.env`, then restart **only** `eduardoos-api.service`. When the flag is missing or false, the APIs return **404**.
+Diagnostics are **off by default**. Locally, set `ENABLE_ADMIN_DIAGNOSTICS=true` in `backend/.env` or the parent workspace `.env`, plus `JWT_SECRET`, SMTP, and AI keys as needed. The first admin is created by one-time bootstrap env vars, not by reseeding `ADMIN_PASSWORD` on every start. Production enablement is manual: add `ENABLE_ADMIN_DIAGNOSTICS=true` to `/etc/eduardoos-api.env`, then restart **only** `eduardoos-api.service`. When the flag is missing or false, the APIs return **404**.
 
 There is no public email-send or AI-provider endpoint. A test email goes only to the signed-in administrator’s verified address. Tests mock SMTP and providers (`go test ./...` in `backend/`).
 
@@ -152,30 +154,24 @@ sudo chmod 440 /etc/sudoers.d/eduardoos-api
 
 Replace `deploy` with `VPS_USER`.
 
-5. Nginx: serve the static files and proxy `/api/` to the loopback API. Example:
+5. Nginx: serve the static files and proxy `/api/` to the loopback API **without** a trailing slash on `proxy_pass` (that would strip `/api` and break auth). Full template: [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf). Direct local health remains `http://127.0.0.1:8081/health`. Do not add a public `/media/` location.
 
 ```nginx
-server {
-    listen 80;
-    server_name eduardoos.com www.eduardoos.com;
-    root /var/www/eduardoos.com/html;
-    index index.html;
-
     location /api/ {
-        proxy_pass http://127.0.0.1:8081/;
+        proxy_pass http://127.0.0.1:8081;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location / {
-        try_files $uri $uri.html $uri/ /404.html;
+    location /internal-media/ {
+        internal;
+        alias /var/www/eduardoos.com/media/;
     }
-}
 ```
 
-`proxy_pass` must **preserve** the `/api/` prefix (implementation stage). The trailing-slash example below is the current README sketch and must be corrected when auth is implemented so `/api/auth/me` reaches Go `/api/auth/me`. Direct local health remains `http://127.0.0.1:8081/health`. Put TLS in front of this server (Certbot or your existing HTTPS terminator). The API itself must stay on `127.0.0.1`.
+Redirect `www` to apex **before** any auth cookies are issued. Put TLS in front of this server (Certbot or your existing HTTPS terminator). The API itself must stay on `127.0.0.1`.
 
 6. Install the GitHub Actions **public** key in `~/.ssh/authorized_keys` for the same Linux user as `VPS_USER` (often `root` on a new VPS). `VPS_SSH_KEY` must be the matching **private** key, including the `BEGIN` / `END` lines.
 

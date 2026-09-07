@@ -10,14 +10,14 @@ import (
 )
 
 const (
-	maxPromptRunes     = 500
-	emailAdminWindow   = 10 * time.Minute
-	emailSiteMax       = 20
-	emailSiteWindow    = time.Hour
-	aiAdminMax         = 10
-	aiAdminWindow      = time.Hour
-	aiSiteMax          = 30
-	aiSiteWindow       = time.Hour
+	maxPromptRunes   = 500
+	emailAdminWindow = 10 * time.Minute
+	emailSiteMax     = 20
+	emailSiteWindow  = time.Hour
+	aiAdminMax       = 10
+	aiAdminWindow    = time.Hour
+	aiSiteMax        = 30
+	aiSiteWindow     = time.Hour
 )
 
 func (a *App) diagnosticsEnabled(w http.ResponseWriter, r *http.Request) bool {

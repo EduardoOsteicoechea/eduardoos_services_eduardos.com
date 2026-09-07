@@ -94,11 +94,13 @@ import Layout from "../layouts/Layout.astro";
         showLogin(true);
         setBanner(status === 401 ? "Sign in with an administrator account." : "Unauthorized.", "err");
         document.querySelector("#nav-diagnostics")?.setAttribute("hidden", "");
+        document.querySelector("[data-admin-only]")?.setAttribute("hidden", "");
         return;
       }
       showLogin(false);
       showTools(true);
       document.querySelector("#nav-diagnostics")?.removeAttribute("hidden");
+      document.querySelectorAll("[data-admin-only]").forEach((node) => node.removeAttribute("hidden"));
       setBanner(`Signed in as ${data.email}. Diagnostics are enforced by the Go API.`, "ok");
     };
 

@@ -1,0 +1,19 @@
+[Unit]
+Description=eduardoos API
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=www-data
+WorkingDirectory=/opt/apps/eduardoos/current
+ExecStart=/opt/apps/eduardoos/current/api
+EnvironmentFile=/etc/eduardoos-api.env
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

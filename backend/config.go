@@ -6,37 +6,42 @@ import (
 )
 
 const (
-	siteName    = "eduardoos.com"
-	displayName = "Eduardoos"
-	defaultPort = "8081"
-	listenHost  = "127.0.0.1"
-	jwtIssuer   = "https://eduardoos.com"
-	jwtAudience = "https://eduardoos.com"
+	siteName      = "eduardoos.com"
+	displayName   = "Eduardoos"
+	defaultPort   = "8081"
+	listenHost    = "127.0.0.1"
+	jwtIssuer     = "https://eduardoos.com"
+	jwtAudience   = "https://eduardoos.com"
+	mongoDatabase = "eduardoos"
 )
 
 type config struct {
-	ListenAddr         string
-	MongoURI           string
-	JWTSecret          string
-	JWTIssuer          string
-	JWTAudience        string
-	SecureCookies      bool
-	EnableDiagnostics  bool
-	AdminEmail         string
-	AdminPassword      string
-	SMTPHost           string
-	SMTPPort           string
-	SMTPUsername       string
-	SMTPPassword       string
-	SMTPFromAddress    string
-	SMTPFromName       string
-	DeepSeekKey        string
-	DeepSeekBaseURL    string
-	DeepSeekModel      string
-	KimiKey            string
-	KimiBaseURL        string
-	KimiModel          string
-	AllowedOrigins     []string
+	ListenAddr             string
+	MongoURI               string
+	MongoDatabase          string
+	JWTSecret              string
+	JWTIssuer              string
+	JWTAudience            string
+	SecureCookies          bool
+	EnableDiagnostics      bool
+	AdminEmail             string
+	AdminPassword          string
+	BootstrapAdminEmail    string
+	BootstrapAdminPassword string
+	MediaRoot              string
+	SMTPHost               string
+	SMTPPort               string
+	SMTPUsername           string
+	SMTPPassword           string
+	SMTPFromAddress        string
+	SMTPFromName           string
+	DeepSeekKey            string
+	DeepSeekBaseURL        string
+	DeepSeekModel          string
+	KimiKey                string
+	KimiBaseURL            string
+	KimiModel              string
+	AllowedOrigins         []string
 }
 
 func loadConfig() config {
@@ -78,33 +83,49 @@ func loadConfig() config {
 		from = "noreply@" + siteName
 	}
 
+	media := strings.TrimSpace(os.Getenv("MEDIA_ROOT"))
+	if media == "" {
+		if envBool("COOKIE_SECURE", false) {
+			media = "/var/www/" + siteName + "/media"
+		} else {
+			media = filepathJoinLocalMedia()
+		}
+	}
+
 	return config{
-		ListenAddr:        listenHost + ":" + port,
-		MongoURI:          os.Getenv("MONGO_URI"),
-		JWTSecret:         os.Getenv("JWT_SECRET"),
-		JWTIssuer:         issuer,
-		JWTAudience:       audience,
-		SecureCookies:     envBool("COOKIE_SECURE", false),
-		EnableDiagnostics: envBool("ENABLE_ADMIN_DIAGNOSTICS", false),
-		AdminEmail:        strings.TrimSpace(os.Getenv("ADMIN_EMAIL")),
-		AdminPassword:     os.Getenv("ADMIN_PASSWORD"),
-		SMTPHost:          os.Getenv("SMTP_HOST"),
-		SMTPPort:          os.Getenv("SMTP_PORT"),
-		SMTPUsername:      os.Getenv("SMTP_USERNAME"),
-		SMTPPassword:      os.Getenv("SMTP_PASSWORD"),
-		SMTPFromAddress:   from,
-		SMTPFromName:      os.Getenv("SMTP_FROM_NAME"),
-		DeepSeekKey:       os.Getenv("DEEPSEEK_API_KEY"),
-		DeepSeekBaseURL:   strings.TrimRight(deepseekBase, "/"),
-		DeepSeekModel:     deepseekModel,
-		KimiKey:           os.Getenv("KIMI_API_KEY"),
-		KimiBaseURL:       strings.TrimRight(kimiBase, "/"),
-		KimiModel:         kimiModel,
+		ListenAddr:             listenHost + ":" + port,
+		MongoURI:               os.Getenv("MONGO_URI"),
+		MongoDatabase:          mongoDatabase,
+		JWTSecret:              os.Getenv("JWT_SECRET"),
+		JWTIssuer:              issuer,
+		JWTAudience:            audience,
+		SecureCookies:          envBool("COOKIE_SECURE", false),
+		EnableDiagnostics:      envBool("ENABLE_ADMIN_DIAGNOSTICS", false),
+		AdminEmail:             strings.TrimSpace(os.Getenv("ADMIN_EMAIL")),
+		AdminPassword:          os.Getenv("ADMIN_PASSWORD"),
+		BootstrapAdminEmail:    strings.TrimSpace(os.Getenv("BOOTSTRAP_ADMIN_EMAIL")),
+		BootstrapAdminPassword: os.Getenv("BOOTSTRAP_ADMIN_PASSWORD"),
+		MediaRoot:              media,
+		SMTPHost:               os.Getenv("SMTP_HOST"),
+		SMTPPort:               os.Getenv("SMTP_PORT"),
+		SMTPUsername:           os.Getenv("SMTP_USERNAME"),
+		SMTPPassword:           os.Getenv("SMTP_PASSWORD"),
+		SMTPFromAddress:        from,
+		SMTPFromName:           os.Getenv("SMTP_FROM_NAME"),
+		DeepSeekKey:            os.Getenv("DEEPSEEK_API_KEY"),
+		DeepSeekBaseURL:        strings.TrimRight(deepseekBase, "/"),
+		DeepSeekModel:          deepseekModel,
+		KimiKey:                os.Getenv("KIMI_API_KEY"),
+		KimiBaseURL:            strings.TrimRight(kimiBase, "/"),
+		KimiModel:              kimiModel,
 		AllowedOrigins: []string{
 			"https://" + siteName,
-			"https://www." + siteName,
 			"http://127.0.0.1:4321",
 			"http://127.0.0.1:" + port,
 		},
 	}
+}
+
+func filepathJoinLocalMedia() string {
+	return ".data/media"
 }
