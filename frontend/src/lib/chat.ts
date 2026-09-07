@@ -169,6 +169,7 @@ function paintChat(): void {
   if (!(log instanceof HTMLElement)) {
     return;
   }
+  const emptyNode = empty instanceof HTMLElement ? empty : null;
   log.replaceChildren();
   turns.forEach((turn, index) => {
     const article = document.createElement("article");
@@ -254,8 +255,11 @@ function paintChat(): void {
     article.append(body);
     log.append(article);
   });
-  if (empty instanceof HTMLElement) {
-    empty.hidden = turns.length > 0;
+  if (emptyNode) {
+    emptyNode.hidden = turns.length > 0;
+    if (turns.length === 0) {
+      log.prepend(emptyNode);
+    }
   }
   paintSelectBar();
   paintHistory();

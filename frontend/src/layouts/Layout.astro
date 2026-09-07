@@ -199,8 +199,9 @@ const isEreport = htmlPage.startsWith("ereport");
         <button class="agent-chat-resize icon-btn" type="button" data-agent-resize aria-label="Resize chat">
           <span class="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
         </button>
-        <p class="hint" data-agent-empty>Ask a short question about this site.</p>
-        <div class="agent-chat-log" data-agent-log></div>
+        <div class="agent-chat-log" data-agent-log>
+          <p class="hint" data-agent-empty>Ask a short question about this site.</p>
+        </div>
         <div class="agent-chat-select-bar" data-agent-select-bar hidden>
           <button type="button" data-agent-copy-selected>Copy selected</button>
           <button type="button" data-agent-cancel-select>Cancel</button>
@@ -210,7 +211,7 @@ const isEreport = htmlPage.startsWith("ereport");
           <p class="agent-chat-reply" data-agent-reply hidden></p>
           <div class="agent-chat-composer">
             <div class="agent-chat-compose-main">
-              <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message"></textarea>
+              <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message" placeholder="Ask a short question about this site."></textarea>
               <div class="agent-chat-drop" data-agent-drop>
                 <input type="file" data-agent-files accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden />
                 <span class="material-symbols-outlined" aria-hidden="true">imagesmode</span>
@@ -225,7 +226,9 @@ const isEreport = htmlPage.startsWith("ereport");
               <button class="icon-btn" type="button" data-agent-history-toggle aria-expanded="false" aria-label="Chat history">
                 <span class="material-symbols-outlined" aria-hidden="true">history</span>
               </button>
-              <button type="submit" data-agent-send disabled>Send</button>
+              <button class="icon-btn" type="submit" data-agent-send disabled aria-label="Send">
+                <span class="material-symbols-outlined" aria-hidden="true">send</span>
+              </button>
             </div>
           </div>
         </form>

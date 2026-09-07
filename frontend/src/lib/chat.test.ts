@@ -94,6 +94,17 @@ describe("agent chat tray", () => {
     expect(document.querySelector(".agent-chat-msg-assistant")).toBeNull();
   });
 
+  it("hides copy-selected until select mode and keeps the empty hint in the log", () => {
+    mountTray();
+    startAgentChat();
+    const bar = document.querySelector("[data-agent-select-bar]") as HTMLElement;
+    const empty = document.querySelector("[data-agent-empty]") as HTMLElement;
+    const log = document.querySelector("[data-agent-log]") as HTMLElement;
+    expect(bar.hidden).toBe(true);
+    expect(empty.hidden).toBe(false);
+    expect(log.contains(empty)).toBe(true);
+  });
+
   it("widens the tray from the border handle", () => {
     mountTray();
     startAgentChat();
