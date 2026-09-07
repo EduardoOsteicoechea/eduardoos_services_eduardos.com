@@ -34,7 +34,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
         <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-label="Open page actions">
           <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
         </button>
-        <a class="header-avatar icon-btn" href="/session" data-route aria-label="Session">
+        <a class="header-avatar icon-btn" href="/session" data-route data-guest-href="/session" data-authed-href="/session/profile" data-guest-label="Sign in" data-authed-label="Profile" aria-label="Sign in">
           <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
         </a>
       </header>
@@ -64,10 +64,34 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
-          <a href="/session" data-route aria-current={path === "/session" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
-            Session
+          <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">login</span>
+            Sign in
           </a>
+          <a href="/session/register" data-route data-guest-only aria-current={path === "/session/register" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+            Create account
+          </a>
+          <a href="/session/verify-email" data-route data-guest-only aria-current={path === "/session/verify-email" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">mark_email_read</span>
+            Verify email
+          </a>
+          <a href="/session/forgot-password" data-route data-guest-only aria-current={path === "/session/forgot-password" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">lock_reset</span>
+            Forgot password
+          </a>
+          <a href="/session/profile" data-route data-authed-only hidden aria-current={path === "/session/profile" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+            Profile
+          </a>
+          <a href="/session/change-password" data-route data-authed-only hidden aria-current={path === "/session/change-password" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">password</span>
+            Change password
+          </a>
+          <button type="button" data-logout data-authed-only hidden>
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+            Sign out
+          </button>
           <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
             Diagnostics
@@ -80,7 +104,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
           <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
           </a>
-        ) : path === "/session" ? (
+        ) : path.startsWith("/session") ? (
           <a class="icon-btn" href="/session" data-route aria-label="Session">
             <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
           </a>

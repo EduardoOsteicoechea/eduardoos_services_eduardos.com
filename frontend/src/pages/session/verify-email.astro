@@ -1,0 +1,76 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Verify email · Eduardoos">
+  <section class="session-grid" data-session>
+    <h1>Verify email</h1>
+    <p class="lede">Enter the six-digit code from email, or request a new one. Successful verification signs you in.</p>
+    <p class="status" data-banner>Loading session…</p>
+    <form class="panel" data-verify>
+      <h2>Verify account</h2>
+      <label>
+        Email
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label>
+        Six-digit code
+        <input name="otp" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required />
+      </label>
+      <button type="submit">Verify</button>
+    </form>
+    <form class="panel" data-resend>
+      <h2>Resend verification</h2>
+      <label>
+        Email
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <button type="submit">Send code</button>
+      <p class="hint session-links">
+        <a href="/session" data-route>Sign in</a>
+        <a href="/session/register" data-route>Create account</a>
+      </p>
+    </form>
+  </section>
+</Layout>
+
+<script>
+  import { getCsrf, postJSON, type MeResponse } from "../../lib/api";
+  import { afterAuthChange, genericMessage, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { go } from "../../lib/router";
+
+  const root = document.querySelector("[data-session]");
+  if (root instanceof HTMLElement) {
+    const copy = sessionCopy();
+    void getCsrf().then(() => requireGuest(root, copy));
+    root.querySelector("[data-verify]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const data = new FormData(form);
+      const result = await postJSON<MeResponse>("/auth/verify-email", {
+        email: String(data.get("email") ?? ""),
+        otp: String(data.get("otp") ?? ""),
+      });
+      setBusy(form, false);
+      const message = genericMessage(copy, result.status, result.data, "Verification accepted.");
+      setBanner(root, message.text, message.kind);
+      if (result.status === 200) {
+        await afterAuthChange();
+        go("/session/profile");
+      }
+    });
+    root.querySelector("[data-resend]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const data = new FormData(form);
+      const result = await postJSON<MeResponse>("/auth/resend-verification", { email: String(data.get("email") ?? "") });
+      setBusy(form, false);
+      const message = genericMessage(copy, result.status, result.data, "If that account needs verification, a new code was sent.");
+      setBanner(root, message.text, message.kind);
+    });
+  }
+</script>

@@ -1,0 +1,105 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Profile · Eduardoos">
+  <section class="session-grid" data-session>
+    <h1>Profile</h1>
+    <p class="lede">Profile changes apply only to your account. The Go API remains the authority.</p>
+    <p class="status" data-banner>Loading session…</p>
+    <p class="panel" data-guest-fallback hidden>
+      Sign in to view your profile.
+      <span class="hint session-links">
+        <a href="/session" data-route>Sign in</a>
+      </span>
+    </p>
+    <div class="panel" data-authed-panel hidden>
+      <h2>Profile</h2>
+      <p class="hint" data-profile-summary></p>
+      <img class="session-avatar" data-avatar-img hidden alt="" />
+      <form data-profile-form>
+        <label>
+          Display name
+          <input name="display_name" maxlength="80" />
+        </label>
+        <label>
+          Username
+          <input name="username" required minlength="3" maxlength="32" pattern="[a-z0-9_]+" />
+        </label>
+        <label>
+          Phone (E.164)
+          <input name="phone" placeholder="+15551234567" />
+        </label>
+        <button type="submit">Save profile</button>
+      </form>
+      <form data-avatar-form>
+        <label>
+          Avatar (JPEG, PNG, or WebP)
+          <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
+        </label>
+        <button type="submit">Upload avatar</button>
+        <button type="button" data-avatar-delete>Remove avatar</button>
+      </form>
+      <p class="hint session-links">
+        <a href="/session/change-password" data-route>Change password</a>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { deleteAvatar, getCsrf, patchJSON, uploadAvatar, type MeResponse } from "../../lib/api";
+  import { fillProfile, genericMessage, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+
+  const root = document.querySelector("[data-session]");
+  if (root instanceof HTMLElement) {
+    const copy = sessionCopy();
+    void getCsrf().then(async () => {
+      const me = await requireAuth(root, copy);
+      if (me) {
+        fillProfile(root, me);
+        setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
+      }
+    });
+    root.querySelector("[data-profile-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      setBusy(form, true);
+      const data = new FormData(form);
+      const phone = String(data.get("phone") ?? "").trim();
+      const displayName = String(data.get("display_name") ?? "").trim();
+      const result = await patchJSON<MeResponse>("/profile", {
+        display_name: displayName === "" ? null : displayName,
+        username: String(data.get("username") ?? ""),
+        phone,
+      });
+      setBusy(form, false);
+      const message = genericMessage(copy, result.status, result.data, "Profile saved.");
+      setBanner(root, message.text, message.kind);
+      if (result.status === 200) fillProfile(root, result.data);
+    });
+    root.querySelector("[data-avatar-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const fileInput = form.elements.namedItem("file");
+      if (!(fileInput instanceof HTMLInputElement) || !fileInput.files?.[0]) {
+        setBanner(root, "Choose an image file.", "err");
+        return;
+      }
+      setBusy(form, true);
+      const result = await uploadAvatar(fileInput.files[0]);
+      setBusy(form, false);
+      const message = genericMessage(copy, result.status, result.data, "Avatar updated.");
+      setBanner(root, message.text, message.kind);
+      if (result.status === 200) fillProfile(root, result.data);
+    });
+    root.querySelector("[data-avatar-delete]")?.addEventListener("click", async () => {
+      const result = await deleteAvatar();
+      const message = genericMessage(copy, result.status, result.data, "Avatar removed.");
+      setBanner(root, message.text, message.kind);
+      if (result.status === 200) fillProfile(root, result.data);
+    });
+  }
+</script>

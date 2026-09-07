@@ -79,7 +79,7 @@ func normalizeDisplayName(raw string) (string, bool) {
 
 func validPassword(raw string) bool {
 	n := utf8.RuneCountInString(raw)
-	return n >= 12 && n <= 128
+	return n >= 8 && n <= 128
 }
 
 func validOTP(raw string) bool {

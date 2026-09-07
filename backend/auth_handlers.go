@@ -236,8 +236,12 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	_, emailNorm, ok := normalizeEmail(body.Email)
-	if !ok || !validOTP(body.OTP) || !validPassword(body.NewPassword) {
+	if !ok || !validOTP(body.OTP) {
 		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
+		return
+	}
+	if !validPassword(body.NewPassword) {
+		a.writeSafeError(w, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	otp, err := a.consumeOTP(otpPasswordReset, emailNorm, body.OTP)

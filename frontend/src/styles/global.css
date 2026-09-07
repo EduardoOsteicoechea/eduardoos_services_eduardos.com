@@ -2,7 +2,7 @@
   --space-margin: 1rem;
   --space-padding: 1rem;
   --border-width: 0.0625rem;
-  --border-radius: 0.5rem;
+  --border-radius: 0.125rem;
   --header-size: 4rem;
   --sidebar-width: 20rem;
   --icon-size: 1.5rem;
@@ -121,7 +121,7 @@ a {
   color: var(--color-button-fg);
   background: var(--color-button-bg);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
+  border-radius: 50%;
 }
 
 .material-symbols-outlined {
@@ -136,6 +136,9 @@ a {
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   padding: var(--space-padding);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .sidebar-toolbar {
@@ -144,12 +147,32 @@ a {
   margin-bottom: var(--space-margin);
 }
 
-.sidebar-left nav a {
+.sidebar-left nav {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar-left nav a,
+.sidebar-left nav button {
   display: flex;
   align-items: center;
   gap: var(--space-padding);
   padding: var(--space-padding) 0;
+  font: inherit;
   font-size: var(--font-size-md);
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-left nav a[hidden],
+.sidebar-left nav button[hidden] {
+  display: none;
 }
 
 .sidebar-left nav a[aria-current="page"] {
@@ -211,10 +234,17 @@ h2 {
   max-width: 40rem;
 }
 
+.session-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-padding);
+  margin-top: var(--space-margin);
+}
+
 .session-avatar {
   width: var(--button-size);
   height: var(--button-size);
-  border-radius: var(--border-radius);
+  border-radius: 50%;
   border: var(--border-width) solid var(--color-border);
   object-fit: cover;
 }

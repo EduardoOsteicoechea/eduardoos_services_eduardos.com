@@ -51,6 +51,69 @@ func TestRegisterVerifyLoginUsername(t *testing.T) {
 	}
 }
 
+func TestPasswordLengthEightSucceedsSevenFails(t *testing.T) {
+	app := newTestApp(true)
+	mailer := app.mailer.(*recordingMailer)
+
+	tooShort := app.anonPOST(t, "/api/auth/register", `{"email":"short7@eduardoos.com","username":"short7u","password":"abcdefg"}`)
+	if tooShort.Code != http.StatusBadRequest {
+		t.Fatalf("7-char register: %d %s", tooShort.Code, tooShort.Body.String())
+	}
+
+	okReg := app.anonPOST(t, "/api/auth/register", `{"email":"eight8@eduardoos.com","username":"eight8u","password":"abcdefgh"}`)
+	if okReg.Code != http.StatusOK {
+		t.Fatalf("8-char register: %d %s", okReg.Code, okReg.Body.String())
+	}
+	code := extractOTP(t, mailer)
+	verify := app.anonPOST(t, "/api/auth/verify-email", `{"email":"eight8@eduardoos.com","otp":"`+code+`"}`)
+	if verify.Code != http.StatusOK {
+		t.Fatalf("verify 8-char: %d %s", verify.Code, verify.Body.String())
+	}
+	login := app.anonPOST(t, "/api/auth/login", `{"email":"eight8@eduardoos.com","password":"abcdefgh"}`)
+	if login.Code != http.StatusOK {
+		t.Fatalf("login 8-char: %d %s", login.Code, login.Body.String())
+	}
+
+	changeReq, changeRec := app.memberPOST(t, "/api/auth/change-password", `{"current_password":"correct-horse-battery","new_password":"abcdefg"}`)
+	app.Handler().ServeHTTP(changeRec, changeReq)
+	if changeRec.Code != http.StatusBadRequest {
+		t.Fatalf("7-char change: %d %s", changeRec.Code, changeRec.Body.String())
+	}
+
+	app.anonPOST(t, "/api/auth/request-password-reset", `{"email":"member@eduardoos.com"}`)
+	resetCode := extractOTP(t, mailer)
+	resetShort := app.anonPOST(t, "/api/auth/reset-password", `{"email":"member@eduardoos.com","otp":"`+resetCode+`","new_password":"abcdefg"}`)
+	if resetShort.Code != http.StatusBadRequest {
+		t.Fatalf("7-char reset: %d %s", resetShort.Code, resetShort.Body.String())
+	}
+
+	shortStore := newMemoryStore()
+	shortCfg := config{
+		JWTSecret:              "bootstrap-secret-value-not-production",
+		JWTIssuer:              jwtIssuer,
+		JWTAudience:            jwtAudience,
+		BootstrapAdminEmail:    "root7@eduardoos.com",
+		BootstrapAdminPassword: "abcdefg",
+		MediaRoot:              t.TempDir(),
+		AllowedOrigins:         []string{"https://eduardoos.com"},
+	}
+	_ = newAppWithStore(shortCfg, shortStore)
+	n, _ := shortStore.CountAdmins(context.Background())
+	if n != 0 {
+		t.Fatalf("7-char bootstrap must not create admin, got %d", n)
+	}
+
+	okStore := newMemoryStore()
+	okCfg := shortCfg
+	okCfg.BootstrapAdminEmail = "root8@eduardoos.com"
+	okCfg.BootstrapAdminPassword = "abcdefgh"
+	_ = newAppWithStore(okCfg, okStore)
+	n, _ = okStore.CountAdmins(context.Background())
+	if n != 1 {
+		t.Fatalf("8-char bootstrap must create admin, got %d", n)
+	}
+}
+
 func TestDuplicateEmailIsGenericAndDuplicateUsernameConflicts(t *testing.T) {
 	app := newTestApp(true)
 	first := app.anonPOST(t, "/api/auth/register", `{"email":"dup@eduardoos.com","username":"dupone","password":"correct-horse-battery"}`)
