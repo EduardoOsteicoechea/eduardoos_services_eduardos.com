@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SITE: eduardoos.com
+      APP: eduardoos
+      SERVICE: eduardoos-api.service
       API_PORT: "8081"
     steps:
       - name: Check out source
@@ -105,12 +107,12 @@ jobs:
           PORT="${VPS_PORT:-22}"
           RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
           SHA="${GITHUB_SHA}"
-          RELEASE="/opt/apps/${SITE}/releases/${SHA}"
+          RELEASE="/opt/apps/${APP}/releases/${SHA}"
           ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${RELEASE}'"
           rsync -az -e "${RSH}" \
             backend/api \
             "${VPS_USER}@${VPS_HOST}:${RELEASE}/api"
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${SITE}/current.tmp' && mv -Tf '/opt/apps/${SITE}/current.tmp' '/opt/apps/${SITE}/current'"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${APP}/current.tmp' && mv -Tf '/opt/apps/${APP}/current.tmp' '/opt/apps/${APP}/current'"
 
       - name: Restart API and verify health
         env:
@@ -121,4 +123,4 @@ jobs:
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
           RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SITE}-api.service' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SERVICE}' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"

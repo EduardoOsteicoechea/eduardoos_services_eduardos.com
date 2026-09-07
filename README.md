@@ -20,11 +20,11 @@ eduardoos.com/
 | API bind | `127.0.0.1:8081` |
 | Frontend → API | same-origin `/api/` |
 | Static files on VPS | `/var/www/eduardoos.com/html/` |
-| API releases | `/opt/apps/eduardoos.com/releases/<git-sha>/api` |
-| Live API symlink | `/opt/apps/eduardoos.com/current` → release dir |
-| Live binary | `/opt/apps/eduardoos.com/current/api` |
+| API releases | `/opt/apps/eduardoos/releases/<git-sha>/api` |
+| Live API symlink | `/opt/apps/eduardoos/current` → release dir |
+| Live binary | `/opt/apps/eduardoos/current/api` |
 | Secrets file | `/etc/eduardoos.com-api.env` |
-| systemd unit | `eduardoos.com-api.service` |
+| systemd unit | `eduardoos-api.service` |
 
 The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay in environment variables on the server.
 
@@ -101,19 +101,11 @@ Run once on the VPS as a user that can write the app paths and use systemd.
 
 ```bash
 sudo mkdir -p /var/www/eduardoos.com/html
-sudo mkdir -p /opt/apps/eduardoos.com/releases
-sudo chown -R "$USER:$USER" /var/www/eduardoos.com /opt/apps/eduardoos.com
 ```
 
-2. Install the systemd unit from `backend/systemd/eduardoos.com-api.service`:
+Backend release directories already exist and are owned by `deploy`. CI only creates a unique folder under `/opt/apps/eduardoos/releases/` and never creates `/opt/apps` or `/opt/apps/eduardoos`.
 
-```bash
-sudo cp backend/systemd/eduardoos.com-api.service /etc/systemd/system/eduardoos.com-api.service
-sudo systemctl daemon-reload
-sudo systemctl enable eduardoos.com-api.service
-```
-
-The unit executes `/opt/apps/eduardoos.com/current/api` and loads `/etc/eduardoos.com-api.env`.
+2. The live unit on the VPS is `eduardoos-api.service`. It executes `/opt/apps/eduardoos/current/api` and loads `/etc/eduardoos.com-api.env`.
 
 3. Create secrets (never commit this file):
 
@@ -128,8 +120,8 @@ EOF
 4. Allow the deploy user to restart only this service:
 
 ```bash
-echo 'deploy ALL=NOPASSWD: /bin/systemctl restart eduardoos.com-api.service' | sudo tee /etc/sudoers.d/eduardoos.com-api
-sudo chmod 440 /etc/sudoers.d/eduardoos.com-api
+echo 'deploy ALL=NOPASSWD: /bin/systemctl restart eduardoos-api.service' | sudo tee /etc/sudoers.d/eduardoos-api
+sudo chmod 440 /etc/sudoers.d/eduardoos-api
 ```
 
 Replace `deploy` with `VPS_USER`.
@@ -208,9 +200,9 @@ Pushes to `main` and manual **workflow_dispatch** run `.github/workflows/deploy.
 5. Authenticates with `VPS_SSH_KEY`.
 6. Verifies the host with `VPS_KNOWN_HOSTS`.
 7. rsyncs only `frontend/dist/` to `/var/www/eduardoos.com/html/` with `--delete`.
-8. Uploads only the `api` binary to `/opt/apps/eduardoos.com/releases/<git-sha>/api`.
-9. Atomically points `/opt/apps/eduardoos.com/current` at that release.
-10. Restarts `eduardoos.com-api.service`.
+8. Uploads only the `api` binary to `/opt/apps/eduardoos/releases/<git-sha>/api`.
+9. Atomically points `/opt/apps/eduardoos/current` at that release.
+10. Restarts `eduardoos-api.service`.
 11. Verifies `curl --fail http://127.0.0.1:8081/health` on the VPS.
 
 Source, `node_modules`, `.git`, `.env` files, and credentials are never uploaded.
@@ -220,12 +212,12 @@ Source, `node_modules`, `.git`, `.env` files, and credentials are never uploaded
 API (on the VPS):
 
 ```bash
-ls -1 /opt/apps/eduardoos.com/releases
-sudo ln -sfn /opt/apps/eduardoos.com/releases/<previous-sha> /opt/apps/eduardoos.com/current
-sudo systemctl restart eduardoos.com-api.service
+ls -1 /opt/apps/eduardoos/releases
+sudo ln -sfn /opt/apps/eduardoos/releases/<previous-sha> /opt/apps/eduardoos/current
+sudo systemctl restart eduardoos-api.service
 curl --fail http://127.0.0.1:8081/health
 ```
 
 Frontend: the document root is replaced on each deploy. Restore a previous frontend by re-running the workflow on the desired commit (`workflow_dispatch` after checking out that SHA, or revert on `main` and push).
 
-Keep a few old directories under `/opt/apps/eduardoos.com/releases/` and delete the rest after you confirm a release.
+Keep a few old directories under `/opt/apps/eduardoos/releases/` and delete the rest after you confirm a release.
