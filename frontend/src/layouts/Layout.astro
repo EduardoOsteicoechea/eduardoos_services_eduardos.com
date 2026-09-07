@@ -196,6 +196,9 @@ const isEreport = htmlPage.startsWith("ereport");
       </main>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
+        <button class="agent-chat-resize icon-btn" type="button" data-agent-resize aria-label="Resize chat">
+          <span class="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
+        </button>
         <p class="hint" data-agent-empty>Ask a short question about this site.</p>
         <div class="agent-chat-log" data-agent-log></div>
         <div class="agent-chat-select-bar" data-agent-select-bar hidden>
@@ -205,12 +208,15 @@ const isEreport = htmlPage.startsWith("ereport");
         <div class="agent-chat-history" data-agent-history hidden></div>
         <form class="agent-chat-form" data-agent-form>
           <p class="agent-chat-reply" data-agent-reply hidden></p>
-          <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message"></textarea>
           <div class="agent-chat-composer">
-            <div class="agent-chat-drop" data-agent-drop>
-              <input type="file" data-agent-files accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden />
-              <p class="hint" data-agent-drop-label>Drop images</p>
-              <div class="agent-chat-thumbs" data-agent-thumbs></div>
+            <div class="agent-chat-compose-main">
+              <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message"></textarea>
+              <div class="agent-chat-drop" data-agent-drop>
+                <input type="file" data-agent-files accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden />
+                <span class="material-symbols-outlined" aria-hidden="true">imagesmode</span>
+                <span class="hint" data-agent-drop-label>Images</span>
+                <div class="agent-chat-thumbs" data-agent-thumbs></div>
+              </div>
             </div>
             <div class="agent-chat-tools">
               <button class="icon-btn" type="button" data-agent-new aria-label="New chat">

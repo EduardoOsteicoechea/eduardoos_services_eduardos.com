@@ -15,6 +15,7 @@ vi.mock("./error-modal", () => ({
 function mountTray(): void {
   document.body.innerHTML = `
     <aside id="agent-sidebar">
+      <button type="button" data-agent-resize aria-label="Resize chat"></button>
       <p data-agent-empty>Ask a short question about this site.</p>
       <div data-agent-log></div>
       <div data-agent-select-bar hidden>
@@ -91,5 +92,14 @@ describe("agent chat tray", () => {
       expect(showErrorModal).toHaveBeenCalled();
     });
     expect(document.querySelector(".agent-chat-msg-assistant")).toBeNull();
+  });
+
+  it("widens the tray from the border handle", () => {
+    mountTray();
+    startAgentChat();
+    const aside = document.getElementById("agent-sidebar") as HTMLElement;
+    const handle = document.querySelector("[data-agent-resize]") as HTMLElement;
+    handle.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true, cancelable: true }));
+    expect(aside.style.width).toBe("21rem");
   });
 });

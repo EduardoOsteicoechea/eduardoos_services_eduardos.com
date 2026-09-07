@@ -6,7 +6,10 @@ const MAX_HISTORY = 8;
 const MAX_MESSAGE = 500;
 const MAX_IMAGES = 6;
 const MAX_IMAGE_BYTES = 1500000;
-const INPUT_MAX_REM = 10;
+const INPUT_MAX_REM = 8;
+const SIDEBAR_MIN_REM = 16;
+const SIDEBAR_MAX_REM = 40;
+const SIDEBAR_DEFAULT_REM = 20;
 
 const copy = {
   failed: "The assistant could not reply.",
@@ -40,6 +43,7 @@ let replyTo = "";
 let selectMode = false;
 let selected = new Set<number>();
 let openMenu = -1;
+let sidebarWidthRem = SIDEBAR_DEFAULT_REM;
 
 export function resetAgentChat(): void {
   revokeAll(pendingImages.map((item) => item.url));
@@ -50,6 +54,7 @@ export function resetAgentChat(): void {
   selectMode = false;
   selected = new Set();
   openMenu = -1;
+  sidebarWidthRem = SIDEBAR_DEFAULT_REM;
 }
 
 function revokeAll(urls: string[]): void {
@@ -83,6 +88,65 @@ function syncSend(input: HTMLTextAreaElement, send: HTMLButtonElement | null): v
   if (send) {
     send.disabled = !hasComposerContent(input);
   }
+}
+
+function applySidebarWidth(): void {
+  const aside = document.getElementById("agent-sidebar");
+  if (!(aside instanceof HTMLElement)) {
+    return;
+  }
+  const width = `${sidebarWidthRem}rem`;
+  aside.style.width = width;
+  aside.style.setProperty("--agent-sidebar-width", width);
+}
+
+function widthFromClientX(clientX: number): number {
+  const root = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  return Math.min(SIDEBAR_MAX_REM, Math.max(SIDEBAR_MIN_REM, (window.innerWidth - clientX) / root));
+}
+
+function bindResize(): void {
+  const handle = document.querySelector("[data-agent-resize]");
+  if (!(handle instanceof HTMLElement) || handle.dataset.bound === "true") {
+    applySidebarWidth();
+    return;
+  }
+  handle.dataset.bound = "true";
+  applySidebarWidth();
+  handle.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    handle.setPointerCapture(event.pointerId);
+    document.documentElement.dataset.agentResizing = "true";
+    sidebarWidthRem = widthFromClientX(event.clientX);
+    applySidebarWidth();
+  });
+  handle.addEventListener("pointermove", (event) => {
+    if (!handle.hasPointerCapture(event.pointerId)) {
+      return;
+    }
+    sidebarWidthRem = widthFromClientX(event.clientX);
+    applySidebarWidth();
+  });
+  const stop = (event: PointerEvent) => {
+    if (handle.hasPointerCapture(event.pointerId)) {
+      handle.releasePointerCapture(event.pointerId);
+    }
+    delete document.documentElement.dataset.agentResizing;
+  };
+  handle.addEventListener("pointerup", stop);
+  handle.addEventListener("pointercancel", stop);
+  handle.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      sidebarWidthRem = Math.min(SIDEBAR_MAX_REM, sidebarWidthRem + 1);
+      applySidebarWidth();
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      sidebarWidthRem = Math.max(SIDEBAR_MIN_REM, sidebarWidthRem - 1);
+      applySidebarWidth();
+    }
+  });
 }
 
 function growInput(input: HTMLTextAreaElement): void {
@@ -399,6 +463,7 @@ export function startAgentChat(): void {
     return;
   }
   const sendBtn = send instanceof HTMLButtonElement ? send : null;
+  bindResize();
   paintChat();
   growInput(input);
   syncSend(input, sendBtn);
