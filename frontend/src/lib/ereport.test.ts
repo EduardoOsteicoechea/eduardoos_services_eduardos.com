@@ -31,16 +31,32 @@ describe("eReport public invite routing", () => {
     expect(css).toContain("padding: 0 0 0 var(--rail-width)");
   });
 
-  it("keeps create-org, existing reports, and org lists visible on the hub", () => {
+  it("switches hub views from ?view= and offers a way back to the dashboard", () => {
     const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
     expect(hubSrc).toContain('data-view="register"');
     expect(hubSrc).toContain('data-view="recent"');
     expect(hubSrc).toContain('data-view="orgs"');
+    expect(hubSrc).toContain('data-view="new-report"');
+    expect(hubSrc).toContain('data-view="manage"');
     expect(hubSrc).toContain("data-register-form");
     expect(hubSrc).toContain("data-recent-list");
-    expect(hubSrc).not.toMatch(/data-view="register" hidden/);
-    expect(hubSrc).not.toMatch(/data-view="recent" hidden/);
-    expect(hubSrc).not.toMatch(/data-view="orgs" hidden/);
+    expect(hubSrc).toContain("data-hub-back");
+    expect(hubSrc).toContain('searchParams.delete("view")');
+  });
+
+  it("builds the hub from 073 dashboard cards and the .btn system", () => {
+    const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
+    expect(hubSrc).toContain("product-dash__card");
+    expect(hubSrc).toContain("product-dash__card--active");
+    expect(hubSrc).toContain("btn btn--primary");
+    expect(hubSrc).toContain("btn btn--red");
+    const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
+    expect(css).toContain("--font-base: 1rem");
+    expect(css).toContain("--p3: 1rem");
+    expect(css).toContain("--m2: 0.75rem");
+    expect(css).toMatch(/\.btn--red,[\s\S]{0,80}\.btn--danger/);
+    expect(css).toContain("minmax(11rem, 1fr)");
+    expect(css).toContain("calc(var(--bmh) * 3)");
   });
 
   it("does not AuthGate the invite page", () => {

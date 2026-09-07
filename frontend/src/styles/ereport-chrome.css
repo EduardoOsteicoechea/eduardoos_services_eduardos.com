@@ -28,8 +28,13 @@ html[data-page^="ereport"] {
   --br: 3.44px;
   --bmh: 36px;
   --bmw: 36px;
+  --p1: 0.5rem;
   --p2: 0.75rem;
+  --p3: 1rem;
+  --p5: 1.5rem;
   --m1: 0.5rem;
+  --m2: 0.75rem;
+  --page-inline-pad: var(--p3);
   --ui-scale: 1.3333;
   --chrome-control-size: 48px;
   --header-dynamic-control-size: var(--chrome-control-size);
@@ -41,6 +46,8 @@ html[data-page^="ereport"] {
   --font-body: var(--font-brand);
   --font-utility: var(--font-brand);
   --font-heading: var(--font-brand);
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
   --font-lg: 1.125rem;
   --color-bg: var(--site-body-bg);
   --color-surface: var(--site-surface);
@@ -240,25 +247,144 @@ html[data-page^="ereport"] .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  height: var(--bmh);
   min-height: var(--bmh);
+  max-height: var(--bmh);
+  min-width: var(--bmw);
   padding: 0 var(--p2);
   gap: var(--m1);
-  font: inherit;
-  color: var(--site-body-fg);
+  font: 600 var(--font-base) / 1.2 var(--font-display);
+  color: var(--fg);
   background: var(--site-surface);
-  border: 1px solid var(--site-input-border);
+  border: none;
   border-radius: var(--br);
+  cursor: pointer;
+  text-decoration: none;
 }
 
 html[data-page^="ereport"] .btn--primary,
 html[data-page^="ereport"] .btn--blue {
   background: var(--btn-blue);
-  border-color: var(--btn-blue);
   color: var(--btn-blue-fg);
+}
+
+html[data-page^="ereport"] .btn--red,
+html[data-page^="ereport"] .btn--danger {
+  background: var(--btn-red);
+  color: var(--btn-red-fg);
+}
+
+html[data-page^="ereport"] .btn:hover:not(:disabled) {
+  filter: brightness(1.05);
 }
 
 html[data-page^="ereport"] .btn:disabled {
   opacity: 0.55;
+  cursor: not-allowed;
+}
+
+html[data-page^="ereport"] .product-dash {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p3);
+  max-width: none;
+  padding: var(--p3) var(--page-inline-pad) var(--p5);
+}
+
+html[data-page^="ereport"] .product-dash > h1 {
+  margin: 0;
+  font-size: var(--font-lg);
+  font-weight: 650;
+}
+
+html[data-page^="ereport"] .product-dash__section-title {
+  margin: 0;
+  font-size: var(--font-base);
+  font-weight: 650;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+html[data-page^="ereport"] .product-dash__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--m2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html[data-page^="ereport"] .product-dash__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--m1);
+  min-height: calc(var(--bmh) * 3);
+  padding: var(--p3);
+  color: var(--fg);
+  text-align: left;
+  background: var(--site-surface);
+  border: none;
+  border-radius: var(--br);
+  cursor: pointer;
+}
+
+html[data-page^="ereport"] .product-dash__card:hover {
+  background: color-mix(in srgb, var(--btn-blue) 12%, var(--site-surface));
+}
+
+html[data-page^="ereport"] .product-dash__card--active {
+  background: color-mix(in srgb, var(--btn-blue) 18%, var(--site-surface));
+}
+
+html[data-page^="ereport"] .product-dash__card .material-symbols-outlined {
+  font-size: 1.35rem;
+  color: var(--site-accent);
+}
+
+html[data-page^="ereport"] .product-dash__card-title {
+  font-size: var(--font-base);
+  font-weight: 650;
+}
+
+html[data-page^="ereport"] .product-dash__card-desc {
+  font-size: var(--font-sm);
+  opacity: 0.75;
+}
+
+html[data-page^="ereport"] .ereport-hub__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m1);
+  max-width: 28rem;
+}
+
+html[data-page^="ereport"] .ereport-hub__form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m1);
+  margin: 0;
+  font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] .ereport-hub__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--m1);
+}
+
+html[data-page^="ereport"] .product-dash input,
+html[data-page^="ereport"] .product-dash select,
+html[data-page^="ereport"] .ereport-modal input {
+  height: var(--bmh);
+  min-height: var(--bmh);
+  padding: 0 var(--p2);
+  font-size: var(--font-base);
+  color: var(--site-body-fg);
+  background: var(--site-input-bg);
+  border: 1px solid var(--site-input-border);
+  border-radius: var(--br);
 }
 
 html[data-page^="ereport"] .ereport-modal {
