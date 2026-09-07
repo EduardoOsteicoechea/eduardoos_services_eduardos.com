@@ -46,7 +46,9 @@ Database setup is automatic on API startup. The Go API connects with `MONGO_URI`
 
 Atlas only needs a database user with `readWrite` on `eduardoos` and the VPS public IP allowlisted. GitHub Actions does not create collections, indexes, or users.
 
-Collections provisioned on startup: `users`, `auth_sessions`, `email_verification_otps`, `password_reset_tokens`, `csrf_challenges`, `schema_migrations`.
+Collections provisioned on startup: `users`, `auth_sessions`, `email_verification_otps`, `password_reset_tokens`, `csrf_challenges`, `schema_migrations`, `entitlements`, `api_keys`.
+
+eReport payloads, metadata, history, invites, and images are **not** Mongo collections. They live only under `/var/www/eduardoos.com/media/ereport/` (`EREPORT_MEDIA_ROOT`). Mongo is used for identity, sessions, OTPs, entitlements, and API keys.
 
 Safe migrations run automatically. Destructive migrations never run on startup. There are no destructive migrations in this release. A future drop/rebuild would require an Atlas backup (or `mongodump`) and then:
 
@@ -79,7 +81,31 @@ Do not `echo` or `cat` the env file. Tests use an in-memory store or `eduardoos_
 
 ## Uploaded media storage
 
-This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media is `backend/.data/media` (Git-ignored). They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`. Do not expose a public `/media/` alias; private avatars are authorized by Go and delivered with Nginx `X-Accel-Redirect` to `/internal-media/`.
+This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. Local development media is `backend/.data/media` (Git-ignored). They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`. Do not expose a public `/media/` alias; private avatars and eReport files are authorized by Go and delivered with Nginx `X-Accel-Redirect` to `/internal-media/`.
+
+## eReport
+
+eReport is org-only. Owners sign in with the existing HttpOnly cookie session. Invitees use `/ereport/invite` (public; no AuthGate) plus emailed OTP. New images are JPEG/PNG/WebP files under:
+
+```
+/var/www/eduardoos.com/media/ereport/<owner-user-id>/orgs/<org-id>/reports/<report-id>/
+```
+
+Owner directories are derived only from the authenticated immutable user id. Email and username are display metadata and never filesystem keys. There is no S3 runtime, and report JSON is not stored in MongoDB.
+
+Local development:
+
+1. Start the Go API (`cd backend && go run .`).
+2. Start the Astro app (`cd frontend && npm run dev`).
+3. Sign in, open `/ereport`, create an org/report (admin bypasses subscription locally if you grant entitlements or use the bootstrap admin).
+4. Tracker autosaves through `/api/ereport/orgs/{orgId}/reports/{reportId}`.
+5. Invite a mailbox, open the magic link, request OTP, then edit in the full tracker iframe.
+
+Production env names (values only in `/etc/eduardoos-api.env`): `EREPORT_MEDIA_ROOT`, `EREPORT_MAX_IMAGE_BYTES`, `EREPORT_MAX_IMAGE_EDGE`, `EREPORT_MAX_PAYLOAD_BYTES`, `PUBLIC_BASE_URL`. Defaults: media root `/var/www/eduardoos.com/media/ereport`, 8 MiB image/payload limits.
+
+**Backups:** include `/var/www/eduardoos.com/media/` (especially `media/ereport/`) **and** the `eduardoos` Mongo database. CI/CD must never rsync `--delete` the media tree. After a frontend rollback, report files remain on disk.
+
+**Rollback:** restore a previous API release as below. eReport files are independent of the binary; do not delete `media/ereport/` to roll back code.
 
 ## Email, OTP, and notifications
 
@@ -195,7 +221,7 @@ sudo chmod 440 /etc/sudoers.d/eduardoos-api
 
 Replace `deploy` with `VPS_USER`.
 
-5. Nginx: serve the static files and proxy `/api/` to the loopback API **without** a trailing slash on `proxy_pass` (that would strip `/api` and break auth). Full template: [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf). Direct local health remains `http://127.0.0.1:8081/health`. Do not add a public `/media/` location.
+5. Nginx: serve the static files and proxy `/api/` to the loopback API **without** a trailing slash on `proxy_pass` (that would strip `/api` and break auth). Full template: [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf). Direct local health remains `http://127.0.0.1:8081/health`. Do not add a public `/media/` location. After this eReport release, apply on the VPS (not from CI): `client_max_body_size 10m;` on the server and `/api/` location, keep `location /internal-media/` internal, and add exact `try_files` locations for `/ereport-tracker.html`, `/ereport`, `/ereport/workspace`, `/ereport/invite`, and `/api-docs` so those pretty URLs cannot fall through to the tracker HTML. Optionally add `ReadWritePaths=/var/www/eduardoos.com/media` to `eduardoos-api.service`.
 
 ```nginx
     location /api/ {
