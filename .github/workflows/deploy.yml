@@ -46,14 +46,41 @@ jobs:
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o api .
 
       - name: Configure SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          home = Path.home() / ".ssh"
+          key = os.environ["VPS_SSH_KEY"].replace("\r\n", "\n").replace("\r", "\n")
+          if "BEGIN" not in key and "\\n" in key:
+              key = key.replace("\\n", "\n")
+          key = key.strip() + "\n"
+          if "BEGIN" not in key or "PRIVATE KEY" not in key:
+              raise SystemExit(
+                  "VPS_SSH_KEY is not a private key. Paste the full OpenSSH private key, not the .pub file or a password."
+              )
+          path = home / "deploy_key"
+          path.write_text(key)
+          path.chmod(0o600)
+          hosts = os.environ["VPS_KNOWN_HOSTS"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+          known = home / "known_hosts"
+          known.write_text(hosts)
+          known.chmod(0o644)
+          PY
+          ssh-keygen -y -f "$HOME/.ssh/deploy_key" >/dev/null
+          echo "Deploy key fingerprint:"
+          ssh-keygen -lf "$HOME/.ssh/deploy_key"
+          {
+            echo "SSH_KEY_PATH=$HOME/.ssh/deploy_key"
+            echo "SSH_KNOWN_HOSTS_PATH=$HOME/.ssh/known_hosts"
+          } >> "$GITHUB_ENV"
 
       - name: Upload frontend dist
         env:
@@ -63,8 +90,8 @@ jobs:
         run: |
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
-          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
-          rsync -az --delete -e "ssh ${SSH_OPTS}" \
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
+          rsync -az --delete -e "${RSH}" \
             frontend/dist/ \
             "${VPS_USER}@${VPS_HOST}:/var/www/${SITE}/html/"
 
@@ -76,14 +103,14 @@ jobs:
         run: |
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
-          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
           SHA="${GITHUB_SHA}"
           RELEASE="/opt/apps/${SITE}/releases/${SHA}"
-          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${RELEASE}'"
-          rsync -az -e "ssh ${SSH_OPTS}" \
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${RELEASE}'"
+          rsync -az -e "${RSH}" \
             backend/api \
             "${VPS_USER}@${VPS_HOST}:${RELEASE}/api"
-          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${SITE}/current.tmp' && mv -Tf '/opt/apps/${SITE}/current.tmp' '/opt/apps/${SITE}/current'"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${SITE}/current.tmp' && mv -Tf '/opt/apps/${SITE}/current.tmp' '/opt/apps/${SITE}/current'"
 
       - name: Restart API and verify health
         env:
@@ -93,5 +120,5 @@ jobs:
         run: |
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
-          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
-          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SITE}-api.service' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SITE}-api.service' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"

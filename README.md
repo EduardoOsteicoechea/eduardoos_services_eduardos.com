@@ -159,7 +159,21 @@ server {
 
 `proxy_pass` with a trailing slash forwards `/api/health` to `/health`. Put TLS in front of this server (Certbot or your existing HTTPS terminator). The API itself must stay on `127.0.0.1`.
 
-6. Install the GitHub Actions public key in `~/.ssh/authorized_keys` for `VPS_USER`.
+6. Install the GitHub Actions **public** key in `~/.ssh/authorized_keys` for the same Linux user as `VPS_USER` (often `root` on a new VPS). `VPS_SSH_KEY` must be the matching **private** key, including the `BEGIN` / `END` lines.
+
+```bash
+# On your laptop, from the private key you stored as VPS_SSH_KEY:
+ssh-keygen -y -f github-actions-deploy > github-actions-deploy.pub
+ssh-keygen -lf github-actions-deploy
+
+# On the VPS, as VPS_USER:
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+# paste the .pub line, then:
+chmod 600 ~/.ssh/authorized_keys
+```
+
+`Permission denied (publickey,password)` means the VPS accepted the TCP connection but rejected this key. The panel username is not always the SSH user. Confirm `VPS_USER` can log in with that exact public key.
 
 ## GitHub secret setup
 
