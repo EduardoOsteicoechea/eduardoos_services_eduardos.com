@@ -132,6 +132,10 @@ a {
   border-radius: 50%;
 }
 
+.app-header .icon-btn {
+  border-radius: var(--border-radius);
+}
+
 .header-session {
   position: relative;
   overflow: hidden;
@@ -140,7 +144,7 @@ a {
 .header-session-photo {
   width: var(--button-size);
   height: var(--button-size);
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -180,7 +184,7 @@ a {
   color: var(--color-button-fg);
   background: var(--color-button-bg);
   border: var(--border-width) solid var(--color-border);
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   cursor: pointer;
   z-index: 31;
 }
