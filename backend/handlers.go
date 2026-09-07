@@ -5,14 +5,6 @@ import (
 	"net/http"
 )
 
-func newMux() http.Handler {
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /health", healthHandler)
-	mux.HandleFunc("GET /api/health", healthHandler)
-	mux.HandleFunc("GET /api/info", infoHandler)
-	return mux
-}
-
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{
 		"status":  "ok",
@@ -22,7 +14,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 
 func infoHandler(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{
-		"name":   "Eduardoos",
+		"name":   displayName,
 		"domain": siteName,
 	})
 }

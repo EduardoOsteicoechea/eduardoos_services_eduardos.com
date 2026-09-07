@@ -1,0 +1,175 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Diagnostics">
+  <section class="diag" data-diagnostics>
+    <h1>Diagnostics</h1>
+    <p class="lede">
+      Admin-only connectivity checks. A test email is sent only to the signed-in
+      administrator’s verified address. AI replies are untrusted display text.
+    </p>
+
+    <p class="status" data-banner>Checking session…</p>
+
+    <form class="panel" data-login hidden>
+      <label>
+        Email
+        <input type="email" name="email" autocomplete="username" required />
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" autocomplete="current-password" required />
+      </label>
+      <button type="submit">Sign in</button>
+    </form>
+
+    <div class="panel" data-tools hidden>
+      <h2>Email</h2>
+      <p class="hint">Uses this site’s SMTP settings. Recipient cannot be chosen.</p>
+      <button type="button" data-email>Send test email</button>
+    </div>
+
+    <div class="panel" data-tools hidden>
+      <h2>AI chat</h2>
+      <label>
+        Provider
+        <select data-provider>
+          <option value="deepseek">DeepSeek</option>
+          <option value="kimi">Kimi</option>
+        </select>
+      </label>
+      <label>
+        Short test prompt
+        <textarea data-prompt maxlength="500" rows="4" placeholder="Write a one-sentence connectivity test."></textarea>
+      </label>
+      <button type="button" data-ai>Test AI chat</button>
+      <pre class="ai-out" data-ai-out hidden></pre>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe, loginAdmin, postDiagnostics } from "../lib/api";
+
+  const root = document.querySelector("[data-diagnostics]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const loginForm = root.querySelector("[data-login]");
+    const tools = root.querySelectorAll("[data-tools]");
+    const emailBtn = root.querySelector("[data-email]");
+    const aiBtn = root.querySelector("[data-ai]");
+    const provider = root.querySelector("[data-provider]");
+    const prompt = root.querySelector("[data-prompt]");
+    const aiOut = root.querySelector("[data-ai-out]");
+    let csrf = "";
+
+    const setBanner = (text: string, kind = "") => {
+      if (!(banner instanceof HTMLElement)) {
+        return;
+      }
+      banner.textContent = text;
+      banner.className = `status ${kind}`.trim();
+    };
+
+    const showTools = (visible: boolean) => {
+      tools.forEach((node) => {
+        if (node instanceof HTMLElement) {
+          node.hidden = !visible;
+        }
+      });
+    };
+
+    const showLogin = (visible: boolean) => {
+      if (loginForm instanceof HTMLElement) {
+        loginForm.hidden = !visible;
+      }
+    };
+
+    const applyMe = async () => {
+      const { status, data } = await getMe();
+      csrf = data.csrf || "";
+      if (status === 401 || data.role !== "admin") {
+        showTools(false);
+        showLogin(true);
+        setBanner(status === 401 ? "Sign in with an administrator account." : "Unauthorized.", "err");
+        document.querySelector("#nav-diagnostics")?.setAttribute("hidden", "");
+        return;
+      }
+      showLogin(false);
+      showTools(true);
+      document.querySelector("#nav-diagnostics")?.removeAttribute("hidden");
+      setBanner(`Signed in as ${data.email}. Diagnostics are enforced by the Go API.`, "ok");
+    };
+
+    const handleResult = (status: number, data: { ok?: boolean; error?: string; request_id?: string }, okText: string) => {
+      if (status === 404) {
+        showTools(false);
+        setBanner("Diagnostics are disabled on this API.", "err");
+        return;
+      }
+      if (status === 401 || status === 403) {
+        showTools(false);
+        showLogin(true);
+        setBanner("Unauthorized.", "err");
+        return;
+      }
+      if (status === 429) {
+        setBanner(`Rate limited. Request ${data.request_id ?? ""}.`.trim(), "err");
+        return;
+      }
+      if (!data.ok) {
+        setBanner(`Failed. Request ${data.request_id ?? ""}.`.trim(), "err");
+        return;
+      }
+      setBanner(`${okText} Request ${data.request_id ?? ""}.`.trim(), "ok");
+    };
+
+    void applyMe();
+
+    loginForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(loginForm instanceof HTMLFormElement)) {
+        return;
+      }
+      const form = new FormData(loginForm);
+      setBanner("Signing in…");
+      const result = await loginAdmin(String(form.get("email") ?? ""), String(form.get("password") ?? ""), csrf);
+      if (result.status !== 200) {
+        setBanner("Sign-in failed.", "err");
+        csrf = (await getMe()).data.csrf || csrf;
+        return;
+      }
+      await applyMe();
+    });
+
+    emailBtn?.addEventListener("click", async () => {
+      setBanner("Sending test email…");
+      const result = await postDiagnostics("/admin/diagnostics/email-test", csrf, {});
+      handleResult(result.status, result.data, "Test email accepted.");
+    });
+
+    aiBtn?.addEventListener("click", async () => {
+      const text = prompt instanceof HTMLTextAreaElement ? prompt.value.trim() : "";
+      const selected = provider instanceof HTMLSelectElement ? provider.value : "deepseek";
+      if (!text) {
+        setBanner("Enter a short prompt.", "err");
+        return;
+      }
+      setBanner("Testing AI chat…");
+      if (aiOut instanceof HTMLElement) {
+        aiOut.hidden = true;
+        aiOut.textContent = "";
+      }
+      const result = await postDiagnostics("/admin/diagnostics/ai-chat-test", csrf, {
+        provider: selected,
+        prompt: text,
+      });
+      handleResult(result.status, result.data, "AI test completed.");
+      if (result.data.text && aiOut instanceof HTMLElement) {
+        aiOut.hidden = false;
+        aiOut.textContent = result.data.text;
+      }
+    });
+  }
+</script>

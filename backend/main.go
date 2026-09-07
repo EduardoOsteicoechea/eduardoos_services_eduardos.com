@@ -7,9 +7,10 @@ import (
 
 func main() {
 	cfg := loadConfig()
+	app := newApp(cfg)
 	server := &http.Server{
 		Addr:    cfg.ListenAddr,
-		Handler: newMux(),
+		Handler: app.Handler(),
 	}
 
 	log.Printf("%s api listening on %s", siteName, cfg.ListenAddr)

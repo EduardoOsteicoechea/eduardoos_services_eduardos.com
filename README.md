@@ -28,6 +28,30 @@ eduardoos.com/
 
 The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay in environment variables on the server.
 
+## Authentication and authorization
+
+This site follows the parent-workspace contract [`.cursor/rules/auth-security.mdc`](../.cursor/rules/auth-security.mdc). Users, JWTs, refresh tokens, and cookies are local to `eduardoos.com`. Frontend route guards are UX only. Real authorization decisions are enforced by this site’s Go API.
+
+## Uploaded media storage
+
+This site follows the parent-workspace contract [`.cursor/rules/media-storage.mdc`](../.cursor/rules/media-storage.mdc). User uploads live on the VPS at `/var/www/eduardoos.com/media`. They are persistent production data, not Git contents and not frontend build output. CI/CD may `--delete` only `/var/www/eduardoos.com/html/`.
+
+## Email, OTP, and notifications
+
+This site follows the parent-workspace contract [`.cursor/rules/email-otp-notifications.mdc`](../.cursor/rules/email-otp-notifications.mdc). The Go API is the only mail sender. Production SMTP settings live only in the protected `/etc/eduardoos-api.env` file. They are never in Git, frontend builds, or CI/CD.
+
+## AI chat and agent workflows
+
+This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek and Kimi are backend-only integrations. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
+
+## Admin diagnostics
+
+`/diagnostics` and `POST /api/admin/diagnostics/*` are admin-only. The Go API enforces JWT, `admin` role, and CSRF. The page is UX only.
+
+Diagnostics are **off by default**. Locally, set `ENABLE_ADMIN_DIAGNOSTICS=true` in `backend/.env` or the parent workspace `.env`, plus `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `JWT_SECRET`, SMTP, and AI keys as needed. Seeded admin users are created only from those env values. Production enablement is manual: add `ENABLE_ADMIN_DIAGNOSTICS=true` to `/etc/eduardoos-api.env`, then restart **only** `eduardoos-api.service`. When the flag is missing or false, the APIs return **404**.
+
+There is no public email-send or AI-provider endpoint. A test email goes only to the signed-in administrator’s verified address. Tests mock SMTP and providers (`go test ./...` in `backend/`).
+
 ## Local development
 
 Requirements: Node 22+, Go 1.23+, Git.
