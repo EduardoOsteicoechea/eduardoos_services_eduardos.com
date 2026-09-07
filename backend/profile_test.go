@@ -234,6 +234,26 @@ func TestAvatarVersionChangesAfterReplace(t *testing.T) {
 	}
 }
 
+func TestWriteAvatarFileKeepsTempOutsideMedia(t *testing.T) {
+	root := t.TempDir()
+	media := filepath.Join(root, "media")
+	rel := "avatars/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee.jpg"
+	data := encodeJPEG(t, 8, 8)
+	if err := writeAvatarFile(media, rel, data); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(filepath.Join(media, filepath.FromSlash(rel))); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(filepath.Join(media, ".tmp")); !os.IsNotExist(err) {
+		t.Fatal("temp files must not live inside the media directory")
+	}
+	tmp := avatarTempDir(media)
+	if !strings.HasPrefix(tmp, root) || strings.Contains(tmp, string(filepath.Separator)+"media"+string(filepath.Separator)) {
+		t.Fatalf("temp dir must be beside media, got %q", tmp)
+	}
+}
+
 func tinyWebP() []byte {
 	buf := make([]byte, 30)
 	copy(buf[0:4], "RIFF")

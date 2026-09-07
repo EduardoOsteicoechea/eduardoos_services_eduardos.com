@@ -114,16 +114,19 @@ func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	file, header, err := r.FormFile("file")
 	if err != nil {
+		a.logValidation(r, "missing_file")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	defer file.Close()
 	if header != nil && strings.Contains(header.Filename, "..") {
+		a.logValidation(r, "avatar_invalid")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	data, err := io.ReadAll(io.LimitReader(file, maxAvatarBytes+1))
 	if err != nil {
+		a.logValidation(r, "avatar_invalid")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -137,15 +140,18 @@ func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err != nil {
+		a.logValidation(r, "avatar_invalid")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	relative, err := newAvatarRelPath(kind.ext)
 	if err != nil {
+		a.logValidation(r, "avatar_invalid")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if err := writeAvatarFile(a.cfg.MediaRoot, relative, data); err != nil {
+		a.logValidation(r, "avatar_store_failed")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -159,6 +165,7 @@ func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	user.UpdatedAt = now
 	if err := a.store.UpdateUser(r.Context(), user); err != nil {
 		removeAvatarFile(a.cfg.MediaRoot, relative)
+		a.logValidation(r, "avatar_store_failed")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}

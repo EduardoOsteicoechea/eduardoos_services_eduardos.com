@@ -9,6 +9,7 @@ import (
 	"image"
 	_ "image/jpeg"
 	_ "image/png"
+	"io"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -144,6 +145,36 @@ func avatarAPIHref(user *User) string {
 	return fmt.Sprintf("/api/profile/avatar?v=%d", stamp.UnixMilli())
 }
 
+func avatarTempDir(root string) string {
+	parent := filepath.Dir(root)
+	if parent == "" || parent == "." || parent == string(filepath.Separator) {
+		parent = root
+	}
+	return filepath.Join(parent, ".media-tmp")
+}
+
+func copyAvatarFile(src, dest string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+	out, err := os.OpenFile(dest, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0640)
+	if err != nil {
+		return err
+	}
+	if _, err := io.Copy(out, in); err != nil {
+		_ = out.Close()
+		_ = os.Remove(dest)
+		return err
+	}
+	if err := out.Close(); err != nil {
+		_ = os.Remove(dest)
+		return err
+	}
+	return nil
+}
+
 func writeAvatarFile(root, relative string, data []byte) error {
 	if !safeAvatarRel.MatchString(relative) {
 		return errAvatarInvalid
@@ -152,7 +183,11 @@ func writeAvatarFile(root, relative string, data []byte) error {
 		return err
 	}
 	full := filepath.Join(root, filepath.FromSlash(relative))
-	tmp, err := os.CreateTemp(os.TempDir(), "avatar-")
+	tmpDir := avatarTempDir(root)
+	if err := os.MkdirAll(tmpDir, 0750); err != nil {
+		return err
+	}
+	tmp, err := os.CreateTemp(tmpDir, "avatar-")
 	if err != nil {
 		return err
 	}
@@ -168,7 +203,9 @@ func writeAvatarFile(root, relative string, data []byte) error {
 		return err
 	}
 	if err := os.Rename(tmpName, full); err != nil {
-		return err
+		if err := copyAvatarFile(tmpName, full); err != nil {
+			return err
+		}
 	}
 	return os.Chmod(full, 0640)
 }
