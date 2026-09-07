@@ -146,6 +146,9 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
     if (!data.request_id && requestId) {
       data.request_id = requestId;
     }
+    if (response.ok && typeof data.csrf === "string" && data.csrf) {
+      rememberCsrf(data.csrf);
+    }
     return { status: response.status, data, requestId };
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") {

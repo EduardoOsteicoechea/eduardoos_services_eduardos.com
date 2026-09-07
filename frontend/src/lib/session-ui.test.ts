@@ -2,7 +2,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
-  return { ...actual, getMe: vi.fn(), postJSON: vi.fn() };
+  return {
+    ...actual,
+    getMe: vi.fn(),
+    postJSON: vi.fn(),
+    getCsrf: vi.fn().mockResolvedValue("csrf-token"),
+    resetCsrfMemory: vi.fn(),
+  };
 });
 
 vi.mock("./chrome", () => ({
@@ -107,6 +113,25 @@ describe("session forms", () => {
     expect(body).not.toHaveProperty("username");
     expect(form.querySelector("button")?.disabled).toBe(true);
     expect((form.elements.namedItem("identifier") as HTMLInputElement).disabled).toBe(false);
+  });
+
+  it("reads live input values even when FormData would be empty", () => {
+    document.body.innerHTML = `
+      <form data-login>
+        <input name="identifier" />
+        <input name="password" />
+        <button type="submit">Sign in</button>
+      </form>
+    `;
+    const form = document.querySelector("[data-login]") as HTMLFormElement;
+    const identifier = form.elements.namedItem("identifier") as HTMLInputElement;
+    const password = form.elements.namedItem("password") as HTMLInputElement;
+    identifier.value = "autofilled@eduardoos.com";
+    password.value = "autofill-password";
+    expect(loginBodyFromForm(form)).toEqual({
+      identifier: "autofilled@eduardoos.com",
+      password: "autofill-password",
+    });
   });
 
   it("sends display name and phone for profile save", () => {
@@ -262,7 +287,7 @@ describe("session forms", () => {
         <form data-login>
           <input name="identifier" value="member@eduardoos.com" required />
           <input name="password" value="correct-horse-battery" required minlength="8" />
-          <button type="button" data-session-login>Sign in</button>
+          <button type="submit" data-session-login>Sign in</button>
         </form>
       </section>
     `;
@@ -275,5 +300,6 @@ describe("session forms", () => {
       });
       expect(go).toHaveBeenCalledWith("/session/profile");
     });
+    expect(postJSON).toHaveBeenCalledTimes(1);
   });
 });

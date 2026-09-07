@@ -129,11 +129,56 @@ describe("tracker host bridge", () => {
     window.dispatchEvent(
       new MessageEvent("message", {
         origin: "https://eduardoos.com",
+        source: win,
         data: { source: "ereport-tracker", type: "booted" },
       }),
     );
     expect(posted.some((msg) => (msg as { command?: string }).command === "tutorial")).toBe(true);
     host.destroy();
+    document.body.replaceChildren();
+  });
+
+  it("collect resolves from same-iframe state and ignores foreign sources", async () => {
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const win = iframe.contentWindow;
+    if (!win) {
+      document.body.replaceChildren();
+      throw new Error("expected iframe contentWindow");
+    }
+    win.postMessage = (() => undefined) as typeof win.postMessage;
+    const host = startTrackerHost(iframe, {
+      origin: "https://eduardoos.com",
+      uploadUrl: "/api/ereport/orgs/o/reports/r/images",
+      csrf: "csrf",
+      payload: null,
+      handlers: { onCloudSave: () => undefined, onError: () => undefined },
+    });
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        origin: "https://eduardoos.com",
+        source: win,
+        data: { source: "ereport-tracker", type: "booted" },
+      }),
+    );
+    const pending = host.collect(500);
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        origin: "https://eduardoos.com",
+        source: window,
+        data: { source: "ereport-tracker", type: "state", payload: { reportName: "foreign" } },
+      }),
+    );
+    window.dispatchEvent(
+      new MessageEvent("message", {
+        origin: "https://eduardoos.com",
+        source: win,
+        data: { source: "ereport-tracker", type: "state", payload: { reportName: "Mine" } },
+      }),
+    );
+    await expect(pending).resolves.toEqual({ reportName: "Mine" });
+    host.destroy();
+    await expect(host.collect(50)).rejects.toThrow(/destroyed/i);
     document.body.replaceChildren();
   });
 });
@@ -163,6 +208,14 @@ describe("eReport workspace chrome", () => {
       expect(src).toContain("iframe.src = TRACKER_SRC");
       expect(src).not.toContain('iframe.src = "/ereport-tracker.html"');
     }
+  });
+
+  it("tears down workspace bind keys and awaits collect before save", () => {
+    const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
+    expect(workspaceSrc).toContain("delete root.dataset.boundKey");
+    expect(workspaceSrc).toContain("astro:before-swap");
+    expect(workspaceSrc).toContain("await host.collect()");
+    expect(workspaceSrc).toContain("host?.destroy()");
   });
 
   it("steps site text scale on 073 bounds without touching tracker hex", () => {

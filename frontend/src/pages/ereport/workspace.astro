@@ -196,6 +196,7 @@ import Layout from "../../layouts/Layout.astro";
       host = null;
       for (const stop of disposers.splice(0)) stop();
       delete root.dataset.bound;
+      delete root.dataset.boundKey;
     };
 
     onDoc("astro:before-swap", dispose, { once: true });

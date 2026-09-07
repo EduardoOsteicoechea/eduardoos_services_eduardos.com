@@ -185,6 +185,13 @@ func TestLoginEmailAndBadCredentials(t *testing.T) {
 	if ok.Code != http.StatusOK {
 		t.Fatalf("admin login: %d %s", ok.Code, ok.Body.String())
 	}
+	var profile map[string]any
+	if err := json.NewDecoder(ok.Body).Decode(&profile); err != nil {
+		t.Fatal(err)
+	}
+	if csrf, _ := profile["csrf"].(string); csrf == "" {
+		t.Fatal("login must return session csrf for client memory")
+	}
 	bad := app.anonPOST(t, "/api/auth/login", `{"identifier":"admin@eduardoos.com","password":"wrong-password-12"}`)
 	if bad.Code != http.StatusUnauthorized {
 		t.Fatalf("bad password: %d", bad.Code)

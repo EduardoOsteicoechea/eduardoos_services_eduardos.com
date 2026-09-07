@@ -1,4 +1,4 @@
-import { deleteAvatar, getMe, loginPayload, postJSON, profileAvatarURL, uploadAvatar, type MeResponse } from "./api";
+import { deleteAvatar, getCsrf, getMe, loginPayload, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
 
 declare global {
   interface Window {
@@ -120,8 +120,11 @@ export function setBusy(form: HTMLFormElement, busy: boolean): void {
 }
 
 export function loginBodyFromForm(form: HTMLFormElement): { identifier: string; password: string } {
-  const data = new FormData(form);
-  return loginPayload(String(data.get("identifier") ?? ""), String(data.get("password") ?? ""));
+  const identifier = form.elements.namedItem("identifier");
+  const password = form.elements.namedItem("password");
+  const idValue = identifier instanceof HTMLInputElement ? identifier.value : String(new FormData(form).get("identifier") ?? "");
+  const passwordValue = password instanceof HTMLInputElement ? password.value : String(new FormData(form).get("password") ?? "");
+  return loginPayload(idValue, passwordValue);
 }
 
 export function guardSessionSubmit(event: Event): HTMLFormElement | null {
@@ -326,20 +329,26 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
 }
 
 function currentSessionPath(): string {
-  return location.pathname.replace(/\/+$/, "") || "/";
+  const path = location.pathname.replace(/\/+$/, "") || "/";
+  return `${path}${location.search}`;
 }
 
 export function onBoundPageReady(selector: string, init: (root: HTMLElement) => void): void {
-  const expectedPath = currentSessionPath();
+  const expectedKey = currentSessionPath();
   const start = () => {
-    if (currentSessionPath() !== expectedPath) {
+    if (currentSessionPath() !== expectedKey) {
       return;
     }
     const root = document.querySelector(selector);
-    if (!(root instanceof HTMLElement) || root.dataset.bound === "true") {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+    const boundKey = root.dataset.boundKey || "";
+    if (boundKey === expectedKey) {
       return;
     }
     root.dataset.bound = "true";
+    root.dataset.boundKey = expectedKey;
     init(root);
   };
   document.addEventListener("astro:page-load", start);
@@ -415,6 +424,8 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
 }
 
 export async function afterAuthChange(): Promise<void> {
+  resetCsrfMemory();
+  await getCsrf();
   await refreshAuthChrome();
 }
 
@@ -479,6 +490,9 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
 }
 
 async function persistLoginForm(form: HTMLFormElement): Promise<void> {
+  if (form.dataset.loginBusy === "true") {
+    return;
+  }
   const root = form.closest("[data-session]");
   if (!(root instanceof HTMLElement)) {
     return;
@@ -489,12 +503,15 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
   }
   const body = loginBodyFromForm(form);
   if (!body.identifier || body.password.length < 8) {
+    setBanner(root, copy.checkForm, "err");
+    showErrorModal({ message: copy.checkForm });
     const password = form.elements.namedItem("password");
     if (password instanceof HTMLInputElement) {
       password.focus();
     }
     return;
   }
+  form.dataset.loginBusy = "true";
   setBusy(form, true);
   try {
     const result = await postJSON<MeResponse>("/auth/login", body);
@@ -509,6 +526,7 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     setBanner(root, copy.loadError, "err");
     showErrorModal({ message: copy.loadError });
   } finally {
+    delete form.dataset.loginBusy;
     setBusy(form, false);
   }
 }

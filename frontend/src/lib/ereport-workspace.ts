@@ -19,6 +19,12 @@ export type TrackerHostHandlers = {
   onState?: (payload: Record<string, unknown>) => void;
 };
 
+export type TrackerHost = {
+  post: (msg: Record<string, unknown>) => void;
+  collect: (timeoutMs?: number) => Promise<Record<string, unknown>>;
+  destroy: () => void;
+};
+
 export const SITE_TEXT_SCALE_STEPS = [0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4] as const;
 
 export function readSiteTextScale(root: HTMLElement = document.documentElement): number {
@@ -74,7 +80,11 @@ export function handleTrackerMessage(
   ev: MessageEvent,
   locationOrigin: string,
   handlers: TrackerHostHandlers,
+  expectedSource?: Window | null,
 ): boolean {
+  if (expectedSource && ev.source !== expectedSource) {
+    return false;
+  }
   if (!trackerOriginAllowed(ev.origin, locationOrigin)) {
     return false;
   }
@@ -115,49 +125,105 @@ export function startTrackerHost(
     handlers: TrackerHostHandlers;
     autoSaveMs?: number;
   },
-): { post: (msg: Record<string, unknown>) => void; destroy: () => void } {
+): TrackerHost {
   let timer = 0;
   let ready = false;
+  let destroyed = false;
   const queued: Record<string, unknown>[] = [];
   const delay = opts.autoSaveMs ?? 100;
+  let collectWaiter: {
+    resolve: (payload: Record<string, unknown>) => void;
+    reject: (err: Error) => void;
+    timer: number;
+  } | null = null;
+
   const send = (msg: Record<string, unknown>) => {
+    if (destroyed) return;
     iframe.contentWindow?.postMessage(msg, opts.origin);
   };
   const post = (msg: Record<string, unknown>) => {
+    if (destroyed) return;
     if (!ready || !iframe.contentWindow) {
       queued.push(msg);
       return;
     }
     send(msg);
   };
+  const settleCollect = (payload: Record<string, unknown>) => {
+    if (!collectWaiter) return;
+    window.clearTimeout(collectWaiter.timer);
+    const waiter = collectWaiter;
+    collectWaiter = null;
+    waiter.resolve(payload);
+  };
   const onMessage = (ev: MessageEvent) => {
-    handleTrackerMessage(ev, opts.origin, {
-      ...opts.handlers,
-      onBooted: () => {
-        ready = true;
-        if (opts.payload) {
-          send(trackerLoadMessage(opts.payload));
-        }
-        send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-        send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
-        send(trackerConfigMessage(opts.uploadUrl, opts.csrf));
-        const waiting = queued.splice(0);
-        for (const msg of waiting) {
-          send(msg);
-        }
-        opts.handlers.onBooted?.();
+    if (destroyed) return;
+    handleTrackerMessage(
+      ev,
+      opts.origin,
+      {
+        ...opts.handlers,
+        onBooted: () => {
+          ready = true;
+          if (opts.payload) {
+            send(trackerLoadMessage(opts.payload));
+          }
+          send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+          send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
+          send(trackerConfigMessage(opts.uploadUrl, opts.csrf));
+          const waiting = queued.splice(0);
+          for (const msg of waiting) {
+            send(msg);
+          }
+          opts.handlers.onBooted?.();
+        },
+        onCloudSave: (payload) => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(() => {
+            if (!destroyed) opts.handlers.onCloudSave(payload);
+          }, delay);
+        },
+        onState: (payload) => {
+          settleCollect(payload);
+          opts.handlers.onState?.(payload);
+        },
       },
-      onCloudSave: (payload) => {
-        window.clearTimeout(timer);
-        timer = window.setTimeout(() => opts.handlers.onCloudSave(payload), delay);
-      },
-    });
+      iframe.contentWindow,
+    );
   };
   window.addEventListener("message", onMessage);
   return {
     post,
+    collect: (timeoutMs = 4000) =>
+      new Promise<Record<string, unknown>>((resolve, reject) => {
+        if (destroyed) {
+          reject(new Error("Tracker host destroyed"));
+          return;
+        }
+        if (collectWaiter) {
+          window.clearTimeout(collectWaiter.timer);
+          collectWaiter.reject(new Error("Collect superseded"));
+        }
+        collectWaiter = {
+          resolve,
+          reject,
+          timer: window.setTimeout(() => {
+            collectWaiter = null;
+            reject(new Error("Collect timed out"));
+          }, timeoutMs),
+        };
+        post(trackerCollectMessage());
+      }),
     destroy: () => {
+      destroyed = true;
+      ready = false;
       window.clearTimeout(timer);
+      if (collectWaiter) {
+        window.clearTimeout(collectWaiter.timer);
+        collectWaiter.reject(new Error("Tracker host destroyed"));
+        collectWaiter = null;
+      }
+      queued.length = 0;
       window.removeEventListener("message", onMessage);
     },
   };

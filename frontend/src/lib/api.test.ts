@@ -66,7 +66,7 @@ describe("api csrf and errors", () => {
       .fn()
       .mockResolvedValueOnce(jsonResponse(200, { csrf: "fresh-token" }))
       .mockResolvedValueOnce(
-        jsonResponse(200, { id: "member-1", email: "a@b.c" }, { "X-Request-ID": "rid-login-1" }),
+        jsonResponse(200, { id: "member-1", email: "a@b.c", csrf: "session-csrf" }, { "X-Request-ID": "rid-login-1" }),
       );
     vi.stubGlobal("fetch", fetchMock);
     const result = await postJSON("/auth/login", loginPayload("a@b.c", "secret"));
@@ -79,6 +79,7 @@ describe("api csrf and errors", () => {
     expect(loginInit.headers.get("X-CSRF-Token")).toBe("fresh-token");
     expect(JSON.parse(loginInit.body)).toEqual({ identifier: "a@b.c", password: "secret" });
     expect(result.requestId).toBe("rid-login-1");
+    expect(currentCsrf()).toBe("session-csrf");
   });
 
   it("surfaces standardized error fields from failed auth forms", async () => {

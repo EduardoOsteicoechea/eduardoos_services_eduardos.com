@@ -438,13 +438,16 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
-	if _, err := a.issueSession(w, user); err != nil {
+	sess, err := a.issueSession(w, user)
+	if err != nil {
 		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	a.auditEvent(r, "login", "success", user.ID)
-	writeJSON(w, http.StatusOK, a.safeProfile(user))
+	profile := a.safeProfile(user)
+	profile["csrf"] = sess.CSRF
+	writeJSON(w, http.StatusOK, profile)
 }
 
 func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
