@@ -132,7 +132,19 @@ export function showErrorModal(payload: ErrorPayload): void {
   closeBtn?.focus();
 }
 
+declare global {
+  interface Window {
+    __errorModalSwapBound?: boolean;
+  }
+}
+
 export function startErrorModal(): void {
+  if (!window.__errorModalSwapBound) {
+    window.__errorModalSwapBound = true;
+    document.addEventListener("astro:after-swap", () => {
+      startErrorModal();
+    });
+  }
   const modal = document.getElementById("error-modal");
   if (!(modal instanceof HTMLElement) || modal.dataset.bound === "true") {
     return;

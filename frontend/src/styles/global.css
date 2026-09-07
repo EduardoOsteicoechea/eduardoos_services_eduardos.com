@@ -132,11 +132,22 @@ a {
   border-radius: 50%;
 }
 
+.header-session {
+  position: relative;
+  overflow: hidden;
+}
+
 .header-session-photo {
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: var(--button-size);
+  height: var(--button-size);
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+.header-session[data-has-avatar] [data-session-icon],
+.material-symbols-outlined[hidden] {
+  display: none;
 }
 
 .header-nav {

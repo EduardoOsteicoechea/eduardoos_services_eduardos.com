@@ -139,28 +139,46 @@ function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
   return target.closest("button, a, [data-logout]");
 }
 
-export function applySessionAvatar(avatar?: string | null): void {
-  const src = profileAvatarURL(avatar);
+function sessionButton(): HTMLElement | null {
+  const node = document.querySelector(".header-session");
+  return node instanceof HTMLElement ? node : null;
+}
+
+function showSessionIcon(): void {
+  const button = sessionButton();
   const photo = document.querySelector("[data-session-avatar]");
   const icon = document.querySelector("[data-session-icon]");
+  button?.removeAttribute("data-has-avatar");
   if (photo instanceof HTMLImageElement) {
-    if (src) {
-      photo.onerror = () => {
-        photo.removeAttribute("src");
-        photo.hidden = true;
-        if (icon instanceof HTMLElement) icon.hidden = false;
-      };
-      photo.src = src;
-      photo.hidden = false;
-      if (icon instanceof HTMLElement) icon.hidden = true;
-    } else {
-      photo.removeAttribute("src");
-      photo.hidden = true;
-      if (icon instanceof HTMLElement) icon.hidden = false;
-    }
-  } else if (icon instanceof HTMLElement) {
+    photo.removeAttribute("src");
+    photo.hidden = true;
+  }
+  if (icon instanceof HTMLElement) {
     icon.hidden = false;
   }
+}
+
+export function applySessionAvatar(avatar?: string | null): void {
+  const src = profileAvatarURL(avatar);
+  const button = sessionButton();
+  const photo = document.querySelector("[data-session-avatar]");
+  const icon = document.querySelector("[data-session-icon]");
+  if (!(photo instanceof HTMLImageElement)) {
+    if (icon instanceof HTMLElement) icon.hidden = false;
+    button?.removeAttribute("data-has-avatar");
+    return;
+  }
+  if (!src) {
+    showSessionIcon();
+    return;
+  }
+  photo.onerror = () => {
+    showSessionIcon();
+  };
+  photo.src = src;
+  photo.hidden = false;
+  if (icon instanceof HTMLElement) icon.hidden = true;
+  button?.setAttribute("data-has-avatar", "true");
 }
 
 export async function refreshAuthChrome(): Promise<void> {
@@ -182,6 +200,12 @@ export async function refreshAuthChrome(): Promise<void> {
     }
   });
   applySessionAvatar(authed ? data.avatar : null);
+}
+
+function restoreChromeAfterNavigation(): void {
+  applyHeaderCollapsed(headerCollapsed(), false);
+  syncExpanded();
+  void refreshAuthChrome();
 }
 
 export function startChrome(): void {
@@ -279,9 +303,11 @@ export function startChrome(): void {
       setPanelHidden("agent-sidebar", true);
       syncExpanded();
     });
+
+    document.addEventListener("astro:after-swap", () => {
+      restoreChromeAfterNavigation();
+    });
   }
 
-  applyHeaderCollapsed(headerCollapsed(), false);
-  syncExpanded();
-  void refreshAuthChrome();
+  restoreChromeAfterNavigation();
 }
