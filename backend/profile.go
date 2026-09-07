@@ -227,11 +227,6 @@ func (a *App) getAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", ctype)
 	w.Header().Set("Cache-Control", "private, no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
-	if a.cfg.SecureCookies {
-		w.Header().Set("X-Accel-Redirect", "/internal-media/"+user.AvatarKey)
-		w.WriteHeader(http.StatusOK)
-		return
-	}
 	http.ServeFile(w, r, full)
 }
 

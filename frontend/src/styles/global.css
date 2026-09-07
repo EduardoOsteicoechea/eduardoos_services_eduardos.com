@@ -132,6 +132,13 @@ a {
   border-radius: 50%;
 }
 
+.header-session-photo {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .header-nav {
   display: flex;
   align-items: center;

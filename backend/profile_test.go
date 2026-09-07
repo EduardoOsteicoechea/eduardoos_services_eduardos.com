@@ -177,14 +177,17 @@ func TestAvatarGetAuthorizationAndAccel(t *testing.T) {
 	if got.Code != http.StatusOK {
 		t.Fatalf("owner get: %d %s", got.Code, got.Body.String())
 	}
-	if got.Header().Get("X-Accel-Redirect") != "/internal-media/"+user.AvatarKey {
-		t.Fatalf("accel %q", got.Header().Get("X-Accel-Redirect"))
+	if got.Header().Get("X-Accel-Redirect") != "" {
+		t.Fatal("browser <img> must receive image bytes through /api/, not an empty accel response")
 	}
 	if got.Header().Get("Cache-Control") != "private, no-store" {
 		t.Fatalf("cache %q", got.Header().Get("Cache-Control"))
 	}
-	if got.Body.Len() != 0 {
-		t.Fatal("production accel response must not include file bytes")
+	if got.Header().Get("Content-Type") != "image/jpeg" {
+		t.Fatalf("type %q", got.Header().Get("Content-Type"))
+	}
+	if got.Body.Len() < 12 || !bytes.HasPrefix(got.Body.Bytes(), []byte{0xff, 0xd8, 0xff}) {
+		t.Fatal("owner get must include image bytes so <img> can render through /api/")
 	}
 	if strings.Contains(got.Header().Get("X-Accel-Redirect"), app.cfg.MediaRoot) {
 		t.Fatal("absolute media path leaked")

@@ -7,6 +7,7 @@ vi.mock("./api", async () => {
 
 vi.mock("./chrome", () => ({
   refreshAuthChrome: vi.fn(),
+  applySessionAvatar: vi.fn(),
 }));
 
 vi.mock("./router", () => ({
@@ -15,6 +16,7 @@ vi.mock("./router", () => ({
 
 import { getMe } from "./api";
 import { go } from "./router";
+import { applySessionAvatar } from "./chrome";
 import { fillProfile, profileAvatarURL, reportFailure, requireGuest, sessionCopy, setBusy, loginBodyFromForm } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
@@ -134,6 +136,7 @@ describe("session forms", () => {
     expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=99");
     expect(img.src).toContain("/api/profile/avatar");
     expect(img.src).not.toContain("/media/");
+    expect(applySessionAvatar).toHaveBeenCalledWith("/api/profile/avatar?v=99");
     expect(profileAvatarURL("/media/avatars/x.jpg")).toBeNull();
     expect(profileAvatarURL("https://evil.example/api/profile/avatar")).toBeNull();
     fillProfile(root, { username: "member", avatar: "/media/avatars/x.jpg" });

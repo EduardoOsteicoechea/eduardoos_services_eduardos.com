@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, resetCsrfMemory, uploadAvatar } from "./api";
+import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar } from "./api";
 
 function jsonResponse(status: number, body: unknown, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
@@ -153,5 +153,7 @@ describe("api csrf and errors", () => {
     expect(JSON.stringify(loginPayload("member", "correct-horse-battery"))).toBe(
       '{"identifier":"member","password":"correct-horse-battery"}',
     );
+    expect(profileAvatarURL("/api/profile/avatar?v=9")).toBe("/api/profile/avatar?v=9");
+    expect(profileAvatarURL("/media/avatars/x.jpg")).toBeNull();
   });
 });

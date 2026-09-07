@@ -1,4 +1,4 @@
-import { getMe, postJSON } from "./api";
+import { getMe, postJSON, profileAvatarURL } from "./api";
 import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
@@ -139,6 +139,30 @@ function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
   return target.closest("button, a, [data-logout]");
 }
 
+export function applySessionAvatar(avatar?: string | null): void {
+  const src = profileAvatarURL(avatar);
+  const photo = document.querySelector("[data-session-avatar]");
+  const icon = document.querySelector("[data-session-icon]");
+  if (photo instanceof HTMLImageElement) {
+    if (src) {
+      photo.onerror = () => {
+        photo.removeAttribute("src");
+        photo.hidden = true;
+        if (icon instanceof HTMLElement) icon.hidden = false;
+      };
+      photo.src = src;
+      photo.hidden = false;
+      if (icon instanceof HTMLElement) icon.hidden = true;
+    } else {
+      photo.removeAttribute("src");
+      photo.hidden = true;
+      if (icon instanceof HTMLElement) icon.hidden = false;
+    }
+  } else if (icon instanceof HTMLElement) {
+    icon.hidden = false;
+  }
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
@@ -157,6 +181,7 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !(authed && data.role === "admin");
     }
   });
+  applySessionAvatar(authed ? data.avatar : null);
 }
 
 export function startChrome(): void {

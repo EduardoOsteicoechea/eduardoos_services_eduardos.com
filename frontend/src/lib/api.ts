@@ -66,6 +66,21 @@ export function loginPayload(identifier: string, password: string): LoginPayload
   return { identifier: identifier.trim(), password };
 }
 
+export function profileAvatarURL(avatar: string | null | undefined): string | null {
+  if (!avatar) {
+    return null;
+  }
+  try {
+    const url = new URL(avatar, "https://local.invalid");
+    if (url.origin !== "https://local.invalid" || url.pathname !== "/api/profile/avatar") {
+      return null;
+    }
+    return `/api/profile/avatar${url.search}`;
+  } catch {
+    return null;
+  }
+}
+
 async function parseJSON<T>(response: Response): Promise<T> {
   const text = await response.text();
   if (!text) {

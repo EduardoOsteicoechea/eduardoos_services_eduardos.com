@@ -1,7 +1,9 @@
-import { getMe, loginPayload, type MeResponse } from "./api";
-import { refreshAuthChrome } from "./chrome";
+import { getMe, loginPayload, profileAvatarURL, type MeResponse } from "./api";
+import { applySessionAvatar, refreshAuthChrome } from "./chrome";
 import { showErrorModal } from "./error-modal";
 import { go } from "./router";
+
+export { profileAvatarURL };
 
 export type SessionCopy = {
   loading: string;
@@ -120,21 +122,6 @@ export function reportFailure(copy: SessionCopy, status: number, data: MeRespons
   return message;
 }
 
-export function profileAvatarURL(avatar: string | null | undefined): string | null {
-  if (!avatar) {
-    return null;
-  }
-  try {
-    const url = new URL(avatar, "https://local.invalid");
-    if (url.origin !== "https://local.invalid" || url.pathname !== "/api/profile/avatar") {
-      return null;
-    }
-    return `/api/profile/avatar${url.search}`;
-  } catch {
-    return null;
-  }
-}
-
 export function fillProfile(root: ParentNode, data: MeResponse): void {
   const summary = root.querySelector("[data-profile-summary]");
   if (summary instanceof HTMLElement) {
@@ -168,6 +155,7 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
     }
   }
+  applySessionAvatar(data.avatar);
 }
 
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
