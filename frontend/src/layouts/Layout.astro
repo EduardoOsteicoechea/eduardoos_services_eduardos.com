@@ -1,0 +1,44 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+
+type Props = {
+  title: string;
+  description?: string;
+};
+
+const { title, description = "Personal site of Eduardo Osteicoechea." } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="nav">
+        <a class="brand" href="/" data-route>Eduardoos</a>
+        <nav class="links" aria-label="Primary">
+          <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>Home</a>
+          <a href="/about" data-route aria-current={path === "/about" ? "page" : undefined}>About</a>
+          <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>Contact</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="footer">eduardoos.com</footer>
+    </div>
+    <script>
+      import { startClientRouting } from "../lib/router";
+      startClientRouting();
+    </script>
+  </body>
+</html>

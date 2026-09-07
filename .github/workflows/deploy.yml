@@ -1,0 +1,97 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SITE: eduardoos.com
+      API_PORT: "8081"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build Astro frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          cache: false
+
+      - name: Run Go tests
+        working-directory: backend
+        run: go test ./...
+
+      - name: Compile Linux AMD64 API
+        working-directory: backend
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o api .
+
+      - name: Configure SSH
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Upload frontend dist
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${VPS_PORT:-22}"
+          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          rsync -az --delete -e "ssh ${SSH_OPTS}" \
+            frontend/dist/ \
+            "${VPS_USER}@${VPS_HOST}:/var/www/${SITE}/html/"
+
+      - name: Upload API binary and switch release
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${VPS_PORT:-22}"
+          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          SHA="${GITHUB_SHA}"
+          RELEASE="/opt/apps/${SITE}/releases/${SHA}"
+          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${RELEASE}'"
+          rsync -az -e "ssh ${SSH_OPTS}" \
+            backend/api \
+            "${VPS_USER}@${VPS_HOST}:${RELEASE}/api"
+          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${SITE}/current.tmp' && mv -Tf '/opt/apps/${SITE}/current.tmp' '/opt/apps/${SITE}/current'"
+
+      - name: Restart API and verify health
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${VPS_PORT:-22}"
+          SSH_OPTS="-i ~/.ssh/deploy_key -p ${PORT} -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes"
+          ssh ${SSH_OPTS} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SITE}-api.service' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"

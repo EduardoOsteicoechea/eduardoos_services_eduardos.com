@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Eduardoos">
+  <h1>Software, systems, and careful craft.</h1>
+  <p class="lede">
+    Independent work across web platforms, APIs, and production infrastructure.
+    This site is a static Astro frontend that talks to its API only through
+    <code>/api/</code>.
+  </p>
+  <section class="panel" aria-live="polite">
+    <p id="api-status" class="status">Checking API…</p>
+  </section>
+</Layout>
+
+<script>
+  import { getHealth } from "../lib/api";
+
+  const status = document.getElementById("api-status");
+
+  try {
+    const health = await getHealth();
+    if (status) {
+      status.classList.add("ok");
+      status.textContent = `API ${health.status}`;
+    }
+  } catch {
+    if (status) {
+      status.classList.add("err");
+      status.textContent = "API unavailable. Start the local Go server to see /api/health.";
+    }
+  }
+</script>
