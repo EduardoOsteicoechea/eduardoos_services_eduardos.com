@@ -22,22 +22,38 @@ type ChatResult struct {
 	Usage ChatUsage
 }
 
+type ChatMessage struct {
+	Role    string
+	Content string
+}
+
 type ChatClient interface {
 	Chat(ctx context.Context, prompt string) (ChatResult, error)
+	Complete(ctx context.Context, system string, history []ChatMessage) (ChatResult, error)
 }
 
 type recordingChat struct {
-	provider string
-	text     string
-	usage    ChatUsage
-	fail     bool
-	last     string
-	calls    int
+	provider   string
+	text       string
+	usage      ChatUsage
+	fail       bool
+	last       string
+	lastSystem string
+	lastHist   []ChatMessage
+	calls      int
 }
 
-func (c *recordingChat) Chat(_ context.Context, prompt string) (ChatResult, error) {
+func (c *recordingChat) Chat(ctx context.Context, prompt string) (ChatResult, error) {
+	return c.Complete(ctx, "connectivity-test", []ChatMessage{{Role: "user", Content: prompt}})
+}
+
+func (c *recordingChat) Complete(_ context.Context, system string, history []ChatMessage) (ChatResult, error) {
 	c.calls++
-	c.last = prompt
+	c.lastSystem = system
+	c.lastHist = append([]ChatMessage(nil), history...)
+	if len(history) > 0 {
+		c.last = history[len(history)-1].Content
+	}
 	if c.fail {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
@@ -73,10 +89,36 @@ func (c openAICompatClient) chatPayload(prompt string) map[string]any {
 }
 
 func (c openAICompatClient) Chat(ctx context.Context, prompt string) (ChatResult, error) {
+	return c.Complete(ctx, "You are a connectivity test. Reply in one short sentence. Do not request tools or secrets.", []ChatMessage{{Role: "user", Content: prompt}})
+}
+
+func (c openAICompatClient) Complete(ctx context.Context, system string, history []ChatMessage) (ChatResult, error) {
 	if c.apiKey == "" {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	payload := c.chatPayload(prompt)
+	messages := []map[string]string{{"role": "system", "content": system}}
+	for _, item := range history {
+		if item.Role != "user" && item.Role != "assistant" {
+			continue
+		}
+		content := strings.TrimSpace(item.Content)
+		if content == "" {
+			continue
+		}
+		messages = append(messages, map[string]string{"role": item.Role, "content": content})
+	}
+	payload := map[string]any{
+		"model":      c.model,
+		"messages":   messages,
+		"max_tokens": 512,
+	}
+	if c.name == "kimi" {
+		delete(payload, "max_tokens")
+		payload["max_completion_tokens"] = 512
+		payload["reasoning_effort"] = "low"
+	} else {
+		payload["temperature"] = 0.2
+	}
 	body, err := json.Marshal(payload)
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")

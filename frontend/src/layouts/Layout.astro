@@ -169,7 +169,13 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
       </main>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden>
-        <p>The AI agent talks only through this site’s API.</p>
+        <h2 class="agent-chat-title">Ask Eduardoos</h2>
+        <p class="hint" data-agent-empty>Ask a short question about this site.</p>
+        <div class="agent-chat-log" data-agent-log></div>
+        <form class="agent-chat-form" data-agent-form>
+          <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="3" required aria-label="Message"></textarea>
+          <button type="submit" data-agent-send>Send</button>
+        </form>
       </aside>
     </div>
     <div id="error-modal" class="error-modal" hidden>

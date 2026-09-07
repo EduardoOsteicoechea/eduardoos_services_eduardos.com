@@ -1,4 +1,5 @@
 import { getMe, postJSON, profileAvatarURL } from "./api";
+import { startAgentChat } from "./chat";
 import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
@@ -217,6 +218,7 @@ function restoreChromeAfterNavigation(): void {
   applyHeaderCollapsed(headerCollapsed(), false);
   syncExpanded();
   paintSessionAvatar(lastSessionAvatar);
+  startAgentChat();
   void refreshAuthChrome();
 }
 

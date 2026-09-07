@@ -28,6 +28,8 @@ type App struct {
 	emailSiteLimit  *limiter
 	aiAdminLimit    *limiter
 	aiSiteLimit     *limiter
+	chatIPLimit     *limiter
+	chatUserLimit   *limiter
 	inviteOTPLimit  *limiter
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
@@ -82,6 +84,8 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		emailSiteLimit:  newLimiter(emailSiteWindow, emailSiteMax),
 		aiAdminLimit:    newLimiter(aiAdminWindow, aiAdminMax),
 		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
+		chatIPLimit:     newLimiter(publicChatWindow, publicChatIPMax),
+		chatUserLimit:   newLimiter(publicChatWindow, publicChatUserMax),
 		inviteOTPLimit:  newLimiter(time.Hour, 8),
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
@@ -134,6 +138,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /profile/avatar", a.getAvatarHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
+	mux.HandleFunc("POST /api/chat", a.publicChatHandler)
 
 	mux.HandleFunc("GET /api/ereport/access", a.ereportAccessHandler)
 	mux.HandleFunc("GET /api/ereport/orgs", a.ereportGetOrgsHandler)

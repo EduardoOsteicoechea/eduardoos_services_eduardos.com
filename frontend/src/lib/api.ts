@@ -36,6 +36,16 @@ export type DiagnosticsResult = APIErrorBody & {
   };
 };
 
+export type ChatTurn = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type ChatResponse = APIErrorBody & {
+  ok?: boolean;
+  text?: string;
+};
+
 let csrfToken = "";
 
 function apiUrl(path: string): string {
@@ -196,6 +206,44 @@ export async function postJSON<T = MeResponse>(path: string, body: Record<string
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+}
+
+export async function postChat(message: string, history: ChatTurn[]): Promise<{ status: number; data: ChatResponse; requestId: string }> {
+  await getCsrf();
+  const headers = new Headers();
+  headers.set("Accept", "application/json");
+  headers.set("Content-Type", "application/json");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  const controller = new AbortController();
+  const timer = globalThis.setTimeout(() => controller.abort(), 45000);
+  try {
+    const response = await fetch(apiUrl("/chat"), {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: JSON.stringify({ message, history }),
+      signal: controller.signal,
+    });
+    const data = await parseJSON<ChatResponse>(response);
+    const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
+    if (!data.request_id && requestId) {
+      data.request_id = requestId;
+    }
+    return { status: response.status, data, requestId };
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      return {
+        status: 0,
+        data: { error: "internal_error", message: "Could not reach the API." },
+        requestId: "",
+      };
+    }
+    throw err;
+  } finally {
+    globalThis.clearTimeout(timer);
+  }
 }
 
 export async function patchJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
