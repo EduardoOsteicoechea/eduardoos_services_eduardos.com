@@ -123,4 +123,9 @@ jobs:
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
           RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SERVICE}' && curl --fail 'http://127.0.0.1:${API_PORT}/health'"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "sudo systemctl restart '${SERVICE}'"
+          if ! ${RSH} "${VPS_USER}@${VPS_HOST}" "curl --fail http://127.0.0.1:${API_PORT}/health"; then
+            ${RSH} "${VPS_USER}@${VPS_HOST}" "systemctl status '${SERVICE}' --no-pager" || true
+            ${RSH} "${VPS_USER}@${VPS_HOST}" "journalctl -u '${SERVICE}' -n 100 --no-pager" || true
+            exit 1
+          fi
