@@ -845,7 +845,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-top: var(--collapsed-header-height);
+    padding-top: calc(var(--collapsed-header-height) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .sidebar-left,
@@ -973,7 +973,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-left: var(--collapsed-rail-width);
+    padding-left: calc(var(--collapsed-rail-width) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .sidebar-left {
