@@ -784,7 +784,7 @@ section.diag > h1,
 section.diag > .lede,
 section.diag > .status,
 section.diag > [data-banner] {
-  grid-column: var(--page-col-fr1);
+  grid-column: var(--page-col-fr1) / var(--page-col-fr2-end);
 }
 
 .session-grid > form,
@@ -883,8 +883,13 @@ section.diag .panel:not(form) {
 
 .session-grid form > :not(button),
 .diag form > :not(button) {
-  grid-column: var(--page-col-fr1);
+  grid-column: var(--page-col-fr1) / var(--page-col-fr2);
   min-width: 0;
+}
+
+.session-grid form > .session-links,
+.diag form > .session-links {
+  grid-column: var(--page-col-fr1) / var(--page-col-fr2-end);
 }
 
 .session-grid form > button,
