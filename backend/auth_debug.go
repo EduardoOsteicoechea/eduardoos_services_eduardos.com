@@ -9,7 +9,7 @@ import (
 )
 
 func (a *App) authDebugEnabled(r *http.Request) bool {
-	if a.cfg.EnableAuthDebug || a.cfg.AppEnv == "development" {
+	if a.cfg.MustLog || a.cfg.EnableAuthDebug || a.cfg.AppEnv == "development" {
 		return true
 	}
 	origin := requestOrigin(r)

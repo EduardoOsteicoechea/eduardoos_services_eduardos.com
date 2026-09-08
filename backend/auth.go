@@ -91,7 +91,7 @@ func (a *App) setCookie(w http.ResponseWriter, name, value string, maxAge int) {
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
 	})
-	if a.cfg.EnableAuthDebug || a.cfg.AppEnv == "development" {
+	if a.cfg.MustLog || a.cfg.EnableAuthDebug || a.cfg.AppEnv == "development" {
 		a.log.Info("auth_cookie_set",
 			slog.String("cookie_name", name),
 			slog.Bool("secure", a.cfg.SecureCookies),
@@ -338,6 +338,11 @@ func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return false
 	}
+	a.logAuthDebug(r, "require_unsafe_ok",
+		slog.Bool("origin_ok", originOK),
+		slog.Bool("csrf_ok", csrfOK),
+		slog.String("csrf_reason", a.csrfFailureReason(r)),
+	)
 	return true
 }
 
@@ -442,25 +447,33 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		ident = usernameNorm
 	}
 	if !a.loginIPLimit.allow(ip) || !a.loginIDLimit.allow(ident) {
+		a.logAuthDebug(r, "login_rate_limited")
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	if (hasEmail && !emailOK) || (!hasEmail && !usernameOK) {
+		a.logAuthDebug(r, "login_denied", slog.String("reason", "invalid_identifier"))
 		a.dummyPasswordCheck(body.Password)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	user := a.lookupLoginUser(emailNorm, usernameNorm)
-	if user == nil || user.Status != statusVerified || !verifyPassword(user.PasswordHash, body.Password) {
+	passwordOK := user != nil && verifyPassword(user.PasswordHash, body.Password)
+	if user == nil || user.Status != statusVerified || !passwordOK {
 		if user == nil {
 			a.dummyPasswordCheck(body.Password)
 		}
+		a.logAuthDebug(r, "login_denied",
+			slog.String("reason", loginDenialReason(user, passwordOK)),
+			slog.Bool("has_user", user != nil),
+		)
 		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
-	sess, err := a.issueSession(w, user)
+	sess, err := a.issueSessionLogged(w, r, user)
 	if err != nil {
+		a.logAuthDebug(r, "login_session_failed", slog.String("reason", redactLogValue(err.Error())))
 		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
@@ -473,18 +486,33 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
+	a.logAuthDebug(r, "logout_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	a.logAuthDebug(r, "logout_csrf_ok")
 	if sess := a.currentSession(r); sess != nil {
+		a.logAuthDebug(r, "logout_revoke_access_session",
+			slog.String("session_id", sess.SessionID),
+			slog.String("family_id", sess.FamilyID),
+		)
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
 	} else if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
+			a.logAuthDebug(r, "logout_revoke_refresh_session",
+				slog.String("session_id", sess.SessionID),
+				slog.String("family_id", sess.FamilyID),
+			)
 			_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
+		} else {
+			a.logAuthDebug(r, "logout_refresh_lookup_failed")
 		}
+	} else {
+		a.logAuthDebug(r, "logout_no_session")
 	}
 	a.clearAuthCookies(w)
 	a.auditEvent(r, "logout", "success", "")
+	a.logAuthDebug(r, "logout_success")
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
@@ -495,6 +523,7 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	cookie, err := r.Cookie(a.refreshCookieName())
 	if err != nil || cookie.Value == "" {
+		a.logAuthDebug(r, "refresh_denied", slog.String("reason", "missing_refresh_cookie"))
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
@@ -502,11 +531,17 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 	hash := a.hashOpaque("refresh", cookie.Value)
 	sess, err := a.store.SessionByRefreshHash(r.Context(), hash)
 	if err != nil {
+		a.logAuthDebug(r, "refresh_denied", slog.String("reason", "session_not_found"))
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if sess.Revoked {
+		a.logAuthDebug(r, "refresh_denied",
+			slog.String("reason", "refresh_reuse"),
+			slog.String("session_id", sess.SessionID),
+			slog.String("family_id", sess.FamilyID),
+		)
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "reuse")
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
@@ -514,26 +549,42 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	now := time.Now().UTC()
 	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
+		a.logAuthDebug(r, "refresh_denied",
+			slog.String("reason", "session_expired"),
+			slog.String("session_id", sess.SessionID),
+		)
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "expired")
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
 	if !a.refreshLimit.allow(sess.SessionID) {
+		a.logAuthDebug(r, "refresh_rate_limited", slog.String("session_id", sess.SessionID))
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	user, err := a.store.UserByID(r.Context(), sess.UserID)
 	if err != nil || user.Status != statusVerified {
+		a.logAuthDebug(r, "refresh_denied",
+			slog.String("reason", "user_unavailable"),
+			slog.String("session_id", sess.SessionID),
+			slog.Bool("user_found", err == nil),
+		)
 		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "disable")
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	a.logAuthDebug(r, "refresh_rotating",
+		slog.String("session_id", sess.SessionID),
+		slog.String("user_id", user.ID),
+	)
 	if _, err := a.rotateSession(w, sess, user); err != nil {
+		a.logAuthDebug(r, "refresh_rotate_failed", slog.String("reason", redactLogValue(err.Error())))
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	a.logAuthDebug(r, "refresh_success", slog.String("user_id", user.ID))
 	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
@@ -571,12 +622,19 @@ func (a *App) sendOTPMail(to, purpose, code string) error {
 }
 
 func (a *App) deliverOTPEmail(r *http.Request, auditKind, to, purpose, code, userID string) {
+	a.logAuthDebug(r, auditKind+"_email_start",
+		slog.String("purpose", purpose),
+		slog.String("user_id", userID),
+		slog.String("smtp_state", a.smtpDebugState()),
+		slog.String("email_domain", emailLogDomain(strings.ToLower(strings.TrimSpace(to)))),
+	)
 	if err := a.sendOTPMail(to, purpose, code); err != nil {
 		a.auditEvent(r, auditKind, "email_failed", userID)
 		a.logAuthDebug(r, auditKind+"_email_failed", slog.String("reason", redactLogValue(err.Error())))
 		return
 	}
 	a.auditEvent(r, auditKind, "email_sent", userID)
+	a.logAuthDebug(r, auditKind+"_email_sent", slog.String("user_id", userID))
 }
 
 func (a *App) consumeOTP(purpose, emailNorm, code string) (*OTPRecord, error) {

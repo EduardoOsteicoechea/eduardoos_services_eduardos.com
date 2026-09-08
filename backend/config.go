@@ -26,6 +26,7 @@ type config struct {
 	AppEnv                 string
 	EnableDiagnostics      bool
 	EnableAuthDebug        bool
+	MustLog                bool
 	AdminEmail             string
 	AdminPassword          string
 	BootstrapAdminEmail    string
@@ -131,6 +132,7 @@ func loadConfig() config {
 		AppEnv:                 appEnv,
 		EnableDiagnostics:      envBool("ENABLE_ADMIN_DIAGNOSTICS", false),
 		EnableAuthDebug:        envBool("ENABLE_AUTH_DEBUG", false),
+		MustLog:                envBool("MUST_LOG", appEnv == "development"),
 		AdminEmail:             strings.TrimSpace(os.Getenv("ADMIN_EMAIL")),
 		AdminPassword:          os.Getenv("ADMIN_PASSWORD"),
 		BootstrapAdminEmail:    strings.TrimSpace(os.Getenv("BOOTSTRAP_ADMIN_EMAIL")),
