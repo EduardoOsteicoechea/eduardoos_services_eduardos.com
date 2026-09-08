@@ -1,6 +1,6 @@
 import basicSsl from "@vitejs/plugin-basic-ssl";
 
-function devProxyBanner(target, port, useHttps) {
+function devProxyBanner(target, port, useHttps, useProdProxy) {
   return {
     name: "dev-proxy-banner",
     configureServer(server) {
@@ -11,7 +11,8 @@ function devProxyBanner(target, port, useHttps) {
         console.log(`  Dev URL     ${scheme}://127.0.0.1:${port}/`);
         if (useHttps) {
           console.log("  Note        Open HTTPS (not HTTP) and accept the local certificate warning.");
-        } else {
+        }
+        if (!useProdProxy) {
           console.log("  Note        Local API mode. Keep the Go server running on the proxy target.");
         }
         console.log("");
@@ -22,13 +23,14 @@ function devProxyBanner(target, port, useHttps) {
 
 export function createDevProxyConfig({ port, productionApi }) {
   const apiProxyTarget = (process.env.API_PROXY_TARGET || productionApi).trim().replace(/\/$/, "");
-  const useHttpsDev = apiProxyTarget.startsWith("https://");
+  const useHttpsDev = true;
+  const useProdProxy = apiProxyTarget.startsWith("https://");
 
   return {
     port,
     vitePlugins: [
-      ...(useHttpsDev ? [basicSsl()] : []),
-      devProxyBanner(apiProxyTarget, port, useHttpsDev),
+      basicSsl(),
+      devProxyBanner(apiProxyTarget, port, useHttpsDev, useProdProxy),
     ],
     proxy: {
       "/api": {
