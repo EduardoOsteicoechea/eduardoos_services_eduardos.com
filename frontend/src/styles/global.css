@@ -142,6 +142,15 @@ a {
   width: var(--rail-button-size);
   height: var(--rail-button-size);
   border-radius: var(--header-button-radius);
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
+}
+
+.app-header .icon-btn:hover,
+.app-header .icon-btn:focus-visible {
+  background: transparent;
+  color: var(--color-accent);
 }
 
 .app-header .icon-btn .material-symbols-outlined {
@@ -152,14 +161,11 @@ a {
   border-radius: 50%;
 }
 
-.app-header .header-logo.icon-btn {
-  background: transparent;
-  border: 0;
-}
-
+.app-header .header-logo.icon-btn,
 .app-header .header-logo.icon-btn:hover,
 .app-header .header-logo.icon-btn:focus-visible {
   background: transparent;
+  border: 0;
 }
 
 .header-logo-img {
@@ -305,6 +311,21 @@ html[data-header-collapsed="true"] .sidebar-right {
   display: flex;
   gap: var(--space-margin);
   margin-bottom: var(--space-margin);
+}
+
+.sidebar-toolbar .icon-btn {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border-radius: var(--header-button-radius);
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+.sidebar-toolbar .icon-btn:hover,
+.sidebar-toolbar .icon-btn:focus-visible {
+  background: transparent;
+  color: var(--color-accent);
 }
 
 .sidebar-left nav {

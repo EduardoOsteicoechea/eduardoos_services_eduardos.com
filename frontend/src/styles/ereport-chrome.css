@@ -140,16 +140,17 @@ html[data-page^="ereport"] .header-session {
   width: var(--chrome-control-size);
   height: var(--chrome-control-size);
   border-radius: 50%;
-  background: var(--site-accent);
-  color: var(--site-accent-fg);
-  border: 2px solid var(--site-surface);
-  outline: 1px solid color-mix(in srgb, var(--fg) 32%, transparent);
+  background: transparent;
+  color: var(--site-body-fg);
+  border: 0;
+  outline: 0;
   overflow: hidden;
 }
 
 html[data-page^="ereport"] .header-session:hover {
-  filter: brightness(1.06);
-  outline-color: var(--site-accent);
+  color: var(--site-accent);
+  filter: none;
+  outline: 0;
 }
 
 html[data-page^="ereport"] .header-session-photo {
@@ -162,13 +163,14 @@ html[data-page^="ereport"] .header-dynamic {
   width: var(--chrome-control-size);
   height: var(--chrome-control-size);
   border-radius: var(--br);
-  background: var(--site-surface);
-  border: 1px solid var(--site-input-border);
+  background: transparent;
+  border: 0;
   color: var(--site-body-fg);
 }
 
 html[data-page^="ereport"] .header-dynamic[aria-expanded="true"] {
-  background: color-mix(in srgb, var(--site-accent) 18%, var(--site-surface));
+  background: transparent;
+  color: var(--site-accent);
 }
 
 html[data-page^="ereport"] .ereport-guest-auth {
@@ -236,7 +238,15 @@ html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn {
   min-width: var(--bmw);
   min-height: var(--bmh);
   border-radius: var(--br);
-  background: var(--site-surface-muted);
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn:hover,
+html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn:focus-visible {
+  background: transparent;
+  color: var(--site-accent);
 }
 
 html[data-page^="ereport"] [data-close-menu] {
