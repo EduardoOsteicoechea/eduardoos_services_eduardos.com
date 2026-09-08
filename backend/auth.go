@@ -574,7 +574,9 @@ func (a *App) deliverOTPEmail(r *http.Request, auditKind, to, purpose, code, use
 	if err := a.sendOTPMail(to, purpose, code); err != nil {
 		a.auditEvent(r, auditKind, "email_failed", userID)
 		a.logAuthDebug(r, auditKind+"_email_failed", slog.String("reason", redactLogValue(err.Error())))
+		return
 	}
+	a.auditEvent(r, auditKind, "email_sent", userID)
 }
 
 func (a *App) consumeOTP(purpose, emailNorm, code string) (*OTPRecord, error) {

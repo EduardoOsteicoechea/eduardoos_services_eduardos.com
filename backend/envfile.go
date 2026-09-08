@@ -75,6 +75,13 @@ func mongoURIFromEnv() string {
 	return envString("MONGO_URI")
 }
 
+func smtpFromAddressFromEnv() string {
+	if v := envString("SMTP_FROM_ADDRESS"); v != "" {
+		return v
+	}
+	return envString("SMTP_FROM_ADDR")
+}
+
 func envBool(key string, fallback bool) bool {
 	raw := strings.TrimSpace(os.Getenv(key))
 	if raw == "" {

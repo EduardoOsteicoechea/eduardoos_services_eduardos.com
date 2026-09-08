@@ -85,7 +85,7 @@ func loadConfig() config {
 		kimiModel = "kimi-k3"
 	}
 
-	from := envString("SMTP_FROM_ADDRESS")
+	from := smtpFromAddressFromEnv()
 	if from == "" {
 		from = "noreply@" + siteName
 	}
