@@ -338,6 +338,17 @@ func TestOpenStoreWithoutURIUsesMemory(t *testing.T) {
 	}
 }
 
+func TestOpenStoreRequiresURIInProduction(t *testing.T) {
+	_, err := openStore(context.Background(), config{MongoDatabase: mongoDatabase, AppEnv: "production"})
+	if err == nil {
+		t.Fatal("production startup must require MONGO_URI")
+	}
+	_, err = openStore(context.Background(), config{MongoDatabase: mongoDatabase, SecureCookies: true})
+	if err == nil {
+		t.Fatal("secure-cookie startup must require MONGO_URI")
+	}
+}
+
 func TestOpenStoreNeverReadsProductionURIDuringTests(t *testing.T) {
 	if strings.TrimSpace(os.Getenv("TEST_MONGO_URI")) == "" && strings.TrimSpace(os.Getenv("MONGO_URI")) != "" {
 		t.Log("MONGO_URI is set in the environment; tests must not pass it to openStore")
