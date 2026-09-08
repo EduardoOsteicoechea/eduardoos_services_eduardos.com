@@ -117,7 +117,7 @@ func loadConfig() config {
 		ListenAddr:             listenHost + ":" + port,
 		MongoURI:               mongoURIFromEnv(),
 		MongoDatabase:          mongoDatabase,
-		JWTSecret:              os.Getenv("JWT_SECRET"),
+		JWTSecret:              envString("JWT_SECRET"),
 		JWTIssuer:              issuer,
 		JWTAudience:            audience,
 		SecureCookies:          envBool("COOKIE_SECURE", false),

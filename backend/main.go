@@ -14,7 +14,7 @@ import (
 func main() {
 	cfg := loadConfig()
 	command, confirmBackup := parseAPICommand(os.Args[1:])
-	if command == "serve" && cfg.SecureCookies && strings.TrimSpace(os.Getenv("JWT_SECRET")) == "" {
+	if command == "serve" && cfg.SecureCookies && strings.TrimSpace(cfg.JWTSecret) == "" {
 		log.Fatal("JWT_SECRET is required when COOKIE_SECURE=true")
 	}
 

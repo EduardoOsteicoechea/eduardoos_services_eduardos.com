@@ -55,11 +55,24 @@ func envInt64(key string, fallback int64) int64 {
 	return n
 }
 
+func trimEnvQuotes(s string) string {
+	if len(s) >= 2 {
+		if (s[0] == '\'' && s[len(s)-1] == '\'') || (s[0] == '"' && s[len(s)-1] == '"') {
+			return s[1 : len(s)-1]
+		}
+	}
+	return s
+}
+
+func envString(key string) string {
+	return trimEnvQuotes(strings.TrimSpace(os.Getenv(key)))
+}
+
 func mongoURIFromEnv() string {
-	if v := strings.TrimSpace(os.Getenv("MONGODB_URI")); v != "" {
+	if v := envString("MONGODB_URI"); v != "" {
 		return v
 	}
-	return strings.TrimSpace(os.Getenv("MONGO_URI"))
+	return envString("MONGO_URI")
 }
 
 func envBool(key string, fallback bool) bool {
