@@ -36,9 +36,9 @@ html[data-page^="ereport"] {
   --m2: 0.75rem;
   --page-inline-pad: var(--p3);
   --ui-scale: 1.3333;
-  --chrome-control-size: 48px;
+  --chrome-control-size: calc(3.4375rem - 1rem);
   --header-dynamic-control-size: var(--chrome-control-size);
-  --header_width: calc(var(--chrome-control-size) + 1.25rem);
+  --header_width: 3.4375rem;
   --site-text-scale: 1;
   --font-brand: "Kumbh Sans", system-ui, sans-serif;
   --font-sans: var(--font-brand);
