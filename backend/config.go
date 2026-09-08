@@ -87,7 +87,14 @@ func loadConfig() config {
 
 	from := smtpFromAddressFromEnv()
 	if from == "" {
+		from = envString("SMTP_USERNAME")
+	}
+	if from == "" {
 		from = "noreply@" + siteName
+	}
+	smtpName := envString("SMTP_FROM_NAME")
+	if smtpName == "" {
+		smtpName = displayName
 	}
 
 	appEnv := strings.ToLower(strings.TrimSpace(os.Getenv("APP_ENV")))
@@ -139,7 +146,7 @@ func loadConfig() config {
 		SMTPUsername:           envString("SMTP_USERNAME"),
 		SMTPPassword:           envString("SMTP_PASSWORD"),
 		SMTPFromAddress:        from,
-		SMTPFromName:           envString("SMTP_FROM_NAME"),
+		SMTPFromName:           smtpName,
 		DeepSeekKey:            os.Getenv("DEEPSEEK_API_KEY"),
 		DeepSeekBaseURL:        strings.TrimRight(deepseekBase, "/"),
 		DeepSeekModel:          deepseekModel,
