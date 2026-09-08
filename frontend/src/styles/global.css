@@ -15,7 +15,7 @@
   --page-col-a3-3: 18;
   --page-span-cols-end: 19;
   --page-col-a1-group-end: 7;
-  --form-grid-columns: auto 1rem auto 1rem auto;
+  --page-col-a2-group-end: 13;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
   --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
@@ -653,10 +653,13 @@ main > * {
 main > .session-grid,
 main > section.diag,
 main > form {
-  grid-column: var(--page-col-a1) / var(--page-col-a1-group-end);
+  grid-column: var(--page-col-a1) / var(--page-col-a2-group-end);
+  display: grid;
+  grid-template-columns: subgrid;
   width: 100%;
   max-width: 100%;
   justify-self: start;
+  row-gap: var(--rail-gap);
 }
 
 .page-col-2 {
@@ -769,9 +772,24 @@ h2 {
 }
 
 .session-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  row-gap: var(--rail-gap);
+}
+
+.session-grid > h1,
+.session-grid > .lede,
+.session-grid > .status,
+section.diag > h1,
+section.diag > .lede,
+section.diag > .status,
+section.diag > [data-banner] {
+  grid-column: var(--page-col-a1) / var(--page-col-a1-group-end);
+}
+
+.session-grid > form,
+.session-grid > .panel:not(form),
+section.diag > form,
+section.diag > .panel:not(form) {
+  grid-column: 1 / -1;
 }
 
 .session-grid h1 {
@@ -790,12 +808,23 @@ h2 {
   margin: 0;
 }
 
-.session-grid .panel:not(form) {
+.session-grid .panel:not(form),
+section.diag .panel:not(form) {
   margin-top: 0;
   padding: var(--rail-gap);
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--rail-gap);
+}
+
+.session-grid .panel:not(form) > :not(form),
+section.diag .panel:not(form) > :not(form) {
+  grid-column: var(--page-col-a1) / var(--page-col-a1-group-end);
+}
+
+.session-grid .panel:not(form) > form,
+section.diag .panel:not(form) > form {
+  grid-column: 1 / -1;
 }
 
 .session-grid form.panel {
@@ -849,22 +878,20 @@ h2 {
 .session-grid form,
 .diag form {
   display: grid;
-  grid-template-columns: var(--form-grid-columns);
-  column-gap: 0;
+  grid-template-columns: subgrid;
   row-gap: var(--rail-gap);
-  width: 100%;
   align-items: start;
 }
 
 .session-grid form > :not(button),
 .diag form > :not(button) {
-  grid-column: 1 / 4;
+  grid-column: var(--page-col-a1) / var(--page-col-a1-group-end);
   min-width: 0;
 }
 
 .session-grid form > button,
 .diag form > button {
-  grid-column: 5;
+  grid-column: var(--page-col-a2);
   width: 100%;
   align-self: stretch;
   margin-top: 0;
