@@ -382,6 +382,7 @@ button.has-label { gap: 0.35rem; }
 .section-open-label { color: var(--muted); font-size: 0.8rem; }
 .app-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 0; }
 .app-actions .ghost { display: inline-flex; align-items: center; gap: 0.35rem; }
+.empty-report { margin: 1rem 0 0; }
 .section-actions button.danger {
   background: transparent; color: var(--danger); border-color: var(--line);
   width: 2rem; height: 2rem; padding: 0;
@@ -1109,11 +1110,13 @@ function renderCriteriaEditor() {
       const i = Number(btn.dataset.idx);
       const removed = state.validationCriteria[i];
       state.validationCriteria.splice(i, 1);
+      const dropCriterion = (it) => {
+        if (it && it.criteriaStatus && removed in it.criteriaStatus) delete it.criteriaStatus[removed];
+      };
       (state.sections || []).forEach((sec) => {
+        (sec.items || []).forEach(dropCriterion);
         (sec.groups || []).forEach((grp) => {
-          (grp.items || []).forEach((it) => {
-            if (it.criteriaStatus && removed in it.criteriaStatus) delete it.criteriaStatus[removed];
-          });
+          (grp.items || []).forEach(dropCriterion);
         });
       });
       renderCriteriaEditor();
@@ -1368,6 +1371,98 @@ function addSectionItem(sid) {
   render();
 }
 
+function addGroup(sid) {
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  if (!Array.isArray(sec.groups)) sec.groups = [];
+  const id = uid("group");
+  const n = sec.groups.length + 1;
+  sec.groups.push({
+    id,
+    title: (sec.kind === "subarticulos" ? "Nuevo subartículo " : "Nueva subsección ") + n,
+    items: [normalizeItem({ id: uid(id) })]
+  });
+  collapseState.sections.delete(sid);
+  collapseState.groups.delete(id);
+  syncCollapseToState();
+  render();
+  scrollToBlock("grp-" + id);
+}
+
+function removeGroup(sid, gid) {
+  const sec = state.sections.find(s => s.id === sid);
+  const grp = sec && (sec.groups || []).find(g => g.id === gid);
+  if (!grp) return;
+  if (!confirm('¿Eliminar la subsección "' + (grp.title || gid) + '" y todas sus incidencias?')) return;
+  collectFromDom();
+  sec.groups = sec.groups.filter(g => g.id !== gid);
+  collapseState.groups.delete(gid);
+  (grp.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  syncCollapseToState();
+  render();
+}
+
+function removeSection(sid) {
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  if (!confirm('¿Eliminar la sección "' + (sec.title || sid) + '" con todas sus subsecciones e incidencias?')) return;
+  collectFromDom();
+  state.sections = state.sections.filter(s => s.id !== sid);
+  collapseState.sections.delete(sid);
+  (sec.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  (sec.groups || []).forEach(g => {
+    collapseState.groups.delete(g.id);
+    (g.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  });
+  syncCollapseToState();
+  render();
+}
+
+function toggleSectionKind(sid) {
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  sec.kind = sec.kind === "subarticulos" ? "funcionalidades" : "subarticulos";
+  render();
+}
+
+/** Host commands act on the section nearest the top of the viewport. */
+function currentSectionId() {
+  const blocks = [...document.querySelectorAll(".section-block")];
+  if (!blocks.length) return null;
+  const visible = blocks.find(b => b.getBoundingClientRect().bottom > 0);
+  return (visible || blocks[blocks.length - 1]).dataset.section;
+}
+
+function scrollToBlock(domId) {
+  const el = document.getElementById(domId);
+  if (el && typeof el.scrollIntoView === "function") el.scrollIntoView({ block: "start" });
+}
+
+function setAllCollapsed(collapsed) {
+  collectFromDom();
+  if (collapsed) {
+    (state.sections || []).forEach(sec => {
+      collapseState.sections.add(sec.id);
+      (sec.groups || []).forEach(g => collapseState.groups.add(g.id));
+    });
+  } else {
+    collapseState.sections.clear();
+    collapseState.groups.clear();
+    collapseState.items.clear();
+  }
+  syncCollapseToState();
+  render();
+}
+
+function focusCriteria() {
+  const panel = document.getElementById("meta-panel");
+  if (panel && typeof panel.scrollIntoView === "function") panel.scrollIntoView({ block: "start" });
+  const input = document.getElementById("criteria-add-input");
+  if (input && typeof input.focus === "function") input.focus();
+}
+
 function removeItem(sid, gid, iid) {
   collectFromDom();
   const found = locateItem(sid, gid, iid);
@@ -1532,7 +1627,7 @@ function renderItem(sec, grp, item) {
           `).join("")}
         </div>` : "";
   return `
-  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${item.id}" data-section="${sec.id}" data-group="${grp.id}" data-item="${item.id}">
+  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${escapeAttr(item.id)}" data-section="${escapeAttr(sec.id)}" data-group="${escapeAttr(grp.id)}" data-item="${escapeAttr(item.id)}">
     <div class="item-top">
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
@@ -1627,7 +1722,7 @@ function renderNavRail() {
   const rail = document.getElementById("nav-rail");
   if (!rail) return;
   rail.innerHTML = state.sections.map(sec => `
-    <div class="nav-sec" data-section="${sec.id}" title="${escapeAttr(sec.title)}">
+    <div class="nav-sec" data-section="${escapeAttr(sec.id)}" title="${escapeAttr(sec.title)}">
       <div class="nav-sec-label">${escapeHtml(shortNavLabel(sec))} · ${escapeHtml(sec.title)}</div>
       <div class="nav-dots">
       ${[
@@ -1753,7 +1848,7 @@ function render() {
   root.innerHTML = state.sections.map(sec => {
     const secCollapsed = isCollapsed("sections", sec.id);
     return `
-    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${sec.id}" data-section="${sec.id}">
+    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${escapeAttr(sec.id)}" data-section="${escapeAttr(sec.id)}">
       <div class="section-title">
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
@@ -1761,11 +1856,20 @@ function render() {
         </div>
         <div class="section-actions">
           <span class="hint">${sec.kind === "funcionalidades" ? "Por funcionalidad" : "Por subartículo"}</span>
-          <button type="button" class="ghost" data-act="add-section-item" title="Add open issue">
+          <button type="button" class="ghost" data-act="toggle-kind" title="Cambiar tipo (funcionalidad / subartículo)" aria-label="Cambiar tipo de sección">
+            ${mi("swap_horiz")}
+          </button>
+          <button type="button" class="ghost" data-act="add-group" title="Agregar subsección" aria-label="Agregar subsección">
+            ${mi("playlist_add")}
+          </button>
+          <button type="button" class="ghost" data-act="add-section-item" title="Add open issue" aria-label="Agregar open issue">
             ${mi("add")}
           </button>
-          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección">
+          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección" aria-label="Vaciar sección">
             ${mi("delete")}
+          </button>
+          <button type="button" class="danger" data-act="del-section" title="Eliminar sección" aria-label="Eliminar sección">
+            ${mi("delete_forever")}
           </button>
         </div>
       </div>
@@ -1777,15 +1881,16 @@ function render() {
       ${sec.groups.map(grp => {
         const grpCollapsed = isCollapsed("groups", grp.id);
         return `
-        <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${grp.id}" data-group="${grp.id}">
+        <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${escapeAttr(grp.id)}" data-group="${escapeAttr(grp.id)}">
           <div class="group-head">
             <div class="group-head-main">
               <button type="button" class="collapse-toggle" data-collapse="groups" data-id="${escapeAttr(grp.id)}" title="Colapsar/expandir subartículo" aria-expanded="${grpCollapsed ? "false" : "true"}">${collapseChevron(grpCollapsed)}</button>
               ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
             </div>
             <div class="group-actions">
-              <button type="button" class="ghost" data-act="add-item" title="Agregar fila">${mi("add")}</button>
-              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo">${mi("delete")}</button>
+              <button type="button" class="ghost" data-act="add-item" title="Agregar fila" aria-label="Agregar incidencia">${mi("add")}</button>
+              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo" aria-label="Vaciar subsección">${mi("delete")}</button>
+              <button type="button" class="danger" data-act="del-group" title="Eliminar subsección" aria-label="Eliminar subsección">${mi("delete_forever")}</button>
             </div>
           </div>
           <div class="group-body">
@@ -1798,9 +1903,13 @@ function render() {
     </section>
   `;
   }).join("") + `
+    ${state.sections.length ? "" : `<p class="hint empty-report">Este reporte todavía no tiene secciones principales.</p>`}
     <div class="app-actions">
+      <button type="button" class="ghost" data-act="add-section" title="Agregar sección principal">
+        ${mi("library_add")}<span>Agregar sección principal</span>
+      </button>
     </div>
-  `;}
+  `;
 
   root.querySelectorAll("[data-collapse]").forEach(btn => {
     btn.onclick = (e) => {
@@ -1891,6 +2000,22 @@ function render() {
   });
   root.querySelectorAll('[data-act="add-section-item"]').forEach(btn => {
     btn.onclick = () => addSectionItem(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="add-group"]').forEach(btn => {
+    btn.onclick = () => addGroup(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="del-group"]').forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      removeGroup(sec.dataset.section, block.dataset.group);
+    };
+  });
+  root.querySelectorAll('[data-act="del-section"]').forEach(btn => {
+    btn.onclick = () => removeSection(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="toggle-kind"]').forEach(btn => {
+    btn.onclick = () => toggleSectionKind(btn.closest(".section-block").dataset.section);
   });
   root.querySelectorAll('[data-act="add-section"]').forEach(btn => {
     btn.onclick = () => addSection();
@@ -2269,6 +2394,19 @@ function runHostCommand(command) {
     case "progress": openProgressModal("info"); break;
     case "save-export": openProgressModal("save"); break;
     case "add-section": addSection(); break;
+    case "add-group": {
+      const sid = currentSectionId();
+      if (sid) addGroup(sid); else toast("Agrega primero una sección principal");
+      break;
+    }
+    case "add-open-issue": {
+      const sid = currentSectionId();
+      if (sid) addSectionItem(sid); else toast("Agrega primero una sección principal");
+      break;
+    }
+    case "criteria": focusCriteria(); break;
+    case "collapse-all": setAllCollapsed(true); break;
+    case "expand-all": setAllCollapsed(false); break;
     default: break;
   }
 }

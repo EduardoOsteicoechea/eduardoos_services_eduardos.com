@@ -22,6 +22,43 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("sec.items");
   });
 
+  it("parses: every inline script compiles", () => {
+    const blocks = [...tracker.matchAll(/<script(?![^>]*src=)([^>]*)>([\s\S]*?)<\/script>/g)];
+    const js = blocks.filter(([, attrs]) => !/type=["']application\/json["']/.test(attrs));
+    expect(js.length).toBeGreaterThan(0);
+    for (const [, , code] of js) {
+      expect(() => new Function(code)).not.toThrow();
+    }
+  });
+
+  it("can add, retype and delete subsections and sections from the canvas", () => {
+    for (const act of ["add-group", "del-group", "del-section", "toggle-kind"]) {
+      expect(tracker).toContain(`data-act="${act}"`);
+      expect(tracker).toContain(`root.querySelectorAll('[data-act="${act}"]')`);
+    }
+    expect(tracker).toContain("function addGroup(");
+    expect(tracker).toContain("function removeGroup(");
+    expect(tracker).toContain("function removeSection(");
+    expect(tracker).toContain("function toggleSectionKind(");
+  });
+
+  it("keeps the add-section control in the canvas, not in the host header", () => {
+    expect(tracker).toMatch(/<div class="app-actions">[\s\S]{0,300}data-act="add-section"/);
+  });
+
+  it("runs every documented host command", () => {
+    for (const command of ["add-section", "add-group", "add-open-issue", "criteria", "collapse-all", "expand-all"]) {
+      expect(tracker).toContain(`case "${command}":`);
+    }
+    expect(tracker).toContain("function currentSectionId(");
+    expect(tracker).toContain("function setAllCollapsed(");
+  });
+
+  it("drops a removed validation criterion from open issues too", () => {
+    expect(tracker).toContain("(sec.items || []).forEach(dropCriterion)");
+    expect(tracker).toContain("(grp.items || []).forEach(dropCriterion)");
+  });
+
   it("uploads new images as files and keeps legacy dataUrl only as a display fallback", () => {
     expect(tracker).toContain("uploadImageFile");
     expect(tracker).toContain("imageSrc");

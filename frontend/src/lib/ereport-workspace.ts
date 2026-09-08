@@ -9,7 +9,12 @@ export type TrackerCommand =
   | "clear-all"
   | "progress"
   | "save-export"
-  | "add-section";
+  | "add-section"
+  | "add-group"
+  | "add-open-issue"
+  | "criteria"
+  | "collapse-all"
+  | "expand-all";
 
 export type TrackerHostHandlers = {
   onBooted?: () => void;
