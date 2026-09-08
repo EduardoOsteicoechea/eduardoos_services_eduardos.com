@@ -83,12 +83,12 @@ const isEreport = htmlPage.startsWith("ereport");
           <span class="header-collapse-line" aria-hidden="true"></span>
         </div>
         <div class="header-cluster header-cluster--bottom" data-header-chrome>
+          <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
+            <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
+          </button>
           <button class="header-session icon-btn" type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Account menu" title="Account" transition:persist="header-session">
             <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
             <img class="header-session-photo" data-session-avatar hidden alt="" />
-          </button>
-          <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
-            <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
           </button>
           <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
             <span class="material-symbols-outlined" aria-hidden="true">smart_toy</span>

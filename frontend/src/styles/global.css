@@ -179,23 +179,13 @@ a {
 }
 
 .header-collapse {
-  position: relative;
+  position: absolute;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--rail-gap);
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  z-index: 30;
   overflow: visible;
-}
-
-.header-collapse-line {
-  width: var(--border-width);
-  height: calc(var(--rail-button-size) * 0.75);
-  background: var(--color-border);
-  flex-shrink: 0;
   pointer-events: none;
 }
 
@@ -213,6 +203,15 @@ a {
   cursor: pointer;
   z-index: 31;
   position: static;
+  pointer-events: auto;
+}
+
+.header-collapse-line {
+  width: var(--border-width);
+  height: calc(var(--rail-button-size) * 0.75);
+  background: var(--color-border);
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 .header-collapse-btn:hover {
@@ -728,22 +727,13 @@ h2 {
 
   .header-cluster--bottom {
     flex-direction: row;
+    margin-left: auto;
   }
 
-  .header-cluster--bottom .header-dynamic {
-    order: 1;
-  }
-
-  .header-cluster--bottom .header-session {
-    order: 2;
-  }
-
-  .header-cluster--bottom .agent-fab {
-    order: 3;
-  }
-
-  .header-cluster--bottom .header-menu--mobile {
-    order: 4;
+  .header-collapse {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .header-collapse-line {
@@ -756,10 +746,6 @@ h2 {
 
   .header-menu--mobile {
     display: inline-flex;
-  }
-
-  .header-collapse {
-    align-self: stretch;
   }
 
   .sidebar-left,
@@ -790,9 +776,9 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse {
-    flex: 1;
-    min-width: 0;
-    height: calc(var(--mobile-header-height) * 0.25);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   html[data-header-collapsed="true"] .header-collapse-line {
@@ -835,6 +821,18 @@ h2 {
     margin-top: auto;
   }
 
+  .header-cluster--bottom .header-session {
+    order: 1;
+  }
+
+  .header-cluster--bottom .header-dynamic {
+    order: 2;
+  }
+
+  .header-cluster--bottom .agent-fab {
+    order: 3;
+  }
+
   .header-menu--mobile {
     display: none;
   }
@@ -844,7 +842,7 @@ h2 {
   }
 
   .header-collapse {
-    width: 100%;
+    inset: 0;
   }
 
   .sidebar-left {
@@ -871,9 +869,8 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse {
-    margin-top: 0;
-    flex: 1;
-    width: 100%;
+    inset: 0;
+    transform: none;
   }
 
   html[data-header-collapsed="true"] .header-collapse-line {
