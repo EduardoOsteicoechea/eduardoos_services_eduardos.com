@@ -10,7 +10,7 @@
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
   --header-button-radius: 0.25rem;
-  --rail-button-size: 1.5rem;
+  --rail-button-size: 0.75rem;
   --collapse-button-size: 1rem;
   --button-size-sm: calc(var(--collapse-button-size) * 0.5);
   --rail-gap: 0.5rem;
@@ -139,6 +139,10 @@ a {
   width: var(--rail-button-size);
   height: var(--rail-button-size);
   border-radius: var(--header-button-radius);
+}
+
+.app-header .icon-btn .material-symbols-outlined {
+  font-size: calc(var(--rail-button-size) * 0.75);
 }
 
 .app-header .header-session.icon-btn {
