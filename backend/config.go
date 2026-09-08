@@ -115,7 +115,7 @@ func loadConfig() config {
 
 	return config{
 		ListenAddr:             listenHost + ":" + port,
-		MongoURI:               os.Getenv("MONGODB_URI"),
+		MongoURI:               mongoURIFromEnv(),
 		MongoDatabase:          mongoDatabase,
 		JWTSecret:              os.Getenv("JWT_SECRET"),
 		JWTIssuer:              issuer,

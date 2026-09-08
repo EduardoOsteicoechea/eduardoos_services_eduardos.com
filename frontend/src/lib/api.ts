@@ -103,7 +103,11 @@ async function parseJSON<T>(response: Response): Promise<T> {
   try {
     return JSON.parse(text) as T;
   } catch {
-    return { error: "internal_error", message: "Something went wrong." } as T;
+    const gateway = response.status === 502 || response.status === 503 || response.status === 504;
+    return {
+      error: "internal_error",
+      message: gateway ? "Could not reach the API. The server may be down or restarting." : "Something went wrong.",
+    } as T;
   }
 }
 
