@@ -85,7 +85,7 @@ func loadConfig() config {
 		kimiModel = "kimi-k3"
 	}
 
-	from := strings.TrimSpace(os.Getenv("SMTP_FROM_ADDRESS"))
+	from := envString("SMTP_FROM_ADDRESS")
 	if from == "" {
 		from = "noreply@" + siteName
 	}
@@ -134,12 +134,12 @@ func loadConfig() config {
 		EreportMaxImageEdge:    int(envInt64("EREPORT_MAX_IMAGE_EDGE", int64(defaultMaxImageEdge))),
 		EreportMaxPayloadBytes: envInt64("EREPORT_MAX_PAYLOAD_BYTES", defaultMaxPayloadBytes),
 		PublicBaseURL:          strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_BASE_URL")), "/"),
-		SMTPHost:               os.Getenv("SMTP_HOST"),
-		SMTPPort:               os.Getenv("SMTP_PORT"),
-		SMTPUsername:           os.Getenv("SMTP_USERNAME"),
-		SMTPPassword:           os.Getenv("SMTP_PASSWORD"),
+		SMTPHost:               envString("SMTP_HOST"),
+		SMTPPort:               envString("SMTP_PORT"),
+		SMTPUsername:           envString("SMTP_USERNAME"),
+		SMTPPassword:           envString("SMTP_PASSWORD"),
 		SMTPFromAddress:        from,
-		SMTPFromName:           os.Getenv("SMTP_FROM_NAME"),
+		SMTPFromName:           envString("SMTP_FROM_NAME"),
 		DeepSeekKey:            os.Getenv("DEEPSEEK_API_KEY"),
 		DeepSeekBaseURL:        strings.TrimRight(deepseekBase, "/"),
 		DeepSeekModel:          deepseekModel,

@@ -72,7 +72,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if code, err := a.issueOTP(user, otpEmailVerify, emailNorm); err == nil {
-		_ = a.sendOTPMail(email, otpEmailVerify, code)
+		a.deliverOTPEmail(r, "register", email, otpEmailVerify, code, user.ID)
 	}
 	a.auditEvent(r, "register", "accepted", user.ID)
 	a.logAuthDebug(r, "register_created", slog.String("user_id", user.ID), slog.String("status", user.Status))
@@ -149,7 +149,7 @@ func (a *App) resendVerificationHandler(w http.ResponseWriter, r *http.Request) 
 	user, err := a.store.UserByEmail(r.Context(), emailNorm)
 	if err == nil && user.Status == statusPending {
 		if code, err := a.issueOTP(user, otpEmailVerify, emailNorm); err == nil {
-			_ = a.sendOTPMail(user.Email, otpEmailVerify, code)
+			a.deliverOTPEmail(r, "resend_verification", user.Email, otpEmailVerify, code, user.ID)
 		}
 	}
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
@@ -224,7 +224,7 @@ func (a *App) requestPasswordResetHandler(w http.ResponseWriter, r *http.Request
 	user, err := a.store.UserByEmail(r.Context(), emailNorm)
 	if err == nil && user.Status != statusDisabled {
 		if code, err := a.issueOTP(user, otpPasswordReset, emailNorm); err == nil {
-			_ = a.sendOTPMail(user.Email, otpPasswordReset, code)
+			a.deliverOTPEmail(r, "password_reset_request", user.Email, otpPasswordReset, code, user.ID)
 		}
 	}
 	a.auditEvent(r, "password_reset_request", "accepted", "")

@@ -570,6 +570,13 @@ func (a *App) sendOTPMail(to, purpose, code string) error {
 	return a.mailer.Send(to, subject, body)
 }
 
+func (a *App) deliverOTPEmail(r *http.Request, auditKind, to, purpose, code, userID string) {
+	if err := a.sendOTPMail(to, purpose, code); err != nil {
+		a.auditEvent(r, auditKind, "email_failed", userID)
+		a.logAuthDebug(r, auditKind+"_email_failed", slog.String("reason", redactLogValue(err.Error())))
+	}
+}
+
 func (a *App) consumeOTP(purpose, emailNorm, code string) (*OTPRecord, error) {
 	otp, err := a.store.LatestOTP(context.Background(), purpose, emailNorm)
 	if err != nil {
