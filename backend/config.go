@@ -148,6 +148,8 @@ func loadConfig() config {
 			"https://" + siteName,
 			"http://127.0.0.1:4321",
 			"http://localhost:4321",
+			"https://127.0.0.1:4321",
+			"https://localhost:4321",
 			"http://127.0.0.1:" + port,
 		},
 	}
