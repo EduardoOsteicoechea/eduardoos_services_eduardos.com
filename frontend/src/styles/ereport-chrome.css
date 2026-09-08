@@ -514,7 +514,7 @@ html[data-page^="ereport"] .ereport-hub__error {
   }
 
   html[data-page^="ereport"] main {
-    padding-left: calc(var(--header_width) + var(--space-padding));
+    padding-left: calc(var(--header_width) + var(--main-padding));
   }
 
   html[data-page^="ereport-workspace"] main {

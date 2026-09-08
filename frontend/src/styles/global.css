@@ -1,6 +1,7 @@
 :root {
   --space-margin: 1rem;
   --space-padding: 1rem;
+  --main-padding: 1.5rem;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
   --header-size: 3.25rem;
@@ -230,8 +231,8 @@ html[data-theme="dark"] .header-logo-img {
   align-items: center;
   justify-content: center;
   padding: 0;
-  color: var(--color-err);
-  background: var(--color-button-bg);
+  color: #ffffff;
+  background: #121212;
   border: var(--border-width) solid var(--color-border);
   border-radius: 50%;
   cursor: pointer;
@@ -248,8 +249,8 @@ html[data-theme="dark"] .header-logo-img {
 }
 
 .header-collapse-btn:hover {
-  color: var(--color-err);
-  background: var(--color-button-bg);
+  color: #ffffff;
+  background: #121212;
 }
 
 .header-collapse-btn:focus-visible {
@@ -340,6 +341,26 @@ html[data-header-collapsed="true"] .sidebar-right {
 
 .agent-fab {
   flex-shrink: 0;
+}
+
+.app-header .agent-fab {
+  flex-direction: column;
+  height: auto;
+  min-height: var(--rail-button-size);
+  padding: calc(var(--rail-button-size) * 0.125) calc(var(--rail-button-size) * 0.0625);
+  gap: 0;
+}
+
+.app-header .agent-fab .material-symbols-outlined {
+  font-size: calc(var(--rail-button-size) * 0.5);
+  line-height: 1;
+}
+
+.agent-fab-label {
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 #agent-sidebar {
@@ -596,7 +617,7 @@ html[data-agent-resizing="true"] {
 }
 
 main {
-  padding: var(--space-padding);
+  padding: var(--main-padding);
 }
 
 h1 {
@@ -800,7 +821,7 @@ h2 {
   }
 
   main {
-    padding-top: calc(var(--mobile-header-height) + var(--space-padding));
+    padding-top: calc(var(--mobile-header-height) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .app-header {
@@ -837,7 +858,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-top: calc(var(--collapsed-header-height) + var(--space-padding));
+    padding-top: calc(var(--collapsed-header-height) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .sidebar-left,
@@ -927,7 +948,7 @@ h2 {
   }
 
   main {
-    padding-left: calc(var(--rail-width) + var(--space-padding));
+    padding-left: calc(var(--rail-width) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .app-header {
@@ -965,7 +986,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-left: calc(var(--collapsed-rail-width) + var(--space-padding));
+    padding-left: calc(var(--collapsed-rail-width) + var(--main-padding));
   }
 
   html[data-header-collapsed="true"] .sidebar-left {
