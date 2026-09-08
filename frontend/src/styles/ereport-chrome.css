@@ -36,7 +36,7 @@ html[data-page^="ereport"] {
   --m2: 0.75rem;
   --page-inline-pad: var(--p3);
   --ui-scale: 1.3333;
-  --chrome-control-size: 2rem;
+  --chrome-control-size: 1.5rem;
   --header-dynamic-control-size: var(--chrome-control-size);
   --header_width: 3.25rem;
   --site-text-scale: 1;
@@ -103,7 +103,7 @@ html[data-page^="ereport"] .header-logo {
 }
 
 html[data-page^="ereport"] .header-logo:hover {
-  background: color-mix(in srgb, var(--site-accent) 12%, transparent);
+  background: transparent;
 }
 
 html[data-page^="ereport"] .header-logo-img {

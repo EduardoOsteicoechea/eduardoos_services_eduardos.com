@@ -10,8 +10,9 @@
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
   --header-button-radius: 0.25rem;
-  --rail-button-size: 2rem;
-  --button-size-sm: calc(var(--rail-button-size) * 0.5);
+  --rail-button-size: 1.5rem;
+  --collapse-button-size: 1rem;
+  --button-size-sm: calc(var(--collapse-button-size) * 0.5);
   --rail-gap: 0.5rem;
   --rail-group-gap: 1rem;
   --header-button-gap: var(--rail-gap);
@@ -144,10 +145,24 @@ a {
   border-radius: 50%;
 }
 
+.app-header .header-logo.icon-btn {
+  background: transparent;
+  border: 0;
+}
+
+.app-header .header-logo.icon-btn:hover,
+.app-header .header-logo.icon-btn:focus-visible {
+  background: transparent;
+}
+
 .header-logo-img {
-  width: calc(var(--rail-button-size) * 0.75);
-  height: calc(var(--rail-button-size) * 0.75);
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
   object-fit: contain;
+}
+
+html[data-theme="dark"] .header-logo-img {
+  filter: invert(1);
 }
 
 .header-session {
@@ -203,8 +218,8 @@ a {
 }
 
 .header-collapse-btn {
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
+  width: var(--collapse-button-size);
+  height: var(--collapse-button-size);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -237,7 +252,7 @@ a {
 }
 
 .header-collapse-btn .material-symbols-outlined {
-  font-size: calc(var(--rail-button-size) * 0.75);
+  font-size: calc(var(--collapse-button-size) * 0.75);
 }
 
 .sidebar-left[hidden],
@@ -798,8 +813,8 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse-btn {
-    width: var(--rail-button-size);
-    height: var(--rail-button-size);
+    width: var(--collapse-button-size);
+    height: var(--collapse-button-size);
   }
 
   html[data-header-collapsed="true"] main {
@@ -859,7 +874,7 @@ h2 {
     right: 0;
     bottom: auto;
     width: 100%;
-    height: calc(var(--rail-button-size) * 0.5);
+    height: calc(var(--collapse-button-size) * 0.5);
     transform: translateY(-50%);
   }
 
@@ -875,7 +890,7 @@ h2 {
 
   .header-collapse-btn {
     position: absolute;
-    right: calc(var(--rail-button-size) * -0.25);
+    right: calc(var(--collapse-button-size) * -0.25);
     top: 50%;
     transform: translateY(-50%);
   }
@@ -917,11 +932,11 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse-btn {
-    right: calc(var(--rail-button-size) * -0.25);
+    right: calc(var(--collapse-button-size) * -0.25);
     top: 50%;
     transform: translateY(-50%);
-    width: var(--rail-button-size);
-    height: var(--rail-button-size);
+    width: var(--collapse-button-size);
+    height: var(--collapse-button-size);
   }
 
   html[data-header-collapsed="true"] main {
