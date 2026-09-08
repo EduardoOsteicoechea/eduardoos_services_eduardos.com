@@ -2,11 +2,18 @@
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1.5rem;
-  --page-grid-columns: 1rem max-content 1rem minmax(0, auto) 1rem minmax(0, auto) 1rem;
+  --page-grid-columns: 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem;
   --page-col-a1: 2;
+  --page-col-a1-2: 4;
+  --page-col-a1-3: 6;
   --page-col-a1-max: 32rem;
-  --page-col-a2: 4;
-  --page-col-a3: 6;
+  --page-col-a2: 8;
+  --page-col-a2-2: 10;
+  --page-col-a2-3: 12;
+  --page-col-a3: 14;
+  --page-col-a3-2: 16;
+  --page-col-a3-3: 18;
+  --page-span-cols-end: 19;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
   --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
@@ -663,7 +670,7 @@ main > form {
 }
 
 .page-span-cols {
-  grid-column: var(--page-col-a1) / 7;
+  grid-column: var(--page-col-a1) / var(--page-span-cols-end);
 }
 
 .page-span-all {
