@@ -120,6 +120,25 @@ export function setBusy(form: HTMLFormElement, busy: boolean): void {
   });
 }
 
+export function emailFromQuery(): string {
+  try {
+    return new URLSearchParams(globalThis.location.search).get("email")?.trim() ?? "";
+  } catch {
+    return "";
+  }
+}
+
+export function prefillEmailFields(root: ParentNode, email: string): void {
+  if (!email) {
+    return;
+  }
+  root.querySelectorAll("input[name='email']").forEach((node) => {
+    if (node instanceof HTMLInputElement && node.type === "email" && !node.value) {
+      node.value = email;
+    }
+  });
+}
+
 export function loginBodyFromForm(form: HTMLFormElement): { identifier: string; password: string } {
   const identifier = form.elements.namedItem("identifier");
   const password = form.elements.namedItem("password");

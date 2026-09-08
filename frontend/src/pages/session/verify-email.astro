@@ -36,11 +36,12 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { postJSON, type MeResponse } from "../../lib/api";
-  import { afterAuthChange, reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { afterAuthChange, emailFromQuery, prefillEmailFields, reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
   import { go } from "../../lib/router";
 
   onSessionPageReady((root) => {
     const copy = sessionCopy();
+    prefillEmailFields(root, emailFromQuery());
     void requireGuest(root, copy);
     root.querySelector("[data-verify]")?.addEventListener("submit", async (event) => {
       event.preventDefault();

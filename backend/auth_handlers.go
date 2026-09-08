@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log/slog"
 	"net/http"
 	"strings"
 	"time"
@@ -11,10 +12,12 @@ import (
 )
 
 func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
+	a.logAuthDebug(r, "register_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
 	if !a.registerLimit.allow(clientIP(r.RemoteAddr)) {
+		a.logAuthDebug(r, "register_rate_limited")
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
@@ -34,6 +37,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if existing, err := a.store.UserByEmail(r.Context(), emailNorm); err == nil && existing != nil {
+		a.logAuthDebug(r, "register_existing_email", slog.String("user_id", existing.ID), slog.String("status", existing.Status))
 		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 		return
 	}
@@ -71,6 +75,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		_ = a.sendOTPMail(email, otpEmailVerify, code)
 	}
 	a.auditEvent(r, "register", "accepted", user.ID)
+	a.logAuthDebug(r, "register_created", slog.String("user_id", user.ID), slog.String("status", user.Status))
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
