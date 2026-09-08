@@ -17,6 +17,7 @@
   --collapsed-header-height: 0rem;
   --button-size-sm: calc(var(--collapse-button-size) * 0.5);
   --rail-gap: 0.5rem;
+  --flex-gap: var(--rail-gap);
   --rail-group-gap: 1rem;
   --header-button-gap: var(--rail-gap);
   --font-size-xs: 0.75rem;
@@ -198,7 +199,7 @@ a {
 .header-cluster {
   display: flex;
   align-items: center;
-  gap: var(--header-button-gap, 0);
+  gap: var(--rail-gap);
   flex-shrink: 0;
 }
 
@@ -295,6 +296,7 @@ html[data-header-collapsed="true"] .sidebar-right {
   padding: var(--space-padding);
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
   overflow: hidden;
 }
 
@@ -464,6 +466,7 @@ html[data-agent-resizing="true"] {
   z-index: 2;
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
   min-width: 8rem;
   padding: var(--rail-gap);
   background: var(--color-surface);
@@ -517,6 +520,7 @@ html[data-agent-resizing="true"] {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
   min-width: 0;
   background: var(--color-bg);
   border: var(--border-width) solid var(--color-border);
@@ -785,6 +789,13 @@ h2 {
   gap: var(--rail-gap);
   margin: 0;
   font-size: var(--font-size-xs);
+}
+
+.session-grid form,
+.diag form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
 }
 
 .phone-field {
@@ -1231,6 +1242,7 @@ html[data-page="ereport-invite"] .shell {
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
 }
 
 html[data-page="ereport-workspace"] main,
@@ -1238,6 +1250,7 @@ html[data-page="ereport-invite"] main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
   min-height: 0;
 }
 
@@ -1296,6 +1309,7 @@ html[data-page="ereport-workspace"] .ereport-workspace > .status.ok {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: var(--rail-gap);
   min-height: 0;
 }
 
