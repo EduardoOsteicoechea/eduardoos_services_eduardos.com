@@ -28,7 +28,10 @@ import Layout from "../layouts/Layout.astro";
   } catch {
     if (status) {
       status.classList.add("err");
-      status.textContent = "API unavailable. Start the local Go server to see /api/health.";
+      const origin = `${window.location.protocol}//${window.location.host}`;
+      status.textContent = window.location.protocol === "http:"
+        ? `API unavailable on ${origin}. Open https://127.0.0.1:${window.location.port || "4321"}/ instead (production proxy needs HTTPS).`
+        : "API unavailable. Stop any old dev server on this port, run npm run dev again, or use npm run dev:local with the Go API running.";
     }
   }
 </script>

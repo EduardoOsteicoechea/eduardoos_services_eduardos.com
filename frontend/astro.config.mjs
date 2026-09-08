@@ -1,29 +1,23 @@
 import { defineConfig } from "astro/config";
-import basicSsl from "@vitejs/plugin-basic-ssl";
+import { createDevProxyConfig } from "./dev-proxy.mjs";
 
-const DEV_PORT = 4321;
-const PRODUCTION_API = "https://eduardoos.com";
-
-const apiProxyTarget = (process.env.API_PROXY_TARGET || PRODUCTION_API).trim().replace(/\/$/, "");
-const useHttpsDev = apiProxyTarget.startsWith("https://");
+const devProxy = createDevProxyConfig({
+  port: 4321,
+  productionApi: "https://eduardoos.com",
+});
 
 export default defineConfig({
   output: "static",
   trailingSlash: "never",
   server: {
-    port: DEV_PORT,
+    port: devProxy.port,
     host: "127.0.0.1",
+    strictPort: true,
   },
   vite: {
-    plugins: useHttpsDev ? [basicSsl()] : [],
+    plugins: devProxy.vitePlugins,
     server: {
-      proxy: {
-        "/api": {
-          target: apiProxyTarget,
-          changeOrigin: true,
-          secure: apiProxyTarget.startsWith("https://"),
-        },
-      },
+      proxy: devProxy.proxy,
     },
   },
 });
