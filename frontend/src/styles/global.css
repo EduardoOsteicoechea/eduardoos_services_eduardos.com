@@ -11,7 +11,7 @@
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
   --header-button-radius: 0.25rem;
-  --rail-button-size: 2rem;
+  --rail-button-size: 1.75rem;
   --collapse-button-size: 1rem;
   --collapsed-rail-width: 0;
   --collapsed-header-height: 0;
@@ -344,14 +344,6 @@ html[data-header-collapsed="true"] .sidebar-right {
 }
 
 .app-header .agent-fab {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--rail-button-size);
-  height: auto;
-  min-height: calc(var(--rail-button-size) * 1.125);
-  padding: calc(var(--rail-button-size) * 0.125) calc(var(--rail-button-size) * 0.0625);
-  gap: calc(var(--rail-button-size) * 0.0625);
   color: #ffffff;
   background: #121212;
   border-color: var(--color-border);
@@ -361,11 +353,6 @@ html[data-header-collapsed="true"] .sidebar-right {
 .app-header .agent-fab:focus-visible {
   color: #ffffff;
   background: #121212;
-}
-
-.app-header .agent-fab .material-symbols-outlined {
-  font-size: calc(var(--rail-button-size) * 0.5625);
-  line-height: 1;
 }
 
 .agent-fab-label {
