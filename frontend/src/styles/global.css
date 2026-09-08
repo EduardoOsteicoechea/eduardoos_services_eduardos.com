@@ -980,10 +980,10 @@ h2 {
 
   .header-collapse {
     top: 50%;
-    left: 0;
-    right: 0;
+    left: calc(var(--rail-gap) * -1);
+    right: auto;
     bottom: auto;
-    width: 100%;
+    width: var(--rail-width);
     height: calc(var(--collapse-button-size) * 0.5);
     transform: translateY(-50%);
   }
@@ -1000,9 +1000,10 @@ h2 {
 
   .header-collapse-btn {
     position: absolute;
-    right: calc(var(--collapse-button-size) * -0.25);
+    left: 100%;
     top: 50%;
-    transform: translateY(-50%);
+    right: auto;
+    transform: translate(-50%, -50%);
   }
 
   .sidebar-left {
