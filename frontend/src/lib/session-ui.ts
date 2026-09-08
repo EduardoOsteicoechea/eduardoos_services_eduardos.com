@@ -1,4 +1,5 @@
 import { deleteAvatar, getCsrf, getMe, loginPayload, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
+import { sessionLog, sessionLogCookies, sessionLogStorage } from "./dev-log";
 
 declare global {
   interface Window {
@@ -362,8 +363,10 @@ export function onSessionPageReady(init: (root: HTMLElement) => void): void {
 
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
   setBanner(root, copy.loading);
+  sessionLog("session.requireGuest.start");
   try {
     const { status, data } = await getMe();
+    sessionLog("session.requireGuest.me", { status, userId: data.id, error: data.error });
     if (status === 200) {
       go("/session/profile");
       return false;
@@ -389,10 +392,12 @@ export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promis
 
 export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise<MeResponse | null> {
   setBanner(root, copy.loading);
+  sessionLog("session.requireAuth.start");
   const fallback = root.querySelector("[data-guest-fallback]");
   const panel = root.querySelector("[data-authed-panel]");
   try {
     const { status, data } = await getMe();
+    sessionLog("session.requireAuth.me", { status, userId: data.id, role: data.role, error: data.error });
     if (status === 401) {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
       if (panel instanceof HTMLElement) panel.hidden = true;
@@ -424,9 +429,12 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
 }
 
 export async function afterAuthChange(): Promise<void> {
+  sessionLog("session.afterAuthChange.start");
   resetCsrfMemory();
   await getCsrf();
   await refreshAuthChrome();
+  sessionLogCookies("afterAuthChange");
+  sessionLog("session.afterAuthChange.done");
 }
 
 function profileActionCopy(): { saved: string; avatarUpdated: string; avatarRemoved: string; chooseImage: string } {
@@ -459,7 +467,9 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
   }
   setBusy(form, true);
   try {
-    const result = await postJSON<MeResponse>("/profile", profilePatchBody(form));
+    const patch = profilePatchBody(form);
+    sessionLog("session.profile.save_start", patch);
+    const result = await postJSON<MeResponse>("/profile", patch);
     const message = reportFailure(copy, result.status, result.data, actions.saved);
     setBanner(root, message.text, message.kind);
     if (result.status !== 200) {
@@ -467,6 +477,11 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
     }
     fillProfile(root, result.data);
     const confirmed = await getMe();
+    sessionLog("session.profile.confirm_read", {
+      status: confirmed.status,
+      displayName: confirmed.data.display_name,
+      phone: confirmed.data.phone,
+    });
     if (confirmed.status === 200) {
       const savedName = result.data.display_name ?? "";
       const savedPhone = result.data.phone ?? "";
@@ -514,7 +529,10 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
   form.dataset.loginBusy = "true";
   setBusy(form, true);
   try {
+    sessionLog("session.login.start", { identifier: body.identifier });
     const result = await postJSON<MeResponse>("/auth/login", body);
+    sessionLog("session.login.result", { status: result.status, userId: result.data.id, error: result.data.error });
+    sessionLogCookies("after login");
     const signedIn = document.documentElement.lang.startsWith("es") ? "Sesión iniciada." : "Signed in.";
     const message = reportFailure(copy, result.status, result.data, signedIn);
     setBanner(root, message.text, message.kind);

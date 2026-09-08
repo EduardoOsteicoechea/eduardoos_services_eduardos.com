@@ -1,3 +1,5 @@
+import { sessionLog, sessionLogCookies } from "./dev-log";
+
 export type HealthResponse = {
   status: string;
   service?: string;
@@ -55,6 +57,7 @@ function apiUrl(path: string): string {
 
 function rememberCsrf(token?: string): void {
   if (token) {
+    sessionLog("csrf.remember", { tokenLength: token.length });
     csrfToken = token;
   }
 }
@@ -64,6 +67,7 @@ export function currentCsrf(): string {
 }
 
 export function resetCsrfMemory(): void {
+  sessionLog("csrf.reset");
   csrfToken = "";
 }
 
@@ -134,8 +138,16 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
     }
   }
   const timed = timeoutSignal(init.signal);
+  const url = apiUrl(path);
+  sessionLog("api.request", {
+    method,
+    url,
+    hasCsrfHeader: headers.has("X-CSRF-Token"),
+    csrfInMemory: Boolean(csrfToken),
+  });
+  sessionLogCookies(`before ${method} ${path}`);
   try {
-    const response = await fetch(apiUrl(path), {
+    const response = await fetch(url, {
       ...init,
       headers,
       credentials: "include",
@@ -149,8 +161,23 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
     if (response.ok && typeof data.csrf === "string" && data.csrf) {
       rememberCsrf(data.csrf);
     }
+    sessionLog("api.response", {
+      method,
+      path,
+      status: response.status,
+      requestId,
+      error: data.error,
+      hasUser: Boolean((data as MeResponse).id),
+    });
+    sessionLogCookies(`after ${method} ${path}`);
     return { status: response.status, data, requestId };
   } catch (err) {
+    sessionLog("api.network_error", {
+      method,
+      path,
+      error: err instanceof Error ? err.name : "unknown",
+      message: err instanceof Error ? err.message : String(err),
+    });
     if (err instanceof DOMException && err.name === "AbortError") {
       return {
         status: 0,
@@ -185,6 +212,7 @@ export function getInfo(): Promise<InfoResponse> {
 }
 
 export async function getCsrf(): Promise<string> {
+  sessionLog("csrf.fetch_start");
   const headers = new Headers();
   headers.set("Accept", "application/json");
   const response = await fetch(apiUrl("/auth/csrf"), {
@@ -193,6 +221,8 @@ export async function getCsrf(): Promise<string> {
     credentials: "include",
   });
   const data = await parseJSON<{ csrf?: string }>(response);
+  sessionLog("csrf.fetch_done", { status: response.status, tokenLength: data.csrf?.length ?? 0 });
+  sessionLogCookies("after /auth/csrf");
   if (response.status === 200) {
     rememberCsrf(data.csrf);
   }

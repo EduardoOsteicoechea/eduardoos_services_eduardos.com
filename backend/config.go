@@ -25,6 +25,7 @@ type config struct {
 	SecureCookies          bool
 	AppEnv                 string
 	EnableDiagnostics      bool
+	EnableAuthDebug        bool
 	AdminEmail             string
 	AdminPassword          string
 	BootstrapAdminEmail    string
@@ -122,6 +123,7 @@ func loadConfig() config {
 		SecureCookies:          envBool("COOKIE_SECURE", false),
 		AppEnv:                 appEnv,
 		EnableDiagnostics:      envBool("ENABLE_ADMIN_DIAGNOSTICS", false),
+		EnableAuthDebug:        envBool("ENABLE_AUTH_DEBUG", false),
 		AdminEmail:             strings.TrimSpace(os.Getenv("ADMIN_EMAIL")),
 		AdminPassword:          os.Getenv("ADMIN_PASSWORD"),
 		BootstrapAdminEmail:    strings.TrimSpace(os.Getenv("BOOTSTRAP_ADMIN_EMAIL")),

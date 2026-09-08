@@ -1,5 +1,6 @@
 import { getMe, postJSON, profileAvatarURL } from "./api";
 import { startAgentChat } from "./chat";
+import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
@@ -102,6 +103,7 @@ function togglePanel(id: string): void {
 function applyFont(size: string): void {
   document.documentElement.style.fontSize = size;
   localStorage.setItem("root-font-size", size);
+  sessionLog("chrome.font.persist", { size });
 }
 
 function cycleFont(delta: number): void {
@@ -230,8 +232,10 @@ export function applySessionAvatar(avatar?: string | null): void {
 }
 
 export async function refreshAuthChrome(): Promise<void> {
+  sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
+  sessionLog("chrome.refreshAuth.me", { status, authed, userId: data.id, role: data.role, error: data.error });
   document.querySelectorAll("[data-guest-only]").forEach((node) => {
     if (node instanceof HTMLElement) {
       node.hidden = authed;
@@ -297,16 +301,19 @@ function restoreChromeAfterNavigation(): void {
 
 export function startChrome(): void {
   startClientRouting();
+  sessionLogStorage("chrome.start");
 
   const storedTheme = localStorage.getItem("theme");
   if (storedTheme === "light" || storedTheme === "dark") {
     document.documentElement.dataset.theme = storedTheme;
   }
+  sessionLog("chrome.theme.restore", { storedTheme, applied: document.documentElement.dataset.theme });
 
   const storedFont = localStorage.getItem("root-font-size");
   if (storedFont) {
     document.documentElement.style.fontSize = storedFont;
   }
+  sessionLog("chrome.font.restore", { storedFont, applied: document.documentElement.style.fontSize });
 
   if (!window.__chromeStarted) {
     window.__chromeStarted = true;
@@ -316,7 +323,9 @@ export function startChrome(): void {
       if (node?.closest("[data-logout]")) {
         event.preventDefault();
         void (async () => {
+          sessionLog("chrome.logout.start");
           const result = await postJSON("/auth/logout", {});
+          sessionLog("chrome.logout.result", { status: result.status, error: result.data.error });
           if (result.status < 200 || result.status >= 300) {
             showErrorModal({
               message: result.data.message || (document.documentElement.lang.startsWith("es") ? "Algo salió mal." : "Something went wrong."),
@@ -374,6 +383,7 @@ export function startChrome(): void {
         const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
         document.documentElement.dataset.theme = next;
         localStorage.setItem("theme", next);
+        sessionLog("chrome.theme.persist", { theme: next });
         window.dispatchEvent(new CustomEvent("ereport-theme"));
         return;
       }

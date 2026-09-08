@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -102,9 +103,20 @@ func (a *App) patchProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if fresh.DisplayName != user.DisplayName || fresh.Phone != user.Phone || fresh.Username != user.Username {
 		a.logUnexpected(r, "profile_persist_mismatch", "store did not keep profile fields")
+		a.logAuthDebug(r, "profile_persist_mismatch",
+			slog.String("wanted_display", user.DisplayName),
+			slog.String("got_display", fresh.DisplayName),
+			slog.String("wanted_phone", user.Phone),
+			slog.String("got_phone", fresh.Phone),
+		)
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.logAuthDebug(r, "profile_persisted",
+		slog.String("user_id", fresh.ID),
+		slog.String("display_name", fresh.DisplayName),
+		slog.String("phone", fresh.Phone),
+	)
 	a.auditEvent(r, "profile_update", "success", fresh.ID)
 	writeJSON(w, http.StatusOK, a.safeProfile(fresh))
 }

@@ -11,6 +11,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strings"
@@ -90,6 +91,14 @@ func (a *App) setCookie(w http.ResponseWriter, name, value string, maxAge int) {
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
 	})
+	if a.cfg.EnableAuthDebug || a.cfg.AppEnv == "development" {
+		a.log.Info("auth_cookie_set",
+			slog.String("cookie_name", name),
+			slog.Bool("secure", a.cfg.SecureCookies),
+			slog.Int("max_age", maxAge),
+			slog.Bool("has_value", value != ""),
+		)
+	}
 }
 
 func (a *App) clearCookie(w http.ResponseWriter, name string) {
@@ -318,7 +327,14 @@ func (a *App) validCSRF(r *http.Request) bool {
 }
 
 func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
-	if !a.validOrigin(r) || !a.validCSRF(r) {
+	originOK := a.validOrigin(r)
+	csrfOK := a.validCSRF(r)
+	if !originOK || !csrfOK {
+		a.logAuthDebug(r, "require_unsafe_denied",
+			slog.Bool("origin_ok", originOK),
+			slog.Bool("csrf_ok", csrfOK),
+			slog.String("csrf_reason", a.csrfFailureReason(r)),
+		)
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return false
 	}
@@ -352,15 +368,19 @@ func (a *App) safeProfile(user *User) map[string]any {
 }
 
 func (a *App) csrfHandler(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, map[string]string{"csrf": a.mintCSRF(w, r)})
+	token := a.mintCSRF(w, r)
+	a.logAuthDebug(r, "csrf_minted", slog.Bool("has_token", token != ""))
+	writeJSON(w, http.StatusOK, map[string]string{"csrf": token})
 }
 
 func (a *App) meHandler(w http.ResponseWriter, r *http.Request) {
 	user := a.currentUser(r)
 	if user == nil {
+		a.logAuthDebug(r, "me_guest", slog.String("session_state", a.sessionDebugState(r)))
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	a.logAuthDebug(r, "me_authed", slog.String("user_id", user.ID), slog.String("role", user.Role))
 	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
@@ -384,6 +404,7 @@ func (a *App) dummyPasswordCheck(password string) {
 }
 
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
+	a.logAuthDebug(r, "login_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
@@ -445,6 +466,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.auditEvent(r, "login", "success", user.ID)
+	a.logAuthDebug(r, "login_success", slog.String("user_id", user.ID))
 	profile := a.safeProfile(user)
 	profile["csrf"] = sess.CSRF
 	writeJSON(w, http.StatusOK, profile)
@@ -467,6 +489,7 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
+	a.logAuthDebug(r, "refresh_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
