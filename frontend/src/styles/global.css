@@ -14,6 +14,8 @@
   --page-col-a3-2: 16;
   --page-col-a3-3: 18;
   --page-span-cols-end: 19;
+  --page-col-a1-group-end: 7;
+  --form-grid-columns: auto 1rem auto 1rem auto;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
   --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
@@ -648,17 +650,13 @@ main > * {
   min-width: 0;
 }
 
-.session-grid,
-section.diag,
+main > .session-grid,
+main > section.diag,
 main > form {
-  width: var(--page-col-a1-max);
+  grid-column: var(--page-col-a1) / var(--page-col-a1-group-end);
+  width: 100%;
   max-width: 100%;
   justify-self: start;
-}
-
-.session-grid form,
-.diag form {
-  width: 100%;
 }
 
 .page-col-2 {
@@ -792,12 +790,17 @@ h2 {
   margin: 0;
 }
 
-.session-grid .panel {
+.session-grid .panel:not(form) {
   margin-top: 0;
   padding: var(--rail-gap);
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
+}
+
+.session-grid form.panel {
+  margin-top: 0;
+  padding: var(--rail-gap);
 }
 
 .session-grid:has([data-authed-panel]:not([hidden])) > [data-guest-fallback] {
@@ -845,9 +848,32 @@ h2 {
 
 .session-grid form,
 .diag form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  display: grid;
+  grid-template-columns: var(--form-grid-columns);
+  column-gap: 0;
+  row-gap: var(--rail-gap);
+  width: 100%;
+  align-items: start;
+}
+
+.session-grid form > :not(button),
+.diag form > :not(button) {
+  grid-column: 1 / 4;
+  min-width: 0;
+}
+
+.session-grid form > button,
+.diag form > button {
+  grid-column: 5;
+  width: 100%;
+  align-self: stretch;
+  margin-top: 0;
+}
+
+.session-grid form:not(:has(> button ~ button)) > button,
+.diag form:not(:has(> button ~ button)) > button {
+  grid-row: 1 / -1;
+  align-self: start;
 }
 
 .phone-field {
