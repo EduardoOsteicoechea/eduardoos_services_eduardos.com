@@ -58,6 +58,7 @@
   --color-err: #ef5350;
   --color-button-bg: #f5f5f5;
   --color-button-fg: #121212;
+  --color-link: #5b9bd5;
   --bg: var(--color-bg);
   --panel: var(--color-surface);
   --text: var(--color-text);
@@ -82,6 +83,7 @@ html[data-theme="light"] {
   --color-err: #c62828;
   --color-button-bg: #121212;
   --color-button-fg: #f5f5f5;
+  --color-link: #1976d2;
 }
 
 @media (max-width: 47.999rem) {
@@ -656,9 +658,9 @@ main > .session-grid,
 main > section.diag,
 main > form {
   grid-column: var(--page-col-fr1) / var(--page-col-fr2-end);
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--rail-gap);
   min-width: 0;
 }
 
@@ -772,7 +774,24 @@ h2 {
 }
 
 .session-grid {
-  gap: var(--rail-gap);
+  row-gap: var(--rail-gap);
+}
+
+.session-grid > h1,
+.session-grid > .lede,
+.session-grid > .status,
+section.diag > h1,
+section.diag > .lede,
+section.diag > .status,
+section.diag > [data-banner] {
+  grid-column: var(--page-col-fr1);
+}
+
+.session-grid > form,
+.session-grid > .panel:not(form),
+section.diag > form,
+section.diag > .panel:not(form) {
+  grid-column: 1 / -1;
 }
 
 .session-grid h1 {
@@ -794,7 +813,7 @@ h2 {
 .session-grid .panel:not(form),
 section.diag .panel:not(form) {
   margin-top: 0;
-  padding: var(--rail-gap);
+  padding: var(--space-padding);
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
@@ -802,7 +821,7 @@ section.diag .panel:not(form) {
 
 .session-grid form.panel {
   margin-top: 0;
-  padding: var(--rail-gap);
+  padding: var(--space-padding);
 }
 
 .session-grid:has([data-authed-panel]:not([hidden])) > [data-guest-fallback] {
@@ -816,9 +835,15 @@ section.diag .panel:not(form) {
 
 .session-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-padding);
+  flex-direction: column;
+  gap: var(--rail-gap);
   margin-top: var(--space-margin);
+}
+
+.session-links a {
+  display: block;
+  width: 100%;
+  color: var(--color-link);
 }
 
 .session-avatar {
@@ -850,9 +875,36 @@ section.diag .panel:not(form) {
 
 .session-grid form,
 .diag form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--rail-gap);
+  align-items: start;
+}
+
+.session-grid form > :not(button),
+.diag form > :not(button) {
+  grid-column: var(--page-col-fr1);
+  min-width: 0;
+}
+
+.session-grid form > button,
+.diag form > button {
+  grid-column: var(--page-col-fr2);
+  width: 100%;
+  height: auto;
+  min-height: var(--control-height);
+  align-self: stretch;
+  margin-top: 0;
+}
+
+.session-grid form:not(:has(> button ~ button)) > button:last-child,
+.diag form:not(:has(> button ~ button)) > button:last-child {
+  grid-row: 1 / -1;
+}
+
+.session-grid form:not(:has(> button ~ button)) > button:not(:last-child),
+.diag form:not(:has(> button ~ button)) > button:not(:last-child) {
+  grid-row: 1 / -2;
 }
 
 .phone-field {
