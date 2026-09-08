@@ -2,22 +2,22 @@
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1.5rem;
-  --page-grid-columns: 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem auto 1rem;
-  --page-col-auto1: 2;
-  --page-col-auto2: 4;
-  --page-col-auto3: 6;
-  --page-col-auto4: 8;
-  --page-col-auto5: 10;
-  --page-col-auto6: 12;
-  --page-col-auto7: 14;
-  --page-col-auto8: 16;
-  --page-col-auto9: 18;
-  --page-col-auto2-end: 5;
-  --page-span-autos-end: 19;
-  --page-col-a1: var(--page-col-auto1);
-  --page-col-a2: var(--page-col-auto2);
-  --page-col-a3: var(--page-col-auto3);
-  --page-span-cols-end: var(--page-span-autos-end);
+  --page-grid-columns: 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem 1fr 1rem;
+  --page-col-fr1: 2;
+  --page-col-fr2: 4;
+  --page-col-fr3: 6;
+  --page-col-fr4: 8;
+  --page-col-fr5: 10;
+  --page-col-fr6: 12;
+  --page-col-fr7: 14;
+  --page-col-fr8: 16;
+  --page-col-fr9: 18;
+  --page-col-fr2-end: 5;
+  --page-span-frs-end: 19;
+  --page-col-a1: var(--page-col-fr1);
+  --page-col-a2: var(--page-col-fr2);
+  --page-col-a3: var(--page-col-fr3);
+  --page-span-cols-end: var(--page-span-frs-end);
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
   --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
@@ -655,7 +655,7 @@ main > * {
 main > .session-grid,
 main > section.diag,
 main > form {
-  grid-column: var(--page-col-auto1) / var(--page-col-auto2-end);
+  grid-column: var(--page-col-fr1) / var(--page-col-fr2-end);
   display: grid;
   grid-template-columns: subgrid;
   width: 100%;
@@ -784,7 +784,7 @@ section.diag > h1,
 section.diag > .lede,
 section.diag > .status,
 section.diag > [data-banner] {
-  grid-column: var(--page-col-auto1);
+  grid-column: var(--page-col-fr1);
 }
 
 .session-grid > form,
@@ -821,7 +821,7 @@ section.diag .panel:not(form) {
 
 .session-grid .panel:not(form) > :not(form),
 section.diag .panel:not(form) > :not(form) {
-  grid-column: var(--page-col-auto1);
+  grid-column: var(--page-col-fr1);
 }
 
 .session-grid .panel:not(form) > form,
@@ -887,13 +887,13 @@ section.diag .panel:not(form) > form {
 
 .session-grid form > :not(button),
 .diag form > :not(button) {
-  grid-column: var(--page-col-auto1);
+  grid-column: var(--page-col-fr1);
   min-width: 0;
 }
 
 .session-grid form > button,
 .diag form > button {
-  grid-column: var(--page-col-a2);
+  grid-column: var(--page-col-fr2);
   width: 100%;
   align-self: stretch;
   margin-top: 0;
