@@ -94,25 +94,6 @@ html[data-page^="ereport"] .header-collapse {
   display: none;
 }
 
-html[data-page^="ereport"] .header-logo {
-  background: transparent;
-  border: var(--border_001);
-  width: var(--chrome-control-size);
-  height: var(--chrome-control-size);
-  border-radius: var(--br);
-}
-
-html[data-page^="ereport"] .header-logo:hover {
-  background: transparent;
-}
-
-html[data-page^="ereport"] .header-logo-img {
-  width: 78%;
-  height: 78%;
-  object-fit: contain;
-}
-
-html[data-page^="ereport"] .header-logo .material-symbols-outlined,
 html[data-page^="ereport"] .header-menu-symbol {
   display: none;
 }
@@ -452,6 +433,7 @@ html[data-page^="ereport"] .ereport-hub__error {
   html[data-page^="ereport"] .app-header {
     gap: 0;
     padding: 0 0.5rem;
+    background: transparent;
   }
 
   html[data-page^="ereport"] #dynamic-header {
@@ -477,7 +459,7 @@ html[data-page^="ereport"] .ereport-hub__error {
   }
 
   html[data-page^="ereport"] .header-cluster--top {
-    gap: 0;
+    gap: var(--rail-gap);
   }
 
   html[data-page^="ereport"] .header-menu {

@@ -62,9 +62,6 @@ const isEreport = htmlPage.startsWith("ereport");
     <div class="shell">
       <header class="app-header">
         <div class="header-cluster header-cluster--top" data-header-chrome>
-          <a class="header-logo icon-btn" href="/" data-route aria-label={isEreport ? "Eduardo OS home" : "Home"} title={isEreport ? undefined : "Home"}>
-            <img class="header-logo-img" src="/favicon-32.png" alt="" />
-          </a>
           <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
             {isEreport ? (
@@ -72,6 +69,18 @@ const isEreport = htmlPage.startsWith("ereport");
                 <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
               </svg>
             ) : null}
+          </button>
+          <button class="header-menu header-menu--mobile icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
+            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
+            {isEreport ? (
+              <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            ) : null}
+          </button>
+          <button class="header-session icon-btn" type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Account menu" title="Account" transition:persist="header-session">
+            <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
+            <img class="header-session-photo" data-session-avatar hidden alt="" />
           </button>
         </div>
         {isEreport ? (
@@ -90,20 +99,8 @@ const isEreport = htmlPage.startsWith("ereport");
           <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
             <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
           </button>
-          <button class="header-session icon-btn" type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Account menu" title="Account" transition:persist="header-session">
-            <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
-            <img class="header-session-photo" data-session-avatar hidden alt="" />
-          </button>
           <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
             <span class="agent-fab-label" aria-hidden="true">AI</span>
-          </button>
-          <button class="header-menu header-menu--mobile icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
-            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
-            {isEreport ? (
-              <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            ) : null}
           </button>
         </div>
       </header>
