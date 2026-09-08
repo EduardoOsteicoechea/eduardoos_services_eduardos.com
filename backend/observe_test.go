@@ -187,7 +187,7 @@ func TestLogsRedactSecrets(t *testing.T) {
 	app := newTestApp(true)
 	var buf bytes.Buffer
 	app.log = slog.New(slog.NewJSONHandler(&buf, nil))
-	app.logUnexpected(httptest.NewRequest(http.MethodGet, "/api/auth/login", nil), "test", "MONGO_URI=mongodb+srv://u:p@h/db SMTP_PASSWORD=abc JWT_SECRET=test-jwt-secret-not-for-production")
+	app.logUnexpected(httptest.NewRequest(http.MethodGet, "/api/auth/login", nil), "test", "MONGODB_URI=mongodb+srv://u:p@h/db SMTP_PASSWORD=abc JWT_SECRET=test-jwt-secret-not-for-production")
 	out := buf.String()
 	if strings.Contains(strings.ToLower(out), "mongodb+srv://u:p") || strings.Contains(out, "SMTP_PASSWORD=abc") {
 		t.Fatalf("log leaked secrets: %s", out)

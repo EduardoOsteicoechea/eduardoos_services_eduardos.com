@@ -16,7 +16,7 @@ const requestIDContextKey contextKeyObserve = "request_id"
 
 var redactPatterns = []*regexp.Regexp{
 	regexp.MustCompile(`(?i)mongodb(\+srv)?:\/\/\S+`),
-	regexp.MustCompile(`(?i)(smtp_password|smtp_pass|password|passwd|otp|refresh_token|access_token|authorization|bearer|api[_-]?key|jwt_secret|mongo_uri)\s*[:=]\s*\S+`),
+	regexp.MustCompile(`(?i)(smtp_password|smtp_pass|password|passwd|otp|refresh_token|access_token|authorization|bearer|api[_-]?key|jwt_secret|mongo_uri|mongodb_uri)\s*[:=]\s*\S+`),
 	regexp.MustCompile(`(?i)(sk-[A-Za-z0-9]{8,}|eyJ[A-Za-z0-9._-]{4,})`),
 }
 

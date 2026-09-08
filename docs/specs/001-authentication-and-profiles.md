@@ -80,7 +80,7 @@ These replace the previous open-decision list for this milestone.
 
 Today this API is an **in-process** diagnostics login, not the MongoDB auth system in this spec.
 
-- Users and sessions live in memory (`backend/store.go`). `MONGO_URI` is loaded and unused. There is no MongoDB driver.
+- Users and sessions live in memory (`backend/store.go`). `MONGODB_URI` is loaded and unused. There is no MongoDB driver.
 - Existing routes: `GET /api/auth/me`, `POST /api/auth/login`, `POST /api/auth/logout`. No register, verify, refresh, CSRF-only GET, password reset, profile, or avatar routes.
 - Login is email + password only. Passwords are Argon2id. Failures return generic `invalid_credentials`.
 - Access JWT is HS256, 15 minutes, cookie `access` (dev) or `__Host-access` (when `COOKIE_SECURE=true`). Session id is stored in JWT `jti`, not a `sid` claim. There is **no** refresh token or `__Host-refresh` cookie.
@@ -577,7 +577,7 @@ Keep current names and add bootstrap + media when implementing (do not edit `.en
 
 ```
 PORT
-MONGO_URI
+MONGODB_URI
 JWT_SECRET
 JWT_ISSUER
 JWT_AUDIENCE
@@ -610,7 +610,7 @@ MEDIA_ROOT
 | Variable | This site |
 | --- | --- |
 | `PORT` | `8081` |
-| `MONGO_URI` | This site’s URI; database `eduardoos` only |
+| `MONGODB_URI` | This site’s URI; database `eduardoos` only |
 | `JWT_SECRET` | Unique to this site; required in production (no random fallback) |
 | `JWT_ISSUER` | `https://eduardoos.com` |
 | `JWT_AUDIENCE` | `https://eduardoos.com` |

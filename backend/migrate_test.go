@@ -334,38 +334,38 @@ func TestOpenStoreWithoutURIUsesMemory(t *testing.T) {
 		t.Fatal(err)
 	}
 	if _, ok := store.(*memoryStore); !ok {
-		t.Fatal("empty MONGO_URI must use memory store")
+		t.Fatal("empty MONGODB_URI must use memory store")
 	}
 }
 
 func TestOpenStoreRequiresURIInProduction(t *testing.T) {
 	_, err := openStore(context.Background(), config{MongoDatabase: mongoDatabase, AppEnv: "production"})
 	if err == nil {
-		t.Fatal("production startup must require MONGO_URI")
+		t.Fatal("production startup must require MONGODB_URI")
 	}
 	_, err = openStore(context.Background(), config{MongoDatabase: mongoDatabase, SecureCookies: true})
 	if err == nil {
-		t.Fatal("secure-cookie startup must require MONGO_URI")
+		t.Fatal("secure-cookie startup must require MONGODB_URI")
 	}
 }
 
 func TestOpenStoreNeverReadsProductionURIDuringTests(t *testing.T) {
-	if strings.TrimSpace(os.Getenv("TEST_MONGO_URI")) == "" && strings.TrimSpace(os.Getenv("MONGO_URI")) != "" {
-		t.Log("MONGO_URI is set in the environment; tests must not pass it to openStore")
+	if strings.TrimSpace(os.Getenv("TEST_MONGODB_URI")) == "" && strings.TrimSpace(os.Getenv("MONGODB_URI")) != "" {
+		t.Log("MONGODB_URI is set in the environment; tests must not pass it to openStore")
 	}
 	store, err := openStore(context.Background(), config{MongoURI: "", MongoDatabase: mongoDatabase, AppEnv: "test"})
 	if err != nil {
 		t.Fatal(err)
 	}
 	if _, ok := store.(*memoryStore); !ok {
-		t.Fatal("tests must not open Atlas using MONGO_URI")
+		t.Fatal("tests must not open Atlas using MONGODB_URI")
 	}
 }
 
 func TestMongoIntegrationProvisioningIsolatedDatabase(t *testing.T) {
-	uri := strings.TrimSpace(os.Getenv("TEST_MONGO_URI"))
+	uri := strings.TrimSpace(os.Getenv("TEST_MONGODB_URI"))
 	if uri == "" {
-		t.Skip("TEST_MONGO_URI not set; fake applier covers migration behavior")
+		t.Skip("TEST_MONGODB_URI not set; fake applier covers migration behavior")
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()

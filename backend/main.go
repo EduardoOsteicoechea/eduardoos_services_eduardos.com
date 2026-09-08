@@ -89,9 +89,9 @@ func parseAPICommand(args []string) (command, confirmBackup string) {
 func openStore(ctx context.Context, cfg config) (DataStore, error) {
 	if strings.TrimSpace(cfg.MongoURI) == "" {
 		if cfg.SecureCookies || cfg.AppEnv == "production" {
-			return nil, errors.New("MONGO_URI is required when COOKIE_SECURE=true or APP_ENV=production")
+			return nil, errors.New("MONGODB_URI is required when COOKIE_SECURE=true or APP_ENV=production")
 		}
-		log.Println("WARNING: MONGO_URI unset; using in-memory store (data will not persist)")
+		log.Println("WARNING: MONGODB_URI unset; using in-memory store (data will not persist)")
 		return newMemoryStore(), nil
 	}
 	return newMongoStore(ctx, cfg)

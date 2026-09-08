@@ -42,7 +42,7 @@ Bootstrap an admin **only** when the database has no `admin` user and `BOOTSTRAP
 
 ## Database setup
 
-Database setup is automatic on API startup. The Go API connects with `MONGO_URI` and the locked database name `eduardoos`. It creates required collections and indexes and applies safe, ordered schema migrations. No manual MongoDB Compass collection or index creation is required.
+Database setup is automatic on API startup. The Go API connects with `MONGODB_URI` and the locked database name `eduardoos`. It creates required collections and indexes and applies safe, ordered schema migrations. No manual MongoDB Compass collection or index creation is required.
 
 Atlas only needs a database user with `readWrite` on `eduardoos` and the VPS public IP allowlisted. GitHub Actions does not create collections, indexes, or users.
 
@@ -83,8 +83,8 @@ Backup before any future destructive migration:
 set -a
 . /etc/eduardoos-api.env
 set +a
-mongodump --uri="$MONGO_URI" --db=eduardoos --out="$HOME/backups/eduardoos-$(date -u +%Y%m%dT%H%M%SZ)"
-unset MONGO_URI SMTP_PASSWORD JWT_SECRET
+mongodump --uri="$MONGODB_URI" --db=eduardoos --out="$HOME/backups/eduardoos-$(date -u +%Y%m%dT%H%M%SZ)"
+unset MONGODB_URI SMTP_PASSWORD JWT_SECRET
 ```
 
 Do not `echo` or `cat` the env file. Tests use an in-memory store or `eduardoos_gotest` and never migrate the production database.
@@ -169,7 +169,7 @@ curl --fail http://127.0.0.1:8081/health
 
 Expected JSON includes `"status":"ok"` and HTTP 200.
 
-`MONGO_URI` and every other secret must come from the environment (local `.env` loaded by your process manager or exported in the shell). Do not put secrets in frontend code. Do not commit `.env`.
+`MONGODB_URI` and every other secret must come from the environment (local `.env` loaded by your process manager or exported in the shell). Do not put secrets in frontend code. Do not commit `.env`.
 
 ### Client routing
 
@@ -222,7 +222,7 @@ Backend release directories already exist and are owned by `deploy`. CI only cre
 sudo install -m 600 /dev/null /etc/eduardoos-api.env
 sudo tee /etc/eduardoos-api.env >/dev/null <<'EOF'
 PORT=8081
-MONGO_URI=mongodb+srv://USER:PASSWORD@cluster.mongodb.net/eduardoos?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://USER:PASSWORD@cluster.mongodb.net/eduardoos?retryWrites=true&w=majority
 EOF
 ```
 
