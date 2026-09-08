@@ -4,16 +4,21 @@ import "../styles/global.css";
 import "../styles/ereport-chrome.css";
 
 type Props = {
-  title: string;
+  title?: string;
   description?: string;
   page?: string;
 };
 
+const siteTitle = "Eduardo Osteicoechea - AEC AI Technologist";
 const {
   title,
   description = "Eduardo Osteicoechea — AEC Technologist. Licensed Building Architect, BIM practitioner, and full-stack developer.",
   page = "",
 } = Astro.props;
+const documentTitle = (() => {
+  const pageTitle = title?.replace(/\s·\sEduardoos$/, "");
+  return pageTitle ? `${pageTitle} · ${siteTitle}` : siteTitle;
+})();
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const hasDhsSlot = Astro.slots.has("dhs");
 const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
@@ -47,7 +52,7 @@ const isEreport = htmlPage.startsWith("ereport");
     {isEreport ? (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:YOPQ,wght@300,400..700&display=swap" />
     ) : null}
-    <title>{title}</title>
+    <title>{documentTitle}</title>
     <ClientRouter />
   </head>
   <body>
