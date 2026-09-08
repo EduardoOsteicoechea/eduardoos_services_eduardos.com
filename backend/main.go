@@ -24,6 +24,7 @@ func main() {
 
 	store, err := openStore(setupCtx, cfg)
 	if err != nil {
+		logger.Error("database_unavailable", slog.String("reason", redactLogValue(err.Error())))
 		log.Fatal("database unavailable")
 	}
 	defer func() { _ = store.Close(context.Background()) }()
