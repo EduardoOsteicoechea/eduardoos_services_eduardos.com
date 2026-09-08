@@ -345,22 +345,35 @@ html[data-header-collapsed="true"] .sidebar-right {
 
 .app-header .agent-fab {
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--rail-button-size);
   height: auto;
-  min-height: var(--rail-button-size);
+  min-height: calc(var(--rail-button-size) * 1.125);
   padding: calc(var(--rail-button-size) * 0.125) calc(var(--rail-button-size) * 0.0625);
-  gap: 0;
+  gap: calc(var(--rail-button-size) * 0.0625);
+  color: #ffffff;
+  background: #121212;
+  border-color: var(--color-border);
+}
+
+.app-header .agent-fab:hover,
+.app-header .agent-fab:focus-visible {
+  color: #ffffff;
+  background: #121212;
 }
 
 .app-header .agent-fab .material-symbols-outlined {
-  font-size: calc(var(--rail-button-size) * 0.5);
+  font-size: calc(var(--rail-button-size) * 0.5625);
   line-height: 1;
 }
 
 .agent-fab-label {
+  font-family: system-ui, sans-serif;
   font-size: var(--font-size-xs);
   line-height: 1;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
 }
 
 #agent-sidebar {
@@ -858,7 +871,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-top: calc(var(--collapsed-header-height) + var(--main-padding));
+    padding-top: var(--collapsed-header-height);
   }
 
   html[data-header-collapsed="true"] .sidebar-left,
@@ -986,7 +999,7 @@ h2 {
   }
 
   html[data-header-collapsed="true"] main {
-    padding-left: calc(var(--collapsed-rail-width) + var(--main-padding));
+    padding-left: var(--collapsed-rail-width);
   }
 
   html[data-header-collapsed="true"] .sidebar-left {
