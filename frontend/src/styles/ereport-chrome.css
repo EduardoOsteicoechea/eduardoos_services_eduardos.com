@@ -440,12 +440,8 @@ html[data-page^="ereport"] .ereport-hub__error {
 
 @media (max-width: 47.999rem) {
   html[data-page^="ereport"] .app-header {
-    gap: 0.5rem;
+    gap: 0;
     padding: 0 0.5rem;
-  }
-
-  html[data-page^="ereport"] .header-dhs {
-    margin-left: 0.25rem;
   }
 
   html[data-page^="ereport"] #dynamic-header {
@@ -466,16 +462,12 @@ html[data-page^="ereport"] .ereport-hub__error {
     width: var(--header_width);
     background: transparent;
     backdrop-filter: none;
-    gap: 0.65rem;
+    gap: 0;
     padding: 0.65rem 0;
   }
 
-  html[data-page^="ereport"] .header-nav {
-    gap: 0.65rem;
-  }
-
-  html[data-page^="ereport"] .header-session {
-    margin-top: 0.65rem;
+  html[data-page^="ereport"] .header-cluster--top {
+    gap: 0;
   }
 
   html[data-page^="ereport"] .header-menu {
@@ -494,7 +486,7 @@ html[data-page^="ereport"] .ereport-hub__error {
     align-items: center;
     position: fixed;
     z-index: 21;
-    top: calc(var(--chrome-control-size) * 3 + 2.6rem);
+    top: calc(var(--chrome-control-size) * 2 + 1.3rem);
     left: 0;
     right: auto;
     bottom: auto;

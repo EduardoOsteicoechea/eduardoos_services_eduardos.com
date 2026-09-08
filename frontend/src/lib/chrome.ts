@@ -37,9 +37,11 @@ function syncExpanded(): void {
     [".agent-fab", "agent-sidebar"],
   ];
   for (const [selector, id] of pairs) {
-    const button = document.querySelector(selector);
-    if (button instanceof HTMLElement) {
-      const open = panelOpen(id);
+    const open = panelOpen(id);
+    document.querySelectorAll(selector).forEach((button) => {
+      if (!(button instanceof HTMLElement)) {
+        return;
+      }
       button.setAttribute("aria-expanded", open ? "true" : "false");
       if (selector === ".header-dynamic" && isEreportPage()) {
         button.setAttribute("aria-label", open ? "Close tools" : "Open tools");
@@ -57,7 +59,7 @@ function syncExpanded(): void {
           path.setAttribute("d", open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16");
         }
       }
-    }
+    });
   }
 }
 
