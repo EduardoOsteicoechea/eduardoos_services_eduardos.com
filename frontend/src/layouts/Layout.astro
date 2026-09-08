@@ -55,11 +55,7 @@ const isEreport = htmlPage.startsWith("ereport");
       <header class="app-header">
         <div class="header-cluster header-cluster--top" data-header-chrome>
           <a class="header-logo icon-btn" href="/" data-route aria-label={isEreport ? "Eduardo OS home" : "Home"} title={isEreport ? undefined : "Home"}>
-            {isEreport ? (
-              <img class="header-logo-img" src="/favicon-48.png" alt="" />
-            ) : (
-              <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
-            )}
+            <img class="header-logo-img" src="/favicon.svg" alt="" />
           </a>
           <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>

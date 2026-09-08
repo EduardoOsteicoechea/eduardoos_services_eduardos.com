@@ -3,14 +3,14 @@
   --space-padding: 1rem;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
-  --header-size: 3.4375rem;
+  --header-size: 3.25rem;
   --rail-width: var(--header-size);
   --mobile-header-height: var(--header-size);
   --sidebar-width: 20rem;
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
   --header-button-radius: 0.25rem;
-  --rail-button-size: calc(var(--rail-width) - (var(--header-button-gap) * 2));
+  --rail-button-size: 2rem;
   --button-size-sm: calc(var(--rail-button-size) * 0.5);
   --rail-gap: 0.5rem;
   --rail-group-gap: 1rem;
@@ -117,8 +117,8 @@ a {
   z-index: 20;
   display: flex;
   overflow: visible;
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
+  background: transparent;
+  border: 0;
 }
 
 .icon-btn {
@@ -142,6 +142,12 @@ a {
 
 .app-header .header-session.icon-btn {
   border-radius: 50%;
+}
+
+.header-logo-img {
+  width: calc(var(--rail-button-size) * 0.75);
+  height: calc(var(--rail-button-size) * 0.75);
+  object-fit: contain;
 }
 
 .header-session {
