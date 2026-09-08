@@ -7,12 +7,6 @@ import Layout from "../../layouts/Layout.astro";
     <h1>Profile</h1>
     <p class="lede">Profile changes apply only to your account. The Go API remains the authority.</p>
     <p class="status" data-banner>Loading session…</p>
-    <p class="panel" data-guest-fallback hidden>
-      Sign in to view your profile.
-      <span class="hint session-links">
-        <a href="/session" data-route>Sign in</a>
-      </span>
-    </p>
     <div class="panel" data-authed-panel hidden>
       <p class="hint" data-profile-summary></p>
       <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
@@ -66,14 +60,18 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { fillProfile, onSessionPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
+  import { go } from "../../lib/router";
 
   onSessionPageReady((root) => {
     const copy = sessionCopy();
     void (async () => {
       const me = await requireAuth(root, copy);
-      if (me) {
-        try {
-          fillProfile(root, me);
+      if (!me) {
+        go("/session");
+        return;
+      }
+      try {
+        fillProfile(root, me);
           setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
         } catch {
           setBanner(root, copy.loadError, "err");
@@ -125,7 +123,6 @@ import Layout from "../../layouts/Layout.astro";
         } catch {
           /* API keys are optional; session must still load. */
         }
-      }
     })();
   });
 </script>

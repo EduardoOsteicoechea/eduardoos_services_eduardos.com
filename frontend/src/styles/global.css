@@ -26,6 +26,10 @@
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
   --font-size-3xl: 2.5rem;
+  --control-height: 1.5rem;
+  --control-padding-inline: 0.375rem;
+  --control-padding-block: 0.125rem;
+  --textarea-min-height: 3rem;
   --font-family: "Kumbh Sans", system-ui, sans-serif;
   --color-bg: #121212;
   --color-surface: #1a1a1a;
@@ -92,6 +96,10 @@ html[data-theme="light"] {
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html,
@@ -534,15 +542,16 @@ html[data-agent-resizing="true"] {
 
 .agent-chat-form textarea {
   font: inherit;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.2;
   color: var(--color-text);
   background: transparent;
   border: 0;
   border-radius: 0;
-  padding: var(--rail-gap) var(--space-padding);
+  padding: var(--control-padding-block) var(--control-padding-inline);
   resize: none;
-  min-height: calc(var(--font-size-md) * 1.75);
-  max-height: calc(var(--font-size-md) * 8);
+  min-height: var(--textarea-min-height);
+  max-height: calc(var(--textarea-min-height) * 3);
   overflow-y: auto;
 }
 
@@ -696,6 +705,10 @@ h2 {
   gap: var(--rail-gap);
 }
 
+.session-grid:has([data-authed-panel]:not([hidden])) > [data-guest-fallback] {
+  display: none !important;
+}
+
 .session-grid .panel h2 {
   font-size: var(--font-size-md);
   margin: 0;
@@ -758,36 +771,50 @@ h2 {
   min-width: 0;
 }
 
-.diag input,
+.diag input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 .diag select,
 .diag textarea,
-.diag button {
+.diag button,
+.session-grid input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.session-grid select,
+.session-grid textarea,
+.session-grid button,
+.error-modal-actions button {
   display: block;
+  box-sizing: border-box;
   align-self: stretch;
   margin-top: 0;
-  padding: var(--rail-gap) var(--space-padding);
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
   font: inherit;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.2;
   color: var(--color-text);
   background: var(--color-bg);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
 
-.session-grid input,
+.diag input:not([type="file"]),
+.diag select,
+.session-grid input:not([type="file"]),
 .session-grid select,
-.session-grid textarea,
-.session-grid button {
-  display: block;
-  align-self: stretch;
-  margin-top: 0;
-  padding: var(--rail-gap) var(--space-padding);
-  font: inherit;
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-  background: var(--color-bg);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
+.diag button,
+.session-grid button,
+.error-modal-actions button {
+  height: var(--control-height);
+}
+
+.diag textarea,
+.session-grid textarea {
+  min-height: var(--textarea-min-height);
+  height: auto;
+  resize: vertical;
+}
+
+.diag input[type="file"],
+.session-grid input[type="file"] {
+  height: auto;
 }
 
 .diag button {
@@ -1120,9 +1147,12 @@ h2 {
 
 .error-modal-actions button,
 .error-modal [data-error-copy-debug] {
-  padding: var(--space-padding);
+  min-height: var(--control-height);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
   font: inherit;
   font-size: var(--font-size-sm);
+  line-height: 1.2;
   color: var(--color-button-fg);
   background: var(--color-button-bg);
   border: var(--border-width) solid var(--color-border);
