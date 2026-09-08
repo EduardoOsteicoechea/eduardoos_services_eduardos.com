@@ -10,7 +10,7 @@
   --icon-size: 1.5rem;
   --button-size: 2.5rem;
   --header-button-radius: 0.25rem;
-  --rail-button-size: 1.25rem;
+  --rail-button-size: 2rem;
   --collapse-button-size: 1rem;
   --button-size-sm: calc(var(--collapse-button-size) * 0.5);
   --rail-gap: 0.5rem;
@@ -807,9 +807,10 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse {
-    left: 50%;
+    left: auto;
+    right: 0;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
   }
 
   html[data-header-collapsed="true"] .header-collapse-line {
@@ -817,8 +818,13 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse-btn {
+    right: calc(var(--collapse-button-size) * -0.5);
+    top: 50%;
+    left: auto;
+    transform: translateY(-50%);
     width: var(--collapse-button-size);
     height: var(--collapse-button-size);
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
   }
 
   html[data-header-collapsed="true"] main {
@@ -936,11 +942,12 @@ h2 {
   }
 
   html[data-header-collapsed="true"] .header-collapse-btn {
-    right: calc(var(--collapse-button-size) * -0.25);
+    right: calc(var(--collapse-button-size) * -0.5);
     top: 50%;
     transform: translateY(-50%);
     width: var(--collapse-button-size);
     height: var(--collapse-button-size);
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
   }
 
   html[data-header-collapsed="true"] main {
