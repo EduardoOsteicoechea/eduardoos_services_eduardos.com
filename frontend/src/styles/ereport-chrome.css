@@ -38,7 +38,7 @@ html[data-page^="ereport"] {
   --ui-scale: 1.3333;
   --chrome-control-size: 1.75rem;
   --header-dynamic-control-size: var(--chrome-control-size);
-  --header_width: 3.25rem;
+  --header_width: calc(var(--chrome-control-size) + (var(--rail-gap) * 2));
   --site-text-scale: 1;
   --font-brand: "Kumbh Sans", system-ui, sans-serif;
   --font-sans: var(--font-brand);
@@ -62,7 +62,7 @@ html[data-page^="ereport"] {
   --border-radius: var(--br);
   --font-family: var(--font-brand);
   --rail-width: var(--header_width);
-  --mobile-header-height: var(--chrome-control-size);
+  --mobile-header-height: calc(var(--chrome-control-size) + (var(--rail-gap) * 2));
   font-family: var(--font-brand);
   font-size: calc(16px * var(--site-text-scale));
 }

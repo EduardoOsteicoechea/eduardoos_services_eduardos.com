@@ -4,7 +4,7 @@
   --main-padding: 1.5rem;
   --border-width: 0.0625rem;
   --border-radius: 0.125rem;
-  --header-size: 3.25rem;
+  --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
   --rail-width: var(--header-size);
   --mobile-header-height: var(--header-size);
   --sidebar-width: 20rem;
@@ -763,7 +763,7 @@ h2 {
     flex-direction: row;
     align-items: center;
     gap: 0;
-    padding: 0 var(--space-padding);
+    padding: var(--rail-gap);
   }
 
   .header-cluster--top {
@@ -863,7 +863,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     gap: 0;
-    padding: var(--rail-gap) 0;
+    padding: var(--rail-gap);
   }
 
   .header-cluster--top {
