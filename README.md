@@ -98,10 +98,14 @@ This site follows the parent-workspace contract [`.cursor/rules/media-storage.md
 eReport is org-only. Owners sign in with the existing HttpOnly cookie session. Invitees use `/ereport/invite` (public; no AuthGate) plus emailed OTP. New images are JPEG/PNG/WebP files under:
 
 ```
-/var/www/eduardoos.com/media/ereport/<owner-user-id>/orgs/<org-id>/reports/<report-id>/
+/var/www/eduardoos.com/media/ereport/<username>/<safe-email>/orgs/<org-id>/reports/<report-id>/
 ```
 
-Owner directories are derived only from the authenticated immutable user id. Email and username are display metadata and never filesystem keys. There is no S3 runtime, and report JSON is not stored in MongoDB.
+Owner directories are named after the account's username and email so the tree is browsable, but neither value ever selects or authorizes anything: every request resolves its owner from the authenticated session user id, and `<safe-email>` encodes the address (`@` becomes `_at_`, other characters become `-`).
+
+The directory a user receives is pinned on first use in `<root>/.owners/<user-id>.json`. The pin wins over the live username and email, so changing either in the profile never moves, renames, or orphans a report. A tree already written under the earlier `<user-id>/` layout is adopted in place and keeps that path.
+
+There is no S3 runtime, and report JSON is not stored in MongoDB.
 
 Local development:
 

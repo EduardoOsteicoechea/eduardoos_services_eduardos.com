@@ -91,6 +91,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
 		ereport:         newEreportFS(cfg.EreportMediaRoot),
 	}
+	app.ereport.owner = app.ereportOwnerLookup
 	httpClient := newHTTPClient()
 	app.chat["deepseek"] = openAICompatClient{
 		name:    "deepseek",

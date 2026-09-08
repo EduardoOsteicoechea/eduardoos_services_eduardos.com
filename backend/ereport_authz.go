@@ -16,6 +16,16 @@ type ereportPrincipal struct {
 	CanManage   bool
 }
 
+// ereportOwnerLookup names an owner directory <username>/<safe-email>. The
+// session user id stays the authority; these values only label the tree.
+func (a *App) ereportOwnerLookup(userID string) (username, email string, ok bool) {
+	user, err := a.store.UserByID(context.Background(), userID)
+	if err != nil || user == nil {
+		return "", "", false
+	}
+	return user.Username, user.Email, true
+}
+
 func (a *App) inviteCookieName() string {
 	if a.cfg.SecureCookies {
 		return "__Host-ereport-invite"

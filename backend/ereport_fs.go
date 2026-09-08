@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"io"
@@ -8,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -19,16 +22,34 @@ var (
 
 var safeEreportID = regexp.MustCompile(`^[A-Za-z0-9._-]{4,64}$`)
 
+// ereportOwnerIndexDir holds one pin file per user. It is reserved so it can
+// never collide with a username segment.
+const ereportOwnerIndexDir = ".owners"
+
+// ereportOwnerPin records the directory a user was first given. The pin wins
+// over the live username and email, so profile edits never move files (072 §2).
+type ereportOwnerPin struct {
+	UserID   string   `json:"userId"`
+	Segments []string `json:"segments"`
+}
+
 type ereportFS struct {
 	root    string
 	tmpDir  string
 	maxHist int
+
+	// owner names an owner directory from the platform user record. Nil keeps
+	// the directory on the user id alone.
+	owner func(userID string) (username, email string, ok bool)
+
+	mu        sync.RWMutex
+	ownerDirs map[string][]string
 }
 
 func newEreportFS(root string) *ereportFS {
 	root = filepath.Clean(root)
 	tmp := filepath.Join(filepath.Dir(root), ".ereport-tmp")
-	return &ereportFS{root: root, tmpDir: tmp, maxHist: maxHistorySnapshots}
+	return &ereportFS{root: root, tmpDir: tmp, maxHist: maxHistorySnapshots, ownerDirs: map[string][]string{}}
 }
 
 func (fs *ereportFS) ensureRoot() error {
@@ -74,43 +95,187 @@ func (fs *ereportFS) resolve(parts ...string) (string, error) {
 	return full, nil
 }
 
-func (fs *ereportFS) ownerDir(ownerUserID string) (string, error) {
-	if !validEreportID(ownerUserID) {
-		return "", errEreportPath
+// ereportSafeEmail encodes an email address as one path segment. This is the
+// authoritative half of an owner directory, so it must stay unique per address.
+func ereportSafeEmail(email string) string {
+	email = strings.ToLower(strings.TrimSpace(email))
+	encoded := ereportPathChars(strings.ReplaceAll(email, "@", "_at_"))
+	if encoded == "" {
+		return ""
 	}
-	return fs.resolve(ownerUserID)
+	if len(encoded) > 64 {
+		// Truncate for the filesystem but keep two long addresses apart.
+		sum := sha256.Sum256([]byte(email))
+		encoded = encoded[:52] + "-" + hex.EncodeToString(sum[:5])
+	}
+	for len(encoded) < 4 {
+		encoded += "0"
+	}
+	return encoded
+}
+
+// ereportUsernameSegment labels the owner directory for humans reading the
+// disk. It never selects or authorizes anything, so collisions are harmless.
+func ereportUsernameSegment(username, email string) string {
+	label := ereportPathChars(strings.ToLower(strings.TrimSpace(username)))
+	if len(label) > 64 {
+		label = strings.Trim(label[:64], "-")
+	}
+	if len(label) < 4 || label == ereportOwnerIndexDir {
+		local := strings.ToLower(strings.TrimSpace(email))
+		if at := strings.Index(local, "@"); at >= 0 {
+			local = local[:at]
+		}
+		label = ereportSafeEmail(local)
+	}
+	if label == "" || label == ereportOwnerIndexDir {
+		label = "user"
+	}
+	return label
+}
+
+// ereportPathChars keeps only the characters safeEreportID accepts.
+func ereportPathChars(in string) string {
+	var b strings.Builder
+	for _, r := range in {
+		switch {
+		case r >= 'a' && r <= 'z', r >= '0' && r <= '9', r == '.', r == '_', r == '-':
+			b.WriteRune(r)
+		default:
+			b.WriteByte('-')
+		}
+	}
+	return strings.Trim(b.String(), "-")
+}
+
+func (fs *ereportFS) ownerPinPath(ownerUserID string) (string, error) {
+	return fs.resolve(ereportOwnerIndexDir, ownerUserID+".json")
+}
+
+func (fs *ereportFS) readOwnerPin(ownerUserID string) ([]string, error) {
+	path, err := fs.ownerPinPath(ownerUserID)
+	if err != nil {
+		return nil, err
+	}
+	var pin ereportOwnerPin
+	if err := fs.readJSON(path, &pin); err != nil {
+		return nil, err
+	}
+	if len(pin.Segments) == 0 {
+		return nil, errEreportNotFound
+	}
+	for _, segment := range pin.Segments {
+		if !validEreportID(segment) {
+			return nil, errEreportPath
+		}
+	}
+	return pin.Segments, nil
+}
+
+func (fs *ereportFS) writeOwnerPin(ownerUserID string, segments []string) error {
+	path, err := fs.ownerPinPath(ownerUserID)
+	if err != nil {
+		return err
+	}
+	return fs.writeJSON(path, ereportOwnerPin{UserID: ownerUserID, Segments: segments})
+}
+
+// ownerSegments resolves the directory that belongs to a user, pinning the
+// answer the first time so later renames cannot move or orphan the tree.
+func (fs *ereportFS) ownerSegments(ownerUserID string) ([]string, error) {
+	ownerUserID = strings.TrimSpace(ownerUserID)
+	if !validEreportID(ownerUserID) {
+		return nil, errEreportPath
+	}
+	fs.mu.RLock()
+	cached, hit := fs.ownerDirs[ownerUserID]
+	fs.mu.RUnlock()
+	if hit {
+		return cached, nil
+	}
+
+	segments, err := fs.discoverOwnerSegments(ownerUserID)
+	if err != nil {
+		return nil, err
+	}
+	fs.mu.Lock()
+	if fs.ownerDirs == nil {
+		fs.ownerDirs = map[string][]string{}
+	}
+	fs.ownerDirs[ownerUserID] = segments
+	fs.mu.Unlock()
+	return segments, nil
+}
+
+func (fs *ereportFS) discoverOwnerSegments(ownerUserID string) ([]string, error) {
+	if pinned, err := fs.readOwnerPin(ownerUserID); err == nil {
+		return pinned, nil
+	}
+	// Trees written before the username+email layout keep the place they have.
+	if legacy, err := fs.resolve(ownerUserID); err == nil {
+		if info, statErr := os.Stat(legacy); statErr == nil && info.IsDir() {
+			_ = fs.writeOwnerPin(ownerUserID, []string{ownerUserID})
+			return []string{ownerUserID}, nil
+		}
+	}
+	if fs.owner == nil {
+		return []string{ownerUserID}, nil
+	}
+	username, email, ok := fs.owner(ownerUserID)
+	if !ok {
+		return nil, errEreportPath
+	}
+	segments := []string{ereportUsernameSegment(username, email), ereportSafeEmail(email)}
+	if !validEreportID(segments[0]) || !validEreportID(segments[1]) {
+		return nil, errEreportPath
+	}
+	_ = fs.writeOwnerPin(ownerUserID, segments)
+	return segments, nil
+}
+
+// resolveOwner joins parts under the owner's directory.
+func (fs *ereportFS) resolveOwner(ownerUserID string, parts ...string) (string, error) {
+	segments, err := fs.ownerSegments(ownerUserID)
+	if err != nil {
+		return "", err
+	}
+	return fs.resolve(append(append([]string{}, segments...), parts...)...)
+}
+
+func (fs *ereportFS) ownerDir(ownerUserID string) (string, error) {
+	return fs.resolveOwner(ownerUserID)
 }
 
 func (fs *ereportFS) orgsIndexPath(ownerUserID string) (string, error) {
-	return fs.resolve(ownerUserID, "orgs.json")
+	return fs.resolveOwner(ownerUserID, "orgs.json")
 }
 
 func (fs *ereportFS) orgMetaPath(ownerUserID, orgID string) (string, error) {
 	if !validEreportID(orgID) {
 		return "", errEreportPath
 	}
-	return fs.resolve(ownerUserID, "orgs", orgID, "meta.json")
+	return fs.resolveOwner(ownerUserID, "orgs", orgID, "meta.json")
 }
 
 func (fs *ereportFS) orgLibraryPath(ownerUserID, orgID string) (string, error) {
 	if !validEreportID(orgID) {
 		return "", errEreportPath
 	}
-	return fs.resolve(ownerUserID, "orgs", orgID, "library.json")
+	return fs.resolveOwner(ownerUserID, "orgs", orgID, "library.json")
 }
 
 func (fs *ereportFS) orgDir(ownerUserID, orgID string) (string, error) {
 	if !validEreportID(orgID) {
 		return "", errEreportPath
 	}
-	return fs.resolve(ownerUserID, "orgs", orgID)
+	return fs.resolveOwner(ownerUserID, "orgs", orgID)
 }
 
 func (fs *ereportFS) reportDir(ownerUserID, orgID, reportID string) (string, error) {
 	if !validEreportID(orgID) || !validEreportID(reportID) {
 		return "", errEreportPath
 	}
-	return fs.resolve(ownerUserID, "orgs", orgID, "reports", reportID)
+	return fs.resolveOwner(ownerUserID, "orgs", orgID, "reports", reportID)
 }
 
 func (fs *ereportFS) reportMetaPath(ownerUserID, orgID, reportID string) (string, error) {

@@ -148,6 +148,89 @@ func TestEreportEmailChangeDoesNotMoveDirectories(t *testing.T) {
 	}
 }
 
+// Reports written under the pre-username layout must stay exactly where they
+// are, so a deploy of the new layout cannot orphan live data.
+func TestEreportAdoptsExistingUserIDDirectory(t *testing.T) {
+	app := newTestApp(false)
+	user := app.mustUser("member@eduardoos.com")
+	legacy := filepath.Join(app.cfg.EreportMediaRoot, user.ID)
+	if err := os.MkdirAll(filepath.Join(legacy, "orgs"), 0750); err != nil {
+		t.Fatal(err)
+	}
+
+	dir, err := app.ereport.ownerDir(user.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if dir != legacy {
+		t.Fatalf("owner dir %s, want the existing %s", dir, legacy)
+	}
+}
+
+func TestEreportEmailChangeKeepsOwnerDirectory(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Keep"}`)
+	user := app.mustUser("member@eduardoos.com")
+	before, err := app.ereport.ownerDir(user.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	user.Email = "moved@eduardoos.com"
+	user.EmailNormalized = "moved@eduardoos.com"
+	if err := app.store.UpdateUser(context.Background(), user); err != nil {
+		t.Fatal(err)
+	}
+	// Drop the cache so resolution has to read the pin back off disk.
+	app.ereport.ownerDirs = map[string][]string{}
+
+	after, err := app.ereport.ownerDir(user.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if after != before {
+		t.Fatalf("owner dir moved to %s, want %s", after, before)
+	}
+	if _, err := os.Stat(before); err != nil {
+		t.Fatalf("original directory gone: %v", err)
+	}
+}
+
+func TestEreportOwnerSegmentEncoding(t *testing.T) {
+	if got := ereportSafeEmail("Owner+Tag@Example.COM"); got != "owner-tag_at_example.com" {
+		t.Errorf("safe email = %q", got)
+	}
+	long := strings.Repeat("a", 70) + "@example.com"
+	got := ereportSafeEmail(long)
+	if len(got) > 64 || !validEreportID(got) {
+		t.Errorf("long email = %q (len %d)", got, len(got))
+	}
+	if other := ereportSafeEmail(strings.Repeat("a", 70) + "@example.org"); other == got {
+		t.Error("two long addresses collided into one directory")
+	}
+
+	if seg := ereportUsernameSegment("Eduardo.OS", "x@y.com"); seg != "eduardo.os" {
+		t.Errorf("username segment = %q", seg)
+	}
+	// Too short for safeEreportID, so the label falls back to the email local part.
+	if seg := ereportUsernameSegment("ab", "member@eduardoos.com"); seg != "member" {
+		t.Errorf("short username segment = %q", seg)
+	}
+	if seg := ereportUsernameSegment(ereportOwnerIndexDir, "member@eduardoos.com"); seg == ereportOwnerIndexDir {
+		t.Error("username must never take the reserved index directory")
+	}
+	for _, seg := range []string{
+		ereportUsernameSegment("", "member@eduardoos.com"),
+		ereportUsernameSegment("!!!", "member@eduardoos.com"),
+		ereportSafeEmail("member@eduardoos.com"),
+	} {
+		if !validEreportID(seg) {
+			t.Errorf("segment %q is not a valid path segment", seg)
+		}
+	}
+}
+
 func TestEreportFilesystemLayoutAndNoS3(t *testing.T) {
 	app := newTestApp(false)
 	src, _ := os.ReadFile("ereport_http.go")
@@ -164,12 +247,16 @@ func TestEreportFilesystemLayoutAndNoS3(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := filepath.Join(user.ID, "orgs", orgID, "reports", reportID)
+	want := filepath.Join(
+		ereportUsernameSegment(user.Username, user.Email),
+		ereportSafeEmail(user.Email),
+		"orgs", orgID, "reports", reportID,
+	)
 	if !strings.Contains(filepath.ToSlash(metaPath), filepath.ToSlash(want)) {
 		t.Fatalf("path %s missing %s", metaPath, want)
 	}
-	if strings.Contains(metaPath, "@") || strings.Contains(metaPath, "_at_") {
-		t.Fatalf("path used email: %s", metaPath)
+	if strings.Contains(metaPath, "@") {
+		t.Fatalf("raw email must be encoded in the path: %s", metaPath)
 	}
 }
 
@@ -518,7 +605,7 @@ func TestMergeAPIPayload_AddItemRejectsMutation(t *testing.T) {
 	}
 }
 
-func TestEreportImportFromFilesUsesUserIDNotEmail(t *testing.T) {
+func TestEreportImportFromFilesUsesUsernameAndEmailDirectory(t *testing.T) {
 	app := newTestApp(false)
 	user := app.mustUser("member@eduardoos.com")
 	dir := t.TempDir()
@@ -571,14 +658,21 @@ func TestEreportImportFromFilesUsesUserIDNotEmail(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	present := map[string]bool{}
 	for _, entry := range rootEntries {
-		name := entry.Name()
-		if strings.Contains(name, "@") || strings.Contains(name, "gmail") || strings.Contains(name, "eduardooost") || strings.Contains(name, "_at_") {
-			t.Fatalf("email leaked into owner dir: %s", name)
-		}
-		if name != user.ID {
-			t.Fatalf("owner dir %s want %s", name, user.ID)
-		}
+		present[entry.Name()] = true
+	}
+	wantUsername := ereportUsernameSegment(user.Username, user.Email)
+	if !present[wantUsername] || !present[ereportOwnerIndexDir] {
+		t.Fatalf("root entries %v want %s and %s", present, wantUsername, ereportOwnerIndexDir)
+	}
+	ownerEntries, err := os.ReadDir(filepath.Join(app.cfg.EreportMediaRoot, wantUsername))
+	if err != nil {
+		t.Fatal(err)
+	}
+	wantEmailDir := ereportSafeEmail(user.Email)
+	if len(ownerEntries) != 1 || ownerEntries[0].Name() != wantEmailDir {
+		t.Fatalf("owner dir entries %v want %s", ownerEntries, wantEmailDir)
 	}
 
 	again, err := importEreportFromFiles(context.Background(), app.store, app.ereport, ereportImportArgs{
