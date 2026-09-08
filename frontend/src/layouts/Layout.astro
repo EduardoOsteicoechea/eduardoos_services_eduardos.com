@@ -115,10 +115,6 @@ const jsonLdString =
               </svg>
             ) : null}
           </button>
-          <button class="header-session icon-btn" type="button" aria-controls="session-menu" aria-expanded="false" aria-label="Account menu" title="Account" transition:persist="header-session">
-            <span class="material-symbols-outlined" data-session-icon aria-hidden="true">account_circle</span>
-            <img class="header-session-photo" data-session-avatar hidden alt="" />
-          </button>
         </div>
         {isEreport ? (
           <div class="ereport-guest-auth" data-header-chrome data-guest-only>
@@ -186,11 +182,6 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
             Agent Sandbox
           </button>
-        </nav>
-      </aside>
-
-      <aside id="session-menu" class="sidebar-left" hidden>
-        <nav aria-label="Session">
           <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">login</span>
             Sign in

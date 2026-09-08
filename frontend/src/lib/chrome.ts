@@ -1,4 +1,4 @@
-import { getMe, postJSON, profileAvatarURL } from "./api";
+import { getMe, postJSON } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
@@ -6,7 +6,7 @@ import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
-const LEFT_PANELS = ["main-menu", "session-menu", "dynamic-header"] as const;
+const LEFT_PANELS = ["main-menu", "dynamic-header"] as const;
 
 declare global {
   interface Window {
@@ -33,7 +33,6 @@ function setPanelHidden(id: string, hidden: boolean): void {
 function syncExpanded(): void {
   const pairs: Array<[string, string]> = [
     [".header-menu", "main-menu"],
-    [".header-session", "session-menu"],
     [".header-dynamic", "dynamic-header"],
     [".agent-fab", "agent-sidebar"],
   ];
@@ -178,57 +177,8 @@ function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
   return target.closest("button, a, [data-logout]");
 }
 
-function sessionButton(): HTMLElement | null {
-  const node = document.querySelector(".header-session");
-  return node instanceof HTMLElement ? node : null;
-}
-
-let lastSessionAvatar: string | null = null;
-
-function showSessionIcon(): void {
-  const button = sessionButton();
-  const photo = document.querySelector("[data-session-avatar]");
-  const icon = document.querySelector("[data-session-icon]");
-  button?.removeAttribute("data-has-avatar");
-  if (photo instanceof HTMLImageElement) {
-    photo.removeAttribute("src");
-    photo.hidden = true;
-  }
-  if (icon instanceof HTMLElement) {
-    icon.hidden = false;
-  }
-}
-
-function paintSessionAvatar(src: string | null): void {
-  const button = sessionButton();
-  const photo = document.querySelector("[data-session-avatar]");
-  const icon = document.querySelector("[data-session-icon]");
-  if (!(photo instanceof HTMLImageElement)) {
-    if (icon instanceof HTMLElement) icon.hidden = false;
-    button?.removeAttribute("data-has-avatar");
-    return;
-  }
-  if (!src) {
-    showSessionIcon();
-    return;
-  }
-  if (photo.getAttribute("src") === src && !photo.hidden) {
-    if (icon instanceof HTMLElement) icon.hidden = true;
-    button?.setAttribute("data-has-avatar", "true");
-    return;
-  }
-  photo.onerror = () => {
-    showSessionIcon();
-  };
-  photo.src = src;
-  photo.hidden = false;
-  if (icon instanceof HTMLElement) icon.hidden = true;
-  button?.setAttribute("data-has-avatar", "true");
-}
-
-export function applySessionAvatar(avatar?: string | null): void {
-  lastSessionAvatar = profileAvatarURL(avatar);
-  paintSessionAvatar(lastSessionAvatar);
+export function applySessionAvatar(_avatar?: string | null): void {
+  // Session actions live in #main-menu; header avatar chrome was removed.
 }
 
 export async function refreshAuthChrome(): Promise<void> {
@@ -251,11 +201,6 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !(authed && data.role === "admin");
     }
   });
-  applySessionAvatar(authed ? data.avatar : null);
-  const session = document.querySelector(".header-session");
-  if (isEreportPage() && session instanceof HTMLElement) {
-    session.hidden = !authed;
-  }
 }
 
 function syncIconButtonTitles(): void {
@@ -294,7 +239,6 @@ function restoreChromeAfterNavigation(): void {
   syncEreportChrome();
   syncExpanded();
   syncIconButtonTitles();
-  paintSessionAvatar(lastSessionAvatar);
   startAgentChat();
   void refreshAuthChrome();
 }
@@ -343,10 +287,6 @@ export function startChrome(): void {
       }
       if (node?.closest(".header-menu")) {
         togglePanel("main-menu");
-        return;
-      }
-      if (node?.closest(".header-session")) {
-        togglePanel("session-menu");
         return;
       }
       if (node?.closest(".header-dynamic")) {
