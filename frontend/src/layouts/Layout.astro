@@ -3,17 +3,28 @@ import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "../styles/ereport-chrome.css";
 
+type JsonLd = Record<string, unknown> | Record<string, unknown>[] | string;
+
 type Props = {
   title?: string;
   description?: string;
   page?: string;
+  robots?: string;
+  ogImage?: string;
+  ogType?: string;
+  jsonLd?: JsonLd;
 };
 
 const siteTitle = "Eduardo Osteicoechea - AEC AI Technologist";
+const siteName = "Eduardoos";
 const {
   title,
   description = "Eduardo Osteicoechea — AEC Technologist. Licensed Building Architect, BIM practitioner, and full-stack developer.",
   page = "",
+  robots: robotsProp,
+  ogImage = "/og-default.png",
+  ogType = "website",
+  jsonLd,
 } = Astro.props;
 const documentTitle = (() => {
   const pageTitle = title?.replace(/\s·\sEduardoos$/, "");
@@ -23,6 +34,16 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const hasDhsSlot = Astro.slots.has("dhs");
 const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
 const isEreport = htmlPage.startsWith("ereport");
+const privateByDefault =
+  path.startsWith("/session") ||
+  path === "/diagnostics" ||
+  path.startsWith("/ereport");
+const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
+const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
+const canonicalUrl = path === "/" ? "https://eduardoos.com/" : canonical;
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
+const jsonLdString =
+  typeof jsonLd === "string" ? jsonLd : jsonLd ? JSON.stringify(jsonLd) : "";
 ---
 
 <!doctype html>
@@ -31,6 +52,21 @@ const isEreport = htmlPage.startsWith("ereport");
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={siteName} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="theme-color" content="#121212" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -56,6 +92,7 @@ const isEreport = htmlPage.startsWith("ereport");
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap"
     />
     <title>{documentTitle}</title>
+    {jsonLdString ? <script type="application/ld+json" set:html={jsonLdString} /> : null}
     <ClientRouter />
   </head>
   <body>

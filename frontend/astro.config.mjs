@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 import { createDevProxyConfig } from "./dev-proxy.mjs";
 
 const devProxy = createDevProxyConfig({
@@ -7,8 +8,17 @@ const devProxy = createDevProxyConfig({
 });
 
 export default defineConfig({
+  site: "https://eduardoos.com",
   output: "static",
   trailingSlash: "never",
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes("/session") &&
+        !page.includes("/diagnostics") &&
+        !page.includes("/ereport"),
+    }),
+  ],
   server: {
     port: devProxy.port,
     host: "127.0.0.1",

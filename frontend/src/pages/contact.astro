@@ -1,12 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { contactPageSchema, graph, personSchema, websiteSchema } from "../lib/seo";
+
+const description =
+  "Contact Eduardo Osteicoechea: email, WhatsApp, LinkedIn, GitHub, and YouTube for AEC technology and product work.";
 ---
 
-<Layout title="Contact · Eduardoos" description="Contact Eduardoos.">
+<Layout
+  title="Contact · Eduardoos"
+  description={description}
+  jsonLd={graph(websiteSchema(), personSchema(), contactPageSchema())}
+>
   <h1>Contact</h1>
   <p class="lede">
-    For project inquiries, write through the channels published on this domain.
-    Forms and mailbox integrations can be added behind <code>/api/</code> without
-    exposing backend addresses in the frontend.
+    For project inquiries, use the public channels below. Forms and mailbox
+    integrations can be added behind <code>/api/</code> without exposing backend
+    addresses in the frontend.
   </p>
+
+  <section class="seo-section" aria-labelledby="channels-heading">
+    <h2 id="channels-heading">Public channels</h2>
+    <ul>
+      <li>Email: <a href="mailto:eduardooost@gmail.com">eduardooost@gmail.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/584147281033" rel="noopener noreferrer">wa.me/584147281033</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/eduardoosteicoechea" rel="noopener noreferrer">eduardoosteicoechea</a></li>
+      <li>GitHub: <a href="https://github.com/EduardoOsteicoechea" rel="noopener noreferrer">EduardoOsteicoechea</a></li>
+      <li>YouTube: <a href="https://youtube.com/@EduardoOsteicoechea" rel="noopener noreferrer">@EduardoOsteicoechea</a></li>
+    </ul>
+  </section>
+
+  <section class="seo-section" aria-labelledby="next-heading">
+    <h2 id="next-heading">Next steps</h2>
+    <p>
+      Read <a href="/about" data-route>About</a> for credentials and craft, or
+      return <a href="/" data-route>home</a>.
+    </p>
+  </section>
 </Layout>

@@ -1,0 +1,18 @@
+# Eduardo Osteicoechea — full agent corpus
+
+Eduardo Osteicoechea (Eduardoos) is a licensed Building Architect who graduated from Universidad de Los Andes (ULA) Cum Laude. He is also a full-stack desktop, web, and cloud developer focused on AEC (architecture, engineering, and construction) technology.
+
+He completed focused BIM training: an Autodesk Authorized Training Center Course in 2011 and a BIMMASTER.org course. Those are professional training programs, not a Master’s degree. He builds Revit and AutoCAD API tools, AI integrations, and multiplatform products for AEC teams.
+
+The public website https://eduardoos.com/ is a static Astro frontend. Browser clients call only same-origin `/api/` on eduardoos.com. The site does not expose MongoDB URIs, SMTP credentials, JWT secrets, or AI provider keys in the frontend.
+
+Primary public pages:
+
+- Home explains who he is, what he builds, and answers common questions.
+- About expands credentials, craft, and how the site is operated.
+- Contact lists public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, and YouTube.
+- API docs describes the external API catalog for API-key clients; eReport bytes live on the VPS filesystem, not S3, and not in MongoDB.
+
+Session, diagnostics, and eReport workspace routes are private UX surfaces and should not be treated as marketing or citation sources.
+
+For a short index of URLs, see https://eduardoos.com/llms.txt

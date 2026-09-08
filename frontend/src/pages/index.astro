@@ -1,15 +1,58 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import {
+  HOME_FAQS,
+  faqSchema,
+  graph,
+  personSchema,
+  websiteSchema,
+} from "../lib/seo";
+
+const description =
+  "Eduardo Osteicoechea — licensed Building Architect and AEC AI technologist. BIM tools, full-stack platforms, and careful craft at eduardoos.com.";
 ---
 
-<Layout>
-  <h1>Software, systems, and careful craft.</h1>
+<Layout description={description} jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))}>
+  <h1 id="who">Software, systems, and careful craft for AEC.</h1>
   <p class="lede">
-    Independent work across web platforms, APIs, and production infrastructure.
-    This site is a static Astro frontend that talks to its API only through
-    <code>/api/</code>.
+    Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and
+    full-stack developer. Eduardoos.com is his public home for product work,
+    technical writing, and services across web platforms, APIs, and production
+    infrastructure.
   </p>
-  <section class="panel" aria-live="polite">
+
+  <section class="seo-section" id="work" aria-labelledby="work-heading">
+    <h2 id="work-heading">What this site stands for</h2>
+    <p>
+      Focused BIM training (Autodesk Authorized Training Center Course 2011;
+      BIMMASTER.org course — not a Master’s degree), Revit/AutoCAD API tools,
+      AI integrations, and multiplatform products for architecture, engineering,
+      and construction teams.
+    </p>
+    <p>
+      The frontend is static Astro. Browsers talk to this domain’s API only
+      through <code>/api/</code> — no secrets in the client bundle.
+    </p>
+    <p>
+      Learn more on <a href="/about" data-route>About</a>, reach out via
+      <a href="/contact" data-route>Contact</a>, or review the
+      <a href="/api-docs" data-route>API docs</a>.
+    </p>
+  </section>
+
+  <section class="seo-section" id="faq" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">FAQ</h2>
+    <div class="faq">
+      {HOME_FAQS.map((item) => (
+        <details>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="system-status panel" aria-live="polite">
     <p id="api-status" class="status">Checking API…</p>
   </section>
 </Layout>

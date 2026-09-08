@@ -1,12 +1,44 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { aboutPageSchema, graph, personSchema, websiteSchema } from "../lib/seo";
+
+const description =
+  "About Eduardo Osteicoechea: licensed Building Architect (ULA), BIM practitioner, and full-stack AEC AI technologist behind eduardoos.com.";
 ---
 
-<Layout title="About · Eduardoos" description="About Eduardo Osteicoechea.">
-  <h1>About</h1>
+<Layout
+  title="About · Eduardoos"
+  description={description}
+  jsonLd={graph(websiteSchema(), personSchema(), aboutPageSchema())}
+>
+  <h1>About Eduardo Osteicoechea</h1>
   <p class="lede">
     Eduardoos is the public home for product work, technical writing, and
-    services. The frontend is generated as static files; navigation happens in
-    the browser.
+    services. The person behind it is Eduardo Osteicoechea — licensed Building
+    Architect (Universidad de Los Andes, Cum Laude) and full-stack
+    desktop–web–cloud developer.
   </p>
+
+  <section class="seo-section" aria-labelledby="credentials-heading">
+    <h2 id="credentials-heading">Credentials and craft</h2>
+    <p>
+      Focused BIM training includes an Autodesk Authorized Training Center Course
+      (2011) and a BIMMASTER.org course. That is professional training, not a
+      Master’s degree. Day-to-day work spans Revit/AutoCAD API tooling, AI
+      integrations, and multiplatform products for AEC.
+    </p>
+  </section>
+
+  <section class="seo-section" aria-labelledby="platform-heading">
+    <h2 id="platform-heading">How this site is built</h2>
+    <p>
+      The frontend is generated as static files; navigation happens in the
+      browser. Live data is requested only from same-origin <code>/api/</code>.
+      Secrets, database URIs, and provider keys stay on the server.
+    </p>
+    <p>
+      For project inquiries, use <a href="/contact" data-route>Contact</a>.
+      External API clients can start at <a href="/api-docs" data-route>API docs</a>.
+    </p>
+  </section>
 </Layout>

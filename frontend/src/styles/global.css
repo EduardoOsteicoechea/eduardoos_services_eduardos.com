@@ -657,6 +657,62 @@ h2 {
   color: var(--color-err);
 }
 
+.seo-section {
+  margin-block: var(--space-margin);
+  max-width: 38rem;
+}
+
+.seo-section h2 {
+  font-size: var(--font-size-xl);
+  margin: 0 0 var(--rail-gap);
+}
+
+.seo-section p,
+.seo-section ul {
+  margin: 0 0 var(--rail-gap);
+  color: var(--color-muted);
+  font-size: var(--font-size-md);
+}
+
+.seo-section ul {
+  padding-inline-start: var(--space-padding);
+}
+
+.faq {
+  margin-block: var(--rail-gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.faq details {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+}
+
+.faq summary {
+  cursor: pointer;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.faq details p {
+  margin: var(--rail-gap) 0 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+.system-status {
+  margin-top: calc(var(--space-margin) * 2);
+}
+
+.system-status.panel {
+  margin-top: calc(var(--space-margin) * 2);
+}
+
 .session-grid {
   display: flex;
   flex-direction: column;
