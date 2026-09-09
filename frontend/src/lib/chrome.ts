@@ -1,4 +1,4 @@
-import { getMe, postJSON } from "./api";
+import { getMe, postJSON, profileAvatarURL } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
@@ -146,15 +146,40 @@ function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
   return target.closest("button, a, [data-logout]");
 }
 
-export function applySessionAvatar(_avatar?: string | null): void {
-  // Session actions live in #main-menu; header avatar chrome was removed.
+export function applySessionAvatar(avatar?: string | null): void {
+  const img = document.querySelector("[data-header-avatar-img]");
+  const fallback = document.querySelector("[data-header-avatar-fallback]");
+  const src = profileAvatarURL(avatar);
+  if (img instanceof HTMLImageElement) {
+    if (src) {
+      img.onerror = () => {
+        img.removeAttribute("src");
+        img.hidden = true;
+        if (fallback instanceof HTMLElement) {
+          fallback.hidden = false;
+        }
+      };
+      img.src = src;
+      img.hidden = false;
+      if (fallback instanceof HTMLElement) {
+        fallback.hidden = true;
+      }
+    } else {
+      img.removeAttribute("src");
+      img.hidden = true;
+      if (fallback instanceof HTMLElement) {
+        fallback.hidden = false;
+      }
+    }
+  }
 }
 
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
-  sessionLog("chrome.refreshAuth.me", { status, authed, userId: data.id, role: data.role, error: data.error });
+  const isAdmin = authed && data.role === "admin";
+  sessionLog("chrome.refreshAuth.me", { status, authed, isAdmin, userId: data.id, role: data.role, error: data.error });
   document.querySelectorAll("[data-guest-only]").forEach((node) => {
     if (node instanceof HTMLElement) {
       node.hidden = authed;
@@ -167,9 +192,14 @@ export async function refreshAuthChrome(): Promise<void> {
   });
   document.querySelectorAll("[data-admin-only]").forEach((node) => {
     if (node instanceof HTMLElement) {
-      node.hidden = !(authed && data.role === "admin");
+      node.hidden = !isAdmin;
     }
   });
+  if (authed) {
+    applySessionAvatar(data.avatar);
+  } else {
+    applySessionAvatar(null);
+  }
 }
 
 function syncIconButtonTitles(): void {

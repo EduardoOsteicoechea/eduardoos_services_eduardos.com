@@ -445,6 +445,7 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
     }
     if (fallback instanceof HTMLElement) fallback.hidden = true;
     setPanelsHidden(false);
+    await refreshAuthChrome();
     return data;
   } catch {
     if (fallback instanceof HTMLElement) fallback.hidden = false;

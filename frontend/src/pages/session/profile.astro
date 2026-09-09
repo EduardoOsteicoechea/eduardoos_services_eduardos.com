@@ -41,6 +41,11 @@ import Layout from "../../layouts/Layout.astro";
         <a href="/session/change-password" data-route>Change password</a>
         <a href="/api-docs" data-route>API docs</a>
       </p>
+      <div class="session-links" data-admin-only hidden>
+        <h2>Admin</h2>
+        <a href="/admin/users" data-route>Registered users</a>
+        <a href="/diagnostics" data-route>Diagnostics</a>
+      </div>
     </div>
     <div class="panel" data-apikeys data-authed-panel hidden>
       <h2>API keys</h2>

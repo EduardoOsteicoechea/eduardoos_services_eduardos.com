@@ -43,6 +43,21 @@ describe("main-menu session chrome", () => {
     window.__chromeStarted = false;
   });
 
+  it("updates the header session avatar", () => {
+    document.body.innerHTML += `
+      <a data-header-avatar href="/session/profile">
+        <img data-header-avatar-img hidden alt="" />
+        <span data-header-avatar-fallback hidden>account_circle</span>
+      </a>
+    `;
+    applySessionAvatar("/api/profile/avatar?v=44");
+    const img = document.querySelector("[data-header-avatar-img]") as HTMLImageElement;
+    expect(img.hidden).toBe(false);
+    expect(img.getAttribute("src")).toBe("/api/profile/avatar?v=44");
+    applySessionAvatar(null);
+    expect(img.hidden).toBe(true);
+  });
+
   it("hides guest session links and shows authed links after /api/auth/me", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
