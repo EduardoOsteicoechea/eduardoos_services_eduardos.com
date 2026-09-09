@@ -10,6 +10,18 @@ import Layout from "../../layouts/Layout.astro";
     <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
       <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
     </button>
+    <button class="icon-btn" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
+      <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+    </button>
+    <button class="icon-btn" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
+      <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
+      <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+    </button>
+    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
+      <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+    </button>
     <button class="icon-btn" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
       <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
     </button>
@@ -60,7 +72,7 @@ import Layout from "../../layouts/Layout.astro";
     type ReportCard,
   } from "../../lib/ereport";
   import { isPublicEreportInvitePath, readInviteParams, TRACKER_SRC } from "../../lib/ereport-routes";
-  import { startTrackerHost, trackerCommandMessage, type TrackerCommand } from "../../lib/ereport-workspace";
+  import { startTrackerHost, trackerCommandMessage, bumpUiScale, type TrackerCommand } from "../../lib/ereport-workspace";
   import { showErrorModal } from "../../lib/error-modal";
   import { onBoundPageReady } from "../../lib/session-ui";
 
@@ -224,9 +236,19 @@ import Layout from "../../layouts/Layout.astro";
     document.addEventListener("click", (event) => {
       const node = event.target;
       if (!(node instanceof Element)) return;
+      const scaleBtn = node.closest("[data-site-scale]");
+      if (scaleBtn instanceof HTMLElement && scaleBtn.dataset.siteScale) {
+        const scale = bumpUiScale(Number(scaleBtn.dataset.siteScale) || 0);
+        host?.post({ target: "ereport-tracker", type: "text-scale", scale });
+        return;
+      }
       const cmd = node.closest("[data-tracker-cmd]");
       if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
         sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
+        if (cmd.dataset.trackerCmd === "toggle-sidebar") {
+          const pressed = cmd.getAttribute("aria-pressed") === "true";
+          cmd.setAttribute("aria-pressed", pressed ? "false" : "true");
+        }
       }
     });
   });

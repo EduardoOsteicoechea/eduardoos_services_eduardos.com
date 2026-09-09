@@ -210,6 +210,52 @@ describe("eReport workspace chrome", () => {
     expect(css).toContain("Kumbh Sans");
   });
 
+  it("wires every workspace HDS button to a tracker command or modal", () => {
+    const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
+    const trackerCmds = [
+      "tutorial",
+      "toggle-sidebar",
+      "upload",
+      "clear-all",
+      "progress",
+      "save-export",
+    ];
+    for (const cmd of trackerCmds) {
+      expect(workspaceSrc).toContain(`data-tracker-cmd="${cmd}"`);
+      expect(workspaceSrc).toContain("sendCmd(");
+    }
+    expect(workspaceSrc).toContain('data-site-scale="1"');
+    expect(workspaceSrc).toContain('data-site-scale="-1"');
+    expect(workspaceSrc).toContain("bumpUiScale(");
+    for (const modal of ["hub", "tema", "save", "share", "historial"]) {
+      expect(workspaceSrc).toContain(`data-open-modal="${modal}"`);
+      expect(workspaceSrc).toContain(`data-modal="${modal}"`);
+    }
+    expect(workspaceSrc).toContain("data-save-now");
+    expect(workspaceSrc).toContain("host.collect()");
+    expect(workspaceSrc).toContain("createReportInvite(");
+    expect(workspaceSrc).toContain("listReportHistory(");
+    expect(workspaceSrc).toContain("restoreReportHistory(");
+  });
+
+  it("wires invite HDS tracker tools including scale upload and clear", () => {
+    const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
+    for (const cmd of ["tutorial", "toggle-sidebar", "upload", "clear-all", "progress", "save-export"]) {
+      expect(inviteSrc).toContain(`data-tracker-cmd="${cmd}"`);
+    }
+    expect(inviteSrc).toContain('data-site-scale="1"');
+    expect(inviteSrc).toContain('data-site-scale="-1"');
+    expect(inviteSrc).toContain("bumpUiScale(");
+  });
+
+  it("wires hub HDS view switches", () => {
+    const hubSrc = readFileSync(join(here, "../pages/ereport/index.astro"), "utf8");
+    for (const view of ["dashboard", "orgs", "register", "new-report", "recent", "manage"]) {
+      expect(hubSrc).toContain(`data-hub-view="${view}"`);
+    }
+    expect(hubSrc).toContain("setView(");
+  });
+
   it("reads pretty hub and workspace URLs without shadowing real routes", () => {
     expect(prettyHubHref("a_at_b.com")).toBe("/ereport/a_at_b.com");
     expect(prettyHubHref("")).toBe("/ereport");

@@ -354,10 +354,48 @@ html[data-page^="ereport"] .product-dash__card-desc {
 }
 
 html[data-page^="ereport"] .ereport-hub__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--m1);
-  max-width: 28rem;
+  display: grid;
+  grid-template-columns: 1fr 1rem 1fr;
+  row-gap: var(--m1);
+  column-gap: 0;
+  align-items: start;
+  max-width: none;
+}
+
+html[data-page^="ereport"] .ereport-hub__form > :not(button):not(.ereport-hub__row) {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+html[data-page^="ereport"] .ereport-hub__form > button {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
+}
+
+html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1rem 1fr;
+  column-gap: 0;
+  row-gap: var(--m1);
+  align-items: stretch;
+}
+
+html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > .btn--primary,
+html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > button:first-child {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
+}
+
+html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > button:not(:first-child) {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
 }
 
 html[data-page^="ereport"] .ereport-hub__form label {
@@ -366,6 +404,49 @@ html[data-page^="ereport"] .ereport-hub__form label {
   gap: var(--m1);
   margin: 0;
   font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] .ereport-modal form {
+  display: grid;
+  grid-template-columns: 1fr 1rem 1fr;
+  row-gap: var(--m1);
+  column-gap: 0;
+  align-items: start;
+}
+
+html[data-page^="ereport"] .ereport-modal form > :not(button):not(.ereport-modal-actions) {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+html[data-page^="ereport"] .ereport-modal form > button {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
+}
+
+html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1rem 1fr;
+  column-gap: 0;
+  row-gap: var(--m1);
+}
+
+html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions > .btn--primary,
+html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions > button:last-child {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
+}
+
+html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions > button:not(.btn--primary):not(:last-child) {
+  grid-column: 1;
+  width: 100%;
+  height: var(--bmh);
+  min-height: var(--bmh);
 }
 
 html[data-page^="ereport"] .ereport-hub__row {

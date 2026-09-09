@@ -100,9 +100,10 @@ import Layout from "../../layouts/Layout.astro";
             Email
             <input name="email" type="email" required />
           </label>
-          <button class="btn" type="submit">Añadir</button>
+          <button class="btn btn--primary" type="submit">Enviar invitación</button>
         </form>
         <ul class="ereport-list" data-share-list></ul>
+        <p class="hint">Las invitaciones expiran; el enlace completo aparece abajo al crearlas.</p>
         <p class="hint" data-share-link hidden></p>
         <p class="ereport-hub__error" data-share-error hidden></p>
         <div class="ereport-modal-actions">
@@ -500,23 +501,26 @@ import Layout from "../../layouts/Layout.astro";
       const list = root.querySelector("[data-share-list]");
       if (list instanceof HTMLElement) {
         const li = document.createElement("li");
-        li.textContent = `${email} `;
-        const remove = document.createElement("button");
-        remove.type = "button";
-        remove.className = "btn";
-        remove.textContent = "Quitar";
-        remove.addEventListener("click", () => {
-          invited.delete(email);
-          li.remove();
-        });
-        li.append(remove);
+        const label = document.createElement("span");
+        label.textContent = email;
+        li.append(label);
+        if (res.data.link) {
+          const link = document.createElement("a");
+          link.href = res.data.link;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "Abrir enlace";
+          li.append(document.createTextNode(" · "), link);
+        }
         list.append(li);
       }
-      const link = root.querySelector("[data-share-link]");
-      if (link instanceof HTMLElement && res.data.link) {
-        link.hidden = false;
-        link.textContent = res.data.link;
+      const linkBox = root.querySelector("[data-share-link]");
+      if (linkBox instanceof HTMLElement && res.data.link) {
+        linkBox.hidden = false;
+        linkBox.textContent = res.data.link;
       }
+      form.reset();
+      setBanner(root, message.text, message.kind);
     });
   });
 </script>
