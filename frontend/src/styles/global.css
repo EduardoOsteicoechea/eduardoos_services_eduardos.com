@@ -12,7 +12,7 @@
   --span-full: 24;
   --span-button: 6;
   --border-width: 0.0625rem;
-  --border-radius: 0.125rem;
+  --border-radius: 0.25rem;
   --header-size: calc(var(--rail-button-size) + (var(--rail-gap) * 2));
   --rail-width: var(--header-size);
   --mobile-header-height: var(--header-size);
@@ -288,8 +288,11 @@ html[data-header-collapsed="true"] .header-collapse-btn .material-symbols-outlin
   transform: translateX(calc(var(--collapse-button-size) * 0.125));
 }
 
-html[data-tray-open="main-menu"] .header-collapse {
-  display: none;
+/* Activity-bar collapse control removed by product decision */
+.header-collapse,
+.header-collapse-btn,
+.header-collapse-line {
+  display: none !important;
 }
 
 .sidebar-left[hidden],
@@ -438,6 +441,7 @@ html[data-header-collapsed="true"] .sidebar-right {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: var(--space-padding);
   min-height: 0;
   padding-right: var(--rail-gap);
@@ -446,9 +450,9 @@ html[data-header-collapsed="true"] .sidebar-right {
 .agent-chat-msg {
   position: relative;
   margin: 0;
-  max-width: calc(var(--agent-sidebar-width, var(--sidebar-width)) * 0.8);
-  width: calc(var(--agent-sidebar-width, var(--sidebar-width)) * 0.8);
   box-sizing: border-box;
+  width: calc(var(--agent-sidebar-width, var(--sidebar-width)) * 0.8);
+  max-width: calc(var(--agent-sidebar-width, var(--sidebar-width)) * 0.8);
   font-size: var(--font-size-sm);
   padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
@@ -458,11 +462,14 @@ html[data-header-collapsed="true"] .sidebar-right {
 
 .agent-chat-msg-user {
   align-self: flex-start;
+  margin-right: auto;
+  margin-left: 0;
 }
 
 .agent-chat-msg-assistant {
   align-self: flex-end;
-  margin-right: var(--rail-gap);
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .agent-chat-msg[data-selected="true"] {
@@ -943,26 +950,26 @@ section.diag .panel:not(form) {
 }
 
 .phone-field {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--page-gutter) minmax(0, 1fr);
+  column-gap: 0;
   align-items: stretch;
-  gap: var(--rail-gap);
 }
 
 .session-grid .phone-field select,
 .session-grid .phone-field input {
-  align-self: auto;
+  align-self: stretch;
   margin-top: 0;
+  min-width: 0;
+  width: auto;
 }
 
 .session-grid .phone-field select {
-  flex: 0 0 14rem;
-  width: 14rem;
+  grid-column: 1;
 }
 
 .session-grid .phone-field input {
-  flex: 1;
-  min-width: 0;
+  grid-column: 3;
 }
 
 .diag input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),

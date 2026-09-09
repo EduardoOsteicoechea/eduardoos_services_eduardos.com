@@ -106,6 +106,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		rid := requestIDFrom(r, w)
 		w.Header().Set("Content-Type", "text/event-stream")
 		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Connection", "keep-alive")
 		w.Header().Set("X-Accel-Buffering", "no")
 		w.WriteHeader(http.StatusOK)
 		result, err := client.Stream(ctx, siteSystemPrompt, history, func(delta string) error {

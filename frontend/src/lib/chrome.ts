@@ -120,26 +120,6 @@ function cycleFont(delta: number): void {
   applyFont(next);
 }
 
-function headerCollapsed(): boolean {
-  return document.documentElement.dataset.headerCollapsed === "true";
-}
-
-function syncCollapseButton(): void {
-  const button = document.querySelector(".header-collapse-btn");
-  const icon = button?.querySelector(".material-symbols-outlined");
-  const collapsed = headerCollapsed();
-  if (button instanceof HTMLElement) {
-    const hideLabel = button.dataset.labelHide || "Hide header";
-    const showLabel = button.dataset.labelShow || "Show header";
-    button.setAttribute("aria-label", collapsed ? showLabel : hideLabel);
-    button.setAttribute("title", collapsed ? showLabel : hideLabel);
-    button.setAttribute("aria-pressed", collapsed ? "true" : "false");
-  }
-  if (icon instanceof HTMLElement) {
-    icon.textContent = collapsed ? "chevron_right" : "chevron_left";
-  }
-}
-
 function setChromeHidden(node: Element | null, hidden: boolean): void {
   if (!(node instanceof HTMLElement)) {
     return;
@@ -150,27 +130,13 @@ function setChromeHidden(node: Element | null, hidden: boolean): void {
   }
 }
 
-function applyHeaderCollapsed(collapsed: boolean, focusToggle: boolean): void {
-  document.documentElement.dataset.headerCollapsed = collapsed ? "true" : "false";
+function clearHeaderCollapsed(): void {
+  delete document.documentElement.dataset.headerCollapsed;
   document.querySelectorAll("[data-header-chrome]").forEach((node) => {
-    setChromeHidden(node, collapsed);
+    setChromeHidden(node, false);
   });
-  setChromeHidden(document.querySelector(".app-header--end"), collapsed);
-  setChromeHidden(document.querySelector(".agent-fab"), collapsed);
-  if (collapsed) {
-    closeAllPanels();
-  }
-  syncCollapseButton();
-  if (focusToggle) {
-    const toggle = document.querySelector(".header-collapse-btn");
-    if (toggle instanceof HTMLElement) {
-      toggle.focus();
-    }
-  }
-}
-
-function setHeaderCollapsed(collapsed: boolean): void {
-  applyHeaderCollapsed(collapsed, true);
+  setChromeHidden(document.querySelector(".app-header--end"), false);
+  setChromeHidden(document.querySelector(".agent-fab"), false);
 }
 
 function chromeClickTarget(target: EventTarget | null): HTMLElement | null {
@@ -218,10 +184,9 @@ function syncEreportChrome(): void {
   if (!isEreportPage()) {
     return;
   }
-  applyHeaderCollapsed(false, false);
+  clearHeaderCollapsed();
   document.documentElement.style.fontSize = "";
   setChromeHidden(document.querySelector(".agent-fab"), true);
-  setChromeHidden(document.querySelector(".header-collapse"), true);
   const opener = document.querySelector(".header-dynamic");
   if (!isCompactChrome()) {
     setPanelHidden("dynamic-header", false);
@@ -238,7 +203,7 @@ function syncEreportChrome(): void {
 }
 
 function restoreChromeAfterNavigation(): void {
-  applyHeaderCollapsed(headerCollapsed(), false);
+  clearHeaderCollapsed();
   syncEreportChrome();
   syncExpanded();
   syncIconButtonTitles();
@@ -294,10 +259,6 @@ export function startChrome(): void {
       }
       if (node?.closest(".header-dynamic")) {
         togglePanel("dynamic-header");
-        return;
-      }
-      if (node?.closest(".header-collapse-btn")) {
-        setHeaderCollapsed(!headerCollapsed());
         return;
       }
       if (node?.closest(".agent-fab")) {

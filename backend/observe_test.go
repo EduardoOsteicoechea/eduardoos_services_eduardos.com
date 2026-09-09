@@ -270,3 +270,29 @@ func TestLoginInvalidJSONLogsReason(t *testing.T) {
 		t.Fatalf("logged request body: %s", out)
 	}
 }
+
+func TestStatusWriterImplementsFlusher(t *testing.T) {
+	inner := httptest.NewRecorder()
+	cf := &countingFlusher{ResponseWriter: inner}
+	ww := &statusWriter{ResponseWriter: cf, status: http.StatusOK}
+	flusher, ok := any(ww).(http.Flusher)
+	if !ok {
+		t.Fatal("statusWriter must implement http.Flusher for SSE")
+	}
+	flusher.Flush()
+	if cf.flushes != 1 {
+		t.Fatalf("flush not propagated: %d", cf.flushes)
+	}
+}
+
+type countingFlusher struct {
+	http.ResponseWriter
+	flushes int
+}
+
+func (c *countingFlusher) Flush() {
+	c.flushes++
+	if f, ok := c.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
+}
