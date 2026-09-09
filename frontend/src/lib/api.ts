@@ -268,7 +268,7 @@ export async function postChatStream(
       signal: controller.signal,
     });
     const requestId = response.headers.get("X-Request-ID") || "";
-    const type = response.headers.get("Content-Type") || "";
+    const type = (response.headers.get("Content-Type") || "").toLowerCase();
     if (!type.includes("event-stream")) {
       const data = await parseJSON<ChatResponse>(response);
       if (!data.request_id && requestId) {

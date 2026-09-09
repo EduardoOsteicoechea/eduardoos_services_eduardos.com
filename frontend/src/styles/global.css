@@ -517,15 +517,26 @@ html[data-header-collapsed="true"] .sidebar-right {
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
-  min-width: 8rem;
-  padding: var(--rail-gap);
+  gap: 0;
+  min-width: 6rem;
+  padding: calc(var(--rail-gap) * 0.5);
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
 
-.agent-chat-menu button,
+.agent-chat-menu button {
+  padding: calc(var(--rail-gap) * 0.25) calc(var(--rail-gap) * 0.5);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  line-height: 1.2;
+  color: var(--color-text);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--border-radius);
+}
+
 .agent-chat-history button,
 .agent-chat-select-bar button {
   padding: var(--rail-gap);

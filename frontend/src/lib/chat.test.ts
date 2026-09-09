@@ -50,6 +50,12 @@ describe("agent chat tray", () => {
     mountTray();
     vi.mocked(postChatStream).mockImplementation(async (_message, _history, onDelta) => {
       onDelta("Visit **turquesa.shop** ");
+      expect(document.querySelector(".agent-chat-msg-assistant")?.textContent).toContain("turquesa.shop");
+      expect(
+        Array.from(document.querySelectorAll(".agent-chat-msg-assistant .agent-chat-msg-head span"))
+          .map((node) => node.textContent)
+          .join(""),
+      ).toContain("…");
       onDelta(`<img src=x onerror=alert(1)>`);
       return {
         status: 200,
@@ -71,6 +77,8 @@ describe("agent chat tray", () => {
     expect(document.querySelector("[data-agent-log] img")).toBeNull();
     expect(document.querySelector(".agent-chat-msg-user")).toBeTruthy();
     expect(document.querySelector(".agent-chat-msg-assistant")).toBeTruthy();
+    const stamp = document.querySelector(".agent-chat-msg-assistant .agent-chat-msg-head span")?.textContent || "";
+    expect(stamp).toMatch(/^\d{2}:\d{2}$/);
     expect(vi.mocked(postChatStream)).toHaveBeenCalled();
   });
 

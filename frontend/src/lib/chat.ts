@@ -360,6 +360,27 @@ function addImages(files: FileList | File[]): void {
   paintThumbs();
 }
 
+function paintAssistantStream(content: string): void {
+  const log = document.querySelector("[data-agent-log]");
+  const articles = document.querySelectorAll(".agent-chat-msg-assistant");
+  const last = articles[articles.length - 1];
+  if (!(last instanceof HTMLElement)) {
+    paintChat();
+    return;
+  }
+  let body = last.querySelector(".agent-chat-msg-body");
+  if (!(body instanceof HTMLElement)) {
+    body = document.createElement("div");
+    body.className = "agent-chat-msg-body";
+    last.append(body);
+  }
+  body.replaceChildren();
+  renderMarkdown(content, body);
+  if (log instanceof HTMLElement) {
+    log.scrollTop = log.scrollHeight;
+  }
+}
+
 async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | null): Promise<void> {
   const text = input.value.trim();
   if ((!text && !pendingImages.length) || text.length > MAX_MESSAGE) {
@@ -371,11 +392,11 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   pendingImages = [];
   const quoted = replyTo;
   replyTo = "";
-  const now = Date.now();
-  turns.push({ role: "user", content: message, ms: 0, at: now, images, replyTo: quoted || undefined });
+  const sentAt = Date.now();
+  turns.push({ role: "user", content: message, ms: 0, at: sentAt, images, replyTo: quoted || undefined });
   input.value = "";
   growInput(input);
-  const assistant: AgentTurn = { role: "assistant", content: "", ms: undefined, at: now };
+  const assistant: AgentTurn = { role: "assistant", content: "", ms: undefined, at: undefined };
   turns.push(assistant);
   paintChat();
   syncSend(input, send);
@@ -387,13 +408,14 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
     const result = await postChatStream(quoted ? `${quoted}\n\n${message}` : message, history, (delta) => {
       assistant.content += delta;
       assistant.ms = Date.now() - started;
-      paintChat();
+      paintAssistantStream(assistant.content);
     });
     assistant.ms = Date.now() - started;
     if (result.status === 200 && result.data.ok && (result.data.text || assistant.content)) {
       if (result.data.text) {
         assistant.content = result.data.text;
       }
+      assistant.at = Date.now();
       paintChat();
       return;
     }
