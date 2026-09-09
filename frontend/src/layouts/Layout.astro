@@ -36,6 +36,7 @@ const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\
 const isEreport = htmlPage.startsWith("ereport");
 const privateByDefault =
   path.startsWith("/session") ||
+  path.startsWith("/admin") ||
   path === "/diagnostics" ||
   path.startsWith("/ereport");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
@@ -189,6 +190,10 @@ const jsonLdString =
           <a href="/diagnostics" data-route data-admin-only hidden aria-current={path === "/diagnostics" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
             Diagnostics
+          </a>
+          <a href="/admin/users" data-route data-admin-only hidden aria-current={path === "/admin/users" ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
+            Users
           </a>
           <button type="button" data-open-agent data-admin-only hidden>
             <span class="material-symbols-outlined" aria-hidden="true">terminal</span>

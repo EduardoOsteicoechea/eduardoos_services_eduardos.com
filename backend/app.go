@@ -137,6 +137,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /profile/avatar", a.uploadAvatarHandler)
 	mux.HandleFunc("DELETE /profile/avatar", a.deleteAvatarHandler)
 	mux.HandleFunc("GET /profile/avatar", a.getAvatarHandler)
+	mux.HandleFunc("GET /api/admin/users", a.listUsersHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
 	mux.HandleFunc("POST /api/chat", a.publicChatHandler)

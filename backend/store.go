@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"sort"
 	"sync"
 	"time"
 )
@@ -143,6 +144,7 @@ type DataStore interface {
 	UserByEmail(ctx context.Context, emailNorm string) (*User, error)
 	UserByUsername(ctx context.Context, usernameNorm string) (*User, error)
 	CountAdmins(ctx context.Context) (int64, error)
+	ListUsers(ctx context.Context) ([]*User, error)
 	InsertSession(ctx context.Context, sess *Session) error
 	UpdateSession(ctx context.Context, sess *Session) error
 	SessionByID(ctx context.Context, id string) (*Session, error)
@@ -275,6 +277,19 @@ func (s *memoryStore) CountAdmins(context.Context) (int64, error) {
 		}
 	}
 	return n, nil
+}
+
+func (s *memoryStore) ListUsers(_ context.Context) ([]*User, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	list := make([]*User, 0, len(s.users))
+	for _, user := range s.users {
+		list = append(list, user.clone())
+	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].CreatedAt.After(list[j].CreatedAt)
+	})
+	return list, nil
 }
 
 func (s *memoryStore) InsertSession(_ context.Context, sess *Session) error {

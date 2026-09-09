@@ -38,6 +38,23 @@ export type DiagnosticsResult = APIErrorBody & {
   };
 };
 
+export type AdminUserRow = {
+  id: string;
+  email: string;
+  username: string;
+  display_name?: string | null;
+  role: string;
+  status: string;
+  email_verified: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type AdminUsersResponse = APIErrorBody & {
+  users?: AdminUserRow[];
+  count?: number;
+};
+
 export type ChatTurn = {
   role: "user" | "assistant";
   content: string;
@@ -235,6 +252,10 @@ export async function getCsrf(): Promise<string> {
 
 export async function getMe(): Promise<{ status: number; data: MeResponse; requestId: string }> {
   return apiSend<MeResponse>("/auth/me");
+}
+
+export async function getAdminUsers(): Promise<{ status: number; data: AdminUsersResponse; requestId: string }> {
+  return apiSend<AdminUsersResponse>("/admin/users");
 }
 
 export async function postJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {

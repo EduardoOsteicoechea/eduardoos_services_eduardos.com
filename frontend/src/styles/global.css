@@ -994,6 +994,34 @@ section.diag .panel:not(form) {
   border-radius: var(--border-radius);
 }
 
+.admin-users-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.admin-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-xs);
+}
+
+.admin-users-table th,
+.admin-users-table td {
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-users-table thead th {
+  font-size: var(--font-size-sm);
+  background: var(--color-surface);
+}
+
+.admin-users-table tbody tr:nth-child(even) {
+  background: var(--color-surface);
+}
+
 /* Phone + tablet: top/bottom activity bars, horizontal content insets none */
 @media (max-width: 63.999rem) {
   :root {

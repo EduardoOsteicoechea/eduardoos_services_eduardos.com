@@ -1,0 +1,169 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Users" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-users-refresh title="Refresh list" aria-label="Refresh list">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="diag" data-admin-users>
+    <h1>Registered users</h1>
+    <p class="lede">
+      Administrator-only list of accounts on this site. Data is loaded from the Go API
+      after your session is verified.
+    </p>
+
+    <p class="status" data-banner>Checking session…</p>
+
+    <div class="panel" data-table-wrap hidden>
+      <p class="hint" data-count></p>
+      <div class="admin-users-scroll">
+        <table class="admin-users-table">
+          <thead>
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">Username</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Verified</th>
+              <th scope="col">Created</th>
+            </tr>
+          </thead>
+          <tbody data-users-body></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { getAdminUsers, getMe } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+
+  const root = document.querySelector("[data-admin-users]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const tableWrap = root.querySelector("[data-table-wrap]");
+    const count = root.querySelector("[data-count]");
+    const body = root.querySelector("[data-users-body]");
+    const refreshBtn = document.querySelector("[data-users-refresh]");
+
+    const setBanner = (text: string, kind = "") => {
+      if (!(banner instanceof HTMLElement)) {
+        return;
+      }
+      banner.textContent = text;
+      banner.className = `status ${kind}`.trim();
+    };
+
+    const showTable = (visible: boolean) => {
+      if (tableWrap instanceof HTMLElement) {
+        tableWrap.hidden = !visible;
+      }
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showTable(false);
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
+    const formatDate = (value: string) => {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) {
+        return value;
+      }
+      return date.toLocaleString();
+    };
+
+    const renderRows = (users: Array<{
+      email: string;
+      username: string;
+      role: string;
+      status: string;
+      email_verified: boolean;
+      created_at: string;
+    }>) => {
+      if (!(body instanceof HTMLElement)) {
+        return;
+      }
+      body.replaceChildren();
+      for (const user of users) {
+        const row = document.createElement("tr");
+        const cells = [
+          user.email,
+          user.username,
+          user.role,
+          user.status,
+          user.email_verified ? "yes" : "no",
+          formatDate(user.created_at),
+        ];
+        for (const text of cells) {
+          const cell = document.createElement("td");
+          cell.textContent = text;
+          row.appendChild(cell);
+        }
+        body.appendChild(row);
+      }
+      if (count instanceof HTMLElement) {
+        count.textContent = `${users.length} registered user${users.length === 1 ? "" : "s"}.`;
+      }
+    };
+
+    const loadUsers = async () => {
+      setBanner("Loading users…");
+      const result = await getAdminUsers();
+      if (result.status === 401 || result.status === 403) {
+        fail(result.data.message || "Unauthorized.", result.data.request_id, result.data.debug);
+        document.querySelectorAll("[data-admin-only]").forEach((node) => node.setAttribute("hidden", ""));
+        return;
+      }
+      if (result.status >= 400) {
+        fail(result.data.message || "Could not load users.", result.data.request_id, result.data.debug);
+        return;
+      }
+      const users = result.data.users ?? [];
+      renderRows(users);
+      showTable(true);
+      setBanner("User list loaded.", "ok");
+    };
+
+    const applyMe = async () => {
+      const { status, data } = await getMe();
+      if (status === 401) {
+        fail("Sign in with an administrator account.");
+        document.querySelectorAll("[data-admin-only]").forEach((node) => node.setAttribute("hidden", ""));
+        return;
+      }
+      if (status !== 200) {
+        fail(data.message || "Could not load the session.", data.request_id, data.debug);
+        return;
+      }
+      if (data.role !== "admin") {
+        fail("Unauthorized.", data.request_id, data.debug);
+        document.querySelectorAll("[data-admin-only]").forEach((node) => node.setAttribute("hidden", ""));
+        return;
+      }
+      document.querySelectorAll("[data-admin-only]").forEach((node) => node.removeAttribute("hidden"));
+      await loadUsers();
+    };
+
+    void applyMe();
+
+    refreshBtn?.addEventListener("click", () => {
+      void loadUsers();
+    });
+  }
+</script>

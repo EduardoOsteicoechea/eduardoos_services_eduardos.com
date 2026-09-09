@@ -15,6 +15,7 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes("/session") &&
+        !page.includes("/admin") &&
         !page.includes("/diagnostics") &&
         !page.includes("/ereport"),
     }),

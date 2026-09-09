@@ -171,6 +171,26 @@ func (s *mongoStore) CountAdmins(ctx context.Context) (int64, error) {
 	return s.users().CountDocuments(ctx, bson.M{"role": roleAdmin})
 }
 
+func (s *mongoStore) ListUsers(ctx context.Context) ([]*User, error) {
+	cur, err := s.users().Find(ctx, bson.M{}, options.Find().SetSort(bson.D{{Key: "created_at", Value: -1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	list := make([]*User, 0)
+	for cur.Next(ctx) {
+		var user User
+		if err := cur.Decode(&user); err != nil {
+			return nil, err
+		}
+		list = append(list, &user)
+	}
+	if err := cur.Err(); err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
 func (s *mongoStore) InsertSession(ctx context.Context, sess *Session) error {
 	_, err := s.sessions().InsertOne(ctx, sess)
 	return err
