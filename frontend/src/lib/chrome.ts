@@ -6,7 +6,7 @@ import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
-const LEFT_PANELS = ["main-menu", "dynamic-header"] as const;
+const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
 
 declare global {
   interface Window {
@@ -78,13 +78,13 @@ function isEreportPage(): boolean {
   return (document.documentElement.dataset.page || "").startsWith("ereport");
 }
 
-function isPhoneChrome(): boolean {
-  return window.matchMedia("(max-width: 47.999rem)").matches;
+function isCompactChrome(): boolean {
+  return window.matchMedia("(max-width: 63.999rem)").matches;
 }
 
-function closeLeft(except?: string): void {
-  for (const id of LEFT_PANELS) {
-    if (id === "dynamic-header" && isEreportPage() && !isPhoneChrome()) {
+function closeAllPanels(except?: string): void {
+  for (const id of ALL_PANELS) {
+    if (id === "dynamic-header" && isEreportPage() && !isCompactChrome()) {
       continue;
     }
     if (id !== except) {
@@ -100,12 +100,7 @@ function togglePanel(id: string): void {
     return;
   }
   const next = node.hidden;
-  if (id === "agent-sidebar") {
-    setPanelHidden(id, !next);
-    syncExpanded();
-    return;
-  }
-  closeLeft(next ? id : undefined);
+  closeAllPanels(next ? id : undefined);
   setPanelHidden(id, !next);
   syncExpanded();
 }
@@ -162,11 +157,10 @@ function applyHeaderCollapsed(collapsed: boolean, focusToggle: boolean): void {
   document.querySelectorAll("[data-header-chrome]").forEach((node) => {
     setChromeHidden(node, collapsed);
   });
+  setChromeHidden(document.querySelector(".app-header--end"), collapsed);
   setChromeHidden(document.querySelector(".agent-fab"), collapsed);
   if (collapsed) {
-    closeLeft();
-    setPanelHidden("agent-sidebar", true);
-    syncExpanded();
+    closeAllPanels();
   }
   syncCollapseButton();
   if (focusToggle) {
@@ -231,7 +225,7 @@ function syncEreportChrome(): void {
   setChromeHidden(document.querySelector(".agent-fab"), true);
   setChromeHidden(document.querySelector(".header-collapse"), true);
   const opener = document.querySelector(".header-dynamic");
-  if (!isPhoneChrome()) {
+  if (!isCompactChrome()) {
     setPanelHidden("dynamic-header", false);
     if (opener instanceof HTMLElement) {
       opener.hidden = true;
@@ -291,7 +285,7 @@ export function startChrome(): void {
             return;
           }
           await refreshAuthChrome();
-          closeLeft();
+          closeAllPanels();
           go("/session");
         })();
         return;
@@ -321,12 +315,11 @@ export function startChrome(): void {
         return;
       }
       if (node?.closest("[data-close-menu]")) {
-        closeLeft();
+        closeAllPanels();
         return;
       }
       if (node?.closest("[data-open-agent]")) {
         event.preventDefault();
-        closeLeft();
         togglePanel("agent-sidebar");
         return;
       }
@@ -339,18 +332,14 @@ export function startChrome(): void {
         return;
       }
       if (node?.closest("a[data-route]") && node.closest(".sidebar-left, .sidebar-right")) {
-        closeLeft();
-        setPanelHidden("agent-sidebar", true);
-        syncExpanded();
+        closeAllPanels();
         return;
       }
       if (
         event.target instanceof Element &&
         !event.target.closest(".app-header, .sidebar-left, .sidebar-right, .agent-fab")
       ) {
-        closeLeft();
-        setPanelHidden("agent-sidebar", true);
-        syncExpanded();
+        closeAllPanels();
       }
     });
 
@@ -358,9 +347,7 @@ export function startChrome(): void {
       if (event.key !== "Escape") {
         return;
       }
-      closeLeft();
-      setPanelHidden("agent-sidebar", true);
-      syncExpanded();
+      closeAllPanels();
     });
 
     document.addEventListener("astro:after-swap", () => {
