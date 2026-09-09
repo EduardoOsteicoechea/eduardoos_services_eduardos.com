@@ -202,7 +202,50 @@ function syncEreportChrome(): void {
   }
 }
 
+function applyStoredTheme(): void {
+  try {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "light" || storedTheme === "dark") {
+      document.documentElement.dataset.theme = storedTheme;
+    }
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
+function applyStoredFont(): void {
+  try {
+    const storedFont = localStorage.getItem("root-font-size");
+    if (storedFont) {
+      document.documentElement.style.fontSize = storedFont;
+    }
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
+function applyStoredPreferences(): void {
+  applyStoredTheme();
+  applyStoredFont();
+}
+
+function stampDocumentPreferences(doc: Document): void {
+  try {
+    const theme = localStorage.getItem("theme");
+    if (theme === "light" || theme === "dark") {
+      doc.documentElement.dataset.theme = theme;
+    }
+    const font = localStorage.getItem("root-font-size");
+    if (font) {
+      doc.documentElement.style.fontSize = font;
+    }
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
 function restoreChromeAfterNavigation(): void {
+  applyStoredPreferences();
   clearHeaderCollapsed();
   syncEreportChrome();
   syncExpanded();
@@ -215,17 +258,9 @@ export function startChrome(): void {
   startClientRouting();
   sessionLogStorage("chrome.start");
 
-  const storedTheme = localStorage.getItem("theme");
-  if (storedTheme === "light" || storedTheme === "dark") {
-    document.documentElement.dataset.theme = storedTheme;
-  }
-  sessionLog("chrome.theme.restore", { storedTheme, applied: document.documentElement.dataset.theme });
-
-  const storedFont = localStorage.getItem("root-font-size");
-  if (storedFont) {
-    document.documentElement.style.fontSize = storedFont;
-  }
-  sessionLog("chrome.font.restore", { storedFont, applied: document.documentElement.style.fontSize });
+  applyStoredPreferences();
+  sessionLog("chrome.theme.restore", { storedTheme: localStorage.getItem("theme"), applied: document.documentElement.dataset.theme });
+  sessionLog("chrome.font.restore", { storedFont: localStorage.getItem("root-font-size"), applied: document.documentElement.style.fontSize });
 
   if (!window.__chromeStarted) {
     window.__chromeStarted = true;
@@ -307,6 +342,13 @@ export function startChrome(): void {
         return;
       }
       closeAllPanels();
+    });
+
+    document.addEventListener("astro:before-swap", (event) => {
+      const next = (event as Event & { newDocument?: Document }).newDocument;
+      if (next) {
+        stampDocumentPreferences(next);
+      }
     });
 
     document.addEventListener("astro:after-swap", () => {

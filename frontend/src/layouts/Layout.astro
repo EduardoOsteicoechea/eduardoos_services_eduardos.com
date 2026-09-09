@@ -50,6 +50,20 @@ const jsonLdString =
 <html lang="en" data-theme="dark" data-page={htmlPage || undefined}>
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem("theme");
+          if (theme === "light" || theme === "dark") {
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+          const font = localStorage.getItem("root-font-size");
+          if (font) {
+            document.documentElement.style.fontSize = font;
+          }
+        } catch (_) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
