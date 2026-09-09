@@ -35,6 +35,7 @@ function syncExpanded(): void {
     [".header-menu", "main-menu"],
     [".header-dynamic", "dynamic-header"],
     [".agent-fab", "agent-sidebar"],
+    [".agent-chat-collapse", "agent-sidebar"],
   ];
   for (const [selector, id] of pairs) {
     const open = panelOpen(id);
@@ -43,6 +44,16 @@ function syncExpanded(): void {
         return;
       }
       button.setAttribute("aria-expanded", open ? "true" : "false");
+      if (selector === ".agent-chat-collapse") {
+        const hideLabel = button.dataset.labelHide || "Hide AI agent";
+        const showLabel = button.dataset.labelShow || "Show AI agent";
+        button.setAttribute("aria-label", open ? hideLabel : showLabel);
+        button.setAttribute("title", open ? hideLabel : showLabel);
+        const icon = button.querySelector(".material-symbols-outlined");
+        if (icon instanceof HTMLElement) {
+          icon.textContent = open ? "chevron_right" : "chevron_left";
+        }
+      }
       if (selector === ".header-dynamic" && isEreportPage()) {
         button.setAttribute("aria-label", open ? "Close tools" : "Open tools");
         button.setAttribute("title", open ? "Close tools" : "Open tools");
@@ -297,7 +308,7 @@ export function startChrome(): void {
         setHeaderCollapsed(!headerCollapsed());
         return;
       }
-      if (node?.closest(".agent-fab")) {
+      if (node?.closest(".agent-fab") || node?.closest(".agent-chat-collapse") || node?.closest("[data-agent-collapse]")) {
         togglePanel("agent-sidebar");
         return;
       }

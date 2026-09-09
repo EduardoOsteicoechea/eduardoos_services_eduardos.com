@@ -228,8 +228,8 @@ const jsonLdString =
       </main>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
-        <button class="agent-chat-resize icon-btn" type="button" data-agent-resize aria-label="Resize chat">
-          <span class="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
+        <button class="agent-chat-collapse" type="button" data-agent-collapse aria-controls="agent-sidebar" aria-expanded="false" aria-label="Hide AI agent" title="Hide AI agent">
+          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
         </button>
         <div class="agent-chat-log" data-agent-log>
           <p class="hint" data-agent-empty>Ask a short question about this site.</p>
@@ -242,25 +242,29 @@ const jsonLdString =
         <form class="agent-chat-form" data-agent-form>
           <p class="agent-chat-reply" data-agent-reply hidden></p>
           <div class="agent-chat-composer">
-            <div class="agent-chat-compose-main">
+            <div class="agent-chat-compose-row">
               <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message" placeholder="Ask a short question about this site."></textarea>
+              <div class="agent-chat-tools">
+                <button class="icon-btn" type="button" data-agent-new aria-label="New chat">
+                  <span class="material-symbols-outlined" aria-hidden="true">add_comment</span>
+                </button>
+                <button class="icon-btn" type="button" data-agent-history-toggle aria-expanded="false" aria-label="Chat history">
+                  <span class="material-symbols-outlined" aria-hidden="true">history</span>
+                </button>
+              </div>
+            </div>
+            <div class="agent-chat-compose-row">
               <div class="agent-chat-drop" data-agent-drop>
                 <input type="file" data-agent-files accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden />
                 <span class="material-symbols-outlined" aria-hidden="true">imagesmode</span>
                 <span class="hint" data-agent-drop-label>Images</span>
                 <div class="agent-chat-thumbs" data-agent-thumbs></div>
               </div>
-            </div>
-            <div class="agent-chat-tools">
-              <button class="icon-btn" type="button" data-agent-new aria-label="New chat">
-                <span class="material-symbols-outlined" aria-hidden="true">add_comment</span>
-              </button>
-              <button class="icon-btn" type="button" data-agent-history-toggle aria-expanded="false" aria-label="Chat history">
-                <span class="material-symbols-outlined" aria-hidden="true">history</span>
-              </button>
-              <button class="icon-btn" type="submit" data-agent-send disabled aria-label="Send">
-                <span class="material-symbols-outlined" aria-hidden="true">send</span>
-              </button>
+              <div class="agent-chat-tools">
+                <button class="icon-btn" type="submit" data-agent-send disabled aria-label="Send">
+                  <span class="material-symbols-outlined" aria-hidden="true">send</span>
+                </button>
+              </div>
             </div>
           </div>
         </form>

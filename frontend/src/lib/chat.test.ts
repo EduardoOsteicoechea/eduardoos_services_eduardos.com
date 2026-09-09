@@ -15,7 +15,7 @@ vi.mock("./error-modal", () => ({
 function mountTray(): void {
   document.body.innerHTML = `
     <aside id="agent-sidebar">
-      <button type="button" data-agent-resize aria-label="Resize chat"></button>
+      <button type="button" data-agent-collapse aria-label="Hide AI agent"></button>
       <p data-agent-empty>Ask a short question about this site.</p>
       <div data-agent-log></div>
       <div data-agent-select-bar hidden>
@@ -105,12 +105,11 @@ describe("agent chat tray", () => {
     expect(log.contains(empty)).toBe(true);
   });
 
-  it("widens the tray from the border handle", () => {
+  it("applies the default tray width", () => {
     mountTray();
     startAgentChat();
     const aside = document.getElementById("agent-sidebar") as HTMLElement;
-    const handle = document.querySelector("[data-agent-resize]") as HTMLElement;
-    handle.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true, cancelable: true }));
-    expect(aside.style.width).toBe("21rem");
+    expect(aside.style.width).toBe("20rem");
+    expect(aside.style.getPropertyValue("--agent-sidebar-width")).toBe("20rem");
   });
 });
