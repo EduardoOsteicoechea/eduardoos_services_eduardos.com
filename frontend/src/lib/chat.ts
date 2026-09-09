@@ -27,6 +27,7 @@ const copy = {
 
 type AgentTurn = ChatTurn & {
   ms?: number;
+  at?: number;
   images?: string[];
   replyTo?: string;
 };
@@ -60,11 +61,11 @@ function revokeAll(urls: string[]): void {
   }
 }
 
-function formatMs(ms: number): string {
-  if (ms < 1000) {
-    return `${(ms / 1000).toFixed(1)}s`;
-  }
-  return `${Math.round(ms / 1000)}s`;
+function formatClock(at: number): string {
+  const d = new Date(at);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  return `${hh}:${mm}`;
 }
 
 function chatErrorMessage(status: number, data: { error?: string; message?: string }): string {
@@ -141,7 +142,7 @@ function paintChat(): void {
     const head = document.createElement("header");
     head.className = "agent-chat-msg-head";
     const time = document.createElement("span");
-    time.textContent = turn.ms === undefined ? "…" : formatMs(turn.ms);
+    time.textContent = turn.at === undefined ? "…" : formatClock(turn.at);
     const more = document.createElement("button");
     more.className = "icon-btn";
     more.type = "button";
@@ -370,10 +371,11 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   pendingImages = [];
   const quoted = replyTo;
   replyTo = "";
-  turns.push({ role: "user", content: message, ms: 0, images, replyTo: quoted || undefined });
+  const now = Date.now();
+  turns.push({ role: "user", content: message, ms: 0, at: now, images, replyTo: quoted || undefined });
   input.value = "";
   growInput(input);
-  const assistant: AgentTurn = { role: "assistant", content: "", ms: undefined };
+  const assistant: AgentTurn = { role: "assistant", content: "", ms: undefined, at: now };
   turns.push(assistant);
   paintChat();
   syncSend(input, send);

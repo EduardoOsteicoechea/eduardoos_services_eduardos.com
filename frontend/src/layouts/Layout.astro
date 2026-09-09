@@ -157,7 +157,8 @@ const jsonLdString =
           </button>
         </header>
         <nav aria-label="Primary">
-          <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
+          <div class="sidebar-nav-section sidebar-nav-section--routes">
+            <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">home</span>
             Home
           </a>
@@ -185,7 +186,9 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
             Agent Sandbox
           </button>
-          <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
+          </div>
+          <div class="sidebar-nav-section sidebar-nav-section--session">
+            <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">login</span>
             Sign in
           </a>
@@ -213,6 +216,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             Sign out
           </button>
+          </div>
         </nav>
       </aside>
 
@@ -231,10 +235,7 @@ const jsonLdString =
       </main>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
-        <button class="agent-chat-collapse" type="button" data-agent-collapse aria-controls="agent-sidebar" aria-expanded="false" aria-label="Hide AI agent" title="Hide AI agent">
-          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-        </button>
-        <div class="agent-chat-log" data-agent-log>
+<div class="agent-chat-log" data-agent-log>
           <p class="hint" data-agent-empty>Ask a short question about this site.</p>
         </div>
         <div class="agent-chat-select-bar" data-agent-select-bar hidden>
