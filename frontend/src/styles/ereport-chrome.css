@@ -89,8 +89,7 @@ html[data-page^="ereport"] .app-header {
   border: var(--border_001);
 }
 
-html[data-page^="ereport"] .agent-fab,
-html[data-page^="ereport"] .header-collapse {
+html[data-page^="ereport"] .agent-fab {
   display: none;
 }
 

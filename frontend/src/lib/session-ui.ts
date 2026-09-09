@@ -413,19 +413,27 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
   setBanner(root, copy.loading);
   sessionLog("session.requireAuth.start");
   const fallback = root.querySelector("[data-guest-fallback]");
-  const panel = root.querySelector("[data-authed-panel]");
+  const panels = Array.from(root.querySelectorAll("[data-authed-panel]")).filter(
+    (node): node is HTMLElement => node instanceof HTMLElement,
+  );
+  const setPanelsHidden = (hidden: boolean) => {
+    for (const panel of panels) {
+      panel.hidden = hidden;
+    }
+  };
+
   try {
     const { status, data } = await getMe();
     sessionLog("session.requireAuth.me", { status, userId: data.id, role: data.role, error: data.error });
     if (status === 401) {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
-      if (panel instanceof HTMLElement) panel.hidden = true;
+      setPanelsHidden(true);
       setBanner(root, copy.unauthorized, "err");
       return null;
     }
     if (status !== 200) {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
-      if (panel instanceof HTMLElement) panel.hidden = true;
+      setPanelsHidden(true);
       setBanner(root, copy.loadError, "err");
       showErrorModal({
         message: data.message || copy.loadError,
@@ -436,11 +444,11 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
       return null;
     }
     if (fallback instanceof HTMLElement) fallback.hidden = true;
-    if (panel instanceof HTMLElement) panel.hidden = false;
+    setPanelsHidden(false);
     return data;
   } catch {
     if (fallback instanceof HTMLElement) fallback.hidden = false;
-    if (panel instanceof HTMLElement) panel.hidden = true;
+    setPanelsHidden(true);
     setBanner(root, copy.loadError, "err");
     showErrorModal({ message: copy.loadError });
     return null;

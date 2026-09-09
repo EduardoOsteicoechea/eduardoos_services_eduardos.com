@@ -41,19 +41,19 @@ import Layout from "../../layouts/Layout.astro";
         <a href="/session/change-password" data-route>Change password</a>
         <a href="/api-docs" data-route>API docs</a>
       </p>
-      <div data-apikeys>
-        <h2>API keys</h2>
-        <p class="hint">Keys are shown once. They require the api product entitlement. External clients use Bearer keys only for /api/v1; signed-in pages keep cookie auth.</p>
-        <form data-apikey-form>
-          <label>
-            Label
-            <input name="label" required maxlength="80" />
-          </label>
-          <button type="submit">Create key</button>
-        </form>
-        <p class="hint" data-apikey-secret hidden></p>
-        <ul class="ereport-list" data-apikey-list></ul>
-      </div>
+    </div>
+    <div class="panel" data-apikeys data-authed-panel hidden>
+      <h2>API keys</h2>
+      <p class="hint">Keys are shown once. They require the api product entitlement. External clients use Bearer keys only for /api/v1; signed-in pages keep cookie auth.</p>
+      <form data-apikey-form>
+        <label>
+          Label
+          <input name="label" required maxlength="80" />
+        </label>
+        <button type="submit">Create key</button>
+      </form>
+      <p class="hint" data-apikey-secret hidden></p>
+      <ul class="ereport-list" data-apikey-list></ul>
     </div>
   </section>
 </Layout>
