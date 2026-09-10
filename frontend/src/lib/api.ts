@@ -66,6 +66,12 @@ export type ChatResponse = APIErrorBody & {
 };
 
 let csrfToken = "";
+let csrfInFlight: Promise<string> | null = null;
+let refreshInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+
+const SESSION_HINT_KEY = "eduardoos.session-hint";
+const REFRESH_LOCK_KEY = "eduardoos.refresh-lock";
+const REFRESH_LOCK_MS = 15000;
 
 function apiUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
@@ -86,6 +92,77 @@ export function currentCsrf(): string {
 export function resetCsrfMemory(): void {
   sessionLog("csrf.reset");
   csrfToken = "";
+  csrfInFlight = null;
+}
+
+export function markSessionHint(): void {
+  try {
+    sessionStorage.setItem(SESSION_HINT_KEY, "1");
+    sessionLog("session.hint.set");
+  } catch {
+    /* private mode */
+  }
+}
+
+export function clearSessionHint(): void {
+  try {
+    sessionStorage.removeItem(SESSION_HINT_KEY);
+    sessionLog("session.hint.clear");
+  } catch {
+    /* private mode */
+  }
+}
+
+export function hasSessionHint(): boolean {
+  try {
+    return sessionStorage.getItem(SESSION_HINT_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function isAuthPath(path: string): boolean {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  const normalized = p.startsWith("/api/") ? p.slice(4) : p;
+  return (
+    normalized === "/auth/me" ||
+    normalized === "/auth/csrf" ||
+    normalized === "/auth/refresh" ||
+    normalized === "/auth/login" ||
+    normalized === "/auth/logout" ||
+    normalized === "/auth/register" ||
+    normalized.startsWith("/auth/")
+  );
+}
+
+async function withRefreshLock<T>(fn: () => Promise<T>): Promise<T> {
+  const locks = typeof navigator !== "undefined" ? navigator.locks : undefined;
+  if (locks?.request) {
+    return locks.request("eduardoos-session-refresh", fn);
+  }
+  const started = Date.now();
+  while (Date.now() - started < REFRESH_LOCK_MS) {
+    try {
+      const raw = localStorage.getItem(REFRESH_LOCK_KEY);
+      const until = raw ? Number(raw) : 0;
+      if (!until || until < Date.now()) {
+        localStorage.setItem(REFRESH_LOCK_KEY, String(Date.now() + REFRESH_LOCK_MS));
+        break;
+      }
+    } catch {
+      break;
+    }
+    await new Promise((r) => setTimeout(r, 50));
+  }
+  try {
+    return await fn();
+  } finally {
+    try {
+      localStorage.removeItem(REFRESH_LOCK_KEY);
+    } catch {
+      /* ignore */
+    }
+  }
 }
 
 export type LoginPayload = {
@@ -134,7 +211,11 @@ function isUnsafe(method: string): boolean {
 
 const apiTimeoutMs = 12000;
 
-let refreshInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+type ApiSendOpts = {
+  skipAuthRetry?: boolean;
+  skipCsrfRetry?: boolean;
+  forceCsrfRefresh?: boolean;
+};
 
 function timeoutSignal(existing?: AbortSignal | null): { signal: AbortSignal; cancel: () => void } {
   const controller = new AbortController();
@@ -150,12 +231,39 @@ function timeoutSignal(existing?: AbortSignal | null): { signal: AbortSignal; ca
   return { signal: controller.signal, cancel };
 }
 
-async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+function logApiFailure(
+  method: string,
+  path: string,
+  status: number,
+  data: APIErrorBody,
+  requestId: string,
+): void {
+  if (status < 400 && status !== 0) {
+    return;
+  }
+  if (path.includes("/auth/me") && status === 401) {
+    return;
+  }
+  console.error("[api.error]", {
+    method,
+    path,
+    status,
+    requestId,
+    error: data.error,
+    message: data.message,
+  });
+}
+
+async function apiSend<T>(
+  path: string,
+  init: RequestInit = {},
+  opts: ApiSendOpts = {},
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   const headers = new Headers(init.headers);
   headers.set("Accept", "application/json");
   const method = (init.method || "GET").toUpperCase();
   if (isUnsafe(method)) {
-    await getCsrf();
+    await getCsrf(opts.forceCsrfRefresh);
     if (csrfToken) {
       headers.set("X-CSRF-Token", csrfToken);
     }
@@ -167,6 +275,7 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
     url,
     hasCsrfHeader: headers.has("X-CSRF-Token"),
     csrfInMemory: Boolean(csrfToken),
+    skipAuthRetry: Boolean(opts.skipAuthRetry),
   });
   sessionLogCookies(`before ${method} ${path}`);
   try {
@@ -184,6 +293,9 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
     if (response.ok && typeof data.csrf === "string" && data.csrf) {
       rememberCsrf(data.csrf);
     }
+    if (response.ok && (data as MeResponse).id) {
+      markSessionHint();
+    }
     sessionLog("api.response", {
       method,
       path,
@@ -193,9 +305,41 @@ async function apiSend<T>(path: string, init: RequestInit = {}): Promise<{ statu
       hasUser: Boolean((data as MeResponse).id),
     });
     sessionLogCookies(`after ${method} ${path}`);
+
+    if (
+      response.status === 401 &&
+      !opts.skipAuthRetry &&
+      !isAuthPath(path) &&
+      hasSessionHint()
+    ) {
+      sessionLog("api.unauthorized_retry_refresh", { path, method });
+      const refreshed = await refreshSession();
+      if (refreshed.status === 200 && refreshed.data.id) {
+        return apiSend<T>(path, init, { ...opts, skipAuthRetry: true });
+      }
+    }
+
+    if (
+      response.status === 403 &&
+      isUnsafe(method) &&
+      !opts.skipCsrfRetry &&
+      data.error === "forbidden"
+    ) {
+      sessionLog("api.forbidden_retry_csrf", { path, method, error: data.error });
+      resetCsrfMemory();
+      return apiSend<T>(path, init, { ...opts, skipCsrfRetry: true, forceCsrfRefresh: true });
+    }
+
+    logApiFailure(method, path, response.status, data, requestId);
     return { status: response.status, data, requestId };
   } catch (err) {
     sessionLog("api.network_error", {
+      method,
+      path,
+      error: err instanceof Error ? err.name : "unknown",
+      message: err instanceof Error ? err.message : String(err),
+    });
+    console.error("[api.network_error]", {
       method,
       path,
       error: err instanceof Error ? err.name : "unknown",
@@ -234,47 +378,90 @@ export function getInfo(): Promise<InfoResponse> {
   return apiGet<InfoResponse>("/info");
 }
 
-export async function getCsrf(): Promise<string> {
-  sessionLog("csrf.fetch_start");
-  const headers = new Headers();
-  headers.set("Accept", "application/json");
-  const response = await fetch(apiUrl("/auth/csrf"), {
-    method: "GET",
-    headers,
-    credentials: "include",
-  });
-  const data = await parseJSON<{ csrf?: string }>(response);
-  sessionLog("csrf.fetch_done", { status: response.status, tokenLength: data.csrf?.length ?? 0 });
-  sessionLogCookies("after /auth/csrf");
-  if (response.status === 200) {
-    rememberCsrf(data.csrf);
+export async function getCsrf(force = false): Promise<string> {
+  if (!force && csrfToken) {
+    sessionLog("csrf.reuse_memory", { tokenLength: csrfToken.length });
+    return csrfToken;
   }
-  return csrfToken;
+  if (force) {
+    if (csrfInFlight) {
+      try {
+        await csrfInFlight;
+      } catch {
+        /* ignore prior mint failure */
+      }
+    }
+    csrfToken = "";
+    csrfInFlight = null;
+  }
+  if (!csrfInFlight) {
+    sessionLog("csrf.fetch_start", { force });
+    csrfInFlight = (async () => {
+      const timed = timeoutSignal();
+      try {
+        const headers = new Headers();
+        headers.set("Accept", "application/json");
+        const response = await fetch(apiUrl("/auth/csrf"), {
+          method: "GET",
+          headers,
+          credentials: "include",
+          signal: timed.signal,
+        });
+        const data = await parseJSON<{ csrf?: string }>(response);
+        sessionLog("csrf.fetch_done", { status: response.status, tokenLength: data.csrf?.length ?? 0 });
+        sessionLogCookies("after /auth/csrf");
+        if (response.status === 200) {
+          rememberCsrf(data.csrf);
+        }
+        return csrfToken;
+      } finally {
+        timed.cancel();
+        csrfInFlight = null;
+      }
+    })();
+  }
+  return csrfInFlight;
 }
 
 export async function refreshSession(): Promise<{ status: number; data: MeResponse; requestId: string }> {
   if (!refreshInFlight) {
     sessionLog("session.refresh.start");
-    refreshInFlight = postJSON<MeResponse>("/auth/refresh", {}).finally(() => {
+    refreshInFlight = withRefreshLock(async () => {
+      const result = await postJSON<MeResponse>("/auth/refresh", {});
+      sessionLog("session.refresh.done", { status: result.status, userId: result.data.id });
+      if (result.status === 200 && result.data.id) {
+        markSessionHint();
+      } else if (result.status === 401) {
+        clearSessionHint();
+      }
+      return result;
+    }).finally(() => {
       refreshInFlight = null;
     });
   }
-  const result = await refreshInFlight;
-  sessionLog("session.refresh.done", { status: result.status, userId: result.data.id });
-  return result;
+  return refreshInFlight;
 }
 
 export async function getMe(): Promise<{ status: number; data: MeResponse; requestId: string }> {
-  const first = await apiSend<MeResponse>("/auth/me");
+  const first = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+  if (first.status === 200 && first.data.id) {
+    markSessionHint();
+    return first;
+  }
   if (first.status !== 401) {
+    return first;
+  }
+  if (!hasSessionHint()) {
+    sessionLog("session.me.guest_skip_refresh");
     return first;
   }
   sessionLog("session.me.unauthorized_try_refresh");
   const refreshed = await refreshSession();
   if (refreshed.status !== 200 || !refreshed.data.id) {
+    clearSessionHint();
     return first;
   }
-  return apiSend<MeResponse>("/auth/me");
+  return apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
 }
 
 export async function getAdminUsers(): Promise<{ status: number; data: AdminUsersResponse; requestId: string }> {

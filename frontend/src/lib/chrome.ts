@@ -1,4 +1,4 @@
-import { getMe, postJSON, profileAvatarURL, refreshSession } from "./api";
+import { clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
@@ -7,7 +7,7 @@ import { go, startClientRouting } from "./router";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
-const SESSION_REFRESH_MS = 14 * 60 * 1000;
+const SESSION_REFRESH_MS = 10 * 60 * 1000;
 
 let sessionRefreshTimer: ReturnType<typeof setInterval> | undefined;
 
@@ -195,6 +195,20 @@ function scheduleSessionRefresh(): void {
       clearSessionRefreshTimer();
     });
   }, SESSION_REFRESH_MS);
+  if (typeof document !== "undefined" && !document.documentElement.dataset.sessionVisBound) {
+    document.documentElement.dataset.sessionVisBound = "1";
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "visible") {
+        return;
+      }
+      sessionLog("chrome.visibility.refresh");
+      void refreshSession().then((result) => {
+        if (result.status === 200 && result.data.id) {
+          void refreshAuthChrome();
+        }
+      });
+    });
+  }
 }
 
 export async function refreshAuthChrome(): Promise<void> {
@@ -337,6 +351,8 @@ export function startChrome(): void {
             });
             return;
           }
+          resetCsrfMemory();
+          clearSessionHint();
           await refreshAuthChrome();
           closeAllPanels();
           go("/session");

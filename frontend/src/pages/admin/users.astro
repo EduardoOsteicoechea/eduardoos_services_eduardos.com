@@ -141,19 +141,21 @@ import Layout from "../../layouts/Layout.astro";
     };
 
     const applyMe = async () => {
-      const { status, data } = await getMe();
+      const { status, data, requestId } = await getMe();
       if (status === 401) {
-        fail("Sign in with an administrator account.");
+        setBanner("Sign in with an administrator account.", "err");
         document.querySelectorAll("[data-admin-only]").forEach((node) => node.setAttribute("hidden", ""));
+        showTable(false);
         return;
       }
       if (status !== 200) {
-        fail(data.message || "Could not load the session.", data.request_id, data.debug);
+        fail(data.message || "Could not load the session.", data.request_id || requestId, data.debug);
         return;
       }
       if (data.role !== "admin") {
-        fail("Unauthorized.", data.request_id, data.debug);
+        setBanner("Unauthorized.", "err");
         document.querySelectorAll("[data-admin-only]").forEach((node) => node.setAttribute("hidden", ""));
+        showTable(false);
         return;
       }
       document.querySelectorAll("[data-admin-only]").forEach((node) => node.removeAttribute("hidden"));

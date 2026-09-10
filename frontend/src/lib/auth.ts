@@ -3,6 +3,7 @@
  */
 
 import { getMe } from "./api";
+import { mustLog } from "./dev-log";
 
 let sessionOk = false;
 let sessionEmail = "";
@@ -23,10 +24,8 @@ export async function refreshAuthSession(): Promise<boolean> {
   const me = await getMe();
   sessionOk = me.status === 200 && Boolean(me.data.id);
   sessionEmail = (me.data.email || "").trim();
+  if (mustLog) {
+    console.log("[auth] refreshAuthSession", { ok: sessionOk, status: me.status, requestId: me.requestId });
+  }
   return sessionOk;
 }
-
-/** Fire-and-forget warm for early pamphlet mounts. */
-void refreshAuthSession().catch(() => {
-  sessionOk = false;
-});

@@ -667,7 +667,7 @@ func TestWWWOriginRejectedOnLogin(t *testing.T) {
 	app.Handler().ServeHTTP(csrfRec, httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil))
 	var body map[string]string
 	_ = json.NewDecoder(csrfRec.Body).Decode(&body)
-	req := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":}"admin@eduardoos.com","password":"correct-horse-battery"}`))
+	req := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":"admin@eduardoos.com","password":"correct-horse-battery"}`))
 	req.Header.Set("Origin", "https://www.eduardoos.com")
 	req.Header.Set("X-CSRF-Token", body["csrf"])
 	copyCookies(req, csrfRec)
@@ -675,5 +675,31 @@ func TestWWWOriginRejectedOnLogin(t *testing.T) {
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusForbidden {
 		t.Fatalf("www: %d", rec.Code)
+	}
+}
+
+func TestCSRFRejectedWhenRefreshSessionRevoked(t *testing.T) {
+	app := newTestApp(true)
+	seed := httptest.NewRecorder()
+	sess, err := app.issueSession(seed, app.mustUser("member@eduardoos.com"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := app.store.RevokeFamily(context.Background(), sess.FamilyID, "test_revoke"); err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest(http.MethodPost, "/api/auth/logout", bytes.NewBufferString(`{}`))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	req.Header.Set("X-CSRF-Token", sess.CSRF)
+	for _, c := range seed.Result().Cookies() {
+		if c.Name == app.refreshCookieName() {
+			req.AddCookie(c)
+		}
+	}
+	rec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusForbidden {
+		t.Fatalf("revoked refresh csrf: %d %s", rec.Code, rec.Body.String())
 	}
 }

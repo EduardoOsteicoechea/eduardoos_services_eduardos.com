@@ -24,8 +24,8 @@ Port into `eduardoos.com` (this repo), frontend + backend:
 
 1. **Auth:** cookie `__Host-` / local secure cookies, CSRF memory token, same-origin `/api/*`. Never bearer JWT in `localStorage`.
 2. **Persistence:** all durable product objects live in **MongoDB** (`eduardoos` database). Binary blobs (images, audio, uploaded docs, `.epam` bodies) live under **media root** (`backend/.data/media` local; `/var/www/eduardoos.com/media` prod). **No S3. No DynamoDB.**
-3. **localStorage ban (product data):** do not store libraries, sheets, epams, students, tasks, voice projects, entitlements, payment state, last-opened document ids, Institutes nav, or sidebar open state in `localStorage` / `sessionStorage`. Persist those as Mongo documents (or `user_preferences` — see §3). Chrome-only theme + root font-size may remain in `localStorage` per shared shell tokens.
-4. **Logging:** every meaningful handler branch and FE fetch lifecycle uses `mustLog` / `if (mustLog)`. Every error surfaces via global error modal (FE) or structured slog (BE). Never log secrets, OTPs, cookies, SMTP, AI keys, or raw file bytes.
+3. **localStorage ban (product data):** do not store libraries, sheets, epams, students, tasks, voice projects, entitlements, payment state, last-opened document ids, Institutes nav, or sidebar open state in `localStorage` / `sessionStorage`. Persist those as Mongo documents (or `user_preferences` — see §3). **Chrome-only** keys allowed in `localStorage`: `theme`, `root-font-size`, `site-text-scale`. Ephemeral **session** hint `sessionStorage["eduardoos.session-hint"]` may mark “had a session” so guest `/api/auth/me` does not spam refresh/CSRF remints (not product data).
+4. **Logging:** every meaningful handler branch and FE fetch lifecycle uses `mustLog` / `if (mustLog)`. `mustLog` is on in `import.meta.env.DEV`, when `?debug=1`, or when `MUST_LOG=true` on the API. **Every** FE error still `console.error`s and opens the global error modal (except guest `401 /api/auth/me` and intentional gate banners). Backend unexpected errors always slog with `request_id`. Never log secrets, OTPs, cookies, SMTP, AI keys, or raw file bytes.
 5. **Spec-first:** amend this document (or a child spec under `docs/specs/002-*.md`) before changing behavior.
 6. **Shell:** Astro `Layout.astro` + shared chrome; product pages register `#dynamic-header` actions. Rem tokens only. Brand colors stay in this site’s `global.css`.
 
@@ -169,8 +169,19 @@ Frontend: `if (mustLog) console.log(...)` on route enter, gate checks, every `/a
 7. Subscription + hub FE gates + nav
 8. Build, commit, push
 
-## 9. Amendments log
+## 9. Auth hardening (amendment)
+
+1. FE CSRF: single-flight mint with timeout; **reuse** in-memory token until logout / CSRF `403` / explicit reset (avoid parallel remint races).
+2. FE refresh: single-flight + `navigator.locks` (fallback timestamp lock) so multi-tab rotation does not revoke the family; proactive refresh ~10m + `visibilitychange`.
+3. FE `getMe`: attempt refresh **only** when session hint is set (or access cookie likely); never remint guest CSRF solely to probe refresh.
+4. FE `apiSend`: on `401` for non-auth routes, single refresh then **one** retry; on CSRF `403`, remint CSRF then one retry.
+5. BE `validCSRF`: refresh-cookie branch rejects expired sessions; **revoked** refresh CSRF is rejected for all routes **except** `POST /api/auth/refresh` (so reuse detection can still revoke the family).
+6. Logout clears in-memory CSRF + session hint, then remints guest challenge when needed.
+7. Admin UI: guest `401 /me` is banner-only, not error modal.
+
+## 10. Amendments log
 
 | Date | Change |
 | --- | --- |
 | 2026-09-10 | Initial MongoDB-first suite lock; ban product localStorage; exclude agent sandbox |
+| 2026-09-10 | Auth hardening (§9); chrome-only LS keys; exhaustive error console + modal; session hint |

@@ -1,7 +1,15 @@
 const PREFIX = "[session-debug]";
 
-/** Exhaustive FE diagnostics (error-observability). Default on in local DEV builds. */
-export const mustLog = import.meta.env.DEV;
+function debugQueryEnabled(): boolean {
+  try {
+    return typeof location !== "undefined" && new URLSearchParams(location.search).get("debug") === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** Exhaustive FE diagnostics. On in DEV, or with `?debug=1`. */
+export const mustLog = import.meta.env.DEV || debugQueryEnabled();
 
 export function sessionDebugEnabled(): boolean {
   return mustLog;
@@ -42,5 +50,6 @@ export function sessionLogStorage(context: string): void {
     theme: localStorage.getItem("theme"),
     rootFontSize: localStorage.getItem("root-font-size"),
     siteTextScale: localStorage.getItem("site-text-scale"),
+    note: "product data must use Mongo /api/preferences — chrome keys only here",
   });
 }

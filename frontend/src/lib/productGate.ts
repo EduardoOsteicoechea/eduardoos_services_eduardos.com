@@ -29,6 +29,12 @@ export async function requireSession(): Promise<{
   if (mustLog) {
     console.log("[productGate] session", { ok, status: me.status, requestId: me.requestId });
   }
+  if (!ok && me.status !== 401) {
+    apiFail(me.data.message || "Could not load the session.", {
+      requestId: me.requestId,
+      details: me.data.error ? `error=${me.data.error}` : undefined,
+    });
+  }
   return {
     ok,
     email: (me.data.email || "").trim(),

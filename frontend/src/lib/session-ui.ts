@@ -1,4 +1,4 @@
-import { deleteAvatar, getCsrf, getMe, loginPayload, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
+import { deleteAvatar, getCsrf, getMe, loginPayload, markSessionHint, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
 import { sessionLog, sessionLogCookies, sessionLogStorage } from "./dev-log";
 
 declare global {
@@ -458,6 +458,7 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
 
 export async function afterAuthChange(): Promise<void> {
   sessionLog("session.afterAuthChange.start");
+  markSessionHint();
   resetCsrfMemory();
   await getCsrf();
   await refreshAuthChrome();

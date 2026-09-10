@@ -312,7 +312,17 @@ func (a *App) validCSRF(r *http.Request) bool {
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
-			return hmacEqual(want, sess.CSRFHash)
+			if !hmacEqual(want, sess.CSRFHash) {
+				return false
+			}
+			if sess.Revoked {
+				// Allow CSRF through only on refresh so reuse detection can revoke the family.
+				return r.URL.Path == "/api/auth/refresh"
+			}
+			if time.Now().UTC().After(sess.ExpiresAt) {
+				return false
+			}
+			return true
 		}
 	}
 	cookie, err := r.Cookie(a.csrfBindCookieName())

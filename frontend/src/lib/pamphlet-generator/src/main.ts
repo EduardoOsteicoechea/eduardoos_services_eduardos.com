@@ -640,7 +640,7 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
 }
 
 /**
- * On first visit: reopen the last cloud .epam from localStorage, or the only
+ * On first visit: reopen the last cloud .epam from /api/preferences, or the only
  * document available to this account when there is exactly one.
  */
 async function tryAutoloadCloudPamphlet(): Promise<void> {

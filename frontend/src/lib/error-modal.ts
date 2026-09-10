@@ -84,8 +84,15 @@ async function copyText(value: string): Promise<void> {
 }
 
 export function showErrorModal(payload: ErrorPayload): void {
+  console.error("[error-modal]", {
+    message: payload.message,
+    requestId: payload.requestId,
+    details: payload.details,
+    hasDebug: Boolean(payload.debug),
+  });
   const modal = document.getElementById("error-modal");
   if (!(modal instanceof HTMLElement)) {
+    console.error("[error-modal] #error-modal missing from Layout");
     return;
   }
   const copy = errorModalCopy();
