@@ -96,13 +96,27 @@ jobs:
               if [ -r \"\$f\" ]; then ENV_FILE=\$f; break; fi
             done
             if [ -z \"\$ENV_FILE\" ]; then
-              echo 'ereport-import: api env file missing or unreadable' >&2
+              for f in /etc/eduardoos-api.env /etc/eduardoos.com-api.env; do
+                if sudo -n test -r \"\$f\" 2>/dev/null; then
+                  TMP_ENV=\$(mktemp)
+                  sudo -n cat \"\$f\" > \"\$TMP_ENV\"
+                  chmod 600 \"\$TMP_ENV\"
+                  ENV_FILE=\$TMP_ENV
+                  break
+                fi
+              done
+            fi
+            if [ -z \"\$ENV_FILE\" ]; then
+              echo 'ereport-import: api env file missing or unreadable (need deploy read or passwordless sudo cat)' >&2
+              ls -la /etc/eduardoos-api.env /etc/eduardoos.com-api.env 2>&1 || true
+              id
               exit 1
             fi
             set -a
             # shellcheck disable=SC1090
             . \"\$ENV_FILE\"
             set +a
+            if [ -n \"\${TMP_ENV:-}\" ]; then rm -f \"\$TMP_ENV\"; fi
             if [ -z \"\${MONGODB_URI:-}\${MONGO_URI:-}\" ]; then
               echo 'ereport-import: MONGODB_URI/MONGO_URI unset after sourcing env' >&2
               exit 1
