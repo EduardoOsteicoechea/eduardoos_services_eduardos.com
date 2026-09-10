@@ -1,0 +1,115 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eoadmin · My statements" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoadmin" data-route title="New statement" aria-label="New statement">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+      </span>
+      New statement
+    </a>
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="eoadmin-board" data-eoadmin-mine>
+    <h1>My purchase statements</h1>
+    <p class="lede">Statements tied to your signed-in email. Payment is stored only after admin approval.</p>
+    <p class="status" data-banner>Checking session…</p>
+    <div class="eoadmin-columns" data-list></div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { listEoadminStatements, statusLabel, type EoadminStatement } from "../../lib/eoadmin";
+
+  const root = document.querySelector("[data-eoadmin-mine]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const list = root.querySelector("[data-list]");
+
+    const setBanner = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const render = (rows: EoadminStatement[]) => {
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!rows.length) {
+        const empty = document.createElement("p");
+        empty.className = "eoadmin-hint";
+        empty.textContent = "No statements yet.";
+        list.appendChild(empty);
+        return;
+      }
+      rows.forEach((st) => {
+        const card = document.createElement("article");
+        card.className = "eoadmin-card";
+        const h = document.createElement("h3");
+        h.textContent = st.option_label;
+        const meta = document.createElement("p");
+        meta.className = "eoadmin-meta";
+        meta.textContent = `${statusLabel(st.status)} · ${st.user_email}`;
+        const desc = document.createElement("p");
+        desc.className = "eoadmin-hint";
+        desc.textContent = st.description || "(no description)";
+        const items = document.createElement("p");
+        items.className = "eoadmin-meta";
+        items.textContent = (st.items || [])
+          .map((it) => `${it.label || it.checkbox_id}: ${it.units} ${it.unit_label || ""}`)
+          .join(" · ");
+        card.append(h, meta, desc, items);
+        if (st.has_image && st.image_url) {
+          const prev = document.createElement("div");
+          prev.className = "eoadmin-preview";
+          const img = document.createElement("img");
+          img.src = st.image_url;
+          img.alt = "Payment proof";
+          prev.appendChild(img);
+          card.appendChild(prev);
+        }
+        list.appendChild(card);
+      });
+    };
+
+    const load = async () => {
+      setBanner("Loading…");
+      const { status, data, requestId } = await listEoadminStatements();
+      if (status !== 200) {
+        setBanner(data.message || "Could not load statements.", "err");
+        showErrorModal({
+          message: data.message || "Could not load statements.",
+          requestId,
+          details: requestId ? `request_id=${requestId}` : "",
+          debug: data.debug,
+        });
+        return;
+      }
+      render(data.statements || []);
+      setBanner(`${data.count ?? 0} statement(s).`);
+    };
+
+    document.querySelector("[data-refresh]")?.addEventListener("click", () => void load());
+
+    void (async () => {
+      const me = await getMe();
+      if (me.status !== 200) {
+        setBanner("Sign in required.", "err");
+        return;
+      }
+      await load();
+    })();
+  }
+</script>

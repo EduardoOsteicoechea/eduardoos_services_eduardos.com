@@ -1,0 +1,170 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="eoadmin · Options" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoadmin/admin" data-route title="Board" aria-label="Back to board">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+      </span>
+      Board
+    </a>
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="eoadmin-board" data-eoadmin-options>
+    <h1>Assignment options</h1>
+    <p class="lede">Dropdown targets for payment assignment. Each option exposes checkboxes with units.</p>
+    <p class="status" data-banner>Checking session…</p>
+
+    <form class="eoadmin-panel" data-create hidden>
+      <h2 class="product-dash__section-title">Add option</h2>
+      <div class="eoadmin-field">
+        <label for="opt-label">Label</label>
+        <input id="opt-label" type="text" data-label required />
+      </div>
+      <div class="eoadmin-field">
+        <label for="opt-desc">Description</label>
+        <input id="opt-desc" type="text" data-desc />
+      </div>
+      <div class="eoadmin-field">
+        <label for="opt-product">Product id (optional catalog id)</label>
+        <input id="opt-product" type="text" data-product placeholder="pamphlet" />
+      </div>
+      <div class="eoadmin-field">
+        <label for="opt-boxes">Checkboxes JSON</label>
+        <textarea id="opt-boxes" data-boxes rows="4"></textarea>
+      </div>
+      <div class="eoadmin-actions">
+        <button class="btn btn--primary" type="submit">Create</button>
+      </div>
+    </form>
+
+    <div class="eoadmin-columns" data-list></div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../../lib/api";
+  import { showErrorModal } from "../../../lib/error-modal";
+  import {
+    createEoadminOption,
+    deleteEoadminOption,
+    listEoadminOptions,
+    type EoadminOption,
+  } from "../../../lib/eoadmin";
+
+  const root = document.querySelector("[data-eoadmin-options]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const list = root.querySelector("[data-list]");
+    const createForm = root.querySelector("[data-create]");
+
+    const setBanner = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "", debug });
+    };
+
+    const render = (rows: EoadminOption[]) => {
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      rows.forEach((opt) => {
+        const card = document.createElement("article");
+        card.className = "eoadmin-card";
+        const h = document.createElement("h3");
+        h.textContent = `${opt.label}${opt.active === false ? " (inactive)" : ""}`;
+        const meta = document.createElement("p");
+        meta.className = "eoadmin-meta";
+        meta.textContent = `${opt.id}${opt.product_id ? ` · product ${opt.product_id}` : ""}`;
+        const desc = document.createElement("p");
+        desc.className = "eoadmin-hint";
+        desc.textContent = opt.description || "";
+        const boxes = document.createElement("p");
+        boxes.className = "eoadmin-meta";
+        boxes.textContent = (opt.checkboxes || [])
+          .map((c) => `${c.label} (${c.unit_label})`)
+          .join(" · ");
+        const actions = document.createElement("div");
+        actions.className = "eoadmin-actions";
+        if (opt.active !== false) {
+          const deactivate = document.createElement("button");
+          deactivate.type = "button";
+          deactivate.className = "btn";
+          deactivate.textContent = "Deactivate";
+          deactivate.addEventListener("click", async () => {
+            const res = await deleteEoadminOption(opt.id);
+            if (res.status !== 200) {
+              fail(res.data.message || "Deactivate failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await load();
+          });
+          actions.appendChild(deactivate);
+        }
+        card.append(h, meta, desc, boxes, actions);
+        list.appendChild(card);
+      });
+    };
+
+    const load = async () => {
+      const { status, data, requestId } = await listEoadminOptions("", true);
+      if (status !== 200) {
+        fail(data.message || "Could not load options.", requestId, data.debug);
+        return;
+      }
+      render(data.options || []);
+      setBanner(`${data.count ?? 0} option(s).`);
+    };
+
+    createForm?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const label = (root.querySelector("[data-label]") as HTMLInputElement)?.value.trim();
+      const description = (root.querySelector("[data-desc]") as HTMLInputElement)?.value.trim();
+      const product_id = (root.querySelector("[data-product]") as HTMLInputElement)?.value.trim();
+      const raw = (root.querySelector("[data-boxes]") as HTMLTextAreaElement)?.value || "[]";
+      let checkboxes: unknown[] = [];
+      try {
+        checkboxes = JSON.parse(raw);
+      } catch {
+        fail("Checkboxes must be valid JSON.");
+        return;
+      }
+      const res = await createEoadminOption({ label, description, product_id, checkboxes, sort_order: 100 });
+      if (res.status !== 200) {
+        fail(res.data.message || "Create failed.", res.requestId, res.data.debug);
+        return;
+      }
+      await load();
+    });
+
+    document.querySelector("[data-refresh]")?.addEventListener("click", () => void load());
+
+    void (async () => {
+      const me = await getMe();
+      if (me.status !== 200 || me.data.role !== "admin") {
+        setBanner("Administrator session required.", "err");
+        return;
+      }
+      if (createForm instanceof HTMLElement) createForm.hidden = false;
+      const boxesEl = root.querySelector("[data-boxes]");
+      if (boxesEl instanceof HTMLTextAreaElement && !boxesEl.value) {
+        boxesEl.value = '[{"id":"units","label":"Units","unit_label":"units"}]';
+      }
+      await load();
+    })();
+  }
+</script>

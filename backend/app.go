@@ -41,6 +41,8 @@ type App struct {
 	evoiceFS        *evoiceFS
 	evoiceJobs      *evoiceJobStore
 	homescool       HomescoolStore
+	eoadmin         EoadminStore
+	eostore         EostoreStore
 	failClosedEnt   bool
 }
 
@@ -88,6 +90,8 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		scrib:           openScribStore(store),
 		pamphlet:        openPamphletStore(store, cfg.MediaRoot),
 		homescool:       openHomescoolStore(store, cfg.MediaRoot),
+		eoadmin:         openEoadminStore(store),
+		eostore:         openEostoreStore(store),
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
 		audit:           newAuditStore(),
@@ -265,6 +269,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/homescool/learning/{teacherSlug}/tasks/{taskId}/submit", a.submitLearningTaskHandler)
 
 	a.registerEvoiceRoutes(mux)
+	a.registerEoadminRoutes(mux)
+	a.registerEostoreRoutes(mux)
 
 	return a.withObservability(mux)
 }

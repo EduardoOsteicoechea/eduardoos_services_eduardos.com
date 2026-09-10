@@ -1,0 +1,288 @@
+/* eoadmin — payment proof + admin boards */
+
+.eoadmin-form,
+.eoadmin-board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  grid-column: 1 / span var(--span-form);
+}
+
+.eoadmin-board {
+  grid-column: 1 / span var(--span-full);
+}
+
+.eoadmin-form h1,
+.eoadmin-board h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 650;
+}
+
+.eoadmin-form .lede,
+.eoadmin-board .lede,
+.eoadmin-hint {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.eoadmin-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-field > label,
+.eoadmin-check label {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eoadmin-field input[type="text"],
+.eoadmin-field input[type="number"],
+.eoadmin-field input[type="search"],
+.eoadmin-field textarea,
+.eoadmin-field select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-field textarea {
+  height: auto;
+  min-height: var(--textarea-min-height);
+}
+
+.eoadmin-combobox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-combobox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: calc(var(--control-height) * 6);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-combobox-list[hidden] {
+  display: none;
+}
+
+.eoadmin-combobox-list button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: auto;
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.eoadmin-combobox-list button:hover,
+.eoadmin-combobox-list button[aria-selected="true"] {
+  background: var(--color-bg);
+  color: var(--color-accent);
+}
+
+.eoadmin-combobox-list .eoadmin-option-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eoadmin-checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-check {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-check input[type="number"] {
+  width: calc(var(--control-height) * 2);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-annotate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-annotate-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-annotate-tools button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.eoadmin-stage {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: calc(var(--span-form) * 1rem + var(--page-gutter) * 5);
+  overflow: hidden;
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  touch-action: none;
+  user-select: none;
+}
+
+.eoadmin-stage img {
+  display: block;
+  max-width: calc(var(--control-height) * 12);
+  height: auto;
+  pointer-events: none;
+}
+
+.eoadmin-stage svg {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+}
+
+.eoadmin-stage-hit {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+}
+
+.eoadmin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-actions button,
+.eoadmin-actions .btn {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-sm);
+}
+
+.eoadmin-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: flex-start;
+}
+
+.eoadmin-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 1 1 calc(var(--control-height) * 8);
+  min-width: calc(var(--control-height) * 8);
+}
+
+.eoadmin-column h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+}
+
+.eoadmin-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-card h3 {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+}
+
+.eoadmin-meta {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eoadmin-preview {
+  position: relative;
+  display: inline-flex;
+  max-width: calc(var(--control-height) * 8);
+}
+
+.eoadmin-preview img {
+  display: block;
+  max-width: calc(var(--control-height) * 8);
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+.eoadmin-preview svg {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+}
+
+.eoadmin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eoadmin-tabs button[aria-selected="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}

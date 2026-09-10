@@ -1,0 +1,189 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="eoadmin · Admin board" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoadmin/admin/options" data-route title="Options" aria-label="Manage options">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+      </span>
+      Options
+    </a>
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="eoadmin-board" data-eoadmin-admin>
+    <h1>eoadmin board</h1>
+    <p class="lede">Approve payments, then move statements from to-deliver to delivered. Pending payment means ordered without accepted proof yet.</p>
+    <p class="status" data-banner>Checking session…</p>
+
+    <div class="eoadmin-tabs" role="tablist" data-tabs>
+      <button type="button" class="btn" data-tab="pending_approval" aria-selected="true">Pending approval</button>
+      <button type="button" class="btn" data-tab="pending_payment" aria-selected="false">Pending payment</button>
+      <button type="button" class="btn" data-tab="to_deliver" aria-selected="false">To deliver</button>
+      <button type="button" class="btn" data-tab="delivered" aria-selected="false">Delivered</button>
+      <button type="button" class="btn" data-tab="rejected" aria-selected="false">Rejected</button>
+    </div>
+
+    <div class="eoadmin-columns" data-list></div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../../lib/api";
+  import { showErrorModal } from "../../../lib/error-modal";
+  import {
+    approveEoadminStatement,
+    deliverEoadminStatement,
+    listEoadminStatements,
+    rejectEoadminStatement,
+    statusLabel,
+    type EoadminStatement,
+  } from "../../../lib/eoadmin";
+
+  const root = document.querySelector("[data-eoadmin-admin]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const list = root.querySelector("[data-list]");
+    let tab = "pending_approval";
+
+    const setBanner = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "", debug });
+    };
+
+    const render = (rows: EoadminStatement[]) => {
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!rows.length) {
+        const empty = document.createElement("p");
+        empty.className = "eoadmin-hint";
+        empty.textContent = "No statements in this column.";
+        list.appendChild(empty);
+        return;
+      }
+      rows.forEach((st) => {
+        const card = document.createElement("article");
+        card.className = "eoadmin-card";
+        const h = document.createElement("h3");
+        h.textContent = st.option_label;
+        const meta = document.createElement("p");
+        meta.className = "eoadmin-meta";
+        meta.textContent = `${statusLabel(st.status)} · ${st.user_email} · ${st.id}`;
+        const desc = document.createElement("p");
+        desc.className = "eoadmin-hint";
+        desc.textContent = st.description || "(no description)";
+        const items = document.createElement("p");
+        items.className = "eoadmin-meta";
+        items.textContent = (st.items || [])
+          .map((it) => `${it.label || it.checkbox_id}: ${it.units}`)
+          .join(" · ");
+        card.append(h, meta, desc, items);
+        if (st.has_image && st.image_url) {
+          const prev = document.createElement("div");
+          prev.className = "eoadmin-preview";
+          const img = document.createElement("img");
+          img.src = st.image_url;
+          img.alt = "Payment proof";
+          prev.appendChild(img);
+          card.appendChild(prev);
+        }
+        const actions = document.createElement("div");
+        actions.className = "eoadmin-actions";
+        if (st.status === "pending_approval" || st.status === "pending_payment") {
+          const approve = document.createElement("button");
+          approve.type = "button";
+          approve.className = "btn btn--primary";
+          approve.textContent = "Approve";
+          approve.addEventListener("click", async () => {
+            const res = await approveEoadminStatement(st.id);
+            if (res.status !== 200) {
+              fail(res.data.message || "Approve failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await load();
+          });
+          const reject = document.createElement("button");
+          reject.type = "button";
+          reject.className = "btn";
+          reject.textContent = "Reject";
+          reject.addEventListener("click", async () => {
+            const res = await rejectEoadminStatement(st.id, "rejected");
+            if (res.status !== 200) {
+              fail(res.data.message || "Reject failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await load();
+          });
+          actions.append(approve, reject);
+        }
+        if (st.status === "to_deliver") {
+          const deliver = document.createElement("button");
+          deliver.type = "button";
+          deliver.className = "btn btn--primary";
+          deliver.textContent = "Mark delivered";
+          deliver.addEventListener("click", async () => {
+            const res = await deliverEoadminStatement(st.id);
+            if (res.status !== 200) {
+              fail(res.data.message || "Deliver failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await load();
+          });
+          actions.appendChild(deliver);
+        }
+        if (actions.childNodes.length) card.appendChild(actions);
+        list.appendChild(card);
+      });
+    };
+
+    const load = async () => {
+      setBanner("Loading…");
+      const { status, data, requestId } = await listEoadminStatements(tab);
+      if (status !== 200) {
+        fail(data.message || "Could not load board.", requestId, data.debug);
+        return;
+      }
+      render(data.statements || []);
+      setBanner(`${data.count ?? 0} · ${statusLabel(tab)}`);
+    };
+
+    root.querySelectorAll("[data-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tab = btn.getAttribute("data-tab") || "pending_approval";
+        root.querySelectorAll("[data-tab]").forEach((el) => {
+          el.setAttribute("aria-selected", el === btn ? "true" : "false");
+        });
+        void load();
+      });
+    });
+
+    document.querySelector("[data-refresh]")?.addEventListener("click", () => void load());
+
+    void (async () => {
+      const me = await getMe();
+      if (me.status !== 200 || me.data.role !== "admin") {
+        setBanner("Administrator session required.", "err");
+        if (me.status === 200) {
+          showErrorModal({ message: "Administrator access required for the eoadmin board." });
+        }
+        return;
+      }
+      await load();
+    })();
+  }
+</script>

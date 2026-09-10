@@ -1,0 +1,364 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eoadmin · Submit payment" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoadmin/mine" data-route title="My statements" aria-label="My statements">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+      </span>
+      My statements
+    </a>
+    <a class="dhs-action" href="/eoadmin/admin" data-route data-admin-only hidden title="Admin board" aria-label="Admin board">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
+      </span>
+      Admin board
+    </a>
+  </Fragment>
+
+  <section class="eoadmin-form" data-eoadmin-submit>
+    <h1>eoadmin</h1>
+    <p class="lede">
+      Upload a payment proof, mark amount / reference / optional date rectangles, assign the payment to a product, then submit a purchase statement for admin approval.
+    </p>
+    <p class="status" data-banner>Checking session…</p>
+
+    <form class="eoadmin-panel" data-form hidden>
+      <div class="eoadmin-field">
+        <label for="eoadmin-file">Payment proof image</label>
+        <input id="eoadmin-file" type="file" accept="image/jpeg,image/png,image/webp" data-file />
+        <p class="eoadmin-hint">JPEG, PNG, or WebP. Draw rectangles after selecting a file. Leave empty to create an order pending payment.</p>
+      </div>
+
+      <div class="eoadmin-annotate" data-annotate hidden>
+        <div class="eoadmin-annotate-tools" role="group" aria-label="Rectangle tool">
+          <button type="button" class="btn" data-tool="amount" aria-pressed="true">Amount</button>
+          <button type="button" class="btn" data-tool="reference" aria-pressed="false">Reference</button>
+          <button type="button" class="btn" data-tool="date" aria-pressed="false">Date (optional)</button>
+          <button type="button" class="btn" data-clear-rects>Clear rects</button>
+        </div>
+        <div class="eoadmin-stage" data-stage>
+          <img data-preview alt="Payment proof preview" />
+          <svg data-overlay viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="eoadmin-stage-hit" data-hit tabindex="0" role="application" aria-label="Draw annotation rectangles"></div>
+        </div>
+        <p class="eoadmin-hint" data-rect-status>Draw amount and reference boxes (date optional).</p>
+      </div>
+
+      <div class="eoadmin-field eoadmin-combobox" data-combobox>
+        <label for="eoadmin-option-search">Assign payment to</label>
+        <input id="eoadmin-option-search" type="search" autocomplete="off" placeholder="Search options…" data-option-search />
+        <input type="hidden" data-option-id />
+        <ul class="eoadmin-combobox-list" data-option-list hidden role="listbox"></ul>
+        <p class="eoadmin-hint" data-option-picked></p>
+      </div>
+
+      <div class="eoadmin-checks" data-checks hidden></div>
+
+      <div class="eoadmin-field">
+        <label for="eoadmin-desc">Description</label>
+        <textarea id="eoadmin-desc" rows="3" data-description placeholder="Notes for the admin…"></textarea>
+      </div>
+
+      <div class="eoadmin-actions">
+        <button class="btn btn--primary" type="submit" data-submit>Submit statement</button>
+      </div>
+    </form>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import {
+    buildAnnotationSvg,
+    listEoadminOptions,
+    submitEoadminStatement,
+    type EoadminOption,
+    type EoadminRect,
+  } from "../../lib/eoadmin";
+  import { mustLog } from "../../lib/dev-log";
+
+  type Tool = "amount" | "reference" | "date";
+
+  const root = document.querySelector("[data-eoadmin-submit]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const form = root.querySelector("[data-form]");
+    const fileInput = root.querySelector("[data-file]");
+    const annotate = root.querySelector("[data-annotate]");
+    const preview = root.querySelector("[data-preview]");
+    const overlay = root.querySelector("[data-overlay]");
+    const hit = root.querySelector("[data-hit]");
+    const rectStatus = root.querySelector("[data-rect-status]");
+    const optionSearch = root.querySelector("[data-option-search]");
+    const optionIdInput = root.querySelector("[data-option-id]");
+    const optionList = root.querySelector("[data-option-list]");
+    const optionPicked = root.querySelector("[data-option-picked]");
+    const checks = root.querySelector("[data-checks]");
+    const description = root.querySelector("[data-description]");
+    const adminLinks = document.querySelectorAll("[data-admin-only]");
+
+    let options: EoadminOption[] = [];
+    let selected: EoadminOption | null = null;
+    let tool: Tool = "amount";
+    let rects: { amount: EoadminRect | null; reference: EoadminRect | null; date: EoadminRect | null } = {
+      amount: null,
+      reference: null,
+      date: null,
+    };
+    let dragStart: { x: number; y: number } | null = null;
+    let objectUrl = "";
+
+    const setBanner = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "", debug });
+    };
+
+    const paintOverlay = () => {
+      if (!(overlay instanceof SVGElement)) return;
+      overlay.innerHTML = "";
+      const svg = buildAnnotationSvg(rects);
+      const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
+      parsed.documentElement.querySelectorAll("rect").forEach((node) => {
+        overlay.appendChild(document.importNode(node, true));
+      });
+      if (rectStatus instanceof HTMLElement) {
+        const missing = [];
+        if (!rects.amount) missing.push("amount");
+        if (!rects.reference) missing.push("reference");
+        rectStatus.textContent = missing.length
+          ? `Still need: ${missing.join(", ")}. Date is optional.`
+          : `Amount and reference set${rects.date ? "; date set" : ""}.`;
+      }
+    };
+
+    const normPoint = (ev: PointerEvent) => {
+      if (!(hit instanceof HTMLElement)) return { x: 0, y: 0 };
+      const box = hit.getBoundingClientRect();
+      const x = Math.min(1, Math.max(0, (ev.clientX - box.left) / box.width));
+      const y = Math.min(1, Math.max(0, (ev.clientY - box.top) / box.height));
+      return { x, y };
+    };
+
+    const renderChecks = () => {
+      if (!(checks instanceof HTMLElement)) return;
+      checks.innerHTML = "";
+      if (!selected) {
+        checks.hidden = true;
+        return;
+      }
+      checks.hidden = false;
+      selected.checkboxes.forEach((box) => {
+        const row = document.createElement("div");
+        row.className = "eoadmin-check";
+        const label = document.createElement("label");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.setAttribute("data-check-id", box.id);
+        label.append(cb, document.createTextNode(` ${box.label}`));
+        const unitsLabel = document.createElement("label");
+        unitsLabel.append(document.createTextNode(`${box.unit_label} `));
+        const units = document.createElement("input");
+        units.type = "number";
+        units.min = "1";
+        units.max = "10000";
+        units.value = "1";
+        units.disabled = true;
+        units.setAttribute("data-units-for", box.id);
+        unitsLabel.appendChild(units);
+        cb.addEventListener("change", () => {
+          units.disabled = !cb.checked;
+        });
+        row.append(label, unitsLabel);
+        checks.appendChild(row);
+      });
+    };
+
+    const pickOption = (opt: EoadminOption) => {
+      selected = opt;
+      if (optionIdInput instanceof HTMLInputElement) optionIdInput.value = opt.id;
+      if (optionSearch instanceof HTMLInputElement) optionSearch.value = opt.label;
+      if (optionPicked instanceof HTMLElement) {
+        optionPicked.textContent = opt.description || opt.label;
+      }
+      if (optionList instanceof HTMLElement) optionList.hidden = true;
+      renderChecks();
+    };
+
+    const renderOptionList = (rows: EoadminOption[]) => {
+      if (!(optionList instanceof HTMLElement)) return;
+      optionList.innerHTML = "";
+      if (!rows.length) {
+        optionList.hidden = true;
+        return;
+      }
+      rows.forEach((opt) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.setAttribute("role", "option");
+        const title = document.createElement("span");
+        title.textContent = opt.label;
+        const desc = document.createElement("span");
+        desc.className = "eoadmin-option-desc";
+        desc.textContent = opt.description || "";
+        btn.append(title, desc);
+        btn.addEventListener("click", () => pickOption(opt));
+        li.appendChild(btn);
+        optionList.appendChild(li);
+      });
+      optionList.hidden = false;
+    };
+
+    const loadOptions = async (q: string) => {
+      const { status, data, requestId } = await listEoadminOptions(q);
+      if (status !== 200) {
+        fail(data.message || "Could not load options.", requestId, data.debug);
+        return;
+      }
+      options = data.options || [];
+      renderOptionList(options);
+    };
+
+    root.querySelectorAll("[data-tool]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const next = btn.getAttribute("data-tool") as Tool;
+        tool = next;
+        root.querySelectorAll("[data-tool]").forEach((el) => {
+          el.setAttribute("aria-pressed", el === btn ? "true" : "false");
+        });
+      });
+    });
+
+    root.querySelector("[data-clear-rects]")?.addEventListener("click", () => {
+      rects = { amount: null, reference: null, date: null };
+      paintOverlay();
+    });
+
+    if (hit instanceof HTMLElement) {
+      hit.addEventListener("pointerdown", (ev) => {
+        hit.setPointerCapture(ev.pointerId);
+        dragStart = normPoint(ev);
+      });
+      hit.addEventListener("pointerup", (ev) => {
+        if (!dragStart) return;
+        const end = normPoint(ev);
+        const x = Math.min(dragStart.x, end.x);
+        const y = Math.min(dragStart.y, end.y);
+        const w = Math.abs(end.x - dragStart.x);
+        const h = Math.abs(end.y - dragStart.y);
+        dragStart = null;
+        if (w < 0.01 || h < 0.01) return;
+        rects = { ...rects, [tool]: { x, y, w, h } };
+        paintOverlay();
+      });
+    }
+
+    if (fileInput instanceof HTMLInputElement) {
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files?.[0];
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        if (!file || !(preview instanceof HTMLImageElement) || !(annotate instanceof HTMLElement)) {
+          if (annotate instanceof HTMLElement) annotate.hidden = true;
+          return;
+        }
+        objectUrl = URL.createObjectURL(file);
+        preview.src = objectUrl;
+        annotate.hidden = false;
+        rects = { amount: null, reference: null, date: null };
+        paintOverlay();
+      });
+    }
+
+    let searchTimer = 0;
+    if (optionSearch instanceof HTMLInputElement) {
+      optionSearch.addEventListener("input", () => {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(() => {
+          void loadOptions(optionSearch.value.trim());
+        }, 200);
+        if (optionIdInput instanceof HTMLInputElement) optionIdInput.value = "";
+        selected = null;
+        renderChecks();
+      });
+      optionSearch.addEventListener("focus", () => {
+        void loadOptions(optionSearch.value.trim());
+      });
+    }
+
+    form?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      if (!(optionIdInput instanceof HTMLInputElement) || !optionIdInput.value || !selected) {
+        fail("Select an assignment option from the list.");
+        return;
+      }
+      const items: { checkbox_id: string; units: number }[] = [];
+      checks?.querySelectorAll("input[type=checkbox]").forEach((node) => {
+        if (!(node instanceof HTMLInputElement) || !node.checked) return;
+        const id = node.getAttribute("data-check-id") || "";
+        const unitsEl = checks.querySelector(`input[data-units-for="${id}"]`);
+        const units = unitsEl instanceof HTMLInputElement ? Number(unitsEl.value) : 0;
+        if (id && units >= 1) items.push({ checkbox_id: id, units });
+      });
+      if (!items.length) {
+        fail("Select at least one checkbox and set units.");
+        return;
+      }
+      const file = fileInput instanceof HTMLInputElement ? fileInput.files?.[0] : null;
+      if (file && (!rects.amount || !rects.reference)) {
+        fail("Draw amount and reference rectangles on the image.");
+        return;
+      }
+      setBanner("Submitting…");
+      const { status, data, requestId } = await submitEoadminStatement({
+        file,
+        optionId: optionIdInput.value,
+        description: description instanceof HTMLTextAreaElement ? description.value.trim() : "",
+        items,
+        amountRect: rects.amount,
+        referenceRect: rects.reference,
+        dateRect: rects.date,
+      });
+      if (status !== 200 || !data.statement) {
+        fail(data.message || "Could not submit statement.", requestId, data.debug);
+        return;
+      }
+      if (mustLog) console.log("eoadmin.submit.ok", data.statement.id, data.statement.status);
+      setBanner(`Submitted (${data.statement.status}).`, "ok");
+      window.location.assign("/eoadmin/mine");
+    });
+
+    void (async () => {
+      const { status, data, requestId } = await getMe();
+      if (status !== 200) {
+        setBanner("Sign in to submit a payment statement.", "err");
+        showErrorModal({
+          message: data.message || "Sign in required.",
+          requestId,
+          details: requestId ? `request_id=${requestId}` : "",
+          debug: data.debug,
+        });
+        return;
+      }
+      if (data.role === "admin") {
+        adminLinks.forEach((el) => {
+          if (el instanceof HTMLElement) el.hidden = false;
+        });
+      }
+      if (form instanceof HTMLElement) form.hidden = false;
+      setBanner(`Signed in as ${data.email}.`);
+      await loadOptions("");
+    })();
+  }
+</script>

@@ -202,6 +202,36 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colHomescoolCatalogs, Keys: bson.D{{Key: "teacher_user_id", Value: 1}, {Key: "kind", Value: 1}}},
 			},
 		},
+		{
+			ID:          "007_eoadmin",
+			Description: "Create eoadmin assignment options and purchase statements collections",
+			Collections: []string{colEoadminOptions, colEoadminStatements},
+			Indexes: []indexSpec{
+				{Collection: colEoadminOptions, Keys: bson.D{{Key: "active", Value: 1}, {Key: "sort_order", Value: 1}}},
+				{Collection: colEoadminOptions, Keys: bson.D{{Key: "label", Value: 1}}},
+				{Collection: colEoadminStatements, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colEoadminStatements, Keys: bson.D{{Key: "user_email", Value: 1}}},
+				{Collection: colEoadminStatements, Keys: bson.D{{Key: "status", Value: 1}}},
+				{Collection: colEoadminStatements, Keys: bson.D{{Key: "updated_at", Value: 1}}},
+			},
+		},
+		{
+			ID:          "008_eostore",
+			Description: "Create eostore companies, sections, types, and products collections",
+			Collections: []string{colEostoreCompanies, colEostoreSections, colEostoreTypes, colEostoreProducts},
+			Indexes: []indexSpec{
+				{Collection: colEostoreCompanies, Keys: bson.D{{Key: "friendly_id", Value: 1}}, Unique: true},
+				{Collection: colEostoreCompanies, Keys: bson.D{{Key: "name", Value: 1}}},
+				{Collection: colEostoreSections, Keys: bson.D{{Key: "company_guid", Value: 1}, {Key: "friendly_id", Value: 1}}, Unique: true},
+				{Collection: colEostoreSections, Keys: bson.D{{Key: "company_guid", Value: 1}}},
+				{Collection: colEostoreTypes, Keys: bson.D{{Key: "section_guid", Value: 1}, {Key: "friendly_id", Value: 1}}, Unique: true},
+				{Collection: colEostoreTypes, Keys: bson.D{{Key: "company_guid", Value: 1}}},
+				{Collection: colEostoreProducts, Keys: bson.D{{Key: "company_guid", Value: 1}, {Key: "friendly_id", Value: 1}}, Unique: true},
+				{Collection: colEostoreProducts, Keys: bson.D{{Key: "type_guid", Value: 1}}},
+				{Collection: colEostoreProducts, Keys: bson.D{{Key: "section_guid", Value: 1}}},
+				{Collection: colEostoreProducts, Keys: bson.D{{Key: "visible", Value: 1}}},
+			},
+		},
 	}
 }
 

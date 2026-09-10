@@ -13,6 +13,7 @@ var (
 	errDuplicateEmail    = errors.New("duplicate email")
 	errDuplicateUsername = errors.New("duplicate username")
 	errNotFound          = errors.New("not found")
+	errConflict          = errors.New("conflict")
 )
 
 const (
