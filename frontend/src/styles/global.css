@@ -20,7 +20,7 @@
   --mobile-header-height: var(--header-size);
   --mobile-footer-height: var(--header-size);
   --activity-start-size: var(--rail-width);
-  --activity-end-size: var(--rail-width);
+  --activity-end-size: 0rem;
   --collapsed-rail-width: 0rem;
   --collapsed-header-height: 0rem;
   --collapsed-footer-height: 0rem;
@@ -1063,12 +1063,13 @@ section.diag .panel:not(form) {
   background: var(--color-surface);
 }
 
-/* Phone + tablet: top/bottom activity bars */
+/* Phone + tablet: top activity bar only (tools on the start bar) */
 @media (max-width: 63.999rem) {
   :root {
     --content-basis: 48rem;
     --activity-start-size: 0rem;
     --activity-end-size: 0rem;
+    --mobile-footer-height: 0rem;
     --page-col-count: 16;
     --span-form: 4;
     --span-sidebar: 4;
@@ -1088,22 +1089,13 @@ section.diag .panel:not(form) {
     width: auto;
     flex-direction: row;
     align-items: center;
-    gap: 0;
+    justify-content: flex-start;
+    gap: var(--rail-gap);
     padding: var(--rail-gap);
   }
 
   .app-header--end {
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--mobile-footer-height);
-    width: auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0;
-    padding: var(--rail-gap);
+    display: none;
   }
 
   .header-cluster--menu {
@@ -1122,6 +1114,7 @@ section.diag .panel:not(form) {
   .header-cluster--tools {
     flex-direction: row;
     margin-left: auto;
+    margin-top: 0;
     gap: var(--rail-gap);
   }
 
@@ -1140,20 +1133,14 @@ section.diag .panel:not(form) {
   .sidebar-left,
   .sidebar-right {
     top: var(--mobile-header-height);
-    bottom: var(--mobile-footer-height);
-  }
-
-  .sidebar-left {
+    bottom: 0;
     left: 0;
-  }
-
-  .sidebar-right {
-    right: 0;
+    right: auto;
   }
 
   main {
     padding-top: calc(var(--mobile-header-height) + var(--main-padding));
-    padding-bottom: calc(var(--mobile-footer-height) + var(--main-padding));
+    padding-bottom: var(--main-padding);
   }
 
   
@@ -1196,12 +1183,12 @@ section.diag .panel:not(form) {
   }
 }
 
-/* Desktop: left + right activity rails */
+/* Desktop: single left activity rail (menu + tools) */
 @media (min-width: 64rem) {
   :root {
     --content-basis: 64rem;
     --activity-start-size: var(--rail-width);
-    --activity-end-size: var(--rail-width);
+    --activity-end-size: 0rem;
     --page-col-count: 24;
     --span-form: 6;
     --span-sidebar: 6;
@@ -1230,16 +1217,7 @@ section.diag .panel:not(form) {
   }
 
   .app-header--end {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: var(--rail-width);
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0;
-    padding: var(--rail-gap);
+    display: none;
   }
 
   .header-cluster--menu {
@@ -1284,12 +1262,13 @@ section.diag .panel:not(form) {
   .sidebar-right {
     top: 0;
     bottom: 0;
-    right: var(--rail-width);
+    left: var(--rail-width);
+    right: auto;
   }
 
   main {
     padding-left: calc(var(--rail-width) + var(--main-inline));
-    padding-right: calc(var(--rail-width) + var(--main-inline));
+    padding-right: var(--main-inline);
   }
 
   

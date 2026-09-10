@@ -138,7 +138,6 @@ function clearHeaderCollapsed(): void {
   document.querySelectorAll("[data-header-chrome]").forEach((node) => {
     setChromeHidden(node, false);
   });
-  setChromeHidden(document.querySelector(".app-header--end"), false);
   setChromeHidden(document.querySelector(".agent-fab"), false);
 }
 

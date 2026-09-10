@@ -43,6 +43,9 @@ import Layout from "../../layouts/Layout.astro";
     <button class="icon-btn" type="button" data-open-modal="historial" title="Historial" aria-label="Historial de versiones API">
       <span class="material-symbols-outlined" aria-hidden="true">history</span>
     </button>
+    <button class="icon-btn" type="button" data-open-modal="ids" title="Org ID y Report ID" aria-label="Mostrar Org ID y Report ID">
+      <span class="material-symbols-outlined" aria-hidden="true">tag</span>
+    </button>
   </Fragment>
 
   <section class="ereport-workspace" data-ereport-workspace>
@@ -118,6 +121,27 @@ import Layout from "../../layouts/Layout.astro";
         <div class="ereport-modal-actions">
           <button class="btn" type="button" data-history-refresh>Actualizar</button>
           <button class="btn btn--primary" type="button" data-close-modal>Cerrar</button>
+        </div>
+      </div>
+    </div>
+    <div class="ereport-modal" data-modal="ids" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-ids-title">
+        <h2 id="ereport-ids-title">IDs del reporte</h2>
+        <p class="hint">Úsalos con el connector / API key (`EDUARDOOS_ORG_ID`, `EDUARDOOS_REPORT_ID`).</p>
+        <label>
+          Org ID
+          <input id="ereport-modal-org-id" type="text" readonly data-ids-org />
+        </label>
+        <label>
+          Report ID
+          <input id="ereport-modal-report-id" type="text" readonly data-ids-report />
+        </label>
+        <p class="ereport-hub__error" data-ids-copy-status hidden></p>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-copy-id="org">Copiar org</button>
+          <button class="btn" type="button" data-copy-id="report">Copiar report</button>
+          <button class="btn btn--primary" type="button" data-copy-id="both">Copiar ambos</button>
+          <button class="btn" type="button" data-close-modal>Cerrar</button>
         </div>
       </div>
     </div>
@@ -274,6 +298,14 @@ import Layout from "../../layouts/Layout.astro";
           input.value = tema;
           input.focus();
         }
+      }
+      if (name === "ids") {
+        const orgInput = modal.querySelector("[data-ids-org]");
+        const reportInput = modal.querySelector("[data-ids-report]");
+        if (orgInput instanceof HTMLInputElement) orgInput.value = orgId;
+        if (reportInput instanceof HTMLInputElement) reportInput.value = reportId;
+        const status = modal.querySelector("[data-ids-copy-status]");
+        if (status instanceof HTMLElement) status.hidden = true;
       }
       if (name === "historial") loadHistory();
     };
@@ -438,6 +470,28 @@ import Layout from "../../layouts/Layout.astro";
       if (disposed) return;
       const node = event.target;
       if (!(node instanceof Element)) return;
+      const copyId = node.closest("[data-copy-id]");
+      if (copyId instanceof HTMLElement && copyId.dataset.copyId) {
+        const kind = copyId.dataset.copyId;
+        const text =
+          kind === "org" ? orgId : kind === "report" ? reportId : `ORG=${orgId}\nREPORT=${reportId}`;
+        const status =
+          document.querySelector("[data-ids-copy-status]") || root.querySelector("[data-ids-copy-status]");
+        try {
+          await navigator.clipboard.writeText(text);
+          if (status instanceof HTMLElement) {
+            status.hidden = false;
+            status.textContent = "Copiado.";
+            status.classList.remove("ereport-hub__error");
+          }
+        } catch {
+          if (status instanceof HTMLElement) {
+            status.hidden = false;
+            status.textContent = "No se pudo copiar.";
+          }
+        }
+        return;
+      }
       const saveNow = node.closest("[data-save-now]");
       if (saveNow) {
         const btn = saveNow instanceof HTMLButtonElement ? saveNow : null;
