@@ -15,11 +15,42 @@ var (
 )
 
 func (a *App) calvinRoot() string {
-	root := strings.TrimSpace(a.cfg.CalvinParagraphsRoot)
-	if root == "" {
-		root = ".data/calvin-institutes-paragraphs"
+	return resolveCalvinParagraphsRoot(a.cfg.CalvinParagraphsRoot)
+}
+
+// resolveCalvinParagraphsRoot picks an existing Institutes pack directory.
+// Deploy places the pack under /var/www/eduardoos.com/data/… (persistent);
+// local/dev uses backend/.data or .data next to the API process.
+func resolveCalvinParagraphsRoot(explicit string) string {
+	explicit = strings.TrimSpace(explicit)
+	candidates := make([]string, 0, 5)
+	if explicit != "" {
+		candidates = append(candidates, explicit)
 	}
-	return root
+	candidates = append(candidates,
+		"/var/www/eduardoos.com/data/calvin-institutes-paragraphs",
+		"/opt/apps/eduardoos/shared/calvin-institutes-paragraphs",
+		filepath.Join("backend", ".data", "calvin-institutes-paragraphs"),
+		filepath.Join(".data", "calvin-institutes-paragraphs"),
+	)
+	seen := map[string]struct{}{}
+	for _, candidate := range candidates {
+		if candidate == "" {
+			continue
+		}
+		if _, ok := seen[candidate]; ok {
+			continue
+		}
+		seen[candidate] = struct{}{}
+		info, err := os.Stat(candidate)
+		if err == nil && info.IsDir() {
+			return candidate
+		}
+	}
+	if explicit != "" {
+		return explicit
+	}
+	return filepath.Join(".data", "calvin-institutes-paragraphs")
 }
 
 func (a *App) latinMustLog(r *http.Request, msg string, attrs ...any) {

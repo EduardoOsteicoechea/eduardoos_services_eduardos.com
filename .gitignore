@@ -62,6 +62,5 @@ backend/.data/*
 !backend/.data/calvin-institutes-paragraphs/
 !backend/.data/calvin-institutes-paragraphs/**
 
-# Deploy note: if the paragraph pack is omitted from git, sync
-# workspace `calvin-institutes-paragraphs/` → `backend/.data/calvin-institutes-paragraphs/`
-# on the VPS before enabling /api/latin/calvins-institutes/paragraphs.
+# Deploy syncs this pack to /var/www/eduardoos.com/data/calvin-institutes-paragraphs
+# (persistent; outside release switches). Local/dev resolves backend/.data or .data.

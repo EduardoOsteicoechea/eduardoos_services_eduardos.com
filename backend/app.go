@@ -73,9 +73,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EreportMaxPayloadBytes <= 0 {
 		cfg.EreportMaxPayloadBytes = defaultMaxPayloadBytes
 	}
-	if strings.TrimSpace(cfg.CalvinParagraphsRoot) == "" {
-		cfg.CalvinParagraphsRoot = ".data/calvin-institutes-paragraphs"
-	}
+	cfg.CalvinParagraphsRoot = resolveCalvinParagraphsRoot(cfg.CalvinParagraphsRoot)
 	if strings.TrimSpace(cfg.EvoiceMediaRoot) == "" {
 		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
 	}

@@ -141,10 +141,7 @@ func loadConfig() config {
 		evoiceRoot = media + "/evoice"
 	}
 
-	calvinRoot := strings.TrimSpace(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
-	if calvinRoot == "" {
-		calvinRoot = ".data/calvin-institutes-paragraphs"
-	}
+	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
 
 	return config{
 		ListenAddr:             listenHost + ":" + port,
