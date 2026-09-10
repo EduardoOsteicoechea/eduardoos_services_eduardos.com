@@ -48,6 +48,12 @@ func main() {
 			os.Exit(1)
 		}
 		return
+	case "scrib-import":
+		if err := runScribImportCLI(setupCtx, store, os.Args[2:]); err != nil {
+			logger.Error("scrib_import_failed", slog.String("reason", err.Error()))
+			os.Exit(1)
+		}
+		return
 	}
 
 	if err := store.ApplySafeMigrations(setupCtx, logger, cfg.AppEnv); err != nil {
@@ -82,6 +88,8 @@ func parseAPICommand(args []string) (command, confirmBackup string) {
 		return command, confirmBackup
 	case "ereport-import":
 		return "ereport-import", ""
+	case "scrib-import":
+		return "scrib-import", ""
 	default:
 		return command, ""
 	}

@@ -1,0 +1,72 @@
+name: Import Scrib
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: Owner account email
+        required: true
+        default: eduardooost@gmail.com
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    env:
+      APP: eduardoos
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          home = Path.home() / ".ssh"
+          key = os.environ["VPS_SSH_KEY"].replace("\r\n", "\n").replace("\r", "\n")
+          if "BEGIN" not in key and "\\n" in key:
+              key = key.replace("\\n", "\n")
+          key = key.strip() + "\n"
+          if "BEGIN" not in key or "PRIVATE KEY" not in key:
+              raise SystemExit("VPS_SSH_KEY is not a private key")
+          path = home / "deploy_key"
+          path.write_text(key)
+          path.chmod(0o600)
+          hosts = os.environ["VPS_KNOWN_HOSTS"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+          known = home / "known_hosts"
+          known.write_text(hosts)
+          known.chmod(0o644)
+          PY
+          {
+            echo "SSH_KEY_PATH=$HOME/.ssh/deploy_key"
+            echo "SSH_KNOWN_HOSTS_PATH=$HOME/.ssh/known_hosts"
+          } >> "$GITHUB_ENV"
+
+      - name: Upload samples and import
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          IMPORT_EMAIL: ${{ inputs.email }}
+        run: |
+          set -euo pipefail
+          PORT="${VPS_PORT:-22}"
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
+          REMOTE_DIR="/tmp/scrib-import-${GITHUB_RUN_ID}"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${REMOTE_DIR}'"
+          rsync -az -e "${RSH}" scripts/scrib-import-samples/ "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/samples/"
+          rsync -az -e "${RSH}" scripts/vps-scrib-import.sh "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/vps-scrib-import.sh"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${REMOTE_DIR}/vps-scrib-import.sh' && '${REMOTE_DIR}/vps-scrib-import.sh' \
+            '${IMPORT_EMAIL}' \
+            '${REMOTE_DIR}/samples/library.json' \
+            '${REMOTE_DIR}/samples/book-calvin.json,${REMOTE_DIR}/samples/book-romanos.json' \
+            '${REMOTE_DIR}/samples/sheet-prefacio.json,${REMOTE_DIR}/samples/sheet-hoja-nueva.json,${REMOTE_DIR}/samples/sheet-romanos-1.json' \
+            && rm -rf '${REMOTE_DIR}'"
