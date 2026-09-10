@@ -1,8 +1,8 @@
 name: Import eReport
 
-# One-shot/manual: load legacy meta.json + report.json onto VPS media for an existing Mongo user.
+# Manual: load legacy meta.json + report.json onto VPS media for an existing Mongo user.
 # Report bodies live under /var/www/eduardoos.com/media/ereport (not Mongo documents).
-# Mongo is used only to resolve the owner email → user id.
+# Mongo is used to resolve owner email → user id.
 
 on:
   workflow_dispatch:
@@ -88,55 +88,5 @@ jobs:
           ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${REMOTE_DIR}'"
           rsync -az -e "${RSH}" "$META_PATH" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/meta.json"
           rsync -az -e "${RSH}" "$PAYLOAD_PATH" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/report.json"
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "set -euo pipefail
-            API=/opt/apps/${APP}/current/api
-            test -x \"\$API\"
-            ENV_FILE=
-            for f in /etc/eduardoos-api.env /etc/eduardoos.com-api.env; do
-              if [ -r \"\$f\" ]; then ENV_FILE=\$f; break; fi
-            done
-            if [ -z \"\$ENV_FILE\" ]; then
-              for f in /etc/eduardoos-api.env /etc/eduardoos.com-api.env; do
-                if sudo -n test -r \"\$f\" 2>/dev/null; then
-                  TMP_ENV=\$(mktemp)
-                  sudo -n cat \"\$f\" > \"\$TMP_ENV\"
-                  chmod 600 \"\$TMP_ENV\"
-                  ENV_FILE=\$TMP_ENV
-                  break
-                fi
-              done
-            fi
-            if [ -z \"\$ENV_FILE\" ]; then
-              PID=\$(systemctl show -p MainPID --value eduardoos-api.service 2>/dev/null || true)
-              if [ -n \"\${PID:-}\" ] && [ \"\$PID\" != \"0\" ] && [ -r \"/proc/\$PID/environ\" ]; then
-                TMP_ENV=\$(mktemp)
-                tr '\\0' '\\n' < \"/proc/\$PID/environ\" > \"\$TMP_ENV\"
-                chmod 600 \"\$TMP_ENV\"
-                ENV_FILE=\$TMP_ENV
-              fi
-            fi
-            if [ -z \"\$ENV_FILE\" ]; then
-              echo 'ereport-import: cannot load api env (file 600 root, no sudo cat, no /proc environ)' >&2
-              ls -la /etc/eduardoos-api.env /etc/eduardoos.com-api.env 2>&1 || true
-              id
-              exit 1
-            fi
-            set -a
-            # shellcheck disable=SC1090
-            . \"\$ENV_FILE\"
-            set +a
-            if [ -n \"\${TMP_ENV:-}\" ]; then rm -f \"\$TMP_ENV\"; fi
-            if [ -z \"\${MONGODB_URI:-}\${MONGO_URI:-}\" ]; then
-              echo 'ereport-import: MONGODB_URI/MONGO_URI unset after sourcing env' >&2
-              exit 1
-            fi
-            \"\$API\" ereport-import \
-              --email='${IMPORT_EMAIL}' \
-              --meta='${REMOTE_DIR}/meta.json' \
-              --payload='${REMOTE_DIR}/report.json' \
-              --org-name='${ORG_NAME}' \
-              --root=/var/www/${SITE}/media/ereport
-            rm -rf '${REMOTE_DIR}'
-            curl --fail --silent --show-error http://127.0.0.1:8081/health
-            echo
-          "
+          rsync -az -e "${RSH}" scripts/vps-ereport-import.sh "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/vps-ereport-import.sh"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${REMOTE_DIR}/vps-ereport-import.sh' && '${REMOTE_DIR}/vps-ereport-import.sh' '${IMPORT_EMAIL}' '${REMOTE_DIR}/meta.json' '${REMOTE_DIR}/report.json' '${ORG_NAME}' && rm -rf '${REMOTE_DIR}'"
