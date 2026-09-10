@@ -99,8 +99,8 @@ html[data-page^="ereport"] .header-menu-symbol {
 
 html[data-page^="ereport"] .header-menu-svg {
   display: block;
-  width: 55%;
-  height: 55%;
+  width: calc(var(--chrome-control-size) * 0.72);
+  height: calc(var(--chrome-control-size) * 0.72);
 }
 
 html[data-page^="ereport"] .header-menu {
@@ -189,16 +189,17 @@ html[data-page^="ereport"] #dynamic-header .icon-btn:disabled {
 }
 
 html[data-page^="ereport"] #dynamic-header .icon-btn .material-symbols-outlined {
-  font-size: 56%;
-  font-variation-settings: "FILL" 0, "wght" 400, "opsz" 24;
+  font-size: calc(var(--header-dynamic-control-size) * 0.78);
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 
 html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
-  width: 51%;
-  height: 51%;
+  width: calc(var(--header-dynamic-control-size) * 0.72);
+  height: calc(var(--header-dynamic-control-size) * 0.72);
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.75;
+  stroke-width: 0.125rem;
 }
 
 html[data-page^="ereport"] .ereport-hds-cloud-save {
