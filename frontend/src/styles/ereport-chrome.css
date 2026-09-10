@@ -409,12 +409,48 @@ html[data-page^="ereport"] .ereport-hub__form label {
   font-size: var(--font-sm);
 }
 
+html[data-page^="ereport"] .ereport-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m1);
+  margin: 0;
+  min-width: 0;
+  font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] .ereport-modal label input {
+  align-self: stretch;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] .ereport-modal .ereport-ids-panel {
+  width: min(100%, 36rem);
+}
+
+html[data-page^="ereport"] .ereport-ids-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m2);
+  margin: 0;
+  min-width: 0;
+}
+
 html[data-page^="ereport"] .ereport-modal form {
   display: grid;
   grid-template-columns: 1fr 1rem 1fr;
   row-gap: var(--m1);
   column-gap: 0;
   align-items: start;
+}
+
+html[data-page^="ereport"] .ereport-modal form.ereport-ids-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m2);
+  grid-template-columns: none;
 }
 
 html[data-page^="ereport"] .ereport-modal form > :not(button):not(.ereport-modal-actions) {
@@ -494,8 +530,9 @@ html[data-page^="ereport"] .ereport-modal h2 {
 
 html[data-page^="ereport"] .ereport-modal-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--rail-gap);
   margin-top: var(--space-margin);
 }
 

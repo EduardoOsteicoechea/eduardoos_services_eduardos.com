@@ -125,24 +125,40 @@ import Layout from "../../layouts/Layout.astro";
       </div>
     </div>
     <div class="ereport-modal" data-modal="ids" hidden>
-      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-ids-title">
+      <div class="panel ereport-ids-panel" role="dialog" aria-modal="true" aria-labelledby="ereport-ids-title">
         <h2 id="ereport-ids-title">IDs del reporte</h2>
         <p class="hint">Úsalos con el connector / API key (`EDUARDOOS_ORG_ID`, `EDUARDOOS_REPORT_ID`).</p>
-        <label>
-          Org ID
-          <input id="ereport-modal-org-id" type="text" readonly data-ids-org />
-        </label>
-        <label>
-          Report ID
-          <input id="ereport-modal-report-id" type="text" readonly data-ids-report />
-        </label>
-        <p class="ereport-hub__error" data-ids-copy-status hidden></p>
-        <div class="ereport-modal-actions">
-          <button class="btn" type="button" data-copy-id="org">Copiar org</button>
-          <button class="btn" type="button" data-copy-id="report">Copiar report</button>
-          <button class="btn btn--primary" type="button" data-copy-id="both">Copiar ambos</button>
-          <button class="btn" type="button" data-close-modal>Cerrar</button>
-        </div>
+        <form class="ereport-ids-form" data-ids-form>
+          <label for="ereport-modal-org-id">
+            Org ID
+            <input
+              id="ereport-modal-org-id"
+              type="text"
+              readonly
+              spellcheck="false"
+              autocomplete="off"
+              data-ids-org
+            />
+          </label>
+          <label for="ereport-modal-report-id">
+            Report ID
+            <input
+              id="ereport-modal-report-id"
+              type="text"
+              readonly
+              spellcheck="false"
+              autocomplete="off"
+              data-ids-report
+            />
+          </label>
+          <p class="ereport-hub__error" data-ids-copy-status hidden></p>
+          <div class="ereport-modal-actions">
+            <button class="btn" type="button" data-copy-id="org">Copiar org</button>
+            <button class="btn" type="button" data-copy-id="report">Copiar report</button>
+            <button class="btn btn--primary" type="button" data-copy-id="both">Copiar ambos</button>
+            <button class="btn" type="button" data-close-modal>Cerrar</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -283,6 +299,31 @@ import Layout from "../../layouts/Layout.astro";
       });
     };
 
+    const liveOrgId = () => orgId || params.get("org")?.trim() || "";
+    const liveReportId = () => reportId || params.get("report")?.trim() || pretty.reportId || "";
+
+    const fillIdsFields = (modal?: HTMLElement | null) => {
+      const host =
+        modal ||
+        (root.querySelector('[data-modal="ids"]') as HTMLElement | null) ||
+        (document.querySelector('[data-modal="ids"]') as HTMLElement | null);
+      if (!(host instanceof HTMLElement)) return;
+      const orgVal = liveOrgId();
+      const reportVal = liveReportId();
+      const orgInput = host.querySelector("[data-ids-org]");
+      const reportInput = host.querySelector("[data-ids-report]");
+      if (orgInput instanceof HTMLInputElement) {
+        orgInput.value = orgVal;
+        orgInput.defaultValue = orgVal;
+        orgInput.title = orgVal;
+      }
+      if (reportInput instanceof HTMLInputElement) {
+        reportInput.value = reportVal;
+        reportInput.defaultValue = reportVal;
+        reportInput.title = reportVal;
+      }
+    };
+
     const openModal = (name: string) => {
       closeModals();
       const modal = root.querySelector(`[data-modal="${name}"]`) || document.querySelector(`[data-modal="${name}"]`);
@@ -300,12 +341,17 @@ import Layout from "../../layouts/Layout.astro";
         }
       }
       if (name === "ids") {
-        const orgInput = modal.querySelector("[data-ids-org]");
-        const reportInput = modal.querySelector("[data-ids-report]");
-        if (orgInput instanceof HTMLInputElement) orgInput.value = orgId;
-        if (reportInput instanceof HTMLInputElement) reportInput.value = reportId;
+        fillIdsFields(modal);
         const status = modal.querySelector("[data-ids-copy-status]");
-        if (status instanceof HTMLElement) status.hidden = true;
+        if (status instanceof HTMLElement) {
+          status.hidden = true;
+          status.textContent = "";
+        }
+        const orgInput = modal.querySelector("[data-ids-org]");
+        if (orgInput instanceof HTMLInputElement) {
+          orgInput.focus();
+          orgInput.select();
+        }
       }
       if (name === "historial") loadHistory();
     };
@@ -389,6 +435,7 @@ import Layout from "../../layouts/Layout.astro";
         ...res.data.payload,
         reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
       };
+      fillIdsFields();
       setBanner(root, "Editing on the VPS filesystem.", "ok");
       attachHost(payload);
     });
@@ -444,6 +491,10 @@ import Layout from "../../layouts/Layout.astro";
     disposers.push(() => document.removeEventListener("ereport-ui-scale", onScale));
     disposers.push(() => document.removeEventListener("ereport-theme", onTheme));
 
+    root.querySelector("[data-ids-form]")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+
     root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
@@ -473,10 +524,23 @@ import Layout from "../../layouts/Layout.astro";
       const copyId = node.closest("[data-copy-id]");
       if (copyId instanceof HTMLElement && copyId.dataset.copyId) {
         const kind = copyId.dataset.copyId;
+        const orgVal = liveOrgId();
+        const reportVal = liveReportId();
         const text =
-          kind === "org" ? orgId : kind === "report" ? reportId : `ORG=${orgId}\nREPORT=${reportId}`;
+          kind === "org"
+            ? orgVal
+            : kind === "report"
+              ? reportVal
+              : `EDUARDOOS_ORG_ID=${orgVal}\nEDUARDOOS_REPORT_ID=${reportVal}`;
         const status =
           document.querySelector("[data-ids-copy-status]") || root.querySelector("[data-ids-copy-status]");
+        if (!text.trim()) {
+          if (status instanceof HTMLElement) {
+            status.hidden = false;
+            status.textContent = "IDs aún no disponibles.";
+          }
+          return;
+        }
         try {
           await navigator.clipboard.writeText(text);
           if (status instanceof HTMLElement) {

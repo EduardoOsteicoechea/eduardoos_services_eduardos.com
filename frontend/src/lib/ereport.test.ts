@@ -229,10 +229,14 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain('data-site-scale="1"');
     expect(workspaceSrc).toContain('data-site-scale="-1"');
     expect(workspaceSrc).toContain("bumpUiScale(");
-    for (const modal of ["hub", "tema", "save", "share", "historial"]) {
+    for (const modal of ["hub", "tema", "save", "share", "historial", "ids"]) {
       expect(workspaceSrc).toContain(`data-open-modal="${modal}"`);
       expect(workspaceSrc).toContain(`data-modal="${modal}"`);
     }
+    expect(workspaceSrc).toContain("data-ids-org");
+    expect(workspaceSrc).toContain("data-ids-report");
+    expect(workspaceSrc).toContain("fillIdsFields");
+    expect(workspaceSrc).toContain("liveOrgId");
     expect(workspaceSrc).toContain("data-save-now");
     expect(workspaceSrc).toContain("host.collect()");
     expect(workspaceSrc).toContain("createReportInvite(");
