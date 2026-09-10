@@ -91,6 +91,22 @@ jobs:
           ${RSH} "${VPS_USER}@${VPS_HOST}" "set -euo pipefail
             API=/opt/apps/${APP}/current/api
             test -x \"\$API\"
+            ENV_FILE=
+            for f in /etc/eduardoos-api.env /etc/eduardoos.com-api.env; do
+              if [ -r \"\$f\" ]; then ENV_FILE=\$f; break; fi
+            done
+            if [ -z \"\$ENV_FILE\" ]; then
+              echo 'ereport-import: api env file missing or unreadable' >&2
+              exit 1
+            fi
+            set -a
+            # shellcheck disable=SC1090
+            . \"\$ENV_FILE\"
+            set +a
+            if [ -z \"\${MONGODB_URI:-}\${MONGO_URI:-}\" ]; then
+              echo 'ereport-import: MONGODB_URI/MONGO_URI unset after sourcing env' >&2
+              exit 1
+            fi
             \"\$API\" ereport-import \
               --email='${IMPORT_EMAIL}' \
               --meta='${REMOTE_DIR}/meta.json' \
