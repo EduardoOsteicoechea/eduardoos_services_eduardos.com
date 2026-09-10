@@ -24,15 +24,19 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 		"ownerSafe": "Display metadata only (lowercase email with @ replaced by _at_). Filesystem ownership uses immutable ownerUserId from the API key owner.",
 		"keyPolicy": "API keys are created, listed, and revoked only in the Eduardo OS UI. Key lifecycle is not part of the external API.",
 		"skill":     "https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector — clone as .ereport/ sidecar. Mirror: https://eduardoos.com/skills/eduardoos-ereport/",
-		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3) Ordered eReport flow: access → orgs → orgs/{orgId}/reports → GET report → add only new open issues → POST. 4) API POST is additive for issues: cannot modify/delete existing items/sections; new items need non-empty incidencia + status reprobado. 5) Always print viewUrl after write. 6) There are no flat /reports/{ownerSafe}/{reportId} paths.",
+		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3) Ordered eReport flow: access → orgs → orgs/{orgId}/reports → GET report → add only new open issues → POST. 4) API POST is additive for issues: cannot modify/delete existing items/sections; new items need non-empty incidencia + status reprobado. 5) Always print viewUrl after write. 6) There are no flat /reports/{ownerSafe}/{reportId} paths. 7) List only returns reports whose payload meta is loadable; GET/POST for a listed id must not 404 for stale ownerUserId in meta (path ownership heals it). True missing storage returns error report_storage_missing with orgId/reportId/reason.",
 		"routes": []map[string]any{
 			{"method": http.MethodGet, "path": "/api/v1/docs", "auth": "none", "summary": "This catalog (public). Fetch first."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/access", "auth": "api_key", "summary": "Step 1 — check eReport API access.", "requirements": "api + ereport (or admin). Returns allowed, email, ownerUserId, ownerSafe."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs", "auth": "api_key", "summary": "Step 2 — list owned organizations (hidden omitted)."},
-			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports", "auth": "api_key", "summary": "Step 3 — list reports inside one org."},
-			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}", "auth": "api_key", "summary": "Step 4a — read one org report (meta + payload + viewUrl)."},
+			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports", "auth": "api_key", "summary": "Step 3 — list loadable reports inside one org (orphans without readable meta are omitted and pruned from library.json)."},
+			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}", "auth": "api_key", "summary": "Step 4a — read one org report (meta + payload + viewUrl). Heals stale meta.ownerUserId when files live under this key owner's tree."},
 			{"method": http.MethodPost, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}", "auth": "api_key", "summary": "Step 4b — additive write after confirmOverwrite:true.", "body": `{"confirmOverwrite":true,"tema":"optional","payload":{}}`},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/library", "auth": "api_key", "summary": "Alias for orgs (no legacy flat reports)."},
+		},
+		"errors": map[string]any{
+			"report_storage_missing": "GET/POST when meta/payload cannot be read under media/ereport/<owner>/orgs/{orgId}/reports/{reportId}. Body includes orgId, reportId, reason.",
+			"not_found":              "Unknown org or generic missing resource.",
 		},
 		"payloadSchema": map[string]any{
 			"description":     "Portable Issue Tracker / .ereport JSON stored as filesystem files under the report directory. Image refs are file ids/URLs, not new base64.",

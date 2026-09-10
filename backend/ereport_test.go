@@ -553,6 +553,166 @@ func TestEreportAPIV1AdditiveAndHistory(t *testing.T) {
 	}
 }
 
+func TestEreportV1HealsStaleOwnerUserIDAndSkipsOrphans(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	_ = app.grantEntitlement("member-1", productAPI)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Alcaldia","firstReportName":"Tablet"}`)
+	if created.Code != http.StatusCreated {
+		t.Fatalf("create: %d %s", created.Code, created.Body.String())
+	}
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	healthyID := body["report"].(map[string]any)["id"].(string)
+	user := app.mustUser("member@eduardoos.com")
+
+	// Hex id with stale ownerUserId (account remint) but files under current owner tree.
+	staleHex := "89853904ec25e6b790b2254d92e87ff9"
+	staleMeta := ereportMeta{
+		ID: staleHex, Tema: "Model Checker 1.1", OrgID: orgID,
+		OwnerUserID: user.ID, CreatedAt: nowRFC3339(), UpdatedAt: nowRFC3339(),
+	}
+	if err := app.ereport.saveReport(user.ID, staleMeta, map[string]any{
+		"orgName": "Alcaldia", "reportName": "Model Checker 1.1", "sections": []any{},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	staleMeta.OwnerUserID = "f77444e7cce71d64baf20e3c"
+	metaPath, err := app.ereport.reportMetaPath(user.ID, orgID, staleHex)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := app.ereport.writeJSON(metaPath, staleMeta); err != nil {
+		t.Fatal(err)
+	}
+	// UUID id, same stale owner mismatch.
+	staleUUID := "6d1b577e-91ac-373b-f7f5-8a2d712f7f3a"
+	staleUUIDMeta := ereportMeta{
+		ID: staleUUID, Tema: "website issues", OrgID: orgID,
+		OwnerUserID: user.ID, CreatedAt: nowRFC3339(), UpdatedAt: nowRFC3339(),
+	}
+	if err := app.ereport.saveReport(user.ID, staleUUIDMeta, map[string]any{
+		"orgName": "eduardoos", "reportName": "website issues", "sections": []any{},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	staleUUIDMeta.OwnerUserID = "f77444e7cce71d64baf20e3c"
+	uuidMetaPath, err := app.ereport.reportMetaPath(user.ID, orgID, staleUUID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := app.ereport.writeJSON(uuidMetaPath, staleUUIDMeta); err != nil {
+		t.Fatal(err)
+	}
+	// Library orphan: listed but no meta/payload on disk.
+	orphanID := "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+	lib, err := app.ereport.loadOrgLibrary(user.ID, orgID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lib.Reports = append(lib.Reports,
+		ereportCard{ID: staleHex, Tema: "Model Checker 1.1", UpdatedAt: nowRFC3339()},
+		ereportCard{ID: staleUUID, Tema: "website issues", UpdatedAt: nowRFC3339()},
+		ereportCard{ID: orphanID, Tema: "ghost", UpdatedAt: nowRFC3339()},
+	)
+	if err := app.ereport.saveOrgLibrary(user.ID, orgID, lib); err != nil {
+		t.Fatal(err)
+	}
+
+	keyRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"stale-owner"}`)
+	secret := decodeMap(t, keyRec)["key"].(string)
+
+	listReq := httptest.NewRequest(http.MethodGet, "/api/v1/ereport/orgs/"+orgID+"/reports", nil)
+	listReq.Header.Set("Authorization", "Bearer "+secret)
+	listRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(listRec, listReq)
+	if listRec.Code != http.StatusOK {
+		t.Fatalf("list: %d %s", listRec.Code, listRec.Body.String())
+	}
+	listed := decodeMap(t, listRec)["reports"].([]any)
+	ids := map[string]bool{}
+	for _, raw := range listed {
+		ids[raw.(map[string]any)["id"].(string)] = true
+	}
+	if !ids[healthyID] || !ids[staleHex] || !ids[staleUUID] {
+		t.Fatalf("expected healthy+healed reports listed, got %v", ids)
+	}
+	if ids[orphanID] {
+		t.Fatal("orphan without storage must not be listed")
+	}
+
+	for _, reportID := range []string{staleHex, staleUUID, healthyID} {
+		getReq := httptest.NewRequest(http.MethodGet, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, nil)
+		getReq.Header.Set("Authorization", "Bearer "+secret)
+		getRec := httptest.NewRecorder()
+		app.Handler().ServeHTTP(getRec, getReq)
+		if getRec.Code != http.StatusOK {
+			t.Fatalf("get %s: %d %s", reportID, getRec.Code, getRec.Body.String())
+		}
+		got := decodeMap(t, getRec)
+		if got["payload"] == nil || got["viewUrl"] == nil {
+			t.Fatalf("get %s missing payload/viewUrl: %v", reportID, got)
+		}
+		meta := got["meta"].(map[string]any)
+		if meta["ownerUserId"] != user.ID {
+			t.Fatalf("get %s owner not healed: %v", reportID, meta["ownerUserId"])
+		}
+	}
+
+	// Healed meta persisted on disk.
+	healed, _, err := app.ereport.loadReport(user.ID, orgID, staleHex)
+	if err != nil || healed.OwnerUserID != user.ID {
+		t.Fatalf("persisted heal: %+v err=%v", healed, err)
+	}
+
+	postBody, _ := json.Marshal(map[string]any{
+		"confirmOverwrite": true,
+		"payload": map[string]any{
+			"orgName": "Alcaldia", "reportName": "Model Checker 1.1", "reportDate": "2026-09-10",
+			"reportNumber": "ModelBA-1.1",
+			"sections": []any{
+				map[string]any{
+					"id": "api-fix-smoke", "title": "API fix smoke",
+					"groups": []any{
+						map[string]any{
+							"id": "api-fix-smoke-g", "title": "smoke",
+							"items": []any{
+								map[string]any{
+									"id": "api-fix-smoke-item-1", "nombre": "smoke",
+									"incidencia": "Post-fix smoke issue — safe to close",
+									"solucion":   "", "status": "reprobado",
+									"fechaIncidencia": "", "fechaSolucion": "",
+									"imagesIncidencia": []any{}, "imagesSolucion": []any{},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	})
+	postReq := httptest.NewRequest(http.MethodPost, "/api/v1/ereport/orgs/"+orgID+"/reports/"+staleHex, bytes.NewReader(postBody))
+	postReq.Header.Set("Authorization", "Bearer "+secret)
+	postReq.Header.Set("Content-Type", "application/json")
+	postRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(postRec, postReq)
+	if postRec.Code != http.StatusOK {
+		t.Fatalf("post healed report: %d %s", postRec.Code, postRec.Body.String())
+	}
+
+	missReq := httptest.NewRequest(http.MethodGet, "/api/v1/ereport/orgs/"+orgID+"/reports/"+orphanID, nil)
+	missReq.Header.Set("Authorization", "Bearer "+secret)
+	missRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(missRec, missReq)
+	if missRec.Code != http.StatusNotFound {
+		t.Fatalf("missing report: %d %s", missRec.Code, missRec.Body.String())
+	}
+	miss := decodeMap(t, missRec)
+	if miss["error"] != "report_storage_missing" || miss["reportId"] != orphanID || miss["orgId"] != orgID {
+		t.Fatalf("expected actionable missing error, got %v", miss)
+	}
+}
+
 func TestEreportSourceHasNoS3Runtime(t *testing.T) {
 	entries, err := os.ReadDir(".")
 	if err != nil {

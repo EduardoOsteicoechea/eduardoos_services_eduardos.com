@@ -112,7 +112,7 @@ func (a *App) ereportV1OrgReportsHandler(w http.ResponseWriter, r *http.Request)
 	orgID := r.PathValue("orgId")
 	orgMeta, err := a.ereport.loadOrgMeta(user.ID, orgID)
 	if err != nil {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		a.writeEreportNotFound(w, r, orgID, "", "org_missing")
 		return
 	}
 	lib, err := a.ereport.loadOrgLibrary(user.ID, orgID)
@@ -120,6 +120,7 @@ func (a *App) ereportV1OrgReportsHandler(w http.ResponseWriter, r *http.Request)
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	lib, _ = a.ereport.filterLoadableOrgReports(user.ID, orgID, lib, true)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ownerUserId": user.ID,
 		"ownerSafe":   displayOwnerSafe(user.Email),
@@ -139,7 +140,7 @@ func (a *App) ereportV1GetReportHandler(w http.ResponseWriter, r *http.Request) 
 	reportID := r.PathValue("reportId")
 	meta, payload, err := a.ereport.loadReport(user.ID, orgID, reportID)
 	if err != nil {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
 		return
 	}
 	ownerSafe := displayOwnerSafe(user.Email)
@@ -160,7 +161,7 @@ func (a *App) ereportV1PostReportHandler(w http.ResponseWriter, r *http.Request)
 	reportID := r.PathValue("reportId")
 	meta, current, err := a.ereport.loadReport(user.ID, orgID, reportID)
 	if err != nil {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
 		return
 	}
 	r.Body = http.MaxBytesReader(w, r.Body, a.cfg.EreportMaxPayloadBytes)

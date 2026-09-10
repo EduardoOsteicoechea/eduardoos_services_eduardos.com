@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"net/http"
 	"regexp"
 	"strings"
@@ -18,8 +19,9 @@ var safeMessages = map[string]string{
 	"rate_limited":        "Too many attempts. Try later.",
 	"conflict":            "That username is already taken.",
 	"payload_too_large":   "That file is too large.",
-	"not_found":           "Not found.",
-	"internal_error":      "Something went wrong.",
+	"not_found":              "Not found.",
+	"report_storage_missing": "Report storage is missing or unreadable for this org/report id.",
+	"internal_error":         "Something went wrong.",
 }
 
 func normalizeErrorCode(code string) string {
@@ -72,6 +74,40 @@ func requestIDFrom(r *http.Request, w http.ResponseWriter) string {
 
 func (a *App) writeSafeError(w http.ResponseWriter, r *http.Request, status int, code string) {
 	a.writeAPIError(w, r, status, code, "")
+}
+
+func (a *App) writeEreportNotFound(w http.ResponseWriter, r *http.Request, orgID, reportID, reason string) {
+	code := "report_storage_missing"
+	if reason == "org_missing" {
+		code = "not_found"
+	}
+	id := requestIDFrom(r, w)
+	payload := map[string]any{
+		"error":      code,
+		"message":    safeErrorMessage(code),
+		"request_id": id,
+	}
+	if orgID != "" {
+		payload["orgId"] = orgID
+	}
+	if reportID != "" {
+		payload["reportId"] = reportID
+	}
+	if reason != "" {
+		payload["reason"] = reason
+	}
+	writeJSON(w, http.StatusNotFound, payload)
+}
+
+func ereportMissingReason(err error) string {
+	switch {
+	case errors.Is(err, errEreportTraversal), errors.Is(err, errEreportPath):
+		return "invalid_id"
+	case errors.Is(err, errEreportNotFound):
+		return "meta_or_payload_missing"
+	default:
+		return "unreadable"
+	}
 }
 
 func (a *App) writeAPIError(w http.ResponseWriter, r *http.Request, status int, code, debug string) {

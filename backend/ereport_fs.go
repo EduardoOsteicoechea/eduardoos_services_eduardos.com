@@ -515,8 +515,28 @@ func (fs *ereportFS) loadReport(ownerUserID, orgID, reportID string) (ereportMet
 	if err := fs.readJSON(metaPath, &meta); err != nil {
 		return meta, nil, err
 	}
-	if meta.ID == "" || meta.OwnerUserID != ownerUserID || meta.OrgID != orgID {
+	// Filesystem path under this owner's tree is authoritative. Stale
+	// ownerUserId (account remint / import) or empty org/id fields used to
+	// make library list succeed while GET/POST returned opaque not_found.
+	dirty := false
+	if meta.ID == "" {
+		meta.ID = reportID
+		dirty = true
+	} else if meta.ID != reportID {
 		return ereportMeta{}, nil, errEreportNotFound
+	}
+	if meta.OrgID == "" {
+		meta.OrgID = orgID
+		dirty = true
+	} else if meta.OrgID != orgID {
+		return ereportMeta{}, nil, errEreportNotFound
+	}
+	if meta.OwnerUserID != ownerUserID {
+		meta.OwnerUserID = ownerUserID
+		dirty = true
+	}
+	if dirty {
+		_ = fs.writeJSON(metaPath, meta)
 	}
 	payloadPath, err := fs.reportPayloadPath(ownerUserID, orgID, reportID)
 	if err != nil {
@@ -525,14 +545,50 @@ func (fs *ereportFS) loadReport(ownerUserID, orgID, reportID string) (ereportMet
 	var payload map[string]any
 	if err := fs.readJSON(payloadPath, &payload); err != nil {
 		if errors.Is(err, errEreportNotFound) {
-			return meta, map[string]any{}, nil
+			// Legacy import / older layouts may have used report.json.
+			legacy := filepath.Join(filepath.Dir(payloadPath), "report.json")
+			if legacyErr := fs.readJSON(legacy, &payload); legacyErr != nil {
+				if errors.Is(legacyErr, errEreportNotFound) {
+					return meta, map[string]any{}, nil
+				}
+				return meta, nil, legacyErr
+			}
+		} else {
+			return meta, nil, err
 		}
-		return meta, nil, err
 	}
 	if payload == nil {
 		payload = map[string]any{}
 	}
 	return meta, payload, nil
+}
+
+// filterLoadableOrgReports returns library cards that can be loaded (and
+// heals stale meta as a side effect). Orphans with no meta on disk are omitted
+// and optionally pruned from library.json when prune is true.
+func (fs *ereportFS) filterLoadableOrgReports(ownerUserID, orgID string, lib ereportLibrary, prune bool) (ereportLibrary, bool) {
+	out := make([]ereportCard, 0, len(lib.Reports))
+	changed := false
+	for _, card := range lib.Reports {
+		id := strings.TrimSpace(card.ID)
+		if id == "" || !validEreportID(id) {
+			changed = true
+			continue
+		}
+		if _, _, err := fs.loadReport(ownerUserID, orgID, id); err != nil {
+			changed = true
+			continue
+		}
+		out = append(out, card)
+	}
+	if len(out) != len(lib.Reports) {
+		changed = true
+	}
+	lib.Reports = out
+	if prune && changed {
+		_ = fs.saveOrgLibrary(ownerUserID, orgID, lib)
+	}
+	return lib, changed
 }
 
 func (fs *ereportFS) saveReport(ownerUserID string, meta ereportMeta, payload map[string]any) error {
