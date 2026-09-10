@@ -3,6 +3,7 @@
   --space-padding: 1rem;
   --main-padding: 1.5rem;
   --main-padding-top: var(--main-padding);
+  --main-inline: 1rem;
   --page-gutter: 1rem;
   --page-col-count: 24;
   --span-form: 6;
@@ -674,8 +675,8 @@ main {
   row-gap: var(--rail-gap);
   padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding);
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: var(--main-inline);
+  padding-right: var(--main-inline);
 }
 
 main > * {
@@ -1062,7 +1063,7 @@ section.diag .panel:not(form) {
   background: var(--color-surface);
 }
 
-/* Phone + tablet: top/bottom activity bars, horizontal content insets none */
+/* Phone + tablet: top/bottom activity bars */
 @media (max-width: 63.999rem) {
   :root {
     --content-basis: 48rem;
@@ -1076,6 +1077,7 @@ section.diag .panel:not(form) {
     --span-two-thirds: 11;
     --span-full: 16;
     --span-button: 4;
+    --main-inline: 1rem;
   }
 
   .app-header--start {
@@ -1208,8 +1210,12 @@ section.diag .panel:not(form) {
     --span-two-thirds: 16;
     --span-full: 24;
     --span-button: 6;
-    /* Align main content top with first rail icon button top */
-    --main-padding-top: var(--rail-gap);
+    --main-inline: 2rem;
+    /* Center route title with first rail menu button */
+    --main-padding-top: calc(
+      var(--rail-gap) + (var(--rail-button-size) / 2) -
+        (var(--font-size-xl) * 1.2 / 2)
+    );
   }
 
   .app-header--start {
@@ -1282,8 +1288,8 @@ section.diag .panel:not(form) {
   }
 
   main {
-    padding-left: var(--rail-width);
-    padding-right: var(--rail-width);
+    padding-left: calc(var(--rail-width) + var(--main-inline));
+    padding-right: calc(var(--rail-width) + var(--main-inline));
   }
 
   
