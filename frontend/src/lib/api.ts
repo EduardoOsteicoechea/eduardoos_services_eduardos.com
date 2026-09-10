@@ -215,11 +215,15 @@ type ApiSendOpts = {
   skipAuthRetry?: boolean;
   skipCsrfRetry?: boolean;
   forceCsrfRefresh?: boolean;
+  timeoutMs?: number;
 };
 
-function timeoutSignal(existing?: AbortSignal | null): { signal: AbortSignal; cancel: () => void } {
+function timeoutSignal(
+  existing?: AbortSignal | null,
+  ms = apiTimeoutMs,
+): { signal: AbortSignal; cancel: () => void } {
   const controller = new AbortController();
-  const timer = globalThis.setTimeout(() => controller.abort(), apiTimeoutMs);
+  const timer = globalThis.setTimeout(() => controller.abort(), ms);
   const cancel = () => globalThis.clearTimeout(timer);
   if (existing) {
     if (existing.aborted) {
@@ -268,7 +272,7 @@ async function apiSend<T>(
       headers.set("X-CSRF-Token", csrfToken);
     }
   }
-  const timed = timeoutSignal(init.signal);
+  const timed = timeoutSignal(init.signal, opts.timeoutMs ?? apiTimeoutMs);
   const url = apiUrl(path);
   sessionLog("api.request", {
     method,
@@ -621,26 +625,10 @@ export async function deleteJSON<T = MeResponse>(path: string): Promise<{ status
 }
 
 export async function uploadFile<T = APIErrorBody>(path: string, file: File, field = "file"): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
-  await getCsrf();
   const body = new FormData();
   body.append(field, file);
-  const headers = new Headers();
-  headers.set("Accept", "application/json");
-  if (csrfToken) {
-    headers.set("X-CSRF-Token", csrfToken);
-  }
-  const response = await fetch(apiUrl(path), {
-    method: "POST",
-    credentials: "include",
-    headers,
-    body,
-  });
-  const data = await parseJSON<T & APIErrorBody>(response);
-  const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
-  if (requestId) {
-    data.request_id = requestId;
-  }
-  return { status: response.status, data, requestId };
+  // Do not set Content-Type: the browser must add the multipart boundary.
+  return apiSend<T>(path, { method: "POST", body }, { timeoutMs: 120000 });
 }
 
 export async function loginAdmin(email: string, password: string, _csrf?: string): Promise<{ status: number; data: MeResponse; requestId: string }> {
@@ -652,26 +640,7 @@ export async function postDiagnostics(path: string, _csrf: string, body: Record<
 }
 
 export async function uploadAvatar(file: File): Promise<{ status: number; data: MeResponse; requestId: string }> {
-  await getCsrf();
-  const body = new FormData();
-  body.append("file", file);
-  const headers = new Headers();
-  headers.set("Accept", "application/json");
-  if (csrfToken) {
-    headers.set("X-CSRF-Token", csrfToken);
-  }
-  const response = await fetch(apiUrl("/profile/avatar"), {
-    method: "POST",
-    credentials: "include",
-    headers,
-    body,
-  });
-  const data = await parseJSON<MeResponse>(response);
-  const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
-  if (requestId) {
-    data.request_id = requestId;
-  }
-  return { status: response.status, data, requestId };
+  return uploadFile<MeResponse>("/profile/avatar", file);
 }
 
 export async function deleteAvatar(): Promise<{ status: number; data: MeResponse; requestId: string }> {

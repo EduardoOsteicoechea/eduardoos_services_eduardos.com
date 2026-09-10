@@ -17,8 +17,7 @@ import (
 
 func (a *App) eostoreAdmin(w http.ResponseWriter, r *http.Request) *User {
 	if r.Method != http.MethodGet && r.Method != http.MethodHead {
-		if !a.validOrigin(r) || !a.validCSRF(r) {
-			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		if !a.requireUnsafe(w, r) {
 			return nil
 		}
 	}
@@ -610,6 +609,27 @@ func writeEostoreImage(mediaRoot, rel string, data []byte) error {
 	return os.Rename(tmpName, abs)
 }
 
+func detectEostoreImage(data []byte) (avatarKind, error) {
+	if len(data) > maxEostoreImageBytes {
+		return avatarKind{}, errAvatarTooLarge
+	}
+	if len(data) < 12 {
+		return avatarKind{}, errAvatarInvalid
+	}
+	kind, err := sniffImage(data)
+	if err != nil {
+		return avatarKind{}, err
+	}
+	cfg, err := decodeConfig(data, kind.mime)
+	if err != nil {
+		return avatarKind{}, errAvatarInvalid
+	}
+	if cfg.Width <= 0 || cfg.Height <= 0 || cfg.Width > maxEostoreImageEdge || cfg.Height > maxEostoreImageEdge {
+		return avatarKind{}, errAvatarTooLarge
+	}
+	return kind, nil
+}
+
 func (a *App) eostoreDeleteImageFile(rel string) error {
 	if !safeEostoreRel.MatchString(rel) {
 		return nil
@@ -641,8 +661,9 @@ func (a *App) eostoreProductImageUploadHandler(w http.ResponseWriter, r *http.Re
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	r.Body = http.MaxBytesReader(w, r.Body, maxEostoreImageBytes+(1<<20))
 	if err := r.ParseMultipartForm(maxEostoreImageBytes + (1 << 20)); err != nil {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
 	file, _, err := r.FormFile("file")
@@ -652,11 +673,15 @@ func (a *App) eostoreProductImageUploadHandler(w http.ResponseWriter, r *http.Re
 	}
 	defer file.Close()
 	data, err := io.ReadAll(io.LimitReader(file, maxEostoreImageBytes+1))
-	if err != nil || len(data) == 0 || len(data) > maxEostoreImageBytes {
-		a.writeSafeError(w, r, http.StatusBadRequest, "payload_too_large")
+	if err != nil || len(data) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	kind, err := detectAvatar(data)
+	if len(data) > maxEostoreImageBytes {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	kind, err := detectEostoreImage(data)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
