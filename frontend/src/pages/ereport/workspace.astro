@@ -1,50 +1,93 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
-      <span class="material-symbols-outlined" aria-hidden="true">help</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">help</span>
+      </span>
+      Tutorial
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
-      <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+      </span>
+      Sidebar
     </button>
-    <button class="icon-btn" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
-      <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+    <button class="dhs-action" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+      </span>
+      Agrandar fuente
     </button>
-    <button class="icon-btn" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
-      <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+    <button class="dhs-action" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+      </span>
+      Reducir fuente
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
-      <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+      </span>
+      Cargar
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
-      <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+      </span>
+      Limpiar todo
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
-      <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+      </span>
+      Progreso
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
-      <span class="material-symbols-outlined" aria-hidden="true">download</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">download</span>
+      </span>
+      Descargar
     </button>
-    <button class="icon-btn" type="button" data-open-modal="hub" title="Hub" aria-label="Abrir hub">
-      <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
+    <button class="dhs-action" type="button" data-open-modal="hub" title="Hub" aria-label="Abrir hub">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
+      </span>
+      Hub
     </button>
-    <button class="icon-btn" type="button" data-open-modal="tema" title="Editar tema" aria-label="Editar tema">
-      <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+    <button class="dhs-action" type="button" data-open-modal="tema" title="Editar tema" aria-label="Editar tema">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+      </span>
+      Editar tema
     </button>
-    <button class="icon-btn ereport-hds-cloud-save" type="button" data-open-modal="save" title="Guardar en nube" aria-label="Guardar en nube">
-      <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+    <button class="dhs-action ereport-hds-cloud-save" type="button" data-open-modal="save" title="Guardar en nube" aria-label="Guardar en nube">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+      </span>
+      Guardar en nube
     </button>
-    <button class="icon-btn" type="button" data-open-modal="share" title="Compartir" aria-label="Compartir con usuarios">
-      <span class="material-symbols-outlined" aria-hidden="true">share</span>
+    <button class="dhs-action" type="button" data-open-modal="share" title="Compartir" aria-label="Compartir con usuarios">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">share</span>
+      </span>
+      Compartir
     </button>
-    <button class="icon-btn" type="button" data-open-modal="historial" title="Historial" aria-label="Historial de versiones API">
-      <span class="material-symbols-outlined" aria-hidden="true">history</span>
+    <button class="dhs-action" type="button" data-open-modal="historial" title="Historial" aria-label="Historial de versiones API">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">history</span>
+      </span>
+      Historial
     </button>
-    <button class="icon-btn" type="button" data-open-modal="ids" title="Org ID y Report ID" aria-label="Mostrar Org ID y Report ID">
-      <span class="material-symbols-outlined" aria-hidden="true">tag</span>
+    <button class="dhs-action" type="button" data-open-modal="ids" title="Org ID y Report ID" aria-label="Mostrar Org ID y Report ID">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">tag</span>
+      </span>
+      IDs
     </button>
   </Fragment>
 

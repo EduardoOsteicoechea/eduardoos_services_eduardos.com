@@ -1,32 +1,57 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="eReport invite · Eduardoos" page="ereport-invite">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
-      <span class="material-symbols-outlined" aria-hidden="true">help</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">help</span>
+      </span>
+      Tutorial
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
-      <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+      </span>
+      Sidebar
     </button>
-    <button class="icon-btn" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
-      <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+    <button class="dhs-action" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+      </span>
+      Agrandar fuente
     </button>
-    <button class="icon-btn" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
-      <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+    <button class="dhs-action" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+      </span>
+      Reducir fuente
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
-      <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+      </span>
+      Cargar
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
-      <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+      </span>
+      Limpiar todo
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
-      <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
+      </span>
+      Progreso
     </button>
-    <button class="icon-btn" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
-      <span class="material-symbols-outlined" aria-hidden="true">download</span>
+    <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">download</span>
+      </span>
+      Descargar
     </button>
   </Fragment>
 

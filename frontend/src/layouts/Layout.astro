@@ -298,8 +298,11 @@ const jsonLdString =
         {hasDhsSlot ? (
           <slot name="dhs" />
         ) : (
-          <a class="icon-btn" href="/diagnostics" data-route aria-label="Diagnostics">
-            <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+          <a class="dhs-action" href="/diagnostics" data-route title="Diagnostics" aria-label="Diagnostics">
+            <span class="icon-btn" aria-hidden="true">
+              <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
+            </span>
+            Diagnostics
           </a>
         )}
       </aside>

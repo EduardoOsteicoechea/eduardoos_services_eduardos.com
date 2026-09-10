@@ -85,9 +85,6 @@ function isCompactChrome(): boolean {
 
 function closeAllPanels(except?: string): void {
   for (const id of ALL_PANELS) {
-    if (id === "dynamic-header" && isEreportPage() && !isCompactChrome()) {
-      continue;
-    }
     if (id !== except) {
       setPanelHidden(id, true);
     }
@@ -256,12 +253,7 @@ function syncEreportChrome(): void {
   document.documentElement.style.fontSize = "";
   setChromeHidden(document.querySelector(".agent-fab"), true);
   const opener = document.querySelector(".header-dynamic");
-  if (!isCompactChrome()) {
-    setPanelHidden("dynamic-header", false);
-    if (opener instanceof HTMLElement) {
-      opener.hidden = true;
-    }
-  } else if (opener instanceof HTMLElement) {
+  if (opener instanceof HTMLElement) {
     opener.hidden = false;
   }
   const storedScale = localStorage.getItem("site-text-scale");

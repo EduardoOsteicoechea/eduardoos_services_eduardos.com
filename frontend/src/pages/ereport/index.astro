@@ -1,26 +1,45 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="eReport · Eduardoos" page="ereport">
   <Fragment slot="dhs">
-    <button class="icon-btn" type="button" data-hub-view="dashboard" title="Dashboard" aria-label="Dashboard">
-      <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+    <button class="dhs-action" type="button" data-hub-view="dashboard" title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
     </button>
-    <button class="icon-btn" type="button" data-hub-view="orgs" title="Orgs" aria-label="Orgs">
-      <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
+    <button class="dhs-action" type="button" data-hub-view="orgs" title="Orgs" aria-label="Orgs">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
+      </span>
+      Orgs
     </button>
-    <button class="icon-btn" type="button" data-hub-view="register" title="New org" aria-label="New org">
-      <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
+    <button class="dhs-action" type="button" data-hub-view="register" title="New org" aria-label="New org">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
+      </span>
+      New org
     </button>
-    <button class="icon-btn" type="button" data-hub-view="new-report" title="New report" aria-label="New report">
-      <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
+    <button class="dhs-action" type="button" data-hub-view="new-report" title="New report" aria-label="New report">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
+      </span>
+      New report
     </button>
-    <button class="icon-btn" type="button" data-hub-view="recent" title="Recent" aria-label="Recent">
-      <span class="material-symbols-outlined" aria-hidden="true">history</span>
+    <button class="dhs-action" type="button" data-hub-view="recent" title="Recent" aria-label="Recent">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">history</span>
+      </span>
+      Recent
     </button>
-    <button class="icon-btn" type="button" data-hub-view="manage" title="Manage" aria-label="Manage">
-      <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+    <button class="dhs-action" type="button" data-hub-view="manage" title="Manage" aria-label="Manage">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+      </span>
+      Manage
     </button>
   </Fragment>
 

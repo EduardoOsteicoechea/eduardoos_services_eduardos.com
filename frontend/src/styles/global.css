@@ -287,6 +287,71 @@ a {
   overflow-y: auto;
 }
 
+/* Route actions: icon left, label right, title tooltip */
+.dhs-action {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  padding: calc(var(--rail-gap) * 0.25) 0;
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dhs-action .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border-radius: var(--header-button-radius);
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.dhs-action:hover,
+.dhs-action:focus-visible {
+  color: var(--color-accent);
+}
+
+.dhs-action:hover .icon-btn,
+.dhs-action:focus-visible .icon-btn {
+  color: var(--color-accent);
+}
+
+.dhs-action[aria-pressed="true"],
+.dhs-action[data-active],
+.dhs-action[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.dhs-action[aria-pressed="true"] .icon-btn,
+.dhs-action[data-active] .icon-btn,
+.dhs-action[aria-current="page"] .icon-btn {
+  color: var(--color-accent);
+}
+
+.dhs-action[hidden] {
+  display: none;
+}
+
+.dhs-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .material-symbols-outlined {
   font-size: var(--icon-size);
 }
