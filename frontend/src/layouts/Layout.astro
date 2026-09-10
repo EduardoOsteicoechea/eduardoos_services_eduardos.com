@@ -204,6 +204,11 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
+          <a href="/store" data-route aria-current={path === "/store" || path.startsWith("/store/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">store</span>
+            Store
+          </a>
+          <div data-eostore-nav></div>
           <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             Subscriptions

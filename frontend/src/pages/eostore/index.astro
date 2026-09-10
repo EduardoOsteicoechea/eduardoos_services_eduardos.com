@@ -3,7 +3,7 @@ import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="eostore · Admin catalog" robots="noindex,nofollow">
+<Layout title="eostore · Products dashboard" robots="noindex,nofollow">
   <Fragment slot="dhs">
     <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
       <span class="icon-btn" aria-hidden="true">
@@ -15,17 +15,17 @@ import Layout from "../../layouts/Layout.astro";
 
   <section class="eostore-board" data-eostore-admin>
     <h1>eostore</h1>
-    <p class="lede">Admin catalog: companies, product sections, product types, and products (USD + Bs).</p>
+    <p class="lede">Products dashboard: manage catalog companies, sections, types, and inventory-backed products (USD + Bs).</p>
     <p class="status" data-banner>Checking session…</p>
 
     <div class="eostore-tabs" role="tablist" data-tabs>
-      <button type="button" class="btn" data-tab="companies" aria-selected="true">Companies</button>
+      <button type="button" class="btn" data-tab="companies" aria-selected="false">Companies</button>
       <button type="button" class="btn" data-tab="sections" aria-selected="false">Sections</button>
       <button type="button" class="btn" data-tab="types" aria-selected="false">Types</button>
-      <button type="button" class="btn" data-tab="products" aria-selected="false">Products</button>
+      <button type="button" class="btn" data-tab="products" aria-selected="true">Products</button>
     </div>
 
-    <div class="eostore-pane" data-pane="companies">
+    <div class="eostore-pane" data-pane="companies" hidden>
       <form class="eostore-panel" data-company-form hidden>
         <h2>Add company</h2>
         <div class="eostore-field">
@@ -99,7 +99,7 @@ import Layout from "../../layouts/Layout.astro";
       <div class="eostore-columns" data-type-list></div>
     </div>
 
-    <div class="eostore-pane" data-pane="products" hidden>
+    <div class="eostore-pane" data-pane="products">
       <form class="eostore-panel" data-product-form hidden>
         <h2>Add product</h2>
         <div class="eostore-field">
@@ -187,7 +187,7 @@ import Layout from "../../layouts/Layout.astro";
     let sections: EostoreSection[] = [];
     let types: EostoreType[] = [];
     let products: EostoreProduct[] = [];
-    let tab = "companies";
+    let tab = "products";
 
     const setBanner = (text: string, kind = "") => {
       if (banner instanceof HTMLElement) {
@@ -648,6 +648,8 @@ import Layout from "../../layouts/Layout.astro";
     });
 
     document.querySelector("[data-refresh]")?.addEventListener("click", () => void loadAll());
+
+    showTab("products");
 
     void (async () => {
       const me = await getMe();

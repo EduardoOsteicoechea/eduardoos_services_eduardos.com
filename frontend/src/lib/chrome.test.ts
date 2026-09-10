@@ -8,6 +8,10 @@ vi.mock("./api", async () => {
   return { ...actual, getMe: vi.fn() };
 });
 
+vi.mock("./eostore", () => ({
+  listPublicCompanies: vi.fn().mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } }),
+}));
+
 vi.mock("./serviceAccess", () => ({
   checkServiceAccess: vi.fn(),
 }));

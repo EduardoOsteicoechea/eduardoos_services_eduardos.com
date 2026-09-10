@@ -232,6 +232,15 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEostoreProducts, Keys: bson.D{{Key: "visible", Value: 1}}},
 			},
 		},
+		{
+			ID:          "009_eostore_carts",
+			Description: "Create eostore per-user company carts collection",
+			Collections: []string{colEostoreCarts},
+			Indexes: []indexSpec{
+				{Collection: colEostoreCarts, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "company_guid", Value: 1}}, Unique: true},
+				{Collection: colEostoreCarts, Keys: bson.D{{Key: "updated_at", Value: 1}}},
+			},
+		},
 	}
 }
 

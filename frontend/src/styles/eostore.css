@@ -194,3 +194,92 @@
   font-size: var(--font-size-sm);
   white-space: pre-wrap;
 }
+
+/* storefront */
+
+.eostore-shop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  grid-column: 1 / span var(--span-full);
+}
+
+.eostore-shop h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 650;
+}
+
+.eostore-shop h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+}
+
+.eostore-shop h3 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+}
+
+.eostore-shop-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eostore-shop-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eostore-shop-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 1 1 calc(var(--button-size) * 10);
+  max-width: calc(var(--button-size) * 14);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-shop-card--compact {
+  flex: 1 1 calc(var(--button-size) * 8);
+  max-width: calc(var(--button-size) * 12);
+}
+
+.eostore-shop-card img {
+  display: block;
+  width: calc(var(--button-size) * 4);
+  height: calc(var(--button-size) * 4);
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-qty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.eostore-qty label {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eostore-qty input[type="number"] {
+  width: calc(var(--button-size) * 3);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}

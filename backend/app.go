@@ -43,6 +43,7 @@ type App struct {
 	homescool       HomescoolStore
 	eoadmin         EoadminStore
 	eostore         EostoreStore
+	eostoreCart     EostoreCartStore
 	failClosedEnt   bool
 }
 
@@ -92,6 +93,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		homescool:       openHomescoolStore(store, cfg.MediaRoot),
 		eoadmin:         openEoadminStore(store),
 		eostore:         openEostoreStore(store),
+		eostoreCart:     openEostoreCartStore(store),
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
 		audit:           newAuditStore(),
@@ -272,6 +274,7 @@ func (a *App) Handler() http.Handler {
 	a.registerEvoiceRoutes(mux)
 	a.registerEoadminRoutes(mux)
 	a.registerEostoreRoutes(mux)
+	a.registerEostoreShopRoutes(mux)
 
 	return a.withObservability(mux)
 }

@@ -1,0 +1,206 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="Cart" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" data-store-link href="/store" data-route title="Back to store" aria-label="Back to store">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
+      </span>
+      Store
+    </a>
+    <a class="dhs-action" href="/eoadmin/mine" data-route title="My orders" aria-label="My orders">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+      </span>
+      My orders
+    </a>
+  </Fragment>
+
+  <section class="eostore-shop" data-store-cart>
+    <h1 data-title>Cart</h1>
+    <p class="lede" data-lede>Sign in to manage this company cart. Checkout opens an eoadmin statement.</p>
+    <p class="status" data-banner>Checking session…</p>
+    <div class="eostore-shop-grid" data-lines></div>
+    <form class="eostore-panel" data-checkout-form hidden>
+      <h2>Checkout</h2>
+      <div class="eostore-field">
+        <label for="cart-note">Note (optional)</label>
+        <textarea id="cart-note" data-note></textarea>
+      </div>
+      <p class="eostore-meta" data-totals></p>
+      <div class="eostore-actions">
+        <button class="btn btn--primary" type="submit" data-checkout>Checkout with eoadmin</button>
+      </div>
+    </form>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../../lib/api";
+  import { showErrorModal } from "../../../lib/error-modal";
+  import { mustLog } from "../../../lib/dev-log";
+  import {
+    checkoutCart,
+    companyIdFromPath,
+    formatMoney,
+    getCart,
+    setCartItem,
+    type EostoreCart,
+    type EostoreCartLine,
+  } from "../../../lib/eostore";
+
+  const root = document.querySelector("[data-store-cart]");
+  if (root instanceof HTMLElement) {
+    const companyId = companyIdFromPath();
+    const title = root.querySelector("[data-title]");
+    const lede = root.querySelector("[data-lede]");
+    const banner = root.querySelector("[data-banner]");
+    const linesEl = root.querySelector("[data-lines]");
+    const form = root.querySelector("[data-checkout-form]");
+    const totals = root.querySelector("[data-totals]");
+    const note = root.querySelector("[data-note]");
+    const storeLink = document.querySelector("[data-store-link]");
+
+    if (storeLink instanceof HTMLAnchorElement && companyId) {
+      storeLink.href = `/store/${encodeURIComponent(companyId)}`;
+    }
+
+    const setBanner = (text: string) => {
+      if (banner instanceof HTMLElement) banner.textContent = text;
+    };
+
+    const fail = (message: string, requestId = "", debug = "") => {
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
+    const render = (cart: EostoreCart, companyName: string) => {
+      if (title instanceof HTMLElement) title.textContent = `${companyName} cart`;
+      if (lede instanceof HTMLElement) {
+        lede.textContent = "Adjust units up to inventory, then checkout to create an eoadmin statement.";
+      }
+      if (!(linesEl instanceof HTMLElement)) return;
+      linesEl.innerHTML = "";
+      const items = cart.items || [];
+      if (!items.length) {
+        setBanner("Cart is empty.");
+        if (form instanceof HTMLElement) form.hidden = true;
+        return;
+      }
+      setBanner(`${items.length} line(s)`);
+      if (form instanceof HTMLElement) form.hidden = false;
+      if (totals instanceof HTMLElement) {
+        totals.textContent = `Total $${formatMoney(cart.total_usd)} USD · Bs ${formatMoney(cart.total_bs)}`;
+      }
+      items.forEach((line: EostoreCartLine) => {
+        const card = document.createElement("article");
+        card.className = "eostore-shop-card";
+        if (line.image_url) {
+          const img = document.createElement("img");
+          img.src = line.image_url;
+          img.alt = line.name;
+          card.appendChild(img);
+        }
+        const h = document.createElement("h3");
+        h.textContent = line.name;
+        const meta = document.createElement("p");
+        meta.className = "eostore-hint";
+        meta.textContent = `${line.product_id} · max ${line.max_units}`;
+        const price = document.createElement("p");
+        price.className = "eostore-meta";
+        price.textContent = `$${formatMoney(line.unit_price_usd)} ea · line $${formatMoney(line.line_total_usd)}`;
+        const qty = document.createElement("div");
+        qty.className = "eostore-qty";
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = "0";
+        input.max = String(line.max_units);
+        input.step = "1";
+        input.value = String(line.units);
+        input.setAttribute("aria-label", `Units for ${line.name}`);
+        const save = document.createElement("button");
+        save.type = "button";
+        save.className = "btn";
+        save.textContent = "Update";
+        save.addEventListener("click", async () => {
+          let units = Number(input.value) || 0;
+          if (units < 0) units = 0;
+          if (units > line.max_units) units = line.max_units;
+          input.value = String(units);
+          save.disabled = true;
+          const res = await setCartItem(companyId, line.product_guid, units);
+          save.disabled = false;
+          if (res.status !== 200 || !res.data.cart) {
+            fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
+            return;
+          }
+          render(res.data.cart, companyName);
+        });
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "btn";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", async () => {
+          remove.disabled = true;
+          const res = await setCartItem(companyId, line.product_guid, 0);
+          remove.disabled = false;
+          if (res.status !== 200 || !res.data.cart) {
+            fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
+            return;
+          }
+          render(res.data.cart, companyName);
+        });
+        qty.append(input, save, remove);
+        card.append(h, meta, price, qty);
+        linesEl.appendChild(card);
+      });
+    };
+
+    if (form instanceof HTMLFormElement) {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const btn = form.querySelector("[data-checkout]");
+        if (btn instanceof HTMLButtonElement) btn.disabled = true;
+        const noteText = note instanceof HTMLTextAreaElement ? note.value.trim() : "";
+        if (mustLog) console.log("store.cart.checkout", { companyId });
+        const res = await checkoutCart(companyId, noteText);
+        if (btn instanceof HTMLButtonElement) btn.disabled = false;
+        if (res.status !== 200) {
+          fail(res.data.message || "Checkout failed.", res.requestId, res.data.debug);
+          return;
+        }
+        window.location.assign(res.data.redirect || "/eoadmin/mine");
+      });
+    }
+
+    void (async () => {
+      if (!companyId) {
+        setBanner("Missing company in URL.");
+        fail("Open a company cart from its storefront.");
+        return;
+      }
+      const me = await getMe();
+      if (me.status !== 200 || !me.data.id) {
+        setBanner("Sign in to view this cart.");
+        window.location.assign(`/session?next=${encodeURIComponent(window.location.pathname)}`);
+        return;
+      }
+      const res = await getCart(companyId);
+      if (res.status !== 200 || !res.data.cart) {
+        setBanner("Could not load cart.");
+        fail(res.data.message || "Could not load cart.", res.requestId, res.data.debug);
+        return;
+      }
+      const companyName = res.data.company?.name || companyId;
+      document.title = `${companyName} cart · Eduardoos`;
+      render(res.data.cart, companyName);
+    })();
+  }
+</script>

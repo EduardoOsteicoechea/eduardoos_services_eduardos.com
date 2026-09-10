@@ -3,6 +3,7 @@ import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
+import { listPublicCompanies } from "./eostore";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
 
@@ -253,6 +254,38 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   });
 }
 
+async function syncEostoreNav(): Promise<void> {
+  const hosts = document.querySelectorAll("[data-eostore-nav]");
+  if (!hosts.length) return;
+  try {
+    const res = await listPublicCompanies();
+    const companies = res.status === 200 ? res.data.companies || [] : [];
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    hosts.forEach((host) => {
+      if (!(host instanceof HTMLElement)) return;
+      host.replaceChildren();
+      companies.forEach((company) => {
+        const href = `/store/${encodeURIComponent(company.id)}`;
+        const link = document.createElement("a");
+        link.href = href;
+        link.setAttribute("data-route", "");
+        if (path === href || path.startsWith(`${href}/`)) {
+          link.setAttribute("aria-current", "page");
+        }
+        const icon = document.createElement("span");
+        icon.className = "material-symbols-outlined";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "store";
+        link.append(icon, document.createTextNode(company.name));
+        host.appendChild(link);
+      });
+    });
+    sessionLog("chrome.eostoreNav", { count: companies.length });
+  } catch {
+    sessionLog("chrome.eostoreNav.error");
+  }
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
@@ -275,6 +308,7 @@ export async function refreshAuthChrome(): Promise<void> {
     }
   });
   await syncSubscriptionNav(isAdmin, authed);
+  await syncEostoreNav();
   if (authed) {
     applySessionAvatar(data.avatar);
     scheduleSessionRefresh();

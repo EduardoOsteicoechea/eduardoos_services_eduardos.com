@@ -78,35 +78,39 @@ func (o *EoadminOption) clone() *EoadminOption {
 
 // EoadminSelectedItem is a checked line with units on a statement.
 type EoadminSelectedItem struct {
-	CheckboxID string `json:"checkbox_id" bson:"checkbox_id"`
-	Label      string `json:"label" bson:"label"`
-	UnitLabel  string `json:"unit_label" bson:"unit_label"`
-	Units      int    `json:"units" bson:"units"`
+	CheckboxID         string  `json:"checkbox_id" bson:"checkbox_id"`
+	Label              string  `json:"label" bson:"label"`
+	UnitLabel          string  `json:"unit_label" bson:"unit_label"`
+	Units              int     `json:"units" bson:"units"`
+	EostoreProductGUID string  `json:"eostore_product_guid,omitempty" bson:"eostore_product_guid,omitempty"`
+	UnitPriceUSD       float64 `json:"unit_price_usd,omitempty" bson:"unit_price_usd,omitempty"`
 }
 
 // EoadminStatement is a purchase statement awaiting / past admin approval.
 type EoadminStatement struct {
-	ID                string                `json:"id" bson:"_id"`
-	UserID            string                `json:"user_id" bson:"user_id"`
-	UserEmail         string                `json:"user_email" bson:"user_email"`
-	OptionID          string                `json:"option_id" bson:"option_id"`
-	OptionLabel       string                `json:"option_label" bson:"option_label"`
-	ProductID         string                `json:"product_id,omitempty" bson:"product_id,omitempty"`
-	Items             []EoadminSelectedItem `json:"items" bson:"items"`
-	Description       string                `json:"description" bson:"description"`
-	Rects             EoadminRects          `json:"rects" bson:"rects"`
-	SVG               string                `json:"svg" bson:"svg"`
-	ImageKey          string                `json:"image_key,omitempty" bson:"image_key,omitempty"`
-	ImageContentType  string                `json:"image_content_type,omitempty" bson:"image_content_type,omitempty"`
-	ImageBytes        int64                 `json:"image_bytes,omitempty" bson:"image_bytes,omitempty"`
-	Status            string                `json:"status" bson:"status"`
-	AdminNote         string                `json:"admin_note,omitempty" bson:"admin_note,omitempty"`
-	ApprovedAt        *time.Time            `json:"approved_at,omitempty" bson:"approved_at,omitempty"`
-	ApprovedBy        string                `json:"approved_by,omitempty" bson:"approved_by,omitempty"`
-	DeliveredAt       *time.Time            `json:"delivered_at,omitempty" bson:"delivered_at,omitempty"`
-	DeliveredBy       string                `json:"delivered_by,omitempty" bson:"delivered_by,omitempty"`
-	CreatedAt         time.Time             `json:"created_at" bson:"created_at"`
-	UpdatedAt         time.Time             `json:"updated_at" bson:"updated_at"`
+	ID                 string                `json:"id" bson:"_id"`
+	UserID             string                `json:"user_id" bson:"user_id"`
+	UserEmail          string                `json:"user_email" bson:"user_email"`
+	OptionID           string                `json:"option_id" bson:"option_id"`
+	OptionLabel        string                `json:"option_label" bson:"option_label"`
+	ProductID          string                `json:"product_id,omitempty" bson:"product_id,omitempty"`
+	EostoreCompanyGUID string                `json:"eostore_company_guid,omitempty" bson:"eostore_company_guid,omitempty"`
+	InventoryReserved  bool                  `json:"inventory_reserved,omitempty" bson:"inventory_reserved,omitempty"`
+	Items              []EoadminSelectedItem `json:"items" bson:"items"`
+	Description        string                `json:"description" bson:"description"`
+	Rects              EoadminRects          `json:"rects" bson:"rects"`
+	SVG                string                `json:"svg" bson:"svg"`
+	ImageKey           string                `json:"image_key,omitempty" bson:"image_key,omitempty"`
+	ImageContentType   string                `json:"image_content_type,omitempty" bson:"image_content_type,omitempty"`
+	ImageBytes         int64                 `json:"image_bytes,omitempty" bson:"image_bytes,omitempty"`
+	Status             string                `json:"status" bson:"status"`
+	AdminNote          string                `json:"admin_note,omitempty" bson:"admin_note,omitempty"`
+	ApprovedAt         *time.Time            `json:"approved_at,omitempty" bson:"approved_at,omitempty"`
+	ApprovedBy         string                `json:"approved_by,omitempty" bson:"approved_by,omitempty"`
+	DeliveredAt        *time.Time            `json:"delivered_at,omitempty" bson:"delivered_at,omitempty"`
+	DeliveredBy        string                `json:"delivered_by,omitempty" bson:"delivered_by,omitempty"`
+	CreatedAt          time.Time             `json:"created_at" bson:"created_at"`
+	UpdatedAt          time.Time             `json:"updated_at" bson:"updated_at"`
 }
 
 func (s *EoadminStatement) clone() *EoadminStatement {

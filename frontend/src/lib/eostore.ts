@@ -181,3 +181,76 @@ export async function describeProduct(guid: string, wordCount: number, imageId =
   if (imageId) body.image_id = imageId;
   return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body);
 }
+
+export type EostoreCatalogResponse = APIErrorBody & {
+  company?: EostoreCompany;
+  sections?: EostoreSection[];
+  types?: EostoreType[];
+  products?: EostoreProduct[];
+  count?: number;
+};
+
+export type EostoreCartLine = {
+  product_guid: string;
+  product_id: string;
+  name: string;
+  units: number;
+  max_units: number;
+  unit_price_usd: number;
+  line_total_usd: number;
+  line_total_bs: number;
+  visible?: boolean;
+  image_url?: string;
+};
+
+export type EostoreCart = {
+  company_guid: string;
+  items: EostoreCartLine[];
+  count: number;
+  total_usd: number;
+  total_bs: number;
+  updated_at?: string;
+};
+
+export type EostoreCartResponse = APIErrorBody & {
+  cart?: EostoreCart;
+  company?: EostoreCompany;
+};
+
+export type EostoreCheckoutResponse = APIErrorBody & {
+  statement_id?: string;
+  redirect?: string;
+};
+
+export async function listPublicCompanies() {
+  return getJSON<EostoreCompaniesResponse>("/eostore/public/companies");
+}
+
+export async function getPublicCatalog(companyId: string) {
+  return getJSON<EostoreCatalogResponse>(`/eostore/public/companies/${encodeURIComponent(companyId)}`);
+}
+
+export async function getCart(companyId: string) {
+  return getJSON<EostoreCartResponse>(`/eostore/cart/${encodeURIComponent(companyId)}`);
+}
+
+export async function setCartItem(companyId: string, productGuid: string, units: number) {
+  if (mustLog) console.log("eostore.cart.put", { companyId, productGuid, units });
+  return putJSON<EostoreCartResponse>(`/eostore/cart/${encodeURIComponent(companyId)}`, {
+    product_guid: productGuid,
+    units,
+  });
+}
+
+export async function checkoutCart(companyId: string, description = "") {
+  if (mustLog) console.log("eostore.cart.checkout", { companyId });
+  return postJSON<EostoreCheckoutResponse>(`/eostore/cart/${encodeURIComponent(companyId)}/checkout`, {
+    description,
+  });
+}
+
+export function companyIdFromPath(pathname = window.location.pathname): string {
+  const parts = pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+  if (parts[0] !== "store" || !parts[1] || parts[1] === "company") return "";
+  return decodeURIComponent(parts[1]);
+}

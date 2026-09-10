@@ -446,25 +446,27 @@ func statementPublic(st *EoadminStatement, includeSVG bool) map[string]any {
 		return nil
 	}
 	out := map[string]any{
-		"id":           st.ID,
-		"user_id":      st.UserID,
-		"user_email":   st.UserEmail,
-		"option_id":    st.OptionID,
-		"option_label": st.OptionLabel,
-		"product_id":   st.ProductID,
-		"items":        st.Items,
-		"description":  st.Description,
-		"rects":        st.Rects,
-		"has_image":    st.ImageKey != "",
-		"image_url":    "",
-		"status":       st.Status,
-		"admin_note":   st.AdminNote,
-		"approved_at":  st.ApprovedAt,
-		"approved_by":  st.ApprovedBy,
-		"delivered_at": st.DeliveredAt,
-		"delivered_by": st.DeliveredBy,
-		"created_at":   st.CreatedAt,
-		"updated_at":   st.UpdatedAt,
+		"id":                    st.ID,
+		"user_id":               st.UserID,
+		"user_email":            st.UserEmail,
+		"option_id":             st.OptionID,
+		"option_label":          st.OptionLabel,
+		"product_id":            st.ProductID,
+		"eostore_company_guid":  st.EostoreCompanyGUID,
+		"inventory_reserved":    st.InventoryReserved,
+		"items":                 st.Items,
+		"description":           st.Description,
+		"rects":                 st.Rects,
+		"has_image":             st.ImageKey != "",
+		"image_url":             "",
+		"status":                st.Status,
+		"admin_note":            st.AdminNote,
+		"approved_at":           st.ApprovedAt,
+		"approved_by":           st.ApprovedBy,
+		"delivered_at":          st.DeliveredAt,
+		"delivered_by":          st.DeliveredBy,
+		"created_at":            st.CreatedAt,
+		"updated_at":            st.UpdatedAt,
 	}
 	if st.ImageKey != "" {
 		out["image_url"] = "/api/eoadmin/statements/" + st.ID + "/image"
@@ -633,6 +635,12 @@ func (a *App) eoadminStatementTransition(w http.ResponseWriter, r *http.Request,
 	case eoadminStatusDelivered:
 		st.DeliveredAt = &now
 		st.DeliveredBy = admin.ID
+	case eoadminStatusRejected:
+		if st.InventoryReserved && st.EostoreCompanyGUID != "" {
+			a.eostoreRestoreInventory(r.Context(), st.Items)
+			st.InventoryReserved = false
+			a.mustLogf(r, "eostore.inventory.restored", "statement_id", st.ID)
+		}
 	}
 	if err := a.eoadmin.UpdateStatement(r.Context(), st); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

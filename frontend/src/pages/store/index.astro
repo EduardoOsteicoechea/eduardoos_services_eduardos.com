@@ -1,0 +1,98 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Store"
+  description="Browse company storefronts: sections, product types, and inventory-backed products."
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoadmin/mine" data-route title="My orders" aria-label="My orders">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+      </span>
+      My orders
+    </a>
+  </Fragment>
+
+  <section class="eostore-shop" data-store-hub>
+    <h1>Store</h1>
+    <p class="lede">Choose a company. Checkout creates an eoadmin payment statement.</p>
+    <p class="status" data-banner>Loading companies…</p>
+    <div class="eostore-shop-grid" data-company-grid></div>
+  </section>
+</Layout>
+
+<script>
+  import { showErrorModal } from "../../lib/error-modal";
+  import { mustLog } from "../../lib/dev-log";
+  import { listPublicCompanies, type EostoreCompany } from "../../lib/eostore";
+
+  const root = document.querySelector("[data-store-hub]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    const grid = root.querySelector("[data-company-grid]");
+
+    const setBanner = (text: string) => {
+      if (banner instanceof HTMLElement) banner.textContent = text;
+    };
+
+    const fail = (message: string, requestId = "", debug = "") => {
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
+    const render = (companies: EostoreCompany[]) => {
+      if (!(grid instanceof HTMLElement)) return;
+      grid.innerHTML = "";
+      if (!companies.length) {
+        setBanner("No companies published yet.");
+        return;
+      }
+      setBanner(`${companies.length} compan${companies.length === 1 ? "y" : "ies"}`);
+      companies.forEach((c) => {
+        const card = document.createElement("article");
+        card.className = "eostore-shop-card";
+        const h = document.createElement("h2");
+        h.textContent = c.name;
+        const meta = document.createElement("p");
+        meta.className = "eostore-hint";
+        meta.textContent = c.id;
+        const desc = document.createElement("p");
+        desc.className = "lede";
+        desc.textContent = c.description || "";
+        const actions = document.createElement("div");
+        actions.className = "eostore-actions";
+        const open = document.createElement("a");
+        open.className = "btn btn--primary";
+        open.href = `/store/${encodeURIComponent(c.id)}`;
+        open.setAttribute("data-route", "");
+        open.textContent = "Open store";
+        const cart = document.createElement("a");
+        cart.className = "btn";
+        cart.href = `/store/${encodeURIComponent(c.id)}/cart`;
+        cart.setAttribute("data-route", "");
+        cart.textContent = "Cart";
+        actions.append(open, cart);
+        card.append(h, meta, desc, actions);
+        grid.appendChild(card);
+      });
+    };
+
+    void (async () => {
+      if (mustLog) console.log("store.hub.load");
+      const res = await listPublicCompanies();
+      if (res.status !== 200) {
+        setBanner("Could not load companies.");
+        fail(res.data.message || "Could not load companies.", res.requestId, res.data.debug);
+        return;
+      }
+      render(res.data.companies || []);
+    })();
+  }
+</script>

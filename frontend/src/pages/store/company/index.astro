@@ -1,0 +1,264 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Company store"
+  description="Company storefront with sections, product types, and products. Add units up to inventory, then check out via eoadmin."
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/store" data-route title="All stores" aria-label="All stores">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
+      </span>
+      All stores
+    </a>
+    <a class="dhs-action" data-cart-link href="/store" data-route title="Cart" aria-label="Open cart">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+      </span>
+      Cart
+    </a>
+  </Fragment>
+
+  <section class="eostore-shop" data-store-company>
+    <h1 data-title>Company store</h1>
+    <p class="lede" data-lede>Loading catalog…</p>
+    <p class="status" data-banner></p>
+    <div data-catalog></div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../../lib/api";
+  import { showErrorModal } from "../../../lib/error-modal";
+  import { mustLog } from "../../../lib/dev-log";
+  import {
+    companyIdFromPath,
+    formatMoney,
+    getPublicCatalog,
+    setCartItem,
+    type EostoreProduct,
+    type EostoreSection,
+    type EostoreType,
+  } from "../../../lib/eostore";
+
+  const root = document.querySelector("[data-store-company]");
+  if (root instanceof HTMLElement) {
+    const companyId = companyIdFromPath();
+    const title = root.querySelector("[data-title]");
+    const lede = root.querySelector("[data-lede]");
+    const banner = root.querySelector("[data-banner]");
+    const catalog = root.querySelector("[data-catalog]");
+    const cartLink = document.querySelector("[data-cart-link]");
+
+    if (cartLink instanceof HTMLAnchorElement && companyId) {
+      cartLink.href = `/store/${encodeURIComponent(companyId)}/cart`;
+    }
+
+    const setBanner = (text: string) => {
+      if (banner instanceof HTMLElement) banner.textContent = text;
+    };
+
+    const fail = (message: string, requestId = "", debug = "") => {
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
+    const requireAuth = async () => {
+      const me = await getMe();
+      if (me.status !== 200 || !me.data.id) {
+        window.location.assign(`/session?next=${encodeURIComponent(window.location.pathname)}`);
+        return false;
+      }
+      return true;
+    };
+
+    const productCard = (p: EostoreProduct, sectionName: string, typeName: string) => {
+      const card = document.createElement("article");
+      card.className = "eostore-shop-card";
+      const h = document.createElement("h3");
+      h.textContent = p.name;
+      const meta = document.createElement("p");
+      meta.className = "eostore-hint";
+      meta.textContent = `${sectionName} · ${typeName} · stock ${p.units}`;
+      const price = document.createElement("p");
+      price.className = "eostore-meta";
+      price.textContent = `$${formatMoney(p.price_final_usd)} USD · Bs ${formatMoney(p.price_bs)}`;
+      const desc = document.createElement("p");
+      desc.className = "lede";
+      desc.textContent = p.description || "";
+      const tags = document.createElement("p");
+      tags.className = "eostore-hint";
+      tags.textContent = (p.hashtags || []).map((t) => `#${t}`).join(" ");
+      const thumbs = document.createElement("div");
+      thumbs.className = "eostore-thumbs";
+      (p.images || []).slice(0, 3).forEach((img) => {
+        if (!img.url) return;
+        const image = document.createElement("img");
+        image.src = img.url;
+        image.alt = p.name;
+        thumbs.appendChild(image);
+      });
+      const qty = document.createElement("div");
+      qty.className = "eostore-qty";
+      const label = document.createElement("label");
+      label.textContent = "Units";
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "1";
+      input.max = String(Math.max(1, p.units));
+      input.step = "1";
+      input.value = "1";
+      input.setAttribute("aria-label", `Units for ${p.name}`);
+      const add = document.createElement("button");
+      add.type = "button";
+      add.className = "btn btn--primary";
+      add.textContent = p.units > 0 ? "Add to cart" : "Out of stock";
+      add.disabled = p.units < 1;
+      add.addEventListener("click", async () => {
+        if (!(await requireAuth())) return;
+        let units = Number(input.value) || 0;
+        if (units < 1) units = 1;
+        if (units > p.units) units = p.units;
+        input.value = String(units);
+        add.disabled = true;
+        if (mustLog) console.log("store.add_to_cart", { companyId, guid: p.guid, units });
+        const res = await setCartItem(companyId, p.guid, units);
+        add.disabled = p.units < 1;
+        if (res.status !== 200) {
+          fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
+          return;
+        }
+        setBanner(`Cart updated · ${res.data.cart?.count ?? 0} line(s) · $${formatMoney(res.data.cart?.total_usd)}`);
+      });
+      qty.append(label, input, add);
+      card.append(h, meta, price, desc, tags, thumbs, qty);
+      return card;
+    };
+
+    const render = (
+      companyName: string,
+      companyDesc: string,
+      sections: EostoreSection[],
+      types: EostoreType[],
+      products: EostoreProduct[],
+    ) => {
+      if (title instanceof HTMLElement) title.textContent = companyName;
+      if (lede instanceof HTMLElement) {
+        lede.textContent = companyDesc || "Sections, types, and products for this company.";
+      }
+      if (!(catalog instanceof HTMLElement)) return;
+      catalog.innerHTML = "";
+
+      const typeByGuid = new Map(types.map((t) => [t.guid, t]));
+      const sectionByGuid = new Map(sections.map((s) => [s.guid, s]));
+
+      if (types.length) {
+        const block = document.createElement("div");
+        block.className = "eostore-shop-block";
+        const h2 = document.createElement("h2");
+        h2.textContent = "Product types";
+        const grid = document.createElement("div");
+        grid.className = "eostore-shop-grid";
+        types.forEach((t) => {
+          const card = document.createElement("article");
+          card.className = "eostore-shop-card eostore-shop-card--compact";
+          const h = document.createElement("h3");
+          h.textContent = t.name;
+          const meta = document.createElement("p");
+          meta.className = "eostore-hint";
+          meta.textContent = sectionByGuid.get(t.section_guid)?.name || t.id;
+          const d = document.createElement("p");
+          d.className = "lede";
+          d.textContent = t.description || "";
+          card.append(h, meta, d);
+          grid.appendChild(card);
+        });
+        block.append(h2, grid);
+        catalog.appendChild(block);
+      }
+
+      const orderedSections = sections.length
+        ? sections
+        : [{ guid: "", id: "", company_guid: "", name: "Products", description: "" } as EostoreSection];
+
+      orderedSections.forEach((sec) => {
+        const block = document.createElement("div");
+        block.className = "eostore-shop-block";
+        const h2 = document.createElement("h2");
+        h2.textContent = sec.name || "Products";
+        const d = document.createElement("p");
+        d.className = "lede";
+        d.textContent = sec.description || "";
+        const grid = document.createElement("div");
+        grid.className = "eostore-shop-grid";
+        const secProducts = sec.guid
+          ? products.filter((p) => p.section_guid === sec.guid)
+          : products;
+        if (!secProducts.length) {
+          const empty = document.createElement("p");
+          empty.className = "eostore-hint";
+          empty.textContent = "No products in this section.";
+          block.append(h2, d, empty);
+          catalog.appendChild(block);
+          return;
+        }
+        secProducts.forEach((p) => {
+          const typ = typeByGuid.get(p.type_guid);
+          grid.appendChild(productCard(p, sec.name || "—", typ?.name || p.id));
+        });
+        block.append(h2, d, grid);
+        catalog.appendChild(block);
+      });
+
+      if (sections.length) {
+        const orphan = products.filter((p) => !sectionByGuid.has(p.section_guid));
+        if (orphan.length) {
+          const block = document.createElement("div");
+          block.className = "eostore-shop-block";
+          const h2 = document.createElement("h2");
+          h2.textContent = "Other products";
+          const grid = document.createElement("div");
+          grid.className = "eostore-shop-grid";
+          orphan.forEach((p) => {
+            const typ = typeByGuid.get(p.type_guid);
+            grid.appendChild(productCard(p, "—", typ?.name || p.id));
+          });
+          block.append(h2, grid);
+          catalog.appendChild(block);
+        }
+      }
+
+      setBanner(`${products.length} product${products.length === 1 ? "" : "s"}`);
+    };
+
+    void (async () => {
+      if (!companyId) {
+        setBanner("Missing company in URL.");
+        fail("Open a company from the Store menu.");
+        return;
+      }
+      if (mustLog) console.log("store.company.load", { companyId });
+      const res = await getPublicCatalog(companyId);
+      if (res.status !== 200 || !res.data.company) {
+        setBanner("Catalog unavailable.");
+        fail(res.data.message || "Could not load catalog.", res.requestId, res.data.debug);
+        return;
+      }
+      document.title = `${res.data.company.name} · Store · Eduardoos`;
+      render(
+        res.data.company.name,
+        res.data.company.description || "",
+        res.data.sections || [],
+        res.data.types || [],
+        res.data.products || [],
+      );
+    })();
+  }
+</script>
