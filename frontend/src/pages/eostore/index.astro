@@ -101,7 +101,8 @@ import Layout from "../../layouts/Layout.astro";
 
     <div class="eostore-pane" data-pane="products">
       <form class="eostore-panel" data-product-form hidden>
-        <h2>Add product</h2>
+        <h2 data-product-form-title>Add product</h2>
+        <input type="hidden" data-pr-edit-guid value="" />
         <div class="eostore-field">
           <label for="pr-type">Product type</label>
           <select id="pr-type" data-pr-type required></select>
@@ -144,7 +145,8 @@ import Layout from "../../layouts/Layout.astro";
           <label for="pr-visible">Visible</label>
         </div>
         <div class="eostore-actions">
-          <button class="btn btn--primary" type="submit">Create product</button>
+          <button class="btn btn--primary" type="submit" data-product-submit>Create product</button>
+          <button class="btn" type="button" data-product-cancel hidden>Cancel edit</button>
         </div>
       </form>
       <div class="eostore-columns" data-product-list></div>
@@ -173,6 +175,7 @@ import Layout from "../../layouts/Layout.astro";
     listSections,
     listTypes,
     parseHashtags,
+    updateProduct,
     uploadProductImage,
     type EostoreCompany,
     type EostoreProduct,
@@ -203,6 +206,7 @@ import Layout from "../../layouts/Layout.astro";
 
     const fillSelect = (el: Element | null, options: { value: string; label: string }[], placeholder: string) => {
       if (!(el instanceof HTMLSelectElement)) return;
+      const prev = el.value;
       el.innerHTML = "";
       const empty = document.createElement("option");
       empty.value = "";
@@ -214,6 +218,7 @@ import Layout from "../../layouts/Layout.astro";
         o.textContent = opt.label;
         el.appendChild(o);
       });
+      if (prev && options.some((opt) => opt.value === prev)) el.value = prev;
     };
 
     const companyLabel = (guid: string) => companies.find((c) => c.guid === guid)?.name || guid;
@@ -491,6 +496,14 @@ import Layout from "../../layouts/Layout.astro";
 
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "btn btn--primary";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => {
+          fillProductForm(p);
+          root.querySelector("[data-product-form]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn";
@@ -501,9 +514,12 @@ import Layout from "../../layouts/Layout.astro";
             fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
             return;
           }
+          if ((root.querySelector("[data-pr-edit-guid]") as HTMLInputElement)?.value === p.guid) {
+            clearProductForm();
+          }
           await loadAll();
         });
-        actions.appendChild(del);
+        actions.append(edit, del);
         card.append(h, meta, price, tags, desc, thumbs, upload, ai, actions);
         list.appendChild(card);
       });
@@ -580,6 +596,60 @@ import Layout from "../../layouts/Layout.astro";
     root.querySelector("[data-pr-discount]")?.addEventListener("input", updatePreview);
     root.querySelector("[data-pr-bs]")?.addEventListener("input", updatePreview);
 
+    const clearProductForm = () => {
+      const form = root.querySelector("[data-product-form]");
+      if (form instanceof HTMLFormElement) form.reset();
+      const editGuid = root.querySelector("[data-pr-edit-guid]");
+      if (editGuid instanceof HTMLInputElement) editGuid.value = "";
+      const title = root.querySelector("[data-product-form-title]");
+      if (title instanceof HTMLElement) title.textContent = "Add product";
+      const submit = root.querySelector("[data-product-submit]");
+      if (submit instanceof HTMLButtonElement) submit.textContent = "Create product";
+      const cancel = root.querySelector("[data-product-cancel]");
+      if (cancel instanceof HTMLElement) cancel.hidden = true;
+      const visibleEl = root.querySelector("[data-pr-visible]");
+      if (visibleEl instanceof HTMLInputElement) visibleEl.checked = true;
+      updatePreview();
+    };
+
+    const fillProductForm = (p: EostoreProduct) => {
+      refreshSelects();
+      const editGuid = root.querySelector("[data-pr-edit-guid]");
+      if (editGuid instanceof HTMLInputElement) editGuid.value = p.guid;
+      const typeEl = root.querySelector("[data-pr-type]");
+      if (typeEl instanceof HTMLSelectElement) typeEl.value = p.type_guid || "";
+      const nameEl = root.querySelector("[data-pr-name]");
+      if (nameEl instanceof HTMLInputElement) nameEl.value = p.name || "";
+      const idEl = root.querySelector("[data-pr-id]");
+      if (idEl instanceof HTMLInputElement) idEl.value = p.id || "";
+      const descEl = root.querySelector("[data-pr-desc]");
+      if (descEl instanceof HTMLTextAreaElement) descEl.value = p.description || "";
+      const tagsEl = root.querySelector("[data-pr-tags]");
+      if (tagsEl instanceof HTMLInputElement) tagsEl.value = (p.hashtags || []).join(" ");
+      const usdEl = root.querySelector("[data-pr-usd]");
+      if (usdEl instanceof HTMLInputElement) usdEl.value = String(p.price_base_usd ?? 0);
+      const discountEl = root.querySelector("[data-pr-discount]");
+      if (discountEl instanceof HTMLInputElement) discountEl.value = String(p.discount_percent ?? 0);
+      const bsEl = root.querySelector("[data-pr-bs]");
+      if (bsEl instanceof HTMLInputElement) bsEl.value = String(p.bs_per_usd ?? 0);
+      const unitsEl = root.querySelector("[data-pr-units]");
+      if (unitsEl instanceof HTMLInputElement) unitsEl.value = String(p.units ?? 0);
+      const visibleEl = root.querySelector("[data-pr-visible]");
+      if (visibleEl instanceof HTMLInputElement) visibleEl.checked = Boolean(p.visible);
+      const title = root.querySelector("[data-product-form-title]");
+      if (title instanceof HTMLElement) title.textContent = `Edit product · ${p.name}`;
+      const submit = root.querySelector("[data-product-submit]");
+      if (submit instanceof HTMLButtonElement) submit.textContent = "Save changes";
+      const cancel = root.querySelector("[data-product-cancel]");
+      if (cancel instanceof HTMLElement) cancel.hidden = false;
+      updatePreview();
+      if (mustLog) console.log("eostore.product.edit.fill", { guid: p.guid, id: p.id });
+    };
+
+    root.querySelector("[data-product-cancel]")?.addEventListener("click", () => {
+      clearProductForm();
+    });
+
     root.querySelector("[data-company-form]")?.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       const name = (root.querySelector("[data-co-name]") as HTMLInputElement)?.value.trim();
@@ -626,6 +696,7 @@ import Layout from "../../layouts/Layout.astro";
 
     root.querySelector("[data-product-form]")?.addEventListener("submit", async (ev) => {
       ev.preventDefault();
+      const editGuid = ((root.querySelector("[data-pr-edit-guid]") as HTMLInputElement)?.value || "").trim();
       const type_guid = (root.querySelector("[data-pr-type]") as HTMLSelectElement)?.value;
       const name = (root.querySelector("[data-pr-name]") as HTMLInputElement)?.value.trim();
       const id = (root.querySelector("[data-pr-id]") as HTMLInputElement)?.value.trim();
@@ -636,7 +707,7 @@ import Layout from "../../layouts/Layout.astro";
       const bs_per_usd = Number((root.querySelector("[data-pr-bs]") as HTMLInputElement)?.value || 0);
       const units = Number((root.querySelector("[data-pr-units]") as HTMLInputElement)?.value || 0);
       const visible = Boolean((root.querySelector("[data-pr-visible]") as HTMLInputElement)?.checked);
-      const res = await createProduct({
+      const body = {
         type_guid,
         name,
         id,
@@ -647,13 +718,17 @@ import Layout from "../../layouts/Layout.astro";
         bs_per_usd,
         units,
         visible,
-      });
+      };
+      const res = editGuid ? await updateProduct(editGuid, body) : await createProduct(body);
       if (res.status !== 200) {
-        fail(res.data.message || "Create product failed.", res.requestId, res.data.debug);
+        fail(
+          res.data.message || (editGuid ? "Update product failed." : "Create product failed."),
+          res.requestId,
+          res.data.debug,
+        );
         return;
       }
-      (ev.target as HTMLFormElement).reset();
-      updatePreview();
+      clearProductForm();
       await loadAll();
     });
 
