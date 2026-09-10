@@ -140,7 +140,7 @@ import Layout from "../../layouts/Layout.astro";
           <input id="pr-units" type="number" data-pr-units min="0" step="1" value="0" required />
         </div>
         <div class="eostore-check">
-          <input id="pr-visible" type="checkbox" data-pr-visible />
+          <input id="pr-visible" type="checkbox" data-pr-visible checked />
           <label for="pr-visible">Visible</label>
         </div>
         <div class="eostore-actions">
@@ -268,6 +268,16 @@ import Layout from "../../layouts/Layout.astro";
         desc.textContent = c.description || "";
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
+        const openStore = document.createElement("a");
+        openStore.className = "btn btn--primary";
+        openStore.href = `/store/${encodeURIComponent(c.id)}`;
+        openStore.setAttribute("data-route", "");
+        openStore.textContent = "Open store";
+        const openCart = document.createElement("a");
+        openCart.className = "btn";
+        openCart.href = `/store/${encodeURIComponent(c.id)}/cart`;
+        openCart.setAttribute("data-route", "");
+        openCart.textContent = "Cart";
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn";
@@ -280,7 +290,7 @@ import Layout from "../../layouts/Layout.astro";
           }
           await loadAll();
         });
-        actions.appendChild(del);
+        actions.append(openStore, openCart, del);
         card.append(h, meta, desc, actions);
         list.appendChild(card);
       });

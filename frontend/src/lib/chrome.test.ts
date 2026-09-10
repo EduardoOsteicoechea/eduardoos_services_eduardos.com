@@ -10,6 +10,7 @@ vi.mock("./api", async () => {
 
 vi.mock("./eostore", () => ({
   listPublicCompanies: vi.fn().mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } }),
+  companyIdFromPath: vi.fn().mockReturnValue(""),
 }));
 
 vi.mock("./serviceAccess", () => ({
@@ -29,6 +30,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
   const guestHidden = options.guestVisible === false ? "hidden" : "";
   const authedHidden = options.guestVisible === false ? "" : "hidden";
   document.body.innerHTML = `
+    <a href="/store" data-cart-fab>Cart</a>
     <aside id="main-menu">
       <a href="/session" data-guest-only ${guestHidden}>Sign in</a>
       <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
@@ -38,6 +40,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
       <a href="/eoadmin" data-authed-only ${authedHidden}>eoadmin</a>
+      <div data-eostore-nav></div>
     </aside>
   `;
 }

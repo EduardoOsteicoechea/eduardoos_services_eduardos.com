@@ -166,6 +166,16 @@ const jsonLdString =
           </div>
         ) : null}
         <div class="header-cluster header-cluster--tools" data-header-chrome>
+          <a
+            class="header-cart icon-btn"
+            href="/store"
+            data-route
+            data-cart-fab
+            aria-label="Open shopping cart"
+            title="Cart"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+          </a>
           <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
             <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
           </button>
@@ -208,7 +218,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">store</span>
             Store
           </a>
-          <div data-eostore-nav></div>
+          <div class="sidebar-nav-stores" data-eostore-nav aria-label="Company stores"></div>
           <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             Subscriptions

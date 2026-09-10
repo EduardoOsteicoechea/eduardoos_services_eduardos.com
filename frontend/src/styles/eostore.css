@@ -195,6 +195,23 @@
   white-space: pre-wrap;
 }
 
+.sidebar-nav-stores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.sidebar-nav-stores .sidebar-nav-hint {
+  margin: 0;
+  padding-inline: var(--space-padding);
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.header-cart {
+  text-decoration: none;
+}
+
 /* storefront */
 
 .eostore-shop {

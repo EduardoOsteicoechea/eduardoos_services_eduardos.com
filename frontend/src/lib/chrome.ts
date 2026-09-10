@@ -3,9 +3,45 @@ import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
-import { listPublicCompanies } from "./eostore";
+import { companyIdFromPath, listPublicCompanies } from "./eostore";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
+
+const EOSTORE_LAST_COMPANY_KEY = "eostore.lastCompanyId";
+
+function rememberEostoreCompany(companyId: string): void {
+  const id = companyId.trim();
+  if (!id) return;
+  try {
+    localStorage.setItem(EOSTORE_LAST_COMPANY_KEY, id);
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
+function lastEostoreCompanyId(): string {
+  const fromPath = companyIdFromPath();
+  if (fromPath) {
+    rememberEostoreCompany(fromPath);
+    return fromPath;
+  }
+  try {
+    return (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
+  } catch {
+    return "";
+  }
+}
+
+function syncCartFab(): void {
+  const companyId = lastEostoreCompanyId();
+  const href = companyId ? `/store/${encodeURIComponent(companyId)}/cart` : "/store";
+  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
+    if (!(node instanceof HTMLAnchorElement)) return;
+    node.href = href;
+    node.title = companyId ? `Cart · ${companyId}` : "Cart · Store";
+    node.setAttribute("aria-label", companyId ? `Open cart for ${companyId}` : "Open shopping cart");
+  });
+}
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
@@ -256,31 +292,47 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
 
 async function syncEostoreNav(): Promise<void> {
   const hosts = document.querySelectorAll("[data-eostore-nav]");
+  syncCartFab();
   if (!hosts.length) return;
   try {
     const res = await listPublicCompanies();
     const companies = res.status === 200 ? res.data.companies || [] : [];
+    if (companies.length === 1) {
+      rememberEostoreCompany(companies[0].id);
+      syncCartFab();
+    }
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
     hosts.forEach((host) => {
       if (!(host instanceof HTMLElement)) return;
       host.replaceChildren();
+      if (!companies.length) {
+        const hint = document.createElement("p");
+        hint.className = "sidebar-nav-hint";
+        hint.textContent = "No store companies yet.";
+        host.appendChild(hint);
+        return;
+      }
       companies.forEach((company) => {
+        if (!company.id) return;
         const href = `/store/${encodeURIComponent(company.id)}`;
         const link = document.createElement("a");
         link.href = href;
         link.setAttribute("data-route", "");
+        link.setAttribute("data-eostore-company", company.id);
         if (path === href || path.startsWith(`${href}/`)) {
           link.setAttribute("aria-current", "page");
+          rememberEostoreCompany(company.id);
         }
         const icon = document.createElement("span");
         icon.className = "material-symbols-outlined";
         icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "store";
-        link.append(icon, document.createTextNode(company.name));
+        icon.textContent = "storefront";
+        link.append(icon, document.createTextNode(company.name || company.id));
         host.appendChild(link);
       });
     });
-    sessionLog("chrome.eostoreNav", { count: companies.length });
+    syncCartFab();
+    sessionLog("chrome.eostoreNav", { count: companies.length, ids: companies.map((c) => c.id) });
   } catch {
     sessionLog("chrome.eostoreNav.error");
   }
