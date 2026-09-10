@@ -2,6 +2,7 @@
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1.5rem;
+  --main-padding-top: var(--main-padding);
   --page-gutter: 1rem;
   --page-col-count: 24;
   --span-form: 6;
@@ -671,7 +672,7 @@ main {
   grid-template-columns: repeat(var(--page-col-count), minmax(0, 1fr));
   column-gap: var(--page-gutter);
   row-gap: var(--rail-gap);
-  padding-top: var(--main-padding);
+  padding-top: var(--main-padding-top);
   padding-bottom: var(--main-padding);
   padding-left: 0;
   padding-right: 0;
@@ -1207,6 +1208,8 @@ section.diag .panel:not(form) {
     --span-two-thirds: 16;
     --span-full: 24;
     --span-button: 6;
+    /* Align main content top with first rail icon button top */
+    --main-padding-top: var(--rail-gap);
   }
 
   .app-header--start {
