@@ -532,6 +532,9 @@ func TestEreportAPIV1AdditiveAndHistory(t *testing.T) {
 	if badRec.Code != http.StatusBadRequest {
 		t.Fatalf("mutation should 400, got %d %s", badRec.Code, badRec.Body.String())
 	}
+	if decodeMap(t, badRec)["error"] != "append_existing_item_modified" {
+		t.Fatalf("want append_existing_item_modified, got %s", badRec.Body.String())
+	}
 
 	hist := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/history", "")
 	if hist.Code != http.StatusOK {
@@ -550,6 +553,159 @@ func TestEreportAPIV1AdditiveAndHistory(t *testing.T) {
 	}
 	if strings.Contains(raw, `"path":"/api/v1/ereport/reports/`) {
 		t.Fatal("docs must not include flat ownerSafe report routes")
+	}
+	if !strings.Contains(raw, `"mode":"append"`) && !strings.Contains(raw, "mode append") {
+		// docs must mention replace/append modes
+		if !strings.Contains(raw, "replace") || !strings.Contains(raw, "append") {
+			t.Fatal("docs must document append and replace modes")
+		}
+	}
+}
+
+func TestEreportAPIV1ReplaceFullSeed(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	_ = app.grantEntitlement("member-1", productAPI)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Alcaldia","firstReportName":"Model Checker stub"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	keyRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"replace"}`)
+	secret := decodeMap(t, keyRec)["key"].(string)
+
+	seed := map[string]any{
+		"appTitle": "Issue Tracker", "orgName": "Alcaldía de Buenos Aires",
+		"reportName": "Model Checker 1.1", "reportDate": "2026-08-31",
+		"reportNumber": "ModelBA-1.1-C20MCB-100", "theme": "dark",
+		"validationCriteria": []any{},
+		"sections": []any{
+			map[string]any{
+				"id": "sec-qa-1", "title": "1. Product", "kind": "funcionalidades",
+				"groups": []any{
+					map[string]any{
+						"id": "g-qa-1", "title": "General",
+						"items": []any{
+							map[string]any{"id": "qa-1", "incidencia": "ok path", "status": "aprobado"},
+							map[string]any{"id": "qa-2", "incidencia": "n/a path", "status": "no_aplica"},
+							map[string]any{"id": "qa-3", "incidencia": "fail path", "status": "reprobado"},
+						},
+					},
+				},
+			},
+			map[string]any{
+				"id": "sec-qa-2", "title": "2. More",
+				"groups": []any{
+					map[string]any{
+						"id": "g-qa-2", "title": "G2",
+						"items": []any{
+							map[string]any{"id": "qa-4", "incidencia": "another ok", "status": "aprobado"},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	// replace without confirm → replace_confirm_required
+	noConfirm, _ := json.Marshal(map[string]any{"mode": "replace", "confirmOverwrite": false, "payload": seed})
+	ncReq := httptest.NewRequest(http.MethodPost, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, bytes.NewReader(noConfirm))
+	ncReq.Header.Set("Authorization", "Bearer "+secret)
+	ncReq.Header.Set("Content-Type", "application/json")
+	ncRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(ncRec, ncReq)
+	if ncRec.Code != http.StatusBadRequest || decodeMap(t, ncRec)["error"] != "replace_confirm_required" {
+		t.Fatalf("want replace_confirm_required, got %d %s", ncRec.Code, ncRec.Body.String())
+	}
+
+	postBody, _ := json.Marshal(map[string]any{
+		"confirmOverwrite": true, "mode": "replace", "tema": "Model Checker 1.1", "payload": seed,
+	})
+	postReq := httptest.NewRequest(http.MethodPost, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, bytes.NewReader(postBody))
+	postReq.Header.Set("Authorization", "Bearer "+secret)
+	postReq.Header.Set("Content-Type", "application/json")
+	postRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(postRec, postReq)
+	if postRec.Code != http.StatusOK {
+		t.Fatalf("replace: %d %s", postRec.Code, postRec.Body.String())
+	}
+	posted := decodeMap(t, postRec)
+	if posted["snapshotId"] == nil {
+		t.Fatal("expected history snapshot on replace")
+	}
+	pl := posted["payload"].(map[string]any)
+	if countEreportItems(pl) != 4 {
+		t.Fatalf("want 4 items after replace, got %d", countEreportItems(pl))
+	}
+	if asString(pl["theme"]) != "dark" || asString(pl["reportNumber"]) != "ModelBA-1.1-C20MCB-100" {
+		t.Fatalf("root meta: %v", pl)
+	}
+	// Stub template id must be gone unless in seed.
+	for _, sec := range asMapSlice(pl["sections"]) {
+		for _, g := range asMapSlice(sec["groups"]) {
+			for _, it := range asMapSlice(g["items"]) {
+				if asString(it["id"]) == "group-1-item-1" {
+					t.Fatal("stub group-1-item-1 must not remain after replace")
+				}
+			}
+		}
+	}
+
+	getReq := httptest.NewRequest(http.MethodGet, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, nil)
+	getReq.Header.Set("Authorization", "Bearer "+secret)
+	getRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("get after replace: %d %s", getRec.Code, getRec.Body.String())
+	}
+	gotPL := decodeMap(t, getRec)["payload"].(map[string]any)
+	if countEreportItems(gotPL) != 4 {
+		t.Fatalf("GET item count %d", countEreportItems(gotPL))
+	}
+
+	// append still rejects aprobado new items
+	appendBad, _ := json.Marshal(map[string]any{
+		"confirmOverwrite": true,
+		"mode":             "append",
+		"payload": map[string]any{
+			"sections": []any{
+				map[string]any{
+					"id": "sec-qa-1",
+					"groups": []any{
+						map[string]any{
+							"id": "g-qa-1",
+							"items": []any{
+								map[string]any{"id": "qa-1", "incidencia": "ok path", "status": "aprobado"},
+								map[string]any{"id": "qa-new-ok", "incidencia": "should fail", "status": "aprobado"},
+							},
+						},
+					},
+				},
+			},
+		},
+	})
+	abReq := httptest.NewRequest(http.MethodPost, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, bytes.NewReader(appendBad))
+	abReq.Header.Set("Authorization", "Bearer "+secret)
+	abReq.Header.Set("Content-Type", "application/json")
+	abRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(abRec, abReq)
+	if abRec.Code != http.StatusBadRequest || decodeMap(t, abRec)["error"] != "append_invalid_new_item_status" {
+		t.Fatalf("want append_invalid_new_item_status, got %d %s", abRec.Code, abRec.Body.String())
+	}
+
+	// other user's key cannot replace
+	_ = app.grantEntitlement("admin-1", productEreport)
+	_ = app.grantEntitlement("admin-1", productAPI)
+	otherKey := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"other"}`)
+	otherSecret := decodeMap(t, otherKey)["key"].(string)
+	cross, _ := json.Marshal(map[string]any{"confirmOverwrite": true, "mode": "replace", "payload": seed})
+	crossReq := httptest.NewRequest(http.MethodPost, "/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, bytes.NewReader(cross))
+	crossReq.Header.Set("Authorization", "Bearer "+otherSecret)
+	crossReq.Header.Set("Content-Type", "application/json")
+	crossRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(crossRec, crossReq)
+	if crossRec.Code == http.StatusOK {
+		t.Fatal("cross-user replace must not succeed")
 	}
 }
 
@@ -760,8 +916,46 @@ func TestMergeAPIPayload_AddItemRejectsMutation(t *testing.T) {
 	badGrps[0]["items"] = toAnySlice(badItems)
 	badSecs[0]["groups"] = toAnySlice(badGrps)
 	bad["sections"] = toAnySlice(badSecs)
-	if _, err := mergeAPIPayload(out, bad); err == nil || !strings.Contains(err.Error(), "cannot modify") {
-		t.Fatalf("want modify error, got %v", err)
+	if err := func() error {
+		_, e := mergeAPIPayload(out, bad)
+		return e
+	}(); err == nil {
+		t.Fatal("want modify error")
+	} else if api := asAPIWriteErr(err); api.Code != "append_existing_item_modified" {
+		t.Fatalf("want append_existing_item_modified, got %v", err)
+	}
+}
+
+func TestPrepareReplacePayload_AllowsMixedStatuses(t *testing.T) {
+	seed := map[string]any{
+		"appTitle": "Issue Tracker", "orgName": "Alcaldía", "reportName": "Model Checker 1.1",
+		"reportDate": "2026-08-31", "reportNumber": "ModelBA-1.1", "theme": "dark",
+		"validationCriteria": []any{},
+		"sections": []any{
+			map[string]any{
+				"id": "sec-1", "title": "1", "kind": "funcionalidades",
+				"groups": []any{
+					map[string]any{
+						"id": "g-1", "title": "General",
+						"items": []any{
+							map[string]any{"id": "i-ok", "incidencia": "ok", "status": "aprobado"},
+							map[string]any{"id": "i-na", "incidencia": "n/a", "status": "no_aplica"},
+							map[string]any{"id": "i-bad", "incidencia": "fail", "status": "reprobado"},
+						},
+					},
+				},
+			},
+		},
+	}
+	out, err := prepareReplacePayload(seed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if countEreportItems(out) != 3 {
+		t.Fatalf("item count %d", countEreportItems(out))
+	}
+	if asString(out["theme"]) != "dark" || asString(out["orgName"]) != "Alcaldía" {
+		t.Fatalf("root meta lost: %v", out)
 	}
 }
 

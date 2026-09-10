@@ -6,9 +6,39 @@ import (
 	"strings"
 )
 
+// ereportAPIWriteError is returned by API-key merge/replace validation with a stable machine code.
+type ereportAPIWriteError struct {
+	Code   string
+	Detail string
+}
+
+func (e *ereportAPIWriteError) Error() string {
+	if e == nil {
+		return ""
+	}
+	if e.Detail == "" {
+		return e.Code
+	}
+	return e.Code + ": " + e.Detail
+}
+
+func apiWriteErr(code, detail string) error {
+	return &ereportAPIWriteError{Code: code, Detail: detail}
+}
+
+func asAPIWriteErr(err error) *ereportAPIWriteError {
+	if err == nil {
+		return nil
+	}
+	if e, ok := err.(*ereportAPIWriteError); ok {
+		return e
+	}
+	return &ereportAPIWriteError{Code: "invalid_request", Detail: err.Error()}
+}
+
 func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 	if incoming == nil {
-		return nil, fmt.Errorf("payload required")
+		return nil, apiWriteErr("invalid_request", "payload required")
 	}
 	base := stored
 	if base == nil {
@@ -36,7 +66,7 @@ func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 	for _, inSec := range incomingSecs {
 		sid := strings.TrimSpace(asString(inSec["id"]))
 		if sid == "" {
-			return nil, fmt.Errorf("section id required")
+			return nil, apiWriteErr("invalid_request", "section id required")
 		}
 		storedSec, exists := storedSecByID[sid]
 		if !exists {
@@ -52,7 +82,7 @@ func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 		}
 		mergedSec := resultSecByID[sid]
 		if mergedSec == nil {
-			return nil, fmt.Errorf("internal: missing section %s", sid)
+			return nil, apiWriteErr("internal_error", "missing section "+sid)
 		}
 		mergedGroups, err := mergeGroups(asMapSlice(storedSec["groups"]), asMapSlice(inSec["groups"]), asMapSlice(mergedSec["groups"]))
 		if err != nil {
@@ -76,7 +106,7 @@ func mergeGroups(storedGroups, incomingGroups, resultGroups []map[string]any) ([
 	for _, inGrp := range incomingGroups {
 		gid := strings.TrimSpace(asString(inGrp["id"]))
 		if gid == "" {
-			return nil, fmt.Errorf("group id required")
+			return nil, apiWriteErr("invalid_request", "group id required")
 		}
 		storedGrp, exists := storedByID[gid]
 		if !exists {
@@ -92,7 +122,7 @@ func mergeGroups(storedGroups, incomingGroups, resultGroups []map[string]any) ([
 		}
 		mergedGrp := resultByID[gid]
 		if mergedGrp == nil {
-			return nil, fmt.Errorf("internal: missing group %s", gid)
+			return nil, apiWriteErr("internal_error", "missing group "+gid)
 		}
 		mergedItems, err := mergeItems(asMapSlice(storedGrp["items"]), asMapSlice(inGrp["items"]), asMapSlice(mergedGrp["items"]))
 		if err != nil {
@@ -114,7 +144,7 @@ func mergeItems(storedItems, incomingItems, resultItems []map[string]any) ([]any
 	for _, inItem := range incomingItems {
 		iid := strings.TrimSpace(asString(inItem["id"]))
 		if iid == "" {
-			return nil, fmt.Errorf("item id required")
+			return nil, apiWriteErr("invalid_request", "item id required")
 		}
 		storedItem, exists := storedByID[iid]
 		if !exists {
@@ -122,14 +152,14 @@ func mergeItems(storedItems, incomingItems, resultItems []map[string]any) ([]any
 				return nil, err
 			}
 			if _, dup := resultByID[iid]; dup {
-				return nil, fmt.Errorf("duplicate new item id %s", iid)
+				return nil, apiWriteErr("invalid_request", "duplicate new item id "+iid)
 			}
 			out = append(out, deepCloneMap(inItem))
 			resultByID[iid] = inItem
 			continue
 		}
 		if !jsonEqual(storedItem, inItem) {
-			return nil, fmt.Errorf("cannot modify existing issue %s (API posts are additive only)", iid)
+			return nil, apiWriteErr("append_existing_item_modified", "cannot modify existing issue "+iid)
 		}
 	}
 	return out, nil
@@ -138,10 +168,11 @@ func mergeItems(storedItems, incomingItems, resultItems []map[string]any) ([]any
 func validateNewAPIItem(it map[string]any) error {
 	text := strings.TrimSpace(asString(it["incidencia"]))
 	if text == "" {
-		return fmt.Errorf("new issues require non-empty incidencia text")
+		return apiWriteErr("append_invalid_new_item_status", "new issues require non-empty incidencia text")
 	}
-	if asString(it["status"]) != "reprobado" {
-		return fmt.Errorf("new issues must have status reprobado")
+	status := asString(it["status"])
+	if status != "reprobado" {
+		return apiWriteErr("append_invalid_new_item_status", "new issues must have status reprobado")
 	}
 	return nil
 }
@@ -170,10 +201,68 @@ func assertUnchangedMeta(stored, incoming map[string]any, keys []string, label s
 			continue
 		}
 		if asString(stored[k]) != asString(incoming[k]) {
-			return fmt.Errorf("cannot modify %s field %s (API posts are additive only)", label, k)
+			return apiWriteErr("append_existing_item_modified", fmt.Sprintf("cannot modify %s field %s", label, k))
 		}
 	}
 	return nil
+}
+
+// prepareReplacePayload validates and clones a full .ereport payload for mode=replace.
+// Stub template sections/items are not preserved unless present in incoming.
+func prepareReplacePayload(incoming map[string]any) (map[string]any, error) {
+	if incoming == nil {
+		return nil, apiWriteErr("invalid_request", "payload required")
+	}
+	out := deepCloneMap(incoming)
+	if _, ok := out["sections"]; !ok {
+		out["sections"] = []any{}
+	}
+	secs := asMapSlice(out["sections"])
+	if out["sections"] != nil && secs == nil {
+		if _, isArr := out["sections"].([]any); !isArr {
+			if _, isTyped := out["sections"].([]map[string]any); !isTyped {
+				return nil, apiWriteErr("invalid_request", "payload.sections must be an array")
+			}
+		}
+	}
+	for _, sec := range secs {
+		sid := strings.TrimSpace(asString(sec["id"]))
+		if sid == "" {
+			return nil, apiWriteErr("invalid_request", "section id required")
+		}
+		for _, g := range asMapSlice(sec["groups"]) {
+			gid := strings.TrimSpace(asString(g["id"]))
+			if gid == "" {
+				return nil, apiWriteErr("invalid_request", "group id required")
+			}
+			for _, it := range asMapSlice(g["items"]) {
+				iid := strings.TrimSpace(asString(it["id"]))
+				if iid == "" {
+					return nil, apiWriteErr("invalid_request", "item id required")
+				}
+				if err := validateReplaceItemStatus(it); err != nil {
+					return nil, err
+				}
+			}
+		}
+	}
+	if out["validationCriteria"] == nil {
+		out["validationCriteria"] = []any{}
+	}
+	if strings.TrimSpace(asString(out["appTitle"])) == "" {
+		out["appTitle"] = "Issue Tracker"
+	}
+	return out, nil
+}
+
+func validateReplaceItemStatus(it map[string]any) error {
+	status := asString(it["status"])
+	switch status {
+	case "", "aprobado", "reprobado", "no_aplica":
+		return nil
+	default:
+		return apiWriteErr("invalid_request", "item status must be aprobado|reprobado|no_aplica|empty")
+	}
 }
 
 func indexByID(rows []map[string]any) map[string]map[string]any {
@@ -244,4 +333,14 @@ func toAnySlice(rows []map[string]any) []any {
 		out[i] = rows[i]
 	}
 	return out
+}
+
+func countEreportItems(payload map[string]any) int {
+	n := 0
+	for _, sec := range asMapSlice(payload["sections"]) {
+		for _, g := range asMapSlice(sec["groups"]) {
+			n += len(asMapSlice(g["items"]))
+		}
+	}
+	return n
 }

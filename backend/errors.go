@@ -12,16 +12,19 @@ const maxRequestIDLen = 64
 var requestIDRe = regexp.MustCompile(`^[A-Za-z0-9._-]{8,64}$`)
 
 var safeMessages = map[string]string{
-	"invalid_request":     "Check the form and try again.",
-	"unauthorized":        "Sign in to continue.",
-	"invalid_credentials": "Sign-in failed.",
-	"forbidden":           "The request was rejected.",
-	"rate_limited":        "Too many attempts. Try later.",
-	"conflict":            "That username is already taken.",
-	"payload_too_large":   "That file is too large.",
-	"not_found":              "Not found.",
-	"report_storage_missing": "Report storage is missing or unreadable for this org/report id.",
-	"internal_error":         "Something went wrong.",
+	"invalid_request":                "Check the form and try again.",
+	"unauthorized":                   "Sign in to continue.",
+	"invalid_credentials":            "Sign-in failed.",
+	"forbidden":                      "The request was rejected.",
+	"rate_limited":                   "Too many attempts. Try later.",
+	"conflict":                       "That username is already taken.",
+	"payload_too_large":              "That file is too large.",
+	"not_found":                      "Not found.",
+	"report_storage_missing":         "Report storage is missing or unreadable for this org/report id.",
+	"append_existing_item_modified":  "API append cannot modify or remove existing issues.",
+	"append_invalid_new_item_status": "New append items need incidencia text and status reprobado.",
+	"replace_confirm_required":       "mode replace requires confirmOverwrite:true.",
+	"internal_error":                 "Something went wrong.",
 }
 
 func normalizeErrorCode(code string) string {

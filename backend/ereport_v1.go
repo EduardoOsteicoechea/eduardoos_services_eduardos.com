@@ -167,6 +167,7 @@ func (a *App) ereportV1PostReportHandler(w http.ResponseWriter, r *http.Request)
 	r.Body = http.MaxBytesReader(w, r.Body, a.cfg.EreportMaxPayloadBytes)
 	var body struct {
 		ConfirmOverwrite bool           `json:"confirmOverwrite"`
+		Mode             string         `json:"mode"`
 		Tema             *string        `json:"tema"`
 		Payload          map[string]any `json:"payload"`
 	}
@@ -174,10 +175,29 @@ func (a *App) ereportV1PostReportHandler(w http.ResponseWriter, r *http.Request)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if !body.ConfirmOverwrite {
+	mode := strings.ToLower(strings.TrimSpace(body.Mode))
+	if mode == "" {
+		mode = "append"
+	}
+	if mode != "append" && mode != "replace" {
 		writeJSON(w, http.StatusBadRequest, map[string]any{
 			"error":      "invalid_request",
-			"message":    "confirmOverwrite must be true to replace the latest web version",
+			"message":    safeErrorMessage("invalid_request"),
+			"request_id": requestIDFrom(r, w),
+			"hint":       "mode must be append or replace",
+		})
+		return
+	}
+	if !body.ConfirmOverwrite {
+		code := "invalid_request"
+		msg := "confirmOverwrite must be true to write the latest web version"
+		if mode == "replace" {
+			code = "replace_confirm_required"
+			msg = safeErrorMessage(code)
+		}
+		writeJSON(w, http.StatusBadRequest, map[string]any{
+			"error":      code,
+			"message":    msg,
 			"request_id": requestIDFrom(r, w),
 		})
 		return
@@ -186,14 +206,24 @@ func (a *App) ereportV1PostReportHandler(w http.ResponseWriter, r *http.Request)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	payload, mergeErr := mergeAPIPayload(current, body.Payload)
-	if mergeErr != nil {
-		writeJSON(w, http.StatusBadRequest, map[string]any{
-			"error":      "invalid_request",
-			"message":    "Check the form and try again.",
+	var payload map[string]any
+	var writeErr error
+	if mode == "replace" {
+		payload, writeErr = prepareReplacePayload(body.Payload)
+	} else {
+		payload, writeErr = mergeAPIPayload(current, body.Payload)
+	}
+	if writeErr != nil {
+		apiErr := asAPIWriteErr(writeErr)
+		out := map[string]any{
+			"error":      apiErr.Code,
+			"message":    safeErrorMessage(apiErr.Code),
 			"request_id": requestIDFrom(r, w),
-			"hint":       "API posts are additive only; new issues need incidencia text and status reprobado.",
-		})
+		}
+		if apiErr.Detail != "" {
+			out["hint"] = apiErr.Detail
+		}
+		writeJSON(w, http.StatusBadRequest, out)
 		return
 	}
 	var snapshotID string
