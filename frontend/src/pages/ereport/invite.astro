@@ -72,7 +72,7 @@ import Layout from "../../layouts/Layout.astro";
     type ReportCard,
   } from "../../lib/ereport";
   import { isPublicEreportInvitePath, readInviteParams, TRACKER_SRC } from "../../lib/ereport-routes";
-  import { startTrackerHost, trackerCommandMessage, bumpUiScale, type TrackerCommand } from "../../lib/ereport-workspace";
+  import { startTrackerHost, trackerCommandMessage, bumpUiScale, siteIsDark, type TrackerCommand } from "../../lib/ereport-workspace";
   import { showErrorModal } from "../../lib/error-modal";
   import { onBoundPageReady } from "../../lib/session-ui";
 
@@ -251,5 +251,13 @@ import Layout from "../../layouts/Layout.astro";
         }
       }
     });
+
+    const onTheme = () => host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+    document.addEventListener("ereport-theme", onTheme);
+    document.addEventListener(
+      "astro:before-swap",
+      () => document.removeEventListener("ereport-theme", onTheme),
+      { once: true },
+    );
   });
 </script>

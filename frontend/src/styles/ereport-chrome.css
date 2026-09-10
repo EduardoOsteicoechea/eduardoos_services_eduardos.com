@@ -65,6 +65,7 @@ html[data-page^="ereport"] {
   --mobile-header-height: calc(var(--chrome-control-size) + (var(--rail-gap) * 2));
   font-family: var(--font-brand);
   font-size: calc(16px * var(--site-text-scale));
+  color-scheme: dark;
 }
 
 html[data-page^="ereport"][data-theme="light"] {
@@ -74,6 +75,7 @@ html[data-page^="ereport"][data-theme="light"] {
   --site-input-border: color-mix(in srgb, var(--fg) 18%, transparent);
   --site-input-bg: #ffffff;
   --glassed_background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color-scheme: light;
 }
 
 @media (min-width: 68.75rem) {

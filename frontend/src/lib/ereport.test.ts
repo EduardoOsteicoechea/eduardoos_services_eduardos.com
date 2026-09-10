@@ -302,6 +302,25 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain("host?.destroy()");
   });
 
+  it("keeps tracker theme under the site toggle and shows date icons in dark mode", () => {
+    const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
+    expect(css).toMatch(/html\[data-page\^="ereport"\] \{[\s\S]*color-scheme:\s*dark/);
+    expect(css).toMatch(/html\[data-page\^="ereport"\]\[data-theme="light"\] \{[\s\S]*color-scheme:\s*light/);
+    const tracker = readFileSync(join(here, "../../public/ereport-tracker.html"), "utf8");
+    expect(tracker).toContain("color-scheme: dark");
+    expect(tracker).toContain("adoptHostTheme");
+    expect(tracker).toContain("::-webkit-calendar-picker-indicator");
+    expect(tracker).toContain("filter: invert(1)");
+    const host = readFileSync(join(here, "./ereport-workspace.ts"), "utf8");
+    expect(host).toMatch(
+      /onBooted:\s*\(\)\s*=>\s*\{[\s\S]*?type:\s*"theme"[\s\S]*?trackerLoadMessage/,
+    );
+    expect(host).toContain("onLoaded:");
+    const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
+    expect(inviteSrc).toContain("ereport-theme");
+    expect(inviteSrc).toContain("siteIsDark");
+  });
+
   it("steps site text scale on 073 bounds without touching tracker hex", () => {
     document.documentElement.dataset.page = "ereport-workspace";
     document.documentElement.style.setProperty("--site-text-scale", "1");

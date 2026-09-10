@@ -170,17 +170,22 @@ export function startTrackerHost(
         ...opts.handlers,
         onBooted: () => {
           ready = true;
+          // Site theme first so a payload's theme field cannot paint over the host chrome.
+          send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+          send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
           if (opts.payload) {
             send(trackerLoadMessage(opts.payload));
           }
-          send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-          send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
           send(trackerConfigMessage(opts.uploadUrl, opts.csrf));
           const waiting = queued.splice(0);
           for (const msg of waiting) {
             send(msg);
           }
           opts.handlers.onBooted?.();
+        },
+        onLoaded: () => {
+          send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
+          opts.handlers.onLoaded?.();
         },
         onCloudSave: (payload) => {
           window.clearTimeout(timer);
