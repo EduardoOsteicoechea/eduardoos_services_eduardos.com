@@ -37,7 +37,9 @@ describe("eReport public invite routing", () => {
     const css = readFileSync(join(here, "../styles/global.css"), "utf8");
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] main \{\s*padding: 0;/);
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
-    expect(css).toContain("padding: 0 var(--rail-width)");
+    expect(css).toContain(
+      "padding: 0 var(--main-inline) 0 calc(var(--rail-width) + var(--main-inline))",
+    );
   });
 
   it("switches hub views from ?view= and offers a way back to the dashboard", () => {

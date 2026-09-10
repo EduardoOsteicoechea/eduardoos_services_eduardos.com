@@ -708,10 +708,39 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
     position: fixed; right: 0; top: var(--topbar-h); z-index: 42;
-    width: min(28rem, 80vw);
+    /* Half of phone content-basis (30rem) — rem-legal stand-in for 50% screen */
+    width: 15rem;
   }
   body.sidebar-collapsed .sidebar {
-    transform: translateX(105%); width: min(28rem, 80vw); opacity: 1; pointer-events: none;
+    transform: translateX(105%); width: 15rem; opacity: 1; pointer-events: none;
+  }
+  .main-col { padding: 0.75rem; }
+  .section-body,
+  .group-body {
+    --tree-toggle-center: 1rem;
+    --tree-pad: 1rem;
+    margin-left: var(--tree-toggle-center);
+    padding: 0.75rem 0.75rem 0.75rem var(--tree-pad);
+  }
+  .section-block > .section-title,
+  .group-head,
+  .item-top {
+    flex-wrap: wrap;
+  }
+  .section-title-main,
+  .group-head-main {
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+  .section-actions,
+  .group-actions {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+  .inplace-title .inplace-view,
+  .inplace-nombre .inplace-view {
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 }
 .material-icons {

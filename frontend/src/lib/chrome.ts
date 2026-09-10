@@ -72,10 +72,15 @@ function setPanelHidden(id: string, hidden: boolean): void {
 }
 
 function syncTrayOpenAttr(): void {
-  if (panelOpen("main-menu")) {
-    document.documentElement.dataset.trayOpen = "main-menu";
+  const openId = ALL_PANELS.find((id) => panelOpen(id));
+  if (openId) {
+    document.documentElement.dataset.trayOpen = openId;
   } else {
     delete document.documentElement.dataset.trayOpen;
+  }
+  const backdrop = document.querySelector("[data-tray-backdrop]");
+  if (backdrop instanceof HTMLElement) {
+    backdrop.hidden = !openId;
   }
 }
 
@@ -518,6 +523,10 @@ export function startChrome(): void {
         localStorage.setItem("theme", next);
         sessionLog("chrome.theme.persist", { theme: next });
         window.dispatchEvent(new CustomEvent("ereport-theme"));
+        return;
+      }
+      if (node?.closest("[data-tray-backdrop]")) {
+        closeAllPanels();
         return;
       }
       if (node?.closest("a[data-route]") && node.closest(".sidebar-left, .sidebar-right")) {

@@ -370,6 +370,21 @@ a {
   overflow: hidden;
 }
 
+.tray-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-sidebar) - 1);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: color-mix(in srgb, var(--color-text) 28%, transparent);
+  cursor: pointer;
+}
+
+.tray-backdrop[hidden] {
+  display: none;
+}
+
 .sidebar-toolbar {
   display: flex;
   gap: var(--rail-gap);
@@ -1163,24 +1178,44 @@ section.diag .panel:not(form) {
     display: none;
   }
 
-  .header-cluster--menu {
+  /* Phone/tablet: [dynamic][AI] … [avatar][menu] — menu at the end edge */
+  .header-cluster--tools {
+    order: 1;
     flex-direction: row;
+    margin-left: 0;
+    margin-top: 0;
+    gap: var(--rail-gap);
+  }
+
+  .header-cluster--tools .header-cart {
+    order: -1;
+  }
+
+  .header-cluster--tools .header-dynamic {
+    order: 0;
+  }
+
+  .header-cluster--tools .agent-fab {
+    order: 1;
+  }
+
+  .ereport-guest-auth {
+    order: 2;
+  }
+
+  .header-cluster--menu {
+    order: 3;
+    flex-direction: row;
+    margin-left: auto;
     gap: var(--rail-gap);
   }
 
   .header-cluster--menu .header-session {
-    order: -1;
-  }
-
-  .header-cluster--menu .header-menu--mobile {
     order: 0;
   }
 
-  .header-cluster--tools {
-    flex-direction: row;
-    margin-left: auto;
-    margin-top: 0;
-    gap: var(--rail-gap);
+  .header-cluster--menu .header-menu--mobile {
+    order: 1;
   }
 
   
@@ -1228,7 +1263,8 @@ section.diag .panel:not(form) {
     --content-basis: 30rem;
     --page-col-count: 8;
     --span-form: 8;
-    --span-sidebar: 6;
+    /* Half of the 8-col phone grid ≈ 50% screen (rem-legal) */
+    --span-sidebar: 4;
     --span-modal: 8;
     --span-half: 4;
     --span-two-thirds: 6;
@@ -1503,10 +1539,8 @@ html[data-page="ereport-workspace"] main {
 
 @media (min-width: 64rem) {
   html[data-page="ereport-workspace"] main {
-    padding: 0 var(--rail-width);
+    padding: 0 var(--main-inline) 0 calc(var(--rail-width) + var(--main-inline));
   }
-
-  
 }
 
 .ereport-workspace {

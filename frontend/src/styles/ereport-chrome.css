@@ -76,10 +76,9 @@ html[data-page^="ereport"][data-theme="light"] {
   color-scheme: light;
 }
 
-@media (min-width: 68.75rem) {
+@media (max-width: 63.999rem) {
   html[data-page^="ereport"] {
     --ui-scale: 1;
-    --chrome-control-size: 36px;
   }
 }
 
