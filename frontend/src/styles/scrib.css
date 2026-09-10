@@ -1,28 +1,41 @@
-/* eduardoos.com shell offsets for Scrib viewport */
-.scrib-viewport {
-  inset: var(--mobile-header-height) 0 var(--mobile-footer-height) 0;
-  width: auto;
-  height: auto;
+/**
+ * Scrib — dashboard books + US Letter editor confined to main (not the viewport chrome).
+ * Hub padding comes from .product-dash (spec 054); do not double-pad.
+ */
+
+/* Sheet editor fills main only; activity rails / trays stay outside. */
+html[data-page="scrib-sheet"] body {
+  height: 100%;
 }
-@media (min-width: 64rem) {
-  .scrib-viewport {
-    inset: 0 var(--rail-width) 0 var(--rail-width);
-    width: auto;
-    height: auto;
-  }
+
+html[data-page="scrib-sheet"] .shell {
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
+
+html[data-page="scrib-sheet"] main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  /* Keep rail/top-bar offsets from global.css; no extra page scroll for the sheet. */
+  overflow: hidden;
+}
+
+html[data-page="scrib-sheet"] main > .status,
+html[data-page="scrib-sheet"] main > .product-gate {
+  flex: 0 0 auto;
+}
+
 html.scrib-fullscreen--header-hidden .app-header,
 html.scrib-fullscreen--header-hidden .sidebar-left,
 html.scrib-fullscreen--header-hidden .sidebar-right {
   display: none;
 }
-html.scrib-fullscreen--header-hidden .scrib-viewport {
-  inset: 0;
-}
-/**
- * Scrib — dashboard books + full-viewport US Letter editor.
- * Hub padding comes from .product-dash (spec 054); do not double-pad.
- */
 
 .scrib-dashboard {
   box-sizing: border-box;
@@ -256,37 +269,36 @@ html.scrib-fullscreen--header-hidden .scrib-viewport {
   cursor: pointer;
   font-family: var(--font-family);
   font-weight: 600;
-  color: var(--color-accent));
+  color: var(--color-accent);
 }
 
 /* —— Editor —— */
 
-html:has(.scrib-viewport),
-body:has(.scrib-viewport) {
-  overflow: hidden;
-}
-
 .scrib-viewport {
   box-sizing: border-box;
-  position: fixed;
-  inset: var(--mobile-header-height) 0 0 0;
-  width: 100%;
-  height: calc(100% - var(--mobile-header-height));
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: auto;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg);
+  background: var(--color-surface);
   touch-action: none;
   user-select: none;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
 }
 
-@media (min-width: 901px) {
-  .scrib-viewport {
-    inset: 0 0 0 var(--rail-width);
-    width: calc(100% - var(--rail-width));
-    height: 100%;
-  }
+html.scrib-fullscreen--header-hidden .scrib-viewport,
+html:fullscreen .scrib-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-content);
+  border: 0;
+  border-radius: 0;
 }
 
 .scrib-viewport--zoom {
@@ -351,18 +363,9 @@ html.dark .scrib-layer {
   pointer-events: none;
 }
 
-html.scrib-fullscreen--header-hidden .app-header {
-  display: none;
-}
-
-html.scrib-fullscreen--header-hidden .scrib-viewport {
-  inset: 0;
-  /* stretch via inset */
-}
-
 .scrib-fullscreen-controls {
-  position: fixed;
-  z-index: 170;
+  position: absolute;
+  z-index: var(--z-modal);
   top: max(0.75rem, env(safe-area-inset-top));
   right: max(0.75rem, env(safe-area-inset-right));
   display: flex;

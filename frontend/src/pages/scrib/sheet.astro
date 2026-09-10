@@ -783,7 +783,10 @@ import Layout from "../../layouts/Layout.astro";
       setHidden(viewport, true);
     } else {
       sheet = ensureLayers(loaded.sheet);
-      if (banner instanceof HTMLElement) banner.textContent = "";
+      if (banner instanceof HTMLElement) {
+        banner.textContent = "";
+        banner.hidden = true;
+      }
       setHidden(gate, true);
       setHidden(viewport, false);
       setMode("draw");
