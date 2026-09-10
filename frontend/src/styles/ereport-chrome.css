@@ -511,14 +511,19 @@ html[data-page^="ereport"] .ereport-hub__error {
 }
 
 @media (max-width: 47.999rem) {
+  /* Main already insets with --main-inline; avoid double horizontal pad that squashes copy. */
+  html[data-page^="ereport"] {
+    --page-inline-pad: 0;
+  }
+
   html[data-page^="ereport"] .app-header {
     gap: 0;
-    padding: 0 0.5rem;
+    padding: 0 var(--rail-gap);
     background: transparent;
   }
 
   html[data-page^="ereport"] #dynamic-header {
-    width: calc(var(--chrome-control-size) + 1.5rem + 10px);
+    width: calc(var(--chrome-control-size) + 1.5rem + 0.625rem);
     padding: 0.45rem;
     gap: 0.45rem;
     background: var(--site-surface);
@@ -527,6 +532,74 @@ html[data-page^="ereport"] .ereport-hub__error {
   html[data-page^="ereport"] .site-header__backdrop,
   html[data-page^="ereport"] .header-dynamic-menu__phone-backdrop {
     background: color-mix(in srgb, var(--site-body-fg) 28%, transparent);
+  }
+
+  /* Single-column cards — minmax(11rem) overflows and squashes text on narrow phones. */
+  html[data-page^="ereport"] .product-dash__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-page^="ereport"] .product-dash__card,
+  html[data-page^="ereport"] .product-dash__card-title,
+  html[data-page^="ereport"] .product-dash__card-desc,
+  html[data-page^="ereport"] .product-dash > h1,
+  html[data-page^="ereport"] .product-dash .hint,
+  html[data-page^="ereport"] .product-dash__section-title,
+  html[data-page^="ereport"] [data-org-detail-name] {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Collapse desktop 1fr / 1rem / 1fr form tracks so labels and actions are not cut. */
+  html[data-page^="ereport"] .ereport-hub__form,
+  html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row,
+  html[data-page^="ereport"] .ereport-modal form,
+  html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-page^="ereport"] .ereport-hub__form > button,
+  html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > .btn--primary,
+  html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > button,
+  html[data-page^="ereport"] .ereport-modal form > button,
+  html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions > button {
+    grid-column: 1;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  html[data-page^="ereport"] .btn {
+    height: auto;
+    max-height: none;
+    min-height: var(--bmh);
+    white-space: normal;
+    overflow: visible;
+    line-height: 1.25;
+    padding-block: var(--p1);
+    box-sizing: border-box;
+  }
+
+  html[data-page^="ereport"] .product-dash input,
+  html[data-page^="ereport"] .product-dash select,
+  html[data-page^="ereport"] .ereport-modal input {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  html[data-page^="ereport"] .ereport-list li {
+    min-width: 0;
+    align-items: flex-start;
+  }
+
+  html[data-page^="ereport"] .ereport-list a,
+  html[data-page^="ereport"] .ereport-list strong {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
