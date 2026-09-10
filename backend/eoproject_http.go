@@ -14,6 +14,7 @@ import (
 
 func (a *App) registerEoprojectRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/eoproject/me", a.eoprojectGetMe)
+	mux.HandleFunc("POST /api/eoproject/me", a.eoprojectGetMe)
 	mux.HandleFunc("GET /api/eoproject/projects", a.eoprojectListProjects)
 	mux.HandleFunc("POST /api/eoproject/projects", a.eoprojectCreateProject)
 	mux.HandleFunc("GET /api/eoproject/projects/{projectId}", a.eoprojectGetProject)
@@ -89,7 +90,7 @@ func (a *App) requireEoprojectUnsafe(w http.ResponseWriter, r *http.Request) *Us
 	return a.requireEoprojectUser(w, r)
 }
 
-func (a *App) eoprojectOwnedProject(w http.ResponseWriter, r *http.Request, user *User, projectID string) *eoprojectProject {
+func (a *App) eoprojectOwnedProject(w http.ResponseWriter, r *http.Request, user *User, projectID string, mutate bool) *eoprojectProject {
 	p, err := a.eoproject.GetProject(r.Context(), projectID)
 	if errors.Is(err, errNotFound) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
@@ -99,6 +100,13 @@ func (a *App) eoprojectOwnedProject(w http.ResponseWriter, r *http.Request, user
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return nil
 	}
+	if mutate {
+		if p.UserID != user.ID {
+			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+			return nil
+		}
+		return p
+	}
 	if p.UserID != user.ID && user.Role != roleAdmin {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return nil
@@ -106,8 +114,8 @@ func (a *App) eoprojectOwnedProject(w http.ResponseWriter, r *http.Request, user
 	return p
 }
 
-func (a *App) eoprojectOwnedStage(w http.ResponseWriter, r *http.Request, user *User, projectID, stageID string) (*eoprojectProject, *eoprojectStage) {
-	p := a.eoprojectOwnedProject(w, r, user, projectID)
+func (a *App) eoprojectOwnedStage(w http.ResponseWriter, r *http.Request, user *User, projectID, stageID string, mutate bool) (*eoprojectProject, *eoprojectStage) {
+	p := a.eoprojectOwnedProject(w, r, user, projectID, mutate)
 	if p == nil {
 		return nil, nil
 	}
@@ -216,8 +224,8 @@ func (a *App) eoprojectGetMe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"email":  user.Email,
-		"userId": user.ID,
+		"email":   user.Email,
+		"userId":  user.ID,
 		"isAdmin": user.Role == roleAdmin,
 	})
 }
@@ -278,7 +286,7 @@ func (a *App) eoprojectGetProject(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), false)
 	if p == nil {
 		return
 	}
@@ -295,7 +303,7 @@ func (a *App) eoprojectUpdateProject(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
 	if p == nil {
 		return
 	}
@@ -331,7 +339,7 @@ func (a *App) eoprojectDeleteProject(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
 	if p == nil {
 		return
 	}
@@ -350,7 +358,7 @@ func (a *App) eoprojectListStages(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), false)
 	if p == nil {
 		return
 	}
@@ -370,7 +378,7 @@ func (a *App) eoprojectCreateStage(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
 	if p == nil {
 		return
 	}
@@ -425,7 +433,7 @@ func (a *App) eoprojectUpdateStage(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
@@ -463,7 +471,7 @@ func (a *App) eoprojectDeleteStage(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
@@ -482,7 +490,7 @@ func (a *App) eoprojectListPhotos(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), false)
 	if p == nil || st == nil {
 		return
 	}
@@ -505,11 +513,11 @@ func (a *App) eoprojectUploadPhoto(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
-	if err := r.ParseMultipartForm(eoprojectMaxPhotoBytes + (1 << 20)); err != nil {
+	if err := r.ParseMultipartForm(int64(eoprojectMaxPhotoBytes) + (1 << 20)); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -519,12 +527,12 @@ func (a *App) eoprojectUploadPhoto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	body, err := io.ReadAll(io.LimitReader(file, eoprojectMaxPhotoBytes+1))
+	body, err := io.ReadAll(io.LimitReader(file, int64(eoprojectMaxPhotoBytes)+1))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if int64(len(body)) > eoprojectMaxPhotoBytes {
+	if len(body) > eoprojectMaxPhotoBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -572,7 +580,7 @@ func (a *App) eoprojectDeletePhoto(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
@@ -612,7 +620,7 @@ func (a *App) eoprojectGetPhotoFile(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), false)
 	if p == nil || st == nil {
 		return
 	}
@@ -633,7 +641,7 @@ func (a *App) eoprojectListIFC(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), false)
 	if p == nil || st == nil {
 		return
 	}
@@ -656,11 +664,11 @@ func (a *App) eoprojectUploadIFC(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
-	if err := r.ParseMultipartForm(eoprojectMaxIFCBytes + (1 << 20)); err != nil {
+	if err := r.ParseMultipartForm(int64(eoprojectMaxIFCBytes) + (1 << 20)); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -670,12 +678,12 @@ func (a *App) eoprojectUploadIFC(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	body, err := io.ReadAll(io.LimitReader(file, eoprojectMaxIFCBytes+1))
+	body, err := io.ReadAll(io.LimitReader(file, int64(eoprojectMaxIFCBytes)+1))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if int64(len(body)) > eoprojectMaxIFCBytes {
+	if len(body) > eoprojectMaxIFCBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -729,7 +737,7 @@ func (a *App) eoprojectDeleteIFC(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
 	if p == nil || st == nil {
 		return
 	}
@@ -766,7 +774,7 @@ func (a *App) eoprojectGetIFCFile(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"))
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), false)
 	if p == nil || st == nil {
 		return
 	}
@@ -787,7 +795,7 @@ func (a *App) eoprojectListShares(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), false)
 	if p == nil {
 		return
 	}
@@ -814,7 +822,7 @@ func (a *App) eoprojectCreateShare(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
 	if p == nil {
 		return
 	}
@@ -868,7 +876,7 @@ func (a *App) eoprojectDeleteShare(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"))
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
 	if p == nil {
 		return
 	}
