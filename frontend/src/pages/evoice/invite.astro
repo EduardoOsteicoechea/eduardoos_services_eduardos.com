@@ -14,47 +14,140 @@ import Layout from "../../layouts/Layout.astro";
     </button>
   </Fragment>
 
-  <section class="product-dash" data-invite>
-    <h1>Shared playlist</h1>
+  <section class="evoice evoice__invite" data-invite>
+    <h1>eVoice playlist invite</h1>
     <p class="status" data-banner>Loading invite…</p>
-    <ul class="product-list evoice-playlist" data-files></ul>
+    <p class="evoice__empty" data-error hidden></p>
+    <div data-preview hidden>
+      <p data-summary></p>
+      <ul class="product-list evoice-playlist" data-files></ul>
+      <form class="product-form" data-import>
+        <label class="evoice__field">Import into project
+          <select class="evoice__select" data-project></select>
+        </label>
+        <label class="evoice__field">Or create project
+          <input class="evoice__input" name="newProject" maxlength="64" placeholder="New project name" />
+        </label>
+        <button class="btn btn--primary" type="submit">Import playlist</button>
+      </form>
+      <p class="hint" data-done hidden></p>
+      <p class="hint"><a href="/session" data-route data-signin hidden>Sign in to import</a></p>
+    </div>
   </section>
 </Layout>
 
 <script>
-  import { fetchEvoiceInvite } from "../../lib/evoice";
+  import {
+    acceptEvoicePlaylistInvite,
+    createEvoiceProject,
+    fetchEvoiceInvite,
+    fetchEvoiceMe,
+    fetchEvoiceProjects,
+  } from "../../lib/evoice";
   import { showErrorModal } from "../../lib/error-modal";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
 
-  const token = new URLSearchParams(location.search).get("token") || "";
+  const token =
+    new URLSearchParams(location.search).get("token") ||
+    new URLSearchParams(location.search).get("t") ||
+    "";
   const banner = document.querySelector("[data-banner]");
+  const errorEl = document.querySelector("[data-error]");
+  const preview = document.querySelector("[data-preview]");
+  const summary = document.querySelector("[data-summary]");
   const list = document.querySelector("[data-files]");
+  const projectSelect = document.querySelector("[data-project]");
+  const signin = document.querySelector("[data-signin]");
+  const doneEl = document.querySelector("[data-done]");
   document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
 
+  function showErr(msg: string) {
+    if (errorEl instanceof HTMLElement) {
+      errorEl.textContent = msg;
+      setHidden(errorEl, false);
+    }
+    if (banner instanceof HTMLElement) banner.textContent = "";
+  }
+
   if (!token) {
-    if (banner instanceof HTMLElement) banner.textContent = "Missing invite token.";
+    showErr("Missing invite token.");
   } else {
     const invite = await fetchEvoiceInvite(token);
     if (invite.error) {
       showErrorModal({ message: invite.error, requestId: invite.requestId });
-      if (banner instanceof HTMLElement) banner.textContent = "Invite unavailable.";
+      showErr("Invite unavailable.");
+    } else if (invite.expired || invite.valid === false) {
+      showErr("This invite is expired or invalid.");
     } else {
-      if (banner instanceof HTMLElement) banner.textContent = invite.project || "Playlist";
+      if (banner instanceof HTMLElement) banner.textContent = "";
+      setHidden(preview, false);
+      if (summary instanceof HTMLElement) {
+        const email = invite.invite?.email || "";
+        const count = invite.files?.length ?? 0;
+        summary.textContent = `Shared from project ${invite.project || "?"} for ${email} (${count} track(s)).`;
+      }
       if (list instanceof HTMLElement) {
         list.replaceChildren();
         for (const file of invite.files || []) {
           const li = document.createElement("li");
-          const label = document.createElement("span");
-          label.textContent = file.name;
-          if (file.url) {
-            const audio = document.createElement("audio");
-            audio.controls = true;
-            audio.preload = "none";
-            audio.src = file.url;
-            li.append(label, audio);
-          } else {
-            li.append(label);
-          }
+          li.textContent = file.name;
           list.appendChild(li);
+        }
+      }
+
+      const gateResult = await requireService("evoice");
+      if (!gateResult.sessionOk || !gateResult.access.allowed) {
+        setHidden(signin, false);
+      } else {
+        const me = await fetchEvoiceMe();
+        if (me.error) {
+          apiFail(me.error, { requestId: me.requestId });
+        } else {
+          const projects = await fetchEvoiceProjects(me.userSafe);
+          if (projectSelect instanceof HTMLSelectElement) {
+            projectSelect.replaceChildren();
+            for (const name of projects.projects) {
+              const opt = document.createElement("option");
+              opt.value = name;
+              opt.textContent = name;
+              projectSelect.appendChild(opt);
+            }
+          }
+          document.querySelector("[data-import]")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target as HTMLFormElement;
+            let target = projectSelect instanceof HTMLSelectElement ? projectSelect.value : "";
+            const newName = String(new FormData(form).get("newProject") || "").trim();
+            if (newName) {
+              const created = await createEvoiceProject(newName, me.userSafe);
+              if (!created.project) {
+                apiFail(created.error || "Could not create project.", { requestId: created.requestId });
+                return;
+              }
+              target = created.project;
+            }
+            if (!target) {
+              showErrorModal({ message: "Choose or create a project." });
+              return;
+            }
+            const res = await acceptEvoicePlaylistInvite(token, target);
+            if (res.error) {
+              apiFail(res.error, { requestId: res.requestId });
+              return;
+            }
+            const renamed = res.renamed || {};
+            const renameNote =
+              Object.keys(renamed).length > 0
+                ? ` Renamed: ${Object.entries(renamed)
+                    .map(([a, b]) => `${a} → ${b}`)
+                    .join(", ")}.`
+                : "";
+            if (doneEl instanceof HTMLElement) {
+              doneEl.hidden = false;
+              doneEl.textContent = `Imported ${(res.imported || []).length} track(s) into ${res.project}.${renameNote}`;
+            }
+            window.location.href = `/evoice/?project=${encodeURIComponent(res.project || target)}`;
+          });
         }
       }
     }

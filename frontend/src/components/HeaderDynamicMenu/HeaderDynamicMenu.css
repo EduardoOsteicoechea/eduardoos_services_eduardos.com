@@ -1,1 +1,381 @@
-/* stub — pamphlet-generator host chrome uses Layout DHS instead */
+/**
+ * Header Dynamic Menu — tools live inside Header chrome (not a second top bar).
+ * Desktop/tablet: vertical stack in the left rail.
+ * Phone (spec 062): single tune toggle → left lateral drawer of HDS actions.
+ * Empty host stays invisible until a route mounts controls into it.
+ */
+
+.header-dynamic-menu-shell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: 0.25rem;
+}
+
+/* Hide empty shell; :has covers portal mounts even if React hasTools lags. */
+.header-dynamic-menu-shell:not(.header-dynamic-menu-shell--has-tools):not(
+    :has(.header-dynamic-menu-host:not(:empty))
+  ) {
+  display: none;
+}
+
+.header-dynamic-menu__phone-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--chrome-control-size, var(--bmw));
+  height: var(--chrome-control-size, var(--bmh));
+  min-width: var(--chrome-control-size, var(--bmw));
+  min-height: var(--chrome-control-size, var(--bmh));
+  padding: 0;
+  border: 1px solid var(--site-input-border, color-mix(in srgb, var(--color-text) 18%, transparent));
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.header-dynamic-menu__phone-toggle[hidden] {
+  display: none !important;
+}
+
+.header-dynamic-menu__phone-toggle .material-symbols-outlined {
+  font-size: calc(var(--chrome-control-size, 2.25rem) * 0.56);
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.header-dynamic-menu__phone-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.header-dynamic-menu-shell--phone-open .header-dynamic-menu__phone-toggle,
+.header-dynamic-menu__phone-toggle[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg));
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.header-dynamic-menu__phone-backdrop {
+  display: none;
+}
+
+.header-dynamic-menu-host:empty {
+  display: none;
+}
+
+.header-dynamic-menu-host:not(:empty) {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.header-dynamic-menu {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  color: var(--color-text);
+  position: relative;
+}
+
+.header-dynamic-menu__inner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+}
+
+.header-dynamic-menu__actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.header-dynamic-menu__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem));
+  height: var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem));
+  min-width: var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem));
+  min-height: var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem));
+  padding: 0;
+  border: 1px solid var(--site-input-border, color-mix(in srgb, var(--color-text) 18%, transparent));
+  border-radius: var(--border-radius);
+  /* Elevated plate so HDS stays visible on the rail/bar (spec 045). */
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.header-dynamic-menu__btn svg,
+.header-dynamic-menu__btn .header-dynamic-menu__icon--svg {
+  color: inherit;
+  fill: currentColor;
+  width: calc(var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem)) * 0.51);
+  height: calc(var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem)) * 0.51);
+  flex-shrink: 0;
+}
+
+.header-dynamic-menu__btn .material-symbols-outlined.header-dynamic-menu__icon {
+  font-size: calc(var(--header-dynamic-control-size, var(--chrome-control-size, 2.25rem)) * 0.56);
+  line-height: 1;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  color: inherit;
+}
+
+.header-dynamic-menu__btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.header-dynamic-menu__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.header-dynamic-menu__btn--active,
+.header-dynamic-menu__btn[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--site-accent-fg);
+}
+
+.header-dynamic-menu__btn--active:hover:not(:disabled),
+.header-dynamic-menu__btn[aria-pressed="true"]:hover:not(:disabled) {
+  color: var(--site-accent-fg);
+  filter: brightness(1.05);
+}
+
+.header-dynamic-menu__tray-toggle--open,
+.header-dynamic-menu__tray-toggle[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg));
+  border-color: var(--color-accent);
+}
+
+/* Label tray: under the bar on mobile; flyout right of the rail on desktop. */
+.header-dynamic-menu__tray {
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  position: absolute;
+  z-index: 170;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 12rem;
+  max-width: min(18rem, 80vw);
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface));
+  box-shadow: var(--site-shadow);
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.header-dynamic-menu__tray--open {
+  display: flex;
+}
+
+.header-dynamic-menu--tray-open .header-dynamic-menu__tray {
+  display: flex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-dynamic-menu__btn,
+  .header-dynamic-menu__tray,
+  .header-dynamic-menu-host {
+    transition: none;
+  }
+}
+
+/*
+ * Phone only (spec 062): one toggle in the bar; HDS actions live in a left
+ * lateral drawer under the top chrome (same idea as the main nav tray).
+ */
+@media (max-width: 767.98px) {
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu__phone-toggle:not([hidden]),
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty))
+    .header-dynamic-menu__phone-toggle:not([hidden]) {
+    display: inline-flex;
+  }
+
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu__phone-backdrop:not([hidden]),
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host--phone-open)
+    .header-dynamic-menu__phone-backdrop:not([hidden]),
+  .header-dynamic-menu-phone-layer--open .header-dynamic-menu__phone-backdrop:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 145;
+    background: color-mix(in srgb, var(--color-text) 28%, transparent);
+    cursor: pointer;
+  }
+
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu-host:not(:empty),
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty))
+    .header-dynamic-menu-host:not(:empty),
+  .header-dynamic-menu-phone-layer--has-tools .header-dynamic-menu-host:not(:empty) {
+    position: fixed;
+    top: calc(
+      var(--header_bar_height, var(--chrome-control-size, 60px)) +
+        var(--header_safe_top, env(safe-area-inset-top, 0px))
+    );
+    left: 0;
+    right: auto;
+    bottom: auto;
+    z-index: 155;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* Spec 062d/e: fit chrome buttons; contrast vs page (not surface-on-surface). */
+    width: calc(var(--chrome-control-size, 2.25rem) + 1.5rem + 10px);
+    min-width: calc(var(--chrome-control-size, 2.25rem) + 1.5rem + 10px);
+    max-width: min(40vw, 8.5rem);
+    height: calc(
+      100dvh -
+        var(--header_bar_height, var(--chrome-control-size, 60px)) -
+        var(--header_safe_top, env(safe-area-inset-top, 0px))
+    );
+    max-height: calc(
+      100dvh -
+        var(--header_bar_height, var(--chrome-control-size, 60px)) -
+        var(--header_safe_top, env(safe-area-inset-top, 0px))
+    );
+    margin: 0;
+    padding: 0.75rem 0.65rem 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--site-body-bg, var(--bg));
+    border-right: 1px solid var(--site-input-border, color-mix(in srgb, var(--fg) 18%, transparent));
+    box-shadow: 4px 0 16px color-mix(in srgb, var(--fg) 12%, transparent);
+    transform: translateX(-105%);
+    transition: transform 0.18s ease-out;
+    pointer-events: none;
+  }
+
+  .header-dynamic-menu-shell--has-tools
+    .header-dynamic-menu-host.header-dynamic-menu-host--phone-open:not(:empty),
+  .header-dynamic-menu-host.header-dynamic-menu-host--phone-open:not(:empty),
+  .header-dynamic-menu-phone-layer--open
+    .header-dynamic-menu-host.header-dynamic-menu-host--phone-open:not(:empty) {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu-host:not(:empty) .header-dynamic-menu__btn,
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty))
+    .header-dynamic-menu-host:not(:empty)
+    .header-dynamic-menu__btn,
+  .header-dynamic-menu-phone-layer--has-tools
+    .header-dynamic-menu-host:not(:empty)
+    .header-dynamic-menu__btn {
+    background: var(--color-surface);
+    border-color: color-mix(in srgb, var(--color-text) 28%, transparent);
+    color: var(--color-text);
+  }
+
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu,
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu__inner,
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty)) .header-dynamic-menu,
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty))
+    .header-dynamic-menu__inner,
+  .header-dynamic-menu-phone-layer--has-tools .header-dynamic-menu,
+  .header-dynamic-menu-phone-layer--has-tools .header-dynamic-menu__inner {
+    height: 100%;
+    width: 100%;
+  }
+
+  .header-dynamic-menu-shell--has-tools .header-dynamic-menu__actions,
+  .header-dynamic-menu-shell:has(.header-dynamic-menu-host:not(:empty))
+    .header-dynamic-menu__actions,
+  .header-dynamic-menu-phone-layer--has-tools .header-dynamic-menu__actions {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-block: 0.15rem;
+  }
+}
+
+/* Desktop/tablet: stacked controls inside the left rail */
+@media (min-width: 768px) {
+  .header-dynamic-menu-shell {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header-dynamic-menu__phone-toggle,
+  .header-dynamic-menu__phone-backdrop {
+    display: none !important;
+  }
+
+  .header-dynamic-menu__inner {
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header-dynamic-menu__actions {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-block: 0.25rem;
+    padding-inline: 0.15rem;
+    box-sizing: border-box;
+  }
+
+  .header-dynamic-menu__tray {
+    top: 0;
+    left: calc(100% + 0.45rem);
+    right: auto;
+    transform: none;
+    min-width: 11rem;
+  }
+}
+
+@media print {
+  .header-dynamic-menu-shell,
+  .header-dynamic-menu-host,
+  .header-dynamic-menu {
+    display: none !important;
+  }
+}

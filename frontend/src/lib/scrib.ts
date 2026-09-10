@@ -166,6 +166,22 @@ export async function fetchScribSheet(
   return { sheet: data ?? null, requestId };
 }
 
+/** Rename a sheet by loading it, updating `name`, and saving the full document. */
+export async function renameScribSheet(
+  bookId: string,
+  sheetId: string,
+  name: string,
+): Promise<{ sheet: ScribSheet | null; error?: string; requestId?: string }> {
+  const trimmed = name.trim();
+  if (!trimmed) return { sheet: null, error: "name required" };
+  const loaded = await fetchScribSheet(bookId, sheetId);
+  if (loaded.error || !loaded.sheet) {
+    return { sheet: null, error: loaded.error ?? "sheet not found", requestId: loaded.requestId };
+  }
+  if (loaded.sheet.name === trimmed) return { sheet: loaded.sheet, requestId: loaded.requestId };
+  return saveScribSheet({ ...loaded.sheet, name: trimmed });
+}
+
 export async function saveScribSheet(
   sheet: ScribSheet,
 ): Promise<{ sheet: ScribSheet | null; error?: string; requestId?: string }> {

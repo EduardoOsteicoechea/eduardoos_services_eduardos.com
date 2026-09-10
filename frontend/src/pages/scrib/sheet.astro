@@ -9,17 +9,66 @@ import Layout from "../../layouts/Layout.astro";
   robots="noindex,nofollow"
 >
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-tool="draw" title="Draw" aria-label="Draw">
+    <a class="dhs-action" href="/scrib" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
+    </a>
+    <button class="dhs-action" type="button" data-mode="zoom" title="Zoom / pan" aria-label="Zoom / pan">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">zoom_in</span>
+      </span>
+      Zoom
+    </button>
+    <button class="dhs-action" type="button" data-mode="draw" title="Draw" aria-label="Draw">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">draw</span>
       </span>
       Draw
     </button>
-    <button class="dhs-action" type="button" data-tool="erase" title="Erase" aria-label="Erase">
+    <button class="dhs-action" type="button" data-stroke="-" title="Thinner stroke" aria-label="Thinner stroke">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">remove</span>
+      </span>
+      Stroke −
+    </button>
+    <span class="scrib-stroke-widget" data-stroke-label>0.35 mm</span>
+    <button class="dhs-action" type="button" data-stroke="+" title="Thicker stroke" aria-label="Thicker stroke">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+      </span>
+      Stroke +
+    </button>
+    <button class="dhs-action" type="button" data-mode="erase" title="Erase" aria-label="Erase">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">ink_eraser</span>
       </span>
       Erase
+    </button>
+    <button class="dhs-action" type="button" data-layers title="Layers" aria-label="Layers">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">layers</span>
+      </span>
+      Layers
+    </button>
+    <button class="dhs-action" type="button" data-institutes title="Institutes Capita" aria-label="Institutes Capita">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+      </span>
+      Capita
+    </button>
+    <button class="dhs-action" type="button" data-undo title="Undo" aria-label="Undo">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">undo</span>
+      </span>
+      Undo
+    </button>
+    <button class="dhs-action" type="button" data-fullscreen title="Fullscreen" aria-label="Fullscreen">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">fullscreen</span>
+      </span>
+      Fullscreen
     </button>
     <button class="dhs-action" type="button" data-print title="Print PDF" aria-label="Print PDF">
       <span class="icon-btn" aria-hidden="true">
@@ -27,111 +76,145 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Print PDF
     </button>
-    <button class="dhs-action" type="button" data-institutes title="Institutes" aria-label="Institutes">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
-      </span>
-      Institutes
-    </button>
-    <a class="dhs-action" href="/scrib" data-route title="Library" aria-label="Library">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">library_books</span>
-      </span>
-      Library
-    </a>
+    <span class="scrib-save-hint" data-save-hint></span>
   </Fragment>
 
-  <section class="scrib-editor" data-scrib-editor>
-    <h1 data-title>Scrib sheet</h1>
-    <p class="status" data-banner>Loading…</p>
-    <div data-gate hidden class="product-gate">
-      <p class="hint">Sign in with Scrib access to edit sheets.</p>
-      <p class="hint"><a href="/scrib" data-route>Back to Scrib</a></p>
+  <p class="status" data-banner>Loading…</p>
+  <div data-gate hidden class="product-gate">
+    <p class="hint">Sign in with Scrib access to edit sheets.</p>
+    <p class="hint"><a href="/scrib" data-route>Back to Scrib</a></p>
+  </div>
+
+  <div class="scrib-viewport" data-viewport hidden>
+    <div class="scrib-stage" data-stage>
+      <div class="scrib-page" data-page></div>
     </div>
-    <div data-workspace hidden>
-      <div class="scrib-editor__toolbar">
-        <label>
-          Layer
-          <select data-layer></select>
-        </label>
-        <label>
-          Stroke (mm)
-          <input data-stroke type="number" min="0.1" max="2.5" step="0.05" value="0.35" />
-        </label>
-        <label>
-          Zoom
-          <input data-zoom type="range" min="25" max="400" value="100" />
-        </label>
-        <button class="btn" type="button" data-undo>Undo</button>
-        <button class="btn btn--primary" type="button" data-save>Save</button>
-      </div>
-      <div class="scrib-editor__stage">
-        <div
-          class="scrib-sheet"
-          data-sheet
-          style={`background-image: url('/documento_generado_columnas_v3.jpg'); width: 13.49375rem; height: 17.4625rem;`}
-        ></div>
-      </div>
-      <dialog data-institutes-modal>
-        <form method="dialog" class="product-form">
-          <h2>Institutes navigation</h2>
-          <label>
-            Book
-            <input name="book" data-inst-book />
-          </label>
-          <label>
-            Chapter
-            <input name="chapter" data-inst-chapter />
-          </label>
-          <div class="subscription-page__period">
-            <button class="btn btn--primary" value="save">Save nav</button>
-            <button class="btn" value="cancel">Close</button>
-            <a class="btn" href="/dashboard/latin/calvins-institutes" data-route>Open reader</a>
-          </div>
-        </form>
-      </dialog>
+    <div class="scrib-fullscreen-controls" data-fs-controls hidden>
+      <button type="button" class="scrib-fullscreen-toggle-header" data-toggle-header title="Toggle chrome" aria-label="Toggle chrome">
+        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+      </button>
+      <button type="button" class="scrib-fullscreen-close" data-exit-fs title="Exit fullscreen" aria-label="Exit fullscreen">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
     </div>
-  </section>
+  </div>
+
+  <div class="scrib-layers-modal" data-layers-modal hidden role="dialog" aria-modal="true" aria-label="Capas">
+    <div class="scrib-layers-modal__panel">
+      <header class="scrib-layers-modal__head">
+        <h2>Capas</h2>
+        <button type="button" class="btn" data-layers-close>Cerrar</button>
+      </header>
+      <ul class="scrib-layers-list" data-layers-list></ul>
+    </div>
+  </div>
+
+  <div class="scrib-institutes-modal" data-institutes-modal hidden role="dialog" aria-modal="true" aria-label="Institutes Capita">
+    <div class="scrib-institutes-modal__panel scrib-layers-modal__panel">
+      <header class="scrib-layers-modal__head">
+        <h2>Capita</h2>
+        <button type="button" class="btn" data-institutes-close>Cerrar</button>
+      </header>
+      <p class="scrib-institutes-modal__error" data-inst-error hidden></p>
+      <p class="scrib-institutes-modal__status" data-inst-status>Loading…</p>
+      <div class="scrib-institutes-modal__scroll" data-inst-body hidden>
+        <div class="scrib-institutes-modal__libers" data-inst-libers></div>
+        <div class="scrib-institutes-modal__step">
+          <p class="scrib-institutes-modal__step-label">Caput</p>
+          <p class="scrib-institutes-modal__step-meta" data-inst-chapter-meta></p>
+          <div class="scrib-institutes-modal__chips scrib-institutes-modal__chips--chapters" data-inst-chapters></div>
+        </div>
+        <div class="scrib-institutes-modal__step">
+          <p class="scrib-institutes-modal__step-label">Paragraph</p>
+          <div class="scrib-institutes-modal__chips scrib-institutes-modal__chips--paras" data-inst-paras></div>
+        </div>
+        <div class="scrib-institutes-modal__text">
+          <p class="scrib-institutes-modal__text-id" data-inst-para-id></p>
+          <p class="scrib-institutes-modal__text-body" data-inst-para-text></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <script>
   import { mustLog } from "../../lib/dev-log";
   import { showErrorModal } from "../../lib/error-modal";
+  import {
+    chapterNavLabel,
+    fetchParagraphChapter,
+    fetchParagraphIndex,
+    groupChaptersByLiber,
+    type ParagraphIndexChapter,
+    type ParagraphUnit,
+  } from "../../lib/calvinsInstitutes";
   import { PREF_SCRIB_INSTITUTES_NAV, getPreference, putPreference } from "../../lib/preferences";
   import { apiFail, requireService, setHidden } from "../../lib/productGate";
   import {
     fetchScribSheet,
     resolveScribSheetFromLocation,
     saveScribSheet,
+    SCRIB_BG_SRC,
     SCRIB_LAYER_IDS,
     SCRIB_LAYER_LABELS,
+    SCRIB_PAGE_HEIGHT_MM,
+    SCRIB_PAGE_WIDTH_MM,
     type ScribLayer,
+    type ScribLayerId,
     type ScribSheet,
     type StrokePath,
   } from "../../lib/scrib";
   import { downloadScribSheetPdf } from "../../lib/scribPrint";
 
   const INK = "#141820";
-  const root = document.querySelector("[data-scrib-editor]");
-  if (!(root instanceof HTMLElement)) throw new Error("scrib editor missing");
+  const STROKE_MIN = 0.1;
+  const STROKE_MAX = 2.5;
+  const STROKE_STEP = 0.05;
+  const ZOOM_MIN = 0.25;
+  const ZOOM_MAX = 4;
 
-  const banner = root.querySelector("[data-banner]");
-  const gate = root.querySelector("[data-gate]");
-  const workspace = root.querySelector("[data-workspace]");
-  const sheetEl = root.querySelector("[data-sheet]");
-  const layerSelect = root.querySelector("[data-layer]");
-  const strokeInput = root.querySelector("[data-stroke]");
-  const zoomInput = root.querySelector("[data-zoom]");
-  const titleEl = root.querySelector("[data-title]");
-  const modal = root.querySelector("[data-institutes-modal]");
+  type Mode = "draw" | "zoom" | "erase";
+  type UndoEntry = { layerId: string; pathsBefore: StrokePath[] };
+  type InstNav = { activeBook: string; chapterId: string | null; paraOrder: number | null };
+
+  const banner = document.querySelector("[data-banner]");
+  const gate = document.querySelector("[data-gate]");
+  const viewport = document.querySelector("[data-viewport]");
+  const stage = document.querySelector("[data-stage]");
+  const pageEl = document.querySelector("[data-page]");
+  const strokeLabel = document.querySelector("[data-stroke-label]");
+  const saveHint = document.querySelector("[data-save-hint]");
+  const layersModal = document.querySelector("[data-layers-modal]");
+  const layersList = document.querySelector("[data-layers-list]");
+  const institutesModal = document.querySelector("[data-institutes-modal]");
+  const fsControls = document.querySelector("[data-fs-controls]");
 
   let sheet: ScribSheet | null = null;
-  let tool: "draw" | "erase" = "draw";
-  let zoom = 1;
+  let mode: Mode = "draw";
+  let scale = 1;
+  let pan = { x: 0, y: 0 };
+  let draftPath = "";
   let drawing = false;
-  let currentPoints: { x: number; y: number }[] = [];
-  let undoStack: Array<{ layerId: string; pathsBefore: StrokePath[] }> = [];
+  let activePointerId: number | null = null;
+  let points: { x: number; y: number }[] = [];
+  let panDrag: { x: number; y: number; panX: number; panY: number } | null = null;
+  let pinch: { dist: number; scale: number } | null = null;
+  let undoStack: UndoEntry[] = [];
   let saveQueue: Promise<void> = Promise.resolve();
+  let queuedSaves = 0;
+  let isFullscreen = false;
+  let headerVisible = true;
+
+  let instChapters: ParagraphIndexChapter[] = [];
+  let instActiveBook = "I";
+  let instSelected: ParagraphIndexChapter | null = null;
+  let instParas: ParagraphUnit[] = [];
+  let instParaOrder: number | null = null;
+  let instPendingChapterId: string | null = null;
+
+  function clonePaths(paths: StrokePath[]): StrokePath[] {
+    return paths.map((p) => ({ ...p }));
+  }
 
   function ensureLayers(doc: ScribSheet): ScribSheet {
     const byId = new Map(doc.layers.map((l) => [l.id, l]));
@@ -142,61 +225,26 @@ import Layout from "../../layouts/Layout.astro";
     return { ...doc, layers };
   }
 
-  function activeLayer(): ScribLayer | null {
-    if (!sheet) return null;
-    return sheet.layers.find((l) => l.id === sheet!.activeLayerId) || sheet.layers[0] || null;
+  function rootRem(): number {
+    const n = parseFloat(getComputedStyle(document.documentElement).fontSize || "16");
+    return n > 0 ? n : 16;
   }
 
-  function renderSvgs() {
-    if (!(sheetEl instanceof HTMLElement) || !sheet) return;
-    sheetEl.querySelectorAll("svg.scrib-layer").forEach((n) => n.remove());
-    for (const layer of sheet.layers) {
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.classList.add("scrib-layer");
-      svg.setAttribute("viewBox", `0 0 215.9 279.4`);
-      svg.style.opacity = String(layer.opacity);
-      svg.style.pointerEvents = layer.id === sheet.activeLayerId ? "auto" : "none";
-      for (const path of layer.paths) {
-        const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        p.setAttribute("d", path.d);
-        p.setAttribute("stroke-width", String(path.strokeWidth));
-        p.setAttribute("stroke", INK);
-        svg.appendChild(p);
-      }
-      sheetEl.appendChild(svg);
-    }
-    sheetEl.style.transform = `scale(${zoom})`;
+  function applyStageTransform() {
+    if (!(stage instanceof HTMLElement)) return;
+    stage.style.transform = `translate(${pan.x}rem, ${pan.y}rem) scale(${scale})`;
   }
 
-  function fillLayerSelect() {
-    if (!(layerSelect instanceof HTMLSelectElement) || !sheet) return;
-    layerSelect.replaceChildren();
-    for (const id of SCRIB_LAYER_IDS) {
-      const opt = document.createElement("option");
-      opt.value = id;
-      opt.textContent = SCRIB_LAYER_LABELS[id];
-      if (id === sheet.activeLayerId) opt.selected = true;
-      layerSelect.appendChild(opt);
+  function updateStrokeLabel() {
+    if (strokeLabel instanceof HTMLElement && sheet) {
+      strokeLabel.textContent = `${sheet.strokeWidthMm.toFixed(2)} mm`;
     }
   }
 
-  function pointerToMm(event: PointerEvent): { x: number; y: number } | null {
-    if (!(sheetEl instanceof HTMLElement)) return null;
-    const rect = sheetEl.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) return null;
-    const x = ((event.clientX - rect.left) / rect.width) * 215.9;
-    const y = ((event.clientY - rect.top) / rect.height) * 279.4;
-    return { x, y };
-  }
-
-  function isStylus(event: PointerEvent): boolean {
-    return event.pointerType === "pen" || (event.pointerType === "mouse" && event.buttons === 1 && event.isPrimary);
-  }
-
-  function pathFromPoints(pts: { x: number; y: number }[]): string {
-    if (pts.length === 0) return "";
-    const [first, ...rest] = pts;
-    return [`M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`, ...rest.map((p) => `L ${p.x.toFixed(2)} ${p.y.toFixed(2)}`)].join(" ");
+  function updateSaveHint() {
+    if (saveHint instanceof HTMLElement) {
+      saveHint.textContent = queuedSaves > 0 ? "Saving…" : "";
+    }
   }
 
   function pathPoints(d: string): { x: number; y: number }[] {
@@ -207,133 +255,518 @@ import Layout from "../../layouts/Layout.astro";
     return pts;
   }
 
-  function erasePaths(paths: StrokePath[], eraser: { x: number; y: number }[]): StrokePath[] {
-    if (eraser.length < 1) return paths;
-    const threshold = 1.2;
+  function erasePaths(paths: StrokePath[], eraser: { x: number; y: number }[], radiusMm: number): StrokePath[] {
+    if (eraser.length === 0) return paths;
     return paths.filter((path) => {
       const pts = pathPoints(path.d);
-      for (const a of pts) {
-        for (const b of eraser) {
-          if (Math.hypot(a.x - b.x, a.y - b.y) <= threshold + path.strokeWidth) return false;
+      if (pts.length === 0) return true;
+      const hitR = radiusMm + path.strokeWidth * 0.5;
+      for (const p of pts) {
+        for (const e of eraser) {
+          if (Math.hypot(p.x - e.x, p.y - e.y) <= hitR) return false;
         }
       }
       return true;
     });
   }
 
-  function queueSave() {
-    if (!sheet) return;
-    saveQueue = saveQueue.then(async () => {
-      if (!sheet) return;
-      const result = await saveScribSheet(sheet);
-      if (!result.sheet) {
-        apiFail(result.error || "Could not save sheet.", { requestId: result.requestId });
-        return;
+  function renderPage() {
+    if (!(pageEl instanceof HTMLElement) || !sheet) return;
+    pageEl.style.width = `${SCRIB_PAGE_WIDTH_MM}mm`;
+    pageEl.style.height = `${SCRIB_PAGE_HEIGHT_MM}mm`;
+    pageEl.replaceChildren();
+    const bg = document.createElement("img");
+    bg.className = "scrib-page__bg";
+    bg.src = SCRIB_BG_SRC;
+    bg.alt = "";
+    bg.draggable = false;
+    pageEl.append(bg);
+    sheet.layers.forEach((layer, index) => {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.classList.add("scrib-layer");
+      svg.setAttribute("viewBox", `0 0 ${SCRIB_PAGE_WIDTH_MM} ${SCRIB_PAGE_HEIGHT_MM}`);
+      svg.setAttribute("width", `${SCRIB_PAGE_WIDTH_MM}mm`);
+      svg.setAttribute("height", `${SCRIB_PAGE_HEIGHT_MM}mm`);
+      svg.style.zIndex = String(index + 1);
+      svg.style.opacity = String(layer.opacity);
+      svg.setAttribute("aria-hidden", "true");
+      for (const path of layer.paths) {
+        const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        p.setAttribute("d", path.d);
+        p.setAttribute("fill", "none");
+        p.setAttribute("stroke", INK);
+        p.setAttribute("stroke-width", String(path.strokeWidth));
+        p.setAttribute("stroke-linecap", "round");
+        p.setAttribute("stroke-linejoin", "round");
+        svg.appendChild(p);
       }
-      sheet = ensureLayers(result.sheet);
-      if (mustLog) console.log("[scrib] saved", { id: sheet.id });
+      if (layer.id === sheet!.activeLayerId && draftPath && mode === "draw") {
+        const draft = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        draft.setAttribute("d", draftPath);
+        draft.setAttribute("fill", "none");
+        draft.setAttribute("stroke", INK);
+        draft.setAttribute("stroke-width", String(sheet!.strokeWidthMm));
+        draft.setAttribute("stroke-linecap", "round");
+        draft.setAttribute("stroke-linejoin", "round");
+        draft.setAttribute("opacity", "0.85");
+        svg.appendChild(draft);
+      }
+      pageEl.append(svg);
+    });
+    applyStageTransform();
+    updateStrokeLabel();
+  }
+
+  function persist(next: ScribSheet) {
+    sheet = next;
+    queuedSaves += 1;
+    updateSaveHint();
+    saveQueue = saveQueue
+      .catch(() => undefined)
+      .then(async () => {
+        const res = await saveScribSheet(next);
+        if (!res.sheet) apiFail(res.error || "Could not save sheet.", { requestId: res.requestId });
+      })
+      .finally(() => {
+        queuedSaves -= 1;
+        updateSaveHint();
+      });
+  }
+
+  function commitLocal(next: ScribSheet) {
+    sheet = ensureLayers(next);
+    renderPage();
+  }
+
+  function mmFromClient(clientX: number, clientY: number): { x: number; y: number } | null {
+    if (!(pageEl instanceof HTMLElement)) return null;
+    const rect = pageEl.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return null;
+    return {
+      x: ((clientX - rect.left) / rect.width) * SCRIB_PAGE_WIDTH_MM,
+      y: ((clientY - rect.top) / rect.height) * SCRIB_PAGE_HEIGHT_MM,
+    };
+  }
+
+  function setMode(next: Mode) {
+    mode = next;
+    if (viewport instanceof HTMLElement) {
+      viewport.classList.toggle("scrib-viewport--zoom", mode === "zoom");
+    }
+    document.querySelectorAll("[data-mode]").forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      btn.setAttribute("aria-pressed", btn.dataset.mode === mode ? "true" : "false");
     });
   }
 
-  function onPointerDown(event: PointerEvent) {
-    if (!sheet || !isStylus(event)) return;
-    const pt = pointerToMm(event);
-    if (!pt) return;
-    drawing = true;
-    currentPoints = [pt];
-    (event.target as Element).setPointerCapture?.(event.pointerId);
+  function fitSheet() {
+    if (!(viewport instanceof HTMLElement)) return;
+    const pad = 1; // rem-ish pad via client px → scale only
+    const availW = Math.max(120, viewport.clientWidth - pad * 32);
+    const availH = Math.max(120, viewport.clientHeight - pad * 32);
+    const sx = availW / SCRIB_PAGE_WIDTH_MM;
+    const sy = availH / SCRIB_PAGE_HEIGHT_MM;
+    scale = Math.min(Math.max(Math.min(sx, sy, 1.5), ZOOM_MIN), ZOOM_MAX);
+    pan = { x: 0, y: 0 };
+    applyStageTransform();
   }
 
-  function onPointerMove(event: PointerEvent) {
-    if (!drawing || !sheet) return;
-    const pt = pointerToMm(event);
-    if (!pt) return;
-    currentPoints.push(pt);
-  }
-
-  function onPointerUp() {
+  function finishStroke() {
     if (!drawing || !sheet) return;
     drawing = false;
-    const layer = activeLayer();
-    if (!layer || currentPoints.length < 2) {
-      currentPoints = [];
+    const pts = points;
+    points = [];
+    draftPath = "";
+    if (pts.length < 2) {
+      renderPage();
       return;
     }
-    undoStack.push({ layerId: layer.id, pathsBefore: layer.paths.map((p) => ({ ...p })) });
-    if (tool === "draw") {
-      const strokeWidth = Number((strokeInput as HTMLInputElement)?.value || sheet.strokeWidthMm || 0.35);
-      layer.paths = [...layer.paths, { d: pathFromPoints(currentPoints), strokeWidth }];
-      sheet.strokeWidthMm = strokeWidth;
-    } else {
-      layer.paths = erasePaths(layer.paths, currentPoints);
-    }
-    currentPoints = [];
-    renderSvgs();
-    queueSave();
+    const activeId = sheet.activeLayerId;
+    let pathsBefore: StrokePath[] = [];
+    const layers = sheet.layers.map((layer) => {
+      if (layer.id !== activeId) return layer;
+      pathsBefore = clonePaths(layer.paths);
+      if (mode === "erase") {
+        return { ...layer, paths: erasePaths(layer.paths, pts, sheet!.strokeWidthMm) };
+      }
+      const d = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x.toFixed(3)} ${p.y.toFixed(3)}`).join(" ");
+      return { ...layer, paths: [...layer.paths, { d, strokeWidth: sheet!.strokeWidthMm }] };
+    });
+    undoStack = [...undoStack, { layerId: activeId, pathsBefore }];
+    const next = { ...sheet, layers };
+    commitLocal(next);
+    persist(next);
   }
 
-  sheetEl?.addEventListener("pointerdown", (e) => onPointerDown(e as PointerEvent));
-  sheetEl?.addEventListener("pointermove", (e) => onPointerMove(e as PointerEvent));
-  sheetEl?.addEventListener("pointerup", () => onPointerUp());
-  sheetEl?.addEventListener("pointercancel", () => {
-    drawing = false;
-    currentPoints = [];
-  });
+  function onPointerDown(e: PointerEvent) {
+    if (!sheet) return;
+    if (mode === "zoom") {
+      panDrag = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y };
+      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+      return;
+    }
+    if (e.pointerType !== "pen") return;
+    const pt = mmFromClient(e.clientX, e.clientY);
+    if (!pt) return;
+    drawing = true;
+    activePointerId = e.pointerId;
+    points = [pt];
+    draftPath = "";
+    (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+  }
 
-  layerSelect?.addEventListener("change", () => {
-    if (!sheet || !(layerSelect instanceof HTMLSelectElement)) return;
-    sheet.activeLayerId = layerSelect.value;
-    renderSvgs();
-    queueSave();
-  });
+  function onPointerMove(e: PointerEvent) {
+    if (mode === "zoom" && panDrag) {
+      const rem = rootRem();
+      pan = {
+        x: panDrag.panX + (e.clientX - panDrag.x) / rem,
+        y: panDrag.panY + (e.clientY - panDrag.y) / rem,
+      };
+      applyStageTransform();
+      return;
+    }
+    if (!drawing) return;
+    if (activePointerId !== null && e.pointerId !== activePointerId) return;
+    if (e.pointerType !== "pen") return;
+    const pt = mmFromClient(e.clientX, e.clientY);
+    if (!pt) return;
+    points.push(pt);
+    if (mode === "draw") {
+      draftPath = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x.toFixed(3)} ${p.y.toFixed(3)}`).join(" ");
+      renderPage();
+    }
+  }
 
-  zoomInput?.addEventListener("input", () => {
-    zoom = Number((zoomInput as HTMLInputElement).value) / 100;
-    if (sheetEl instanceof HTMLElement) sheetEl.style.transform = `scale(${zoom})`;
-  });
+  function onPointerUp(e: PointerEvent) {
+    if (mode === "zoom") {
+      panDrag = null;
+      return;
+    }
+    if (activePointerId !== null && e.pointerId !== activePointerId) return;
+    activePointerId = null;
+    finishStroke();
+  }
 
-  root.querySelector("[data-undo]")?.addEventListener("click", () => {
-    const entry = undoStack.pop();
-    if (!entry || !sheet) return;
-    const layer = sheet.layers.find((l) => l.id === entry.layerId);
-    if (!layer) return;
-    layer.paths = entry.pathsBefore;
-    renderSvgs();
-    queueSave();
-  });
+  function renderLayersModal() {
+    if (!(layersList instanceof HTMLElement) || !sheet) return;
+    layersList.replaceChildren();
+    for (const layer of sheet.layers) {
+      const id = layer.id as ScribLayerId;
+      const li = document.createElement("li");
+      li.className = "scrib-layer-card";
+      const active = document.createElement("label");
+      active.className = "scrib-layer-card__active";
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "scrib-active-layer";
+      radio.checked = sheet.activeLayerId === layer.id;
+      radio.addEventListener("change", () => {
+        if (!sheet) return;
+        commitLocal({ ...sheet, activeLayerId: layer.id });
+      });
+      active.append(radio, document.createTextNode(SCRIB_LAYER_LABELS[id] ?? layer.id));
+      const opacity = document.createElement("label");
+      opacity.className = "scrib-layer-card__opacity";
+      opacity.append("Opacidad");
+      const range = document.createElement("input");
+      range.type = "range";
+      range.min = "0";
+      range.max = "1";
+      range.step = "0.05";
+      range.value = String(layer.opacity);
+      const pct = document.createElement("span");
+      pct.textContent = `${Math.round(layer.opacity * 100)}%`;
+      range.addEventListener("input", () => {
+        if (!sheet) return;
+        const value = Number(range.value);
+        pct.textContent = `${Math.round(value * 100)}%`;
+        commitLocal({
+          ...sheet,
+          layers: sheet.layers.map((l) => (l.id === layer.id ? { ...l, opacity: value } : l)),
+        });
+      });
+      opacity.append(range, pct);
+      li.append(active, opacity);
+      layersList.append(li);
+    }
+  }
 
-  root.querySelector("[data-save]")?.addEventListener("click", () => queueSave());
-  document.querySelector("[data-print]")?.addEventListener("click", async () => {
-    if (!sheet || !(sheetEl instanceof HTMLElement)) return;
+  function openLayers(open: boolean) {
+    setHidden(layersModal, !open);
+    if (open) {
+      setHidden(institutesModal, true);
+      renderLayersModal();
+    } else if (sheet) persist(sheet);
+  }
+
+  async function persistInstNav() {
+    const nav: InstNav = {
+      activeBook: instActiveBook,
+      chapterId: instSelected?.id ?? instPendingChapterId,
+      paraOrder: instParaOrder,
+    };
+    await putPreference(PREF_SCRIB_INSTITUTES_NAV, nav);
+  }
+
+  function renderInstitutes() {
+    const libers = document.querySelector("[data-inst-libers]");
+    const chaptersEl = document.querySelector("[data-inst-chapters]");
+    const parasEl = document.querySelector("[data-inst-paras]");
+    const meta = document.querySelector("[data-inst-chapter-meta]");
+    const paraId = document.querySelector("[data-inst-para-id]");
+    const paraText = document.querySelector("[data-inst-para-text]");
+    if (!(libers instanceof HTMLElement) || !(chaptersEl instanceof HTMLElement) || !(parasEl instanceof HTMLElement)) return;
+    const groups = groupChaptersByLiber(instChapters);
+    libers.replaceChildren();
+    for (const g of groups) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "scrib-institutes-modal__liber" + (g.book === instActiveBook ? " is-active" : "");
+      btn.textContent = `Liber ${g.book}`;
+      btn.addEventListener("click", () => {
+        instActiveBook = g.book;
+        instSelected = null;
+        instParas = [];
+        instParaOrder = null;
+        void persistInstNav();
+        renderInstitutes();
+      });
+      libers.append(btn);
+    }
+    const entries = groups.find((g) => g.book === instActiveBook)?.entries ?? [];
+    chaptersEl.replaceChildren();
+    for (const entry of entries) {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "scrib-institutes-modal__chip" + (instSelected?.id === entry.id ? " is-active" : "");
+      chip.textContent = chapterNavLabel(entry);
+      chip.title = entry.heading || entry.chapter;
+      chip.addEventListener("click", () => void selectChapter(entry));
+      chaptersEl.append(chip);
+    }
+    if (meta instanceof HTMLElement) meta.textContent = instSelected?.heading || "";
+    parasEl.replaceChildren();
+    for (const p of instParas) {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "scrib-institutes-modal__chip" + (instParaOrder === p.order ? " is-active" : "");
+      chip.textContent = String(p.order);
+      chip.addEventListener("click", () => {
+        instParaOrder = p.order;
+        void persistInstNav();
+        renderInstitutes();
+      });
+      parasEl.append(chip);
+    }
+    const active = instParas.find((p) => p.order === instParaOrder) ?? null;
+    if (paraId instanceof HTMLElement) paraId.textContent = active ? `¶ ${active.order}` : "";
+    if (paraText instanceof HTMLElement) paraText.textContent = active?.text || "";
+  }
+
+  async function selectChapter(entry: ParagraphIndexChapter) {
+    instSelected = entry;
+    instPendingChapterId = entry.id;
+    const status = document.querySelector("[data-inst-status]");
+    if (status instanceof HTMLElement) status.textContent = "Loading chapter…";
     try {
-      await downloadScribSheetPdf(sheetEl, sheet);
+      const doc = await fetchParagraphChapter(entry.book, entry.chapter);
+      instParas = [...(doc.paragraphs ?? [])]
+        .map((p, i) => ({ order: typeof p.order === "number" ? p.order : i + 1, text: p.text || "", id: p.id }))
+        .sort((a, b) => a.order - b.order);
+      if (instParaOrder == null && instParas[0]) instParaOrder = instParas[0].order;
+      if (status instanceof HTMLElement) status.textContent = "";
+    } catch (err) {
+      instParas = [];
+      if (status instanceof HTMLElement) status.textContent = "";
+      const errEl = document.querySelector("[data-inst-error]");
+      if (errEl instanceof HTMLElement) {
+        errEl.textContent = err instanceof Error ? err.message : "Chapter failed.";
+        setHidden(errEl, false);
+      }
+    }
+    await persistInstNav();
+    renderInstitutes();
+  }
+
+  async function openInstitutes(open: boolean) {
+    setHidden(institutesModal, !open);
+    if (!open) return;
+    openLayers(false);
+    setHidden(layersModal, true);
+    const status = document.querySelector("[data-inst-status]");
+    const body = document.querySelector("[data-inst-body]");
+    const errEl = document.querySelector("[data-inst-error]");
+    setHidden(errEl, true);
+    if (instChapters.length === 0) {
+      if (status instanceof HTMLElement) status.textContent = "Loading…";
+      setHidden(body, true);
+      try {
+        const idx = await fetchParagraphIndex();
+        instChapters = (idx.chapters ?? []).map((c, i) => ({
+          id: c.id || `${c.book}-${c.chapter}`,
+          order: typeof c.order === "number" ? c.order : i + 1,
+          book: c.book,
+          chapter: c.chapter,
+          heading: c.heading || "",
+          paragraphCount: c.paragraphCount,
+          url: c.url,
+        }));
+        const pref = await getPreference<InstNav>(PREF_SCRIB_INSTITUTES_NAV);
+        const groups = groupChaptersByLiber(instChapters);
+        if (pref.value?.activeBook && groups.some((g) => g.book === pref.value!.activeBook)) {
+          instActiveBook = pref.value.activeBook;
+        } else {
+          instActiveBook = groups[0]?.book ?? "I";
+        }
+        instPendingChapterId = pref.value?.chapterId ?? null;
+        instParaOrder = pref.value?.paraOrder ?? null;
+        if (instPendingChapterId) {
+          const match = instChapters.find((c) => c.id === instPendingChapterId);
+          if (match) await selectChapter(match);
+        }
+        if (status instanceof HTMLElement) status.textContent = "";
+        setHidden(body, false);
+        renderInstitutes();
+      } catch (err) {
+        if (errEl instanceof HTMLElement) {
+          errEl.textContent = err instanceof Error ? err.message : "Institutes unavailable.";
+          setHidden(errEl, false);
+        }
+        if (status instanceof HTMLElement) status.textContent = "";
+      }
+    } else {
+      if (status instanceof HTMLElement) status.textContent = "";
+      setHidden(body, false);
+      renderInstitutes();
+    }
+  }
+
+  pageEl?.addEventListener("pointerdown", (e) => onPointerDown(e as PointerEvent));
+  pageEl?.addEventListener("pointermove", (e) => onPointerMove(e as PointerEvent));
+  pageEl?.addEventListener("pointerup", (e) => onPointerUp(e as PointerEvent));
+  pageEl?.addEventListener("pointercancel", (e) => onPointerUp(e as PointerEvent));
+
+  if (viewport instanceof HTMLElement) {
+    viewport.addEventListener(
+      "wheel",
+      (e) => {
+        if (mode !== "zoom") return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? 0.9 : 1.1;
+        scale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, scale * delta));
+        applyStageTransform();
+      },
+      { passive: false },
+    );
+    viewport.addEventListener("touchstart", (e) => {
+      if (mode !== "zoom" || e.touches.length !== 2) return;
+      const [a, b] = [e.touches[0], e.touches[1]];
+      pinch = { dist: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY), scale };
+    });
+    viewport.addEventListener(
+      "touchmove",
+      (e) => {
+        if (mode !== "zoom" || !pinch || e.touches.length !== 2) return;
+        e.preventDefault();
+        const [a, b] = [e.touches[0], e.touches[1]];
+        const dist1 = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        scale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, pinch.scale * (dist1 / Math.max(1, pinch.dist))));
+        applyStageTransform();
+      },
+      { passive: false },
+    );
+    viewport.addEventListener("touchend", () => {
+      pinch = null;
+    });
+  }
+
+  document.querySelectorAll("[data-mode]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!(btn instanceof HTMLElement)) return;
+      const next = btn.dataset.mode;
+      if (next === "draw" || next === "zoom" || next === "erase") setMode(next);
+    });
+  });
+
+  document.querySelectorAll("[data-stroke]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!sheet || !(btn instanceof HTMLElement)) return;
+      const dir = btn.dataset.stroke === "+" ? STROKE_STEP : -STROKE_STEP;
+      const strokeWidthMm = Math.min(STROKE_MAX, Math.max(STROKE_MIN, +(sheet.strokeWidthMm + dir).toFixed(2)));
+      commitLocal({ ...sheet, strokeWidthMm });
+    });
+  });
+
+  document.querySelector("[data-undo]")?.addEventListener("click", () => {
+    if (!sheet || undoStack.length === 0) return;
+    const entry = undoStack[undoStack.length - 1];
+    undoStack = undoStack.slice(0, -1);
+    const next = {
+      ...sheet,
+      layers: sheet.layers.map((l) => (l.id === entry.layerId ? { ...l, paths: clonePaths(entry.pathsBefore) } : l)),
+    };
+    commitLocal(next);
+    persist(next);
+  });
+
+  document.querySelector("[data-layers]")?.addEventListener("click", () => {
+    const open = layersModal instanceof HTMLElement && layersModal.hasAttribute("hidden");
+    openLayers(open);
+  });
+  document.querySelector("[data-layers-close]")?.addEventListener("click", () => openLayers(false));
+  layersModal?.addEventListener("pointerdown", (e) => {
+    if (e.target === layersModal) openLayers(false);
+  });
+
+  document.querySelector("[data-institutes]")?.addEventListener("click", () => {
+    const open = institutesModal instanceof HTMLElement && institutesModal.hasAttribute("hidden");
+    void openInstitutes(open);
+  });
+  document.querySelector("[data-institutes-close]")?.addEventListener("click", () => void openInstitutes(false));
+  institutesModal?.addEventListener("pointerdown", (e) => {
+    if (e.target === institutesModal) void openInstitutes(false);
+  });
+
+  document.querySelector("[data-fullscreen]")?.addEventListener("click", async () => {
+    try {
+      headerVisible = true;
+      document.documentElement.classList.remove("scrib-fullscreen--header-hidden");
+      await document.documentElement.requestFullscreen();
+    } catch {
+      showErrorModal({ message: "No se pudo abrir la pantalla completa." });
+    }
+  });
+  document.querySelector("[data-exit-fs]")?.addEventListener("click", async () => {
+    try {
+      await document.exitFullscreen();
+    } catch {
+      /* ignore */
+    }
+  });
+  document.querySelector("[data-toggle-header]")?.addEventListener("click", () => {
+    headerVisible = !headerVisible;
+    document.documentElement.classList.toggle("scrib-fullscreen--header-hidden", !headerVisible);
+  });
+  document.addEventListener("fullscreenchange", () => {
+    isFullscreen = document.fullscreenElement === document.documentElement;
+    setHidden(fsControls, !isFullscreen);
+    if (!isFullscreen) {
+      document.documentElement.classList.remove("scrib-fullscreen--header-hidden");
+      headerVisible = true;
+    }
+  });
+
+  document.querySelector("[data-print]")?.addEventListener("click", async () => {
+    if (!sheet || !(pageEl instanceof HTMLElement)) return;
+    openLayers(false);
+    void openInstitutes(false);
+    draftPath = "";
+    renderPage();
+    try {
+      await downloadScribSheetPdf(pageEl, sheet);
     } catch (err) {
       showErrorModal({ message: err instanceof Error ? err.message : "Print failed." });
     }
-  });
-
-  document.querySelectorAll("[data-tool]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (!(btn instanceof HTMLElement)) return;
-      tool = btn.dataset.tool === "erase" ? "erase" : "draw";
-    });
-  });
-
-  document.querySelector("[data-institutes]")?.addEventListener("click", async () => {
-    if (!(modal instanceof HTMLDialogElement)) return;
-    const pref = await getPreference<{ book?: string; chapter?: string }>(PREF_SCRIB_INSTITUTES_NAV);
-    const bookInput = root.querySelector("[data-inst-book]");
-    const chapterInput = root.querySelector("[data-inst-chapter]");
-    if (bookInput instanceof HTMLInputElement) bookInput.value = pref.value?.book || "";
-    if (chapterInput instanceof HTMLInputElement) chapterInput.value = pref.value?.chapter || "";
-    modal.showModal();
-  });
-
-  modal?.querySelector("form")?.addEventListener("close", () => {
-    if (!(modal instanceof HTMLDialogElement) || modal.returnValue !== "save") return;
-    const book = root.querySelector<HTMLInputElement>("[data-inst-book]")?.value.trim() || "";
-    const chapter = root.querySelector<HTMLInputElement>("[data-inst-chapter]")?.value.trim() || "";
-    void putPreference(PREF_SCRIB_INSTITUTES_NAV, { book, chapter });
   });
 
   const loc = resolveScribSheetFromLocation();
@@ -341,22 +774,22 @@ import Layout from "../../layouts/Layout.astro";
   if (!loc || !gateResult.sessionOk || !gateResult.access.allowed) {
     if (banner instanceof HTMLElement) banner.textContent = !loc ? "Missing sheet query." : "Access required.";
     setHidden(gate, false);
-    setHidden(workspace, true);
+    setHidden(viewport, true);
   } else {
     const loaded = await fetchScribSheet(loc.bookId, loc.sheetId);
     if (!loaded.sheet) {
       apiFail(loaded.error || "Sheet not found.", { requestId: loaded.requestId });
       setHidden(gate, false);
-      setHidden(workspace, true);
+      setHidden(viewport, true);
     } else {
       sheet = ensureLayers(loaded.sheet);
-      if (titleEl) titleEl.textContent = sheet.name;
-      if (banner instanceof HTMLElement) banner.textContent = "Stylus draw · auto-save";
-      if (strokeInput instanceof HTMLInputElement) strokeInput.value = String(sheet.strokeWidthMm || 0.35);
+      if (banner instanceof HTMLElement) banner.textContent = "";
       setHidden(gate, true);
-      setHidden(workspace, false);
-      fillLayerSelect();
-      renderSvgs();
+      setHidden(viewport, false);
+      setMode("draw");
+      renderPage();
+      fitSheet();
+      if (mustLog) console.log("[scrib] sheet ready", { id: sheet.id, paths: sheet.layers.reduce((n, l) => n + l.paths.length, 0) });
     }
   }
 </script>

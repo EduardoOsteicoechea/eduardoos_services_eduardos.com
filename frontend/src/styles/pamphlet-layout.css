@@ -1,0 +1,340 @@
+/**
+ * PamphletLayout — full-bleed editor workspace under the site header.
+ * Centers the letter sheet; restores fixed chrome broken by .pamphlet-app * { position: relative }.
+ */
+
+html:has(body.page-pamphlet) {
+  /* Chrome/Safari pull-to-refresh listens on the root scroller */
+  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+}
+
+body.page-pamphlet {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  /* Kill browser pull-to-refresh / overscroll reload at top of page */
+  overscroll-behavior-y: none;
+  overscroll-behavior: none;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keep site header/avatar above teleported pamphlet chrome. */
+body.page-pamphlet .app-header {
+  z-index: 300;
+}
+
+body.page-pamphlet .app-header__bar {
+  z-index: 301;
+}
+
+/* Full-bleed workspace, reserved for top bar (mobile) or 60px left rail (desktop). */
+.pamphlet-layout-workspace {
+  box-sizing: border-box;
+  width: calc(100% - var(--rail-width));
+  min-height: calc(100% - var(--mobile-header-height));
+  margin-top: 0;
+  margin-left: var(--rail-width);
+  padding: 1rem 0 2rem;
+  padding-top: calc(1rem + var(--mobile-header-height));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pamphlet-route-root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  color: var(--color-text);
+}
+
+.pamphlet-route-root .pamphlet-app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 0;
+}
+
+/*
+ * Pamphlet tools live inside Header chrome (rail / mobile center slot).
+ * No extra top offset for a second toolbar; no bottom Activity Bar.
+ */
+body.page-pamphlet .pamphlet-layout-workspace {
+  padding-top: calc(1rem + var(--mobile-header-height));
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+}
+
+body.page-pamphlet .item-type-options button {
+  background: color-mix(in srgb, var(--color-text) 12%, var(--color-bg));
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  padding: var(--space-padding);
+}
+
+body.page-pamphlet .item-type-options button:hover {
+  background: color-mix(in srgb, var(--color-text) 22%, var(--color-bg));
+}
+
+.pamphlet-header-menu-tray__labels {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+.series-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: 17.5rem;
+  overflow: auto;
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 0.65rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: color-mix(in srgb, var(--color-text) 4%, var(--color-bg));
+}
+
+.series-tree__series-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.series-tree__chapter-title {
+  margin: 0.35rem 0 0.25rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: none;
+}
+
+.series-tree__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.series-tree__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.55rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+
+.series-tree__item:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-bg));
+}
+
+.series-tree__item.is-current {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg));
+  font-weight: 600;
+}
+
+body.page-pamphlet .create-modal.series-modal,
+body.page-pamphlet .create-modal.footer-modal,
+body.page-pamphlet .create-modal.open-cloud-modal {
+  width: min(520px, calc(100vw - 32px));
+}
+
+body.page-pamphlet .create-modal {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(420px, calc(100vw - 32px));
+  max-height: min(90vh, calc(100dvh - 32px));
+  padding: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+body.page-pamphlet .pamphlet-app .create-modal .create-modal-form {
+  padding: 24px;
+}
+
+body.page-pamphlet .pamphlet-app .create-modal.item-type-modal .create-modal-form {
+  padding: 28px;
+}
+
+body.page-pamphlet .create-modal-hint {
+  color: var(--color-muted);
+}
+
+body.page-pamphlet .open-cloud-list__card,
+body.page-pamphlet .open-cloud-list__item {
+  background: color-mix(in srgb, var(--color-text) 8%, var(--color-bg));
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+body.page-pamphlet .open-cloud-list__card:hover,
+body.page-pamphlet .open-cloud-list__item:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-bg));
+}
+
+body.page-pamphlet .open-cloud-list__action {
+  color: var(--color-muted);
+}
+
+body.page-pamphlet .create-modal-form input {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+body.page-pamphlet #modal-cancel,
+body.page-pamphlet #item-type-cancel {
+  background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
+  color: var(--color-text);
+}
+
+body.page-pamphlet #modal-confirm {
+  background: var(--color-accent);
+  color: var(--site-accent-fg);
+}
+
+/* Sheet paper follows site theme on screen; print / PDF stay white via token overrides. */
+body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background: var(--pamphlet-paper-bg, var(--color-bg));
+  color: var(--pamphlet-ink, var(--color-text));
+  flex-shrink: 0;
+}
+
+/* Desktop columns + body ink (layout override must not leave inherited #000). */
+body.page-pamphlet .pamphlet-app[data-view-mode="desktop"] .dumb-column[class*="pamphlet-column-"],
+body.page-pamphlet .pamphlet-app[data-view-mode="desktop"] .dumb-column .pamphlet-item,
+body.page-pamphlet .pamphlet-app[data-view-mode="desktop"] .dumb-column .pamphlet-item p,
+body.page-pamphlet .pamphlet-app[data-view-mode="desktop"] .dumb-column .pamphlet-item h1 {
+  color: var(--pamphlet-ink, var(--color-text));
+}
+
+body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] main.pamphlet-sheet {
+  background: transparent !important;
+  color: var(--pamphlet-ink, var(--color-text));
+  /* Center the mm-width column stack in the viewport */
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/*
+ * Phones/tablets: CSS `mm` is tied to the 96dpi reference pixel, so true physical mm look smaller.
+ * Boost only the on-screen transform (print/desktop unchanged). Height_mm math stays identical.
+ * Phone boost is the baseline; tablet is 1.75× that visual size.
+ */
+@media (max-width: 1024px) {
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] {
+    --mm-visual-boost: calc(1.35 * 1.75);
+  }
+}
+
+@media (max-width: 640px) {
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] {
+    --mm-visual-boost: 1.35;
+  }
+}
+
+/* Mobile stack: screen theme tokens (print stays paper white). */
+body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
+body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
+body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
+  background: var(--pamphlet-paper-bg, var(--color-bg));
+  color: var(--pamphlet-ink, var(--color-text));
+  border: 1px solid color-mix(in srgb, var(--color-text) 28%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
+    background: transparent;
+    color: var(--pamphlet-ink, var(--color-text));
+    border-color: color-mix(in srgb, var(--color-text) 35%, transparent);
+  }
+
+  body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-image-frame {
+    background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  }
+}
+
+html.dark body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
+html.dark body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
+html.dark body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"],
+html[data-theme="dark"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
+html[data-theme="dark"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
+html[data-theme="dark"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
+  background: transparent;
+  color: var(--pamphlet-ink, var(--color-text));
+  border-color: color-mix(in srgb, var(--color-text) 35%, transparent);
+}
+
+html[data-theme="light"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
+html[data-theme="light"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
+html[data-theme="light"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
+  background: var(--pamphlet-paper-bg, var(--color-bg));
+  color: var(--pamphlet-ink, var(--color-text));
+}
+
+@media print {
+  .app-header {
+    display: none !important;
+  }
+
+  html,
+  body.page-pamphlet,
+  .pamphlet-layout-workspace,
+  .pamphlet-route-root,
+  .pamphlet-app {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .pamphlet-layout-workspace {
+    margin-top: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  body.page-pamphlet .header-dynamic-menu-host,
+  body.page-pamphlet .header-dynamic-menu,
+  body.page-pamphlet .pamphlet-header-menu {
+    display: none !important;
+  }
+}

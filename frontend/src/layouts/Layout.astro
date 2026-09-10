@@ -3,6 +3,11 @@ import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "../styles/ereport-chrome.css";
 import "../styles/product-suite.css";
+import "../styles/scrib.css";
+import "../styles/pamphlet-layout.css";
+import "../styles/pamphlet-hub.css";
+import "../styles/evoice.css";
+import "../components/HeaderDynamicMenu/HeaderDynamicMenu.css";
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[] | string;
 
@@ -276,6 +281,7 @@ const jsonLdString =
       </aside>
 
       <aside id="dynamic-header" class="sidebar-right" hidden>
+        <div id="header-dynamic-menu-host" class="header-dynamic-menu-host" data-hds-host></div>
         {hasDhsSlot ? (
           <slot name="dhs" />
         ) : (
@@ -354,6 +360,7 @@ const jsonLdString =
       startErrorModal();
       startChrome();
       startProfileActions();
+      window.dispatchEvent(new Event("eduardoos:hds-host-ready"));
     </script>
   </body>
 </html>

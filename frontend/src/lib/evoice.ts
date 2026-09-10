@@ -151,35 +151,100 @@ export async function createEvoiceShare(
   ownerSafe: string,
   project: string,
   files: string[],
-): Promise<{ token?: string; url?: string; error?: string; requestId?: string }> {
-  const { status, data, requestId } = await apiRequest<{ token?: string; url?: string }>(
+  email?: string,
+): Promise<{ token?: string; url?: string; link?: string; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await apiRequest<{
+    token?: string;
+    url?: string;
+    link?: string;
+    invite?: { token?: string };
+  }>(
     `/evoice/projects/${encodeURIComponent(ownerSafe)}/${encodeURIComponent(project)}/shares`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ files }),
+      body: JSON.stringify({ files, email: email || undefined }),
     },
   );
   if (status < 200 || status >= 300) {
     return { error: data.message || "Could not create share.", requestId };
   }
-  return { token: data.token, url: data.url, requestId };
+  const token = data.token || data.invite?.token;
+  const link = data.link || data.url;
+  return { token, url: link, link, requestId };
 }
 
+export type EvoiceShareInvite = {
+  token?: string;
+  email?: string;
+  ownerSafe?: string;
+  project?: string;
+  files?: string[] | EvoiceObjectMeta[];
+  expiresAt?: string;
+  createdAt?: string;
+};
+
 export async function fetchEvoiceInvite(token: string): Promise<{
+  valid?: boolean;
+  expired?: boolean;
+  invite?: EvoiceShareInvite;
   project?: string;
   files?: EvoiceObjectMeta[];
   error?: string;
   requestId?: string;
 }> {
   const { status, data, requestId } = await apiRequest<{
+    valid?: boolean;
+    expired?: boolean;
+    invite?: EvoiceShareInvite;
     project?: string;
     files?: EvoiceObjectMeta[];
   }>(`/evoice/invite/${encodeURIComponent(token)}`);
   if (status < 200 || status >= 300) {
     return { error: data.message || "Invite not found.", requestId };
   }
-  return { project: data.project, files: data.files ?? [], requestId };
+  const filesRaw = data.invite?.files ?? data.files ?? [];
+  const files: EvoiceObjectMeta[] = (filesRaw as Array<string | EvoiceObjectMeta>).map((f) =>
+    typeof f === "string" ? { name: f, key: f, size: 0 } : f,
+  );
+  return {
+    valid: data.valid,
+    expired: data.expired,
+    invite: data.invite,
+    project: data.invite?.project ?? data.project,
+    files,
+    requestId,
+  };
+}
+
+export async function acceptEvoicePlaylistInvite(
+  token: string,
+  project: string,
+): Promise<{
+  project?: string;
+  imported?: string[];
+  renamed?: Record<string, string>;
+  error?: string;
+  requestId?: string;
+}> {
+  const { status, data, requestId } = await apiRequest<{
+    project?: string;
+    imported?: string[];
+    renamed?: Record<string, string>;
+  }>(`/evoice/invite/${encodeURIComponent(token)}/accept`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ project }),
+  });
+  if (status < 200 || status >= 300) {
+    return { error: data.message || "Could not import playlist.", requestId };
+  }
+  return {
+    project: data.project,
+    imported: data.imported ?? [],
+    renamed: data.renamed ?? {},
+    requestId,
+  };
 }
 
 export function evoiceFileUrl(

@@ -18,7 +18,7 @@ import Layout from "../../layouts/Layout.astro";
     </button>
   </Fragment>
 
-  <section class="product-dash" data-evoice>
+  <section class="evoice" data-evoice>
     <h1>eVoice</h1>
     <p class="status" data-banner>Loading…</p>
     <div data-gate hidden class="product-gate">
@@ -26,23 +26,80 @@ import Layout from "../../layouts/Layout.astro";
       <p class="hint"><a href="/payments/subscription" data-route>Subscribe</a></p>
     </div>
     <div data-authed hidden>
-      <form class="product-form" data-create>
-        <label>New project <input name="name" required maxlength="64" /></label>
-        <button class="btn btn--primary" type="submit">Create project</button>
-      </form>
-      <label>Project
-        <select data-project></select>
-      </label>
-      <form class="product-form" data-upload>
-        <label>Upload document <input name="file" type="file" accept=".txt,.md,.docx,.pdf,text/plain" required /></label>
-        <button class="btn" type="submit">Upload</button>
-      </form>
-      <h2 class="product-dash__section-title">Docs</h2>
-      <ul class="product-list" data-docs></ul>
-      <h2 class="product-dash__section-title">Audios</h2>
-      <ul class="product-list evoice-playlist" data-audios></ul>
-      <p class="hint" data-job hidden></p>
-      <p class="hint" data-share-url hidden></p>
+      <div class="evoice__toolbar">
+        <form class="evoice__create" data-create>
+          <label class="evoice__field evoice__field--twin">
+            New project
+            <input class="evoice__input" name="name" required maxlength="64" />
+          </label>
+          <button class="btn btn--primary" type="submit">Create</button>
+        </form>
+        <label class="evoice__field evoice__field--twin">
+          Project
+          <select class="evoice__select" data-project></select>
+        </label>
+      </div>
+
+      <div class="evoice__sections">
+        <section class="evoice__section" data-section="upload">
+          <div class="evoice__section-head-row">
+            <button type="button" class="evoice__section-head" data-section-toggle aria-expanded="true">
+              <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
+              <h2>Upload</h2>
+            </button>
+          </div>
+          <div class="evoice__section-body">
+            <form class="product-form" data-upload>
+              <label class="evoice__field">Upload document
+                <input class="evoice__input" name="file" type="file" accept=".txt,.md,.docx,.pdf,text/plain,image/*" required />
+              </label>
+              <button class="btn" type="submit">Upload</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="evoice__section" data-section="docs">
+          <div class="evoice__section-head-row">
+            <button type="button" class="evoice__section-head" data-section-toggle aria-expanded="true">
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              <h2>Documents</h2>
+            </button>
+          </div>
+          <div class="evoice__section-body">
+            <div class="evoice__section-clip">
+              <ul class="product-list" data-docs></ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="evoice__section" data-section="playlists">
+          <div class="evoice__section-head-row">
+            <button type="button" class="evoice__section-head" data-section-toggle aria-expanded="true">
+              <span class="material-symbols-outlined" aria-hidden="true">library_music</span>
+              <h2>Playlists</h2>
+            </button>
+          </div>
+          <div class="evoice__section-body">
+            <div class="evoice__section-clip evoice__section-clip--expanded">
+              <ul class="product-list evoice-playlist" data-audios></ul>
+            </div>
+            <p class="hint" data-job hidden></p>
+            <p class="hint" data-share-url hidden></p>
+            <dialog data-share-modal class="evoice-share-modal">
+              <form method="dialog" class="product-form">
+                <h2>Share playlist</h2>
+                <label class="evoice__field">Invitee email
+                  <input class="evoice__input" name="email" type="email" data-share-email required />
+                </label>
+                <div class="subscription-page__period">
+                  <button class="btn btn--primary" value="share">Create link</button>
+                  <button class="btn" value="cancel">Cancel</button>
+                </div>
+              </form>
+            </dialog>
+          </div>
+        </section>
+      </div>
     </div>
   </section>
 </Layout>
@@ -72,8 +129,18 @@ import Layout from "../../layouts/Layout.astro";
   const audiosEl = root?.querySelector("[data-audios]");
   const jobEl = root?.querySelector("[data-job]");
   const shareEl = root?.querySelector("[data-share-url]");
+  const shareModal = root?.querySelector("[data-share-modal]");
 
   let ownerSafe = "";
+
+  root?.querySelectorAll("[data-section-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const section = btn.closest(".evoice__section");
+      if (!(section instanceof HTMLElement) || !(btn instanceof HTMLElement)) return;
+      const closed = section.classList.toggle("evoice__section--closed");
+      btn.setAttribute("aria-expanded", closed ? "false" : "true");
+    });
+  });
 
   async function reloadProjects() {
     const me = await fetchEvoiceMe();
@@ -88,6 +155,7 @@ import Layout from "../../layouts/Layout.astro";
       return;
     }
     if (!(projectSelect instanceof HTMLSelectElement)) return;
+    const previous = projectSelect.value;
     projectSelect.replaceChildren();
     for (const name of projects.projects) {
       const opt = document.createElement("option");
@@ -95,6 +163,9 @@ import Layout from "../../layouts/Layout.astro";
       opt.textContent = name;
       projectSelect.appendChild(opt);
     }
+    const fromUrl = new URLSearchParams(location.search).get("project");
+    if (fromUrl && projects.projects.includes(fromUrl)) projectSelect.value = fromUrl;
+    else if (previous && projects.projects.includes(previous)) projectSelect.value = previous;
     if (projectSelect.value) await reloadProject();
   }
 
@@ -188,16 +259,24 @@ import Layout from "../../layouts/Layout.astro";
     if (mustLog) console.log("[evoice] job", started.job.id);
     void pollJob(started.job.id);
   });
-  document.querySelector("[data-share]")?.addEventListener("click", async () => {
+  document.querySelector("[data-share]")?.addEventListener("click", () => {
+    if (shareModal instanceof HTMLDialogElement) shareModal.showModal();
+  });
+  shareModal?.querySelector("form")?.addEventListener("close", async () => {
+    if (!(shareModal instanceof HTMLDialogElement) || shareModal.returnValue !== "share") return;
     if (!(projectSelect instanceof HTMLSelectElement) || !projectSelect.value) return;
+    const email = root?.querySelector<HTMLInputElement>("[data-share-email]")?.value.trim() || "";
     const audios = await fetchEvoiceAudios(ownerSafe, projectSelect.value);
     const names = audios.audios.map((a) => a.name);
-    const share = await createEvoiceShare(ownerSafe, projectSelect.value, names);
+    const share = await createEvoiceShare(ownerSafe, projectSelect.value, names, email || undefined);
     if (share.error) {
       apiFail(share.error, { requestId: share.requestId });
       return;
     }
-    const url = share.url || (share.token ? `${location.origin}/evoice/invite?token=${encodeURIComponent(share.token)}` : "");
+    const url =
+      share.link ||
+      share.url ||
+      (share.token ? `${location.origin}/evoice/invite?token=${encodeURIComponent(share.token)}` : "");
     if (shareEl instanceof HTMLElement) {
       shareEl.hidden = false;
       shareEl.textContent = url ? `Share: ${url}` : "Share created.";

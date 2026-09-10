@@ -15,11 +15,11 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Dashboard
     </button>
-    <button class="dhs-action" type="button" data-view="new" title="New" aria-label="New">
+    <button class="dhs-action" type="button" data-view="recent" title="Recent" aria-label="Recent">
       <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+        <span class="material-symbols-outlined" aria-hidden="true">history</span>
       </span>
-      New
+      Recent
     </button>
     <button class="dhs-action" type="button" data-view="open" title="Open" aria-label="Open">
       <span class="icon-btn" aria-hidden="true">
@@ -27,38 +27,75 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Open
     </button>
+    <button class="dhs-action" type="button" data-view="new" title="New" aria-label="New">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+      </span>
+      New
+    </button>
+    <button class="dhs-action" type="button" data-view="manage" title="Manage" aria-label="Manage">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+      </span>
+      Manage
+    </button>
+    <button class="dhs-action" type="button" data-view="footers" title="Footers" aria-label="Footers">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+      </span>
+      Footers
+    </button>
   </Fragment>
 
-  <section class="product-dash" data-pamphlet>
-    <h1>Pamphlet</h1>
+  <div class="pamphlet-hub" data-pamphlet>
     <p class="status" data-banner>Loading…</p>
     <div data-gate hidden class="product-gate">
       <p class="hint">Pamphlet subscription required.</p>
       <p class="hint"><a href="/payments/subscription" data-route>Subscribe</a></p>
     </div>
-    <div data-dash hidden>
+    <div data-dash hidden class="product-dash">
+      <h1>Pamphlet</h1>
       <div class="product-dash__grid">
-        <button class="product-dash__card" type="button" data-view="new">
-          <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
-          <span class="product-dash__card-title">New</span>
-          <span class="product-dash__card-desc">Create a pamphlet</span>
+        <button class="product-dash__card" type="button" data-view="recent">
+          <span class="material-symbols-outlined" aria-hidden="true">history</span>
+          <span class="product-dash__card-title">Recent</span>
+          <span class="product-dash__card-desc">Continue recent pamphlets.</span>
         </button>
         <button class="product-dash__card" type="button" data-view="open">
           <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
           <span class="product-dash__card-title">Open</span>
-          <span class="product-dash__card-desc">Open from cloud</span>
+          <span class="product-dash__card-desc">Open a cloud pamphlet.</span>
         </button>
-        <button class="product-dash__card" type="button" data-view="recent">
-          <span class="material-symbols-outlined" aria-hidden="true">history</span>
-          <span class="product-dash__card-title">Recent</span>
-          <span class="product-dash__card-desc">Continue last document</span>
+        <button class="product-dash__card" type="button" data-view="new">
+          <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+          <span class="product-dash__card-title">New</span>
+          <span class="product-dash__card-desc">Create a new pamphlet.</span>
+        </button>
+        <button class="product-dash__card" type="button" data-view="manage">
+          <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+          <span class="product-dash__card-title">Manage</span>
+          <span class="product-dash__card-desc">Manage cloud documents.</span>
+        </button>
+        <button class="product-dash__card" type="button" data-view="footers">
+          <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+          <span class="product-dash__card-title">Footers</span>
+          <span class="product-dash__card-desc">Footer profiles.</span>
         </button>
       </div>
       <h2 class="product-dash__section-title">Cloud documents</h2>
       <ul class="product-list" data-list></ul>
     </div>
-    <div class="pamphlet-host" data-editor hidden></div>
-  </section>
+    <div class="pamphlet-hub__hint-bar" data-editor-hint hidden>
+      <span data-view-label>View</span>
+      <button type="button" class="btn" data-view="dashboard">Dashboard</button>
+    </div>
+    <div
+      id="pamphlet-root"
+      class="pamphlet-route-root pamphlet-layout-workspace pamphlet-host"
+      data-editor
+      hidden
+    ></div>
+  </div>
 </Layout>
 
 <script>
@@ -70,14 +107,30 @@ import Layout from "../../layouts/Layout.astro";
   import { PREF_PAMPHLET_LAST_EPAM, getPreference } from "../../lib/preferences";
   import { apiFail, requireService, setHidden } from "../../lib/productGate";
 
+  const EDITOR_VIEWS = new Set(["recent", "open", "new", "manage", "footers"]);
   const root = document.querySelector("[data-pamphlet]");
   if (!(root instanceof HTMLElement)) throw new Error("pamphlet root missing");
   const banner = root.querySelector("[data-banner]");
   const gate = root.querySelector("[data-gate]");
   const dash = root.querySelector("[data-dash]");
   const editor = root.querySelector("[data-editor]");
+  const editorHint = root.querySelector("[data-editor-hint]");
+  const viewLabel = root.querySelector("[data-view-label]");
   const list = root.querySelector("[data-list]");
   let handle: { destroy: () => void } | null = null;
+
+  function readView(): string {
+    const q = new URLSearchParams(window.location.search).get("view");
+    if (q && (q === "dashboard" || EDITOR_VIEWS.has(q))) return q;
+    return "dashboard";
+  }
+
+  function writeView(view: string) {
+    const url = new URL(window.location.href);
+    if (view === "dashboard") url.searchParams.delete("view");
+    else url.searchParams.set("view", view);
+    window.history.replaceState({}, "", url.toString());
+  }
 
   function destroyEditor() {
     handle?.destroy();
@@ -89,18 +142,46 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     setHidden(dash, true);
     setHidden(editor, false);
+    setHidden(editorHint, false);
+    if (viewLabel instanceof HTMLElement) viewLabel.textContent = `View: ${view}`;
+    root.classList.add("pamphlet-hub--editor");
     if (!(editor instanceof HTMLElement)) return;
     editor.dataset.pamphletView = view;
+    (window as Window & { __eduardoosPamphletView?: string }).__eduardoosPamphletView = view;
     document.documentElement.classList.add("layout-editor-bleed", "page-pamphlet");
+    document.body.classList.add("page-pamphlet");
     handle = mountPamphletGenerator(editor);
+    window.dispatchEvent(new Event("eduardoos:hds-host-ready"));
     if (mustLog) console.log("[pamphlet] editor mounted", { view });
   }
 
   function showDash() {
     destroyEditor();
     document.documentElement.classList.remove("layout-editor-bleed", "page-pamphlet");
+    document.body.classList.remove("page-pamphlet");
+    root.classList.remove("pamphlet-hub--editor");
     setHidden(editor, true);
+    setHidden(editorHint, true);
     setHidden(dash, false);
+  }
+
+  async function applyView(view: string) {
+    writeView(view);
+    if (view === "dashboard") {
+      showDash();
+      await refreshList();
+      return;
+    }
+    if (view === "recent") {
+      const pref = await getPreference<string>(PREF_PAMPHLET_LAST_EPAM);
+      if (!pref.value) {
+        showErrorModal({ message: "No recent pamphlet saved yet." });
+        writeView("dashboard");
+        showDash();
+        return;
+      }
+    }
+    showEditor(view);
   }
 
   async function refreshList() {
@@ -120,7 +201,7 @@ import Layout from "../../layouts/Layout.astro";
         open.type = "button";
         open.className = "btn btn--primary";
         open.textContent = epam.title || epam.epamId;
-        open.addEventListener("click", () => showEditor("open"));
+        open.addEventListener("click", () => void applyView("open"));
         li.appendChild(open);
         list.appendChild(li);
       }
@@ -130,35 +211,30 @@ import Layout from "../../layouts/Layout.astro";
   }
 
   root.querySelectorAll("[data-view]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
+    btn.addEventListener("click", () => {
       if (!(btn instanceof HTMLElement)) return;
-      const view = btn.dataset.view || "dashboard";
-      if (view === "dashboard") {
-        showDash();
-        await refreshList();
-        return;
-      }
-      if (view === "recent") {
-        const pref = await getPreference<string>(PREF_PAMPHLET_LAST_EPAM);
-        if (!pref.value) {
-          showErrorModal({ message: "No recent pamphlet saved yet." });
-          return;
-        }
-      }
-      showEditor(view);
+      void applyView(btn.dataset.view || "dashboard");
+    });
+  });
+  document.querySelectorAll("[data-view]").forEach((btn) => {
+    if (root.contains(btn)) return;
+    btn.addEventListener("click", () => {
+      if (!(btn instanceof HTMLElement)) return;
+      void applyView(btn.dataset.view || "dashboard");
     });
   });
 
   await refreshAuthSession();
   const gateResult = await requireService("pamphlet");
   if (!gateResult.sessionOk || !gateResult.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+    if (banner instanceof HTMLElement) {
+      banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+    }
     setHidden(gate, false);
     setHidden(dash, true);
   } else {
-    if (banner instanceof HTMLElement) banner.textContent = "Pamphlet hub";
+    if (banner instanceof HTMLElement) banner.textContent = "";
     setHidden(gate, true);
-    showDash();
-    await refreshList();
+    await applyView(readView());
   }
 </script>
