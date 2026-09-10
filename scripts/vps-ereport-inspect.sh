@@ -1,100 +1,84 @@
 #!/usr/bin/env bash
 # Inspect ereport FS consistency for an owner on the VPS (deploy user).
-# Args: ownerUserId [orgId] [reportId...]
-set -euo pipefail
+# Args: ownerUserId
+set -uo pipefail
 
 OWNER="${1:?ownerUserId}"
 ROOT="${EREPORT_ROOT:-/var/www/eduardoos.com/media/ereport}"
 
 echo "=== root=$ROOT owner=$OWNER ==="
-if [[ ! -d "$ROOT" ]]; then
-  echo "missing root" >&2
-  exit 1
-fi
+ls -la "$ROOT" | head -n 40 || true
 
-echo "--- owner pins ---"
-if [[ -f "$ROOT/.owners/${OWNER}.json" ]]; then
-  cat "$ROOT/.owners/${OWNER}.json"
-  echo
-else
-  echo "(no pin file)"
-fi
+PIN="$ROOT/.owners/${OWNER}.json"
+echo "--- pin $PIN ---"
+if [[ -f "$PIN" ]]; then cat "$PIN"; echo; else echo "(no pin)"; fi
 
-echo "--- top-level under root (names only) ---"
-ls -1 "$ROOT" | head -n 50
-
-# Resolve owner dir candidates
-CANDIDATES=()
-if [[ -d "$ROOT/$OWNER" ]]; then
-  CANDIDATES+=("$ROOT/$OWNER")
-fi
-# pin-based
-if [[ -f "$ROOT/.owners/${OWNER}.json" ]]; then
-  mapfile -t SEGS < <(python3 - "$ROOT/.owners/${OWNER}.json" <<'PY'
-import json,sys
-pin=json.load(open(sys.argv[1]))
-print("\n".join(pin.get("segments") or []))
+OWNER_DIR=""
+if [[ -f "$PIN" ]]; then
+  OWNER_DIR="$(python3 - "$PIN" "$ROOT" <<'PY'
+import json, os, sys
+pin = json.load(open(sys.argv[1]))
+root = sys.argv[2]
+segs = pin.get("segments") or []
+print(os.path.join(root, *segs) if segs else "")
 PY
-)
-  if [[ ${#SEGS[@]} -ge 1 ]]; then
-    JOIN="$ROOT"
-    for s in "${SEGS[@]}"; do JOIN="$JOIN/$s"; done
-    CANDIDATES+=("$JOIN")
+)"
+fi
+echo "--- resolved owner dir: ${OWNER_DIR:-NONE} ---"
+if [[ -n "$OWNER_DIR" && -d "$OWNER_DIR" ]]; then
+  ls -la "$OWNER_DIR" | head -n 40 || true
+  if [[ -f "$OWNER_DIR/orgs.json" ]]; then
+    echo "-- orgs.json --"
+    python3 -m json.tool "$OWNER_DIR/orgs.json" | head -n 80
+  fi
+  if [[ -d "$OWNER_DIR/orgs" ]]; then
+    echo "-- per-org libraries / report files --"
+    python3 - "$OWNER_DIR" "$OWNER" <<'PY'
+import json, os, sys
+od, owner = sys.argv[1], sys.argv[2]
+orgs = os.path.join(od, "orgs")
+for org in sorted(os.listdir(orgs)):
+    org_path = os.path.join(orgs, org)
+    if not os.path.isdir(org_path):
+        continue
+    lib_path = os.path.join(org_path, "library.json")
+    print(f"\nORG {org}")
+    reports = []
+    if os.path.isfile(lib_path):
+        lib = json.load(open(lib_path))
+        reports = lib.get("reports") or []
+        print(f"  library entries={len(reports)}")
+    else:
+        print("  (no library.json)")
+    reports_dir = os.path.join(org_path, "reports")
+    disk_ids = set()
+    if os.path.isdir(reports_dir):
+        disk_ids = {n for n in os.listdir(reports_dir) if os.path.isdir(os.path.join(reports_dir, n))}
+        print(f"  report dirs on disk={len(disk_ids)}")
+    lib_ids = {r.get("id") for r in reports if r.get("id")}
+    for rid in sorted(lib_ids | disk_ids):
+        rdir = os.path.join(reports_dir, rid)
+        meta_p = os.path.join(rdir, "meta.json")
+        erep_p = os.path.join(rdir, "report.ereport")
+        json_p = os.path.join(rdir, "report.json")
+        in_lib = rid in lib_ids
+        tema = next((r.get("tema") for r in reports if r.get("id")==rid), "")
+        print(f"  report={rid} tema={tema!r} in_library={in_lib} dir={os.path.isdir(rdir)} meta={os.path.isfile(meta_p)} ereport={os.path.isfile(erep_p)} report.json={os.path.isfile(json_p)}")
+        if os.path.isfile(meta_p):
+            m = json.load(open(meta_p))
+            print(f"    meta.id={m.get('id')} orgId={m.get('orgId')} ownerUserId={m.get('ownerUserId')} match_owner={m.get('ownerUserId')==owner} match_org={m.get('orgId')==org}")
+PY
   fi
 fi
-# email-ish dirs
-while IFS= read -r d; do
-  CANDIDATES+=("$d")
-done < <(find "$ROOT" -maxdepth 2 -type d -name '*eduardooost*' 2>/dev/null || true)
 
-# uniq
-mapfile -t CANDIDATES < <(printf '%s\n' "${CANDIDATES[@]}" | awk 'NF' | sort -u)
-
-for OD in "${CANDIDATES[@]}"; do
-  echo "=== candidate owner dir: $OD ==="
-  if [[ ! -d "$OD" ]]; then
-    echo "(missing)"
-    continue
-  fi
-  echo "-- orgs.json --"
-  if [[ -f "$OD/orgs.json" ]]; then
-    python3 - "$OD/orgs.json" <<'PY'
-import json,sys
-idx=json.load(open(sys.argv[1]))
-for o in idx.get("orgs") or []:
-    print(f"{o.get('id')}\t{o.get('name')}\thidden={o.get('hidden')}")
-PY
-  else
-    echo "(no orgs.json)"
-  fi
-  echo "-- orgs/*/library.json reports --"
-  find "$OD/orgs" -mindepth 2 -maxdepth 2 -name library.json 2>/dev/null | while read -r lib; do
-    org="$(basename "$(dirname "$lib")")"
-    echo "org=$org library=$lib"
-    python3 - "$lib" "$OD" "$org" <<'PY'
-import json,os,sys
-lib=json.load(open(sys.argv[1]))
-od, org = sys.argv[2], sys.argv[3]
-for r in lib.get("reports") or []:
-    rid=r.get("id")
-    rdir=os.path.join(od,"orgs",org,"reports",rid or "")
-    meta=os.path.join(rdir,"meta.json")
-    payload=os.path.join(rdir,"report.ereport")
-    legacy=os.path.join(rdir,"report.json")
-    print(f"  report={rid} tema={r.get('tema')}")
-    print(f"    dir_exists={os.path.isdir(rdir)} meta={os.path.isfile(meta)} ereport={os.path.isfile(payload)} report.json={os.path.isfile(legacy)}")
-    if os.path.isfile(meta):
-        m=json.load(open(meta))
-        print(f"    meta.id={m.get('id')} meta.orgId={m.get('orgId')} meta.ownerUserId={m.get('ownerUserId')}")
-PY
-  done
+echo "--- search specific report ids anywhere under root ---"
+for RID in \
+  89853904ec25e6b790b2254d92e87ff9 \
+  4c1b30e7-c20f-41e2-92a0-51c3236191e0 \
+  6d1b577e91ac373bf7f58a2d712f7f3a
+do
+  echo "RID=$RID"
+  find "$ROOT" -type d -name "$RID" 2>/dev/null | head -n 20 || true
 done
 
-# Specific ids if provided
-shift || true
-ORG_FILTER="${1:-}"
-if [[ -n "${ORG_FILTER:-}" ]]; then shift || true; fi
-for RID in "$@"; do
-  echo "=== find reportId=$RID ==="
-  find "$ROOT" -type d -name "$RID" 2>/dev/null | head -n 20
-done
+echo "=== done ==="

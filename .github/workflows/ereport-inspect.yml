@@ -59,8 +59,4 @@ jobs:
           REMOTE_DIR="/tmp/ereport-inspect-${GITHUB_RUN_ID}"
           ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${REMOTE_DIR}'"
           rsync -az -e "${RSH}" scripts/vps-ereport-inspect.sh "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/vps-ereport-inspect.sh"
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${REMOTE_DIR}/vps-ereport-inspect.sh' && '${REMOTE_DIR}/vps-ereport-inspect.sh' '${OWNER}' '' \
-            '89853904ec25e6b790b2254d92e87ff9' \
-            '4c1b30e7-c20f-41e2-92a0-51c3236191e0' \
-            '6d1b577e91ac373bf7f58a2d712f7f3a' \
-            && rm -rf '${REMOTE_DIR}'"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${REMOTE_DIR}/vps-ereport-inspect.sh' && '${REMOTE_DIR}/vps-ereport-inspect.sh' '${OWNER}' ; ec=\$?; rm -rf '${REMOTE_DIR}'; exit \$ec"
