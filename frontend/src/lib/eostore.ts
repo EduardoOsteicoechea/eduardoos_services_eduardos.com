@@ -168,3 +168,16 @@ export async function uploadProductImage(guid: string, file: File) {
 export async function deleteProductImage(guid: string, imageId: string) {
   return deleteJSON<EostoreProductResponse>(`/eostore/products/${guid}/images/${imageId}`);
 }
+
+export type EostoreDescribeResponse = EostoreProductResponse & {
+  description?: string;
+  word_count?: number;
+  image_id?: string;
+};
+
+export async function describeProduct(guid: string, wordCount: number, imageId = "") {
+  if (mustLog) console.log("eostore.product.describe.start", { guid, wordCount, imageId });
+  const body: Record<string, unknown> = { word_count: wordCount };
+  if (imageId) body.image_id = imageId;
+  return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body);
+}

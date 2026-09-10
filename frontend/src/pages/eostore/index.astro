@@ -166,6 +166,7 @@ import Layout from "../../layouts/Layout.astro";
     deleteProductImage,
     deleteSection,
     deleteType,
+    describeProduct,
     formatMoney,
     listCompanies,
     listProducts,
@@ -388,6 +389,9 @@ import Layout from "../../layouts/Layout.astro";
         const tags = document.createElement("p");
         tags.className = "eostore-hint";
         tags.textContent = (p.hashtags || []).map((t) => `#${t}`).join(" ") || "";
+        const desc = document.createElement("p");
+        desc.className = "eostore-desc";
+        desc.textContent = p.description || "";
         const thumbs = document.createElement("div");
         thumbs.className = "eostore-thumbs";
         (p.images || []).forEach((img) => {
@@ -430,6 +434,51 @@ import Layout from "../../layouts/Layout.astro";
           await loadAll();
         });
         upload.appendChild(file);
+
+        const ai = document.createElement("div");
+        ai.className = "eostore-ai";
+        const hasImages = (p.images || []).length > 0;
+        ai.hidden = !hasImages;
+        if (hasImages) {
+          const aiTitle = document.createElement("p");
+          aiTitle.className = "eostore-meta";
+          aiTitle.textContent = "AI description (DeepSeek vision)";
+          const wordsField = document.createElement("div");
+          wordsField.className = "eostore-field";
+          const wordsLabel = document.createElement("label");
+          const wordsValue = document.createElement("span");
+          wordsValue.textContent = "100 words";
+          wordsLabel.append("Length ", wordsValue);
+          const wordsRange = document.createElement("input");
+          wordsRange.type = "range";
+          wordsRange.min = "25";
+          wordsRange.max = "1000";
+          wordsRange.step = "25";
+          wordsRange.value = "100";
+          wordsRange.addEventListener("input", () => {
+            wordsValue.textContent = `${wordsRange.value} words`;
+          });
+          wordsField.append(wordsLabel, wordsRange);
+          const gen = document.createElement("button");
+          gen.type = "button";
+          gen.className = "btn btn--primary";
+          gen.textContent = "Generate description";
+          gen.addEventListener("click", async () => {
+            gen.disabled = true;
+            const wordCount = Number(wordsRange.value) || 100;
+            const latestImageId = p.images?.[p.images.length - 1]?.id || "";
+            if (mustLog) console.log("eostore.describe.click", { guid: p.guid, wordCount, latestImageId });
+            const res = await describeProduct(p.guid, wordCount, latestImageId);
+            gen.disabled = false;
+            if (res.status !== 200) {
+              fail(res.data.message || "AI description failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await loadAll();
+          });
+          ai.append(aiTitle, wordsField, gen);
+        }
+
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
         const del = document.createElement("button");
@@ -445,7 +494,7 @@ import Layout from "../../layouts/Layout.astro";
           await loadAll();
         });
         actions.appendChild(del);
-        card.append(h, meta, price, tags, thumbs, upload, actions);
+        card.append(h, meta, price, tags, desc, thumbs, upload, ai, actions);
         list.appendChild(card);
       });
     };

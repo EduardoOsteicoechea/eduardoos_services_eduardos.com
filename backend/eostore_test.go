@@ -5,6 +5,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -171,5 +172,85 @@ func TestEostoreDiscountSteps(t *testing.T) {
 	}
 	if roundMoney(p.priceBs()) != 2920 {
 		t.Fatalf("price bs=%v", p.priceBs())
+	}
+}
+
+func TestEostoreDescribeRequiresImageAndAdmin(t *testing.T) {
+	app := newTestApp(true)
+	app.cfg.AdminEmail = "admin@eduardoos.com"
+	bot := app.chat["deepseek"].(*recordingChat)
+	bot.text = "Toalla suave de algodón ideal para la playa."
+
+	co := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/companies", `{"name":"Acme","id":"acme"}`)
+	companyGUID := decodeMap(t, co)["company"].(map[string]any)["guid"].(string)
+	sec := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/sections", `{"company_guid":"`+companyGUID+`","name":"Textiles","id":"textiles"}`)
+	sectionGUID := decodeMap(t, sec)["section"].(map[string]any)["guid"].(string)
+	typ := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/types", `{"section_guid":"`+sectionGUID+`","name":"Towels","id":"towels"}`)
+	typeGUID := decodeMap(t, typ)["type"].(map[string]any)["guid"].(string)
+	prod := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products", `{
+		"type_guid":"`+typeGUID+`","name":"Beach Towel","id":"beach-towel",
+		"price_base_usd":20,"discount_percent":0,"bs_per_usd":40,"units":3,"visible":true
+	}`)
+	guid := decodeMap(t, prod)["product"].(map[string]any)["guid"].(string)
+
+	noImg := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products/"+guid+"/describe", `{"word_count":50}`)
+	if noImg.Code != http.StatusBadRequest {
+		t.Fatalf("expected describe without image 400, got %d %s", noImg.Code, noImg.Body.String())
+	}
+
+	seed := httptest.NewRecorder()
+	sess, err := app.issueSession(seed, app.mustUser("admin@eduardoos.com"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var body bytes.Buffer
+	w := multipart.NewWriter(&body)
+	part, err := w.CreateFormFile("file", "towel.png")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := part.Write(testPNGBytes(t)); err != nil {
+		t.Fatal(err)
+	}
+	_ = w.Close()
+	req := httptest.NewRequest(http.MethodPost, "/api/eostore/products/"+guid+"/images", &body)
+	req.Header.Set("Content-Type", w.FormDataContentType())
+	req.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	req.Header.Set("X-CSRF-Token", sess.CSRF)
+	copyCookies(req, seed)
+	rr := httptest.NewRecorder()
+	app.Handler().ServeHTTP(rr, req)
+	if rr.Code != http.StatusOK {
+		t.Fatalf("upload status=%d body=%s", rr.Code, rr.Body.String())
+	}
+
+	member := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eostore/products/"+guid+"/describe", `{"word_count":50}`)
+	if member.Code != http.StatusForbidden {
+		t.Fatalf("member describe status=%d", member.Code)
+	}
+
+	badWords := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products/"+guid+"/describe", `{"word_count":10}`)
+	if badWords.Code != http.StatusBadRequest {
+		t.Fatalf("short word_count status=%d", badWords.Code)
+	}
+
+	beforeCalls := bot.calls
+	ok := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products/"+guid+"/describe", `{"word_count":50}`)
+	if ok.Code != http.StatusOK {
+		t.Fatalf("describe status=%d body=%s", ok.Code, ok.Body.String())
+	}
+	payload := decodeMap(t, ok)
+	if payload["description"] != bot.text {
+		t.Fatalf("unexpected description %#v", payload["description"])
+	}
+	product := payload["product"].(map[string]any)
+	if product["description"] != bot.text {
+		t.Fatalf("product description not saved %#v", product["description"])
+	}
+	if !bot.lastVision || bot.calls != beforeCalls+1 || bot.lastImage == 0 {
+		t.Fatalf("expected vision call, vision=%v calls=%d image=%d", bot.lastVision, bot.calls, bot.lastImage)
+	}
+	if !strings.Contains(bot.last, "Acme") || !strings.Contains(bot.last, "Textiles") || !strings.Contains(bot.last, "Towels") || !strings.Contains(bot.last, "Beach Towel") {
+		t.Fatalf("prompt missing catalog context: %q", bot.last)
 	}
 }

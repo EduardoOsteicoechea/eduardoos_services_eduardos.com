@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -765,6 +767,180 @@ func (a *App) eostoreProductImageDeleteHandler(w http.ResponseWriter, r *http.Re
 	writeJSON(w, http.StatusOK, map[string]any{"product": eostoreProductView(p)})
 }
 
+const (
+	eostoreDescribeMinWords = 25
+	eostoreDescribeMaxWords = 1000
+)
+
+func eostoreDescribeSystemPrompt() string {
+	return strings.TrimSpace(`You write product catalog descriptions for an online store.
+Use the product photo as the primary visual source.
+Use company, section, product type, and product name only as catalog context — do not invent unrelated brands, prices, or credentials.
+Write plain prose (no markdown headings, no bullet lists unless natural).
+Match the language of the product and company names; if unclear, write in Spanish.
+Stay close to the requested word count.`)
+}
+
+func eostoreDescribeUserPrompt(company, section, typ, product string, words int) string {
+	return fmt.Sprintf(
+		"Write a product description of about %d words.\n\nCompany: %s\nSection: %s\nProduct type: %s\nProduct name: %s\n\nInterpret the attached product image and describe what a shopper sees and why it fits this catalog context.",
+		words,
+		strings.TrimSpace(company),
+		strings.TrimSpace(section),
+		strings.TrimSpace(typ),
+		strings.TrimSpace(product),
+	)
+}
+
+func eostoreDescribeMaxTokens(words int) int {
+	// Spanish/English ~1.4–1.8 tokens per word; leave headroom.
+	n := words*2 + 64
+	if n < 128 {
+		n = 128
+	}
+	if n > 4096 {
+		n = 4096
+	}
+	return n
+}
+
+func (a *App) eostoreProductDescribeHandler(w http.ResponseWriter, r *http.Request) {
+	admin := a.eostoreAdmin(w, r)
+	if admin == nil {
+		return
+	}
+	guid := strings.TrimSpace(r.PathValue("guid"))
+	p, err := a.eostore.GetProduct(r.Context(), guid)
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	if len(p.Images) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body struct {
+		WordCount int    `json:"word_count"`
+		ImageID   string `json:"image_id"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 16<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	words := body.WordCount
+	if words < eostoreDescribeMinWords || words > eostoreDescribeMaxWords {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if !a.aiAdminLimit.allow(admin.ID) {
+		a.auditEventExtra(r, "eostore_describe", "rate_limited", admin.ID, "deepseek", words)
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
+		return
+	}
+
+	var img *EostoreImage
+	wantID := strings.TrimSpace(body.ImageID)
+	for i := range p.Images {
+		if wantID != "" && p.Images[i].ID == wantID {
+			img = &p.Images[i]
+			break
+		}
+	}
+	if img == nil {
+		if wantID != "" {
+			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		// Prefer the most recently uploaded image.
+		img = &p.Images[len(p.Images)-1]
+	}
+	if !safeEostoreRel.MatchString(img.Key) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	abs := filepath.Join(a.cfg.MediaRoot, filepath.FromSlash(img.Key))
+	data, err := os.ReadFile(abs)
+	if err != nil || len(data) == 0 {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	mime := strings.TrimSpace(img.ContentType)
+	if mime == "" {
+		mime = "image/jpeg"
+	}
+
+	companyName, sectionName, typeName := p.CompanyGUID, p.SectionGUID, p.TypeGUID
+	if co, err := a.eostore.GetCompany(r.Context(), p.CompanyGUID); err == nil && co != nil {
+		companyName = co.Name
+	}
+	if sec, err := a.eostore.GetSection(r.Context(), p.SectionGUID); err == nil && sec != nil {
+		sectionName = sec.Name
+	}
+	if typ, err := a.eostore.GetType(r.Context(), p.TypeGUID); err == nil && typ != nil {
+		typeName = typ.Name
+	}
+
+	client, ok := a.chat["deepseek"]
+	if !ok || client == nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	vision, ok := client.(VisionChatClient)
+	if !ok {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+
+	system := eostoreDescribeSystemPrompt()
+	prompt := eostoreDescribeUserPrompt(companyName, sectionName, typeName, p.Name, words)
+	a.mustLogf(r, "eostore.describe.start",
+		"product_guid", p.GUID,
+		"image_id", img.ID,
+		"words", words,
+		"company_len", len(companyName),
+		"section_len", len(sectionName),
+		"type_len", len(typeName),
+		"product_len", len(p.Name),
+		"bytes", len(data),
+	)
+
+	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
+	defer cancel()
+	result, err := vision.CompleteVision(ctx, system, prompt, mime, data, eostoreDescribeMaxTokens(words))
+	if err != nil {
+		a.mustLogf(r, "eostore.describe.error", "err", err.Error())
+		a.auditEventExtra(r, "eostore_describe", "failed", admin.ID, "deepseek", words)
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	desc := sanitizeModelTextMax(result.Text, 12000)
+	if desc == "" {
+		a.auditEventExtra(r, "eostore_describe", "failed", admin.ID, "deepseek", words)
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	p.Description = desc
+	p.UpdatedAt = time.Now().UTC()
+	if err := a.eostore.UpdateProduct(r.Context(), p); err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	a.auditEventExtra(r, "eostore_describe", "ok", admin.ID, "deepseek", words)
+	a.mustLogf(r, "eostore.describe.ok",
+		"product_guid", p.GUID,
+		"image_id", img.ID,
+		"desc_len", len(desc),
+		"prompt_tokens", result.Usage.PromptTokens,
+		"completion_tokens", result.Usage.CompletionTokens,
+	)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"product":     eostoreProductView(p),
+		"description": desc,
+		"word_count":  words,
+		"image_id":    img.ID,
+	})
+}
+
 func (a *App) registerEostoreRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/eostore/companies", a.eostoreCompaniesListHandler)
 	mux.HandleFunc("POST /api/eostore/companies", a.eostoreCompaniesCreateHandler)
@@ -789,4 +965,5 @@ func (a *App) registerEostoreRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/eostore/products/{guid}/images", a.eostoreProductImageUploadHandler)
 	mux.HandleFunc("GET /api/eostore/products/{guid}/images/{imageId}", a.eostoreProductImageGetHandler)
 	mux.HandleFunc("DELETE /api/eostore/products/{guid}/images/{imageId}", a.eostoreProductImageDeleteHandler)
+	mux.HandleFunc("POST /api/eostore/products/{guid}/describe", a.eostoreProductDescribeHandler)
 }

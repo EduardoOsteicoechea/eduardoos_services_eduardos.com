@@ -30,3 +30,11 @@ Derived (API only): `price_final_usd`, `price_bs`.
 - FE admin: `/eostore` (admin session; `noindex`)
 - API: `/api/eostore/companies|sections|types|products` — admin + CSRF on writes
 - Image upload/get/delete under `/api/eostore/products/{guid}/images…`
+
+## AI description
+
+- `POST /api/eostore/products/{guid}/describe` (admin + CSRF)
+- Requires at least one product image; uses DeepSeek vision (`DEEPSEEK_VISION_MODEL`, default `deepseek-v4-flash-vision-exp`) with `DEEPSEEK_API_KEY`
+- Prompt context: company name, section name, product type name, product name + latest (or selected) image
+- Body: `{ "word_count": 25–1000, "image_id"?: "..." }` — FE slider step 25
+- Saves generated text onto `product.description`

@@ -122,11 +122,12 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	app.ereport.owner = app.ereportOwnerLookup
 	httpClient := newHTTPClient()
 	app.chat["deepseek"] = openAICompatClient{
-		name:    "deepseek",
-		baseURL: cfg.DeepSeekBaseURL,
-		apiKey:  cfg.DeepSeekKey,
-		model:   cfg.DeepSeekModel,
-		http:    httpClient,
+		name:        "deepseek",
+		baseURL:     cfg.DeepSeekBaseURL,
+		apiKey:      cfg.DeepSeekKey,
+		model:       cfg.DeepSeekModel,
+		visionModel: cfg.DeepSeekVisionModel,
+		http:        httpClient,
 	}
 	app.chat["kimi"] = openAICompatClient{
 		name:    "kimi",

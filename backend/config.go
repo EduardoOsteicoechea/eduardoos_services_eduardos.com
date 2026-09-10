@@ -51,6 +51,7 @@ type config struct {
 	DeepSeekKey            string
 	DeepSeekBaseURL        string
 	DeepSeekModel          string
+	DeepSeekVisionModel    string
 	KimiKey                string
 	KimiBaseURL            string
 	KimiModel              string
@@ -83,6 +84,10 @@ func loadConfig() config {
 	deepseekModel := strings.TrimSpace(os.Getenv("DEEPSEEK_MODEL"))
 	if deepseekModel == "" {
 		deepseekModel = "deepseek-v4-flash"
+	}
+	deepseekVisionModel := strings.TrimSpace(os.Getenv("DEEPSEEK_VISION_MODEL"))
+	if deepseekVisionModel == "" {
+		deepseekVisionModel = "deepseek-v4-flash-vision-exp"
 	}
 	kimiBase := strings.TrimSpace(os.Getenv("KIMI_API_BASE"))
 	if kimiBase == "" {
@@ -177,6 +182,7 @@ func loadConfig() config {
 		DeepSeekKey:            os.Getenv("DEEPSEEK_API_KEY"),
 		DeepSeekBaseURL:        strings.TrimRight(deepseekBase, "/"),
 		DeepSeekModel:          deepseekModel,
+		DeepSeekVisionModel:    deepseekVisionModel,
 		KimiKey:                os.Getenv("KIMI_API_KEY"),
 		KimiBaseURL:            strings.TrimRight(kimiBase, "/"),
 		KimiModel:              kimiModel,

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -34,6 +35,11 @@ type ChatClient interface {
 	Stream(ctx context.Context, system string, history []ChatMessage, emit func(string) error) (ChatResult, error)
 }
 
+// VisionChatClient is optional; DeepSeek vision uses multimodal chat completions.
+type VisionChatClient interface {
+	CompleteVision(ctx context.Context, system, prompt, imageMIME string, imageData []byte, maxTokens int) (ChatResult, error)
+}
+
 type recordingChat struct {
 	provider   string
 	text       string
@@ -42,6 +48,9 @@ type recordingChat struct {
 	last       string
 	lastSystem string
 	lastHist   []ChatMessage
+	lastMIME   string
+	lastImage  int
+	lastVision bool
 	calls      int
 }
 
@@ -75,12 +84,41 @@ func (c *recordingChat) Stream(ctx context.Context, system string, history []Cha
 	return result, nil
 }
 
+func (c *recordingChat) CompleteVision(_ context.Context, system, prompt, imageMIME string, imageData []byte, _ int) (ChatResult, error) {
+	c.calls++
+	c.lastVision = true
+	c.lastSystem = system
+	c.last = prompt
+	c.lastMIME = imageMIME
+	c.lastImage = len(imageData)
+	c.lastHist = []ChatMessage{{Role: "user", Content: prompt}}
+	if c.fail {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	return ChatResult{Text: c.text, Usage: c.usage}, nil
+}
+
 type openAICompatClient struct {
-	name    string
-	baseURL string
-	apiKey  string
-	model   string
-	http    *http.Client
+	name        string
+	baseURL     string
+	apiKey      string
+	model       string
+	visionModel string
+	http        *http.Client
+}
+
+func (c openAICompatClient) visionHTTP() *http.Client {
+	if c.http != nil && c.http.Timeout >= 90*time.Second {
+		return c.http
+	}
+	return &http.Client{Timeout: 120 * time.Second}
+}
+
+func (c openAICompatClient) resolveVisionModel() string {
+	if strings.TrimSpace(c.visionModel) != "" {
+		return strings.TrimSpace(c.visionModel)
+	}
+	return c.model
 }
 
 func (c openAICompatClient) chatPayload(prompt string) map[string]any {
@@ -275,6 +313,13 @@ func sanitizeModelDelta(text string) string {
 }
 
 func sanitizeModelText(text string) string {
+	return sanitizeModelTextMax(text, 2000)
+}
+
+func sanitizeModelTextMax(text string, maxRunes int) string {
+	if maxRunes <= 0 {
+		maxRunes = 2000
+	}
 	var b strings.Builder
 	count := 0
 	for _, r := range text {
@@ -283,15 +328,84 @@ func sanitizeModelText(text string) string {
 		}
 		b.WriteRune(r)
 		count++
-		if count >= 2000 {
+		if count >= maxRunes {
 			break
 		}
 	}
 	out := strings.TrimSpace(b.String())
-	if utf8.RuneCountInString(out) > 2000 {
-		out = string([]rune(out)[:2000])
+	if utf8.RuneCountInString(out) > maxRunes {
+		out = string([]rune(out)[:maxRunes])
 	}
 	return out
+}
+
+func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, imageMIME string, imageData []byte, maxTokens int) (ChatResult, error) {
+	if c.apiKey == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	if len(imageData) == 0 || strings.TrimSpace(imageMIME) == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	if maxTokens < 64 {
+		maxTokens = 64
+	}
+	if maxTokens > 4096 {
+		maxTokens = 4096
+	}
+	system = strings.TrimSpace(system)
+	prompt = strings.TrimSpace(prompt)
+	if system == "" || prompt == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	dataURL := "data:" + imageMIME + ";base64," + base64.StdEncoding.EncodeToString(imageData)
+	userContent := []map[string]any{
+		{"type": "text", "text": prompt},
+		{"type": "image_url", "image_url": map[string]any{"url": dataURL}},
+	}
+	payload := map[string]any{
+		"model": c.resolveVisionModel(),
+		"messages": []map[string]any{
+			{"role": "system", "content": system},
+			{"role": "user", "content": userContent},
+		},
+		"max_tokens":  maxTokens,
+		"temperature": 0.4,
+	}
+	body, err := json.Marshal(payload)
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/chat/completions", bytes.NewReader(body))
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	req.Header.Set("Authorization", "Bearer "+c.apiKey)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := c.visionHTTP().Do(req)
+	if err != nil {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	defer resp.Body.Close()
+	raw, _ := io.ReadAll(io.LimitReader(resp.Body, 2<<20))
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	var parsed struct {
+		Choices []struct {
+			Message struct {
+				Content string `json:"content"`
+			} `json:"message"`
+		} `json:"choices"`
+		Usage ChatUsage `json:"usage"`
+	}
+	if err := json.Unmarshal(raw, &parsed); err != nil || len(parsed.Choices) == 0 {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	text := sanitizeModelTextMax(parsed.Choices[0].Message.Content, 12000)
+	if text == "" {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	return ChatResult{Text: text, Usage: parsed.Usage}, nil
 }
 
 func newHTTPClient() *http.Client {

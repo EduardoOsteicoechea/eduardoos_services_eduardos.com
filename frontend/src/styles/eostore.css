@@ -175,6 +175,22 @@
   min-width: calc(var(--button-size) * 6);
 }
 
-.eostore-pane[hidden] {
+.eostore-ai {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+.eostore-ai[hidden] {
   display: none;
+}
+
+.eostore-desc {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
 }
