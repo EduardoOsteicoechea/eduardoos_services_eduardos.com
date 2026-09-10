@@ -1,0 +1,103 @@
+name: Import eReport
+
+# One-shot/manual: load legacy meta.json + report.json onto VPS media for an existing Mongo user.
+# Report bodies live under /var/www/eduardoos.com/media/ereport (not Mongo documents).
+# Mongo is used only to resolve the owner email → user id.
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: Owner account email (must already exist in Mongo)
+        required: true
+        default: eduardooost@gmail.com
+      org_name:
+        description: Organization name
+        required: true
+        default: eduardoos.com
+      meta_path:
+        description: Path in repo to meta JSON
+        required: true
+        default: scripts/ereport-import-samples/meta.json
+      payload_path:
+        description: Path in repo to report JSON
+        required: true
+        default: scripts/ereport-import-samples/report.json
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    env:
+      SITE: eduardoos.com
+      APP: eduardoos
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          home = Path.home() / ".ssh"
+          key = os.environ["VPS_SSH_KEY"].replace("\r\n", "\n").replace("\r", "\n")
+          if "BEGIN" not in key and "\\n" in key:
+              key = key.replace("\\n", "\n")
+          key = key.strip() + "\n"
+          if "BEGIN" not in key or "PRIVATE KEY" not in key:
+              raise SystemExit("VPS_SSH_KEY is not a private key")
+          path = home / "deploy_key"
+          path.write_text(key)
+          path.chmod(0o600)
+          hosts = os.environ["VPS_KNOWN_HOSTS"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+          known = home / "known_hosts"
+          known.write_text(hosts)
+          known.chmod(0o644)
+          PY
+          {
+            echo "SSH_KEY_PATH=$HOME/.ssh/deploy_key"
+            echo "SSH_KNOWN_HOSTS_PATH=$HOME/.ssh/known_hosts"
+          } >> "$GITHUB_ENV"
+
+      - name: Upload JSON and run ereport-import
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          IMPORT_EMAIL: ${{ inputs.email }}
+          ORG_NAME: ${{ inputs.org_name }}
+          META_PATH: ${{ inputs.meta_path }}
+          PAYLOAD_PATH: ${{ inputs.payload_path }}
+        run: |
+          set -euo pipefail
+          test -f "$META_PATH"
+          test -f "$PAYLOAD_PATH"
+          PORT="${VPS_PORT:-22}"
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
+          REMOTE_DIR="/tmp/ereport-import-${GITHUB_RUN_ID}"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${REMOTE_DIR}'"
+          rsync -az -e "${RSH}" "$META_PATH" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/meta.json"
+          rsync -az -e "${RSH}" "$PAYLOAD_PATH" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/report.json"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "set -euo pipefail
+            API=/opt/apps/${APP}/current/api
+            test -x \"\$API\"
+            \"\$API\" ereport-import \
+              --email='${IMPORT_EMAIL}' \
+              --meta='${REMOTE_DIR}/meta.json' \
+              --payload='${REMOTE_DIR}/report.json' \
+              --org-name='${ORG_NAME}' \
+              --root=/var/www/${SITE}/media/ereport
+            rm -rf '${REMOTE_DIR}'
+            curl --fail --silent --show-error http://127.0.0.1:8081/health
+            echo
+          "
