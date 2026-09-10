@@ -28,7 +28,7 @@
   --sidebar-w: 24.5rem;
   --topbar-h: 0rem;
   --base: 1rem;
-  --sticky-sec-h: 3.5rem;
+  --sticky-sec-h: 2.75rem;
   --sticky-sub-h: 2.75rem;
   --radius: 3px;
   --section-head-bg: #dcdcdc;
@@ -315,20 +315,21 @@ button.has-label { gap: 0.35rem; }
   position: sticky;
   top: var(--topbar-h);
   z-index: 35;
-  display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-  margin: 0; padding: 0.85rem 1rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: nowrap;
+  margin: 0; padding: 0.7rem 0.85rem;
   background: var(--section-head-bg);
   color: var(--ink);
   border: 0.125rem solid var(--ink);
   border-radius: var(--radius);
-  box-shadow: 0 0.15rem 0.45rem rgba(0,0,0,.18);
+  box-shadow: 0 0.12rem 0.4rem rgba(0,0,0,.12);
 }
 .section-title-main {
-  display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1;
+  display: flex; align-items: center; gap: 0.45rem; min-width: 0; flex: 1;
 }
-.section-block > .section-title h2 {
-  margin: 0; font-size: 1.35rem; font-weight: 750; letter-spacing: -0.02em;
-  color: var(--ink); line-height: 1.15;
+.section-block > .section-title h2,
+.section-title .inplace-title .inplace-view {
+  margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: 0;
+  color: var(--ink); line-height: 1.2;
 }
 .collapse-toggle {
   flex: 0 0 auto;
@@ -388,10 +389,11 @@ button.has-label { gap: 0.35rem; }
   --tree-pad: 1.75rem;
   top: calc(0.65rem + 0.75rem); /* item-card pad + half toggle */
 }
-.section-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-.section-actions .hint { color: var(--muted); font-size: 0.8rem; }
+.section-actions { display: flex; gap: 0.35rem; align-items: center; flex-wrap: nowrap; flex: 0 0 auto; }
+.section-actions .hint { color: var(--muted); font-size: 0.75rem; white-space: nowrap; }
+.section-actions button { width: 1.9rem; height: 1.9rem; padding: 0; }
 .section-open { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
-.section-open-label { color: var(--muted); font-size: 0.8rem; }
+.section-open-label { display: none; }
 .app-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 0; }
 .app-actions .ghost { display: inline-flex; align-items: center; gap: 0.35rem; }
 .empty-report { margin: 1rem 0 0; }
@@ -557,9 +559,15 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   color: var(--ink);
   background: transparent;
 }
-.inplace-title .inplace-view {
+.inplace-title .inplace-view,
+.inplace-section-title .inplace-view {
   min-height: 0;
   padding: 0.15rem 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .inplace-view:hover, .inplace-view:focus-visible {
   border-color: var(--line);
@@ -1923,7 +1931,6 @@ function render() {
       </div>
       <div class="section-body">
       <div class="section-open">
-        <div class="section-open-label">Open issues</div>
         ${(sec.items || []).map(it => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: sec.items }, it)).join("")}
       </div>
       ${sec.groups.map(grp => {
