@@ -119,6 +119,17 @@ import Layout from "../../layouts/Layout.astro";
           <label for="pr-desc">Description</label>
           <textarea id="pr-desc" data-pr-desc></textarea>
         </div>
+        <div class="eostore-ai" data-pr-ai hidden>
+          <p class="eostore-meta">AI description (DeepSeek vision)</p>
+          <div class="eostore-field">
+            <label for="pr-ai-words">Length <span data-pr-ai-words-label>100 words</span></label>
+            <input id="pr-ai-words" type="range" data-pr-ai-words min="25" max="1000" step="25" value="100" />
+          </div>
+          <div class="eostore-actions">
+            <button class="btn btn--primary" type="button" data-pr-ai-generate>Regenerate description</button>
+          </div>
+          <p class="eostore-hint" data-pr-ai-hint hidden>Upload at least one product image to enable AI.</p>
+        </div>
         <div class="eostore-field">
           <label for="pr-tags">Hashtags (space or comma separated)</label>
           <input id="pr-tags" type="text" data-pr-tags placeholder="coast soft" />
@@ -441,12 +452,17 @@ import Layout from "../../layouts/Layout.astro";
         file.addEventListener("change", async () => {
           const f = file.files?.[0];
           if (!f) return;
+          const editingGuid = ((root.querySelector("[data-pr-edit-guid]") as HTMLInputElement)?.value || "").trim();
           const res = await uploadProductImage(p.guid, f);
           if (res.status !== 200) {
             fail(res.data.message || "Upload failed.", res.requestId, res.data.debug);
             return;
           }
           await loadAll();
+          if (editingGuid === p.guid) {
+            const updated = products.find((x) => x.guid === p.guid);
+            if (updated) fillProductForm(updated);
+          }
         });
         upload.appendChild(file);
 
@@ -602,6 +618,24 @@ import Layout from "../../layouts/Layout.astro";
     root.querySelector("[data-pr-discount]")?.addEventListener("input", updatePreview);
     root.querySelector("[data-pr-bs]")?.addEventListener("input", updatePreview);
 
+    const setProductAiPanel = (p: EostoreProduct | null) => {
+      const panel = root.querySelector("[data-pr-ai]");
+      const gen = root.querySelector("[data-pr-ai-generate]");
+      const hint = root.querySelector("[data-pr-ai-hint]");
+      if (!(panel instanceof HTMLElement)) return;
+      if (!p) {
+        panel.hidden = true;
+        return;
+      }
+      panel.hidden = false;
+      const hasImages = (p.images || []).length > 0;
+      if (gen instanceof HTMLButtonElement) {
+        gen.disabled = !hasImages;
+        gen.hidden = false;
+      }
+      if (hint instanceof HTMLElement) hint.hidden = hasImages;
+    };
+
     const clearProductForm = () => {
       const form = root.querySelector("[data-product-form]");
       if (form instanceof HTMLFormElement) form.reset();
@@ -615,6 +649,11 @@ import Layout from "../../layouts/Layout.astro";
       if (cancel instanceof HTMLElement) cancel.hidden = true;
       const visibleEl = root.querySelector("[data-pr-visible]");
       if (visibleEl instanceof HTMLInputElement) visibleEl.checked = true;
+      const wordsEl = root.querySelector("[data-pr-ai-words]");
+      if (wordsEl instanceof HTMLInputElement) wordsEl.value = "100";
+      const wordsLabel = root.querySelector("[data-pr-ai-words-label]");
+      if (wordsLabel instanceof HTMLElement) wordsLabel.textContent = "100 words";
+      setProductAiPanel(null);
       updatePreview();
     };
 
@@ -648,9 +687,46 @@ import Layout from "../../layouts/Layout.astro";
       if (submit instanceof HTMLButtonElement) submit.textContent = "Save changes";
       const cancel = root.querySelector("[data-product-cancel]");
       if (cancel instanceof HTMLElement) cancel.hidden = false;
+      setProductAiPanel(p);
       updatePreview();
-      if (mustLog) console.log("eostore.product.edit.fill", { guid: p.guid, id: p.id });
+      if (mustLog) console.log("eostore.product.edit.fill", { guid: p.guid, id: p.id, images: (p.images || []).length });
     };
+
+    root.querySelector("[data-pr-ai-words]")?.addEventListener("input", () => {
+      const wordsEl = root.querySelector("[data-pr-ai-words]");
+      const wordsLabel = root.querySelector("[data-pr-ai-words-label]");
+      const n = Number((wordsEl as HTMLInputElement)?.value || 100);
+      if (wordsLabel instanceof HTMLElement) wordsLabel.textContent = `${n} words`;
+    });
+
+    root.querySelector("[data-pr-ai-generate]")?.addEventListener("click", async () => {
+      const editGuid = ((root.querySelector("[data-pr-edit-guid]") as HTMLInputElement)?.value || "").trim();
+      if (!editGuid) return;
+      const product = products.find((x) => x.guid === editGuid);
+      if (!product) {
+        fail("Product not found. Refresh and try again.");
+        return;
+      }
+      const images = product.images || [];
+      if (!images.length) {
+        fail("Upload at least one product image before generating a description.");
+        return;
+      }
+      const gen = root.querySelector("[data-pr-ai-generate]");
+      if (gen instanceof HTMLButtonElement) gen.disabled = true;
+      const wordCount = Number((root.querySelector("[data-pr-ai-words]") as HTMLInputElement)?.value || 100);
+      const latestImageId = images[images.length - 1]?.id || "";
+      if (mustLog) console.log("eostore.describe.form.click", { guid: editGuid, wordCount, latestImageId });
+      const res = await describeProduct(editGuid, wordCount, latestImageId);
+      if (gen instanceof HTMLButtonElement) gen.disabled = false;
+      if (res.status !== 200) {
+        fail(res.data.message || "AI description failed.", res.requestId, res.data.debug);
+        return;
+      }
+      await loadAll();
+      const updated = products.find((x) => x.guid === editGuid);
+      if (updated) fillProductForm(updated);
+    });
 
     root.querySelector("[data-product-cancel]")?.addEventListener("click", () => {
       clearProductForm();
