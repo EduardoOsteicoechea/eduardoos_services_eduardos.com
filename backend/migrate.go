@@ -23,6 +23,8 @@ const (
 	colCSRF               = "csrf_challenges"
 	colEntitlements       = "entitlements"
 	colAPIKeys            = "api_keys"
+	colPaymentIntents     = "payment_intents"
+	colUserPreferences    = "user_preferences"
 	colSchemaMigrations   = "schema_migrations"
 	confirmBackupToken    = "I_HAVE_A_BACKUP"
 	testDatabaseSuffix    = "_gotest"
@@ -148,6 +150,56 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colAPIKeys, Keys: bson.D{{Key: "secret_hash", Value: 1}}, Unique: true},
 				{Collection: colAPIKeys, Keys: bson.D{{Key: "user_id", Value: 1}}},
 				{Collection: colAPIKeys, Keys: bson.D{{Key: "prefix", Value: 1}}},
+			},
+		},
+		{
+			ID:          "003_product_suite_payments_prefs",
+			Description: "Create payment_intents and user_preferences for product suite subscriptions",
+			Collections: []string{colPaymentIntents, colUserPreferences},
+			Indexes: []indexSpec{
+				{Collection: colPaymentIntents, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colPaymentIntents, Keys: bson.D{{Key: "status", Value: 1}}},
+				{Collection: colPaymentIntents, Keys: bson.D{{Key: "updated_at", Value: 1}}},
+				{Collection: colUserPreferences, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "key", Value: 1}}, Unique: true},
+				{Collection: colUserPreferences, Keys: bson.D{{Key: "updated_at", Value: 1}}},
+			},
+		},
+		{
+			ID:          "004_evoice_collections",
+			Description: "Create eVoice projects, jobs, and hashed playlist share collections",
+			Collections: []string{colEvoiceProjects, colEvoiceJobs, colEvoiceShares},
+			Indexes: []indexSpec{
+				{Collection: colEvoiceProjects, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "name", Value: 1}}, Unique: true},
+				{Collection: colEvoiceJobs, Keys: bson.D{{Key: "owner_user_id", Value: 1}}},
+				{Collection: colEvoiceJobs, Keys: bson.D{{Key: "updated_at", Value: 1}}},
+				{Collection: colEvoiceShares, Keys: bson.D{{Key: "token_hash", Value: 1}}, Unique: true},
+				{Collection: colEvoiceShares, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt()},
+			},
+		},
+		{
+			ID:          "005_scrib_epams",
+			Description: "Create Scrib and Pamphlet (epam) Mongo collections",
+			Collections: []string{colScribLibraries, colScribBooks, colScribSheets, colEpams, colEpamFooters},
+			Indexes: []indexSpec{
+				{Collection: colScribBooks, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colScribSheets, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "bookId", Value: 1}}},
+				{Collection: colEpams, Keys: bson.D{{Key: "user_id", Value: 1}}},
+				{Collection: colEpamFooters, Keys: bson.D{{Key: "user_id", Value: 1}}},
+			},
+		},
+		{
+			ID:          "006_homescool",
+			Description: "Create Homescool links, tasks, templates, and catalogs collections",
+			Collections: []string{
+				colHomescoolLinks, colHomescoolTasks, colHomescoolTemplates, colHomescoolCatalogs,
+			},
+			Indexes: []indexSpec{
+				{Collection: colHomescoolLinks, Keys: bson.D{{Key: "teacher_user_id", Value: 1}, {Key: "student_user_id", Value: 1}}, Unique: true},
+				{Collection: colHomescoolLinks, Keys: bson.D{{Key: "teacher_user_id", Value: 1}, {Key: "student_slug", Value: 1}}},
+				{Collection: colHomescoolLinks, Keys: bson.D{{Key: "student_user_id", Value: 1}}},
+				{Collection: colHomescoolTasks, Keys: bson.D{{Key: "teacher_user_id", Value: 1}, {Key: "student_user_id", Value: 1}}},
+				{Collection: colHomescoolTemplates, Keys: bson.D{{Key: "teacher_user_id", Value: 1}}},
+				{Collection: colHomescoolCatalogs, Keys: bson.D{{Key: "teacher_user_id", Value: 1}, {Key: "kind", Value: 1}}},
 			},
 		},
 	}

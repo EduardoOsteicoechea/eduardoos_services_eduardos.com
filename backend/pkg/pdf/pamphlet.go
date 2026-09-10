@@ -1,0 +1,1855 @@
+package pdf
+
+// Pamphlet PDF builder — raw PDF 1.4 byte streams (no external PDF libraries).
+//
+// Geometry matches the frontend sheet CSS exactly:
+//   page  279.4mm × 215.9mm (US Letter landscape)
+//   cols  57.85mm wide, gutters 4mm / 20mm (center), margins 10mm
+//   page1 left  cols 7–8 (160.1mm tall) + footer; right header + cols 1–2
+//   page2       cols 3–6 full body height
+//
+// Text uses embedded Roboto / Roboto-Bold (website font) with WinAnsiEncoding.
+// Latin-1 glyphs are mapped to single WinAnsi bytes (never raw UTF-8 — that
+// produced the Ã¡ / Â¿ mojibake). Images from data:image/*;base64,… items are
+// decoded via stdlib image/jpeg+png, re-encoded as JPEG, and embedded as
+// /XObject image streams.
+
+import (
+	"bytes"
+	"encoding/base64"
+	"fmt"
+	"image"
+	_ "image/gif"
+	"image/jpeg"
+	_ "image/png"
+	"strings"
+	"unicode"
+)
+
+// Letter landscape page size used by the pamphlet sheet (exact CSS mm).
+const (
+	PamphletPageWidthMm  = 279.4
+	PamphletPageHeightMm = 215.9
+	PamphletMarginMm     = 10.0
+	PamphletGutterNarrow = 4.0
+	// Gap only between cols 7–8 and the footer (--footer-body-gutter).
+	PamphletFooterBodyGutterMm = 6.0
+	// Center fold gutter (page 1 left↔right and page 2 left↔right).
+	PamphletGutterWide = 20.0
+	// (279.4 − 10 − 4 − 20 − 4 − 10) / 4 = 57.85mm
+	PamphletColWidthMm = 57.85
+	// Header band: title + title_pad_bottom + title divider + title_meta_gap + meta + frame.
+	// Overridden by header_layout.height from frontend when present.
+	PamphletHeaderHMm = 34.5
+	// Gap under the header band before cols 1–2 — CSS --header-body-gutter.
+	PamphletHeaderBodyGutterMm = 5.0
+	PamphletFooterHMm          = 29.8 // default; overridden by footer_layout.height from frontend
+	// 215.9 − 10 − 34.5 − 5 − 6 − 29.8 − 10
+	PamphletPage1BodyMm = 120.6
+	PamphletPage2BodyMm = 195.9
+	PamphletItemGapMm   = 2.5
+	// Clear space under subtitle → meta (PAMPHLET_HEADER_LAYOUT_MM.title_meta_gap).
+	PamphletHeaderTitleMetaGapMm = 0.6
+	// CSS .pamphlet-header-meta-bar { row-gap }.
+	PamphletHeaderMetaRowGapMm = 1.8
+	// Right-side cols 1–2: 195.9 − 34.5 − 5
+	PamphletPage1RightColMm = 156.4
+	// Left-side cols 7–8 above footer: 195.9 − 6 − 29.8 (default layout.height)
+	PamphletPage1LeftColMm = 160.1
+	// Exact CSS type sizes on the sheet (defaults; print may override via header_layout).
+	pamphletTitleSizeMm   = 6.75 // .pamphlet-header-title p — 1.35× of 5mm; band fits title + meta + rule
+	pamphletTitleLH       = 1.1
+	pamphletMetaSizeMm    = 2.5 // .pamphlet-header-meta-label { font-size: 2.5mm; line-height: 1.2 }
+	pamphletMetaLH        = 1.2
+	pamphletBodySizeMm    = 3.0 // paragraph { font-size: 3mm; line-height: 1.25 }
+	pamphletBodyLH        = 1.25
+	pamphletHeadingSizeMm = 4.25 // h1 { font-size: 4.25mm; line-height: 1.2 }
+	pamphletHeadingLH     = 1.2
+	pamphletBodySizePt    = 8.503937007874016 // 3mm
+	pamphletHeadingSizePt = 12.04724409448819 // 4.25mm
+)
+
+// PamphletDocument mirrors the frontend .epam pamphlet_single_sheet JSON body.
+type PamphletDocument struct {
+	Type         string               `json:"type"`
+	Header       PamphletHeader       `json:"header"`
+	Footer       PamphletFooter       `json:"footer"`
+	HeaderLayout PamphletHeaderLayout `json:"header_layout,omitempty"`
+	FooterLayout PamphletFooterLayout `json:"footer_layout,omitempty"`
+	// InkColor selects primary PDF ink: ""/"black" (default) or "blue" (#00368c).
+	// Gray meta rules stay gray; embedded photos are unchanged.
+	InkColor string         `json:"ink_color,omitempty"`
+	Column1  []PamphletItem `json:"column_1"`
+	Column2  []PamphletItem `json:"column_2"`
+	Column3  []PamphletItem `json:"column_3"`
+	Column4  []PamphletItem `json:"column_4"`
+	Column5  []PamphletItem `json:"column_5"`
+	Column6  []PamphletItem `json:"column_6"`
+	Column7  []PamphletItem `json:"column_7"`
+	Column8  []PamphletItem `json:"column_8"`
+}
+
+// pamphletInk is DeviceRGB operators for primary stroke/fill (spec 040).
+type pamphletInk struct {
+	Fill   string // e.g. "0 0 0 rg\n"
+	Stroke string // e.g. "0 0 0 RG\n"
+}
+
+// resolvePamphletInk maps ink_color from the print payload.
+// Blue is exact #00368c → RGB (0, 54, 140) / 255.
+func resolvePamphletInk(color string) pamphletInk {
+	switch strings.ToLower(strings.TrimSpace(color)) {
+	case "blue", "#00368c":
+		return pamphletInk{
+			Fill:   "0.000 0.212 0.549 rg\n",
+			Stroke: "0.000 0.212 0.549 RG\n",
+		}
+	default:
+		return pamphletInk{
+			Fill:   "0 0 0 rg\n",
+			Stroke: "0 0 0 RG\n",
+		}
+	}
+}
+
+// applyPamphletInk prefixes page content with the fill color (body/title text
+// never set a color operator — they inherit) and, for non-black ink, rewrites
+// hardcoded black and gray-meta stroke/fill operators to that ink. Gray meta
+// (0.4 0.4 0.4) is the header Serie/Capítulo/Autor/Fecha grid and the footer
+// contact grid; blue mode must match outer chrome (spec 040 patch).
+func applyPamphletInk(content string, ink pamphletInk) string {
+	out := ink.Fill + content
+	if ink.Fill == "0 0 0 rg\n" {
+		return out
+	}
+	out = strings.ReplaceAll(out, "0 0 0 rg\n", ink.Fill)
+	out = strings.ReplaceAll(out, "0 0 0 RG\n", ink.Stroke)
+	out = strings.ReplaceAll(out, "0.4 0.4 0.4 rg\n", ink.Fill)
+	out = strings.ReplaceAll(out, "0.4 0.4 0.4 RG\n", ink.Stroke)
+	return out
+}
+
+// PamphletHeaderLayout is the exact mm type/spacing from the frontend sheet CSS
+// (PAMPHLET_HEADER_LAYOUT_MM). Print POSTs these; PDF must not invent sizes.
+type PamphletHeaderLayout struct {
+	Height             float64 `json:"height"`
+	BodyGutter         float64 `json:"body_gutter"`
+	Pad                float64 `json:"pad"`
+	PadTop             float64 `json:"pad_top"`
+	PadBottom          float64 `json:"pad_bottom"`
+	PadX               float64 `json:"pad_x"`
+	Radius             float64 `json:"radius"`
+	Stroke             float64 `json:"stroke"`
+	InnerInset         float64 `json:"inner_inset"`
+	InnerStroke        float64 `json:"inner_stroke"`
+	InnerRadius        float64 `json:"inner_radius"`
+	TitleSize          float64 `json:"title_size"`
+	TitleLH            float64 `json:"title_lh"`
+	TitlePadBottom     float64 `json:"title_pad_bottom"`
+	TitleMetaGap       float64 `json:"title_meta_gap"`
+	DividerOuterStroke float64 `json:"divider_outer_stroke"`
+	DividerGap         float64 `json:"divider_gap"`
+	DividerInnerStroke float64 `json:"divider_inner_stroke"`
+	SubtitleSize       float64 `json:"subtitle_size"`
+	SubtitleLH         float64 `json:"subtitle_lh"`
+	SubtitlePadX       float64 `json:"subtitle_pad_x"`
+	SubtitlePadTop     float64 `json:"subtitle_pad_top"`
+	SubtitlePadY       float64 `json:"subtitle_pad_y"`
+	SubtitleMinH       float64 `json:"subtitle_min_h"`
+	MetaSize           float64 `json:"meta_size"`
+	MetaLH             float64 `json:"meta_lh"`
+	MetaRowGap         float64 `json:"meta_row_gap"`
+	MetaColGap         float64 `json:"meta_col_gap"`
+	MetaPadTop         float64 `json:"meta_pad_top"`
+}
+
+// PamphletFooterLayout is the exact mm chrome from the frontend sheet CSS
+// (PAMPHLET_FOOTER_LAYOUT_MM). Print POSTs these; PDF must not invent sizes.
+type PamphletFooterLayout struct {
+	Height             float64 `json:"height"`
+	Width              float64 `json:"width"`
+	Pad                float64 `json:"pad"`
+	PadTop             float64 `json:"pad_top"`
+	PadBottom          float64 `json:"pad_bottom"`
+	Radius             float64 `json:"radius"`
+	Stroke             float64 `json:"stroke"`
+	InnerInset         float64 `json:"inner_inset"`
+	InnerStroke        float64 `json:"inner_stroke"`
+	InnerRadius        float64 `json:"inner_radius"`
+	ChromeGap          float64 `json:"chrome_gap"`
+	DividerOuterStroke float64 `json:"divider_outer_stroke"`
+	DividerGap         float64 `json:"divider_gap"`
+	DividerInnerStroke float64 `json:"divider_inner_stroke"`
+	ActionSize         float64 `json:"action_size"`
+	ActionLH           float64 `json:"action_lh"`
+	ActionPadX         float64 `json:"action_pad_x"`
+	ActionPadY         float64 `json:"action_pad_y"`
+	ActionMinH         float64 `json:"action_min_h"`
+	MessageSize        float64 `json:"message_size"`
+	MessageLH          float64 `json:"message_lh"`
+	MessagePadX        float64 `json:"message_pad_x"`
+	MessagePadTop      float64 `json:"message_pad_top"`
+	MessagePadBottom   float64 `json:"message_pad_bottom"`
+	MessagePadY        float64 `json:"message_pad_y"`
+	MessageMinH        float64 `json:"message_min_h"`
+	MetaGap            float64 `json:"meta_gap"`
+	MetaColGap         float64 `json:"meta_col_gap"`
+	MetaRowH           float64 `json:"meta_row_h"`
+	MetaLabel1RowH     float64 `json:"meta_label1_row_h"`
+	MetaLabel2RowH     float64 `json:"meta_label2_row_h"`
+	MetaLabel2PadTop   float64 `json:"meta_label2_pad_top"`
+	MetaValueRowH      float64 `json:"meta_value_row_h"`
+	MetaSize           float64 `json:"meta_size"`
+	MetaLH             float64 `json:"meta_lh"`
+	MetaPadX           float64 `json:"meta_pad_x"`
+	MetaPadY           float64 `json:"meta_pad_y"`
+	MetaValuePadY      float64 `json:"meta_value_pad_y"`
+	CellStroke         float64 `json:"cell_stroke"`
+	// Legacy: older clients sent action_message_gap; ignored when divider_* present.
+	ActionMessageGap float64 `json:"action_message_gap"`
+}
+
+type PamphletHeader struct {
+	Title         string `json:"title"`
+	Subtitle      string `json:"subtitle"`
+	Author        string `json:"author"`
+	Series        string `json:"series"`
+	SeriesChapter string `json:"series_chapter"`
+	Date          string `json:"date"`
+}
+
+type PamphletFooter struct {
+	Action  string `json:"action"`
+	Message string `json:"message"`
+	Label1  string `json:"label1"`
+	Value1  string `json:"value1"`
+	Label2  string `json:"label2"`
+	Value2  string `json:"value2"`
+	Label3  string `json:"label3"`
+	Value3  string `json:"value3"`
+	Label4  string `json:"label4"`
+	Value4  string `json:"value4"`
+	// Legacy keys (migrated into labelN/valueN when present).
+	Whatsapp   string         `json:"whatsapp,omitempty"`
+	Phone      string         `json:"phone,omitempty"`
+	Address    string         `json:"address,omitempty"`
+	Activities string         `json:"activities,omitempty"`
+	Items      []PamphletItem `json:"items,omitempty"`
+}
+
+type PamphletItem struct {
+	Type         string  `json:"type"`
+	Content      string  `json:"content"`
+	StyleIndexes [][]int `json:"style_indexes"`
+	HeightMm     float64 `json:"height_mm"`
+}
+
+// pdfImage is one embedded JPEG XObject collected while walking the document.
+type pdfImage struct {
+	key    string // original item content (data URL) for lookup
+	name   string // Im1, Im2, …
+	jpeg   []byte
+	width  int
+	height int
+	objNum int
+}
+
+// pdfBuilder accumulates PDF objects as raw byte slices so JPEG streams stay binary-safe.
+type pdfBuilder struct {
+	objects [][]byte
+}
+
+func (b *pdfBuilder) add(obj []byte) int {
+	b.objects = append(b.objects, obj)
+	return len(b.objects)
+}
+
+func (b *pdfBuilder) addString(obj string) int {
+	return b.add([]byte(obj))
+}
+
+func (b *pdfBuilder) bytes() []byte {
+	var out bytes.Buffer
+	out.WriteString("%PDF-1.4\n")
+	offsets := make([]int, 0, len(b.objects)+1)
+	offsets = append(offsets, 0)
+	for _, obj := range b.objects {
+		offsets = append(offsets, out.Len())
+		out.Write(obj)
+	}
+	xref := out.Len()
+	fmt.Fprintf(&out, "xref\n0 %d\n", len(b.objects)+1)
+	out.WriteString("0000000000 65535 f \n")
+	for _, off := range offsets[1:] {
+		fmt.Fprintf(&out, "%010d 00000 n \n", off)
+	}
+	fmt.Fprintf(&out, "trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n", len(b.objects)+1, xref)
+	return out.Bytes()
+}
+
+// BuildPamphletPDF renders a two-page US Letter landscape PDF using the same
+// mm geometry as the frontend pamphlet sheet (279.4 × 215.9 mm per page).
+func BuildPamphletPDF(doc PamphletDocument) []byte {
+	pageW := MmToPoints(PamphletPageWidthMm)
+	pageH := MmToPoints(PamphletPageHeightMm)
+
+	images := collectPamphletImages(doc)
+
+	var b pdfBuilder
+	b.addString("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n")
+	b.addString("2 0 obj\n<< /Type /Pages /Kids [] /Count 2 >>\nendobj\n") // patched below
+	f1, f2 := buildEmbeddedFontPair(&b)
+
+	xObjDecl := strings.Builder{}
+	for i := range images {
+		objNum := len(b.objects) + 1
+		images[i].objNum = objNum
+		b.add(buildJPEGXObject(objNum, images[i]))
+		fmt.Fprintf(&xObjDecl, "/%s %d 0 R ", images[i].name, objNum)
+	}
+
+	imgByContent := make(map[string]*pdfImage, len(images))
+	for i := range images {
+		imgByContent[images[i].key] = &images[i]
+	}
+
+	ink := resolvePamphletInk(doc.InkColor)
+	content1 := applyPamphletInk(buildPage1Content(doc, imgByContent), ink)
+	content2 := applyPamphletInk(buildPage2Content(doc, imgByContent), ink)
+
+	resources := fmt.Sprintf("/Font << /F1 %d 0 R /F2 %d 0 R >>", f1, f2)
+	if xObjDecl.Len() > 0 {
+		resources += " /XObject << " + xObjDecl.String() + ">>"
+	}
+
+	page1Num := len(b.objects) + 1
+	content1Num := page1Num + 1
+	b.addString(fmt.Sprintf(
+		"%d 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents %d 0 R /Resources << %s >> >>\nendobj\n",
+		page1Num, pageW, pageH, content1Num, resources,
+	))
+	b.add(buildStreamObject(content1Num, content1))
+
+	page2Num := len(b.objects) + 1
+	content2Num := page2Num + 1
+	b.addString(fmt.Sprintf(
+		"%d 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents %d 0 R /Resources << %s >> >>\nendobj\n",
+		page2Num, pageW, pageH, content2Num, resources,
+	))
+	b.add(buildStreamObject(content2Num, content2))
+
+	b.objects[1] = []byte(fmt.Sprintf(
+		"2 0 obj\n<< /Type /Pages /Kids [%d 0 R %d 0 R] /Count 2 >>\nendobj\n",
+		page1Num, page2Num,
+	))
+
+	return b.bytes()
+}
+
+func collectPamphletImages(doc PamphletDocument) []pdfImage {
+	var out []pdfImage
+	seen := map[string]bool{}
+	add := func(item PamphletItem) {
+		if item.Type != "image" || strings.TrimSpace(item.Content) == "" {
+			return
+		}
+		if seen[item.Content] {
+			return
+		}
+		jpegBytes, w, h, ok := decodeToJPEG(item.Content)
+		if !ok {
+			return
+		}
+		seen[item.Content] = true
+		out = append(out, pdfImage{
+			key:    item.Content,
+			name:   fmt.Sprintf("Im%d", len(out)+1),
+			jpeg:   jpegBytes,
+			width:  w,
+			height: h,
+		})
+	}
+	for _, col := range [][]PamphletItem{
+		doc.Column1, doc.Column2, doc.Column3, doc.Column4,
+		doc.Column5, doc.Column6, doc.Column7, doc.Column8,
+	} {
+		for _, it := range col {
+			add(it)
+		}
+	}
+	return out
+}
+
+func decodeToJPEG(content string) (jpegBytes []byte, w, h int, ok bool) {
+	payload, err := dataURLPayload(content)
+	if err != nil || len(payload) == 0 {
+		return nil, 0, 0, false
+	}
+	if isJPEG(payload) {
+		cw, ch, okCfg := jpegSize(payload)
+		if okCfg {
+			return payload, cw, ch, true
+		}
+	}
+	img, _, err := image.Decode(bytes.NewReader(payload))
+	if err != nil {
+		return nil, 0, 0, false
+	}
+	bounds := img.Bounds()
+	w, h = bounds.Dx(), bounds.Dy()
+	if w < 1 || h < 1 {
+		return nil, 0, 0, false
+	}
+	var buf bytes.Buffer
+	if err := jpeg.Encode(&buf, img, &jpeg.Options{Quality: 85}); err != nil {
+		return nil, 0, 0, false
+	}
+	return buf.Bytes(), w, h, true
+}
+
+func dataURLPayload(content string) ([]byte, error) {
+	content = strings.TrimSpace(content)
+	if strings.HasPrefix(content, "data:") {
+		comma := strings.IndexByte(content, ',')
+		if comma < 0 {
+			return nil, fmt.Errorf("bad data url")
+		}
+		meta := content[5:comma]
+		data := content[comma+1:]
+		if strings.Contains(meta, ";base64") {
+			// Strip whitespace that some serializers insert into long base64 blobs.
+			compact := strings.Map(func(r rune) rune {
+				if r == '\n' || r == '\r' || r == '\t' || r == ' ' {
+					return -1
+				}
+				return r
+			}, data)
+			return base64.StdEncoding.DecodeString(compact)
+		}
+		return []byte(data), nil
+	}
+	if decoded, err := base64.StdEncoding.DecodeString(content); err == nil && (isJPEG(decoded) || len(decoded) > 8) {
+		return decoded, nil
+	}
+	return nil, fmt.Errorf("unsupported image content")
+}
+
+func isJPEG(b []byte) bool {
+	return len(b) > 3 && b[0] == 0xFF && b[1] == 0xD8 && b[2] == 0xFF
+}
+
+func jpegSize(b []byte) (w, h int, ok bool) {
+	cfg, err := jpeg.DecodeConfig(bytes.NewReader(b))
+	if err != nil {
+		return 0, 0, false
+	}
+	return cfg.Width, cfg.Height, true
+}
+
+func buildJPEGXObject(objNum int, img pdfImage) []byte {
+	var buf bytes.Buffer
+	fmt.Fprintf(&buf, "%d 0 obj\n", objNum)
+	fmt.Fprintf(&buf, "<< /Type /XObject /Subtype /Image /Width %d /Height %d /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length %d >>\n",
+		img.width, img.height, len(img.jpeg))
+	buf.WriteString("stream\n")
+	buf.Write(img.jpeg)
+	buf.WriteString("\nendstream\nendobj\n")
+	return buf.Bytes()
+}
+
+func buildStreamObject(objNum int, content string) []byte {
+	body := []byte(content)
+	var buf bytes.Buffer
+	fmt.Fprintf(&buf, "%d 0 obj\n<< /Length %d >>\nstream\n", objNum, len(body))
+	buf.Write(body)
+	buf.WriteString("\nendstream\nendobj\n")
+	return buf.Bytes()
+}
+
+func colX(track int) float64 {
+	// CSS grid content tracks 2,4,6,8 → columns left→right
+	switch track {
+	case 2:
+		return PamphletMarginMm
+	case 4:
+		return PamphletMarginMm + PamphletColWidthMm + PamphletGutterNarrow
+	case 6:
+		return PamphletMarginMm + PamphletColWidthMm + PamphletGutterNarrow + PamphletColWidthMm + PamphletGutterWide
+	case 8:
+		return PamphletMarginMm + PamphletColWidthMm + PamphletGutterNarrow + PamphletColWidthMm + PamphletGutterWide + PamphletColWidthMm + PamphletGutterNarrow
+	default:
+		return PamphletMarginMm
+	}
+}
+
+func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage) string {
+	var s strings.Builder
+	headerLayout := normalizeHeaderLayout(doc.HeaderLayout)
+	footerLayout := normalizeFooterLayout(doc.FooterLayout)
+	headerH := headerLayout.Height
+	bodyGutter := headerLayout.BodyGutter
+	footerH := footerLayout.Height
+	leftColH := PamphletPage2BodyMm - PamphletFooterBodyGutterMm - footerH
+	rightColH := PamphletPage2BodyMm - headerH - bodyGutter
+
+	headerX := colX(6)
+	headerTop := PamphletPageHeightMm - PamphletMarginMm
+	// Same vertical tracks as CSS grid: margin → header → gutter → cols.
+	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
+
+	leftTop := PamphletPageHeightMm - PamphletMarginMm
+	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7)
+	drawColumn(&s, doc.Column8, colX(4), leftTop, PamphletColWidthMm, leftColH, images, false)
+
+	// Col1 lead shares col2 top (after header→body gutter); body band shrinks by lead+gap.
+	rightTop := headerTop - headerH - bodyGutter
+	if structuredLead(doc, 1) {
+		drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1)
+	} else {
+		drawColumn(&s, doc.Column1, colX(6), rightTop, PamphletColWidthMm, rightColH, images, false)
+	}
+	drawColumn(&s, doc.Column2, colX(8), rightTop, PamphletColWidthMm, rightColH, images, false)
+
+	footerTop := PamphletMarginMm + footerH
+	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
+	return s.String()
+}
+
+func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage) string {
+	var s strings.Builder
+	top := PamphletPageHeightMm - PamphletMarginMm
+	h := PamphletPage2BodyMm
+	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3)
+	drawColumn(&s, doc.Column4, colX(4), top, PamphletColWidthMm, h, images, false)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column5, colX(6), top, h, images, 5)
+	drawColumn(&s, doc.Column6, colX(8), top, PamphletColWidthMm, h, images, false)
+	return s.String()
+}
+
+// cssBaselineOffsetMm is the distance from the top of a CSS line box to the
+// alphabetic baseline: half-leading + ~0.8em (Latin sans).
+func cssBaselineOffsetMm(sizeMm, lineHeight float64) float64 {
+	return sizeMm*(lineHeight-1.0)/2.0 + sizeMm*0.80
+}
+
+// drawHeader paints footer-style double frame, title, title double-divider,
+// subtitle, then 2x2 gray meta. Type sizes and chrome come from header_layout (FE mm).
+func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayout, x, top, width float64) float64 {
+	layout = normalizeHeaderLayout(layout)
+	heightMm := layout.Height
+	floor := top - heightMm
+
+	// Outer + inner frame (same path math as drawFooter).
+	strokeRoundedRectMm(s, x, top, width, heightMm, layout.Radius, layout.Stroke)
+	if layout.InnerInset > 0 && layout.InnerStroke > 0 {
+		clear := layout.InnerInset
+		pathInset := layout.Stroke/2 + clear + layout.InnerStroke/2
+		ix := x + pathInset
+		it := top - pathInset
+		iw := width - 2*pathInset
+		ih := heightMm - 2*pathInset
+		if iw > 0 && ih > 0 {
+			strokeRoundedRectMm(s, ix, it, iw, ih, layout.InnerRadius, layout.InnerStroke)
+		}
+	}
+
+	padTop := layout.PadTop
+	padBottom := layout.PadBottom
+	if padTop <= 0 && padBottom <= 0 {
+		// Legacy symmetric pad from older print clients.
+		if layout.Pad > 0 {
+			padTop = layout.Pad
+			padBottom = layout.Pad
+		} else {
+			padTop = 2.2
+			padBottom = 0
+		}
+	} else if padTop <= 0 {
+		if layout.Pad > 0 {
+			padTop = layout.Pad
+		} else {
+			padTop = 2.2
+		}
+	}
+	padX := layout.PadX
+	innerX := x + padX
+	innerTop := top - padTop
+	innerW := width - 2*padX
+	textFloor := floor + padBottom
+
+	titleSizeMm := layout.TitleSize
+	titleLH := layout.TitleLH
+	titleSizePt := MmToPoints(titleSizeMm)
+	titleLineHMm := titleSizeMm * titleLH
+	y := innerTop - cssBaselineOffsetMm(titleSizeMm, titleLH)
+	used := writeWrapped(s, "F2", titleSizePt, titleLH, innerX, y, innerW, h.Title, textFloor)
+	nTitle := 1
+	if used > 0 {
+		nTitle = int(used/titleLineHMm + 0.5)
+		if nTitle < 1 {
+			nTitle = 1
+		}
+	} else if strings.TrimSpace(h.Title) == "" {
+		return floor
+	}
+	titleBoxBottom := innerTop - float64(nTitle)*titleLineHMm
+
+	// Double rule under title (same strokes as footer Acción→Mensaje divider).
+	cursorTop := titleBoxBottom - layout.TitlePadBottom
+	dividerH := layout.DividerOuterStroke + layout.DividerGap + layout.DividerInnerStroke
+	if dividerH > 0 {
+		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerOuterStroke)
+		cursorTop -= layout.DividerOuterStroke + layout.DividerGap
+		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerInnerStroke)
+		cursorTop -= layout.DividerInnerStroke
+	}
+
+	// Subtitle / key metadata (footer Mensaje analogue).
+	subSize := layout.SubtitleSize
+	subLH := layout.SubtitleLH
+	if subSize <= 0 {
+		subSize = 2.469
+	}
+	if subLH <= 0 {
+		subLH = 1.25
+	}
+	subPadTop := layout.SubtitlePadTop
+	if subPadTop <= 0 {
+		subPadTop = layout.SubtitlePadY
+	}
+	subPadBottom := layout.SubtitlePadY
+	subTextW := innerW - 2*layout.SubtitlePadX
+	if subTextW < 4 {
+		subTextW = innerW
+	}
+	subTextH := measureWrappedHeightMm(h.Subtitle, subSize, subLH, subTextW)
+	subBoxH := subPadTop + subPadBottom + subTextH
+	if subBoxH < layout.SubtitleMinH {
+		subBoxH = layout.SubtitleMinH
+	}
+	if cursorTop-subBoxH < textFloor {
+		subBoxH = cursorTop - textFloor
+	}
+	if subBoxH > 0 {
+		if strings.TrimSpace(h.Subtitle) != "" {
+			textTop := cursorTop - subPadTop
+			sy := textTop - cssBaselineOffsetMm(subSize, subLH)
+			subFloor := cursorTop - subBoxH + subPadBottom
+			writeWrapped(s, "F1", MmToPoints(subSize), subLH,
+				innerX+layout.SubtitlePadX, sy, subTextW, h.Subtitle, subFloor)
+		}
+		cursorTop -= subBoxH
+	}
+
+	metaLineTop := cursorTop - layout.TitleMetaGap
+	metaSectionTop := metaLineTop
+
+	metaSizeMm := layout.MetaSize
+	metaLH := layout.MetaLH
+	metaSizePt := MmToPoints(metaSizeMm)
+	metaLineHMm := metaSizeMm * metaLH
+	metaPadTop := layout.MetaPadTop
+	if metaPadTop < 0 {
+		metaPadTop = 0
+	}
+	// First meta row sits below the top gray rule by meta_pad_top.
+	metaCursor := metaLineTop - metaPadTop
+	metaY := metaCursor - cssBaselineOffsetMm(metaSizeMm, metaLH)
+
+	colGapMm := layout.MetaColGap
+	half := (innerW - colGapMm) / 2
+	if half < 10 {
+		half = innerW / 2
+	}
+	rightX := innerX + half + colGapMm
+
+	left1 := labeledMeta("Serie", h.Series)
+	right1 := labeledMeta("Capítulo", h.SeriesChapter)
+	left2 := labeledMeta("Autor", h.Author)
+	right2 := labeledMeta("Fecha", h.Date)
+
+	contentBottom := titleBoxBottom
+	drewMeta := false
+	if (left1 != "" || right1 != "") && metaY > textFloor {
+		if left1 != "" {
+			writeGrayText(s, "F1", metaSizePt, innerX, metaY, half, left1)
+		}
+		if right1 != "" {
+			writeGrayText(s, "F1", metaSizePt, rightX, metaY, half, right1)
+		}
+		contentBottom = metaCursor - metaLineHMm
+		drewMeta = true
+		metaCursor -= metaLineHMm + layout.MetaRowGap
+		metaY = metaCursor - cssBaselineOffsetMm(metaSizeMm, metaLH)
+	}
+	if (left2 != "" || right2 != "") && metaY > textFloor {
+		if left2 != "" {
+			writeGrayText(s, "F1", metaSizePt, innerX, metaY, half, left2)
+		}
+		if right2 != "" {
+			writeGrayText(s, "F1", metaSizePt, rightX, metaY, half, right2)
+		}
+		contentBottom = metaCursor - metaLineHMm
+		drewMeta = true
+	}
+
+	// Double gray cross on meta (vertical + mid horizontal) — no outer frame.
+	if drewMeta && metaSectionTop > contentBottom {
+		// Top gray hairline + mid H/V cross (parity with footer meta / CSS).
+		strokeGrayMetaCrossMm(s, innerX, metaSectionTop, innerW, metaSectionTop-contentBottom, true)
+	}
+
+	if contentBottom < floor {
+		return floor
+	}
+	return contentBottom
+}
+
+func labeledMeta(label, value string) string {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return ""
+	}
+	return label + ": " + value
+}
+
+var pamphletFooterDefaultLabels = [4]string{"WhatsApp:", "Teléfono:", "Dirección:", "Actividades:"}
+
+// defaultHeaderLayout mirrors frontend PAMPHLET_HEADER_LAYOUT_MM / style.css.
+func defaultHeaderLayout() PamphletHeaderLayout {
+	return PamphletHeaderLayout{
+		Height:             PamphletHeaderHMm,
+		BodyGutter:         PamphletHeaderBodyGutterMm,
+		Pad:                1.2,
+		PadTop:             2.2,
+		PadBottom:          0.5,
+		PadX:               2.2,
+		Radius:             1,
+		Stroke:             0.2,
+		InnerInset:         0.45,
+		InnerStroke:        0.1,
+		InnerRadius:        0.6,
+		TitleSize:          pamphletTitleSizeMm,
+		TitleLH:            pamphletTitleLH,
+		TitlePadBottom:     1,
+		TitleMetaGap:       PamphletHeaderTitleMetaGapMm,
+		DividerOuterStroke: 0.2,
+		DividerGap:         0.45,
+		DividerInnerStroke: 0.1,
+		SubtitleSize:       2.469,
+		SubtitleLH:         1.25,
+		SubtitlePadX:       0,
+		SubtitlePadTop:     1.5,
+		SubtitlePadY:       0.5,
+		SubtitleMinH:       4.0,
+		MetaSize:           pamphletMetaSizeMm,
+		MetaLH:             pamphletMetaLH,
+		MetaRowGap:         PamphletHeaderMetaRowGapMm,
+		MetaColGap:         2.5,
+		MetaPadTop:         0.5,
+	}
+}
+
+// normalizeHeaderLayout fills zero fields from the frontend defaults so older
+// print clients without header_layout still render a coherent header band.
+func normalizeHeaderLayout(l PamphletHeaderLayout) PamphletHeaderLayout {
+	d := defaultHeaderLayout()
+	pick := func(v, def float64) float64 {
+		if v > 0 {
+			return v
+		}
+		return def
+	}
+	padTop := pick(l.PadTop, 0)
+	padBottom := l.PadBottom
+	if padTop <= 0 && padBottom <= 0 {
+		sym := pick(l.Pad, d.Pad)
+		padTop = pick(d.PadTop, sym)
+		padBottom = d.PadBottom
+		if l.Pad > 0 && l.PadTop <= 0 {
+			// Truly legacy: only `pad` sent — keep symmetric.
+			padTop = l.Pad
+			padBottom = l.Pad
+		}
+	} else if padTop <= 0 {
+		padTop = pick(l.Pad, d.PadTop)
+	}
+	return PamphletHeaderLayout{
+		Height:             pick(l.Height, d.Height),
+		BodyGutter:         pick(l.BodyGutter, d.BodyGutter),
+		Pad:                pick(l.Pad, d.Pad),
+		PadTop:             padTop,
+		PadBottom:          padBottom,
+		PadX:               pick(l.PadX, d.PadX),
+		Radius:             pick(l.Radius, d.Radius),
+		Stroke:             pick(l.Stroke, d.Stroke),
+		InnerInset:         pick(l.InnerInset, d.InnerInset),
+		InnerStroke:        pick(l.InnerStroke, d.InnerStroke),
+		InnerRadius:        pick(l.InnerRadius, d.InnerRadius),
+		TitleSize:          pick(l.TitleSize, d.TitleSize),
+		TitleLH:            pick(l.TitleLH, d.TitleLH),
+		TitlePadBottom:     pick(l.TitlePadBottom, d.TitlePadBottom),
+		TitleMetaGap:       pick(l.TitleMetaGap, d.TitleMetaGap),
+		DividerOuterStroke: pick(l.DividerOuterStroke, d.DividerOuterStroke),
+		DividerGap:         pick(l.DividerGap, d.DividerGap),
+		DividerInnerStroke: pick(l.DividerInnerStroke, d.DividerInnerStroke),
+		SubtitleSize:       pick(l.SubtitleSize, d.SubtitleSize),
+		SubtitleLH:         pick(l.SubtitleLH, d.SubtitleLH),
+		SubtitlePadX:       pick(l.SubtitlePadX, d.SubtitlePadX),
+		SubtitlePadTop:     pick(l.SubtitlePadTop, d.SubtitlePadTop),
+		SubtitlePadY:       pick(l.SubtitlePadY, d.SubtitlePadY),
+		SubtitleMinH:       pick(l.SubtitleMinH, d.SubtitleMinH),
+		MetaSize:           pick(l.MetaSize, d.MetaSize),
+		MetaLH:             pick(l.MetaLH, d.MetaLH),
+		MetaRowGap:         pick(l.MetaRowGap, d.MetaRowGap),
+		MetaColGap:         pick(l.MetaColGap, d.MetaColGap),
+		MetaPadTop:         pick(l.MetaPadTop, d.MetaPadTop),
+	}
+}
+
+// defaultFooterLayout mirrors frontend PAMPHLET_FOOTER_LAYOUT_MM / style.css.
+func defaultFooterLayout() PamphletFooterLayout {
+	return PamphletFooterLayout{
+		Height:             PamphletFooterHMm,
+		Width:              PamphletColWidthMm*2 + PamphletGutterNarrow,
+		Pad:                1.2,
+		PadTop:             1.2,
+		PadBottom:          0,
+		Radius:             1.0,
+		Stroke:             0.2,
+		InnerInset:         0.45,
+		InnerStroke:        0.1,
+		InnerRadius:        0.6,
+		ChromeGap:          0.6,
+		DividerOuterStroke: 0.2,
+		DividerGap:         0.45,
+		DividerInnerStroke: 0.1,
+		ActionSize:         3.175,
+		ActionLH:           1.25,
+		ActionPadX:         1.4,
+		ActionPadY:         0.7,
+		ActionMinH:         4.5,
+		MessageSize:        2.469,
+		MessageLH:          1.25,
+		MessagePadX:        1.4,
+		MessagePadTop:      0.4,
+		MessagePadBottom:   0,
+		MessagePadY:        0.7,
+		MessageMinH:        3.5,
+		MetaGap:            0.4,
+		MetaColGap:         2.0,
+		MetaRowH:           5.5,
+		MetaLabel1RowH:     3.0,
+		MetaLabel2RowH:     6.5,
+		MetaLabel2PadTop:   1.0,
+		MetaValueRowH:      1.5,
+		MetaSize:           2.8,
+		MetaLH:             1.25,
+		MetaPadX:           1.0,
+		MetaPadY:           0.7,
+		MetaValuePadY:      0.2,
+		CellStroke:         0.15,
+	}
+}
+
+// normalizeFooterLayout fills zero fields from the frontend defaults so older
+// print clients without footer_layout still render a coherent chrome band.
+func normalizeFooterLayout(l PamphletFooterLayout) PamphletFooterLayout {
+	d := defaultFooterLayout()
+	pick := func(v, def float64) float64 {
+		if v > 0 {
+			return v
+		}
+		return def
+	}
+	return PamphletFooterLayout{
+		Height: pick(l.Height, d.Height),
+		Width:  pick(l.Width, d.Width),
+		Pad:    pick(l.Pad, d.Pad),
+		PadTop: func() float64 {
+			if l.PadTop > 0 {
+				return l.PadTop
+			}
+			if l.PadBottom == 0 && l.PadTop == 0 && l.Pad > 0 {
+				// Legacy symmetric pad only.
+				return l.Pad
+			}
+			return d.PadTop
+		}(),
+		PadBottom: func() float64 {
+			// FE posts pad_top > 0 with pad_bottom: 0 (flush bottom).
+			if l.PadTop > 0 {
+				return l.PadBottom
+			}
+			if l.PadBottom > 0 {
+				return l.PadBottom
+			}
+			if l.Pad > 0 {
+				return l.Pad
+			}
+			return d.PadBottom
+		}(),
+		Radius:             pick(l.Radius, d.Radius),
+		Stroke:             pick(l.Stroke, d.Stroke),
+		InnerInset:         pick(l.InnerInset, d.InnerInset),
+		InnerStroke:        pick(l.InnerStroke, d.InnerStroke),
+		InnerRadius:        pick(l.InnerRadius, d.InnerRadius),
+		ChromeGap:          pick(l.ChromeGap, d.ChromeGap),
+		DividerOuterStroke: pick(l.DividerOuterStroke, d.DividerOuterStroke),
+		DividerGap:         pick(l.DividerGap, d.DividerGap),
+		DividerInnerStroke: pick(l.DividerInnerStroke, d.DividerInnerStroke),
+		ActionSize:         pick(l.ActionSize, d.ActionSize),
+		ActionLH:           pick(l.ActionLH, d.ActionLH),
+		ActionPadX:         pick(l.ActionPadX, d.ActionPadX),
+		ActionPadY:         pick(l.ActionPadY, d.ActionPadY),
+		ActionMinH:         pick(l.ActionMinH, d.ActionMinH),
+		MessageSize:        pick(l.MessageSize, d.MessageSize),
+		MessageLH:          pick(l.MessageLH, d.MessageLH),
+		MessagePadX:        pick(l.MessagePadX, d.MessagePadX),
+		MessagePadTop: func() float64 {
+			if l.MessagePadTop > 0 {
+				return l.MessagePadTop
+			}
+			// Legacy symmetric pad, or FE sent pad_bottom:0 with pad_top via defaults path.
+			if l.MessagePadBottom == 0 && l.MessagePadTop == 0 {
+				return pick(l.MessagePadY, d.MessagePadTop)
+			}
+			return d.MessagePadTop
+		}(),
+		MessagePadBottom: func() float64 {
+			// FE posts message_pad_top > 0 with message_pad_bottom: 0 (−1mm).
+			if l.MessagePadTop > 0 {
+				return l.MessagePadBottom
+			}
+			if l.MessagePadBottom > 0 {
+				return l.MessagePadBottom
+			}
+			return pick(l.MessagePadY, d.MessagePadBottom)
+		}(),
+		MessagePadY:      pick(l.MessagePadY, d.MessagePadY),
+		MessageMinH:      pick(l.MessageMinH, d.MessageMinH),
+		MetaGap:          pick(l.MetaGap, d.MetaGap),
+		MetaColGap:       pick(l.MetaColGap, d.MetaColGap),
+		MetaRowH:         pick(l.MetaRowH, d.MetaRowH),
+		MetaLabel1RowH:   pick(l.MetaLabel1RowH, d.MetaLabel1RowH),
+		MetaLabel2RowH:   pick(l.MetaLabel2RowH, d.MetaLabel2RowH),
+		MetaLabel2PadTop: pick(l.MetaLabel2PadTop, d.MetaLabel2PadTop),
+		MetaValueRowH:    pick(l.MetaValueRowH, d.MetaValueRowH),
+		MetaSize:         pick(l.MetaSize, d.MetaSize),
+		MetaLH:           pick(l.MetaLH, d.MetaLH),
+		MetaPadX:         pick(l.MetaPadX, d.MetaPadX),
+		MetaPadY:         pick(l.MetaPadY, d.MetaPadY),
+		MetaValuePadY:    pick(l.MetaValuePadY, d.MetaValuePadY),
+		CellStroke:       pick(l.CellStroke, d.CellStroke),
+	}
+}
+
+// strokeRoundedRectMm strokes a rounded rectangle. x/top/width/height are mm;
+// top is the CSS box top (PDF y increases upward). radius and strokeMm are mm.
+func strokeRoundedRectMm(s *strings.Builder, x, top, width, height, radius, strokeMm float64) {
+	if width <= 0 || height <= 0 {
+		return
+	}
+	r := radius
+	if r < 0 {
+		r = 0
+	}
+	maxR := width / 2
+	if height/2 < maxR {
+		maxR = height / 2
+	}
+	if r > maxR {
+		r = maxR
+	}
+
+	bx := MmToPoints(x)
+	by := MmToPoints(top - height) // bottom-left
+	bw := MmToPoints(width)
+	bh := MmToPoints(height)
+	rp := MmToPoints(r)
+	// Cubic Bézier kappa for quarter-circle approximation.
+	const k = 0.5522847498
+	rk := rp * k
+
+	left, right := bx, bx+bw
+	bottom, topPt := by, by+bh
+
+	s.WriteString("q\n")
+	s.WriteString("0 0 0 RG\n")
+	s.WriteString(fmt.Sprintf("%.3f w\n", MmToPoints(strokeMm)))
+	// Start at bottom edge just after left radius, go counter-clockwise.
+	s.WriteString(fmt.Sprintf("%.2f %.2f m\n", left+rp, bottom))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", right-rp, bottom))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+		right-rp+rk, bottom, right, bottom+rp-rk, right, bottom+rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", right, topPt-rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+		right, topPt-rp+rk, right-rp+rk, topPt, right-rp, topPt))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", left+rp, topPt))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+		left+rp-rk, topPt, left, topPt-rp+rk, left, topPt-rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", left, bottom+rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n",
+		left, bottom+rp-rk, left+rp-rk, bottom, left+rp, bottom))
+	s.WriteString("S\n")
+	s.WriteString("Q\n")
+}
+
+// normalizeFooter upgrades legacy footer shapes into labelN/valueN chrome fields.
+func normalizeFooter(f PamphletFooter) PamphletFooter {
+	// Prior fixed chrome used whatsapp/phone/address/activities as values only.
+	if strings.TrimSpace(f.Value1) == "" && strings.TrimSpace(f.Whatsapp) != "" {
+		f.Value1 = f.Whatsapp
+	}
+	if strings.TrimSpace(f.Value2) == "" && strings.TrimSpace(f.Phone) != "" {
+		f.Value2 = f.Phone
+	}
+	if strings.TrimSpace(f.Value3) == "" && strings.TrimSpace(f.Address) != "" {
+		f.Value3 = f.Address
+	}
+	if strings.TrimSpace(f.Value4) == "" && strings.TrimSpace(f.Activities) != "" {
+		f.Value4 = f.Activities
+	}
+
+	hasStructured := strings.TrimSpace(f.Action) != "" ||
+		strings.TrimSpace(f.Message) != "" ||
+		strings.TrimSpace(f.Value1) != "" ||
+		strings.TrimSpace(f.Value2) != "" ||
+		strings.TrimSpace(f.Value3) != "" ||
+		strings.TrimSpace(f.Value4) != "" ||
+		strings.TrimSpace(f.Label1) != "" ||
+		strings.TrimSpace(f.Label2) != "" ||
+		strings.TrimSpace(f.Label3) != "" ||
+		strings.TrimSpace(f.Label4) != ""
+	if !hasStructured && len(f.Items) > 0 {
+		textAt := func(i int) string {
+			if i < 0 || i >= len(f.Items) {
+				return ""
+			}
+			return f.Items[i].Content
+		}
+		f.Action = textAt(0)
+		f.Message = textAt(1)
+		f.Value1 = textAt(2)
+		f.Value2 = textAt(3)
+		f.Value3 = textAt(4)
+		f.Value4 = textAt(5)
+	}
+
+	labels := []*string{&f.Label1, &f.Label2, &f.Label3, &f.Label4}
+	for i, p := range labels {
+		if strings.TrimSpace(*p) == "" {
+			*p = pamphletFooterDefaultLabels[i]
+		} else {
+			*p = ensureFooterLabelColon(*p)
+		}
+	}
+	return f
+}
+
+// ensureFooterLabelColon appends ":" when a non-empty meta caption lacks one.
+func ensureFooterLabelColon(label string) string {
+	t := strings.TrimSpace(label)
+	if t == "" || strings.HasSuffix(t, ":") {
+		return t
+	}
+	return t + ":"
+}
+
+// writeGrayText paints a single line in medium gray (UI meta color), clipped by width via wrap.
+func writeGrayText(s *strings.Builder, font string, sizePt float64, xMm, yMm, widthMm float64, text string) {
+	text = strings.TrimSpace(toWinAnsi(text))
+	if text == "" {
+		return
+	}
+	lines := wrapWordsToWidth(text, sizePt, MmToPoints(widthMm), false)
+	if len(lines) == 0 {
+		return
+	}
+	// One visual line in the meta cell (ellipsis via truncation of wrap).
+	line := lines[0]
+	if len(lines) > 1 && len(line) > 3 {
+		runes := []rune(line)
+		if len(runes) > 3 {
+			line = string(runes[:len(runes)-3]) + "..."
+		}
+	}
+	// DeviceGray ≈ #666666
+	s.WriteString("0.4 0.4 0.4 rg\n")
+	s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+		font, sizePt, MmToPoints(xMm), MmToPoints(yMm), escape(line)))
+	s.WriteString("0 0 0 rg\n")
+}
+
+// measureWrappedHeightMm returns how many mm of line-box height text needs.
+func measureWrappedHeightMm(text string, sizeMm, lh, widthMm float64) float64 {
+	text = strings.TrimSpace(text)
+	lineH := sizeMm * lh
+	if text == "" {
+		return lineH
+	}
+	lines := wrapWordsToWidth(toWinAnsi(text), MmToPoints(sizeMm), MmToPoints(widthMm), false)
+	n := len(lines)
+	if n < 1 {
+		n = 1
+	}
+	return float64(n) * lineH
+}
+
+// footerMetaSectionHeightMm is the reserved mm for the 2 pair-rows (+ gap), matching CSS.
+func footerMetaSectionHeightMm(f PamphletFooter, layout PamphletFooterLayout) float64 {
+	pair1 := layout.MetaLabel1RowH
+	if strings.TrimSpace(f.Value1) != "" || strings.TrimSpace(f.Value2) != "" {
+		pair1 += layout.MetaValueRowH
+	}
+	pair2 := layout.MetaLabel2RowH
+	if strings.TrimSpace(f.Value3) != "" || strings.TrimSpace(f.Value4) != "" {
+		pair2 += layout.MetaValueRowH
+	}
+	return pair1 + layout.MetaGap + pair2
+}
+
+// drawFooter paints fixed chrome using frontend footer_layout mm: outer frame,
+// Acción/Mensaje text, then a 2×2 meta pair grid (spec 034). Inner input cell
+// borders are desktop edit chrome only — never stroked in the PDF print.
+func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayout, x, top, width float64) {
+	f = normalizeFooter(f)
+	layout = normalizeFooterLayout(layout)
+	heightMm := layout.Height
+	// Prefer exhaustive FE footer_layout.width when posted; caller width is fallback only.
+	if layout.Width > 0 {
+		width = layout.Width
+	}
+
+	strokeRoundedRectMm(s, x, top, width, heightMm, layout.Radius, layout.Stroke)
+	// Thinner second frame: CSS ::after inset is from the padding edge (inner face
+	// of the outer border). PDF strokes are centered on the path, so inset the
+	// inner path by stroke/2 + clear_inset + inner_stroke/2.
+	if layout.InnerInset > 0 && layout.InnerStroke > 0 {
+		clear := layout.InnerInset
+		pathInset := layout.Stroke/2 + clear + layout.InnerStroke/2
+		ix := x + pathInset
+		it := top - pathInset
+		iw := width - 2*pathInset
+		ih := heightMm - 2*pathInset
+		if iw > 0 && ih > 0 {
+			strokeRoundedRectMm(s, ix, it, iw, ih, layout.InnerRadius, layout.InnerStroke)
+		}
+	}
+
+	padX := layout.Pad
+	if padX <= 0 {
+		padX = 1.2
+	}
+	padTop := layout.PadTop
+	padBottom := layout.PadBottom
+	if padTop <= 0 && padBottom <= 0 {
+		padTop = padX
+		padBottom = padX
+	}
+	innerX := x + padX
+	innerTop := top - padTop
+	innerW := width - 2*padX
+	floor := top - heightMm + padBottom
+	cursorTop := innerTop
+
+	// Reserve meta (+ chrome_gap) at the bottom so a long Acción cannot eat pair2
+	// or the visual bottom of the footer frame (spec 034 revision).
+	metaH := footerMetaSectionHeightMm(f, layout)
+	upperFloor := floor + metaH + layout.ChromeGap
+	if upperFloor > innerTop {
+		upperFloor = innerTop
+	}
+
+	dividerH := layout.DividerOuterStroke + layout.DividerGap + layout.DividerInnerStroke
+
+	// Acción — box height from FE layout only; no cell border in print.
+	actionTextW := innerW - 2*layout.ActionPadX
+	if actionTextW < 4 {
+		actionTextW = innerW
+	}
+	actionTextH := measureWrappedHeightMm(f.Action, layout.ActionSize, layout.ActionLH, actionTextW)
+	actionBoxH := layout.ActionPadY*2 + actionTextH
+	if actionBoxH < layout.ActionMinH {
+		actionBoxH = layout.ActionMinH
+	}
+	if cursorTop-actionBoxH < upperFloor {
+		actionBoxH = cursorTop - upperFloor
+	}
+	if actionBoxH > 0 {
+		if strings.TrimSpace(f.Action) != "" {
+			textTop := cursorTop - layout.ActionPadY
+			y := textTop - cssBaselineOffsetMm(layout.ActionSize, layout.ActionLH)
+			textFloor := cursorTop - actionBoxH + layout.ActionPadY
+			writeWrapped(s, "F2", MmToPoints(layout.ActionSize), layout.ActionLH,
+				innerX+layout.ActionPadX, y, actionTextW, f.Action, textFloor)
+		}
+		cursorTop -= actionBoxH
+	}
+
+	// Double horizontal rule (same language as footer outer/inner frame).
+	if dividerH > 0 && cursorTop-dividerH > upperFloor {
+		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerOuterStroke)
+		cursorTop -= layout.DividerOuterStroke + layout.DividerGap
+		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerInnerStroke)
+		cursorTop -= layout.DividerInnerStroke
+	}
+
+	// Mensaje
+	msgPadTop := layout.MessagePadTop
+	msgPadBottom := layout.MessagePadBottom
+	if msgPadTop <= 0 && msgPadBottom <= 0 && layout.MessagePadY > 0 {
+		msgPadTop = layout.MessagePadY
+		msgPadBottom = layout.MessagePadY
+	} else if msgPadTop <= 0 {
+		msgPadTop = layout.MessagePadY
+		if msgPadTop <= 0 {
+			msgPadTop = 0.7
+		}
+	}
+	// msgPadBottom may be 0 when FE sends message_pad_bottom: 0 (−1mm vs prior 0.7).
+	msgTextW := innerW - 2*layout.MessagePadX
+	if msgTextW < 4 {
+		msgTextW = innerW
+	}
+	msgTextH := measureWrappedHeightMm(f.Message, layout.MessageSize, layout.MessageLH, msgTextW)
+	msgBoxH := msgPadTop + msgPadBottom + msgTextH
+	if msgBoxH < layout.MessageMinH {
+		msgBoxH = layout.MessageMinH
+	}
+	if cursorTop-msgBoxH < upperFloor {
+		msgBoxH = cursorTop - upperFloor
+	}
+	if msgBoxH > 0 {
+		if strings.TrimSpace(f.Message) != "" {
+			textTop := cursorTop - msgPadTop
+			y := textTop - cssBaselineOffsetMm(layout.MessageSize, layout.MessageLH)
+			textFloor := cursorTop - msgBoxH + msgPadBottom
+			writeWrapped(s, "F1", MmToPoints(layout.MessageSize), layout.MessageLH,
+				innerX+layout.MessagePadX, y, msgTextW, f.Message, textFloor)
+		}
+		cursorTop -= msgBoxH
+	}
+
+	// Pack meta under Mensaje (desktop flex-start). upperFloor still caps Acción/Mensaje
+	// so they cannot invade the reserved meta height; leftover band stays below meta.
+	cursorTop -= layout.ChromeGap
+	if cursorTop-metaH < floor-0.01 {
+		// Upper stack ate the reserve — pin meta to the floor band.
+		cursorTop = floor + metaH
+	}
+
+	half := (innerW - layout.MetaColGap) / 2
+	if half < 8 {
+		half = innerW / 2
+	}
+	rightX := innerX + half + layout.MetaColGap
+
+	metaPt := MmToPoints(layout.MetaSize)
+	metaSizeMm := layout.MetaSize
+	metaLH := layout.MetaLH
+	if metaLH <= 0 {
+		metaLH = 1.25
+	}
+	labelGap := 1.0 // mm between bold label and value (matches CSS gap)
+
+	type metaPair struct {
+		labelL, valueL, labelR, valueR string
+		labelRowH                      float64
+		padY                           float64
+		wrap                           bool // pair2: value wraps; line2+ flush left
+	}
+	pairs := []metaPair{
+		{
+			labelL: f.Label1, valueL: f.Value1, labelR: f.Label2, valueR: f.Value2,
+			labelRowH: layout.MetaLabel1RowH, padY: layout.MetaPadY, wrap: false,
+		},
+		{
+			labelL: f.Label3, valueL: f.Value3, labelR: f.Label4, valueR: f.Value4,
+			labelRowH: layout.MetaLabel2RowH, padY: layout.MetaLabel2PadTop, wrap: true,
+		},
+	}
+	if pairs[1].padY <= 0 {
+		pairs[1].padY = layout.MetaPadY
+	}
+
+	metaSectionTop := cursorTop
+	drawnH := 0.0
+	pairsDrawn := 0
+	pair1DrawnH := 0.0
+	for i, pair := range pairs {
+		valuesEmpty := strings.TrimSpace(pair.valueL) == "" && strings.TrimSpace(pair.valueR) == ""
+		rowH := pair.labelRowH
+		if !valuesEmpty {
+			rowH += layout.MetaValueRowH
+		}
+		if cursorTop-rowH < floor-0.01 {
+			break
+		}
+		if i > 0 {
+			cursorTop -= layout.MetaGap
+			drawnH += layout.MetaGap
+		}
+
+		drawMetaPairCell := func(cellX float64, label, value string) {
+			textW := half - layout.MetaPadX
+			if textW < 4 {
+				textW = half
+			}
+			x0 := cellX + layout.MetaPadX*0.5
+			textTop := cursorTop - pair.padY
+			baseline := textTop - cssBaselineOffsetMm(metaSizeMm, metaLH)
+			floorCell := cursorTop - rowH + layout.MetaValuePadY
+			if floorCell < floor {
+				floorCell = floor
+			}
+
+			label = strings.TrimSpace(label)
+			value = strings.TrimSpace(value)
+			labelW := 0.0
+			if label != "" {
+				labelW = stringWidthPt(toWinAnsi(label), metaPt, true) * 25.4 / 72.0
+				if labelW > textW*0.45 {
+					labelW = textW * 0.45
+				}
+				writeGrayText(s, "F2", metaPt, x0, baseline, labelW+0.5, label)
+			}
+			if value == "" {
+				return
+			}
+			valueX := x0
+			valueW := textW
+			if labelW > 0 {
+				valueX = x0 + labelW + labelGap
+				valueW = textW - labelW - labelGap
+				if valueW < 4 {
+					valueW = 4
+					valueX = x0 + textW - valueW
+				}
+			}
+			if pair.wrap {
+				writeGrayWrappedFlushLeft(s, "F1", metaPt, metaLH, valueX, x0, valueW, textW, baseline, value, floorCell)
+			} else {
+				writeGrayText(s, "F1", metaPt, valueX, baseline, valueW, value)
+			}
+		}
+
+		drawMetaPairCell(innerX, pair.labelL, pair.valueL)
+		drawMetaPairCell(rightX, pair.labelR, pair.valueR)
+		cursorTop -= rowH
+		drawnH += rowH
+		pairsDrawn++
+		if i == 0 {
+			pair1DrawnH = rowH
+		}
+	}
+	if drawnH > 0 {
+		midFromTop := 0.0
+		drawMid := pairsDrawn >= 2
+		if drawMid {
+			midFromTop = pair1DrawnH + layout.MetaGap/2
+		}
+		strokeGrayMetaCrossAtMm(s, innerX, metaSectionTop, innerW, drawnH, midFromTop, true, drawMid)
+	}
+}
+
+// writeGrayWrappedFlushLeft paints pair2 values: first line beside the label,
+// following lines flush at fullX with fullW (spec 034 — not indented under value).
+func writeGrayWrappedFlushLeft(
+	s *strings.Builder,
+	font string,
+	sizePt, lineHeight, firstX, fullX, firstW, fullW, yMm float64,
+	text string,
+	floorMm float64,
+) {
+	text = strings.TrimSpace(toWinAnsi(text))
+	if text == "" || firstW <= 0 {
+		return
+	}
+	if lineHeight < 1.0 {
+		lineHeight = 1.25
+	}
+	if fullW < 4 {
+		fullW = firstW
+	}
+	bold := font == "F2"
+	words := strings.Fields(text)
+	if len(words) == 0 {
+		return
+	}
+
+	// Pack first line into firstW (beside label).
+	spaceW := glyphWidthEm(' ', bold) * sizePt
+	maxFirst := MmToPoints(firstW)
+	var first strings.Builder
+	firstWidth := 0.0
+	restStart := 0
+	for i, w := range words {
+		ww := stringWidthPt(w, sizePt, bold)
+		if first.Len() == 0 {
+			if ww > maxFirst {
+				// Single long word: hard-split for line 1, remainder continues.
+				parts := splitLongWord(w, sizePt, maxFirst, bold)
+				if len(parts) > 0 {
+					first.WriteString(parts[0])
+				}
+				if len(parts) > 1 {
+					words = append(parts[1:], words[i+1:]...)
+					restStart = 0
+				} else {
+					restStart = i + 1
+				}
+				break
+			}
+			first.WriteString(w)
+			firstWidth = ww
+			restStart = i + 1
+			continue
+		}
+		if firstWidth+spaceW+ww > maxFirst {
+			restStart = i
+			break
+		}
+		first.WriteByte(' ')
+		first.WriteString(w)
+		firstWidth += spaceW + ww
+		restStart = i + 1
+	}
+
+	lineH := sizePt * lineHeight * 25.4 / 72.0
+	sizeMm := sizePt * 25.4 / 72.0
+	offset := cssBaselineOffsetMm(sizeMm, lineHeight)
+	y := yMm
+
+	s.WriteString("0.4 0.4 0.4 rg\n")
+	if first.Len() > 0 {
+		lineBoxTop := y + offset
+		if lineBoxTop >= floorMm-lineH {
+			s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+				font, sizePt, MmToPoints(firstX), MmToPoints(y), escape(first.String())))
+			y -= lineH
+		}
+	}
+
+	// Remaining lines at full column width, flush left (max one more line in the band).
+	if restStart < len(words) {
+		rest := strings.Join(words[restStart:], " ")
+		lines := wrapWordsToWidth(rest, sizePt, MmToPoints(fullW), bold)
+		if len(lines) > 1 {
+			lines = lines[:1]
+		}
+		for _, line := range lines {
+			lineBoxTop := y + offset
+			if lineBoxTop < floorMm-lineH {
+				break
+			}
+			s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+				font, sizePt, MmToPoints(fullX), MmToPoints(y), escape(line)))
+			y -= lineH
+		}
+	}
+	s.WriteString("0 0 0 rg\n")
+}
+
+// writeGrayWrapped paints up to two gray lines at a fixed x (legacy helper).
+func writeGrayWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm, widthMm float64, text string, floorMm float64) {
+	writeGrayWrappedFlushLeft(s, font, sizePt, lineHeight, xMm, xMm, widthMm, widthMm, yMm, text, floorMm)
+}
+
+// strokeGrayMetaCrossMm paints single gray hairlines: optional top, mid horizontal, center vertical.
+// Matches CSS meta ::before/::after overlays — does not affect layout math.
+func strokeGrayMetaCrossMm(s *strings.Builder, x, top, width, height float64, includeTop bool) {
+	strokeGrayMetaCrossAtMm(s, x, top, width, height, height/2, includeTop, true)
+}
+
+// strokeGrayMetaCrossAtMm places the mid rule at midFromTop mm below top when drawMid is true.
+func strokeGrayMetaCrossAtMm(s *strings.Builder, x, top, width, height, midFromTop float64, includeTop, drawMid bool) {
+	if width <= 0 || height <= 0 {
+		return
+	}
+	const stroke = 0.2
+	if includeTop {
+		strokeHorizontalRuleGrayMm(s, x, top, width, stroke)
+	}
+	if drawMid && midFromTop > 0 && midFromTop < height {
+		strokeHorizontalRuleGrayMm(s, x, top-midFromTop, width, stroke)
+	}
+	cx := x + width/2
+	strokeVerticalRuleGrayMm(s, cx, top, height, stroke)
+}
+
+func strokeHorizontalRuleGrayMm(s *strings.Builder, x, top, width, strokeMm float64) {
+	if width <= 0 || strokeMm <= 0 {
+		return
+	}
+	y := MmToPoints(top)
+	s.WriteString("q\n")
+	s.WriteString("0.4 0.4 0.4 RG\n")
+	s.WriteString(fmt.Sprintf("%.3f w\n", MmToPoints(strokeMm)))
+	s.WriteString(fmt.Sprintf("%.2f %.2f m %.2f %.2f l S\n",
+		MmToPoints(x), y, MmToPoints(x+width), y))
+	s.WriteString("Q\n")
+}
+
+func strokeVerticalRuleGrayMm(s *strings.Builder, x, top, height, strokeMm float64) {
+	if height <= 0 || strokeMm <= 0 {
+		return
+	}
+	xp := MmToPoints(x)
+	s.WriteString("q\n")
+	s.WriteString("0.4 0.4 0.4 RG\n")
+	s.WriteString(fmt.Sprintf("%.3f w\n", MmToPoints(strokeMm)))
+	s.WriteString(fmt.Sprintf("%.2f %.2f m %.2f %.2f l S\n",
+		xp, MmToPoints(top), xp, MmToPoints(top-height)))
+	s.WriteString("Q\n")
+}
+
+// strokeHorizontalRuleMm draws a hairline across the footer (divider outer/inner).
+func strokeHorizontalRuleMm(s *strings.Builder, x, top, width, strokeMm float64) {
+	if width <= 0 || strokeMm <= 0 {
+		return
+	}
+	y := MmToPoints(top)
+	s.WriteString("q\n")
+	s.WriteString("0 0 0 RG\n")
+	s.WriteString(fmt.Sprintf("%.3f w\n", MmToPoints(strokeMm)))
+	s.WriteString(fmt.Sprintf("%.2f %.2f m %.2f %.2f l S\n",
+		MmToPoints(x), y, MmToPoints(x+width), y))
+	s.WriteString("Q\n")
+}
+
+func structuredLead(doc PamphletDocument, colNum int) bool {
+	if doc.Type != "pamphlet_structured_images" {
+		return false
+	}
+	return colNum == 1 || colNum == 3 || colNum == 5 || colNum == 7
+}
+
+const (
+	pamphletLeadHeightMm = 52.0 // 10:9 of ~57.85mm column
+	pamphletLeadGapMm    = 3.75 // 0.75 × former 5mm gap
+)
+
+// drawStructuredOrPlainColumn draws an optional outside-column lead, then body items
+// in the remaining height (structured template only).
+func drawStructuredOrPlainColumn(
+	s *strings.Builder,
+	doc PamphletDocument,
+	items []PamphletItem,
+	x, top, heightMm float64,
+	images map[string]*pdfImage,
+	colNum int,
+) {
+	if !structuredLead(doc, colNum) {
+		drawColumn(s, items, x, top, PamphletColWidthMm, heightMm, images, false)
+		return
+	}
+	body := items
+	cursor := top
+	h := heightMm
+	if len(items) > 0 && items[0].Type == "image" {
+		drawImageOrPlaceholder(s, items[0], x, cursor, PamphletColWidthMm, pamphletLeadHeightMm, images)
+		drawLeadDoubleBorder(s, x, cursor, PamphletColWidthMm, pamphletLeadHeightMm)
+		cursor -= pamphletLeadHeightMm + pamphletLeadGapMm
+		h -= pamphletLeadHeightMm + pamphletLeadGapMm
+		body = items[1:]
+	}
+	if h <= 0 {
+		return
+	}
+	drawColumn(s, body, x, cursor, PamphletColWidthMm, h, images, false)
+}
+
+func drawColumn(s *strings.Builder, items []PamphletItem, x, top, width, heightMm float64, images map[string]*pdfImage, leadFirst bool) {
+	drawStackedItems(s, items, x, top, width, heightMm, images, pamphletBodySizePt, pamphletHeadingSizePt, pamphletBodyLH, pamphletHeadingLH, leadFirst)
+}
+
+// drawStackedItems walks items from the CSS box top (not the first baseline).
+// Desktop columns use overflow:visible and only --item-gap-height between
+// blocks — no extra heading margin. Tracking the item-top cursor keeps the
+// last heading+paragraph inside the band instead of eating them at the floor.
+func drawStackedItems(
+	s *strings.Builder,
+	items []PamphletItem,
+	x, top, width, heightMm float64,
+	images map[string]*pdfImage,
+	bodyPt, headingPt, bodyLH, headingLH float64,
+	leadFirst bool,
+) {
+	cursorTop := top
+	floor := top - heightMm
+	for i, item := range items {
+		// CSS .dumb-column { overflow: visible } — the last sheet line may start
+		// just below the grid floor and still sit in the 10mm page margin.
+		if cursorTop < floor-pamphletBodySizeMm*pamphletBodyLH {
+			break
+		}
+		if item.Type == "image" {
+			h := item.HeightMm
+			if h < 10 {
+				h = 10
+			}
+			lead := leadFirst && i == 0
+			if lead {
+				h = pamphletLeadHeightMm
+			}
+			drawImageOrPlaceholder(s, item, x, cursorTop, width, h, images)
+			if lead {
+				drawLeadDoubleBorder(s, x, cursorTop, width, h)
+			}
+			cursorTop -= h
+			if lead {
+				cursorTop -= pamphletLeadGapMm
+			} else if i < len(items)-1 {
+				cursorTop -= PamphletItemGapMm
+			}
+			continue
+		}
+		sizePt := bodyPt
+		sizeMm := bodyPt * 25.4 / 72.0
+		lh := bodyLH
+		font := "F1"
+		if item.Type == "heading_1" {
+			sizePt = headingPt
+			sizeMm = headingPt * 25.4 / 72.0
+			lh = headingLH
+			font = "F2"
+		}
+		if hasBold(item) && item.Type != "heading_1" {
+			font = "F2"
+			sizePt = bodyPt
+			sizeMm = bodyPt * 25.4 / 72.0
+			lh = bodyLH
+		}
+		y := cursorTop - cssBaselineOffsetMm(sizeMm, lh)
+		used := writeWrapped(s, font, sizePt, lh, x, y, width, item.Content, floor)
+		if used <= 0 {
+			break
+		}
+		cursorTop -= used
+		if i < len(items)-1 {
+			cursorTop -= PamphletItemGapMm
+		}
+	}
+}
+
+func drawLeadDoubleBorder(s *strings.Builder, x, top, width, heightMm float64) {
+	// Match header chrome: outer 0.2mm + inner inset 0.45mm / 0.1mm stroke.
+	strokeRoundedRectMm(s, x, top, width, heightMm, 1.0, 0.2)
+	inset := 0.45
+	pathInset := 0.2/2 + inset + 0.1/2
+	strokeRoundedRectMm(s, x+pathInset, top-pathInset, width-2*pathInset, heightMm-2*pathInset, 0.6, 0.1)
+}
+
+func drawImageOrPlaceholder(s *strings.Builder, item PamphletItem, x, y, width, heightMm float64, images map[string]*pdfImage) {
+	img, ok := images[item.Content]
+	if !ok || img == nil || len(img.jpeg) == 0 {
+		// Empty / undecodable: draw nothing here (no fill, no "[imagen]" label).
+		// Structured leads get their thin double border from drawLeadDoubleBorder;
+		// stroking a second rect under that frame looked like a black matte.
+		return
+	}
+
+	bx := MmToPoints(x)
+	by := MmToPoints(y - heightMm)
+	bw := MmToPoints(width)
+	bh := MmToPoints(heightMm)
+
+	// Fit image into the reserved frame (object-fit: cover → scale to fill, clip via clip rect).
+	// Optional pan/zoom from style_indexes (mirrors frontend):
+	//   [1][0] = offset_x_mm * 100 (+ right)
+	//   [1][1] = offset_y_mm * 100 (+ down in CSS; PDF y is inverted)
+	//   [2][0] = scale * 100 (100 = 1.0×)
+	s.WriteString("q\n")
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f re W n\n", bx, by, bw, bh))
+	iw, ih := float64(img.width), float64(img.height)
+	if iw < 1 {
+		iw = 1
+	}
+	if ih < 1 {
+		ih = 1
+	}
+	scale := bw / iw
+	if bh/ih > scale {
+		scale = bh / ih
+	}
+	zoom := 1.0
+	if len(item.StyleIndexes) > 2 && len(item.StyleIndexes[2]) > 0 && item.StyleIndexes[2][0] > 0 {
+		zoom = float64(item.StyleIndexes[2][0]) / 100.0
+		if zoom < 0.5 {
+			zoom = 0.5
+		}
+		if zoom > 3 {
+			zoom = 3
+		}
+	}
+	scale *= zoom
+	dw, dh := iw*scale, ih*scale
+	dx := bx + (bw-dw)/2
+	dy := by + (bh-dh)/2
+	if len(item.StyleIndexes) > 1 && len(item.StyleIndexes[1]) > 0 {
+		dx += MmToPoints(float64(item.StyleIndexes[1][0]) / 100.0)
+		if len(item.StyleIndexes[1]) > 1 {
+			// CSS +Y is down; PDF +Y is up → subtract.
+			dy -= MmToPoints(float64(item.StyleIndexes[1][1]) / 100.0)
+		}
+	}
+	s.WriteString(fmt.Sprintf("%.2f 0 0 %.2f %.2f %.2f cm /%s Do\n", dw, dh, dx, dy, img.name))
+	s.WriteString("Q\n")
+}
+
+func hasBold(item PamphletItem) bool {
+	if len(item.StyleIndexes) == 0 || len(item.StyleIndexes[0]) < 2 {
+		return false
+	}
+	a, b := item.StyleIndexes[0][0], item.StyleIndexes[0][1]
+	return b > a
+}
+
+func writeText(s *strings.Builder, font string, sizePt float64, xMm, yMm, widthMm float64, text string) {
+	_ = widthMm
+	text = toWinAnsi(text)
+	if text == "" {
+		return
+	}
+	s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+		font, sizePt, MmToPoints(xMm), MmToPoints(yMm), escape(text)))
+}
+
+func writeWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm, widthMm float64, text string, floorMm float64) float64 {
+	text = strings.TrimSpace(toWinAnsi(text))
+	if text == "" {
+		return 0
+	}
+	if lineHeight < 1.0 {
+		lineHeight = 1.25
+	}
+	maxWidthPt := MmToPoints(widthMm)
+	lines := wrapWordsToWidth(text, sizePt, maxWidthPt, font == "F2")
+	lineH := sizePt * lineHeight * 25.4 / 72.0 // mm
+	sizeMm := sizePt * 25.4 / 72.0
+	offset := cssBaselineOffsetMm(sizeMm, lineHeight)
+	used := 0.0
+	y := yMm
+	for _, line := range lines {
+		// y is the alphabetic baseline. Desktop columns are overflow:visible, so
+		// paint a line whose line-box still intersects the band or starts at most
+		// one line into the page margin — that is the last sheet line the PDF
+		// was dropping ("para santificae" / "Mira cómo dice Romanos…").
+		lineBoxTop := y + offset
+		if lineBoxTop < floorMm-lineH {
+			break
+		}
+		s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+			font, sizePt, MmToPoints(xMm), MmToPoints(y), escape(line)))
+		y -= lineH
+		used += lineH
+	}
+	return used
+}
+
+func wrapWordsToWidth(text string, sizePt, maxWidthPt float64, bold bool) []string {
+	words := strings.Fields(text)
+	if len(words) == 0 {
+		return nil
+	}
+	spaceW := glyphWidthEm(' ', bold) * sizePt
+	var lines []string
+	var cur strings.Builder
+	curWidth := 0.0
+	for _, w := range words {
+		ww := stringWidthPt(w, sizePt, bold)
+		if cur.Len() == 0 {
+			if ww > maxWidthPt {
+				lines = append(lines, splitLongWord(w, sizePt, maxWidthPt, bold)...)
+				cur.Reset()
+				curWidth = 0
+				continue
+			}
+			cur.WriteString(w)
+			curWidth = ww
+			continue
+		}
+		if curWidth+spaceW+ww > maxWidthPt {
+			lines = append(lines, cur.String())
+			cur.Reset()
+			if ww > maxWidthPt {
+				lines = append(lines, splitLongWord(w, sizePt, maxWidthPt, bold)...)
+				curWidth = 0
+				continue
+			}
+			cur.WriteString(w)
+			curWidth = ww
+			continue
+		}
+		cur.WriteByte(' ')
+		cur.WriteString(w)
+		curWidth += spaceW + ww
+	}
+	if cur.Len() > 0 {
+		lines = append(lines, cur.String())
+	}
+	return lines
+}
+
+func splitLongWord(word string, sizePt, maxWidthPt float64, bold bool) []string {
+	var lines []string
+	start := 0
+	w := 0.0
+	for i := 0; i < len(word); i++ {
+		gw := glyphWidthEm(word[i], bold) * sizePt
+		if w+gw > maxWidthPt && i > start {
+			lines = append(lines, word[start:i])
+			start = i
+			w = 0
+		}
+		w += gw
+	}
+	if start < len(word) {
+		lines = append(lines, word[start:])
+	}
+	return lines
+}
+
+// toWinAnsi converts Unicode text to a single-byte WinAnsi string suitable for
+// Roboto + /WinAnsiEncoding. Writing UTF-8 multi-byte sequences into the PDF
+// string (via WriteRune) was the source of Ã¡ / Â¿ mojibake.
+func toWinAnsi(s string) string {
+	var b strings.Builder
+	b.Grow(len(s))
+	for _, r := range s {
+		switch {
+		case r == '\n' || r == '\r' || r == '\t':
+			b.WriteByte(' ')
+		case r < 128:
+			b.WriteByte(byte(r))
+		case r <= 0xFF:
+			// Latin-1 / WinAnsi overlap for Western European (áéíóúñ¿¡· etc.).
+			b.WriteByte(byte(r))
+		default:
+			if mapped, ok := winAnsiExtras[r]; ok {
+				b.WriteByte(mapped)
+			} else if unicode.IsLetter(r) || unicode.IsDigit(r) {
+				b.WriteByte('?')
+			}
+			// drop other unsupported glyphs
+		}
+	}
+	return strings.TrimSpace(b.String())
+}
+
+// Common typography outside Latin-1 that still appears in pamphlets.
+var winAnsiExtras = map[rune]byte{
+	'\u2018': 0x91, // ‘
+	'\u2019': 0x92, // ’
+	'\u201C': 0x93, // “
+	'\u201D': 0x94, // ”
+	'\u2013': 0x96, // –
+	'\u2014': 0x97, // —
+	'\u2026': 0x85, // …
+	'\u20AC': 0x80, // €
+}
+
+func nonEmpty(s string) string {
+	return strings.TrimSpace(s)
+}

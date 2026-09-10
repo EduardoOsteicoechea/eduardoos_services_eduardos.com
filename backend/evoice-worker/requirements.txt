@@ -1,0 +1,16 @@
+# eVoice TTS worker deps (spec 002 §5.7 / 044 / 069).
+# System packages still required on the VPS: ffmpeg, tesseract-ocr, espeak-ng (and/or piper).
+# Super Premium PDF: pymupdf (preferred) rasterizes pages → DeepSeek Vision.
+# Fallback: poppler-utils (pdftoppm) on PATH.
+#
+# Env (see linux_sync.py docstring):
+#   EVOICE_PYTHON, EVOICE_WORKER_SCRIPT, EVOICE_FAKE_TTS, EVOICE_MEDIA_ROOT,
+#   EVOICE_JOB_TIMEOUT, DEEPSEEK_API_KEY
+#
+# Production: create a venv under backend/evoice-worker/.venv and point EVOICE_PYTHON at it.
+# Local/tests: set EVOICE_FAKE_TTS=true so the Go API never shells out to this script.
+python-docx>=1.1.0
+pypdf>=4.0.0
+pytesseract>=0.3.10
+Pillow>=10.0.0
+pymupdf>=1.24.0

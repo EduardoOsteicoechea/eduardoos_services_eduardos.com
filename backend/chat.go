@@ -14,6 +14,9 @@ import (
 //go:embed prompts/system.md
 var siteSystemPrompt string
 
+//go:embed prompts/PROFILE_CONTEXT.md
+var profileContextCorpus string
+
 const (
 	maxPublicChatRunes   = 500
 	maxPublicChatHistory = 8
@@ -29,9 +32,19 @@ type publicChatTurn struct {
 }
 
 type publicChatRequest struct {
-	Message string           `json:"message"`
-	History []publicChatTurn `json:"history"`
-	Stream  bool             `json:"stream"`
+	Message  string           `json:"message"`
+	Question string           `json:"question"` // alias used by /api/profile/ask
+	History  []publicChatTurn `json:"history"`
+	Stream   bool             `json:"stream"`
+}
+
+func chatSystemPrompt() string {
+	base := strings.TrimSpace(siteSystemPrompt)
+	corpus := strings.TrimSpace(profileContextCorpus)
+	if corpus == "" {
+		return base
+	}
+	return base + "\n\n---\n\n# PROFILE_CONTEXT (canonical corpus)\n\n" + corpus
 }
 
 func sanitizeChatTurns(raw []publicChatTurn) []ChatMessage {
@@ -68,6 +81,15 @@ func writeSSE(w http.ResponseWriter, payload any) error {
 }
 
 func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
+	a.handlePublicChat(w, r, "public-chat")
+}
+
+// profileAskHandler is an alias of public chat for the home dock (/api/profile/ask).
+func (a *App) profileAskHandler(w http.ResponseWriter, r *http.Request) {
+	a.handlePublicChat(w, r, "profile-ask")
+}
+
+func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind string) {
 	if !a.validOrigin(r) || !a.validCSRF(r) {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
@@ -78,6 +100,9 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	message := strings.TrimSpace(body.Message)
+	if message == "" {
+		message = strings.TrimSpace(body.Question)
+	}
 	if message == "" || utf8.RuneCountInString(message) > maxPublicChatRunes {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
@@ -89,7 +114,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		userID = user.ID
 	}
 	if !a.chatIPLimit.allow(ip) || (userID != "" && !a.chatUserLimit.allow(userID)) {
-		a.auditEventExtra(r, "public-chat", "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
+		a.auditEventExtra(r, auditKind, "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
@@ -97,6 +122,15 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
+	}
+	systemPrompt := chatSystemPrompt()
+	if a.cfg.MustLog {
+		a.log.Info("chat.system_prompt",
+			"request_id", requestIDFrom(r, nil),
+			"kind", auditKind,
+			"prompt_len", utf8.RuneCountInString(systemPrompt),
+			"has_profile_corpus", strings.Contains(systemPrompt, "eduardooost@gmail.com"),
+		)
 	}
 	history := sanitizeChatTurns(body.History)
 	history = append(history, ChatMessage{Role: "user", Content: message})
@@ -109,7 +143,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Connection", "keep-alive")
 		w.Header().Set("X-Accel-Buffering", "no")
 		w.WriteHeader(http.StatusOK)
-		result, err := client.Stream(ctx, siteSystemPrompt, history, func(delta string) error {
+		result, err := client.Stream(ctx, systemPrompt, history, func(delta string) error {
 			clean := sanitizeModelDelta(delta)
 			if clean == "" {
 				return nil
@@ -117,7 +151,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 			return writeSSE(w, map[string]any{"delta": clean})
 		})
 		if err != nil {
-			a.auditEventExtra(r, "public-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
+			a.auditEventExtra(r, auditKind, "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
 			_ = writeSSE(w, map[string]any{
 				"ok": false, "error": "provider_unavailable",
 				"request_id": rid,
@@ -125,7 +159,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 			})
 			return
 		}
-		a.auditEventExtra(r, "public-chat", "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
+		a.auditEventExtra(r, auditKind, "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
 		_ = writeSSE(w, map[string]any{
 			"ok": true, "done": true,
 			"request_id": rid,
@@ -133,9 +167,9 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	result, err := client.Complete(ctx, siteSystemPrompt, history)
+	result, err := client.Complete(ctx, systemPrompt, history)
 	if err != nil {
-		a.auditEventExtra(r, "public-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
+		a.auditEventExtra(r, auditKind, "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
 		writeJSON(w, http.StatusOK, map[string]any{
 			"ok": false, "error": "provider_unavailable",
 			"request_id": requestIDFrom(r, w),
@@ -143,7 +177,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	a.auditEventExtra(r, "public-chat", "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
+	a.auditEventExtra(r, auditKind, "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":         true,
 		"request_id": requestIDFrom(r, w),

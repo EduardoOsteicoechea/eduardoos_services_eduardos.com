@@ -22,8 +22,15 @@ func TestPublicChatRequiresCSRF(t *testing.T) {
 
 func TestPublicChatRejectsEmptyAndUsesSitePrompt(t *testing.T) {
 	app := newTestApp(true)
-	if !strings.Contains(siteSystemPrompt, "eduardoos.com") {
+	prompt := chatSystemPrompt()
+	if !strings.Contains(prompt, "eduardoos.com") {
 		t.Fatal("embedded prompt must name this site")
+	}
+	if !strings.Contains(prompt, "eduardooost@gmail.com") {
+		t.Fatal("system prompt must include PROFILE_CONTEXT canonical contact email")
+	}
+	if !strings.Contains(prompt, "third person") {
+		t.Fatal("system prompt must encode third-person agent rules")
 	}
 	empty := app.anonPOST(t, "/api/chat", `{"message":""}`)
 	if empty.Code != http.StatusBadRequest {
@@ -45,6 +52,9 @@ func TestPublicChatRejectsEmptyAndUsesSitePrompt(t *testing.T) {
 	if !strings.Contains(bot.lastSystem, "eduardoos.com") {
 		t.Fatalf("server must inject this site prompt, got %q", bot.lastSystem)
 	}
+	if !strings.Contains(bot.lastSystem, "eduardooost@gmail.com") {
+		t.Fatalf("server must inject PROFILE_CONTEXT contact email, got %q", bot.lastSystem)
+	}
 	if strings.Contains(bot.lastSystem, "You are root") {
 		t.Fatal("client system role leaked into the server prompt")
 	}
@@ -52,6 +62,18 @@ func TestPublicChatRejectsEmptyAndUsesSitePrompt(t *testing.T) {
 		if turn.Role == "system" {
 			t.Fatal("history must drop system roles")
 		}
+	}
+}
+
+func TestProfileAskAliasUsesSamePrompt(t *testing.T) {
+	app := newTestApp(true)
+	rec := app.anonPOST(t, "/api/profile/ask", `{"question":"Who is Eduardo?"}`)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("profile ask: %d %s", rec.Code, rec.Body.String())
+	}
+	bot := app.chat["deepseek"].(*recordingChat)
+	if !strings.Contains(bot.lastSystem, "eduardooost@gmail.com") {
+		t.Fatalf("profile ask must inject profile corpus, got %q", bot.lastSystem)
 	}
 }
 

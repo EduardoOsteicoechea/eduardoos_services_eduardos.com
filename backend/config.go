@@ -33,9 +33,14 @@ type config struct {
 	BootstrapAdminPassword string
 	MediaRoot              string
 	EreportMediaRoot       string
+	EvoiceMediaRoot        string
+	EvoicePython           string
+	EvoiceFakeTTS          bool
+	EvoiceWorkerScript     string
 	EreportMaxImageBytes   int64
 	EreportMaxImageEdge    int
 	EreportMaxPayloadBytes int64
+	CalvinParagraphsRoot   string
 	PublicBaseURL          string
 	SMTPHost               string
 	SMTPPort               string
@@ -49,6 +54,8 @@ type config struct {
 	KimiKey                string
 	KimiBaseURL            string
 	KimiModel              string
+	PayPalHostedButtonID   string
+	PayPalCheckoutURL      string
 	AllowedOrigins         []string
 }
 
@@ -85,6 +92,10 @@ func loadConfig() config {
 	if kimiModel == "" {
 		kimiModel = "kimi-k3"
 	}
+	paypalCheckout := strings.TrimSpace(os.Getenv("PAYPAL_CHECKOUT_URL"))
+	if paypalCheckout == "" {
+		paypalCheckout = "https://www.paypal.com/cgi-bin/webscr"
+	}
 
 	from := smtpFromAddressFromEnv()
 	if from == "" {
@@ -120,6 +131,15 @@ func loadConfig() config {
 	if ereportRoot == "" {
 		ereportRoot = media + "/ereport"
 	}
+	evoiceRoot := strings.TrimSpace(os.Getenv("EVOICE_MEDIA_ROOT"))
+	if evoiceRoot == "" {
+		evoiceRoot = media + "/evoice"
+	}
+
+	calvinRoot := strings.TrimSpace(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
+	if calvinRoot == "" {
+		calvinRoot = ".data/calvin-institutes-paragraphs"
+	}
 
 	return config{
 		ListenAddr:             listenHost + ":" + port,
@@ -139,9 +159,14 @@ func loadConfig() config {
 		BootstrapAdminPassword: os.Getenv("BOOTSTRAP_ADMIN_PASSWORD"),
 		MediaRoot:              media,
 		EreportMediaRoot:       ereportRoot,
+		EvoiceMediaRoot:        evoiceRoot,
+		EvoicePython:           strings.TrimSpace(os.Getenv("EVOICE_PYTHON")),
+		EvoiceFakeTTS:          envBool("EVOICE_FAKE_TTS", false),
+		EvoiceWorkerScript:     strings.TrimSpace(os.Getenv("EVOICE_WORKER_SCRIPT")),
 		EreportMaxImageBytes:   envInt64("EREPORT_MAX_IMAGE_BYTES", defaultMaxImageBytes),
 		EreportMaxImageEdge:    int(envInt64("EREPORT_MAX_IMAGE_EDGE", int64(defaultMaxImageEdge))),
 		EreportMaxPayloadBytes: envInt64("EREPORT_MAX_PAYLOAD_BYTES", defaultMaxPayloadBytes),
+		CalvinParagraphsRoot:   calvinRoot,
 		PublicBaseURL:          strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_BASE_URL")), "/"),
 		SMTPHost:               envString("SMTP_HOST"),
 		SMTPPort:               envString("SMTP_PORT"),
@@ -155,6 +180,8 @@ func loadConfig() config {
 		KimiKey:                os.Getenv("KIMI_API_KEY"),
 		KimiBaseURL:            strings.TrimRight(kimiBase, "/"),
 		KimiModel:              kimiModel,
+		PayPalHostedButtonID:   strings.TrimSpace(os.Getenv("PAYPAL_HOSTED_BUTTON_ID")),
+		PayPalCheckoutURL:      paypalCheckout,
 		AllowedOrigins: []string{
 			"https://" + siteName,
 			"http://127.0.0.1:4321",

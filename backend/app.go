@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -11,6 +12,8 @@ type App struct {
 	cfg             config
 	log             *slog.Logger
 	store           DataStore
+	scrib           ScribStore
+	pamphlet        PamphletStore
 	mailer          Mailer
 	chat            map[string]ChatClient
 	audit           *auditStore
@@ -34,6 +37,10 @@ type App struct {
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
 	ereport         *ereportFS
+	evoiceMeta      evoiceMetaStore
+	evoiceFS        *evoiceFS
+	evoiceJobs      *evoiceJobStore
+	homescool       HomescoolStore
 	failClosedEnt   bool
 }
 
@@ -51,6 +58,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EreportMediaRoot == "" {
 		cfg.EreportMediaRoot = cfg.MediaRoot + "/ereport"
 	}
+	if cfg.EvoiceMediaRoot == "" {
+		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
+	}
 	if cfg.EreportMaxImageBytes <= 0 {
 		cfg.EreportMaxImageBytes = defaultMaxImageBytes
 	}
@@ -60,13 +70,24 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EreportMaxPayloadBytes <= 0 {
 		cfg.EreportMaxPayloadBytes = defaultMaxPayloadBytes
 	}
+	if strings.TrimSpace(cfg.CalvinParagraphsRoot) == "" {
+		cfg.CalvinParagraphsRoot = ".data/calvin-institutes-paragraphs"
+	}
+	if strings.TrimSpace(cfg.EvoiceMediaRoot) == "" {
+		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
+	}
 	_ = os.MkdirAll(cfg.MediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EreportMediaRoot, 0750)
+	_ = os.MkdirAll(cfg.EvoiceMediaRoot, 0750)
+	_ = os.MkdirAll(cfg.EvoiceMediaRoot, 0750)
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:             cfg,
 		log:             newJSONLogger(),
 		store:           store,
+		scrib:           openScribStore(store),
+		pamphlet:        openPamphletStore(store, cfg.MediaRoot),
+		homescool:       openHomescoolStore(store, cfg.MediaRoot),
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
 		audit:           newAuditStore(),
@@ -90,7 +111,10 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
 		ereport:         newEreportFS(cfg.EreportMediaRoot),
+		evoiceMeta:      newEvoiceMetaFromStore(store),
+		evoiceFS:        newEvoiceFS(cfg.EvoiceMediaRoot),
 	}
+	app.evoiceJobs = newEvoiceJobStore(resolveEvoiceRunner(cfg), app.evoiceMeta, app.evoiceFS, app.log, cfg.MustLog)
 	app.ereport.owner = app.ereportOwnerLookup
 	httpClient := newHTTPClient()
 	app.chat["deepseek"] = openAICompatClient{
@@ -141,6 +165,16 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
 	mux.HandleFunc("POST /api/chat", a.publicChatHandler)
+	mux.HandleFunc("POST /api/profile/ask", a.profileAskHandler)
+
+	mux.HandleFunc("GET /api/subscriptions/catalog", a.subscriptionsCatalogHandler)
+	mux.HandleFunc("GET /api/subscriptions/entitlements", a.subscriptionsEntitlementsHandler)
+	mux.HandleFunc("GET /api/subscriptions/entitlements/preview", a.subscriptionsEntitlementsPreviewHandler)
+	mux.HandleFunc("GET /api/subscriptions/access/{serviceID}", a.subscriptionsAccessHandler)
+	mux.HandleFunc("POST /api/payments/intents", a.paymentsCreateIntentHandler)
+	mux.HandleFunc("GET /api/payments/status/{intentID}", a.paymentsStatusHandler)
+	mux.HandleFunc("GET /api/preferences/{key}", a.preferencesGetHandler)
+	mux.HandleFunc("PUT /api/preferences/{key}", a.preferencesPutHandler)
 
 	mux.HandleFunc("GET /api/ereport/access", a.ereportAccessHandler)
 	mux.HandleFunc("GET /api/ereport/orgs", a.ereportGetOrgsHandler)
@@ -181,5 +215,56 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports", a.withAPIKey(productEreport, a.ereportV1OrgReportsHandler))
 	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1GetReportHandler))
 	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1PostReportHandler))
+
+	mux.HandleFunc("GET /api/latin/calvins-institutes", a.latinCalvinsInstitutesHandler)
+	mux.HandleFunc("GET /api/latin/calvins-institutes/paragraphs", a.latinCalvinsParagraphsHandler)
+	mux.HandleFunc("GET /api/latin/calvins-institutes/paragraphs/chapters/{book}/{chapter}", a.latinCalvinsParagraphChapterHandler)
+
+	mux.HandleFunc("GET /api/scrib/library", a.scribGetLibraryHandler)
+	mux.HandleFunc("POST /api/scrib/books", a.scribCreateBookHandler)
+	mux.HandleFunc("GET /api/scrib/books/{bookId}", a.scribGetBookHandler)
+	mux.HandleFunc("PUT /api/scrib/books/{bookId}", a.scribRenameBookHandler)
+	mux.HandleFunc("DELETE /api/scrib/books/{bookId}", a.scribDeleteBookHandler)
+	mux.HandleFunc("POST /api/scrib/books/{bookId}/sheets", a.scribCreateSheetHandler)
+	mux.HandleFunc("GET /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribGetSheetHandler)
+	mux.HandleFunc("PUT /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribPutSheetHandler)
+	mux.HandleFunc("DELETE /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribDeleteSheetHandler)
+	mux.HandleFunc("POST /api/scrib/print/pdf", a.scribPrintPDFHandler)
+
+	mux.HandleFunc("GET /api/epams/series-tree", a.listEpamSeriesTreeHandler)
+	mux.HandleFunc("GET /api/epams/footers", a.listFootersHandler)
+	mux.HandleFunc("POST /api/epams/footers", a.createFooterHandler)
+	mux.HandleFunc("PUT /api/epams/footers/{id}", a.updateFooterHandler)
+	mux.HandleFunc("DELETE /api/epams/footers/{id}", a.deleteFooterHandler)
+	mux.HandleFunc("GET /api/epams", a.listEpamsHandler)
+	mux.HandleFunc("POST /api/epams", a.createEpamHandler)
+	mux.HandleFunc("POST /api/epams/{id}/copy", a.copyEpamHandler)
+	mux.HandleFunc("GET /api/epams/{id}", a.getEpamHandler)
+	mux.HandleFunc("PUT /api/epams/{id}", a.updateEpamHandler)
+	mux.HandleFunc("DELETE /api/epams/{id}", a.deleteEpamHandler)
+	mux.HandleFunc("POST /api/documents/pamphlet/pdf", a.pamphletPDFHandler)
+
+	mux.HandleFunc("POST /api/homescool/students", a.registerHomescoolStudentHandler)
+	mux.HandleFunc("GET /api/homescool/students", a.listHomescoolStudentsHandler)
+	mux.HandleFunc("GET /api/homescool/students/{studentSlug}", a.getHomescoolStudentHandler)
+	mux.HandleFunc("GET /api/homescool/students/{studentSlug}/folders/{folder}", a.listTeacherStudentFolderHandler)
+	mux.HandleFunc("POST /api/homescool/task-templates", a.createTaskTemplateHandler)
+	mux.HandleFunc("GET /api/homescool/task-templates", a.listTaskTemplatesHandler)
+	mux.HandleFunc("GET /api/homescool/task-templates/{templateId}", a.getTaskTemplateHandler)
+	mux.HandleFunc("PUT /api/homescool/task-templates/{templateId}", a.updateTaskTemplateHandler)
+	mux.HandleFunc("POST /api/homescool/catalogs", a.createCatalogEntryHandler)
+	mux.HandleFunc("GET /api/homescool/catalogs", a.listCatalogEntriesHandler)
+	mux.HandleFunc("POST /api/homescool/students/{studentSlug}/tasks", a.assignTasksHandler)
+	mux.HandleFunc("GET /api/homescool/students/{studentSlug}/tasks", a.listTeacherStudentTasksHandler)
+	mux.HandleFunc("POST /api/homescool/students/{studentSlug}/tasks/{taskId}/grade", a.gradeTaskHandler)
+	mux.HandleFunc("POST /api/homescool/students/{studentSlug}/tasks/{taskId}/archive", a.archiveTaskHandler)
+	mux.HandleFunc("GET /api/homescool/learning", a.listHomescoolLearningHandler)
+	mux.HandleFunc("GET /api/homescool/learning/{teacherSlug}/folders/{folder}", a.listLearningFolderHandler)
+	mux.HandleFunc("GET /api/homescool/learning/{teacherSlug}/tasks", a.listLearningTasksHandler)
+	mux.HandleFunc("GET /api/homescool/learning/{teacherSlug}/tasks/{taskId}", a.getLearningTaskHandler)
+	mux.HandleFunc("POST /api/homescool/learning/{teacherSlug}/tasks/{taskId}/submit", a.submitLearningTaskHandler)
+
+	a.registerEvoiceRoutes(mux)
+
 	return a.withObservability(mux)
 }

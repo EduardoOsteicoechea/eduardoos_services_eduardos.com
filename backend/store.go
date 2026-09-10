@@ -164,35 +164,95 @@ type DataStore interface {
 	APIKeyByID(ctx context.Context, id string) (*APIKeyRecord, error)
 	APIKeyByHash(ctx context.Context, hash string) (*APIKeyRecord, error)
 	APIKeysByUser(ctx context.Context, userID string) ([]*APIKeyRecord, error)
+	InsertPaymentIntent(ctx context.Context, intent *PaymentIntent) error
+	UpsertPaymentIntent(ctx context.Context, intent *PaymentIntent) error
+	PaymentIntentByID(ctx context.Context, id string) (*PaymentIntent, error)
+	UserPreferenceByKey(ctx context.Context, userID, key string) (*UserPreference, error)
+	UpsertUserPreference(ctx context.Context, pref *UserPreference) error
+	UserPreferenceGet(ctx context.Context, userID, key string) (*UserPreference, error)
+	UserPreferencePut(ctx context.Context, pref *UserPreference) error
+}
+
+// PaymentIntent is a PayPal checkout intent persisted in Mongo (or memory for tests).
+type PaymentIntent struct {
+	ID             string    `bson:"_id" json:"intent_id"`
+	UserID         string    `bson:"user_id" json:"user_id"`
+	Email          string    `bson:"email" json:"email"`
+	PlanID         string    `bson:"plan_id" json:"plan_id"`
+	ProductName    string    `bson:"product_name" json:"product_name"`
+	HostedButtonID string    `bson:"hosted_button_id" json:"hosted_button_id"`
+	Currency       string    `bson:"currency" json:"currency"`
+	Amount         string    `bson:"amount" json:"amount"`
+	Services       []string  `bson:"services" json:"services"`
+	BillingPeriod  string    `bson:"billing_period" json:"billing_period"`
+	Status         string    `bson:"status" json:"status"`
+	CreatedAt      time.Time `bson:"created_at" json:"created_at"`
+	UpdatedAt      time.Time `bson:"updated_at" json:"updated_at"`
+}
+
+func (p *PaymentIntent) clone() *PaymentIntent {
+	if p == nil {
+		return nil
+	}
+	cp := *p
+	if p.Services != nil {
+		cp.Services = append([]string{}, p.Services...)
+	}
+	return &cp
+}
+
+// UserPreference stores a per-user JSON preference (replaces product localStorage).
+type UserPreference struct {
+	ID        string    `bson:"_id" json:"id"`
+	UserID    string    `bson:"user_id" json:"user_id"`
+	Key       string    `bson:"key" json:"key"`
+	Value     any       `bson:"value" json:"value"`
+	UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
+}
+
+func (p *UserPreference) clone() *UserPreference {
+	if p == nil {
+		return nil
+	}
+	cp := *p
+	return &cp
 }
 
 type memoryStore struct {
-	mu           sync.Mutex
-	users        map[string]*User
-	email        map[string]string
-	username     map[string]string
-	sessions     map[string]*Session
-	refresh      map[string]string
-	otps         map[string]*OTPRecord
-	csrf         map[string]*CSRFChallenge
-	entitlements map[string]*Entitlement
-	apiKeys      map[string]*APIKeyRecord
-	apiKeyHash   map[string]string
+	mu            sync.Mutex
+	users         map[string]*User
+	email         map[string]string
+	username      map[string]string
+	sessions      map[string]*Session
+	refresh       map[string]string
+	otps          map[string]*OTPRecord
+	csrf          map[string]*CSRFChallenge
+	entitlements  map[string]*Entitlement
+	apiKeys       map[string]*APIKeyRecord
+	apiKeyHash    map[string]string
+	paymentIntents map[string]*PaymentIntent
+	preferences   map[string]*UserPreference // keyed by userID + "\x00" + key
 }
 
 func newMemoryStore() *memoryStore {
 	return &memoryStore{
-		users:    map[string]*User{},
-		email:    map[string]string{},
-		username: map[string]string{},
-		sessions: map[string]*Session{},
-		refresh:  map[string]string{},
-		otps:         map[string]*OTPRecord{},
-		csrf:         map[string]*CSRFChallenge{},
-		entitlements: map[string]*Entitlement{},
-		apiKeys:      map[string]*APIKeyRecord{},
-		apiKeyHash:   map[string]string{},
+		users:          map[string]*User{},
+		email:          map[string]string{},
+		username:       map[string]string{},
+		sessions:       map[string]*Session{},
+		refresh:        map[string]string{},
+		otps:           map[string]*OTPRecord{},
+		csrf:           map[string]*CSRFChallenge{},
+		entitlements:   map[string]*Entitlement{},
+		apiKeys:        map[string]*APIKeyRecord{},
+		apiKeyHash:     map[string]string{},
+		paymentIntents: map[string]*PaymentIntent{},
+		preferences:    map[string]*UserPreference{},
 	}
+}
+
+func preferenceMemKey(userID, key string) string {
+	return userID + "\x00" + key
 }
 
 func (s *memoryStore) Close(context.Context) error { return nil }
@@ -497,6 +557,66 @@ func (s *memoryStore) APIKeysByUser(_ context.Context, userID string) ([]*APIKey
 		}
 	}
 	return out, nil
+}
+
+func (s *memoryStore) InsertPaymentIntent(_ context.Context, intent *PaymentIntent) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.paymentIntents[intent.ID]; ok {
+		return errDuplicateEmail // reuse generic conflict; callers treat as internal
+	}
+	s.paymentIntents[intent.ID] = intent.clone()
+	return nil
+}
+
+func (s *memoryStore) UpsertPaymentIntent(_ context.Context, intent *PaymentIntent) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.paymentIntents[intent.ID] = intent.clone()
+	return nil
+}
+
+func (s *memoryStore) PaymentIntentByID(_ context.Context, id string) (*PaymentIntent, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	intent, ok := s.paymentIntents[id]
+	if !ok {
+		return nil, errNotFound
+	}
+	return intent.clone(), nil
+}
+
+func (s *memoryStore) UserPreferenceByKey(_ context.Context, userID, key string) (*UserPreference, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	pref, ok := s.preferences[preferenceMemKey(userID, key)]
+	if !ok {
+		return nil, nil
+	}
+	return pref.clone(), nil
+}
+
+func (s *memoryStore) UpsertUserPreference(_ context.Context, pref *UserPreference) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	cp := pref.clone()
+	s.preferences[preferenceMemKey(pref.UserID, pref.Key)] = cp
+	return nil
+}
+
+func (s *memoryStore) UserPreferenceGet(ctx context.Context, userID, key string) (*UserPreference, error) {
+	pref, err := s.UserPreferenceByKey(ctx, userID, key)
+	if err != nil {
+		return nil, err
+	}
+	if pref == nil {
+		return nil, errNotFound
+	}
+	return pref, nil
+}
+
+func (s *memoryStore) UserPreferencePut(ctx context.Context, pref *UserPreference) error {
+	return s.UpsertUserPreference(ctx, pref)
 }
 
 type AuditEvent struct {

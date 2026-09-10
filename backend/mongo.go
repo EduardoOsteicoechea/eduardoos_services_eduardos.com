@@ -38,6 +38,12 @@ func (s *mongoStore) entitlements() *mongo.Collection {
 	return s.db.Collection(colEntitlements)
 }
 func (s *mongoStore) apiKeys() *mongo.Collection { return s.db.Collection(colAPIKeys) }
+func (s *mongoStore) paymentIntents() *mongo.Collection {
+	return s.db.Collection(colPaymentIntents)
+}
+func (s *mongoStore) userPreferences() *mongo.Collection {
+	return s.db.Collection(colUserPreferences)
+}
 
 func (s *mongoStore) otpCol(purpose string) *mongo.Collection {
 	if purpose == otpPasswordReset {
@@ -376,4 +382,62 @@ func (s *mongoStore) APIKeysByUser(ctx context.Context, userID string) ([]*APIKe
 		out = []*APIKeyRecord{}
 	}
 	return out, nil
+}
+
+func (s *mongoStore) InsertPaymentIntent(ctx context.Context, intent *PaymentIntent) error {
+	_, err := s.paymentIntents().InsertOne(ctx, intent)
+	if isDup(err) {
+		return errDuplicateEmail
+	}
+	return err
+}
+
+func (s *mongoStore) UpsertPaymentIntent(ctx context.Context, intent *PaymentIntent) error {
+	_, err := s.paymentIntents().ReplaceOne(ctx, bson.M{"_id": intent.ID}, intent, options.Replace().SetUpsert(true))
+	return err
+}
+
+func (s *mongoStore) PaymentIntentByID(ctx context.Context, id string) (*PaymentIntent, error) {
+	var intent PaymentIntent
+	err := s.paymentIntents().FindOne(ctx, bson.M{"_id": id}).Decode(&intent)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &intent, nil
+}
+
+func (s *mongoStore) UserPreferenceByKey(ctx context.Context, userID, key string) (*UserPreference, error) {
+	var pref UserPreference
+	err := s.userPreferences().FindOne(ctx, bson.M{"user_id": userID, "key": key}).Decode(&pref)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &pref, nil
+}
+
+func (s *mongoStore) UpsertUserPreference(ctx context.Context, pref *UserPreference) error {
+	filter := bson.M{"user_id": pref.UserID, "key": pref.Key}
+	_, err := s.userPreferences().ReplaceOne(ctx, filter, pref, options.Replace().SetUpsert(true))
+	return err
+}
+
+func (s *mongoStore) UserPreferenceGet(ctx context.Context, userID, key string) (*UserPreference, error) {
+	pref, err := s.UserPreferenceByKey(ctx, userID, key)
+	if err != nil {
+		return nil, err
+	}
+	if pref == nil {
+		return nil, errNotFound
+	}
+	return pref, nil
+}
+
+func (s *mongoStore) UserPreferencePut(ctx context.Context, pref *UserPreference) error {
+	return s.UpsertUserPreference(ctx, pref)
 }

@@ -11,6 +11,9 @@ const (
 	maxHistorySnapshots = 50
 	otpEreportInvite  = "ereport_invite"
 	productEreport    = "ereport"
+	productScrib      = "scrib"
+	productPamphlet   = "pamphlet"
+	productHomescool  = "homescool"
 	productAPI        = "api"
 	apiKeyPrefix      = "eos_live_"
 	apiKeyRatePerMin  = 60
