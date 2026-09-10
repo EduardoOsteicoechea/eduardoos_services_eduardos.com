@@ -1,4 +1,4 @@
-import { getMe, postJSON, profileAvatarURL } from "./api";
+import { getMe, postJSON, profileAvatarURL, refreshSession } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
@@ -7,6 +7,9 @@ import { go, startClientRouting } from "./router";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
+const SESSION_REFRESH_MS = 14 * 60 * 1000;
+
+let sessionRefreshTimer: ReturnType<typeof setInterval> | undefined;
 
 declare global {
   interface Window {
@@ -174,6 +177,26 @@ export function applySessionAvatar(avatar?: string | null): void {
   }
 }
 
+function clearSessionRefreshTimer(): void {
+  if (sessionRefreshTimer !== undefined) {
+    clearInterval(sessionRefreshTimer);
+    sessionRefreshTimer = undefined;
+  }
+}
+
+function scheduleSessionRefresh(): void {
+  clearSessionRefreshTimer();
+  sessionRefreshTimer = setInterval(() => {
+    void refreshSession().then((result) => {
+      if (result.status === 200 && result.data.id) {
+        void refreshAuthChrome();
+        return;
+      }
+      clearSessionRefreshTimer();
+    });
+  }, SESSION_REFRESH_MS);
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
@@ -197,8 +220,10 @@ export async function refreshAuthChrome(): Promise<void> {
   });
   if (authed) {
     applySessionAvatar(data.avatar);
+    scheduleSessionRefresh();
   } else {
     applySessionAvatar(null);
+    clearSessionRefreshTimer();
   }
 }
 

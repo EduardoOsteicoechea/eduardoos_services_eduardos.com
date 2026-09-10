@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar } from "./api";
+import { currentCsrf, getCsrf, getMe, loginPayload, patchJSON, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory, uploadAvatar } from "./api";
 
 function jsonResponse(status: number, body: unknown, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {
@@ -50,15 +50,55 @@ describe("api csrf and errors", () => {
   });
 
   it("does not treat 401 /api/auth/me as a csrf source", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
-      jsonResponse(401, { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-me-1", csrf: "should-ignore" }, { "X-Request-ID": "rid-me-1" }),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse(401, { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-me-1", csrf: "should-ignore" }, { "X-Request-ID": "rid-me-1" }),
+      )
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
+      .mockResolvedValueOnce(
+        jsonResponse(401, { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-refresh-1" }, { "X-Request-ID": "rid-refresh-1" }),
+      );
     vi.stubGlobal("fetch", fetchMock);
     const result = await getMe();
     expect(result.status).toBe(401);
     expect(result.data.error).toBe("unauthorized");
-    expect(currentCsrf()).toBe("");
+    expect(currentCsrf()).toBe("refresh-csrf");
     expect(fetchMock.mock.calls[0][0]).toBe("/api/auth/me");
+    expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
+  });
+
+  it("renews an expired access token with the refresh cookie", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", request_id: "rid-me-expired" }))
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-refresh-ok" }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await getMe();
+    expect(result.status).toBe(200);
+    expect(result.data.id).toBe("member-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+    expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
+  });
+
+  it("deduplicates concurrent refresh requests", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-refresh-ok" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const [first, second] = await Promise.all([refreshSession(), refreshSession()]);
+    expect(first.status).toBe(200);
+    expect(second.status).toBe(200);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/refresh")).toHaveLength(1);
   });
 
   it("refreshes csrf before unsafe submissions and sends X-CSRF-Token", async () => {

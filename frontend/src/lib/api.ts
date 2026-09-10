@@ -134,6 +134,8 @@ function isUnsafe(method: string): boolean {
 
 const apiTimeoutMs = 12000;
 
+let refreshInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+
 function timeoutSignal(existing?: AbortSignal | null): { signal: AbortSignal; cancel: () => void } {
   const controller = new AbortController();
   const timer = globalThis.setTimeout(() => controller.abort(), apiTimeoutMs);
@@ -250,7 +252,28 @@ export async function getCsrf(): Promise<string> {
   return csrfToken;
 }
 
+export async function refreshSession(): Promise<{ status: number; data: MeResponse; requestId: string }> {
+  if (!refreshInFlight) {
+    sessionLog("session.refresh.start");
+    refreshInFlight = postJSON<MeResponse>("/auth/refresh", {}).finally(() => {
+      refreshInFlight = null;
+    });
+  }
+  const result = await refreshInFlight;
+  sessionLog("session.refresh.done", { status: result.status, userId: result.data.id });
+  return result;
+}
+
 export async function getMe(): Promise<{ status: number; data: MeResponse; requestId: string }> {
+  const first = await apiSend<MeResponse>("/auth/me");
+  if (first.status !== 401) {
+    return first;
+  }
+  sessionLog("session.me.unauthorized_try_refresh");
+  const refreshed = await refreshSession();
+  if (refreshed.status !== 200 || !refreshed.data.id) {
+    return first;
+  }
   return apiSend<MeResponse>("/auth/me");
 }
 
