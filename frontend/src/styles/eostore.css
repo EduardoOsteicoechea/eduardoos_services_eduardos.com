@@ -1,0 +1,180 @@
+/* eostore — admin catalog */
+
+.eostore-board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  grid-column: 1 / span var(--span-full);
+}
+
+.eostore-board h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 650;
+}
+
+.eostore-board .lede,
+.eostore-hint {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.eostore-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eostore-tabs .btn[aria-selected="true"] {
+  background: var(--color-button-bg);
+  color: var(--color-button-fg);
+}
+
+.eostore-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-panel h2 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+}
+
+.eostore-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eostore-field > label {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eostore-field input[type="text"],
+.eostore-field input[type="number"],
+.eostore-field input[type="search"],
+.eostore-field input[type="file"],
+.eostore-field textarea,
+.eostore-field select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-field textarea {
+  height: auto;
+  min-height: var(--textarea-min-height);
+}
+
+.eostore-field input[type="range"] {
+  height: var(--control-height);
+  width: auto;
+  accent-color: var(--color-accent);
+}
+
+.eostore-field input[type="checkbox"] {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.eostore-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.eostore-check label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.eostore-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eostore-columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eostore-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-card h3 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+}
+
+.eostore-meta {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eostore-price {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.eostore-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eostore-thumb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: calc(var(--button-size) * 4);
+}
+
+.eostore-thumb img {
+  display: block;
+  width: calc(var(--button-size) * 4);
+  height: calc(var(--button-size) * 4);
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eostore-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eostore-filters .eostore-field {
+  flex: 1;
+  min-width: calc(var(--button-size) * 6);
+}
+
+.eostore-pane[hidden] {
+  display: none;
+}

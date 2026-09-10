@@ -23,6 +23,7 @@ export default defineConfig({
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
         !page.includes("/eoadmin") &&
+        !page.includes("/eostore") &&
         !page.includes("/payments"),
     }),
   ],

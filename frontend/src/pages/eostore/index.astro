@@ -1,0 +1,616 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eostore · Admin catalog" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="eostore-board" data-eostore-admin>
+    <h1>eostore</h1>
+    <p class="lede">Admin catalog: companies, product sections, product types, and products (USD + Bs).</p>
+    <p class="status" data-banner>Checking session…</p>
+
+    <div class="eostore-tabs" role="tablist" data-tabs>
+      <button type="button" class="btn" data-tab="companies" aria-selected="true">Companies</button>
+      <button type="button" class="btn" data-tab="sections" aria-selected="false">Sections</button>
+      <button type="button" class="btn" data-tab="types" aria-selected="false">Types</button>
+      <button type="button" class="btn" data-tab="products" aria-selected="false">Products</button>
+    </div>
+
+    <div class="eostore-pane" data-pane="companies">
+      <form class="eostore-panel" data-company-form hidden>
+        <h2>Add company</h2>
+        <div class="eostore-field">
+          <label for="co-name">Name</label>
+          <input id="co-name" type="text" data-co-name required />
+        </div>
+        <div class="eostore-field">
+          <label for="co-id">Friendly id (optional)</label>
+          <input id="co-id" type="text" data-co-id placeholder="acme" />
+        </div>
+        <div class="eostore-field">
+          <label for="co-desc">Description</label>
+          <textarea id="co-desc" data-co-desc></textarea>
+        </div>
+        <div class="eostore-actions">
+          <button class="btn btn--primary" type="submit">Create company</button>
+        </div>
+      </form>
+      <div class="eostore-columns" data-company-list></div>
+    </div>
+
+    <div class="eostore-pane" data-pane="sections" hidden>
+      <form class="eostore-panel" data-section-form hidden>
+        <h2>Add product section</h2>
+        <div class="eostore-field">
+          <label for="sec-company">Company</label>
+          <select id="sec-company" data-sec-company required></select>
+        </div>
+        <div class="eostore-field">
+          <label for="sec-name">Name</label>
+          <input id="sec-name" type="text" data-sec-name required />
+        </div>
+        <div class="eostore-field">
+          <label for="sec-id">Friendly id (optional)</label>
+          <input id="sec-id" type="text" data-sec-id />
+        </div>
+        <div class="eostore-field">
+          <label for="sec-desc">Description</label>
+          <textarea id="sec-desc" data-sec-desc></textarea>
+        </div>
+        <div class="eostore-actions">
+          <button class="btn btn--primary" type="submit">Create section</button>
+        </div>
+      </form>
+      <div class="eostore-columns" data-section-list></div>
+    </div>
+
+    <div class="eostore-pane" data-pane="types" hidden>
+      <form class="eostore-panel" data-type-form hidden>
+        <h2>Add product type</h2>
+        <div class="eostore-field">
+          <label for="typ-section">Section</label>
+          <select id="typ-section" data-typ-section required></select>
+        </div>
+        <div class="eostore-field">
+          <label for="typ-name">Name</label>
+          <input id="typ-name" type="text" data-typ-name required />
+        </div>
+        <div class="eostore-field">
+          <label for="typ-id">Friendly id (optional)</label>
+          <input id="typ-id" type="text" data-typ-id />
+        </div>
+        <div class="eostore-field">
+          <label for="typ-desc">Description</label>
+          <textarea id="typ-desc" data-typ-desc></textarea>
+        </div>
+        <div class="eostore-actions">
+          <button class="btn btn--primary" type="submit">Create type</button>
+        </div>
+      </form>
+      <div class="eostore-columns" data-type-list></div>
+    </div>
+
+    <div class="eostore-pane" data-pane="products" hidden>
+      <form class="eostore-panel" data-product-form hidden>
+        <h2>Add product</h2>
+        <div class="eostore-field">
+          <label for="pr-type">Product type</label>
+          <select id="pr-type" data-pr-type required></select>
+        </div>
+        <div class="eostore-field">
+          <label for="pr-name">Name</label>
+          <input id="pr-name" type="text" data-pr-name required />
+        </div>
+        <div class="eostore-field">
+          <label for="pr-id">Friendly id (optional)</label>
+          <input id="pr-id" type="text" data-pr-id />
+        </div>
+        <div class="eostore-field">
+          <label for="pr-desc">Description</label>
+          <textarea id="pr-desc" data-pr-desc></textarea>
+        </div>
+        <div class="eostore-field">
+          <label for="pr-tags">Hashtags (space or comma separated)</label>
+          <input id="pr-tags" type="text" data-pr-tags placeholder="coast soft" />
+        </div>
+        <div class="eostore-field">
+          <label for="pr-usd">Base price USD</label>
+          <input id="pr-usd" type="number" data-pr-usd min="0" step="0.01" value="0" required />
+        </div>
+        <div class="eostore-field">
+          <label for="pr-discount">Discount <span data-pr-discount-label>0%</span></label>
+          <input id="pr-discount" type="range" data-pr-discount min="0" max="100" step="5" value="0" />
+        </div>
+        <div class="eostore-field">
+          <label for="pr-bs">Bs per USD</label>
+          <input id="pr-bs" type="number" data-pr-bs min="0" step="0.01" value="0" required />
+        </div>
+        <p class="eostore-price" data-pr-preview>Final: $0.00 · Bs 0.00</p>
+        <div class="eostore-field">
+          <label for="pr-units">Units</label>
+          <input id="pr-units" type="number" data-pr-units min="0" step="1" value="0" required />
+        </div>
+        <div class="eostore-check">
+          <input id="pr-visible" type="checkbox" data-pr-visible />
+          <label for="pr-visible">Visible</label>
+        </div>
+        <div class="eostore-actions">
+          <button class="btn btn--primary" type="submit">Create product</button>
+        </div>
+      </form>
+      <div class="eostore-columns" data-product-list></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { mustLog } from "../../lib/dev-log";
+  import {
+    createCompany,
+    createProduct,
+    createSection,
+    createType,
+    deleteCompany,
+    deleteProduct,
+    deleteProductImage,
+    deleteSection,
+    deleteType,
+    formatMoney,
+    listCompanies,
+    listProducts,
+    listSections,
+    listTypes,
+    parseHashtags,
+    uploadProductImage,
+    type EostoreCompany,
+    type EostoreProduct,
+    type EostoreSection,
+    type EostoreType,
+  } from "../../lib/eostore";
+
+  const root = document.querySelector("[data-eostore-admin]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-banner]");
+    let companies: EostoreCompany[] = [];
+    let sections: EostoreSection[] = [];
+    let types: EostoreType[] = [];
+    let products: EostoreProduct[] = [];
+    let tab = "companies";
+
+    const setBanner = (text: string, kind = "") => {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = text;
+        banner.className = `status ${kind}`.trim();
+      }
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "", debug });
+    };
+
+    const fillSelect = (el: Element | null, options: { value: string; label: string }[], placeholder: string) => {
+      if (!(el instanceof HTMLSelectElement)) return;
+      el.innerHTML = "";
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = placeholder;
+      el.appendChild(empty);
+      options.forEach((opt) => {
+        const o = document.createElement("option");
+        o.value = opt.value;
+        o.textContent = opt.label;
+        el.appendChild(o);
+      });
+    };
+
+    const companyLabel = (guid: string) => companies.find((c) => c.guid === guid)?.name || guid;
+    const sectionLabel = (guid: string) => {
+      const s = sections.find((x) => x.guid === guid);
+      return s ? `${s.name} · ${companyLabel(s.company_guid)}` : guid;
+    };
+    const typeLabel = (guid: string) => {
+      const t = types.find((x) => x.guid === guid);
+      return t ? `${t.name} · ${sectionLabel(t.section_guid)}` : guid;
+    };
+
+    const refreshSelects = () => {
+      fillSelect(
+        root.querySelector("[data-sec-company]"),
+        companies.map((c) => ({ value: c.guid, label: `${c.name} (${c.id})` })),
+        "Select company",
+      );
+      fillSelect(
+        root.querySelector("[data-typ-section]"),
+        sections.map((s) => ({ value: s.guid, label: `${s.name} · ${companyLabel(s.company_guid)}` })),
+        "Select section",
+      );
+      fillSelect(
+        root.querySelector("[data-pr-type]"),
+        types.map((t) => ({ value: t.guid, label: typeLabel(t.guid) })),
+        "Select type",
+      );
+    };
+
+    const renderCompanies = () => {
+      const list = root.querySelector("[data-company-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!companies.length) {
+        const empty = document.createElement("p");
+        empty.className = "eostore-hint";
+        empty.textContent = "No companies yet.";
+        list.appendChild(empty);
+        return;
+      }
+      companies.forEach((c) => {
+        const card = document.createElement("article");
+        card.className = "eostore-card";
+        const h = document.createElement("h3");
+        h.textContent = c.name;
+        const meta = document.createElement("p");
+        meta.className = "eostore-meta";
+        meta.textContent = `id ${c.id} · guid ${c.guid}`;
+        const desc = document.createElement("p");
+        desc.className = "eostore-hint";
+        desc.textContent = c.description || "";
+        const actions = document.createElement("div");
+        actions.className = "eostore-actions";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn";
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          const res = await deleteCompany(c.guid);
+          if (res.status !== 200) {
+            fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
+            return;
+          }
+          await loadAll();
+        });
+        actions.appendChild(del);
+        card.append(h, meta, desc, actions);
+        list.appendChild(card);
+      });
+    };
+
+    const renderSections = () => {
+      const list = root.querySelector("[data-section-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!sections.length) {
+        const empty = document.createElement("p");
+        empty.className = "eostore-hint";
+        empty.textContent = "No sections yet.";
+        list.appendChild(empty);
+        return;
+      }
+      sections.forEach((s) => {
+        const card = document.createElement("article");
+        card.className = "eostore-card";
+        const h = document.createElement("h3");
+        h.textContent = s.name;
+        const meta = document.createElement("p");
+        meta.className = "eostore-meta";
+        meta.textContent = `id ${s.id} · ${companyLabel(s.company_guid)}`;
+        const actions = document.createElement("div");
+        actions.className = "eostore-actions";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn";
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          const res = await deleteSection(s.guid);
+          if (res.status !== 200) {
+            fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
+            return;
+          }
+          await loadAll();
+        });
+        actions.appendChild(del);
+        card.append(h, meta, actions);
+        list.appendChild(card);
+      });
+    };
+
+    const renderTypes = () => {
+      const list = root.querySelector("[data-type-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!types.length) {
+        const empty = document.createElement("p");
+        empty.className = "eostore-hint";
+        empty.textContent = "No types yet.";
+        list.appendChild(empty);
+        return;
+      }
+      types.forEach((t) => {
+        const card = document.createElement("article");
+        card.className = "eostore-card";
+        const h = document.createElement("h3");
+        h.textContent = t.name;
+        const meta = document.createElement("p");
+        meta.className = "eostore-meta";
+        meta.textContent = `id ${t.id} · ${sectionLabel(t.section_guid)}`;
+        const actions = document.createElement("div");
+        actions.className = "eostore-actions";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn";
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          const res = await deleteType(t.guid);
+          if (res.status !== 200) {
+            fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
+            return;
+          }
+          await loadAll();
+        });
+        actions.appendChild(del);
+        card.append(h, meta, actions);
+        list.appendChild(card);
+      });
+    };
+
+    const renderProducts = () => {
+      const list = root.querySelector("[data-product-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.innerHTML = "";
+      if (!products.length) {
+        const empty = document.createElement("p");
+        empty.className = "eostore-hint";
+        empty.textContent = "No products yet.";
+        list.appendChild(empty);
+        return;
+      }
+      products.forEach((p) => {
+        const card = document.createElement("article");
+        card.className = "eostore-card";
+        const h = document.createElement("h3");
+        h.textContent = `${p.name}${p.visible ? "" : " (hidden)"}`;
+        const meta = document.createElement("p");
+        meta.className = "eostore-meta";
+        meta.textContent = `id ${p.id} · guid ${p.guid} · ${typeLabel(p.type_guid)}`;
+        const price = document.createElement("p");
+        price.className = "eostore-price";
+        price.textContent = `USD ${formatMoney(p.price_base_usd)} − ${p.discount_percent}% → ${formatMoney(p.price_final_usd)} · Bs ${formatMoney(p.price_bs)} (${formatMoney(p.bs_per_usd)} Bs/USD) · ${p.units} units`;
+        const tags = document.createElement("p");
+        tags.className = "eostore-hint";
+        tags.textContent = (p.hashtags || []).map((t) => `#${t}`).join(" ") || "";
+        const thumbs = document.createElement("div");
+        thumbs.className = "eostore-thumbs";
+        (p.images || []).forEach((img) => {
+          const wrap = document.createElement("div");
+          wrap.className = "eostore-thumb";
+          if (img.url) {
+            const image = document.createElement("img");
+            image.src = img.url;
+            image.alt = p.name;
+            wrap.appendChild(image);
+          }
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "btn";
+          remove.textContent = "Remove";
+          remove.addEventListener("click", async () => {
+            const res = await deleteProductImage(p.guid, img.id);
+            if (res.status !== 200) {
+              fail(res.data.message || "Image delete failed.", res.requestId, res.data.debug);
+              return;
+            }
+            await loadAll();
+          });
+          wrap.appendChild(remove);
+          thumbs.appendChild(wrap);
+        });
+        const upload = document.createElement("div");
+        upload.className = "eostore-field";
+        const file = document.createElement("input");
+        file.type = "file";
+        file.accept = "image/jpeg,image/png,image/webp";
+        file.addEventListener("change", async () => {
+          const f = file.files?.[0];
+          if (!f) return;
+          const res = await uploadProductImage(p.guid, f);
+          if (res.status !== 200) {
+            fail(res.data.message || "Upload failed.", res.requestId, res.data.debug);
+            return;
+          }
+          await loadAll();
+        });
+        upload.appendChild(file);
+        const actions = document.createElement("div");
+        actions.className = "eostore-actions";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn";
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          const res = await deleteProduct(p.guid);
+          if (res.status !== 200) {
+            fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
+            return;
+          }
+          await loadAll();
+        });
+        actions.appendChild(del);
+        card.append(h, meta, price, tags, thumbs, upload, actions);
+        list.appendChild(card);
+      });
+    };
+
+    const render = () => {
+      refreshSelects();
+      renderCompanies();
+      renderSections();
+      renderTypes();
+      renderProducts();
+    };
+
+    const loadAll = async () => {
+      if (mustLog) console.log("eostore.load.start", { tab });
+      const [c, s, t, p] = await Promise.all([listCompanies(), listSections(), listTypes(), listProducts()]);
+      if (c.status !== 200) {
+        fail(c.data.message || "Could not load companies.", c.requestId, c.data.debug);
+        return;
+      }
+      if (s.status !== 200) {
+        fail(s.data.message || "Could not load sections.", s.requestId, s.data.debug);
+        return;
+      }
+      if (t.status !== 200) {
+        fail(t.data.message || "Could not load types.", t.requestId, t.data.debug);
+        return;
+      }
+      if (p.status !== 200) {
+        fail(p.data.message || "Could not load products.", p.requestId, p.data.debug);
+        return;
+      }
+      companies = c.data.companies || [];
+      sections = s.data.sections || [];
+      types = t.data.types || [];
+      products = p.data.products || [];
+      render();
+      setBanner(`${companies.length} companies · ${sections.length} sections · ${types.length} types · ${products.length} products.`);
+      if (mustLog) console.log("eostore.load.ok", { companies: companies.length, products: products.length });
+    };
+
+    const showTab = (next: string) => {
+      tab = next;
+      root.querySelectorAll("[data-tab]").forEach((btn) => {
+        if (btn instanceof HTMLButtonElement) {
+          btn.setAttribute("aria-selected", btn.dataset.tab === next ? "true" : "false");
+        }
+      });
+      root.querySelectorAll("[data-pane]").forEach((pane) => {
+        if (pane instanceof HTMLElement) {
+          pane.hidden = pane.dataset.pane !== next;
+        }
+      });
+    };
+
+    root.querySelector("[data-tabs]")?.addEventListener("click", (ev) => {
+      const btn = (ev.target as HTMLElement)?.closest?.("[data-tab]");
+      if (!(btn instanceof HTMLButtonElement) || !btn.dataset.tab) return;
+      showTab(btn.dataset.tab);
+    });
+
+    const updatePreview = () => {
+      const usd = Number((root.querySelector("[data-pr-usd]") as HTMLInputElement)?.value || 0);
+      const discount = Number((root.querySelector("[data-pr-discount]") as HTMLInputElement)?.value || 0);
+      const bs = Number((root.querySelector("[data-pr-bs]") as HTMLInputElement)?.value || 0);
+      const label = root.querySelector("[data-pr-discount-label]");
+      if (label) label.textContent = `${discount}%`;
+      const finalUsd = usd * (1 - discount / 100);
+      const preview = root.querySelector("[data-pr-preview]");
+      if (preview) preview.textContent = `Final: $${formatMoney(finalUsd)} · Bs ${formatMoney(finalUsd * bs)}`;
+    };
+
+    root.querySelector("[data-pr-usd]")?.addEventListener("input", updatePreview);
+    root.querySelector("[data-pr-discount]")?.addEventListener("input", updatePreview);
+    root.querySelector("[data-pr-bs]")?.addEventListener("input", updatePreview);
+
+    root.querySelector("[data-company-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const name = (root.querySelector("[data-co-name]") as HTMLInputElement)?.value.trim();
+      const id = (root.querySelector("[data-co-id]") as HTMLInputElement)?.value.trim();
+      const description = (root.querySelector("[data-co-desc]") as HTMLTextAreaElement)?.value.trim();
+      const res = await createCompany({ name, id, description });
+      if (res.status !== 200) {
+        fail(res.data.message || "Create company failed.", res.requestId, res.data.debug);
+        return;
+      }
+      (ev.target as HTMLFormElement).reset();
+      await loadAll();
+    });
+
+    root.querySelector("[data-section-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const company_guid = (root.querySelector("[data-sec-company]") as HTMLSelectElement)?.value;
+      const name = (root.querySelector("[data-sec-name]") as HTMLInputElement)?.value.trim();
+      const id = (root.querySelector("[data-sec-id]") as HTMLInputElement)?.value.trim();
+      const description = (root.querySelector("[data-sec-desc]") as HTMLTextAreaElement)?.value.trim();
+      const res = await createSection({ company_guid, name, id, description });
+      if (res.status !== 200) {
+        fail(res.data.message || "Create section failed.", res.requestId, res.data.debug);
+        return;
+      }
+      (ev.target as HTMLFormElement).reset();
+      await loadAll();
+    });
+
+    root.querySelector("[data-type-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const section_guid = (root.querySelector("[data-typ-section]") as HTMLSelectElement)?.value;
+      const name = (root.querySelector("[data-typ-name]") as HTMLInputElement)?.value.trim();
+      const id = (root.querySelector("[data-typ-id]") as HTMLInputElement)?.value.trim();
+      const description = (root.querySelector("[data-typ-desc]") as HTMLTextAreaElement)?.value.trim();
+      const res = await createType({ section_guid, name, id, description });
+      if (res.status !== 200) {
+        fail(res.data.message || "Create type failed.", res.requestId, res.data.debug);
+        return;
+      }
+      (ev.target as HTMLFormElement).reset();
+      await loadAll();
+    });
+
+    root.querySelector("[data-product-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const type_guid = (root.querySelector("[data-pr-type]") as HTMLSelectElement)?.value;
+      const name = (root.querySelector("[data-pr-name]") as HTMLInputElement)?.value.trim();
+      const id = (root.querySelector("[data-pr-id]") as HTMLInputElement)?.value.trim();
+      const description = (root.querySelector("[data-pr-desc]") as HTMLTextAreaElement)?.value.trim();
+      const hashtags = parseHashtags((root.querySelector("[data-pr-tags]") as HTMLInputElement)?.value || "");
+      const price_base_usd = Number((root.querySelector("[data-pr-usd]") as HTMLInputElement)?.value || 0);
+      const discount_percent = Number((root.querySelector("[data-pr-discount]") as HTMLInputElement)?.value || 0);
+      const bs_per_usd = Number((root.querySelector("[data-pr-bs]") as HTMLInputElement)?.value || 0);
+      const units = Number((root.querySelector("[data-pr-units]") as HTMLInputElement)?.value || 0);
+      const visible = Boolean((root.querySelector("[data-pr-visible]") as HTMLInputElement)?.checked);
+      const res = await createProduct({
+        type_guid,
+        name,
+        id,
+        description,
+        hashtags,
+        price_base_usd,
+        discount_percent,
+        bs_per_usd,
+        units,
+        visible,
+      });
+      if (res.status !== 200) {
+        fail(res.data.message || "Create product failed.", res.requestId, res.data.debug);
+        return;
+      }
+      (ev.target as HTMLFormElement).reset();
+      updatePreview();
+      await loadAll();
+    });
+
+    document.querySelector("[data-refresh]")?.addEventListener("click", () => void loadAll());
+
+    void (async () => {
+      const me = await getMe();
+      if (me.status !== 200 || me.data.role !== "admin") {
+        setBanner("Administrator session required.", "err");
+        return;
+      }
+      root.querySelectorAll("form").forEach((f) => {
+        if (f instanceof HTMLElement) f.hidden = false;
+      });
+      updatePreview();
+      await loadAll();
+    })();
+  }
+</script>

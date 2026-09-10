@@ -8,6 +8,7 @@ import "../styles/pamphlet-layout.css";
 import "../styles/pamphlet-hub.css";
 import "../styles/evoice.css";
 import "../styles/eoadmin.css";
+import "../styles/eostore.css";
 import "../components/HeaderDynamicMenu/HeaderDynamicMenu.css";
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[] | string;
@@ -51,6 +52,7 @@ const privateByDefault =
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
   path.startsWith("/eoadmin") ||
+  path.startsWith("/eostore") ||
   path.startsWith("/payments");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
@@ -251,6 +253,10 @@ const jsonLdString =
             <a href="/eoadmin/admin" data-route aria-current={path.startsWith("/eoadmin/admin") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
               eoadmin board
+            </a>
+            <a href="/eostore" data-route aria-current={path === "/eostore" || path.startsWith("/eostore/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
+              eostore
             </a>
             <a href="/diagnostics" data-route aria-current={path === "/diagnostics" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
