@@ -42,8 +42,9 @@ type ereportFS struct {
 	// the directory on the user id alone.
 	owner func(userID string) (username, email string, ok bool)
 
-	mu        sync.RWMutex
-	ownerDirs map[string][]string
+	mu          sync.RWMutex
+	ownerDirs   map[string][]string
+	executionMu sync.Mutex
 }
 
 func newEreportFS(root string) *ereportFS {
