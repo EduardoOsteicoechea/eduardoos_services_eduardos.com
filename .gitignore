@@ -57,5 +57,11 @@ tmp/
 temp/
 .cache/
 
-# Local media
-backend/.data/
+# Local media / runtime data (keep Calvin paragraph pack for deploy)
+backend/.data/*
+!backend/.data/calvin-institutes-paragraphs/
+!backend/.data/calvin-institutes-paragraphs/**
+
+# Deploy note: if the paragraph pack is omitted from git, sync
+# workspace `calvin-institutes-paragraphs/` → `backend/.data/calvin-institutes-paragraphs/`
+# on the VPS before enabling /api/latin/calvins-institutes/paragraphs.

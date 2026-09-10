@@ -6,6 +6,11 @@ Disallow: /session/
 Disallow: /admin/
 Disallow: /diagnostics
 Disallow: /ereport/
+Disallow: /scrib/
+Disallow: /homescool/
+Disallow: /documents/pamphlet
+Disallow: /evoice/
+Disallow: /payments/
 
 User-agent: Googlebot
 Allow: /

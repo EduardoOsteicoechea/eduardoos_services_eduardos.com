@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Homescool · Eduardoos" description="Homescool learning surface." page="homescool" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool/students" data-route title="Students" aria-label="Students">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">group</span></span>
+      Students
+    </a>
+    <a class="dhs-action" href="/homescool/register-student" data-route title="Register" aria-label="Register">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">person_add</span></span>
+      Register
+    </a>
+    <a class="dhs-action" href="/homescool/learning" data-route title="Learning" aria-label="Learning">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+      Learning
+    </a>
+  </Fragment>
+
+  <section class="product-dash" data-homescool>
+    <h1>Homescool</h1>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Homescool teacher access requires a subscription.</p>
+      <p class="hint"><a href="/payments/subscription" data-route>Subscribe</a> · <a href="/homescool/learning" data-route>Student learning</a></p>
+    </div>
+    <div data-authed hidden>
+      <div class="product-dash__grid">
+        <a class="product-dash__card" href="/homescool/students" data-route>
+          <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          <span class="product-dash__card-title">Students</span>
+          <span class="product-dash__card-desc">Manage linked students</span>
+        </a>
+        <a class="product-dash__card" href="/homescool/register-student" data-route>
+          <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+          <span class="product-dash__card-title">Register student</span>
+          <span class="product-dash__card-desc">Invite by email</span>
+        </a>
+        <a class="product-dash__card" href="/homescool/learning" data-route>
+          <span class="material-symbols-outlined" aria-hidden="true">school</span>
+          <span class="product-dash__card-title">Learning</span>
+          <span class="product-dash__card-desc">Student task board</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-homescool]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const result = await requireService("homescool", { requireSubscription: true });
+  if (!result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = result.sessionOk ? "Subscription required." : "Sign in required.";
+    setHidden(gate, false);
+    setHidden(authed, true);
+  } else {
+    if (banner instanceof HTMLElement) banner.textContent = "Teacher hub";
+    setHidden(gate, true);
+    setHidden(authed, false);
+  }
+</script>

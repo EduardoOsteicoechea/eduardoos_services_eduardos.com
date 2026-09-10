@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Homescool learning · Eduardoos" page="homescool-learning" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Hub" aria-label="Hub">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">home</span></span>
+      Hub
+    </a>
+  </Fragment>
+
+  <section class="product-dash" data-learning>
+    <h1>Learning</h1>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Sign in as a linked student (or teacher with access).</p>
+    </div>
+    <div data-authed hidden>
+      <label>Teacher
+        <select data-teacher></select>
+      </label>
+      <ul class="product-list" data-tasks></ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { fetchLearningLinks, fetchLearningTasks } from "../../lib/homescool";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-learning]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const teacherSelect = root?.querySelector("[data-teacher]");
+  const list = root?.querySelector("[data-tasks]");
+
+  async function loadTasks(slug: string) {
+    const rows = await fetchLearningTasks(slug);
+    if (rows.error) {
+      apiFail(rows.error, { requestId: rows.requestId });
+      return;
+    }
+    if (!(list instanceof HTMLElement)) return;
+    list.replaceChildren();
+    for (const task of rows.tasks) {
+      const li = document.createElement("li");
+      li.textContent = `${task.name} · ${task.status}`;
+      list.appendChild(li);
+    }
+  }
+
+  const result = await requireService("homescool");
+  if (!result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Access required.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    const links = await fetchLearningLinks();
+    if (links.error) {
+      apiFail(links.error, { requestId: links.requestId });
+    } else if (teacherSelect instanceof HTMLSelectElement) {
+      if (banner instanceof HTMLElement) banner.textContent = `${links.teachers.length} teacher link(s)`;
+      teacherSelect.replaceChildren();
+      for (const link of links.teachers) {
+        const opt = document.createElement("option");
+        opt.value = link.studentSlug || link.id;
+        opt.textContent = link.teacherEmail || opt.value;
+        teacherSelect.appendChild(opt);
+      }
+      teacherSelect.addEventListener("change", () => void loadTasks(teacherSelect.value));
+      if (teacherSelect.value) await loadTasks(teacherSelect.value);
+    }
+  }
+</script>

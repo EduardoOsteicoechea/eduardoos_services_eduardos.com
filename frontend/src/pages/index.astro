@@ -1,6 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import {
+  PROFILE_EMAIL,
+  PROFILE_GITHUB,
+  PROFILE_LINKEDIN,
+  PROFILE_WHATSAPP,
+  PROFILE_WHATSAPP_DISPLAY,
+  PROFILE_YOUTUBE,
+  profileEducation,
+  profileExperience,
+  profileExpertiseAnswer,
+  profileFaq,
+  profileFocusAnswer,
+  profileSkillCards,
+  profileStack,
+  profileWhoAnswer,
+} from "../lib/eduardoProfile";
+import {
   HOME_FAQS,
   faqSchema,
   graph,
@@ -13,36 +29,103 @@ const description =
 ---
 
 <Layout description={description} jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))}>
-  <h1 id="who">Software, systems, and careful craft for AEC.</h1>
+  <h1 id="who">Architect. BIM engineer. Software builder.</h1>
   <p class="lede">
-    Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and
-    full-stack developer. Eduardoos.com is his public home for product work,
-    technical writing, and services across web platforms, APIs, and production
-    infrastructure.
+    {profileWhoAnswer}
+  </p>
+  <p class="lede">
+    Reach me via <a href="/contact" data-route>Contact</a>,
+    <a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>,
+    or review the <a href="/api-docs" data-route>API docs</a>.
   </p>
 
-  <section class="seo-section" id="work" aria-labelledby="work-heading">
-    <h2 id="work-heading">What this site stands for</h2>
-    <p>
-      Focused BIM training (Autodesk Authorized Training Center Course 2011;
-      BIMMASTER.org course — not a Master’s degree), Revit/AutoCAD API tools,
-      AI integrations, and multiplatform products for architecture, engineering,
-      and construction teams.
-    </p>
-    <p>
-      The frontend is static Astro. Browsers talk to this domain’s API only
-      through <code>/api/</code> — no secrets in the client bundle.
-    </p>
-    <p>
-      Learn more on <a href="/about" data-route>About</a>, reach out via
-      <a href="/contact" data-route>Contact</a>, or review the
-      <a href="/api-docs" data-route>API docs</a>.
-    </p>
+  <section class="home-profile" aria-label="Professional profile">
+    <section class="home-profile__block" id="expertise">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">architecture</span>
+        <h2>Specialization</h2>
+      </div>
+      <p class="lede">{profileExpertiseAnswer}</p>
+    </section>
+
+    <section class="home-profile__block" id="focus">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">flag</span>
+        <h2>Current focus</h2>
+      </div>
+      <p class="lede">{profileFocusAnswer}</p>
+    </section>
+
+    <section class="home-profile__block" id="education">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">school</span>
+        <h2>Education and training</h2>
+      </div>
+      <ul class="home-profile__list">
+        {profileEducation.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section class="home-profile__block" id="experience">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">work</span>
+        <h2>Professional experience</h2>
+      </div>
+      <div class="home-profile__grid">
+        {profileExperience.map((job) => (
+          <article class="home-profile__block">
+            <div class="home-profile__heading">
+              <span class="material-symbols-outlined" aria-hidden="true">{job.icon}</span>
+              <h2>{job.org}</h2>
+            </div>
+            <p class="hint">{job.role} · {job.period}</p>
+            <p class="lede">{job.summary}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="home-profile__block" id="skills">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">handyman</span>
+        <h2>Skills</h2>
+      </div>
+      <div class="home-profile__skills">
+        {profileSkillCards.map((skill) => (
+          <article class="product-dash__card">
+            <span class="material-symbols-outlined" aria-hidden="true">{skill.icon}</span>
+            <span class="product-dash__card-title">{skill.title}</span>
+            <span class="product-dash__card-desc">{skill.description}</span>
+          </article>
+        ))}
+      </div>
+      <p class="lede">{profileStack}</p>
+    </section>
+
+    <section class="home-profile__block" id="contact-links">
+      <div class="home-profile__heading">
+        <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+        <h2>Public contacts</h2>
+      </div>
+      <ul class="home-profile__list">
+        <li><a href={`mailto:${PROFILE_EMAIL}`}>{PROFILE_EMAIL}</a></li>
+        <li><a href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp {PROFILE_WHATSAPP_DISPLAY}</a></li>
+        <li><a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+        <li><a href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a></li>
+        <li><a href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a></li>
+      </ul>
+    </section>
   </section>
 
   <section class="seo-section" id="faq" aria-labelledby="faq-heading">
     <h2 id="faq-heading">FAQ</h2>
     <div class="faq">
+      {profileFaq.map((item) => (
+        <details>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
       {HOME_FAQS.map((item) => (
         <details>
           <summary>{item.question}</summary>

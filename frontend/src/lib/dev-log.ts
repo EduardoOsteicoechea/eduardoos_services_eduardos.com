@@ -1,7 +1,10 @@
 const PREFIX = "[session-debug]";
 
+/** Exhaustive FE diagnostics (error-observability). Default on in local DEV builds. */
+export const mustLog = import.meta.env.DEV;
+
 export function sessionDebugEnabled(): boolean {
-  return import.meta.env.DEV;
+  return mustLog;
 }
 
 export function sessionLog(step: string, detail: Record<string, unknown> = {}): void {

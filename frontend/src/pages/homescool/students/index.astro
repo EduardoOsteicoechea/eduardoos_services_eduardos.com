@@ -1,0 +1,57 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="Homescool students · Eduardoos" page="homescool-students" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Hub" aria-label="Hub">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">home</span></span>
+      Hub
+    </a>
+    <a class="dhs-action" href="/homescool/register-student" data-route title="Register" aria-label="Register">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">person_add</span></span>
+      Register
+    </a>
+  </Fragment>
+
+  <section class="product-dash" data-students>
+    <h1>Students</h1>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate"><p class="hint">Teacher subscription required.</p></div>
+    <ul class="product-list" data-list hidden></ul>
+  </section>
+</Layout>
+
+<script>
+  import { fetchHomescoolStudents } from "../../../lib/homescool";
+  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+
+  const root = document.querySelector("[data-students]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const list = root?.querySelector("[data-list]");
+  const result = await requireService("homescool", { requireSubscription: true });
+  if (!result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Access required.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(list, false);
+    const rows = await fetchHomescoolStudents();
+    if (rows.error) {
+      apiFail(rows.error, { requestId: rows.requestId });
+    } else if (list instanceof HTMLElement) {
+      if (banner instanceof HTMLElement) banner.textContent = `${rows.students.length} student(s)`;
+      list.replaceChildren();
+      for (const s of rows.students) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `/homescool/students/workspace?slug=${encodeURIComponent(s.studentSlug)}`;
+        a.dataset.route = "";
+        a.textContent = `${s.studentEmail} (${s.studentSlug})`;
+        li.appendChild(a);
+        list.appendChild(li);
+      }
+    }
+  }
+</script>

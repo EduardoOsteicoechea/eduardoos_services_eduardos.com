@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Register student · Eduardoos" page="homescool-register" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool/students" data-route title="Students" aria-label="Students">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">group</span></span>
+      Students
+    </a>
+  </Fragment>
+
+  <section class="product-dash">
+    <h1>Register student</h1>
+    <p class="status" data-banner>Enter the student email to send an invite link.</p>
+    <form class="product-form" data-register>
+      <label>Student email <input name="studentEmail" type="email" required /></label>
+      <label>Display name <input name="displayName" maxlength="120" /></label>
+      <button class="btn btn--primary" type="submit">Register</button>
+    </form>
+    <p class="hint" data-result hidden></p>
+  </section>
+</Layout>
+
+<script>
+  import { registerHomescoolStudent } from "../../lib/homescool";
+  import { apiFail, requireService } from "../../lib/productGate";
+
+  const resultEl = document.querySelector("[data-result]");
+  const gate = await requireService("homescool", { requireSubscription: true });
+  if (!gate.sessionOk || !gate.access.allowed) {
+    apiFail("Teacher subscription required.");
+  }
+
+  document.querySelector("[data-register]")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const fd = new FormData(event.target as HTMLFormElement);
+    const res = await registerHomescoolStudent({
+      studentEmail: String(fd.get("studentEmail") || "").trim(),
+      displayName: String(fd.get("displayName") || "").trim() || undefined,
+    });
+    if (!res.student) {
+      apiFail(res.error || "Could not register student.", { requestId: res.requestId });
+      return;
+    }
+    if (resultEl instanceof HTMLElement) {
+      resultEl.hidden = false;
+      resultEl.textContent = `Registered ${res.student.studentEmail} (${res.student.studentSlug}).`;
+    }
+  });
+</script>

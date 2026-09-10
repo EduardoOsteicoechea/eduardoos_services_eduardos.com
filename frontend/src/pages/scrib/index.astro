@@ -1,0 +1,160 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Scrib · Eduardoos"
+  description="Layered US Letter manuscript sheets."
+  page="scrib"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-new-book title="New book" aria-label="New book">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">library_add</span>
+      </span>
+      New book
+    </button>
+    <a class="dhs-action" href="/dashboard/latin/calvins-institutes" data-route title="Institutes" aria-label="Institutes">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+      </span>
+      Institutes
+    </a>
+  </Fragment>
+
+  <section class="product-dash" data-scrib-hub>
+    <h1>Scrib</h1>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Scrib subscription required.</p>
+      <p class="hint"><a href="/payments/subscription" data-route>Subscribe</a> · <a href="/session" data-route>Sign in</a></p>
+    </div>
+    <div data-authed hidden>
+      <form class="product-form" data-create-book>
+        <label>
+          New book name
+          <input name="name" required maxlength="120" />
+        </label>
+        <button class="btn btn--primary" type="submit">Create book</button>
+      </form>
+      <h2 class="product-dash__section-title">Books</h2>
+      <div class="product-dash__grid" data-books></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import {
+    createScribBook,
+    createScribSheet,
+    deleteScribBook,
+    fetchScribLibrary,
+    scribSheetHref,
+    type ScribBookCard,
+  } from "../../lib/scrib";
+
+  const root = document.querySelector("[data-scrib-hub]");
+  if (!(root instanceof HTMLElement)) throw new Error("scrib hub missing");
+  const banner = root.querySelector("[data-banner]");
+  const gate = root.querySelector("[data-gate]");
+  const authed = root.querySelector("[data-authed]");
+  const booksEl = root.querySelector("[data-books]");
+  let userSafe = "";
+
+  function renderBooks(books: ScribBookCard[]) {
+    if (!(booksEl instanceof HTMLElement)) return;
+    booksEl.replaceChildren();
+    for (const book of books) {
+      const card = document.createElement("article");
+      card.className = "product-dash__card";
+      card.innerHTML = `
+        <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+        <span class="product-dash__card-title"></span>
+        <span class="product-dash__card-desc"></span>
+        <div class="subscription-page__period">
+          <button class="btn btn--primary" type="button" data-add-sheet>New sheet</button>
+          <button class="btn" type="button" data-delete-book>Delete</button>
+        </div>
+        <ul class="product-list" data-sheets></ul>
+      `;
+      const title = card.querySelector(".product-dash__card-title");
+      const desc = card.querySelector(".product-dash__card-desc");
+      if (title) title.textContent = book.name;
+      if (desc) desc.textContent = `${book.sheets.length} sheet(s)`;
+      const sheets = card.querySelector("[data-sheets]");
+      for (const sheet of book.sheets) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = scribSheetHref(userSafe, book.id, sheet.id);
+        a.dataset.route = "";
+        a.textContent = sheet.name;
+        li.appendChild(a);
+        sheets?.appendChild(li);
+      }
+      card.querySelector("[data-add-sheet]")?.addEventListener("click", async () => {
+        const name = prompt("Sheet name", `Sheet ${(book.sheets.length || 0) + 1}`);
+        if (!name?.trim()) return;
+        const created = await createScribSheet(book.id, name.trim());
+        if (!created.sheet) {
+          apiFail(created.error || "Could not create sheet.", { requestId: created.requestId });
+          return;
+        }
+        location.href = scribSheetHref(userSafe, book.id, created.sheet.id);
+      });
+      card.querySelector("[data-delete-book]")?.addEventListener("click", async () => {
+        if (!confirm(`Delete book “${book.name}”?`)) return;
+        const res = await deleteScribBook(book.id);
+        if (!res.ok) {
+          apiFail(res.error || "Could not delete book.", { requestId: res.requestId });
+          return;
+        }
+        await reload();
+      });
+      booksEl.appendChild(card);
+    }
+  }
+
+  async function reload() {
+    const lib = await fetchScribLibrary();
+    if (lib.error) {
+      apiFail(lib.error, { requestId: lib.requestId });
+      return;
+    }
+    userSafe = lib.userSafe;
+    renderBooks(lib.books);
+  }
+
+  root.querySelector("[data-create-book]")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const name = String(new FormData(form).get("name") || "").trim();
+    if (!name) return;
+    const created = await createScribBook(name);
+    if (!created.book) {
+      apiFail(created.error || "Could not create book.", { requestId: created.requestId });
+      return;
+    }
+    form.reset();
+    await reload();
+  });
+
+  document.querySelector("[data-new-book]")?.addEventListener("click", () => {
+    root.querySelector<HTMLInputElement>("[data-create-book] input")?.focus();
+  });
+
+  const gateResult = await requireService("scrib");
+  if (!gateResult.sessionOk || !gateResult.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+    setHidden(gate, false);
+    setHidden(authed, true);
+  } else {
+    if (banner instanceof HTMLElement) banner.textContent = "Scrib library";
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (mustLog) console.log("[scrib] hub ready");
+    await reload();
+  }
+</script>

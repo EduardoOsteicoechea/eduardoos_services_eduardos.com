@@ -1,0 +1,74 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout title="Student workspace · Eduardoos" page="homescool-workspace" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool/students" data-route title="Students" aria-label="Students">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">group</span></span>
+      Students
+    </a>
+  </Fragment>
+
+  <section class="product-dash" data-workspace>
+    <h1>Student workspace</h1>
+    <p class="status" data-banner>Loading…</p>
+    <form class="product-form" data-task-form hidden>
+      <label>Task name <input name="name" required /></label>
+      <label>Description <textarea name="description" rows="3"></textarea></label>
+      <button class="btn btn--primary" type="submit">Assign task</button>
+    </form>
+    <ul class="product-list" data-tasks hidden></ul>
+  </section>
+</Layout>
+
+<script>
+  import { createTeacherTask, fetchTeacherTasks } from "../../../lib/homescool";
+  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+
+  const slug = new URLSearchParams(location.search).get("slug") || "";
+  const root = document.querySelector("[data-workspace]");
+  const banner = root?.querySelector("[data-banner]");
+  const form = root?.querySelector("[data-task-form]");
+  const list = root?.querySelector("[data-tasks]");
+
+  async function reload() {
+    const rows = await fetchTeacherTasks(slug);
+    if (rows.error) {
+      apiFail(rows.error, { requestId: rows.requestId });
+      return;
+    }
+    if (banner instanceof HTMLElement) banner.textContent = `${slug} · ${rows.tasks.length} task(s)`;
+    if (!(list instanceof HTMLElement)) return;
+    list.replaceChildren();
+    for (const task of rows.tasks) {
+      const li = document.createElement("li");
+      li.textContent = `${task.name} · ${task.status}`;
+      list.appendChild(li);
+    }
+  }
+
+  const result = await requireService("homescool", { requireSubscription: true });
+  if (!slug || !result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Access or slug missing.";
+  } else {
+    setHidden(form, false);
+    setHidden(list, false);
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const fd = new FormData(event.target as HTMLFormElement);
+      const created = await createTeacherTask(slug, {
+        name: String(fd.get("name") || "").trim(),
+        description: String(fd.get("description") || "").trim(),
+        status: "pending",
+      });
+      if (!created.task) {
+        apiFail(created.error || "Could not create task.", { requestId: created.requestId });
+        return;
+      }
+      (event.target as HTMLFormElement).reset();
+      await reload();
+    });
+    await reload();
+  }
+</script>

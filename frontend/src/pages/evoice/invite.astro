@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="eVoice playlist · Eduardoos" page="evoice-invite" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/evoice" data-route title="eVoice" aria-label="eVoice">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span></span>
+      eVoice
+    </a>
+    <button class="dhs-action" type="button" data-print title="Print" aria-label="Print">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
+      Print
+    </button>
+  </Fragment>
+
+  <section class="product-dash" data-invite>
+    <h1>Shared playlist</h1>
+    <p class="status" data-banner>Loading invite…</p>
+    <ul class="product-list evoice-playlist" data-files></ul>
+  </section>
+</Layout>
+
+<script>
+  import { fetchEvoiceInvite } from "../../lib/evoice";
+  import { showErrorModal } from "../../lib/error-modal";
+
+  const token = new URLSearchParams(location.search).get("token") || "";
+  const banner = document.querySelector("[data-banner]");
+  const list = document.querySelector("[data-files]");
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+
+  if (!token) {
+    if (banner instanceof HTMLElement) banner.textContent = "Missing invite token.";
+  } else {
+    const invite = await fetchEvoiceInvite(token);
+    if (invite.error) {
+      showErrorModal({ message: invite.error, requestId: invite.requestId });
+      if (banner instanceof HTMLElement) banner.textContent = "Invite unavailable.";
+    } else {
+      if (banner instanceof HTMLElement) banner.textContent = invite.project || "Playlist";
+      if (list instanceof HTMLElement) {
+        list.replaceChildren();
+        for (const file of invite.files || []) {
+          const li = document.createElement("li");
+          const label = document.createElement("span");
+          label.textContent = file.name;
+          if (file.url) {
+            const audio = document.createElement("audio");
+            audio.controls = true;
+            audio.preload = "none";
+            audio.src = file.url;
+            li.append(label, audio);
+          } else {
+            li.append(label);
+          }
+          list.appendChild(li);
+        }
+      }
+    }
+  }
+</script>

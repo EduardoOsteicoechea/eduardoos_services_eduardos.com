@@ -17,7 +17,12 @@ export default defineConfig({
         !page.includes("/session") &&
         !page.includes("/admin") &&
         !page.includes("/diagnostics") &&
-        !page.includes("/ereport"),
+        !page.includes("/ereport") &&
+        !page.includes("/scrib") &&
+        !page.includes("/homescool") &&
+        !page.includes("/documents/pamphlet") &&
+        !page.includes("/evoice") &&
+        !page.includes("/payments"),
     }),
   ],
   server: {

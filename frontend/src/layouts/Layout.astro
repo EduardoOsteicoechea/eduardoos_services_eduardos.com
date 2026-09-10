@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "../styles/ereport-chrome.css";
+import "../styles/product-suite.css";
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[] | string;
 
@@ -38,7 +39,12 @@ const privateByDefault =
   path.startsWith("/session") ||
   path.startsWith("/admin") ||
   path === "/diagnostics" ||
-  path.startsWith("/ereport");
+  path.startsWith("/ereport") ||
+  path.startsWith("/scrib") ||
+  path.startsWith("/homescool") ||
+  path.startsWith("/documents/pamphlet") ||
+  path.startsWith("/evoice") ||
+  path.startsWith("/payments");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
 const canonicalUrl = path === "/" ? "https://eduardoos.com/" : canonical;
@@ -192,6 +198,30 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
+          <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+            Subscriptions
+          </a>
+          <a href="/scrib" data-route aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
+            Scrib
+          </a>
+          <a href="/dashboard/latin/calvins-institutes" data-route aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+            Institutes
+          </a>
+          <a href="/homescool" data-route aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">school</span>
+            Homescool
+          </a>
+          <a href="/documents/pamphlet" data-route aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">description</span>
+            Pamphlet
+          </a>
+          <a href="/evoice" data-route aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
+            eVoice
+          </a>
           <a href="/ereport" data-route aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
             eReport
@@ -211,10 +241,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
               Diagnostics
             </a>
-            <button type="button" data-open-agent>
-              <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
-              Agent Sandbox
-            </button>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">
             <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>

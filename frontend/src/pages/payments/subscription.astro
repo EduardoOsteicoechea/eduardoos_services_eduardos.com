@@ -1,0 +1,240 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Subscription · Eduardoos"
+  description="Subscribe to Eduardoos product services."
+  page="payments-subscription"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-sub-prepare title="Prepare checkout" aria-label="Prepare checkout">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+      </span>
+      Prepare checkout
+    </button>
+    <a class="dhs-action" href="/session" data-route title="Sign in" aria-label="Sign in">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">login</span>
+      </span>
+      Sign in
+    </a>
+  </Fragment>
+
+  <section class="product-dash subscription-page" data-subscription>
+    <h1>Subscription</h1>
+    <p class="lede">
+      Pamphlet, Homescool, Scrib, eReport, and eVoice are $1/month each; API is $3/month.
+      Yearly is 10× the monthly total.
+    </p>
+    <p class="status" data-banner>Loading…</p>
+
+    <div data-guest hidden>
+      <p class="hint">Sign in so payment intents attach to your session email.</p>
+      <p class="hint session-links">
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
+    <div data-authed hidden>
+      <div class="subscription-page__period" role="group" aria-label="Billing period">
+        <button class="btn btn--primary" type="button" data-period="monthly">Monthly</button>
+        <button class="btn" type="button" data-period="yearly">Yearly</button>
+      </div>
+
+      <div class="product-dash__grid" data-services role="group" aria-label="Services"></div>
+
+      <p class="hint" data-total>Total: $0.00</p>
+      <p class="hint" data-message hidden></p>
+
+      <div class="subscription-page__period">
+        <button class="btn btn--primary" type="button" data-prepare>Prepare PayPal checkout</button>
+        <button class="btn" type="button" data-check-status hidden>Check payment status</button>
+      </div>
+
+      <form data-paypal hidden method="post" action="https://www.paypal.com/cgi-bin/webscr" target="_blank" rel="noopener">
+        <input type="hidden" name="cmd" value="_s-xclick" />
+        <input type="hidden" name="hosted_button_id" data-paypal-button value="" />
+        <input type="hidden" name="custom" data-paypal-custom value="" />
+        <button type="submit">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" alt="PayPal Buy Now" />
+        </button>
+      </form>
+
+      <h2 class="product-dash__section-title">Active entitlements</h2>
+      <ul class="product-list" data-ents></ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { showErrorModal } from "../../lib/error-modal";
+  import {
+    createSubscriptionIntent,
+    fetchMyEntitlements,
+    fetchSubscriptionCatalog,
+    getPaymentStatus,
+    paypalHostedButtonIdFallback,
+    quoteSubscription,
+    type BillingPeriod,
+    type PaymentIntentResponse,
+    type SubscriptionService,
+  } from "../../lib/payments";
+  import { requireSession, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-subscription]");
+  if (!(root instanceof HTMLElement)) throw new Error("subscription root missing");
+
+  const banner = root.querySelector("[data-banner]");
+  const guest = root.querySelector("[data-guest]");
+  const authed = root.querySelector("[data-authed]");
+  const servicesEl = root.querySelector("[data-services]");
+  const totalEl = root.querySelector("[data-total]");
+  const messageEl = root.querySelector("[data-message]");
+  const prepareBtn = root.querySelector("[data-prepare]");
+  const checkBtn = root.querySelector("[data-check-status]");
+  const paypalForm = root.querySelector("[data-paypal]");
+  const paypalButton = root.querySelector("[data-paypal-button]");
+  const paypalCustom = root.querySelector("[data-paypal-custom]");
+  const entsEl = root.querySelector("[data-ents]");
+
+  let catalog: SubscriptionService[] = [];
+  let selected: string[] = ["pamphlet"];
+  let billingPeriod: BillingPeriod = "monthly";
+  let email = "";
+  let intent: PaymentIntentResponse | null = null;
+
+  function renderServices() {
+    if (!(servicesEl instanceof HTMLElement)) return;
+    servicesEl.replaceChildren();
+    for (const service of catalog) {
+      const checked = selected.includes(service.id);
+      const label = document.createElement("label");
+      label.className = checked
+        ? "product-dash__card subscription-page__service product-dash__card--selected"
+        : "product-dash__card subscription-page__service";
+      label.innerHTML = `
+        <input class="subscription-page__service-input" type="checkbox" value="${service.id}" ${checked ? "checked" : ""} />
+        <span class="product-dash__card-head">
+          <span class="material-symbols-outlined" aria-hidden="true">${service.icon}</span>
+          <span class="product-dash__card-title">${service.label}</span>
+        </span>
+        <span class="product-dash__card-desc">${service.description}</span>
+        <span class="product-dash__card-desc">$${service.monthlyUsd.toFixed(2)}/mo</span>
+      `;
+      const input = label.querySelector("input");
+      input?.addEventListener("change", () => {
+        selected = selected.includes(service.id)
+          ? selected.filter((id) => id !== service.id)
+          : [...selected, service.id];
+        intent = null;
+        setHidden(paypalForm, true);
+        setHidden(checkBtn, true);
+        renderServices();
+        renderTotal();
+      });
+      servicesEl.appendChild(label);
+    }
+  }
+
+  function renderTotal() {
+    if (totalEl instanceof HTMLElement) {
+      totalEl.textContent = `Total: $${quoteSubscription(selected, billingPeriod, catalog).toFixed(2)} ${billingPeriod}`;
+    }
+  }
+
+  async function renderEntitlements() {
+    if (!(entsEl instanceof HTMLElement)) return;
+    const rows = await fetchMyEntitlements();
+    entsEl.replaceChildren();
+    if (rows.length === 0) {
+      const li = document.createElement("li");
+      li.textContent = "No active entitlements yet.";
+      entsEl.appendChild(li);
+      return;
+    }
+    for (const row of rows) {
+      const li = document.createElement("li");
+      li.textContent = `${row.service_label || row.service_id} · ${row.billing_period} · until ${row.valid_until || "—"}`;
+      entsEl.appendChild(li);
+    }
+  }
+
+  async function prepare() {
+    if (selected.length === 0) {
+      showErrorModal({ message: "Select at least one service." });
+      return;
+    }
+    if (mustLog) console.log("[subscription] prepare", { selected, billingPeriod });
+    const result = await createSubscriptionIntent(email, selected, billingPeriod);
+    if (!result.data) {
+      showErrorModal({
+        message: result.error || "Could not create payment intent.",
+        requestId: result.requestId,
+      });
+      return;
+    }
+    intent = result.data;
+    if (messageEl instanceof HTMLElement) {
+      messageEl.hidden = false;
+      messageEl.textContent = `Intent ${intent.intent_id} ready · $${intent.amount} ${intent.currency}`;
+    }
+    if (paypalButton instanceof HTMLInputElement) {
+      paypalButton.value = intent.hosted_button_id || paypalHostedButtonIdFallback() || "PLACEHOLDER_HOSTED_BUTTON";
+    }
+    if (paypalCustom instanceof HTMLInputElement) {
+      paypalCustom.value = intent.intent_id;
+    }
+    setHidden(paypalForm, false);
+    setHidden(checkBtn, false);
+  }
+
+  root.querySelectorAll("[data-period]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!(btn instanceof HTMLElement)) return;
+      billingPeriod = btn.dataset.period === "yearly" ? "yearly" : "monthly";
+      root.querySelectorAll("[data-period]").forEach((node) => {
+        node.classList.toggle("btn--primary", node === btn);
+      });
+      intent = null;
+      setHidden(paypalForm, true);
+      setHidden(checkBtn, true);
+      renderTotal();
+    });
+  });
+
+  prepareBtn?.addEventListener("click", () => void prepare());
+  document.querySelector("[data-sub-prepare]")?.addEventListener("click", () => void prepare());
+  checkBtn?.addEventListener("click", async () => {
+    if (!intent?.intent_id) return;
+    const status = await getPaymentStatus(intent.intent_id);
+    if (!status) {
+      showErrorModal({ message: "Could not load payment status." });
+      return;
+    }
+    if (messageEl instanceof HTMLElement) {
+      messageEl.hidden = false;
+      messageEl.textContent = `Payment status: ${status.status}`;
+    }
+    await renderEntitlements();
+  });
+
+  const session = await requireSession();
+  catalog = await fetchSubscriptionCatalog();
+  if (!session.ok) {
+    if (banner instanceof HTMLElement) banner.textContent = "Sign in required.";
+    setHidden(guest, false);
+    setHidden(authed, true);
+  } else {
+    email = session.email;
+    if (banner instanceof HTMLElement) banner.textContent = `Signed in as ${email || "account"}`;
+    setHidden(guest, true);
+    setHidden(authed, false);
+    renderServices();
+    renderTotal();
+    await renderEntitlements();
+  }
+</script>

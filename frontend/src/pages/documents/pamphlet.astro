@@ -1,0 +1,164 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Pamphlet · Eduardoos"
+  description="Cloud pamphlet editor and print export."
+  page="pamphlet"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-view="dashboard" title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
+    </button>
+    <button class="dhs-action" type="button" data-view="new" title="New" aria-label="New">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+      </span>
+      New
+    </button>
+    <button class="dhs-action" type="button" data-view="open" title="Open" aria-label="Open">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+      </span>
+      Open
+    </button>
+  </Fragment>
+
+  <section class="product-dash" data-pamphlet>
+    <h1>Pamphlet</h1>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Pamphlet subscription required.</p>
+      <p class="hint"><a href="/payments/subscription" data-route>Subscribe</a></p>
+    </div>
+    <div data-dash hidden>
+      <div class="product-dash__grid">
+        <button class="product-dash__card" type="button" data-view="new">
+          <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+          <span class="product-dash__card-title">New</span>
+          <span class="product-dash__card-desc">Create a pamphlet</span>
+        </button>
+        <button class="product-dash__card" type="button" data-view="open">
+          <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+          <span class="product-dash__card-title">Open</span>
+          <span class="product-dash__card-desc">Open from cloud</span>
+        </button>
+        <button class="product-dash__card" type="button" data-view="recent">
+          <span class="material-symbols-outlined" aria-hidden="true">history</span>
+          <span class="product-dash__card-title">Recent</span>
+          <span class="product-dash__card-desc">Continue last document</span>
+        </button>
+      </div>
+      <h2 class="product-dash__section-title">Cloud documents</h2>
+      <ul class="product-list" data-list></ul>
+    </div>
+    <div class="pamphlet-host" data-editor hidden></div>
+  </section>
+</Layout>
+
+<script>
+  import { refreshAuthSession } from "../../lib/auth";
+  import { mustLog } from "../../lib/dev-log";
+  import { fetchEpams } from "../../lib/epams";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index";
+  import { PREF_PAMPHLET_LAST_EPAM, getPreference } from "../../lib/preferences";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-pamphlet]");
+  if (!(root instanceof HTMLElement)) throw new Error("pamphlet root missing");
+  const banner = root.querySelector("[data-banner]");
+  const gate = root.querySelector("[data-gate]");
+  const dash = root.querySelector("[data-dash]");
+  const editor = root.querySelector("[data-editor]");
+  const list = root.querySelector("[data-list]");
+  let handle: { destroy: () => void } | null = null;
+
+  function destroyEditor() {
+    handle?.destroy();
+    handle = null;
+    if (editor instanceof HTMLElement) editor.innerHTML = "";
+  }
+
+  function showEditor(view: string) {
+    destroyEditor();
+    setHidden(dash, true);
+    setHidden(editor, false);
+    if (!(editor instanceof HTMLElement)) return;
+    editor.dataset.pamphletView = view;
+    document.documentElement.classList.add("layout-editor-bleed", "page-pamphlet");
+    handle = mountPamphletGenerator(editor);
+    if (mustLog) console.log("[pamphlet] editor mounted", { view });
+  }
+
+  function showDash() {
+    destroyEditor();
+    document.documentElement.classList.remove("layout-editor-bleed", "page-pamphlet");
+    setHidden(editor, true);
+    setHidden(dash, false);
+  }
+
+  async function refreshList() {
+    if (!(list instanceof HTMLElement)) return;
+    try {
+      const { epams } = await fetchEpams();
+      list.replaceChildren();
+      if (epams.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "No cloud pamphlets yet.";
+        list.appendChild(li);
+        return;
+      }
+      for (const epam of epams) {
+        const li = document.createElement("li");
+        const open = document.createElement("button");
+        open.type = "button";
+        open.className = "btn btn--primary";
+        open.textContent = epam.title || epam.epamId;
+        open.addEventListener("click", () => showEditor("open"));
+        li.appendChild(open);
+        list.appendChild(li);
+      }
+    } catch (err) {
+      showErrorModal({ message: err instanceof Error ? err.message : "Could not list pamphlets." });
+    }
+  }
+
+  root.querySelectorAll("[data-view]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!(btn instanceof HTMLElement)) return;
+      const view = btn.dataset.view || "dashboard";
+      if (view === "dashboard") {
+        showDash();
+        await refreshList();
+        return;
+      }
+      if (view === "recent") {
+        const pref = await getPreference<string>(PREF_PAMPHLET_LAST_EPAM);
+        if (!pref.value) {
+          showErrorModal({ message: "No recent pamphlet saved yet." });
+          return;
+        }
+      }
+      showEditor(view);
+    });
+  });
+
+  await refreshAuthSession();
+  const gateResult = await requireService("pamphlet");
+  if (!gateResult.sessionOk || !gateResult.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+    setHidden(gate, false);
+    setHidden(dash, true);
+  } else {
+    if (banner instanceof HTMLElement) banner.textContent = "Pamphlet hub";
+    setHidden(gate, true);
+    showDash();
+    await refreshList();
+  }
+</script>
