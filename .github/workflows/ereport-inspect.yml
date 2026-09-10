@@ -1,0 +1,66 @@
+name: Inspect eReport FS
+
+on:
+  workflow_dispatch:
+    inputs:
+      owner_user_id:
+        description: Owner user id (filesystem)
+        required: true
+        default: 1291f1f63a8c8ec6d6e400e9
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          home = Path.home() / ".ssh"
+          key = os.environ["VPS_SSH_KEY"].replace("\r\n", "\n").replace("\r", "\n")
+          if "BEGIN" not in key and "\\n" in key:
+              key = key.replace("\\n", "\n")
+          key = key.strip() + "\n"
+          path = home / "deploy_key"
+          path.write_text(key)
+          path.chmod(0o600)
+          hosts = os.environ["VPS_KNOWN_HOSTS"].replace("\r\n", "\n").replace("\r", "\n").strip() + "\n"
+          known = home / "known_hosts"
+          known.write_text(hosts)
+          known.chmod(0o644)
+          PY
+          {
+            echo "SSH_KEY_PATH=$HOME/.ssh/deploy_key"
+            echo "SSH_KNOWN_HOSTS_PATH=$HOME/.ssh/known_hosts"
+          } >> "$GITHUB_ENV"
+
+      - name: Run FS inspect on VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          OWNER: ${{ inputs.owner_user_id }}
+        run: |
+          set -euo pipefail
+          PORT="${VPS_PORT:-22}"
+          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
+          REMOTE_DIR="/tmp/ereport-inspect-${GITHUB_RUN_ID}"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '${REMOTE_DIR}'"
+          rsync -az -e "${RSH}" scripts/vps-ereport-inspect.sh "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/vps-ereport-inspect.sh"
+          ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${REMOTE_DIR}/vps-ereport-inspect.sh' && '${REMOTE_DIR}/vps-ereport-inspect.sh' '${OWNER}' '' \
+            '89853904ec25e6b790b2254d92e87ff9' \
+            '4c1b30e7-c20f-41e2-92a0-51c3236191e0' \
+            '6d1b577e91ac373bf7f58a2d712f7f3a' \
+            && rm -rf '${REMOTE_DIR}'"
