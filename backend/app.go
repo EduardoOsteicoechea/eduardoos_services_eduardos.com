@@ -44,6 +44,8 @@ type App struct {
 	eoadmin         EoadminStore
 	eostore         EostoreStore
 	eostoreCart     EostoreCartStore
+	eoproject       eoprojectStore
+	eoprojectFS     *eoprojectFS
 	failClosedEnt   bool
 }
 
@@ -64,6 +66,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EvoiceMediaRoot == "" {
 		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
 	}
+	if cfg.EoprojectMediaRoot == "" {
+		cfg.EoprojectMediaRoot = cfg.MediaRoot + "/eoproject"
+	}
 	if cfg.EreportMaxImageBytes <= 0 {
 		cfg.EreportMaxImageBytes = defaultMaxImageBytes
 	}
@@ -77,10 +82,13 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if strings.TrimSpace(cfg.EvoiceMediaRoot) == "" {
 		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
 	}
+	if strings.TrimSpace(cfg.EoprojectMediaRoot) == "" {
+		cfg.EoprojectMediaRoot = cfg.MediaRoot + "/eoproject"
+	}
 	_ = os.MkdirAll(cfg.MediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EreportMediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EvoiceMediaRoot, 0750)
-	_ = os.MkdirAll(cfg.EvoiceMediaRoot, 0750)
+	_ = os.MkdirAll(cfg.EoprojectMediaRoot, 0750)
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:             cfg,
@@ -92,6 +100,8 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		eoadmin:         openEoadminStore(store),
 		eostore:         openEostoreStore(store),
 		eostoreCart:     openEostoreCartStore(store),
+		eoproject:       newEoprojectStoreFromDataStore(store),
+		eoprojectFS:     newEoprojectFS(cfg.EoprojectMediaRoot),
 		mailer:          smtpMailer{cfg: cfg},
 		chat:            map[string]ChatClient{},
 		audit:           newAuditStore(),
@@ -270,6 +280,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/homescool/learning/{teacherSlug}/tasks/{taskId}/submit", a.submitLearningTaskHandler)
 
 	a.registerEvoiceRoutes(mux)
+	a.registerEoprojectRoutes(mux)
 	a.registerEoadminRoutes(mux)
 	a.registerEostoreRoutes(mux)
 	a.registerEostoreShopRoutes(mux)

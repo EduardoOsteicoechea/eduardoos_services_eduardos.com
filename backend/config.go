@@ -34,6 +34,7 @@ type config struct {
 	MediaRoot              string
 	EreportMediaRoot       string
 	EvoiceMediaRoot        string
+	EoprojectMediaRoot     string
 	EvoicePython           string
 	EvoiceFakeTTS          bool
 	EvoiceWorkerScript     string
@@ -140,6 +141,10 @@ func loadConfig() config {
 	if evoiceRoot == "" {
 		evoiceRoot = media + "/evoice"
 	}
+	eoprojectRoot := strings.TrimSpace(os.Getenv("EOPROJECT_MEDIA_ROOT"))
+	if eoprojectRoot == "" {
+		eoprojectRoot = media + "/eoproject"
+	}
 
 	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
 
@@ -162,6 +167,7 @@ func loadConfig() config {
 		MediaRoot:              media,
 		EreportMediaRoot:       ereportRoot,
 		EvoiceMediaRoot:        evoiceRoot,
+		EoprojectMediaRoot:     eoprojectRoot,
 		EvoicePython:           strings.TrimSpace(os.Getenv("EVOICE_PYTHON")),
 		EvoiceFakeTTS:          envBool("EVOICE_FAKE_TTS", false),
 		EvoiceWorkerScript:     strings.TrimSpace(os.Getenv("EVOICE_WORKER_SCRIPT")),

@@ -241,6 +241,21 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEostoreCarts, Keys: bson.D{{Key: "updated_at", Value: 1}}},
 			},
 		},
+		{
+			ID:          "010_eoproject",
+			Description: "Create eoproject projects, stages, photos, IFC, and shares collections",
+			Collections: []string{colEoprojectProjects, colEoprojectStages, colEoprojectPhotos, colEoprojectIFC, colEoprojectShares},
+			Indexes: []indexSpec{
+				{Collection: colEoprojectProjects, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "updated_at", Value: -1}}},
+				{Collection: colEoprojectStages, Keys: bson.D{{Key: "project_id", Value: 1}, {Key: "sort_order", Value: 1}}},
+				{Collection: colEoprojectPhotos, Keys: bson.D{{Key: "stage_id", Value: 1}, {Key: "created_at", Value: -1}}},
+				{Collection: colEoprojectPhotos, Keys: bson.D{{Key: "project_id", Value: 1}}},
+				{Collection: colEoprojectIFC, Keys: bson.D{{Key: "stage_id", Value: 1}, {Key: "version", Value: -1}}},
+				{Collection: colEoprojectIFC, Keys: bson.D{{Key: "project_id", Value: 1}}},
+				{Collection: colEoprojectShares, Keys: bson.D{{Key: "token_hash", Value: 1}}, Unique: true},
+				{Collection: colEoprojectShares, Keys: bson.D{{Key: "project_id", Value: 1}}},
+			},
+		},
 	}
 }
 
