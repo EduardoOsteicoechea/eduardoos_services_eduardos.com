@@ -624,9 +624,19 @@ export async function deleteJSON<T = MeResponse>(path: string): Promise<{ status
   return apiSend<T>(path, { method: "DELETE" });
 }
 
-export async function uploadFile<T = APIErrorBody>(path: string, file: File, field = "file"): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+export async function uploadFile<T = APIErrorBody>(
+  path: string,
+  file: File,
+  field = "file",
+  fields?: Record<string, string>,
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   const body = new FormData();
   body.append(field, file);
+  if (fields) {
+    for (const [key, value] of Object.entries(fields)) {
+      if (value !== "") body.append(key, value);
+    }
+  }
   // Do not set Content-Type: the browser must add the multipart boundary.
   return apiSend<T>(path, { method: "POST", body }, { timeoutMs: 120000 });
 }

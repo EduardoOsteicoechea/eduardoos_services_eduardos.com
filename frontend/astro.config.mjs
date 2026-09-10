@@ -22,6 +22,7 @@ export default defineConfig({
         !page.includes("/homescool") &&
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
+        !page.includes("/eoproject") &&
         !page.includes("/eoadmin") &&
         !page.includes("/eostore") &&
         !page.includes("/payments"),

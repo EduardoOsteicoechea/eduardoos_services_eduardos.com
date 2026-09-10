@@ -1,0 +1,209 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eoProject invite · Eduardoos"
+  description="Shared construction project view."
+  page="eoproject-invite"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoproject" data-route title="eoProject" aria-label="eoProject">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
+      </span>
+      eoProject
+    </a>
+    <button class="dhs-action" type="button" data-print title="Print" aria-label="Print">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">print</span>
+      </span>
+      Print
+    </button>
+  </Fragment>
+
+  <section class="eoproject product-dash" data-eoproject-invite>
+    <h1 data-title>eoProject invite</h1>
+    <p class="lede" data-desc></p>
+    <p class="status" data-banner>Loading invite…</p>
+    <p class="eoproject__empty" data-error hidden></p>
+    <div data-view hidden>
+      <div class="eoproject__stages" data-stages></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import {
+    createEoprojectIfcViewer,
+    type EoprojectIfcViewer,
+  } from "../../lib/eoproject-ifc-viewer";
+  import {
+    eoprojectInviteIfcUrl,
+    eoprojectInvitePhotoUrl,
+    fetchEoprojectInvite,
+    type EoprojectStageBundle,
+  } from "../../lib/eoproject";
+  import { setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-eoproject-invite]");
+  const banner = root?.querySelector("[data-banner]");
+  const errorEl = root?.querySelector("[data-error]");
+  const viewEl = root?.querySelector("[data-view]");
+  const titleEl = root?.querySelector("[data-title]");
+  const descEl = root?.querySelector("[data-desc]");
+  const stagesEl = root?.querySelector("[data-stages]");
+
+  const token =
+    new URLSearchParams(location.search).get("token") ||
+    new URLSearchParams(location.search).get("t") ||
+    "";
+
+  const viewers = new Map<string, EoprojectIfcViewer>();
+
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
+
+  function setBanner(text: string) {
+    if (banner instanceof HTMLElement) banner.textContent = text;
+  }
+
+  function showError(msg: string) {
+    if (errorEl instanceof HTMLElement) {
+      errorEl.textContent = msg;
+      setHidden(errorEl, false);
+    }
+    setBanner("");
+  }
+
+  async function loadIfc(stageId: string, versionId: string, statusEl: HTMLElement | null) {
+    const host = stagesEl?.querySelector<HTMLElement>(`[data-viewer="${stageId}"]`);
+    if (!host) return;
+    if (statusEl) statusEl.textContent = "Loading IFC…";
+    try {
+      let viewer = viewers.get(stageId);
+      if (!viewer) {
+        viewer = await createEoprojectIfcViewer(host);
+        viewers.set(stageId, viewer);
+      }
+      await viewer.loadFromUrl(eoprojectInviteIfcUrl(token, versionId), { credentials: "omit" });
+      if (statusEl) statusEl.textContent = "IFC loaded.";
+    } catch (err) {
+      if (mustLog) console.log("[eoproject-invite] ifc error", err);
+      if (statusEl) statusEl.textContent = "Could not load IFC.";
+    }
+  }
+
+  function renderStage(bundle: EoprojectStageBundle): HTMLElement {
+    const section = document.createElement("section");
+    section.className = "eoproject__stage";
+
+    const head = document.createElement("div");
+    head.className = "eoproject__stage-head";
+    const h2 = document.createElement("h2");
+    h2.textContent = bundle.stage.name;
+    head.appendChild(h2);
+
+    const photoHead = document.createElement("h3");
+    photoHead.className = "eoproject__subhead";
+    photoHead.textContent = "Photos";
+    const gallery = document.createElement("div");
+    gallery.className = "eoproject__gallery";
+    for (const photo of bundle.photos) {
+      const card = document.createElement("div");
+      card.className = "eoproject__photo";
+      const img = document.createElement("img");
+      img.src = photo.url || eoprojectInvitePhotoUrl(token, photo.id);
+      img.alt = photo.originalName || "Stage photo";
+      img.loading = "lazy";
+      const caption = document.createElement("div");
+      caption.className = "eoproject__photo-caption";
+      caption.textContent = photo.originalName || photo.id;
+      card.append(img, caption);
+      gallery.appendChild(card);
+    }
+
+    const ifcHead = document.createElement("h3");
+    ifcHead.className = "eoproject__subhead";
+    ifcHead.textContent = "IFC models";
+    const ifcRow = document.createElement("div");
+    ifcRow.className = "eoproject__upload-row";
+    const select = document.createElement("select");
+    select.className = "eoproject__select";
+    select.setAttribute("aria-label", `IFC versions for ${bundle.stage.name}`);
+    const versions = [...bundle.ifcVersions].sort((a, b) => b.version - a.version);
+    if (versions.length === 0) {
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "No versions";
+      select.appendChild(opt);
+      select.disabled = true;
+    } else {
+      for (const v of versions) {
+        const opt = document.createElement("option");
+        opt.value = v.id;
+        opt.textContent = `v${v.version}${v.label ? ` — ${v.label}` : ""} (${v.originalName})`;
+        select.appendChild(opt);
+      }
+    }
+    const viewBtn = document.createElement("button");
+    viewBtn.type = "button";
+    viewBtn.className = "eoproject__btn eoproject__btn--primary";
+    viewBtn.textContent = "View";
+    viewBtn.disabled = versions.length === 0;
+    const viewerHost = document.createElement("div");
+    viewerHost.className = "eoproject__viewer";
+    viewerHost.dataset.viewer = bundle.stage.id;
+    const viewerStatus = document.createElement("p");
+    viewerStatus.className = "eoproject__viewer-status";
+    viewerStatus.textContent = versions.length
+      ? "Select a version and click View."
+      : "No IFC versions shared.";
+    viewBtn.addEventListener("click", () => {
+      if (!select.value) return;
+      void loadIfc(bundle.stage.id, select.value, viewerStatus);
+    });
+    ifcRow.append(select, viewBtn);
+    const viewerWrap = document.createElement("div");
+    viewerWrap.className = "eoproject__viewer-wrap";
+    viewerWrap.append(viewerHost, viewerStatus);
+
+    section.append(head, photoHead, gallery, ifcHead, ifcRow, viewerWrap);
+    return section;
+  }
+
+  window.addEventListener("resize", () => {
+    for (const v of viewers.values()) v.resize();
+  });
+
+  if (!token) {
+    showError("Missing invite token.");
+  } else {
+    const invite = await fetchEoprojectInvite(token);
+    if (invite.error || !invite.valid || !invite.dashboard) {
+      showError(invite.error || "This invite is expired or invalid.");
+    } else {
+      setBanner("");
+      setHidden(viewEl, false);
+      const project = invite.dashboard.project;
+      if (titleEl instanceof HTMLElement) titleEl.textContent = project.name;
+      if (descEl instanceof HTMLElement) {
+        const parts = [
+          invite.label ? `Share: ${invite.label}` : null,
+          invite.expiresAt ? `Expires ${new Date(invite.expiresAt).toLocaleString()}` : null,
+          project.description || null,
+        ].filter(Boolean);
+        descEl.textContent = parts.join(" · ") || "Shared project view.";
+      }
+      const stages = [...invite.dashboard.stages].sort(
+        (a, b) => a.stage.sortOrder - b.stage.sortOrder || a.stage.name.localeCompare(b.stage.name),
+      );
+      if (stagesEl instanceof HTMLElement) {
+        stagesEl.replaceChildren();
+        for (const bundle of stages) stagesEl.appendChild(renderStage(bundle));
+      }
+      if (mustLog) console.log("[eoproject-invite] loaded", { stages: stages.length });
+    }
+  }
+</script>

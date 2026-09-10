@@ -7,6 +7,7 @@ import "../styles/scrib.css";
 import "../styles/pamphlet-layout.css";
 import "../styles/pamphlet-hub.css";
 import "../styles/evoice.css";
+import "../styles/eoproject.css";
 import "../styles/eoadmin.css";
 import "../styles/eostore.css";
 import "../components/HeaderDynamicMenu/HeaderDynamicMenu.css";
@@ -51,6 +52,7 @@ const privateByDefault =
   path.startsWith("/homescool") ||
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
+  path.startsWith("/eoproject") ||
   path.startsWith("/eoadmin") ||
   path.startsWith("/eostore") ||
   path.startsWith("/payments");
@@ -243,6 +245,10 @@ const jsonLdString =
           <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
             eVoice
+          </a>
+          <a href="/eoproject" data-route data-service="eoproject" hidden aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
+            <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
+            eoProject
           </a>
           <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">assignment</span>

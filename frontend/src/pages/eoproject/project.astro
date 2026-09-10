@@ -1,0 +1,509 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eoProject · Eduardoos"
+  description="Project stages, photos, and IFC versions."
+  page="eoproject-project"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoproject" data-route title="All projects" aria-label="All projects">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+      </span>
+      Projects
+    </a>
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+    <button class="dhs-action" type="button" data-share title="Share link" aria-label="Share link">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">share</span>
+      </span>
+      Share
+    </button>
+  </Fragment>
+
+  <section class="eoproject product-dash" data-eoproject-project>
+    <h1 data-title>eoProject</h1>
+    <p class="lede" data-desc></p>
+    <p class="status" data-banner>Loading…</p>
+
+    <div data-gate hidden class="product-gate">
+      <p class="hint">eoProject subscription required.</p>
+      <p class="hint">
+        <a href="/payments/subscription" data-route>Subscribe</a>
+        ·
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
+    <div data-authed hidden>
+      <form class="eoproject__toolbar" data-add-stage>
+        <label class="eoproject__field">
+          New stage
+          <input class="eoproject__input" name="name" required maxlength="120" placeholder="Stage name" />
+        </label>
+        <button class="eoproject__btn eoproject__btn--primary" type="submit">Add stage</button>
+      </form>
+
+      <p class="eoproject__empty" data-empty-stages hidden>No stages yet.</p>
+      <div class="eoproject__stages" data-stages></div>
+
+      <section class="eoproject__shares">
+        <h2 class="eoproject__subhead">Share links</h2>
+        <ul class="eoproject__list" data-shares></ul>
+      </section>
+    </div>
+
+    <div class="eoproject__modal-backdrop" data-share-modal hidden>
+      <div class="eoproject__modal" role="dialog" aria-modal="true" aria-labelledby="eoproject-share-title">
+        <div class="eoproject__modal-head">
+          <h2 id="eoproject-share-title">Create share link</h2>
+          <button
+            class="eoproject__icon-btn"
+            type="button"
+            data-share-close
+            title="Close"
+            aria-label="Close share dialog"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <form class="eoproject__toolbar" data-share-form>
+          <label class="eoproject__field">
+            Label
+            <input class="eoproject__input" name="label" maxlength="80" placeholder="Client review" />
+          </label>
+          <label class="eoproject__field eoproject__field--narrow">
+            Duration
+            <select class="eoproject__select" name="durationHours">
+              <option value="24">24 hours</option>
+              <option value="72" selected>72 hours</option>
+              <option value="168">7 days</option>
+              <option value="720">30 days</option>
+            </select>
+          </label>
+          <button class="eoproject__btn eoproject__btn--primary" type="submit">Create link</button>
+        </form>
+        <p class="eoproject__link" data-share-result hidden></p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import {
+    createEoprojectIfcViewer,
+    type EoprojectIfcViewer,
+  } from "../../lib/eoproject-ifc-viewer";
+  import {
+    createEoprojectShare,
+    createEoprojectStage,
+    deleteEoprojectIfc,
+    deleteEoprojectPhoto,
+    deleteEoprojectShare,
+    deleteEoprojectStage,
+    eoprojectIfcFileUrl,
+    eoprojectInvitePageUrl,
+    eoprojectPhotoFileUrl,
+    fetchEoprojectDashboard,
+    listEoprojectShares,
+    uploadEoprojectIfc,
+    uploadEoprojectPhoto,
+    type EoprojectDashboard,
+    type EoprojectShare,
+    type EoprojectStageBundle,
+  } from "../../lib/eoproject";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-eoproject-project]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const titleEl = root?.querySelector("[data-title]");
+  const descEl = root?.querySelector("[data-desc]");
+  const stagesEl = root?.querySelector("[data-stages]");
+  const emptyStages = root?.querySelector("[data-empty-stages]");
+  const sharesEl = root?.querySelector("[data-shares]");
+  const shareModal = root?.querySelector("[data-share-modal]");
+  const shareResult = root?.querySelector("[data-share-result]");
+
+  const projectId = new URLSearchParams(location.search).get("id") || "";
+  let dashboard: EoprojectDashboard | null = null;
+  const viewers = new Map<string, EoprojectIfcViewer>();
+
+  function setBanner(text: string) {
+    if (banner instanceof HTMLElement) banner.textContent = text;
+  }
+
+  function iconBtn(name: string, label: string, danger = false): HTMLButtonElement {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = danger
+      ? "eoproject__icon-btn eoproject__icon-btn--danger"
+      : "eoproject__icon-btn";
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
+    const icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = name;
+    btn.appendChild(icon);
+    return btn;
+  }
+
+  async function ensureViewer(stageId: string, host: HTMLElement): Promise<EoprojectIfcViewer> {
+    let viewer = viewers.get(stageId);
+    if (viewer) return viewer;
+    viewer = await createEoprojectIfcViewer(host);
+    viewers.set(stageId, viewer);
+    return viewer;
+  }
+
+  async function loadIfc(stageId: string, versionId: string, statusEl: HTMLElement | null) {
+    const host = stagesEl?.querySelector<HTMLElement>(`[data-viewer="${stageId}"]`);
+    if (!host) return;
+    if (statusEl) statusEl.textContent = "Loading IFC…";
+    try {
+      const viewer = await ensureViewer(stageId, host);
+      await viewer.loadFromUrl(eoprojectIfcFileUrl(projectId, stageId, versionId), {
+        credentials: "include",
+      });
+      if (statusEl) statusEl.textContent = "IFC loaded.";
+    } catch (err) {
+      if (mustLog) console.log("[eoproject] ifc error", err);
+      if (statusEl) statusEl.textContent = "Could not load IFC.";
+      apiFail(err instanceof Error ? err.message : "Could not load IFC.");
+    }
+  }
+
+  function renderPhotos(bundle: EoprojectStageBundle, mount: HTMLElement) {
+    mount.replaceChildren();
+    for (const photo of bundle.photos) {
+      const card = document.createElement("div");
+      card.className = "eoproject__photo";
+      const img = document.createElement("img");
+      img.src = photo.url || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
+      img.alt = photo.originalName || "Stage photo";
+      img.loading = "lazy";
+      const caption = document.createElement("div");
+      caption.className = "eoproject__photo-caption";
+      caption.textContent = photo.originalName || photo.id;
+      const del = iconBtn("delete", `Delete photo ${photo.originalName || ""}`, true);
+      del.addEventListener("click", async () => {
+        if (!confirm("Delete this photo?")) return;
+        const res = await deleteEoprojectPhoto(projectId, bundle.stage.id, photo.id);
+        if (!res.ok) {
+          apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+          return;
+        }
+        await reload();
+      });
+      card.append(img, caption, del);
+      mount.appendChild(card);
+    }
+  }
+
+  function renderStage(bundle: EoprojectStageBundle): HTMLElement {
+    const section = document.createElement("section");
+    section.className = "eoproject__stage";
+
+    const head = document.createElement("div");
+    head.className = "eoproject__stage-head";
+    const h2 = document.createElement("h2");
+    h2.textContent = bundle.stage.name;
+    const delStage = iconBtn("delete", `Delete stage ${bundle.stage.name}`, true);
+    delStage.addEventListener("click", async () => {
+      if (!confirm(`Delete stage “${bundle.stage.name}” and its files?`)) return;
+      viewers.get(bundle.stage.id)?.dispose();
+      viewers.delete(bundle.stage.id);
+      const res = await deleteEoprojectStage(projectId, bundle.stage.id);
+      if (!res.ok) {
+        apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+        return;
+      }
+      await reload();
+    });
+    head.append(h2, delStage);
+
+    const photoHead = document.createElement("h3");
+    photoHead.className = "eoproject__subhead";
+    photoHead.textContent = "Photos";
+    const gallery = document.createElement("div");
+    gallery.className = "eoproject__gallery";
+    renderPhotos(bundle, gallery);
+
+    const photoForm = document.createElement("form");
+    photoForm.className = "eoproject__upload-row";
+    const photoLabel = document.createElement("label");
+    photoLabel.className = "eoproject__field";
+    photoLabel.append("Upload photo");
+    const photoInput = document.createElement("input");
+    photoInput.className = "eoproject__input";
+    photoInput.name = "file";
+    photoInput.type = "file";
+    photoInput.accept = "image/*";
+    photoInput.required = true;
+    photoLabel.appendChild(photoInput);
+    const photoSubmit = document.createElement("button");
+    photoSubmit.className = "eoproject__btn";
+    photoSubmit.type = "submit";
+    photoSubmit.textContent = "Upload";
+    photoForm.append(photoLabel, photoSubmit);
+    photoForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = photoInput.files?.[0];
+      if (!file) return;
+      const res = await uploadEoprojectPhoto(projectId, bundle.stage.id, file);
+      if (!res.photo) {
+        apiFail(res.error || "Upload failed.", { requestId: res.requestId });
+        return;
+      }
+      await reload();
+    });
+
+    const ifcHead = document.createElement("h3");
+    ifcHead.className = "eoproject__subhead";
+    ifcHead.textContent = "IFC models";
+
+    const ifcRow = document.createElement("div");
+    ifcRow.className = "eoproject__upload-row";
+    const select = document.createElement("select");
+    select.className = "eoproject__select";
+    select.setAttribute("aria-label", `IFC versions for ${bundle.stage.name}`);
+    const versions = [...bundle.ifcVersions].sort((a, b) => b.version - a.version);
+    if (versions.length === 0) {
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "No versions yet";
+      select.appendChild(opt);
+      select.disabled = true;
+    } else {
+      for (const v of versions) {
+        const opt = document.createElement("option");
+        opt.value = v.id;
+        opt.textContent = `v${v.version}${v.label ? ` — ${v.label}` : ""} (${v.originalName})`;
+        select.appendChild(opt);
+      }
+    }
+    const viewBtn = document.createElement("button");
+    viewBtn.type = "button";
+    viewBtn.className = "eoproject__btn eoproject__btn--primary";
+    viewBtn.textContent = "View";
+    viewBtn.disabled = versions.length === 0;
+    const delIfc = iconBtn("delete", "Delete selected IFC version", true);
+    delIfc.disabled = versions.length === 0;
+
+    const viewerHost = document.createElement("div");
+    viewerHost.className = "eoproject__viewer";
+    viewerHost.dataset.viewer = bundle.stage.id;
+    const viewerStatus = document.createElement("p");
+    viewerStatus.className = "eoproject__viewer-status";
+    viewerStatus.textContent = versions.length
+      ? "Select a version and click View."
+      : "Upload an IFC file to preview.";
+
+    viewBtn.addEventListener("click", () => {
+      if (!select.value) return;
+      void loadIfc(bundle.stage.id, select.value, viewerStatus);
+    });
+    delIfc.addEventListener("click", async () => {
+      if (!select.value) return;
+      if (!confirm("Delete this IFC version?")) return;
+      const res = await deleteEoprojectIfc(projectId, bundle.stage.id, select.value);
+      if (!res.ok) {
+        apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+        return;
+      }
+      viewers.get(bundle.stage.id)?.dispose();
+      viewers.delete(bundle.stage.id);
+      await reload();
+    });
+    ifcRow.append(select, viewBtn, delIfc);
+
+    const ifcForm = document.createElement("form");
+    ifcForm.className = "eoproject__upload-row";
+    const ifcFileLabel = document.createElement("label");
+    ifcFileLabel.className = "eoproject__field";
+    ifcFileLabel.append("Upload IFC");
+    const ifcInput = document.createElement("input");
+    ifcInput.className = "eoproject__input";
+    ifcInput.name = "file";
+    ifcInput.type = "file";
+    ifcInput.accept = ".ifc,application/octet-stream";
+    ifcInput.required = true;
+    ifcFileLabel.appendChild(ifcInput);
+    const ifcLabelField = document.createElement("label");
+    ifcLabelField.className = "eoproject__field eoproject__field--narrow";
+    ifcLabelField.append("Label");
+    const ifcLabelInput = document.createElement("input");
+    ifcLabelInput.className = "eoproject__input";
+    ifcLabelInput.name = "label";
+    ifcLabelInput.maxLength = 80;
+    ifcLabelInput.placeholder = "Optional";
+    ifcLabelField.appendChild(ifcLabelInput);
+    const ifcSubmit = document.createElement("button");
+    ifcSubmit.className = "eoproject__btn";
+    ifcSubmit.type = "submit";
+    ifcSubmit.textContent = "Upload IFC";
+    ifcForm.append(ifcFileLabel, ifcLabelField, ifcSubmit);
+    ifcForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = ifcInput.files?.[0];
+      const label = ifcLabelInput.value.trim();
+      if (!file) return;
+      const res = await uploadEoprojectIfc(projectId, bundle.stage.id, file, label || undefined);
+      if (!res.version) {
+        apiFail(res.error || "Upload failed.", { requestId: res.requestId });
+        return;
+      }
+      await reload();
+    });
+
+    const viewerWrap = document.createElement("div");
+    viewerWrap.className = "eoproject__viewer-wrap";
+    viewerWrap.append(viewerHost, viewerStatus);
+
+    section.append(head, photoHead, gallery, photoForm, ifcHead, ifcRow, ifcForm, viewerWrap);
+    return section;
+  }
+
+  function renderShares(shares: EoprojectShare[]) {
+    if (!(sharesEl instanceof HTMLElement)) return;
+    sharesEl.replaceChildren();
+    for (const share of shares) {
+      const li = document.createElement("li");
+      li.className = "eoproject__share-row";
+      const meta = document.createElement("div");
+      meta.className = "eoproject__share-meta";
+      const expired = Boolean(share.expired) || new Date(share.expiresAt).getTime() <= Date.now();
+      meta.textContent = `${share.label || "Share"} · expires ${new Date(share.expiresAt).toLocaleString()}${expired ? " · expired" : ""}`;
+      const del = iconBtn("delete", "Delete share link", true);
+      del.addEventListener("click", async () => {
+        if (!confirm("Revoke this share link?")) return;
+        const res = await deleteEoprojectShare(projectId, share.id);
+        if (!res.ok) {
+          apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+          return;
+        }
+        await reloadShares();
+      });
+      li.append(meta, del);
+      sharesEl.appendChild(li);
+    }
+  }
+
+  async function reloadShares() {
+    const res = await listEoprojectShares(projectId);
+    if (res.error) {
+      apiFail(res.error, { requestId: res.requestId });
+      return;
+    }
+    renderShares(res.shares);
+  }
+
+  async function reload() {
+    for (const v of viewers.values()) v.dispose();
+    viewers.clear();
+    const res = await fetchEoprojectDashboard(projectId);
+    if (!res.dashboard) {
+      apiFail(res.error || "Could not load project.", { requestId: res.requestId });
+      setBanner("Project unavailable.");
+      return;
+    }
+    dashboard = res.dashboard;
+    if (titleEl instanceof HTMLElement) titleEl.textContent = dashboard.project.name;
+    if (descEl instanceof HTMLElement) {
+      descEl.textContent =
+        dashboard.project.description || "Project stages, photos, and IFC versions.";
+    }
+    const stages = [...dashboard.stages].sort(
+      (a, b) => a.stage.sortOrder - b.stage.sortOrder || a.stage.name.localeCompare(b.stage.name),
+    );
+    setBanner(`${stages.length} stage${stages.length === 1 ? "" : "s"}`);
+    setHidden(emptyStages, stages.length > 0);
+    if (stagesEl instanceof HTMLElement) {
+      stagesEl.replaceChildren();
+      for (const bundle of stages) stagesEl.appendChild(renderStage(bundle));
+    }
+    await reloadShares();
+  }
+
+  function openShareModal(open: boolean) {
+    setHidden(shareModal, !open);
+    if (shareResult instanceof HTMLElement) {
+      shareResult.hidden = true;
+      shareResult.textContent = "";
+    }
+  }
+
+  root?.querySelector("[data-add-stage]")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const name = String(new FormData(form).get("name") || "").trim();
+    if (!name) return;
+    const res = await createEoprojectStage(projectId, name);
+    if (!res.stage) {
+      apiFail(res.error || "Could not create stage.", { requestId: res.requestId });
+      return;
+    }
+    form.reset();
+    await reload();
+  });
+
+  document.querySelector("[data-refresh]")?.addEventListener("click", () => void reload());
+  document.querySelector("[data-share]")?.addEventListener("click", () => openShareModal(true));
+  root?.querySelector("[data-share-close]")?.addEventListener("click", () => openShareModal(false));
+  shareModal?.addEventListener("click", (event) => {
+    if (event.target === shareModal) openShareModal(false);
+  });
+
+  root?.querySelector("[data-share-form]")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const fd = new FormData(form);
+    const label = String(fd.get("label") || "").trim();
+    const durationHours = Number(fd.get("durationHours") || 72);
+    const res = await createEoprojectShare(projectId, label, durationHours);
+    if (!res.share) {
+      apiFail(res.error || "Could not create share.", { requestId: res.requestId });
+      return;
+    }
+    const link =
+      res.share.link ||
+      (res.share.token ? `${location.origin}${eoprojectInvitePageUrl(res.share.token)}` : "");
+    if (shareResult instanceof HTMLElement) {
+      shareResult.hidden = false;
+      shareResult.textContent = link || "Share created.";
+    }
+    if (mustLog) console.log("[eoproject] share", res.share.id);
+    await reloadShares();
+  });
+
+  window.addEventListener("resize", () => {
+    for (const v of viewers.values()) v.resize();
+  });
+
+  if (!projectId) {
+    setBanner("Missing project id.");
+    setHidden(gate, false);
+  } else {
+    const gateResult = await requireService("eoproject");
+    if (!gateResult.sessionOk || !gateResult.access.allowed) {
+      setBanner(gateResult.sessionOk ? "Subscription required." : "Sign in required.");
+      setHidden(gate, false);
+      setHidden(authed, true);
+    } else {
+      setHidden(gate, true);
+      setHidden(authed, false);
+      await reload();
+    }
+  }
+</script>

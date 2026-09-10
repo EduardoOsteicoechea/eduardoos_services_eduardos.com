@@ -1,0 +1,184 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eoProject · Eduardoos"
+  description="Construction project stages with photos and IFC models."
+  page="eoproject"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-refresh title="Refresh" aria-label="Refresh">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+    <a
+      class="dhs-action"
+      href="/payments/subscription"
+      data-route
+      title="Subscribe"
+      aria-label="Subscribe"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+      </span>
+      Subscribe
+    </a>
+  </Fragment>
+
+  <section class="eoproject product-dash" data-eoproject-hub>
+    <h1>eoProject</h1>
+    <p class="lede">Construction projects with photo galleries and IFC model versions per stage.</p>
+    <p class="status" data-banner>Loading…</p>
+
+    <div data-gate hidden class="product-gate">
+      <p class="hint">eoProject subscription required.</p>
+      <p class="hint">
+        <a href="/payments/subscription" data-route>Subscribe</a>
+        ·
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
+    <div data-authed hidden>
+      <form class="eoproject__toolbar" data-create>
+        <label class="eoproject__field">
+          New project
+          <input class="eoproject__input" name="name" required maxlength="120" placeholder="Project name" />
+        </label>
+        <label class="eoproject__field">
+          Description
+          <input class="eoproject__input" name="description" maxlength="2000" placeholder="Optional" />
+        </label>
+        <button class="eoproject__btn eoproject__btn--primary" type="submit">Create</button>
+      </form>
+
+      <p class="eoproject__empty" data-empty hidden>No projects yet. Create one above.</p>
+      <ul class="eoproject__list" data-projects></ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import {
+    createEoprojectProject,
+    deleteEoprojectProject,
+    listEoprojectProjects,
+    type EoprojectProject,
+  } from "../../lib/eoproject";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-eoproject-hub]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const listEl = root?.querySelector("[data-projects]");
+  const emptyEl = root?.querySelector("[data-empty]");
+
+  let projects: EoprojectProject[] = [];
+
+  function setBanner(text: string) {
+    if (banner instanceof HTMLElement) banner.textContent = text;
+  }
+
+  function renderProjects() {
+    if (!(listEl instanceof HTMLElement)) return;
+    listEl.replaceChildren();
+    setHidden(emptyEl, projects.length > 0);
+    for (const project of projects) {
+      const li = document.createElement("li");
+      li.className = "eoproject__project-row";
+
+      const main = document.createElement("div");
+      main.className = "eoproject__project-main";
+      const link = document.createElement("a");
+      link.className = "eoproject__project-name";
+      link.href = `/eoproject/project?id=${encodeURIComponent(project.id)}`;
+      link.dataset.route = "";
+      link.textContent = project.name;
+      main.appendChild(link);
+      if (project.description) {
+        const desc = document.createElement("p");
+        desc.className = "eoproject__project-desc";
+        desc.textContent = project.description;
+        main.appendChild(desc);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "eoproject__actions";
+      const open = document.createElement("a");
+      open.className = "eoproject__btn";
+      open.href = `/eoproject/project?id=${encodeURIComponent(project.id)}`;
+      open.dataset.route = "";
+      open.textContent = "Open";
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "eoproject__icon-btn eoproject__icon-btn--danger";
+      del.setAttribute("aria-label", `Delete ${project.name}`);
+      del.title = "Delete project";
+      const icon = document.createElement("span");
+      icon.className = "material-symbols-outlined";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "delete";
+      del.appendChild(icon);
+      del.addEventListener("click", async () => {
+        if (!confirm(`Delete project “${project.name}”?`)) return;
+        const res = await deleteEoprojectProject(project.id);
+        if (!res.ok) {
+          apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+          return;
+        }
+        await reload();
+      });
+      actions.append(open, del);
+      li.append(main, actions);
+      listEl.appendChild(li);
+    }
+  }
+
+  async function reload() {
+    const res = await listEoprojectProjects();
+    if (res.error) {
+      apiFail(res.error, { requestId: res.requestId });
+      setBanner("Could not load projects.");
+      return;
+    }
+    projects = res.projects;
+    setBanner(`${projects.length} project${projects.length === 1 ? "" : "s"}`);
+    renderProjects();
+  }
+
+  root?.querySelector("[data-create]")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "").trim();
+    const description = String(fd.get("description") || "").trim();
+    if (!name) return;
+    const created = await createEoprojectProject(name, description || undefined);
+    if (!created.project) {
+      apiFail(created.error || "Create failed.", { requestId: created.requestId });
+      return;
+    }
+    if (mustLog) console.log("[eoproject] created", created.project.id);
+    form.reset();
+    window.location.href = `/eoproject/project?id=${encodeURIComponent(created.project.id)}`;
+  });
+
+  document.querySelector("[data-refresh]")?.addEventListener("click", () => void reload());
+
+  const gateResult = await requireService("eoproject");
+  if (!gateResult.sessionOk || !gateResult.access.allowed) {
+    setBanner(gateResult.sessionOk ? "Subscription required." : "Sign in required.");
+    setHidden(gate, false);
+    setHidden(authed, true);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    await reload();
+  }
+</script>
