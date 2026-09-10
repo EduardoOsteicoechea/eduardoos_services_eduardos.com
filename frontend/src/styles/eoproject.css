@@ -222,14 +222,28 @@
   width: 10rem;
 }
 
+.eoproject__photo-thumb {
+  display: block;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  cursor: zoom-in;
+}
+
+.eoproject__photo-thumb:focus-visible {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: 0.125rem;
+}
+
 .eoproject__photo img {
   display: block;
   width: 10rem;
   height: 7.5rem;
   object-fit: cover;
-  border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-bg);
+  pointer-events: none;
 }
 
 .eoproject__photo-caption {
@@ -238,6 +252,96 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.eoproject__photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.eoproject__lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-padding);
+  background: color-mix(in srgb, #000 55%, transparent);
+}
+
+.eoproject__lightbox[hidden] {
+  display: none;
+}
+
+.eoproject__lightbox-dialog {
+  box-sizing: border-box;
+  width: 56rem;
+  max-width: 56rem;
+  max-height: 40rem;
+  overflow: auto;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eoproject__lightbox-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+}
+
+.eoproject__lightbox-caption {
+  margin: 0;
+  flex: 1 1 10rem;
+  min-width: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eoproject__lightbox-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.eoproject__lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16rem;
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.eoproject__lightbox-img {
+  display: block;
+  max-width: 54rem;
+  max-height: 32rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.eoproject__lightbox-meta {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
 }
 
 .eoproject__upload-row {
@@ -352,7 +456,19 @@
     height: 16rem;
   }
 
+  .eoproject__lightbox-dialog {
+    width: 30rem;
+    max-width: 30rem;
+    max-height: 36rem;
+  }
+
+  .eoproject__lightbox-img {
+    max-width: 28rem;
+    max-height: 24rem;
+  }
+
   .eoproject__photo,
+  .eoproject__photo-thumb,
   .eoproject__photo img {
     width: 8rem;
     height: 6rem;

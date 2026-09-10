@@ -104,6 +104,11 @@ import Layout from "../../layouts/Layout.astro";
     type EoprojectIfcViewer,
   } from "../../lib/eoproject-ifc-viewer";
   import {
+    createEoprojectPhotoViewer,
+    downloadEoprojectPhoto,
+    type EoprojectPhotoViewerItem,
+  } from "../../lib/eoproject-photo-viewer";
+  import {
     createEoprojectShare,
     createEoprojectStage,
     deleteEoprojectIfc,
@@ -138,6 +143,7 @@ import Layout from "../../layouts/Layout.astro";
   const projectId = new URLSearchParams(location.search).get("id") || "";
   let dashboard: EoprojectDashboard | null = null;
   const viewers = new Map<string, EoprojectIfcViewer>();
+  const photoViewer = createEoprojectPhotoViewer();
 
   function setBanner(text: string) {
     if (banner instanceof HTMLElement) banner.textContent = text;
@@ -157,6 +163,17 @@ import Layout from "../../layouts/Layout.astro";
     icon.textContent = name;
     btn.appendChild(icon);
     return btn;
+  }
+
+  function photoItemsForStage(bundle: EoprojectStageBundle): EoprojectPhotoViewerItem[] {
+    return bundle.photos.map((photo) => {
+      const src = photo.url || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
+      return {
+        src,
+        downloadUrl: src,
+        name: photo.originalName || `photo-${photo.id}`,
+      };
+    });
   }
 
   async function ensureViewer(stageId: string, host: HTMLElement): Promise<EoprojectIfcViewer> {
@@ -186,16 +203,40 @@ import Layout from "../../layouts/Layout.astro";
 
   function renderPhotos(bundle: EoprojectStageBundle, mount: HTMLElement) {
     mount.replaceChildren();
-    for (const photo of bundle.photos) {
+    const items = photoItemsForStage(bundle);
+    bundle.photos.forEach((photo, photoIndex) => {
       const card = document.createElement("div");
       card.className = "eoproject__photo";
+
+      const openBtn = document.createElement("button");
+      openBtn.type = "button";
+      openBtn.className = "eoproject__photo-thumb";
+      openBtn.title = `View ${photo.originalName || "photo"}`;
+      openBtn.setAttribute("aria-label", `View ${photo.originalName || "stage photo"}`);
       const img = document.createElement("img");
-      img.src = photo.url || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
+      img.src = items[photoIndex]?.src || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
       img.alt = photo.originalName || "Stage photo";
       img.loading = "lazy";
+      openBtn.appendChild(img);
+      openBtn.addEventListener("click", () => photoViewer.open(items, photoIndex));
+
       const caption = document.createElement("div");
       caption.className = "eoproject__photo-caption";
       caption.textContent = photo.originalName || photo.id;
+
+      const actions = document.createElement("div");
+      actions.className = "eoproject__photo-actions";
+      const downloadBtn = iconBtn("download", `Download ${photo.originalName || "photo"}`);
+      downloadBtn.addEventListener("click", async () => {
+        try {
+          await downloadEoprojectPhoto(
+            items[photoIndex]?.downloadUrl || img.src,
+            photo.originalName || `photo-${photo.id}`,
+          );
+        } catch (err) {
+          apiFail(err instanceof Error ? err.message : "Download failed.");
+        }
+      });
       const del = iconBtn("delete", `Delete photo ${photo.originalName || ""}`, true);
       del.addEventListener("click", async () => {
         if (!confirm("Delete this photo?")) return;
@@ -206,9 +247,10 @@ import Layout from "../../layouts/Layout.astro";
         }
         await reload();
       });
-      card.append(img, caption, del);
+      actions.append(downloadBtn, del);
+      card.append(openBtn, caption, actions);
       mount.appendChild(card);
-    }
+    });
   }
 
   function renderStage(bundle: EoprojectStageBundle): HTMLElement {

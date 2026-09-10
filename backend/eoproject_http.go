@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -599,7 +600,7 @@ func (a *App) eoprojectDeletePhoto(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{"deleted": true})
 }
 
-func (a *App) eoprojectServePhoto(w http.ResponseWriter, r *http.Request, ownerID, projectID, stageID, storageName, contentType string) {
+func (a *App) eoprojectServePhoto(w http.ResponseWriter, r *http.Request, ownerID, projectID, stageID, storageName, contentType, originalName string) {
 	f, info, err := a.eoprojectFS.openPhoto(ownerID, projectID, stageID, storageName)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
@@ -612,7 +613,28 @@ func (a *App) eoprojectServePhoto(w http.ResponseWriter, r *http.Request, ownerI
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Length", strconv.FormatInt(info.Size(), 10))
 	w.Header().Set("Cache-Control", "private, max-age=60")
-	http.ServeContent(w, r, storageName, info.ModTime(), f)
+	filename := path.Base(strings.TrimSpace(originalName))
+	if filename == "" || filename == "." || filename == ".." {
+		filename = path.Base(storageName)
+	}
+	if strings.EqualFold(strings.TrimSpace(r.URL.Query().Get("download")), "1") ||
+		strings.EqualFold(strings.TrimSpace(r.URL.Query().Get("download")), "true") {
+		w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s"`, sanitizeEoprojectDownloadName(filename)))
+	} else {
+		w.Header().Set("Content-Disposition", fmt.Sprintf(`inline; filename="%s"`, sanitizeEoprojectDownloadName(filename)))
+	}
+	http.ServeContent(w, r, filename, info.ModTime(), f)
+}
+
+func sanitizeEoprojectDownloadName(name string) string {
+	name = path.Base(strings.TrimSpace(name))
+	name = strings.ReplaceAll(name, `"`, "")
+	name = strings.ReplaceAll(name, "\r", "")
+	name = strings.ReplaceAll(name, "\n", "")
+	if name == "" || name == "." || name == ".." {
+		return "photo"
+	}
+	return name
 }
 
 func (a *App) eoprojectGetPhotoFile(w http.ResponseWriter, r *http.Request) {
@@ -633,7 +655,7 @@ func (a *App) eoprojectGetPhotoFile(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	a.eoprojectServePhoto(w, r, p.UserID, p.ID, st.ID, ph.StorageName, ph.ContentType)
+	a.eoprojectServePhoto(w, r, p.UserID, p.ID, st.ID, ph.StorageName, ph.ContentType, ph.OriginalName)
 }
 
 func (a *App) eoprojectListIFC(w http.ResponseWriter, r *http.Request) {
@@ -936,7 +958,7 @@ func (a *App) eoprojectInvitePhotoFile(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	a.eoprojectServePhoto(w, r, project.UserID, project.ID, ph.StageID, ph.StorageName, ph.ContentType)
+	a.eoprojectServePhoto(w, r, project.UserID, project.ID, ph.StageID, ph.StorageName, ph.ContentType, ph.OriginalName)
 }
 
 func (a *App) eoprojectInviteIFCFile(w http.ResponseWriter, r *http.Request) {

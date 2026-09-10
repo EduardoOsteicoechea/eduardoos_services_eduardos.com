@@ -41,6 +41,11 @@ import Layout from "../../layouts/Layout.astro";
     type EoprojectIfcViewer,
   } from "../../lib/eoproject-ifc-viewer";
   import {
+    createEoprojectPhotoViewer,
+    downloadEoprojectPhoto,
+    type EoprojectPhotoViewerItem,
+  } from "../../lib/eoproject-photo-viewer";
+  import {
     eoprojectInviteIfcUrl,
     eoprojectInvitePhotoUrl,
     fetchEoprojectInvite,
@@ -62,6 +67,7 @@ import Layout from "../../layouts/Layout.astro";
     "";
 
   const viewers = new Map<string, EoprojectIfcViewer>();
+  const photoViewer = createEoprojectPhotoViewer();
 
   document.querySelector("[data-print]")?.addEventListener("click", () => window.print());
 
@@ -75,6 +81,31 @@ import Layout from "../../layouts/Layout.astro";
       setHidden(errorEl, false);
     }
     setBanner("");
+  }
+
+  function iconBtn(name: string, label: string): HTMLButtonElement {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "eoproject__icon-btn";
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
+    const icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = name;
+    btn.appendChild(icon);
+    return btn;
+  }
+
+  function photoItemsForStage(bundle: EoprojectStageBundle): EoprojectPhotoViewerItem[] {
+    return bundle.photos.map((photo) => {
+      const src = photo.url || eoprojectInvitePhotoUrl(token, photo.id);
+      return {
+        src,
+        downloadUrl: src,
+        name: photo.originalName || `photo-${photo.id}`,
+      };
+    });
   }
 
   async function loadIfc(stageId: string, versionId: string, statusEl: HTMLElement | null) {
@@ -110,19 +141,46 @@ import Layout from "../../layouts/Layout.astro";
     photoHead.textContent = "Photos";
     const gallery = document.createElement("div");
     gallery.className = "eoproject__gallery";
-    for (const photo of bundle.photos) {
+    const items = photoItemsForStage(bundle);
+    bundle.photos.forEach((photo, photoIndex) => {
       const card = document.createElement("div");
       card.className = "eoproject__photo";
+
+      const openBtn = document.createElement("button");
+      openBtn.type = "button";
+      openBtn.className = "eoproject__photo-thumb";
+      openBtn.title = `View ${photo.originalName || "photo"}`;
+      openBtn.setAttribute("aria-label", `View ${photo.originalName || "stage photo"}`);
       const img = document.createElement("img");
-      img.src = photo.url || eoprojectInvitePhotoUrl(token, photo.id);
+      img.src = items[photoIndex]?.src || eoprojectInvitePhotoUrl(token, photo.id);
       img.alt = photo.originalName || "Stage photo";
       img.loading = "lazy";
+      openBtn.appendChild(img);
+      openBtn.addEventListener("click", () => photoViewer.open(items, photoIndex));
+
       const caption = document.createElement("div");
       caption.className = "eoproject__photo-caption";
       caption.textContent = photo.originalName || photo.id;
-      card.append(img, caption);
+
+      const actions = document.createElement("div");
+      actions.className = "eoproject__photo-actions";
+      const downloadBtn = iconBtn("download", `Download ${photo.originalName || "photo"}`);
+      downloadBtn.addEventListener("click", async () => {
+        try {
+          await downloadEoprojectPhoto(
+            items[photoIndex]?.downloadUrl || img.src,
+            photo.originalName || `photo-${photo.id}`,
+          );
+        } catch (err) {
+          if (mustLog) console.log("[eoproject-invite] download error", err);
+          const base = items[photoIndex]?.downloadUrl || img.src;
+          window.open(`${base}${base.includes("?") ? "&" : "?"}download=1`, "_blank", "noopener");
+        }
+      });
+      actions.appendChild(downloadBtn);
+      card.append(openBtn, caption, actions);
       gallery.appendChild(card);
-    }
+    });
 
     const ifcHead = document.createElement("h3");
     ifcHead.className = "eoproject__subhead";
