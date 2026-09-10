@@ -208,7 +208,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             Subscriptions
           </a>
-          <a href="/scrib" data-route aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
+          <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
             Scrib
           </a>
@@ -216,27 +216,27 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
             Institutes
           </a>
-          <a href="/homescool" data-route aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
+          <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">school</span>
             Homescool
           </a>
-          <a href="/documents/pamphlet" data-route aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
+          <a href="/documents/pamphlet" data-route data-service="pamphlet" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">description</span>
             Pamphlet
           </a>
-          <a href="/evoice" data-route aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
+          <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
             eVoice
           </a>
-          <a href="/ereport" data-route aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
+          <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
             eReport
           </a>
-          <a href="/eoadmin" data-route aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
+          <a href="/eoadmin" data-route data-authed-only hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             eoadmin
           </a>
-          <a href="/api-docs" data-route aria-current={path === "/api-docs" ? "page" : undefined}>
+          <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">api</span>
             API docs
           </a>

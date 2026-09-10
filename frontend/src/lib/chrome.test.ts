@@ -1,11 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMe } from "./api";
 import { applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
+import { checkServiceAccess } from "./serviceAccess";
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
   return { ...actual, getMe: vi.fn() };
 });
+
+vi.mock("./serviceAccess", () => ({
+  checkServiceAccess: vi.fn(),
+}));
 
 vi.mock("./router", () => ({
   go: vi.fn(),
@@ -26,6 +31,9 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/session/profile" data-authed-only ${authedHidden}>Profile</a>
       <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
       <a href="/diagnostics" data-admin-only hidden>Diagnostics</a>
+      <a href="/scrib" data-service="scrib" hidden>Scrib</a>
+      <a href="/ereport" data-service="ereport" hidden>eReport</a>
+      <a href="/eoadmin" data-authed-only ${authedHidden}>eoadmin</a>
     </aside>
   `;
 }
@@ -34,6 +42,12 @@ describe("main-menu session chrome", () => {
   beforeEach(() => {
     window.__chromeStarted = false;
     mountChrome();
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
   });
 
   afterEach(() => {
@@ -45,7 +59,7 @@ describe("main-menu session chrome", () => {
 
   it("updates the header session avatar", () => {
     document.body.innerHTML += `
-      <a data-header-avatar href="/session/profile">
+      <a data-header-chrome href="/session/profile">
         <img data-header-avatar-img hidden alt="" />
         <span data-header-avatar-fallback hidden>account_circle</span>
       </a>
@@ -68,6 +82,47 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-admin-only]") as HTMLElement).hidden).toBe(false);
+  });
+
+  it("shows every data-service link for admins", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-admin",
+      data: { id: "admin-1", role: "admin" },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(false);
+    expect(checkServiceAccess).not.toHaveBeenCalled();
+  });
+
+  it("shows only entitled service links for members", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-member",
+      data: { id: "member-1", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
+      allowed: serviceId === "scrib",
+      isAdmin: false,
+      hasEntitlement: serviceId === "scrib",
+      isHomescoolStudent: false,
+    }));
+    await refreshAuthChrome();
+    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+  });
+
+  it("keeps service links hidden for guests", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 401,
+      requestId: "rid-guest",
+      data: { error: "unauthorized" },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+    expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
   it("restores session chrome after a client navigation swap", async () => {

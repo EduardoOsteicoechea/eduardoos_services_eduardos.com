@@ -53,8 +53,17 @@ import Layout from "../../layouts/Layout.astro";
       </span>
     </p>
 
+    <div class="product-gate panel" data-subscription-gate hidden>
+      <p class="hint">eReport subscription required.</p>
+      <p class="hint">
+        <a href="/payments/subscription" data-route>Subscribe</a>
+        ·
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
     <div data-authed-panel hidden>
-      <p class="hint" data-create-hint hidden>eReport subscription required.</p>
+      <p class="hint" data-create-hint hidden>eReport subscription required to create orgs and reports.</p>
       <p class="ereport-hub__error" data-hub-error hidden></p>
 
       <div data-view="dashboard">
@@ -257,6 +266,7 @@ import Layout from "../../layouts/Layout.astro";
     type ReportCard,
   } from "../../lib/ereport";
   import { showErrorModal } from "../../lib/error-modal";
+  import { requireService, setHidden } from "../../lib/productGate";
   import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
   const HUB_VIEWS = ["dashboard", "orgs", "register", "new-report", "recent", "manage"];
@@ -556,6 +566,17 @@ import Layout from "../../layouts/Layout.astro";
 
     void requireAuth(root, copy).then(async (me) => {
       if (!me) return;
+      const gate = root.querySelector("[data-subscription-gate]");
+      const panel = root.querySelector("[data-authed-panel]");
+      const access = await requireService("ereport");
+      if (!access.access.allowed) {
+        setHidden(gate, false);
+        setHidden(panel, true);
+        setBanner(root, "eReport subscription required.", "err");
+        return;
+      }
+      setHidden(gate, true);
+      setHidden(panel, false);
       setBanner(root, "Signed in.", "ok");
       try {
         await reload();

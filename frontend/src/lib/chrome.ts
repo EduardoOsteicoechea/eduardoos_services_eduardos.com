@@ -4,6 +4,7 @@ import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { go, startClientRouting } from "./router";
+import { checkServiceAccess } from "./serviceAccess";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
@@ -207,6 +208,51 @@ function scheduleSessionRefresh(): void {
   }
 }
 
+async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
+  const nodes = [...document.querySelectorAll("[data-service]")].filter(
+    (node): node is HTMLElement => node instanceof HTMLElement,
+  );
+  if (nodes.length === 0) {
+    return;
+  }
+  if (isAdmin) {
+    for (const node of nodes) {
+      node.hidden = false;
+    }
+    sessionLog("chrome.refreshAuth.services", { mode: "admin", count: nodes.length });
+    return;
+  }
+  if (!authed) {
+    for (const node of nodes) {
+      node.hidden = true;
+    }
+    sessionLog("chrome.refreshAuth.services", { mode: "guest", count: nodes.length });
+    return;
+  }
+  const ids = [
+    ...new Set(
+      nodes
+        .map((node) => (node.getAttribute("data-service") || "").trim().toLowerCase())
+        .filter(Boolean),
+    ),
+  ];
+  const allowed = new Map<string, boolean>();
+  await Promise.all(
+    ids.map(async (id) => {
+      const access = await checkServiceAccess(id);
+      allowed.set(id, Boolean(access.allowed));
+    }),
+  );
+  for (const node of nodes) {
+    const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
+    node.hidden = !allowed.get(id);
+  }
+  sessionLog("chrome.refreshAuth.services", {
+    mode: "entitlements",
+    allowed: Object.fromEntries(allowed),
+  });
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
@@ -228,6 +274,7 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !isAdmin;
     }
   });
+  await syncSubscriptionNav(isAdmin, authed);
   if (authed) {
     applySessionAvatar(data.avatar);
     scheduleSessionRefresh();
