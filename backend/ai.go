@@ -388,7 +388,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 	defer resp.Body.Close()
 	raw, _ := io.ReadAll(io.LimitReader(resp.Body, 2<<20))
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return ChatResult{}, fmt.Errorf("provider unavailable")
+		return ChatResult{}, fmt.Errorf("provider unavailable: vision status %d", resp.StatusCode)
 	}
 	var parsed struct {
 		Choices []struct {
@@ -399,7 +399,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 		Usage ChatUsage `json:"usage"`
 	}
 	if err := json.Unmarshal(raw, &parsed); err != nil || len(parsed.Choices) == 0 {
-		return ChatResult{}, fmt.Errorf("provider unavailable")
+		return ChatResult{}, fmt.Errorf("provider unavailable: vision empty response")
 	}
 	text := sanitizeModelTextMax(parsed.Choices[0].Message.Content, 12000)
 	if text == "" {

@@ -179,7 +179,8 @@ export async function describeProduct(guid: string, wordCount: number, imageId =
   if (mustLog) console.log("eostore.product.describe.start", { guid, wordCount, imageId });
   const body: Record<string, unknown> = { word_count: wordCount };
   if (imageId) body.image_id = imageId;
-  return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body);
+  // Vision can take well over the default 12s API timeout.
+  return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body, { timeoutMs: 120000 });
 }
 
 export type EostoreCatalogResponse = APIErrorBody & {

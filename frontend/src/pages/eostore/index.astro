@@ -483,6 +483,7 @@ import Layout from "../../layouts/Layout.astro";
             const wordCount = Number(wordsRange.value) || 100;
             const latestImageId = p.images?.[p.images.length - 1]?.id || "";
             if (mustLog) console.log("eostore.describe.click", { guid: p.guid, wordCount, latestImageId });
+            const editingGuid = ((root.querySelector("[data-pr-edit-guid]") as HTMLInputElement)?.value || "").trim();
             const res = await describeProduct(p.guid, wordCount, latestImageId);
             gen.disabled = false;
             if (res.status !== 200) {
@@ -490,6 +491,11 @@ import Layout from "../../layouts/Layout.astro";
               return;
             }
             await loadAll();
+            // Keep edit form open and show the new AI text (loadAll would otherwise leave stale form fields).
+            if (editingGuid === p.guid) {
+              const updated = products.find((x) => x.guid === p.guid);
+              if (updated) fillProductForm(updated);
+            }
           });
           ai.append(aiTitle, wordsField, gen);
         }

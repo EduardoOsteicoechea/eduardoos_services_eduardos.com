@@ -798,17 +798,25 @@ const (
 )
 
 func eostoreDescribeSystemPrompt() string {
-	return strings.TrimSpace(`You write product catalog descriptions for an online store.
-Use the product photo as the primary visual source.
-Use company, section, product type, and product name only as catalog context — do not invent unrelated brands, prices, or credentials.
-Write plain prose (no markdown headings, no bullet lists unless natural).
-Match the language of the product and company names; if unclear, write in Spanish.
-Stay close to the requested word count.`)
+	return strings.TrimSpace(`You write product descriptions for an online store, for everyday shoppers (not technicians).
+
+Goals:
+- Sound warm, clear, and trustworthy.
+- Help the reader picture owning or using the product.
+- Spark desire to buy without pressure, hype, or fake urgency.
+- Stay honest: only describe what the photo and catalog context support.
+
+Style:
+- Short sentences and plain words a non-expert understands.
+- Friendly conversational tone; no jargon, no specs dump, no markdown headings, no bullet lists unless a short list feels natural.
+- Do not invent brands, prices, discounts, certifications, materials, or features you cannot see or infer from the context.
+- Match the language of the product and company names; if unclear, write in Spanish.
+- Stay close to the requested word count.`)
 }
 
 func eostoreDescribeUserPrompt(company, section, typ, product string, words int) string {
 	return fmt.Sprintf(
-		"Write a product description of about %d words.\n\nCompany: %s\nSection: %s\nProduct type: %s\nProduct name: %s\n\nInterpret the attached product image and describe what a shopper sees and why it fits this catalog context.",
+		"Write a product description of about %d words that a regular shopper would enjoy reading and that makes them want this product.\n\nCompany: %s\nSection: %s\nProduct type: %s\nProduct name: %s\n\nLook at the attached product photo. Describe what stands out, how it would feel or fit into daily life, and why someone would choose it — without inventing facts that are not visible or given above.",
 		words,
 		strings.TrimSpace(company),
 		strings.TrimSpace(section),

@@ -88,7 +88,7 @@ func loadConfig() config {
 	}
 	deepseekVisionModel := strings.TrimSpace(os.Getenv("DEEPSEEK_VISION_MODEL"))
 	if deepseekVisionModel == "" {
-		deepseekVisionModel = "deepseek-v4-flash-vision-exp"
+		deepseekVisionModel = "deepseek-flash"
 	}
 	kimiBase := strings.TrimSpace(os.Getenv("KIMI_API_BASE"))
 	if kimiBase == "" {

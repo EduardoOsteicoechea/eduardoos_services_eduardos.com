@@ -352,7 +352,10 @@ async function apiSend<T>(
     if (err instanceof DOMException && err.name === "AbortError") {
       return {
         status: 0,
-        data: { error: "internal_error", message: "Could not reach the API." } as T & APIErrorBody,
+        data: {
+          error: "internal_error",
+          message: "The request took too long. Try again with a shorter description, or wait and retry.",
+        } as T & APIErrorBody,
         requestId: "",
       };
     }
@@ -476,12 +479,20 @@ export async function getJSON<T = MeResponse>(path: string): Promise<{ status: n
   return apiSend<T>(path);
 }
 
-export async function postJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
-  return apiSend<T>(path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+export async function postJSON<T = MeResponse>(
+  path: string,
+  body: Record<string, unknown>,
+  opts?: { timeoutMs?: number },
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(
+    path,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+    { timeoutMs: opts?.timeoutMs },
+  );
 }
 
 export async function postChatStream(
