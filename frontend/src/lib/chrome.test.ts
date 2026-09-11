@@ -36,11 +36,15 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
       <a href="/session/profile" data-authed-only ${authedHidden}>Profile</a>
       <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
+      <a href="/about" data-full-nav>About</a>
+      <a href="/contact">Contact</a>
+      <a href="/store" data-store-hub-nav data-full-nav>Store</a>
+      <a href="/payments/subscription">Subscriptions</a>
       <a href="/diagnostics" data-admin-only hidden>Diagnostics</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
-      <a href="/eoadmin" data-authed-only ${authedHidden}>eoadmin</a>
-      <div data-eostore-nav></div>
+      <a href="/eoadmin" data-authed-only data-full-nav ${authedHidden}>eoadmin</a>
+      <div data-eostore-nav data-full-nav></div>
     </aside>
   `;
 }
@@ -118,6 +122,28 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+  });
+
+
+  it("hides full-nav links for plain non-admin members", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-plain",
+      data: { id: "member-2", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector('[href="/about"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[href="/store"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[href="/eoadmin"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[href="/contact"]') as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector('[href="/payments/subscription"]') as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
   });
 
   it("keeps service links hidden for guests", async () => {

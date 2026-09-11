@@ -362,12 +362,57 @@ async function syncEostoreNav(): Promise<void> {
   }
 }
 
+
+function plainUserBlockedPath(pathname: string): boolean {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  if (path === "/" || path === "/contact") return false;
+  if (path.startsWith("/payments")) return false;
+  if (path.startsWith("/session")) return false;
+  // Entitled service surfaces keep their own gates; do not soft-block here.
+  if (
+    path.startsWith("/scrib") ||
+    path.startsWith("/homescool") ||
+    path.startsWith("/documents/pamphlet") ||
+    path.startsWith("/evoice") ||
+    path.startsWith("/eoproject") ||
+    path.startsWith("/ereport") ||
+    path === "/api-docs"
+  ) {
+    return false;
+  }
+  return (
+    path === "/about" ||
+    path.startsWith("/store") ||
+    path.includes("calvins-institutes") ||
+    path.startsWith("/eoadmin") ||
+    path.startsWith("/eostore") ||
+    path.startsWith("/admin") ||
+    path === "/diagnostics"
+  );
+}
+
+function enforcePlainUserRouteAccess(isPlainUser: boolean): void {
+  if (!isPlainUser || typeof window === "undefined") return;
+  if (!plainUserBlockedPath(window.location.pathname)) return;
+  sessionLog("chrome.plainUser.redirect", { from: window.location.pathname });
+  go("/");
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
   const isAdmin = authed && data.role === "admin";
-  sessionLog("chrome.refreshAuth.me", { status, authed, isAdmin, userId: data.id, role: data.role, error: data.error });
+  const isPlainUser = authed && !isAdmin;
+  sessionLog("chrome.refreshAuth.me", {
+    status,
+    authed,
+    isAdmin,
+    isPlainUser,
+    userId: data.id,
+    role: data.role,
+    error: data.error,
+  });
   document.querySelectorAll("[data-guest-only]").forEach((node) => {
     if (node instanceof HTMLElement) {
       node.hidden = authed;
@@ -383,8 +428,41 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !isAdmin;
     }
   });
+  // Guests + admins keep marketing/store/institutes/eoadmin; plain members only see
+  // home, contact, subscriptions, entitled services, and session links.
+  document.querySelectorAll("[data-full-nav]").forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (isPlainUser) {
+      node.hidden = true;
+      return;
+    }
+    if (node.hasAttribute("data-authed-only")) {
+      node.hidden = !authed;
+      return;
+    }
+    if (node.hasAttribute("data-admin-only")) {
+      node.hidden = !isAdmin;
+      return;
+    }
+    node.hidden = false;
+  });
+  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
+    if (node instanceof HTMLElement) {
+      node.hidden = isPlainUser;
+    }
+  });
   await syncSubscriptionNav(isAdmin, authed);
-  await syncEostoreNav();
+  if (!isPlainUser) {
+    await syncEostoreNav();
+  } else {
+    document.querySelectorAll("[data-eostore-nav]").forEach((host) => {
+      if (host instanceof HTMLElement) {
+        host.replaceChildren();
+        host.hidden = true;
+      }
+    });
+  }
+  enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {
     applySessionAvatar(data.avatar);
     scheduleSessionRefresh();

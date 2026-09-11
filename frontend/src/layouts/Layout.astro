@@ -209,7 +209,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">home</span>
             Home
           </a>
-          <a href="/about" data-route aria-current={path === "/about" ? "page" : undefined}>
+          <a href="/about" data-route data-full-nav aria-current={path === "/about" ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">info</span>
             About
           </a>
@@ -221,12 +221,13 @@ const jsonLdString =
             href="/store"
             data-route
             data-store-hub-nav
+            data-full-nav
             aria-current={path === "/store" ? "page" : undefined}
           >
             <span class="material-symbols-outlined" aria-hidden="true">store</span>
             Store
           </a>
-          <div class="sidebar-nav-stores" data-eostore-nav aria-label="Company stores"></div>
+          <div class="sidebar-nav-stores" data-eostore-nav data-full-nav aria-label="Company stores"></div>
           <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             Subscriptions
@@ -235,7 +236,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
             Scrib
           </a>
-          <a href="/dashboard/latin/calvins-institutes" data-route aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
+          <a href="/dashboard/latin/calvins-institutes" data-route data-full-nav aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
             Institutes
           </a>
@@ -259,7 +260,7 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
             eReport
           </a>
-          <a href="/eoadmin" data-route data-authed-only hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
+          <a href="/eoadmin" data-route data-authed-only data-full-nav hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
             <span class="material-symbols-outlined" aria-hidden="true">payments</span>
             eoadmin
           </a>
