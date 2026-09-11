@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { createDevProxyConfig } from "./dev-proxy.mjs";
 
@@ -12,6 +13,7 @@ export default defineConfig({
   output: "static",
   trailingSlash: "never",
   integrations: [
+    react(),
     sitemap({
       filter: (page) =>
         !page.includes("/session") &&

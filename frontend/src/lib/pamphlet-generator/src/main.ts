@@ -588,7 +588,7 @@ let currentDoc: PamphletStructure | null = null;
 let undoSnapshot: PamphletStructure | null = null;
 let suppressEditOpenSave = false;
 let pendingInsert: PendingInsert | null = null;
-/** When set, edits can persist to DynamoDB/S3 without a local FileSystem handle. */
+/** When set, edits can persist to the cloud API without a local FileSystem handle. */
 let cloudEpamId: string | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
 let memorySession = false;
@@ -628,7 +628,7 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
     const doc = loaded.document as PamphletStructure | undefined;
     if (!doc || typeof doc !== "object" || !(doc as { type?: string }).type) {
         throw new Error(
-            "El servidor devolvió un panfleto vacío (sin documento). Suele ser un .epam sin cuerpo en S3.",
+            "El servidor devolvió un panfleto vacío (sin documento). Suele ser un .epam sin cuerpo en el almacenamiento local.",
         );
     }
     clearOpenFile();

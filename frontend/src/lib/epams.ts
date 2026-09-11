@@ -51,9 +51,20 @@ export type EpamSeriesTreeItem = {
   updatedAt?: string;
 };
 
+export type EpamSeriesTreeChapter = {
+  name: string;
+  items: EpamSeriesTreeItem[];
+};
+
+export type EpamSeriesTreeNode = {
+  name: string;
+  chapters: EpamSeriesTreeChapter[];
+};
+
+/** Matches backend `epamSeriesTreeResponse` (series → chapters → items). */
 export type EpamSeriesTreeResponse = {
-  series: Array<{ name: string; items: EpamSeriesTreeItem[] }>;
-  uncategorized?: EpamSeriesTreeItem[];
+  count: number;
+  series: EpamSeriesTreeNode[];
 };
 
 type ListWire = {
@@ -167,10 +178,18 @@ export async function fetchEpamSeriesTree(): Promise<EpamSeriesTreeResponse> {
   if (status < 200 || status >= 300) {
     throw new Error(data.message || "Could not load series tree.");
   }
-  return {
-    series: data.series ?? [],
-    uncategorized: data.uncategorized ?? [],
-  };
+  const series = (data.series ?? []).map((node) => ({
+    name: node.name,
+    chapters: (node.chapters ?? []).map((ch) => ({
+      name: ch.name,
+      items: ch.items ?? [],
+    })),
+  }));
+  const count =
+    typeof data.count === "number"
+      ? data.count
+      : series.reduce((n, s) => n + s.chapters.reduce((m, c) => m + c.items.length, 0), 0);
+  return { count, series };
 }
 
 export async function listEpamDocs(): Promise<EpamDoc[]> {

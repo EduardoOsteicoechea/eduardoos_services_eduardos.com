@@ -23,6 +23,7 @@ func (a *App) registerEvoiceRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/evoice/projects/{ownerSafe}/{project}/docs", a.evoiceListDocs)
 	mux.HandleFunc("POST /api/evoice/projects/{ownerSafe}/{project}/docs", a.evoiceUploadDoc)
 	mux.HandleFunc("POST /api/evoice/projects/{ownerSafe}/{project}/docs/text", a.evoicePasteDocText)
+	mux.HandleFunc("POST /api/evoice/projects/{ownerSafe}/{project}/docs/crawl", a.evoiceCrawlDocURL)
 	mux.HandleFunc("DELETE /api/evoice/projects/{ownerSafe}/{project}/docs", a.evoiceDeleteDoc)
 	mux.HandleFunc("GET /api/evoice/projects/{ownerSafe}/{project}/audios", a.evoiceListAudios)
 	mux.HandleFunc("DELETE /api/evoice/projects/{ownerSafe}/{project}/audios", a.evoiceDeleteAudio)
@@ -388,6 +389,137 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 		"size":      len(raw),
 		"url":       fmt.Sprintf("/api/evoice/file/%s/%s/docs?name=%s", owner, project, url.QueryEscape(name)),
 	})
+}
+
+func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEvoiceUser(w, r)
+	if user == nil {
+		return
+	}
+	owner := r.PathValue("ownerSafe")
+	project := r.PathValue("project")
+	if !validEvoiceProjectName(project) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if !a.canAccessEvoiceOwner(r, user, owner) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	var body struct {
+		URL string `json:"url"`
+	}
+	if err := json.NewDecoder(io.LimitReader(r.Body, 64<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	rawURL := strings.TrimSpace(body.URL)
+	parsed, err := url.ParseRequestURI(rawURL)
+	if err != nil || (parsed.Scheme != "http" && parsed.Scheme != "https") || parsed.Host == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	client := &http.Client{Timeout: 20 * time.Second}
+	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, parsed.String(), nil)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	req.Header.Set("User-Agent", "eduardoos-evoice-crawler/1.0")
+	resp, err := client.Do(req)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
+		return
+	}
+	limited, err := io.ReadAll(io.LimitReader(resp.Body, evoiceMaxUpload+1))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
+		return
+	}
+	if len(limited) > evoiceMaxUpload {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	text := evoiceHTMLToPlainText(string(limited))
+	text = strings.TrimSpace(text)
+	if text == "" {
+		a.writeSafeError(w, r, http.StatusUnprocessableEntity, "empty_document")
+		return
+	}
+	if len(text) > evoiceMaxUpload {
+		text = text[:evoiceMaxUpload]
+	}
+	host := sanitizeEvoiceFileName(parsed.Hostname())
+	if host == "" {
+		host = "crawl"
+	}
+	name := fmt.Sprintf("crawl-%s-%s.txt", host, time.Now().UTC().Format("20060102-150405"))
+	if err := a.evoiceFS.ensureProject(owner, project); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	raw := []byte(text)
+	if err := a.evoiceFS.putFile(owner, project, "docs", name, raw); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	preview := text
+	if len(preview) > 280 {
+		preview = preview[:280] + "…"
+	}
+	writeJSON(w, http.StatusCreated, map[string]any{
+		"ownerSafe": owner,
+		"project":   project,
+		"name":      name,
+		"key":       evoiceRelKey(owner, project, "docs", name),
+		"size":      len(raw),
+		"preview":   preview,
+		"url":       fmt.Sprintf("/api/evoice/file/%s/%s/docs?name=%s", owner, project, url.QueryEscape(name)),
+	})
+}
+
+func evoiceHTMLToPlainText(s string) string {
+	lower := strings.ToLower(s)
+	if !strings.Contains(lower, "<html") && !strings.Contains(lower, "<body") && !strings.Contains(lower, "<p") {
+		return s
+	}
+	var b strings.Builder
+	inTag := false
+	inScript := false
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if c == '<' {
+			inTag = true
+			rest := strings.ToLower(s[i:])
+			if strings.HasPrefix(rest, "<script") || strings.HasPrefix(rest, "<style") {
+				inScript = true
+			}
+			if strings.HasPrefix(rest, "</script") || strings.HasPrefix(rest, "</style") {
+				inScript = false
+			}
+			continue
+		}
+		if c == '>' {
+			inTag = false
+			continue
+		}
+		if inTag || inScript {
+			continue
+		}
+		b.WriteByte(c)
+	}
+	out := b.String()
+	out = strings.ReplaceAll(out, "\r\n", "\n")
+	out = strings.ReplaceAll(out, "\u00a0", " ")
+	for strings.Contains(out, "\n\n\n") {
+		out = strings.ReplaceAll(out, "\n\n\n", "\n\n")
+	}
+	return strings.TrimSpace(out)
 }
 
 func evoiceFileNameFromRequest(r *http.Request) string {

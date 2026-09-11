@@ -219,6 +219,15 @@ export function scribSheetHref(userSafe: string, bookId: string, sheetId: string
   return `/scrib/sheet?${q.toString()}`;
 }
 
+/** Pretty URL used by ScribEditor (may include query string). */
+export function scribSheetPrettyPath(
+  userSafe: string,
+  bookId: string,
+  sheetId: string,
+): string {
+  return scribSheetHref(userSafe, bookId, sheetId);
+}
+
 export function resolveScribSheetFromLocation(loc?: {
   pathname: string;
   search: string;
@@ -266,3 +275,7 @@ export async function postScribPrintPdf(
   }
   return { blob: await response.blob(), requestId };
 }
+
+/** Alternate names used by some Scrib islands. */
+export const scribSheetUrl = scribSheetHref;
+export const scribSheetPrettyUrl = scribSheetPrettyPath;

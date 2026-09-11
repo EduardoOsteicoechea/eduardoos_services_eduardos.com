@@ -1,0 +1,726 @@
+/**
+ * eVoice page — single-page collapsible hub (spec 069).
+ */
+
+.evoice {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  color: var(--site-body-fg);
+  --evoice-section-body-max: 600px;
+}
+
+.evoice__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+@media (max-width: 640px) {
+  .evoice__toolbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.evoice__create {
+  display: contents;
+}
+
+.evoice__field {
+  display: grid;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.evoice__field--grow {
+  flex: 1 1 14rem;
+}
+
+.evoice__field--twin {
+  min-width: 0;
+}
+
+.evoice__field--inline {
+  display: inline-grid;
+  gap: 0.25rem;
+  min-width: 5.5rem;
+}
+
+.evoice__select,
+.evoice__input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--control_min_height, 2.5rem);
+  height: var(--control_min_height, 2.5rem);
+  padding: 0.4rem 0.65rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-body-bg);
+  color: var(--site-body-fg);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.evoice__select--compact {
+  min-width: 5rem;
+}
+
+/* Stack of sections — page scrolls; each section clips itself */
+.evoice__sections {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.evoice__section-body {
+  padding: 0 0.85rem 0.65rem;
+}
+
+.evoice__section--closed .evoice__section-body {
+  display: none;
+}
+
+.evoice__section-clip {
+  max-height: var(--evoice-section-body-max, 600px);
+  overflow: hidden;
+}
+
+.evoice__section-clip--expanded {
+  max-height: none;
+  overflow: visible;
+}
+
+.evoice__section-more {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.45rem;
+}
+
+.evoice__section-more-btn {
+  font-size: 0.85rem;
+}
+
+/* Collapsible sections */
+.evoice__section {
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: color-mix(in srgb, var(--site-surface, var(--site-body-bg)) 92%, var(--site-body-fg) 8%);
+}
+
+.evoice__section-head-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-right: 0.5rem;
+}
+
+.evoice__section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  border: none;
+  border-radius: var(--border_radius_001);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.evoice__section-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+}
+
+.evoice__section-head:hover {
+  background: color-mix(in srgb, var(--site-body-fg) 4%, transparent);
+}
+
+.evoice__section-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.evoice__chevron {
+  flex: 0 0 auto;
+  font-size: 1.35rem;
+  transition: transform 0.15s ease;
+}
+
+.evoice__section--closed .evoice__chevron {
+  transform: rotate(-90deg);
+}
+
+/* Upload row */
+.evoice__upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.evoice__upload {
+  cursor: pointer;
+}
+
+.evoice__paste,
+.evoice__crawl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.evoice__textarea {
+  width: 100%;
+  min-height: 5.5rem;
+  padding: 0.55rem 0.7rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-body-bg);
+  color: var(--site-body-fg);
+  font-family: var(--font-body);
+  resize: vertical;
+}
+
+.evoice__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* Documents + console grid */
+.evoice__docs-console {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .evoice__docs-console:not(.evoice__docs-console--solo) {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: start;
+  }
+}
+
+.evoice__docs-main {
+  min-width: 0;
+}
+
+.evoice__panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.evoice__list {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.evoice__doc-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: var(--font-body);
+}
+
+.evoice__doc-check {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.evoice__doc-check input {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.evoice__doc-main {
+  flex: 1 1 12rem;
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.evoice__doc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evoice__doc-progress {
+  height: 0.4rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-body-bg);
+  overflow: hidden;
+}
+
+.evoice__doc-progress-bar {
+  height: 100%;
+  background: var(--site-accent, #2a5a4a);
+  transition: width 0.2s ease;
+}
+
+.evoice__doc-progress-bar--ready,
+.evoice__doc-progress-bar--done,
+.evoice__doc-progress-bar--skipped {
+  background: color-mix(in srgb, var(--site-accent, #2a5a4a) 70%, #888);
+}
+
+.evoice__doc-progress-bar--failed {
+  background: #b42318;
+}
+
+.evoice__doc-progress-bar--idle {
+  width: 0 !important;
+}
+
+.evoice__doc-status {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.evoice__empty {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-body);
+  opacity: 0.8;
+}
+
+/* Action bar below docs list */
+.evoice__action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-top: 0.65rem;
+  border-top: var(--border_001);
+}
+
+.evoice__action-icons {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.evoice__action-icons--end {
+  margin-left: auto;
+}
+
+.evoice__slider-field {
+  display: grid;
+  gap: 0.25rem;
+  flex: 1 1 10rem;
+  min-width: 9rem;
+  max-width: 18rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+.evoice__slider-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.evoice__slider-label em {
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  opacity: 1;
+}
+
+.evoice__slider {
+  width: 100%;
+  accent-color: var(--site-accent);
+  cursor: pointer;
+}
+
+.evoice__slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.15rem;
+  font-size: 0.65rem;
+  opacity: 0.55;
+  line-height: 1.2;
+}
+
+.evoice__slider-ticks span {
+  flex: 1 1 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evoice__modality-panel {
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: color-mix(in srgb, var(--site-body-bg) 80%, transparent);
+}
+
+.evoice__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, #000 45%, transparent);
+}
+
+.evoice__modal {
+  box-sizing: border-box;
+  width: min(24rem, 100%);
+  padding: 1rem 1.1rem 1.15rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-surface, var(--site-body-bg));
+  color: var(--site-body-fg);
+  box-shadow: 0 12px 40px color-mix(in srgb, #000 35%, transparent);
+}
+
+.evoice__modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.evoice__modal-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* Console panel (right column) */
+.evoice__console {
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  padding: 0.65rem 0.75rem;
+  background: var(--site-body-bg);
+  min-width: 0;
+}
+
+.evoice__console-title {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.evoice__progress {
+  height: 0.55rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-body-bg);
+  overflow: hidden;
+}
+
+.evoice__progress-bar {
+  height: 100%;
+  background: var(--site-accent, #2a5a4a);
+  transition: width 0.25s ease;
+}
+
+.evoice__progress-label {
+  margin: 0.35rem 0 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.evoice__steps {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.evoice__step {
+  display: flex;
+  gap: 0.65rem;
+  align-items: baseline;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
+.evoice__step-state {
+  flex: 0 0 4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.evoice__step--active .evoice__step-state {
+  color: var(--site-accent, #2a5a4a);
+  opacity: 1;
+  font-weight: 650;
+}
+
+.evoice__step--done .evoice__step-label {
+  opacity: 0.75;
+}
+
+.evoice__step--failed .evoice__step-state,
+.evoice__step--failed .evoice__step-label {
+  color: #b42318;
+}
+
+.evoice__log-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.evoice__log {
+  margin: 0;
+  max-height: 10rem;
+  overflow: auto;
+  padding: 0.55rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: color-mix(in srgb, var(--site-body-fg) 3%, var(--site-body-bg));
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+}
+
+/* Playlist tree */
+.evoice__transport {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.evoice__playlist-tree {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.evoice__doc-group {
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  padding: 0.65rem 0.75rem;
+  background: color-mix(in srgb, var(--site-body-fg) 2%, transparent);
+}
+
+.evoice__doc-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.45rem;
+  border-bottom: var(--border_001);
+}
+
+.evoice__doc-group-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  flex: 1 1 8rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evoice__version-block {
+  margin-left: 0.5rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid color-mix(in srgb, var(--site-accent, #2a5a4a) 35%, var(--site-border, #ccc));
+  margin-bottom: 0.55rem;
+}
+
+.evoice__version-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.evoice__version-head h4 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.evoice__track-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.evoice__track-row {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.evoice__track {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  text-align: left;
+  padding: 0.4rem 0.55rem;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evoice__track--active {
+  border-color: var(--site-accent, #2a5a4a);
+  background: color-mix(in srgb, var(--site-accent, #2a5a4a) 12%, transparent);
+}
+
+.evoice__audio {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
+/* Icon buttons */
+.evoice__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--control_min_height, 2.5rem);
+  height: var(--control_min_height, 2.5rem);
+  padding: 0;
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
+  background: var(--site-body-bg);
+  color: var(--site-body-fg);
+  cursor: pointer;
+}
+
+.evoice__icon-btn .material-symbols-outlined {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.evoice__icon-btn--accent {
+  color: var(--site-accent, #2a5a4a);
+  border-color: color-mix(in srgb, var(--site-accent, #2a5a4a) 45%, var(--site-border, #ccc));
+}
+
+.evoice__icon-btn--accent:hover:not(:disabled) {
+  border-color: var(--site-accent, #2a5a4a);
+  background: color-mix(in srgb, var(--site-accent, #2a5a4a) 12%, transparent);
+}
+
+.evoice__icon-btn--danger {
+  color: var(--site-danger, #b42318);
+}
+
+.evoice__icon-btn--danger:hover:not(:disabled) {
+  border-color: var(--site-danger, #b42318);
+  background: color-mix(in srgb, var(--site-danger, #b42318) 10%, transparent);
+}
+
+.evoice__icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.evoice__share-hint,
+.evoice__share-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--site-body-fg) 78%, transparent);
+}
+
+.evoice__share-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.evoice__invite {
+  display: grid;
+  gap: 1rem;
+  max-width: 40rem;
+}
+
+.evoice__invite-tracks {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* Compact transport in nested playlist headers */
+.evoice__doc-group-head .evoice__transport,
+.evoice__version-head .evoice__transport {
+  flex: 0 1 auto;
+}
+
+.evoice__doc-group-head .evoice__icon-btn,
+.evoice__version-head .evoice__icon-btn,
+.evoice__transport .evoice__icon-btn {
+  width: 2rem;
+  height: 2rem;
+  min-height: 2rem;
+}
+
+.evoice__doc-group-head .evoice__icon-btn .material-symbols-outlined,
+.evoice__version-head .evoice__icon-btn .material-symbols-outlined,
+.evoice__transport .evoice__icon-btn .material-symbols-outlined {
+  font-size: 1.1rem;
+}

@@ -215,3 +215,16 @@ export async function sessionEmail(): Promise<string> {
   const me = await getMe();
   return (me.data.email || "").trim();
 }
+
+/** Thin wrappers so ServiceGate can import access helpers from payments. */
+export { checkServiceAccess } from "./serviceAccess";
+export type { ServiceAccessResult } from "./serviceAccess";
+
+export function hasServiceAccess(
+  serviceId: string,
+  entitlements: EntitlementRecord[],
+): boolean {
+  return entitlements.some(
+    (row) => row.service_id === serviceId && entitlementActive(row),
+  );
+}
