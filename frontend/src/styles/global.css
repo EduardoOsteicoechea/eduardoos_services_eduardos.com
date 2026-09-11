@@ -893,7 +893,25 @@ h2 {
 }
 
 .session-grid {
+  gap: 1.5rem;
+}
+
+.session-account-block {
+  display: flex;
+  flex-direction: column;
   gap: var(--rail-gap);
+}
+
+.session-account-panel > .session-links,
+.session-account-panel .session-account-block.session-links {
+  margin-top: 0;
+}
+
+.session-grid [data-profile-form] > [data-profile-save] {
+  margin-top: 1rem;
+  grid-column: 3;
+  width: 100%;
+  justify-self: stretch;
 }
 
 .session-grid h1 {
@@ -1326,8 +1344,8 @@ section.diag .panel:not(form) {
     --activity-start-size: var(--rail-width);
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    /* Columns 11–15: five-col form centered on the 24-col desktop grid */
-    --span-form: 5;
+    /* Columns 10–15: six-col form centered on the 24-col desktop grid */
+    --span-form: 6;
     --span-sidebar: 6;
     --span-modal: 8;
     --span-half: 12;
@@ -1345,12 +1363,16 @@ section.diag .panel:not(form) {
   main > .session-grid,
   main > section.diag,
   main > form {
-    grid-column: 11 / span var(--span-form);
+    grid-column: 10 / span var(--span-form);
   }
 
   .session-grid form,
   .diag form {
     grid-template-columns: 2fr 1rem 3fr;
+  }
+
+  .session-grid [data-profile-form] {
+    grid-template-columns: 3fr 1rem 2fr;
   }
 
   .app-header--start {

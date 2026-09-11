@@ -108,6 +108,7 @@ export function setBanner(root: ParentNode, text: string, kind = ""): void {
   if (banner instanceof HTMLElement) {
     banner.textContent = text;
     banner.className = `status ${kind}`.trim();
+    banner.hidden = text.trim() === "";
   }
 }
 

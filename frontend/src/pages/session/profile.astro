@@ -5,7 +5,6 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Profile · Eduardoos">
   <section class="session-grid" data-session>
     <h1>Profile</h1>
-    <p class="lede">Profile changes apply only to your account.</p>
     <p class="status" data-banner>Loading session…</p>
     <div class="panel" data-authed-panel hidden>
       <p class="hint" data-profile-summary></p>
@@ -25,53 +24,55 @@ import Layout from "../../layouts/Layout.astro";
             <input name="phone_national" data-phone-national inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="[0-9]*" placeholder="5551234567" />
           </span>
         </label>
-        <button type="button" data-profile-save>Save profile</button>
+        <button type="button" data-profile-save>Save</button>
       </form>
     </div>
-    <div class="panel" data-authed-panel hidden>
-      <div class="session-avatar-wrap" data-avatar-wrap hidden>
-        <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
-        <button
-          class="session-avatar-remove icon-btn"
-          type="button"
-          data-avatar-delete
-          hidden
-          aria-label="Remove avatar"
-          title="Remove avatar"
-        >
-          <span class="material-symbols-outlined" aria-hidden="true">close</span>
-        </button>
+    <div class="panel session-account-panel" data-authed-panel hidden>
+      <div class="session-account-block">
+        <div class="session-avatar-wrap" data-avatar-wrap hidden>
+          <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
+          <button
+            class="session-avatar-remove icon-btn"
+            type="button"
+            data-avatar-delete
+            hidden
+            aria-label="Remove avatar"
+            title="Remove avatar"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
+        <form data-avatar-form>
+          <label>
+            Avatar (JPEG, PNG, or WebP)
+            <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
+          </label>
+          <button type="button" data-avatar-upload>Upload</button>
+        </form>
       </div>
-      <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
-      <form data-avatar-form>
-        <label>
-          Avatar (JPEG, PNG, or WebP)
-          <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
-        </label>
-        <button type="button" data-avatar-upload>Upload avatar</button>
-      </form>
-      <p class="hint session-links">
+      <div class="session-account-block session-links">
         <a href="/session/change-password" data-route>Change password</a>
         <a href="/api-docs" data-route>API docs</a>
-      </p>
-      <div class="session-links" data-admin-only hidden>
+      </div>
+      <div class="session-account-block" data-apikeys>
+        <h2>API keys</h2>
+        <p class="hint">Keys are shown once. They require the api product entitlement. External clients use Bearer keys only for /api/v1; signed-in pages keep cookie auth.</p>
+        <form data-apikey-form>
+          <label>
+            Label
+            <input name="label" required maxlength="80" />
+          </label>
+          <button type="submit">Create key</button>
+        </form>
+        <p class="hint" data-apikey-secret hidden></p>
+        <ul class="ereport-list" data-apikey-list></ul>
+      </div>
+      <div class="session-account-block session-links" data-admin-only hidden>
         <h2>Admin</h2>
         <a href="/admin/users" data-route>Registered users</a>
         <a href="/diagnostics" data-route>Diagnostics</a>
       </div>
-    </div>
-    <div class="panel" data-apikeys data-authed-panel hidden>
-      <h2>API keys</h2>
-      <p class="hint">Keys are shown once. They require the api product entitlement. External clients use Bearer keys only for /api/v1; signed-in pages keep cookie auth.</p>
-      <form data-apikey-form>
-        <label>
-          Label
-          <input name="label" required maxlength="80" />
-        </label>
-        <button type="submit">Create key</button>
-      </form>
-      <p class="hint" data-apikey-secret hidden></p>
-      <ul class="ereport-list" data-apikey-list></ul>
     </div>
   </section>
 </Layout>
@@ -90,57 +91,57 @@ import Layout from "../../layouts/Layout.astro";
       }
       try {
         fillProfile(root, me);
-          setBanner(root, "Signed in. Profile changes apply only to your account.", "ok");
-        } catch {
-          setBanner(root, copy.loadError, "err");
-        }
-        try {
-          const { createAPIKey, listAPIKeys, revokeAPIKey } = await import("../../lib/ereport");
-          const paintKeys = async () => {
-            const list = root.querySelector("[data-apikey-list]");
-            if (!(list instanceof HTMLElement)) return;
-            const res = await listAPIKeys();
-            list.replaceChildren();
-            if (res.status !== 200) return;
-            for (const key of res.data.keys || []) {
-              const li = document.createElement("li");
-              li.textContent = `${key.label} · ${key.prefix}`;
-              const btn = document.createElement("button");
-              btn.type = "button";
-              btn.textContent = "Revoke";
-              btn.dataset.revokeKey = key.id;
-              li.append(btn);
-              list.append(li);
-            }
-          };
-          await paintKeys();
-          root.querySelector("[data-apikey-form]")?.addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const form = event.currentTarget;
-            if (!(form instanceof HTMLFormElement)) return;
-            setBusy(form, true);
-            const result = await createAPIKey(String(new FormData(form).get("label") || ""));
-            setBusy(form, false);
-            const message = reportFailure(copy, result.status, result.data, "API key created.");
-            setBanner(root, message.text, message.kind);
-            const secret = root.querySelector("[data-apikey-secret]");
-            if (secret instanceof HTMLElement && result.data.key) {
-              secret.hidden = false;
-              secret.textContent = result.data.key;
-            }
-            if (result.status === 201) await paintKeys();
-          });
-          root.addEventListener("click", async (event) => {
-            const node = event.target;
-            if (!(node instanceof HTMLElement) || !node.dataset.revokeKey) return;
-            const result = await revokeAPIKey(node.dataset.revokeKey);
-            const message = reportFailure(copy, result.status, result.data, "API key revoked.");
-            setBanner(root, message.text, message.kind);
-            if (result.status === 200) await paintKeys();
-          });
-        } catch {
-          /* API keys are optional; session must still load. */
-        }
+        setBanner(root, "");
+      } catch {
+        setBanner(root, copy.loadError, "err");
+      }
+      try {
+        const { createAPIKey, listAPIKeys, revokeAPIKey } = await import("../../lib/ereport");
+        const paintKeys = async () => {
+          const list = root.querySelector("[data-apikey-list]");
+          if (!(list instanceof HTMLElement)) return;
+          const res = await listAPIKeys();
+          list.replaceChildren();
+          if (res.status !== 200) return;
+          for (const key of res.data.keys || []) {
+            const li = document.createElement("li");
+            li.textContent = `${key.label} · ${key.prefix}`;
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = "Revoke";
+            btn.dataset.revokeKey = key.id;
+            li.append(btn);
+            list.append(li);
+          }
+        };
+        await paintKeys();
+        root.querySelector("[data-apikey-form]")?.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          if (!(form instanceof HTMLFormElement)) return;
+          setBusy(form, true);
+          const result = await createAPIKey(String(new FormData(form).get("label") || ""));
+          setBusy(form, false);
+          const message = reportFailure(copy, result.status, result.data, "API key created.");
+          setBanner(root, message.text, message.kind);
+          const secret = root.querySelector("[data-apikey-secret]");
+          if (secret instanceof HTMLElement && result.data.key) {
+            secret.hidden = false;
+            secret.textContent = result.data.key;
+          }
+          if (result.status === 201) await paintKeys();
+        });
+        root.addEventListener("click", async (event) => {
+          const node = event.target;
+          if (!(node instanceof HTMLElement) || !node.dataset.revokeKey) return;
+          const result = await revokeAPIKey(node.dataset.revokeKey);
+          const message = reportFailure(copy, result.status, result.data, "API key revoked.");
+          setBanner(root, message.text, message.kind);
+          if (result.status === 200) await paintKeys();
+        });
+      } catch {
+        /* API keys are optional; session must still load. */
+      }
     })();
   });
 </script>
