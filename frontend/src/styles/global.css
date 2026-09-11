@@ -944,12 +944,45 @@ section.diag .panel:not(form) {
   color: var(--color-link);
 }
 
+.session-avatar-wrap {
+  position: relative;
+  width: var(--button-size);
+  height: var(--button-size);
+  flex-shrink: 0;
+}
+
 .session-avatar {
+  display: block;
   width: var(--button-size);
   height: var(--button-size);
   border-radius: 50%;
   border: var(--border-width) solid var(--color-border);
   object-fit: cover;
+}
+
+.session-grid .session-avatar-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: auto;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 50%;
+  transform: translate(0.35rem, -0.35rem);
+}
+
+.session-grid .session-avatar-remove .material-symbols-outlined {
+  font-size: var(--font-size-sm);
+  line-height: 1;
 }
 
 .session-avatar-fallback {
@@ -992,15 +1025,17 @@ section.diag .panel:not(form) {
 .diag form > button {
   grid-column: 1;
   width: 100%;
+  max-width: 100%;
   height: var(--control-height);
   min-height: var(--control-height);
-  align-self: stretch;
+  align-self: start;
   margin-top: 0;
 }
 
 .phone-field {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--page-gutter) minmax(0, 1fr);
+  /* Region = 2 cols (col+gutter+col); number expands one col left into the rest */
+  grid-template-columns: minmax(0, 2fr) var(--page-gutter) minmax(0, 3fr);
   column-gap: 0;
   align-items: stretch;
 }
@@ -1157,7 +1192,7 @@ section.diag .panel:not(form) {
     --span-half: 8;
     --span-two-thirds: 11;
     --span-full: 16;
-    --span-button: 4;
+    --span-button: 2;
     --main-inline: 1rem;
   }
 
@@ -1291,19 +1326,31 @@ section.diag .panel:not(form) {
     --activity-start-size: var(--rail-width);
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    --span-form: 6;
+    /* Columns 11–15: five-col form centered on the 24-col desktop grid */
+    --span-form: 5;
     --span-sidebar: 6;
     --span-modal: 8;
     --span-half: 12;
     --span-two-thirds: 16;
     --span-full: 24;
-    --span-button: 6;
+    --span-button: 2;
     --main-inline: 2rem;
     /* Center route title with first rail menu button */
     --main-padding-top: calc(
       var(--rail-gap) + (var(--rail-button-size) / 2) -
         (var(--font-size-xl) * 1.2 / 2)
     );
+  }
+
+  main > .session-grid,
+  main > section.diag,
+  main > form {
+    grid-column: 11 / span var(--span-form);
+  }
+
+  .session-grid form,
+  .diag form {
+    grid-template-columns: 2fr 1rem 3fr;
   }
 
   .app-header--start {

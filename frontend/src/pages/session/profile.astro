@@ -5,12 +5,10 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Profile · Eduardoos">
   <section class="session-grid" data-session>
     <h1>Profile</h1>
-    <p class="lede">Profile changes apply only to your account. The Go API remains the authority.</p>
+    <p class="lede">Profile changes apply only to your account.</p>
     <p class="status" data-banner>Loading session…</p>
     <div class="panel" data-authed-panel hidden>
       <p class="hint" data-profile-summary></p>
-      <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
-      <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
       <form data-profile-form>
         <label>
           Display name
@@ -29,13 +27,28 @@ import Layout from "../../layouts/Layout.astro";
         </label>
         <button type="button" data-profile-save>Save profile</button>
       </form>
+    </div>
+    <div class="panel" data-authed-panel hidden>
+      <div class="session-avatar-wrap" data-avatar-wrap hidden>
+        <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
+        <button
+          class="session-avatar-remove icon-btn"
+          type="button"
+          data-avatar-delete
+          hidden
+          aria-label="Remove avatar"
+          title="Remove avatar"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </div>
+      <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
       <form data-avatar-form>
         <label>
           Avatar (JPEG, PNG, or WebP)
           <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
         </label>
         <button type="button" data-avatar-upload>Upload avatar</button>
-        <button type="button" data-avatar-delete>Remove avatar</button>
       </form>
       <p class="hint session-links">
         <a href="/session/change-password" data-route>Change password</a>

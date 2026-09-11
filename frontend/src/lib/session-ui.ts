@@ -312,7 +312,7 @@ export function reportFailure(copy: SessionCopy, status: number, data: MeRespons
 export function fillProfile(root: ParentNode, data: MeResponse): void {
   const summary = root.querySelector("[data-profile-summary]");
   if (summary instanceof HTMLElement) {
-    summary.textContent = `${data.email ?? ""} · @${data.username ?? ""} · ${data.role ?? ""}`;
+    summary.textContent = data.email ?? "";
   }
   const form = root.querySelector("[data-profile-form]");
   if (form instanceof HTMLFormElement) {
@@ -326,24 +326,31 @@ export function fillProfile(root: ParentNode, data: MeResponse): void {
     if (region instanceof HTMLSelectElement) paintPhoneRegions(region, parts.region);
     if (national instanceof HTMLInputElement) national.value = parts.national;
   }
+  const avatarWrap = root.querySelector("[data-avatar-wrap]");
   const avatarImg = root.querySelector("[data-avatar-img]");
+  const avatarRemove = root.querySelector("[data-avatar-delete]");
   const fallback = root.querySelector("[data-avatar-fallback]");
   const src = profileAvatarURL(data.avatar);
+  const showAvatar = (visible: boolean) => {
+    if (avatarWrap instanceof HTMLElement) avatarWrap.hidden = !visible;
+    if (avatarImg instanceof HTMLImageElement) avatarImg.hidden = !visible;
+    if (avatarRemove instanceof HTMLElement) avatarRemove.hidden = !visible;
+    if (fallback instanceof HTMLElement) fallback.hidden = visible;
+  };
   if (avatarImg instanceof HTMLImageElement) {
     if (src) {
       avatarImg.onerror = () => {
         avatarImg.removeAttribute("src");
-        avatarImg.hidden = true;
-        if (fallback instanceof HTMLElement) fallback.hidden = false;
+        showAvatar(false);
       };
       avatarImg.src = src;
-      avatarImg.hidden = false;
-      if (fallback instanceof HTMLElement) fallback.hidden = true;
+      showAvatar(true);
     } else {
       avatarImg.removeAttribute("src");
-      avatarImg.hidden = true;
-      if (fallback instanceof HTMLElement) fallback.hidden = false;
+      showAvatar(false);
     }
+  } else {
+    showAvatar(false);
   }
   applySessionAvatar(data.avatar);
 }
