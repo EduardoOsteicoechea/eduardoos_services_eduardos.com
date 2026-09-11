@@ -51,6 +51,34 @@ func TestRegisterVerifyLoginUsername(t *testing.T) {
 	}
 }
 
+
+func TestRegisterPendingResendsOTP(t *testing.T) {
+	app := newTestApp(true)
+	mailer := app.mailer.(*recordingMailer)
+	payload := `{"email":"retry@eduardoos.com","username":"retryuser","password":"correct-horse-battery"}`
+	first := app.anonPOST(t, "/api/auth/register", payload)
+	if first.Code != http.StatusOK {
+		t.Fatalf("first register: %d", first.Code)
+	}
+	firstCode := extractOTP(t, mailer)
+	second := app.anonPOST(t, "/api/auth/register", payload)
+	if second.Code != http.StatusOK {
+		t.Fatalf("second register: %d", second.Code)
+	}
+	secondCode := extractOTP(t, mailer)
+	if secondCode == "" {
+		t.Fatal("expected OTP on pending re-register")
+	}
+	stale := app.anonPOST(t, "/api/auth/verify-email", `{"email":"retry@eduardoos.com","otp":"`+firstCode+`"}`)
+	if cookieNamed(stale, app.accessCookieName()) != nil {
+		t.Fatal("first OTP must not remain valid after re-register")
+	}
+	ok := app.anonPOST(t, "/api/auth/verify-email", `{"email":"retry@eduardoos.com","otp":"`+secondCode+`"}`)
+	if cookieNamed(ok, app.accessCookieName()) == nil {
+		t.Fatal("second OTP from re-register must verify")
+	}
+}
+
 func TestPasswordLengthEightSucceedsSevenFails(t *testing.T) {
 	app := newTestApp(true)
 	mailer := app.mailer.(*recordingMailer)

@@ -51,6 +51,16 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 			slog.String("user_id", existing.ID),
 			slog.String("status", existing.Status),
 		)
+		// Pending accounts often retry register after a failed SMTP attempt.
+		// Re-issue and send the verification code (same as resend) instead of
+		// returning silent success with no mail.
+		if existing.Status == statusPending {
+			if code, otpErr := a.issueOTPLogged(r, existing, otpEmailVerify, emailNorm); otpErr == nil {
+				a.deliverOTPEmail(r, "register", existing.Email, otpEmailVerify, code, existing.ID)
+			} else {
+				a.logAuthDebug(r, "register_existing_otp_skipped", slog.String("reason", "issue_otp_failed"))
+			}
+		}
 		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 		return
 	}
@@ -76,6 +86,11 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 	if err := a.store.InsertUser(r.Context(), user); err != nil {
 		if errors.Is(err, errDuplicateEmail) {
 			a.logAuthDebug(r, "register_insert_duplicate_email")
+			if existing, lookErr := a.store.UserByEmail(r.Context(), emailNorm); lookErr == nil && existing != nil && existing.Status == statusPending {
+				if code, otpErr := a.issueOTPLogged(r, existing, otpEmailVerify, emailNorm); otpErr == nil {
+					a.deliverOTPEmail(r, "register", existing.Email, otpEmailVerify, code, existing.ID)
+				}
+			}
 			writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 			return
 		}
