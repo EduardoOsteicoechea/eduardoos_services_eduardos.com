@@ -43,6 +43,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/diagnostics" data-admin-only hidden>Diagnostics</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
+      <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
       <a href="/eoadmin" data-authed-only data-full-nav ${authedHidden}>eoadmin</a>
       <div data-eostore-nav data-full-nav></div>
     </aside>
@@ -146,7 +147,7 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
   });
 
-  it("keeps service links hidden for guests", async () => {
+  it("keeps service links and Institutes hidden for guests", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 401,
       requestId: "rid-guest",
@@ -155,6 +156,7 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(true);
     expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[href="/dashboard/latin/calvins-institutes"]') as HTMLElement).hidden).toBe(true);
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 

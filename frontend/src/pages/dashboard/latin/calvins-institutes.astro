@@ -6,7 +6,7 @@ import Layout from "../../../layouts/Layout.astro";
   title="Calvin’s Institutes · Eduardoos"
   description="John Calvin, Institutio Christianae Religionis (1559), Latin text."
   page="latin-institutes"
-  robots="index,follow"
+  robots="noindex,nofollow"
 >
   <Fragment slot="dhs">
     <button class="dhs-action" type="button" data-toggle-nav title="Toggle contents" aria-label="Toggle contents">
@@ -40,6 +40,7 @@ import Layout from "../../../layouts/Layout.astro";
   import { showErrorModal } from "../../../lib/error-modal";
   import { PREF_INSTITUTES_SIDEBAR, getPreference, putPreference } from "../../../lib/preferences";
   import { requireSession } from "../../../lib/productGate";
+  import { go } from "../../../lib/router";
 
   const root = document.querySelector("[data-institutes]");
   if (!(root instanceof HTMLElement)) throw new Error("institutes root missing");
@@ -61,58 +62,61 @@ import Layout from "../../../layouts/Layout.astro";
           paragraphs.appendChild(el);
         }
       }
-      const session = await requireSession();
-      if (session.ok) {
-        void putPreference(PREF_INSTITUTES_SIDEBAR, { book, chapter });
-      }
+      void putPreference(PREF_INSTITUTES_SIDEBAR, { book, chapter });
     } catch (err) {
       showErrorModal({ message: err instanceof Error ? err.message : "Could not load chapter." });
     }
   }
 
-  try {
-    const index = await fetchParagraphsIndex();
-    if (banner instanceof HTMLElement) banner.textContent = "Paragraph pack ready.";
-    if (!(nav instanceof HTMLElement)) throw new Error("nav missing");
-    nav.replaceChildren();
-
-    const books = index.books?.length
-      ? index.books
-      : (index.chapters || []).reduce<Array<{ book: string; chapters: string[] }>>((acc, row) => {
-          let entry = acc.find((b) => b.book === row.book);
-          if (!entry) {
-            entry = { book: row.book, chapters: [] };
-            acc.push(entry);
-          }
-          if (!entry.chapters.includes(row.chapter)) entry.chapters.push(row.chapter);
-          return acc;
-        }, []);
-
-    for (const book of books) {
-      const h = document.createElement("strong");
-      h.textContent = book.book;
-      nav.appendChild(h);
-      for (const chapter of book.chapters) {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "btn";
-        btn.textContent = chapter;
-        btn.addEventListener("click", () => void openChapter(book.book, chapter, `${book.book} ${chapter}`));
-        nav.appendChild(btn);
-      }
+  void (async () => {
+    const session = await requireSession();
+    if (!session.ok) {
+      if (banner instanceof HTMLElement) banner.textContent = "Sign in required.";
+      go("/session");
+      return;
     }
 
-    const session = await requireSession();
-    if (session.ok) {
+    try {
+      const index = await fetchParagraphsIndex();
+      if (banner instanceof HTMLElement) banner.textContent = "Paragraph pack ready.";
+      if (!(nav instanceof HTMLElement)) throw new Error("nav missing");
+      nav.replaceChildren();
+
+      const books = index.books?.length
+        ? index.books
+        : (index.chapters || []).reduce<Array<{ book: string; chapters: string[] }>>((acc, row) => {
+            let entry = acc.find((b) => b.book === row.book);
+            if (!entry) {
+              entry = { book: row.book, chapters: [] };
+              acc.push(entry);
+            }
+            if (!entry.chapters.includes(row.chapter)) entry.chapters.push(row.chapter);
+            return acc;
+          }, []);
+
+      for (const book of books) {
+        const h = document.createElement("strong");
+        h.textContent = book.book;
+        nav.appendChild(h);
+        for (const chapter of book.chapters) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn";
+          btn.textContent = chapter;
+          btn.addEventListener("click", () => void openChapter(book.book, chapter, `${book.book} ${chapter}`));
+          nav.appendChild(btn);
+        }
+      }
+
       const pref = await getPreference<{ book?: string; chapter?: string }>(PREF_INSTITUTES_SIDEBAR);
       if (pref.value?.book && pref.value?.chapter) {
         void openChapter(pref.value.book, pref.value.chapter, `${pref.value.book} ${pref.value.chapter}`);
       }
+    } catch (err) {
+      if (banner instanceof HTMLElement) banner.textContent = "Index unavailable.";
+      showErrorModal({ message: err instanceof Error ? err.message : "Could not load Institutes index." });
     }
-  } catch (err) {
-    if (banner instanceof HTMLElement) banner.textContent = "Index unavailable.";
-    showErrorModal({ message: err instanceof Error ? err.message : "Could not load Institutes index." });
-  }
+  })();
 
   document.querySelector("[data-toggle-nav]")?.addEventListener("click", () => {
     if (!(nav instanceof HTMLElement)) return;

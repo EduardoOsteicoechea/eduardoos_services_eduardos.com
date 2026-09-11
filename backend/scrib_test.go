@@ -152,6 +152,15 @@ func TestScribPrintPDFRequiresAuth(t *testing.T) {
 	}
 }
 
+func TestLatinInstitutesRequiresAuth(t *testing.T) {
+	app := newTestApp(false)
+	rec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes", nil))
+	if rec.Code != http.StatusUnauthorized {
+		t.Fatalf("guest index want 401 got %d body=%s", rec.Code, rec.Body.String())
+	}
+}
+
 func TestLatinInstitutesPack(t *testing.T) {
 	root, err := filepath.Abs(filepath.Join(".data", "calvin-institutes-paragraphs"))
 	if err != nil {
@@ -164,8 +173,19 @@ func TestLatinInstitutesPack(t *testing.T) {
 	app.cfg.MustLog = true
 	app.cfg.CalvinParagraphsRoot = root
 
-	rec := httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes", nil))
+	seed := httptest.NewRecorder()
+	if _, err := app.issueSession(seed, app.mustUser("member@eduardoos.com")); err != nil {
+		t.Fatal(err)
+	}
+	authedGET := func(path string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(http.MethodGet, path, nil)
+		copyCookies(req, seed)
+		rec := httptest.NewRecorder()
+		app.Handler().ServeHTTP(rec, req)
+		return rec
+	}
+
+	rec := authedGET("/api/latin/calvins-institutes")
 	if rec.Code != http.StatusOK {
 		t.Fatalf("index status=%d body=%s", rec.Code, rec.Body.String())
 	}
@@ -173,26 +193,22 @@ func TestLatinInstitutesPack(t *testing.T) {
 		t.Fatalf("unexpected index body")
 	}
 
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes/paragraphs", nil))
+	rec = authedGET("/api/latin/calvins-institutes/paragraphs")
 	if rec.Code != http.StatusOK {
 		t.Fatalf("paragraphs status=%d body=%s", rec.Code, rec.Body.String())
 	}
 
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes/paragraphs/chapters/I/I", nil))
+	rec = authedGET("/api/latin/calvins-institutes/paragraphs/chapters/I/I")
 	if rec.Code != http.StatusOK {
 		t.Fatalf("chapter status=%d body=%s", rec.Code, rec.Body.String())
 	}
 
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes/paragraphs/chapters/X/I", nil))
+	rec = authedGET("/api/latin/calvins-institutes/paragraphs/chapters/X/I")
 	if rec.Code != http.StatusBadRequest {
 		t.Fatalf("invalid book want 400 got %d", rec.Code)
 	}
 
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes/paragraphs/chapters/I/ZZZ", nil))
+	rec = authedGET("/api/latin/calvins-institutes/paragraphs/chapters/I/ZZZ")
 	if rec.Code != http.StatusBadRequest && rec.Code != http.StatusNotFound {
 		t.Fatalf("unknown chapter want 400/404 got %d", rec.Code)
 	}

@@ -398,6 +398,14 @@ function enforcePlainUserRouteAccess(isPlainUser: boolean): void {
   go("/");
 }
 
+function enforceGuestInstitutesAccess(authed: boolean): void {
+  if (authed || typeof window === "undefined") return;
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (!path.includes("calvins-institutes")) return;
+  sessionLog("chrome.guest.institutes.redirect", { from: path });
+  go("/session");
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start");
   const { status, data } = await getMe();
@@ -428,8 +436,8 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !isAdmin;
     }
   });
-  // Guests + admins keep marketing/store/institutes/eoadmin; plain members only see
-  // home, contact, subscriptions, entitled services, and session links.
+  // Guests + admins keep marketing/store; Institutes and eoadmin need auth (admins via full-nav).
+  // Plain members only see home, contact, subscriptions, entitled services, and session links.
   document.querySelectorAll("[data-full-nav]").forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (isPlainUser) {
@@ -462,6 +470,7 @@ export async function refreshAuthChrome(): Promise<void> {
       }
     });
   }
+  enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {
     applySessionAvatar(data.avatar);

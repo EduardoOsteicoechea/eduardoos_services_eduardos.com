@@ -51,6 +51,7 @@ export type ParagraphChapterDoc = {
 async function getJSON<T>(url: string): Promise<T> {
   const res = await fetch(url, {
     headers: { "X-Correlation-ID": createCorrelationId() },
+    credentials: "include",
     cache: "no-store",
   });
   if (!res.ok) {

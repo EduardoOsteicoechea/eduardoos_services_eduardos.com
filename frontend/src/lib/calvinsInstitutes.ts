@@ -1,5 +1,5 @@
 /**
- * Calvin’s Institutes (Latin) — public latin API.
+ * Calvin’s Institutes (Latin) — session-authenticated latin API.
  */
 
 import { apiGet } from "./api";

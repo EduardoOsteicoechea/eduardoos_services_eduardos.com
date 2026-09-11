@@ -27,7 +27,9 @@ export default defineConfig({
         !page.includes("/eoproject") &&
         !page.includes("/eoadmin") &&
         !page.includes("/eostore") &&
-        !page.includes("/payments"),
+        !page.includes("/payments") &&
+        !page.includes("/dashboard/latin") &&
+        !page.includes("calvins-institutes"),
     }),
   ],
   server: {

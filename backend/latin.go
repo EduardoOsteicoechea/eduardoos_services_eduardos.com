@@ -66,14 +66,29 @@ func (a *App) latinMustLog(r *http.Request, msg string, attrs ...any) {
 	a.log.Info(msg, args...)
 }
 
-// latinCalvinsInstitutesHandler serves the pack index.json.
+func (a *App) requireLatinUser(w http.ResponseWriter, r *http.Request) *User {
+	user := a.currentUser(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return nil
+	}
+	return user
+}
+
+// latinCalvinsInstitutesHandler serves the pack index.json (authenticated).
 func (a *App) latinCalvinsInstitutesHandler(w http.ResponseWriter, r *http.Request) {
+	if a.requireLatinUser(w, r) == nil {
+		return
+	}
 	a.latinMustLog(r, "latin.institutes_index")
 	a.serveCalvinJSON(w, r, "index.json")
 }
 
-// latinCalvinsParagraphsHandler serves the paragraphs index when present, else index.json.
+// latinCalvinsParagraphsHandler serves the paragraphs index when present, else index.json (authenticated).
 func (a *App) latinCalvinsParagraphsHandler(w http.ResponseWriter, r *http.Request) {
+	if a.requireLatinUser(w, r) == nil {
+		return
+	}
 	a.latinMustLog(r, "latin.paragraphs_index")
 	root := a.calvinRoot()
 	candidates := []string{
@@ -94,8 +109,11 @@ func (a *App) latinCalvinsParagraphsHandler(w http.ResponseWriter, r *http.Reque
 	a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 }
 
-// latinCalvinsParagraphChapterHandler serves chapters/{book}/{chapter}.json.
+// latinCalvinsParagraphChapterHandler serves chapters/{book}/{chapter}.json (authenticated).
 func (a *App) latinCalvinsParagraphChapterHandler(w http.ResponseWriter, r *http.Request) {
+	if a.requireLatinUser(w, r) == nil {
+		return
+	}
 	book := strings.TrimSpace(r.PathValue("book"))
 	chapter := strings.TrimSpace(r.PathValue("chapter"))
 	a.latinMustLog(r, "latin.paragraph_chapter",

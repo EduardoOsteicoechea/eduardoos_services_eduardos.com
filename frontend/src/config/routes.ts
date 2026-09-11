@@ -24,9 +24,9 @@ export const APP_ROUTES = {
   evoice: "/evoice",
 } as const;
 
-/** Public Latin / Institutes paragraph pack API. */
+/** Auth-required Latin / Institutes paragraph pack API. */
 export const LATIN_API_ROUTES = {
   institutesParagraphsIndex: "/api/latin/calvins-institutes/paragraphs",
   institutesParagraphChapter: (book: string, chapter: string) =>
-    `/api/latin/calvins-institutes/paragraphs/${encodeURIComponent(book)}/${encodeURIComponent(chapter)}`,
+    `/api/latin/calvins-institutes/paragraphs/chapters/${encodeURIComponent(book)}/${encodeURIComponent(chapter)}`,
 } as const;
