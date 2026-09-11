@@ -247,6 +247,20 @@ func (a *App) clearAuthCookies(w http.ResponseWriter) {
 	a.clearCookie(w, a.csrfBindCookieName())
 }
 
+func refreshSessionAlive(sess *Session) bool {
+	if sess == nil || sess.Revoked {
+		return false
+	}
+	now := time.Now().UTC()
+	if now.After(sess.ExpiresAt) {
+		return false
+	}
+	if !sess.AbsoluteExpiresAt.IsZero() && now.After(sess.AbsoluteExpiresAt) {
+		return false
+	}
+	return true
+}
+
 func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 	token := randomID(16)
 	hash := a.hashOpaque("csrf", token)
@@ -257,7 +271,7 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 		return token
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
-		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil && !sess.Revoked {
+		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil && refreshSessionAlive(sess) {
 			sess.CSRFHash = hash
 			sess.CSRF = token
 			_ = a.store.UpdateSession(r.Context(), sess)
@@ -312,17 +326,13 @@ func (a *App) validCSRF(r *http.Request) bool {
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
-			if !hmacEqual(want, sess.CSRFHash) {
-				return false
+			if refreshSessionAlive(sess) {
+				return hmacEqual(want, sess.CSRFHash)
 			}
-			if sess.Revoked {
-				// Allow CSRF through only on refresh so reuse detection can revoke the family.
-				return r.URL.Path == "/api/auth/refresh"
+			// Dead refresh cookies must not block guest csrfbind (login after idle expiry).
+			if sess.Revoked && r.URL.Path == "/api/auth/refresh" {
+				return hmacEqual(want, sess.CSRFHash)
 			}
-			if time.Now().UTC().After(sess.ExpiresAt) {
-				return false
-			}
-			return true
 		}
 	}
 	cookie, err := r.Cookie(a.csrfBindCookieName())

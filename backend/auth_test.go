@@ -731,3 +731,48 @@ func TestCSRFRejectedWhenRefreshSessionRevoked(t *testing.T) {
 		t.Fatalf("revoked refresh csrf: %d %s", rec.Code, rec.Body.String())
 	}
 }
+
+func TestLoginSucceedsWithExpiredRefreshCookie(t *testing.T) {
+	app := newTestApp(true)
+	seed := httptest.NewRecorder()
+	sess, err := app.issueSession(seed, app.mustUser("member@eduardoos.com"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sess.ExpiresAt = time.Now().UTC().Add(-time.Minute)
+	if err := app.store.UpdateSession(context.Background(), sess); err != nil {
+		t.Fatal(err)
+	}
+
+	csrfRec := httptest.NewRecorder()
+	csrfReq := httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil)
+	for _, c := range seed.Result().Cookies() {
+		if c.Name == app.refreshCookieName() {
+			csrfReq.AddCookie(c)
+		}
+	}
+	app.Handler().ServeHTTP(csrfRec, csrfReq)
+	var csrfBody map[string]string
+	if err := json.NewDecoder(csrfRec.Body).Decode(&csrfBody); err != nil {
+		t.Fatal(err)
+	}
+	if csrfBody["csrf"] == "" {
+		t.Fatal("missing guest csrf after expired refresh")
+	}
+
+	login := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":"member@eduardoos.com","password":"correct-horse-battery"}`))
+	login.Header.Set("Content-Type", "application/json")
+	login.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	login.Header.Set("X-CSRF-Token", csrfBody["csrf"])
+	for _, c := range seed.Result().Cookies() {
+		if c.Name == app.refreshCookieName() {
+			login.AddCookie(c)
+		}
+	}
+	copyCookies(login, csrfRec)
+	loginRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(loginRec, login)
+	if loginRec.Code != http.StatusOK {
+		t.Fatalf("login with expired refresh cookie: %d %s", loginRec.Code, loginRec.Body.String())
+	}
+}

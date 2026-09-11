@@ -89,10 +89,16 @@ func (a *App) csrfFailureReason(r *http.Request) string {
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
-			if hmacEqual(want, sess.CSRFHash) {
-				return "ok_refresh_session"
+			if refreshSessionAlive(sess) {
+				if hmacEqual(want, sess.CSRFHash) {
+					return "ok_refresh_session"
+				}
+				return "csrf_mismatch_refresh_session"
 			}
-			return "csrf_mismatch_refresh_session"
+			if sess.Revoked {
+				return "refresh_session_revoked_fallback_bind"
+			}
+			return "refresh_session_expired_fallback_bind"
 		}
 		return "refresh_session_lookup_failed"
 	}
