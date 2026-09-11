@@ -461,9 +461,8 @@
   /* Screen-only: CSS mm under-reads on phone/tablet; boost visual size without changing layout math. */
   --mm-visual-boost: 1;
   /*
-   * Letter sheet is always paper white / black ink on screen so it stays
-   * visible on the dark eduardoos chrome. Print media also forces B&W.
-   * Do not bind these to missing --site-body-* tokens (invisible sheet).
+   * Screen ink follows site theme (desktop dark mode).
+   * @media print overrides these to paper white / black ink (PDF stays server-side B&W).
    */
   --pamphlet-paper-bg: #ffffff;
   --pamphlet-ink: #000000;

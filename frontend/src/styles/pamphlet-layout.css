@@ -24,23 +24,23 @@ body.page-pamphlet {
 }
 
 /* Keep site header/avatar above teleported pamphlet chrome. */
-body.page-pamphlet .app-header {
+body.page-pamphlet .site-header {
   z-index: 300;
 }
 
-body.page-pamphlet .app-header__bar {
+body.page-pamphlet .site-header__bar {
   z-index: 301;
 }
 
 /* Full-bleed workspace, reserved for top bar (mobile) or 60px left rail (desktop). */
 .pamphlet-layout-workspace {
   box-sizing: border-box;
-  width: calc(100% - var(--rail-width));
-  min-height: calc(100% - var(--mobile-header-height));
+  width: calc(100% - var(--header_width, 0px));
+  min-height: calc(100vh - var(--header_offset, var(--header_height, 0px)));
   margin-top: 0;
-  margin-left: var(--rail-width);
+  margin-left: var(--header_width, 0px);
   padding: 1rem 0 2rem;
-  padding-top: calc(1rem + var(--mobile-header-height));
+  padding-top: calc(1rem + var(--header_offset, var(--header_height, 0px)));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,16 +68,16 @@ body.page-pamphlet .app-header__bar {
  * No extra top offset for a second toolbar; no bottom Activity Bar.
  */
 body.page-pamphlet .pamphlet-layout-workspace {
-  padding-top: calc(1rem + var(--mobile-header-height));
+  padding-top: calc(1rem + var(--header_offset, var(--header_height, 0px)));
   padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
 }
 
 body.page-pamphlet .item-type-options button {
   background: color-mix(in srgb, var(--color-text) 12%, var(--color-bg));
   color: var(--color-text);
-  border: var(--border-width) solid var(--color-border);
+  border: var(--border_001);
   border-radius: 0;
-  padding: var(--space-padding);
+  padding: 14px 16px;
 }
 
 body.page-pamphlet .item-type-options button:hover {
@@ -87,8 +87,8 @@ body.page-pamphlet .item-type-options button:hover {
 .pamphlet-header-menu-tray__labels {
   margin: 0;
   padding-left: 1.1rem;
-  font-size: var(--font-size-sm);
-  color: var(--color-muted);
+  font-size: var(--font-sm);
+  color: var(--site-muted-fg, var(--color-text));
   line-height: 1.45;
 }
 
@@ -96,29 +96,29 @@ body.page-pamphlet .item-type-options button:hover {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  max-height: 17.5rem;
+  max-height: min(40vh, 280px);
   overflow: auto;
   margin: 0.5rem 0 0;
   padding: 0.5rem 0.65rem;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
   background: color-mix(in srgb, var(--color-text) 4%, var(--color-bg));
 }
 
 .series-tree__series-title {
   margin: 0 0 0.35rem;
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  font-family: var(--font-display);
+  font-size: var(--font-sm);
   font-weight: 700;
   color: var(--color-text);
 }
 
 .series-tree__chapter-title {
   margin: 0.35rem 0 0.25rem;
-  font-family: var(--font-family);
-  font-size: var(--font-size-xs);
+  font-family: var(--font-body);
+  font-size: var(--font-xs);
   font-weight: 600;
-  color: var(--color-muted);
+  color: var(--site-muted-fg, var(--color-text));
   text-transform: none;
 }
 
@@ -136,12 +136,12 @@ body.page-pamphlet .item-type-options button:hover {
   width: 100%;
   text-align: left;
   padding: 0.45rem 0.55rem;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
+  border: var(--border_001);
+  border-radius: var(--border_radius_001);
   background: var(--color-bg);
   color: var(--color-text);
   cursor: pointer;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-sm);
 }
 
 .series-tree__item:hover {
@@ -164,7 +164,7 @@ body.page-pamphlet .create-modal.open-cloud-modal {
 body.page-pamphlet .create-modal {
   background: var(--color-bg);
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: var(--site-border);
   position: fixed;
   inset: 0;
   margin: auto;
@@ -190,7 +190,7 @@ body.page-pamphlet .create-modal-hint {
 body.page-pamphlet .open-cloud-list__card,
 body.page-pamphlet .open-cloud-list__item {
   background: color-mix(in srgb, var(--color-text) 8%, var(--color-bg));
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--site-border);
   color: var(--color-text);
   cursor: pointer;
 }
@@ -208,7 +208,7 @@ body.page-pamphlet .open-cloud-list__action {
 body.page-pamphlet .create-modal-form input {
   background: var(--color-bg);
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: var(--site-border);
 }
 
 body.page-pamphlet #modal-cancel,
@@ -308,7 +308,7 @@ html[data-theme="light"] body.page-pamphlet .pamphlet-app[data-view-mode="mobile
 }
 
 @media print {
-  .app-header {
+  .site-header {
     display: none !important;
   }
 

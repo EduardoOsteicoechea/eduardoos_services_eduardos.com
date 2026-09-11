@@ -48,13 +48,10 @@ import {
     updateFooterProfile,
     type FooterProfile,
 } from "../../pamphletFooters";
-import { getAuthToken, isAuthenticated, refreshAuthSession } from "../../auth";
+import { getAuthToken, isAuthenticated } from "../../auth";
 import { DOCUMENT_ROUTES } from "../../../config/routes";
 import { createCorrelationId } from "../../telemetry";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
-import { currentCsrf, getCsrf } from "../../api";
-import { PREF_PAMPHLET_LAST_EPAM, getPreference, putPreference } from "../../preferences";
-import { mustLog } from "../../dev-log";
 import {
     createAddItemButton,
     createItemElement,
@@ -456,19 +453,13 @@ async function printDocument(inkColor: "black" | "blue" = "black"): Promise<void
             ink_color: inkColor,
         };
         const correlationId = createCorrelationId();
-        await getCsrf();
-        const headers = new Headers({
-            "Content-Type": "application/json",
-            Accept: "application/pdf, application/json",
-            "X-Correlation-ID": correlationId,
-        });
-        const csrf = currentCsrf();
-        if (csrf) headers.set("X-CSRF-Token", csrf);
-        if (mustLog) console.log("[pamphlet] print pdf", { correlationId, ink: inkColor });
         const res = await fetch(DOCUMENT_ROUTES.pamphletPdf, {
             method: "POST",
-            credentials: "include",
-            headers,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                "X-Correlation-ID": correlationId,
+            },
             body: JSON.stringify(printPayload),
         });
         if (!res.ok) {
@@ -588,7 +579,7 @@ let currentDoc: PamphletStructure | null = null;
 let undoSnapshot: PamphletStructure | null = null;
 let suppressEditOpenSave = false;
 let pendingInsert: PendingInsert | null = null;
-/** When set, edits can persist to the cloud API without a local FileSystem handle. */
+/** When set, edits can persist to DynamoDB/S3 without a local FileSystem handle. */
 let cloudEpamId: string | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
 let memorySession = false;
@@ -596,30 +587,26 @@ let memorySession = false;
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
 
-/** In-memory cache for last epam; durable store is /api/preferences (no localStorage). */
-let lastEpamIdMemory: string | null = null;
+const LAST_EPAM_STORAGE_KEY = "eduardoos-pamphlet-last-epam-id";
 
 function rememberLastEpamId(epamId: string | null | undefined): void {
-    const id = epamId?.trim() ?? "";
-    lastEpamIdMemory = id || null;
-    void putPreference(PREF_PAMPHLET_LAST_EPAM, id || null).catch(() => {
-        /* preference API may be unavailable offline */
-    });
+    try {
+        const id = epamId?.trim() ?? "";
+        if (!id) {
+            localStorage.removeItem(LAST_EPAM_STORAGE_KEY);
+            return;
+        }
+        localStorage.setItem(LAST_EPAM_STORAGE_KEY, id);
+    } catch {
+        // Quota / private mode — ignore.
+    }
 }
 
 function readLastEpamId(): string | null {
-    return lastEpamIdMemory?.trim() || null;
-}
-
-async function hydrateLastEpamId(): Promise<void> {
     try {
-        await refreshAuthSession();
-        const { value } = await getPreference<string>(PREF_PAMPHLET_LAST_EPAM);
-        if (typeof value === "string" && value.trim()) {
-            lastEpamIdMemory = value.trim();
-        }
+        return localStorage.getItem(LAST_EPAM_STORAGE_KEY)?.trim() || null;
     } catch {
-        /* ignore */
+        return null;
     }
 }
 
@@ -628,7 +615,7 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
     const doc = loaded.document as PamphletStructure | undefined;
     if (!doc || typeof doc !== "object" || !(doc as { type?: string }).type) {
         throw new Error(
-            "El servidor devolvió un panfleto vacío (sin documento). Suele ser un .epam sin cuerpo en el almacenamiento local.",
+            "El servidor devolvió un panfleto vacío (sin documento). Suele ser un .epam sin cuerpo en S3.",
         );
     }
     clearOpenFile();
@@ -640,11 +627,10 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
 }
 
 /**
- * On first visit: reopen the last cloud .epam from /api/preferences, or the only
+ * On first visit: reopen the last cloud .epam from localStorage, or the only
  * document available to this account when there is exactly one.
  */
 async function tryAutoloadCloudPamphlet(): Promise<void> {
-    await hydrateLastEpamId();
     if (!getAuthToken() || !isAuthenticated()) {
         return;
     }
@@ -2564,7 +2550,7 @@ if (window.visualViewport) {
     on(window.visualViewport, "scroll", syncFixedChromeScale);
 }
 
-    syncOpenSourceModalForFsa();
+syncOpenSourceModalForFsa();
     if (!isFileSystemAccessSupported()) {
         // Keep Open/New usable: cloud + in-browser create still work without FSA.
         setStatus(FSA_HTTPS_HINT, "info");
@@ -2572,24 +2558,68 @@ if (window.visualViewport) {
         setStatus("No file open — open an existing .epam or create a new one.");
     }
 
-    /** Reveal tools tray so Open/New/Save are reachable under current shell chrome. */
+    /** Open the shell tools tray so pamphlet HDS buttons are reachable. */
     function revealHeaderToolsTray(): void {
-        const tray =
-            document.getElementById("dynamic-header") ??
-            document.getElementById("header-dynamic");
+        const tray = document.getElementById("dynamic-header");
         if (tray) tray.hidden = false;
         document
-            .querySelector<HTMLElement>(".header-dynamic, [aria-controls='dynamic-header']")
+            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
             ?.setAttribute("aria-expanded", "true");
     }
 
     /**
-     * Hub ?view= intents from PamphletHub (new / open / recent / manage / footers).
-     * Skip cloud autoload when the hub already asked for an explicit flow.
+     * Hub ?view= intents (new / open / recent / manage / footers).
+     * Skip cloud autoload when an explicit flow was requested.
      */
     function applyHubViewIntent(): boolean {
         const view = String(
-            host.dataset.pamphletView || window.__eduardoosPamphletView || "",
+            host.dataset.pamphletView ||
+                (window as Window & { __eduardoosPamphletView?: string }).__eduardoosPamphletView ||
+                "",
+        )
+            .trim()
+            .toLowerCase();
+        if (!view || view === "dashboard") return false;
+        revealHeaderToolsTray();
+        if (view === "new") {
+            openCreateModal();
+            return true;
+        }
+        if (view === "open" || view === "recent" || view === "manage") {
+            if (getAuthToken() && isAuthenticated()) {
+                void openCloudListModal("open");
+            } else {
+                syncOpenSourceModalForFsa();
+                openSourceModal.showModal();
+            }
+            return true;
+        }
+        if (view === "footers") {
+            void openFooterModal();
+            return true;
+        }
+        return false;
+    }
+
+    if (!applyHubViewIntent()) {
+        /** Open the shell tools tray so pamphlet HDS buttons are reachable. */
+    function revealHeaderToolsTray(): void {
+        const tray = document.getElementById("dynamic-header");
+        if (tray) tray.hidden = false;
+        document
+            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
+            ?.setAttribute("aria-expanded", "true");
+    }
+
+    /**
+     * Hub ?view= intents (new / open / recent / manage / footers).
+     * Skip cloud autoload when an explicit flow was requested.
+     */
+    function applyHubViewIntent(): boolean {
+        const view = String(
+            host.dataset.pamphletView ||
+                (window as Window & { __eduardoosPamphletView?: string }).__eduardoosPamphletView ||
+                "",
         )
             .trim()
             .toLowerCase();
@@ -2617,6 +2647,8 @@ if (window.visualViewport) {
 
     if (!applyHubViewIntent()) {
         void tryAutoloadCloudPamphlet();
+    }
+
     }
 
     return {

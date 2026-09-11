@@ -1,6 +1,12 @@
 ---
+/**
+ * Pamphlet — vanilla mount of the portable generator (same pattern as the
+ * original PanfletoPage.astro example). No React hub for the editor canvas.
+ */
 import Layout from "../../layouts/Layout.astro";
-import PamphletHub from "../../components/Pamphlet/PamphletHub.tsx";
+
+const viewParam = Astro.url.searchParams.get("view")?.trim() || "dashboard";
+const isEditor = viewParam !== "dashboard";
 ---
 
 <Layout
@@ -9,7 +15,149 @@ import PamphletHub from "../../components/Pamphlet/PamphletHub.tsx";
   page="pamphlet"
   robots="noindex,nofollow"
 >
-  <!-- React portals into #header-dynamic-menu-host -->
   <span slot="dhs" hidden></span>
-  <PamphletHub client:load />
+
+  {
+    isEditor ? (
+      <div
+        id="pamphlet-root"
+        class="pamphlet-route-root pamphlet-layout-workspace"
+        data-pamphlet-view={viewParam}
+      />
+    ) : (
+      <section class="pamphlet-vanilla-dash" aria-label="Pamphlet">
+        <h1 class="pamphlet-vanilla-dash__title">Pamphlet</h1>
+        <p class="pamphlet-vanilla-dash__lede">
+          Create and edit letter pamphlets. Tools open in the page-actions tray.
+        </p>
+        <div class="pamphlet-vanilla-dash__grid">
+          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=new">
+            <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+            <span class="pamphlet-vanilla-dash__card-title">New</span>
+            <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
+          </a>
+          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=open">
+            <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+            <span class="pamphlet-vanilla-dash__card-title">Open</span>
+            <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
+          </a>
+          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=recent">
+            <span class="material-symbols-outlined" aria-hidden="true">history</span>
+            <span class="pamphlet-vanilla-dash__card-title">Recent</span>
+            <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
+          </a>
+          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=manage">
+            <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+            <span class="pamphlet-vanilla-dash__card-title">Manage</span>
+            <span class="pamphlet-vanilla-dash__card-desc">Manage cloud documents.</span>
+          </a>
+          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=footers">
+            <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+            <span class="pamphlet-vanilla-dash__card-title">Footers</span>
+            <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
+          </a>
+        </div>
+      </section>
+    )
+  }
 </Layout>
+
+<style is:global>
+  .pamphlet-vanilla-dash {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    color: var(--color-text);
+  }
+
+  .pamphlet-vanilla-dash__title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-family);
+  }
+
+  .pamphlet-vanilla-dash__lede {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .pamphlet-vanilla-dash__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--rail-gap);
+  }
+
+  .pamphlet-vanilla-dash__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .pamphlet-vanilla-dash__card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .pamphlet-vanilla-dash__card .material-symbols-outlined {
+    font-size: var(--icon-size);
+  }
+
+  .pamphlet-vanilla-dash__card-title {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+  }
+
+  .pamphlet-vanilla-dash__card-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .pamphlet-route-root {
+    box-sizing: border-box;
+    width: auto;
+    min-height: 24rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
+
+{
+  isEditor ? (
+    <script>
+      import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
+
+      const root = document.documentElement;
+      root.classList.add("layout-editor-bleed", "page-pamphlet");
+      document.body.classList.add("page-pamphlet");
+
+      const host = document.getElementById("pamphlet-root");
+      if (host) {
+        const view =
+          host.dataset.pamphletView ||
+          new URLSearchParams(window.location.search).get("view") ||
+          "new";
+        host.dataset.pamphletView = view;
+        window.__eduardoosPamphletView = view;
+
+        const handle = mountPamphletGenerator(host);
+        document.addEventListener(
+          "astro:before-swap",
+          () => {
+            handle.destroy();
+            root.classList.remove("layout-editor-bleed", "page-pamphlet");
+            document.body.classList.remove("page-pamphlet");
+          },
+          { once: true },
+        );
+      }
+    </script>
+  ) : null
+}
