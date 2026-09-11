@@ -35,6 +35,7 @@ import Layout from "../../../layouts/Layout.astro";
   import { showErrorModal } from "../../../lib/error-modal";
   import { mustLog } from "../../../lib/dev-log";
   import {
+    companyCartHref,
     companyIdFromPath,
     formatMoney,
     getPublicCatalog,
@@ -54,7 +55,7 @@ import Layout from "../../../layouts/Layout.astro";
     const cartLink = document.querySelector("[data-cart-link]");
 
     if (cartLink instanceof HTMLAnchorElement && companyId) {
-      cartLink.href = `/store/${encodeURIComponent(companyId)}/cart`;
+      cartLink.href = companyCartHref(companyId);
     }
 
     const setBanner = (text: string) => {
@@ -73,7 +74,9 @@ import Layout from "../../../layouts/Layout.astro";
     const requireAuth = async () => {
       const me = await getMe();
       if (me.status !== 200 || !me.data.id) {
-        window.location.assign(`/session?next=${encodeURIComponent(window.location.pathname)}`);
+        window.location.assign(
+          `/session?next=${encodeURIComponent(window.location.pathname + window.location.search)}`,
+        );
         return false;
       }
       return true;

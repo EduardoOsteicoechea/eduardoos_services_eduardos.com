@@ -3,7 +3,12 @@ import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
-import { companyIdFromPath, listPublicCompanies } from "./eostore";
+import {
+  companyCartHref,
+  companyIdFromPath,
+  companyStoreHref,
+  listPublicCompanies,
+} from "./eostore";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
 
@@ -34,12 +39,20 @@ function lastEostoreCompanyId(): string {
 
 function syncCartFab(): void {
   const companyId = lastEostoreCompanyId();
-  const href = companyId ? `/store/${encodeURIComponent(companyId)}/cart` : "/store";
+  const href = companyId ? companyCartHref(companyId) : "/store";
   document.querySelectorAll("[data-cart-fab]").forEach((node) => {
     if (!(node instanceof HTMLAnchorElement)) return;
     node.href = href;
     node.title = companyId ? `Cart · ${companyId}` : "Cart · Store";
     node.setAttribute("aria-label", companyId ? `Open cart for ${companyId}` : "Open shopping cart");
+  });
+}
+
+function syncStaticStoreNav(companyCount: number): void {
+  document.querySelectorAll("[data-store-hub-nav]").forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    // One storefront entry per company; hide the generic hub when companies exist.
+    node.hidden = companyCount > 0;
   });
 }
 
@@ -298,14 +311,19 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
 async function syncEostoreNav(): Promise<void> {
   const hosts = document.querySelectorAll("[data-eostore-nav]");
   syncCartFab();
-  if (!hosts.length) return;
+  if (!hosts.length) {
+    syncStaticStoreNav(0);
+    return;
+  }
   try {
     const res = await listPublicCompanies();
     const companies = res.status === 200 ? res.data.companies || [] : [];
+    syncStaticStoreNav(companies.length);
     if (companies.length === 1) {
       rememberEostoreCompany(companies[0].id);
       syncCartFab();
     }
+    const activeId = companyIdFromPath();
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
     hosts.forEach((host) => {
       if (!(host instanceof HTMLElement)) return;
@@ -319,12 +337,12 @@ async function syncEostoreNav(): Promise<void> {
       }
       companies.forEach((company) => {
         if (!company.id) return;
-        const href = `/store/${encodeURIComponent(company.id)}`;
+        const href = companyStoreHref(company.id);
         const link = document.createElement("a");
         link.href = href;
         link.setAttribute("data-route", "");
         link.setAttribute("data-eostore-company", company.id);
-        if (path === href || path.startsWith(`${href}/`)) {
+        if (activeId === company.id || path === href || path.startsWith(`/store/${encodeURIComponent(company.id)}`)) {
           link.setAttribute("aria-current", "page");
           rememberEostoreCompany(company.id);
         }
@@ -339,6 +357,7 @@ async function syncEostoreNav(): Promise<void> {
     syncCartFab();
     sessionLog("chrome.eostoreNav", { count: companies.length, ids: companies.map((c) => c.id) });
   } catch {
+    syncStaticStoreNav(0);
     sessionLog("chrome.eostoreNav.error");
   }
 }

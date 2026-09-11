@@ -19,6 +19,7 @@ var safeMessages = map[string]string{
 	"rate_limited":                   "Too many attempts. Try later.",
 	"conflict":                       "That username is already taken.",
 	"payload_too_large":              "That file is too large.",
+	"unsupported_media":              "Use a JPEG, PNG, or WebP image.",
 	"not_found":                      "Not found.",
 	"report_storage_missing":         "Report storage is missing or unreadable for this org/report id.",
 	"append_existing_item_modified":  "API append cannot modify or remove existing issues.",

@@ -45,6 +45,7 @@ import Layout from "../../../layouts/Layout.astro";
   import {
     checkoutCart,
     companyIdFromPath,
+    companyStoreHref,
     formatMoney,
     getCart,
     setCartItem,
@@ -65,7 +66,7 @@ import Layout from "../../../layouts/Layout.astro";
     const storeLink = document.querySelector("[data-store-link]");
 
     if (storeLink instanceof HTMLAnchorElement && companyId) {
-      storeLink.href = `/store/${encodeURIComponent(companyId)}`;
+      storeLink.href = companyStoreHref(companyId);
     }
 
     const setBanner = (text: string) => {
@@ -189,7 +190,9 @@ import Layout from "../../../layouts/Layout.astro";
       const me = await getMe();
       if (me.status !== 200 || !me.data.id) {
         setBanner("Sign in to view this cart.");
-        window.location.assign(`/session?next=${encodeURIComponent(window.location.pathname)}`);
+        window.location.assign(
+          `/session?next=${encodeURIComponent(window.location.pathname + window.location.search)}`,
+        );
         return;
       }
       const res = await getCart(companyId);

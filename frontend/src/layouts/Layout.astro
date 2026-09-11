@@ -217,7 +217,12 @@ const jsonLdString =
             <span class="material-symbols-outlined" aria-hidden="true">mail</span>
             Contact
           </a>
-          <a href="/store" data-route aria-current={path === "/store" || path.startsWith("/store/") ? "page" : undefined}>
+          <a
+            href="/store"
+            data-route
+            data-store-hub-nav
+            aria-current={path === "/store" ? "page" : undefined}
+          >
             <span class="material-symbols-outlined" aria-hidden="true">store</span>
             Store
           </a>

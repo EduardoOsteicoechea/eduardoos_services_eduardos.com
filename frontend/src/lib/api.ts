@@ -192,15 +192,29 @@ export function profileAvatarURL(avatar: string | null | undefined): string | nu
 async function parseJSON<T>(response: Response): Promise<T> {
   const text = await response.text();
   if (!text) {
+    if (response.status === 413) {
+      return {
+        error: "payload_too_large",
+        message: "That file is too large for the server upload limit.",
+      } as T;
+    }
     return {} as T;
   }
   try {
     return JSON.parse(text) as T;
   } catch {
+    if (response.status === 413) {
+      return {
+        error: "payload_too_large",
+        message: "That file is too large for the server upload limit.",
+      } as T;
+    }
     const gateway = response.status === 502 || response.status === 503 || response.status === 504;
     return {
       error: "internal_error",
-      message: gateway ? "Could not reach the API. The server may be down or restarting." : "Something went wrong.",
+      message: gateway
+        ? "Could not reach the API. The server may be down or restarting."
+        : "Something went wrong.",
     } as T;
   }
 }

@@ -291,7 +291,7 @@ import Layout from "../../layouts/Layout.astro";
     photoInput.className = "eoproject__input";
     photoInput.name = "file";
     photoInput.type = "file";
-    photoInput.accept = "image/*";
+    photoInput.accept = "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp";
     photoInput.required = true;
     photoLabel.appendChild(photoInput);
     const photoSubmit = document.createElement("button");
@@ -303,6 +303,12 @@ import Layout from "../../layouts/Layout.astro";
       event.preventDefault();
       const file = photoInput.files?.[0];
       if (!file) return;
+      const lower = file.name.toLowerCase();
+      const okExt = /\.(jpe?g|png|webp)$/.test(lower);
+      if (!okExt) {
+        apiFail("Use a JPEG, PNG, or WebP image (HEIC/HEIF is not supported).");
+        return;
+      }
       const res = await uploadEoprojectPhoto(projectId, bundle.stage.id, file);
       if (!res.photo) {
         apiFail(res.error || "Upload failed.", { requestId: res.requestId });

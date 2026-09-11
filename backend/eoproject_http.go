@@ -539,7 +539,7 @@ func (a *App) eoprojectUploadPhoto(w http.ResponseWriter, r *http.Request) {
 	}
 	kind, err := sniffImage(body)
 	if err != nil {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		a.writeSafeError(w, r, http.StatusBadRequest, "unsupported_media")
 		return
 	}
 	photoID := randomID(16)

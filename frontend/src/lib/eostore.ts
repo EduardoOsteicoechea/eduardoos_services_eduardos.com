@@ -250,8 +250,23 @@ export async function checkoutCart(companyId: string, description = "") {
   });
 }
 
-export function companyIdFromPath(pathname = window.location.pathname): string {
+/** Resolve company id from `?id=` (preferred) or legacy `/store/{id}` paths. */
+export function companyIdFromPath(
+  pathname = window.location.pathname,
+  search = window.location.search,
+): string {
+  const fromQuery = new URLSearchParams(search).get("id")?.trim() || "";
+  if (fromQuery) return fromQuery;
   const parts = pathname.replace(/\/+$/, "").split("/").filter(Boolean);
   if (parts[0] !== "store" || !parts[1] || parts[1] === "company") return "";
   return decodeURIComponent(parts[1]);
+}
+
+/** Real Astro page — works without nginx pretty-URL rewrites. */
+export function companyStoreHref(companyId: string): string {
+  return `/store/company?id=${encodeURIComponent(companyId)}`;
+}
+
+export function companyCartHref(companyId: string): string {
+  return `/store/company/cart?id=${encodeURIComponent(companyId)}`;
 }
