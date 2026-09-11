@@ -3,7 +3,7 @@
 .product-dash {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--rail-gap);
   grid-column: 1 / span var(--span-full);
 }
 
@@ -30,7 +30,7 @@
 .product-dash__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 1.5rem;
+  gap: var(--rail-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -81,6 +81,12 @@
 
 .subscription-page__service {
   position: relative;
+  border: 0.125rem solid color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.subscription-page__service:hover,
+.product-dash__card--selected.subscription-page__service {
+  border-color: var(--color-accent);
 }
 
 .subscription-page__service-input {
@@ -95,7 +101,7 @@
 }
 
 .subscription-page__grid {
-  gap: 1.5rem;
+  gap: 0.75rem;
 }
 
 .subscription-page__billing {
