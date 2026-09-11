@@ -19,6 +19,23 @@
   border-bottom: var(--border-width) solid var(--color-border);
 }
 
+.pamphlet-hub__hint-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.pamphlet-hub__hint-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: center;
+}
+
+.pamphlet-hub__hint-actions .btn.is-active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 .pamphlet-hub__error {
   margin: var(--space-padding);
   padding: var(--space-padding);

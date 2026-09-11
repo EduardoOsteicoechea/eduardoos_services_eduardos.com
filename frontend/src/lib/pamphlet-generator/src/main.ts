@@ -2564,7 +2564,7 @@ if (window.visualViewport) {
     on(window.visualViewport, "scroll", syncFixedChromeScale);
 }
 
-syncOpenSourceModalForFsa();
+    syncOpenSourceModalForFsa();
     if (!isFileSystemAccessSupported()) {
         // Keep Open/New usable: cloud + in-browser create still work without FSA.
         setStatus(FSA_HTTPS_HINT, "info");
@@ -2572,7 +2572,52 @@ syncOpenSourceModalForFsa();
         setStatus("No file open — open an existing .epam or create a new one.");
     }
 
-    void tryAutoloadCloudPamphlet();
+    /** Reveal tools tray so Open/New/Save are reachable under current shell chrome. */
+    function revealHeaderToolsTray(): void {
+        const tray =
+            document.getElementById("dynamic-header") ??
+            document.getElementById("header-dynamic");
+        if (tray) tray.hidden = false;
+        document
+            .querySelector<HTMLElement>(".header-dynamic, [aria-controls='dynamic-header']")
+            ?.setAttribute("aria-expanded", "true");
+    }
+
+    /**
+     * Hub ?view= intents from PamphletHub (new / open / recent / manage / footers).
+     * Skip cloud autoload when the hub already asked for an explicit flow.
+     */
+    function applyHubViewIntent(): boolean {
+        const view = String(
+            host.dataset.pamphletView || window.__eduardoosPamphletView || "",
+        )
+            .trim()
+            .toLowerCase();
+        if (!view || view === "dashboard") return false;
+        revealHeaderToolsTray();
+        if (view === "new") {
+            openCreateModal();
+            return true;
+        }
+        if (view === "open" || view === "recent" || view === "manage") {
+            if (getAuthToken() && isAuthenticated()) {
+                void openCloudListModal("open");
+            } else {
+                syncOpenSourceModalForFsa();
+                openSourceModal.showModal();
+            }
+            return true;
+        }
+        if (view === "footers") {
+            void openFooterModal();
+            return true;
+        }
+        return false;
+    }
+
+    if (!applyHubViewIntent()) {
+        void tryAutoloadCloudPamphlet();
+    }
 
     return {
         destroy() {

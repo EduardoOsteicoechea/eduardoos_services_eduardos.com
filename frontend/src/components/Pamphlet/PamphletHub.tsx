@@ -4,8 +4,8 @@
  * toggle html.layout-editor-bleed for a full-bleed canvas under BaseLayout.
  * Generator canvas dimensions stay pass-through (do not rem-convert).
  *
- * The generator module is loaded lazily so a broken editor dependency cannot
- * blank the whole dashboard.
+ * ProductHeaderMenu is dashboard-only so it does not wipe generator tools from
+ * #header-dynamic-menu-host. Editor view switching stays on the hint bar.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -16,7 +16,10 @@ import {
   ProductHubShell,
   useProductView,
 } from "../ProductDashboard/ProductDashboard";
-import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index";
+import {
+  mountPamphletGenerator,
+  type PamphletMountHandle,
+} from "../../lib/pamphlet-generator/src/index";
 import "../ProductDashboard/ProductDashboard.css";
 import "../../styles/PamphletLayout.css";
 import "./PamphletHub.css";
@@ -53,6 +56,7 @@ function PamphletHubInner() {
   const hostRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<PamphletMountHandle | null>(null);
   const [editorError, setEditorError] = useState("");
+  const [editorLoading, setEditorLoading] = useState(false);
   const isEditor = view !== "dashboard";
 
   useEffect(() => {
@@ -67,35 +71,35 @@ function PamphletHubInner() {
   }, [isEditor]);
 
   useEffect(() => {
-    let cancelled = false;
     if (!isEditor) {
       handleRef.current?.destroy();
       handleRef.current = null;
       if (hostRef.current) hostRef.current.innerHTML = "";
       setEditorError("");
+      setEditorLoading(false);
       return;
     }
     const host = hostRef.current;
     if (!host) return;
+
     handleRef.current?.destroy();
     handleRef.current = null;
     host.innerHTML = "";
     host.dataset.pamphletView = view;
     window.__eduardoosPamphletView = view;
     setEditorError("");
-    void (async () => {
-      try {
-        const mod = await import("../../lib/pamphlet-generator/src/index");
-        if (cancelled || !hostRef.current) return;
-        handleRef.current = mod.mountPamphletGenerator(hostRef.current);
-      } catch (err) {
-        if (cancelled) return;
-        const message = err instanceof Error ? err.message : "Could not open the pamphlet editor.";
-        setEditorError(message);
-      }
-    })();
+    setEditorLoading(true);
+
+    try {
+      handleRef.current = mountPamphletGenerator(host);
+      setEditorLoading(false);
+    } catch (err) {
+      setEditorLoading(false);
+      const message = err instanceof Error ? err.message : "Could not open the pamphlet editor.";
+      setEditorError(message);
+    }
+
     return () => {
-      cancelled = true;
       handleRef.current?.destroy();
       handleRef.current = null;
     };
@@ -103,22 +107,38 @@ function PamphletHubInner() {
 
   return (
     <div className={isEditor ? "pamphlet-hub pamphlet-hub--editor" : "pamphlet-hub"}>
-      <ProductHeaderMenu
-        menuId="pamphlet-product-header-menu"
-        items={[...PAMPHLET_VIEWS]}
-        activeId={view}
-        onSelect={setView}
-      />
+      {!isEditor ? (
+        <ProductHeaderMenu
+          menuId="pamphlet-product-header-menu"
+          items={[...PAMPHLET_VIEWS]}
+          activeId={view}
+          onSelect={setView}
+        />
+      ) : null}
       {!isEditor ? (
         <ProductHubShell title="Pamphlet">
           <DashboardGrid cards={PAMPHLET_CARDS} onSelect={setView} />
         </ProductHubShell>
       ) : (
         <div className="pamphlet-hub__hint-bar">
-          <span>View: {view}</span>
-          <button type="button" className="btn" onClick={() => setView("dashboard")}>
-            Dashboard
-          </button>
+          <span className="pamphlet-hub__hint-label">
+            {editorLoading ? "Opening editor…" : `Editor · ${view}`}
+          </span>
+          <div className="pamphlet-hub__hint-actions">
+            {PAMPHLET_VIEWS.filter((v) => v.id !== "dashboard").map((v) => (
+              <button
+                key={v.id}
+                type="button"
+                className={view === v.id ? "btn is-active" : "btn"}
+                onClick={() => setView(v.id)}
+              >
+                {v.label}
+              </button>
+            ))}
+            <button type="button" className="btn" onClick={() => setView("dashboard")}>
+              Dashboard
+            </button>
+          </div>
         </div>
       )}
       {editorError ? (
