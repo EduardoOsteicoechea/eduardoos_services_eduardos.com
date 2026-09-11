@@ -3,7 +3,7 @@
 .product-dash {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  gap: 1.5rem;
   grid-column: 1 / span var(--span-full);
 }
 
@@ -30,7 +30,7 @@
 .product-dash__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: var(--rail-gap);
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -90,10 +90,103 @@
   cursor: pointer;
 }
 
-.subscription-page__period {
+.subscription-page {
+  gap: 1.5rem;
+}
+
+.subscription-page__grid {
+  gap: 1.5rem;
+}
+
+.subscription-page__billing {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--rail-gap);
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.subscription-page__billing-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.subscription-page__billing-label--active {
+  color: var(--color-text);
+  font-weight: 650;
+}
+
+.subscription-page__switch {
+  position: relative;
+  width: 3rem;
+  height: 1.75rem;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 999rem;
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.subscription-page__switch-thumb {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999rem;
+  background: var(--color-accent);
+  transition: transform 0.15s ease;
+}
+
+.subscription-page__switch--yearly .subscription-page__switch-thumb,
+.subscription-page__switch[aria-checked="true"] .subscription-page__switch-thumb {
+  transform: translateX(1.2rem);
+}
+
+.subscription-page__paypal-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.paypal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  color: #003087;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.01rem;
+  background: #ffc439;
+  border: 0.0625rem solid #ffc439;
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
+.paypal-btn:hover,
+.paypal-btn:focus-visible {
+  background: #f2ba36;
+  border-color: #f2ba36;
+}
+
+.paypal-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.paypal-btn__mark {
+  font-family: var(--font-family);
+  font-style: italic;
+  font-weight: 800;
+  color: #003087;
+}
+
+.paypal-btn__label {
+  color: #111;
 }
 
 .product-list {

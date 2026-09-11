@@ -84,6 +84,7 @@ export type PaymentIntentResponse = {
   paypal_checkout_url?: string;
   paypal_business?: string;
   created_at?: string;
+  message?: string;
 };
 
 export type PaymentStatusResponse = {
