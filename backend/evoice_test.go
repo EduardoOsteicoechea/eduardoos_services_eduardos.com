@@ -145,11 +145,11 @@ func TestEvoiceProjectCreateFakeTTS(t *testing.T) {
 	}
 }
 
-func TestEvoiceAllowlistAccess(t *testing.T) {
+func TestEvoiceRequiresEntitlementNotAllowlist(t *testing.T) {
 	app := newEvoiceTestApp(t)
 	rec := app.doJSON(t, "eliasosteic@gmail.com", http.MethodGet, "/api/evoice/me", "")
-	if rec.Code != http.StatusOK {
-		t.Fatalf("allowlist me status=%d body=%s", rec.Code, rec.Body.String())
+	if rec.Code != http.StatusForbidden {
+		t.Fatalf("former allowlist email without subscription want 403 got %d body=%s", rec.Code, rec.Body.String())
 	}
 }
 

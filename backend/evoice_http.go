@@ -48,9 +48,6 @@ func (a *App) hasEvoiceAccess(r *http.Request, user *User) (allowed bool, unavai
 	if user.Role == roleAdmin {
 		return true, false
 	}
-	if isEvoiceAllowlisted(user.EmailNormalized) || isEvoiceAllowlisted(user.Email) {
-		return true, false
-	}
 	return a.hasProductEntitlement(r, user, productEvoice)
 }
 

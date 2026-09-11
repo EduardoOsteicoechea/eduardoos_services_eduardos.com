@@ -136,7 +136,7 @@ export default function EvoiceInvitePage() {
   }
 
   return (
-    <ServiceGate serviceId="evoice" serviceLabel="eVoice">
+    <ServiceGate serviceId="evoice" serviceLabel="eVoice" requireSubscription>
       <div className="evoice evoice__invite">
         <h1>eVoice playlist invite</h1>
         {error ? <p className="evoice__empty">{error}</p> : null}

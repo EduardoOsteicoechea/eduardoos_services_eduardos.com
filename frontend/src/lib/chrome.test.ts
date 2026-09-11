@@ -42,6 +42,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/payments/subscription">Subscriptions</a>
       <a href="/diagnostics" data-admin-only hidden>Diagnostics</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
+      <a href="/evoice" data-service="evoice" hidden>eVoice</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
       <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
       <a href="/eoadmin" data-authed-only data-full-nav ${authedHidden}>eoadmin</a>
@@ -115,7 +116,7 @@ describe("main-menu session chrome", () => {
       data: { id: "member-1", role: "user" },
     });
     vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
-      allowed: serviceId === "scrib",
+      allowed: serviceId === "scrib" || serviceId === "evoice",
       isAdmin: false,
       hasEntitlement: serviceId === "scrib",
       isHomescoolStudent: false,
@@ -123,6 +124,7 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[data-service="evoice"]') as HTMLElement).hidden).toBe(true);
   });
 
 

@@ -295,7 +295,13 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   await Promise.all(
     ids.map(async (id) => {
       const access = await checkServiceAccess(id);
-      allowed.set(id, Boolean(access.allowed));
+      // Homescool linked students may use `allowed` without a paid entitlement.
+      // Every other service (including eVoice) needs an active subscription.
+      const show =
+        id === "homescool"
+          ? Boolean(access.allowed)
+          : Boolean(access.hasEntitlement);
+      allowed.set(id, show);
     }),
   );
   for (const node of nodes) {

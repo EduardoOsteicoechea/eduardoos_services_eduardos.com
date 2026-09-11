@@ -457,7 +457,7 @@ function TransportBar({
 
 export default function EvoicePage() {
   return (
-    <ServiceGate serviceId="evoice" serviceLabel="eVoice">
+    <ServiceGate serviceId="evoice" serviceLabel="eVoice" requireSubscription>
       <EvoiceWorkspace />
     </ServiceGate>
   );

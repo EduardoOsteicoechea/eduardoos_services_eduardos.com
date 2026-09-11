@@ -24,11 +24,6 @@ var serviceCatalog = []serviceInfo{
 	{ID: "api", Label: "API", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3},
 }
 
-var evoiceAllowlistEmails = []string{
-	"eliasosteic@gmail.com",
-	"laleskavf.2una@gmail.com",
-}
-
 var serviceByID map[string]serviceInfo
 
 func init() {
@@ -70,16 +65,6 @@ func quoteTotalUSD(serviceIDs []string, billingPeriod string) float64 {
 
 func formatAmountUSD(total float64) string {
 	return fmt.Sprintf("%.2f", total)
-}
-
-func isEvoiceAllowlisted(email string) bool {
-	email = strings.ToLower(strings.TrimSpace(email))
-	for _, a := range evoiceAllowlistEmails {
-		if email == strings.ToLower(a) {
-			return true
-		}
-	}
-	return false
 }
 
 func entitlementActiveProduct(ents []*Entitlement, product string, now time.Time) bool {

@@ -70,16 +70,6 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
   },
 ];
 
-export const EVOICE_ALLOWLIST_EMAILS = [
-  "eliasosteic@gmail.com",
-  "laleskavf.2una@gmail.com",
-] as const;
-
-export function isEvoiceAllowlisted(email?: string | null): boolean {
-  const e = (email ?? "").trim().toLowerCase();
-  return EVOICE_ALLOWLIST_EMAILS.some((a) => a === e);
-}
-
 export type PaymentIntentResponse = {
   intent_id: string;
   email: string;

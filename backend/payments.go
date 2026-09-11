@@ -90,9 +90,6 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 	if user.Role == roleAdmin {
 		allowed = true
 		reason = "admin"
-	} else if serviceID == "evoice" && (isEvoiceAllowlisted(user.Email) || isEvoiceAllowlisted(user.EmailNormalized)) {
-		allowed = true
-		reason = "allowlist"
 	} else {
 		ok, unavailable := a.hasProductEntitlement(r, user, serviceID)
 		if unavailable {
@@ -117,9 +114,8 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 		"allowed":               allowed,
 		"reason":                reason,
 		"is_admin":              user.Role == roleAdmin,
-		"has_entitlement":       reason == "entitlement",
-		"is_homescool_student":  reason == "linked_student",
-		"is_evoice_allowlisted": reason == "allowlist",
+		"has_entitlement":      reason == "entitlement" || reason == "admin",
+		"is_homescool_student": reason == "linked_student",
 	})
 }
 

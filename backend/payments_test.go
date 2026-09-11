@@ -159,7 +159,4 @@ func TestKnownCatalogHelpers(t *testing.T) {
 	if quoteTotalUSD([]string{"api", "ereport"}, "monthly") != 4 {
 		t.Fatal("quote monthly wrong")
 	}
-	if !isEvoiceAllowlisted("eliasosteic@gmail.com") {
-		t.Fatal("evoice allowlist missing")
-	}
 }
