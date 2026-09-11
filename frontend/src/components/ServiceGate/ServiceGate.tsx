@@ -38,14 +38,20 @@ export default function ServiceGate({
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      await refreshAuthSession();
-      if (!isAuthenticated()) {
+      try {
+        await refreshAuthSession();
+      } catch {
         if (!cancelled) setState("signin");
+        return;
+      }
+      if (cancelled) return;
+      if (!isAuthenticated()) {
+        setState("signin");
         return;
       }
       // Bootstrap email or JWT role admin — never block gated services.
       if (isPlatformAdmin()) {
-        if (!cancelled) setState("ok");
+        setState("ok");
         return;
       }
       try {
@@ -56,7 +62,6 @@ export default function ServiceGate({
           return;
         }
         if (requireSubscription) {
-          // Teacher / paid-only surfaces: entitlement required (not student link).
           if (remote.hasEntitlement) {
             setState("ok");
             return;
@@ -74,8 +79,6 @@ export default function ServiceGate({
         if (cancelled) return;
         setState(hasServiceAccess(serviceId, ents) ? "ok" : "denied");
       } catch {
-        // Network / API failure: re-check local admin so a transient error
-        // cannot lock out the platform admin.
         if (!cancelled) setState(isPlatformAdmin() ? "ok" : "denied");
       }
     })();
@@ -85,7 +88,7 @@ export default function ServiceGate({
   }, [serviceId, requireSubscription]);
 
   if (state === "loading") {
-    return <ViewLoading label="Checking subscription" />;
+    return <ViewLoading label={`Checking ${serviceLabel} access…`} />;
   }
 
   if (state === "signin") {
@@ -93,12 +96,14 @@ export default function ServiceGate({
       <section className="service-gate">
         <h1 className="service-gate__title">{serviceLabel}</h1>
         <p className="service-gate__lead">Sign in to use this service.</p>
-        <a
-          className="btn btn--primary"
-          href={`${APP_ROUTES.login}?next=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
-        >
-          Sign in
-        </a>
+        <div className="service-gate__actions">
+          <a
+            className="btn btn--primary"
+            href={`${APP_ROUTES.login}?next=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
+          >
+            Sign in
+          </a>
+        </div>
       </section>
     );
   }

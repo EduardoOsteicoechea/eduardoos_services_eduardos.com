@@ -1,18 +1,32 @@
 .pamphlet-hub {
   box-sizing: border-box;
-  width: 100%;
-  min-height: 100%;
+  width: auto;
+  min-height: 16rem;
+  color: var(--color-text);
 }
 
 .pamphlet-hub__hint-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--m1);
+  gap: var(--rail-gap);
   align-items: center;
   justify-content: space-between;
-  padding: var(--p2) var(--page-inline-pad, var(--p2));
-  font-family: var(--font-body);
-  font-size: var(--font-sm);
+  padding: var(--space-padding);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.pamphlet-hub__error {
+  margin: var(--space-padding);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-err);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-err);
+  font-size: var(--font-size-sm);
 }
 
 html.layout-editor-bleed .pamphlet-hub--editor {
@@ -25,5 +39,5 @@ html.layout-editor-bleed .pamphlet-hub--editor {
 html.layout-editor-bleed .pamphlet-route-root,
 html.layout-editor-bleed .pamphlet-layout-workspace {
   flex: 1 1 auto;
-  width: 100%;
+  width: auto;
 }

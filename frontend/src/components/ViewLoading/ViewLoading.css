@@ -1,5 +1,5 @@
 /**
- * Spec 065 — centered Material Symbols progress spinner for view loads.
+ * Centered Material Symbols progress spinner for gated product views.
  */
 
 .view-loading {
@@ -7,31 +7,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--m2, 1.125rem);
+  gap: var(--rail-gap);
   box-sizing: border-box;
-  width: 100%;
-  min-height: min(40vh, 16rem);
+  width: auto;
+  min-height: 16rem;
   margin: 0;
-  padding: var(--p4, 2.25rem) var(--page-inline-pad, var(--p2, 1.125rem));
-  color: var(--site-meta-fg, var(--fg));
+  padding: var(--main-padding) var(--space-padding);
+  color: var(--color-text);
   text-align: center;
 }
 
 .view-loading--compact {
   min-height: 6rem;
-  padding: var(--p2, 1.125rem);
-  gap: var(--m1, 0.75rem);
+  padding: var(--space-padding);
 }
 
 .view-loading--compact .view-loading__icon {
-  font-size: 1.75rem;
+  font-size: var(--font-size-xl);
 }
 
 .view-loading__icon {
   display: block;
-  font-size: 2.25rem;
+  font-size: var(--font-size-2xl);
   line-height: 1;
-  color: var(--site-accent, var(--btn-blue));
+  color: var(--color-accent);
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   animation: view-loading-spin 0.85s linear infinite;
 }
@@ -39,18 +38,18 @@
 .view-loading__label {
   margin: 0;
   max-width: 18rem;
-  font-family: var(--font-body);
-  font-size: var(--font-sm, 0.875rem);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
   line-height: 1.4;
-  color: var(--site-meta-fg, var(--fg));
+  color: var(--color-muted);
 }
 
 .view-loading__sr {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;

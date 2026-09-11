@@ -3,9 +3,12 @@
  * (specs 045 + 054). Dashboard uses the universal product chrome; editor views
  * toggle html.layout-editor-bleed for a full-bleed canvas under BaseLayout.
  * Generator canvas dimensions stay pass-through (do not rem-convert).
+ *
+ * The generator module is loaded lazily so a broken editor dependency cannot
+ * blank the whole dashboard.
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import {
   DashboardGrid,
@@ -13,10 +16,7 @@ import {
   ProductHubShell,
   useProductView,
 } from "../ProductDashboard/ProductDashboard";
-import {
-  mountPamphletGenerator,
-  type PamphletMountHandle,
-} from "../../lib/pamphlet-generator/src/index";
+import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index";
 import "../ProductDashboard/ProductDashboard.css";
 import "../../styles/PamphletLayout.css";
 import "./PamphletHub.css";
@@ -52,6 +52,7 @@ function PamphletHubInner() {
   const [view, setView] = useProductView("dashboard");
   const hostRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<PamphletMountHandle | null>(null);
+  const [editorError, setEditorError] = useState("");
   const isEditor = view !== "dashboard";
 
   useEffect(() => {
@@ -66,10 +67,12 @@ function PamphletHubInner() {
   }, [isEditor]);
 
   useEffect(() => {
+    let cancelled = false;
     if (!isEditor) {
       handleRef.current?.destroy();
       handleRef.current = null;
       if (hostRef.current) hostRef.current.innerHTML = "";
+      setEditorError("");
       return;
     }
     const host = hostRef.current;
@@ -79,8 +82,20 @@ function PamphletHubInner() {
     host.innerHTML = "";
     host.dataset.pamphletView = view;
     window.__eduardoosPamphletView = view;
-    handleRef.current = mountPamphletGenerator(host);
+    setEditorError("");
+    void (async () => {
+      try {
+        const mod = await import("../../lib/pamphlet-generator/src/index");
+        if (cancelled || !hostRef.current) return;
+        handleRef.current = mod.mountPamphletGenerator(hostRef.current);
+      } catch (err) {
+        if (cancelled) return;
+        const message = err instanceof Error ? err.message : "Could not open the pamphlet editor.";
+        setEditorError(message);
+      }
+    })();
     return () => {
+      cancelled = true;
       handleRef.current?.destroy();
       handleRef.current = null;
     };
@@ -106,6 +121,11 @@ function PamphletHubInner() {
           </button>
         </div>
       )}
+      {editorError ? (
+        <p className="pamphlet-hub__error" role="alert">
+          {editorError}
+        </p>
+      ) : null}
       <div
         ref={hostRef}
         id="pamphlet-root"
