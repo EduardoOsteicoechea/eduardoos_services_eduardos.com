@@ -2550,7 +2550,7 @@ if (window.visualViewport) {
     on(window.visualViewport, "scroll", syncFixedChromeScale);
 }
 
-syncOpenSourceModalForFsa();
+    syncOpenSourceModalForFsa();
     if (!isFileSystemAccessSupported()) {
         // Keep Open/New usable: cloud + in-browser create still work without FSA.
         setStatus(FSA_HTTPS_HINT, "info");
@@ -2602,53 +2602,7 @@ syncOpenSourceModalForFsa();
     }
 
     if (!applyHubViewIntent()) {
-        /** Open the shell tools tray so pamphlet HDS buttons are reachable. */
-    function revealHeaderToolsTray(): void {
-        const tray = document.getElementById("dynamic-header");
-        if (tray) tray.hidden = false;
-        document
-            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
-            ?.setAttribute("aria-expanded", "true");
-    }
-
-    /**
-     * Hub ?view= intents (new / open / recent / manage / footers).
-     * Skip cloud autoload when an explicit flow was requested.
-     */
-    function applyHubViewIntent(): boolean {
-        const view = String(
-            host.dataset.pamphletView ||
-                (window as Window & { __eduardoosPamphletView?: string }).__eduardoosPamphletView ||
-                "",
-        )
-            .trim()
-            .toLowerCase();
-        if (!view || view === "dashboard") return false;
-        revealHeaderToolsTray();
-        if (view === "new") {
-            openCreateModal();
-            return true;
-        }
-        if (view === "open" || view === "recent" || view === "manage") {
-            if (getAuthToken() && isAuthenticated()) {
-                void openCloudListModal("open");
-            } else {
-                syncOpenSourceModalForFsa();
-                openSourceModal.showModal();
-            }
-            return true;
-        }
-        if (view === "footers") {
-            void openFooterModal();
-            return true;
-        }
-        return false;
-    }
-
-    if (!applyHubViewIntent()) {
         void tryAutoloadCloudPamphlet();
-    }
-
     }
 
     return {

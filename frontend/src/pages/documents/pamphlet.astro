@@ -1,12 +1,10 @@
 ---
 /**
- * Pamphlet — vanilla mount of the portable generator (same pattern as the
- * original PanfletoPage.astro example). No React hub for the editor canvas.
+ * Pamphlet — dashboard + editor host always present.
+ * Static builds cannot branch on ?view= at request time, so client JS
+ * shows the dash or mounts the vanilla generator from the URL / clicks.
  */
 import Layout from "../../layouts/Layout.astro";
-
-const viewParam = Astro.url.searchParams.get("view")?.trim() || "dashboard";
-const isEditor = viewParam !== "dashboard";
 ---
 
 <Layout
@@ -17,49 +15,46 @@ const isEditor = viewParam !== "dashboard";
 >
   <span slot="dhs" hidden></span>
 
-  {
-    isEditor ? (
-      <div
-        id="pamphlet-root"
-        class="pamphlet-route-root pamphlet-layout-workspace"
-        data-pamphlet-view={viewParam}
-      />
-    ) : (
-      <section class="pamphlet-vanilla-dash" aria-label="Pamphlet">
-        <h1 class="pamphlet-vanilla-dash__title">Pamphlet</h1>
-        <p class="pamphlet-vanilla-dash__lede">
-          Create and edit letter pamphlets. Tools open in the page-actions tray.
-        </p>
-        <div class="pamphlet-vanilla-dash__grid">
-          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=new">
-            <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
-            <span class="pamphlet-vanilla-dash__card-title">New</span>
-            <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
-          </a>
-          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=open">
-            <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
-            <span class="pamphlet-vanilla-dash__card-title">Open</span>
-            <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
-          </a>
-          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=recent">
-            <span class="material-symbols-outlined" aria-hidden="true">history</span>
-            <span class="pamphlet-vanilla-dash__card-title">Recent</span>
-            <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
-          </a>
-          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=manage">
-            <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
-            <span class="pamphlet-vanilla-dash__card-title">Manage</span>
-            <span class="pamphlet-vanilla-dash__card-desc">Manage cloud documents.</span>
-          </a>
-          <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=footers">
-            <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
-            <span class="pamphlet-vanilla-dash__card-title">Footers</span>
-            <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
-          </a>
-        </div>
-      </section>
-    )
-  }
+  <section id="pamphlet-dash" class="pamphlet-vanilla-dash" aria-label="Pamphlet">
+    <h1 class="pamphlet-vanilla-dash__title">Pamphlet</h1>
+    <p class="pamphlet-vanilla-dash__lede">
+      Create and edit letter pamphlets. Click New to open the creator.
+    </p>
+    <div class="pamphlet-vanilla-dash__grid">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=new" data-pamphlet-nav="new">
+        <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+        <span class="pamphlet-vanilla-dash__card-title">New</span>
+        <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
+      </a>
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=open" data-pamphlet-nav="open">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+        <span class="pamphlet-vanilla-dash__card-title">Open</span>
+        <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
+      </a>
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=recent" data-pamphlet-nav="recent">
+        <span class="material-symbols-outlined" aria-hidden="true">history</span>
+        <span class="pamphlet-vanilla-dash__card-title">Recent</span>
+        <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
+      </a>
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=manage" data-pamphlet-nav="manage">
+        <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+        <span class="pamphlet-vanilla-dash__card-title">Manage</span>
+        <span class="pamphlet-vanilla-dash__card-desc">Manage cloud documents.</span>
+      </a>
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=footers" data-pamphlet-nav="footers">
+        <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+        <span class="pamphlet-vanilla-dash__card-title">Footers</span>
+        <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
+      </a>
+    </div>
+  </section>
+
+  <div id="pamphlet-editor-bar" class="pamphlet-editor-bar" hidden>
+    <span id="pamphlet-editor-label">Editor</span>
+    <button type="button" class="btn" data-pamphlet-dashboard>Dashboard</button>
+  </div>
+
+  <div id="pamphlet-root" class="pamphlet-route-root pamphlet-layout-workspace" hidden></div>
 </Layout>
 
 <style is:global>
@@ -69,6 +64,10 @@ const isEditor = viewParam !== "dashboard";
     gap: var(--rail-gap);
     padding: var(--space-padding);
     color: var(--color-text);
+  }
+
+  .pamphlet-vanilla-dash[hidden] {
+    display: none;
   }
 
   .pamphlet-vanilla-dash__title {
@@ -99,6 +98,7 @@ const isEditor = viewParam !== "dashboard";
     background: var(--color-surface);
     color: var(--color-text);
     text-decoration: none;
+    cursor: pointer;
   }
 
   .pamphlet-vanilla-dash__card:hover {
@@ -119,6 +119,23 @@ const isEditor = viewParam !== "dashboard";
     color: var(--color-muted);
   }
 
+  .pamphlet-editor-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-padding);
+    border-bottom: var(--border-width) solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  .pamphlet-editor-bar[hidden] {
+    display: none;
+  }
+
   .pamphlet-route-root {
     box-sizing: border-box;
     width: auto;
@@ -127,37 +144,125 @@ const isEditor = viewParam !== "dashboard";
     flex-direction: column;
     align-items: center;
   }
+
+  .pamphlet-route-root[hidden] {
+    display: none;
+  }
 </style>
 
-{
-  isEditor ? (
-    <script>
-      import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
+<script>
+  import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
+  import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
 
-      const root = document.documentElement;
-      root.classList.add("layout-editor-bleed", "page-pamphlet");
-      document.body.classList.add("page-pamphlet");
+  let handle: PamphletMountHandle | null = null;
 
-      const host = document.getElementById("pamphlet-root");
-      if (host) {
-        const view =
-          host.dataset.pamphletView ||
-          new URLSearchParams(window.location.search).get("view") ||
-          "new";
-        host.dataset.pamphletView = view;
-        window.__eduardoosPamphletView = view;
+  function readView(): string {
+    const v = new URLSearchParams(window.location.search).get("view");
+    return v && v.trim() ? v.trim().toLowerCase() : "dashboard";
+  }
 
-        const handle = mountPamphletGenerator(host);
-        document.addEventListener(
-          "astro:before-swap",
-          () => {
-            handle.destroy();
-            root.classList.remove("layout-editor-bleed", "page-pamphlet");
-            document.body.classList.remove("page-pamphlet");
-          },
-          { once: true },
-        );
-      }
-    </script>
-  ) : null
-}
+  function setViewInUrl(view: string): void {
+    const url = new URL(window.location.href);
+    if (!view || view === "dashboard") url.searchParams.delete("view");
+    else url.searchParams.set("view", view);
+    window.history.pushState({}, "", url.toString());
+  }
+
+  function destroyEditor(): void {
+    handle?.destroy();
+    handle = null;
+    const host = document.getElementById("pamphlet-root");
+    if (host) host.replaceChildren();
+  }
+
+  function clearBleed(): void {
+    document.documentElement.classList.remove("layout-editor-bleed", "page-pamphlet");
+    document.body.classList.remove("page-pamphlet");
+  }
+
+  function applyBleed(): void {
+    document.documentElement.classList.add("layout-editor-bleed", "page-pamphlet");
+    document.body.classList.add("page-pamphlet");
+  }
+
+  function showDashboard(): void {
+    destroyEditor();
+    clearBleed();
+    const dash = document.getElementById("pamphlet-dash");
+    const host = document.getElementById("pamphlet-root");
+    const bar = document.getElementById("pamphlet-editor-bar");
+    if (dash) dash.hidden = false;
+    if (host) host.hidden = true;
+    if (bar) bar.hidden = true;
+  }
+
+  function showEditor(view: string): void {
+    const dash = document.getElementById("pamphlet-dash");
+    const host = document.getElementById("pamphlet-root");
+    const bar = document.getElementById("pamphlet-editor-bar");
+    const label = document.getElementById("pamphlet-editor-label");
+    if (!host) {
+      console.error("[pamphlet] missing #pamphlet-root");
+      return;
+    }
+
+    destroyEditor();
+    if (dash) dash.hidden = true;
+    host.hidden = false;
+    if (bar) bar.hidden = false;
+    if (label) label.textContent = `Editor · ${view}`;
+    applyBleed();
+
+    host.dataset.pamphletView = view;
+    window.__eduardoosPamphletView = view;
+
+    try {
+      handle = mountPamphletGenerator(host);
+    } catch (err) {
+      console.error("[pamphlet] mount failed", err);
+      const message = err instanceof Error ? err.message : String(err);
+      host.textContent = `Could not open pamphlet editor: ${message}`;
+    }
+  }
+
+  function syncFromUrl(): void {
+    const view = readView();
+    if (view === "dashboard") showDashboard();
+    else showEditor(view);
+  }
+
+  function onClick(event: Event): void {
+    const el = event.target;
+    if (!(el instanceof Element)) return;
+
+    const dashBtn = el.closest("[data-pamphlet-dashboard]");
+    if (dashBtn) {
+      event.preventDefault();
+      setViewInUrl("dashboard");
+      showDashboard();
+      return;
+    }
+
+    const nav = el.closest<HTMLAnchorElement>("[data-pamphlet-nav]");
+    if (!nav) return;
+    event.preventDefault();
+    const view = (nav.dataset.pamphletNav || "new").toLowerCase();
+    setViewInUrl(view);
+    showEditor(view);
+  }
+
+  function boot(): void {
+    document.addEventListener("click", onClick);
+    window.addEventListener("popstate", syncFromUrl);
+    document.addEventListener("astro:page-load", syncFromUrl);
+    syncFromUrl();
+  }
+
+  boot();
+
+  declare global {
+    interface Window {
+      __eduardoosPamphletView?: string;
+    }
+  }
+</script>
