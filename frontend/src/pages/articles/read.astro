@@ -19,24 +19,26 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 <style is:global>
   .article-page { display: flex; flex-direction: column; gap: 1.25rem; }
-  .article-page__header { display: flex; flex-direction: column; gap: var(--rail-gap); }
+  .article-page__header,
+  .article-page__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    box-sizing: border-box;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--space-padding);
+  }
   .article-page h1, .article-page h2, .article-page p { margin: 0; }
   .article-page h1 { font-size: var(--font-size-xl); }
   .article-page h2 { font-size: var(--font-size-md); }
   .article-page p { font-size: var(--font-size-sm); }
   .article-page__byline { display: flex; flex-direction: column; gap: var(--rail-gap); }
   .article-page__meta { font-size: var(--font-size-sm); color: var(--color-muted); }
-  .article-page__body,
-  .article-page__footer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  .article-page__footer {
-    margin-top: var(--rail-gap);
-    padding-top: var(--rail-gap);
-    border-top: var(--border-width) solid var(--color-border);
-  }
+  .article-page__subtitle { font-size: var(--font-size-xs); color: var(--color-muted); }
+  .article-page__body { display: flex; flex-direction: column; gap: 1.25rem; }
+  .article-page__footer { gap: 1.25rem; }
   .article-page img { max-width: 100%; height: auto; border-radius: var(--border-radius); }
   @media (min-width: 48rem) and (max-width: 63.999rem) {
     .article-page { grid-column: 4 / 13; }
@@ -103,7 +105,7 @@ import Layout from "../../layouts/Layout.astro";
     }
     if (subtitle) {
       const p = document.createElement("p");
-      p.className = "article-page__meta";
+      p.className = "article-page__subtitle";
       p.textContent = subtitle;
       host.appendChild(p);
       shown = true;
