@@ -134,30 +134,5 @@ const description =
       ))}
     </div>
   </section>
-
-  <section class="system-status panel" aria-live="polite">
-    <p id="api-status" class="status">Checking API…</p>
-  </section>
 </Layout>
 
-<script>
-  import { getHealth } from "../lib/api";
-
-  const status = document.getElementById("api-status");
-
-  try {
-    const health = await getHealth();
-    if (status) {
-      status.classList.add("ok");
-      status.textContent = `API ${health.status}`;
-    }
-  } catch {
-    if (status) {
-      status.classList.add("err");
-      const origin = `${window.location.protocol}//${window.location.host}`;
-      status.textContent = window.location.protocol === "http:"
-        ? `API unavailable on ${origin}. Open https://127.0.0.1:${window.location.port || "4321"}/ instead (production proxy needs HTTPS).`
-        : "API unavailable. Stop any old dev server on this port, run npm run dev again, or use npm run dev:local with the Go API running.";
-    }
-  }
-</script>

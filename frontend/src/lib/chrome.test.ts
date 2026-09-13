@@ -49,12 +49,12 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/contact">Contact</a>
       <a href="/store" data-store-hub-nav data-full-nav>Store</a>
       <a href="/payments/subscription">Subscriptions</a>
-      <a href="/diagnostics" data-admin-only hidden>Diagnostics</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
       <a href="/evoice" data-service="evoice" hidden>eVoice</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
       <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
       <a href="/eoadmin" data-authed-only data-full-nav ${authedHidden}>eoadmin</a>
+      <a href="/admin/users" data-admin-only hidden>Users</a>
       <div data-eostore-nav data-full-nav></div>
     </aside>
   `;

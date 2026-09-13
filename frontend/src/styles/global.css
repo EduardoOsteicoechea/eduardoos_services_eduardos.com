@@ -920,13 +920,6 @@ h2 {
   font-size: var(--font-size-sm);
 }
 
-.system-status {
-  margin-top: calc(var(--space-margin) * 2);
-}
-
-.system-status.panel {
-  margin-top: calc(var(--space-margin) * 2);
-}
 
 .session-grid {
   gap: 1.5rem;

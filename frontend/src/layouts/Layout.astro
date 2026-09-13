@@ -47,7 +47,6 @@ const isPamphlet = path.startsWith("/documents/pamphlet");
 const privateByDefault =
   path.startsWith("/session") ||
   path.startsWith("/admin") ||
-  path === "/diagnostics" ||
   path.startsWith("/ereport") ||
   path.startsWith("/scrib") ||
   path.startsWith("/homescool") ||
@@ -299,10 +298,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
               eostore
             </a>
-            <a href="/diagnostics" data-route aria-current={path === "/diagnostics" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
-              Diagnostics
-            </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">
             <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
@@ -339,16 +334,7 @@ const jsonLdString =
 
       <aside id="dynamic-header" class="sidebar-right" hidden>
         <div id="header-dynamic-menu-host" class="header-dynamic-menu-host" data-hds-host></div>
-        {hasDhsSlot ? (
-          <slot name="dhs" />
-        ) : (
-          <a class="dhs-action" href="/diagnostics" data-route title="Diagnostics" aria-label="Diagnostics">
-            <span class="icon-btn" aria-hidden="true">
-              <span class="material-symbols-outlined" aria-hidden="true">monitor_heart</span>
-            </span>
-            Diagnostics
-          </a>
-        )}
+        {hasDhsSlot ? <slot name="dhs" /> : null}
       </aside>
 
       <main>

@@ -509,8 +509,7 @@ function plainUserBlockedPath(pathname: string): boolean {
     path.includes("calvins-institutes") ||
     path.startsWith("/eoadmin") ||
     path.startsWith("/eostore") ||
-    path.startsWith("/admin") ||
-    path === "/diagnostics"
+    path.startsWith("/admin")
   );
 }
 
