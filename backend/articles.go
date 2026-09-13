@@ -70,10 +70,14 @@ func asAnySlice(v any) []any {
 }
 
 func articleBlocks(title string, body map[string]any) ([]map[string]string, string) {
-	// Normalize Mongo/BSON shapes (bson.M / bson.A) into plain JSON maps/slices.
+	blocks, _, plain, _ := articleProjection(title, body)
+	return blocks, plain
+}
+
+func articleProjection(title string, body map[string]any) (blocks, footer []map[string]string, plain string, byline map[string]string) {
 	body = asStringMap(body)
-	var blocks []map[string]string
-	appendBlock := func(kind, text string) {
+	byline = map[string]string{}
+	appendTo := func(dst *[]map[string]string, kind, text string) {
 		text = strings.TrimSpace(text)
 		if text == "" {
 			return
@@ -81,14 +85,14 @@ func articleBlocks(title string, body map[string]any) ([]map[string]string, stri
 		if kind != "heading_1" && kind != "paragraph" && kind != "image" && kind != "meta" {
 			kind = "paragraph"
 		}
-		blocks = append(blocks, map[string]string{"type": kind, "content": text})
+		*dst = append(*dst, map[string]string{"type": kind, "content": text})
 	}
-	appendItems := func(raw any) {
+	appendItems := func(dst *[]map[string]string, raw any) {
 		for _, rawItem := range asAnySlice(raw) {
 			item := asStringMap(rawItem)
 			if item == nil {
 				if s := stringFromAny(rawItem); s != "" {
-					appendBlock("paragraph", s)
+					appendTo(dst, "paragraph", s)
 				}
 				continue
 			}
@@ -100,48 +104,72 @@ func articleBlocks(title string, body map[string]any) ([]map[string]string, stri
 			if kind == "" && text != "" {
 				kind = "paragraph"
 			}
-			appendBlock(kind, text)
+			appendTo(dst, kind, text)
 		}
 	}
 	header := asStringMap(body["header"])
-	headerTitle := stringFromAny(header["title"])
-	if headerTitle == "" {
-		headerTitle = strings.TrimSpace(title)
+	resolvedTitle := strings.TrimSpace(title)
+	if t := stringFromAny(header["title"]); t != "" {
+		resolvedTitle = t
 	}
-	if headerTitle != "" {
-		appendBlock("heading_1", headerTitle)
-	}
-	metaBits := make([]string, 0, 4)
 	for _, key := range []string{"subtitle", "author", "series", "series_chapter", "date"} {
 		if v := stringFromAny(header[key]); v != "" {
-			metaBits = append(metaBits, v)
+			byline[key] = v
 		}
 	}
-	if len(metaBits) > 0 {
-		appendBlock("meta", strings.Join(metaBits, " · "))
-	}
 	for _, key := range []string{"column_1", "column_2", "column_3", "column_4", "column_5", "column_6", "column_7", "column_8"} {
-		appendItems(body[key])
+		appendItems(&blocks, body[key])
 	}
-	footer := asStringMap(body["footer"])
-	if action := stringFromAny(footer["action"]); action != "" {
-		appendBlock("heading_1", action)
+	foot := asStringMap(body["footer"])
+	if action := stringFromAny(foot["action"]); action != "" {
+		appendTo(&footer, "paragraph", action)
 	}
-	if message := stringFromAny(footer["message"]); message != "" {
-		appendBlock("paragraph", message)
+	if message := stringFromAny(foot["message"]); message != "" {
+		appendTo(&footer, "paragraph", message)
 	}
-	appendItems(footer["items"])
-	// Legacy / iglesia-style bodies: { "blocks": [...] }.
-	if len(blocks) <= 1 {
-		appendItems(body["blocks"])
+	appendItems(&footer, foot["items"])
+	if len(blocks) == 0 {
+		appendItems(&blocks, body["blocks"])
 	}
-	parts := make([]string, 0, len(blocks))
+	if len(blocks) > 0 && blocks[0]["type"] == "heading_1" && strings.EqualFold(blocks[0]["content"], resolvedTitle) {
+		blocks = blocks[1:]
+	}
+	parts := make([]string, 0, len(blocks)+len(footer)+1)
+	if resolvedTitle != "" {
+		parts = append(parts, resolvedTitle)
+	}
 	for _, block := range blocks {
 		if block["type"] != "image" {
 			parts = append(parts, block["content"])
 		}
 	}
-	return blocks, strings.Join(parts, "\n\n")
+	for _, block := range footer {
+		if block["type"] != "image" {
+			parts = append(parts, block["content"])
+		}
+	}
+	plain = strings.Join(parts, "\n\n")
+	return blocks, footer, plain, byline
+}
+
+func articleDescription(plain, title string) string {
+	text := strings.TrimSpace(plain)
+	title = strings.TrimSpace(title)
+	if title != "" && strings.HasPrefix(strings.ToLower(text), strings.ToLower(title)) {
+		text = strings.TrimSpace(text[len(title):])
+	}
+	text = strings.Join(strings.Fields(text), " ")
+	runes := []rune(text)
+	if len(runes) == 0 {
+		if title != "" {
+			return title
+		}
+		return "Public article."
+	}
+	if len(runes) > 160 {
+		return string(runes[:157]) + "..."
+	}
+	return text
 }
 
 func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
@@ -179,19 +207,24 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.applyLinkedFooter(r, &record)
-	blocks, plain := articleBlocks(record.Title, record.Body)
-	if plain == "" && strings.TrimSpace(record.Title) != "" {
-		plain = strings.TrimSpace(record.Title)
-		if len(blocks) == 0 {
-			blocks = []map[string]string{{"type": "heading_1", "content": plain}}
-		}
+	title := strings.TrimSpace(record.Title)
+	blocks, footer, plain, byline := articleProjection(title, record.Body)
+	if title == "" && len(blocks) > 0 && blocks[0]["type"] == "heading_1" {
+		title = blocks[0]["content"]
+		blocks = blocks[1:]
+	}
+	if plain == "" && title != "" {
+		plain = title
 	}
 	sum := sha256.Sum256([]byte(plain))
 	meta := record
 	meta.Body = nil
+	id := strings.TrimSpace(r.PathValue("id"))
 	writeJSON(w, http.StatusOK, map[string]any{
-		"meta": meta, "title": record.Title, "blocks": blocks, "plainText": plain,
+		"meta": meta, "title": title, "description": articleDescription(plain, title),
+		"byline": byline, "blocks": blocks, "footer": footer, "plainText": plain,
 		"contentHash": hex.EncodeToString(sum[:]),
+		"canonicalPath": "/articles/read?id=" + id,
 	})
 }
 

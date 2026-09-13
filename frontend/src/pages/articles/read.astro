@@ -5,45 +5,52 @@ import Layout from "../../layouts/Layout.astro";
   title="Article"
   description="A publicly selected Eduardoos pamphlet presented as a readable article."
   robots="index,follow"
+  ogType="article"
 >
-  <article class="article-page" data-article>
-    <a href="/articles" data-route>Articles</a>
-    <h1 data-article-title>Article</h1>
-    <p class="status" data-article-status>Loading article…</p>
-    <div class="article-page__body" data-article-content></div>
+  <article class="article-page" data-article lang="es" itemscope itemtype="https://schema.org/Article">
+    <header class="article-page__header">
+      <h1 data-article-title itemprop="headline">Article</h1>
+      <div class="article-page__byline" data-article-byline hidden></div>
+      <p class="status" data-article-status>Loading article…</p>
+    </header>
+    <div class="article-page__body" data-article-content itemprop="articleBody"></div>
+    <footer class="article-page__footer" data-article-footer hidden></footer>
   </article>
 </Layout>
 <style is:global>
-  .article-page { display: flex; flex-direction: column; gap: var(--rail-gap); }
+  .article-page { display: flex; flex-direction: column; gap: 1.25rem; }
+  .article-page__header { display: flex; flex-direction: column; gap: var(--rail-gap); }
   .article-page h1, .article-page h2, .article-page p { margin: 0; }
   .article-page h1 { font-size: var(--font-size-xl); }
   .article-page h2 { font-size: var(--font-size-md); }
   .article-page p { font-size: var(--font-size-sm); }
+  .article-page__byline { display: flex; flex-direction: column; gap: var(--rail-gap); }
   .article-page__meta { font-size: var(--font-size-sm); color: var(--color-muted); }
-  .article-page__body {
+  .article-page__body,
+  .article-page__footer {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding: var(--space-padding);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius);
-    background: var(--color-surface);
+  }
+  .article-page__footer {
+    margin-top: var(--rail-gap);
+    padding-top: var(--rail-gap);
+    border-top: var(--border-width) solid var(--color-border);
   }
   .article-page img { max-width: 100%; height: auto; border-radius: var(--border-radius); }
   @media (min-width: 48rem) and (max-width: 63.999rem) {
-    .article-page {
-      grid-column: 4 / 13;
-    }
+    .article-page { grid-column: 4 / 13; }
   }
 </style>
 <script>
   import { apiRequest } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
   import { mustLog } from "../../lib/dev-log";
+  import { applyArticleSeo } from "../../lib/article-seo";
 
   type ArticleBlock = { type?: string; content?: string };
 
-  function appendText(host: HTMLElement, text: string, heading = false, meta = false) {
+  function appendBlock(host: HTMLElement, text: string, heading = false, meta = false) {
     const value = text.trim();
     if (!value) return;
     const node = document.createElement(heading ? "h2" : "p");
@@ -52,15 +59,79 @@ import Layout from "../../layouts/Layout.astro";
     host.appendChild(node);
   }
 
+  function renderBlocks(host: HTMLElement, blocks: ArticleBlock[] | undefined) {
+    for (const block of blocks ?? []) {
+      const text = (block.content || "").trim();
+      if (!text) continue;
+      if (block.type === "image") {
+        const img = document.createElement("img");
+        img.src = text;
+        img.alt = "";
+        host.appendChild(img);
+        continue;
+      }
+      if (block.type === "meta") {
+        appendBlock(host, text, false, true);
+        continue;
+      }
+      appendBlock(host, text, block.type === "heading_1");
+    }
+  }
+
+  function renderByline(host: HTMLElement, byline: Record<string, string> | undefined) {
+    host.replaceChildren();
+    const author = (byline?.author || "").trim();
+    const series = (byline?.series || "").trim();
+    const chapter = (byline?.series_chapter || "").trim();
+    const date = (byline?.date || "").trim();
+    const subtitle = (byline?.subtitle || "").trim();
+    let shown = false;
+    if (author) {
+      const p = document.createElement("p");
+      p.className = "article-page__meta";
+      p.setAttribute("itemprop", "author");
+      p.textContent = author;
+      host.appendChild(p);
+      shown = true;
+    }
+    if (series || chapter) {
+      const p = document.createElement("p");
+      p.className = "article-page__meta";
+      p.textContent = [series, chapter].filter(Boolean).join(" · ");
+      host.appendChild(p);
+      shown = true;
+    }
+    if (subtitle) {
+      const p = document.createElement("p");
+      p.className = "article-page__meta";
+      p.textContent = subtitle;
+      host.appendChild(p);
+      shown = true;
+    }
+    if (date) {
+      const p = document.createElement("p");
+      p.className = "article-page__meta";
+      p.setAttribute("itemprop", "datePublished");
+      p.textContent = date;
+      host.appendChild(p);
+      shown = true;
+    }
+    host.hidden = !shown;
+  }
+
   async function loadArticle() {
     const titleEl = document.querySelector("[data-article-title]");
     const status = document.querySelector("[data-article-status]");
     const content = document.querySelector("[data-article-content]");
-    if (!(status instanceof HTMLElement) || !(content instanceof HTMLElement)) return;
+    const footer = document.querySelector("[data-article-footer]");
+    const bylineHost = document.querySelector("[data-article-byline]");
+    if (!(status instanceof HTMLElement) || !(content instanceof HTMLElement) || !(footer instanceof HTMLElement)) return;
     const id = new URLSearchParams(window.location.search).get("id")?.trim();
     status.hidden = false;
     status.textContent = "Loading article…";
     content.replaceChildren();
+    footer.replaceChildren();
+    footer.hidden = true;
     if (titleEl instanceof HTMLElement) titleEl.textContent = "Article";
     if (!id) {
       status.textContent = "Article id is missing.";
@@ -68,14 +139,21 @@ import Layout from "../../layouts/Layout.astro";
     }
     const result = await apiRequest<{
       title?: string;
+      description?: string;
       plainText?: string;
+      byline?: Record<string, string>;
       blocks?: ArticleBlock[];
+      footer?: ArticleBlock[];
+      meta?: { updatedAt?: string; createdAt?: string };
+      canonicalPath?: string;
+      message?: string;
     }>(`/articles/${encodeURIComponent(id)}`);
     if (mustLog) {
       console.log("[articles] read", {
         responseStatus: result.status,
         requestId: result.requestId,
         blocks: result.data.blocks?.length,
+        footer: result.data.footer?.length,
       });
     }
     if (result.status >= 400) {
@@ -89,32 +167,35 @@ import Layout from "../../layouts/Layout.astro";
     }
     const title = (result.data.title || "").trim() || "Article";
     if (titleEl instanceof HTMLElement) titleEl.textContent = title;
+    if (bylineHost instanceof HTMLElement) renderByline(bylineHost, result.data.byline);
     status.hidden = true;
-    for (const block of result.data.blocks ?? []) {
-      const text = (block.content || "").trim();
-      if (!text) continue;
-      if (block.type === "image") {
-        const img = document.createElement("img");
-        img.src = text;
-        img.alt = "";
-        content.appendChild(img);
-        continue;
-      }
-      if (block.type === "meta") {
-        appendText(content, text, false, true);
-        continue;
-      }
-      appendText(content, text, block.type === "heading_1");
-    }
+    renderBlocks(content, result.data.blocks);
     if (!content.childElementCount) {
       const plain = (result.data.plainText || "").trim();
       if (plain) {
-        for (const para of plain.split(/\n\n+/)) appendText(content, para);
+        for (const para of plain.split(/\n\n+/)) {
+          if (para.trim() === title) continue;
+          appendBlock(content, para);
+        }
       }
     }
     if (!content.childElementCount) {
-      appendText(content, "This article has no readable text yet.");
+      appendBlock(content, "This article has no readable text yet.");
     }
+    renderBlocks(footer, result.data.footer);
+    footer.hidden = !footer.childElementCount;
+    const path = result.data.canonicalPath || `/articles/read?id=${encodeURIComponent(id)}`;
+    applyArticleSeo({
+      title,
+      description: result.data.description || title,
+      url: new URL(path, window.location.origin).toString(),
+      siteName: "Eduardoos",
+      language: "es_VE",
+      author: result.data.byline?.author,
+      articleBody: result.data.plainText,
+      datePublished: result.data.meta?.createdAt,
+      dateModified: result.data.meta?.updatedAt,
+    });
   }
 
   document.addEventListener("astro:page-load", () => {
