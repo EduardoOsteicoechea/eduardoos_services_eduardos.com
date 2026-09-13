@@ -1880,9 +1880,15 @@ on(openSourceLocalBtn, "click", async () => {
     try {
         const data = await openPamphletFile();
         memorySession = false;
-        cloudEpamId = data.id?.trim() || null;
-        rememberLastEpamId(cloudEpamId);
+        // Local files are not cloud-linked yet — keep cloudEpamId null so Guardar
+        // can POST a new cloud copy instead of PUT-ing an unknown id.
+        cloudEpamId = null;
+        rememberLastEpamId(null);
         loadPamphlet(data);
+        setStatus(
+            "Local .epam opened — Guardar downloads a copy and can also save to the cloud.",
+            "info",
+        );
     } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         const message = err instanceof Error ? err.message : String(err);
@@ -2268,26 +2274,69 @@ on(footerProfileForm, "submit", (event: Event) => {
     })();
 });
 
+/** Trigger a browser download of the live pamphlet as a `.epam` JSON file. */
+function downloadEpamFile(data: PamphletStructure, suggestedName?: string): string {
+    const base =
+        sanitizeDownloadFilename(
+            suggestedName || getOpenFileName() || data.header?.title || "pamphlet",
+        ) || "pamphlet";
+    const filename = base.toLowerCase().endsWith(".epam") ? base : `${base}.epam`;
+    const blob = new Blob([JSON.stringify(data, null, 4)], {
+        type: "application/x-epam",
+    });
+    const href = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.download = filename;
+    anchor.rel = "noopener";
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(href);
+    return filename;
+}
+
 on(saveCloudBtn, "click", async () => {
     clearError();
     if (!currentDoc) {
         setError("No hay panfleto abierto para guardar.");
         return;
     }
-    if (!getAuthToken() || !isAuthenticated()) {
-        setError("Sign in to save to the cloud.");
-        return;
-    }
     try {
         const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
-        const savedDoc = await persistCloud({ ...live });
-        memorySession = false;
-        renderDocument(savedDoc, false);
+        const withId = ensureDocumentId(live);
+        const downloaded = downloadEpamFile(withId, getOpenFileName() || undefined);
+
+        if (hasOpenFile()) {
+            try {
+                await savePamphlet(withId);
+            } catch (err) {
+                const message = err instanceof Error ? err.message : String(err);
+                setStatus(`Downloaded ${downloaded}; disk write skipped: ${message}`, "info");
+            }
+        }
+
+        if (getAuthToken() && isAuthenticated()) {
+            const savedDoc = await persistCloud({ ...withId });
+            memorySession = false;
+            renderDocument(savedDoc, false);
+            updatePrintAvailability();
+            setStatus(
+                `Downloaded ${downloaded} and saved to cloud: ${getOpenFileName() || cloudEpamId}`,
+                "success",
+            );
+            return;
+        }
+
+        renderDocument(withId, false);
         updatePrintAvailability();
-        setStatus(`Saved to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
+        setStatus(
+            `Downloaded ${downloaded}. Sign in to also keep a cloud copy.`,
+            "info",
+        );
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
-        setError(`Cloud save failed: ${message}`);
+        setError(`Save failed: ${message}`);
     }
 });
 

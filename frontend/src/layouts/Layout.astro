@@ -216,74 +216,74 @@ const jsonLdString =
           </button>
         </header>
         <nav aria-label="Primary">
-          <div class="sidebar-nav-section sidebar-nav-section--routes">
+          <div class="sidebar-nav-section sidebar-nav-section--site">
+            <p class="sidebar-nav-label">Eduardoos</p>
             <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">home</span>
-            Home
-          </a>
-          <a href="/about" data-route data-full-nav aria-current={path === "/about" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">info</span>
-            About
-          </a>
-          <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-            Contact
-          </a>
-          <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">article</span>
-            Articles
-          </a>
-          <a
-            href="/store"
-            data-route
-            data-store-hub-nav
-            data-full-nav
-            aria-current={path === "/store" ? "page" : undefined}
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">store</span>
-            Store
-          </a>
-          <div class="sidebar-nav-stores" data-eostore-nav data-full-nav aria-label="Company stores"></div>
-          <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">payments</span>
-            Subscriptions
-          </a>
-          <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
-            Scrib
-          </a>
-          <a href="/dashboard/latin/calvins-institutes" data-route data-authed-only data-full-nav hidden aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
-            Institutes
-          </a>
-          <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">school</span>
-            Homescool
-          </a>
-          <a href="/documents/pamphlet" data-route data-service="pamphlet" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">description</span>
-            Pamphlet
-          </a>
-          <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
-            eVoice
-          </a>
-          <a href="/eoproject" data-route data-service="eoproject" hidden aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
-            eoProject
-          </a>
-          <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
-            eReport
-          </a>
-          <a href="/eoadmin" data-route data-authed-only data-full-nav hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">payments</span>
-            eoadmin
-          </a>
-          <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">api</span>
-            API docs
-          </a>
+              <span class="material-symbols-outlined" aria-hidden="true">home</span>
+              Home
+            </a>
+            <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">article</span>
+              Articles
+            </a>
+            <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+              Contact
+            </a>
+          </div>
+          <div class="sidebar-nav-section sidebar-nav-section--services">
+            <p class="sidebar-nav-label">Services</p>
+            <a
+              href="/store"
+              data-route
+              data-store-hub-nav
+              data-full-nav
+              aria-current={path === "/store" ? "page" : undefined}
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">store</span>
+              Store
+            </a>
+            <div class="sidebar-nav-stores" data-eostore-nav data-full-nav aria-label="Company stores"></div>
+            <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+              Subscriptions
+            </a>
+            <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
+              Scrib
+            </a>
+            <a href="/dashboard/latin/calvins-institutes" data-route data-authed-only data-full-nav hidden aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+              Institutes
+            </a>
+            <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">school</span>
+              Homescool
+            </a>
+            <a href="/documents/pamphlet" data-route data-service="pamphlet" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              Pamphlet
+            </a>
+            <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
+              eVoice
+            </a>
+            <a href="/eoproject" data-route data-service="eoproject" hidden aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
+              eoProject
+            </a>
+            <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
+              eReport
+            </a>
+            <a href="/eoadmin" data-route data-authed-only data-full-nav hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+              eoadmin
+            </a>
+            <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">api</span>
+              API docs
+            </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--admin" data-admin-only hidden>
             <p class="sidebar-nav-label">Admin</p>
