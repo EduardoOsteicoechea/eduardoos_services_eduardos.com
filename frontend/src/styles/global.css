@@ -1231,44 +1231,45 @@ section.diag .panel:not(form) {
     display: none;
   }
 
-  /* Phone/tablet: [dynamic][AI] … [avatar][menu] — menu at the end edge */
+  /*
+   * Phone/tablet (all routes): avatar (or ereport guest auth) left, separated;
+   * right group = AI → cart → dynamic actions → menu.
+   */
+  .header-cluster--menu,
   .header-cluster--tools {
-    order: 1;
-    flex-direction: row;
-    margin-left: 0;
-    margin-top: 0;
-    gap: var(--rail-gap);
+    display: contents;
   }
 
-  .header-cluster--tools .header-cart {
-    order: -1;
-  }
-
-  .header-cluster--tools .header-dynamic {
+  .header-session:not([hidden]) {
     order: 0;
+    margin-right: auto;
   }
 
-  .header-cluster--tools .agent-fab {
+  .ereport-guest-auth:not([hidden]) {
+    order: 0;
+    margin-right: auto;
+  }
+
+  .agent-fab {
     order: 1;
   }
 
-  .ereport-guest-auth {
+  .header-cart {
     order: 2;
   }
 
-  .header-cluster--menu {
+  .header-dynamic {
     order: 3;
-    flex-direction: row;
-    margin-left: auto;
-    gap: var(--rail-gap);
   }
 
-  .header-cluster--menu .header-session {
-    order: 0;
+  .header-menu--mobile {
+    order: 4;
   }
 
-  .header-cluster--menu .header-menu--mobile {
-    order: 1;
+  .app-header--start:not(:has(.header-session:not([hidden]))):not(
+      :has(.ereport-guest-auth:not([hidden]))
+    ) {
+    justify-content: flex-end;
   }
 
   

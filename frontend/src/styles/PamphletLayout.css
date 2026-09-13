@@ -97,20 +97,6 @@ body.page-pamphlet .header-cluster--menu .header-session {
   order: 2;
 }
 
-@media (max-width: 63.999rem) {
-  body.page-pamphlet .header-cluster--menu .header-menu--mobile {
-    order: 0;
-  }
-
-  body.page-pamphlet .header-cluster--menu .header-dynamic {
-    order: 1;
-  }
-
-  body.page-pamphlet .header-cluster--menu .header-session {
-    order: 2;
-  }
-}
-
 /* Pamphlet tools tray: icon left, label right, descriptive title tooltip. */
 body.page-pamphlet #dynamic-header .header-dynamic-menu-host,
 body.page-pamphlet #dynamic-header .header-dynamic-menu,
