@@ -8,9 +8,9 @@ import (
 	"strings"
 )
 
-// Public articles are an opt-in projection of pamphlets. An article is never
-// selected from the caller's account: it must belong to the configured publisher
-// account and be explicitly marked public.
+// Public articles are a projection of every pamphlet owned by the configured
+// publisher account (legacy eduardoos behavior). Callers never see another
+// account's pamphlets through these routes.
 func (a *App) publicArticleOwner(r *http.Request) (*User, bool) {
 	email := strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail))
 	if email == "" {
@@ -18,6 +18,19 @@ func (a *App) publicArticleOwner(r *http.Request) (*User, bool) {
 	}
 	owner, err := a.store.UserByEmail(r.Context(), email)
 	return owner, err == nil && owner != nil
+}
+
+// autoPublishEpamForArticles marks pamphlets owned by the configured articles
+// publisher as public on every cloud save (metadata for admin tools / imports).
+func (a *App) autoPublishEpamForArticles(user *User, rec *EpamRecord) {
+	if user == nil || rec == nil {
+		return
+	}
+	email := strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail))
+	if email == "" || user.EmailNormalized != email {
+		return
+	}
+	rec.Public = true
 }
 
 func articleBlocks(body map[string]any) ([]map[string]string, string) {
@@ -72,10 +85,8 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	out := make([]EpamRecord, 0, len(records))
 	for _, record := range records {
-		if record.Public {
-			record.Body = nil
-			out = append(out, record)
-		}
+		record.Body = nil
+		out = append(out, record)
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"count": len(out), "articles": out})
 }
@@ -91,7 +102,7 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	if !found || !record.Public {
+	if !found {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}

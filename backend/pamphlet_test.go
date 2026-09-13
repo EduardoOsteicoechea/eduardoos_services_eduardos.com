@@ -107,32 +107,44 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 	}
 }
 
-func TestArticlesRequireConfiguredOwnerAndPublication(t *testing.T) {
+func TestArticlesLoadAllPamphletsForConfiguredOwner(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
 	_, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
-		UserID: "member-1", EpamID: "public", Title: "Public", Public: true,
-		Body: map[string]any{"header": map[string]any{"title": "Public"}, "column_1": []any{map[string]any{"type": "paragraph", "text": "Visible"}}, "footer": map[string]any{}},
+		UserID: "member-1", EpamID: "saved", Title: "Saved",
+		Body: map[string]any{"header": map[string]any{"title": "Saved"}, "column_1": []any{map[string]any{"type": "paragraph", "text": "Visible"}}, "footer": map[string]any{}},
 	}, "test")
 	if err != nil {
 		t.Fatal(err)
 	}
 	_, err = app.pamphlet.SaveEpam(context.Background(), EpamRecord{
-		UserID: "member-1", EpamID: "private", Title: "Private",
-		Body: map[string]any{"header": map[string]any{"title": "Private"}, "footer": map[string]any{}},
+		UserID: "member-1", EpamID: "draft", Title: "Draft",
+		Body: map[string]any{"header": map[string]any{"title": "Draft"}, "footer": map[string]any{}},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "other-1", EpamID: "foreign", Title: "Foreign", Public: true,
+		Body: map[string]any{"header": map[string]any{"title": "Foreign"}, "footer": map[string]any{}},
 	}, "test")
 	if err != nil {
 		t.Fatal(err)
 	}
 	list := httptest.NewRecorder()
 	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
-	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(1) {
-		t.Fatalf("public list: %d %s", list.Code, list.Body.String())
+	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(2) {
+		t.Fatalf("owner list: %d %s", list.Code, list.Body.String())
 	}
-	private := httptest.NewRecorder()
-	app.Handler().ServeHTTP(private, httptest.NewRequest(http.MethodGet, "/api/articles/private", nil))
-	if private.Code != http.StatusNotFound {
-		t.Fatalf("private pamphlet exposed: %d %s", private.Code, private.Body.String())
+	got := httptest.NewRecorder()
+	app.Handler().ServeHTTP(got, httptest.NewRequest(http.MethodGet, "/api/articles/draft", nil))
+	if got.Code != http.StatusOK {
+		t.Fatalf("saved pamphlet should load as article: %d %s", got.Code, got.Body.String())
+	}
+	foreign := httptest.NewRecorder()
+	app.Handler().ServeHTTP(foreign, httptest.NewRequest(http.MethodGet, "/api/articles/foreign", nil))
+	if foreign.Code != http.StatusNotFound {
+		t.Fatalf("other owner's pamphlet exposed: %d %s", foreign.Code, foreign.Body.String())
 	}
 }
 

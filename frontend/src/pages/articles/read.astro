@@ -24,28 +24,52 @@ import Layout from "../../layouts/Layout.astro";
   import { showErrorModal } from "../../lib/error-modal";
   import { mustLog } from "../../lib/dev-log";
 
-  const status = document.querySelector("[data-article-status]");
-  const content = document.querySelector("[data-article-content]");
-  const id = new URLSearchParams(window.location.search).get("id")?.trim();
-  if (status instanceof HTMLElement && content instanceof HTMLElement) {
-    void (async () => {
-      if (!id) {
-        status.textContent = "Article id is missing.";
-        return;
+  async function loadArticle() {
+    const status = document.querySelector("[data-article-status]");
+    const content = document.querySelector("[data-article-content]");
+    if (!(status instanceof HTMLElement) || !(content instanceof HTMLElement)) return;
+    const id = new URLSearchParams(window.location.search).get("id")?.trim();
+    status.hidden = false;
+    status.textContent = "Loading article…";
+    content.replaceChildren();
+    if (!id) {
+      status.textContent = "Article id is missing.";
+      return;
+    }
+    const result = await apiRequest<{ title?: string; blocks?: Array<{ type: string; content: string }> }>(
+      `/articles/${encodeURIComponent(id)}`,
+    );
+    if (mustLog) console.log("[articles] read", { responseStatus: result.status, requestId: result.requestId });
+    if (result.status >= 400) {
+      status.textContent = result.data.message || "Could not load the article.";
+      showErrorModal({
+        message: result.data.message || "Could not load the article.",
+        requestId: result.requestId,
+        details: result.requestId ? `request_id=${result.requestId}` : "",
+      });
+      return;
+    }
+    status.hidden = true;
+    for (const block of result.data.blocks ?? []) {
+      if (block.type === "image") {
+        const img = document.createElement("img");
+        img.src = block.content;
+        img.alt = "";
+        content.appendChild(img);
+        continue;
       }
-      const result = await apiRequest<{ title?: string; blocks?: Array<{ type: string; content: string }> }>(`/articles/${encodeURIComponent(id)}`);
-      if (mustLog) console.log("[articles] read", { responseStatus: result.status, requestId: result.requestId });
-      if (result.status >= 400) {
-        status.textContent = result.data.message || "Could not load the article.";
-        showErrorModal({ message: result.data.message || "Could not load the article.", requestId: result.requestId, details: result.requestId ? `request_id=${result.requestId}` : "" });
-        return;
-      }
-      status.remove();
-      for (const block of result.data.blocks ?? []) {
-        const node = document.createElement(block.type === "heading_1" ? "h2" : "p");
-        node.textContent = block.content;
-        content.appendChild(node);
-      }
-    })();
+      const node = document.createElement(block.type === "heading_1" ? "h2" : "p");
+      node.textContent = block.content;
+      content.appendChild(node);
+    }
+    if (!content.childElementCount) {
+      const empty = document.createElement("p");
+      empty.textContent = "This article has no readable text yet.";
+      content.appendChild(empty);
+    }
   }
+
+  document.addEventListener("astro:page-load", () => {
+    void loadArticle();
+  });
 </script>

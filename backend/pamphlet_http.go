@@ -182,6 +182,7 @@ func (a *App) createEpamHandler(w http.ResponseWriter, r *http.Request) {
 	if rec.Title == "" {
 		rec.Title = "Untitled pamphlet"
 	}
+	a.autoPublishEpamForArticles(user, &rec)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), rec, requestIDFrom(r, nil))
 	if err != nil {
 		a.mustLogf(r, "epams.create.error", "err", err.Error())
@@ -245,6 +246,7 @@ func (a *App) updateEpamHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	applyEpamWrite(&existing, body)
+	a.autoPublishEpamForArticles(user, &existing)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

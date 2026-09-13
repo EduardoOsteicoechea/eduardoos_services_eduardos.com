@@ -26,36 +26,51 @@ import Layout from "../layouts/Layout.astro";
   import { showErrorModal } from "../lib/error-modal";
   import { mustLog } from "../lib/dev-log";
 
-  const root = document.querySelector("[data-articles]");
-  const status = root?.querySelector("[data-articles-status]");
-  const list = root?.querySelector("[data-articles-list]");
-  if (status instanceof HTMLElement && list instanceof HTMLElement) {
-    void (async () => {
-      const { status: responseStatus, data, requestId } = await apiRequest<{ articles?: Array<{ epamId: string; title: string; author?: string; date?: string }> }>("/articles");
-      if (mustLog) console.log("[articles] list", { responseStatus, requestId });
-      if (responseStatus >= 400) {
-        status.textContent = data.message || "Could not load articles.";
-        showErrorModal({ message: data.message || "Could not load articles.", requestId, details: requestId ? `request_id=${requestId}` : "" });
-        return;
+  async function loadArticles() {
+    const root = document.querySelector("[data-articles]");
+    const status = root?.querySelector("[data-articles-status]");
+    const list = root?.querySelector("[data-articles-list]");
+    if (!(status instanceof HTMLElement) || !(list instanceof HTMLElement)) return;
+    status.hidden = false;
+    status.textContent = "Loading articles…";
+    list.replaceChildren();
+    const { status: responseStatus, data, requestId } = await apiRequest<{
+      articles?: Array<{ epamId: string; title: string; author?: string; date?: string }>;
+    }>("/articles");
+    if (mustLog) console.log("[articles] list", { responseStatus, requestId });
+    if (responseStatus >= 400) {
+      status.textContent = data.message || "Could not load articles.";
+      showErrorModal({
+        message: data.message || "Could not load articles.",
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+      });
+      return;
+    }
+    const articles = data.articles ?? [];
+    status.textContent = articles.length
+      ? `${articles.length} article${articles.length === 1 ? "" : "s"}.`
+      : "No public articles are available.";
+    for (const article of articles) {
+      const link = document.createElement("a");
+      link.className = "articles-page__item";
+      link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
+      link.setAttribute("data-route", "");
+      const title = document.createElement("strong");
+      title.textContent = article.title || "Untitled";
+      link.appendChild(title);
+      const meta = [article.author, article.date].filter(Boolean).join(" · ");
+      if (meta) {
+        const detail = document.createElement("span");
+        detail.className = "articles-page__meta";
+        detail.textContent = meta;
+        link.appendChild(detail);
       }
-      const articles = data.articles ?? [];
-      status.textContent = articles.length ? `${articles.length} article${articles.length === 1 ? "" : "s"}.` : "No public articles are available.";
-      for (const article of articles) {
-        const link = document.createElement("a");
-        link.className = "articles-page__item";
-        link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
-        const title = document.createElement("strong");
-        title.textContent = article.title || "Untitled";
-        link.appendChild(title);
-        const meta = [article.author, article.date].filter(Boolean).join(" · ");
-        if (meta) {
-          const detail = document.createElement("span");
-          detail.className = "articles-page__meta";
-          detail.textContent = meta;
-          link.appendChild(detail);
-        }
-        list.appendChild(link);
-      }
-    })();
+      list.appendChild(link);
+    }
   }
+
+  document.addEventListener("astro:page-load", () => {
+    void loadArticles();
+  });
 </script>
