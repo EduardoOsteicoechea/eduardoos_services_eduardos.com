@@ -608,7 +608,7 @@ export async function postChat(message: string, history: ChatTurn[]): Promise<{ 
 }
 
 async function sendChat(message: string, history: ChatTurn[], stream: boolean, signal: AbortSignal): Promise<Response> {
-  await getCsrf();
+  await getCsrf(true);
   const headers = new Headers();
   headers.set("Accept", stream ? "text/event-stream" : "application/json");
   headers.set("Content-Type", "application/json");

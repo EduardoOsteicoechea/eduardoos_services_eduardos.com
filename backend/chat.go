@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 	"time"
@@ -90,7 +91,15 @@ func (a *App) profileAskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind string) {
-	if !a.validOrigin(r) || !a.validCSRF(r) {
+	originOK := a.validOrigin(r)
+	csrfOK := a.validCSRF(r)
+	if !originOK || !csrfOK {
+		a.logAuthDebug(r, "public_chat_denied",
+			slog.String("audit_kind", auditKind),
+			slog.Bool("origin_ok", originOK),
+			slog.Bool("csrf_ok", csrfOK),
+			slog.String("csrf_reason", a.csrfFailureReason(r)),
+		)
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
