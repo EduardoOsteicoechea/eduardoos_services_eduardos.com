@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMe } from "./api";
-import { applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
+import { companyIdFromPath, getCart } from "./eostore";
+import { applyHeaderCartFab, applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
 
 vi.mock("./api", async () => {
@@ -11,6 +12,13 @@ vi.mock("./api", async () => {
 vi.mock("./eostore", () => ({
   listPublicCompanies: vi.fn().mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } }),
   companyIdFromPath: vi.fn().mockReturnValue(""),
+  companyCartHref: vi.fn((companyId: string) => `/store/${companyId}/cart`),
+  companyStoreHref: vi.fn((companyId: string) => `/store/${companyId}`),
+  getCart: vi.fn().mockResolvedValue({
+    status: 200,
+    requestId: "rid-cart",
+    data: { cart: { count: 0, items: [] } },
+  }),
 }));
 
 vi.mock("./serviceAccess", () => ({
@@ -160,6 +168,66 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
     expect((document.querySelector('[href="/dashboard/latin/calvins-institutes"]') as HTMLElement).hidden).toBe(true);
     expect(checkServiceAccess).not.toHaveBeenCalled();
+  });
+
+  it("hides header cart when the cart is empty", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-admin-cart",
+      data: { id: "admin-1", role: "admin" },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
+  });
+
+  it("shows header cart when the cart has payable items", async () => {
+    vi.mocked(companyIdFromPath).mockReturnValue("demo-co");
+    vi.mocked(getCart).mockResolvedValue({
+      status: 200,
+      requestId: "rid-cart-items",
+      data: { cart: { count: 1, items: [{ units: 2 }] } },
+    });
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-admin-cart-show",
+      data: { id: "admin-1", role: "admin" },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
+  });
+
+  it("hides header cart for plain members even when a cart has items", async () => {
+    vi.mocked(getCart).mockResolvedValue({
+      status: 200,
+      requestId: "rid-cart-plain",
+      data: { cart: { count: 1, items: [{ units: 1 }] } },
+    });
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-plain-cart",
+      data: { id: "member-2", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
+  });
+
+  it("updates header cart visibility from applyHeaderCartFab", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-admin-apply",
+      data: { id: "admin-1", role: "admin" },
+    });
+    await refreshAuthChrome();
+    applyHeaderCartFab("demo-co", { count: 2, items: [{ units: 1 }] });
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
+    applyHeaderCartFab("demo-co", { count: 0, items: [] });
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
   });
 
   it("restores session chrome after a client navigation swap", async () => {

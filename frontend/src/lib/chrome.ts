@@ -7,7 +7,9 @@ import {
   companyCartHref,
   companyIdFromPath,
   companyStoreHref,
+  getCart,
   listPublicCompanies,
+  type EostoreCart,
 } from "./eostore";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
@@ -37,8 +39,21 @@ function lastEostoreCompanyId(): string {
   }
 }
 
-function syncCartFab(): void {
-  const companyId = lastEostoreCompanyId();
+type CartFabPolicy = { authed: boolean; allowCart: boolean };
+
+let cartFabPolicy: CartFabPolicy = { authed: false, allowCart: false };
+
+function setCartFabPolicy(authed: boolean, allowCart: boolean): void {
+  cartFabPolicy = { authed, allowCart };
+}
+
+function cartHasPayableItems(cart?: EostoreCart | null): boolean {
+  if (!cart) return false;
+  if ((cart.count ?? 0) > 0) return true;
+  return (cart.items || []).some((line) => line.units > 0);
+}
+
+function applyCartFabHref(companyId: string): void {
   const href = companyId ? companyCartHref(companyId) : "/store";
   document.querySelectorAll("[data-cart-fab]").forEach((node) => {
     if (!(node instanceof HTMLAnchorElement)) return;
@@ -46,6 +61,63 @@ function syncCartFab(): void {
     node.title = companyId ? `Cart · ${companyId}` : "Cart · Store";
     node.setAttribute("aria-label", companyId ? `Open cart for ${companyId}` : "Open shopping cart");
   });
+}
+
+function setCartFabHidden(hidden: boolean): void {
+  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
+    if (node instanceof HTMLElement) {
+      node.hidden = hidden;
+    }
+  });
+}
+
+export function applyHeaderCartFab(companyId: string, cart?: EostoreCart | null): void {
+  if (companyId) {
+    rememberEostoreCompany(companyId);
+    applyCartFabHref(companyId);
+  }
+  const show =
+    cartFabPolicy.authed && cartFabPolicy.allowCart && Boolean(companyId) && cartHasPayableItems(cart);
+  setCartFabHidden(!show);
+}
+
+async function syncCartFab(): Promise<void> {
+  if (!cartFabPolicy.authed || !cartFabPolicy.allowCart) {
+    setCartFabHidden(true);
+    return;
+  }
+  const companyId = lastEostoreCompanyId();
+  if (!companyId) {
+    setCartFabHidden(true);
+    return;
+  }
+  try {
+    const res = await getCart(companyId);
+    applyHeaderCartFab(companyId, res.status === 200 ? res.data.cart : null);
+  } catch {
+    setCartFabHidden(true);
+  }
+}
+
+/** Refresh header cart icon after store cart changes (or on auth chrome load). */
+export async function refreshHeaderCartFab(
+  companyId?: string,
+  cart?: EostoreCart | null,
+): Promise<void> {
+  if (companyId !== undefined) {
+    if (cart !== undefined) {
+      applyHeaderCartFab(companyId, cart);
+      return;
+    }
+    try {
+      const res = await getCart(companyId);
+      applyHeaderCartFab(companyId, res.status === 200 ? res.data.cart : null);
+    } catch {
+      setCartFabHidden(true);
+    }
+    return;
+  }
+  await syncCartFab();
 }
 
 function syncStaticStoreNav(companyCount: number): void {
@@ -316,7 +388,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
 
 async function syncEostoreNav(): Promise<void> {
   const hosts = document.querySelectorAll("[data-eostore-nav]");
-  syncCartFab();
+  await syncCartFab();
   if (!hosts.length) {
     syncStaticStoreNav(0);
     return;
@@ -327,7 +399,7 @@ async function syncEostoreNav(): Promise<void> {
     syncStaticStoreNav(companies.length);
     if (companies.length === 1) {
       rememberEostoreCompany(companies[0].id);
-      syncCartFab();
+      await syncCartFab();
     }
     const activeId = companyIdFromPath();
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -360,7 +432,7 @@ async function syncEostoreNav(): Promise<void> {
         host.appendChild(link);
       });
     });
-    syncCartFab();
+    await syncCartFab();
     sessionLog("chrome.eostoreNav", { count: companies.length, ids: companies.map((c) => c.id) });
   } catch {
     syncStaticStoreNav(0);
@@ -460,11 +532,7 @@ export async function refreshAuthChrome(): Promise<void> {
     }
     node.hidden = false;
   });
-  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
-    if (node instanceof HTMLElement) {
-      node.hidden = isPlainUser;
-    }
-  });
+  setCartFabPolicy(authed, !isPlainUser);
   await syncSubscriptionNav(isAdmin, authed);
   if (!isPlainUser) {
     await syncEostoreNav();
@@ -475,6 +543,7 @@ export async function refreshAuthChrome(): Promise<void> {
         host.hidden = true;
       }
     });
+    await syncCartFab();
   }
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);

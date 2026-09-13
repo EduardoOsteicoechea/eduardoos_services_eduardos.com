@@ -32,6 +32,7 @@ import Layout from "../../../layouts/Layout.astro";
 
 <script>
   import { getMe } from "../../../lib/api";
+  import { refreshHeaderCartFab } from "../../../lib/chrome";
   import { showErrorModal } from "../../../lib/error-modal";
   import { mustLog } from "../../../lib/dev-log";
   import {
@@ -138,6 +139,7 @@ import Layout from "../../../layouts/Layout.astro";
           fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
           return;
         }
+        void refreshHeaderCartFab(companyId, res.data.cart);
         setBanner(`Cart updated · ${res.data.cart?.count ?? 0} line(s) · $${formatMoney(res.data.cart?.total_usd)}`);
       });
       qty.append(label, input, add);

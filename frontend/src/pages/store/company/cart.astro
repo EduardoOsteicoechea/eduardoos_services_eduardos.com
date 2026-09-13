@@ -42,6 +42,7 @@ import Layout from "../../../layouts/Layout.astro";
   import { getMe } from "../../../lib/api";
   import { showErrorModal } from "../../../lib/error-modal";
   import { mustLog } from "../../../lib/dev-log";
+  import { refreshHeaderCartFab } from "../../../lib/chrome";
   import {
     checkoutCart,
     companyIdFromPath,
@@ -142,6 +143,7 @@ import Layout from "../../../layouts/Layout.astro";
             fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
             return;
           }
+          void refreshHeaderCartFab(companyId, res.data.cart);
           render(res.data.cart, companyName);
         });
         const remove = document.createElement("button");
@@ -156,6 +158,7 @@ import Layout from "../../../layouts/Layout.astro";
             fail(res.data.message || "Could not update cart.", res.requestId, res.data.debug);
             return;
           }
+          void refreshHeaderCartFab(companyId, res.data.cart);
           render(res.data.cart, companyName);
         });
         qty.append(input, save, remove);
@@ -203,6 +206,7 @@ import Layout from "../../../layouts/Layout.astro";
       }
       const companyName = res.data.company?.name || companyId;
       document.title = `${companyName} cart · Eduardoos`;
+      void refreshHeaderCartFab(companyId, res.data.cart);
       render(res.data.cart, companyName);
     })();
   }
