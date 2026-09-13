@@ -60,6 +60,10 @@ func main() {
 		logger.Error("database_setup_failed", slog.String("reason", migrationReason(err)))
 		os.Exit(1)
 	}
+	if err := migratePamphletBodies(setupCtx, cfg, store); err != nil {
+		logger.Error("pamphlet_migration_failed", slog.String("reason", redactLogValue(err.Error())))
+		os.Exit(1)
+	}
 
 	app := newAppWithStore(cfg, store)
 	server := &http.Server{

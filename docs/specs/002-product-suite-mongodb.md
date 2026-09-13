@@ -70,7 +70,7 @@ FE: `/payments/subscription` card grid; ServiceGate on product hubs.
 | `scrib_books` | book meta + sheet index |
 | `scrib_sheets` | full sheet JSON (layers/paths) |
 | `epams` | pamphlet document metadata |
-| `epam_bodies` | optional; or body path under `media/pamphlet/...` |
+| `epam_bodies` | full pamphlet JSON bodies, keyed by owner + EPAM |
 | `epam_footers` | footer templates |
 | `homescool_students` | student profiles + access |
 | `homescool_links` | parent↔student links |
@@ -88,7 +88,6 @@ Indexes: owner/user_id, updated_at, job status, share token hash. TTL only where
 media/
   ereport/<userId>/…          # existing
   scrib/                      # optional assets only; sheet JSON in Mongo
-  pamphlet/<userId>/<epamId>.epam
   homescool/<userId>/…
   evoice/<userId>/<project>/docs|audios|…
   calvin-institutes-paragraphs/  # or backend/.data pack (read-only)
@@ -119,7 +118,7 @@ Source pack: workspace `calvin-institutes-paragraphs/` copied to `backend/.data/
 API parity with reference 003 under `/api/homescool/*`. Dynamo/S3 → Mongo + `media/homescool`. Student invite email via existing mailer. FE routes under `/homescool/*`. Calendar via FullCalendar (add deps) or vanilla equivalent matching UX.
 
 ### 5.5 Pamphlet
-- Cloud CRUD `/api/epams*` → Mongo + media bodies
+- Cloud CRUD `/api/epams*` → Mongo metadata + `epam_bodies`; no runtime filesystem reads or writes
 - `POST /api/documents/pamphlet/pdf` → `pkg/pdf` pamphlet builder (ink black / `#00368c`)
 - FE `/documents/pamphlet` using ported pamphlet-generator (vanilla TS)
 - Last-opened id → `user_preferences` key `pamphlet.lastEpamId`

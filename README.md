@@ -50,6 +50,14 @@ Collections provisioned on startup: `users`, `auth_sessions`, `email_verificatio
 
 eReport payloads, metadata, history, invites, and images are **not** Mongo collections. They live only under `/var/www/eduardoos.com/media/ereport/` (`EREPORT_MEDIA_ROOT`). Mongo is used for identity, sessions, OTPs, entitlements, and API keys.
 
+## Pamphlet
+
+Pamphlet metadata and complete EPAM document bodies live in MongoDB (`epams` and
+`epam_bodies`). The API does not read or write `media/pamphlet/` at runtime.
+On the first API start after this release, legacy filesystem-backed EPAM bodies
+are copied to MongoDB and their metadata is cut over. The original files remain
+on disk as offline backup data and are not read by the application.
+
 Safe migrations run automatically. Destructive migrations never run on startup. There are no destructive migrations in this release. A future drop/rebuild would require an Atlas backup (or `mongodump`) and then:
 
 ```bash

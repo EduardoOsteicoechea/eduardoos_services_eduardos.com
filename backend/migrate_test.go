@@ -15,14 +15,14 @@ import (
 )
 
 type fakeApplier struct {
-	mu                  sync.Mutex
-	name                string
-	collections         map[string]int
-	indexes             map[string][]mongo.IndexModel
-	records             map[string]schemaMigrationRecord
-	failCreateIndexAt   int
-	createIndexCalls    int
-	failCollection      string
+	mu                sync.Mutex
+	name              string
+	collections       map[string]int
+	indexes           map[string][]mongo.IndexModel
+	records           map[string]schemaMigrationRecord
+	failCreateIndexAt int
+	createIndexCalls  int
+	failCollection    string
 }
 
 func newFakeApplier(name string) *fakeApplier {
@@ -103,8 +103,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 	if err := applySchemaMigrations(ctx, log, applier, "test", safeSchemaMigrations(), false, ""); err != nil {
 		t.Fatalf("second apply: %v", err)
 	}
-	if len(applier.records) != 10 {
-		t.Fatalf("expected ten migration records, got %d", len(applier.records))
+	if len(applier.records) != 11 {
+		t.Fatalf("expected eleven migration records, got %d", len(applier.records))
 	}
 	if applier.records["001_initial_auth_schema"].Checksum == "" {
 		t.Fatal("missing checksum")
@@ -124,8 +124,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 
 func TestIndexDefinitionsMatchContract(t *testing.T) {
 	migrations := safeSchemaMigrations()
-	if len(migrations) != 10 {
-		t.Fatalf("expected ten safe migrations, got %d", len(migrations))
+	if len(migrations) != 11 {
+		t.Fatalf("expected eleven safe migrations, got %d", len(migrations))
 	}
 	m := migrations[0]
 	assertUnique := func(collection, field string) {

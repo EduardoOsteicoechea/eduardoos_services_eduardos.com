@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -39,6 +42,9 @@ func TestPamphletCRUDAndPDF(t *testing.T) {
 	epamID, _ := meta["epamId"].(string)
 	if epamID == "" {
 		t.Fatal("missing epamId")
+	}
+	if _, err := os.Stat(filepath.Join(app.cfg.MediaRoot, "pamphlet", "member-1", epamID+".epam")); !errors.Is(err, os.ErrNotExist) {
+		t.Fatalf("epam body must not be written to the filesystem: %v", err)
 	}
 
 	listed := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/epams", "")

@@ -54,11 +54,11 @@ type schemaMigrationRecord struct {
 }
 
 type indexSpec struct {
-	Collection          string
-	Keys                bson.D
-	Unique              bool
-	Sparse              bool
-	ExpireAfterSeconds  *int32
+	Collection         string
+	Keys               bson.D
+	Unique             bool
+	Sparse             bool
+	ExpireAfterSeconds *int32
 }
 
 func ttlExpireAt() *int32 {
@@ -93,11 +93,11 @@ func (idx indexSpec) fingerprint() string {
 }
 
 type schemaMigration struct {
-	ID           string
-	Description  string
-	Destructive  bool
-	Collections  []string
-	Indexes      []indexSpec
+	ID          string
+	Description string
+	Destructive bool
+	Collections []string
+	Indexes     []indexSpec
 }
 
 func (m schemaMigration) checksum() string {
@@ -254,6 +254,14 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEoprojectIFC, Keys: bson.D{{Key: "project_id", Value: 1}}},
 				{Collection: colEoprojectShares, Keys: bson.D{{Key: "token_hash", Value: 1}}, Unique: true},
 				{Collection: colEoprojectShares, Keys: bson.D{{Key: "project_id", Value: 1}}},
+			},
+		},
+		{
+			ID:          "011_epam_bodies",
+			Description: "Create MongoDB storage for Pamphlet document bodies",
+			Collections: []string{colEpamBodies},
+			Indexes: []indexSpec{
+				{Collection: colEpamBodies, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "epam_id", Value: 1}}, Unique: true},
 			},
 		},
 	}

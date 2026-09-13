@@ -18,7 +18,7 @@ const (
 	pamphletDefaultFooterL4    = "Actividades:"
 )
 
-// EpamRecord is pamphlet metadata (body lives under media/pamphlet/...).
+// EpamRecord is pamphlet metadata. The document body is stored in MongoDB.
 type EpamRecord struct {
 	UserID            string         `json:"userId" bson:"user_id"`
 	EpamID            string         `json:"epamId" bson:"epam_id"`
@@ -28,8 +28,6 @@ type EpamRecord struct {
 	SeriesChapter     string         `json:"seriesChapter,omitempty" bson:"series_chapter,omitempty"`
 	Author            string         `json:"author,omitempty" bson:"author,omitempty"`
 	Date              string         `json:"date,omitempty" bson:"date,omitempty"`
-	BodyPath          string         `json:"bodyPath,omitempty" bson:"body_path,omitempty"`
-	S3Key             string         `json:"s3Key,omitempty" bson:"s3_key,omitempty"` // FE-compatible alias of BodyPath
 	ContentSizeBytes  int64          `json:"contentSizeBytes,omitempty" bson:"content_size_bytes,omitempty"`
 	CreatedAt         string         `json:"createdAt,omitempty" bson:"created_at,omitempty"`
 	UpdatedAt         string         `json:"updatedAt" bson:"updated_at"`
@@ -48,8 +46,6 @@ type epamMetaDoc struct {
 	SeriesChapter     string `bson:"series_chapter,omitempty"`
 	Author            string `bson:"author,omitempty"`
 	Date              string `bson:"date,omitempty"`
-	BodyPath          string `bson:"body_path,omitempty"`
-	S3Key             string `bson:"s3_key,omitempty"`
 	ContentSizeBytes  int64  `bson:"content_size_bytes,omitempty"`
 	CreatedAt         string `bson:"created_at,omitempty"`
 	UpdatedAt         string `bson:"updated_at"`
@@ -71,8 +67,6 @@ func (r EpamRecord) toDoc() epamMetaDoc {
 		SeriesChapter:     r.SeriesChapter,
 		Author:            r.Author,
 		Date:              r.Date,
-		BodyPath:          r.BodyPath,
-		S3Key:             r.S3Key,
 		ContentSizeBytes:  r.ContentSizeBytes,
 		CreatedAt:         r.CreatedAt,
 		UpdatedAt:         r.UpdatedAt,
@@ -90,12 +84,27 @@ func (d epamMetaDoc) toRecord() EpamRecord {
 		SeriesChapter:     d.SeriesChapter,
 		Author:            d.Author,
 		Date:              d.Date,
-		BodyPath:          d.BodyPath,
-		S3Key:             d.S3Key,
 		ContentSizeBytes:  d.ContentSizeBytes,
 		CreatedAt:         d.CreatedAt,
 		UpdatedAt:         d.UpdatedAt,
 		LastCorrelationID: d.LastCorrelationID,
+	}
+}
+
+// epamBodyDoc is stored separately so list queries never load an entire pamphlet.
+type epamBodyDoc struct {
+	ID     string         `bson:"_id"`
+	UserID string         `bson:"user_id"`
+	EpamID string         `bson:"epam_id"`
+	Body   map[string]any `bson:"body"`
+}
+
+func (r EpamRecord) bodyDoc() epamBodyDoc {
+	return epamBodyDoc{
+		ID:     epamDocID(r.UserID, r.EpamID),
+		UserID: r.UserID,
+		EpamID: r.EpamID,
+		Body:   r.Body,
 	}
 }
 
@@ -170,7 +179,7 @@ type epamSeriesTreeItem struct {
 }
 
 type epamSeriesTreeChapter struct {
-	Name  string              `json:"name"`
+	Name  string               `json:"name"`
 	Items []epamSeriesTreeItem `json:"items"`
 }
 
@@ -186,14 +195,6 @@ type epamSeriesTreeResponse struct {
 
 func pamphletNow() string {
 	return time.Now().UTC().Format(time.RFC3339)
-}
-
-func pamphletBodyRelPath(userID, epamID string) string {
-	return fmt.Sprintf("pamphlet/%s/%s.epam", userID, epamID)
-}
-
-func pamphletRecycleRelPath(userID, epamID string) string {
-	return fmt.Sprintf("pamphlet/%s/recycle-bin/%s.epam", userID, epamID)
 }
 
 func normalizeFooterFields(f FooterFields) FooterFields {
