@@ -26,6 +26,17 @@ function rememberEostoreCompany(companyId: string): void {
   }
 }
 
+function forgetEostoreCompany(companyId?: string): void {
+  try {
+    const current = (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
+    if (!companyId || current === companyId.trim()) {
+      localStorage.removeItem(EOSTORE_LAST_COMPANY_KEY);
+    }
+  } catch {
+    /* private mode / blocked storage */
+  }
+}
+
 function lastEostoreCompanyId(): string {
   const fromPath = companyIdFromPath();
   if (fromPath) {
@@ -83,6 +94,31 @@ export function applyHeaderCartFab(companyId: string, cart?: EostoreCart | null)
   setCartFabHidden(!show);
 }
 
+async function applyCartFetchResult(
+  companyId: string,
+  status: number,
+  cart?: EostoreCart | null,
+): Promise<void> {
+  if (status === 200) {
+    applyHeaderCartFab(companyId, cart ?? null);
+    sessionLog("chrome.cart.status", {
+      companyId,
+      status,
+      count: cart?.count ?? 0,
+      empty: !cartHasPayableItems(cart),
+    });
+    return;
+  }
+  if (status === 404) {
+    forgetEostoreCompany(companyId);
+    setCartFabHidden(true);
+    sessionLog("chrome.cart.status", { companyId, status, empty: true });
+    return;
+  }
+  setCartFabHidden(true);
+  sessionLog("chrome.cart.status", { companyId, status, empty: true });
+}
+
 async function syncCartFab(): Promise<void> {
   if (!cartFabPolicy.authed || !cartFabPolicy.allowCart) {
     setCartFabHidden(true);
@@ -95,7 +131,7 @@ async function syncCartFab(): Promise<void> {
   }
   try {
     const res = await getCart(companyId);
-    applyHeaderCartFab(companyId, res.status === 200 ? res.data.cart : null);
+    await applyCartFetchResult(companyId, res.status, res.data.cart);
   } catch {
     setCartFabHidden(true);
   }
@@ -109,11 +145,17 @@ export async function refreshHeaderCartFab(
   if (companyId !== undefined) {
     if (cart !== undefined) {
       applyHeaderCartFab(companyId, cart);
+      sessionLog("chrome.cart.status", {
+        companyId,
+        status: 200,
+        count: cart?.count ?? 0,
+        empty: !cartHasPayableItems(cart),
+      });
       return;
     }
     try {
       const res = await getCart(companyId);
-      applyHeaderCartFab(companyId, res.status === 200 ? res.data.cart : null);
+      await applyCartFetchResult(companyId, res.status, res.data.cart);
     } catch {
       setCartFabHidden(true);
     }
@@ -315,7 +357,8 @@ function scheduleSessionRefresh(): void {
   sessionRefreshTimer = setInterval(() => {
     void refreshSession().then((result) => {
       if (result.status === 200 && result.data.id) {
-        void refreshAuthChrome();
+        // Session keepalive only — do not re-poll the cart.
+        void refreshAuthChrome({ syncCart: false });
         return;
       }
       clearSessionRefreshTimer();
@@ -330,7 +373,7 @@ function scheduleSessionRefresh(): void {
       sessionLog("chrome.visibility.refresh");
       void refreshSession().then((result) => {
         if (result.status === 200 && result.data.id) {
-          void refreshAuthChrome();
+          void refreshAuthChrome({ syncCart: false });
         }
       });
     });
@@ -388,11 +431,12 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   });
 }
 
-async function syncEostoreNav(): Promise<void> {
+async function syncEostoreNav(opts: { syncCart?: boolean } = {}): Promise<void> {
+  const syncCart = opts.syncCart !== false;
   const hosts = document.querySelectorAll("[data-eostore-nav]");
-  await syncCartFab();
   if (!hosts.length) {
     syncStaticStoreNav(0);
+    if (syncCart) await syncCartFab();
     return;
   }
   try {
@@ -401,7 +445,6 @@ async function syncEostoreNav(): Promise<void> {
     syncStaticStoreNav(companies.length);
     if (companies.length === 1) {
       rememberEostoreCompany(companies[0].id);
-      await syncCartFab();
     }
     const activeId = companyIdFromPath();
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -434,12 +477,12 @@ async function syncEostoreNav(): Promise<void> {
         host.appendChild(link);
       });
     });
-    await syncCartFab();
     sessionLog("chrome.eostoreNav", { count: companies.length, ids: companies.map((c) => c.id) });
   } catch {
     syncStaticStoreNav(0);
     sessionLog("chrome.eostoreNav.error");
   }
+  if (syncCart) await syncCartFab();
 }
 
 
@@ -486,8 +529,9 @@ function enforceGuestInstitutesAccess(authed: boolean): void {
   go("/session");
 }
 
-export async function refreshAuthChrome(): Promise<void> {
-  sessionLog("chrome.refreshAuth.start");
+export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Promise<void> {
+  const syncCart = opts.syncCart !== false;
+  sessionLog("chrome.refreshAuth.start", { syncCart });
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
   const isAdmin = authed && data.role === "admin";
@@ -537,7 +581,7 @@ export async function refreshAuthChrome(): Promise<void> {
   setCartFabPolicy(authed, !isPlainUser);
   await syncSubscriptionNav(isAdmin, authed);
   if (!isPlainUser) {
-    await syncEostoreNav();
+    await syncEostoreNav({ syncCart });
   } else {
     document.querySelectorAll("[data-eostore-nav]").forEach((host) => {
       if (host instanceof HTMLElement) {
@@ -545,7 +589,8 @@ export async function refreshAuthChrome(): Promise<void> {
         host.hidden = true;
       }
     });
-    await syncCartFab();
+    if (syncCart) await syncCartFab();
+    else setCartFabHidden(true);
   }
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);

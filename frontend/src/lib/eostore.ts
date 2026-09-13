@@ -250,15 +250,18 @@ export async function checkoutCart(companyId: string, description = "") {
   });
 }
 
-/** Resolve company id from `?id=` (preferred) or legacy `/store/{id}` paths. */
+/** Resolve company id only on store routes: `/store/company?id=` or legacy `/store/{id}`. */
 export function companyIdFromPath(
   pathname = window.location.pathname,
   search = window.location.search,
 ): string {
-  const fromQuery = new URLSearchParams(search).get("id")?.trim() || "";
-  if (fromQuery) return fromQuery;
   const parts = pathname.replace(/\/+$/, "").split("/").filter(Boolean);
-  if (parts[0] !== "store" || !parts[1] || parts[1] === "company") return "";
+  if (parts[0] !== "store" || !parts[1]) return "";
+  // Preferred: /store/company?id=... or /store/company/cart?id=...
+  if (parts[1] === "company") {
+    return new URLSearchParams(search).get("id")?.trim() || "";
+  }
+  // Legacy: /store/{id} or /store/{id}/cart
   return decodeURIComponent(parts[1]);
 }
 

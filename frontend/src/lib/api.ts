@@ -60,6 +60,31 @@ export type ChatTurn = {
   content: string;
 };
 
+export type ChatPageContext = {
+  path: string;
+  page_context: string;
+};
+
+/** Visible main-column text for the current route (bounded; sent as agent context). */
+export function collectChatPageContext(): ChatPageContext {
+  const path = typeof location !== "undefined" ? location.pathname.replace(/\/+$/, "") || "/" : "/";
+  const main = typeof document !== "undefined" ? document.querySelector("main") : null;
+  let page_context = "";
+  if (main instanceof HTMLElement) {
+    page_context = (main.innerText || "")
+      .replace(/[ 	]+
+/g, "
+")
+      .replace(/[ 	]{2,}/g, " ")
+      .trim();
+    if (page_context.length > 12000) {
+      page_context = page_context.slice(0, 12000);
+    }
+  }
+  return { path, page_context };
+}
+
+
 export type ChatResponse = APIErrorBody & {
   ok?: boolean;
   text?: string;
@@ -260,6 +285,18 @@ function logApiFailure(
     return;
   }
   if (path.includes("/auth/me") && status === 401) {
+    return;
+  }
+  // Missing/empty cart is an expected state, not a console error.
+  if (status === 404 && path.includes("/eostore/cart/")) {
+    console.log("[api.status]", {
+      method,
+      path,
+      status,
+      requestId,
+      error: data.error,
+      message: data.message || "cart empty or not found",
+    });
     return;
   }
   console.error("[api.error]", {
@@ -619,7 +656,7 @@ async function sendChat(message: string, history: ChatTurn[], stream: boolean, s
     method: "POST",
     headers,
     credentials: "include",
-    body: JSON.stringify({ message, history, ...(stream ? { stream: true } : {}) }),
+    body: JSON.stringify({ message, history, ...collectChatPageContext(), ...(stream ? { stream: true } : {}) }),
     signal,
   });
 }
