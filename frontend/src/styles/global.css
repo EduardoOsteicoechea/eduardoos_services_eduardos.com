@@ -1352,10 +1352,17 @@ section.diag .panel:not(form) {
   
 }
 
-@media (max-width: 47.999rem) {
-  /* Root scale on phone: 16px so 1rem matches the browser default. */
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  /* Root scale on tablet. */
   html {
-    font-size: 16px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  /* Root scale on phone. */
+  html {
+    font-size: 18px;
   }
 
   :root {

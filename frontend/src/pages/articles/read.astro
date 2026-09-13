@@ -30,6 +30,11 @@ import Layout from "../../layouts/Layout.astro";
     background: var(--color-surface);
   }
   .article-page img { max-width: 100%; height: auto; border-radius: var(--border-radius); }
+  @media (min-width: 48rem) and (max-width: 63.999rem) {
+    .article-page {
+      grid-column: 4 / 13;
+    }
+  }
 </style>
 <script>
   import { apiRequest } from "../../lib/api";
