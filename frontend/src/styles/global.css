@@ -205,6 +205,14 @@ a {
   color: var(--color-accent);
 }
 
+/* Tray open: invert chrome button so the active rail control is obvious */
+.app-header .icon-btn[aria-expanded="true"],
+.app-header .icon-btn[aria-expanded="true"]:hover,
+.app-header .icon-btn[aria-expanded="true"]:focus-visible {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
 .app-header .icon-btn .material-symbols-outlined {
   font-size: calc(var(--rail-button-size) * 0.75);
 }
@@ -1413,9 +1421,9 @@ section.diag .panel:not(form) {
     bottom: 0;
     width: var(--rail-width);
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 0;
-    padding: var(--rail-gap);
+    padding: var(--rail-gap) 0;
   }
 
   .app-header--end {
@@ -1424,12 +1432,17 @@ section.diag .panel:not(form) {
 
   .header-logo {
     order: -1;
-    align-self: center;
+    align-self: stretch;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
     margin-bottom: var(--rail-gap);
   }
 
   .header-cluster--menu {
     flex-direction: column;
+    align-items: stretch;
+    width: 100%;
     gap: var(--rail-gap);
   }
 
@@ -1443,8 +1456,23 @@ section.diag .panel:not(form) {
 
   .header-cluster--tools {
     flex-direction: column;
+    align-items: stretch;
+    width: 100%;
     margin-top: auto;
     gap: var(--rail-gap);
+  }
+
+  /* Full-rail square chrome buttons so invert fills the lateral bar */
+  .app-header .icon-btn:not(.header-session) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .app-header .header-session {
+    width: var(--rail-button-size);
+    height: var(--rail-button-size);
+    align-self: center;
   }
 
   .header-menu--mobile {
