@@ -1232,7 +1232,7 @@ section.diag .panel:not(form) {
     width: auto;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: var(--rail-gap);
     padding: var(--rail-gap);
   }
@@ -1242,44 +1242,37 @@ section.diag .panel:not(form) {
   }
 
   /*
-   * Phone/tablet (all routes): avatar (or ereport guest auth) left, separated;
-   * right group = AI → cart → dynamic actions → menu.
+   * Phone/tablet (all routes): bar end-aligned; order =
+   * [eReport guest auth when visible] → AI → session avatar → cart →
+   * dynamic actions → menu (menu flush end).
    */
   .header-cluster--menu,
   .header-cluster--tools {
     display: contents;
   }
 
-  .header-session:not([hidden]) {
-    order: 0;
-    margin-right: auto;
-  }
-
   .ereport-guest-auth:not([hidden]) {
     order: 0;
-    margin-right: auto;
   }
 
   .agent-fab {
     order: 1;
   }
 
-  .header-cart {
+  .header-session:not([hidden]) {
     order: 2;
   }
 
-  .header-dynamic {
+  .header-cart {
     order: 3;
   }
 
-  .header-menu--mobile {
+  .header-dynamic {
     order: 4;
   }
 
-  .app-header--start:not(:has(.header-session:not([hidden]))):not(
-      :has(.ereport-guest-auth:not([hidden]))
-    ) {
-    justify-content: flex-end;
+  .header-menu--mobile {
+    order: 5;
   }
 
   
