@@ -28,6 +28,7 @@ type EpamRecord struct {
 	SeriesChapter     string         `json:"seriesChapter,omitempty" bson:"series_chapter,omitempty"`
 	Author            string         `json:"author,omitempty" bson:"author,omitempty"`
 	Date              string         `json:"date,omitempty" bson:"date,omitempty"`
+	Public            bool           `json:"public" bson:"public"`
 	ContentSizeBytes  int64          `json:"contentSizeBytes,omitempty" bson:"content_size_bytes,omitempty"`
 	CreatedAt         string         `json:"createdAt,omitempty" bson:"created_at,omitempty"`
 	UpdatedAt         string         `json:"updatedAt" bson:"updated_at"`
@@ -46,6 +47,7 @@ type epamMetaDoc struct {
 	SeriesChapter     string `bson:"series_chapter,omitempty"`
 	Author            string `bson:"author,omitempty"`
 	Date              string `bson:"date,omitempty"`
+	Public            bool   `bson:"public"`
 	ContentSizeBytes  int64  `bson:"content_size_bytes,omitempty"`
 	CreatedAt         string `bson:"created_at,omitempty"`
 	UpdatedAt         string `bson:"updated_at"`
@@ -67,6 +69,7 @@ func (r EpamRecord) toDoc() epamMetaDoc {
 		SeriesChapter:     r.SeriesChapter,
 		Author:            r.Author,
 		Date:              r.Date,
+		Public:            r.Public,
 		ContentSizeBytes:  r.ContentSizeBytes,
 		CreatedAt:         r.CreatedAt,
 		UpdatedAt:         r.UpdatedAt,
@@ -84,6 +87,7 @@ func (d epamMetaDoc) toRecord() EpamRecord {
 		SeriesChapter:     d.SeriesChapter,
 		Author:            d.Author,
 		Date:              d.Date,
+		Public:            d.Public,
 		ContentSizeBytes:  d.ContentSizeBytes,
 		CreatedAt:         d.CreatedAt,
 		UpdatedAt:         d.UpdatedAt,

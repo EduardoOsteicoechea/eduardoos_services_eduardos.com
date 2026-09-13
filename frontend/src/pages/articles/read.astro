@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout
+  title="Article"
+  description="A publicly selected Eduardoos pamphlet presented as a readable article."
+  robots="index,follow"
+>
+  <article class="article-page" data-article>
+    <a href="/articles" data-route>Articles</a>
+    <p class="status" data-article-status>Loading article…</p>
+    <div data-article-content></div>
+  </article>
+</Layout>
+<style is:global>
+  .article-page, .article-page [data-article-content] { display: flex; flex-direction: column; gap: var(--rail-gap); }
+  .article-page h1, .article-page h2, .article-page p { margin: 0; }
+  .article-page h1 { font-size: var(--font-size-xl); }
+  .article-page h2 { font-size: var(--font-size-md); }
+  .article-page p { font-size: var(--font-size-sm); }
+</style>
+<script>
+  import { apiRequest } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { mustLog } from "../../lib/dev-log";
+
+  const status = document.querySelector("[data-article-status]");
+  const content = document.querySelector("[data-article-content]");
+  const id = new URLSearchParams(window.location.search).get("id")?.trim();
+  if (status instanceof HTMLElement && content instanceof HTMLElement) {
+    void (async () => {
+      if (!id) {
+        status.textContent = "Article id is missing.";
+        return;
+      }
+      const result = await apiRequest<{ title?: string; blocks?: Array<{ type: string; content: string }> }>(`/articles/${encodeURIComponent(id)}`);
+      if (mustLog) console.log("[articles] read", { responseStatus: result.status, requestId: result.requestId });
+      if (result.status >= 400) {
+        status.textContent = result.data.message || "Could not load the article.";
+        showErrorModal({ message: result.data.message || "Could not load the article.", requestId: result.requestId, details: result.requestId ? `request_id=${result.requestId}` : "" });
+        return;
+      }
+      status.remove();
+      for (const block of result.data.blocks ?? []) {
+        const node = document.createElement(block.type === "heading_1" ? "h2" : "p");
+        node.textContent = block.content;
+        content.appendChild(node);
+      }
+    })();
+  }
+</script>

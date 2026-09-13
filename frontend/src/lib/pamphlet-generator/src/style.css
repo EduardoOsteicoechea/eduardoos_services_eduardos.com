@@ -338,6 +338,23 @@
   padding: 8px 0;
 }
 
+/* Keep cloud-dialog content and its scrollbar away from the modal edges. */
+.open-cloud-list {
+  gap: var(--rail-gap);
+  padding-inline: var(--rail-gap);
+  scrollbar-gutter: stable;
+}
+
+.open-cloud-list__row,
+.open-cloud-list__chapter-items {
+  gap: var(--rail-gap);
+}
+
+.open-cloud-list__series,
+.open-cloud-list__chapter {
+  padding-inline: var(--rail-gap);
+}
+
 #modal-cancel,
 #item-type-cancel {
   background: #e8e8e8;

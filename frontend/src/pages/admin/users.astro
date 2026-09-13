@@ -33,6 +33,7 @@ import Layout from "../../layouts/Layout.astro";
               <th scope="col">Role</th>
               <th scope="col">Status</th>
               <th scope="col">Verified</th>
+              <th scope="col">Service access</th>
               <th scope="col">Created</th>
             </tr>
           </thead>
@@ -44,7 +45,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { getAdminUsers, getMe } from "../../lib/api";
+  import { apiRequest, getAdminUsers, getMe } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
 
   const root = document.querySelector("[data-admin-users]");
@@ -94,6 +95,8 @@ import Layout from "../../layouts/Layout.astro";
       role: string;
       status: string;
       email_verified: boolean;
+      id: string;
+      admin_services?: string[];
       created_at: string;
     }>) => {
       if (!(body instanceof HTMLElement)) {
@@ -108,13 +111,36 @@ import Layout from "../../layouts/Layout.astro";
           user.role,
           user.status,
           user.email_verified ? "yes" : "no",
-          formatDate(user.created_at),
         ];
         for (const text of cells) {
           const cell = document.createElement("td");
           cell.textContent = text;
           row.appendChild(cell);
         }
+        const access = document.createElement("td");
+        access.className = "admin-users-services";
+        const form = document.createElement("form");
+        form.dataset.userServices = user.id;
+        const granted = new Set(user.admin_services ?? []);
+        for (const service of ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api"]) {
+          const label = document.createElement("label");
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.name = "service";
+          input.value = service;
+          input.checked = granted.has(service);
+          label.append(input, ` ${service}`);
+          form.append(label);
+        }
+        const save = document.createElement("button");
+        save.type = "submit";
+        save.textContent = "Save";
+        form.appendChild(save);
+        access.appendChild(form);
+        row.appendChild(access);
+        const created = document.createElement("td");
+        created.textContent = formatDate(user.created_at);
+        row.appendChild(created);
         body.appendChild(row);
       }
       if (count instanceof HTMLElement) {
@@ -166,6 +192,25 @@ import Layout from "../../layouts/Layout.astro";
 
     refreshBtn?.addEventListener("click", () => {
       void loadUsers();
+    });
+
+    body?.addEventListener("submit", (event) => {
+      const form = event.target;
+      if (!(form instanceof HTMLFormElement) || !form.dataset.userServices) return;
+      event.preventDefault();
+      const services = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="service"]:checked')).map((input) => input.value);
+      void (async () => {
+        const result = await apiRequest<{ services?: string[] }>(`/admin/users/${encodeURIComponent(form.dataset.userServices || "")}/services`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ services }),
+        });
+        if (result.status >= 400) {
+          fail(result.data.message || "Could not update service access.", result.requestId, result.data.debug);
+          return;
+        }
+        setBanner("Service access updated.", "ok");
+      })();
     });
   }
 </script>

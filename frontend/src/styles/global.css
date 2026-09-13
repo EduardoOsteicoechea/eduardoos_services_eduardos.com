@@ -168,7 +168,7 @@ a {
   z-index: var(--z-activity);
   display: flex;
   overflow: visible;
-  background: transparent;
+  background: var(--color-bg);
   border: 0;
 }
 
@@ -1174,7 +1174,7 @@ section.diag .panel:not(form) {
 }
 
 .admin-users-table {
-  width: 100%;
+  min-width: 48rem;
   border-collapse: collapse;
   font-size: var(--font-size-xs);
 }
@@ -1194,6 +1194,16 @@ section.diag .panel:not(form) {
 
 .admin-users-table tbody tr:nth-child(even) {
   background: var(--color-surface);
+}
+
+.admin-users-services form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.admin-users-services label {
+  font-size: var(--font-size-xs);
 }
 
 /* Phone + tablet: top activity bar only (tools on the start bar) */

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strings"
@@ -103,6 +104,35 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 	admin := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/epams", "")
 	if admin.Code != http.StatusOK {
 		t.Fatalf("admin bypass: %d %s", admin.Code, admin.Body.String())
+	}
+}
+
+func TestArticlesRequireConfiguredOwnerAndPublication(t *testing.T) {
+	app := newTestApp(false)
+	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
+	_, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "public", Title: "Public", Public: true,
+		Body: map[string]any{"header": map[string]any{"title": "Public"}, "column_1": []any{map[string]any{"type": "paragraph", "text": "Visible"}}, "footer": map[string]any{}},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "private", Title: "Private",
+		Body: map[string]any{"header": map[string]any{"title": "Private"}, "footer": map[string]any{}},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	list := httptest.NewRecorder()
+	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(1) {
+		t.Fatalf("public list: %d %s", list.Code, list.Body.String())
+	}
+	private := httptest.NewRecorder()
+	app.Handler().ServeHTTP(private, httptest.NewRequest(http.MethodGet, "/api/articles/private", nil))
+	if private.Code != http.StatusNotFound {
+		t.Fatalf("private pamphlet exposed: %d %s", private.Code, private.Body.String())
 	}
 }
 

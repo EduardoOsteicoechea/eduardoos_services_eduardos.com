@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"log/slog"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -54,7 +56,13 @@ func (a *App) listUsersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	rows := make([]map[string]any, 0, len(users))
 	for _, user := range users {
-		rows = append(rows, adminUserSummary(user))
+		row := adminUserSummary(user)
+		if pref, err := a.store.UserPreferenceByKey(r.Context(), user.ID, "admin_services"); err == nil && pref != nil {
+			row["admin_services"] = preferenceServiceIDs(pref.Value)
+		} else {
+			row["admin_services"] = []string{}
+		}
+		rows = append(rows, row)
 	}
 	a.auditEvent(r, "admin_users", "listed", admin.ID)
 	a.logAuthDebug(r, "admin_users_ok", slog.Int("count", len(rows)))
@@ -62,4 +70,42 @@ func (a *App) listUsersHandler(w http.ResponseWriter, r *http.Request) {
 		"users": rows,
 		"count": len(rows),
 	})
+}
+
+type adminServicesBody struct {
+	Services []string `json:"services"`
+}
+
+// setUserServices stores administrator-granted access separately from paid
+// entitlements, so revoking an administrative grant cannot alter billing state.
+func (a *App) setUserServicesHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	admin := a.requireAdminRead(w, r)
+	if admin == nil {
+		return
+	}
+	targetID := strings.TrimSpace(r.PathValue("id"))
+	target, err := a.store.UserByID(r.Context(), targetID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	var body adminServicesBody
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 16<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	services := normalizeServiceIDs(body.Services)
+	if err := a.store.UpsertUserPreference(r.Context(), &UserPreference{
+		ID: target.ID + "\x00admin_services", UserID: target.ID, Key: "admin_services",
+		Value: services, UpdatedAt: time.Now().UTC(),
+	}); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "admin_service_access", "updated", admin.ID)
+	a.mustLogf(r, "admin.services.updated", "admin_id", admin.ID, "user_id", target.ID, "count", len(services))
+	writeJSON(w, http.StatusOK, map[string]any{"user_id": target.ID, "services": services})
 }

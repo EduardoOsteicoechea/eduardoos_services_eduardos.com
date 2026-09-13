@@ -56,3 +56,27 @@ func TestListUsersAdminOnly(t *testing.T) {
 		}
 	}
 }
+
+func TestAdminCanGrantAndRevokeServices(t *testing.T) {
+	app := newTestApp(true)
+	req, rec := app.adminPOST(t, "/api/admin/users/member-1/services", `{"services":["pamphlet","evoice"]}`)
+	req.Method = http.MethodPut
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("grant services: %d %s", rec.Code, rec.Body.String())
+	}
+	access := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/subscriptions/access/pamphlet", "")
+	if access.Code != http.StatusOK || decodeMap(t, access)["allowed"] != true {
+		t.Fatalf("manual access not granted: %d %s", access.Code, access.Body.String())
+	}
+	req, rec = app.adminPOST(t, "/api/admin/users/member-1/services", `{"services":[]}`)
+	req.Method = http.MethodPut
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("revoke services: %d %s", rec.Code, rec.Body.String())
+	}
+	access = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/subscriptions/access/pamphlet", "")
+	if decodeMap(t, access)["allowed"] != false {
+		t.Fatalf("manual access not revoked: %s", access.Body.String())
+	}
+}

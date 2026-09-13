@@ -107,16 +107,52 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 			reason = "linked_student"
 		}
 	}
+	if !allowed {
+		pref, err := a.store.UserPreferenceByKey(r.Context(), user.ID, "admin_services")
+		if err != nil {
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		if pref != nil && preferenceIncludesService(pref.Value, serviceID) {
+			allowed = true
+			reason = "admin_grant"
+		}
+	}
 	a.mustLogf(r, "subscriptions.access", "user_id", user.ID, "service", serviceID, "allowed", allowed, "reason", reason)
 	writeJSON(w, http.StatusOK, map[string]any{
-		"email":                 user.Email,
-		"service_id":            serviceID,
-		"allowed":               allowed,
-		"reason":                reason,
-		"is_admin":              user.Role == roleAdmin,
-		"has_entitlement":      reason == "entitlement" || reason == "admin",
+		"email":                user.Email,
+		"service_id":           serviceID,
+		"allowed":              allowed,
+		"reason":               reason,
+		"is_admin":             user.Role == roleAdmin,
+		"has_entitlement":      reason == "entitlement" || reason == "admin" || reason == "admin_grant",
 		"is_homescool_student": reason == "linked_student",
 	})
+}
+
+func preferenceIncludesService(value any, serviceID string) bool {
+	for _, value := range preferenceServiceIDs(value) {
+		if strings.EqualFold(value, serviceID) {
+			return true
+		}
+	}
+	return false
+}
+
+func preferenceServiceIDs(value any) []string {
+	switch values := value.(type) {
+	case []string:
+		return normalizeServiceIDs(values)
+	case []any:
+		out := make([]string, 0, len(values))
+		for _, raw := range values {
+			if value, ok := raw.(string); ok {
+				out = append(out, value)
+			}
+		}
+		return normalizeServiceIDs(out)
+	}
+	return []string{}
 }
 
 func (a *App) subscriptionsPreviewHandler(w http.ResponseWriter, r *http.Request) {
