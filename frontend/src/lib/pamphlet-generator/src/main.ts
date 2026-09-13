@@ -2650,7 +2650,14 @@ if (window.visualViewport) {
             openCreateModal();
             return true;
         }
-        if (view === "open" || view === "recent" || view === "manage" || view === "edit") {
+        if (view === "manage") {
+            // Manage must always offer local .epam load + cloud list (do not
+            // auto-open the last document and skip the picker).
+            syncOpenSourceModalForFsa();
+            openSourceModal.showModal();
+            return true;
+        }
+        if (view === "open" || view === "recent" || view === "edit") {
             void (async () => {
                 const lastEpamId = await readLastEpamId();
                 if (lastEpamId) {

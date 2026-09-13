@@ -6,6 +6,7 @@ import addRowAboveUrl from "../assets/icons/add_row_above_24dp_E3E3E3_FILL0_wght
 import addRowBelowUrl from "../assets/icons/add_row_below_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg?url";
 import undoUrl from "../assets/icons/undo_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg?url";
 import deleteUrl from "../assets/icons/delete_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg?url";
+import stickyNoteUrl from "../assets/icons/sticky_note_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg?url";
 import menuUrl from "../assets/icons/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg?url";
 
 export const ICONS = {
@@ -16,6 +17,7 @@ export const ICONS = {
     addRowBelow: addRowBelowUrl,
     undo: undoUrl,
     delete: deleteUrl,
+    stickyNote: stickyNoteUrl,
 } as const;
 
 export const MENU_ICON = menuUrl;

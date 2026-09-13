@@ -40,7 +40,7 @@ const PAMPHLET_CARDS = [
   { id: "recent", title: "Recent", description: "Continue recent pamphlets.", icon: "history" },
   { id: "open", title: "Open", description: "Open a cloud pamphlet.", icon: "folder_open" },
   { id: "new", title: "New", description: "Create a new pamphlet.", icon: "note_add" },
-  { id: "manage", title: "Manage", description: "Manage cloud documents.", icon: "folder_managed" },
+  { id: "manage", title: "Manage", description: "Manage cloud docs or load a .epam.", icon: "folder_managed" },
   { id: "footers", title: "Footers", description: "Footer profiles.", icon: "vertical_align_bottom" },
 ];
 
