@@ -2295,3 +2295,91 @@
     border: none;
   }
 }
+
+
+/* ---- Item notes ---- */
+.pamphlet-note-mark {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
+  cursor: pointer;
+}
+
+.pamphlet-item--has-notes .pamphlet-note-mark:hover {
+  color: var(--pamphlet-accent, #0b57d0);
+}
+
+.notes-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: min(24rem, 92vw);
+}
+
+.notes-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.notes-modal-header h2 {
+  margin: 0;
+}
+
+.notes-modal-close {
+  flex: 0 0 auto;
+}
+
+.notes-modal-input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.notes-input {
+  width: 100%;
+  min-height: 5rem;
+  resize: vertical;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.5rem;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 12rem;
+  overflow: auto;
+}
+
+.notes-list-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 0.25rem;
+}
+
+.notes-list-text {
+  margin: 0;
+  flex: 1 1 auto;
+  white-space: pre-wrap;
+}
+
+.notes-list-delete {
+  flex: 0 0 auto;
+}
+
+.notes-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.edit_tray_notes_button {
+  /* inherits edit_tray_icon_button sizing */
+}

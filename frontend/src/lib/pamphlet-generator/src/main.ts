@@ -19,14 +19,19 @@ import { normalizeImageDataUrlToJpeg } from "./create_element";
 import {
     appendItem,
     applyBoldRange,
+    clearItemNotes,
     clonePamphlet,
+    createNotesForSelection,
     createTypedItem,
     deleteItem,
     getRegionItems,
     insertItem,
     moveItemDown,
     moveItemUp,
+    newNoteId,
+    reconcileItemNotes,
     resolveLocation,
+    setItemNotes,
     updateItemContent,
     updateItemHeightMm,
     updateItemStyleIndexes,
@@ -69,6 +74,7 @@ import {
     syncFooterMetaEmptyFlags,
     syncImageItemFromDom,
     syncItemContentFromTextarea,
+    parseItemNotes,
 } from "./pamphlet_io";
 import {
     FOOTER_COLUMN,
@@ -91,6 +97,8 @@ import {
     type PamphletHeader,
     type PamphletItemType,
     type PamphletStructure,
+    type PamphletItemNotes,
+    type PamphletNoteEntry,
 } from "./pamphlet_schema";
 
 type PendingInsert =
@@ -175,6 +183,14 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const footerFormFromSheet = requireElement<HTMLButtonElement>("#footer-form-from-sheet");
     const footerModalCancelBtn = requireElement<HTMLButtonElement>("#footer-modal-cancel");
     const itemTypeModal = requireElement<HTMLDialogElement>("#item-type-modal");
+    const notesModal = requireElement<HTMLDialogElement>("#notes-modal");
+    const notesModalTitle = requireElement<HTMLElement>("#notes-modal-title");
+    const notesModalHint = requireElement<HTMLElement>("#notes-modal-hint");
+    const notesList = requireElement<HTMLElement>("#notes-list");
+    const notesInput = requireElement<HTMLTextAreaElement>("#notes-input");
+    const notesAddBtn = requireElement<HTMLButtonElement>("#notes-add");
+    const notesSaveBtn = requireElement<HTMLButtonElement>("#notes-save");
+    const notesCloseBtn = requireElement<HTMLButtonElement>("#notes-modal-close");
     const itemTypeCancelBtn = requireElement<HTMLButtonElement>("#item-type-cancel");
     const headerMenu = requireElement<HTMLElement>("#pamphlet-header-menu");
 
@@ -1366,6 +1382,217 @@ async function handleAddItemButton(column: number): Promise<void> {
     openItemTypeModal({ mode: "end", column });
 }
 
+
+type NotesModalMode = "create" | "manage";
+
+type NotesSession = {
+    container: HTMLElement;
+    loc: LastEditedElement;
+    selectionStart: number;
+    selectionEnd: number;
+    mode: NotesModalMode;
+    reopenEdit: boolean;
+};
+
+let notesSession: NotesSession | null = null;
+
+function getBodyItemAt(data: PamphletStructure, loc: LastEditedElement) {
+    if (loc.column < 1 || loc.column > 8) return null;
+    const items = getRegionItems(data, loc.column);
+    return items[loc.index] ?? null;
+}
+
+function renderNotesListUI(notes: PamphletItemNotes | undefined): void {
+    notesList.replaceChildren();
+    if (!notes || notes.entries.length === 0) {
+        notesList.hidden = true;
+        return;
+    }
+    notesList.hidden = false;
+    for (const entry of notes.entries) {
+        const row = document.createElement("div");
+        row.className = "notes-list-row";
+
+        const text = document.createElement("p");
+        text.className = "notes-list-text";
+        text.textContent = entry.text;
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "notes-list-delete";
+        del.textContent = "Borrar";
+        del.setAttribute("aria-label", "Borrar nota");
+        del.addEventListener("click", () => {
+            void removeNoteEntry(entry.id);
+        });
+
+        row.appendChild(text);
+        row.appendChild(del);
+        notesList.appendChild(row);
+    }
+}
+
+function configureNotesModal(mode: NotesModalMode, notes: PamphletItemNotes | undefined): void {
+    notesInput.value = "";
+    if (mode === "create") {
+        notesModalTitle.textContent = "Añadir nota";
+        notesModalHint.textContent = "Escribe una nota para el texto seleccionado.";
+        notesAddBtn.hidden = true;
+        notesSaveBtn.hidden = false;
+        notesSaveBtn.textContent = "Guardar";
+        notesList.hidden = true;
+        notesList.replaceChildren();
+    } else {
+        notesModalTitle.textContent = "Notas";
+        notesModalHint.textContent =
+            "Puedes añadir más notas o borrar notas individuales. Si borras todas, se quita el subrayado.";
+        notesAddBtn.hidden = false;
+        notesSaveBtn.hidden = false;
+        notesSaveBtn.textContent = "Listo";
+        renderNotesListUI(notes);
+    }
+}
+
+async function removeNoteEntry(id: string): Promise<void> {
+    if (!currentDoc || !notesSession) return;
+    const base = snapshotFromDom(currentDoc.last_edited_element);
+    if (!base) return;
+    const item = getBodyItemAt(base, notesSession.loc);
+    if (!item?.notes) return;
+    const nextEntries = item.notes.entries.filter((e) => e.id !== id);
+    if (nextEntries.length === 0) {
+        clearItemNotes(item);
+        renderNotesListUI(undefined);
+    } else {
+        item.notes = { ...item.notes, entries: nextEntries };
+        reconcileItemNotes(item);
+        renderNotesListUI(item.notes);
+    }
+    base.last_edited_element = notesSession.loc;
+    pushUndoSnapshot();
+    await commitDocument(base, notesSession.reopenEdit);
+}
+
+async function addNoteFromInput(): Promise<void> {
+    if (!currentDoc || !notesSession) return;
+    const text = notesInput.value.trim();
+    if (!text) {
+        setError("Escribe una nota antes de añadirla.");
+        return;
+    }
+    const base = snapshotFromDom(currentDoc.last_edited_element);
+    if (!base) return;
+    const item = getBodyItemAt(base, notesSession.loc);
+    if (!item || item.type === "image") return;
+
+    if (!item.notes || item.notes.entries.length === 0) {
+        const created = createNotesForSelection(
+            item.content,
+            notesSession.selectionStart,
+            notesSession.selectionEnd,
+            text,
+        );
+        if (!created) {
+            setError("Selecciona texto en el elemento para asociar la nota.");
+            return;
+        }
+        setItemNotes(item, created);
+    } else {
+        item.notes.entries.push({ id: newNoteId(), text });
+        reconcileItemNotes(item);
+    }
+
+    notesInput.value = "";
+    clearError();
+    renderNotesListUI(item.notes);
+    configureNotesModal("manage", item.notes);
+    notesSession = { ...notesSession, mode: "manage" };
+    base.last_edited_element = notesSession.loc;
+    pushUndoSnapshot();
+    await commitDocument(base, notesSession.reopenEdit);
+}
+
+async function saveNotesCreate(): Promise<void> {
+    if (!notesSession) return;
+    if (notesSession.mode === "manage") {
+        closeNotesModal();
+        return;
+    }
+    await addNoteFromInput();
+    closeNotesModal();
+}
+
+function closeNotesModal(): void {
+    notesSession = null;
+    notesInput.value = "";
+    notesList.replaceChildren();
+    notesList.hidden = true;
+    if (notesModal.open) notesModal.close();
+}
+
+async function openNotesModal(
+    detail: Extract<PamphletTrayAction, { action: "notes" | "notes-view" }>,
+): Promise<void> {
+    if (!currentDoc) {
+        setError("No pamphlet file is open.");
+        return;
+    }
+    if (isImageItem(detail.container) || isChromeItem(detail.container)) {
+        setError("Las notas solo aplican a texto del cuerpo del panfleto.");
+        return;
+    }
+
+    const base = snapshotFromDom(currentDoc.last_edited_element);
+    if (!base) return;
+
+    let loc = locationFromContainer(detail.container);
+    if (detail.action === "notes") {
+        loc = syncContentIntoDoc(detail.container, base) ?? loc;
+    }
+    if (!loc) return;
+
+    currentDoc = base;
+    currentHeader = { ...base.header };
+
+    const item = getBodyItemAt(base, loc);
+    if (!item || item.type === "image") {
+        setError("Las notas solo aplican a texto del cuerpo del panfleto.");
+        return;
+    }
+
+    const existing = item.notes && item.notes.entries.length > 0 ? item.notes : undefined;
+    const reopenEdit = detail.action === "notes";
+    let mode: NotesModalMode = existing ? "manage" : "create";
+    let selectionStart = 0;
+    let selectionEnd = 0;
+
+    if (detail.action === "notes") {
+        selectionStart = detail.start;
+        selectionEnd = detail.end;
+        if (!existing && selectionEnd <= selectionStart) {
+            setError("Selecciona el texto que quieres anotar.");
+            return;
+        }
+        if (existing) mode = "manage";
+    } else {
+        mode = "manage";
+        if (!existing) return;
+    }
+
+    notesSession = {
+        container: detail.container,
+        loc,
+        selectionStart,
+        selectionEnd,
+        mode,
+        reopenEdit,
+    };
+    configureNotesModal(mode, existing);
+    clearError();
+    if (!notesModal.open) notesModal.showModal();
+    notesInput.focus();
+}
+
 async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
     if (!currentDoc || !currentHeader) {
         setError("No pamphlet file is open.");
@@ -1410,6 +1637,11 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         const restored = clonePamphlet(undoSnapshot);
         undoSnapshot = currentDoc ? clonePamphlet(currentDoc) : null;
         await commitDocument(restored, true);
+        return;
+    }
+
+    if (detail.action === "notes" || detail.action === "notes-view") {
+        await openNotesModal(detail);
         return;
     }
 
@@ -1524,6 +1756,20 @@ on(main, "click", (event: MouseEvent) => {
 on(main, "pamphlet-tray-action", (event: Event) => {
     const custom = event as CustomEvent<PamphletTrayAction>;
     void handleTrayAction(custom.detail);
+});
+
+on(notesCloseBtn, "click", () => {
+    closeNotesModal();
+});
+on(notesSaveBtn, "click", () => {
+    void saveNotesCreate();
+});
+on(notesAddBtn, "click", () => {
+    void addNoteFromInput();
+});
+on(notesModal, "cancel", (event: Event) => {
+    event.preventDefault();
+    closeNotesModal();
 });
 
 function syncOpenSourceModalForFsa(): void {

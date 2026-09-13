@@ -20,6 +20,7 @@ import {
     type PamphletFooter,
     type PamphletHeader,
     type PamphletItem,
+    type PamphletItemNotes,
     type PamphletItemType,
     type PamphletStructure,
     type StyleIndexes,
@@ -28,6 +29,7 @@ import {
 export const STYLE_INDEXES_ATTR = "data-style-indexes";
 export const ITEM_TYPE_ATTR = "data-item-type";
 export const HEIGHT_MM_ATTR = "data-height-mm";
+export const NOTES_ATTR = "data-notes";
 
 const HEADER_FIELD_CLASSES: Record<HeaderFieldKey, string> = {
     title: "pamphlet-header-title",
@@ -103,36 +105,100 @@ export function applyStyledContent(
     el: HTMLElement,
     content: string,
     styleIndexes: StyleIndexes,
+    notes?: PamphletItemNotes | null,
 ): void {
-    const [start, end] = styleIndexes[0];
     el.replaceChildren();
 
-    if (
-        Number.isFinite(start) &&
-        Number.isFinite(end) &&
-        end > start &&
-        start >= 0 &&
-        end <= content.length
-    ) {
-        if (start > 0) {
-            el.appendChild(document.createTextNode(content.slice(0, start)));
+    const bold = styleIndexes[0];
+    const boldStart = Number.isFinite(bold?.[0]) ? bold[0] : 0;
+    const boldEnd = Number.isFinite(bold?.[1]) ? bold[1] : 0;
+    const hasBold =
+        boldEnd > boldStart && boldStart >= 0 && boldEnd <= content.length;
+
+    let noteStart = 0;
+    let noteEnd = 0;
+    let hasNote = false;
+    if (notes && notes.entries.length > 0) {
+        if (notes.whole) {
+            noteStart = 0;
+            noteEnd = content.length;
+            hasNote = noteEnd > noteStart;
+        } else if (
+            notes.end > notes.start &&
+            notes.start >= 0 &&
+            notes.end <= content.length
+        ) {
+            noteStart = notes.start;
+            noteEnd = notes.end;
+            hasNote = true;
         }
-        const bold = document.createElement("b");
-        bold.textContent = content.slice(start, end);
-        el.appendChild(bold);
-        if (end < content.length) {
-            el.appendChild(document.createTextNode(content.slice(end)));
-        }
+    }
+
+    if (!hasBold && !hasNote) {
+        el.textContent = content;
         return;
     }
 
-    el.textContent = content;
+    const points = new Set<number>([0, content.length]);
+    if (hasBold) {
+        points.add(boldStart);
+        points.add(boldEnd);
+    }
+    if (hasNote) {
+        points.add(noteStart);
+        points.add(noteEnd);
+    }
+    const sorted = [...points].sort((a, b) => a - b);
+
+    for (let i = 0; i < sorted.length - 1; i++) {
+        const a = sorted[i];
+        const b = sorted[i + 1];
+        if (b <= a) continue;
+        const slice = content.slice(a, b);
+        const inBold = hasBold && a >= boldStart && b <= boldEnd;
+        const inNote = hasNote && a >= noteStart && b <= noteEnd;
+
+        let node: Node = document.createTextNode(slice);
+        if (inBold) {
+            const boldEl = document.createElement("b");
+            boldEl.textContent = slice;
+            node = boldEl;
+        }
+        if (inNote) {
+            const mark = document.createElement("span");
+            mark.className = "pamphlet-note-mark";
+            mark.setAttribute("data-note-mark", "1");
+            mark.appendChild(node);
+            node = mark;
+        }
+        el.appendChild(node);
+    }
 }
 
 function applyItemMeta(container: HTMLElement, item: PamphletItem): void {
     container.setAttribute(ITEM_TYPE_ATTR, item.type);
     container.setAttribute(STYLE_INDEXES_ATTR, JSON.stringify(item.style_indexes));
     container.setAttribute(HEIGHT_MM_ATTR, String(item.height_mm ?? 0));
+    if (item.notes && item.notes.entries.length > 0) {
+        container.setAttribute(NOTES_ATTR, JSON.stringify(item.notes));
+        container.classList.add("pamphlet-item--has-notes");
+    } else {
+        container.removeAttribute(NOTES_ATTR);
+        container.classList.remove("pamphlet-item--has-notes");
+    }
+}
+
+export function parseItemNotes(raw: string | null): PamphletItemNotes | undefined {
+    if (!raw) return undefined;
+    try {
+        const parsed = JSON.parse(raw) as PamphletItemNotes;
+        if (!parsed || !Array.isArray(parsed.entries) || parsed.entries.length === 0) {
+            return undefined;
+        }
+        return parsed;
+    } catch {
+        return undefined;
+    }
 }
 
 function createImageItemElement(item: PamphletItem, lead = false): HTMLElement {
@@ -189,7 +255,7 @@ export function createItemElement(item: PamphletItem, opts?: { lead?: boolean })
     });
     applyItemMeta(container, item);
     const inner = container.firstElementChild as HTMLElement;
-    applyStyledContent(inner, item.content, item.style_indexes);
+    applyStyledContent(inner, item.content, item.style_indexes, item.notes);
     return container;
 }
 
@@ -439,6 +505,8 @@ function serializeItem(container: HTMLElement): PamphletItem {
     const heightRaw = Number(container.getAttribute(HEIGHT_MM_ATTR) ?? 0);
     const height_mm = type === "image" ? clampImageHeightMm(heightRaw || DEFAULT_IMAGE_HEIGHT_MM) : 0;
 
+    const notes = parseItemNotes(container.getAttribute(NOTES_ATTR));
+
     if (type === "image") {
         const img = container.querySelector<HTMLImageElement>(":scope > .pamphlet-image-frame > img");
         return {
@@ -446,6 +514,7 @@ function serializeItem(container: HTMLElement): PamphletItem {
             content: img?.getAttribute("src") ?? "",
             style_indexes: parseStyleIndexes(container.getAttribute(STYLE_INDEXES_ATTR)),
             height_mm,
+            ...(notes ? { notes } : {}),
         };
     }
 
@@ -455,6 +524,7 @@ function serializeItem(container: HTMLElement): PamphletItem {
         content: inner?.textContent ?? "",
         style_indexes: parseStyleIndexes(container.getAttribute(STYLE_INDEXES_ATTR)),
         height_mm: 0,
+        ...(notes ? { notes } : {}),
     };
 }
 
@@ -666,7 +736,7 @@ export function syncItemContentFromTextarea(container: HTMLElement): void {
         styles[0] = [0, 0];
         container.setAttribute(STYLE_INDEXES_ATTR, JSON.stringify(styles));
     }
-    applyStyledContent(inner, content, styles);
+    applyStyledContent(inner, content, styles, parseItemNotes(container.getAttribute(NOTES_ATTR)));
 }
 
 export function syncImageItemFromDom(

@@ -7,7 +7,9 @@ import {
     createParagraphItem,
     type LastEditedElement,
     type PamphletItem,
+    type PamphletItemNotes,
     type PamphletItemType,
+    type PamphletNoteEntry,
     type PamphletStructure,
     type StyleIndexes,
 } from "./pamphlet_schema";
@@ -216,6 +218,87 @@ export function updateItemContent(
     if (end > content.length || start > content.length || end < start) {
         item.style_indexes[0] = [0, 0];
     }
+    reconcileItemNotes(item);
+}
+
+export function newNoteId(): string {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return crypto.randomUUID();
+    }
+    return `note-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+export function clearItemNotes(item: PamphletItem): void {
+    delete item.notes;
+}
+
+export function setItemNotes(item: PamphletItem, notes: PamphletItemNotes | undefined): void {
+    if (!notes || notes.entries.length === 0) {
+        delete item.notes;
+        return;
+    }
+    item.notes = notes;
+}
+
+/** Keep note underline in sync after content edits; expand to whole item if anchor vanishes. */
+export function reconcileItemNotes(item: PamphletItem): void {
+    const notes = item.notes;
+    if (!notes) return;
+    if (!notes.entries.length) {
+        delete item.notes;
+        return;
+    }
+    if (item.type === "image") {
+        delete item.notes;
+        return;
+    }
+    const content = item.content;
+    if (notes.whole) {
+        notes.start = 0;
+        notes.end = content.length;
+        notes.anchor = content;
+        return;
+    }
+    if (
+        notes.start >= 0 &&
+        notes.end <= content.length &&
+        notes.end > notes.start &&
+        content.slice(notes.start, notes.end) === notes.anchor
+    ) {
+        return;
+    }
+    if (notes.anchor && notes.anchor.length > 0) {
+        const idx = content.indexOf(notes.anchor);
+        if (idx >= 0) {
+            notes.start = idx;
+            notes.end = idx + notes.anchor.length;
+            return;
+        }
+    }
+    notes.whole = true;
+    notes.start = 0;
+    notes.end = content.length;
+    notes.anchor = content;
+}
+
+export function createNotesForSelection(
+    content: string,
+    start: number,
+    end: number,
+    firstText: string,
+): PamphletItemNotes | undefined {
+    const a = Math.max(0, Math.min(start, end));
+    const b = Math.min(content.length, Math.max(start, end));
+    const text = firstText.trim();
+    if (b <= a || !text) return undefined;
+    const entry: PamphletNoteEntry = { id: newNoteId(), text };
+    return {
+        start: a,
+        end: b,
+        whole: false,
+        anchor: content.slice(a, b),
+        entries: [entry],
+    };
 }
 
 export function updateItemHeightMm(

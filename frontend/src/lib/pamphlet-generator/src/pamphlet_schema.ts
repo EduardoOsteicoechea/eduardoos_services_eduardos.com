@@ -2,12 +2,30 @@ export type StyleIndexes = [[number, number], [number, number], [number, number]
 
 export type PamphletItemType = "paragraph" | "heading_1" | "image";
 
+export interface PamphletNoteEntry {
+    id: string;
+    text: string;
+}
+
+/** Notes attached to a text span (or the whole item when `whole` is true). */
+export interface PamphletItemNotes {
+    start: number;
+    end: number;
+    /** True when the annotated span was deleted — underline the entire item. */
+    whole: boolean;
+    /** Snapshot of the annotated text used to detect deletion / relocation. */
+    anchor: string;
+    entries: PamphletNoteEntry[];
+}
+
 export interface PamphletItem {
     type: PamphletItemType;
     content: string;
     style_indexes: StyleIndexes;
     /** Frame height in mm for images; 0 for text items. */
     height_mm: number;
+    /** Optional editor notes; omitted when empty. */
+    notes?: PamphletItemNotes;
 }
 
 export interface PamphletHeader {
@@ -471,7 +489,8 @@ const FOOTER_KEYS = [
     "value4",
 ] as const;
 const LAST_EDITED_KEYS = ["column", "index"] as const;
-const ITEM_KEYS = ["type", "content", "style_indexes", "height_mm"] as const;
+const ITEM_REQUIRED_KEYS = ["type", "content", "style_indexes", "height_mm"] as const;
+const ITEM_OPTIONAL_KEYS = ["notes"] as const;
 const ITEM_TYPES = new Set<string>(["paragraph", "heading_1", "image"]);
 
 /** Pull text out of a legacy footer.items[] entry. */
@@ -598,11 +617,56 @@ function assertStyleIndexes(value: unknown, label: string): asserts value is Sty
     }
 }
 
+function assertNoteEntry(value: unknown, label: string): asserts value is PamphletNoteEntry {
+    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        throw new Error(`${label} must be an object`);
+    }
+    assertExactKeys(value, ["id", "text"] as const, label);
+    const entry = value as Record<string, unknown>;
+    assertString(entry.id, `${label}.id`);
+    assertString(entry.text, `${label}.text`);
+}
+
+function assertItemNotes(value: unknown, label: string): asserts value is PamphletItemNotes {
+    if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        throw new Error(`${label} must be an object`);
+    }
+    assertExactKeys(value, ["start", "end", "whole", "anchor", "entries"] as const, label);
+    const notes = value as Record<string, unknown>;
+    if (typeof notes.start !== "number" || !Number.isInteger(notes.start) || notes.start < 0) {
+        throw new Error(`${label}.start must be a non-negative integer`);
+    }
+    if (typeof notes.end !== "number" || !Number.isInteger(notes.end) || notes.end < 0) {
+        throw new Error(`${label}.end must be a non-negative integer`);
+    }
+    if (typeof notes.whole !== "boolean") {
+        throw new Error(`${label}.whole must be a boolean`);
+    }
+    assertString(notes.anchor, `${label}.anchor`);
+    if (!Array.isArray(notes.entries)) {
+        throw new Error(`${label}.entries must be an array`);
+    }
+    notes.entries.forEach((entry, index) => {
+        assertNoteEntry(entry, `${label}.entries[${index}]`);
+    });
+}
+
 function assertPamphletItem(value: unknown, label: string): asserts value is PamphletItem {
     if (typeof value !== "object" || value === null || Array.isArray(value)) {
         throw new Error(`${label} must be an object`);
     }
-    assertExactKeys(value, ITEM_KEYS, label);
+    const keys = Object.keys(value);
+    const allowed = new Set<string>([...ITEM_REQUIRED_KEYS, ...ITEM_OPTIONAL_KEYS]);
+    for (const key of keys) {
+        if (!allowed.has(key)) {
+            throw new Error(`${label}: unexpected key "${key}"`);
+        }
+    }
+    for (const key of ITEM_REQUIRED_KEYS) {
+        if (!(key in value)) {
+            throw new Error(`${label}: missing required key "${key}"`);
+        }
+    }
     const item = value as Record<string, unknown>;
     assertString(item.type, `${label}.type`);
     if (!ITEM_TYPES.has(item.type)) {
@@ -615,6 +679,9 @@ function assertPamphletItem(value: unknown, label: string): asserts value is Pam
     }
     if (item.type === "image" && item.height_mm < MIN_IMAGE_HEIGHT_MM) {
         throw new Error(`${label}.height_mm must be >= ${MIN_IMAGE_HEIGHT_MM} for images`);
+    }
+    if ("notes" in item && item.notes !== undefined) {
+        assertItemNotes(item.notes, `${label}.notes`);
     }
 }
 

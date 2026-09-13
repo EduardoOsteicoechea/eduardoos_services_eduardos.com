@@ -42,6 +42,13 @@ export type PamphletTrayAction =
     | { action: "add-above"; container: HTMLElement }
     | { action: "add-below"; container: HTMLElement }
     | { action: "bold"; container: HTMLElement; start: number; end: number }
+    | {
+          action: "notes";
+          container: HTMLElement;
+          start: number;
+          end: number;
+      }
+    | { action: "notes-view"; container: HTMLElement }
     | { action: "undo"; container: HTMLElement }
     | { action: "delete"; container: HTMLElement };
 
@@ -287,7 +294,17 @@ export default function CreateElement(
     attributes.forEach((att) => el.setAttribute(att.key, att.value));
     el.textContent = content;
 
-    el.addEventListener("click", () => {
+    el.addEventListener("click", (event: MouseEvent) => {
+        const target = event.target as Element | null;
+        if (target?.closest(".pamphlet-note-mark")) {
+            event.preventDefault();
+            event.stopPropagation();
+            dispatchTrayAction(elContainer, {
+                action: "notes-view",
+                container: elContainer,
+            });
+            return;
+        }
         editTray(elContainer, el, id, trayMode);
     });
 
@@ -491,6 +508,28 @@ function editTray(
         }
 
         editTrayButtonsTray.appendChild(undoButton);
+
+        if (!imageMode) {
+            const notesButton = document.createElement("button");
+            setButtonIcon(notesButton, ICONS.stickyNote, "Notas");
+            notesButton.classList.add("edit_tray_notes_button");
+            notesButton.addEventListener("click", () => {
+                const area =
+                    editTrayTextArea ??
+                    tray.querySelector<HTMLTextAreaElement>(".edit_tray_text_area");
+                const start = area?.selectionStart ?? 0;
+                const end = area?.selectionEnd ?? 0;
+                // Do not remount — keep the tray open while the notes modal is up.
+                dispatchTrayAction(elContainer, {
+                    action: "notes",
+                    container: elContainer,
+                    start,
+                    end,
+                });
+            });
+            editTrayButtonsTray.appendChild(notesButton);
+        }
+
         editTrayButtonsTray.appendChild(deleteButton);
     } else {
         const copyButton = document.createElement("button");

@@ -313,6 +313,26 @@ export function renderShell(_menuIconSrc?: string): string {
   </div>
 </dialog>
 
+
+<dialog id="notes-modal" class="create-modal notes-modal">
+  <div class="create-modal-form notes-modal-form">
+    <div class="notes-modal-header">
+      <h2 id="notes-modal-title">Notas</h2>
+      <button type="button" id="notes-modal-close" class="notes-modal-close" aria-label="Cerrar">Cerrar</button>
+    </div>
+    <p class="create-modal-hint" id="notes-modal-hint">Escribe una nota para el texto seleccionado.</p>
+    <div id="notes-list" class="notes-list" hidden></div>
+    <label class="notes-modal-input-label">
+      Nota
+      <textarea id="notes-input" class="notes-input" rows="4" autocomplete="off"></textarea>
+    </label>
+    <div class="create-modal-actions notes-modal-actions">
+      <button type="button" id="notes-add" hidden>Añadir nota</button>
+      <button type="button" id="notes-save">Guardar</button>
+    </div>
+  </div>
+</dialog>
+
 <div id="pamphlet-chrome-status" class="pamphlet-chrome-status" hidden aria-live="polite"></div>
 <main class="pamphlet-sheet"></main>
 `.trim();
