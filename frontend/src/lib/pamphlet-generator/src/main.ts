@@ -304,6 +304,28 @@ function syncMobileViewScale(): void {
     });
 }
 
+function desktopAvailableWidth(): number {
+    // Prefer the viewport-visible slice of the shell main — never host.clientWidth when
+    // min-content descendants expanded the host past the viewport (scale stayed 1).
+    const shellMain = document.querySelector<HTMLElement>("main:not(.pamphlet-sheet)");
+    const vw = window.visualViewport?.width ?? window.innerWidth;
+    if (shellMain) {
+        const rect = shellMain.getBoundingClientRect();
+        const cs = getComputedStyle(shellMain);
+        const padL = Number.parseFloat(cs.paddingLeft) || 0;
+        const padR = Number.parseFloat(cs.paddingRight) || 0;
+        const visible = Math.min(rect.right, vw) - Math.max(rect.left, 0);
+        const inner = visible - padL - padR;
+        if (inner > 20) return inner;
+    }
+    const rail = document.querySelector<HTMLElement>(".app-header--start");
+    const railW =
+        rail && window.matchMedia("(min-width: 64rem)").matches
+            ? rail.getBoundingClientRect().width
+            : 0;
+    return Math.max(20, vw - railW);
+}
+
 function syncDesktopViewScale(): void {
     if (viewMode !== "desktop") {
         appRoot.style.setProperty("--desktop-view-scale", "1");
@@ -312,19 +334,11 @@ function syncDesktopViewScale(): void {
         main.style.marginRight = "";
         return;
     }
-    // Fit letter width into the workspace (viewport minus left rail / gaps).
-    // Cap at 1 so we never upscale past true CSS mm. Negative side margins shrink
-    // the layout box to match the visual scale (transform alone does not).
+    // Fit letter width into the visible workspace. Cap at 1 (true CSS mm).
+    // Negative side margins shrink the layout box to match the visual scale.
     const layoutW = main.offsetWidth;
     const layoutH = main.offsetHeight;
-    const host =
-        document.querySelector<HTMLElement>(".pamphlet-layout-workspace") ??
-        document.querySelector<HTMLElement>("main:not(.pamphlet-sheet)") ??
-        appRoot.parentElement;
-    const available = Math.max(
-        20,
-        host?.clientWidth ?? window.visualViewport?.width ?? window.innerWidth,
-    );
+    const available = desktopAvailableWidth();
     const scale = layoutW > 0 ? Math.min(1, available / layoutW) : 1;
     appRoot.style.setProperty("--desktop-view-scale", String(scale));
     if (layoutH > 0 && scale !== 1) {

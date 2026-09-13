@@ -2299,9 +2299,13 @@
 
 /* ---- Item notes ---- */
 .pamphlet-note-mark {
-  text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.12em;
+  /* Paint underline inside the glyph box — parent overflow:hidden clips text-decoration. */
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 0.08em;
+  padding-bottom: 0.06em;
   cursor: pointer;
 }
 

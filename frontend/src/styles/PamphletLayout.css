@@ -5,8 +5,8 @@
 
 html.page-pamphlet,
 html:has(body.page-pamphlet) {
-  /* Beat global `html { overflow-x: hidden }` so desktop letter can scroll sideways */
-  overflow-x: auto;
+  /* Vertical document scroll on html; clip horizontal spill at the viewport edge. */
+  overflow-x: clip;
   overflow-y: auto;
   /* Chrome/Safari pull-to-refresh listens on the root scroller */
   overscroll-behavior-y: none;
@@ -14,13 +14,12 @@ html:has(body.page-pamphlet) {
 }
 
 body.page-pamphlet {
-  max-width: none;
-  width: auto;
-  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  min-width: 0;
   margin: 0;
   /* Single document scrollport on html — nested body overflow traps wheel over the sheet */
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
   /* Kill browser pull-to-refresh / overscroll reload at top of page */
   overscroll-behavior-y: none;
   overscroll-behavior: none;
@@ -29,20 +28,30 @@ body.page-pamphlet {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Keep shell/layout main/workspace from creating nested scrollports over the editor.
+/* Clip horizontal letter overhang on the workspace; keep vertical overflow open for trays.
    Do not target main.pamphlet-sheet — that needs overflow:clip for letter ink. */
 body.page-pamphlet .shell,
 body.page-pamphlet main:not(.pamphlet-sheet),
-body.page-pamphlet .pamphlet-layout-workspace,
+body.page-pamphlet .pamphlet-layout-workspace {
+  overflow-x: clip;
+  overflow-y: visible;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
 body.page-pamphlet .pamphlet-route-root,
 body.page-pamphlet .pamphlet-app {
   overflow: visible;
-  min-width: min-content;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
 }
 
-/* Beat global `main > * { min-width: 0 }` so the letter is not crushed/clipped. */
+/* Letter keeps intrinsic mm width; scale transform fits it — do not force min-content grow. */
 body.page-pamphlet main:not(.pamphlet-sheet) > * {
-  min-width: min-content;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Keep site header/avatar above teleported pamphlet chrome. */
