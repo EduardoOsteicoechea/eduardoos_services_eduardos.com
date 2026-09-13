@@ -71,3 +71,35 @@ func runEpamImportCLI(ctx context.Context, store DataStore, pamphlets PamphletSt
 	}
 	return nil
 }
+
+// runEpamPublishCLI publishes all pamphlets owned by one explicit account.
+// It is CLI-only because it intentionally changes the visibility of private
+// documents and must not be callable from a public browser endpoint.
+func runEpamPublishCLI(ctx context.Context, store DataStore, pamphlets PamphletStore, args []string) error {
+	fs := flag.NewFlagSet("epam-publish", flag.ContinueOnError)
+	fs.SetOutput(os.Stderr)
+	email := fs.String("email", "", "owner email")
+	all := fs.Bool("all", false, "publish every pamphlet owned by this account")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	_, normalizedEmail, ok := normalizeEmail(*email)
+	if !ok || !*all {
+		return errors.New("email and --all are required")
+	}
+	user, err := store.UserByEmail(ctx, normalizedEmail)
+	if err != nil || user == nil {
+		return errors.New("owner account not found")
+	}
+	records, err := pamphlets.ListEpams(ctx, user.ID, "epam-publish")
+	if err != nil {
+		return err
+	}
+	for _, record := range records {
+		record.Public = true
+		if _, err := pamphlets.SaveEpam(ctx, record, "epam-publish"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

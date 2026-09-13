@@ -154,6 +154,26 @@ func TestEpamImportCLIStoresDocumentForRequestedOwner(t *testing.T) {
 	}
 }
 
+func TestEpamPublishCLIExplicitlyPublishesOwnerDocuments(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productPamphlet)
+	if _, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "public-epam", Title: "Public EPAM",
+		Body: map[string]any{"id": "public-epam", "type": "pamphlet_single_sheet", "header": map[string]any{"title": "Public EPAM"}},
+	}, "test"); err != nil {
+		t.Fatal(err)
+	}
+	if err := runEpamPublishCLI(context.Background(), app.store, app.pamphlet, []string{
+		"--email=member@eduardoos.com", "--all",
+	}); err != nil {
+		t.Fatalf("publish: %v", err)
+	}
+	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "public-epam", "test")
+	if err != nil || !ok || !rec.Public {
+		t.Fatalf("EPAM was not published: %#v, ok=%t, err=%v", rec, ok, err)
+	}
+}
+
 func TestHomescoolStudentCreateAndCrossUserDeny(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productHomescool)
