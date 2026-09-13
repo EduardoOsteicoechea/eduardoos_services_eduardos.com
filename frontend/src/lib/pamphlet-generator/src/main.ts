@@ -5,10 +5,13 @@ import { renderShell } from "./shell";
 
 /** Must match HeaderDynamicMenu host id (Header always renders this empty slot). */
 const HEADER_DYNAMIC_MENU_HOST_ID = "header-dynamic-menu-host";
+const PAMPHLET_BASE_PATH = "/documents/pamphlet";
 
 declare global {
     interface Window {
         __eduardoosHeaderDynamicMenu?: HTMLElement | null;
+        __eduardoosPamphletView?: string;
+        __eduardoosPamphletEpamId?: string;
     }
 }
 import type { PamphletTrayAction } from "./create_element";
@@ -111,6 +114,7 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     }
 
     const main = requireElement<HTMLElement>("main.pamphlet-sheet");
+    const dashboardBtn = requireElement<HTMLButtonElement>("#btn-dashboard");
     const openBtn = requireElement<HTMLButtonElement>("#btn-open");
     const createBtn = requireElement<HTMLButtonElement>("#btn-create");
     const copyBtn = requireElement<HTMLButtonElement>("#btn-copy");
@@ -587,6 +591,19 @@ async function readLastEpamId(): Promise<string | null> {
     }
 }
 
+function syncCloudEpamUrl(epamId: string): void {
+    const id = epamId.trim();
+    if (!id) return;
+    host.dataset.pamphletEpamId = id;
+    window.__eduardoosPamphletEpamId = id;
+    window.__eduardoosPamphletView = "open";
+    window.history.replaceState(
+        {},
+        "",
+        `${PAMPHLET_BASE_PATH}/open#${encodeURIComponent(id)}`,
+    );
+}
+
 async function openCloudDocumentById(epamId: string): Promise<void> {
     const loaded = await fetchEpam(epamId);
     const doc = loaded.document as PamphletStructure | undefined;
@@ -601,6 +618,7 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
     setOpenFileName(loaded.meta.fileName);
     loadPamphlet(doc);
     rememberLastEpamId(loaded.meta.epamId);
+    syncCloudEpamUrl(loaded.meta.epamId);
 }
 
 /**
@@ -1129,6 +1147,7 @@ async function persistCloud(data: PamphletStructure): Promise<PamphletStructure>
     cloudEpamId = saved.meta.epamId;
     setOpenFileName(saved.meta.fileName);
     rememberLastEpamId(saved.meta.epamId);
+    syncCloudEpamUrl(saved.meta.epamId);
     return saved.document;
 }
 
@@ -1499,6 +1518,10 @@ on(openBtn, "click", () => {
     clearError();
     syncOpenSourceModalForFsa();
     openSourceModal.showModal();
+});
+
+on(dashboardBtn, "click", () => {
+    window.location.assign(PAMPHLET_BASE_PATH);
 });
 
 function closeOpenSourceModal(): void {
@@ -2532,17 +2555,44 @@ if (window.visualViewport) {
             .toLowerCase();
         if (!view || view === "dashboard") return false;
         revealHeaderToolsTray();
+        const epamId = (
+            host.dataset.pamphletEpamId ||
+            window.__eduardoosPamphletEpamId ||
+            ""
+        ).trim();
+        if (epamId) {
+            void openCloudDocumentById(epamId).catch((err) => {
+                const message = err instanceof Error ? err.message : String(err);
+                setError(`Cloud open failed: ${message}`);
+                openApiErrorModal(message, {
+                    title: "Cloud pamphlet error",
+                    summary: "Could not open this .epam from the server.",
+                });
+            });
+            return true;
+        }
         if (view === "new") {
             openCreateModal();
             return true;
         }
-        if (view === "open" || view === "recent" || view === "manage") {
-            if (getAuthToken() && isAuthenticated()) {
-                void openCloudListModal("open");
-            } else {
-                syncOpenSourceModalForFsa();
-                openSourceModal.showModal();
-            }
+        if (view === "open" || view === "recent" || view === "manage" || view === "edit") {
+            void (async () => {
+                const lastEpamId = await readLastEpamId();
+                if (lastEpamId) {
+                    try {
+                        await openCloudDocumentById(lastEpamId);
+                        return;
+                    } catch {
+                        // Fall through to the appropriate picker.
+                    }
+                }
+                if (getAuthToken() && isAuthenticated()) {
+                    await openCloudListModal("open");
+                } else {
+                    syncOpenSourceModalForFsa();
+                    openSourceModal.showModal();
+                }
+            })();
             return true;
         }
         if (view === "footers") {

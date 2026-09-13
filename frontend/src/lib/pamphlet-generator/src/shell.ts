@@ -9,6 +9,9 @@ function iconSvg(paths: string, viewBox = "0 0 24 24"): string {
 }
 
 const ICONS = {
+  dashboard: iconSvg(
+    `<path d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z" fill="currentColor"/>`,
+  ),
   open: iconSvg(
     `<path d="M4 4h7l2 2h7v14H4V4zm2 4v10h12V8H6z" fill="currentColor"/>`,
   ),
@@ -64,6 +67,12 @@ export function renderShell(_menuIconSrc?: string): string {
 <section id="pamphlet-header-menu" class="header-dynamic-menu header-dynamic-menu--labeled" aria-label="Pamphlet tools">
   <div class="header-dynamic-menu__inner">
     <div class="header-dynamic-menu__actions" role="toolbar" aria-label="Pamphlet actions">
+      ${actionBtn(
+        "btn-dashboard",
+        ICONS.dashboard,
+        "Dashboard",
+        "Volver al dashboard de panfletos",
+      )}
       ${actionBtn(
         "btn-open",
         ICONS.open,

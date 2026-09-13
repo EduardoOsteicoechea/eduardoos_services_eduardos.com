@@ -133,7 +133,7 @@ import Layout from "../../layouts/Layout.astro";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
 
   const PAMPHLET_BASE = "/documents/pamphlet";
-  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers"]);
+  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers", "edit"]);
 
   let handle: PamphletMountHandle | null = null;
 
@@ -152,16 +152,31 @@ import Layout from "../../layouts/Layout.astro";
     window.history.replaceState({}, "", url.toString());
   }
 
-  function readView(): string {
+  function readRoute(): { view: string; epamId: string } {
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
-    if (path === PAMPHLET_BASE) return "dashboard";
+    if (path === PAMPHLET_BASE) return { view: "dashboard", epamId: "" };
+    const editMatch = new RegExp(`^${PAMPHLET_BASE}/e/([^/]+)$`).exec(path);
+    if (editMatch) {
+      try {
+        return { view: "edit", epamId: decodeURIComponent(editMatch[1]) };
+      } catch {
+        return { view: "edit", epamId: editMatch[1] };
+      }
+    }
     if (path.startsWith(`${PAMPHLET_BASE}/`)) {
       const seg = path.slice(PAMPHLET_BASE.length + 1).split("/")[0]?.toLowerCase() || "";
-      if (PAMPHLET_VIEWS.has(seg)) return seg;
+      if (PAMPHLET_VIEWS.has(seg)) {
+        const hash = seg === "open" ? window.location.hash.slice(1).trim() : "";
+        try {
+          return { view: hash ? "edit" : seg, epamId: hash ? decodeURIComponent(hash) : "" };
+        } catch {
+          return { view: hash ? "edit" : seg, epamId: hash };
+        }
+      }
     }
     const legacy = new URLSearchParams(window.location.search).get("view");
-    if (legacy && legacy.trim()) return legacy.trim().toLowerCase();
-    return "dashboard";
+    if (legacy && legacy.trim()) return { view: legacy.trim().toLowerCase(), epamId: "" };
+    return { view: "dashboard", epamId: "" };
   }
 
   function setViewInUrl(view: string): void {
@@ -197,7 +212,7 @@ import Layout from "../../layouts/Layout.astro";
     if (host) host.hidden = true;
   }
 
-  function showEditor(view: string): void {
+  function showEditor(view: string, epamId = ""): void {
     const dash = document.getElementById("pamphlet-dash");
     const host = document.getElementById("pamphlet-root");
     if (!host) {
@@ -211,7 +226,10 @@ import Layout from "../../layouts/Layout.astro";
     applyBleed();
 
     host.dataset.pamphletView = view;
+    if (epamId) host.dataset.pamphletEpamId = epamId;
+    else delete host.dataset.pamphletEpamId;
     window.__eduardoosPamphletView = view;
+    window.__eduardoosPamphletEpamId = epamId || undefined;
 
     try {
       handle = mountPamphletGenerator(host);
@@ -223,9 +241,9 @@ import Layout from "../../layouts/Layout.astro";
   }
 
   function syncFromUrl(): void {
-    const view = readView();
+    const { view, epamId } = readRoute();
     if (view === "dashboard") showDashboard();
-    else showEditor(view);
+    else showEditor(view, epamId);
   }
 
   function onClick(event: Event): void {
@@ -256,6 +274,7 @@ import Layout from "../../layouts/Layout.astro";
   declare global {
     interface Window {
       __eduardoosPamphletView?: string;
+      __eduardoosPamphletEpamId?: string;
     }
   }
 </script>
