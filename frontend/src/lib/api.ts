@@ -510,23 +510,14 @@ export async function postChatStream(
   history: ChatTurn[],
   onDelta: (delta: string) => void,
 ): Promise<{ status: number; data: ChatResponse; requestId: string }> {
-  await getCsrf();
-  const headers = new Headers();
-  headers.set("Accept", "text/event-stream");
-  headers.set("Content-Type", "application/json");
-  if (csrfToken) {
-    headers.set("X-CSRF-Token", csrfToken);
-  }
   const controller = new AbortController();
   const timer = globalThis.setTimeout(() => controller.abort(), 45000);
   try {
-    const response = await fetch(apiUrl("/chat"), {
-      method: "POST",
-      headers,
-      credentials: "include",
-      body: JSON.stringify({ message, history, stream: true }),
-      signal: controller.signal,
-    });
+    let response = await sendChat(message, history, true, controller.signal);
+    if (response.status === 403) {
+      await getCsrf(true);
+      response = await sendChat(message, history, true, controller.signal);
+    }
     const requestId = response.headers.get("X-Request-ID") || "";
     const type = (response.headers.get("Content-Type") || "").toLowerCase();
     if (!type.includes("event-stream")) {
@@ -588,23 +579,14 @@ export async function postChatStream(
 }
 
 export async function postChat(message: string, history: ChatTurn[]): Promise<{ status: number; data: ChatResponse; requestId: string }> {
-  await getCsrf();
-  const headers = new Headers();
-  headers.set("Accept", "application/json");
-  headers.set("Content-Type", "application/json");
-  if (csrfToken) {
-    headers.set("X-CSRF-Token", csrfToken);
-  }
   const controller = new AbortController();
   const timer = globalThis.setTimeout(() => controller.abort(), 45000);
   try {
-    const response = await fetch(apiUrl("/chat"), {
-      method: "POST",
-      headers,
-      credentials: "include",
-      body: JSON.stringify({ message, history }),
-      signal: controller.signal,
-    });
+    let response = await sendChat(message, history, false, controller.signal);
+    if (response.status === 403) {
+      await getCsrf(true);
+      response = await sendChat(message, history, false, controller.signal);
+    }
     const data = await parseJSON<ChatResponse>(response);
     const requestId = response.headers.get("X-Request-ID") || data.request_id || "";
     if (!data.request_id && requestId) {
@@ -623,6 +605,23 @@ export async function postChat(message: string, history: ChatTurn[]): Promise<{ 
   } finally {
     globalThis.clearTimeout(timer);
   }
+}
+
+async function sendChat(message: string, history: ChatTurn[], stream: boolean, signal: AbortSignal): Promise<Response> {
+  await getCsrf();
+  const headers = new Headers();
+  headers.set("Accept", stream ? "text/event-stream" : "application/json");
+  headers.set("Content-Type", "application/json");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  return fetch(apiUrl("/chat"), {
+    method: "POST",
+    headers,
+    credentials: "include",
+    body: JSON.stringify({ message, history, ...(stream ? { stream: true } : {}) }),
+    signal,
+  });
 }
 
 export async function patchJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
