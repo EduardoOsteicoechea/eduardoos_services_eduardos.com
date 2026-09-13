@@ -38,7 +38,8 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
   const guestHidden = options.guestVisible === false ? "hidden" : "";
   const authedHidden = options.guestVisible === false ? "" : "hidden";
   document.body.innerHTML = `
-    <a href="/store" data-cart-fab>Cart</a>
+    <a href="/store/demo-co/cart" data-cart-fab hidden>Cart</a>
+    <a href="/store/demo-co/cart" data-cart-link hidden>Cart link</a>
     <aside id="main-menu">
       <a href="/session" data-guest-only ${guestHidden}>Sign in</a>
       <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
@@ -226,8 +227,10 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     applyHeaderCartFab("demo-co", { count: 2, items: [{ units: 1 }] });
     expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector("[data-cart-link]") as HTMLElement).hidden).toBe(false);
     applyHeaderCartFab("demo-co", { count: 0, items: [] });
     expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector("[data-cart-link]") as HTMLElement).hidden).toBe(true);
   });
 
   it("restores session chrome after a client navigation swap", async () => {

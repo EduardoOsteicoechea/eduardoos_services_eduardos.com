@@ -14,7 +14,7 @@ import Layout from "../../../layouts/Layout.astro";
       </span>
       All stores
     </a>
-    <a class="dhs-action" data-cart-link href="/store" data-route title="Cart" aria-label="Open cart">
+    <a class="dhs-action" data-cart-link href="/store" data-route title="Cart" aria-label="Open cart" hidden>
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
       </span>
@@ -264,6 +264,7 @@ import Layout from "../../../layouts/Layout.astro";
         res.data.types || [],
         res.data.products || [],
       );
+      void refreshHeaderCartFab(companyId);
     })();
   }
 </script>

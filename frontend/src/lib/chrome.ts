@@ -53,9 +53,11 @@ function cartHasPayableItems(cart?: EostoreCart | null): boolean {
   return (cart.items || []).some((line) => line.units > 0);
 }
 
+const CART_CHROME_SELECTOR = "[data-cart-fab], [data-cart-link]";
+
 function applyCartFabHref(companyId: string): void {
   const href = companyId ? companyCartHref(companyId) : "/store";
-  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
+  document.querySelectorAll(CART_CHROME_SELECTOR).forEach((node) => {
     if (!(node instanceof HTMLAnchorElement)) return;
     node.href = href;
     node.title = companyId ? `Cart · ${companyId}` : "Cart · Store";
@@ -64,7 +66,7 @@ function applyCartFabHref(companyId: string): void {
 }
 
 function setCartFabHidden(hidden: boolean): void {
-  document.querySelectorAll("[data-cart-fab]").forEach((node) => {
+  document.querySelectorAll(CART_CHROME_SELECTOR).forEach((node) => {
     if (node instanceof HTMLElement) {
       node.hidden = hidden;
     }
