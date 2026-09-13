@@ -132,6 +132,10 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const viewMobileBtn = requireElement<HTMLButtonElement>("#btn-view-mobile");
     const seriesBtn = requireElement<HTMLButtonElement>("#btn-series");
     const templateBtn = requireElement<HTMLButtonElement>("#btn-template");
+    const createSourceModal = requireElement<HTMLDialogElement>("#create-source-modal");
+    const createSourceEpamBtn = requireElement<HTMLButtonElement>("#create-source-epam");
+    const createSourceBlankBtn = requireElement<HTMLButtonElement>("#create-source-blank");
+    const createSourceCancelBtn = requireElement<HTMLButtonElement>("#create-source-cancel");
     const createModal = requireElement<HTMLDialogElement>("#create-modal");
     const createSaveModal = requireElement<HTMLDialogElement>("#create-save-modal");
     const createSaveLocalBtn = requireElement<HTMLButtonElement>("#create-save-local");
@@ -1777,6 +1781,7 @@ function syncOpenSourceModalForFsa(): void {
 
 on(openBtn, "click", () => {
     clearError();
+    createFromEpamFlow = false;
     syncOpenSourceModalForFsa();
     openSourceModal.showModal();
 });
@@ -2047,9 +2052,12 @@ on(openSourceCloudBtn, "click", async () => {
     clearError();
     if (!getAuthToken() || !isAuthenticated()) {
         setError("Sign in to open from the cloud.");
+        createFromEpamFlow = false;
         return;
     }
-    await openCloudListModal("open");
+    const intent = createFromEpamFlow ? "copy" : "open";
+    createFromEpamFlow = false;
+    await openCloudListModal(intent);
 });
 
 async function openCloudListModal(intent: "open" | "copy"): Promise<void> {
@@ -2132,10 +2140,12 @@ on(openCloudCancelBtn, "click", () => {
 });
 
 on(openSourceCancelBtn, "click", () => {
+    createFromEpamFlow = false;
     closeOpenSourceModal();
 });
 
 on(openSourceLocalBtn, "click", async () => {
+    createFromEpamFlow = false;
     closeOpenSourceModal();
     clearError();
     try {
@@ -2604,6 +2614,19 @@ on(saveCloudBtn, "click", async () => {
 /** Pending meta after create form validation, before local/cloud destination. */
 let pendingCreateMeta: CreatePamphletMeta | null = null;
 
+/** Nuevo -> desde .epam: picking cloud should copy into a new pamphlet. */
+let createFromEpamFlow = false;
+
+function closeCreateSourceModal(): void {
+    if (createSourceModal.open) createSourceModal.close();
+}
+
+function openCreateSourceModal(): void {
+    clearError();
+    createFromEpamFlow = false;
+    createSourceModal.showModal();
+}
+
 function openCreateModal(): void {
     clearError();
     createForm.reset();
@@ -2641,7 +2664,32 @@ function openCreateSaveModal(): void {
 }
 
 on(createBtn, "click", () => {
+    openCreateSourceModal();
+});
+
+on(createSourceBlankBtn, "click", () => {
+    closeCreateSourceModal();
+    createFromEpamFlow = false;
     openCreateModal();
+});
+
+on(createSourceEpamBtn, "click", () => {
+    closeCreateSourceModal();
+    clearError();
+    createFromEpamFlow = true;
+    syncOpenSourceModalForFsa();
+    const hint = openSourceModal.querySelector<HTMLElement>(".create-modal-hint");
+    if (hint) {
+        hint.textContent = isFileSystemAccessSupported()
+            ? "Elige un .epam de este dispositivo o de la nube para usarlo como base del nuevo panfleto."
+            : "Los archivos del dispositivo requieren HTTPS (o localhost). Elige uno de la nube si has iniciado sesión.";
+    }
+    openSourceModal.showModal();
+});
+
+on(createSourceCancelBtn, "click", () => {
+    createFromEpamFlow = false;
+    closeCreateSourceModal();
 });
 
 on(copyBtn, "click", () => {
@@ -2881,7 +2929,7 @@ if (window.visualViewport) {
             return true;
         }
         if (view === "new") {
-            openCreateModal();
+            openCreateSourceModal();
             return true;
         }
         if (view === "manage") {

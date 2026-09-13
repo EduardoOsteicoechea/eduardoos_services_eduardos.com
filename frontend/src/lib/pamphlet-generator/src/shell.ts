@@ -83,7 +83,7 @@ export function renderShell(_menuIconSrc?: string): string {
         "btn-create",
         ICONS.create,
         "Nuevo",
-        "Crear un panfleto nuevo con título, serie y autor",
+        "Crear un panfleto nuevo desde un .epam o desde cero",
       )}
       ${actionBtn(
         "btn-copy",
@@ -170,6 +170,20 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="create-modal-actions">
       <button type="button" id="open-cloud-cancel">Cancel</button>
       <button type="button" id="open-cloud-delete-confirm" hidden>Borrar seleccionados</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="create-source-modal" class="create-modal">
+  <div class="create-modal-form">
+    <h2>Nuevo panfleto</h2>
+    <p class="create-modal-hint">¿Quieres partir de un archivo .epam o empezar desde cero?</p>
+    <div class="item-type-options">
+      <button type="button" id="create-source-epam">Desde un .epam</button>
+      <button type="button" id="create-source-blank">Desde cero</button>
+    </div>
+    <div class="create-modal-actions">
+      <button type="button" id="create-source-cancel">Cancelar</button>
     </div>
   </div>
 </dialog>
