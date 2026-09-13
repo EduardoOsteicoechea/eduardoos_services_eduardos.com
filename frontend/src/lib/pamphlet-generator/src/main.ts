@@ -229,22 +229,13 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
         return true;
     }
 
-    function revealHeaderToolsTray(): void {
-        const tray = document.getElementById("dynamic-header");
-        if (tray) tray.hidden = false;
-        document
-            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
-            ?.setAttribute("aria-expanded", "true");
-        document.documentElement.dataset.trayOpen = "dynamic-header";
-        const backdrop = document.querySelector<HTMLElement>("[data-tray-backdrop]");
-        if (backdrop) backdrop.hidden = false;
-    }
+    // Mount tools into the DHS host only — do not auto-open #dynamic-header.
+    // The user opens the tray via the shared .header-dynamic control.
 
     if (!mountHeaderMenu()) {
         document.body.append(headerMenu);
         const onReady = () => {
             if (mountHeaderMenu()) {
-                revealHeaderToolsTray();
                 window.removeEventListener(HDS_HOST_READY, onReady);
                 window.clearInterval(hdsRetry);
                 window.clearTimeout(hdsGiveUp);
@@ -261,8 +252,6 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
             window.clearTimeout(hdsGiveUp);
             window.removeEventListener(HDS_HOST_READY, onReady);
         });
-    } else {
-        revealHeaderToolsTray();
     }
 
 function updatePrintAvailability(): void {
@@ -2875,7 +2864,6 @@ if (window.visualViewport) {
             .trim()
             .toLowerCase();
         if (!view || view === "dashboard") return false;
-        revealHeaderToolsTray();
         const epamId = (
             host.dataset.pamphletEpamId ||
             window.__eduardoosPamphletEpamId ||
