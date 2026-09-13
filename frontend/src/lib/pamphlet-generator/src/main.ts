@@ -2519,7 +2519,7 @@ if (window.visualViewport) {
     }
 
     /**
-     * Hub ?view= intents (new / open / recent / manage / footers).
+     * Hub path intents (/documents/pamphlet/{new|open|recent|manage|footers}).
      * Skip cloud autoload when an explicit flow was requested.
      */
     function applyHubViewIntent(): boolean {

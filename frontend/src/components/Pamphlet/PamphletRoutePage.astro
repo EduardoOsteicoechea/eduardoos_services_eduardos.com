@@ -1,8 +1,8 @@
 ---
 /**
- * Pamphlet — dashboard + editor host always present.
- * Static builds cannot branch on ?view= at request time, so client JS
- * shows the dash or mounts the vanilla generator from the URL / clicks.
+ * Pamphlet hub + editor host.
+ * Pretty paths: /documents/pamphlet and /documents/pamphlet/{view}.
+ * Legacy ?view= is rewritten client-side so old links keep working.
  */
 import Layout from "../../layouts/Layout.astro";
 ---
@@ -21,27 +21,27 @@ import Layout from "../../layouts/Layout.astro";
       Create and edit letter pamphlets. Click New to open the creator.
     </p>
     <div class="pamphlet-vanilla-dash__grid">
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=new" data-pamphlet-nav="new">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
         <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
         <span class="pamphlet-vanilla-dash__card-title">New</span>
         <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
       </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=open" data-pamphlet-nav="open">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/open" data-pamphlet-nav="open">
         <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
         <span class="pamphlet-vanilla-dash__card-title">Open</span>
         <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
       </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=recent" data-pamphlet-nav="recent">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/recent" data-pamphlet-nav="recent">
         <span class="material-symbols-outlined" aria-hidden="true">history</span>
         <span class="pamphlet-vanilla-dash__card-title">Recent</span>
         <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
       </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=manage" data-pamphlet-nav="manage">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/manage" data-pamphlet-nav="manage">
         <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
         <span class="pamphlet-vanilla-dash__card-title">Manage</span>
         <span class="pamphlet-vanilla-dash__card-desc">Manage cloud documents.</span>
       </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet?view=footers" data-pamphlet-nav="footers">
+      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/footers" data-pamphlet-nav="footers">
         <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
         <span class="pamphlet-vanilla-dash__card-title">Footers</span>
         <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
@@ -132,17 +132,42 @@ import Layout from "../../layouts/Layout.astro";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
 
+  const PAMPHLET_BASE = "/documents/pamphlet";
+  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers"]);
+
   let handle: PamphletMountHandle | null = null;
 
+  function pamphletPath(view: string): string {
+    if (!view || view === "dashboard") return PAMPHLET_BASE;
+    return `${PAMPHLET_BASE}/${view}`;
+  }
+
+  /** Prefer /documents/pamphlet/{view}; migrate legacy ?view= so reloads stay deep-linked. */
+  function normalizeLegacyQuery(): void {
+    const url = new URL(window.location.href);
+    const legacy = url.searchParams.get("view")?.trim().toLowerCase() || "";
+    if (!legacy) return;
+    url.searchParams.delete("view");
+    url.pathname = pamphletPath(legacy);
+    window.history.replaceState({}, "", url.toString());
+  }
+
   function readView(): string {
-    const v = new URLSearchParams(window.location.search).get("view");
-    return v && v.trim() ? v.trim().toLowerCase() : "dashboard";
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    if (path === PAMPHLET_BASE) return "dashboard";
+    if (path.startsWith(`${PAMPHLET_BASE}/`)) {
+      const seg = path.slice(PAMPHLET_BASE.length + 1).split("/")[0]?.toLowerCase() || "";
+      if (PAMPHLET_VIEWS.has(seg)) return seg;
+    }
+    const legacy = new URLSearchParams(window.location.search).get("view");
+    if (legacy && legacy.trim()) return legacy.trim().toLowerCase();
+    return "dashboard";
   }
 
   function setViewInUrl(view: string): void {
     const url = new URL(window.location.href);
-    if (!view || view === "dashboard") url.searchParams.delete("view");
-    else url.searchParams.set("view", view);
+    url.searchParams.delete("view");
+    url.pathname = pamphletPath(view);
     window.history.pushState({}, "", url.toString());
   }
 
@@ -216,9 +241,13 @@ import Layout from "../../layouts/Layout.astro";
   }
 
   function boot(): void {
+    normalizeLegacyQuery();
     document.addEventListener("click", onClick);
     window.addEventListener("popstate", syncFromUrl);
-    document.addEventListener("astro:page-load", syncFromUrl);
+    document.addEventListener("astro:page-load", () => {
+      normalizeLegacyQuery();
+      syncFromUrl();
+    });
     syncFromUrl();
   }
 
