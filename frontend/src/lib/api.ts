@@ -472,10 +472,6 @@ export async function getMe(): Promise<{ status: number; data: MeResponse; reque
   if (first.status !== 401) {
     return first;
   }
-  if (!hasSessionHint()) {
-    sessionLog("session.me.guest_skip_refresh");
-    return first;
-  }
   sessionLog("session.me.unauthorized_try_refresh");
   const refreshed = await refreshSession();
   if (refreshed.status !== 200 || !refreshed.data.id) {

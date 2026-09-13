@@ -73,19 +73,22 @@ describe("api csrf and errors", () => {
     vi.useRealTimers();
   });
 
-  it("skips refresh on guest /api/auth/me without session hint", async () => {
+  it("attempts refresh on /api/auth/me after a browser restart", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
         jsonResponse(401, { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-me-1", csrf: "should-ignore" }, { "X-Request-ID": "rid-me-1" }),
+      )
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
+      .mockResolvedValueOnce(
+        jsonResponse(401, { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-refresh-1" }, { "X-Request-ID": "rid-refresh-1" }),
       );
     vi.stubGlobal("fetch", fetchMock);
     const result = await getMe();
     expect(result.status).toBe(401);
     expect(result.data.error).toBe("unauthorized");
-    expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock.mock.calls[0][0]).toBe("/api/auth/me");
-    expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(false);
+    expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
     expect(hasSessionHint()).toBe(false);
   });
 
