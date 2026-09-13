@@ -48,9 +48,10 @@ import {
     updateFooterProfile,
     type FooterProfile,
 } from "../../pamphletFooters";
-import { getAuthToken, isAuthenticated } from "../../auth";
+import { getAuthToken, isAuthenticated, refreshAuthSession } from "../../auth";
+import { getPreference, PREF_PAMPHLET_LAST_EPAM, putPreference } from "../../preferences";
 import { DOCUMENT_ROUTES } from "../../../config/routes";
-import { createCorrelationId } from "../../telemetry";
+import { currentCsrf, getCsrf } from "../../api";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 import {
     createAddItemButton,
@@ -423,8 +424,7 @@ async function printDocument(inkColor: "black" | "blue" = "black"): Promise<void
         setStatus("Abre o crea un panfleto antes de imprimir.", "error");
         return;
     }
-    const token = getAuthToken();
-    if (!token || !isAuthenticated()) {
+    if (!getAuthToken() || !isAuthenticated()) {
         setStatus("Sign in to generate the PDF.", "error");
         return;
     }
@@ -452,14 +452,14 @@ async function printDocument(inkColor: "black" | "blue" = "black"): Promise<void
             footer_layout: PAMPHLET_FOOTER_LAYOUT_MM,
             ink_color: inkColor,
         };
-        const correlationId = createCorrelationId();
+        await getCsrf();
+        const headers = new Headers({ "Content-Type": "application/json" });
+        const csrf = currentCsrf();
+        if (csrf) headers.set("X-CSRF-Token", csrf);
         const res = await fetch(DOCUMENT_ROUTES.pamphletPdf, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-                "X-Correlation-ID": correlationId,
-            },
+            credentials: "include",
+            headers,
             body: JSON.stringify(printPayload),
         });
         if (!res.ok) {
@@ -474,7 +474,6 @@ async function printDocument(inkColor: "black" | "blue" = "black"): Promise<void
             throw new Error(
                 [
                     `PDF print failed (${res.status})`,
-                    `correlation=${correlationId}`,
                     `type=${printPayload.type}`,
                     `ink=${inkColor}`,
                     detail,
@@ -587,24 +586,16 @@ let memorySession = false;
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
 
-const LAST_EPAM_STORAGE_KEY = "eduardoos-pamphlet-last-epam-id";
-
 function rememberLastEpamId(epamId: string | null | undefined): void {
-    try {
-        const id = epamId?.trim() ?? "";
-        if (!id) {
-            localStorage.removeItem(LAST_EPAM_STORAGE_KEY);
-            return;
-        }
-        localStorage.setItem(LAST_EPAM_STORAGE_KEY, id);
-    } catch {
-        // Quota / private mode — ignore.
-    }
+    if (!getAuthToken() || !isAuthenticated()) return;
+    const id = epamId?.trim() || null;
+    void putPreference(PREF_PAMPHLET_LAST_EPAM, id);
 }
 
-function readLastEpamId(): string | null {
+async function readLastEpamId(): Promise<string | null> {
     try {
-        return localStorage.getItem(LAST_EPAM_STORAGE_KEY)?.trim() || null;
+        const { value } = await getPreference<unknown>(PREF_PAMPHLET_LAST_EPAM);
+        return typeof value === "string" ? value.trim() || null : null;
     } catch {
         return null;
     }
@@ -639,7 +630,7 @@ async function tryAutoloadCloudPamphlet(): Promise<void> {
         if (epams.length === 0) {
             return;
         }
-        const lastId = readLastEpamId();
+        const lastId = await readLastEpamId();
         const preferred = lastId
             ? epams.find((item) => item.epamId === lastId)
             : undefined;
@@ -2601,9 +2592,12 @@ if (window.visualViewport) {
         return false;
     }
 
-    if (!applyHubViewIntent()) {
-        void tryAutoloadCloudPamphlet();
-    }
+    void (async () => {
+        await refreshAuthSession();
+        if (!applyHubViewIntent()) {
+            await tryAutoloadCloudPamphlet();
+        }
+    })();
 
     return {
         destroy() {

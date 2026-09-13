@@ -42,6 +42,12 @@ export type EpamDocumentResponse = {
   document: PamphletStructure;
 };
 
+export type SaveEpamOptions = {
+  document: PamphletStructure;
+  epamId?: string;
+  fileName?: string;
+};
+
 export type EpamSeriesTreeItem = {
   epamId: string;
   title: string;
@@ -121,13 +127,12 @@ export async function fetchEpam(epamId: string): Promise<EpamDocumentResponse> {
 }
 
 export async function saveEpamToCloud(
-  document: PamphletStructure,
-  epamId?: string,
+  { document, epamId, fileName }: SaveEpamOptions,
 ): Promise<EpamDocumentResponse> {
   const title = titleFromDocument(document);
   const body = epamId
-    ? { title, document, epamId }
-    : { title, document };
+    ? { title, document, epamId, fileName }
+    : { title, document, fileName };
   const path = epamId ? `/epams/${encodeURIComponent(epamId)}` : "/epams";
   const method = epamId ? "PUT" : "POST";
   const { status, data } = await apiRequest<{
