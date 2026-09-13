@@ -84,12 +84,107 @@ body.page-pamphlet .item-type-options button:hover {
   background: color-mix(in srgb, var(--color-text) 22%, var(--color-bg));
 }
 
-.pamphlet-header-menu-tray__labels {
-  margin: 0;
-  padding-left: 1.1rem;
-  font-size: var(--font-sm);
-  color: var(--site-muted-fg, var(--color-text));
-  line-height: 1.45;
+/* Pamphlet: dynamic-actions opener sits under the session avatar in the rail. */
+body.page-pamphlet .header-cluster--menu .header-session {
+  order: 1;
+}
+
+body.page-pamphlet .header-cluster--menu .header-dynamic {
+  order: 2;
+}
+
+body.page-pamphlet .header-cluster--menu .header-menu--desktop {
+  order: 0;
+}
+
+@media (max-width: 63.999rem) {
+  body.page-pamphlet .header-cluster--menu .header-session {
+    order: 0;
+  }
+
+  body.page-pamphlet .header-cluster--menu .header-dynamic {
+    order: 1;
+  }
+
+  body.page-pamphlet .header-cluster--menu .header-menu--mobile {
+    order: 2;
+  }
+}
+
+/* Pamphlet tools tray: icon left, label right, descriptive title tooltip. */
+body.page-pamphlet #dynamic-header .header-dynamic-menu-host,
+body.page-pamphlet #dynamic-header .header-dynamic-menu,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__inner {
+  width: 100%;
+  min-width: 0;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__actions {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  width: 100%;
+  overflow: visible;
+  padding: 0;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action {
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: var(--rail-button-size);
+  padding: calc(var(--rail-gap) * 0.25) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  pointer-events: none;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn svg,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn .header-dynamic-menu__icon--svg {
+  width: calc(var(--rail-button-size) * 0.51);
+  height: calc(var(--rail-button-size) * 0.51);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:hover:not(:disabled),
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:focus-visible {
+  color: var(--color-accent);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn--active,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"] {
+  background: transparent;
+  border: 0;
+  color: var(--color-accent);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:disabled {
+  opacity: 0.45;
 }
 
 .series-tree {

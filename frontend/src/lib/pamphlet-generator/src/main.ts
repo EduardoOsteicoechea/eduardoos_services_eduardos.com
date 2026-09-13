@@ -120,8 +120,6 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const viewMobileBtn = requireElement<HTMLButtonElement>("#btn-view-mobile");
     const seriesBtn = requireElement<HTMLButtonElement>("#btn-series");
     const templateBtn = requireElement<HTMLButtonElement>("#btn-template");
-    const trayToggleBtn = requireElement<HTMLButtonElement>("#btn-activity-expand");
-    const activityTray = requireElement<HTMLElement>("#pamphlet-header-menu-tray");
     const createModal = requireElement<HTMLDialogElement>("#create-modal");
     const createSaveModal = requireElement<HTMLDialogElement>("#create-save-modal");
     const createSaveLocalBtn = requireElement<HTMLButtonElement>("#create-save-local");
@@ -210,10 +208,23 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
         }
         return true;
     }
+
+    function revealHeaderToolsTray(): void {
+        const tray = document.getElementById("dynamic-header");
+        if (tray) tray.hidden = false;
+        document
+            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
+            ?.setAttribute("aria-expanded", "true");
+        document.documentElement.dataset.trayOpen = "dynamic-header";
+        const backdrop = document.querySelector<HTMLElement>("[data-tray-backdrop]");
+        if (backdrop) backdrop.hidden = false;
+    }
+
     if (!mountHeaderMenu()) {
         document.body.append(headerMenu);
         const onReady = () => {
             if (mountHeaderMenu()) {
+                revealHeaderToolsTray();
                 window.removeEventListener(HDS_HOST_READY, onReady);
                 window.clearInterval(hdsRetry);
                 window.clearTimeout(hdsGiveUp);
@@ -230,27 +241,13 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
             window.clearTimeout(hdsGiveUp);
             window.removeEventListener(HDS_HOST_READY, onReady);
         });
+    } else {
+        revealHeaderToolsTray();
     }
 
 function updatePrintAvailability(): void {
     printBtn.disabled = !hasEditableSession() || !currentDoc;
     syncSeriesButtonVisibility();
-}
-
-function setActivityTrayOpen(open: boolean): void {
-    headerMenu.classList.toggle("header-dynamic-menu--tray-open", open);
-    activityTray.classList.toggle("header-dynamic-menu__tray--open", open);
-    activityTray.hidden = !open;
-    trayToggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
-    trayToggleBtn.classList.toggle("header-dynamic-menu__tray-toggle--open", open);
-}
-
-function closeActivityTray(): void {
-    setActivityTrayOpen(false);
-}
-
-function toggleActivityTray(): void {
-    setActivityTrayOpen(activityTray.hidden);
 }
 
 function syncSeriesButtonVisibility(): void {
@@ -329,7 +326,6 @@ function applyViewMode(mode: ViewMode, options?: { closeTray?: boolean }): void 
     viewMobileBtn.setAttribute("aria-pressed", mode === "mobile" ? "true" : "false");
     syncSheetScale();
     if (options?.closeTray !== false) {
-        closeActivityTray();
     }
 }
 
@@ -429,8 +425,6 @@ async function printDocument(inkColor: "black" | "blue" = "black"): Promise<void
         return;
     }
 
-    closeActivityTray();
-
     // Capture pan/zoom/height from the live DOM BEFORE any desktop remount can wipe them.
     const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
     await ensurePamphletImagesAreJpeg(live);
@@ -522,7 +516,6 @@ function openPrintInkModal(): void {
         setStatus("Sign in to generate the PDF.", "error");
         return;
     }
-    closeActivityTray();
     printInkModal.showModal();
 }
 
@@ -1495,17 +1488,6 @@ on(main, "pamphlet-tray-action", (event: Event) => {
     void handleTrayAction(custom.detail);
 });
 
-on(trayToggleBtn, "click", () => {
-    toggleActivityTray();
-});
-
-on(document, "pointerdown", (event: Event) => {
-    if (activityTray.hidden) return;
-    const target = event.target as Node;
-    if (headerMenu.contains(target)) return;
-    closeActivityTray();
-});
-
 function syncOpenSourceModalForFsa(): void {
     const fsaOk = isFileSystemAccessSupported();
     openSourceLocalBtn.disabled = !fsaOk;
@@ -1521,7 +1503,6 @@ function syncOpenSourceModalForFsa(): void {
 }
 
 on(openBtn, "click", () => {
-    closeActivityTray();
     clearError();
     syncOpenSourceModalForFsa();
     openSourceModal.showModal();
@@ -1977,7 +1958,6 @@ async function refreshSeriesTree(activeEpamId: string | null): Promise<void> {
 }
 
 async function openSeriesModal(): Promise<void> {
-    closeActivityTray();
     clearError();
     if (!currentDoc) {
         setError("Open a pamphlet before editing its series.");
@@ -2206,7 +2186,6 @@ async function refreshFooterProfiles(): Promise<void> {
 }
 
 async function openFooterModal(): Promise<void> {
-    closeActivityTray();
     clearError();
     fillFooterForm(null);
     footerModal.showModal();
@@ -2274,7 +2253,6 @@ on(footerProfileForm, "submit", (event: Event) => {
 });
 
 on(saveCloudBtn, "click", async () => {
-    closeActivityTray();
     clearError();
     if (!currentDoc) {
         setError("No hay panfleto abierto para guardar.");
@@ -2337,12 +2315,10 @@ function openCreateSaveModal(): void {
 }
 
 on(createBtn, "click", () => {
-    closeActivityTray();
     openCreateModal();
 });
 
 on(copyBtn, "click", () => {
-    closeActivityTray();
     clearError();
     if (!getAuthToken() || !isAuthenticated()) {
         setError("Sign in to copy a cloud pamphlet.");
@@ -2547,15 +2523,6 @@ if (window.visualViewport) {
         setStatus(FSA_HTTPS_HINT, "info");
     } else {
         setStatus("No file open — open an existing .epam or create a new one.");
-    }
-
-    /** Open the shell tools tray so pamphlet HDS buttons are reachable. */
-    function revealHeaderToolsTray(): void {
-        const tray = document.getElementById("dynamic-header");
-        if (tray) tray.hidden = false;
-        document
-            .querySelector<HTMLButtonElement>(".header-dynamic[aria-controls='dynamic-header']")
-            ?.setAttribute("aria-expanded", "true");
     }
 
     /**

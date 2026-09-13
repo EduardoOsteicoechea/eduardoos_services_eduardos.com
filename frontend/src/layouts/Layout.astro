@@ -43,6 +43,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const hasDhsSlot = Astro.slots.has("dhs");
 const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
 const isEreport = htmlPage.startsWith("ereport");
+const isPamphlet = path.startsWith("/documents/pamphlet");
 const privateByDefault =
   path.startsWith("/session") ||
   path.startsWith("/admin") ||
@@ -153,6 +154,11 @@ const jsonLdString =
             <img class="header-session-photo" data-header-avatar-img hidden alt="" />
             <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
           </a>
+          {isPamphlet ? (
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open pamphlet actions" title="Open pamphlet actions">
+              <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
+            </button>
+          ) : null}
           <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
             {isEreport ? (
@@ -179,9 +185,11 @@ const jsonLdString =
           >
             <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
           </a>
-          <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
-            <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
-          </button>
+          {!isPamphlet ? (
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
+              <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
+            </button>
+          ) : null}
           <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
             <span class="agent-fab-label" aria-hidden="true">AI</span>
           </button>

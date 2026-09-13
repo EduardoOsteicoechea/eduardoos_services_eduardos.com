@@ -39,63 +39,97 @@ const ICONS = {
   copy: iconSvg(
     `<path d="M8 4h10v12h-2V6H8V4zm-4 4h10v12H4V8zm2 2v8h6v-8H6z" fill="currentColor"/>`,
   ),
-  expand: iconSvg(
-    `<path d="M7 10l5 5 5-5H7z" fill="currentColor"/>`,
-  ),
   trash: iconSvg(
     `<path d="M6 7h12v2H6V7zm2 3h8l-1 9H9L8 10zm3-6h2l1 1h4v2H6V5h4l1-1z" fill="currentColor"/>`,
   ),
 };
 
+function actionBtn(
+  id: string,
+  icon: string,
+  label: string,
+  title: string,
+  extra = "",
+  className = "header-dynamic-menu__btn dhs-action",
+): string {
+  return `<button type="button" id="${id}" class="${className}" title="${title}" aria-label="${title}" ${extra}>
+        <span class="icon-btn" aria-hidden="true">${icon}</span>
+        <span class="header-dynamic-menu__label">${label}</span>
+      </button>`;
+}
+
 /** @param _menuIconSrc retained for call-site compatibility; unused (icons are inline). */
 export function renderShell(_menuIconSrc?: string): string {
   return `
-<section id="pamphlet-header-menu" class="header-dynamic-menu" aria-label="Pamphlet tools">
+<section id="pamphlet-header-menu" class="header-dynamic-menu header-dynamic-menu--labeled" aria-label="Pamphlet tools">
   <div class="header-dynamic-menu__inner">
     <div class="header-dynamic-menu__actions" role="toolbar" aria-label="Pamphlet actions">
-      <button type="button" id="btn-open" class="header-dynamic-menu__btn" title="Open pamphlet" aria-label="Open pamphlet">
-        ${ICONS.open}
-      </button>
-      <button type="button" id="btn-create" class="header-dynamic-menu__btn" title="New pamphlet" aria-label="New pamphlet">
-        ${ICONS.create}
-      </button>
-      <button type="button" id="btn-copy" class="header-dynamic-menu__btn" title="Copy existing pamphlet" aria-label="Copy existing pamphlet">
-        ${ICONS.copy}
-      </button>
-      <button type="button" id="btn-save-cloud" class="header-dynamic-menu__btn" title="Save to cloud" aria-label="Save to cloud">
-        ${ICONS.save}
-      </button>
-      <button type="button" id="btn-print" class="header-dynamic-menu__btn" title="Print" aria-label="Print" disabled>
-        ${ICONS.print}
-      </button>
-      <button type="button" id="btn-view-desktop" class="header-dynamic-menu__btn header-dynamic-menu__btn--active is-active" title="Desktop view" aria-label="Desktop view" aria-pressed="true">
-        ${ICONS.desktop}
-      </button>
-      <button type="button" id="btn-view-mobile" class="header-dynamic-menu__btn" title="Mobile view" aria-label="Mobile view" aria-pressed="false">
-        ${ICONS.mobile}
-      </button>
-      <button type="button" id="btn-series" class="header-dynamic-menu__btn" title="Series and chapters" aria-label="Series and chapters" hidden>
-        ${ICONS.series}
-      </button>
-      <button type="button" id="btn-template" class="header-dynamic-menu__btn" title="Tipo de panfleto (simple / imágenes estructuradas)" aria-label="Tipo de panfleto" aria-pressed="false">
-        ${ICONS.template}
-      </button>
-      <button type="button" id="btn-footer" class="header-dynamic-menu__btn" title="Pie de página estático" aria-label="Pie de página estático">
-        ${ICONS.footer}
-      </button>
-      <button type="button" id="btn-activity-expand" class="header-dynamic-menu__btn header-dynamic-menu__tray-toggle" title="Show action labels" aria-label="Show action labels" aria-expanded="false" aria-controls="pamphlet-header-menu-tray">
-        ${ICONS.expand}
-      </button>
-    </div>
-    <div id="pamphlet-header-menu-tray" class="header-dynamic-menu__tray" role="region" aria-label="Action labels" hidden>
-      <ul class="pamphlet-header-menu-tray__labels">
-		<li>Open · New · Copy existing · Save · Print</li>
-        <li>Print: blanco y negro or azul #00368c</li>
-        <li>Desktop / Mobile view</li>
-        <li>Template type (simple / structured images)</li>
-        <li>Static footer profiles (copy or link)</li>
-        <li>Series (when a pamphlet is open)</li>
-      </ul>
+      ${actionBtn(
+        "btn-open",
+        ICONS.open,
+        "Abrir",
+        "Abrir un panfleto desde este dispositivo o la nube",
+      )}
+      ${actionBtn(
+        "btn-create",
+        ICONS.create,
+        "Nuevo",
+        "Crear un panfleto nuevo con título, serie y autor",
+      )}
+      ${actionBtn(
+        "btn-copy",
+        ICONS.copy,
+        "Duplicar",
+        "Copiar un panfleto existente como documento nuevo",
+      )}
+      ${actionBtn(
+        "btn-save-cloud",
+        ICONS.save,
+        "Guardar",
+        "Guardar el panfleto abierto en la nube",
+      )}
+      ${actionBtn(
+        "btn-print",
+        ICONS.print,
+        "Imprimir",
+        "Exportar PDF en blanco y negro o azul #00368c",
+        "disabled",
+      )}
+      ${actionBtn(
+        "btn-view-desktop",
+        ICONS.desktop,
+        "Escritorio",
+        "Vista de hoja apaisada en pantalla de escritorio",
+        'aria-pressed="true"',
+        "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--active is-active",
+      )}
+      ${actionBtn(
+        "btn-view-mobile",
+        ICONS.mobile,
+        "Móvil",
+        "Vista apilada tipo móvil para revisar el contenido",
+        'aria-pressed="false"',
+      )}
+      ${actionBtn(
+        "btn-series",
+        ICONS.series,
+        "Serie",
+        "Organizar serie y capítulos del panfleto abierto",
+        "hidden",
+      )}
+      ${actionBtn(
+        "btn-template",
+        ICONS.template,
+        "Tipo",
+        "Cambiar entre panfleto simple o con imágenes estructuradas",
+        'aria-pressed="false"',
+      )}
+      ${actionBtn(
+        "btn-footer",
+        ICONS.footer,
+        "Pie",
+        "Gestionar pies de página reutilizables (copiar o vincular)",
+      )}
     </div>
   </div>
 </section>
