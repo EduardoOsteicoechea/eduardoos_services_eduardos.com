@@ -141,6 +141,19 @@ const jsonLdString =
               </svg>
             ) : null}
           </button>
+          <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
+            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
+            {isEreport ? (
+              <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            ) : null}
+          </button>
+          {isPamphlet ? (
+            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open pamphlet actions" title="Open pamphlet actions">
+              <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
+            </button>
+          ) : null}
           <a
             href="/session/profile"
             class="header-session icon-btn"
@@ -154,19 +167,6 @@ const jsonLdString =
             <img class="header-session-photo" data-header-avatar-img hidden alt="" />
             <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
           </a>
-          {isPamphlet ? (
-            <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label="Open pamphlet actions" title="Open pamphlet actions">
-              <span class="material-symbols-outlined" aria-hidden="true">space_dashboard</span>
-            </button>
-          ) : null}
-          <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
-            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
-            {isEreport ? (
-              <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            ) : null}
-          </button>
         </div>
         {isEreport ? (
           <div class="ereport-guest-auth" data-header-chrome data-guest-only>

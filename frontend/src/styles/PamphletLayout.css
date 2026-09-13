@@ -84,21 +84,21 @@ body.page-pamphlet .item-type-options button:hover {
   background: color-mix(in srgb, var(--site-body-fg) 22%, var(--site-body-bg));
 }
 
-/* Pamphlet: dynamic-actions opener sits under the session avatar in the rail. */
-body.page-pamphlet .header-cluster--menu .header-session {
-  order: 1;
-}
-
-body.page-pamphlet .header-cluster--menu .header-dynamic {
-  order: 2;
-}
-
+/* Pamphlet rail: menu → dynamic actions → session avatar. */
 body.page-pamphlet .header-cluster--menu .header-menu--desktop {
   order: 0;
 }
 
+body.page-pamphlet .header-cluster--menu .header-dynamic {
+  order: 1;
+}
+
+body.page-pamphlet .header-cluster--menu .header-session {
+  order: 2;
+}
+
 @media (max-width: 63.999rem) {
-  body.page-pamphlet .header-cluster--menu .header-session {
+  body.page-pamphlet .header-cluster--menu .header-menu--mobile {
     order: 0;
   }
 
@@ -106,7 +106,7 @@ body.page-pamphlet .header-cluster--menu .header-menu--desktop {
     order: 1;
   }
 
-  body.page-pamphlet .header-cluster--menu .header-menu--mobile {
+  body.page-pamphlet .header-cluster--menu .header-session {
     order: 2;
   }
 }
