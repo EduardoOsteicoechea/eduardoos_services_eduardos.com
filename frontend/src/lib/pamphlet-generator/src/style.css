@@ -1850,6 +1850,18 @@
   text-size-adjust: 100%;
 }
 
+/*
+ * transform does not contribute to document flow. Reserve the transformed
+ * sheet height so the mobile page remains vertically scrollable after the
+ * visual mm boost is applied.
+ */
+.pamphlet-app[data-view-mode="mobile"] {
+  min-height: calc(
+    var(--sheet-stack-height) * var(--mobile-view-scale, 1) *
+      var(--mm-visual-boost, 1)
+  );
+}
+
 /* Image item should hug the frame so the edit tray sits flush under the image */
 .pamphlet-app[data-view-mode="mobile"] .pamphlet-item[data-item-type="image"] {
   display: flex;
