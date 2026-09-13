@@ -8,23 +8,135 @@ import Layout from "../layouts/Layout.astro";
 >
   <section class="articles-page" data-articles>
     <h1>Articles</h1>
-    <p class="lede">Selected pamphlets published for public reading.</p>
+    <p class="lede">Selected pamphlets published for public reading, grouped by series and chapter.</p>
     <p class="status" data-articles-status>Loading articles…</p>
-    <div class="articles-page__list" data-articles-list></div>
+    <div class="articles-page__tree" data-articles-list></div>
   </section>
 </Layout>
 <style is:global>
   .articles-page { display: flex; flex-direction: column; gap: var(--rail-gap); }
   .articles-page h1, .articles-page p { margin: 0; }
-  .articles-page__list { display: flex; flex-direction: column; gap: var(--rail-gap); }
-  .articles-page__item { display: flex; flex-direction: column; gap: var(--rail-gap); padding: var(--space-padding); border: var(--border-width) solid var(--color-border); border-radius: var(--border-radius); background: var(--color-surface); }
-  .articles-page__item:hover { border-color: var(--color-accent); }
-  .articles-page__meta { font-size: var(--font-size-xs); color: var(--color-muted); }
+  .articles-page__tree { display: flex; flex-direction: column; gap: var(--rail-gap); }
+  .articles-series, .articles-chapter {
+    display: flex; flex-direction: column; gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+  .articles-series > summary, .articles-chapter > summary {
+    cursor: pointer; list-style: none; font-size: var(--font-size-md);
+  }
+  .articles-chapter > summary { font-size: var(--font-size-sm); color: var(--color-muted); }
+  .articles-series > summary::-webkit-details-marker,
+  .articles-chapter > summary::-webkit-details-marker { display: none; }
+  .articles-cards { display: flex; flex-direction: column; gap: var(--rail-gap); margin: 0; padding: 0; list-style: none; }
+  .articles-card {
+    display: flex; flex-direction: column; gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: inherit; text-decoration: none;
+  }
+  .articles-card:hover { border-color: var(--color-accent); }
+  .articles-card__title { font-size: var(--font-size-sm); }
+  .articles-card__meta { font-size: var(--font-size-xs); color: var(--color-muted); }
 </style>
 <script>
   import { apiRequest } from "../lib/api";
   import { showErrorModal } from "../lib/error-modal";
   import { mustLog } from "../lib/dev-log";
+
+  const UNASSIGNED_SERIES = "(sin serie)";
+  const UNASSIGNED_CHAPTER = "(sin capítulo)";
+
+  type ArticleRow = {
+    epamId: string;
+    title?: string;
+    author?: string;
+    date?: string;
+    series?: string;
+    seriesChapter?: string;
+  };
+
+  type SeriesTree = {
+    count: number;
+    series: Array<{ name: string; chapters: Array<{ name: string; items: ArticleRow[] }> }>;
+  };
+
+  function groupBySeries(records: ArticleRow[]): SeriesTree {
+    const seriesMap = new Map<string, Map<string, ArticleRow[]>>();
+    for (const rec of records) {
+      const sk = (rec.series ?? "").trim() || UNASSIGNED_SERIES;
+      const ck = (rec.seriesChapter ?? "").trim() || UNASSIGNED_CHAPTER;
+      if (!seriesMap.has(sk)) seriesMap.set(sk, new Map());
+      const chapters = seriesMap.get(sk)!;
+      if (!chapters.has(ck)) chapters.set(ck, []);
+      chapters.get(ck)!.push(rec);
+    }
+    const seriesNames = [...seriesMap.keys()].sort((a, b) => a.localeCompare(b));
+    const series: SeriesTree["series"] = [];
+    let count = 0;
+    for (const sName of seriesNames) {
+      const chaptersMap = seriesMap.get(sName)!;
+      const chapterNames = [...chaptersMap.keys()].sort((a, b) => a.localeCompare(b));
+      const chapters: SeriesTree["series"][number]["chapters"] = [];
+      for (const cName of chapterNames) {
+        const items = chaptersMap.get(cName)!;
+        items.sort((a, b) => (a.title || "").localeCompare(b.title || "") || a.epamId.localeCompare(b.epamId));
+        count += items.length;
+        chapters.push({ name: cName, items });
+      }
+      series.push({ name: sName, chapters });
+    }
+    return { count, series };
+  }
+
+  function renderTree(list: HTMLElement, tree: SeriesTree) {
+    list.replaceChildren();
+    for (const seriesNode of tree.series) {
+      const seriesEl = document.createElement("details");
+      seriesEl.className = "articles-series";
+      seriesEl.open = true;
+      const seriesSummary = document.createElement("summary");
+      seriesSummary.textContent = seriesNode.name;
+      seriesEl.appendChild(seriesSummary);
+      for (const chapter of seriesNode.chapters) {
+        const chapterEl = document.createElement("details");
+        chapterEl.className = "articles-chapter";
+        chapterEl.open = true;
+        const chapterSummary = document.createElement("summary");
+        chapterSummary.textContent = chapter.name;
+        chapterEl.appendChild(chapterSummary);
+        const cards = document.createElement("ul");
+        cards.className = "articles-cards";
+        for (const article of chapter.items) {
+          const li = document.createElement("li");
+          const link = document.createElement("a");
+          link.className = "articles-card";
+          link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
+          link.setAttribute("data-route", "");
+          const title = document.createElement("strong");
+          title.className = "articles-card__title";
+          title.textContent = article.title || "Untitled";
+          link.appendChild(title);
+          const meta = [article.author, article.date].filter(Boolean).join(" · ");
+          if (meta) {
+            const detail = document.createElement("span");
+            detail.className = "articles-card__meta";
+            detail.textContent = meta;
+            link.appendChild(detail);
+          }
+          li.appendChild(link);
+          cards.appendChild(li);
+        }
+        chapterEl.appendChild(cards);
+        seriesEl.appendChild(chapterEl);
+      }
+      list.appendChild(seriesEl);
+    }
+  }
 
   async function loadArticles() {
     const root = document.querySelector("[data-articles]");
@@ -35,7 +147,7 @@ import Layout from "../layouts/Layout.astro";
     status.textContent = "Loading articles…";
     list.replaceChildren();
     const { status: responseStatus, data, requestId } = await apiRequest<{
-      articles?: Array<{ epamId: string; title: string; author?: string; date?: string }>;
+      articles?: ArticleRow[];
     }>("/articles");
     if (mustLog) console.log("[articles] list", { responseStatus, requestId });
     if (responseStatus >= 400) {
@@ -48,26 +160,11 @@ import Layout from "../layouts/Layout.astro";
       return;
     }
     const articles = data.articles ?? [];
-    status.textContent = articles.length
-      ? `${articles.length} article${articles.length === 1 ? "" : "s"}.`
+    const tree = groupBySeries(articles);
+    status.textContent = tree.count
+      ? `${tree.count} article${tree.count === 1 ? "" : "s"}.`
       : "No public articles are available.";
-    for (const article of articles) {
-      const link = document.createElement("a");
-      link.className = "articles-page__item";
-      link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
-      link.setAttribute("data-route", "");
-      const title = document.createElement("strong");
-      title.textContent = article.title || "Untitled";
-      link.appendChild(title);
-      const meta = [article.author, article.date].filter(Boolean).join(" · ");
-      if (meta) {
-        const detail = document.createElement("span");
-        detail.className = "articles-page__meta";
-        detail.textContent = meta;
-        link.appendChild(detail);
-      }
-      list.appendChild(link);
-    }
+    renderTree(list, tree);
   }
 
   document.addEventListener("astro:page-load", () => {

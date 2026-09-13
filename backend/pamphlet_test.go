@@ -141,6 +141,20 @@ func TestArticlesLoadAllPamphletsForConfiguredOwner(t *testing.T) {
 	if got.Code != http.StatusOK {
 		t.Fatalf("saved pamphlet should load as article: %d %s", got.Code, got.Body.String())
 	}
+	saved := httptest.NewRecorder()
+	app.Handler().ServeHTTP(saved, httptest.NewRequest(http.MethodGet, "/api/articles/saved", nil))
+	if saved.Code != http.StatusOK {
+		t.Fatalf("article with column text: %d %s", saved.Code, saved.Body.String())
+	}
+	payload := decodeMap(t, saved)
+	blocks, _ := payload["blocks"].([]any)
+	if len(blocks) == 0 {
+		t.Fatalf("expected readable blocks, got %s", saved.Body.String())
+	}
+	plain, _ := payload["plainText"].(string)
+	if !strings.Contains(plain, "Visible") {
+		t.Fatalf("expected column text in plainText, got %q", plain)
+	}
 	foreign := httptest.NewRecorder()
 	app.Handler().ServeHTTP(foreign, httptest.NewRequest(http.MethodGet, "/api/articles/foreign", nil))
 	if foreign.Code != http.StatusNotFound {
