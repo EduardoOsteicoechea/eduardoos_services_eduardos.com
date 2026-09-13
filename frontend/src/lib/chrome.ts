@@ -119,16 +119,55 @@ async function applyCartFetchResult(
   sessionLog("chrome.cart.status", { companyId, status, empty: true });
 }
 
-async function syncCartFab(): Promise<void> {
+async function syncCartFab(knownCompanyIds?: string[]): Promise<void> {
   if (!cartFabPolicy.authed || !cartFabPolicy.allowCart) {
     setCartFabHidden(true);
     return;
   }
-  const companyId = lastEostoreCompanyId();
+
+  let knownIds = knownCompanyIds;
+  if (knownIds === undefined) {
+    try {
+      const res = await listPublicCompanies();
+      knownIds =
+        res.status === 200
+          ? (res.data.companies || []).map((c) => c.id).filter(Boolean)
+          : [];
+    } catch {
+      knownIds = [];
+    }
+  }
+
+  const known = new Set(knownIds.map((id) => id.trim()).filter(Boolean));
+
+  let companyId = (companyIdFromPath() || "").trim();
+  if (!companyId) {
+    try {
+      companyId = (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
+    } catch {
+      companyId = "";
+    }
+  }
+  // Only fetch carts for companies that exist in the public catalog.
+  // Clears poisoned localStorage ids (e.g. article UUIDs) without a 404.
+  if (companyId && !known.has(companyId)) {
+    forgetEostoreCompany(companyId);
+    sessionLog("chrome.cart.status", {
+      companyId,
+      empty: true,
+      skipped: "unknown_company",
+    });
+    companyId = "";
+  }
+  if (!companyId && known.size === 1) {
+    companyId = [...known][0];
+  }
   if (!companyId) {
     setCartFabHidden(true);
     return;
   }
+
+  rememberEostoreCompany(companyId);
   try {
     const res = await getCart(companyId);
     await applyCartFetchResult(companyId, res.status, res.data.cart);
@@ -434,6 +473,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
 async function syncEostoreNav(opts: { syncCart?: boolean } = {}): Promise<void> {
   const syncCart = opts.syncCart !== false;
   const hosts = document.querySelectorAll("[data-eostore-nav]");
+  let companyIds: string[] = [];
   if (!hosts.length) {
     syncStaticStoreNav(0);
     if (syncCart) await syncCartFab();
@@ -442,6 +482,7 @@ async function syncEostoreNav(opts: { syncCart?: boolean } = {}): Promise<void> 
   try {
     const res = await listPublicCompanies();
     const companies = res.status === 200 ? res.data.companies || [] : [];
+    companyIds = companies.map((c) => c.id).filter(Boolean);
     syncStaticStoreNav(companies.length);
     if (companies.length === 1) {
       rememberEostoreCompany(companies[0].id);
@@ -482,7 +523,7 @@ async function syncEostoreNav(opts: { syncCart?: boolean } = {}): Promise<void> 
     syncStaticStoreNav(0);
     sessionLog("chrome.eostoreNav.error");
   }
-  if (syncCart) await syncCartFab();
+  if (syncCart) await syncCartFab(companyIds);
 }
 
 

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMe } from "./api";
-import { companyIdFromPath, getCart } from "./eostore";
+import { companyIdFromPath, getCart, listPublicCompanies } from "./eostore";
 import { applyHeaderCartFab, applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
 
@@ -62,6 +62,8 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
 
 describe("main-menu session chrome", () => {
   beforeEach(() => {
+    vi.mocked(companyIdFromPath).mockReturnValue("");
+    vi.mocked(listPublicCompanies).mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } });
     window.__chromeStarted = false;
     mountChrome();
     vi.mocked(checkServiceAccess).mockResolvedValue({
@@ -183,6 +185,11 @@ describe("main-menu session chrome", () => {
 
   it("shows header cart when the cart has payable items", async () => {
     vi.mocked(companyIdFromPath).mockReturnValue("demo-co");
+    vi.mocked(listPublicCompanies).mockResolvedValue({
+      status: 200,
+      requestId: "rid-store-demo",
+      data: { companies: [{ id: "demo-co", name: "Demo" }] },
+    });
     vi.mocked(getCart).mockResolvedValue({
       status: 200,
       requestId: "rid-cart-items",
