@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -40,7 +39,9 @@ func migratePamphletBodies(ctx context.Context, cfg config, store DataStore) err
 			return err
 		}
 		if legacy.ID == "" || legacy.UserID == "" || legacy.EpamID == "" || legacy.BodyPath == "" {
-			return errors.New("invalid legacy pamphlet metadata")
+			// Preserve unrecognizable legacy records for manual recovery rather
+			// than taking the entire API down on every restart.
+			continue
 		}
 		path := filepath.Join(cfg.MediaRoot, filepath.FromSlash(legacy.BodyPath))
 		raw, err := os.ReadFile(path)
