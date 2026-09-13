@@ -395,7 +395,7 @@ export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promis
     const { status, data } = await getMe();
     sessionLog("session.requireGuest.me", { status, userId: data.id, error: data.error });
     if (status === 200) {
-      go("/session/profile");
+      go("/");
       return false;
     }
     if (status !== 401) {
@@ -575,7 +575,7 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     setBanner(root, message.text, message.kind);
     if (result.status === 200) {
       await afterAuthChange();
-      go("/session/profile");
+      go("/");
     }
   } catch {
     setBanner(root, copy.loadError, "err");

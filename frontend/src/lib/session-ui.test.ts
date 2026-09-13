@@ -298,7 +298,7 @@ describe("session forms", () => {
         identifier: "member@eduardoos.com",
         password: "correct-horse-battery",
       });
-      expect(go).toHaveBeenCalledWith("/session/profile");
+      expect(go).toHaveBeenCalledWith("/");
     });
     expect(postJSON).toHaveBeenCalledTimes(1);
   });
