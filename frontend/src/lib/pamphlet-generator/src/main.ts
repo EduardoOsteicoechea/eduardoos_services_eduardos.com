@@ -296,18 +296,11 @@ function syncDesktopViewScale(): void {
         appRoot.style.setProperty("--desktop-view-scale", "1");
         return;
     }
-    const layoutW = main.offsetWidth;
-    const layoutH = main.offsetHeight;
-    const viewportW = window.visualViewport?.width ?? window.innerWidth;
-    const pad = 32;
-    const available = Math.max(280, viewportW - pad);
-    const scale = layoutW > 0 ? available / layoutW : 1;
-    appRoot.style.setProperty("--desktop-view-scale", String(scale));
-    if (layoutH > 0 && scale !== 1) {
-        main.style.marginBottom = `${layoutH * scale - layoutH}px`;
-    } else {
-        main.style.marginBottom = "";
-    }
+    // Desktop keeps the letter at 1:1 CSS mm. Fit-to-width scaling was hiding
+    // horizontal overflow and fighting document scroll; html.page-pamphlet allows
+    // overflow-x so a wide sheet scrolls instead of shrinking.
+    appRoot.style.setProperty("--desktop-view-scale", "1");
+    main.style.marginBottom = "";
 }
 
 function syncSheetScale(): void {

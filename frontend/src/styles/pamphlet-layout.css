@@ -4,6 +4,9 @@
  */
 
 html:has(body.page-pamphlet) {
+  /* Beat global `html { overflow-x: hidden }` so desktop letter can scroll sideways */
+  overflow-x: auto;
+  overflow-y: auto;
   /* Chrome/Safari pull-to-refresh listens on the root scroller */
   overscroll-behavior-y: none;
   overscroll-behavior: none;
@@ -13,14 +16,24 @@ body.page-pamphlet {
   max-width: none;
   width: 100%;
   margin: 0;
-  overflow-x: auto;
-  overflow-y: auto;
+  /* Single document scrollport on html — nested body overflow traps wheel over the sheet */
+  overflow: visible;
   /* Kill browser pull-to-refresh / overscroll reload at top of page */
   overscroll-behavior-y: none;
   overscroll-behavior: none;
   background: var(--color-bg);
   color: var(--color-text);
   -webkit-overflow-scrolling: touch;
+}
+
+/* Keep shell/layout main/workspace from creating nested scrollports over the editor.
+   Do not target main.pamphlet-sheet — that needs overflow:clip for letter ink. */
+body.page-pamphlet .shell,
+body.page-pamphlet main:not(.pamphlet-sheet),
+body.page-pamphlet .pamphlet-layout-workspace,
+body.page-pamphlet .pamphlet-route-root,
+body.page-pamphlet .pamphlet-app {
+  overflow: visible;
 }
 
 /* Keep site header/avatar above teleported pamphlet chrome. */

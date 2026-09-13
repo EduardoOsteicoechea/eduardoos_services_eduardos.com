@@ -478,12 +478,15 @@
   /* Screen-only: CSS mm under-reads on phone/tablet; boost visual size without changing layout math. */
   --mm-visual-boost: 1;
   /*
-   * Screen ink follows site theme (desktop dark mode).
+   * Screen ink follows site theme (desktop/mobile dark mode).
    * @media print overrides these to paper white / black ink (PDF stays server-side B&W).
    */
-  --pamphlet-paper-bg: #ffffff;
-  --pamphlet-ink: #000000;
-  --pamphlet-rule: #000000;
+  --pamphlet-paper-bg: var(--color-bg, var(--site-body-bg, #ffffff));
+  --pamphlet-ink: var(--color-text, var(--site-body-fg, #000000));
+  --pamphlet-rule: var(--color-text, var(--site-body-fg, #000000));
+  /* Legacy aliases used by a few sheet rules */
+  --site-body-bg: var(--color-bg, #ffffff);
+  --site-body-fg: var(--color-text, #000000);
 }
 
 .pamphlet-app,
@@ -659,7 +662,7 @@
     align-items: stretch;
     /* Gap lives on the title divider → meta (title_meta_gap), not flex gap. */
     gap: 0;
-    overflow: hidden;
+    overflow: clip;
     min-width: 0;
     min-height: 0;
     height: 100%;
@@ -745,8 +748,9 @@
     align-items: stretch;
     align-content: flex-start;
     gap: 0.6mm; /* chrome_gap — message → meta */
-    /* Keep chrome inside the band so trays don't paint over cols 7–8. */
-    overflow: hidden;
+    /* Keep chrome inside the band so trays don't paint over cols 7–8.
+       clip (not hidden): mask ink without trapping page wheel scroll. */
+    overflow: clip;
     min-width: 0;
     min-height: 0;
     height: 100%;
@@ -1901,8 +1905,9 @@
   overflow: visible !important;
 }
 
+/* clip (not hidden): still mask ink, but do not become a wheel scrollport that traps page scroll */
 .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
-  overflow: hidden;
+  overflow: clip;
 }
 
 .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer:has(.element_edit_tray),
