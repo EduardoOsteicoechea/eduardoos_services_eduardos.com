@@ -3,6 +3,7 @@
  * Centers the letter sheet; restores fixed chrome broken by .pamphlet-app * { position: relative }.
  */
 
+html.page-pamphlet,
 html:has(body.page-pamphlet) {
   /* Beat global `html { overflow-x: hidden }` so desktop letter can scroll sideways */
   overflow-x: auto;
@@ -14,10 +15,12 @@ html:has(body.page-pamphlet) {
 
 body.page-pamphlet {
   max-width: none;
-  width: 100%;
+  width: auto;
+  min-width: 100%;
   margin: 0;
   /* Single document scrollport on html — nested body overflow traps wheel over the sheet */
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: visible;
   /* Kill browser pull-to-refresh / overscroll reload at top of page */
   overscroll-behavior-y: none;
   overscroll-behavior: none;
@@ -34,6 +37,12 @@ body.page-pamphlet .pamphlet-layout-workspace,
 body.page-pamphlet .pamphlet-route-root,
 body.page-pamphlet .pamphlet-app {
   overflow: visible;
+  min-width: min-content;
+}
+
+/* Beat global `main > * { min-width: 0 }` so the letter is not crushed/clipped. */
+body.page-pamphlet main:not(.pamphlet-sheet) > * {
+  min-width: min-content;
 }
 
 /* Keep site header/avatar above teleported pamphlet chrome. */
