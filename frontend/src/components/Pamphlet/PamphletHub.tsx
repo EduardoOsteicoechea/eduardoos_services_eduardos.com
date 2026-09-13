@@ -5,7 +5,8 @@
  * Generator canvas dimensions stay pass-through (do not rem-convert).
  *
  * ProductHeaderMenu is dashboard-only so it does not wipe generator tools from
- * #header-dynamic-menu-host. Editor view switching stays on the hint bar.
+ * #header-dynamic-menu-host. Editor chrome is the shared rail + #dynamic-header only
+ * (no Editor/Dashboard hint bar).
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -119,28 +120,7 @@ function PamphletHubInner() {
         <ProductHubShell title="Pamphlet">
           <DashboardGrid cards={PAMPHLET_CARDS} onSelect={setView} />
         </ProductHubShell>
-      ) : (
-        <div className="pamphlet-hub__hint-bar">
-          <span className="pamphlet-hub__hint-label">
-            {editorLoading ? "Opening editor…" : `Editor · ${view}`}
-          </span>
-          <div className="pamphlet-hub__hint-actions">
-            {PAMPHLET_VIEWS.filter((v) => v.id !== "dashboard").map((v) => (
-              <button
-                key={v.id}
-                type="button"
-                className={view === v.id ? "btn is-active" : "btn"}
-                onClick={() => setView(v.id)}
-              >
-                {v.label}
-              </button>
-            ))}
-            <button type="button" className="btn" onClick={() => setView("dashboard")}>
-              Dashboard
-            </button>
-          </div>
-        </div>
-      )}
+      ) : null}
       {editorError ? (
         <p className="pamphlet-hub__error" role="alert">
           {editorError}

@@ -49,11 +49,6 @@ import Layout from "../../layouts/Layout.astro";
     </div>
   </section>
 
-  <div id="pamphlet-editor-bar" class="pamphlet-editor-bar" hidden>
-    <span id="pamphlet-editor-label">Editor</span>
-    <button type="button" class="btn" data-pamphlet-dashboard>Dashboard</button>
-  </div>
-
   <div id="pamphlet-root" class="pamphlet-route-root pamphlet-layout-workspace" hidden></div>
 </Layout>
 
@@ -119,23 +114,6 @@ import Layout from "../../layouts/Layout.astro";
     color: var(--color-muted);
   }
 
-  .pamphlet-editor-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--rail-gap);
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-padding);
-    border-bottom: var(--border-width) solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
-    font-size: var(--font-size-sm);
-  }
-
-  .pamphlet-editor-bar[hidden] {
-    display: none;
-  }
-
   .pamphlet-route-root {
     box-sizing: border-box;
     width: auto;
@@ -190,17 +168,13 @@ import Layout from "../../layouts/Layout.astro";
     clearBleed();
     const dash = document.getElementById("pamphlet-dash");
     const host = document.getElementById("pamphlet-root");
-    const bar = document.getElementById("pamphlet-editor-bar");
     if (dash) dash.hidden = false;
     if (host) host.hidden = true;
-    if (bar) bar.hidden = true;
   }
 
   function showEditor(view: string): void {
     const dash = document.getElementById("pamphlet-dash");
     const host = document.getElementById("pamphlet-root");
-    const bar = document.getElementById("pamphlet-editor-bar");
-    const label = document.getElementById("pamphlet-editor-label");
     if (!host) {
       console.error("[pamphlet] missing #pamphlet-root");
       return;
@@ -209,8 +183,6 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     if (dash) dash.hidden = true;
     host.hidden = false;
-    if (bar) bar.hidden = false;
-    if (label) label.textContent = `Editor · ${view}`;
     applyBleed();
 
     host.dataset.pamphletView = view;
@@ -234,14 +206,6 @@ import Layout from "../../layouts/Layout.astro";
   function onClick(event: Event): void {
     const el = event.target;
     if (!(el instanceof Element)) return;
-
-    const dashBtn = el.closest("[data-pamphlet-dashboard]");
-    if (dashBtn) {
-      event.preventDefault();
-      setViewInUrl("dashboard");
-      showDashboard();
-      return;
-    }
 
     const nav = el.closest<HTMLAnchorElement>("[data-pamphlet-nav]");
     if (!nav) return;

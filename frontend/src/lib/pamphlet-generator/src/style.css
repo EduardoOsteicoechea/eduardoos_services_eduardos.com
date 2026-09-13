@@ -575,8 +575,9 @@
         var(--column-content-height)
         var(--page-margin);
     padding: 0;
-    border: 1px solid color-mix(in srgb, var(--pamphlet-ink) 14%, transparent);
-    margin: 10px auto 10px auto;
+    /* Screen: no outer frame — it does not track the viewport; print restores a rule. */
+    border: 0;
+    margin: var(--rail-gap, 0.5rem) auto;
     background: var(--pamphlet-paper-bg);
     color: var(--pamphlet-ink);
 }
@@ -2207,6 +2208,11 @@
     --pamphlet-paper-bg: #ffffff;
     --pamphlet-ink: #000000;
     --pamphlet-rule: #222222;
+  }
+
+  .pamphlet-app main.pamphlet-sheet {
+    border: 0 !important;
+    margin: 0 !important;
   }
 
   .header-dynamic-menu-host,

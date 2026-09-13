@@ -45,15 +45,13 @@ body.page-pamphlet .site-header__bar {
   z-index: 301;
 }
 
-/* Full-bleed workspace, reserved for top bar (mobile) or 60px left rail (desktop). */
+/* Full-bleed workspace under the left rail (desktop) or top bar (mobile). */
 .pamphlet-layout-workspace {
   box-sizing: border-box;
-  width: calc(100% - var(--header_width, 0px));
+  width: 100%;
   min-height: calc(100vh - var(--header_offset, var(--header_height, 0px)));
-  margin-top: 0;
-  margin-left: var(--header_width, 0px);
-  padding: 1rem 0 2rem;
-  padding-top: calc(1rem + var(--header_offset, var(--header_height, 0px)));
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,11 +76,42 @@ body.page-pamphlet .site-header__bar {
 
 /*
  * Pamphlet tools live inside Header chrome (rail / mobile center slot).
- * No extra top offset for a second toolbar; no bottom Activity Bar.
+ * Workspace padding matches the vertical header: --rail-gap on all sides.
  */
 body.page-pamphlet .pamphlet-layout-workspace {
-  padding-top: calc(1rem + var(--header_offset, var(--header_height, 0px)));
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  padding: 0;
+}
+
+/* Desktop: main inset = rail + same gap the vertical header uses as its padding. */
+@media (min-width: 64rem) {
+  body.page-pamphlet main:not(.pamphlet-sheet) {
+    padding-top: var(--rail-gap);
+    padding-bottom: var(--rail-gap);
+    padding-left: calc(var(--rail-width) + var(--rail-gap));
+    padding-right: var(--rail-gap);
+  }
+
+  body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
+    margin-top: 0;
+    margin-bottom: var(--rail-gap);
+    border: 0;
+  }
+
+  /* Dynamic tools tray: same padding as the vertical rail; no frame that fights dimensions. */
+  body.page-pamphlet #dynamic-header.sidebar-right,
+  body.page-pamphlet .sidebar-right {
+    border: 0;
+    padding: var(--rail-gap);
+  }
+}
+
+/* Also match rail padding on phone/tablet when the tools tray opens under the top bar. */
+@media (max-width: 63.999rem) {
+  body.page-pamphlet #dynamic-header.sidebar-right,
+  body.page-pamphlet .sidebar-right {
+    border: 0;
+    padding: var(--rail-gap);
+  }
 }
 
 body.page-pamphlet .item-type-options button {
