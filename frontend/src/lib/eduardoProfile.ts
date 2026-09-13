@@ -14,7 +14,7 @@ export const PROFILE_YOUTUBE = "https://youtube.com/@EduardoOsteicoechea";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
-  "I am a licensed Building Architect (Universidad de Los Andes, Cum Laude) and a full-stack developer across desktop, web, and cloud, with focused BIM training (Autodesk Authorized Training Center Course, 2011; Advanced BIM Modeling at BIMMASTER.org). I build Revit and AutoCAD API tools, ship AI integrations, and design multiplatform products — so AEC teams get architecture depth and software delivery from one practice. I am especially energized by AI-driven development: turning model intelligence into tools people can actually run.";
+  "I am a licensed Building Architect (Universidad de Los Andes, Cum Laude) and a full-stack developer across desktop, web, and cloud, with focused BIM training (Autodesk Authorized Training Center Course, 2011; Advanced BIM Modeling at BIMMASTER.org). I currently work as a BIM Software Developer at Hexagon Multivista (formerly Voyansi). I build Revit and AutoCAD API tools, ship AI integrations, and design multiplatform products — so AEC teams get architecture depth and software delivery from one practice. I am especially energized by AI-driven development: turning model intelligence into tools people can actually run.";
 
 export const profileExpertiseAnswer =
   "I specialize in Revit and AutoCAD API tooling, custom Revit add-ins and Dynamo workflows, .NET desktop apps, and full-stack web and cloud delivery. My work connects design technology with AI — clash detection, visualization, quantification, and multiplatform BIM products that learn from how teams actually build.";
@@ -30,9 +30,17 @@ export type ProfileExperience = {
 
 export const profileExperience: ProfileExperience[] = [
   {
+    org: "Hexagon Multivista (formerly Voyansi)",
+    role: "BIM Software Developer",
+    period: "2025–present",
+    icon: "apartment",
+    summary:
+      "I develop and support desktop, web, Revit API, cloud, and full-stack AEC software at Hexagon Multivista (Voyansi rebranded under Hexagon).",
+  },
+  {
     org: "Avant Leap",
     role: "BIM software developer",
-    period: "March 2024–present",
+    period: "March 2024–April 2025",
     icon: "precision_manufacturing",
     summary:
       "I support and extend Revit add-ins (Clash Detection, Object Visualizer, Object Quantifier, 4D Simulation, Dynamo Zero Touch Nodes, Mirar, Andiamo, Itera). I built SincronizadorGPS50 (Windows Forms + SQL Server) linking Gestproject2024 and Sage50, and ship AI integrations with OpenAI, StabilityAI, and Replicate-based actions across Windows apps and Revit APIs.",
@@ -231,7 +239,7 @@ export function buildHomeProfileJsonLd(pageUrl: string): Record<string, unknown>
         },
         worksFor: {
           "@type": "Organization",
-          name: "Avant Leap",
+          name: "Hexagon Multivista",
         },
       },
       {

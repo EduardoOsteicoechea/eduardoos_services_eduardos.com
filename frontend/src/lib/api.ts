@@ -71,10 +71,7 @@ export function collectChatPageContext(): ChatPageContext {
   const main = typeof document !== "undefined" ? document.querySelector("main") : null;
   let page_context = "";
   if (main instanceof HTMLElement) {
-    page_context = (main.innerText || "")
-      .replace(/[ \t]+\n/g, "\n")
-      .replace(/[ \t]{2,}/g, " ")
-      .trim();
+    page_context = (main.innerText || "").replace(/\s+/g, " ").trim();
     if (page_context.length > 12000) {
       page_context = page_context.slice(0, 12000);
     }

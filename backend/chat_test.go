@@ -22,9 +22,12 @@ func TestPublicChatRequiresCSRF(t *testing.T) {
 
 func TestPublicChatRejectsEmptyAndUsesSitePrompt(t *testing.T) {
 	app := newTestApp(true)
-	prompt := chatSystemPrompt()
+	prompt := chatSystemPrompt("", "")
 	if !strings.Contains(prompt, "eduardoos.com") {
 		t.Fatal("embedded prompt must name this site")
+	}
+	if !strings.Contains(prompt, "WEBSITE_CONTEXT") {
+		t.Fatal("system prompt must include WEBSITE_CONTEXT")
 	}
 	if !strings.Contains(prompt, "eduardooost@gmail.com") {
 		t.Fatal("system prompt must include PROFILE_CONTEXT canonical contact email")

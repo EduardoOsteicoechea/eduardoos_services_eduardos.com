@@ -55,7 +55,7 @@ Never disclose a more specific physical address.
 **Birth date:** January 19, 1992  
 
 **Core identity**  
-Christian thinker; licensed building architect; BIM specialist; full-stack desktop, web, and cloud software developer; AI integrations developer. Committed to professional excellence and ethics. Spanish native, English proficient. Bridges architecture and software for AEC companies that need multitasking professionals for AI-powered BIM multiplatform solutions.
+Christian thinker; licensed building architect; BIM specialist; full-stack desktop, web, and cloud software developer; AI integrations developer; currently BIM Software Developer at Hexagon Multivista (formerly Voyansi). Committed to professional excellence and ethics. Spanish native, English proficient. Bridges architecture and software for AEC companies that need multitasking professionals for AI-powered BIM multiplatform solutions.
 
 **Personal summary (CV)**  
 Architecturally trained BIM specialist and full-stack software developer with a multidisciplinary background in design technology, software engineering, and cloud-based automation. Experience building .NET applications with AI integration, Revit and AutoCAD API tools, and full-stack web solutions (C#, WPF, JavaScript, PHP, MySQL, and related stacks). Custom Revit add-ins, Dynamo scripts, and parametric families; AWS deployment and user-centric UI/UX. Strong remote collaboration and cross-disciplinary adaptability.
@@ -88,7 +88,10 @@ First employee of a consulting startup for US AEC companies. BIM modeling, Revit
 **Freelance — full-stack web & UI/UX (late 2023, ~six months)**  
 Sites including scalaa.com, theinspiratagroup.com, hotelbelensate.com, eduardoos.com (prior PHP site), crintt.com, and thedalessiogroup.com (hosting, branding, design, and coding). Also Python scripting, hosting setup, email migration, image/video editing, and graphic design.
 
-**Avant Leap — BIM software developer (March 2024–present)**  
+**Hexagon Multivista (formerly Voyansi) — BIM Software Developer (2025–present)**  
+Hexagon Multivista (Voyansi rebranded under Hexagon). Desktop, web, Revit API, cloud, and full-stack software development and support for AEC products and services.
+
+**Avant Leap — BIM software developer (March 2024–April 2025)**  
 AI BIM software startup (California). Support and extensions for Revit add-ins including Clash Detection, Object Visualizer, Object Quantifier, 4D Simulation, Avant Leap Revit Dynamo Zero Touch Nodes, Mirar, Andiamo, and Itera. Authored SincronizadorGPS50 (Windows Forms + SQL Server) connecting Gestproject2024 and Sage50. AI integrations: Andiamo (OpenAI), Mirar (StabilityAI), Itera (WPF) and ReplicateAI-based actions. Multitasking across Windows apps, APIs, Revit external commands/add-ins, Dynamo ZTN, and AI.
 
 ### Skills (public)
