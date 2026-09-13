@@ -14,13 +14,16 @@ import Layout from "../../layouts/Layout.astro";
   </article>
 </Layout>
 <style is:global>
-  .article-page, .article-page__body { display: flex; flex-direction: column; gap: var(--rail-gap); }
+  .article-page { display: flex; flex-direction: column; gap: var(--rail-gap); }
   .article-page h1, .article-page h2, .article-page p { margin: 0; }
   .article-page h1 { font-size: var(--font-size-xl); }
   .article-page h2 { font-size: var(--font-size-md); }
   .article-page p { font-size: var(--font-size-sm); }
   .article-page__meta { font-size: var(--font-size-sm); color: var(--color-muted); }
   .article-page__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
     padding: var(--space-padding);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);

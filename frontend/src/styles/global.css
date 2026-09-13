@@ -1352,6 +1352,11 @@ section.diag .panel:not(form) {
 }
 
 @media (max-width: 47.999rem) {
+  /* Root scale on phone: 16px so 1rem matches the browser default. */
+  html {
+    font-size: 16px;
+  }
+
   :root {
     --content-basis: 30rem;
     --page-col-count: 8;
