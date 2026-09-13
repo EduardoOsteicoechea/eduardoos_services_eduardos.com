@@ -58,6 +58,17 @@ On the first API start after this release, legacy filesystem-backed EPAM bodies
 are copied to MongoDB and their metadata is cut over. The original files remain
 on disk as offline backup data and are not read by the application.
 
+To import a private EPAM JSON file manually from the VPS without placing it in
+Git or CI, copy it to a protected temporary location, then run:
+
+```bash
+sudo -u deploy /opt/apps/eduardoos/current/api epam-import \
+  --email=user@example.com \
+  --file=/secure-temporary-path/document.json
+```
+
+The command rejects duplicate document IDs unless `--overwrite` is supplied.
+
 Safe migrations run automatically. Destructive migrations never run on startup. There are no destructive migrations in this release. A future drop/rebuild would require an Atlas backup (or `mongodump`) and then:
 
 ```bash

@@ -54,6 +54,12 @@ func main() {
 			os.Exit(1)
 		}
 		return
+	case "epam-import":
+		if err := runEpamImportCLI(setupCtx, store, openPamphletStore(store, cfg.MediaRoot), os.Args[2:]); err != nil {
+			logger.Error("epam_import_failed", slog.String("reason", redactLogValue(err.Error())))
+			os.Exit(1)
+		}
+		return
 	}
 
 	if err := store.ApplySafeMigrations(setupCtx, logger, cfg.AppEnv); err != nil {
@@ -94,6 +100,8 @@ func parseAPICommand(args []string) (command, confirmBackup string) {
 		return "ereport-import", ""
 	case "scrib-import":
 		return "scrib-import", ""
+	case "epam-import":
+		return "epam-import", ""
 	default:
 		return command, ""
 	}

@@ -106,6 +106,24 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 	}
 }
 
+func TestEpamImportCLIStoresDocumentForRequestedOwner(t *testing.T) {
+	app := newTestApp(false)
+	path := filepath.Join(t.TempDir(), "important.epam.json")
+	body := `{"id":"important-epam","type":"pamphlet_single_sheet","header":{"title":"Important","series":"Series","series_chapter":"1","author":"Eduardo","date":""},"footer":{},"column_1":[],"column_2":[],"column_3":[],"column_4":[],"column_5":[],"column_6":[],"column_7":[],"column_8":[]}`
+	if err := os.WriteFile(path, []byte(body), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := runEpamImportCLI(context.Background(), app.store, app.pamphlet, []string{
+		"--email=member@eduardoos.com", "--file=" + path,
+	}); err != nil {
+		t.Fatalf("import: %v", err)
+	}
+	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "important-epam", "test")
+	if err != nil || !ok || rec.Title != "Important" {
+		t.Fatalf("imported EPAM unavailable: %#v, ok=%t, err=%v", rec, ok, err)
+	}
+}
+
 func TestHomescoolStudentCreateAndCrossUserDeny(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productHomescool)
