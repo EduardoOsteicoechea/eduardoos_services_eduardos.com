@@ -92,8 +92,7 @@ describe("api csrf and errors", () => {
     expect(hasSessionHint()).toBe(false);
   });
 
-  it("renews an expired access token with the refresh cookie when hinted", async () => {
-    markSessionHint();
+  it("restores a session after browser restart with the refresh cookie", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", request_id: "rid-me-expired" }))
