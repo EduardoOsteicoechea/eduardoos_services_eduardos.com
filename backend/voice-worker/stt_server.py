@@ -18,6 +18,7 @@ Environment:
     VOICE_STT_IDLE_SECONDS      drop a session after this idle time (default 120)
     VOICE_STT_MAX_SESSIONS      hard cap on concurrent sessions (default 16)
     VOICE_STT_MAX_CHUNK_BYTES   reject larger chunk bodies (default 1 MiB)
+    VOICE_STT_PRELOAD_LANGS     comma list to load at startup, e.g. "es" (default: lazy)
 """
 
 from __future__ import annotations
@@ -273,6 +274,11 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> int:
     log(f"voice stt listening on http://{HOST}:{PORT} sampleRate={SAMPLE_RATE}")
+    preload = [s.strip() for s in (os.environ.get("VOICE_STT_PRELOAD_LANGS") or "").split(",") if s.strip()]
+    for raw in preload:
+        lang = "en" if raw.lower().startswith("en") else "es"
+        model = SERVER.model(lang)
+        log(f"preload {lang}: {'ok' if model is not None else 'unavailable'}")
     httpd = ThreadingHTTPServer((HOST, PORT), Handler)
     try:
         httpd.serve_forever()
