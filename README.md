@@ -226,6 +226,11 @@ DEEPSEEK_VISION_MODEL=<deepseek vision model id>
 job fails with a clear `evoice worker script not found` message instead of a
 silent no-op. System packages required: `ffmpeg`, `tesseract-ocr`, `espeak-ng`.
 
+Production **ignores** `EVOICE_FAKE_TTS=true` (it is forced off) so the API can
+never ship silent placeholder audio. TTS resolution order is Piper →
+`espeak-ng` → host system voice; the Piper step reuses `VOICE_PIPER_MODEL_ES`
+when `EVOICE_PIPER_MODEL` is unset, so an existing global-voice model is enough.
+
 ## Admin diagnostics
 
 `/diagnostics` and `POST /api/admin/diagnostics/*` are admin-only. The Go API enforces JWT, `admin` role, and CSRF. The page is UX only.

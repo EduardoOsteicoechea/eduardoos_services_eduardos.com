@@ -749,14 +749,33 @@ def find_ffmpeg() -> str:
     return which
 
 
+def find_tool(name: str) -> str | None:
+    """Locate a CLI on PATH or beside the running interpreter (venv/bin)."""
+    found = shutil.which(name)
+    if found:
+        return found
+    local = Path(sys.executable).resolve().parent / name
+    if local.is_file():
+        return str(local)
+    return None
+
+
 def text_to_wav_piper(text: str, wav_path: Path) -> None:
-    piper = shutil.which("piper")
+    piper = find_tool("piper")
     if not piper:
         raise FileNotFoundError("piper not found")
     model = Path(__file__).resolve().parent / "models" / "es_ES-sharvard-medium.onnx"
-    env_model = Path(os.environ.get("EVOICE_PIPER_MODEL", "")).expanduser()
-    if env_model.is_file():
-        model = env_model
+    # Prefer an explicit eVoice model, then reuse the global-voice Piper model
+    # (already provisioned on the VPS for the assistant), then a bundled copy.
+    candidates = [
+        os.environ.get("EVOICE_PIPER_MODEL", ""),
+        os.environ.get("VOICE_PIPER_MODEL_ES", ""),
+    ]
+    for cand in candidates:
+        env_model = Path(cand).expanduser()
+        if cand.strip() and env_model.is_file():
+            model = env_model
+            break
     if not model.is_file():
         raise FileNotFoundError(f"piper model missing: {model}")
     proc = subprocess.run(
@@ -770,7 +789,7 @@ def text_to_wav_piper(text: str, wav_path: Path) -> None:
 
 
 def text_to_wav_espeak(text: str, wav_path: Path) -> None:
-    espeak = shutil.which("espeak-ng") or shutil.which("espeak")
+    espeak = find_tool("espeak-ng") or find_tool("espeak")
     if not espeak:
         raise FileNotFoundError("espeak-ng not found")
     proc = subprocess.run(

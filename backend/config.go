@@ -193,6 +193,13 @@ func loadConfig() config {
 		publicBase = "https://" + siteName
 	}
 
+	// Never ship the silent placeholder runner in production: a misconfigured
+	// EVOICE_FAKE_TTS=true would otherwise generate empty audio that looks real.
+	evoiceFake := envBool("EVOICE_FAKE_TTS", false)
+	if production {
+		evoiceFake = false
+	}
+
 	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
 	publicArticlesOwner := strings.ToLower(strings.TrimSpace(envString("PUBLIC_ARTICLES_OWNER_EMAIL")))
 	if publicArticlesOwner == "" {
@@ -220,7 +227,7 @@ func loadConfig() config {
 		EvoiceMediaRoot:           evoiceRoot,
 		EoprojectMediaRoot:        eoprojectRoot,
 		EvoicePython:              strings.TrimSpace(os.Getenv("EVOICE_PYTHON")),
-		EvoiceFakeTTS:             envBool("EVOICE_FAKE_TTS", false),
+		EvoiceFakeTTS:             evoiceFake,
 		EvoiceWorkerScript:        strings.TrimSpace(os.Getenv("EVOICE_WORKER_SCRIPT")),
 		EreportMaxImageBytes:      envInt64("EREPORT_MAX_IMAGE_BYTES", defaultMaxImageBytes),
 		EreportMaxImageEdge:       int(envInt64("EREPORT_MAX_IMAGE_EDGE", int64(defaultMaxImageEdge))),

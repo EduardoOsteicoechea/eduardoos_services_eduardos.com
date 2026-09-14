@@ -131,7 +131,10 @@ func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFile
 		script = defaultEvoiceWorkerScript()
 	}
 	if st, err := os.Stat(script); err != nil || st.IsDir() {
-		return evoiceJobStats{}, fmt.Errorf("evoice worker script not found: %s", script)
+		return evoiceJobStats{}, fmt.Errorf("evoice worker script not found: %s (run backend/evoice-worker/provision.sh and set EVOICE_WORKER_SCRIPT)", script)
+	}
+	if _, err := exec.LookPath(py); err != nil {
+		return evoiceJobStats{}, fmt.Errorf("evoice python interpreter not found: %s (set EVOICE_PYTHON to the worker venv)", py)
 	}
 	args := []string{script, "--project-dir", projectDir, "--mode", opts.Mode, "--content-percent", strconv.Itoa(opts.ContentPercent)}
 	for _, f := range onlyFiles {
