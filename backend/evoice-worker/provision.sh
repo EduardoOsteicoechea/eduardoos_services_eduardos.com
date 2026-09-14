@@ -65,10 +65,19 @@ Provisioning complete. Add these to /etc/eduardoos-api.env:
   DEEPSEEK_VISION_MODEL=<deepseek vision model id>
 
 EVOICE_WORKER_SCRIPT is resolved relative to the systemd WorkingDirectory
-(the current release), so it stays correct on every deploy. Then:
+(the current release), so it stays correct on every deploy. The worker also
+auto-discovers the voice-worker Piper binary/model, so an existing global-voice
+install is enough. Then:
 
   sudo systemctl restart eduardoos-api.service
 
-Verify with an admin test job from /evoice (or check the API journal):
+Verify the worker (prints the resolved engines and synthesizes a sample):
+
+  cd /opt/apps/eduardoos/current && ${VENV_DIR}/bin/python evoice-worker/linux_sync.py --probe
+
+The probe must print "piper: /..." and "RESULT OK". If it prints
+"robotic_fallback", Piper or the model was not found and the voice will sound
+synthetic. Job logs are available with:
+
   journalctl -u eduardoos-api.service -n 50 --no-pager
 EOF

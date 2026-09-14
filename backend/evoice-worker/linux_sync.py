@@ -760,6 +760,12 @@ def find_tool(name: str) -> str | None:
     return None
 
 
+VOICE_WORKER_DIRS = (
+    Path(__file__).resolve().parent.parent.parent / "voice-worker",
+    Path("/opt/apps/eduardoos/voice-worker"),
+)
+
+
 def find_piper() -> str | None:
     """Find the Piper binary: explicit env, PATH, our venv, then the voice venv."""
     for key in ("EVOICE_PIPER_BIN", "VOICE_PIPER_BIN"):
@@ -772,17 +778,44 @@ def find_piper() -> str | None:
     # The global-voice worker ships its own venv; reuse its Piper if present.
     for key in ("VOICE_PYTHON", "VOICE_WORKER_PYTHON"):
         voice_py = (os.environ.get(key) or "").strip()
-        if not voice_py:
+        if voice_py:
+            candidate = Path(voice_py).expanduser().resolve().parent / "piper"
+            if candidate.is_file():
+                return str(candidate)
+    candidates: list[Path] = [Path("/opt/apps/eduardoos/evoice-venv/bin/piper")]
+    for root in VOICE_WORKER_DIRS:
+        candidates += [
+            root / ".venv" / "bin" / "piper",
+            root / "piper",
+            root / "bin" / "piper",
+        ]
+    for cand in candidates:
+        if cand.is_file():
+            return str(cand)
+    return None
+
+
+def resolve_piper_model() -> Path | None:
+    """Resolve a Piper voice model: env first, then the voice-worker model dirs."""
+    for key in ("EVOICE_PIPER_MODEL", "VOICE_PIPER_MODEL_ES"):
+        cand = (os.environ.get(key) or "").strip()
+        if cand:
+            path = Path(cand).expanduser()
+            if path.is_file():
+                return path
+    search_roots = [
+        Path(__file__).resolve().parent / "models",
+        Path(__file__).resolve().parent / "models" / "piper",
+    ]
+    for root in VOICE_WORKER_DIRS:
+        search_roots += [root / "models" / "piper", root / "models"]
+    for root in search_roots:
+        if not root.is_dir():
             continue
-        candidate = Path(voice_py).expanduser().resolve().parent / "piper"
-        if candidate.is_file():
-            return str(candidate)
-    for fallback in (
-        "/opt/apps/eduardoos/voice-worker/.venv/bin/piper",
-        "/opt/apps/eduardoos/evoice-venv/bin/piper",
-    ):
-        if Path(fallback).is_file():
-            return fallback
+        for pat in ("es_ES*.onnx", "es_*.onnx", "*.onnx"):
+            matches = sorted(root.glob(pat))
+            if matches:
+                return matches[0]
     return None
 
 
@@ -790,20 +823,11 @@ def text_to_wav_piper(text: str, wav_path: Path) -> None:
     piper = find_piper()
     if not piper:
         raise FileNotFoundError("piper not found")
-    model = Path(__file__).resolve().parent / "models" / "es_ES-sharvard-medium.onnx"
-    # Prefer an explicit eVoice model, then reuse the global-voice Piper model
-    # (already provisioned on the VPS for the assistant), then a bundled copy.
-    candidates = [
-        os.environ.get("EVOICE_PIPER_MODEL", ""),
-        os.environ.get("VOICE_PIPER_MODEL_ES", ""),
-    ]
-    for cand in candidates:
-        env_model = Path(cand).expanduser()
-        if cand.strip() and env_model.is_file():
-            model = env_model
-            break
-    if not model.is_file():
-        raise FileNotFoundError(f"piper model missing: {model}")
+    model = resolve_piper_model()
+    if not model:
+        raise FileNotFoundError(
+            "piper model missing (set EVOICE_PIPER_MODEL or VOICE_PIPER_MODEL_ES)"
+        )
     resolved = shutil.which(piper) or piper
     piper_dir = Path(resolved).resolve().parent
     env = os.environ.copy()
@@ -1165,9 +1189,36 @@ def sync_project(
     return stats
 
 
+def probe() -> int:
+    """Print the resolved TTS engines and synthesize a short sample."""
+    log("eVoice TTS probe")
+    log(f"python      : {sys.executable}")
+    log(f"ffmpeg      : {shutil.which('ffmpeg') or 'MISSING'}")
+    log(f"piper       : {find_piper() or 'MISSING'}")
+    log(f"piper model : {resolve_piper_model() or 'MISSING'}")
+    log(f"espeak-ng   : {find_tool('espeak-ng') or find_tool('espeak') or 'MISSING'}")
+    with tempfile.TemporaryDirectory(prefix="evoice-probe-") as tmp:
+        mp3 = Path(tmp) / "probe.mp3"
+        try:
+            text_to_mp3("Prueba de voz de eVoice.", mp3, "probe")
+        except Exception as exc:  # noqa: BLE001
+            log(f"RESULT FAIL: {exc}")
+            return 1
+        if not mp3.is_file() or mp3.stat().st_size <= 0:
+            log("RESULT FAIL: empty output")
+            return 1
+        log(f"RESULT OK: {mp3.stat().st_size} bytes")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--project-dir", type=Path, required=True)
+    parser.add_argument("--project-dir", type=Path, default=None)
+    parser.add_argument(
+        "--probe",
+        action="store_true",
+        help="Print resolved TTS engines and synthesize a test sample, then exit.",
+    )
     parser.add_argument(
         "--only",
         action="append",
@@ -1191,6 +1242,10 @@ def main() -> int:
         help="Target spoken length as %% of original word count (100/75/50/25/10/5).",
     )
     args = parser.parse_args()
+    if args.probe:
+        return probe()
+    if args.project_dir is None:
+        parser.error("--project-dir is required unless --probe is used")
     project_dir = args.project_dir.resolve()
     if not (project_dir / "docs").is_dir():
         log(f"docs/ missing under {project_dir}")

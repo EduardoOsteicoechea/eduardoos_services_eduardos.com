@@ -233,7 +233,19 @@ when `EVOICE_PIPER_MODEL` is unset, so an existing global-voice model is enough.
 Piper is the only natural-sounding engine: `espeak-ng`/Pico/Flite are robotic
 emergencies, so always provision Piper and a voice model (the job log prints
 `robotic_fallback` when it has to use one). The Piper binary is found on PATH,
-in `EVOICE_PIPER_BIN`/`VOICE_PIPER_BIN`, or in the interpreter/voice venv.
+in `EVOICE_PIPER_BIN`/`VOICE_PIPER_BIN`, or in the interpreter/voice venv; the
+model comes from `EVOICE_PIPER_MODEL`/`VOICE_PIPER_MODEL_ES` or is auto-discovered
+under `voice-worker/models/`.
+
+Verify the worker on the VPS without uploading a document:
+
+```bash
+cd /opt/apps/eduardoos/current
+/opt/apps/eduardoos/evoice-venv/bin/python evoice-worker/linux_sync.py --probe
+```
+
+It prints the resolved Python, ffmpeg, piper, model, and espeak-ng, then
+synthesizes a sample and reports `RESULT OK` (or the exact failure).
 
 ## Admin diagnostics
 
