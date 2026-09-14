@@ -84,6 +84,7 @@ func main() {
 	}
 
 	log.Printf("%s api listening on %s", siteName, cfg.ListenAddr)
+	log.Printf("%s media root: %s (eoproject: %s)", siteName, cfg.MediaRoot, cfg.EoprojectMediaRoot)
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}

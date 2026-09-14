@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -159,6 +160,28 @@ func loadConfig() config {
 	eoprojectRoot := strings.TrimSpace(os.Getenv("EOPROJECT_MEDIA_ROOT"))
 	if eoprojectRoot == "" {
 		eoprojectRoot = media + "/eoproject"
+	}
+
+	// On the VPS each deploy switches /opt/apps/<app>/current to a fresh release
+	// directory. A relative media root (the .env.example defaults, for example)
+	// resolves inside that release and is orphaned on the next deploy, so anchor
+	// every relative/empty root to the persistent site media tree when it exists.
+	// Local development has no /var/www/<site>, so .data/media is kept there.
+	siteRoot := "/var/www/" + siteName
+	if info, err := os.Stat(siteRoot); err == nil && info.IsDir() {
+		persistentMedia := filepath.Join(siteRoot, "media")
+		if media == "" || !filepath.IsAbs(media) {
+			media = persistentMedia
+		}
+		if ereportRoot == "" || !filepath.IsAbs(ereportRoot) {
+			ereportRoot = filepath.Join(media, "ereport")
+		}
+		if evoiceRoot == "" || !filepath.IsAbs(evoiceRoot) {
+			evoiceRoot = filepath.Join(media, "evoice")
+		}
+		if eoprojectRoot == "" || !filepath.IsAbs(eoprojectRoot) {
+			eoprojectRoot = filepath.Join(media, "eoproject")
+		}
 	}
 
 	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
