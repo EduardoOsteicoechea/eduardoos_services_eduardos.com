@@ -334,22 +334,23 @@
 .eostore-editor {
   max-width: none;
   margin-inline: 0;
-  gap: calc(var(--space-padding) * 2);
+  gap: var(--rail-gap);
   padding: 0;
   background: transparent;
   border: 0;
 }
 
-.eostore-editor .eostore-fieldset {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
-  padding: var(--space-padding);
-  background: var(--color-surface);
+.eostore-form-title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
 }
 
-.eostore-editor .eostore-fieldset legend {
-  flex: 0 0 auto;
+.eostore-editor .eostore-form-grid {
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
 }
 
 .eostore-form-grid {
