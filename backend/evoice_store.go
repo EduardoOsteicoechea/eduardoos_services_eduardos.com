@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/url"
 	"os"
 	"path/filepath"
 	"sort"
@@ -170,9 +171,6 @@ func (fs *evoiceFS) listKind(userID, project, kind string) ([]evoiceObjectMeta, 
 		if err != nil {
 			continue
 		}
-		if kind == "audios" && info.Size() <= 0 {
-			continue
-		}
 		meta := evoiceObjectMeta{
 			Name: name,
 			Key:  evoiceRelKey(userID, project, kind, name),
@@ -188,7 +186,7 @@ func (fs *evoiceFS) listKind(userID, project, kind string) ([]evoiceObjectMeta, 
 }
 
 func pathEscapeQuery(name string) string {
-	return strings.ReplaceAll(name, " ", "%20")
+	return url.QueryEscape(name)
 }
 
 func (fs *evoiceFS) openFile(userID, project, kind, name string) (*os.File, os.FileInfo, error) {

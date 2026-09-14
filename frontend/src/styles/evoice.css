@@ -768,6 +768,43 @@
   cursor: not-allowed;
 }
 
+/* Primary action button (icon + label, e.g. Generate MP3) */
+.evoice__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--space-padding);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--border-radius);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.evoice__action-btn .material-symbols-outlined {
+  font-size: var(--icon-size);
+  line-height: 1;
+}
+
+.evoice__action-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-accent) 85%, var(--color-bg));
+  border-color: color-mix(in srgb, var(--color-accent) 85%, var(--color-bg));
+}
+
+.evoice__action-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.evoice__action-btn-label {
+  line-height: 1;
+}
+
 .evoice__share-hint,
 .evoice__share-note {
   margin: 0 0 0.75rem;

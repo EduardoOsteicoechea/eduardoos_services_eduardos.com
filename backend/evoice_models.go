@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"os"
 	"path"
 	"path/filepath"
 	"regexp"
@@ -221,26 +222,71 @@ func evoiceProjectRel(userID, project string) string {
 	return fmt.Sprintf("%s/%s/%s", evoiceRootPrefix, userID, sanitizeEvoiceProject(project))
 }
 
-func nextEvoiceAudioVersion(audiosDir, stem string) int {
+// currentEvoiceAudioVersion returns the highest existing version for a stem, or
+// 0 when the stem has no versioned audio yet. It scans the directory instead of
+// globbing so document names with glob metacharacters (* ? [ ]) stay safe.
+func currentEvoiceAudioVersion(audiosDir, stem string) int {
 	max := 0
-	entries, err := filepath.Glob(filepath.Join(audiosDir, stem+".v*.mp3"))
+	entries, err := os.ReadDir(audiosDir)
 	if err != nil {
-		return 1
+		return 0
 	}
-	for _, p := range entries {
-		m := evoiceVersionAudio.FindStringSubmatch(filepath.Base(p))
-		if m == nil || m[1] != stem {
+	for _, e := range entries {
+		if e.IsDir() {
 			continue
 		}
-		n, err := strconv.Atoi(m[2])
-		if err != nil {
+		s, n, ok := parseEvoiceAudioVersion(e.Name())
+		if !ok || s != stem {
 			continue
 		}
 		if n > max {
 			max = n
 		}
 	}
-	return max + 1
+	return max
+}
+
+// clearEvoiceStemAudios removes every version of a stem (versioned, chapter, and
+// legacy mono files) so regeneration overwrites the current version instead of
+// accumulating vN duplicates.
+func clearEvoiceStemAudios(audiosDir, stem string) {
+	entries, err := os.ReadDir(audiosDir)
+	if err != nil {
+		return
+	}
+	for _, e := range entries {
+		if e.IsDir() {
+			continue
+		}
+		name := e.Name()
+		if !strings.HasSuffix(strings.ToLower(name), ".mp3") {
+			continue
+		}
+		if s, _, ok := parseEvoiceAudioVersion(name); ok {
+			if s == stem {
+				_ = os.Remove(filepath.Join(audiosDir, name))
+			}
+			continue
+		}
+		if name == stem+".mp3" || strings.HasPrefix(name, stem+".c") {
+			_ = os.Remove(filepath.Join(audiosDir, name))
+		}
+	}
+}
+
+// evoiceSilentMP3 is a valid MPEG-1 Layer III (44.1 kHz, mono, 64 kbps) frame
+// sequence of silence. The fake runner writes this so dev and tests always have
+// decodable audio instead of a stub no <audio> element can play.
+func evoiceSilentMP3() []byte {
+	header := []byte{0xFF, 0xFB, 0x50, 0xC0} // MPEG1 L3, 64 kbps, 44.1 kHz, mono
+	const frameSize = 208
+	const frames = 40 // ~1 second
+	out := make([]byte, 0, frames*frameSize)
+	for i := 0; i < frames; i++ {
+		out = append(out, header...)
+		out = append(out, make([]byte, frameSize-4)...)
+	}
+	return out
 }
 
 func parseEvoiceAudioVersion(name string) (stem string, version int, ok bool) {

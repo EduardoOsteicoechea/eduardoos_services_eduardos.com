@@ -9,12 +9,15 @@ Usage (Go API shells this out when EVOICE_FAKE_TTS is unset/false):
 
 Environment (documented for operators; Go sets most of these):
   EVOICE_PYTHON          — Python interpreter (default: python3); used by Go, not this script
-  EVOICE_WORKER_SCRIPT   — Absolute path to this file
+  EVOICE_WORKER_SCRIPT   — Path to this file (absolute, or relative to the API cwd)
   EVOICE_FAKE_TTS        — When true/1, Go uses FakeRunner and never calls this script
   EVOICE_MEDIA_ROOT      — VPS root for evoice files (Go); typically MEDIA_ROOT/evoice
   EVOICE_JOB_TIMEOUT     — Go convert timeout (e.g. 45m)
+  EVOICE_PIPER_MODEL     — Path to the Piper .onnx voice (falls back to bundled models/)
   EVOICE_WORK_DIR        — Optional temp base (legacy); jobs now run in-place under media
   DEEPSEEK_API_KEY       — Premium / super_premium DeepSeek refine + vision
+  DEEPSEEK_MODEL         — DeepSeek chat model for premium refine (Go config name)
+  DEEPSEEK_VISION_MODEL  — DeepSeek vision model for super_premium (Go config name)
   TMPDIR / TEMP / TMP    — Set by Go to the parent of --project-dir
 
 Emits frequent progress lines and a final STATS line for the Go job poller.
@@ -139,10 +142,15 @@ def chapter_mp3_name(stem: str, n: int, title: str, version: int = 0) -> str:
     return f"{stem}.c{n:02d}-{slug}.mp3"
 
 
-def next_audio_version(audios_dir: Path, stem: str) -> int:
+def current_audio_version(audios_dir: Path, stem: str) -> int:
+    """Highest existing version for a stem (0 when none).
+
+    Regeneration overwrites this version so a doc keeps a single current audio
+    instead of accumulating v1, v2, v3… duplicates.
+    """
     max_v = 0
     if not audios_dir.is_dir():
-        return 1
+        return 0
     for p in audios_dir.iterdir():
         if not p.is_file() or p.suffix.lower() != ".mp3":
             continue
@@ -150,7 +158,7 @@ def next_audio_version(audios_dir: Path, stem: str) -> int:
         if not m or m.group("stem") != stem:
             continue
         max_v = max(max_v, int(m.group("ver")))
-    return max_v + 1
+    return max_v
 
 
 def content_percent_instruction(pct: int) -> str:
@@ -377,7 +385,11 @@ def premium_optimize(text: str, name: str, content_percent: int = 100) -> str:
     key = (os.environ.get("DEEPSEEK_API_KEY") or "").strip()
     if not key:
         raise RuntimeError("DEEPSEEK_API_KEY not configured for premium")
-    model = (os.environ.get("DEEPSEEK_MODEL_REASONING") or "deepseek-v4-pro").strip()
+    model = (
+        os.environ.get("DEEPSEEK_MODEL")
+        or os.environ.get("DEEPSEEK_MODEL_REASONING")
+        or "deepseek-chat"
+    ).strip()
     base = (os.environ.get("DEEPSEEK_BASE_URL") or "https://api.deepseek.com").rstrip("/")
     log(f"PREMIUM {name} pct=5 detail=deepseek_stream_start model={model} contentPercent={content_percent}")
     payload = {
@@ -450,7 +462,10 @@ def vision_image_to_text(image_path: Path, name: str, page_label: str = "") -> s
     if not key:
         raise RuntimeError("DEEPSEEK_API_KEY not configured for super premium vision")
     model = (
-        os.environ.get("DEEPSEEK_MODEL_VISION") or "deepseek-v4-flash-vision-exp"
+        os.environ.get("DEEPSEEK_VISION_MODEL")
+        or os.environ.get("DEEPSEEK_MODEL_VISION")
+        or os.environ.get("DEEPSEEK_MODEL")
+        or "deepseek-chat"
     ).strip()
     base = (os.environ.get("DEEPSEEK_BASE_URL") or "https://api.deepseek.com").rstrip("/")
     tag = f"{name}{(' ' + page_label) if page_label else ''}"
@@ -778,8 +793,12 @@ def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:
             str(wav_path),
             "-codec:a",
             "libmp3lame",
-            "-qscale:a",
-            "4",
+            "-b:a",
+            "64k",
+            "-ac",
+            "1",
+            "-ar",
+            "44100",
             str(mp3_path),
         ],
         capture_output=True,
@@ -787,6 +806,8 @@ def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:
     )
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.decode("utf-8", errors="replace")[-400:] or "ffmpeg failed")
+    if not mp3_path.is_file() or mp3_path.stat().st_size <= 0:
+        raise RuntimeError(f"ffmpeg produced no audio for {mp3_path.name}")
     log(f"FFMPEG {mp3_path.name} pct=100 detail=ok")
 
 
@@ -899,7 +920,8 @@ def sync_project(
             continue
         log(f"FILE {doc.name} state=active")
         log(f"STEP convert doc={idx}/{len(docs)} file={doc.name}")
-        ver = next_audio_version(audios_dir, stem)
+        ver = current_audio_version(audios_dir, stem) or 1
+        clear_stem_audios(audios_dir, stem)
         log(f"gen   {doc.name} (version=v{ver})")
         try:
             if mode == "super_premium":

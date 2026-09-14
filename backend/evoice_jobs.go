@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"fmt"
 	"io"
 	"log/slog"
 	"os"
@@ -64,7 +65,11 @@ func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []st
 		}
 		stats.Docs++
 		stem := strings.TrimSuffix(name, filepath.Ext(name))
-		ver := nextEvoiceAudioVersion(audiosDir, stem)
+		ver := currentEvoiceAudioVersion(audiosDir, stem)
+		if ver < 1 {
+			ver = 1
+		}
+		clearEvoiceStemAudios(audiosDir, stem)
 		logFn("FILE " + name + " state=active")
 		logFn("EXTRACT " + name + " pct=50 detail=fake")
 		if opts.IsSuper() {
@@ -81,7 +86,7 @@ func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []st
 				stem + ".v" + strconv.Itoa(ver) + ".c02-cuerpo.mp3",
 			} {
 				logFn("TTS " + name + " pct=50 detail=chapter " + ch)
-				if err := os.WriteFile(filepath.Join(audiosDir, ch), []byte("ID3fake-evoice"), 0o640); err != nil {
+				if err := os.WriteFile(filepath.Join(audiosDir, ch), evoiceSilentMP3(), 0o640); err != nil {
 					stats.Failed++
 					logFn("FAIL  " + name + ": " + err.Error())
 					logFn("FILE " + name + " state=failed")
@@ -95,7 +100,7 @@ func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []st
 		}
 		mp3 := stem + ".v" + strconv.Itoa(ver) + ".mp3"
 		logFn("TTS " + name + " pct=50 detail=fake")
-		if err := os.WriteFile(filepath.Join(audiosDir, mp3), []byte("ID3fake-evoice"), 0o640); err != nil {
+		if err := os.WriteFile(filepath.Join(audiosDir, mp3), evoiceSilentMP3(), 0o640); err != nil {
 			stats.Failed++
 			logFn("FAIL  " + name + ": " + err.Error())
 			logFn("FILE " + name + " state=failed")
@@ -123,6 +128,9 @@ func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFile
 	script := p.Script
 	if script == "" {
 		script = defaultEvoiceWorkerScript()
+	}
+	if st, err := os.Stat(script); err != nil || st.IsDir() {
+		return evoiceJobStats{}, fmt.Errorf("evoice worker script not found: %s", script)
 	}
 	args := []string{script, "--project-dir", projectDir, "--mode", opts.Mode, "--content-percent", strconv.Itoa(opts.ContentPercent)}
 	for _, f := range onlyFiles {
@@ -659,10 +667,10 @@ func evoiceConvertTimeout(opts evoiceGenerateOpts) time.Duration {
 			return d
 		}
 	}
-	switch opts.Mode {
-	case ModeSuperPremium:
+	switch {
+	case opts.IsSuper():
 		return 6 * time.Hour
-	case ModePremium:
+	case opts.UsesDeepSeek():
 		return 2 * time.Hour
 	default:
 		return 45 * time.Minute

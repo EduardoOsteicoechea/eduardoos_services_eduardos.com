@@ -39,8 +39,19 @@ import {
   type EvoiceJobStep,
   type EvoiceObjectMeta,
 } from "../../lib/evoice";
-import { getAuthToken } from "../../lib/auth";
+import { isAuthenticated } from "../../lib/auth";
 import { sessionLog } from "../../lib/dev-log";
+import {
+  audiosForDocStem,
+  buildDocPlaylists,
+  docsNeedingAudio,
+  filterSuperPremiumTargets,
+  findLatestPremiumTxt,
+  isPlayableAudio,
+  isSourceDoc,
+  stemOf,
+  trackId,
+} from "../../lib/evoice.playlist";
 import { openServerErrorModal } from "../ServerErrorModal/ServerErrorModal";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
@@ -54,188 +65,6 @@ const QUALITY_MODES: { id: EvoiceGenerateMode; label: string }[] = [
 ];
 
 type UploadModality = "file" | "paste" | "crawl" | null;
-
-const SUPER_PREMIUM_EXT = /\.(pdf|png|jpe?g|webp|tiff?|bmp|gif|docx)$/i;
-
-function stemOf(name: string): string {
-  const i = name.lastIndexOf(".");
-  return i > 0 ? name.slice(0, i) : name;
-}
-
-function trackId(a: EvoiceObjectMeta): string {
-  return a.key || a.name;
-}
-
-/** Doc stem parsed from an audio filename (versioned or legacy). */
-function audioDocStem(audioName: string): string {
-  const base = audioName.replace(/\.mp3$/i, "");
-  const vMatch = base.match(/^(.+?)\.v\d+(?:\.|$)/i);
-  if (vMatch) return vMatch[1];
-  const cMatch = base.match(/^(.+?)\.c\d+/i);
-  if (cMatch) return cMatch[1];
-  return stemOf(audioName);
-}
-
-/** Version number or "legacy" for pre-version MP3s. */
-function audioVersion(audioName: string): number | "legacy" {
-  const m =
-    audioName.match(/\.v(\d+)\./i) || audioName.match(/\.v(\d+)\.mp3$/i);
-  return m ? parseInt(m[1], 10) : "legacy";
-}
-
-function isSourceDoc(name: string): boolean {
-  const lower = name.toLowerCase();
-  if (lower.endsWith(".premium.txt") || lower.endsWith(".vision.txt")) {
-    return false;
-  }
-  return /\.(docx|txt|pdf|png|jpe?g|webp|tiff?|bmp|gif)$/i.test(name);
-}
-
-function audiosForDocStem(
-  docStem: string,
-  audios: EvoiceObjectMeta[],
-): EvoiceObjectMeta[] {
-  return audios.filter((a) => audioDocStem(a.name) === docStem);
-}
-
-function sortTracks(tracks: EvoiceObjectMeta[]): EvoiceObjectMeta[] {
-  return [...tracks].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-}
-
-type VersionBucket = {
-  version: number | "legacy";
-  label: string;
-  tracks: EvoiceObjectMeta[];
-};
-
-type DocPlaylist = {
-  stem: string;
-  sourceDoc?: EvoiceObjectMeta;
-  buckets: VersionBucket[];
-  allTracks: EvoiceObjectMeta[];
-};
-
-function buildDocPlaylists(
-  docs: EvoiceObjectMeta[],
-  audios: EvoiceObjectMeta[],
-): DocPlaylist[] {
-  const stems = new Set<string>();
-  for (const d of docs.filter((x) => isSourceDoc(x.name))) {
-    stems.add(stemOf(d.name));
-  }
-  for (const a of audios) {
-    stems.add(audioDocStem(a.name));
-  }
-
-  const sourceByStem = new Map<string, EvoiceObjectMeta>();
-  for (const d of docs.filter((x) => isSourceDoc(x.name))) {
-    sourceByStem.set(stemOf(d.name), d);
-  }
-
-  return [...stems]
-    .sort((a, b) => a.localeCompare(b))
-    .map((stem) => {
-      const related = audiosForDocStem(stem, audios);
-      const byVersion = new Map<number | "legacy", EvoiceObjectMeta[]>();
-      for (const a of related) {
-        const v = audioVersion(a.name);
-        const list = byVersion.get(v) ?? [];
-        list.push(a);
-        byVersion.set(v, list);
-      }
-
-      const numericVersions = [...byVersion.keys()]
-        .filter((v): v is number => v !== "legacy")
-        .sort((a, b) => a - b);
-
-      const buckets: VersionBucket[] = numericVersions.map((v) => ({
-        version: v,
-        label: `Version v${v}`,
-        tracks: sortTracks(byVersion.get(v) ?? []),
-      }));
-
-      const legacy = byVersion.get("legacy");
-      if (legacy?.length) {
-        buckets.push({
-          version: "legacy",
-          label: "Legacy",
-          tracks: sortTracks(legacy),
-        });
-      }
-
-      const allTracks: EvoiceObjectMeta[] = [];
-      for (const b of buckets) {
-        allTracks.push(...b.tracks);
-      }
-
-      return {
-        stem,
-        sourceDoc: sourceByStem.get(stem),
-        buckets,
-        allTracks,
-      };
-    })
-    .filter((p) => p.buckets.length > 0 || p.sourceDoc);
-}
-
-function docsNeedingAudio(
-  docs: EvoiceObjectMeta[],
-  audios: EvoiceObjectMeta[],
-  onlyFiles?: string[],
-): string[] {
-  const allow = onlyFiles?.length ? new Set(onlyFiles) : null;
-  return docs
-    .filter((d) => isSourceDoc(d.name))
-    .filter((d) => (allow ? allow.has(d.name) : true))
-    .filter((d) => {
-      const related = audiosForDocStem(stemOf(d.name), audios);
-      if (related.length === 0) return true;
-      if (!d.lastModified) return false;
-      const newest = related.reduce((acc, a) => {
-        if (!a.lastModified) return acc;
-        return a.lastModified > acc ? a.lastModified : acc;
-      }, "");
-      if (!newest) return false;
-      return d.lastModified > newest;
-    })
-    .map((d) => d.name);
-}
-
-function findLatestPremiumTxt(
-  docStem: string,
-  docs: EvoiceObjectMeta[],
-): EvoiceObjectMeta | null {
-  let best: EvoiceObjectMeta | null = null;
-  let bestN = -1;
-  const prefix = `${docStem}.v`;
-  for (const d of docs) {
-    const lower = d.name.toLowerCase();
-    if (!lower.endsWith(".premium.txt")) continue;
-    if (!d.name.startsWith(prefix)) continue;
-    const rest = d.name.slice(prefix.length);
-    const m = rest.match(/^(\d+)\.premium\.txt$/i);
-    if (!m) continue;
-    const n = parseInt(m[1], 10);
-    if (n > bestN) {
-      bestN = n;
-      best = d;
-    }
-  }
-  return best;
-}
-
-function filterSuperPremiumTargets(files: string[]): {
-  ok: string[];
-  rejected: string[];
-} {
-  const ok: string[] = [];
-  const rejected: string[] = [];
-  for (const f of files) {
-    if (SUPER_PREMIUM_EXT.test(f)) ok.push(f);
-    else rejected.push(f);
-  }
-  return { ok, rejected };
-}
 
 function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
@@ -509,6 +338,7 @@ function EvoiceWorkspace() {
   const [blobUrl, setBlobUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const blobUrlRef = useRef("");
+  const audioErrorRef = useRef("");
   const autoplayAfterLoadRef = useRef(false);
   const queueLenRef = useRef(0);
   queueLenRef.current = queue.length;
@@ -542,23 +372,24 @@ function EvoiceWorkspace() {
     });
   }
 
-  const reloadProjects = useCallback(async (owner: string) => {
+  const reloadProjects = useCallback(async (owner: string): Promise<string[]> => {
     const res = await fetchEvoiceProjects(owner);
     if (res.error) {
       sessionLog("evoice.projects.error", { owner, error: res.error, requestId: res.requestId });
       showError("eVoice projects", res.error);
       setProjects([]);
-      return;
+      return [];
     }
     sessionLog("evoice.projects.loaded", { owner, count: res.projects.length });
     setProjects(res.projects);
     if (res.projects.length === 0) {
       setProject("");
-      return;
+      return res.projects;
     }
     if (!res.projects.includes(projectRef.current)) {
       setProject(res.projects[0] ?? "");
     }
+    return res.projects;
   }, []);
 
   const reloadDocsAudios = useCallback(async (owner: string, proj: string) => {
@@ -567,31 +398,44 @@ function EvoiceWorkspace() {
       setAudios([]);
       return { docs: [] as EvoiceObjectMeta[], audios: [] as EvoiceObjectMeta[] };
     }
-    const [d, a] = await Promise.all([
-      fetchEvoiceDocs(owner, proj),
-      fetchEvoiceAudios(owner, proj),
-    ]);
-    if (d.error) showError("eVoice docs", d.error);
-    if (a.error) showError("eVoice audios", a.error);
-    setDocs(d.docs);
-    setAudios(a.audios);
-    setTrackIndex(0);
-    setQueue([]);
-    setSelectedDocs((prev) => {
-      const names = new Set(
-        d.docs.filter((x) => isSourceDoc(x.name)).map((x) => x.name),
+    try {
+      const [d, a] = await Promise.all([
+        fetchEvoiceDocs(owner, proj),
+        fetchEvoiceAudios(owner, proj),
+      ]);
+      if (d.error) showError("eVoice docs", d.error);
+      if (a.error) showError("eVoice audios", a.error);
+      setDocs(d.docs);
+      setAudios(a.audios);
+      // Playback state is intentionally preserved: refreshing the library must
+      // not stop the current track or clear the queue.
+      setSelectedDocs((prev) => {
+        const names = new Set(
+          d.docs.filter((x) => isSourceDoc(x.name)).map((x) => x.name),
+        );
+        return prev.filter((n) => names.has(n));
+      });
+      setCheckedTracks((prev) => {
+        const ids = new Set(a.audios.map(trackId));
+        const next = new Set<string>();
+        for (const id of prev) {
+          if (ids.has(id)) next.add(id);
+        }
+        return next;
+      });
+      return { docs: d.docs, audios: a.audios };
+    } catch (e) {
+      sessionLog("evoice.docs.error", {
+        owner,
+        project: proj,
+        error: e instanceof Error ? e.message : "reload failed",
+      });
+      showError(
+        "eVoice documents",
+        e instanceof Error ? e.message : "Could not refresh documents.",
       );
-      return prev.filter((n) => names.has(n));
-    });
-    setCheckedTracks((prev) => {
-      const ids = new Set(a.audios.map(trackId));
-      const next = new Set<string>();
-      for (const id of prev) {
-        if (ids.has(id)) next.add(id);
-      }
-      return next;
-    });
-    return { docs: d.docs, audios: a.audios };
+      return { docs: [] as EvoiceObjectMeta[], audios: [] as EvoiceObjectMeta[] };
+    }
   }, []);
 
   useEffect(() => {
@@ -613,6 +457,13 @@ function EvoiceWorkspace() {
         }
       }
       await reloadProjects(me.userSafe);
+      if (cancelled) return;
+      // Deep link from a playlist invite redirect: /evoice?project=<name>.
+      const wanted = new URLSearchParams(window.location.search).get("project")?.trim();
+      if (wanted) {
+        const list = await fetchEvoiceProjects(me.userSafe);
+        if (!cancelled && list.projects.includes(wanted)) setProject(wanted);
+      }
     })();
     return () => {
       cancelled = true;
@@ -651,7 +502,7 @@ function EvoiceWorkspace() {
       }
       setBlobUrl("");
       const track = queue[trackIndex];
-      if (!track || !ownerSafe || !project || !getAuthToken()) return;
+      if (!track || !ownerSafe || !project || !isAuthenticated()) return;
       if (
         track.key &&
         !track.key.startsWith(`evoice/${ownerSafe}/${project}/audios/`)
@@ -988,10 +839,11 @@ function EvoiceWorkspace() {
     await reloadDocsAudios(ownerSafe, project);
   }
 
-  function resolveGenerateTargets(explicit?: string[]): string[] | undefined {
+  function resolveGenerateTargets(explicit?: string[]): string[] {
     if (explicit && explicit.length > 0) return explicit;
     if (selectedDocs.length > 0) return selectedDocs;
-    return undefined;
+    // No selection: only generate documents that have no current audio.
+    return docsNeedingAudio(docs, audios);
   }
 
   async function onGenerate(files?: string[]) {
@@ -1002,7 +854,7 @@ function EvoiceWorkspace() {
 
     if (mode === "super_premium") {
       const candidate =
-        targets ?? sourceDocs.map((d) => d.name);
+        targets.length > 0 ? targets : sourceDocs.map((d) => d.name);
       const { ok, rejected } = filterSuperPremiumTargets(candidate);
       if (rejected.length > 0 && ok.length === 0) {
         showError(
@@ -1016,8 +868,16 @@ function EvoiceWorkspace() {
           ...prev,
           `Super Premium: skipping non-eligible files: ${rejected.join(", ")}`,
         ]);
-        targets = ok.length > 0 ? ok : undefined;
       }
+      targets = ok;
+    }
+
+    if (targets.length === 0) {
+      showError(
+        "Nothing to generate",
+        "Every document already has current audio. Upload or change a document, or select documents to regenerate.",
+      );
+      return;
     }
 
     setBusy(true);
@@ -1026,9 +886,7 @@ function EvoiceWorkspace() {
     setLogs(["starting…"]);
     setSteps([]);
     setFileProgress(
-      targets?.length
-        ? targets.map((name) => ({ name, state: "pending", progress: 0 }))
-        : [],
+      targets.map((name) => ({ name, state: "pending", progress: 0 })),
     );
     setProgress(0);
     if (consoleOpen === false) setConsoleOpen(true);
@@ -1049,7 +907,7 @@ function EvoiceWorkspace() {
     sessionLog("evoice.generate.start", {
       mode,
       contentPercent: pct,
-      files: targets?.length ?? "all",
+      files: targets.length,
       jobId: started.jobId,
     });
     setActiveJobId(started.jobId);
@@ -1190,6 +1048,14 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
     if (live) return live;
     const related = audiosForDocStem(stemOf(name), audios);
     if (related.length > 0) {
+      if (!related.some(isPlayableAudio)) {
+        return {
+          name,
+          state: "failed",
+          progress: 0,
+          detail: "empty audio — regenerate",
+        };
+      }
       const chapters = related.filter((a) => /\.c\d+/i.test(a.name)).length;
       const detail =
         chapters > 0 ? `${chapters} chapter audio(s)` : "audio present";
@@ -1928,8 +1794,12 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                       </button>
                       <button
                         type="button"
-                        className="evoice__icon-btn evoice__icon-btn--accent"
-                        title="Generate MP3"
+                        className="evoice__action-btn"
+                        title={
+                          selectedDocs.length > 0
+                            ? `Generate MP3 (${selectedDocs.length})`
+                            : "Generate MP3"
+                        }
                         aria-label={
                           selectedDocs.length > 0
                             ? `Generate MP3 (${selectedDocs.length})`
@@ -1940,6 +1810,11 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                       >
                         <span className="material-symbols-outlined" aria-hidden="true">
                           graphic_eq
+                        </span>
+                        <span className="evoice__action-btn-label">
+                          {selectedDocs.length > 0
+                            ? `Generate (${selectedDocs.length})`
+                            : "Generate MP3"}
                         </span>
                       </button>
                     </div>
@@ -2134,6 +2009,17 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                 src={blobUrl || undefined}
                 controls
                 onEnded={next}
+                onError={() => {
+                  if (!blobUrl || audioErrorRef.current === blobUrl) return;
+                  audioErrorRef.current = blobUrl;
+                  autoplayAfterLoadRef.current = false;
+                  const code = audioRef.current?.error?.code ?? 0;
+                  sessionLog("evoice.audio.error", { code });
+                  showError(
+                    "Audio playback",
+                    `The audio could not be played (MediaError ${code}). The file is empty or was not encoded as a valid MP3.`,
+                  );
+                }}
               />
             </CollapsibleSection>
           </>

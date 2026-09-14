@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -141,8 +142,9 @@ func TestEvoiceProjectCreateFakeTTS(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("file get status=%d", rec.Code)
 	}
-	if !bytes.Contains(rec.Body.Bytes(), []byte("ID3fake-evoice")) {
-		t.Fatalf("expected fake mp3 bytes")
+	body := rec.Body.Bytes()
+	if len(body) < 4 || body[0] != 0xFF || (body[1]&0xE0) != 0xE0 {
+		t.Fatalf("expected a valid MP3 frame header, got % x", body[:min(4, len(body))])
 	}
 }
 
@@ -196,6 +198,91 @@ func TestEvoiceImplicitProjectAppearsInList(t *testing.T) {
 	}
 	if !found {
 		t.Fatalf("implicitly created project missing from list: %+v", docs)
+	}
+}
+
+func TestEvoiceFakeRunnerKeepsSingleVersion(t *testing.T) {
+	dir := t.TempDir()
+	docsDir := filepath.Join(dir, "docs")
+	if err := os.MkdirAll(docsDir, 0o750); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(docsDir, "hello.txt"), []byte("hola"), 0o640); err != nil {
+		t.Fatal(err)
+	}
+	runner := evoiceFakeRunner{}
+	opts := evoiceGenerateOpts{Mode: ModeStandard, ContentPercent: 100}
+	for i := 0; i < 2; i++ {
+		if _, err := runner.Run(context.Background(), dir, nil, opts, func(string) {}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	entries, err := os.ReadDir(filepath.Join(dir, "audios"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var mp3s []string
+	for _, e := range entries {
+		if strings.HasSuffix(strings.ToLower(e.Name()), ".mp3") {
+			mp3s = append(mp3s, e.Name())
+		}
+	}
+	if len(mp3s) != 1 || mp3s[0] != "hello.v1.mp3" {
+		t.Fatalf("expected a single hello.v1.mp3 after regenerate, got %v", mp3s)
+	}
+}
+
+func TestEvoiceConvertTimeoutUsesDeepSeek(t *testing.T) {
+	if got := evoiceConvertTimeout(evoiceGenerateOpts{Mode: ModeStandard, ContentPercent: 50}); got != 2*time.Hour {
+		t.Fatalf("contentPercent<100 should use the premium timeout, got %s", got)
+	}
+	if got := evoiceConvertTimeout(evoiceGenerateOpts{Mode: ModeStandard, ContentPercent: 100}); got != 45*time.Minute {
+		t.Fatalf("standard timeout got %s", got)
+	}
+	if got := evoiceConvertTimeout(evoiceGenerateOpts{Mode: ModeSuperPremium, ContentPercent: 100}); got != 6*time.Hour {
+		t.Fatalf("super premium timeout got %s", got)
+	}
+}
+
+func TestEvoicePythonRunnerMissingScript(t *testing.T) {
+	runner := evoicePythonRunner{Python: "python3", Script: filepath.Join(t.TempDir(), "missing.py")}
+	if _, err := runner.Run(context.Background(), t.TempDir(), nil, evoiceGenerateOpts{Mode: ModeStandard, ContentPercent: 100}, func(string) {}); err == nil {
+		t.Fatal("expected an error for a missing worker script")
+	}
+}
+
+func TestEvoiceSpecialCharFileNameServing(t *testing.T) {
+	app := newEvoiceTestApp(t)
+	if err := app.grantEntitlement("member-1", productEvoice); err != nil {
+		t.Fatal(err)
+	}
+	owner := "member-1"
+	if err := app.evoiceFS.ensureProject(owner, "chars"); err != nil {
+		t.Fatal(err)
+	}
+	name := "capítulo 1 & 2.v1.mp3"
+	if err := app.evoiceFS.putFile(owner, "chars", "audios", name, evoiceSilentMP3()); err != nil {
+		t.Fatal(err)
+	}
+	req, rec := app.authedReq(t, "member@eduardoos.com", http.MethodGet, "/api/evoice/projects/"+owner+"/chars/audios", "")
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("list status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var listed struct {
+		Audios []evoiceObjectMeta `json:"audios"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &listed); err != nil {
+		t.Fatal(err)
+	}
+	if len(listed.Audios) != 1 || listed.Audios[0].Name != name {
+		t.Fatalf("unexpected listing: %+v", listed.Audios)
+	}
+	q := url.Values{"name": {name}}.Encode()
+	req, rec = app.authedReq(t, "member@eduardoos.com", http.MethodGet, "/api/evoice/file/"+owner+"/chars/audios?"+q, "")
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("file status=%d body=%s", rec.Code, rec.Body.String())
 	}
 }
 

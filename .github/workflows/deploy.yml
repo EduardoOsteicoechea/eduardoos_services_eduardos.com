@@ -112,6 +112,9 @@ jobs:
           rsync -az -e "${RSH}" \
             backend/api \
             "${VPS_USER}@${VPS_HOST}:${RELEASE}/api"
+          rsync -az -e "${RSH}" \
+            backend/evoice-worker/ \
+            "${VPS_USER}@${VPS_HOST}:${RELEASE}/evoice-worker/"
           ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${APP}/current.tmp' && mv -Tf '/opt/apps/${APP}/current.tmp' '/opt/apps/${APP}/current'"
 
       - name: Upload Calvin Institutes paragraph pack

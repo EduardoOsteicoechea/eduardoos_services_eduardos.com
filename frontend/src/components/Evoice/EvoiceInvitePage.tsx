@@ -11,7 +11,7 @@ import {
   fetchEvoiceProjects,
   type EvoiceShareInvite,
 } from "../../lib/evoice";
-import { getAuthToken } from "../../lib/auth";
+import { isAuthenticated } from "../../lib/auth";
 import { sessionLog } from "../../lib/dev-log";
 import { openServerErrorModal } from "../ServerErrorModal/ServerErrorModal";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
@@ -63,7 +63,7 @@ export default function EvoiceInvitePage() {
         setInvite(preview.invite);
         setValid(preview.valid);
         setExpired(preview.expired);
-        if (getAuthToken()) {
+        if (isAuthenticated()) {
           const me = await fetchEvoiceMe();
           if (cancelled) return;
           setOwnerSafe(me.userSafe);
@@ -126,7 +126,7 @@ export default function EvoiceInvitePage() {
       setDoneMsg(
         `Imported ${res.imported.length} track(s) into ${res.project}.${renameNote}`,
       );
-      window.location.href = `/evoice/?project=${encodeURIComponent(res.project)}`;
+      window.location.href = `/evoice?project=${encodeURIComponent(res.project)}`;
     } catch (err) {
       openServerErrorModal({
         title: "Import playlist",

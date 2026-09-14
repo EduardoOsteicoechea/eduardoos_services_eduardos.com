@@ -188,6 +188,44 @@ No Nginx change is required: the `/api/` location already sets
 under `client_max_body_size`. The STT worker binds loopback only and must never
 be exposed publicly.
 
+## eVoice (batch text-to-audio)
+
+`/evoice` turns uploaded documents (`.docx`, `.txt`, `.pdf`, images) into MP3
+audio. The Go API shells out to `backend/evoice-worker/linux_sync.py`, which
+extracts text (Tesseract OCR / PyMuPDF), optionally refines it with DeepSeek, and
+synthesizes speech with Piper (fallback: espeak-ng) encoded to **MP3 mono
+64 kbps 44.1 kHz** via ffmpeg.
+
+Local development needs no worker or models: set `EVOICE_FAKE_TTS=true` and the
+Go fake runner produces a valid silent MP3.
+
+The worker **code** is deployed by CI into each release at
+`/opt/apps/<app>/current/evoice-worker/`. The venv, system tools, and Piper
+model are provisioned on the VPS outside CI/CD:
+
+```bash
+# On the VPS, as the deploy user, from the backend/evoice-worker directory:
+bash provision.sh
+```
+
+Then set in `/etc/eduardoos-api.env` (values printed by the script) and restart
+`eduardoos-api.service`:
+
+```
+EVOICE_FAKE_TTS=false
+EVOICE_MEDIA_ROOT=/var/www/eduardoos.com/media/evoice
+EVOICE_PYTHON=/opt/apps/eduardoos/evoice-venv/bin/python
+EVOICE_WORKER_SCRIPT=evoice-worker/linux_sync.py
+EVOICE_PIPER_MODEL=/var/www/eduardoos.com/models/evoice/es_ES-sharvard-medium.onnx
+DEEPSEEK_MODEL=<deepseek chat model id>
+DEEPSEEK_VISION_MODEL=<deepseek vision model id>
+```
+
+`EVOICE_WORKER_SCRIPT` is resolved relative to the systemd `WorkingDirectory`
+(the current release), so it tracks every deploy. If the script is missing the
+job fails with a clear `evoice worker script not found` message instead of a
+silent no-op. System packages required: `ffmpeg`, `tesseract-ocr`, `espeak-ng`.
+
 ## Admin diagnostics
 
 `/diagnostics` and `POST /api/admin/diagnostics/*` are admin-only. The Go API enforces JWT, `admin` role, and CSRF. The page is UX only.
