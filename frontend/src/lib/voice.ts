@@ -251,6 +251,44 @@ function enqueueChunk(buffer: ArrayBuffer): void {
     });
 }
 
+function voiceErrorMessage(err: unknown): { code: string; message: string } {
+  if (err instanceof DOMException) {
+    switch (err.name) {
+      case "NotAllowedError":
+      case "SecurityError":
+        return {
+          code: err.name,
+          message:
+            "Microphone access is blocked. Allow the microphone for this site in the browser (and OS privacy settings), then try again.",
+        };
+      case "NotFoundError":
+        return { code: err.name, message: "No microphone was found on this device." };
+      case "NotReadableError":
+      case "AbortError":
+        return {
+          code: err.name,
+          message: "The microphone is busy or unavailable. Close other apps using it and try again.",
+        };
+      default:
+        return { code: err.name || "dom_error", message: `Could not use the microphone (${err.name}).` };
+    }
+  }
+  const code = err instanceof Error ? err.message : String(err);
+  switch (code) {
+    case "insecure":
+      return { code, message: "Voice needs a secure page. Open the site over HTTPS or on localhost." };
+    case "unsupported":
+      return { code, message: "Voice input is not supported in this browser." };
+    case "backend":
+      return {
+        code,
+        message: "The voice service is unavailable. Start the speech-to-text worker, then try again.",
+      };
+    default:
+      return { code, message: "Could not start voice input. Try again." };
+  }
+}
+
 async function startRecording(ui: VoiceUi): Promise<void> {
   if (state.starting || state.recording) {
     return;
@@ -258,18 +296,25 @@ async function startRecording(ui: VoiceUi): Promise<void> {
   state.starting = true;
   sessionLog("voice.record.start", { lang: state.lang, sampleRate: state.sampleRate });
   paintUi(ui);
+  let media: MediaStream | null = null;
+  let ctx: AudioContext | null = null;
+  let streamId: string | null = null;
   try {
+    if (typeof window !== "undefined" && window.isSecureContext === false) {
+      throw new Error("insecure");
+    }
     if (!navigator.mediaDevices?.getUserMedia) {
       throw new Error("unsupported");
     }
-    const streamId = await startVoiceStream(state.lang);
-    if (!streamId) {
-      throw new Error("stream");
-    }
-    const media = await navigator.mediaDevices.getUserMedia({
+    media = await navigator.mediaDevices.getUserMedia({
       audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
     });
-    const ctx = new AudioContext({ sampleRate: state.sampleRate || 16000 });
+    sessionLog("voice.record.mic", { tracks: media.getTracks().length });
+    streamId = await startVoiceStream(state.lang);
+    if (!streamId) {
+      throw new Error("backend");
+    }
+    ctx = new AudioContext({ sampleRate: state.sampleRate || 16000 });
     await ctx.audioWorklet.addModule("/voice-pcm-worklet.js");
     const source = ctx.createMediaStreamSource(media);
     const node = new AudioWorkletNode(ctx, "voice-pcm");
@@ -295,18 +340,24 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     setIcon(ui.mic, "stop_circle");
     paintTranscript(ui, "");
   } catch (err) {
-    const message = err instanceof Error && err.message === "unsupported"
-      ? "Voice input is not supported in this browser."
-      : "Could not start voice input. Check microphone permission.";
+    const { code, message } = voiceErrorMessage(err);
     sessionLog("voice.record.error", {
+      code,
       message,
-      reason: err instanceof Error ? err.message : String(err),
+      reason: err instanceof Error ? `${err.name}: ${err.message}` : String(err),
     });
-    showErrorModal({ message });
-    if (state.streamId) {
-      void cancelVoiceStream(state.streamId);
+    media?.getTracks().forEach((track) => track.stop());
+    if (ctx) {
+      try {
+        await ctx.close();
+      } catch {
+        /* ignore */
+      }
     }
-    state.streamId = null;
+    if (streamId) {
+      void cancelVoiceStream(streamId);
+    }
+    showErrorModal({ message });
   } finally {
     state.starting = false;
     paintUi(ui);

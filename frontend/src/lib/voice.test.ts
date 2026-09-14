@@ -6,6 +6,7 @@ import {
   stopVoiceStream,
 } from "./api";
 import { setAgentChatDraft } from "./chat";
+import { showErrorModal } from "./error-modal";
 import { enqueueVoiceAudio, startVoiceChat, stopVoicePlayback } from "./voice";
 
 vi.mock("./api", () => ({
@@ -167,5 +168,32 @@ describe("global voice input", () => {
     expect(FakeAudio.instances.length).toBe(1);
     expect(FakeAudio.instances[0].play).toHaveBeenCalled();
     stopVoicePlayback();
+  });
+
+  it("reports a blocked microphone as such", async () => {
+    vi.mocked(getVoiceConfig).mockResolvedValue({ enabled: true, sampleRate: 16000, langs: ["en"], defaultLang: "en" });
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockRejectedValue(
+      new DOMException("denied", "NotAllowedError"),
+    );
+    startVoiceChat();
+    const mic = document.querySelector("[data-agent-mic]") as HTMLButtonElement;
+    await vi.waitFor(() => expect(mic.hidden).toBe(false));
+    mic.click();
+    await vi.waitFor(() => expect(showErrorModal).toHaveBeenCalled());
+    const arg = vi.mocked(showErrorModal).mock.calls.at(-1)?.[0];
+    expect(arg?.message).toContain("Microphone access is blocked");
+  });
+
+  it("reports an unavailable voice backend instead of blaming the mic", async () => {
+    vi.mocked(getVoiceConfig).mockResolvedValue({ enabled: true, sampleRate: 16000, langs: ["en"], defaultLang: "en" });
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockResolvedValue({ getTracks: () => [] } as unknown as MediaStream);
+    vi.mocked(startVoiceStream).mockResolvedValue(null);
+    startVoiceChat();
+    const mic = document.querySelector("[data-agent-mic]") as HTMLButtonElement;
+    await vi.waitFor(() => expect(mic.hidden).toBe(false));
+    mic.click();
+    await vi.waitFor(() => expect(showErrorModal).toHaveBeenCalled());
+    const arg = vi.mocked(showErrorModal).mock.calls.at(-1)?.[0];
+    expect(arg?.message).toContain("voice service is unavailable");
   });
 });
