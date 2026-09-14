@@ -334,6 +334,10 @@
 .eostore-editor {
   max-width: none;
   margin-inline: 0;
+  gap: calc(var(--space-padding) * 2);
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 
 .eostore-editor .eostore-fieldset {
@@ -341,6 +345,7 @@
   flex-direction: column;
   gap: var(--rail-gap);
   padding: var(--space-padding);
+  background: var(--color-surface);
 }
 
 .eostore-editor .eostore-fieldset legend {
@@ -415,6 +420,11 @@
 .eostore-card-head h3,
 .eostore-card-head h1 {
   margin: 0;
+}
+
+.eostore-card-id {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
 }
 
 .eostore-shop-card h3 a,
