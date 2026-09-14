@@ -61,10 +61,12 @@ def model_path_for(lang: str) -> Path | None:
         return None
     base = Path(os.environ.get("VOICE_STT_MODELS_DIR") or (Path(__file__).resolve().parent / "models"))
     suffix = "en" if lang.startswith("en") else "es"
-    for candidate in sorted(base.glob(f"vosk-model-*{suffix}*")):
-        if candidate.is_dir():
+    candidates = [c for c in sorted(base.glob(f"vosk-model-*{suffix}*")) if c.is_dir()]
+    # Prefer a full-size model over the "small" one when both are installed.
+    for candidate in candidates:
+        if "small" not in candidate.name:
             return candidate
-    return None
+    return candidates[0] if candidates else None
 
 
 class Recognizer:

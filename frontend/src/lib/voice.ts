@@ -39,6 +39,7 @@ type VoiceState = {
   sink: GainNode | null;
   chain: Promise<void>;
   transcript: string;
+  partial: string;
 };
 
 const state: VoiceState = {
@@ -56,6 +57,7 @@ const state: VoiceState = {
   sink: null,
   chain: Promise.resolve(),
   transcript: "",
+  partial: "",
 };
 
 let bound = false;
@@ -137,19 +139,22 @@ function paintUi(ui: VoiceUi | null): void {
   }
 }
 
-function paintTranscript(ui: VoiceUi | null, interim: string): void {
+function paintTranscript(ui: VoiceUi | null, finalText: string, partial = ""): void {
   if (!ui) {
     return;
   }
-  if (interim) {
-    ui.input.value = interim;
+  const live = [finalText, partial].filter(Boolean).join(" ").trim();
+  if (live) {
+    ui.input.value = live;
     ui.input.dispatchEvent(new Event("input", { bubbles: true }));
   }
   if (ui.caption) {
-    ui.caption.hidden = !state.recording && !interim;
-    ui.caption.textContent = state.recording
-      ? interim || "Listening… press the stop button to finish."
-      : interim;
+    ui.caption.hidden = !state.recording && !live;
+    if (state.recording) {
+      ui.caption.textContent = live || "Listening… press the stop button to finish.";
+    } else {
+      ui.caption.textContent = live;
+    }
   }
 }
 
@@ -240,11 +245,18 @@ function enqueueChunk(buffer: ArrayBuffer): void {
         return;
       }
       const text = (result.data.text || "").trim();
-      if (text) {
-        state.transcript = text;
-        sessionLog("voice.chunk.text", { streamId: state.streamId, runes: text.length, bytes: buffer.byteLength });
-        paintTranscript(resolveUi(), text);
+      const partial = (result.data.partial || "").trim();
+      state.transcript = text;
+      state.partial = partial;
+      if (text || partial) {
+        sessionLog("voice.chunk.text", {
+          streamId: state.streamId,
+          finalRunes: text.length,
+          partialRunes: partial.length,
+          bytes: buffer.byteLength,
+        });
       }
+      paintTranscript(resolveUi(), text, partial);
     })
     .catch((err) => {
       sessionLog("voice.chunk.throw", { streamId: state.streamId, message: String(err) });
@@ -333,6 +345,7 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     state.sink = sink;
     state.streamId = streamId;
     state.transcript = "";
+    state.partial = "";
     state.recording = true;
     state.chain = Promise.resolve();
     stopVoicePlayback();
@@ -406,7 +419,7 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
     }
   }
   await state.chain.catch(() => undefined);
-  let text = state.transcript;
+  let text = [state.transcript, state.partial].filter(Boolean).join(" ").trim();
   if (streamId) {
     const finalText = await stopVoiceStream(streamId);
     if (finalText) {
@@ -414,6 +427,7 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
     }
   }
   state.transcript = "";
+  state.partial = "";
   const finalText = text.trim();
   sessionLog("voice.record.final", { streamId, runes: finalText.length });
   if (finalText) {

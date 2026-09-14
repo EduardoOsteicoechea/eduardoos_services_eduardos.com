@@ -196,4 +196,25 @@ describe("global voice input", () => {
     const arg = vi.mocked(showErrorModal).mock.calls.at(-1)?.[0];
     expect(arg?.message).toContain("voice service is unavailable");
   });
+
+  it("streams interim (partial) text into the composer while recording", async () => {
+    vi.mocked(getVoiceConfig).mockResolvedValue({ enabled: true, sampleRate: 16000, langs: ["es"], defaultLang: "es" });
+    vi.mocked(startVoiceStream).mockResolvedValue("stream-2");
+    vi.mocked(postVoiceChunk).mockResolvedValue({ status: 200, data: { text: "hola", partial: "mun" } });
+    vi.mocked(stopVoiceStream).mockResolvedValue("");
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockResolvedValue({
+      getTracks: () => [{ stop: vi.fn() }],
+    } as unknown as MediaStream);
+    startVoiceChat();
+    const mic = document.querySelector("[data-agent-mic]") as HTMLButtonElement;
+    await vi.waitFor(() => expect(mic.hidden).toBe(false));
+    mic.click();
+    await vi.waitFor(() => expect(workletNodes.length).toBe(1));
+    workletNodes[0].port.onmessage?.({ data: new ArrayBuffer(4) } as MessageEvent);
+    await vi.waitFor(() => {
+      expect((document.querySelector("[data-agent-input]") as HTMLTextAreaElement).value).toBe("hola mun");
+    });
+    const caption = document.querySelector("[data-agent-voice]") as HTMLElement;
+    expect(caption.textContent).toContain("hola mun");
+  });
 });
