@@ -467,17 +467,36 @@ func (a *App) voiceMaxChunkBytes() int64 {
 	return voiceDefaultChunkBytes
 }
 
+// voiceDebug writes bounded diagnostics only when MUST_LOG is on. It must never
+// receive transcripts or audio, only ids, counts, durations, and mapped causes.
+func (a *App) voiceDebug(msg string, args ...any) {
+	if a.cfg.MustLog && a.log != nil {
+		a.log.Info(msg, args...)
+	}
+}
+
+func (a *App) voiceDebugErr(msg string, args ...any) {
+	if a.log != nil {
+		a.log.Error(msg, args...)
+	}
+}
+
+func (a *App) voiceUserID(r *http.Request) string {
+	if user := a.currentUser(r); user != nil {
+		return user.ID
+	}
+	return ""
+}
+
 func (a *App) voiceStartHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	rid := requestIDFrom(r, w)
 	ip := clientIP(r.RemoteAddr)
-	user := a.currentUser(r)
-	userID := ""
-	if user != nil {
-		userID = user.ID
-	}
+	userID := a.voiceUserID(r)
 	if !a.voiceIPLimit.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
+		a.voiceDebug("voice.stream.start", "request_id", rid, "status", "rate_limited", "user_id", userID)
 		a.auditEvent(r, "voice_stream", "rate_limited", userID)
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
@@ -492,12 +511,15 @@ func (a *App) voiceStartHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := a.voice.Start(r.Context(), lang)
 	if err != nil {
 		if errors.Is(err, errVoiceBusy) {
+			a.voiceDebug("voice.stream.start", "request_id", rid, "status", "busy", "lang", lang, "user_id", userID)
 			a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 			return
 		}
+		a.voiceDebugErr("voice.stream.start_failed", "request_id", rid, "lang", lang, "user_id", userID, "cause", redactLogValue(err.Error()))
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
 	}
+	a.voiceDebug("voice.stream.start", "request_id", rid, "status", "ok", "stream_id", id, "lang", lang, "user_id", userID)
 	a.auditEvent(r, "voice_stream", "started", userID)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"streamId":   id,
@@ -510,18 +532,23 @@ func (a *App) voiceChunkHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	rid := requestIDFrom(r, w)
+	start := time.Now()
 	id := strings.TrimSpace(r.PathValue("id"))
 	if id == "" {
+		a.voiceDebug("voice.stream.chunk", "request_id", rid, "status", "invalid_request", "reason", "missing_id")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	max := a.voiceMaxChunkBytes()
 	body, err := io.ReadAll(io.LimitReader(r.Body, max+1))
 	if err != nil {
+		a.voiceDebugErr("voice.stream.chunk_failed", "request_id", rid, "stream_id", id, "reason", "read_body", "cause", redactLogValue(err.Error()))
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if int64(len(body)) > max {
+		a.voiceDebug("voice.stream.chunk", "request_id", rid, "stream_id", id, "status", "payload_too_large", "bytes", len(body), "limit", max)
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -532,12 +559,24 @@ func (a *App) voiceChunkHandler(w http.ResponseWriter, r *http.Request) {
 	partial, final, text, err := a.voice.Write(id, body)
 	if err != nil {
 		if errors.Is(err, errVoiceNotFound) {
+			a.voiceDebug("voice.stream.chunk", "request_id", rid, "stream_id", id, "status", "not_found")
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 			return
 		}
+		a.voiceDebugErr("voice.stream.chunk_failed", "request_id", rid, "stream_id", id, "bytes", len(body), "cause", redactLogValue(err.Error()))
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
 	}
+	a.voiceDebug("voice.stream.chunk",
+		"request_id", rid,
+		"stream_id", id,
+		"status", "ok",
+		"bytes", len(body),
+		"partial_runes", utf8.RuneCountInString(partial),
+		"final_runes", utf8.RuneCountInString(final),
+		"text_runes", utf8.RuneCountInString(text),
+		"duration_ms", time.Since(start).Milliseconds(),
+	)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"partial": partial,
 		"final":   final,
@@ -549,6 +588,8 @@ func (a *App) voiceStopHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	rid := requestIDFrom(r, w)
+	start := time.Now()
 	id := strings.TrimSpace(r.PathValue("id"))
 	if id == "" {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -557,12 +598,22 @@ func (a *App) voiceStopHandler(w http.ResponseWriter, r *http.Request) {
 	text, err := a.voice.Stop(id)
 	if err != nil {
 		if errors.Is(err, errVoiceNotFound) {
+			a.voiceDebug("voice.stream.stop", "request_id", rid, "stream_id", id, "status", "not_found")
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 			return
 		}
+		a.voiceDebugErr("voice.stream.stop_failed", "request_id", rid, "stream_id", id, "cause", redactLogValue(err.Error()))
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
 	}
+	a.voiceDebug("voice.stream.stop",
+		"request_id", rid,
+		"stream_id", id,
+		"status", "ok",
+		"text_runes", utf8.RuneCountInString(text),
+		"duration_ms", time.Since(start).Milliseconds(),
+	)
+	a.auditEvent(r, "voice_stream", "stopped", a.voiceUserID(r))
 	writeJSON(w, http.StatusOK, map[string]any{"text": text})
 }
 
@@ -570,15 +621,18 @@ func (a *App) voiceCancelHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	rid := requestIDFrom(r, w)
 	id := strings.TrimSpace(r.PathValue("id"))
 	if id == "" {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	if err := a.voice.Cancel(id); err != nil && !errors.Is(err, errVoiceNotFound) {
+		a.voiceDebugErr("voice.stream.cancel_failed", "request_id", rid, "stream_id", id, "cause", redactLogValue(err.Error()))
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
 	}
+	a.voiceDebug("voice.stream.cancel", "request_id", rid, "stream_id", id, "status", "ok")
 	writeJSON(w, http.StatusOK, map[string]any{"cancelled": true})
 }
 
@@ -586,17 +640,16 @@ func (a *App) voiceSpeakHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
+	rid := requestIDFrom(r, w)
+	start := time.Now()
 	if a.voiceTTS == nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
 	ip := clientIP(r.RemoteAddr)
-	user := a.currentUser(r)
-	userID := ""
-	if user != nil {
-		userID = user.ID
-	}
+	userID := a.voiceUserID(r)
 	if !a.voiceSpeakLimit.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
+		a.voiceDebug("voice.speak", "request_id", rid, "status", "rate_limited", "user_id", userID)
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
@@ -610,6 +663,7 @@ func (a *App) voiceSpeakHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	text := strings.TrimSpace(body.Text)
 	if text == "" || utf8.RuneCountInString(text) > voiceMaxSpeakRunes {
+		a.voiceDebug("voice.speak", "request_id", rid, "status", "invalid_request", "text_runes", utf8.RuneCountInString(text))
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -618,12 +672,16 @@ func (a *App) voiceSpeakHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 	audio, mime, err := a.voiceTTS.Synthesize(ctx, text, lang)
 	if err != nil || len(audio) == 0 {
+		a.voiceDebugErr("voice.speak_failed", "request_id", rid, "lang", lang, "text_runes", utf8.RuneCountInString(text), "cause", voiceCause(err))
+		a.auditEvent(r, "voice_speak", "failed", userID)
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
 	}
 	if strings.TrimSpace(mime) == "" {
 		mime = "audio/mpeg"
 	}
+	a.voiceDebug("voice.speak", "request_id", rid, "status", "ok", "lang", lang, "text_runes", utf8.RuneCountInString(text), "bytes", len(audio), "duration_ms", time.Since(start).Milliseconds())
+	a.auditEvent(r, "voice_speak", "ok", userID)
 	w.Header().Set("Content-Type", mime)
 	w.Header().Set("Cache-Control", "no-store")
 	w.WriteHeader(http.StatusOK)
@@ -636,19 +694,30 @@ func (a *App) emitVoiceAudio(ctx context.Context, w http.ResponseWriter, lang st
 	if a.voiceTTS == nil || strings.TrimSpace(sentence) == "" {
 		return
 	}
+	seq := s.nextSeq()
+	start := time.Now()
 	tctx, cancel := context.WithTimeout(ctx, voiceTTSTimeout)
 	defer cancel()
 	audio, mime, err := a.voiceTTS.Synthesize(tctx, sentence, lang)
 	if err != nil || len(audio) == 0 {
+		a.voiceDebugErr("voice.chat.audio_failed", "lang", lang, "seq", seq, "text_runes", utf8.RuneCountInString(sentence), "cause", voiceCause(err))
 		return
 	}
 	if strings.TrimSpace(mime) == "" {
 		mime = "audio/mpeg"
 	}
+	a.voiceDebug("voice.chat.audio", "seq", seq, "lang", lang, "text_runes", utf8.RuneCountInString(sentence), "bytes", len(audio), "duration_ms", time.Since(start).Milliseconds())
 	_ = writeSSE(w, map[string]any{
 		"type": "audio",
-		"seq":  s.nextSeq(),
+		"seq":  seq,
 		"mime": mime,
 		"data": base64.StdEncoding.EncodeToString(audio),
 	})
+}
+
+func voiceCause(err error) string {
+	if err == nil {
+		return "empty_audio"
+	}
+	return redactLogValue(err.Error())
 }

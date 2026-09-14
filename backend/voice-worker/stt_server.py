@@ -26,6 +26,7 @@ import json
 import os
 import threading
 import time
+import traceback
 import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -162,12 +163,20 @@ class Handler(BaseHTTPRequestHandler):
         return
 
     def _json(self, status: int, payload: dict) -> None:
+        self._status = status
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def _log_request(self, started: float) -> None:
+        log(
+            f"REQ method={self.command} path={self.path} "
+            f"status={getattr(self, '_status', 0)} "
+            f"duration_ms={int((time.time() - started) * 1000)}"
+        )
 
     def _read_body(self, limit: int) -> bytes:
         length = int(self.headers.get("Content-Length") or "0")
@@ -178,8 +187,10 @@ class Handler(BaseHTTPRequestHandler):
         return self.rfile.read(length)
 
     def do_POST(self) -> None:  # noqa: N802
-        parts = [p for p in self.path.split("/") if p]
+        started = time.time()
+        self._status = 0
         try:
+            parts = [p for p in self.path.split("/") if p]
             if parts == ["sessions"]:
                 self._start()
                 return
@@ -196,14 +207,26 @@ class Handler(BaseHTTPRequestHandler):
         except ValueError:
             self._json(413, {"error": "payload_too_large"})
         except Exception as exc:  # noqa: BLE001
-            log(f"ERROR {exc!s}")
+            log(f"ERROR path={self.path} {exc!s}")
+            traceback.print_exc()
             self._json(500, {"error": "internal_error"})
+        finally:
+            self._log_request(started)
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path == "/health":
-            self._json(200, {"status": "ok", "sessions": len(SERVER.sessions)})
-            return
-        self._json(404, {"error": "not_found"})
+        started = time.time()
+        self._status = 0
+        try:
+            if self.path == "/health":
+                self._json(200, {"status": "ok", "sessions": len(SERVER.sessions)})
+                return
+            self._json(404, {"error": "not_found"})
+        except Exception as exc:  # noqa: BLE001
+            log(f"ERROR path={self.path} {exc!s}")
+            traceback.print_exc()
+            self._json(500, {"error": "internal_error"})
+        finally:
+            self._log_request(started)
 
     def _start(self) -> None:
         body = self._read_body(4096)

@@ -6,6 +6,7 @@ import {
   stopVoiceStream,
 } from "./api";
 import { submitAgentChatMessage } from "./chat";
+import { sessionLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 
 // Global voice input for the agent dock. Captures 16 kHz mono PCM through an
@@ -185,20 +186,32 @@ function playNextAudio(): void {
     playNextAudio();
   };
   audio.onended = done;
-  audio.onerror = done;
-  void audio.play().catch(done);
+  audio.onerror = () => {
+    sessionLog("voice.audio.error", { queued: audioQueue.length });
+    done();
+  };
+  audio.onplay = () => sessionLog("voice.audio.play", { queued: audioQueue.length });
+  void audio.play().catch((err) => {
+    sessionLog("voice.audio.blocked", { message: String(err) });
+    done();
+  });
 }
 
 export function enqueueVoiceAudio(base64: string, mime: string): void {
   const url = blobUrl(base64, mime || "audio/mpeg");
   if (!url) {
+    sessionLog("voice.audio.decode_error", { mime });
     return;
   }
+  sessionLog("voice.audio.enqueue", { mime, queued: audioQueue.length + 1 });
   audioQueue.push(url);
   playNextAudio();
 }
 
 export function stopVoicePlayback(): void {
+  if (audioQueue.length || currentAudio) {
+    sessionLog("voice.audio.stop", { queued: audioQueue.length });
+  }
   for (const url of audioQueue.splice(0)) {
     URL.revokeObjectURL(url);
   }
@@ -217,13 +230,25 @@ function enqueueChunk(buffer: ArrayBuffer): void {
         return;
       }
       const result = await postVoiceChunk(state.streamId, buffer);
+      if (result.status !== 200) {
+        sessionLog("voice.chunk.error", {
+          streamId: state.streamId,
+          status: result.status,
+          error: result.data.error,
+          bytes: buffer.byteLength,
+        });
+        return;
+      }
       const text = (result.data.text || "").trim();
       if (text) {
         state.transcript = text;
+        sessionLog("voice.chunk.text", { streamId: state.streamId, runes: text.length, bytes: buffer.byteLength });
         paintTranscript(resolveUi(), text);
       }
     })
-    .catch(() => undefined);
+    .catch((err) => {
+      sessionLog("voice.chunk.throw", { streamId: state.streamId, message: String(err) });
+    });
 }
 
 async function startRecording(ui: VoiceUi): Promise<void> {
@@ -231,6 +256,7 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     return;
   }
   state.starting = true;
+  sessionLog("voice.record.start", { lang: state.lang, sampleRate: state.sampleRate });
   paintUi(ui);
   try {
     if (!navigator.mediaDevices?.getUserMedia) {
@@ -265,12 +291,17 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     state.recording = true;
     state.chain = Promise.resolve();
     stopVoicePlayback();
+    sessionLog("voice.record.started", { streamId, sampleRate: ctx.sampleRate });
     setIcon(ui.mic, "stop_circle");
     paintTranscript(ui, "");
   } catch (err) {
     const message = err instanceof Error && err.message === "unsupported"
       ? "Voice input is not supported in this browser."
       : "Could not start voice input. Check microphone permission.";
+    sessionLog("voice.record.error", {
+      message,
+      reason: err instanceof Error ? err.message : String(err),
+    });
     showErrorModal({ message });
     if (state.streamId) {
       void cancelVoiceStream(state.streamId);
@@ -287,6 +318,7 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
     return;
   }
   state.recording = false;
+  sessionLog("voice.record.stop", { streamId: state.streamId });
   paintUi(ui);
   if (state.node) {
     state.node.port.onmessage = null;
@@ -332,6 +364,7 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
   }
   state.transcript = "";
   paintTranscript(ui, text);
+  sessionLog("voice.record.final", { streamId, runes: text.trim().length });
   if (text.trim()) {
     submitAgentChatMessage(text.trim());
   } else if (ui.caption) {
@@ -360,6 +393,7 @@ export function startVoiceChat(): void {
     ui.toggle?.addEventListener("click", () => {
       state.reply = !state.reply;
       storeReply(state.reply);
+      sessionLog("voice.reply.toggle", { enabled: state.reply });
       if (!state.reply) {
         stopVoicePlayback();
       }
@@ -378,10 +412,17 @@ async function initVoice(ui: VoiceUi): Promise<void> {
     if (ui.toggle) {
       ui.toggle.hidden = true;
     }
+    sessionLog("voice.config", { enabled: false });
     return;
   }
   state.enabled = true;
   state.sampleRate = config.sampleRate || 16000;
   state.lang = config.defaultLang || "es";
+  sessionLog("voice.config", {
+    enabled: true,
+    sampleRate: state.sampleRate,
+    lang: state.lang,
+    langs: config.langs,
+  });
   paintUi(ui);
 }

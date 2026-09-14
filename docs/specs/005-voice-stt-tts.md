@@ -56,6 +56,26 @@ emits the usual `{delta}` events plus `{type:"audio", seq, mime, data}` events.
 - Audio, transcripts, and temp files are never logged; errors map to safe
   codes. No provider/worker detail reaches the browser. Keys stay server-side.
 
+## Diagnostics
+
+Follows [`error-observability.mdc`](../../../.cursor/rules/error-observability.mdc).
+
+- Every `/api/voice/*` request gets the standard request log (request id,
+  method, route, status, duration, user, source IP) from `withObservability`.
+- With `MUST_LOG=true`, the Go API logs per-step voice events (`voice.stream.start`,
+  `voice.stream.chunk`, `voice.stream.stop`, `voice.speak`, `voice.chat.audio`)
+  with ids, byte/rune **counts**, and latency — never transcripts or audio.
+- Worker failures are logged at error with a redacted cause (`voice.stream.chunk_failed`,
+  `voice.speak_failed`, `voice.chat.audio_failed`) and surfaced to the client only
+  as `internal_error`.
+- Always-on audits: `voice_stream` started/stopped/rate_limited, `voice_speak` ok/failed.
+- Frontend uses the shared `mustLog` gate (`sessionLog`, on in dev or with
+  `?debug=1`): `voice.config`, `voice.record.*`, `voice.chunk.*`, `voice.audio.*`,
+  `voice.reply.toggle`. Failures still open the global error modal.
+- The STT worker logs `REQ method/path/status/duration_ms`, session start/stop,
+  and bounded tracebacks; `speak.py` logs per-chunk timing and totals.
+
+
 ## Frontend
 
 - `src/lib/voice.ts`: capture, chunk upload, live captions, playback queue,

@@ -25,6 +25,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 CHUNK_CHARS = 800
@@ -127,6 +128,7 @@ def main() -> int:
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     chunks = chunk_text(text)
+    t0 = time.time()
     log(f"TTS lang={args.lang} chunks={len(chunks)} model={model.name}")
 
     with tempfile.TemporaryDirectory(prefix="voice-speak-", dir=str(args.out.parent)) as tmp:
@@ -134,8 +136,10 @@ def main() -> int:
         wav_parts: list[Path] = []
         for i, chunk in enumerate(chunks, start=1):
             wav = tmp_path / f"part-{i:04d}.wav"
+            step = time.time()
             synth_wav(chunk, model, wav)
             wav_parts.append(wav)
+            log(f"TTS chunk {i}/{len(chunks)} chars={len(chunk)} duration_ms={int((time.time() - step) * 1000)}")
 
         if len(wav_parts) == 1:
             wav_to_mp3(wav_parts[0], args.out)
@@ -156,7 +160,7 @@ def main() -> int:
                 raise RuntimeError(f"ffmpeg concat failed: {err}")
             wav_to_mp3(merged, args.out)
 
-    log(f"ok bytes={args.out.stat().st_size}")
+    log(f"ok bytes={args.out.stat().st_size} duration_ms={int((time.time() - t0) * 1000)}")
     return 0
 
 
