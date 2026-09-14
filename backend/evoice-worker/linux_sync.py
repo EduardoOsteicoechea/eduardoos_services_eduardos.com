@@ -782,6 +782,50 @@ def text_to_wav_espeak(text: str, wav_path: Path) -> None:
         raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "espeak failed")
 
 
+def text_to_wav_system(text: str, wav_path: Path) -> None:
+    """Last-resort TTS using the host voices (no Piper model or espeak needed).
+
+    macOS uses `say`; Windows uses the built-in SAPI voice through PowerShell.
+    Linux has no portable file-output system voice, so this raises there.
+    """
+    if sys.platform == "darwin":
+        say = shutil.which("say")
+        if not say:
+            raise FileNotFoundError("macOS 'say' not found")
+        proc = subprocess.run(
+            [say, "-o", str(wav_path), "--data-format=LEI16@22050", text],
+            capture_output=True,
+            check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "say failed")
+        return
+    if os.name == "nt":
+        powershell = shutil.which("powershell") or shutil.which("pwsh")
+        if not powershell:
+            raise FileNotFoundError("PowerShell not found for Windows SAPI TTS")
+        escaped = str(wav_path).replace("'", "''")
+        script = (
+            "Add-Type -AssemblyName System.Speech; "
+            "$s = New-Object System.Speech.Synthesis.SpeechSynthesizer; "
+            f"$s.SetOutputToWaveFile('{escaped}'); "
+            "$s.Speak([Console]::In.ReadToEnd()); "
+            "$s.Dispose()"
+        )
+        proc = subprocess.run(
+            [powershell, "-NoProfile", "-NonInteractive", "-Command", script],
+            input=text.encode("utf-8"),
+            capture_output=True,
+            check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "SAPI failed")
+        return
+    raise FileNotFoundError(
+        "no system TTS fallback on this platform (install piper or espeak-ng)"
+    )
+
+
 def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:
     ffmpeg = find_ffmpeg()
     log(f"FFMPEG {mp3_path.name} pct=50 detail=encoding")
@@ -854,8 +898,19 @@ def text_to_mp3(text: str, mp3_path: Path, name: str, tmp_parent: Path | None = 
                     log(f"TTS {name} detail=engine=piper")
             except Exception as piper_err:  # noqa: BLE001
                 if i == 1:
-                    log(f"TTS {name} detail=piper_fail ({piper_err}); espeak-ng")
-                text_to_wav_espeak(chunk, wav)
+                    log(f"TTS {name} detail=piper_fail ({piper_err}); trying espeak-ng")
+                try:
+                    text_to_wav_espeak(chunk, wav)
+                    if i == 1:
+                        log(f"TTS {name} detail=engine=espeak-ng")
+                except Exception as espeak_err:  # noqa: BLE001
+                    if i == 1:
+                        log(f"TTS {name} detail=espeak_fail ({espeak_err}); trying system TTS")
+                    text_to_wav_system(chunk, wav)
+                    if i == 1:
+                        log(f"TTS {name} detail=engine=system")
+            if not wav.is_file() or wav.stat().st_size <= 0:
+                raise RuntimeError(f"TTS produced an empty WAV for chunk {i}")
             wav_parts.append(wav)
             log(f"TTS {name} pct={int(100 * i / max(len(chunks), 1))} detail=chunk_done")
         if len(wav_parts) == 1:

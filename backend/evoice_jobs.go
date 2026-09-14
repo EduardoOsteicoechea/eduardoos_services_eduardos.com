@@ -42,6 +42,7 @@ type evoiceJobRunner interface {
 type evoiceFakeRunner struct{}
 
 func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []string, opts evoiceGenerateOpts, logFn func(string)) (evoiceJobStats, error) {
+	logFn("WARNING: EVOICE_FAKE_TTS=true — writing silent placeholder audio. Set EVOICE_FAKE_TTS=false (and provision piper/espeak) for real speech.")
 	docsDir := filepath.Join(projectDir, "docs")
 	audiosDir := filepath.Join(projectDir, "audios")
 	_ = os.MkdirAll(audiosDir, 0o750)
@@ -211,14 +212,26 @@ func defaultEvoiceWorkerScript() string {
 	return "linux_sync.py"
 }
 
+func resolveEvoicePython(configured string) string {
+	if v := strings.TrimSpace(configured); v != "" {
+		if p, err := exec.LookPath(v); err == nil {
+			return p
+		}
+		return v
+	}
+	for _, cand := range []string{"python3", "python", "py"} {
+		if p, err := exec.LookPath(cand); err == nil {
+			return p
+		}
+	}
+	return "python3"
+}
+
 func resolveEvoiceRunner(cfg config) evoiceJobRunner {
 	if cfg.EvoiceFakeTTS {
 		return evoiceFakeRunner{}
 	}
-	py := cfg.EvoicePython
-	if py == "" {
-		py = "python3"
-	}
+	py := resolveEvoicePython(cfg.EvoicePython)
 	script := cfg.EvoiceWorkerScript
 	if script == "" {
 		script = defaultEvoiceWorkerScript()
