@@ -338,25 +338,35 @@
 
 .eostore-editor .eostore-fieldset {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: flex-start;
-  padding: 0.5rem;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
 }
 
 .eostore-editor .eostore-fieldset legend {
-  flex: 1 1 100%;
+  flex: 0 0 auto;
+}
+
+.eostore-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--rail-gap);
+  width: 100%;
+}
+
+.eostore-form-grid > .eostore-field--wide,
+.eostore-form-grid > .eostore-ai {
+  grid-column: 1 / -1;
 }
 
 .eostore-editor .eostore-field {
-  flex: 1 1 11rem;
   min-width: 0;
   gap: 0.25rem;
 }
 
 .eostore-editor .eostore-field:has(textarea),
 .eostore-editor .eostore-actions {
-  flex: 1 1 100%;
+  grid-column: 1 / -1;
 }
 
 .eostore-editor .eostore-field input[type="text"],

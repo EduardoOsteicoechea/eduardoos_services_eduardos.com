@@ -161,109 +161,119 @@ import Layout from "../../layouts/Layout.astro";
       <form class="eostore-panel eostore-editor" data-product-form hidden novalidate>
         <fieldset class="eostore-fieldset">
           <legend data-product-form-title>Add product</legend>
-          <input type="hidden" data-pr-edit-guid value="" />
-          <div class="eostore-field">
-            <label for="pr-type">Product type</label>
-            <select id="pr-type" data-pr-type required></select>
-            <p class="eostore-error" data-error="type_guid" hidden></p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-name">Name</label>
-            <input id="pr-name" type="text" data-pr-name required />
-            <p class="eostore-error" data-error="name" hidden></p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-id">Slug / friendly id (optional)</label>
-            <input id="pr-id" type="text" data-pr-id placeholder="beach-towel" />
-            <p class="eostore-hint" data-pr-slug-preview></p>
-            <p class="eostore-error" data-error="id" hidden></p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-desc">Description</label>
-            <textarea id="pr-desc" data-pr-desc></textarea>
-          </div>
-          <div class="eostore-ai" data-pr-ai hidden>
-            <p class="eostore-meta">AI description (DeepSeek vision)</p>
+          <div class="eostore-form-grid">
+            <input type="hidden" data-pr-edit-guid value="" />
             <div class="eostore-field">
-              <label for="pr-ai-words">Length <span data-pr-ai-words-label>100 words</span></label>
-              <input id="pr-ai-words" type="range" data-pr-ai-words min="25" max="1000" step="25" value="100" />
+              <label for="pr-type">Product type</label>
+              <select id="pr-type" data-pr-type required></select>
+              <p class="eostore-error" data-error="type_guid" hidden></p>
             </div>
-            <div class="eostore-actions">
-              <button class="btn btn--primary" type="button" data-pr-ai-generate>Regenerate description</button>
+            <div class="eostore-field">
+              <label for="pr-name">Name</label>
+              <input id="pr-name" type="text" data-pr-name required />
+              <p class="eostore-error" data-error="name" hidden></p>
             </div>
-            <p class="eostore-hint" data-pr-ai-hint hidden>Save the product and upload at least one image to enable AI.</p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-tags">Hashtags (space or comma separated)</label>
-            <input id="pr-tags" type="text" data-pr-tags placeholder="coast soft" />
+            <div class="eostore-field">
+              <label for="pr-id">Slug / friendly id (optional)</label>
+              <input id="pr-id" type="text" data-pr-id placeholder="beach-towel" />
+              <p class="eostore-hint" data-pr-slug-preview></p>
+              <p class="eostore-error" data-error="id" hidden></p>
+            </div>
+            <div class="eostore-field eostore-field--wide">
+              <label for="pr-desc">Description</label>
+              <textarea id="pr-desc" data-pr-desc></textarea>
+            </div>
+            <div class="eostore-ai" data-pr-ai hidden>
+              <p class="eostore-meta">AI description (DeepSeek vision)</p>
+              <div class="eostore-field">
+                <label for="pr-ai-words">Length <span data-pr-ai-words-label>100 words</span></label>
+                <input id="pr-ai-words" type="range" data-pr-ai-words min="25" max="1000" step="25" value="100" />
+              </div>
+              <div class="eostore-actions">
+                <button class="btn btn--primary" type="button" data-pr-ai-generate>Regenerate description</button>
+              </div>
+              <p class="eostore-hint" data-pr-ai-hint hidden>Save the product and upload at least one image to enable AI.</p>
+            </div>
+            <div class="eostore-field">
+              <label for="pr-tags">Hashtags (space or comma separated)</label>
+              <input id="pr-tags" type="text" data-pr-tags placeholder="coast soft" />
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="eostore-fieldset">
           <legend>Pricing</legend>
-          <div class="eostore-field">
-            <label for="pr-usd">Base price USD</label>
-            <input id="pr-usd" type="number" data-pr-usd min="0" step="0.01" value="0" required />
-            <p class="eostore-error" data-error="price_base_usd" hidden></p>
+          <div class="eostore-form-grid">
+            <div class="eostore-field">
+              <label for="pr-usd">Base price USD</label>
+              <input id="pr-usd" type="number" data-pr-usd min="0" step="0.01" value="0" required />
+              <p class="eostore-error" data-error="price_base_usd" hidden></p>
+            </div>
+            <div class="eostore-field">
+              <label for="pr-discount">Discount <span data-pr-discount-label>0%</span></label>
+              <input id="pr-discount" type="range" data-pr-discount min="0" max="100" step="5" value="0" />
+              <p class="eostore-error" data-error="discount_percent" hidden></p>
+            </div>
+            <div class="eostore-field">
+              <label for="pr-bs">Bs per USD</label>
+              <input id="pr-bs" type="number" data-pr-bs min="0" step="0.01" value="0" required />
+              <p class="eostore-error" data-error="bs_per_usd" hidden></p>
+            </div>
+            <p class="eostore-price eostore-field--wide" data-pr-preview>Final: $0.00 · Bs 0.00</p>
           </div>
-          <div class="eostore-field">
-            <label for="pr-discount">Discount <span data-pr-discount-label>0%</span></label>
-            <input id="pr-discount" type="range" data-pr-discount min="0" max="100" step="5" value="0" />
-            <p class="eostore-error" data-error="discount_percent" hidden></p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-bs">Bs per USD</label>
-            <input id="pr-bs" type="number" data-pr-bs min="0" step="0.01" value="0" required />
-            <p class="eostore-error" data-error="bs_per_usd" hidden></p>
-          </div>
-          <p class="eostore-price" data-pr-preview>Final: $0.00 · Bs 0.00</p>
         </fieldset>
 
         <fieldset class="eostore-fieldset">
           <legend>Inventory</legend>
-          <div class="eostore-field">
-            <label for="pr-units">Units</label>
-            <input id="pr-units" type="number" data-pr-units min="0" step="1" value="0" required />
-            <p class="eostore-error" data-error="units" hidden></p>
-            <p class="eostore-hint" data-pr-stock-hint></p>
+          <div class="eostore-form-grid">
+            <div class="eostore-field">
+              <label for="pr-units">Units</label>
+              <input id="pr-units" type="number" data-pr-units min="0" step="1" value="0" required />
+              <p class="eostore-error" data-error="units" hidden></p>
+              <p class="eostore-hint" data-pr-stock-hint></p>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="eostore-fieldset">
           <legend>Publishing &amp; SEO</legend>
-          <div class="eostore-field">
-            <label for="pr-status">Status</label>
-            <select id="pr-status" data-pr-status>
-              <option value="draft">Draft</option>
-              <option value="active">Active</option>
-              <option value="archived">Archived</option>
-            </select>
-            <p class="eostore-hint">Active products appear in the public store.</p>
-            <p class="eostore-error" data-error="status" hidden></p>
-          </div>
-          <div class="eostore-field">
-            <label for="pr-sku">SKU (optional)</label>
-            <input id="pr-sku" type="text" data-pr-sku />
-          </div>
-          <div class="eostore-field">
-            <label for="pr-seo-title">SEO title (optional)</label>
-            <input id="pr-seo-title" type="text" data-pr-seo-title maxlength="120" />
-          </div>
-          <div class="eostore-field">
-            <label for="pr-seo-desc">SEO description (optional)</label>
-            <textarea id="pr-seo-desc" data-pr-seo-desc maxlength="320"></textarea>
+          <div class="eostore-form-grid">
+            <div class="eostore-field">
+              <label for="pr-status">Status</label>
+              <select id="pr-status" data-pr-status>
+                <option value="draft">Draft</option>
+                <option value="active">Active</option>
+                <option value="archived">Archived</option>
+              </select>
+              <p class="eostore-hint">Active products appear in the public store.</p>
+              <p class="eostore-error" data-error="status" hidden></p>
+            </div>
+            <div class="eostore-field">
+              <label for="pr-sku">SKU (optional)</label>
+              <input id="pr-sku" type="text" data-pr-sku />
+            </div>
+            <div class="eostore-field">
+              <label for="pr-seo-title">SEO title (optional)</label>
+              <input id="pr-seo-title" type="text" data-pr-seo-title maxlength="120" />
+            </div>
+            <div class="eostore-field eostore-field--wide">
+              <label for="pr-seo-desc">SEO description (optional)</label>
+              <textarea id="pr-seo-desc" data-pr-seo-desc maxlength="320"></textarea>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="eostore-fieldset" data-pr-images-section>
           <legend>Media</legend>
-          <div class="eostore-field" data-pr-new-image-hint>
-            <p class="eostore-hint">Save the product first, then add images.</p>
-          </div>
-          <div class="eostore-field" data-pr-image-upload hidden>
-            <label for="pr-image-file">Add image</label>
-            <input id="pr-image-file" type="file" data-pr-image-file accept="image/jpeg,image/png,image/webp" />
-            <div class="eostore-gallery" data-pr-gallery></div>
+          <div class="eostore-form-grid">
+            <div class="eostore-field eostore-field--wide" data-pr-new-image-hint>
+              <p class="eostore-hint">Save the product first, then add images.</p>
+            </div>
+            <div class="eostore-field eostore-field--wide" data-pr-image-upload hidden>
+              <label for="pr-image-file">Add image</label>
+              <input id="pr-image-file" type="file" data-pr-image-file accept="image/jpeg,image/png,image/webp" />
+              <div class="eostore-gallery" data-pr-gallery></div>
+            </div>
           </div>
         </fieldset>
 
