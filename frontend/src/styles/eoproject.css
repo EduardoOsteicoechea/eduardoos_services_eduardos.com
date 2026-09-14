@@ -210,25 +210,32 @@
 }
 
 .eoproject__gallery {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: var(--rail-gap);
+  width: 100%;
 }
 
 .eoproject__photo {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  width: 10rem;
+  gap: 0.5rem;
+  width: auto;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
 }
 
 .eoproject__photo-thumb {
   display: block;
+  width: 100%;
   padding: 0;
-  border: var(--border-width) solid var(--color-border);
+  border: 0;
   border-radius: var(--border-radius);
   background: var(--color-bg);
   cursor: zoom-in;
+  overflow: hidden;
 }
 
 .eoproject__photo-thumb:focus-visible {
@@ -238,8 +245,9 @@
 
 .eoproject__photo img {
   display: block;
-  width: 10rem;
-  height: 7.5rem;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
   object-fit: cover;
   border-radius: var(--border-radius);
   background: var(--color-bg);
@@ -278,10 +286,10 @@
 
 .eoproject__lightbox-dialog {
   box-sizing: border-box;
-  width: 56rem;
-  max-width: 56rem;
-  max-height: 40rem;
-  overflow: auto;
+  width: 68rem;
+  max-width: 68rem;
+  max-height: 46rem;
+  overflow: hidden;
   padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -322,6 +330,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
   min-height: 16rem;
   background: var(--color-bg);
   border: var(--border-width) solid var(--color-border);
@@ -331,8 +340,8 @@
 
 .eoproject__lightbox-img {
   display: block;
-  max-width: 54rem;
-  max-height: 32rem;
+  max-width: 64rem;
+  max-height: 36rem;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -451,9 +460,26 @@
   color: var(--color-muted);
 }
 
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .eoproject__lightbox-dialog {
+    width: 44rem;
+    max-width: 44rem;
+    max-height: 40rem;
+  }
+
+  .eoproject__lightbox-img {
+    max-width: 40rem;
+    max-height: 30rem;
+  }
+}
+
 @media (max-width: 47.999rem) {
   .eoproject__viewer {
     height: 16rem;
+  }
+
+  .eoproject__gallery {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
   }
 
   .eoproject__lightbox-dialog {
@@ -465,13 +491,6 @@
   .eoproject__lightbox-img {
     max-width: 28rem;
     max-height: 24rem;
-  }
-
-  .eoproject__photo,
-  .eoproject__photo-thumb,
-  .eoproject__photo img {
-    width: 8rem;
-    height: 6rem;
   }
 }
 

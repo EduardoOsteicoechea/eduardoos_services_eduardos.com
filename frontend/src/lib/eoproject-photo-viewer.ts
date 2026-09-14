@@ -2,6 +2,8 @@
  * Stage photo lightbox: open gallery, navigate, download.
  */
 
+import { refreshSession } from "./api";
+
 export type EoprojectPhotoViewerItem = {
   src: string;
   downloadUrl: string;
@@ -101,8 +103,8 @@ export function createEoprojectPhotoViewer(): EoprojectPhotoViewer {
     const prev = root.querySelector<HTMLButtonElement>("[data-lb-prev]");
     const next = root.querySelector<HTMLButtonElement>("[data-lb-next]");
     if (img) {
-      img.src = item.src;
       img.alt = item.name || "Stage photo";
+      loadEoprojectImage(img, item.src);
     }
     if (caption) caption.textContent = item.name || "Photo";
     if (meta) meta.textContent = `${index + 1} / ${items.length}`;
@@ -158,4 +160,45 @@ export function createEoprojectPhotoViewer(): EoprojectPhotoViewer {
 
 export function eoprojectPhotoDownloadUrl(fileUrl: string): string {
   return withDownloadParam(fileUrl);
+}
+
+async function fetchProtectedObjectUrl(url: string): Promise<string | null> {
+  try {
+    let res = await fetch(url, { credentials: "include" });
+    if (res.status === 401) {
+      await refreshSession();
+      res = await fetch(url, { credentials: "include" });
+    }
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Load a protected photo into an <img>. The short-lived access cookie can be
+ * expired while the page stays open, and a plain <img> request cannot refresh
+ * it, so retry through fetch() (which refreshes the session) and swap in an
+ * object URL when the direct load fails.
+ */
+export function loadEoprojectImage(img: HTMLImageElement, url: string): void {
+  if (img.dataset.eoprojectObjectUrl) {
+    URL.revokeObjectURL(img.dataset.eoprojectObjectUrl);
+    delete img.dataset.eoprojectObjectUrl;
+  }
+  img.dataset.eoprojectUrl = url;
+  img.onerror = () => {
+    if (img.dataset.eoprojectUrl !== url) return;
+    if (img.dataset.eoprojectRetry === url) return;
+    img.dataset.eoprojectRetry = url;
+    void fetchProtectedObjectUrl(url).then((objectUrl) => {
+      if (objectUrl && img.dataset.eoprojectUrl === url) {
+        img.dataset.eoprojectObjectUrl = objectUrl;
+        img.src = objectUrl;
+      }
+    });
+  };
+  img.src = url;
 }

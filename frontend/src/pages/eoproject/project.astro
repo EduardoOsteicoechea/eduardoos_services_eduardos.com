@@ -106,6 +106,7 @@ import Layout from "../../layouts/Layout.astro";
   import {
     createEoprojectPhotoViewer,
     downloadEoprojectPhoto,
+    loadEoprojectImage,
     type EoprojectPhotoViewerItem,
   } from "../../lib/eoproject-photo-viewer";
   import {
@@ -330,15 +331,16 @@ import Layout from "../../layouts/Layout.astro";
       const card = document.createElement("div");
       card.className = "eoproject__photo";
 
+      const src = items[photoIndex]?.src || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
       const openBtn = document.createElement("button");
       openBtn.type = "button";
       openBtn.className = "eoproject__photo-thumb";
       openBtn.title = `View ${photo.originalName || "photo"}`;
       openBtn.setAttribute("aria-label", `View ${photo.originalName || "stage photo"}`);
       const img = document.createElement("img");
-      img.src = items[photoIndex]?.src || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
       img.alt = photo.originalName || "Stage photo";
       img.loading = "lazy";
+      loadEoprojectImage(img, src);
       openBtn.appendChild(img);
       openBtn.addEventListener("click", () => photoViewer.open(items, photoIndex));
 
@@ -384,7 +386,7 @@ import Layout from "../../layouts/Layout.astro";
       downloadBtn.addEventListener("click", async () => {
         try {
           await downloadEoprojectPhoto(
-            items[photoIndex]?.downloadUrl || img.src,
+            items[photoIndex]?.downloadUrl || src,
             photo.originalName || `photo-${photo.id}`,
           );
         } catch (err) {
