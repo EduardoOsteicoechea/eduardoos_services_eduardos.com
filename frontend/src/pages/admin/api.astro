@@ -1,0 +1,209 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="API keys" robots="noindex,nofollow">
+  <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-apikeys-refresh title="Refresh keys" aria-label="Refresh keys">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="api-keys" data-api-keys>
+    <h1>API keys</h1>
+    <p class="lede">
+      Administrator-only keys for scripted access (Bearer <code>eos_live_…</code>). A key
+      is shown once when created and can be revoked at any time.
+    </p>
+
+    <p class="status" data-apikeys-banner>Checking session…</p>
+
+    <div class="api-keys-body" data-apikeys-admin hidden>
+      <form class="api-keys-panel" data-apikey-form novalidate>
+        <div class="api-keys-row">
+          <div class="api-keys-field">
+            <label for="apikey-label">Label</label>
+            <input id="apikey-label" type="text" data-apikey-label maxlength="80" placeholder="catalog-import" required />
+          </div>
+          <button class="btn" type="submit" data-apikey-create>Create key</button>
+        </div>
+        <p class="api-keys-item-sub" data-apikey-error hidden></p>
+      </form>
+
+      <div class="api-keys-secret" data-apikey-secret hidden>
+        <p class="hint">Copy this key now. It is shown once and cannot be retrieved again.</p>
+        <code data-apikey-secret-value></code>
+      </div>
+
+      <ul class="api-keys-list" data-apikey-list></ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { getMe } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { createAPIKey, listAPIKeys, revokeAPIKey, type APIKeyRow } from "../../lib/apikeys";
+
+  const root = document.querySelector("[data-api-keys]");
+  if (root instanceof HTMLElement) {
+    const banner = root.querySelector("[data-apikeys-banner]");
+    const body = root.querySelector("[data-apikeys-admin]");
+    const form = root.querySelector("[data-apikey-form]");
+    const labelInput = root.querySelector("[data-apikey-label]");
+    const errorBox = root.querySelector("[data-apikey-error]");
+    const secretBox = root.querySelector("[data-apikey-secret]");
+    const secretValue = root.querySelector("[data-apikey-secret-value]");
+    const list = root.querySelector("[data-apikey-list]");
+    const refreshBtn = document.querySelector("[data-apikeys-refresh]");
+
+    const setBanner = (text: string, kind = "") => {
+      if (!(banner instanceof HTMLElement)) {
+        return;
+      }
+      banner.textContent = text;
+      banner.className = `status ${kind}`.trim();
+    };
+
+    const setError = (text: string) => {
+      if (!(errorBox instanceof HTMLElement)) {
+        return;
+      }
+      errorBox.textContent = text;
+      errorBox.hidden = !text;
+    };
+
+    const fail = (message: string, requestId?: string, debug?: string) => {
+      setBanner(message, "err");
+      showErrorModal({
+        message,
+        requestId,
+        details: requestId ? `request_id=${requestId}` : "",
+        debug,
+      });
+    };
+
+    const formatDate = (value: string) => {
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+    };
+
+    const renderKeys = (keys: APIKeyRow[]) => {
+      if (!(list instanceof HTMLElement)) {
+        return;
+      }
+      list.replaceChildren();
+      if (!keys.length) {
+        const empty = document.createElement("li");
+        empty.className = "api-keys-item-sub";
+        empty.textContent = "No active keys.";
+        list.appendChild(empty);
+        return;
+      }
+      for (const key of keys) {
+        const item = document.createElement("li");
+        item.className = "api-keys-item";
+
+        const meta = document.createElement("div");
+        meta.className = "api-keys-item-meta";
+        const label = document.createElement("span");
+        label.className = "api-keys-item-label";
+        label.textContent = key.label || "(no label)";
+        const sub = document.createElement("span");
+        sub.className = "api-keys-item-sub";
+        const created = key.created_at ? `created ${formatDate(key.created_at)}` : "";
+        const used = key.last_used_at ? ` · last used ${formatDate(key.last_used_at)}` : "";
+        sub.textContent = `${key.prefix} · ${created}${used}`;
+        meta.append(label, sub);
+
+        const revoke = document.createElement("button");
+        revoke.type = "button";
+        revoke.className = "btn";
+        revoke.textContent = "Revoke";
+        revoke.addEventListener("click", () => void revokeKey(key));
+
+        item.append(meta, revoke);
+        list.appendChild(item);
+      }
+    };
+
+    const loadKeys = async () => {
+      setBanner("Loading keys…");
+      const res = await listAPIKeys();
+      if (res.status === 401 || res.status === 403) {
+        setBanner("Administrator session required.", "err");
+        return;
+      }
+      if (res.status >= 400) {
+        fail(res.data.message || "Could not load keys.", res.data.request_id, res.data.debug);
+        return;
+      }
+      renderKeys(res.data.keys ?? []);
+      setBanner("Keys loaded.", "ok");
+    };
+
+    const revokeKey = async (key: APIKeyRow) => {
+      if (!window.confirm(`Revoke “${key.label}”? Scripts using it will stop working.`)) {
+        return;
+      }
+      const res = await revokeAPIKey(key.id);
+      if (res.status >= 400) {
+        fail(res.data.message || "Could not revoke key.", res.data.request_id, res.data.debug);
+        return;
+      }
+      setBanner("Key revoked.", "ok");
+      await loadKeys();
+    };
+
+    form?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      if (!(labelInput instanceof HTMLInputElement)) {
+        return;
+      }
+      const label = labelInput.value.trim();
+      if (!label) {
+        setError("Label is required.");
+        return;
+      }
+      setError("");
+      const btn = root.querySelector("[data-apikey-create]");
+      if (btn instanceof HTMLButtonElement) {
+        btn.disabled = true;
+      }
+      const res = await createAPIKey(label);
+      if (btn instanceof HTMLButtonElement) {
+        btn.disabled = false;
+      }
+      if (res.status !== 200 && res.status !== 201) {
+        fail(res.data.message || "Could not create key.", res.data.request_id, res.data.debug);
+        return;
+      }
+      if (secretBox instanceof HTMLElement && secretValue instanceof HTMLElement) {
+        secretValue.textContent = res.data.key || "";
+        secretBox.hidden = false;
+      }
+      labelInput.value = "";
+      setBanner("Key created.", "ok");
+      await loadKeys();
+    });
+
+    const applyMe = async () => {
+      const { status, data } = await getMe();
+      if (status !== 200 || data.role !== "admin") {
+        setBanner("Administrator session required.", "err");
+        return;
+      }
+      if (body instanceof HTMLElement) {
+        body.hidden = false;
+      }
+      await loadKeys();
+    };
+
+    refreshBtn?.addEventListener("click", () => void loadKeys());
+    void applyMe();
+  }
+</script>

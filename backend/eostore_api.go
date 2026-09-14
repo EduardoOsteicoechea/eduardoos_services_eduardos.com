@@ -141,6 +141,19 @@ func eostoreImportUniqueID(id string, used map[string]bool) string {
 	return candidate
 }
 
+func (a *App) eostoreImportSessionHandler(w http.ResponseWriter, r *http.Request) {
+	admin := a.eostoreAdmin(w, r)
+	if admin == nil {
+		return
+	}
+	var body eostoreImportRequest
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, maxEostoreImportBody)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	a.eostoreImportApply(w, r, admin, body)
+}
+
 func (a *App) eostoreV1ImportHandler(w http.ResponseWriter, r *http.Request) {
 	user := eostoreAPIUserFrom(r)
 	if user == nil {
@@ -152,6 +165,10 @@ func (a *App) eostoreV1ImportHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	a.eostoreImportApply(w, r, user, body)
+}
+
+func (a *App) eostoreImportApply(w http.ResponseWriter, r *http.Request, user *User, body eostoreImportRequest) {
 	if len(body.Products) == 0 || len(body.Products) > maxEostoreImportProducts || len(body.Sections) > maxEostoreImportSections {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return

@@ -244,6 +244,9 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/apikeys", a.listAPIKeysHandler)
 	mux.HandleFunc("POST /api/apikeys", a.createAPIKeyHandler)
 	mux.HandleFunc("DELETE /api/apikeys/{id}", a.deleteAPIKeyHandler)
+	mux.HandleFunc("GET /api/admin/apikeys", a.apiKeysListHandler)
+	mux.HandleFunc("POST /api/admin/apikeys", a.apiKeysCreateHandler)
+	mux.HandleFunc("DELETE /api/admin/apikeys/{id}", a.apiKeysDeleteHandler)
 
 	mux.HandleFunc("GET /api/v1/docs", a.v1DocsHandler)
 	mux.HandleFunc("GET /api/v1/ereport/access", a.withAPIKey(productEreport, a.ereportV1AccessHandler))

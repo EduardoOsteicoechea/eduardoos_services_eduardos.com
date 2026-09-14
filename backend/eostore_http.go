@@ -1200,6 +1200,7 @@ func (a *App) registerEostoreRoutes(mux *http.ServeMux) {
 
 	mux.HandleFunc("GET /api/eostore/products", a.eostoreProductsListHandler)
 	mux.HandleFunc("POST /api/eostore/products", a.eostoreProductsCreateHandler)
+	mux.HandleFunc("POST /api/eostore/import", a.eostoreImportSessionHandler)
 	mux.HandleFunc("GET /api/eostore/products/{guid}", a.eostoreProductsGetHandler)
 	mux.HandleFunc("PUT /api/eostore/products/{guid}", a.eostoreProductsUpdateHandler)
 	mux.HandleFunc("DELETE /api/eostore/products/{guid}", a.eostoreProductsDeleteHandler)

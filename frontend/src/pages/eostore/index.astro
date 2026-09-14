@@ -23,6 +23,7 @@ import Layout from "../../layouts/Layout.astro";
       <button type="button" class="btn" data-tab="sections" aria-selected="false">Sections</button>
       <button type="button" class="btn" data-tab="types" aria-selected="false">Types</button>
       <button type="button" class="btn" data-tab="products" aria-selected="true">Products</button>
+      <button type="button" class="btn" data-tab="import" aria-selected="false">Import</button>
     </div>
 
     <div class="eostore-pane" data-pane="companies" hidden>
@@ -277,6 +278,31 @@ import Layout from "../../layouts/Layout.astro";
       <div class="eostore-columns" data-product-list></div>
       <div class="eostore-pagination" data-product-pagination hidden></div>
     </div>
+
+    <div class="eostore-pane" data-pane="import" hidden>
+      <div class="eostore-panel eostore-import">
+        <h2>Import catalog</h2>
+        <p class="eostore-hint">
+          Paste or load an eostore import payload. Import is idempotent: matching company,
+          section, type, and product ids are updated and the rest are created. Validate with a
+          dry run first if unsure.
+        </p>
+        <div class="eostore-field">
+          <label for="import-file">Load JSON file</label>
+          <input id="import-file" type="file" data-import-file accept="application/json,.json" />
+        </div>
+        <div class="eostore-field">
+          <label for="import-json">Payload</label>
+          <textarea id="import-json" data-import-json spellcheck="false" placeholder='{ "company": { "id": "your-company", "name": "Your Company" }, "sections": [], "products": [] }'></textarea>
+        </div>
+        <div class="eostore-actions">
+          <button class="btn" type="button" data-import-dry>Validate (dry run)</button>
+          <button class="btn btn--primary" type="button" data-import-run>Import</button>
+          <span class="eostore-hint" data-import-status></span>
+        </div>
+        <pre class="eostore-import-result" data-import-result hidden></pre>
+      </div>
+    </div>
   </section>
 </Layout>
 
@@ -302,6 +328,7 @@ import Layout from "../../layouts/Layout.astro";
     filterProducts,
     formatMoney,
     hasFieldErrors,
+    importCatalog,
     listCompanies,
     listProducts,
     listSections,
@@ -1478,6 +1505,85 @@ import Layout from "../../layouts/Layout.astro";
       await loadAll();
     });
     q("[data-type-cancel]")?.addEventListener("click", () => clearTypeForm());
+
+    const setImportStatus = (text: string, kind = "") => {
+      const status = q("[data-import-status]");
+      if (status) {
+        status.textContent = text;
+        status.className = `eostore-hint ${kind}`.trim();
+      }
+    };
+
+    const readImportPayload = (): Record<string, unknown> | null => {
+      const raw = (q<HTMLTextAreaElement>("[data-import-json]")?.value || "").trim();
+      if (!raw) {
+        setImportStatus("Paste or load a JSON payload first.", "err");
+        return null;
+      }
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          setImportStatus("Payload must be a JSON object.", "err");
+          return null;
+        }
+        return parsed as Record<string, unknown>;
+      } catch {
+        setImportStatus("Payload is not valid JSON.", "err");
+        return null;
+      }
+    };
+
+    const runImport = async (dryRun: boolean) => {
+      const payload = readImportPayload();
+      if (!payload) {
+        return;
+      }
+      const btn = q<HTMLButtonElement>(dryRun ? "[data-import-dry]" : "[data-import-run]");
+      if (btn) btn.disabled = true;
+      setImportStatus(dryRun ? "Validating…" : "Importing…");
+      payload.dry_run = dryRun;
+      const res = await importCatalog(payload);
+      if (btn) btn.disabled = false;
+      if (res.status !== 200) {
+        setImportStatus("Import failed.", "err");
+        fail(res.data.message || "Import failed.", res.requestId, res.data.debug);
+        return;
+      }
+      const data = res.data;
+      const summary = [
+        `company ${data.company_created ? "created" : "reused"}`,
+        `sections +${data.sections_created ?? 0}`,
+        `types +${data.types_created ?? 0}`,
+        `products +${data.products_created ?? 0}`,
+        `updated ${data.products_updated ?? 0}`,
+        `failed ${data.failed ?? 0}`,
+      ].join(" · ");
+      setImportStatus(`${summary}${data.dry_run ? " (dry run)" : ""}`, (data.failed ?? 0) > 0 ? "err" : "ok");
+      const result = q<HTMLPreElement>("[data-import-result]");
+      if (result) {
+        result.textContent = JSON.stringify(data.results ?? data, null, 2);
+        result.hidden = false;
+      }
+      if (!dryRun) {
+        await loadAll();
+      }
+    };
+
+    q("[data-import-file]")?.addEventListener("change", async () => {
+      const input = q<HTMLInputElement>("[data-import-file]");
+      const file = input?.files?.[0];
+      if (!input || !file) {
+        return;
+      }
+      const text = await file.text();
+      const area = q<HTMLTextAreaElement>("[data-import-json]");
+      if (area) area.value = text;
+      input.value = "";
+      setImportStatus(`Loaded ${file.name}.`);
+    });
+
+    q("[data-import-dry]")?.addEventListener("click", () => void runImport(true));
+    q("[data-import-run]")?.addEventListener("click", () => void runImport(false));
 
     const onFilterChange = () => {
       page = 1;

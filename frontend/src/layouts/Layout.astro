@@ -10,6 +10,7 @@ import "../styles/evoice.css";
 import "../styles/eoproject.css";
 import "../styles/eoadmin.css";
 import "../styles/eostore.css";
+import "../styles/apikeys.css";
 import "../styles/eduardoos.css";
 import "../components/HeaderDynamicMenu/HeaderDynamicMenu.css";
 
@@ -294,6 +295,10 @@ const jsonLdString =
             <a href="/eostore" data-route aria-current={path === "/eostore" || path.startsWith("/eostore/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
               eostore
+            </a>
+            <a href="/admin/api" data-route aria-current={path === "/admin/api" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">key</span>
+              API keys
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">

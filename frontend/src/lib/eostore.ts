@@ -381,6 +381,29 @@ export async function describeProduct(guid: string, wordCount: number, imageId =
   return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body, { timeoutMs: 120000 });
 }
 
+export type EostoreImportResult = { id: string; guid?: string; action: string; error?: string };
+
+export type EostoreImportResponse = APIErrorBody & {
+  company?: { guid?: string; id?: string; name?: string };
+  company_created?: boolean;
+  sections_created?: number;
+  types_created?: number;
+  products_created?: number;
+  products_updated?: number;
+  failed?: number;
+  dry_run?: boolean;
+  results?: EostoreImportResult[];
+};
+
+export async function importCatalog(payload: Record<string, unknown>) {
+  if (mustLog) {
+    console.log("eostore.import.start", {
+      products: Array.isArray(payload.products) ? payload.products.length : 0,
+    });
+  }
+  return postJSON<EostoreImportResponse>("/eostore/import", payload, { timeoutMs: 120000 });
+}
+
 // ---------------------------------------------------------------------------
 // Public storefront API
 // ---------------------------------------------------------------------------
