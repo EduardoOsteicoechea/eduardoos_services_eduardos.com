@@ -547,7 +547,6 @@ function plainUserBlockedPath(pathname: string): boolean {
   }
   return (
     path === "/about" ||
-    path.startsWith("/store") ||
     path.includes("calvins-institutes") ||
     path.startsWith("/eoadmin") ||
     path.startsWith("/eostore") ||
@@ -602,11 +601,13 @@ export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Prom
     }
   });
   // Guests + admins keep marketing/store; Institutes and eoadmin need auth (admins via full-nav).
-  // Plain members only see home, contact, subscriptions, entitled services, and session links.
+  // Plain members keep the storefront (stores + cart) plus session links.
   document.querySelectorAll("[data-full-nav]").forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (isPlainUser) {
-      node.hidden = true;
+      const storeSurface =
+        node.hasAttribute("data-eostore-nav") || node.hasAttribute("data-store-hub-nav");
+      node.hidden = !storeSurface;
       return;
     }
     if (node.hasAttribute("data-authed-only")) {
@@ -619,20 +620,9 @@ export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Prom
     }
     node.hidden = false;
   });
-  setCartFabPolicy(authed, !isPlainUser);
+  setCartFabPolicy(authed, true);
   await syncSubscriptionNav(isAdmin, authed);
-  if (!isPlainUser) {
-    await syncEostoreNav({ syncCart });
-  } else {
-    document.querySelectorAll("[data-eostore-nav]").forEach((host) => {
-      if (host instanceof HTMLElement) {
-        host.replaceChildren();
-        host.hidden = true;
-      }
-    });
-    if (syncCart) await syncCartFab();
-    else setCartFabHidden(true);
-  }
+  await syncEostoreNav({ syncCart });
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {

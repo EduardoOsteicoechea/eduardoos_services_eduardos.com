@@ -3,6 +3,7 @@ import { getMe } from "./api";
 import { companyIdFromPath, getCart, listPublicCompanies } from "./eostore";
 import { applyHeaderCartFab, applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
+import { go } from "./router";
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
@@ -78,6 +79,7 @@ describe("main-menu session chrome", () => {
     applySessionAvatar(null);
     vi.clearAllMocks();
     document.body.innerHTML = "";
+    window.history.pushState({}, "", "/");
     window.__chromeStarted = false;
   });
 
@@ -139,7 +141,7 @@ describe("main-menu session chrome", () => {
   });
 
 
-  it("hides full-nav links for plain non-admin members", async () => {
+  it("keeps the storefront for plain members but hides admin and marketing links", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-plain",
@@ -153,11 +155,29 @@ describe("main-menu session chrome", () => {
     });
     await refreshAuthChrome();
     expect((document.querySelector('[href="/about"]') as HTMLElement).hidden).toBe(true);
-    expect((document.querySelector('[href="/store"]') as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector('[href="/store"]') as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector("[data-eostore-nav]") as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[href="/eoadmin"]') as HTMLElement).hidden).toBe(true);
     expect((document.querySelector('[href="/contact"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[href="/payments/subscription"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
+  });
+
+  it("does not redirect plain members away from a store route", async () => {
+    window.history.pushState({}, "", "/store/demo-co");
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-plain-store",
+      data: { id: "member-3", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
+    await refreshAuthChrome();
+    expect(go).not.toHaveBeenCalledWith("/");
   });
 
   it("keeps service links and Institutes hidden for guests", async () => {
@@ -204,7 +224,13 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
   });
 
-  it("hides header cart for plain members even when a cart has items", async () => {
+  it("shows header cart for plain members when the cart has payable items", async () => {
+    vi.mocked(companyIdFromPath).mockReturnValue("demo-co");
+    vi.mocked(listPublicCompanies).mockResolvedValue({
+      status: 200,
+      requestId: "rid-store-demo",
+      data: { companies: [{ id: "demo-co", name: "Demo" }] },
+    });
     vi.mocked(getCart).mockResolvedValue({
       status: 200,
       requestId: "rid-cart-plain",
@@ -222,7 +248,7 @@ describe("main-menu session chrome", () => {
       isHomescoolStudent: false,
     });
     await refreshAuthChrome();
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
+    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
   });
 
   it("updates header cart visibility from applyHeaderCartFab", async () => {
