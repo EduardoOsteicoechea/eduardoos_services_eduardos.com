@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   getVoiceConfig,
+  interpretVoiceMessage,
   postVoiceChunk,
   startVoiceStream,
   stopVoiceStream,
@@ -15,10 +16,12 @@ vi.mock("./api", () => ({
   postVoiceChunk: vi.fn(),
   stopVoiceStream: vi.fn(),
   cancelVoiceStream: vi.fn(),
+  interpretVoiceMessage: vi.fn(),
 }));
 
 vi.mock("./chat", () => ({
   setAgentChatDraft: vi.fn(),
+  currentAgentHistory: vi.fn(() => []),
 }));
 
 vi.mock("./error-modal", () => ({
@@ -132,6 +135,7 @@ describe("global voice input", () => {
     vi.mocked(startVoiceStream).mockResolvedValue("stream-1");
     vi.mocked(postVoiceChunk).mockResolvedValue({ status: 200, data: { text: "hola" } });
     vi.mocked(stopVoiceStream).mockResolvedValue("hola mundo");
+    vi.mocked(interpretVoiceMessage).mockResolvedValue("hola mundo");
     const track = { stop: vi.fn() };
     vi.mocked(navigator.mediaDevices.getUserMedia).mockResolvedValue({
       getTracks: () => [track],
@@ -155,9 +159,30 @@ describe("global voice input", () => {
     });
     const caption = document.querySelector("[data-agent-voice]") as HTMLElement;
     expect(caption.hidden).toBe(false);
-    expect(caption.textContent).toContain("Transcription ready");
+    expect(caption.textContent).toContain("Contextualized");
     expect(track.stop).toHaveBeenCalled();
     expect(stopVoiceStream).toHaveBeenCalledWith("stream-1");
+  });
+
+  it("passes the raw transcript through DeepSeek interpretation before drafting", async () => {
+    vi.mocked(getVoiceConfig).mockResolvedValue({ enabled: true, sampleRate: 16000, langs: ["es"], defaultLang: "es" });
+    vi.mocked(startVoiceStream).mockResolvedValue("stream-3");
+    vi.mocked(stopVoiceStream).mockResolvedValue("ola komo estas");
+    vi.mocked(interpretVoiceMessage).mockResolvedValue("Hola, ¿cómo estás?");
+    vi.mocked(navigator.mediaDevices.getUserMedia).mockResolvedValue({
+      getTracks: () => [{ stop: vi.fn() }],
+    } as unknown as MediaStream);
+
+    startVoiceChat();
+    const mic = document.querySelector("[data-agent-mic]") as HTMLButtonElement;
+    await vi.waitFor(() => expect(mic.hidden).toBe(false));
+    mic.click();
+    await vi.waitFor(() => expect(workletNodes.length).toBe(1));
+    mic.click();
+    await vi.waitFor(() => {
+      expect(interpretVoiceMessage).toHaveBeenCalledWith("ola komo estas", expect.anything(), "es");
+    });
+    expect(setAgentChatDraft).toHaveBeenCalledWith("Hola, ¿cómo estás?");
   });
 
   it("plays queued audio and stops on demand", () => {

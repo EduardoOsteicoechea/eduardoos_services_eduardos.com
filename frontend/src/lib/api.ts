@@ -792,6 +792,31 @@ export async function cancelVoiceStream(streamId: string): Promise<void> {
   }
 }
 
+/** Normalizes a raw ASR transcript into a context-aware message (DeepSeek). */
+export async function interpretVoiceMessage(
+  text: string,
+  history: ChatTurn[],
+  lang: string,
+): Promise<string> {
+  const message = text.trim();
+  if (!message) {
+    return "";
+  }
+  try {
+    const { status, data } = await postJSON<APIErrorBody>(
+      "/voice/interpret",
+      { text: message, lang, history },
+      { timeoutMs: 45000 },
+    );
+    if (status === 200 && typeof data.text === "string" && data.text.trim()) {
+      return data.text.trim();
+    }
+  } catch {
+    /* fall back to the raw transcript */
+  }
+  return message;
+}
+
 export async function patchJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   return apiSend<T>(path, {
     method: "PATCH",

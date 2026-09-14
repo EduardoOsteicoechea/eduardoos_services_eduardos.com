@@ -1,11 +1,12 @@
 import {
   cancelVoiceStream,
   getVoiceConfig,
+  interpretVoiceMessage,
   postVoiceChunk,
   startVoiceStream,
   stopVoiceStream,
 } from "./api";
-import { setAgentChatDraft } from "./chat";
+import { currentAgentHistory, setAgentChatDraft } from "./chat";
 import { sessionLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 
@@ -432,13 +433,24 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
   }
   state.transcript = "";
   state.partial = "";
-  const finalText = text.trim();
+  let finalText = text.trim();
   sessionLog("voice.record.final", { streamId, runes: finalText.length });
   if (finalText) {
-    setAgentChatDraft(finalText);
     if (ui.caption) {
       ui.caption.hidden = false;
-      ui.caption.textContent = "Transcription ready. Edit, then press send.";
+      ui.caption.textContent = "Interpreting…";
+    }
+    const cleaned = await interpretVoiceMessage(finalText, currentAgentHistory(), state.lang);
+    sessionLog("voice.record.interpreted", {
+      inRunes: finalText.length,
+      outRunes: cleaned.length,
+    });
+    if (cleaned) {
+      finalText = cleaned;
+    }
+    setAgentChatDraft(finalText);
+    if (ui.caption) {
+      ui.caption.textContent = "Contextualized. Edit, then press send.";
     }
     ui.input.focus();
   } else if (ui.caption) {

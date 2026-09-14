@@ -32,14 +32,16 @@ const (
 	voiceDefaultSessionSec = 300
 	voiceDefaultConcurrent = 8
 	voiceMaxSpeakRunes     = 1200
+	voiceMaxInterpretRunes = 2000
 	voiceMaxSentenceRunes  = 600
 	voiceTTSTimeout        = 20 * time.Second
 	voiceIdleTimeout       = 2 * time.Minute
 
-	voiceIPMax     = 30
-	voiceUserMax   = 60
-	voiceSpeakMax  = 40
-	voiceRateSpace = time.Hour
+	voiceIPMax        = 30
+	voiceUserMax      = 60
+	voiceSpeakMax     = 40
+	voiceInterpretMax = 60
+	voiceRateSpace    = time.Hour
 )
 
 var (
@@ -449,6 +451,74 @@ func (a *App) registerVoiceRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/voice/stream/{id}/stop", a.voiceStopHandler)
 	mux.HandleFunc("POST /api/voice/stream/{id}/cancel", a.voiceCancelHandler)
 	mux.HandleFunc("POST /api/voice/speak", a.voiceSpeakHandler)
+	mux.HandleFunc("POST /api/voice/interpret", a.voiceInterpretHandler)
+}
+
+// voiceInterpretSystemPrompt turns a raw ASR transcript into a clean,
+// context-aware user message. It must not answer the message.
+const voiceInterpretSystemPrompt = "You normalize speech-to-text output for an assistant. " +
+	"Rewrite the user's raw transcript into a clear, faithful message. " +
+	"Rules: fix obvious ASR errors, accents, punctuation, and casing; " +
+	"use the conversation history to resolve ambiguity and context; " +
+	"keep the user's meaning and language; do NOT answer the question; " +
+	"do NOT add facts, commentary, or greetings; " +
+	"return ONLY the corrected message text."
+
+func (a *App) voiceInterpretHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	rid := requestIDFrom(r, w)
+	ip := clientIP(r.RemoteAddr)
+	userID := a.voiceUserID(r)
+	if !a.voiceInterpret.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
+		a.voiceDebug("voice.interpret", "request_id", rid, "status", "rate_limited", "user_id", userID)
+		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
+		return
+	}
+	var body struct {
+		Text    string           `json:"text"`
+		Lang    string           `json:"lang"`
+		History []publicChatTurn `json:"history"`
+	}
+	if err := json.NewDecoder(io.LimitReader(r.Body, 32<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	raw := strings.TrimSpace(body.Text)
+	if raw == "" || utf8.RuneCountInString(raw) > voiceMaxInterpretRunes {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	client, ok := a.chat[publicChatProvider]
+	if !ok {
+		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
+		return
+	}
+	history := sanitizeChatTurns(body.History)
+	history = append(history, ChatMessage{Role: "user", Content: raw})
+	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
+	defer cancel()
+	result, err := client.Complete(ctx, voiceInterpretSystemPrompt, history)
+	if err != nil {
+		a.voiceDebugErr("voice.interpret_failed", "request_id", rid, "cause", redactLogValue(err.Error()))
+		a.auditEvent(r, "voice_interpret", "failed", userID)
+		// Never block the user: fall back to the raw transcript.
+		writeJSON(w, http.StatusOK, map[string]any{"ok": true, "text": raw, "fallback": true})
+		return
+	}
+	clean := sanitizeModelTextMax(result.Text, voiceMaxInterpretRunes)
+	if clean == "" {
+		clean = raw
+	}
+	a.voiceDebug("voice.interpret",
+		"request_id", rid,
+		"status", "ok",
+		"in_runes", utf8.RuneCountInString(raw),
+		"out_runes", utf8.RuneCountInString(clean),
+	)
+	a.auditEvent(r, "voice_interpret", "ok", userID)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "text": clean})
 }
 
 func (a *App) voiceConfigHandler(w http.ResponseWriter, r *http.Request) {

@@ -445,6 +445,11 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   }
 }
 
+/** Current conversation turns, used as context when interpreting voice input. */
+export function currentAgentHistory(): ChatTurn[] {
+  return apiHistory();
+}
+
 /** Puts text into the composer for review without sending it. */
 export function setAgentChatDraft(text: string): void {
   const input = document.querySelector("[data-agent-input]");

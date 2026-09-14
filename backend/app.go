@@ -39,6 +39,7 @@ type App struct {
 	voiceIPLimit    *limiter
 	voiceUserLimit  *limiter
 	voiceSpeakLimit *limiter
+	voiceInterpret  *limiter
 	inviteOTPLimit  *limiter
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
@@ -136,6 +137,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		voiceIPLimit:    newLimiter(voiceRateSpace, voiceIPMax),
 		voiceUserLimit:  newLimiter(voiceRateSpace, voiceUserMax),
 		voiceSpeakLimit: newLimiter(voiceRateSpace, voiceSpeakMax),
+		voiceInterpret:  newLimiter(voiceRateSpace, voiceInterpretMax),
 		inviteOTPLimit:  newLimiter(time.Hour, 8),
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
