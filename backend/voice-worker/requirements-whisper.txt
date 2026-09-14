@@ -8,3 +8,6 @@
 #      VOICE_WHISPER_DEVICE (cpu|cuda), VOICE_WHISPER_COMPUTE (int8|float16),
 #      VOICE_WHISPER_STEP_SECONDS, VOICE_WHISPER_PRELOAD=1
 faster-whisper>=1.0.0
+# NumPy 2.x wheels require an x86-64-v2 CPU baseline; older/VM CPUs (and some
+# cloud instances) need the 1.26 line, which is built with a lower baseline.
+numpy<2
