@@ -84,14 +84,28 @@ def synth_wav(text: str, model: Path, wav_path: Path) -> None:
     binary = piper_bin()
     if not binary:
         raise RuntimeError("piper not found (set VOICE_PIPER_BIN or install piper)")
-    args = [binary, "--model", str(model), "--output_file", str(wav_path)]
+    resolved = shutil.which(binary) or binary
+    piper_dir = Path(resolved).resolve().parent
+    env = os.environ.copy()
+    # The native piper tarball ships espeak-ng-data next to the binary; run from
+    # there so espeak-ng finds it regardless of the API's working directory.
+    if (piper_dir / "espeak-ng-data").is_dir():
+        env["ESPEAK_DATA_PATH"] = str(piper_dir)
+    args = [resolved, "--model", str(model), "--output_file", str(wav_path)]
     length_scale = (os.environ.get("VOICE_PIPER_LENGTH_SCALE") or "").strip()
     if length_scale:
         args += ["--length_scale", length_scale]
-    proc = subprocess.run(args, input=text.encode("utf-8"), capture_output=True, check=False)
+    proc = subprocess.run(
+        args,
+        input=text.encode("utf-8"),
+        capture_output=True,
+        check=False,
+        cwd=str(piper_dir),
+        env=env,
+    )
     if proc.returncode != 0 or not wav_path.is_file() or wav_path.stat().st_size == 0:
-        err = proc.stderr.decode("utf-8", errors="replace")[:300]
-        raise RuntimeError(f"piper failed: {err}")
+        err = proc.stderr.decode("utf-8", errors="replace") or proc.stdout.decode("utf-8", errors="replace")
+        raise RuntimeError(f"piper failed: {err[:300]}")
 
 
 def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:
@@ -169,4 +183,5 @@ if __name__ == "__main__":
         sys.exit(main())
     except Exception as exc:  # noqa: BLE001
         log(f"FAIL {exc!s}")
+        print(f"FAIL {exc!s}", file=sys.stderr, flush=True)
         sys.exit(1)
