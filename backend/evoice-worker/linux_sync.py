@@ -802,13 +802,13 @@ def text_to_wav_espeak(text: str, wav_path: Path) -> None:
 
 
 def text_to_wav_system(text: str, wav_path: Path) -> None:
-    """Last-resort TTS using the host voices (no Piper model or espeak needed).
+    """Last-resort TTS using host voices (no Piper model required).
 
     macOS uses `say`; Windows uses the built-in SAPI voice through PowerShell.
-    Linux has no portable file-output system voice, so this raises there.
+    On Linux/Unix it tries pico2wave, festival's text2wave, then flite.
     """
     if sys.platform == "darwin":
-        say = shutil.which("say")
+        say = find_tool("say")
         if not say:
             raise FileNotFoundError("macOS 'say' not found")
         proc = subprocess.run(
@@ -820,7 +820,7 @@ def text_to_wav_system(text: str, wav_path: Path) -> None:
             raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "say failed")
         return
     if os.name == "nt":
-        powershell = shutil.which("powershell") or shutil.which("pwsh")
+        powershell = find_tool("powershell") or find_tool("pwsh")
         if not powershell:
             raise FileNotFoundError("PowerShell not found for Windows SAPI TTS")
         escaped = str(wav_path).replace("'", "''")
@@ -840,8 +840,41 @@ def text_to_wav_system(text: str, wav_path: Path) -> None:
         if proc.returncode != 0:
             raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "SAPI failed")
         return
+
+    def produced() -> bool:
+        return wav_path.is_file() and wav_path.stat().st_size > 0
+
+    pico = find_tool("pico2wave")
+    if pico:
+        subprocess.run(
+            [pico, "-l", "es-ES", "-w", str(wav_path), text],
+            capture_output=True,
+            check=False,
+        )
+        if produced():
+            return
+    text2wave = find_tool("text2wave")
+    if text2wave:
+        subprocess.run(
+            [text2wave, "-o", str(wav_path)],
+            input=text.encode("utf-8"),
+            capture_output=True,
+            check=False,
+        )
+        if produced():
+            return
+    flite = find_tool("flite")
+    if flite:
+        subprocess.run(
+            [flite, "-voice", "slt", "-o", str(wav_path), "-t", text],
+            capture_output=True,
+            check=False,
+        )
+        if produced():
+            return
+
     raise FileNotFoundError(
-        "no system TTS fallback on this platform (install piper or espeak-ng)"
+        "no TTS engine available: install piper-tts (+ model), espeak-ng, or pico2wave"
     )
 
 

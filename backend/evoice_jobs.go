@@ -155,6 +155,7 @@ func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFile
 		return evoiceJobStats{}, err
 	}
 	stats := evoiceJobStats{}
+	lastFail := ""
 	scan := bufio.NewScanner(io.LimitReader(stdout, 8<<20))
 	scan.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	for scan.Scan() {
@@ -163,13 +164,18 @@ func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFile
 			continue
 		}
 		logFn(line)
-		if strings.HasPrefix(line, "STATS ") {
+		if strings.HasPrefix(line, "FAIL ") {
+			lastFail = strings.TrimSpace(strings.TrimPrefix(line, "FAIL "))
+		} else if strings.HasPrefix(line, "STATS ") {
 			parseEvoiceStatsLine(line, &stats)
 		}
 	}
 	waitErr := cmd.Wait()
 	if scanErr := scan.Err(); scanErr != nil && waitErr == nil {
 		return stats, scanErr
+	}
+	if waitErr != nil && lastFail != "" {
+		return stats, fmt.Errorf("%s: %s", waitErr, lastFail)
 	}
 	return stats, waitErr
 }
@@ -669,6 +675,9 @@ func (s *evoiceJobStore) runJob(ctx context.Context, id, ownerSafe, project stri
 	final := "done"
 	if stats.Failed > 0 {
 		errMsg = strconv.Itoa(stats.Failed) + " file(s) failed conversion"
+		if err != nil {
+			errMsg += ": " + err.Error()
+		}
 	}
 	if stats.Failed > 0 && stats.Generated == 0 && stats.Skipped == 0 {
 		final = "failed"

@@ -21,13 +21,22 @@ echo "    worker source : ${WORKER_DIR}"
 echo "    venv          : ${VENV_DIR}"
 echo "    models        : ${MODELS_DIR}"
 
-for bin in python3 ffmpeg; do
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "!! missing python3 — install it first (apt-get install -y python3-venv)" >&2
+  exit 1
+fi
+
+MISSING_TOOLS=""
+for bin in ffmpeg tesseract espeak-ng; do
   if ! command -v "${bin}" >/dev/null 2>&1; then
-    echo "!! missing system binary: ${bin}" >&2
-    echo "   install it before running this script (e.g. apt-get install -y python3-venv ffmpeg tesseract-ocr espeak-ng)" >&2
-    exit 1
+    MISSING_TOOLS="${MISSING_TOOLS} ${bin}"
   fi
 done
+if [ -n "${MISSING_TOOLS}" ]; then
+  echo "!! missing system tools:${MISSING_TOOLS}" >&2
+  echo "   install them with: sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-spa espeak-ng" >&2
+  echo "   (eVoice still works with Piper alone; espeak-ng is the fallback)" >&2
+fi
 
 python3 -m venv "${VENV_DIR}"
 "${VENV_DIR}/bin/pip" install --upgrade pip
