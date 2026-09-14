@@ -804,14 +804,35 @@ def text_to_wav_piper(text: str, wav_path: Path) -> None:
             break
     if not model.is_file():
         raise FileNotFoundError(f"piper model missing: {model}")
+    resolved = shutil.which(piper) or piper
+    piper_dir = Path(resolved).resolve().parent
+    env = os.environ.copy()
+    # The native Piper tarball ships espeak-ng-data next to the binary; run from
+    # there so Piper finds it regardless of the API working directory (mirrors
+    # the global-voice worker).
+    if (piper_dir / "espeak-ng-data").is_dir():
+        env["ESPEAK_DATA_PATH"] = str(piper_dir)
+    args = [resolved, "--model", str(model), "--output_file", str(wav_path)]
+    length_scale = (
+        os.environ.get("EVOICE_PIPER_LENGTH_SCALE")
+        or os.environ.get("VOICE_PIPER_LENGTH_SCALE")
+        or ""
+    ).strip()
+    if length_scale:
+        args += ["--length_scale", length_scale]
     proc = subprocess.run(
-        [piper, "--model", str(model), "--output_file", str(wav_path)],
+        args,
         input=text.encode("utf-8"),
         capture_output=True,
         check=False,
+        cwd=str(piper_dir),
+        env=env,
     )
-    if proc.returncode != 0:
-        raise RuntimeError(proc.stderr.decode("utf-8", errors="replace") or "piper failed")
+    if proc.returncode != 0 or not wav_path.is_file() or wav_path.stat().st_size == 0:
+        err = proc.stderr.decode("utf-8", errors="replace") or proc.stdout.decode(
+            "utf-8", errors="replace"
+        )
+        raise RuntimeError(f"piper failed: {err[:300]}")
 
 
 def text_to_wav_espeak(text: str, wav_path: Path) -> None:
