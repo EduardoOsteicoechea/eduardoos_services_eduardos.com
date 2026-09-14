@@ -809,13 +809,18 @@ func (a *App) eostoreProductImageUploadHandler(w http.ResponseWriter, r *http.Re
 		}
 		return
 	}
+	webpData, err := eostoreToWebp(data, kind.mime)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_image")
+		return
+	}
 	imageID := randomID(12)
-	rel, err := newEostoreImageRel(p.GUID, imageID, kind.ext)
+	rel, err := newEostoreImageRel(p.GUID, imageID, ".webp")
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if err := writeEostoreImage(a.cfg.MediaRoot, rel, data); err != nil {
+	if err := writeEostoreImage(a.cfg.MediaRoot, rel, webpData); err != nil {
 		a.mustLogf(r, "eostore.image.write_error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -824,8 +829,8 @@ func (a *App) eostoreProductImageUploadHandler(w http.ResponseWriter, r *http.Re
 	img := EostoreImage{
 		ID:          imageID,
 		Key:         rel,
-		ContentType: kind.mime,
-		Bytes:       int64(len(data)),
+		ContentType: "image/webp",
+		Bytes:       int64(len(webpData)),
 		CreatedAt:   now,
 	}
 	p.Images = append(p.Images, img)
