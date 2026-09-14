@@ -118,6 +118,22 @@ See `backend/.env.example` for the full list. Key names: `VOICE_ENABLED`,
 Local development can run the whole feature with `VOICE_ENABLED=true`,
 `VOICE_FAKE_STT=true`, `VOICE_FAKE_TTS=true` and no workers/models.
 
+## Spanish Piper voices (self-hosted)
+
+Piper has no high-quality Latin-American male voice. Options from
+`rhasspy/piper-voices` (install with `download-piper-voice.sh`):
+
+| Voice | Locale | Gender | Quality |
+| --- | --- | --- | --- |
+| `es_MX-claude-high` | es_MX | female | high |
+| `es_MX-ald-medium` | es_MX | male | medium |
+| `es_ES-davefx-medium` | es_ES | male | medium |
+| `es_ES-sharvard-medium` | es_ES | male | medium |
+| `es_ES-carlfm-x_low` | es_ES | male | x_low |
+
+For a natural Latino male voice, use a cloud TTS provider or Coqui XTTS
+instead of Piper. Speaking rate is `VOICE_PIPER_LENGTH_SCALE` (`0.8` = 1.25x).
+
 ## Tests
 
 - Go (`go test ./...`): session lifecycle, concurrency cap, disabled-route 404,
