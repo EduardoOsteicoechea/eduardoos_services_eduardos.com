@@ -541,6 +541,11 @@ function EvoiceWorkspace() {
     const el = audioRef.current;
     if (!el) return;
 
+    // Always play at natural speed; a stale native-control rate (e.g. 1.25x)
+    // resamples the voice and makes it sound distorted.
+    el.defaultPlaybackRate = 1;
+    el.playbackRate = 1;
+
     let cancelled = false;
     const tryPlay = () => {
       if (cancelled || !autoplayAfterLoadRef.current) return;
@@ -2009,6 +2014,15 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                 src={blobUrl || undefined}
                 controls
                 onEnded={next}
+                onLoadedMetadata={(e) => {
+                  e.currentTarget.defaultPlaybackRate = 1;
+                  e.currentTarget.playbackRate = 1;
+                }}
+                onRateChange={(e) => {
+                  if (e.currentTarget.playbackRate !== 1) {
+                    e.currentTarget.playbackRate = 1;
+                  }
+                }}
                 onError={() => {
                   if (!blobUrl || audioErrorRef.current === blobUrl) return;
                   audioErrorRef.current = blobUrl;

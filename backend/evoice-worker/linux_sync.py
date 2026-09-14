@@ -975,8 +975,26 @@ def text_to_mp3(text: str, mp3_path: Path, name: str, tmp_parent: Path | None = 
         )
         merged = tmp_path / "merged.wav"
         ffmpeg = find_ffmpeg()
+        # Re-encode to one canonical rate/channels so chunks recorded at
+        # different rates never play at the wrong speed or pitch.
         proc = subprocess.run(
-            [ffmpeg, "-y", "-f", "concat", "-safe", "0", "-i", str(list_file), "-c", "copy", str(merged)],
+            [
+                ffmpeg,
+                "-y",
+                "-f",
+                "concat",
+                "-safe",
+                "0",
+                "-i",
+                str(list_file),
+                "-ar",
+                "44100",
+                "-ac",
+                "1",
+                "-c:a",
+                "pcm_s16le",
+                str(merged),
+            ],
             capture_output=True,
             check=False,
         )
