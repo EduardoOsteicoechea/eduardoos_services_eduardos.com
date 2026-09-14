@@ -708,10 +708,7 @@ func writeEostoreImage(mediaRoot, rel string, data []byte) error {
 		return errAvatarInvalid
 	}
 	abs := filepath.Join(mediaRoot, filepath.FromSlash(rel))
-	if err := os.MkdirAll(filepath.Dir(abs), 0750); err != nil {
-		return err
-	}
-	tmpDir := filepath.Join(filepath.Dir(mediaRoot), "eostore-tmp")
+	tmpDir := filepath.Dir(abs)
 	if err := os.MkdirAll(tmpDir, 0750); err != nil {
 		return err
 	}
@@ -805,7 +802,11 @@ func (a *App) eostoreProductImageUploadHandler(w http.ResponseWriter, r *http.Re
 	}
 	kind, err := detectEostoreImage(data)
 	if err != nil {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		if errors.Is(err, errAvatarTooLarge) {
+			a.writeSafeError(w, r, http.StatusBadRequest, "image_too_large")
+		} else {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_image")
+		}
 		return
 	}
 	imageID := randomID(12)

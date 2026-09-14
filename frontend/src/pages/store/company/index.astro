@@ -108,6 +108,9 @@ import Layout from "../../../layouts/Layout.astro";
       if ((p.discount_percent || 0) > 0) head.appendChild(badge(`−${p.discount_percent}%`, "sale"));
       const stock = productStockState(p.units);
       if (stock !== "in") head.appendChild(badge(productStockLabel(p.units), stock));
+      const code = document.createElement("p");
+      code.className = "eostore-code";
+      code.textContent = p.sku ? `Code ${p.sku}` : "";
       const meta = document.createElement("p");
       meta.className = "eostore-hint";
       meta.textContent = `${sectionName} · ${typeName} · ${productStockLabel(p.units)}`;
@@ -199,7 +202,7 @@ import Layout from "../../../layouts/Layout.astro";
       viewCart.setAttribute("data-route", "");
       viewCart.textContent = "View cart";
       qty.append(dec, input, inc, add, viewCart, details);
-      card.append(head, meta, price, desc, tags, thumbs, qty);
+      card.append(head, code, meta, price, desc, tags, thumbs, qty);
       return card;
     };
 

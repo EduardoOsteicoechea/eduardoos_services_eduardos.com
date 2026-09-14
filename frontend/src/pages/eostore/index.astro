@@ -818,9 +818,13 @@ import Layout from "../../layouts/Layout.astro";
       const stock = productStockState(p.units);
       if (stock !== "in") head.appendChild(badge(productStockLabel(p.units), stock));
 
+      const code = document.createElement("p");
+      code.className = "eostore-code";
+      code.textContent = p.sku ? `Code ${p.sku}` : "No code";
+
       const meta = document.createElement("p");
       meta.className = "eostore-meta";
-      meta.textContent = `id ${p.id} · guid ${p.guid} · ${typeLabel(p.type_guid)}`;
+      meta.textContent = `id ${p.id} · ${typeLabel(p.type_guid)}`;
 
       const price = document.createElement("p");
       price.className = "eostore-price";
@@ -925,7 +929,7 @@ import Layout from "../../layouts/Layout.astro";
       });
       actions.append(edit, dup, del);
 
-      card.append(head, meta, price, tags, desc, thumbs, inventory, actions);
+      card.append(head, code, meta, price, tags, desc, thumbs, inventory, actions);
       return card;
     };
 

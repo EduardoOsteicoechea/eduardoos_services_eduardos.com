@@ -19,6 +19,8 @@ var safeMessages = map[string]string{
 	"rate_limited":                   "Too many attempts. Try later.",
 	"conflict":                       "That username is already taken.",
 	"payload_too_large":              "That file is too large.",
+	"image_too_large":                "That image is too large. Use a JPG, PNG, or WebP under 10 MB (max 8192 px).",
+	"invalid_image":                  "Unsupported image. Use a JPG, PNG, or WebP file.",
 	"unsupported_media":              "Use a JPEG, PNG, or WebP image.",
 	"not_found":                      "Not found.",
 	"report_storage_missing":         "Report storage is missing or unreadable for this org/report id.",

@@ -9,8 +9,8 @@ import (
 
 const (
 	eostoreMediaPrefix   = "eostore"
-	maxEostoreImageBytes = 8 << 20
-	maxEostoreImageEdge  = 4096
+	maxEostoreImageBytes = 10 << 20
+	maxEostoreImageEdge  = 8192
 	maxEostoreImages     = 12
 
 	// Product lifecycle status (admin workflow). Additive: documents without a

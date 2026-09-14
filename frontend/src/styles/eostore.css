@@ -109,16 +109,17 @@
 }
 
 .eostore-columns {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   gap: var(--rail-gap);
+  align-items: start;
 }
 
 .eostore-card {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
-  padding: var(--space-padding);
+  gap: 0.25rem;
+  padding: 0.5rem;
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -126,8 +127,15 @@
 
 .eostore-card h3 {
   margin: 0;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: 650;
+}
+
+.eostore-code {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  font-weight: 650;
+  color: var(--color-accent);
 }
 
 .eostore-meta {
@@ -324,8 +332,36 @@
 }
 
 .eostore-editor {
-  max-width: calc(var(--button-size) * 24);
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.eostore-editor .eostore-fieldset {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.5rem;
+}
+
+.eostore-editor .eostore-fieldset legend {
+  grid-column: 1 / -1;
+}
+
+.eostore-editor .eostore-field {
+  gap: 0.25rem;
+}
+
+.eostore-editor .eostore-field:has(textarea),
+.eostore-editor .eostore-actions {
+  grid-column: 1 / -1;
+}
+
+.eostore-editor .eostore-field input[type="text"],
+.eostore-editor .eostore-field input[type="number"],
+.eostore-editor .eostore-field input[type="search"],
+.eostore-editor .eostore-field select {
+  height: 1.75rem;
 }
 
 .eostore-fieldset {
@@ -685,6 +721,12 @@
 .shop-card-bs {
   font-size: var(--font-size-xs);
   font-weight: 400;
+  color: var(--color-muted);
+}
+
+.shop-card-code {
+  margin: 0;
+  font-size: var(--font-size-xs);
   color: var(--color-muted);
 }
 
