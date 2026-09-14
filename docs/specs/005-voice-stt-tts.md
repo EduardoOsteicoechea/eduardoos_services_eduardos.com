@@ -91,7 +91,14 @@ Follows [`error-observability.mdc`](../../../.cursor/rules/error-observability.m
 - `backend/voice-worker/stt_server.py`: Vosk HTTP service on `127.0.0.1:8090`,
   one recognizer per session, models loaded once. Unit template:
   `backend/systemd/eduardoos-voice-stt.service`.
-- `backend/voice-worker/speak.py`: Piper + ffmpeg sentence synthesizer.
+- `backend/voice-worker/stt_server_whisper.py`: optional faster-whisper engine
+  (higher accuracy, heavier). Same HTTP protocol on `127.0.0.1:8091`, so
+  switching engines is only `VOICE_STT_URL` + restart — no Go or frontend
+  changes. Unit template: `backend/systemd/eduardoos-voice-whisper.service`;
+  provision with `setup-whisper.sh` / `requirements-whisper.txt`.
+- `backend/voice-worker/speak.py`: Piper + ffmpeg sentence synthesizer. Use the
+  native Piper binary (`install-piper.sh`); the pip `piper-tts` package often
+  fails to import on newer Pythons.
 - Models and the worker scripts are provisioned on the VPS manually (like the
   eVoice worker); deploy does not ship them.
 

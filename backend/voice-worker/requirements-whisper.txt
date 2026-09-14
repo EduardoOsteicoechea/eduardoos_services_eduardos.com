@@ -1,0 +1,10 @@
+# faster-whisper alternative STT worker (backend/voice-worker/stt_server_whisper.py).
+#
+# Speaks the same HTTP protocol as the Vosk worker, so switching is only
+# VOICE_STT_URL=http://127.0.0.1:8091 + restart. CPU wheels (CTranslate2 +
+# onnxruntime). Models download from Hugging Face on first use.
+#
+# Env: VOICE_WHISPER_MODEL (tiny|base|small|medium|large-v3, default small),
+#      VOICE_WHISPER_DEVICE (cpu|cuda), VOICE_WHISPER_COMPUTE (int8|float16),
+#      VOICE_WHISPER_STEP_SECONDS, VOICE_WHISPER_PRELOAD=1
+faster-whisper>=1.0.0
