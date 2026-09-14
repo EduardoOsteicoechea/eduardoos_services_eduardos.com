@@ -404,7 +404,11 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Text string `json:"text"`
 	}
-	if err := json.NewDecoder(io.LimitReader(r.Body, a.cfg.EvoiceMaxUploadBytes+1)).Decode(&body); err != nil {
+	var bodyReader io.Reader = r.Body
+	if a.cfg.EvoiceMaxUploadBytes > 0 {
+		bodyReader = io.LimitReader(r.Body, a.cfg.EvoiceMaxUploadBytes+1)
+	}
+	if err := json.NewDecoder(bodyReader).Decode(&body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -413,7 +417,7 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
+	if a.cfg.EvoiceMaxUploadBytes > 0 && int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -490,12 +494,16 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
 		return
 	}
-	limited, err := io.ReadAll(io.LimitReader(resp.Body, a.cfg.EvoiceMaxUploadBytes+1))
+	var respReader io.Reader = resp.Body
+	if a.cfg.EvoiceMaxUploadBytes > 0 {
+		respReader = io.LimitReader(resp.Body, a.cfg.EvoiceMaxUploadBytes+1)
+	}
+	limited, err := io.ReadAll(respReader)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
 		return
 	}
-	if int64(len(limited)) > a.cfg.EvoiceMaxUploadBytes {
+	if a.cfg.EvoiceMaxUploadBytes > 0 && int64(len(limited)) > a.cfg.EvoiceMaxUploadBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -505,7 +513,7 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusUnprocessableEntity, "empty_document")
 		return
 	}
-	if int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
+	if a.cfg.EvoiceMaxUploadBytes > 0 && int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
 		text = text[:a.cfg.EvoiceMaxUploadBytes]
 	}
 	host := sanitizeEvoiceFileName(parsed.Hostname())

@@ -234,7 +234,8 @@ async function parseJSON<T>(response: Response): Promise<T> {
     if (response.status === 413) {
       return {
         error: "payload_too_large",
-        message: "That file is too large for the server upload limit.",
+        message:
+          "The web server rejected this upload as too large (Nginx client_max_body_size).",
       } as T;
     }
     return {} as T;
@@ -245,7 +246,8 @@ async function parseJSON<T>(response: Response): Promise<T> {
     if (response.status === 413) {
       return {
         error: "payload_too_large",
-        message: "That file is too large for the server upload limit.",
+        message:
+          "The web server rejected this upload as too large (Nginx client_max_body_size).",
       } as T;
     }
     const gateway = response.status === 502 || response.status === 503 || response.status === 504;
@@ -909,7 +911,11 @@ export async function uploadFileWithProgress<T = APIErrorBody>(
             data = { error: "internal_error", message: "Something went wrong." } as T & APIErrorBody;
           }
         } else if (xhr.status === 413) {
-          data = { error: "payload_too_large", message: "That file is too large for the server upload limit." } as T & APIErrorBody;
+          data = {
+            error: "payload_too_large",
+            message:
+              "The web server rejected this upload as too large (Nginx client_max_body_size).",
+          } as T & APIErrorBody;
         }
         if (!data.request_id && requestId) {
           data.request_id = requestId;
