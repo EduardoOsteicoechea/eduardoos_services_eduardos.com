@@ -28,7 +28,8 @@ Environment:
     VOICE_WHISPER_MODEL          tiny|base|small|medium|large-v3 (default small)
     VOICE_WHISPER_DEVICE         cpu|cuda (default cpu)
     VOICE_WHISPER_COMPUTE        int8|int8_float16|float16|float32 (default int8)
-    VOICE_WHISPER_STEP_SECONDS   re-transcribe cadence while speaking (default 3)
+    VOICE_WHISPER_MODE           batch|stream (default batch: record all, transcribe once on stop)
+    VOICE_WHISPER_STEP_SECONDS   stream mode: re-transcribe cadence while speaking (default 3)
     VOICE_WHISPER_BEAM_SIZE      beam size (default 1)
     VOICE_WHISPER_CPU_THREADS    CTranslate2 CPU threads, 0=auto (default 0)
     VOICE_WHISPER_MAX_SECONDS    cap buffered audio per session (default 120)
@@ -60,6 +61,7 @@ MAX_CHUNK_BYTES = int(os.environ.get("VOICE_STT_MAX_CHUNK_BYTES", str(1 << 20)))
 MODEL_SIZE = (os.environ.get("VOICE_WHISPER_MODEL") or "small").strip()
 DEVICE = (os.environ.get("VOICE_WHISPER_DEVICE") or "cpu").strip()
 COMPUTE = (os.environ.get("VOICE_WHISPER_COMPUTE") or "int8").strip()
+MODE = (os.environ.get("VOICE_WHISPER_MODE") or "batch").strip().lower()
 STEP_SECONDS = float(os.environ.get("VOICE_WHISPER_STEP_SECONDS", "3"))
 BEAM_SIZE = int(os.environ.get("VOICE_WHISPER_BEAM_SIZE", "1"))
 CPU_THREADS = int(os.environ.get("VOICE_WHISPER_CPU_THREADS", "0"))
@@ -126,6 +128,10 @@ class WhisperSession:
             cap = int(MAX_SECONDS * SAMPLE_RATE)
             if len(self.audio) > cap:
                 self.audio = self.audio[-cap:]
+            if MODE == "batch":
+                # Record everything; transcribe once on stop. Avoids O(n^2)
+                # re-transcription and uses the full context for accuracy.
+                return ""
             new_samples = len(self.audio) - self.transcribed_len
             # First quick hypothesis after ~1s, then every STEP_SECONDS.
             if new_samples >= int(STEP_SECONDS * SAMPLE_RATE) or (
@@ -296,7 +302,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> int:
     log(f"voice whisper stt listening on http://{HOST}:{PORT} sampleRate={SAMPLE_RATE}")
-    log(f"model={MODEL_SIZE} device={DEVICE} compute={COMPUTE} step={STEP_SECONDS}s")
+    log(f"model={MODEL_SIZE} device={DEVICE} compute={COMPUTE} mode={MODE} step={STEP_SECONDS}s")
     if (os.environ.get("VOICE_WHISPER_PRELOAD") or "").strip() in {"1", "true", "yes", "on"}:
         get_model()
         log("preload ok")

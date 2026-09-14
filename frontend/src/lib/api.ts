@@ -729,7 +729,11 @@ export async function getVoiceConfig(): Promise<VoiceConfig | null> {
 
 export async function startVoiceStream(lang: string): Promise<string | null> {
   try {
-    const { status, data } = await postJSON<{ streamId?: string; error?: string }>("/voice/stream", { lang });
+    const { status, data } = await postJSON<{ streamId?: string; error?: string }>(
+      "/voice/stream",
+      { lang },
+      { timeoutMs: 60000 },
+    );
     if (status === 200 && data.streamId) {
       return data.streamId;
     }
@@ -766,7 +770,11 @@ export async function postVoiceChunk(
 
 export async function stopVoiceStream(streamId: string): Promise<string> {
   try {
-    const { status, data } = await postJSON<{ text?: string }>(`/voice/stream/${encodeURIComponent(streamId)}/stop`, {});
+    const { status, data } = await postJSON<{ text?: string }>(
+      `/voice/stream/${encodeURIComponent(streamId)}/stop`,
+      {},
+      { timeoutMs: 180000 },
+    );
     if (status === 200) {
       return (data.text || "").trim();
     }

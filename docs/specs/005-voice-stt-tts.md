@@ -94,8 +94,10 @@ Follows [`error-observability.mdc`](../../../.cursor/rules/error-observability.m
 - `backend/voice-worker/stt_server_whisper.py`: optional faster-whisper engine
   (higher accuracy, heavier). Same HTTP protocol on `127.0.0.1:8091`, so
   switching engines is only `VOICE_STT_URL` + restart — no Go or frontend
-  changes. Unit template: `backend/systemd/eduardoos-voice-whisper.service`;
-  provision with `setup-whisper.sh` / `requirements-whisper.txt`.
+  changes. Defaults to `VOICE_WHISPER_MODE=batch`: record all PCM, transcribe
+  once on stop (best accuracy and no O(n²) re-transcription on weak CPUs).
+  Unit template: `backend/systemd/eduardoos-voice-whisper.service`; provision
+  with `setup-whisper.sh` / `requirements-whisper.txt`.
 - `backend/voice-worker/speak.py`: Piper + ffmpeg sentence synthesizer. Use the
   native Piper binary (`install-piper.sh`); the pip `piper-tts` package often
   fails to import on newer Pythons.

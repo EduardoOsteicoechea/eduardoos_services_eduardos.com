@@ -418,6 +418,10 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
       /* ignore */
     }
   }
+  if (ui.caption) {
+    ui.caption.hidden = false;
+    ui.caption.textContent = "Transcribing…";
+  }
   await state.chain.catch(() => undefined);
   let text = [state.transcript, state.partial].filter(Boolean).join(" ").trim();
   if (streamId) {

@@ -29,7 +29,7 @@ func newHTTPSTTEngine(baseURL string) httpSTTEngine {
 	}
 	return httpSTTEngine{
 		baseURL: baseURL,
-		client:  &http.Client{Timeout: 60 * time.Second},
+		client:  &http.Client{Timeout: 180 * time.Second},
 	}
 }
 
@@ -100,7 +100,7 @@ func (s *httpSTTSession) Close() (string, error) {
 		return "", nil
 	}
 	s.closed = true
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 	var out struct {
 		Text string `json:"text"`
