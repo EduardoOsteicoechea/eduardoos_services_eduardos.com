@@ -352,6 +352,7 @@ const jsonLdString =
         <div class="agent-chat-history" data-agent-history hidden></div>
         <form class="agent-chat-form" data-agent-form>
           <p class="agent-chat-reply" data-agent-reply hidden></p>
+          <p class="agent-chat-voice" data-agent-voice hidden aria-live="polite"></p>
           <div class="agent-chat-composer">
             <div class="agent-chat-compose-row">
               <textarea id="agent-chat-input" data-agent-input maxlength="500" rows="1" aria-label="Message" placeholder="Ask a short question about this site."></textarea>
@@ -372,6 +373,12 @@ const jsonLdString =
                 <div class="agent-chat-thumbs" data-agent-thumbs></div>
               </div>
               <div class="agent-chat-tools">
+                <button class="icon-btn" type="button" data-agent-speak-toggle hidden aria-pressed="true" aria-label="Speak replies" title="Speak replies">
+                  <span class="material-symbols-outlined" aria-hidden="true">volume_up</span>
+                </button>
+                <button class="icon-btn" type="button" data-agent-mic hidden aria-pressed="false" aria-label="Record voice" title="Record voice">
+                  <span class="material-symbols-outlined" aria-hidden="true">mic</span>
+                </button>
                 <button class="icon-btn" type="submit" data-agent-send disabled aria-label="Send">
                   <span class="material-symbols-outlined" aria-hidden="true">send</span>
                 </button>

@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { postChatStream } from "./api";
 import { resetAgentChat, startAgentChat } from "./chat";
 import { showErrorModal } from "./error-modal";
+import { enqueueVoiceAudio, stopVoicePlayback, voiceReplyEnabled } from "./voice";
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
@@ -10,6 +11,13 @@ vi.mock("./api", async () => {
 
 vi.mock("./error-modal", () => ({
   showErrorModal: vi.fn(),
+}));
+
+vi.mock("./voice", () => ({
+  enqueueVoiceAudio: vi.fn(),
+  stopVoicePlayback: vi.fn(),
+  voiceReplyEnabled: vi.fn(() => false),
+  voiceLang: vi.fn(() => "es"),
 }));
 
 function mountTray(): void {
@@ -119,5 +127,27 @@ describe("agent chat tray", () => {
     const aside = document.getElementById("agent-sidebar") as HTMLElement;
     expect(aside.style.width).toBe("20rem");
     expect(aside.style.getPropertyValue("--agent-sidebar-width")).toBe("20rem");
+  });
+
+  it("asks for spoken replies and forwards audio events when voice is on", async () => {
+    mountTray();
+    vi.mocked(voiceReplyEnabled).mockReturnValue(true);
+    vi.mocked(postChatStream).mockImplementation(async (_message, _history, onDelta, options) => {
+      options?.onAudio?.("YQ==", "audio/mpeg");
+      onDelta("hi");
+      return { status: 200, requestId: "rid-voice", data: { ok: true, text: "hi" } };
+    });
+    startAgentChat();
+    const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
+    input.value = "hello";
+    input.dispatchEvent(new Event("input"));
+    document.querySelector("[data-agent-form]")?.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    await vi.waitFor(() => {
+      expect(enqueueVoiceAudio).toHaveBeenCalledWith("YQ==", "audio/mpeg");
+    });
+    const options = vi.mocked(postChatStream).mock.calls[0]?.[3];
+    expect(options?.speak).toBe(true);
+    expect(stopVoicePlayback).toHaveBeenCalled();
+    vi.mocked(voiceReplyEnabled).mockReturnValue(false);
   });
 });

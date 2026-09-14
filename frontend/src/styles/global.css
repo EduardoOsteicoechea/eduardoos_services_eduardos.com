@@ -772,7 +772,8 @@ a {
 }
 
 #agent-sidebar [data-agent-empty],
-.agent-chat-reply {
+.agent-chat-reply,
+.agent-chat-voice {
   color: var(--color-muted);
   font-size: var(--font-size-sm);
   margin: 0;
@@ -780,6 +781,26 @@ a {
 
 .agent-chat-reply {
   margin-bottom: var(--space-padding);
+}
+
+.agent-chat-voice {
+  margin-bottom: var(--space-padding);
+  font-style: italic;
+}
+
+.agent-chat-mic--recording {
+  color: var(--color-accent);
+  animation: agent-chat-mic-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes agent-chat-mic-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
 }
 
 main {

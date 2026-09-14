@@ -2,6 +2,11 @@
 node_modules/
 backend/vendor/
 
+# Python
+__pycache__/
+*.pyc
+.venv/
+
 # Astro / frontend build
 frontend/dist/
 frontend/.astro/

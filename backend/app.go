@@ -33,6 +33,12 @@ type App struct {
 	aiSiteLimit     *limiter
 	chatIPLimit     *limiter
 	chatUserLimit   *limiter
+	voice           *voiceManager
+	voiceSTT        STTEngine
+	voiceTTS        TTSEngine
+	voiceIPLimit    *limiter
+	voiceUserLimit  *limiter
+	voiceSpeakLimit *limiter
 	inviteOTPLimit  *limiter
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
@@ -127,6 +133,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
 		chatIPLimit:     newLimiter(publicChatWindow, publicChatIPMax),
 		chatUserLimit:   newLimiter(publicChatWindow, publicChatUserMax),
+		voiceIPLimit:    newLimiter(voiceRateSpace, voiceIPMax),
+		voiceUserLimit:  newLimiter(voiceRateSpace, voiceUserMax),
+		voiceSpeakLimit: newLimiter(voiceRateSpace, voiceSpeakMax),
 		inviteOTPLimit:  newLimiter(time.Hour, 8),
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
@@ -135,6 +144,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		evoiceFS:        newEvoiceFS(cfg.EvoiceMediaRoot),
 	}
 	app.evoiceJobs = newEvoiceJobStore(resolveEvoiceRunner(cfg), app.evoiceMeta, app.evoiceFS, app.log, cfg.MustLog)
+	app.voice, app.voiceSTT, app.voiceTTS = resolveVoice(cfg, app.log)
 	app.ereport.owner = app.ereportOwnerLookup
 	httpClient := newHTTPClient()
 	app.chat["deepseek"] = openAICompatClient{
@@ -294,6 +304,7 @@ func (a *App) Handler() http.Handler {
 	a.registerEoadminRoutes(mux)
 	a.registerEostoreRoutes(mux)
 	a.registerEostoreShopRoutes(mux)
+	a.registerVoiceRoutes(mux)
 
 	return a.withObservability(mux)
 }

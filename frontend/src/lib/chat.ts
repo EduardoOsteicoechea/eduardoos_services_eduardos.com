@@ -1,6 +1,7 @@
 import { postChatStream, type ChatTurn } from "./api";
 import { showErrorModal } from "./error-modal";
 import { renderMarkdown } from "./markdown";
+import { enqueueVoiceAudio, stopVoicePlayback, voiceLang, voiceReplyEnabled } from "./voice";
 
 const MAX_HISTORY = 8;
 const MAX_MESSAGE = 500;
@@ -404,12 +405,24 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   if (send) {
     send.disabled = true;
   }
+  if (voiceReplyEnabled()) {
+    stopVoicePlayback();
+  }
   try {
-    const result = await postChatStream(quoted ? `${quoted}\n\n${message}` : message, history, (delta) => {
-      assistant.content += delta;
-      assistant.ms = Date.now() - started;
-      paintAssistantStream(assistant.content);
-    });
+    const result = await postChatStream(
+      quoted ? `${quoted}\n\n${message}` : message,
+      history,
+      (delta) => {
+        assistant.content += delta;
+        assistant.ms = Date.now() - started;
+        paintAssistantStream(assistant.content);
+      },
+      {
+        speak: voiceReplyEnabled(),
+        lang: voiceLang(),
+        onAudio: (data, mime) => enqueueVoiceAudio(data, mime),
+      },
+    );
     assistant.ms = Date.now() - started;
     if (result.status === 200 && result.data.ok && (result.data.text || assistant.content)) {
       if (result.data.text) {
@@ -430,6 +443,23 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   } finally {
     syncSend(input, send);
   }
+}
+
+/** Sends a voice transcript through the same chat pipeline. */
+export function submitAgentChatMessage(text: string): void {
+  const input = document.querySelector("[data-agent-input]");
+  if (!(input instanceof HTMLTextAreaElement)) {
+    return;
+  }
+  const message = text.trim();
+  if (!message) {
+    return;
+  }
+  input.value = message;
+  growInput(input);
+  const send = document.querySelector("[data-agent-send]");
+  syncSend(input, send instanceof HTMLButtonElement ? send : null);
+  void submitChat(input, send instanceof HTMLButtonElement ? send : null);
 }
 
 export function startAgentChat(): void {

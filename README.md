@@ -148,6 +148,46 @@ This site follows the parent-workspace contract [`.cursor/rules/email-otp-notifi
 
 This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek and Kimi are backend-only integrations. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
 
+## Global voice (speech-to-text and spoken replies)
+
+The global agent dock can take voice input. The browser streams 16 kHz mono PCM
+chunks to `POST /api/voice/stream/{id}/chunk`, a self-hosted Vosk worker returns
+live transcription, and the final transcript runs through the same `/api/chat`
+pipeline. With `speak:true`, the assistant's answer is synthesized one sentence
+at a time with the existing Piper toolchain and streamed back over SSE.
+
+The feature is **off by default**. When `VOICE_ENABLED` is unset or false, the
+voice routes are not registered (they return 404) and the mic UI stays hidden.
+Locked specification: [`docs/specs/005-voice-stt-tts.md`](docs/specs/005-voice-stt-tts.md).
+
+Local development (no workers or models required):
+
+```
+VOICE_ENABLED=true
+VOICE_FAKE_STT=true
+VOICE_FAKE_TTS=true
+```
+
+Production requires a runnable Vosk worker and Piper models, both provisioned
+on the VPS outside CI/CD (like the eVoice worker):
+
+1. Install the worker deps in a venv (`backend/voice-worker/requirements.txt`).
+2. Download Vosk `vosk-model-small-es-*` and `vosk-model-small-en-us-*`.
+3. Provide Piper `es` / `en` `.onnx` models and the `ffmpeg` binary.
+4. Run `backend/voice-worker/stt_server.py` (template:
+   `backend/systemd/eduardoos-voice-stt.service`) and set the `VOICE_*`
+   variables in `/etc/eduardoos-api.env`.
+
+Voice env names: `VOICE_ENABLED`, `VOICE_STT_URL`, `VOICE_STT_LANG_DEFAULT`,
+`VOICE_PYTHON`, `VOICE_TTS_SCRIPT`, `VOICE_PIPER_MODEL_ES`,
+`VOICE_PIPER_MODEL_EN`, `VOICE_MAX_CHUNK_BYTES`, `VOICE_MAX_SESSION_SECONDS`,
+`VOICE_MAX_CONCURRENT`, `VOICE_FAKE_STT`, `VOICE_FAKE_TTS`.
+
+No Nginx change is required: the `/api/` location already sets
+`proxy_buffering off` and a long `proxy_read_timeout`, and PCM chunks are well
+under `client_max_body_size`. The STT worker binds loopback only and must never
+be exposed publicly.
+
 ## Admin diagnostics
 
 `/diagnostics` and `POST /api/admin/diagnostics/*` are admin-only. The Go API enforces JWT, `admin` role, and CSRF. The page is UX only.

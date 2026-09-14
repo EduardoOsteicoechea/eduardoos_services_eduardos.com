@@ -40,8 +40,10 @@ type publicChatTurn struct {
 type publicChatRequest struct {
 	Message  string           `json:"message"`
 	Question string           `json:"question"` // alias used by /api/profile/ask
-	History  []publicChatTurn `json:"history"`
+	History     []publicChatTurn `json:"history"`
 	Stream      bool             `json:"stream"`
+	Speak       bool             `json:"speak"`
+	Lang        string           `json:"lang"`
 	Path        string           `json:"path"`
 	PageContext string           `json:"page_context"`
 }
@@ -209,13 +211,28 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 		w.Header().Set("Connection", "keep-alive")
 		w.Header().Set("X-Accel-Buffering", "no")
 		w.WriteHeader(http.StatusOK)
-		result, err := client.Stream(ctx, systemPrompt, history, func(delta string) error {
+		var streamer *voiceSentenceStreamer
+		speakLang := ""
+		if body.Speak && a.voiceTTS != nil {
+			speakLang = normalizeVoiceLang(body.Lang, a.cfg.VoiceSTTLangDefault)
+			streamer = &voiceSentenceStreamer{}
+		}
+		emit := func(delta string) error {
 			clean := sanitizeModelDelta(delta)
 			if clean == "" {
 				return nil
 			}
-			return writeSSE(w, map[string]any{"delta": clean})
-		})
+			if err := writeSSE(w, map[string]any{"delta": clean}); err != nil {
+				return err
+			}
+			if streamer != nil {
+				for _, sentence := range streamer.push(clean) {
+					a.emitVoiceAudio(ctx, w, speakLang, streamer, sentence)
+				}
+			}
+			return nil
+		}
+		result, err := client.Stream(ctx, systemPrompt, history, emit)
 		if err != nil {
 			a.auditEventExtra(r, auditKind, "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
 			_ = writeSSE(w, map[string]any{
@@ -224,6 +241,11 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 				"message":    "The assistant could not reply.",
 			})
 			return
+		}
+		if streamer != nil {
+			if tail := streamer.flush(); tail != "" {
+				a.emitVoiceAudio(ctx, w, speakLang, streamer, tail)
+			}
 		}
 		a.auditEventExtra(r, auditKind, "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
 		_ = writeSSE(w, map[string]any{

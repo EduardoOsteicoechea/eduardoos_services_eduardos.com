@@ -3,6 +3,7 @@ import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
+import { startVoiceChat } from "./voice";
 import {
   companyCartHref,
   companyIdFromPath,
@@ -717,6 +718,7 @@ function restoreChromeAfterNavigation(): void {
   syncExpanded();
   syncIconButtonTitles();
   startAgentChat();
+  startVoiceChat();
   void refreshAuthChrome();
 }
 

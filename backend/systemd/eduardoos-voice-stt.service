@@ -1,0 +1,19 @@
+[Unit]
+Description=eduardoos voice STT (Vosk)
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=www-data
+WorkingDirectory=/opt/apps/eduardoos/voice-worker
+ExecStart=/opt/apps/eduardoos/voice-worker/.venv/bin/python /opt/apps/eduardoos/voice-worker/stt_server.py
+EnvironmentFile=/etc/eduardoos-voice.env
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

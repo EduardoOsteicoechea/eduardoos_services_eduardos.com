@@ -52,6 +52,18 @@ type config struct {
 	SMTPPassword              string
 	SMTPFromAddress           string
 	SMTPFromName              string
+	VoiceEnabled              bool
+	VoiceSTTURL               string
+	VoiceSTTLangDefault       string
+	VoicePython               string
+	VoiceTTScript             string
+	VoicePiperModelES         string
+	VoicePiperModelEN         string
+	VoiceMaxChunkBytes        int64
+	VoiceMaxSessionSeconds    int
+	VoiceMaxConcurrent        int
+	VoiceFakeSTT              bool
+	VoiceFakeTTS              bool
 	DeepSeekKey               string
 	DeepSeekBaseURL           string
 	DeepSeekModel             string
@@ -192,6 +204,18 @@ func loadConfig() config {
 		SMTPPassword:              envString("SMTP_PASSWORD"),
 		SMTPFromAddress:           from,
 		SMTPFromName:              smtpName,
+		VoiceEnabled:              envBool("VOICE_ENABLED", false),
+		VoiceSTTURL:               voiceEnvDefault("VOICE_STT_URL", "http://127.0.0.1:8090"),
+		VoiceSTTLangDefault:       voiceEnvDefault("VOICE_STT_LANG_DEFAULT", "es"),
+		VoicePython:               envString("VOICE_PYTHON"),
+		VoiceTTScript:             envString("VOICE_TTS_SCRIPT"),
+		VoicePiperModelES:         envString("VOICE_PIPER_MODEL_ES"),
+		VoicePiperModelEN:         envString("VOICE_PIPER_MODEL_EN"),
+		VoiceMaxChunkBytes:        envInt64("VOICE_MAX_CHUNK_BYTES", voiceDefaultChunkBytes),
+		VoiceMaxSessionSeconds:    int(envInt64("VOICE_MAX_SESSION_SECONDS", voiceDefaultSessionSec)),
+		VoiceMaxConcurrent:        int(envInt64("VOICE_MAX_CONCURRENT", voiceDefaultConcurrent)),
+		VoiceFakeSTT:              envBool("VOICE_FAKE_STT", false),
+		VoiceFakeTTS:              envBool("VOICE_FAKE_TTS", false),
 		DeepSeekKey:               os.Getenv("DEEPSEEK_API_KEY"),
 		DeepSeekBaseURL:           strings.TrimRight(deepseekBase, "/"),
 		DeepSeekModel:             deepseekModel,
@@ -214,4 +238,11 @@ func loadConfig() config {
 
 func filepathJoinLocalMedia() string {
 	return ".data/media"
+}
+
+func voiceEnvDefault(key, fallback string) string {
+	if v := envString(key); v != "" {
+		return v
+	}
+	return fallback
 }

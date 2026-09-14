@@ -1,0 +1,17 @@
+# Global voice worker deps (Vosk streaming STT + Piper TTS).
+#
+# System packages still required on the VPS:
+#   ffmpeg, piper (binary) — Piper already ships for the eVoice worker
+# Vosk acoustic models must be downloaded separately (see stt_server.py):
+#   vosk-model-small-es-* and vosk-model-small-en-us-*
+#
+# Env (see stt_server.py and speak.py docstrings):
+#   VOICE_STT_URL / VOICE_STT_HOST / VOICE_STT_PORT
+#   VOICE_STT_MODEL_ES / VOICE_STT_MODEL_EN
+#   VOICE_PIPER_BIN / VOICE_PIPER_MODEL_ES / VOICE_PIPER_MODEL_EN
+#
+# Production: create a venv under backend/voice-worker/.venv and point
+# VOICE_PYTHON at it; run stt_server.py as eduardoos-voice-stt.service.
+# Local/tests: set VOICE_FAKE_STT=true and VOICE_FAKE_TTS=true so the Go API
+# never shells out to these scripts.
+vosk>=0.3.45

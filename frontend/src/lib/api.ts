@@ -85,6 +85,25 @@ export type ChatResponse = APIErrorBody & {
   text?: string;
 };
 
+export type ChatStreamOptions = {
+  speak?: boolean;
+  lang?: string;
+  onAudio?: (base64: string, mime: string) => void;
+};
+
+export type VoiceConfig = {
+  enabled: boolean;
+  sampleRate: number;
+  langs: string[];
+  defaultLang: string;
+};
+
+export type VoiceChunkResponse = APIErrorBody & {
+  partial?: string;
+  final?: string;
+  text?: string;
+};
+
 let csrfToken = "";
 let csrfInFlight: Promise<string> | null = null;
 let refreshInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
@@ -541,14 +560,15 @@ export async function postChatStream(
   message: string,
   history: ChatTurn[],
   onDelta: (delta: string) => void,
+  options?: ChatStreamOptions,
 ): Promise<{ status: number; data: ChatResponse; requestId: string }> {
   const controller = new AbortController();
   const timer = globalThis.setTimeout(() => controller.abort(), 45000);
   try {
-    let response = await sendChat(message, history, true, controller.signal);
+    let response = await sendChat(message, history, true, controller.signal, options);
     if (response.status === 403) {
       await getCsrf(true);
-      response = await sendChat(message, history, true, controller.signal);
+      response = await sendChat(message, history, true, controller.signal, options);
     }
     const requestId = response.headers.get("X-Request-ID") || "";
     const type = (response.headers.get("Content-Type") || "").toLowerCase();
@@ -580,7 +600,17 @@ export async function postChatStream(
           continue;
         }
         try {
-          const payload = JSON.parse(line.slice(5).trim()) as ChatResponse & { delta?: string; done?: boolean };
+          const payload = JSON.parse(line.slice(5).trim()) as ChatResponse & {
+            delta?: string;
+            done?: boolean;
+            type?: string;
+            mime?: string;
+            data?: string;
+          };
+          if (payload.type === "audio" && payload.data) {
+            options?.onAudio?.(payload.data, payload.mime || "audio/mpeg");
+            continue;
+          }
           if (payload.delta) {
             onDelta(payload.delta);
           }
@@ -639,7 +669,13 @@ export async function postChat(message: string, history: ChatTurn[]): Promise<{ 
   }
 }
 
-async function sendChat(message: string, history: ChatTurn[], stream: boolean, signal: AbortSignal): Promise<Response> {
+async function sendChat(
+  message: string,
+  history: ChatTurn[],
+  stream: boolean,
+  signal: AbortSignal,
+  options?: ChatStreamOptions,
+): Promise<Response> {
   await getCsrf(true);
   const headers = new Headers();
   headers.set("Accept", stream ? "text/event-stream" : "application/json");
@@ -651,9 +687,101 @@ async function sendChat(message: string, history: ChatTurn[], stream: boolean, s
     method: "POST",
     headers,
     credentials: "include",
-    body: JSON.stringify({ message, history, ...collectChatPageContext(), ...(stream ? { stream: true } : {}) }),
+    body: JSON.stringify({
+      message,
+      history,
+      ...collectChatPageContext(),
+      ...(stream ? { stream: true } : {}),
+      ...(options?.speak ? { speak: true, lang: options.lang || "" } : {}),
+    }),
     signal,
   });
+}
+
+// ---------------------------------------------------------------------------
+// Voice: streaming speech-to-text
+// ---------------------------------------------------------------------------
+
+export async function getVoiceConfig(): Promise<VoiceConfig | null> {
+  try {
+    const response = await fetch(apiUrl("/voice/config"), {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      credentials: "include",
+    });
+    if (response.status !== 200) {
+      return null;
+    }
+    const data = await parseJSON<VoiceConfig & APIErrorBody>(response);
+    if (data.enabled) {
+      return {
+        enabled: true,
+        sampleRate: data.sampleRate || 16000,
+        langs: data.langs || ["es", "en"],
+        defaultLang: data.defaultLang || "es",
+      };
+    }
+  } catch {
+    /* voice is optional */
+  }
+  return null;
+}
+
+export async function startVoiceStream(lang: string): Promise<string | null> {
+  try {
+    const { status, data } = await postJSON<{ streamId?: string; error?: string }>("/voice/stream", { lang });
+    if (status === 200 && data.streamId) {
+      return data.streamId;
+    }
+  } catch {
+    /* handled by caller */
+  }
+  return null;
+}
+
+export async function postVoiceChunk(
+  streamId: string,
+  pcm: ArrayBuffer,
+): Promise<{ status: number; data: VoiceChunkResponse }> {
+  await getCsrf(false);
+  const headers = new Headers();
+  headers.set("Content-Type", "application/octet-stream");
+  headers.set("Accept", "application/json");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  try {
+    const response = await fetch(apiUrl(`/voice/stream/${encodeURIComponent(streamId)}/chunk`), {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: pcm,
+    });
+    const data = await parseJSON<VoiceChunkResponse>(response);
+    return { status: response.status, data };
+  } catch {
+    return { status: 0, data: { error: "internal_error" } };
+  }
+}
+
+export async function stopVoiceStream(streamId: string): Promise<string> {
+  try {
+    const { status, data } = await postJSON<{ text?: string }>(`/voice/stream/${encodeURIComponent(streamId)}/stop`, {});
+    if (status === 200) {
+      return (data.text || "").trim();
+    }
+  } catch {
+    /* ignore */
+  }
+  return "";
+}
+
+export async function cancelVoiceStream(streamId: string): Promise<void> {
+  try {
+    await postJSON(`/voice/stream/${encodeURIComponent(streamId)}/cancel`, {});
+  } catch {
+    /* ignore */
+  }
 }
 
 export async function patchJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
