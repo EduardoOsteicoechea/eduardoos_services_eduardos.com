@@ -230,6 +230,10 @@ Production **ignores** `EVOICE_FAKE_TTS=true` (it is forced off) so the API can
 never ship silent placeholder audio. TTS resolution order is Piper →
 `espeak-ng` → host system voice; the Piper step reuses `VOICE_PIPER_MODEL_ES`
 when `EVOICE_PIPER_MODEL` is unset, so an existing global-voice model is enough.
+Piper is the only natural-sounding engine: `espeak-ng`/Pico/Flite are robotic
+emergencies, so always provision Piper and a voice model (the job log prints
+`robotic_fallback` when it has to use one). The Piper binary is found on PATH,
+in `EVOICE_PIPER_BIN`/`VOICE_PIPER_BIN`, or in the interpreter/voice venv.
 
 ## Admin diagnostics
 

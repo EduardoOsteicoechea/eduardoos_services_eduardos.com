@@ -760,8 +760,34 @@ def find_tool(name: str) -> str | None:
     return None
 
 
+def find_piper() -> str | None:
+    """Find the Piper binary: explicit env, PATH, our venv, then the voice venv."""
+    for key in ("EVOICE_PIPER_BIN", "VOICE_PIPER_BIN"):
+        cand = (os.environ.get(key) or "").strip()
+        if cand and Path(cand).is_file():
+            return cand
+    found = find_tool("piper")
+    if found:
+        return found
+    # The global-voice worker ships its own venv; reuse its Piper if present.
+    for key in ("VOICE_PYTHON", "VOICE_WORKER_PYTHON"):
+        voice_py = (os.environ.get(key) or "").strip()
+        if not voice_py:
+            continue
+        candidate = Path(voice_py).expanduser().resolve().parent / "piper"
+        if candidate.is_file():
+            return str(candidate)
+    for fallback in (
+        "/opt/apps/eduardoos/voice-worker/.venv/bin/piper",
+        "/opt/apps/eduardoos/evoice-venv/bin/piper",
+    ):
+        if Path(fallback).is_file():
+            return fallback
+    return None
+
+
 def text_to_wav_piper(text: str, wav_path: Path) -> None:
-    piper = find_tool("piper")
+    piper = find_piper()
     if not piper:
         raise FileNotFoundError("piper not found")
     model = Path(__file__).resolve().parent / "models" / "es_ES-sharvard-medium.onnx"
@@ -792,8 +818,23 @@ def text_to_wav_espeak(text: str, wav_path: Path) -> None:
     espeak = find_tool("espeak-ng") or find_tool("espeak")
     if not espeak:
         raise FileNotFoundError("espeak-ng not found")
+    # Slower, slightly lower pitch and a small word gap sound less harsh/robotic
+    # than espeak defaults when Piper is unavailable.
     proc = subprocess.run(
-        [espeak, "-v", "es", "-w", str(wav_path), text],
+        [
+            espeak,
+            "-v",
+            "es",
+            "-s",
+            "150",
+            "-p",
+            "42",
+            "-g",
+            "2",
+            "-w",
+            str(wav_path),
+            text,
+        ],
         capture_output=True,
         check=False,
     )
@@ -889,8 +930,8 @@ def wav_to_mp3(wav_path: Path, mp3_path: Path) -> None:
             str(wav_path),
             "-codec:a",
             "libmp3lame",
-            "-b:a",
-            "64k",
+            "-q:a",
+            "4",
             "-ac",
             "1",
             "-ar",
@@ -940,27 +981,32 @@ def text_to_mp3(text: str, mp3_path: Path, name: str, tmp_parent: Path | None = 
     with tempfile.TemporaryDirectory(prefix="evoice-tts-", dir=str(parent)) as tmp:
         tmp_path = Path(tmp)
         wav_parts: list[Path] = []
+        engine = "piper"
         for i, chunk in enumerate(chunks, start=1):
             pct = int(100 * (i - 1) / max(len(chunks), 1))
             log(f"TTS {name} pct={pct} detail=chunk {i}/{len(chunks)}")
             wav = tmp_path / f"part-{i:04d}.wav"
             try:
                 text_to_wav_piper(chunk, wav)
-                if i == 1:
-                    log(f"TTS {name} detail=engine=piper")
+                engine = "piper"
             except Exception as piper_err:  # noqa: BLE001
                 if i == 1:
                     log(f"TTS {name} detail=piper_fail ({piper_err}); trying espeak-ng")
                 try:
                     text_to_wav_espeak(chunk, wav)
-                    if i == 1:
-                        log(f"TTS {name} detail=engine=espeak-ng")
+                    engine = "espeak-ng"
                 except Exception as espeak_err:  # noqa: BLE001
                     if i == 1:
                         log(f"TTS {name} detail=espeak_fail ({espeak_err}); trying system TTS")
                     text_to_wav_system(chunk, wav)
-                    if i == 1:
-                        log(f"TTS {name} detail=engine=system")
+                    engine = "system"
+            if i == 1:
+                log(f"TTS {name} detail=engine={engine}")
+                if engine != "piper":
+                    log(
+                        f"WARNING TTS {name} detail=robotic_fallback engine={engine}; "
+                        "install Piper + a voice model for a natural voice"
+                    )
             if not wav.is_file() or wav.stat().st_size <= 0:
                 raise RuntimeError(f"TTS produced an empty WAV for chunk {i}")
             wav_parts.append(wav)
