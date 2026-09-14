@@ -100,7 +100,10 @@ Follows [`error-observability.mdc`](../../../.cursor/rules/error-observability.m
   with `setup-whisper.sh` / `requirements-whisper.txt`.
 - `backend/voice-worker/speak.py`: Piper + ffmpeg sentence synthesizer. Use the
   native Piper binary (`install-piper.sh`); the pip `piper-tts` package often
-  fails to import on newer Pythons.
+  fails to import on newer Pythons. Voices come from `rhasspy/piper-voices`
+  (`download-piper-voice.sh`), e.g. Mexican Spanish male `es_MX-ald-medium`
+  (`es_MX-claude-high` is female). Speaking rate via `VOICE_PIPER_LENGTH_SCALE`
+  (<1 is faster; `0.8` = 1.25x).
 - Models and the worker scripts are provisioned on the VPS manually (like the
   eVoice worker); deploy does not ship them.
 
