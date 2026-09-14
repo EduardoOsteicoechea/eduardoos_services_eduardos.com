@@ -8,6 +8,11 @@ import {
 } from "./api";
 import { mustLog } from "./dev-log";
 
+export type EostoreStatus = "draft" | "active" | "archived";
+
+export const EOSTORE_PRODUCT_STATUSES: EostoreStatus[] = ["draft", "active", "archived"];
+export const EOSTORE_LOW_STOCK = 5;
+
 export type EostoreCompany = {
   guid: string;
   id: string;
@@ -42,6 +47,7 @@ export type EostoreImage = {
   id: string;
   content_type?: string;
   bytes?: number;
+  alt?: string;
   created_at?: string;
   url?: string;
 };
@@ -63,6 +69,11 @@ export type EostoreProduct = {
   price_bs?: number;
   units: number;
   visible: boolean;
+  status?: EostoreStatus | string;
+  sku?: string;
+  seo_title?: string;
+  seo_description?: string;
+  low_stock?: boolean;
   created_at?: string;
   updated_at?: string;
 };
@@ -84,6 +95,176 @@ export function formatMoney(n: number | undefined): string {
   if (typeof n !== "number" || Number.isNaN(n)) return "—";
   return n.toFixed(2);
 }
+
+// ---------------------------------------------------------------------------
+// Pure workflow helpers (unit tested)
+// ---------------------------------------------------------------------------
+
+export function slugifyProduct(raw: string): string {
+  return raw
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 64);
+}
+
+export function normalizeProductStatus(raw: string | undefined): EostoreStatus {
+  return raw === "active" || raw === "archived" || raw === "draft" ? raw : "draft";
+}
+
+export function productStatusLabel(raw: string | undefined): string {
+  switch (normalizeProductStatus(raw)) {
+    case "active":
+      return "Active";
+    case "archived":
+      return "Archived";
+    default:
+      return "Draft";
+  }
+}
+
+export type ProductStockState = "out" | "low" | "in";
+
+export function productStockState(units: number | undefined): ProductStockState {
+  const n = typeof units === "number" && Number.isFinite(units) ? units : 0;
+  if (n <= 0) return "out";
+  if (n <= EOSTORE_LOW_STOCK) return "low";
+  return "in";
+}
+
+export function productStockLabel(units: number | undefined): string {
+  switch (productStockState(units)) {
+    case "out":
+      return "Out of stock";
+    case "low":
+      return "Low stock";
+    default:
+      return "In stock";
+  }
+}
+
+export function isOnSale(p: Pick<EostoreProduct, "discount_percent">): boolean {
+  return Number(p.discount_percent) > 0;
+}
+
+export type ProductSortKey = "recent" | "name" | "price" | "stock";
+
+export type ProductFilter = {
+  query?: string;
+  companyGuid?: string;
+  sectionGuid?: string;
+  typeGuid?: string;
+  status?: string;
+  sort?: ProductSortKey;
+};
+
+function productHaystack(p: EostoreProduct): string {
+  return [p.name, p.id, p.sku, ...(p.hashtags || [])]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
+
+export function filterProducts(products: EostoreProduct[], filter: ProductFilter): EostoreProduct[] {
+  const q = (filter.query || "").trim().toLowerCase();
+  const out = products.filter((p) => {
+    if (filter.companyGuid && p.company_guid !== filter.companyGuid) return false;
+    if (filter.sectionGuid && p.section_guid !== filter.sectionGuid) return false;
+    if (filter.typeGuid && p.type_guid !== filter.typeGuid) return false;
+    if (filter.status && filter.status !== "all" && normalizeProductStatus(p.status) !== filter.status) return false;
+    if (q && !productHaystack(p).includes(q)) return false;
+    return true;
+  });
+  return sortProducts(out, filter.sort || "recent");
+}
+
+export function sortProducts(products: EostoreProduct[], sort: ProductSortKey): EostoreProduct[] {
+  const copy = [...products];
+  switch (sort) {
+    case "name":
+      return copy.sort((a, b) => a.name.localeCompare(b.name));
+    case "price":
+      return copy.sort((a, b) => (b.price_final_usd ?? b.price_base_usd) - (a.price_final_usd ?? a.price_base_usd));
+    case "stock":
+      return copy.sort((a, b) => a.units - b.units);
+    case "recent":
+    default:
+      return copy.sort((a, b) => (b.updated_at || b.created_at || "").localeCompare(a.updated_at || a.created_at || ""));
+  }
+}
+
+export function pageCount(total: number, pageSize: number): number {
+  if (pageSize <= 0) return 1;
+  return Math.max(1, Math.ceil(total / pageSize));
+}
+
+export function pageSlice<T>(items: T[], page: number, pageSize: number): { items: T[]; page: number; pages: number; total: number } {
+  const total = items.length;
+  const pages = pageCount(total, pageSize);
+  const current = Math.min(Math.max(1, Math.floor(page) || 1), pages);
+  const start = (current - 1) * pageSize;
+  return { items: items.slice(start, start + pageSize), page: current, pages, total };
+}
+
+export type ProductInput = {
+  type_guid?: string;
+  id?: string;
+  name?: string;
+  description?: string;
+  price_base_usd?: number;
+  discount_percent?: number;
+  bs_per_usd?: number;
+  units?: number;
+  status?: string;
+  sku?: string;
+  seo_title?: string;
+  seo_description?: string;
+};
+
+export type ProductFieldErrors = Record<string, string>;
+
+const PRODUCT_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function validateProductInput(input: ProductInput): ProductFieldErrors {
+  const errors: ProductFieldErrors = {};
+  if (!(input.type_guid || "").trim()) errors.type_guid = "Choose a product type.";
+  if (!(input.name || "").trim()) errors.name = "Name is required.";
+  const slug = (input.id || "").trim();
+  if (slug && !PRODUCT_SLUG_RE.test(slug)) {
+    errors.id = "Use lowercase letters, numbers, and single hyphens.";
+  }
+  const price = input.price_base_usd;
+  if (typeof price !== "number" || Number.isNaN(price) || price < 0) {
+    errors.price_base_usd = "Price must be 0 or more.";
+  }
+  const discount = input.discount_percent ?? 0;
+  if (!Number.isFinite(discount) || discount < 0 || discount > 100 || discount % 5 !== 0) {
+    errors.discount_percent = "Discount must be 0–100 in steps of 5.";
+  }
+  const bs = input.bs_per_usd;
+  if (typeof bs !== "number" || Number.isNaN(bs) || bs < 0) {
+    errors.bs_per_usd = "Bs per USD must be 0 or more.";
+  }
+  const units = input.units ?? 0;
+  if (!Number.isInteger(units) || units < 0) {
+    errors.units = "Units must be a whole number 0 or more.";
+  }
+  const status = (input.status || "").trim();
+  if (status && !EOSTORE_PRODUCT_STATUSES.includes(status as EostoreStatus)) {
+    errors.status = "Unknown status.";
+  }
+  return errors;
+}
+
+export function hasFieldErrors(errors: ProductFieldErrors): boolean {
+  return Object.keys(errors).length > 0;
+}
+
+// ---------------------------------------------------------------------------
+// Admin catalog API
+// ---------------------------------------------------------------------------
 
 export async function listCompanies() {
   return getJSON<EostoreCompaniesResponse>("/eostore/companies");
@@ -148,7 +329,7 @@ export async function listProducts(filters: { company_guid?: string; section_gui
 }
 
 export async function createProduct(body: Record<string, unknown>) {
-  if (mustLog) console.log("eostore.product.create.start", { id: body.id, type: body.type_guid });
+  if (mustLog) console.log("eostore.product.create.start", { id: body.id, type: body.type_guid, status: body.status });
   return postJSON<EostoreProductResponse>("/eostore/products", body);
 }
 
@@ -169,6 +350,14 @@ export async function deleteProductImage(guid: string, imageId: string) {
   return deleteJSON<EostoreProductResponse>(`/eostore/products/${guid}/images/${imageId}`);
 }
 
+export async function updateProductImageAlt(guid: string, imageId: string, alt: string) {
+  return putJSON<EostoreProductResponse>(`/eostore/products/${guid}/images/${imageId}`, { alt });
+}
+
+export async function reorderProductImages(guid: string, imageIds: string[]) {
+  return putJSON<EostoreProductResponse>(`/eostore/products/${guid}/images/order`, { image_ids: imageIds });
+}
+
 export type EostoreDescribeResponse = EostoreProductResponse & {
   description?: string;
   word_count?: number;
@@ -183,12 +372,24 @@ export async function describeProduct(guid: string, wordCount: number, imageId =
   return postJSON<EostoreDescribeResponse>(`/eostore/products/${guid}/describe`, body, { timeoutMs: 120000 });
 }
 
+// ---------------------------------------------------------------------------
+// Public storefront API
+// ---------------------------------------------------------------------------
+
 export type EostoreCatalogResponse = APIErrorBody & {
   company?: EostoreCompany;
   sections?: EostoreSection[];
   types?: EostoreType[];
   products?: EostoreProduct[];
   count?: number;
+};
+
+export type EostoreProductDetailResponse = APIErrorBody & {
+  company?: EostoreCompany;
+  product?: EostoreProduct;
+  related?: EostoreProduct[];
+  section_name?: string;
+  type_name?: string;
 };
 
 export type EostoreCartLine = {
@@ -231,6 +432,12 @@ export async function getPublicCatalog(companyId: string) {
   return getJSON<EostoreCatalogResponse>(`/eostore/public/companies/${encodeURIComponent(companyId)}`);
 }
 
+export async function getPublicProduct(companyId: string, productId: string) {
+  return getJSON<EostoreProductDetailResponse>(
+    `/eostore/public/companies/${encodeURIComponent(companyId)}/products/${encodeURIComponent(productId)}`,
+  );
+}
+
 export async function getCart(companyId: string) {
   return getJSON<EostoreCartResponse>(`/eostore/cart/${encodeURIComponent(companyId)}`);
 }
@@ -250,7 +457,11 @@ export async function checkoutCart(companyId: string, description = "") {
   });
 }
 
-/** Resolve company id only on store routes: `/store/company?id=` or legacy `/store/{id}`. */
+// ---------------------------------------------------------------------------
+// Routes
+// ---------------------------------------------------------------------------
+
+/** Resolve company id from a storefront path or query string. */
 export function companyIdFromPath(
   pathname = window.location.pathname,
   search = window.location.search,
@@ -261,15 +472,33 @@ export function companyIdFromPath(
   if (parts[1] === "company") {
     return new URLSearchParams(search).get("id")?.trim() || "";
   }
-  // Legacy: /store/{id} or /store/{id}/cart
+  // Clean path: /store/{company} or /store/{company}/cart
   return decodeURIComponent(parts[1]);
 }
 
-/** Real Astro page — works without nginx pretty-URL rewrites. */
+/** Resolve company + product ids from a product detail path. */
+export function productRefFromPath(
+  pathname = window.location.pathname,
+): { companyId: string; productId: string } {
+  const parts = pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+  if (parts[0] !== "store" || parts.length < 3) return { companyId: "", productId: "" };
+  const companyId = decodeURIComponent(parts[1]);
+  const productId = decodeURIComponent(parts[2]);
+  if (!companyId || !productId || productId === "cart" || productId === "company") {
+    return { companyId: "", productId: "" };
+  }
+  return { companyId, productId };
+}
+
+/** Clean, stable storefront URLs served by nginx rewrites to the static shells. */
 export function companyStoreHref(companyId: string): string {
-  return `/store/company?id=${encodeURIComponent(companyId)}`;
+  return `/store/${encodeURIComponent(companyId)}`;
 }
 
 export function companyCartHref(companyId: string): string {
-  return `/store/company/cart?id=${encodeURIComponent(companyId)}`;
+  return `/store/${encodeURIComponent(companyId)}/cart`;
+}
+
+export function companyProductHref(companyId: string, productId: string): string {
+  return `/store/${encodeURIComponent(companyId)}/${encodeURIComponent(productId)}`;
 }

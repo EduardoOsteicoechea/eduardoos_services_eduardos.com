@@ -411,16 +411,20 @@ func (a *App) eostoreProductsGetHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 type eostoreProductBody struct {
-	TypeGUID         string   `json:"type_guid"`
-	ID               string   `json:"id"`
-	Name             string   `json:"name"`
-	Description      string   `json:"description"`
-	Hashtags         []string `json:"hashtags"`
-	PriceBaseUSD     float64  `json:"price_base_usd"`
-	DiscountPercent  *int     `json:"discount_percent"`
-	BsPerUSD         float64  `json:"bs_per_usd"`
-	Units            *int     `json:"units"`
-	Visible          *bool    `json:"visible"`
+	TypeGUID        string   `json:"type_guid"`
+	ID              string   `json:"id"`
+	Name            string   `json:"name"`
+	Description     string   `json:"description"`
+	Hashtags        []string `json:"hashtags"`
+	PriceBaseUSD    float64  `json:"price_base_usd"`
+	DiscountPercent *int     `json:"discount_percent"`
+	BsPerUSD        float64  `json:"bs_per_usd"`
+	Units           *int     `json:"units"`
+	Visible         *bool    `json:"visible"`
+	Status          *string  `json:"status"`
+	SKU             *string  `json:"sku"`
+	SEOTitle        *string  `json:"seo_title"`
+	SEODescription  *string  `json:"seo_description"`
 }
 
 func (a *App) eostoreProductsCreateHandler(w http.ResponseWriter, r *http.Request) {
@@ -455,6 +459,22 @@ func (a *App) eostoreProductsCreateHandler(w http.ResponseWriter, r *http.Reques
 	if body.Visible != nil {
 		visible = *body.Visible
 	}
+	status := ""
+	if body.Status != nil && strings.TrimSpace(*body.Status) != "" {
+		status = normalizeEostoreStatus(*body.Status)
+		if status == "" {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+	}
+	if status == "" {
+		if visible {
+			status = EostoreStatusActive
+		} else {
+			status = EostoreStatusDraft
+		}
+	}
+	visible = status == EostoreStatusActive
 	if name == "" || !eostoreFriendlyIDValid(friendly) || body.PriceBaseUSD < 0 || body.BsPerUSD < 0 || units < 0 || !eostoreDiscountValid(discount) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
@@ -475,6 +495,10 @@ func (a *App) eostoreProductsCreateHandler(w http.ResponseWriter, r *http.Reques
 		BsPerUSD:        body.BsPerUSD,
 		Units:           units,
 		Visible:         visible,
+		Status:          status,
+		SKU:             trimToLen(derefString(body.SKU), eostoreMaxSKU),
+		SEOTitle:        trimToLen(derefString(body.SEOTitle), eostoreMaxSEOTitle),
+		SEODescription:  trimToLen(derefString(body.SEODescription), eostoreMaxSEODesc),
 		CreatedAt:       now,
 		UpdatedAt:       now,
 	}
@@ -537,8 +561,26 @@ func (a *App) eostoreProductsUpdateHandler(w http.ResponseWriter, r *http.Reques
 		}
 		existing.Units = *body.Units
 	}
-	if body.Visible != nil {
+	if body.Visible != nil && body.Status == nil {
 		existing.Visible = *body.Visible
+	}
+	if body.Status != nil {
+		st := normalizeEostoreStatus(*body.Status)
+		if strings.TrimSpace(*body.Status) != "" && st == "" {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		existing.Status = st
+		existing.Visible = st == EostoreStatusActive
+	}
+	if body.SKU != nil {
+		existing.SKU = trimToLen(*body.SKU, eostoreMaxSKU)
+	}
+	if body.SEOTitle != nil {
+		existing.SEOTitle = trimToLen(*body.SEOTitle, eostoreMaxSEOTitle)
+	}
+	if body.SEODescription != nil {
+		existing.SEODescription = trimToLen(*body.SEODescription, eostoreMaxSEODesc)
 	}
 	if strings.TrimSpace(body.TypeGUID) != "" && body.TypeGUID != existing.TypeGUID {
 		typ, err := a.eostore.GetType(r.Context(), strings.TrimSpace(body.TypeGUID))
@@ -792,6 +834,92 @@ func (a *App) eostoreProductImageDeleteHandler(w http.ResponseWriter, r *http.Re
 	writeJSON(w, http.StatusOK, map[string]any{"product": eostoreProductView(p)})
 }
 
+func (a *App) eostoreProductImageUpdateHandler(w http.ResponseWriter, r *http.Request) {
+	admin := a.eostoreAdmin(w, r)
+	if admin == nil {
+		return
+	}
+	p, err := a.eostore.GetProduct(r.Context(), strings.TrimSpace(r.PathValue("guid")))
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	imageID := strings.TrimSpace(r.PathValue("imageId"))
+	var body struct {
+		Alt string `json:"alt"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 16<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	alt := trimToLen(body.Alt, eostoreMaxImageAlt)
+	found := false
+	for i := range p.Images {
+		if p.Images[i].ID == imageID {
+			p.Images[i].Alt = alt
+			found = true
+			break
+		}
+	}
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	p.UpdatedAt = time.Now().UTC()
+	if err := a.eostore.UpdateProduct(r.Context(), p); err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	a.auditEvent(r, "eostore_product_image", "updated", admin.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"product": eostoreProductView(p)})
+}
+
+func (a *App) eostoreProductImageOrderHandler(w http.ResponseWriter, r *http.Request) {
+	admin := a.eostoreAdmin(w, r)
+	if admin == nil {
+		return
+	}
+	p, err := a.eostore.GetProduct(r.Context(), strings.TrimSpace(r.PathValue("guid")))
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	var body struct {
+		ImageIDs []string `json:"image_ids"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 16<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if len(body.ImageIDs) != len(p.Images) || len(body.ImageIDs) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	byID := make(map[string]EostoreImage, len(p.Images))
+	for _, img := range p.Images {
+		byID[img.ID] = img
+	}
+	ordered := make([]EostoreImage, 0, len(body.ImageIDs))
+	seen := make(map[string]bool, len(body.ImageIDs))
+	for _, id := range body.ImageIDs {
+		img, ok := byID[strings.TrimSpace(id)]
+		if !ok || seen[img.ID] {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		seen[img.ID] = true
+		ordered = append(ordered, img)
+	}
+	p.Images = ordered
+	p.UpdatedAt = time.Now().UTC()
+	if err := a.eostore.UpdateProduct(r.Context(), p); err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	a.auditEvent(r, "eostore_product_image", "reordered", admin.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"product": eostoreProductView(p)})
+}
+
 const (
 	eostoreDescribeMinWords = 25
 	eostoreDescribeMaxWords = 1000
@@ -996,6 +1124,8 @@ func (a *App) registerEostoreRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("PUT /api/eostore/products/{guid}", a.eostoreProductsUpdateHandler)
 	mux.HandleFunc("DELETE /api/eostore/products/{guid}", a.eostoreProductsDeleteHandler)
 	mux.HandleFunc("POST /api/eostore/products/{guid}/images", a.eostoreProductImageUploadHandler)
+	mux.HandleFunc("PUT /api/eostore/products/{guid}/images/order", a.eostoreProductImageOrderHandler)
+	mux.HandleFunc("PUT /api/eostore/products/{guid}/images/{imageId}", a.eostoreProductImageUpdateHandler)
 	mux.HandleFunc("GET /api/eostore/products/{guid}/images/{imageId}", a.eostoreProductImageGetHandler)
 	mux.HandleFunc("DELETE /api/eostore/products/{guid}/images/{imageId}", a.eostoreProductImageDeleteHandler)
 	mux.HandleFunc("POST /api/eostore/products/{guid}/describe", a.eostoreProductDescribeHandler)

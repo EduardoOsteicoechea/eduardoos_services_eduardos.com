@@ -12,6 +12,18 @@ const (
 	maxEostoreImageBytes = 8 << 20
 	maxEostoreImageEdge  = 4096
 	maxEostoreImages     = 12
+
+	// Product lifecycle status (admin workflow). Additive: documents without a
+	// status derive it from the legacy `visible` flag.
+	EostoreStatusDraft    = "draft"
+	EostoreStatusActive   = "active"
+	EostoreStatusArchived = "archived"
+
+	eostoreMaxSKU         = 64
+	eostoreMaxSEOTitle    = 120
+	eostoreMaxSEODesc     = 320
+	eostoreMaxImageAlt    = 200
+	eostoreLowStockThresh = 5
 )
 
 var (
@@ -83,27 +95,32 @@ type EostoreImage struct {
 	Key         string    `json:"key" bson:"key"`
 	ContentType string    `json:"content_type" bson:"content_type"`
 	Bytes       int64     `json:"bytes" bson:"bytes"`
+	Alt         string    `json:"alt,omitempty" bson:"alt,omitempty"`
 	CreatedAt   time.Time `json:"created_at" bson:"created_at"`
 }
 
 // EostoreProduct is a sellable catalog item.
 type EostoreProduct struct {
-	GUID           string         `json:"guid" bson:"_id"`
-	FriendlyID     string         `json:"id" bson:"friendly_id"`
-	CompanyGUID    string         `json:"company_guid" bson:"company_guid"`
-	SectionGUID    string         `json:"section_guid" bson:"section_guid"`
-	TypeGUID       string         `json:"type_guid" bson:"type_guid"`
-	Name           string         `json:"name" bson:"name"`
-	Description    string         `json:"description,omitempty" bson:"description,omitempty"`
-	Hashtags       []string       `json:"hashtags" bson:"hashtags"`
-	Images         []EostoreImage `json:"images" bson:"images"`
-	PriceBaseUSD   float64        `json:"price_base_usd" bson:"price_base_usd"`
-	DiscountPercent int           `json:"discount_percent" bson:"discount_percent"`
-	BsPerUSD       float64        `json:"bs_per_usd" bson:"bs_per_usd"`
-	Units          int            `json:"units" bson:"units"`
-	Visible        bool           `json:"visible" bson:"visible"`
-	CreatedAt      time.Time      `json:"created_at" bson:"created_at"`
-	UpdatedAt      time.Time      `json:"updated_at" bson:"updated_at"`
+	GUID            string         `json:"guid" bson:"_id"`
+	FriendlyID      string         `json:"id" bson:"friendly_id"`
+	CompanyGUID     string         `json:"company_guid" bson:"company_guid"`
+	SectionGUID     string         `json:"section_guid" bson:"section_guid"`
+	TypeGUID        string         `json:"type_guid" bson:"type_guid"`
+	Name            string         `json:"name" bson:"name"`
+	Description     string         `json:"description,omitempty" bson:"description,omitempty"`
+	Hashtags        []string       `json:"hashtags" bson:"hashtags"`
+	Images          []EostoreImage `json:"images" bson:"images"`
+	PriceBaseUSD    float64        `json:"price_base_usd" bson:"price_base_usd"`
+	DiscountPercent int            `json:"discount_percent" bson:"discount_percent"`
+	BsPerUSD        float64        `json:"bs_per_usd" bson:"bs_per_usd"`
+	Units           int            `json:"units" bson:"units"`
+	Visible         bool           `json:"visible" bson:"visible"`
+	Status          string         `json:"status,omitempty" bson:"status,omitempty"`
+	SKU             string         `json:"sku,omitempty" bson:"sku,omitempty"`
+	SEOTitle        string         `json:"seo_title,omitempty" bson:"seo_title,omitempty"`
+	SEODescription  string         `json:"seo_description,omitempty" bson:"seo_description,omitempty"`
+	CreatedAt       time.Time      `json:"created_at" bson:"created_at"`
+	UpdatedAt       time.Time      `json:"updated_at" bson:"updated_at"`
 }
 
 func (p *EostoreProduct) clone() *EostoreProduct {
@@ -151,30 +168,89 @@ func eostoreProductView(p *EostoreProduct) map[string]any {
 			"id":           img.ID,
 			"content_type": img.ContentType,
 			"bytes":        img.Bytes,
+			"alt":          img.Alt,
 			"created_at":   img.CreatedAt.UTC().Format(time.RFC3339),
 			"url":          fmt.Sprintf("/api/eostore/products/%s/images/%s", p.GUID, img.ID),
 		})
 	}
 	return map[string]any{
-		"guid":              p.GUID,
-		"id":                p.FriendlyID,
-		"company_guid":      p.CompanyGUID,
-		"section_guid":      p.SectionGUID,
-		"type_guid":         p.TypeGUID,
-		"name":              p.Name,
-		"description":       p.Description,
-		"hashtags":          append([]string(nil), p.Hashtags...),
-		"images":            images,
-		"price_base_usd":    p.PriceBaseUSD,
-		"discount_percent":  p.DiscountPercent,
-		"bs_per_usd":        p.BsPerUSD,
-		"price_final_usd":   roundMoney(p.priceFinalUSD()),
-		"price_bs":          roundMoney(p.priceBs()),
-		"units":             p.Units,
-		"visible":           p.Visible,
-		"created_at":        p.CreatedAt.UTC().Format(time.RFC3339),
-		"updated_at":        p.UpdatedAt.UTC().Format(time.RFC3339),
+		"guid":             p.GUID,
+		"id":               p.FriendlyID,
+		"company_guid":     p.CompanyGUID,
+		"section_guid":     p.SectionGUID,
+		"type_guid":        p.TypeGUID,
+		"name":             p.Name,
+		"description":      p.Description,
+		"hashtags":         append([]string(nil), p.Hashtags...),
+		"images":           images,
+		"price_base_usd":   p.PriceBaseUSD,
+		"discount_percent": p.DiscountPercent,
+		"bs_per_usd":       p.BsPerUSD,
+		"price_final_usd":  roundMoney(p.priceFinalUSD()),
+		"price_bs":         roundMoney(p.priceBs()),
+		"units":            p.Units,
+		"visible":          eostoreEffectiveVisible(p),
+		"status":           eostoreEffectiveStatus(p),
+		"sku":              p.SKU,
+		"seo_title":        p.SEOTitle,
+		"seo_description":  p.SEODescription,
+		"low_stock":        p.Units > 0 && p.Units <= eostoreLowStockThresh,
+		"created_at":       p.CreatedAt.UTC().Format(time.RFC3339),
+		"updated_at":       p.UpdatedAt.UTC().Format(time.RFC3339),
 	}
+}
+
+// normalizeEostoreStatus returns a canonical status or "" when unrecognized.
+func normalizeEostoreStatus(raw string) string {
+	switch strings.ToLower(strings.TrimSpace(raw)) {
+	case EostoreStatusDraft:
+		return EostoreStatusDraft
+	case EostoreStatusActive:
+		return EostoreStatusActive
+	case EostoreStatusArchived:
+		return EostoreStatusArchived
+	}
+	return ""
+}
+
+// eostoreEffectiveStatus resolves the lifecycle status, deriving it from the
+// legacy `visible` flag when a product has no explicit status.
+func eostoreEffectiveStatus(p *EostoreProduct) string {
+	if p == nil {
+		return EostoreStatusDraft
+	}
+	if s := normalizeEostoreStatus(p.Status); s != "" {
+		return s
+	}
+	if p.Visible {
+		return EostoreStatusActive
+	}
+	return EostoreStatusDraft
+}
+
+// eostoreEffectiveVisible reports whether the product is publicly purchasable.
+func eostoreEffectiveVisible(p *EostoreProduct) bool {
+	return eostoreEffectiveStatus(p) == EostoreStatusActive
+}
+
+// trimToLen trims ASCII/Unicode text to a maximum rune count.
+func trimToLen(s string, max int) string {
+	s = strings.TrimSpace(s)
+	if max <= 0 {
+		return s
+	}
+	r := []rune(s)
+	if len(r) > max {
+		return string(r[:max])
+	}
+	return s
+}
+
+func derefString(p *string) string {
+	if p == nil {
+		return ""
+	}
+	return *p
 }
 
 func roundMoney(v float64) float64 {

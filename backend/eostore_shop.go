@@ -36,6 +36,7 @@ func eostorePublicProductView(p *EostoreProduct) map[string]any {
 		images = append(images, map[string]any{
 			"id":  img.ID,
 			"url": fmt.Sprintf("/api/eostore/public/products/%s/images/%s", p.GUID, img.ID),
+			"alt": img.Alt,
 		})
 	}
 	view["images"] = images
@@ -75,7 +76,7 @@ func (a *App) eostorePublicCatalogHandler(w http.ResponseWriter, r *http.Request
 	}
 	visible := make([]map[string]any, 0)
 	for _, p := range products {
-		if p == nil || !p.Visible {
+		if p == nil || !eostoreEffectiveVisible(p) {
 			continue
 		}
 		visible = append(visible, eostorePublicProductView(p))
@@ -90,9 +91,56 @@ func (a *App) eostorePublicCatalogHandler(w http.ResponseWriter, r *http.Request
 	})
 }
 
+// eostorePublicProductHandler serves one published product plus related items
+// from the same section (product detail page).
+func (a *App) eostorePublicProductHandler(w http.ResponseWriter, r *http.Request) {
+	company, err := a.eostoreResolveCompany(r.Context(), r.PathValue("companyId"))
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	productID := normalizeEostoreFriendlyID(r.PathValue("productId"))
+	p, err := a.eostore.GetProductByFriendlyID(r.Context(), company.GUID, productID)
+	if err != nil || p == nil || !eostoreEffectiveVisible(p) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	related := make([]map[string]any, 0, 8)
+	if p.SectionGUID != "" {
+		siblings, err := a.eostore.ListProducts(r.Context(), company.GUID, p.SectionGUID, "")
+		if err == nil {
+			for _, sib := range siblings {
+				if sib == nil || sib.GUID == p.GUID || !eostoreEffectiveVisible(sib) {
+					continue
+				}
+				related = append(related, eostorePublicProductView(sib))
+				if len(related) >= 8 {
+					break
+				}
+			}
+		}
+	}
+	sectionName := ""
+	if sec, err := a.eostore.GetSection(r.Context(), p.SectionGUID); err == nil && sec != nil {
+		sectionName = sec.Name
+	}
+	typeName := ""
+	if typ, err := a.eostore.GetType(r.Context(), p.TypeGUID); err == nil && typ != nil {
+		typeName = typ.Name
+	}
+	a.mustLogf(r, "eostore.public.product", "company", company.FriendlyID, "product", p.FriendlyID, "related", len(related))
+	writeJSON(w, http.StatusOK, map[string]any{
+		"company":      company,
+		"product":      eostorePublicProductView(p),
+		"related":      related,
+		"section_name": sectionName,
+		"type_name":    typeName,
+	})
+}
+
 func (a *App) eostorePublicProductImageHandler(w http.ResponseWriter, r *http.Request) {
 	p, err := a.eostore.GetProduct(r.Context(), strings.TrimSpace(r.PathValue("guid")))
-	if err != nil || p == nil || !p.Visible {
+	if err != nil || p == nil || !eostoreEffectiveVisible(p) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
@@ -139,16 +187,16 @@ func (a *App) eostoreCartView(ctx context.Context, cart *EostoreCart) map[string
 		totalUSD += lineUSD
 		totalBs += lineBs
 		lines = append(lines, map[string]any{
-			"product_guid":     p.GUID,
-			"product_id":       p.FriendlyID,
-			"name":             p.Name,
-			"units":            it.Units,
-			"max_units":        p.Units,
-			"unit_price_usd":   roundMoney(p.priceFinalUSD()),
-			"line_total_usd":   roundMoney(lineUSD),
-			"line_total_bs":    roundMoney(lineBs),
-			"visible":          p.Visible,
-			"image_url":        firstPublicProductImage(p),
+			"product_guid":   p.GUID,
+			"product_id":     p.FriendlyID,
+			"name":           p.Name,
+			"units":          it.Units,
+			"max_units":      p.Units,
+			"unit_price_usd": roundMoney(p.priceFinalUSD()),
+			"line_total_usd": roundMoney(lineUSD),
+			"line_total_bs":  roundMoney(lineBs),
+			"visible":        eostoreEffectiveVisible(p),
+			"image_url":      firstPublicProductImage(p),
 		})
 	}
 	return map[string]any{
@@ -211,7 +259,7 @@ func (a *App) eostoreCartPutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	productGUID := strings.TrimSpace(body.ProductGUID)
 	p, err := a.eostore.GetProduct(r.Context(), productGUID)
-	if err != nil || p == nil || !p.Visible || p.CompanyGUID != company.GUID {
+	if err != nil || p == nil || !eostoreEffectiveVisible(p) || p.CompanyGUID != company.GUID {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -259,7 +307,7 @@ func (a *App) eostoreReserveInventory(ctx context.Context, items []EoadminSelect
 		if err != nil || p == nil {
 			return errNotFound
 		}
-		if it.Units < 1 || it.Units > p.Units || !p.Visible {
+		if it.Units < 1 || it.Units > p.Units || !eostoreEffectiveVisible(p) {
 			return errConflict
 		}
 		p.Units -= it.Units
@@ -352,7 +400,7 @@ func (a *App) eostoreCartCheckoutHandler(w http.ResponseWriter, r *http.Request)
 	totalUSD := 0.0
 	for _, it := range cart.Items {
 		p, err := a.eostore.GetProduct(r.Context(), it.ProductGUID)
-		if err != nil || p == nil || !p.Visible || p.CompanyGUID != company.GUID {
+		if err != nil || p == nil || !eostoreEffectiveVisible(p) || p.CompanyGUID != company.GUID {
 			a.writeSafeError(w, r, http.StatusConflict, "conflict")
 			return
 		}
@@ -433,6 +481,7 @@ func (a *App) eostoreCartCheckoutHandler(w http.ResponseWriter, r *http.Request)
 func (a *App) registerEostoreShopRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/eostore/public/companies", a.eostorePublicCompaniesHandler)
 	mux.HandleFunc("GET /api/eostore/public/companies/{companyId}", a.eostorePublicCatalogHandler)
+	mux.HandleFunc("GET /api/eostore/public/companies/{companyId}/products/{productId}", a.eostorePublicProductHandler)
 	mux.HandleFunc("GET /api/eostore/public/products/{guid}/images/{imageId}", a.eostorePublicProductImageHandler)
 
 	mux.HandleFunc("GET /api/eostore/cart/{companyId}", a.eostoreCartGetHandler)

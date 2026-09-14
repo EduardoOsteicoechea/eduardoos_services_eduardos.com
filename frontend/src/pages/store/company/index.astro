@@ -38,8 +38,11 @@ import Layout from "../../../layouts/Layout.astro";
   import {
     companyCartHref,
     companyIdFromPath,
+    companyProductHref,
     formatMoney,
     getPublicCatalog,
+    productStockLabel,
+    productStockState,
     setCartItem,
     type EostoreProduct,
     type EostoreSection,
@@ -83,17 +86,40 @@ import Layout from "../../../layouts/Layout.astro";
       return true;
     };
 
+    const badge = (text: string, kind: string) => {
+      const span = document.createElement("span");
+      span.className = `eostore-badge eostore-badge--${kind}`;
+      span.textContent = text;
+      return span;
+    };
+
     const productCard = (p: EostoreProduct, sectionName: string, typeName: string) => {
       const card = document.createElement("article");
       card.className = "eostore-shop-card";
+      const head = document.createElement("div");
+      head.className = "eostore-card-head";
       const h = document.createElement("h3");
-      h.textContent = p.name;
+      const titleLink = document.createElement("a");
+      titleLink.href = companyProductHref(companyId, p.id);
+      titleLink.setAttribute("data-route", "");
+      titleLink.textContent = p.name;
+      h.appendChild(titleLink);
+      head.appendChild(h);
+      if ((p.discount_percent || 0) > 0) head.appendChild(badge(`−${p.discount_percent}%`, "sale"));
+      const stock = productStockState(p.units);
+      if (stock !== "in") head.appendChild(badge(productStockLabel(p.units), stock));
       const meta = document.createElement("p");
       meta.className = "eostore-hint";
-      meta.textContent = `${sectionName} · ${typeName} · stock ${p.units}`;
+      meta.textContent = `${sectionName} · ${typeName} · ${productStockLabel(p.units)}`;
       const price = document.createElement("p");
       price.className = "eostore-meta";
-      price.textContent = `$${formatMoney(p.price_final_usd)} USD · Bs ${formatMoney(p.price_bs)}`;
+      if ((p.discount_percent || 0) > 0) {
+        const was = document.createElement("s");
+        was.textContent = `$${formatMoney(p.price_base_usd)}`;
+        price.append(was, document.createTextNode(` $${formatMoney(p.price_final_usd)} USD · Bs ${formatMoney(p.price_bs)}`));
+      } else {
+        price.textContent = `$${formatMoney(p.price_final_usd)} USD · Bs ${formatMoney(p.price_bs)}`;
+      }
       const desc = document.createElement("p");
       desc.className = "lede";
       desc.textContent = p.description || "";
@@ -106,7 +132,7 @@ import Layout from "../../../layouts/Layout.astro";
         if (!img.url) return;
         const image = document.createElement("img");
         image.src = img.url;
-        image.alt = p.name;
+        image.alt = img.alt || p.name;
         thumbs.appendChild(image);
       });
       const qty = document.createElement("div");
@@ -142,8 +168,13 @@ import Layout from "../../../layouts/Layout.astro";
         void refreshHeaderCartFab(companyId, res.data.cart);
         setBanner(`Cart updated · ${res.data.cart?.count ?? 0} line(s) · $${formatMoney(res.data.cart?.total_usd)}`);
       });
-      qty.append(label, input, add);
-      card.append(h, meta, price, desc, tags, thumbs, qty);
+      const details = document.createElement("a");
+      details.className = "btn";
+      details.href = companyProductHref(companyId, p.id);
+      details.setAttribute("data-route", "");
+      details.textContent = "Details";
+      qty.append(label, input, add, details);
+      card.append(head, meta, price, desc, tags, thumbs, qty);
       return card;
     };
 
