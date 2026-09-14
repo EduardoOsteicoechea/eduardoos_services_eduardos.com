@@ -282,6 +282,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { getMe } from "../../lib/api";
+  import { refreshStoreChrome } from "../../lib/chrome";
   import { showErrorModal } from "../../lib/error-modal";
   import { mustLog } from "../../lib/dev-log";
   import {
@@ -570,6 +571,7 @@ import Layout from "../../layouts/Layout.astro";
           }
           if (currentCompanyGuid() === c.guid) clearCompanyForm();
           setBanner(`Deleted company “${c.name}”.`);
+          void refreshStoreChrome();
           await loadAll();
         });
         actions.append(openStore, openCart, edit, del);
@@ -1412,6 +1414,7 @@ import Layout from "../../layouts/Layout.astro";
       }
       clearCompanyForm();
       setBanner(guid ? `Saved company “${name}”.` : `Created company “${name}”.`);
+      void refreshStoreChrome();
       await loadAll();
     });
     q("[data-company-cancel]")?.addEventListener("click", () => clearCompanyForm());

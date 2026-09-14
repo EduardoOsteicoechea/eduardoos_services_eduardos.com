@@ -204,6 +204,11 @@ export async function refreshHeaderCartFab(
   await syncCartFab();
 }
 
+/** Re-sync the global store links and cart after catalog changes (add/delete store). */
+export async function refreshStoreChrome(): Promise<void> {
+  await syncEostoreNav({ syncCart: true });
+}
+
 function syncStaticStoreNav(companyCount: number): void {
   document.querySelectorAll("[data-store-hub-nav]").forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
