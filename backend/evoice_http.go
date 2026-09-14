@@ -159,10 +159,11 @@ func (a *App) evoiceGetMe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"email":    user.Email,
-		"userId":   user.ID,
-		"userSafe": user.ID,
-		"isAdmin":  user.Role == roleAdmin,
+		"email":          user.Email,
+		"userId":         user.ID,
+		"userSafe":       user.ID,
+		"isAdmin":        user.Role == roleAdmin,
+		"maxUploadBytes": a.cfg.EvoiceMaxUploadBytes,
 	})
 }
 

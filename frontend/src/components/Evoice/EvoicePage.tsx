@@ -70,6 +70,13 @@ function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+function formatBytes(n: number): string {
+  if (n >= 1 << 30) return `${(n / (1 << 30)).toFixed(1)} GB`;
+  if (n >= 1 << 20) return `${(n / (1 << 20)).toFixed(1)} MB`;
+  if (n >= 1 << 10) return `${(n / (1 << 10)).toFixed(1)} KB`;
+  return `${n} B`;
+}
+
 function CollapsibleSection({
   id,
   title,
@@ -296,6 +303,7 @@ function EvoiceWorkspace() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [users, setUsers] = useState<string[]>([]);
   const [ownerSafe, setOwnerSafe] = useState("");
+  const [maxUploadBytes, setMaxUploadBytes] = useState(0);
   const [projects, setProjects] = useState<string[]>([]);
   const [project, setProject] = useState("");
   const [newProject, setNewProject] = useState("");
@@ -450,6 +458,7 @@ function EvoiceWorkspace() {
       }
       setIsAdmin(me.isAdmin);
       setOwnerSafe(me.userSafe);
+      setMaxUploadBytes(me.maxUploadBytes);
       if (me.isAdmin) {
         const u = await fetchEvoiceUsers();
         if (!cancelled && !u.error) {
@@ -759,6 +768,14 @@ function EvoiceWorkspace() {
     const file = ev.target.files?.[0];
     ev.target.value = "";
     if (!file || !ownerSafe || !project || busy) return;
+    if (maxUploadBytes > 0 && file.size > maxUploadBytes) {
+      sessionLog("evoice.doc.upload.oversize", { name: file.name, bytes: file.size, max: maxUploadBytes });
+      showError(
+        "eVoice upload too large",
+        `${file.name} is ${formatBytes(file.size)}. The maximum upload size is ${formatBytes(maxUploadBytes)}.`,
+      );
+      return;
+    }
     setBusy(true);
     sessionLog("evoice.doc.upload.start", { ownerSafe, project, name: file.name, bytes: file.size });
     const res = await uploadEvoiceDoc(ownerSafe, project, file);
@@ -1583,10 +1600,18 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                     <input
                       type="file"
                       hidden
+                      accept=".docx,.txt,.pdf,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp,.gif"
                       onChange={onUpload}
                       disabled={busy}
                     />
                   </label>
+                  <p className="evoice__hint">
+                    DOCX, TXT, PDF, or images.{
+                      maxUploadBytes > 0
+                        ? ` Max ${formatBytes(maxUploadBytes)} per file.`
+                        : " No size limit."
+                    }
+                  </p>
                 </div>
               ) : null}
 

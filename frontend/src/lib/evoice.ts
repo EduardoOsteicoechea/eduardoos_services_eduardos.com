@@ -129,18 +129,25 @@ export function evoiceAudioPath(
 export async function fetchEvoiceMe(): Promise<{
   userSafe: string;
   isAdmin: boolean;
+  maxUploadBytes: number;
   error?: string;
   requestId?: string;
 }> {
   const { status, data, requestId } = await apiRequest<{
     userSafe?: string;
     isAdmin?: boolean;
+    maxUploadBytes?: number;
   }>("/evoice/me");
   if (mustLog) console.log("[evoice] me", { status, requestId });
   if (status < 200 || status >= 300) {
-    return { userSafe: "", isAdmin: false, error: apiErr(data, "eVoice session failed."), requestId };
+    return { userSafe: "", isAdmin: false, maxUploadBytes: 0, error: apiErr(data, "eVoice session failed."), requestId };
   }
-  return { userSafe: data.userSafe ?? "", isAdmin: Boolean(data.isAdmin), requestId };
+  return {
+    userSafe: data.userSafe ?? "",
+    isAdmin: Boolean(data.isAdmin),
+    maxUploadBytes: typeof data.maxUploadBytes === "number" ? data.maxUploadBytes : 0,
+    requestId,
+  };
 }
 
 export async function fetchEvoiceUsers(): Promise<{
