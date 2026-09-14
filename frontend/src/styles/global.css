@@ -641,6 +641,32 @@ a {
   border-radius: var(--border-radius);
 }
 
+.agent-chat-history-row {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
+.agent-chat-history-item {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agent-chat-history-row .icon-btn {
+  flex-shrink: 0;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  color: var(--color-text);
+}
+
+.agent-chat-history-row .icon-btn .material-symbols-outlined {
+  font-size: var(--font-size-sm);
+}
+
 .agent-chat-history,
 .agent-chat-select-bar {
   display: flex;

@@ -8,6 +8,9 @@ const MAX_MESSAGE = 500;
 const MAX_IMAGES = 6;
 const MAX_IMAGE_BYTES = 1500000;
 const SIDEBAR_DEFAULT_REM = 20;
+const STORE_KEY = "eduardoos.agent.history";
+const MAX_SAVED = 30;
+const MAX_STORED_CONTENT = 4000;
 
 const copy = {
   failed: "The assistant could not reply.",
@@ -44,6 +47,9 @@ let selected = new Set<number>();
 let openMenu = -1;
 let sidebarWidthRem = SIDEBAR_DEFAULT_REM;
 
+// Restore the previous conversation and saved chats across reloads.
+loadPersistedChats();
+
 export function resetAgentChat(): void {
   revokeAll(pendingImages.map((item) => item.url));
   pendingImages = [];
@@ -54,6 +60,78 @@ export function resetAgentChat(): void {
   selected = new Set();
   openMenu = -1;
   sidebarWidthRem = SIDEBAR_DEFAULT_REM;
+  try {
+    localStorage.removeItem(STORE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+function sanitizeTurnForStore(turn: AgentTurn): AgentTurn | null {
+  const content = (turn?.content || "").trim();
+  if (!content || (turn.role !== "user" && turn.role !== "assistant")) {
+    return null;
+  }
+  const out: AgentTurn = { role: turn.role, content: content.slice(0, MAX_STORED_CONTENT) };
+  if (typeof turn.at === "number") {
+    out.at = turn.at;
+  }
+  if (typeof turn.ms === "number") {
+    out.ms = turn.ms;
+  }
+  if (turn.replyTo) {
+    out.replyTo = turn.replyTo.slice(0, 120);
+  }
+  return out;
+}
+
+function turnsForStore(list: AgentTurn[]): AgentTurn[] {
+  return list.map(sanitizeTurnForStore).filter((turn): turn is AgentTurn => turn !== null);
+}
+
+function persistChats(): void {
+  try {
+    localStorage.setItem(
+      STORE_KEY,
+      JSON.stringify({
+        version: 1,
+        turns: turnsForStore(turns),
+        saved: saved.slice(0, MAX_SAVED).map((chat) => ({
+          id: chat.id,
+          title: chat.title.slice(0, 80),
+          turns: turnsForStore(chat.turns),
+        })),
+      }),
+    );
+  } catch {
+    /* private mode / quota */
+  }
+}
+
+function loadPersistedChats(): void {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) {
+      return;
+    }
+    const parsed = JSON.parse(raw) as { turns?: AgentTurn[]; saved?: SavedChat[] };
+    if (Array.isArray(parsed.turns)) {
+      turns = turnsForStore(parsed.turns);
+    }
+    if (Array.isArray(parsed.saved)) {
+      saved = parsed.saved
+        .filter((chat) => chat && typeof chat.title === "string" && Array.isArray(chat.turns))
+        .slice(0, MAX_SAVED)
+        .map((chat) => ({
+          id: String(chat.id || Date.now()),
+          title: String(chat.title).slice(0, 80),
+          turns: turnsForStore(chat.turns),
+        }))
+        .filter((chat) => chat.turns.length > 0);
+    }
+  } catch {
+    /* ignore corrupt state */
+  }
 }
 
 function revokeAll(urls: string[]): void {
@@ -294,23 +372,58 @@ function paintHistory(): void {
     panel.append(hint);
     return;
   }
-  saved.forEach((chat, index) => {
+  saved.forEach((chat) => {
+    const row = document.createElement("div");
+    row.className = "agent-chat-history-row";
     const btn = document.createElement("button");
     btn.type = "button";
+    btn.className = "agent-chat-history-item";
     btn.textContent = chat.title;
-    btn.addEventListener("click", () => {
-      archiveCurrent();
-      turns = chat.turns.map((turn) => ({ ...turn, images: turn.images ? [...turn.images] : undefined }));
-      saved.splice(index, 1);
-      panel.hidden = true;
-      const toggle = document.querySelector("[data-agent-history-toggle]");
-      if (toggle instanceof HTMLElement) {
-        toggle.setAttribute("aria-expanded", "false");
-      }
-      paintChat();
+    btn.title = chat.title;
+    btn.addEventListener("click", () => loadSavedChat(chat.id));
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "icon-btn";
+    del.setAttribute("aria-label", "Delete chat");
+    del.title = "Delete chat";
+    const icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "delete";
+    del.append(icon);
+    del.addEventListener("click", (event) => {
+      event.stopPropagation();
+      saved = saved.filter((item) => item.id !== chat.id);
+      persistChats();
+      paintHistory();
     });
-    panel.append(btn);
+    row.append(btn, del);
+    panel.append(row);
   });
+}
+
+function loadSavedChat(id: string): void {
+  const chat = saved.find((item) => item.id === id);
+  if (!chat) {
+    return;
+  }
+  archiveCurrent();
+  saved = saved.filter((item) => item.id !== id);
+  turns = chat.turns.map((turn) => ({ ...turn }));
+  pendingImages = [];
+  replyTo = "";
+  selectMode = false;
+  selected = new Set();
+  persistChats();
+  const panel = document.querySelector("[data-agent-history]");
+  const toggle = document.querySelector("[data-agent-history-toggle]");
+  if (panel instanceof HTMLElement) {
+    panel.hidden = true;
+  }
+  if (toggle instanceof HTMLElement) {
+    toggle.setAttribute("aria-expanded", "false");
+  }
+  paintChat();
 }
 
 function archiveCurrent(): void {
@@ -318,8 +431,16 @@ function archiveCurrent(): void {
     return;
   }
   const title = turns.find((turn) => turn.content)?.content.slice(0, 48) || copy.imageOnly;
-  saved.unshift({ id: String(Date.now()), title, turns: turns.map((turn) => ({ ...turn })) });
+  const id =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : String(Date.now());
+  saved.unshift({ id, title, turns: turns.map((turn) => ({ ...turn })) });
+  if (saved.length > MAX_SAVED) {
+    saved = saved.slice(0, MAX_SAVED);
+  }
   turns = [];
+  persistChats();
 }
 
 async function runMenu(action: "copy" | "select" | "reply", index: number): Promise<void> {
@@ -400,6 +521,7 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   const assistant: AgentTurn = { role: "assistant", content: "", ms: undefined, at: undefined };
   turns.push(assistant);
   paintChat();
+  persistChats();
   syncSend(input, send);
   const started = Date.now();
   if (send) {
@@ -430,10 +552,12 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
       }
       assistant.at = Date.now();
       paintChat();
+      persistChats();
       return;
     }
     turns.pop();
     paintChat();
+    persistChats();
     showErrorModal({
       message: chatErrorMessage(result.status, result.data),
       requestId: result.data.request_id || result.requestId,

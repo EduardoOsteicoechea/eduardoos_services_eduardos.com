@@ -150,4 +150,30 @@ describe("agent chat tray", () => {
     expect(stopVoicePlayback).toHaveBeenCalled();
     vi.mocked(voiceReplyEnabled).mockReturnValue(false);
   });
+
+  it("archives the conversation into the history tray and persists it", async () => {
+    mountTray();
+    vi.mocked(postChatStream).mockResolvedValue({
+      status: 200,
+      requestId: "rid-hist",
+      data: { ok: true, text: "hola", request_id: "rid-hist" },
+    });
+    startAgentChat();
+    const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
+    input.value = "primera pregunta";
+    input.dispatchEvent(new Event("input"));
+    document.querySelector("[data-agent-form]")?.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    await vi.waitFor(() => {
+      expect(document.querySelector(".agent-chat-msg-assistant")).toBeTruthy();
+    });
+
+    (document.querySelector("[data-agent-new]") as HTMLButtonElement).click();
+    (document.querySelector("[data-agent-history-toggle]") as HTMLButtonElement).click();
+    const panel = document.querySelector("[data-agent-history]") as HTMLElement;
+    await vi.waitFor(() => {
+      expect(panel.querySelector(".agent-chat-history-item")?.textContent).toContain("primera pregunta");
+    });
+    expect(localStorage.getItem("eduardoos.agent.history")).toContain("primera pregunta");
+    expect(panel.querySelector(".agent-chat-history-row .icon-btn")).toBeTruthy();
+  });
 });
