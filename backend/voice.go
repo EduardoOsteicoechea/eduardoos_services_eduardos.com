@@ -454,15 +454,36 @@ func (a *App) registerVoiceRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/voice/interpret", a.voiceInterpretHandler)
 }
 
-// voiceInterpretSystemPrompt turns a raw ASR transcript into a clean,
+// voiceInterpretBasePrompt turns a raw ASR transcript into a clean,
 // context-aware user message. It must not answer the message.
-const voiceInterpretSystemPrompt = "You normalize speech-to-text output for an assistant. " +
+const voiceInterpretBasePrompt = "You normalize speech-to-text output for an assistant. " +
 	"Rewrite the user's raw transcript into a clear, faithful message. " +
 	"Rules: fix obvious ASR errors, accents, punctuation, and casing; " +
 	"use the conversation history to resolve ambiguity and context; " +
 	"keep the user's meaning and language; do NOT answer the question; " +
 	"do NOT add facts, commentary, or greetings; " +
 	"return ONLY the corrected message text."
+
+// voiceInterpretSystemPrompt adds the site topic so domain terms are fixed
+// correctly (e.g. product names) without answering.
+func (a *App) voiceInterpretSystemPrompt() string {
+	var b strings.Builder
+	b.WriteString(voiceInterpretBasePrompt)
+	site := strings.TrimSpace(websiteContextCorpus)
+	if site != "" {
+		b.WriteString("\n\n---\n\n# SITE_TOPIC\n\n")
+		b.WriteString("Context about this website, for fixing domain terms only. Do not answer from it.\n\n")
+		b.WriteString(clipRunes(site, 8000))
+	}
+	return b.String()
+}
+
+func clipRunes(s string, max int) string {
+	if max <= 0 || utf8.RuneCountInString(s) <= max {
+		return s
+	}
+	return string([]rune(s)[:max])
+}
 
 func (a *App) voiceInterpretHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
@@ -499,7 +520,7 @@ func (a *App) voiceInterpretHandler(w http.ResponseWriter, r *http.Request) {
 	history = append(history, ChatMessage{Role: "user", Content: raw})
 	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
 	defer cancel()
-	result, err := client.Complete(ctx, voiceInterpretSystemPrompt, history)
+	result, err := client.Complete(ctx, a.voiceInterpretSystemPrompt(), history)
 	if err != nil {
 		a.voiceDebugErr("voice.interpret_failed", "request_id", rid, "cause", redactLogValue(err.Error()))
 		a.auditEvent(r, "voice_interpret", "failed", userID)
