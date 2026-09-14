@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -168,7 +169,9 @@ func loadConfig() config {
 	// every relative/empty root to the persistent site media tree when it exists.
 	// Local development has no /var/www/<site>, so .data/media is kept there.
 	siteRoot := "/var/www/" + siteName
+	siteRootExists := false
 	if info, err := os.Stat(siteRoot); err == nil && info.IsDir() {
+		siteRootExists = true
 		persistentMedia := filepath.Join(siteRoot, "media")
 		if media == "" || !filepath.IsAbs(media) {
 			media = persistentMedia
@@ -182,6 +185,12 @@ func loadConfig() config {
 		if eoprojectRoot == "" || !filepath.IsAbs(eoprojectRoot) {
 			eoprojectRoot = filepath.Join(media, "eoproject")
 		}
+	}
+
+	production := appEnv == "production" || envBool("COOKIE_SECURE", false) || siteRootExists
+	publicBase := strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_BASE_URL")), "/")
+	if production && (publicBase == "" || isLoopbackBaseURL(publicBase)) {
+		publicBase = "https://" + siteName
 	}
 
 	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
@@ -219,7 +228,7 @@ func loadConfig() config {
 		EoprojectMaxVideoBytes:    envInt64("EOPROJECT_MAX_VIDEO_BYTES", defaultEoprojectMaxVideoBytes),
 		EoprojectMaxDocumentBytes: envInt64("EOPROJECT_MAX_DOCUMENT_BYTES", defaultEoprojectMaxDocBytes),
 		CalvinParagraphsRoot:      calvinRoot,
-		PublicBaseURL:             strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_BASE_URL")), "/"),
+		PublicBaseURL:             publicBase,
 		PublicArticlesOwnerEmail:  publicArticlesOwner,
 		SMTPHost:                  envString("SMTP_HOST"),
 		SMTPPort:                  envString("SMTP_PORT"),
@@ -261,6 +270,22 @@ func loadConfig() config {
 
 func filepathJoinLocalMedia() string {
 	return ".data/media"
+}
+
+// isLoopbackBaseURL reports whether a configured public base URL points at the
+// local machine. A loopback value (the .env.example default) must never leak
+// into production share links, so production replaces it with https://<domain>.
+func isLoopbackBaseURL(raw string) bool {
+	u, err := url.Parse(strings.TrimSpace(raw))
+	if err != nil {
+		return false
+	}
+	host := strings.ToLower(u.Hostname())
+	switch host {
+	case "localhost", "127.0.0.1", "0.0.0.0", "::1":
+		return true
+	}
+	return strings.HasSuffix(host, ".localhost")
 }
 
 func voiceEnvDefault(key, fallback string) string {
