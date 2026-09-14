@@ -56,7 +56,12 @@ import Layout from "../../layouts/Layout.astro";
       <div class="eoproject__stages" data-stages></div>
 
       <section class="eoproject__shares">
-        <h2 class="eoproject__subhead">Share links</h2>
+        <h2 class="eoproject__subhead">Client view</h2>
+        <p class="hint">
+          Magic link for clients. They see the stages, photos, videos and IFC read-only, in the order you set.
+        </p>
+        <div class="eoproject__client-panel" data-client-panel></div>
+        <h3 class="eoproject__subhead">All links</h3>
         <ul class="eoproject__list" data-shares></ul>
       </section>
     </div>
@@ -126,6 +131,8 @@ import Layout from "../../layouts/Layout.astro";
     fetchEoprojectDashboard,
     listEoprojectDocuments,
     listEoprojectShares,
+    reorderEoprojectPhotos,
+    reorderEoprojectStages,
     updateEoprojectPhotoTag,
     uploadEoprojectDocument,
     uploadEoprojectIfc,
@@ -149,6 +156,7 @@ import Layout from "../../layouts/Layout.astro";
   const stagesEl = root?.querySelector("[data-stages]");
   const emptyStages = root?.querySelector("[data-empty-stages]");
   const sharesEl = root?.querySelector("[data-shares]");
+  const clientPanel = root?.querySelector("[data-client-panel]");
   const shareModal = root?.querySelector("[data-share-modal]");
   const shareResult = root?.querySelector("[data-share-result]");
 
@@ -220,6 +228,44 @@ import Layout from "../../layouts/Layout.astro";
         name: photo.originalName || `photo-${photo.id}`,
       };
     });
+  }
+
+  function orderedStages(): EoprojectStageBundle[] {
+    if (!dashboard) return [];
+    return [...dashboard.stages].sort(
+      (a, b) => a.stage.sortOrder - b.stage.sortOrder || a.stage.name.localeCompare(b.stage.name),
+    );
+  }
+
+  async function moveStage(stageId: string, delta: number) {
+    const list = orderedStages();
+    const idx = list.findIndex((b) => b.stage.id === stageId);
+    const target = idx + delta;
+    if (idx < 0 || target < 0 || target >= list.length) return;
+    const ids = list.map((b) => b.stage.id);
+    [ids[idx], ids[target]] = [ids[target], ids[idx]];
+    const res = await reorderEoprojectStages(projectId, ids);
+    if (!res.ok) {
+      apiFail(res.error || "Could not reorder stages.", { requestId: res.requestId });
+      return;
+    }
+    await reload();
+  }
+
+  async function movePhoto(stageId: string, photoId: string, delta: number) {
+    const bundle = dashboard?.stages.find((s) => s.stage.id === stageId);
+    if (!bundle) return;
+    const ids = bundle.photos.map((p) => p.id);
+    const idx = ids.indexOf(photoId);
+    const target = idx + delta;
+    if (idx < 0 || target < 0 || target >= ids.length) return;
+    [ids[idx], ids[target]] = [ids[target], ids[idx]];
+    const res = await reorderEoprojectPhotos(projectId, stageId, ids);
+    if (!res.ok) {
+      apiFail(res.error || "Could not reorder photos.", { requestId: res.requestId });
+      return;
+    }
+    await reload();
   }
 
   async function ensureViewer(stageId: string, host: HTMLElement): Promise<EoprojectIfcViewer> {
@@ -403,7 +449,13 @@ import Layout from "../../layouts/Layout.astro";
         }
         await reload();
       });
-      actions.append(downloadBtn, del);
+      const moveUp = iconBtn("arrow_upward", `Move ${photo.originalName || "photo"} up`);
+      moveUp.disabled = photoIndex <= 0;
+      moveUp.addEventListener("click", () => void movePhoto(bundle.stage.id, photo.id, -1));
+      const moveDown = iconBtn("arrow_downward", `Move ${photo.originalName || "photo"} down`);
+      moveDown.disabled = photoIndex >= bundle.photos.length - 1;
+      moveDown.addEventListener("click", () => void movePhoto(bundle.stage.id, photo.id, 1));
+      actions.append(moveUp, moveDown, downloadBtn, del);
 
       card.append(openBtn, tag, tagInput, caption, actions, renderDocs(bundle.stage.id, photo));
       mount.appendChild(card);
@@ -430,7 +482,15 @@ import Layout from "../../layouts/Layout.astro";
       }
       await reload();
     });
-    head.append(h2, delStage);
+    const stageList = orderedStages();
+    const stageIdx = stageList.findIndex((b) => b.stage.id === bundle.stage.id);
+    const moveUp = iconBtn("arrow_upward", `Move ${bundle.stage.name} up`);
+    moveUp.disabled = stageIdx <= 0;
+    moveUp.addEventListener("click", () => void moveStage(bundle.stage.id, -1));
+    const moveDown = iconBtn("arrow_downward", `Move ${bundle.stage.name} down`);
+    moveDown.disabled = stageIdx < 0 || stageIdx >= stageList.length - 1;
+    moveDown.addEventListener("click", () => void moveStage(bundle.stage.id, 1));
+    head.append(h2, moveUp, moveDown, delStage);
 
     const photoHead = document.createElement("h3");
     photoHead.className = "eoproject__subhead";
@@ -673,6 +733,86 @@ import Layout from "../../layouts/Layout.astro";
     return section;
   }
 
+  function copyText(value: string, button: HTMLButtonElement, done = "Copied") {
+    const original = button.textContent;
+    void navigator.clipboard
+      .writeText(value)
+      .then(() => {
+        button.textContent = done;
+        globalThis.setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
+      })
+      .catch(() => apiFail("Could not copy the link."));
+  }
+
+  function createShareButton(label = "Create client link"): HTMLButtonElement {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "eoproject__btn eoproject__btn--primary";
+    btn.textContent = label;
+    btn.addEventListener("click", () => openShareModal(true));
+    return btn;
+  }
+
+  function renderClientPanel(shares: EoprojectShare[]) {
+    if (!(clientPanel instanceof HTMLElement)) return;
+    clientPanel.replaceChildren();
+    const active = shares
+      .filter(
+        (share) =>
+          !share.expired && Boolean(share.link) && new Date(share.expiresAt).getTime() > Date.now(),
+      )
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+    const activeLink = active?.link ?? "";
+
+    if (!active || !activeLink) {
+      const empty = document.createElement("p");
+      empty.className = "eoproject__empty";
+      empty.textContent =
+        "No active client link yet. Create one and it will stay visible here.";
+      clientPanel.append(empty, createShareButton());
+      return;
+    }
+
+    const linkRow = document.createElement("div");
+    linkRow.className = "eoproject__client-link-row";
+    const link = document.createElement("a");
+    link.className = "eoproject__client-link";
+    link.href = activeLink;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = activeLink;
+    linkRow.appendChild(link);
+
+    const actions = document.createElement("div");
+    actions.className = "eoproject__client-actions";
+    const copy = document.createElement("button");
+    copy.type = "button";
+    copy.className = "eoproject__btn";
+    copy.textContent = "Copy link";
+    copy.addEventListener("click", () => copyText(activeLink, copy));
+    const open = document.createElement("a");
+    open.className = "eoproject__btn";
+    open.href = activeLink;
+    open.target = "_blank";
+    open.rel = "noopener";
+    open.textContent = "Open";
+    actions.append(copy, open, createShareButton("New link"));
+
+    const meta = document.createElement("p");
+    meta.className = "eoproject__client-meta";
+    meta.textContent = `${active.label || "Client link"} · expires ${new Date(active.expiresAt).toLocaleString()}`;
+
+    const preview = document.createElement("iframe");
+    preview.className = "eoproject__client-preview";
+    preview.loading = "lazy";
+    preview.title = "Client view preview";
+    preview.src = activeLink;
+
+    clientPanel.append(linkRow, actions, meta, preview);
+  }
+
   function renderShares(shares: EoprojectShare[]) {
     if (!(sharesEl instanceof HTMLElement)) return;
     sharesEl.replaceChildren();
@@ -705,6 +845,7 @@ import Layout from "../../layouts/Layout.astro";
       return;
     }
     renderShares(res.shares);
+    renderClientPanel(res.shares);
   }
 
   async function reload() {

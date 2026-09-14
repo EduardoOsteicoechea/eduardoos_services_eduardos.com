@@ -521,7 +521,12 @@ func (s *memoryEoprojectStore) ListPhotos(_ context.Context, stageID string) ([]
 			out = append(out, &cp)
 		}
 	}
-	sort.Slice(out, func(i, j int) bool { return out[i].CreatedAt.After(out[j].CreatedAt) })
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].SortOrder != out[j].SortOrder {
+			return out[i].SortOrder < out[j].SortOrder
+		}
+		return out[i].CreatedAt.Before(out[j].CreatedAt)
+	})
 	return out, nil
 }
 
@@ -984,7 +989,7 @@ func (s *mongoEoprojectStore) GetPhoto(ctx context.Context, id string) (*eoproje
 }
 
 func (s *mongoEoprojectStore) ListPhotos(ctx context.Context, stageID string) ([]*eoprojectPhoto, error) {
-	cur, err := s.photos().Find(ctx, bson.M{"stage_id": stageID}, options.Find().SetSort(bson.D{{Key: "created_at", Value: -1}}))
+	cur, err := s.photos().Find(ctx, bson.M{"stage_id": stageID}, options.Find().SetSort(bson.D{{Key: "sort_order", Value: 1}, {Key: "created_at", Value: 1}}))
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,9 @@ package main
 
 import (
 	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -49,6 +52,8 @@ func (a *App) registerEoprojectRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/eoproject/invite/{token}/photos/{photoId}/documents/{docId}/file", a.eoprojectInviteDocFile)
 
 	mux.HandleFunc("PATCH /api/eoproject/projects/{projectId}/stages/{stageId}/photos/{photoId}", a.eoprojectUpdatePhotoTag)
+	mux.HandleFunc("POST /api/eoproject/projects/{projectId}/stages/reorder", a.eoprojectReorderStages)
+	mux.HandleFunc("POST /api/eoproject/projects/{projectId}/stages/{stageId}/photos/reorder", a.eoprojectReorderPhotos)
 
 	mux.HandleFunc("GET /api/eoproject/projects/{projectId}/stages/{stageId}/videos", a.eoprojectListVideos)
 	mux.HandleFunc("POST /api/eoproject/projects/{projectId}/stages/{stageId}/videos", a.eoprojectUploadVideo)
@@ -157,6 +162,18 @@ func (a *App) eoprojectInviteLandingURL(token string) string {
 		base = "https://eduardoos.com"
 	}
 	return base + "/eoproject/invite?token=" + url.QueryEscape(strings.TrimSpace(token))
+}
+
+// eoprojectShareToken derives a deterministic, signed share token from the
+// share id and expiry. Because it is reproducible, the client view panel can
+// display the magic link at any time without storing the raw token (only its
+// hash is persisted, matching the rest of the auth surface).
+func (a *App) eoprojectShareToken(shareID string, expiresAt time.Time) string {
+	exp := strconv.FormatInt(expiresAt.UTC().Unix(), 10)
+	msg := shareID + "." + exp
+	mac := hmac.New(sha256.New, []byte(a.cfg.JWTSecret))
+	mac.Write([]byte(msg))
+	return msg + "." + hex.EncodeToString(mac.Sum(nil))
 }
 
 func (a *App) eoprojectBuildDashboard(r *http.Request, project *eoprojectProject, shareToken string) (*eoprojectDashboard, error) {
@@ -609,6 +626,10 @@ func (a *App) eoprojectUploadPhoto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	now := time.Now().UTC()
+	sortOrder := 0
+	if existing, err := a.eoproject.ListPhotos(r.Context(), st.ID); err == nil {
+		sortOrder = len(existing)
+	}
 	ph := &eoprojectPhoto{
 		ID:           photoID,
 		ProjectID:    p.ID,
@@ -619,6 +640,7 @@ func (a *App) eoprojectUploadPhoto(w http.ResponseWriter, r *http.Request) {
 		ContentType:  "image/webp",
 		Size:         int64(len(converted)),
 		Tag:          tag,
+		SortOrder:    sortOrder,
 		CreatedAt:    now,
 		URL:          eoprojectPhotoURL(p.ID, st.ID, photoID),
 	}
@@ -890,12 +912,18 @@ func (a *App) eoprojectListShares(w http.ResponseWriter, r *http.Request) {
 	}
 	out := make([]map[string]any, 0, len(shares))
 	for _, sh := range shares {
+		token := a.eoprojectShareToken(sh.ID, sh.ExpiresAt)
+		link := ""
+		if hashEoprojectToken(token) == sh.TokenHash {
+			link = a.eoprojectInviteLandingURL(token)
+		}
 		out = append(out, map[string]any{
 			"id":        sh.ID,
 			"label":     sh.Label,
 			"expiresAt": sh.ExpiresAt.UTC().Format(time.RFC3339),
 			"createdAt": sh.CreatedAt.UTC().Format(time.RFC3339),
 			"expired":   !time.Now().UTC().Before(sh.ExpiresAt),
+			"link":      link,
 		})
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"shares": out})
@@ -926,18 +954,18 @@ func (a *App) eoprojectCreateShare(w http.ResponseWriter, r *http.Request) {
 		hours = eoprojectShareMaxHours
 	}
 	now := time.Now().UTC()
-	raw := randomID(24)
 	sh := &eoprojectShare{
 		ID:        randomID(12),
-		TokenHash: hashEoprojectToken(raw),
 		UserID:    user.ID,
 		ProjectID: p.ID,
 		Label:     sanitizeEoprojectText(body.Label, eoprojectMaxLabelLen),
 		ExpiresAt: now.Add(time.Duration(hours) * time.Hour),
 		CreatedAt: now,
-		RawToken:  raw,
-		Link:      a.eoprojectInviteLandingURL(raw),
 	}
+	raw := a.eoprojectShareToken(sh.ID, sh.ExpiresAt)
+	sh.TokenHash = hashEoprojectToken(raw)
+	sh.RawToken = raw
+	sh.Link = a.eoprojectInviteLandingURL(raw)
 	if err := a.eoproject.CreateShare(r.Context(), sh); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -1234,6 +1262,119 @@ func (a *App) eoprojectInviteVideoFile(w http.ResponseWriter, r *http.Request) {
 	a.eoprojectServeVideo(w, r, project.UserID, project.ID, v.StageID, v.StorageName, v.ContentType)
 }
 
+func eoprojectSameIDs(current, wanted []string) bool {
+	if len(current) != len(wanted) {
+		return false
+	}
+	seen := make(map[string]bool, len(current))
+	for _, id := range current {
+		seen[id] = true
+	}
+	for _, id := range wanted {
+		if !seen[id] {
+			return false
+		}
+		seen[id] = false
+	}
+	return true
+}
+
+func (a *App) eoprojectReorderStages(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEoprojectUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	p := a.eoprojectOwnedProject(w, r, user, r.PathValue("projectId"), true)
+	if p == nil {
+		return
+	}
+	var body struct {
+		IDs []string `json:"ids"`
+	}
+	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	stages, err := a.eoproject.ListStages(r.Context(), p.ID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	byID := make(map[string]*eoprojectStage, len(stages))
+	current := make([]string, 0, len(stages))
+	for _, st := range stages {
+		byID[st.ID] = st
+		current = append(current, st.ID)
+	}
+	if !eoprojectSameIDs(current, body.IDs) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	now := time.Now().UTC()
+	for i, id := range body.IDs {
+		st := byID[id]
+		if st.SortOrder == i {
+			continue
+		}
+		st.SortOrder = i
+		st.UpdatedAt = now
+		if err := a.eoproject.UpdateStage(r.Context(), st); err != nil {
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+	}
+	p.UpdatedAt = now
+	_ = a.eoproject.UpdateProject(r.Context(), p)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+}
+
+func (a *App) eoprojectReorderPhotos(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEoprojectUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	p, st := a.eoprojectOwnedStage(w, r, user, r.PathValue("projectId"), r.PathValue("stageId"), true)
+	if p == nil || st == nil {
+		return
+	}
+	var body struct {
+		IDs []string `json:"ids"`
+	}
+	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	photos, err := a.eoproject.ListPhotos(r.Context(), st.ID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	byID := make(map[string]*eoprojectPhoto, len(photos))
+	current := make([]string, 0, len(photos))
+	for _, ph := range photos {
+		byID[ph.ID] = ph
+		current = append(current, ph.ID)
+	}
+	if !eoprojectSameIDs(current, body.IDs) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	for i, id := range body.IDs {
+		ph := byID[id]
+		if ph.SortOrder == i {
+			continue
+		}
+		ph.SortOrder = i
+		if err := a.eoproject.UpdatePhoto(r.Context(), ph); err != nil {
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+	}
+	p.UpdatedAt = time.Now().UTC()
+	_ = a.eoproject.UpdateProject(r.Context(), p)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+}
+
 func (a *App) eoprojectUpdatePhotoTag(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEoprojectUnsafe(w, r)
 	if user == nil {
@@ -1253,7 +1394,8 @@ func (a *App) eoprojectUpdatePhotoTag(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var body struct {
-		Tag *string `json:"tag"`
+		Tag       *string `json:"tag"`
+		SortOrder *int    `json:"sortOrder"`
 	}
 	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -1261,6 +1403,9 @@ func (a *App) eoprojectUpdatePhotoTag(w http.ResponseWriter, r *http.Request) {
 	}
 	if body.Tag != nil {
 		ph.Tag = sanitizeEoprojectText(*body.Tag, eoprojectMaxTagLen)
+	}
+	if body.SortOrder != nil {
+		ph.SortOrder = *body.SortOrder
 	}
 	if err := a.eoproject.UpdatePhoto(r.Context(), ph); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

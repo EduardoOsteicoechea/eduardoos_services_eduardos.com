@@ -64,6 +64,7 @@ type eoprojectPhoto struct {
 	ContentType  string                   `json:"contentType" bson:"content_type"`
 	Size         int64                    `json:"size" bson:"size"`
 	Tag          string                   `json:"tag,omitempty" bson:"tag,omitempty"`
+	SortOrder    int                      `json:"sortOrder" bson:"sort_order"`
 	Documents    []eoprojectPhotoDocument `json:"documents,omitempty" bson:"-"`
 	CreatedAt    time.Time                `json:"createdAt" bson:"created_at"`
 	URL          string                   `json:"url,omitempty" bson:"-"`

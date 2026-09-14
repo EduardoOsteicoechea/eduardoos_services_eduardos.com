@@ -6,6 +6,7 @@ import {
   apiRequest,
   deleteJSON,
   patchJSON,
+  postJSON,
   uploadFile,
   uploadFileWithProgress,
   type UploadProgress,
@@ -40,6 +41,7 @@ export type EoprojectPhoto = {
   contentType: string;
   size: number;
   tag?: string;
+  sortOrder?: number;
   documents?: EoprojectPhotoDocument[];
   createdAt: string;
   url?: string;
@@ -481,6 +483,35 @@ export async function updateEoprojectPhotoTag(
     return { photo: null, error: failMsg(data, "Could not update tag."), requestId };
   }
   return { photo: data.photo ?? null, requestId };
+}
+
+export async function reorderEoprojectStages(
+  projectId: string,
+  ids: string[],
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await postJSON(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/reorder`,
+    { ids },
+  );
+  if (status < 200 || status >= 300) {
+    return { ok: false, error: failMsg(data, "Could not reorder stages."), requestId };
+  }
+  return { ok: true, requestId };
+}
+
+export async function reorderEoprojectPhotos(
+  projectId: string,
+  stageId: string,
+  ids: string[],
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await postJSON(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/reorder`,
+    { ids },
+  );
+  if (status < 200 || status >= 300) {
+    return { ok: false, error: failMsg(data, "Could not reorder photos."), requestId };
+  }
+  return { ok: true, requestId };
 }
 
 export async function listEoprojectDocuments(
