@@ -27,21 +27,26 @@ import Layout from "../../layouts/Layout.astro";
 
     <div class="eostore-pane" data-pane="companies" hidden>
       <form class="eostore-panel" data-company-form hidden>
-        <h2>Add company</h2>
+        <h2 data-company-form-title>Add company</h2>
+        <input type="hidden" data-co-edit-guid value="" />
         <div class="eostore-field">
           <label for="co-name">Name</label>
           <input id="co-name" type="text" data-co-name required />
+          <p class="eostore-error" data-co-error="name" hidden></p>
         </div>
         <div class="eostore-field">
-          <label for="co-id">Friendly id (optional)</label>
+          <label for="co-id">Public id / slug (optional)</label>
           <input id="co-id" type="text" data-co-id placeholder="acme" />
+          <p class="eostore-hint">Used in the public store URL, for example /store/acme.</p>
+          <p class="eostore-error" data-co-error="id" hidden></p>
         </div>
         <div class="eostore-field">
           <label for="co-desc">Description</label>
           <textarea id="co-desc" data-co-desc></textarea>
         </div>
         <div class="eostore-actions">
-          <button class="btn btn--primary" type="submit">Create company</button>
+          <button class="btn btn--primary" type="submit" data-company-submit>Create company</button>
+          <button class="btn" type="button" data-company-cancel hidden>Cancel edit</button>
         </div>
       </form>
       <div class="eostore-columns" data-company-list></div>
@@ -49,14 +54,17 @@ import Layout from "../../layouts/Layout.astro";
 
     <div class="eostore-pane" data-pane="sections" hidden>
       <form class="eostore-panel" data-section-form hidden>
-        <h2>Add product section</h2>
+        <h2 data-section-form-title>Add product section</h2>
+        <input type="hidden" data-sec-edit-guid value="" />
         <div class="eostore-field">
           <label for="sec-company">Company</label>
           <select id="sec-company" data-sec-company required></select>
+          <p class="eostore-error" data-sec-error="company_guid" hidden></p>
         </div>
         <div class="eostore-field">
           <label for="sec-name">Name</label>
           <input id="sec-name" type="text" data-sec-name required />
+          <p class="eostore-error" data-sec-error="name" hidden></p>
         </div>
         <div class="eostore-field">
           <label for="sec-id">Friendly id (optional)</label>
@@ -67,7 +75,8 @@ import Layout from "../../layouts/Layout.astro";
           <textarea id="sec-desc" data-sec-desc></textarea>
         </div>
         <div class="eostore-actions">
-          <button class="btn btn--primary" type="submit">Create section</button>
+          <button class="btn btn--primary" type="submit" data-section-submit>Create section</button>
+          <button class="btn" type="button" data-section-cancel hidden>Cancel edit</button>
         </div>
       </form>
       <div class="eostore-columns" data-section-list></div>
@@ -75,14 +84,17 @@ import Layout from "../../layouts/Layout.astro";
 
     <div class="eostore-pane" data-pane="types" hidden>
       <form class="eostore-panel" data-type-form hidden>
-        <h2>Add product type</h2>
+        <h2 data-type-form-title>Add product type</h2>
+        <input type="hidden" data-typ-edit-guid value="" />
         <div class="eostore-field">
           <label for="typ-section">Section</label>
           <select id="typ-section" data-typ-section required></select>
+          <p class="eostore-error" data-typ-error="section_guid" hidden></p>
         </div>
         <div class="eostore-field">
           <label for="typ-name">Name</label>
           <input id="typ-name" type="text" data-typ-name required />
+          <p class="eostore-error" data-typ-error="name" hidden></p>
         </div>
         <div class="eostore-field">
           <label for="typ-id">Friendly id (optional)</label>
@@ -93,7 +105,8 @@ import Layout from "../../layouts/Layout.astro";
           <textarea id="typ-desc" data-typ-desc></textarea>
         </div>
         <div class="eostore-actions">
-          <button class="btn btn--primary" type="submit">Create type</button>
+          <button class="btn btn--primary" type="submit" data-type-submit>Create type</button>
+          <button class="btn" type="button" data-type-cancel hidden>Cancel edit</button>
         </div>
       </form>
       <div class="eostore-columns" data-type-list></div>
@@ -127,10 +140,22 @@ import Layout from "../../layouts/Layout.astro";
             <option value="stock">Stock</option>
           </select>
         </div>
+        <div class="eostore-field">
+          <label for="pr-filter-stock">Stock</label>
+          <select id="pr-filter-stock" data-pr-filter-stock>
+            <option value="all">All</option>
+            <option value="attention">Needs attention</option>
+            <option value="low">Low stock</option>
+            <option value="out">Out of stock</option>
+            <option value="in">In stock</option>
+          </select>
+        </div>
         <div class="eostore-actions">
           <button class="btn btn--primary" type="button" data-product-new>New product</button>
         </div>
       </div>
+
+      <p class="eostore-meta" data-inventory-summary></p>
 
       <form class="eostore-panel eostore-editor" data-product-form hidden novalidate>
         <fieldset class="eostore-fieldset">
@@ -287,8 +312,11 @@ import Layout from "../../layouts/Layout.astro";
     productStockState,
     reorderProductImages,
     slugifyProduct,
+    updateCompany,
     updateProduct,
     updateProductImageAlt,
+    updateSection,
+    updateType,
     uploadProductImage,
     validateProductInput,
     type EostoreCompany,
@@ -377,14 +405,121 @@ import Layout from "../../layouts/Layout.astro";
       );
     };
 
-    // --- render companies / sections / types (unchanged behavior) ---
+    // --- company / section / type forms ---
+
+    const setValue = (sel: string, value: string) => {
+      const el = root.querySelector(sel);
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement) {
+        el.value = value;
+      }
+    };
+
+    const setFormGroups = (
+      prefix: string,
+      opts: { title: string; submit: string; editing: boolean },
+    ) => {
+      const title = q(`[data-${prefix}-form-title]`);
+      if (title) title.textContent = opts.title;
+      const submit = q(`[data-${prefix}-submit]`);
+      if (submit) submit.textContent = opts.submit;
+      const cancel = q(`[data-${prefix}-cancel]`);
+      if (cancel instanceof HTMLElement) cancel.hidden = !opts.editing;
+    };
+
+    const clearGroupErrors = (prefix: string) => {
+      root.querySelectorAll(`[data-${prefix}-error]`).forEach((el) => {
+        if (el instanceof HTMLElement) {
+          el.hidden = true;
+          el.textContent = "";
+        }
+      });
+    };
+
+    const showGroupErrors = (prefix: string, errors: Record<string, string>) => {
+      clearGroupErrors(prefix);
+      Object.entries(errors).forEach(([field, message]) => {
+        const el = root.querySelector(`[data-${prefix}-error="${field}"]`);
+        if (el instanceof HTMLElement) {
+          el.textContent = message;
+          el.hidden = false;
+        }
+      });
+    };
+
+    const setEditGuid = (sel: string, guid: string) => {
+      const el = q<HTMLInputElement>(sel);
+      if (el) el.value = guid;
+    };
+
+    const clearCompanyForm = () => {
+      const form = q<HTMLFormElement>("[data-company-form]");
+      if (form) form.reset();
+      setEditGuid("[data-co-edit-guid]", "");
+      setFormGroups("company", { title: "Add company", submit: "Create company", editing: false });
+      clearGroupErrors("co");
+    };
+
+    const fillCompanyForm = (c: EostoreCompany) => {
+      setEditGuid("[data-co-edit-guid]", c.guid);
+      setValue("[data-co-name]", c.name || "");
+      setValue("[data-co-id]", c.id || "");
+      setValue("[data-co-desc]", c.description || "");
+      setFormGroups("company", { title: `Edit company · ${c.name}`, submit: "Save changes", editing: true });
+      clearGroupErrors("co");
+      q("[data-company-form]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    const clearSectionForm = () => {
+      const form = q<HTMLFormElement>("[data-section-form]");
+      if (form) form.reset();
+      setEditGuid("[data-sec-edit-guid]", "");
+      setFormGroups("section", { title: "Add product section", submit: "Create section", editing: false });
+      clearGroupErrors("sec");
+    };
+
+    const fillSectionForm = (s: EostoreSection) => {
+      refreshCatalogSelects();
+      setEditGuid("[data-sec-edit-guid]", s.guid);
+      setValue("[data-sec-company]", s.company_guid || "");
+      setValue("[data-sec-name]", s.name || "");
+      setValue("[data-sec-id]", s.id || "");
+      setValue("[data-sec-desc]", s.description || "");
+      setFormGroups("section", { title: `Edit section · ${s.name}`, submit: "Save changes", editing: true });
+      clearGroupErrors("sec");
+      q("[data-section-form]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    const clearTypeForm = () => {
+      const form = q<HTMLFormElement>("[data-type-form]");
+      if (form) form.reset();
+      setEditGuid("[data-typ-edit-guid]", "");
+      setFormGroups("type", { title: "Add product type", submit: "Create type", editing: false });
+      clearGroupErrors("typ");
+    };
+
+    const fillTypeForm = (t: EostoreType) => {
+      refreshCatalogSelects();
+      setEditGuid("[data-typ-edit-guid]", t.guid);
+      setValue("[data-typ-section]", t.section_guid || "");
+      setValue("[data-typ-name]", t.name || "");
+      setValue("[data-typ-id]", t.id || "");
+      setValue("[data-typ-desc]", t.description || "");
+      setFormGroups("type", { title: `Edit type · ${t.name}`, submit: "Save changes", editing: true });
+      clearGroupErrors("typ");
+      q("[data-type-form]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    const confirmDelete = (title: string, detail: string): boolean =>
+      window.confirm(detail ? `${title}\n\n${detail}` : title);
+
+    // --- render companies / sections / types ---
 
     const renderCompanies = () => {
       const list = q("[data-company-list]");
       if (!(list instanceof HTMLElement)) return;
       list.innerHTML = "";
       if (!companies.length) {
-        list.appendChild(hint("No companies yet."));
+        list.appendChild(hint("No companies yet. Add your first company above."));
         return;
       }
       companies.forEach((c) => {
@@ -392,9 +527,12 @@ import Layout from "../../layouts/Layout.astro";
         card.className = "eostore-card";
         const h = document.createElement("h3");
         h.textContent = c.name;
+        const companySections = sections.filter((s) => s.company_guid === c.guid);
+        const companyTypes = types.filter((t) => t.company_guid === c.guid);
+        const companyProducts = products.filter((p) => p.company_guid === c.guid);
         const meta = document.createElement("p");
         meta.className = "eostore-meta";
-        meta.textContent = `id ${c.id} · guid ${c.guid}`;
+        meta.textContent = `id ${c.id} · ${companySections.length} section(s) · ${companyTypes.length} type(s) · ${companyProducts.length} product(s)`;
         const desc = document.createElement("p");
         desc.className = "eostore-hint";
         desc.textContent = c.description || "";
@@ -410,19 +548,31 @@ import Layout from "../../layouts/Layout.astro";
         openCart.href = companyCartHref(c.id);
         openCart.setAttribute("data-route", "");
         openCart.textContent = "Cart";
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "btn";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => fillCompanyForm(c));
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn";
         del.textContent = "Delete";
         del.addEventListener("click", async () => {
+          const children = companySections.length + companyTypes.length + companyProducts.length;
+          const detail = children
+            ? `This permanently deletes ${companySections.length} section(s), ${companyTypes.length} type(s), and ${companyProducts.length} product(s) with their images.`
+            : "This company has no products yet.";
+          if (!confirmDelete(`Delete “${c.name}”?`, detail)) return;
           const res = await deleteCompany(c.guid);
           if (res.status !== 200) {
             fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
             return;
           }
+          if (currentCompanyGuid() === c.guid) clearCompanyForm();
+          setBanner(`Deleted company “${c.name}”.`);
           await loadAll();
         });
-        actions.append(openStore, openCart, del);
+        actions.append(openStore, openCart, edit, del);
         card.append(h, meta, desc, actions);
         list.appendChild(card);
       });
@@ -433,7 +583,7 @@ import Layout from "../../layouts/Layout.astro";
       if (!(list instanceof HTMLElement)) return;
       list.innerHTML = "";
       if (!sections.length) {
-        list.appendChild(hint("No sections yet."));
+        list.appendChild(hint("No sections yet. Add a section under a company."));
         return;
       }
       sections.forEach((s) => {
@@ -441,25 +591,38 @@ import Layout from "../../layouts/Layout.astro";
         card.className = "eostore-card";
         const h = document.createElement("h3");
         h.textContent = s.name;
+        const sectionTypes = types.filter((t) => t.section_guid === s.guid);
+        const sectionProducts = products.filter((p) => p.section_guid === s.guid);
         const meta = document.createElement("p");
         meta.className = "eostore-meta";
-        meta.textContent = `id ${s.id} · ${companyLabel(s.company_guid)}`;
+        meta.textContent = `id ${s.id} · ${companyLabel(s.company_guid)} · ${sectionTypes.length} type(s) · ${sectionProducts.length} product(s)`;
+        const desc = document.createElement("p");
+        desc.className = "eostore-hint";
+        desc.textContent = s.description || "";
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "btn";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => fillSectionForm(s));
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn";
         del.textContent = "Delete";
         del.addEventListener("click", async () => {
+          const detail = `This permanently deletes ${sectionTypes.length} type(s) and ${sectionProducts.length} product(s) with their images.`;
+          if (!confirmDelete(`Delete section “${s.name}”?`, detail)) return;
           const res = await deleteSection(s.guid);
           if (res.status !== 200) {
             fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
             return;
           }
+          setBanner(`Deleted section “${s.name}”.`);
           await loadAll();
         });
-        actions.appendChild(del);
-        card.append(h, meta, actions);
+        actions.append(edit, del);
+        card.append(h, meta, desc, actions);
         list.appendChild(card);
       });
     };
@@ -469,7 +632,7 @@ import Layout from "../../layouts/Layout.astro";
       if (!(list instanceof HTMLElement)) return;
       list.innerHTML = "";
       if (!types.length) {
-        list.appendChild(hint("No types yet."));
+        list.appendChild(hint("No types yet. Add a type under a section."));
         return;
       }
       types.forEach((t) => {
@@ -477,25 +640,37 @@ import Layout from "../../layouts/Layout.astro";
         card.className = "eostore-card";
         const h = document.createElement("h3");
         h.textContent = t.name;
+        const typeProducts = products.filter((p) => p.type_guid === t.guid);
         const meta = document.createElement("p");
         meta.className = "eostore-meta";
-        meta.textContent = `id ${t.id} · ${sectionLabel(t.section_guid)}`;
+        meta.textContent = `id ${t.id} · ${sectionLabel(t.section_guid)} · ${typeProducts.length} product(s)`;
+        const desc = document.createElement("p");
+        desc.className = "eostore-hint";
+        desc.textContent = t.description || "";
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "btn";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => fillTypeForm(t));
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn";
         del.textContent = "Delete";
         del.addEventListener("click", async () => {
+          const detail = `This permanently deletes ${typeProducts.length} product(s) with their images.`;
+          if (!confirmDelete(`Delete type “${t.name}”?`, detail)) return;
           const res = await deleteType(t.guid);
           if (res.status !== 200) {
             fail(res.data.message || "Delete failed.", res.requestId, res.data.debug);
             return;
           }
+          setBanner(`Deleted type “${t.name}”.`);
           await loadAll();
         });
-        actions.appendChild(del);
-        card.append(h, meta, actions);
+        actions.append(edit, del);
+        card.append(h, meta, desc, actions);
         list.appendChild(card);
       });
     };
@@ -521,12 +696,36 @@ import Layout from "../../layouts/Layout.astro";
         query: (q<HTMLInputElement>("[data-pr-search]")?.value || "").trim(),
         sectionGuid: q<HTMLSelectElement>("[data-pr-filter-section]")?.value || "",
         status: q<HTMLSelectElement>("[data-pr-filter-status]")?.value || "all",
+        stock: (q<HTMLSelectElement>("[data-pr-filter-stock]")?.value || "all") as
+          | "all"
+          | "in"
+          | "low"
+          | "out"
+          | "attention",
         sort: (q<HTMLSelectElement>("[data-pr-sort]")?.value || "recent") as ProductSortKey,
       });
+
+    const renderInventorySummary = () => {
+      const el = q("[data-inventory-summary]");
+      if (!(el instanceof HTMLElement)) return;
+      if (!products.length) {
+        el.textContent = "";
+        return;
+      }
+      const units = products.reduce((n, p) => n + (Number(p.units) || 0), 0);
+      const low = products.filter((p) => productStockState(p.units) === "low").length;
+      const out = products.filter((p) => productStockState(p.units) === "out").length;
+      const value = products.reduce(
+        (n, p) => n + (Number(p.price_final_usd ?? p.price_base_usd) || 0) * (Number(p.units) || 0),
+        0,
+      );
+      el.textContent = `${products.length} products · ${units} units in stock · ${low} low · ${out} out · inventory value $${formatMoney(value)}`;
+    };
 
     const renderProducts = () => {
       const list = q("[data-product-list]");
       if (!(list instanceof HTMLElement)) return;
+      renderInventorySummary();
       list.innerHTML = "";
       const all = filteredProducts();
       const slice = pageSlice(all, page, PAGE_SIZE);
@@ -620,6 +819,49 @@ import Layout from "../../layouts/Layout.astro";
         thumbs.appendChild(wrap);
       });
 
+      const inventory = document.createElement("div");
+      inventory.className = "eostore-inventory";
+      const invLabel = document.createElement("span");
+      invLabel.className = "eostore-hint";
+      invLabel.textContent = "Stock";
+      const dec = document.createElement("button");
+      dec.type = "button";
+      dec.className = "btn";
+      dec.textContent = "−";
+      dec.setAttribute("aria-label", `Decrease stock for ${p.name}`);
+      const invInput = document.createElement("input");
+      invInput.type = "number";
+      invInput.min = "0";
+      invInput.step = "1";
+      invInput.value = String(p.units ?? 0);
+      invInput.setAttribute("aria-label", `Stock units for ${p.name}`);
+      const inc = document.createElement("button");
+      inc.type = "button";
+      inc.className = "btn";
+      inc.textContent = "+";
+      inc.setAttribute("aria-label", `Increase stock for ${p.name}`);
+      const saveStock = document.createElement("button");
+      saveStock.type = "button";
+      saveStock.className = "btn btn--primary";
+      saveStock.textContent = "Save stock";
+      const commitStock = async (units: number) => {
+        const next = Math.max(0, Math.floor(units) || 0);
+        invInput.value = String(next);
+        saveStock.disabled = true;
+        const res = await updateProduct(p.guid, { units: next });
+        saveStock.disabled = false;
+        if (res.status !== 200 || !res.data.product) {
+          fail(res.data.message || "Could not update stock.", res.requestId, res.data.debug);
+          return;
+        }
+        applyProductUpdate(res.data.product);
+        setBanner(`Stock updated · ${res.data.product.name} now ${res.data.product.units}.`);
+      };
+      dec.addEventListener("click", () => void commitStock((Number(invInput.value) || 0) - 1));
+      inc.addEventListener("click", () => void commitStock((Number(invInput.value) || 0) + 1));
+      saveStock.addEventListener("click", () => void commitStock(Number(invInput.value) || 0));
+      inventory.append(invLabel, dec, invInput, inc, saveStock);
+
       const actions = document.createElement("div");
       actions.className = "eostore-actions";
       const edit = document.createElement("button");
@@ -654,13 +896,16 @@ import Layout from "../../layouts/Layout.astro";
       });
       actions.append(edit, dup, del);
 
-      card.append(head, meta, price, tags, desc, thumbs, actions);
+      card.append(head, meta, price, tags, desc, thumbs, inventory, actions);
       return card;
     };
 
     // --- product editor ---
 
     const currentEditGuid = () => (q<HTMLInputElement>("[data-pr-edit-guid]")?.value || "").trim();
+    const currentCompanyGuid = () => (q<HTMLInputElement>("[data-co-edit-guid]")?.value || "").trim();
+    const currentSectionGuid = () => (q<HTMLInputElement>("[data-sec-edit-guid]")?.value || "").trim();
+    const currentTypeGuid = () => (q<HTMLInputElement>("[data-typ-edit-guid]")?.value || "").trim();
 
     const setDirty = (value: boolean) => {
       dirty = value;
@@ -1142,6 +1387,95 @@ import Layout from "../../layouts/Layout.astro";
       setBanner(`Saved ${saved.name}.`);
     });
 
+    q("[data-company-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const guid = currentCompanyGuid();
+      const name = (q<HTMLInputElement>("[data-co-name]")?.value || "").trim();
+      const id = (q<HTMLInputElement>("[data-co-id]")?.value || "").trim();
+      const description = (q<HTMLTextAreaElement>("[data-co-desc]")?.value || "").trim();
+      const errors: Record<string, string> = {};
+      if (!name) errors.name = "Name is required.";
+      if (id && !slugifyProduct(id)) errors.id = "Use letters, numbers, and hyphens.";
+      if (Object.keys(errors).length) {
+        showGroupErrors("co", errors);
+        return;
+      }
+      const submit = q<HTMLButtonElement>("[data-company-submit]");
+      if (submit) submit.disabled = true;
+      const res = guid
+        ? await updateCompany(guid, { id, name, description })
+        : await createCompany({ id, name, description });
+      if (submit) submit.disabled = false;
+      if (res.status !== 200) {
+        fail(res.data.message || "Save company failed.", res.requestId, res.data.debug);
+        return;
+      }
+      clearCompanyForm();
+      setBanner(guid ? `Saved company “${name}”.` : `Created company “${name}”.`);
+      await loadAll();
+    });
+    q("[data-company-cancel]")?.addEventListener("click", () => clearCompanyForm());
+
+    q("[data-section-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const guid = currentSectionGuid();
+      const company_guid = q<HTMLSelectElement>("[data-sec-company]")?.value || "";
+      const name = (q<HTMLInputElement>("[data-sec-name]")?.value || "").trim();
+      const id = (q<HTMLInputElement>("[data-sec-id]")?.value || "").trim();
+      const description = (q<HTMLTextAreaElement>("[data-sec-desc]")?.value || "").trim();
+      const errors: Record<string, string> = {};
+      if (!company_guid) errors.company_guid = "Choose a company.";
+      if (!name) errors.name = "Name is required.";
+      if (Object.keys(errors).length) {
+        showGroupErrors("sec", errors);
+        return;
+      }
+      const submit = q<HTMLButtonElement>("[data-section-submit]");
+      if (submit) submit.disabled = true;
+      const res = guid
+        ? await updateSection(guid, { id, name, description })
+        : await createSection({ company_guid, id, name, description });
+      if (submit) submit.disabled = false;
+      if (res.status !== 200) {
+        fail(res.data.message || "Save section failed.", res.requestId, res.data.debug);
+        return;
+      }
+      clearSectionForm();
+      setBanner(guid ? `Saved section “${name}”.` : `Created section “${name}”.`);
+      await loadAll();
+    });
+    q("[data-section-cancel]")?.addEventListener("click", () => clearSectionForm());
+
+    q("[data-type-form]")?.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const guid = currentTypeGuid();
+      const section_guid = q<HTMLSelectElement>("[data-typ-section]")?.value || "";
+      const name = (q<HTMLInputElement>("[data-typ-name]")?.value || "").trim();
+      const id = (q<HTMLInputElement>("[data-typ-id]")?.value || "").trim();
+      const description = (q<HTMLTextAreaElement>("[data-typ-desc]")?.value || "").trim();
+      const errors: Record<string, string> = {};
+      if (!section_guid) errors.section_guid = "Choose a section.";
+      if (!name) errors.name = "Name is required.";
+      if (Object.keys(errors).length) {
+        showGroupErrors("typ", errors);
+        return;
+      }
+      const submit = q<HTMLButtonElement>("[data-type-submit]");
+      if (submit) submit.disabled = true;
+      const res = guid
+        ? await updateType(guid, { id, name, description })
+        : await createType({ section_guid, id, name, description });
+      if (submit) submit.disabled = false;
+      if (res.status !== 200) {
+        fail(res.data.message || "Save type failed.", res.requestId, res.data.debug);
+        return;
+      }
+      clearTypeForm();
+      setBanner(guid ? `Saved type “${name}”.` : `Created type “${name}”.`);
+      await loadAll();
+    });
+    q("[data-type-cancel]")?.addEventListener("click", () => clearTypeForm());
+
     const onFilterChange = () => {
       page = 1;
       renderProducts();
@@ -1149,6 +1483,7 @@ import Layout from "../../layouts/Layout.astro";
     q("[data-pr-search]")?.addEventListener("input", onFilterChange);
     q("[data-pr-filter-status]")?.addEventListener("change", onFilterChange);
     q("[data-pr-filter-section]")?.addEventListener("change", onFilterChange);
+    q("[data-pr-filter-stock]")?.addEventListener("change", onFilterChange);
     q("[data-pr-sort]")?.addEventListener("change", onFilterChange);
 
     document.querySelector("[data-refresh]")?.addEventListener("click", () => void loadAll());
@@ -1194,6 +1529,9 @@ import Layout from "../../layouts/Layout.astro";
         if (f instanceof HTMLElement) f.hidden = false;
       });
       clearProductForm();
+      clearCompanyForm();
+      clearSectionForm();
+      clearTypeForm();
       await loadAll();
     })();
   }

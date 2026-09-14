@@ -417,3 +417,72 @@ func TestEostoreEffectiveStatus(t *testing.T) {
 		t.Fatal("unexpected status normalization")
 	}
 }
+
+func TestEostoreCascadeDelete(t *testing.T) {
+	app := newTestApp(true)
+	app.cfg.AdminEmail = "admin@eduardoos.com"
+
+	co := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/companies", `{"name":"Acme","id":"acme"}`)
+	companyGUID := decodeMap(t, co)["company"].(map[string]any)["guid"].(string)
+	sec := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/sections", `{"company_guid":"`+companyGUID+`","name":"Textiles","id":"textiles"}`)
+	sectionGUID := decodeMap(t, sec)["section"].(map[string]any)["guid"].(string)
+	typ := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/types", `{"section_guid":"`+sectionGUID+`","name":"Towels","id":"towels"}`)
+	typeGUID := decodeMap(t, typ)["type"].(map[string]any)["guid"].(string)
+	prod := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products", `{
+		"type_guid":"`+typeGUID+`","name":"Beach Towel","id":"beach-towel","price_base_usd":20,"discount_percent":0,
+		"bs_per_usd":40,"units":5,"visible":true
+	}`)
+	productGUID := decodeMap(t, prod)["product"].(map[string]any)["guid"].(string)
+	imageID := eostoreUploadImage(t, app, productGUID)
+	imageURL := "/api/eostore/products/" + productGUID + "/images/" + imageID
+
+	// Deleting a company with children succeeds and removes the whole tree.
+	del := app.doJSON(t, "admin@eduardoos.com", http.MethodDelete, "/api/eostore/companies/"+companyGUID, "")
+	if del.Code != http.StatusOK {
+		t.Fatalf("cascade company delete status=%d body=%s", del.Code, del.Body.String())
+	}
+	payload := decodeMap(t, del)
+	if int(payload["products"].(float64)) != 1 || int(payload["types"].(float64)) != 1 || int(payload["sections"].(float64)) != 1 {
+		t.Fatalf("unexpected cascade counts %#v", payload)
+	}
+	for _, path := range []string{
+		"/api/eostore/companies",
+		"/api/eostore/sections?company_guid=" + companyGUID,
+		"/api/eostore/types?company_guid=" + companyGUID,
+		"/api/eostore/products?company_guid=" + companyGUID,
+	} {
+		list := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, path, "")
+		if list.Code != http.StatusOK || int(decodeMap(t, list)["count"].(float64)) != 0 {
+			t.Fatalf("expected empty list for %s, got %d %s", path, list.Code, list.Body.String())
+		}
+	}
+	img := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, imageURL, "")
+	if img.Code != http.StatusNotFound {
+		t.Fatalf("expected image gone after cascade, got %d", img.Code)
+	}
+	// Second delete is a clean 404, not a conflict.
+	again := app.doJSON(t, "admin@eduardoos.com", http.MethodDelete, "/api/eostore/companies/"+companyGUID, "")
+	if again.Code != http.StatusNotFound {
+		t.Fatalf("expected 404 on re-delete, got %d", again.Code)
+	}
+
+	// Section delete cascades its types and products too.
+	co2 := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/companies", `{"name":"Beta","id":"beta"}`)
+	company2 := decodeMap(t, co2)["company"].(map[string]any)["guid"].(string)
+	sec2 := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/sections", `{"company_guid":"`+company2+`","name":"Kitchen","id":"kitchen"}`)
+	section2 := decodeMap(t, sec2)["section"].(map[string]any)["guid"].(string)
+	typ2 := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/types", `{"section_guid":"`+section2+`","name":"Cups","id":"cups"}`)
+	type2 := decodeMap(t, typ2)["type"].(map[string]any)["guid"].(string)
+	app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/eostore/products", `{
+		"type_guid":"`+type2+`","name":"Mug","id":"mug","price_base_usd":5,"discount_percent":0,
+		"bs_per_usd":40,"units":3,"visible":true
+	}`)
+	secDel := app.doJSON(t, "admin@eduardoos.com", http.MethodDelete, "/api/eostore/sections/"+section2, "")
+	if secDel.Code != http.StatusOK {
+		t.Fatalf("cascade section delete status=%d body=%s", secDel.Code, secDel.Body.String())
+	}
+	secList := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/eostore/sections?company_guid="+company2, "")
+	if int(decodeMap(t, secList)["count"].(float64)) != 0 {
+		t.Fatal("expected section removed")
+	}
+}

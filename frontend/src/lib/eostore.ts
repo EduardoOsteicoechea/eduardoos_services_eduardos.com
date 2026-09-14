@@ -157,6 +157,7 @@ export type ProductFilter = {
   sectionGuid?: string;
   typeGuid?: string;
   status?: string;
+  stock?: "all" | "in" | "low" | "out" | "attention";
   sort?: ProductSortKey;
 };
 
@@ -174,6 +175,14 @@ export function filterProducts(products: EostoreProduct[], filter: ProductFilter
     if (filter.sectionGuid && p.section_guid !== filter.sectionGuid) return false;
     if (filter.typeGuid && p.type_guid !== filter.typeGuid) return false;
     if (filter.status && filter.status !== "all" && normalizeProductStatus(p.status) !== filter.status) return false;
+    if (filter.stock && filter.stock !== "all") {
+      const state = productStockState(p.units);
+      if (filter.stock === "attention") {
+        if (state === "in") return false;
+      } else if (state !== filter.stock) {
+        return false;
+      }
+    }
     if (q && !productHaystack(p).includes(q)) return false;
     return true;
   });

@@ -536,3 +536,24 @@
   font-weight: 650;
 }
 
+/* inventory quick adjust */
+
+.eostore-inventory {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.eostore-inventory input[type="number"] {
+  width: calc(var(--button-size) * 3);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+

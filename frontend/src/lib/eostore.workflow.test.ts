@@ -82,6 +82,17 @@ describe("filterProducts", () => {
     expect(filterProducts(rows, { status: "active" })).toHaveLength(2);
     expect(filterProducts(rows, { sectionGuid: "s1" })).toHaveLength(2);
   });
+  it("filters by stock state", () => {
+    const stockRows = [
+      product({ name: "in", units: 50 }),
+      product({ name: "low", units: 2 }),
+      product({ name: "out", units: 0 }),
+    ];
+    expect(filterProducts(stockRows, { stock: "in" })).toHaveLength(1);
+    expect(filterProducts(stockRows, { stock: "low" })).toHaveLength(1);
+    expect(filterProducts(stockRows, { stock: "out" })).toHaveLength(1);
+    expect(filterProducts(stockRows, { stock: "attention" })).toHaveLength(2);
+  });
   it("sorts by price and stock", () => {
     const priced = [product({ name: "a", price_base_usd: 5 }), product({ name: "b", price_base_usd: 50 })];
     expect(sortProducts(priced, "price")[0].name).toBe("b");

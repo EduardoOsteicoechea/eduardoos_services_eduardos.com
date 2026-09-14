@@ -94,6 +94,19 @@ location ~ ^/store/[^/]+/?$ {
 and `/store/product` (static shells). Company and product URLs are served by the
 nginx rewrites and are indexed per product.
 
+## Delete (cascade)
+
+`DELETE` removes the whole subtree and product image files:
+
+- company → sections + types + products
+- section → types + products
+- type → products
+
+Responses report `{ sections, types, products }` removed. Missing node → `404`.
+The admin UI confirms with child counts. Cascade is implemented by
+`App.eostoreCascadeDelete` in `backend/eostore_http.go` (products first, then
+types, then sections, then the company).
+
 ## Tests
 
 - `backend/eostore_test.go`: admin lifecycle, status/PDP, image alt/order,

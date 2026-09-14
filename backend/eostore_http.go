@@ -136,12 +136,74 @@ func (a *App) eostoreCompaniesDeleteHandler(w http.ResponseWriter, r *http.Reque
 	if admin == nil {
 		return
 	}
-	if err := a.eostore.DeleteCompany(r.Context(), strings.TrimSpace(r.PathValue("guid"))); err != nil {
+	ctx := r.Context()
+	guid := strings.TrimSpace(r.PathValue("guid"))
+	company, err := a.eostore.GetCompany(ctx, guid)
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	removedProducts, removedTypes, removedSections := a.eostoreCascadeDelete(ctx, company.GUID, "", "")
+	if err := a.eostore.DeleteCompany(ctx, company.GUID); err != nil {
 		a.eostoreWriteStoreErr(w, r, err)
 		return
 	}
 	a.auditEvent(r, "eostore_company", "deleted", admin.ID)
-	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+	a.mustLogf(r, "eostore.companies.delete", "guid", company.GUID, "sections", removedSections, "types", removedTypes, "products", removedProducts)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"ok":       true,
+		"sections": removedSections,
+		"types":    removedTypes,
+		"products": removedProducts,
+	})
+}
+
+// eostoreCascadeDelete removes every product (and its image files), type, and
+// section under a company. Passing a sectionGUID scopes deletion to one section
+// (used by the section delete handler); passing a typeGUID scopes it to one
+// type. Returns the number of products, types, and sections removed.
+func (a *App) eostoreCascadeDelete(ctx context.Context, companyGUID, sectionGUID, typeGUID string) (products, types, sections int) {
+	rows, err := a.eostore.ListProducts(ctx, companyGUID, sectionGUID, typeGUID)
+	if err == nil {
+		for _, p := range rows {
+			if p == nil {
+				continue
+			}
+			for _, img := range p.Images {
+				_ = a.eostoreDeleteImageFile(img.Key)
+			}
+			if err := a.eostore.DeleteProduct(ctx, p.GUID); err == nil {
+				products++
+			}
+		}
+	}
+	if typeGUID == "" {
+		typeRows, err := a.eostore.ListTypes(ctx, companyGUID, sectionGUID)
+		if err == nil {
+			for _, t := range typeRows {
+				if t == nil {
+					continue
+				}
+				if err := a.eostore.DeleteType(ctx, t.GUID); err == nil {
+					types++
+				}
+			}
+		}
+	}
+	if sectionGUID == "" && typeGUID == "" {
+		secRows, err := a.eostore.ListSections(ctx, companyGUID)
+		if err == nil {
+			for _, s := range secRows {
+				if s == nil {
+					continue
+				}
+				if err := a.eostore.DeleteSection(ctx, s.GUID); err == nil {
+					sections++
+				}
+			}
+		}
+	}
+	return products, types, sections
 }
 
 func (a *App) eostoreSectionsListHandler(w http.ResponseWriter, r *http.Request) {
@@ -251,12 +313,21 @@ func (a *App) eostoreSectionsDeleteHandler(w http.ResponseWriter, r *http.Reques
 	if admin == nil {
 		return
 	}
-	if err := a.eostore.DeleteSection(r.Context(), strings.TrimSpace(r.PathValue("guid"))); err != nil {
+	ctx := r.Context()
+	guid := strings.TrimSpace(r.PathValue("guid"))
+	section, err := a.eostore.GetSection(ctx, guid)
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	removedProducts, removedTypes, _ := a.eostoreCascadeDelete(ctx, section.CompanyGUID, section.GUID, "")
+	if err := a.eostore.DeleteSection(ctx, section.GUID); err != nil {
 		a.eostoreWriteStoreErr(w, r, err)
 		return
 	}
 	a.auditEvent(r, "eostore_section", "deleted", admin.ID)
-	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+	a.mustLogf(r, "eostore.sections.delete", "guid", section.GUID, "types", removedTypes, "products", removedProducts)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "types": removedTypes, "products": removedProducts})
 }
 
 func (a *App) eostoreTypesListHandler(w http.ResponseWriter, r *http.Request) {
@@ -368,12 +439,21 @@ func (a *App) eostoreTypesDeleteHandler(w http.ResponseWriter, r *http.Request) 
 	if admin == nil {
 		return
 	}
-	if err := a.eostore.DeleteType(r.Context(), strings.TrimSpace(r.PathValue("guid"))); err != nil {
+	ctx := r.Context()
+	guid := strings.TrimSpace(r.PathValue("guid"))
+	typ, err := a.eostore.GetType(ctx, guid)
+	if err != nil {
+		a.eostoreWriteStoreErr(w, r, err)
+		return
+	}
+	removedProducts, _, _ := a.eostoreCascadeDelete(ctx, typ.CompanyGUID, "", typ.GUID)
+	if err := a.eostore.DeleteType(ctx, typ.GUID); err != nil {
 		a.eostoreWriteStoreErr(w, r, err)
 		return
 	}
 	a.auditEvent(r, "eostore_type", "deleted", admin.ID)
-	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+	a.mustLogf(r, "eostore.types.delete", "guid", typ.GUID, "products", removedProducts)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "products": removedProducts})
 }
 
 func (a *App) eostoreProductsListHandler(w http.ResponseWriter, r *http.Request) {

@@ -44,6 +44,18 @@ cart/checkout only accept effectively-visible products.
   (must be an exact permutation of current image ids; first id is primary).
 - Delete: `DELETE /api/eostore/products/{guid}/images/{imageId}`.
 
+## Delete (cascade)
+
+Deleting a node removes its whole subtree, including product image files:
+
+- **Company** → its sections, types, and products.
+- **Section** → its types and products.
+- **Type** → its products.
+
+The response reports how many sections/types/products were removed. Re-deleting a
+missing node returns `404` (not `409`). The admin UI asks for confirmation with the
+child counts before deleting.
+
 ## Routes
 
 - FE admin: `/eostore` (admin session; `noindex`) — editor with status, validation,
