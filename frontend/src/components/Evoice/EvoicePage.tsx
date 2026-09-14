@@ -844,6 +844,52 @@ function EvoiceWorkspace() {
     await reloadDocsAudios(ownerSafe, project);
   }
 
+  async function onDeleteDocAudios(
+    displayName: string,
+    tracks: EvoiceObjectMeta[],
+  ) {
+    if (!ownerSafe || !project || busy || tracks.length === 0) return;
+    if (
+      !window.confirm(
+        `Delete all ${tracks.length} audio file(s) for ${displayName}?`,
+      )
+    ) {
+      return;
+    }
+    setBusy(true);
+    sessionLog("evoice.audio.deleteAll.start", {
+      name: displayName,
+      count: tracks.length,
+    });
+    let failed = 0;
+    for (const t of tracks) {
+      const res = await deleteEvoiceAudio(ownerSafe, project, t.name);
+      if (res.error) failed += 1;
+    }
+    setBusy(false);
+    if (failed > 0) {
+      sessionLog("evoice.audio.deleteAll.error", { name: displayName, failed });
+      showError(
+        "eVoice",
+        `Could not delete ${failed} of ${tracks.length} audio file(s).`,
+      );
+    } else {
+      sessionLog("evoice.audio.deleteAll.done", {
+        name: displayName,
+        count: tracks.length,
+      });
+    }
+    const removedIds = new Set(tracks.map(trackId));
+    setQueue((prev) => prev.filter((q) => !removedIds.has(trackId(q))));
+    setTrackIndex(0);
+    setCheckedTracks((prev) => {
+      const next = new Set(prev);
+      for (const id of removedIds) next.delete(id);
+      return next;
+    });
+    await reloadDocsAudios(ownerSafe, project);
+  }
+
   function resolveGenerateTargets(explicit?: string[]): string[] {
     if (explicit && explicit.length > 0) return explicit;
     if (selectedDocs.length > 0) return selectedDocs;
@@ -1913,17 +1959,39 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                           <h3 className="evoice__doc-group-title">
                             {dp.sourceDoc?.name ?? dp.stem}
                           </h3>
-                          <TransportBar
-                            label={`Document ${dp.stem}`}
-                            disabled={dp.allTracks.length === 0}
-                            onPlay={() => startPlayback(dp.allTracks)}
-                            onPause={pause}
-                            onStop={stopPlayback}
-                            onPrev={prev}
-                            onNext={next}
-                            canPrev={queueHasTracks && canPrev}
-                            canNext={queueHasTracks && canNext}
-                          />
+                          <div className="evoice__doc-group-actions">
+                            <TransportBar
+                              label={`Document ${dp.stem}`}
+                              disabled={dp.allTracks.length === 0}
+                              onPlay={() => startPlayback(dp.allTracks)}
+                              onPause={pause}
+                              onStop={stopPlayback}
+                              onPrev={prev}
+                              onNext={next}
+                              canPrev={queueHasTracks && canPrev}
+                              canNext={queueHasTracks && canNext}
+                            />
+                            <button
+                              type="button"
+                              className="evoice__icon-btn evoice__icon-btn--danger"
+                              title={`Delete all audio for ${dp.sourceDoc?.name ?? dp.stem}`}
+                              aria-label={`Delete all audio for ${dp.sourceDoc?.name ?? dp.stem}`}
+                              onClick={() =>
+                                void onDeleteDocAudios(
+                                  dp.sourceDoc?.name ?? dp.stem,
+                                  dp.allTracks,
+                                )
+                              }
+                              disabled={busy || dp.allTracks.length === 0}
+                            >
+                              <span
+                                className="material-symbols-outlined"
+                                aria-hidden="true"
+                              >
+                                delete_sweep
+                              </span>
+                            </button>
+                          </div>
                         </header>
 
                         {dp.buckets.map((bucket) => (

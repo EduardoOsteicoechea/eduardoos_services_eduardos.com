@@ -837,6 +837,13 @@
   flex: 0 1 auto;
 }
 
+.evoice__doc-group-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  flex: 0 0 auto;
+}
+
 .evoice__doc-group-head .evoice__icon-btn,
 .evoice__version-head .evoice__icon-btn,
 .evoice__transport .evoice__icon-btn {
