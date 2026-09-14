@@ -16,12 +16,24 @@ import Layout from "../../layouts/Layout.astro";
     </a>
   </Fragment>
 
-  <section class="eostore-shop" data-store-hub>
-    <h1>Store</h1>
-    <p class="lede">Choose a company. Checkout creates an eoadmin payment statement.</p>
-    <p class="status" data-banner>Loading companies…</p>
-    <div class="eostore-shop-grid" data-company-grid></div>
-  </section>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">
+        <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
+        Commerce
+      </p>
+      <h1 class="hero__title">Store</h1>
+      <p class="hero__lede">
+        Choose a company. Checkout creates an eoadmin payment statement that an
+        administrator approves.
+      </p>
+      <p class="status" data-banner>Loading companies…</p>
+    </header>
+
+    <section class="eostore-shop" data-store-hub aria-label="Company storefronts">
+      <div class="eostore-shop-grid" data-company-grid></div>
+    </section>
+  </div>
 </Layout>
 
 <script>
@@ -36,7 +48,7 @@ import Layout from "../../layouts/Layout.astro";
 
   const root = document.querySelector("[data-store-hub]");
   if (root instanceof HTMLElement) {
-    const banner = root.querySelector("[data-banner]");
+    const banner = document.querySelector("[data-banner]");
     const grid = root.querySelector("[data-company-grid]");
 
     const setBanner = (text: string) => {
@@ -57,12 +69,25 @@ import Layout from "../../layouts/Layout.astro";
       grid.innerHTML = "";
       if (!companies.length) {
         setBanner("No companies published yet.");
+        const empty = document.createElement("p");
+        empty.className = "eostore-hint";
+        empty.textContent = "Company storefronts will appear here when they are published.";
+        grid.appendChild(empty);
         return;
       }
-      setBanner(`${companies.length} compan${companies.length === 1 ? "y" : "ies"}`);
+      setBanner(`${companies.length} compan${companies.length === 1 ? "y" : "ies"} available.`);
       companies.forEach((c) => {
         const card = document.createElement("article");
         card.className = "eostore-shop-card";
+
+        const icon = document.createElement("span");
+        icon.className = "eostore-shop-card__icon";
+        const material = document.createElement("span");
+        material.className = "material-symbols-outlined";
+        material.setAttribute("aria-hidden", "true");
+        material.textContent = "storefront";
+        icon.appendChild(material);
+
         const h = document.createElement("h2");
         h.textContent = c.name;
         const meta = document.createElement("p");
@@ -71,6 +96,7 @@ import Layout from "../../layouts/Layout.astro";
         const desc = document.createElement("p");
         desc.className = "lede";
         desc.textContent = c.description || "";
+
         const actions = document.createElement("div");
         actions.className = "eostore-actions";
         const open = document.createElement("a");
@@ -84,7 +110,8 @@ import Layout from "../../layouts/Layout.astro";
         cart.setAttribute("data-route", "");
         cart.textContent = "Cart";
         actions.append(open, cart);
-        card.append(h, meta, desc, actions);
+
+        card.append(icon, h, meta, desc, actions);
         grid.appendChild(card);
       });
     };
@@ -101,3 +128,20 @@ import Layout from "../../layouts/Layout.astro";
     })();
   }
 </script>
+
+<style is:global>
+  .eostore-shop-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    color: var(--color-accent);
+    background: var(--accent-soft);
+    border-radius: var(--radius-md);
+  }
+
+  .eostore-shop-card__icon .material-symbols-outlined {
+    font-size: var(--icon-size);
+  }
+</style>
