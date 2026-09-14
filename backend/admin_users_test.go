@@ -95,3 +95,24 @@ func TestAdminCanGrantAndRevokeServices(t *testing.T) {
 		t.Fatalf("manual access not revoked: %s", access.Body.String())
 	}
 }
+
+func TestAdminGrantUnlocksProductRoute(t *testing.T) {
+	app := newTestApp(true)
+	// Without a grant, the eVoice API denies the plain member.
+	denied := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/evoice/me", "")
+	if denied.Code != http.StatusForbidden {
+		t.Fatalf("expected 403 before grant, got %d %s", denied.Code, denied.Body.String())
+	}
+	// Admin grants evoice.
+	req, rec := app.adminPOST(t, "/api/admin/users/member-1/services", `{"services":["evoice"]}`)
+	req.Method = http.MethodPut
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("grant evoice: %d %s", rec.Code, rec.Body.String())
+	}
+	// The same route guard now allows the member.
+	allowed := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/evoice/me", "")
+	if allowed.Code != http.StatusOK {
+		t.Fatalf("admin grant did not unlock the route: %d %s", allowed.Code, allowed.Body.String())
+	}
+}

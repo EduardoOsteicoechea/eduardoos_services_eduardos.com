@@ -90,6 +90,12 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 	if user.Role == roleAdmin {
 		allowed = true
 		reason = "admin"
+	} else if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, serviceID); unavailable {
+		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
+		return
+	} else if granted {
+		allowed = true
+		reason = "admin_grant"
 	} else {
 		ok, unavailable := a.hasProductEntitlement(r, user, serviceID)
 		if unavailable {
@@ -105,17 +111,6 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 		if a.homescool.IsLinkedStudent(r.Context(), user.ID) {
 			allowed = true
 			reason = "linked_student"
-		}
-	}
-	if !allowed {
-		pref, err := a.store.UserPreferenceByKey(r.Context(), user.ID, "admin_services")
-		if err != nil {
-			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-			return
-		}
-		if pref != nil && preferenceIncludesService(pref.Value, serviceID) {
-			allowed = true
-			reason = "admin_grant"
 		}
 	}
 	a.mustLogf(r, "subscriptions.access", "user_id", user.ID, "service", serviceID, "allowed", allowed, "reason", reason)

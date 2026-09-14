@@ -63,6 +63,22 @@ func (a *App) ereportViewURL(r *http.Request, ownerSafe, orgID, reportID string)
 	return a.publicBase(r) + ereportViewPath(ownerSafe, orgID, reportID)
 }
 
+// hasAdminServiceGrant reports access granted by an administrator from
+// /admin/users, stored as the per-user admin_services preference.
+func (a *App) hasAdminServiceGrant(r *http.Request, userID, serviceID string) (granted bool, unavailable bool) {
+	if strings.TrimSpace(userID) == "" {
+		return false, false
+	}
+	pref, err := a.store.UserPreferenceByKey(r.Context(), userID, "admin_services")
+	if err != nil {
+		return false, true
+	}
+	if pref == nil {
+		return false, false
+	}
+	return preferenceIncludesService(pref.Value, serviceID), false
+}
+
 func (a *App) hasProductEntitlement(r *http.Request, user *User, product string) (allowed bool, unavailable bool) {
 	if a.failClosedEnt {
 		return false, true
@@ -82,6 +98,13 @@ func (a *App) hasProductEntitlement(r *http.Request, user *User, product string)
 		if ent.Product == product && ent.isLive(now) {
 			return true, false
 		}
+	}
+	// Administrator-granted access (managed from /admin/users) unlocks every
+	// route/API that uses this guard.
+	if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, product); unavailable {
+		return false, true
+	} else if granted {
+		return true, false
 	}
 	return false, false
 }
