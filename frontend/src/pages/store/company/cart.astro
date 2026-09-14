@@ -32,7 +32,8 @@ import Layout from "../../../layouts/Layout.astro";
       </div>
       <p class="eostore-meta" data-totals></p>
       <div class="eostore-actions">
-        <button class="btn btn--primary" type="submit" data-checkout>Checkout with eoadmin</button>
+        <button class="btn btn--primary" type="submit" data-checkout>Place order</button>
+        <a class="btn" href="/eoadmin/mine" data-route>My orders</a>
       </div>
     </form>
   </section>
@@ -86,7 +87,7 @@ import Layout from "../../../layouts/Layout.astro";
     const render = (cart: EostoreCart, companyName: string) => {
       if (title instanceof HTMLElement) title.textContent = `${companyName} cart`;
       if (lede instanceof HTMLElement) {
-        lede.textContent = "Adjust units up to inventory, then checkout to create an eoadmin statement.";
+        lede.textContent = "Adjust units up to inventory, then place the order. It appears in eoadmin as pending payment.";
       }
       if (!(linesEl instanceof HTMLElement)) return;
       linesEl.innerHTML = "";

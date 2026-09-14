@@ -301,6 +301,14 @@
   border-radius: var(--border-radius);
 }
 
+.eostore-step {
+  min-width: var(--control-height);
+  height: var(--control-height);
+  padding: 0 var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  line-height: 1;
+}
+
 /* admin toolbar, editor groups, badges, gallery */
 
 .eostore-toolbar {
