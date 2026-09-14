@@ -423,7 +423,16 @@ func (s *mongoStore) UserPreferenceByKey(ctx context.Context, userID, key string
 
 func (s *mongoStore) UpsertUserPreference(ctx context.Context, pref *UserPreference) error {
 	filter := bson.M{"user_id": pref.UserID, "key": pref.Key}
-	_, err := s.userPreferences().ReplaceOne(ctx, filter, pref, options.Replace().SetUpsert(true))
+	// Use $set instead of ReplaceOne so an existing document with a different
+	// _id (e.g. written by the generic preferences API) is not rejected for
+	// changing the immutable _id field.
+	update := bson.M{"$set": bson.M{
+		"user_id":    pref.UserID,
+		"key":        pref.Key,
+		"value":      pref.Value,
+		"updated_at": pref.UpdatedAt,
+	}}
+	_, err := s.userPreferences().UpdateOne(ctx, filter, update, options.Update().SetUpsert(true))
 	return err
 }
 

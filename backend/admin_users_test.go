@@ -5,7 +5,22 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func TestPreferenceServiceIDsHandlesBSONArray(t *testing.T) {
+	got := preferenceServiceIDs(primitive.A{"evoice", "scrib", "nope"})
+	if len(got) != 2 || got[0] != "evoice" || got[1] != "scrib" {
+		t.Fatalf("expected [evoice scrib], got %v", got)
+	}
+	if ids := preferenceServiceIDs([]string{"pamphlet"}); len(ids) != 1 || ids[0] != "pamphlet" {
+		t.Fatalf("string slice: %v", ids)
+	}
+	if ids := preferenceServiceIDs(nil); len(ids) != 0 {
+		t.Fatalf("nil: %v", ids)
+	}
+}
 
 func TestListUsersAdminOnly(t *testing.T) {
 	app := newTestApp(true)

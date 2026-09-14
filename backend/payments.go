@@ -141,18 +141,32 @@ func preferenceIncludesService(value any, serviceID string) bool {
 
 func preferenceServiceIDs(value any) []string {
 	switch values := value.(type) {
+	case nil:
+		return []string{}
 	case []string:
 		return normalizeServiceIDs(values)
-	case []any:
-		out := make([]string, 0, len(values))
-		for _, raw := range values {
-			if value, ok := raw.(string); ok {
-				out = append(out, value)
-			}
-		}
-		return normalizeServiceIDs(out)
 	}
-	return []string{}
+	// Mongo decodes BSON arrays to primitive.A (a named []interface{}), which is
+	// not []any, so fall back to a JSON round-trip to read them reliably.
+	raw, err := json.Marshal(value)
+	if err != nil {
+		return []string{}
+	}
+	var strs []string
+	if err := json.Unmarshal(raw, &strs); err == nil {
+		return normalizeServiceIDs(strs)
+	}
+	var anys []any
+	if err := json.Unmarshal(raw, &anys); err != nil {
+		return []string{}
+	}
+	out := make([]string, 0, len(anys))
+	for _, raw := range anys {
+		if s, ok := raw.(string); ok {
+			out = append(out, s)
+		}
+	}
+	return normalizeServiceIDs(out)
 }
 
 func (a *App) subscriptionsPreviewHandler(w http.ResponseWriter, r *http.Request) {
