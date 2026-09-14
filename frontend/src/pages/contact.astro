@@ -11,29 +11,62 @@ const description =
   description={description}
   jsonLd={graph(websiteSchema(), personSchema(), contactPageSchema())}
 >
-  <h1>Contact</h1>
-  <p class="lede">
-    For project inquiries, use the public channels below. Forms and mailbox
-    integrations can be added behind <code>/api/</code> without exposing backend
-    addresses in the frontend.
-  </p>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">Contact</p>
+      <h1 class="hero__title">Let's talk about the work.</h1>
+      <p class="hero__lede">
+        For project inquiries, use the public channels below. Forms and mailbox
+        integrations can be added behind <code>/api/</code> without exposing
+        backend addresses in the frontend.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="mailto:eduardooost@gmail.com">
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+          Email me
+        </a>
+      </div>
+    </header>
 
-  <section class="seo-section" aria-labelledby="channels-heading">
-    <h2 id="channels-heading">Public channels</h2>
-    <ul>
-      <li>Email: <a href="mailto:eduardooost@gmail.com">eduardooost@gmail.com</a></li>
-      <li>WhatsApp: <a href="https://wa.me/584147281033" rel="noopener noreferrer">wa.me/584147281033</a></li>
-      <li>LinkedIn: <a href="https://www.linkedin.com/in/eduardoosteicoechea" rel="noopener noreferrer">eduardoosteicoechea</a></li>
-      <li>GitHub: <a href="https://github.com/EduardoOsteicoechea" rel="noopener noreferrer">EduardoOsteicoechea</a></li>
-      <li>YouTube: <a href="https://youtube.com/@EduardoOsteicoechea" rel="noopener noreferrer">@EduardoOsteicoechea</a></li>
-    </ul>
-  </section>
+    <section class="section" aria-labelledby="channels-heading">
+      <div class="section__head">
+        <h2 class="section__title" id="channels-heading">Public channels</h2>
+      </div>
+      <div class="card-grid">
+        <a class="card" href="mailto:eduardooost@gmail.com">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">mail</span></span>
+          <h3 class="card__title">Email</h3>
+          <p class="card__desc">eduardooost@gmail.com</p>
+        </a>
+        <a class="card" href="https://wa.me/584147281033" rel="noopener noreferrer" target="_blank">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span>
+          <h3 class="card__title">WhatsApp</h3>
+          <p class="card__desc">wa.me/584147281033</p>
+        </a>
+        <a class="card" href="https://www.linkedin.com/in/eduardoosteicoechea" rel="noopener noreferrer" target="_blank">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">work</span></span>
+          <h3 class="card__title">LinkedIn</h3>
+          <p class="card__desc">eduardoosteicoechea</p>
+        </a>
+        <a class="card" href="https://github.com/EduardoOsteicoechea" rel="noopener noreferrer" target="_blank">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">code</span></span>
+          <h3 class="card__title">GitHub</h3>
+          <p class="card__desc">EduardoOsteicoechea</p>
+        </a>
+        <a class="card" href="https://youtube.com/@EduardoOsteicoechea" rel="noopener noreferrer" target="_blank">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">play_circle</span></span>
+          <h3 class="card__title">YouTube</h3>
+          <p class="card__desc">@EduardoOsteicoechea</p>
+        </a>
+      </div>
+    </section>
 
-  <section class="seo-section" aria-labelledby="next-heading">
-    <h2 id="next-heading">Next steps</h2>
-    <p>
-      Read <a href="/about" data-route>About</a> for credentials and craft, or
-      return <a href="/" data-route>home</a>.
-    </p>
-  </section>
+    <div class="cta">
+      <h2 class="cta__title">Next steps</h2>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href="/about" data-route>About</a>
+        <a class="btn" href="/" data-route>Back home</a>
+      </div>
+    </div>
+  </div>
 </Layout>

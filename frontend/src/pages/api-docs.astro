@@ -6,15 +6,25 @@ import Layout from "../layouts/Layout.astro";
   title="API docs · Eduardoos"
   description="Eduardoos external API catalog for API-key clients. Same-origin /api/ docs; eReport storage is on the VPS filesystem."
 >
-  <section class="session-grid" data-api-docs>
-    <h1>External API</h1>
-    <p class="lede">
-      Public catalog for API-key clients. Signed-in site users keep cookie and CSRF authentication.
-      eReport bytes live on the VPS filesystem, not S3, and not in MongoDB.
-    </p>
-    <p class="status" data-banner>Loading catalog…</p>
-    <pre class="panel" data-docs></pre>
-  </section>
+  <div class="page" data-api-docs>
+    <header class="hero">
+      <p class="eyebrow">External API</p>
+      <h1 class="hero__title">API documentation</h1>
+      <p class="hero__lede">
+        Public catalog for API-key clients. Signed-in site users keep cookie and
+        CSRF authentication. eReport bytes live on the VPS filesystem, not S3, and
+        not in MongoDB.
+      </p>
+    </header>
+
+    <section class="section" aria-labelledby="catalog-heading">
+      <div class="section__head">
+        <h2 class="section__title" id="catalog-heading">Live catalog</h2>
+        <p class="status" data-banner>Loading catalog…</p>
+      </div>
+      <pre class="panel" data-docs></pre>
+    </section>
+  </div>
 </Layout>
 
 <script>

@@ -3,6 +3,15 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Not found · Eduardoos" robots="noindex,nofollow">
-  <h1>Page not found</h1>
-  <p class="lede">That route is not part of this site. Return <a href="/" data-route>home</a>.</p>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="hero__title">Page not found</h1>
+      <p class="hero__lede">That route is not part of this site.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/" data-route>Return home</a>
+        <a class="btn" href="/contact" data-route>Contact</a>
+      </div>
+    </header>
+  </div>
 </Layout>

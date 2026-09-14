@@ -97,7 +97,7 @@ const jsonLdString =
     <meta name="twitter:title" content={documentTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-    <meta name="theme-color" content="#121212" />
+    <meta name="theme-color" content="#0b0b0c" />
     <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -119,10 +119,6 @@ const jsonLdString =
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&display=swap"
-    />
     <title>{documentTitle}</title>
     {jsonLdString ? <script type="application/ld+json" set:html={jsonLdString} /> : null}
     <ClientRouter />
@@ -340,6 +336,42 @@ const jsonLdString =
       <main>
         <slot />
       </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__grid">
+          <div>
+            <p class="site-footer__title">Eduardo Osteicoechea</p>
+            <p>Licensed Building Architect and AEC AI technologist. BIM tools and full-stack platforms.</p>
+          </div>
+          <div>
+            <p class="site-footer__title">Explore</p>
+            <ul class="site-footer__list">
+              <li><a href="/" data-route>Home</a></li>
+              <li><a href="/articles" data-route>Articles</a></li>
+              <li><a href="/contact" data-route>Contact</a></li>
+              <li><a href="/api-docs" data-route>API docs</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="site-footer__title">Services</p>
+            <ul class="site-footer__list">
+              <li><a href="/store" data-route>Store</a></li>
+              <li><a href="/payments/subscription" data-route>Subscriptions</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="site-footer__title">Account</p>
+            <ul class="site-footer__list">
+              <li><a href="/session" data-route>Sign in</a></li>
+              <li><a href="/session/register" data-route>Create account</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="site-footer__bottom">
+          <span>© {new Date().getFullYear()} Eduardo Osteicoechea</span>
+          <span>eduardoos.com</span>
+        </div>
+      </footer>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
 <div class="agent-chat-log" data-agent-log>

@@ -29,110 +29,137 @@ const description =
 ---
 
 <Layout description={description} jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))}>
-  <h1 id="who">Architect. BIM engineer. Software builder.</h1>
-  <p class="lede">
-    {profileWhoAnswer}
-  </p>
-  <p class="lede">
-    Reach me via <a href="/contact" data-route>Contact</a>,
-    <a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>,
-    or review the <a href="/api-docs" data-route>API docs</a>.
-  </p>
-
-  <section class="home-profile" aria-label="Professional profile">
-    <section class="home-profile__block" id="expertise">
-      <div class="home-profile__heading">
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">
         <span class="material-symbols-outlined" aria-hidden="true">architecture</span>
-        <h2>Specialization</h2>
+        Licensed Building Architect · AEC AI Technologist
+      </p>
+      <h1 class="hero__title" id="who">Architect. BIM engineer. Software builder.</h1>
+      <p class="hero__lede">{profileWhoAnswer}</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary btn--lg" href="/contact" data-route>
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+          Contact
+        </a>
+        <a class="btn btn--lg" href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>
+        <a class="btn btn--lg" href="/api-docs" data-route>API docs</a>
       </div>
-      <p class="lede">{profileExpertiseAnswer}</p>
-    </section>
-
-    <section class="home-profile__block" id="focus">
-      <div class="home-profile__heading">
-        <span class="material-symbols-outlined" aria-hidden="true">flag</span>
-        <h2>Current focus</h2>
-      </div>
-      <p class="lede">{profileFocusAnswer}</p>
-    </section>
-
-    <section class="home-profile__block" id="education">
-      <div class="home-profile__heading">
-        <span class="material-symbols-outlined" aria-hidden="true">school</span>
-        <h2>Education and training</h2>
-      </div>
-      <ul class="home-profile__list">
-        {profileEducation.map((item) => <li>{item}</li>)}
+      <ul class="hero__meta">
+        <li><span class="material-symbols-outlined" aria-hidden="true">school</span> Universidad de Los Andes</li>
+        <li><span class="material-symbols-outlined" aria-hidden="true">workspaces</span> BIM &amp; Revit API</li>
+        <li><span class="material-symbols-outlined" aria-hidden="true">memory</span> AI integrations</li>
       </ul>
+    </header>
+
+    <section class="section" aria-label="Professional profile">
+      <div class="card-grid">
+        <article class="card" id="expertise">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">architecture</span></span>
+          <h2 class="card__title">Specialization</h2>
+          <p class="card__desc">{profileExpertiseAnswer}</p>
+        </article>
+        <article class="card" id="focus">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">flag</span></span>
+          <h2 class="card__title">Current focus</h2>
+          <p class="card__desc">{profileFocusAnswer}</p>
+        </article>
+        <article class="card" id="education">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+          <h2 class="card__title">Education and training</h2>
+          <ul class="list-check">
+            {profileEducation.map((item) => (
+              <li>
+                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
     </section>
 
-    <section class="home-profile__block" id="experience">
-      <div class="home-profile__heading">
-        <span class="material-symbols-outlined" aria-hidden="true">work</span>
-        <h2>Professional experience</h2>
+    <section class="section" aria-labelledby="experience-heading">
+      <div class="section__head">
+        <p class="eyebrow">Track record</p>
+        <h2 class="section__title" id="experience-heading">Professional experience</h2>
       </div>
-      <div class="home-profile__grid">
+      <div class="card-grid">
         {profileExperience.map((job) => (
-          <article class="home-profile__block">
-            <div class="home-profile__heading">
-              <span class="material-symbols-outlined" aria-hidden="true">{job.icon}</span>
-              <h2>{job.org}</h2>
-            </div>
-            <p class="hint">{job.role} · {job.period}</p>
-            <p class="lede">{job.summary}</p>
+          <article class="card">
+            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{job.icon}</span></span>
+            <h3 class="card__title">{job.org}</h3>
+            <p class="card__desc"><strong>{job.role}</strong> · {job.period}</p>
+            <p class="card__desc">{job.summary}</p>
           </article>
         ))}
       </div>
     </section>
 
-    <section class="home-profile__block" id="skills">
-      <div class="home-profile__heading">
-        <span class="material-symbols-outlined" aria-hidden="true">handyman</span>
-        <h2>Skills</h2>
+    <section class="section" aria-labelledby="skills-heading">
+      <div class="section__head">
+        <p class="eyebrow">Capabilities</p>
+        <h2 class="section__title" id="skills-heading">Skills</h2>
       </div>
-      <div class="home-profile__skills">
+      <div class="card-grid">
         {profileSkillCards.map((skill) => (
-          <article class="product-dash__card">
-            <span class="material-symbols-outlined" aria-hidden="true">{skill.icon}</span>
-            <span class="product-dash__card-title">{skill.title}</span>
-            <span class="product-dash__card-desc">{skill.description}</span>
+          <article class="card">
+            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{skill.icon}</span></span>
+            <h3 class="card__title">{skill.title}</h3>
+            <p class="card__desc">{skill.description}</p>
           </article>
         ))}
       </div>
-      <p class="lede">{profileStack}</p>
+      <p class="section__lede">{profileStack}</p>
     </section>
 
-    <section class="home-profile__block" id="contact-links">
-      <div class="home-profile__heading">
-        <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-        <h2>Public contacts</h2>
+    <section class="section" aria-labelledby="contacts-heading">
+      <div class="split">
+        <div class="section__head">
+          <p class="eyebrow">Public contacts</p>
+          <h2 class="section__title" id="contacts-heading">Reach me directly</h2>
+          <p class="section__lede">
+            Email is the best first step for project inquiries. Everything else is public.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href={`mailto:${PROFILE_EMAIL}`}>
+              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+              {PROFILE_EMAIL}
+            </a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">link</span></span>
+          <h3 class="card__title">Elsewhere</h3>
+          <ul class="site-footer__list">
+            <li><a href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp {PROFILE_WHATSAPP_DISPLAY}</a></li>
+            <li><a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+            <li><a href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a></li>
+            <li><a href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a></li>
+          </ul>
+        </div>
       </div>
-      <ul class="home-profile__list">
-        <li><a href={`mailto:${PROFILE_EMAIL}`}>{PROFILE_EMAIL}</a></li>
-        <li><a href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp {PROFILE_WHATSAPP_DISPLAY}</a></li>
-        <li><a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
-        <li><a href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a></li>
-        <li><a href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a></li>
-      </ul>
     </section>
-  </section>
 
-  <section class="seo-section" id="faq" aria-labelledby="faq-heading">
-    <h2 id="faq-heading">FAQ</h2>
-    <div class="faq">
-      {profileFaq.map((item) => (
-        <details>
-          <summary>{item.question}</summary>
-          <p>{item.answer}</p>
-        </details>
-      ))}
-      {HOME_FAQS.map((item) => (
-        <details>
-          <summary>{item.question}</summary>
-          <p>{item.answer}</p>
-        </details>
-      ))}
-    </div>
-  </section>
+    <section class="section" aria-labelledby="faq-heading">
+      <div class="section__head">
+        <p class="eyebrow">FAQ</p>
+        <h2 class="section__title" id="faq-heading">Questions</h2>
+      </div>
+      <div class="faq">
+        {profileFaq.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+        {HOME_FAQS.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
 </Layout>
-
