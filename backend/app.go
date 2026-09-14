@@ -304,6 +304,7 @@ func (a *App) Handler() http.Handler {
 	a.registerEoadminRoutes(mux)
 	a.registerEostoreRoutes(mux)
 	a.registerEostoreShopRoutes(mux)
+	a.registerEostoreAPIRoutes(mux)
 	a.registerVoiceRoutes(mux)
 
 	return a.withObservability(mux)
