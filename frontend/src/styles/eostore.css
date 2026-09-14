@@ -337,31 +337,37 @@
 }
 
 .eostore-editor .eostore-fieldset {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  align-items: start;
+  align-items: flex-start;
   padding: 0.5rem;
 }
 
 .eostore-editor .eostore-fieldset legend {
-  grid-column: 1 / -1;
+  flex: 1 1 100%;
 }
 
 .eostore-editor .eostore-field {
+  flex: 1 1 11rem;
+  min-width: 0;
   gap: 0.25rem;
 }
 
 .eostore-editor .eostore-field:has(textarea),
 .eostore-editor .eostore-actions {
-  grid-column: 1 / -1;
+  flex: 1 1 100%;
 }
 
 .eostore-editor .eostore-field input[type="text"],
 .eostore-editor .eostore-field input[type="number"],
 .eostore-editor .eostore-field input[type="search"],
 .eostore-editor .eostore-field select {
-  height: 1.75rem;
+  height: 1.6rem;
+}
+
+.eostore-editor .eostore-field textarea {
+  min-height: 4rem;
 }
 
 .eostore-fieldset {

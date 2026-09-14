@@ -350,9 +350,89 @@ export async function deleteProduct(guid: string) {
   return deleteJSON(`/eostore/products/${guid}`);
 }
 
+function loadImageElement(file: File): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(img);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("image load failed"));
+    };
+    img.src = url;
+  });
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement, type: string, quality: number): Promise<Blob | null> {
+  return new Promise((resolve) => canvas.toBlob((blob) => resolve(blob), type, quality));
+}
+
+/**
+ * Downscale/compress in the browser before upload so requests stay under the
+ * nginx body limit and are already WebP. Falls back to the original file.
+ */
+export async function compressImageForUpload(
+  file: File,
+  maxEdge = 2000,
+  startQuality = 0.82,
+  targetBytes = 900 * 1024,
+): Promise<File> {
+  if (!file.type.startsWith("image/")) {
+    return file;
+  }
+  try {
+    const img = await loadImageElement(file);
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (!w || !h) {
+      return file;
+    }
+    const scale = Math.min(1, maxEdge / Math.max(w, h));
+    const cw = Math.max(1, Math.round(w * scale));
+    const ch = Math.max(1, Math.round(h * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = cw;
+    canvas.height = ch;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return file;
+    }
+    ctx.drawImage(img, 0, 0, cw, ch);
+
+    let quality = startQuality;
+    let blob = await canvasToBlob(canvas, "image/webp", quality);
+    if (!blob) {
+      blob = await canvasToBlob(canvas, "image/jpeg", quality);
+    }
+    while (blob && blob.size > targetBytes && quality > 0.5) {
+      quality = Math.round((quality - 0.1) * 100) / 100;
+      const smaller = await canvasToBlob(canvas, blob.type || "image/webp", quality);
+      if (!smaller) {
+        break;
+      }
+      blob = smaller;
+    }
+    if (!blob) {
+      return file;
+    }
+    const ext = blob.type === "image/png" ? ".png" : blob.type === "image/jpeg" ? ".jpg" : ".webp";
+    const name = file.name.replace(/\.[^.]+$/, "") + ext;
+    if (mustLog) {
+      console.log("eostore.product.image.compressed", { from: file.size, to: blob.size, type: blob.type });
+    }
+    return new File([blob], name, { type: blob.type });
+  } catch {
+    return file;
+  }
+}
+
 export async function uploadProductImage(guid: string, file: File) {
-  if (mustLog) console.log("eostore.product.image.upload", { guid, name: file.name, size: file.size });
-  return uploadFile<EostoreProductResponse>(`/eostore/products/${guid}/images`, file);
+  const prepared = await compressImageForUpload(file);
+  if (mustLog) console.log("eostore.product.image.upload", { guid, name: prepared.name, size: prepared.size });
+  return uploadFile<EostoreProductResponse>(`/eostore/products/${guid}/images`, prepared);
 }
 
 export async function deleteProductImage(guid: string, imageId: string) {
