@@ -7,6 +7,9 @@ __pycache__/
 *.pyc
 .venv/
 
+# Voice worker models (downloaded locally, large)
+backend/voice-worker/models/
+
 # Astro / frontend build
 frontend/dist/
 frontend/.astro/

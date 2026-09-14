@@ -5,7 +5,7 @@ import {
   startVoiceStream,
   stopVoiceStream,
 } from "./api";
-import { submitAgentChatMessage } from "./chat";
+import { setAgentChatDraft } from "./chat";
 import { sessionLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 
@@ -125,8 +125,8 @@ function paintUi(ui: VoiceUi | null): void {
   ui.mic.disabled = state.starting;
   ui.mic.classList.toggle("agent-chat-mic--recording", state.recording);
   ui.mic.setAttribute("aria-pressed", state.recording ? "true" : "false");
-  ui.mic.setAttribute("aria-label", state.recording ? "Stop recording" : "Record voice");
-  ui.mic.setAttribute("title", state.recording ? "Stop recording" : "Record voice");
+  ui.mic.setAttribute("aria-label", state.recording ? "Stop and view text" : "Record voice");
+  ui.mic.setAttribute("title", state.recording ? "Stop and view text" : "Record voice");
   setIcon(ui.mic, state.recording ? "stop_circle" : "mic");
   if (ui.toggle) {
     ui.toggle.hidden = !state.enabled;
@@ -148,7 +148,7 @@ function paintTranscript(ui: VoiceUi | null, interim: string): void {
   if (ui.caption) {
     ui.caption.hidden = !state.recording && !interim;
     ui.caption.textContent = state.recording
-      ? interim || "Escuchando…"
+      ? interim || "Listening… press the stop button to finish."
       : interim;
   }
 }
@@ -363,12 +363,18 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
     }
   }
   state.transcript = "";
-  paintTranscript(ui, text);
-  sessionLog("voice.record.final", { streamId, runes: text.trim().length });
-  if (text.trim()) {
-    submitAgentChatMessage(text.trim());
+  const finalText = text.trim();
+  sessionLog("voice.record.final", { streamId, runes: finalText.length });
+  if (finalText) {
+    setAgentChatDraft(finalText);
+    if (ui.caption) {
+      ui.caption.hidden = false;
+      ui.caption.textContent = "Transcription ready. Edit, then press send.";
+    }
+    ui.input.focus();
   } else if (ui.caption) {
-    ui.caption.hidden = true;
+    ui.caption.hidden = false;
+    ui.caption.textContent = "No speech detected.";
   }
 }
 

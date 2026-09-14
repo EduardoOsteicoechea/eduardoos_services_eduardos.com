@@ -5,7 +5,7 @@ import {
   startVoiceStream,
   stopVoiceStream,
 } from "./api";
-import { submitAgentChatMessage } from "./chat";
+import { setAgentChatDraft } from "./chat";
 import { enqueueVoiceAudio, startVoiceChat, stopVoicePlayback } from "./voice";
 
 vi.mock("./api", () => ({
@@ -17,7 +17,7 @@ vi.mock("./api", () => ({
 }));
 
 vi.mock("./chat", () => ({
-  submitAgentChatMessage: vi.fn(),
+  setAgentChatDraft: vi.fn(),
 }));
 
 vi.mock("./error-modal", () => ({
@@ -121,7 +121,7 @@ describe("global voice input", () => {
     });
   });
 
-  it("streams chunks to the STT endpoint and submits the final transcript", async () => {
+  it("streams chunks and shows the final transcript for review without sending", async () => {
     vi.mocked(getVoiceConfig).mockResolvedValue({
       enabled: true,
       sampleRate: 16000,
@@ -150,8 +150,11 @@ describe("global voice input", () => {
 
     mic.click();
     await vi.waitFor(() => {
-      expect(submitAgentChatMessage).toHaveBeenCalledWith("hola mundo");
+      expect(setAgentChatDraft).toHaveBeenCalledWith("hola mundo");
     });
+    const caption = document.querySelector("[data-agent-voice]") as HTMLElement;
+    expect(caption.hidden).toBe(false);
+    expect(caption.textContent).toContain("Transcription ready");
     expect(track.stop).toHaveBeenCalled();
     expect(stopVoiceStream).toHaveBeenCalledWith("stream-1");
   });

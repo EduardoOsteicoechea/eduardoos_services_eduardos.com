@@ -445,6 +445,18 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   }
 }
 
+/** Puts text into the composer for review without sending it. */
+export function setAgentChatDraft(text: string): void {
+  const input = document.querySelector("[data-agent-input]");
+  if (!(input instanceof HTMLTextAreaElement)) {
+    return;
+  }
+  input.value = text.trim();
+  growInput(input);
+  const send = document.querySelector("[data-agent-send]");
+  syncSend(input, send instanceof HTMLButtonElement ? send : null);
+}
+
 /** Sends a voice transcript through the same chat pipeline. */
 export function submitAgentChatMessage(text: string): void {
   const input = document.querySelector("[data-agent-input]");
@@ -455,10 +467,8 @@ export function submitAgentChatMessage(text: string): void {
   if (!message) {
     return;
   }
-  input.value = message;
-  growInput(input);
+  setAgentChatDraft(message);
   const send = document.querySelector("[data-agent-send]");
-  syncSend(input, send instanceof HTMLButtonElement ? send : null);
   void submitChat(input, send instanceof HTMLButtonElement ? send : null);
 }
 
