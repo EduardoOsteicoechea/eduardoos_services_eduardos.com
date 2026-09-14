@@ -30,6 +30,7 @@ Environment:
     VOICE_WHISPER_COMPUTE        int8|int8_float16|float16|float32 (default int8)
     VOICE_WHISPER_STEP_SECONDS   re-transcribe cadence while speaking (default 3)
     VOICE_WHISPER_BEAM_SIZE      beam size (default 1)
+    VOICE_WHISPER_CPU_THREADS    CTranslate2 CPU threads, 0=auto (default 0)
     VOICE_WHISPER_MAX_SECONDS    cap buffered audio per session (default 120)
     VOICE_WHISPER_PRELOAD        "1" to load the model at startup (default lazy)
 """
@@ -61,6 +62,7 @@ DEVICE = (os.environ.get("VOICE_WHISPER_DEVICE") or "cpu").strip()
 COMPUTE = (os.environ.get("VOICE_WHISPER_COMPUTE") or "int8").strip()
 STEP_SECONDS = float(os.environ.get("VOICE_WHISPER_STEP_SECONDS", "3"))
 BEAM_SIZE = int(os.environ.get("VOICE_WHISPER_BEAM_SIZE", "1"))
+CPU_THREADS = int(os.environ.get("VOICE_WHISPER_CPU_THREADS", "0"))
 MAX_SECONDS = float(os.environ.get("VOICE_WHISPER_MAX_SECONDS", "120"))
 
 
@@ -80,7 +82,10 @@ def get_model():
 
             log(f"loading faster-whisper model={MODEL_SIZE} device={DEVICE} compute={COMPUTE}")
             started = time.time()
-            _model = WhisperModel(MODEL_SIZE, device=DEVICE, compute_type=COMPUTE)
+            kwargs = {"device": DEVICE, "compute_type": COMPUTE}
+            if CPU_THREADS > 0:
+                kwargs["cpu_threads"] = CPU_THREADS
+            _model = WhisperModel(MODEL_SIZE, **kwargs)
             log(f"model loaded in {int((time.time() - started) * 1000)}ms")
     return _model
 
