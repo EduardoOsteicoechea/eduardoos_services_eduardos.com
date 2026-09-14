@@ -88,12 +88,11 @@ class Recognizer:
             return partial, ""
 
     def final(self) -> str:
+        # Return only the not-yet-finalized tail. The Go API accumulates the
+        # per-chunk finals itself, so returning self.text here would double it.
         with self.lock:
             result = json.loads(self.rec.FinalResult())
-            final = str(result.get("text", "")).strip()
-            if final:
-                self.text = (self.text + " " + final).strip()
-            return self.text
+            return str(result.get("text", "")).strip()
 
 
 class Server:
