@@ -842,6 +842,7 @@ export async function uploadFile<T = APIErrorBody>(
   file: File,
   field = "file",
   fields?: Record<string, string>,
+  timeoutMs = 120000,
 ): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   const body = new FormData();
   body.append(field, file);
@@ -851,7 +852,7 @@ export async function uploadFile<T = APIErrorBody>(
     }
   }
   // Do not set Content-Type: the browser must add the multipart boundary.
-  return apiSend<T>(path, { method: "POST", body }, { timeoutMs: 120000 });
+  return apiSend<T>(path, { method: "POST", body }, { timeoutMs });
 }
 
 export type UploadProgress = {

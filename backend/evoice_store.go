@@ -222,7 +222,60 @@ func (fs *evoiceFS) readFile(userID, project, kind, name string) ([]byte, error)
 		return nil, err
 	}
 	defer f.Close()
-	return io.ReadAll(io.LimitReader(f, evoiceMaxUpload+1))
+	return io.ReadAll(f)
+}
+
+// errEvoiceTooLarge is returned by putFileFromReader when the source exceeds the
+// configured cap.
+var errEvoiceTooLarge = errors.New("evoice: file too large")
+
+// putFileFromReader streams src to a temp file and atomically renames it into
+// place, so very large uploads never sit in memory. max <= 0 means no cap.
+func (fs *evoiceFS) putFileFromReader(userID, project, kind, name string, src io.Reader, max int64) (int64, error) {
+	var dir string
+	var err error
+	switch kind {
+	case "docs":
+		dir, err = fs.docsDir(userID, project)
+	case "audios":
+		dir, err = fs.audiosDir(userID, project)
+	default:
+		return 0, fmt.Errorf("invalid kind")
+	}
+	if err != nil {
+		return 0, err
+	}
+	if err := os.MkdirAll(dir, 0o750); err != nil {
+		return 0, err
+	}
+	path := filepath.Join(dir, sanitizeEvoiceFileName(name))
+	tmp := path + ".tmp-" + randomID(8)
+	f, err := os.OpenFile(tmp, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0o640)
+	if err != nil {
+		return 0, err
+	}
+	reader := src
+	if max > 0 {
+		reader = io.LimitReader(src, max+1)
+	}
+	written, copyErr := io.Copy(f, reader)
+	if copyErr == nil && max > 0 && written > max {
+		copyErr = errEvoiceTooLarge
+	}
+	closeErr := f.Close()
+	if copyErr != nil {
+		_ = os.Remove(tmp)
+		return written, copyErr
+	}
+	if closeErr != nil {
+		_ = os.Remove(tmp)
+		return written, closeErr
+	}
+	if err := os.Rename(tmp, path); err != nil {
+		_ = os.Remove(tmp)
+		return written, err
+	}
+	return written, nil
 }
 
 // --- memory meta ---

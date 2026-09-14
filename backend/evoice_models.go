@@ -16,8 +16,13 @@ import (
 const (
 	productEvoice     = "evoice"
 	evoiceRootPrefix  = "evoice"
-	evoiceMaxUpload   = 32 << 20
 	evoiceProjectMark = "CREATE_A_FOLDER_BY_GENERATION_PROJECT_BESIDE_THIS_ONE"
+
+	// eVoice accepts large documents (scanned or book-length PDFs). Uploads
+	// stream to disk, so the cap only guards against runaway disk use and can be
+	// changed with EVOICE_MAX_UPLOAD_BYTES. Default matches nginx
+	// client_max_body_size (5g).
+	evoiceDefaultMaxUpload = int64(5) << 30
 
 	ModeStandard     = "standard"
 	ModePremium      = "premium"

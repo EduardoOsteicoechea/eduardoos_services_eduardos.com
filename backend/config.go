@@ -40,6 +40,7 @@ type config struct {
 	EvoicePython              string
 	EvoiceFakeTTS             bool
 	EvoiceWorkerScript        string
+	EvoiceMaxUploadBytes      int64
 	EreportMaxImageBytes      int64
 	EreportMaxImageEdge       int
 	EreportMaxPayloadBytes    int64
@@ -200,6 +201,12 @@ func loadConfig() config {
 		evoiceFake = false
 	}
 
+	// eVoice accepts large documents; set EVOICE_MAX_UPLOAD_BYTES=0 for no cap.
+	evoiceMaxUpload := envInt64("EVOICE_MAX_UPLOAD_BYTES", evoiceDefaultMaxUpload)
+	if evoiceMaxUpload < 0 {
+		evoiceMaxUpload = 0
+	}
+
 	calvinRoot := resolveCalvinParagraphsRoot(os.Getenv("CALVIN_INSTITUTES_PARAGRAPHS_ROOT"))
 	publicArticlesOwner := strings.ToLower(strings.TrimSpace(envString("PUBLIC_ARTICLES_OWNER_EMAIL")))
 	if publicArticlesOwner == "" {
@@ -229,6 +236,7 @@ func loadConfig() config {
 		EvoicePython:              strings.TrimSpace(os.Getenv("EVOICE_PYTHON")),
 		EvoiceFakeTTS:             evoiceFake,
 		EvoiceWorkerScript:        strings.TrimSpace(os.Getenv("EVOICE_WORKER_SCRIPT")),
+		EvoiceMaxUploadBytes:      evoiceMaxUpload,
 		EreportMaxImageBytes:      envInt64("EREPORT_MAX_IMAGE_BYTES", defaultMaxImageBytes),
 		EreportMaxImageEdge:       int(envInt64("EREPORT_MAX_IMAGE_EDGE", int64(defaultMaxImageEdge))),
 		EreportMaxPayloadBytes:    envInt64("EREPORT_MAX_PAYLOAD_BYTES", defaultMaxPayloadBytes),

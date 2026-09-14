@@ -238,6 +238,10 @@ export async function uploadEvoiceDoc(
   const { status, data, requestId } = await uploadFile<{ name?: string }>(
     docsPath(ownerSafe, project),
     file,
+    "file",
+    undefined,
+    // Large PDFs can take many minutes to upload.
+    30 * 60 * 1000,
   );
   if (mustLog) console.log("[evoice] upload doc", { status, requestId, name: data.name });
   if (status < 200 || status >= 300) {

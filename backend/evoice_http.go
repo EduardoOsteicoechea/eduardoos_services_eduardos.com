@@ -342,7 +342,8 @@ func (a *App) evoiceUploadDoc(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
-	if err := r.ParseMultipartForm(evoiceMaxUpload); err != nil {
+	// Large files spill to disk temp files instead of RAM.
+	if err := r.ParseMultipartForm(32 << 20); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -357,26 +358,22 @@ func (a *App) evoiceUploadDoc(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	body, err := io.ReadAll(io.LimitReader(file, evoiceMaxUpload+1))
-	if err != nil {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-		return
-	}
-	if len(body) > evoiceMaxUpload {
-		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
-		return
-	}
 	if err := a.evoiceFS.ensureProject(owner, project); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	a.ensureEvoiceProjectMeta(r.Context(), owner, project)
-	if err := a.evoiceFS.putFile(owner, project, "docs", name, body); err != nil {
+	size, err := a.evoiceFS.putFileFromReader(owner, project, "docs", name, file, a.cfg.EvoiceMaxUploadBytes)
+	if errors.Is(err, errEvoiceTooLarge) {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if a.cfg.MustLog {
-		a.log.Info("evoice.docs.upload", "owner", owner, "project", project, "name", name, "bytes", len(body))
+		a.log.Info("evoice.docs.upload", "owner", owner, "project", project, "name", name, "bytes", size)
 	}
 	a.auditEvent(r, "evoice_doc_upload", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{
@@ -384,7 +381,7 @@ func (a *App) evoiceUploadDoc(w http.ResponseWriter, r *http.Request) {
 		"project":   project,
 		"name":      name,
 		"key":       evoiceRelKey(owner, project, "docs", name),
-		"size":      len(body),
+		"size":      size,
 		"url":       fmt.Sprintf("/api/evoice/file/%s/%s/docs?name=%s", owner, project, url.QueryEscape(name)),
 	})
 }
@@ -407,7 +404,7 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Text string `json:"text"`
 	}
-	if err := json.NewDecoder(io.LimitReader(r.Body, evoiceMaxUpload+1)).Decode(&body); err != nil {
+	if err := json.NewDecoder(io.LimitReader(r.Body, a.cfg.EvoiceMaxUploadBytes+1)).Decode(&body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -416,7 +413,7 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if len(text) > evoiceMaxUpload {
+	if int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -493,12 +490,12 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
 		return
 	}
-	limited, err := io.ReadAll(io.LimitReader(resp.Body, evoiceMaxUpload+1))
+	limited, err := io.ReadAll(io.LimitReader(resp.Body, a.cfg.EvoiceMaxUploadBytes+1))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
 		return
 	}
-	if len(limited) > evoiceMaxUpload {
+	if int64(len(limited)) > a.cfg.EvoiceMaxUploadBytes {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 		return
 	}
@@ -508,8 +505,8 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusUnprocessableEntity, "empty_document")
 		return
 	}
-	if len(text) > evoiceMaxUpload {
-		text = text[:evoiceMaxUpload]
+	if int64(len(text)) > a.cfg.EvoiceMaxUploadBytes {
+		text = text[:a.cfg.EvoiceMaxUploadBytes]
 	}
 	host := sanitizeEvoiceFileName(parsed.Hostname())
 	if host == "" {
