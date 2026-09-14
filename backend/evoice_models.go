@@ -20,8 +20,8 @@ const (
 
 	// eVoice accepts large documents (scanned or book-length PDFs). Uploads
 	// stream to disk, so the cap only guards against runaway disk use and can be
-	// changed with EVOICE_MAX_UPLOAD_BYTES. Default matches nginx
-	// client_max_body_size (5g).
+	// changed with EVOICE_MAX_UPLOAD_BYTES. Default is 5 GiB; nginx
+	// client_max_body_size is set to 0 (unlimited) so the backend is the limit.
 	evoiceDefaultMaxUpload = int64(5) << 30
 
 	ModeStandard     = "standard"
