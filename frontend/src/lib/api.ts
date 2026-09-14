@@ -693,6 +693,101 @@ export async function uploadFile<T = APIErrorBody>(
   return apiSend<T>(path, { method: "POST", body }, { timeoutMs: 120000 });
 }
 
+export type UploadProgress = {
+  loaded: number;
+  total: number;
+  percent: number;
+};
+
+export async function uploadFileWithProgress<T = APIErrorBody>(
+  path: string,
+  file: File,
+  opts: {
+    field?: string;
+    fields?: Record<string, string>;
+    onProgress?: (progress: UploadProgress) => void;
+  } = {},
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  const { field = "file", fields, onProgress } = opts;
+  const body = new FormData();
+  body.append(field, file);
+  if (fields) {
+    for (const [key, value] of Object.entries(fields)) {
+      if (value !== "") body.append(key, value);
+    }
+  }
+
+  const attempt = async (
+    forceCsrf: boolean,
+  ): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> => {
+    await getCsrf(forceCsrf);
+    const result = await new Promise<{ status: number; data: T & APIErrorBody; requestId: string }>((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", apiUrl(path), true);
+      xhr.withCredentials = true;
+      xhr.setRequestHeader("Accept", "application/json");
+      if (csrfToken) {
+        xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+      }
+      xhr.timeout = 120000;
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable && onProgress) {
+          const percent = event.total > 0 ? Math.round((event.loaded / event.total) * 100) : 0;
+          onProgress({ loaded: event.loaded, total: event.total, percent });
+        }
+      };
+      xhr.onload = () => {
+        const requestId = xhr.getResponseHeader("X-Request-ID") || "";
+        const text = xhr.responseText || "";
+        let data: T & APIErrorBody = {} as T & APIErrorBody;
+        if (text) {
+          try {
+            data = JSON.parse(text) as T & APIErrorBody;
+          } catch {
+            data = { error: "internal_error", message: "Something went wrong." } as T & APIErrorBody;
+          }
+        } else if (xhr.status === 413) {
+          data = { error: "payload_too_large", message: "That file is too large for the server upload limit." } as T & APIErrorBody;
+        }
+        if (!data.request_id && requestId) {
+          data.request_id = requestId;
+        }
+        resolve({ status: xhr.status, data, requestId });
+      };
+      xhr.onerror = () => {
+        resolve({
+          status: 0,
+          data: { error: "internal_error", message: "Could not reach the API." } as T & APIErrorBody,
+          requestId: "",
+        });
+      };
+      xhr.ontimeout = () => {
+        resolve({
+          status: 0,
+          data: { error: "internal_error", message: "The upload took too long." } as T & APIErrorBody,
+          requestId: "",
+        });
+      };
+      xhr.onabort = () => {
+        resolve({
+          status: 0,
+          data: { error: "internal_error", message: "The upload was cancelled." } as T & APIErrorBody,
+          requestId: "",
+        });
+      };
+      xhr.send(body);
+    });
+
+    if (result.status === 403 && !forceCsrf && result.data.error === "forbidden") {
+      resetCsrfMemory();
+      return attempt(true);
+    }
+    return result;
+  };
+
+  return attempt(false);
+}
+
 export async function loginAdmin(email: string, password: string, _csrf?: string): Promise<{ status: number; data: MeResponse; requestId: string }> {
   return postJSON<MeResponse>("/auth/login", loginPayload(email, password));
 }

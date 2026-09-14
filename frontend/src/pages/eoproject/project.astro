@@ -111,21 +111,32 @@ import Layout from "../../layouts/Layout.astro";
   import {
     createEoprojectShare,
     createEoprojectStage,
+    deleteEoprojectDocument,
     deleteEoprojectIfc,
     deleteEoprojectPhoto,
     deleteEoprojectShare,
     deleteEoprojectStage,
+    deleteEoprojectVideo,
+    eoprojectDocumentFileUrl,
     eoprojectIfcFileUrl,
     eoprojectInvitePageUrl,
     eoprojectPhotoFileUrl,
+    eoprojectVideoFileUrl,
     fetchEoprojectDashboard,
+    listEoprojectDocuments,
     listEoprojectShares,
+    updateEoprojectPhotoTag,
+    uploadEoprojectDocument,
     uploadEoprojectIfc,
     uploadEoprojectPhoto,
+    uploadEoprojectVideo,
     type EoprojectDashboard,
+    type EoprojectPhoto,
+    type EoprojectPhotoDocument,
     type EoprojectShare,
     type EoprojectStageBundle,
   } from "../../lib/eoproject";
+  import type { UploadProgress } from "../../lib/api";
   import { apiFail, requireService, setHidden } from "../../lib/productGate";
 
   const root = document.querySelector("[data-eoproject-project]");
@@ -165,6 +176,40 @@ import Layout from "../../layouts/Layout.astro";
     return btn;
   }
 
+  function progressEl(label: string): { root: HTMLDivElement; set: (percent: number) => void } {
+    const root = document.createElement("div");
+    root.className = "eoproject__progress";
+    const text = document.createElement("span");
+    text.textContent = label;
+    const bar = document.createElement("div");
+    bar.className = "eoproject__progress-bar";
+    const fill = document.createElement("span");
+    fill.className = "eoproject__progress-fill";
+    bar.appendChild(fill);
+    root.append(text, bar);
+    const set = (percent: number) => {
+      fill.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+    };
+    return { root, set };
+  }
+
+  function readVideoDuration(file: File): Promise<number> {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.onloadedmetadata = () => {
+        URL.revokeObjectURL(url);
+        resolve(Number.isFinite(video.duration) ? video.duration : 0);
+      };
+      video.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(0);
+      };
+      video.src = url;
+    });
+  }
+
   function photoItemsForStage(bundle: EoprojectStageBundle): EoprojectPhotoViewerItem[] {
     return bundle.photos.map((photo) => {
       const src = photo.url || eoprojectPhotoFileUrl(projectId, bundle.stage.id, photo.id);
@@ -201,6 +246,83 @@ import Layout from "../../layouts/Layout.astro";
     }
   }
 
+  function renderDocs(stageId: string, photo: EoprojectPhoto): HTMLElement {
+    const wrap = document.createElement("div");
+    wrap.className = "eoproject__docs";
+    const list = document.createElement("ul");
+    list.className = "eoproject__doc-list";
+
+    const renderList = (docs: EoprojectPhotoDocument[]) => {
+      list.replaceChildren();
+      for (const d of docs) {
+        const li = document.createElement("li");
+        li.className = "eoproject__doc-row";
+        const link = document.createElement("a");
+        link.href = d.url || eoprojectDocumentFileUrl(projectId, stageId, photo.id, d.id);
+        link.textContent = d.originalName || d.id;
+        link.target = "_blank";
+        link.rel = "noopener";
+        const del = iconBtn("delete", `Delete document ${d.originalName || ""}`, true);
+        del.addEventListener("click", async () => {
+          if (!confirm("Delete this document?")) return;
+          const res = await deleteEoprojectDocument(projectId, stageId, photo.id, d.id);
+          if (!res.ok) {
+            apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+            return;
+          }
+          await refreshDocs();
+        });
+        li.append(link, del);
+        list.appendChild(li);
+      }
+    };
+
+    const refreshDocs = async () => {
+      const res = await listEoprojectDocuments(projectId, stageId, photo.id);
+      if (res.error) {
+        apiFail(res.error, { requestId: res.requestId });
+        return;
+      }
+      renderList(res.documents);
+    };
+
+    const attach = document.createElement("form");
+    attach.className = "eoproject__upload-row";
+    const label = document.createElement("label");
+    label.className = "eoproject__field";
+    label.append("Attach document");
+    const input = document.createElement("input");
+    input.className = "eoproject__input";
+    input.type = "file";
+    input.name = "file";
+    input.required = true;
+    label.appendChild(input);
+    const submit = document.createElement("button");
+    submit.type = "submit";
+    submit.className = "eoproject__btn";
+    submit.textContent = "Upload";
+    attach.append(label, submit);
+    attach.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = input.files?.[0];
+      if (!file) return;
+      const progress = progressEl("Uploading document");
+      attach.appendChild(progress.root);
+      const res = await uploadEoprojectDocument(projectId, stageId, photo.id, file, (p) => progress.set(p.percent));
+      progress.root.remove();
+      if (!res.document) {
+        apiFail(res.error || "Upload failed.", { requestId: res.requestId });
+        return;
+      }
+      attach.reset();
+      await refreshDocs();
+    });
+
+    void refreshDocs();
+    wrap.append(list, attach);
+    return wrap;
+  }
+
   function renderPhotos(bundle: EoprojectStageBundle, mount: HTMLElement) {
     mount.replaceChildren();
     const items = photoItemsForStage(bundle);
@@ -219,6 +341,38 @@ import Layout from "../../layouts/Layout.astro";
       img.loading = "lazy";
       openBtn.appendChild(img);
       openBtn.addEventListener("click", () => photoViewer.open(items, photoIndex));
+
+      const tag = document.createElement("p");
+      tag.className = "eoproject__photo-tag";
+      tag.textContent = photo.tag || "";
+      tag.hidden = !photo.tag;
+
+      const tagInput = document.createElement("input");
+      tagInput.className = "eoproject__tag-input";
+      tagInput.type = "text";
+      tagInput.maxLength = 120;
+      tagInput.placeholder = "Add tag";
+      tagInput.value = photo.tag || "";
+      tagInput.hidden = true;
+      tagInput.addEventListener("keydown", async (event) => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        const value = tagInput.value.trim();
+        const res = await updateEoprojectPhotoTag(projectId, bundle.stage.id, photo.id, value);
+        if (!res.photo) {
+          apiFail(res.error || "Could not update tag.", { requestId: res.requestId });
+          return;
+        }
+        tag.textContent = res.photo.tag || "";
+        tag.hidden = !res.photo.tag;
+        tagInput.value = res.photo.tag || "";
+        tagInput.hidden = true;
+      });
+      tag.addEventListener("dblclick", () => {
+        tag.hidden = true;
+        tagInput.hidden = false;
+        tagInput.focus();
+      });
 
       const caption = document.createElement("div");
       caption.className = "eoproject__photo-caption";
@@ -248,7 +402,8 @@ import Layout from "../../layouts/Layout.astro";
         await reload();
       });
       actions.append(downloadBtn, del);
-      card.append(openBtn, caption, actions);
+
+      card.append(openBtn, tag, tagInput, caption, actions, renderDocs(bundle.stage.id, photo));
       mount.appendChild(card);
     });
   }
@@ -294,11 +449,20 @@ import Layout from "../../layouts/Layout.astro";
     photoInput.accept = "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp";
     photoInput.required = true;
     photoLabel.appendChild(photoInput);
+    const photoTagField = document.createElement("label");
+    photoTagField.className = "eoproject__field eoproject__field--narrow";
+    photoTagField.append("Tag");
+    const photoTagInput = document.createElement("input");
+    photoTagInput.className = "eoproject__input";
+    photoTagInput.name = "tag";
+    photoTagInput.maxLength = 120;
+    photoTagInput.placeholder = "Optional";
+    photoTagField.appendChild(photoTagInput);
     const photoSubmit = document.createElement("button");
     photoSubmit.className = "eoproject__btn";
     photoSubmit.type = "submit";
     photoSubmit.textContent = "Upload";
-    photoForm.append(photoLabel, photoSubmit);
+    photoForm.append(photoLabel, photoTagField, photoSubmit);
     photoForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const file = photoInput.files?.[0];
@@ -309,7 +473,15 @@ import Layout from "../../layouts/Layout.astro";
         apiFail("Use a JPEG, PNG, or WebP image (HEIC/HEIF is not supported).");
         return;
       }
-      const res = await uploadEoprojectPhoto(projectId, bundle.stage.id, file);
+      const progress = progressEl("Uploading photo");
+      photoForm.appendChild(progress.root);
+      photoSubmit.disabled = true;
+      const res = await uploadEoprojectPhoto(projectId, bundle.stage.id, file, {
+        tag: photoTagInput.value.trim(),
+        onProgress: (p: UploadProgress) => progress.set(p.percent),
+      });
+      photoSubmit.disabled = false;
+      progress.root.remove();
       if (!res.photo) {
         apiFail(res.error || "Upload failed.", { requestId: res.requestId });
         return;
@@ -407,8 +579,84 @@ import Layout from "../../layouts/Layout.astro";
       const file = ifcInput.files?.[0];
       const label = ifcLabelInput.value.trim();
       if (!file) return;
-      const res = await uploadEoprojectIfc(projectId, bundle.stage.id, file, label || undefined);
+      const progress = progressEl("Uploading IFC");
+      ifcForm.appendChild(progress.root);
+      const res = await uploadEoprojectIfc(projectId, bundle.stage.id, file, {
+        label: label || undefined,
+        onProgress: (p: UploadProgress) => progress.set(p.percent),
+      });
+      progress.root.remove();
       if (!res.version) {
+        apiFail(res.error || "Upload failed.", { requestId: res.requestId });
+        return;
+      }
+      await reload();
+    });
+
+    const videoHead = document.createElement("h3");
+    videoHead.className = "eoproject__subhead";
+    videoHead.textContent = "Videos";
+    const videoList = document.createElement("div");
+    videoList.className = "eoproject__videos";
+    const renderVideos = () => {
+      videoList.replaceChildren();
+      for (const video of bundle.videos ?? []) {
+        const row = document.createElement("div");
+        row.className = "eoproject__video-row";
+        const player = document.createElement("video");
+        player.className = "eoproject__video";
+        player.controls = true;
+        player.preload = "metadata";
+        player.src = video.url || eoprojectVideoFileUrl(projectId, bundle.stage.id, video.id);
+        const del = iconBtn("delete", `Delete video ${video.originalName || ""}`, true);
+        del.addEventListener("click", async () => {
+          if (!confirm("Delete this video?")) return;
+          const res = await deleteEoprojectVideo(projectId, bundle.stage.id, video.id);
+          if (!res.ok) {
+            apiFail(res.error || "Delete failed.", { requestId: res.requestId });
+            return;
+          }
+          await reload();
+        });
+        row.append(player, del);
+        videoList.appendChild(row);
+      }
+    };
+    renderVideos();
+
+    const videoForm = document.createElement("form");
+    videoForm.className = "eoproject__upload-row";
+    const videoLabel = document.createElement("label");
+    videoLabel.className = "eoproject__field";
+    videoLabel.append("Upload video");
+    const videoInput = document.createElement("input");
+    videoInput.className = "eoproject__input";
+    videoInput.name = "file";
+    videoInput.type = "file";
+    videoInput.accept = "video/mp4,.mp4";
+    videoInput.required = true;
+    videoLabel.appendChild(videoInput);
+    const videoSubmit = document.createElement("button");
+    videoSubmit.className = "eoproject__btn";
+    videoSubmit.type = "submit";
+    videoSubmit.textContent = "Upload video";
+    videoForm.append(videoLabel, videoSubmit);
+    videoForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = videoInput.files?.[0];
+      if (!file) return;
+      const duration = await readVideoDuration(file);
+      if (duration > 600) {
+        apiFail("Videos must be 10 minutes or shorter.");
+        return;
+      }
+      const progress = progressEl("Uploading video");
+      videoForm.appendChild(progress.root);
+      videoSubmit.disabled = true;
+      const res = await uploadEoprojectVideo(projectId, bundle.stage.id, file, (p) => progress.set(p.percent));
+      videoSubmit.disabled = false;
+      progress.root.remove();
+      if (!res.video) {
         apiFail(res.error || "Upload failed.", { requestId: res.requestId });
         return;
       }
@@ -419,7 +667,7 @@ import Layout from "../../layouts/Layout.astro";
     viewerWrap.className = "eoproject__viewer-wrap";
     viewerWrap.append(viewerHost, viewerStatus);
 
-    section.append(head, photoHead, gallery, photoForm, ifcHead, ifcRow, ifcForm, viewerWrap);
+    section.append(head, photoHead, gallery, photoForm, ifcHead, ifcRow, ifcForm, videoHead, videoList, videoForm, viewerWrap);
     return section;
   }
 
@@ -529,7 +777,28 @@ import Layout from "../../layouts/Layout.astro";
       (res.share.token ? `${location.origin}${eoprojectInvitePageUrl(res.share.token)}` : "");
     if (shareResult instanceof HTMLElement) {
       shareResult.hidden = false;
-      shareResult.textContent = link || "Share created.";
+      shareResult.replaceChildren();
+      const linkText = document.createElement("span");
+      linkText.textContent = link || "Share created.";
+      shareResult.appendChild(linkText);
+      if (link) {
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.className = "eoproject__btn";
+        copy.textContent = "Copy link";
+        copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(link);
+            copy.textContent = "Copied";
+            globalThis.setTimeout(() => {
+              copy.textContent = "Copy link";
+            }, 1500);
+          } catch {
+            apiFail("Could not copy the link.");
+          }
+        });
+        shareResult.appendChild(copy);
+      }
     }
     if (mustLog) console.log("[eoproject] share", res.share.id);
     await reloadShares();

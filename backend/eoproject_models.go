@@ -16,14 +16,21 @@ const (
 	colEoprojectPhotos   = "eoproject_photos"
 	colEoprojectIFC      = "eoproject_ifc_versions"
 	colEoprojectShares   = "eoproject_shares"
+	colEoprojectVideos   = "eoproject_videos"
+	colEoprojectDocs     = "eoproject_photo_documents"
 
-	eoprojectMaxPhotoBytes = 12 << 20
-	eoprojectMaxIFCBytes   = 80 << 20
-	eoprojectMaxNameLen    = 120
-	eoprojectMaxDescLen    = 2000
-	eoprojectMaxLabelLen   = 80
-	eoprojectShareMinHours = 1
-	eoprojectShareMaxHours = 24 * 90
+	eoprojectMaxPhotoBytes   = 12 << 20
+	eoprojectMaxIFCBytes     = 80 << 20
+	eoprojectMaxNameLen      = 120
+	eoprojectMaxDescLen      = 2000
+	eoprojectMaxLabelLen     = 80
+	eoprojectMaxTagLen       = 120
+	eoprojectMaxVideoSeconds = 600
+	eoprojectShareMinHours   = 1
+	eoprojectShareMaxHours   = 24 * 90
+
+	defaultEoprojectMaxVideoBytes = 4 << 30
+	defaultEoprojectMaxDocBytes   = 100 << 20
 )
 
 var eoprojectNameRe = regexp.MustCompile(`^[\p{L}\p{N}][\p{L}\p{N} ._'-]{0,119}$`)
@@ -48,6 +55,35 @@ type eoprojectStage struct {
 }
 
 type eoprojectPhoto struct {
+	ID           string                   `json:"id" bson:"_id"`
+	ProjectID    string                   `json:"projectId" bson:"project_id"`
+	StageID      string                   `json:"stageId" bson:"stage_id"`
+	UserID       string                   `json:"userId" bson:"user_id"`
+	StorageName  string                   `json:"-" bson:"storage_name"`
+	OriginalName string                   `json:"originalName" bson:"original_name"`
+	ContentType  string                   `json:"contentType" bson:"content_type"`
+	Size         int64                    `json:"size" bson:"size"`
+	Tag          string                   `json:"tag,omitempty" bson:"tag,omitempty"`
+	Documents    []eoprojectPhotoDocument `json:"documents,omitempty" bson:"-"`
+	CreatedAt    time.Time                `json:"createdAt" bson:"created_at"`
+	URL          string                   `json:"url,omitempty" bson:"-"`
+}
+
+type eoprojectIFCVersion struct {
+	ID           string    `json:"id" bson:"_id"`
+	ProjectID    string    `json:"projectId" bson:"project_id"`
+	StageID      string    `json:"stageId" bson:"stage_id"`
+	UserID       string    `json:"userId" bson:"user_id"`
+	Version      int       `json:"version" bson:"version"`
+	Label        string    `json:"label,omitempty" bson:"label,omitempty"`
+	StorageName  string    `json:"-" bson:"storage_name"`
+	OriginalName string    `json:"originalName" bson:"original_name"`
+	Size         int64     `json:"size" bson:"size"`
+	CreatedAt    time.Time `json:"createdAt" bson:"created_at"`
+	URL          string    `json:"url,omitempty" bson:"-"`
+}
+
+type eoprojectVideo struct {
 	ID           string    `json:"id" bson:"_id"`
 	ProjectID    string    `json:"projectId" bson:"project_id"`
 	StageID      string    `json:"stageId" bson:"stage_id"`
@@ -60,15 +96,15 @@ type eoprojectPhoto struct {
 	URL          string    `json:"url,omitempty" bson:"-"`
 }
 
-type eoprojectIFCVersion struct {
+type eoprojectPhotoDocument struct {
 	ID           string    `json:"id" bson:"_id"`
 	ProjectID    string    `json:"projectId" bson:"project_id"`
 	StageID      string    `json:"stageId" bson:"stage_id"`
+	PhotoID      string    `json:"photoId" bson:"photo_id"`
 	UserID       string    `json:"userId" bson:"user_id"`
-	Version      int       `json:"version" bson:"version"`
-	Label        string    `json:"label,omitempty" bson:"label,omitempty"`
 	StorageName  string    `json:"-" bson:"storage_name"`
 	OriginalName string    `json:"originalName" bson:"original_name"`
+	ContentType  string    `json:"contentType" bson:"content_type"`
 	Size         int64     `json:"size" bson:"size"`
 	CreatedAt    time.Time `json:"createdAt" bson:"created_at"`
 	URL          string    `json:"url,omitempty" bson:"-"`
@@ -87,9 +123,10 @@ type eoprojectShare struct {
 }
 
 type eoprojectStageBundle struct {
-	Stage       eoprojectStage       `json:"stage"`
-	Photos      []eoprojectPhoto     `json:"photos"`
+	Stage       eoprojectStage        `json:"stage"`
+	Photos      []eoprojectPhoto      `json:"photos"`
 	IFCVersions []eoprojectIFCVersion `json:"ifcVersions"`
+	Videos      []eoprojectVideo      `json:"videos"`
 }
 
 type eoprojectDashboard struct {
@@ -149,4 +186,20 @@ func eoprojectSharePhotoURL(token, photoID string) string {
 
 func eoprojectShareIFCURL(token, versionID string) string {
 	return "/api/eoproject/invite/" + token + "/ifc/" + versionID + "/file"
+}
+
+func eoprojectVideoURL(projectID, stageID, videoID string) string {
+	return "/api/eoproject/projects/" + projectID + "/stages/" + stageID + "/videos/" + videoID + "/file"
+}
+
+func eoprojectShareVideoURL(token, videoID string) string {
+	return "/api/eoproject/invite/" + token + "/videos/" + videoID + "/file"
+}
+
+func eoprojectDocURL(projectID, stageID, photoID, docID string) string {
+	return "/api/eoproject/projects/" + projectID + "/stages/" + stageID + "/photos/" + photoID + "/documents/" + docID + "/file"
+}
+
+func eoprojectShareDocURL(token, photoID, docID string) string {
+	return "/api/eoproject/invite/" + token + "/photos/" + photoID + "/documents/" + docID + "/file"
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -14,7 +15,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
 
 type eoprojectStore interface {
 	CreateProject(ctx context.Context, p *eoprojectProject) error
@@ -31,6 +31,7 @@ type eoprojectStore interface {
 	DeleteStagesByProject(ctx context.Context, projectID string) error
 
 	CreatePhoto(ctx context.Context, p *eoprojectPhoto) error
+	UpdatePhoto(ctx context.Context, p *eoprojectPhoto) error
 	GetPhoto(ctx context.Context, id string) (*eoprojectPhoto, error)
 	ListPhotos(ctx context.Context, stageID string) ([]*eoprojectPhoto, error)
 	DeletePhoto(ctx context.Context, id string) error
@@ -50,6 +51,21 @@ type eoprojectStore interface {
 	ListSharesByProject(ctx context.Context, projectID string) ([]*eoprojectShare, error)
 	DeleteShare(ctx context.Context, id string) error
 	DeleteSharesByProject(ctx context.Context, projectID string) error
+
+	CreateVideo(ctx context.Context, v *eoprojectVideo) error
+	GetVideo(ctx context.Context, id string) (*eoprojectVideo, error)
+	ListVideos(ctx context.Context, stageID string) ([]*eoprojectVideo, error)
+	DeleteVideo(ctx context.Context, id string) error
+	DeleteVideosByProject(ctx context.Context, projectID string) error
+	DeleteVideosByStage(ctx context.Context, stageID string) error
+
+	CreateDoc(ctx context.Context, d *eoprojectPhotoDocument) error
+	GetDoc(ctx context.Context, id string) (*eoprojectPhotoDocument, error)
+	ListDocsByPhoto(ctx context.Context, photoID string) ([]*eoprojectPhotoDocument, error)
+	DeleteDoc(ctx context.Context, id string) error
+	DeleteDocsByProject(ctx context.Context, projectID string) error
+	DeleteDocsByStage(ctx context.Context, stageID string) error
+	DeleteDocsByPhoto(ctx context.Context, photoID string) error
 }
 
 type eoprojectFS struct {
@@ -83,6 +99,14 @@ func (fs *eoprojectFS) ifcDir(userID, projectID, stageID string) (string, error)
 	return fs.abs(userID, projectID, "stages", stageID, "ifc")
 }
 
+func (fs *eoprojectFS) videosDir(userID, projectID, stageID string) (string, error) {
+	return fs.abs(userID, projectID, "stages", stageID, "videos")
+}
+
+func (fs *eoprojectFS) docsDir(userID, projectID, stageID, photoID string) (string, error) {
+	return fs.abs(userID, projectID, "stages", stageID, "docs", photoID)
+}
+
 func (fs *eoprojectFS) ensureStage(userID, projectID, stageID string) error {
 	photos, err := fs.photosDir(userID, projectID, stageID)
 	if err != nil {
@@ -92,10 +116,17 @@ func (fs *eoprojectFS) ensureStage(userID, projectID, stageID string) error {
 	if err != nil {
 		return err
 	}
+	videos, err := fs.videosDir(userID, projectID, stageID)
+	if err != nil {
+		return err
+	}
 	if err := os.MkdirAll(photos, 0o750); err != nil {
 		return err
 	}
-	return os.MkdirAll(ifc, 0o750)
+	if err := os.MkdirAll(ifc, 0o750); err != nil {
+		return err
+	}
+	return os.MkdirAll(videos, 0o750)
 }
 
 func (fs *eoprojectFS) removeProject(userID, projectID string) error {
@@ -146,6 +177,47 @@ func (fs *eoprojectFS) putIFC(userID, projectID, stageID, storageName string, bo
 	return os.Rename(tmp, path)
 }
 
+func (fs *eoprojectFS) writeStream(dir, storageName string, src io.Reader) (int64, error) {
+	if err := os.MkdirAll(dir, 0o750); err != nil {
+		return 0, err
+	}
+	path := filepath.Join(dir, filepath.Base(storageName))
+	tmp := path + ".tmp-" + randomID(8)
+	f, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o640)
+	if err != nil {
+		return 0, err
+	}
+	n, err := io.Copy(f, src)
+	if cerr := f.Close(); err == nil {
+		err = cerr
+	}
+	if err != nil {
+		_ = os.Remove(tmp)
+		return 0, err
+	}
+	if err := os.Rename(tmp, path); err != nil {
+		_ = os.Remove(tmp)
+		return 0, err
+	}
+	return n, nil
+}
+
+func (fs *eoprojectFS) putVideoStream(userID, projectID, stageID, storageName string, src io.Reader) (int64, error) {
+	dir, err := fs.videosDir(userID, projectID, stageID)
+	if err != nil {
+		return 0, err
+	}
+	return fs.writeStream(dir, storageName, src)
+}
+
+func (fs *eoprojectFS) putDocStream(userID, projectID, stageID, photoID, storageName string, src io.Reader) (int64, error) {
+	dir, err := fs.docsDir(userID, projectID, stageID, photoID)
+	if err != nil {
+		return 0, err
+	}
+	return fs.writeStream(dir, storageName, src)
+}
+
 func (fs *eoprojectFS) deletePhoto(userID, projectID, stageID, storageName string) error {
 	dir, err := fs.photosDir(userID, projectID, stageID)
 	if err != nil {
@@ -160,6 +232,30 @@ func (fs *eoprojectFS) deletePhoto(userID, projectID, stageID, storageName strin
 
 func (fs *eoprojectFS) deleteIFC(userID, projectID, stageID, storageName string) error {
 	dir, err := fs.ifcDir(userID, projectID, stageID)
+	if err != nil {
+		return err
+	}
+	path := filepath.Join(dir, filepath.Base(storageName))
+	if err := os.Remove(path); err != nil && !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+	return nil
+}
+
+func (fs *eoprojectFS) deleteVideo(userID, projectID, stageID, storageName string) error {
+	dir, err := fs.videosDir(userID, projectID, stageID)
+	if err != nil {
+		return err
+	}
+	path := filepath.Join(dir, filepath.Base(storageName))
+	if err := os.Remove(path); err != nil && !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+	return nil
+}
+
+func (fs *eoprojectFS) deleteDoc(userID, projectID, stageID, photoID, storageName string) error {
+	dir, err := fs.docsDir(userID, projectID, stageID, photoID)
 	if err != nil {
 		return err
 	}
@@ -206,6 +302,42 @@ func (fs *eoprojectFS) openIFC(userID, projectID, stageID, storageName string) (
 	return f, info, nil
 }
 
+func (fs *eoprojectFS) openVideo(userID, projectID, stageID, storageName string) (*os.File, os.FileInfo, error) {
+	dir, err := fs.videosDir(userID, projectID, stageID)
+	if err != nil {
+		return nil, nil, err
+	}
+	path := filepath.Join(dir, filepath.Base(storageName))
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	info, err := f.Stat()
+	if err != nil {
+		_ = f.Close()
+		return nil, nil, err
+	}
+	return f, info, nil
+}
+
+func (fs *eoprojectFS) openDoc(userID, projectID, stageID, photoID, storageName string) (*os.File, os.FileInfo, error) {
+	dir, err := fs.docsDir(userID, projectID, stageID, photoID)
+	if err != nil {
+		return nil, nil, err
+	}
+	path := filepath.Join(dir, filepath.Base(storageName))
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	info, err := f.Stat()
+	if err != nil {
+		_ = f.Close()
+		return nil, nil, err
+	}
+	return f, info, nil
+}
+
 // --- memory ---
 
 type memoryEoprojectStore struct {
@@ -215,6 +347,8 @@ type memoryEoprojectStore struct {
 	photos   map[string]*eoprojectPhoto
 	ifc      map[string]*eoprojectIFCVersion
 	shares   map[string]*eoprojectShare
+	videos   map[string]*eoprojectVideo
+	docs     map[string]*eoprojectPhotoDocument
 }
 
 func newMemoryEoprojectStore() *memoryEoprojectStore {
@@ -224,6 +358,8 @@ func newMemoryEoprojectStore() *memoryEoprojectStore {
 		photos:   map[string]*eoprojectPhoto{},
 		ifc:      map[string]*eoprojectIFCVersion{},
 		shares:   map[string]*eoprojectShare{},
+		videos:   map[string]*eoprojectVideo{},
+		docs:     map[string]*eoprojectPhotoDocument{},
 	}
 }
 
@@ -348,6 +484,17 @@ func (s *memoryEoprojectStore) DeleteStagesByProject(_ context.Context, projectI
 func (s *memoryEoprojectStore) CreatePhoto(_ context.Context, p *eoprojectPhoto) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	cp := *p
+	s.photos[p.ID] = &cp
+	return nil
+}
+
+func (s *memoryEoprojectStore) UpdatePhoto(_ context.Context, p *eoprojectPhoto) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.photos[p.ID]; !ok {
+		return errNotFound
+	}
 	cp := *p
 	s.photos[p.ID] = &cp
 	return nil
@@ -533,6 +680,141 @@ func (s *memoryEoprojectStore) DeleteSharesByProject(_ context.Context, projectI
 	return nil
 }
 
+func (s *memoryEoprojectStore) CreateVideo(_ context.Context, v *eoprojectVideo) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	cp := *v
+	s.videos[v.ID] = &cp
+	return nil
+}
+
+func (s *memoryEoprojectStore) GetVideo(_ context.Context, id string) (*eoprojectVideo, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	v, ok := s.videos[id]
+	if !ok {
+		return nil, errNotFound
+	}
+	cp := *v
+	return &cp, nil
+}
+
+func (s *memoryEoprojectStore) ListVideos(_ context.Context, stageID string) ([]*eoprojectVideo, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := make([]*eoprojectVideo, 0)
+	for _, v := range s.videos {
+		if v.StageID == stageID {
+			cp := *v
+			out = append(out, &cp)
+		}
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].CreatedAt.After(out[j].CreatedAt) })
+	return out, nil
+}
+
+func (s *memoryEoprojectStore) DeleteVideo(_ context.Context, id string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.videos, id)
+	return nil
+}
+
+func (s *memoryEoprojectStore) DeleteVideosByProject(_ context.Context, projectID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for id, v := range s.videos {
+		if v.ProjectID == projectID {
+			delete(s.videos, id)
+		}
+	}
+	return nil
+}
+
+func (s *memoryEoprojectStore) DeleteVideosByStage(_ context.Context, stageID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for id, v := range s.videos {
+		if v.StageID == stageID {
+			delete(s.videos, id)
+		}
+	}
+	return nil
+}
+
+func (s *memoryEoprojectStore) CreateDoc(_ context.Context, d *eoprojectPhotoDocument) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	cp := *d
+	s.docs[d.ID] = &cp
+	return nil
+}
+
+func (s *memoryEoprojectStore) GetDoc(_ context.Context, id string) (*eoprojectPhotoDocument, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	d, ok := s.docs[id]
+	if !ok {
+		return nil, errNotFound
+	}
+	cp := *d
+	return &cp, nil
+}
+
+func (s *memoryEoprojectStore) ListDocsByPhoto(_ context.Context, photoID string) ([]*eoprojectPhotoDocument, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := make([]*eoprojectPhotoDocument, 0)
+	for _, d := range s.docs {
+		if d.PhotoID == photoID {
+			cp := *d
+			out = append(out, &cp)
+		}
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].CreatedAt.After(out[j].CreatedAt) })
+	return out, nil
+}
+
+func (s *memoryEoprojectStore) DeleteDoc(_ context.Context, id string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.docs, id)
+	return nil
+}
+
+func (s *memoryEoprojectStore) DeleteDocsByProject(_ context.Context, projectID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for id, d := range s.docs {
+		if d.ProjectID == projectID {
+			delete(s.docs, id)
+		}
+	}
+	return nil
+}
+
+func (s *memoryEoprojectStore) DeleteDocsByStage(_ context.Context, stageID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for id, d := range s.docs {
+		if d.StageID == stageID {
+			delete(s.docs, id)
+		}
+	}
+	return nil
+}
+
+func (s *memoryEoprojectStore) DeleteDocsByPhoto(_ context.Context, photoID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for id, d := range s.docs {
+		if d.PhotoID == photoID {
+			delete(s.docs, id)
+		}
+	}
+	return nil
+}
+
 // --- mongo ---
 
 type mongoEoprojectStore struct {
@@ -557,6 +839,12 @@ func (s *mongoEoprojectStore) ifc() *mongo.Collection {
 }
 func (s *mongoEoprojectStore) shares() *mongo.Collection {
 	return s.db.Collection(colEoprojectShares)
+}
+func (s *mongoEoprojectStore) videos() *mongo.Collection {
+	return s.db.Collection(colEoprojectVideos)
+}
+func (s *mongoEoprojectStore) docs() *mongo.Collection {
+	return s.db.Collection(colEoprojectDocs)
 }
 
 func (s *mongoEoprojectStore) CreateProject(ctx context.Context, p *eoprojectProject) error {
@@ -670,6 +958,17 @@ func (s *mongoEoprojectStore) DeleteStagesByProject(ctx context.Context, project
 func (s *mongoEoprojectStore) CreatePhoto(ctx context.Context, p *eoprojectPhoto) error {
 	_, err := s.photos().InsertOne(ctx, p)
 	return err
+}
+
+func (s *mongoEoprojectStore) UpdatePhoto(ctx context.Context, p *eoprojectPhoto) error {
+	res, err := s.photos().ReplaceOne(ctx, bson.M{"_id": p.ID}, p)
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errNotFound
+	}
+	return nil
 }
 
 func (s *mongoEoprojectStore) GetPhoto(ctx context.Context, id string) (*eoprojectPhoto, error) {
@@ -819,6 +1118,109 @@ func (s *mongoEoprojectStore) DeleteShare(ctx context.Context, id string) error 
 
 func (s *mongoEoprojectStore) DeleteSharesByProject(ctx context.Context, projectID string) error {
 	_, err := s.shares().DeleteMany(ctx, bson.M{"project_id": projectID})
+	return err
+}
+
+func (s *mongoEoprojectStore) CreateVideo(ctx context.Context, v *eoprojectVideo) error {
+	_, err := s.videos().InsertOne(ctx, v)
+	return err
+}
+
+func (s *mongoEoprojectStore) GetVideo(ctx context.Context, id string) (*eoprojectVideo, error) {
+	var v eoprojectVideo
+	err := s.videos().FindOne(ctx, bson.M{"_id": id}).Decode(&v)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &v, nil
+}
+
+func (s *mongoEoprojectStore) ListVideos(ctx context.Context, stageID string) ([]*eoprojectVideo, error) {
+	cur, err := s.videos().Find(ctx, bson.M{"stage_id": stageID}, options.Find().SetSort(bson.D{{Key: "created_at", Value: -1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var out []*eoprojectVideo
+	for cur.Next(ctx) {
+		var v eoprojectVideo
+		if err := cur.Decode(&v); err != nil {
+			return nil, err
+		}
+		out = append(out, &v)
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoEoprojectStore) DeleteVideo(ctx context.Context, id string) error {
+	_, err := s.videos().DeleteOne(ctx, bson.M{"_id": id})
+	return err
+}
+
+func (s *mongoEoprojectStore) DeleteVideosByProject(ctx context.Context, projectID string) error {
+	_, err := s.videos().DeleteMany(ctx, bson.M{"project_id": projectID})
+	return err
+}
+
+func (s *mongoEoprojectStore) DeleteVideosByStage(ctx context.Context, stageID string) error {
+	_, err := s.videos().DeleteMany(ctx, bson.M{"stage_id": stageID})
+	return err
+}
+
+func (s *mongoEoprojectStore) CreateDoc(ctx context.Context, d *eoprojectPhotoDocument) error {
+	_, err := s.docs().InsertOne(ctx, d)
+	return err
+}
+
+func (s *mongoEoprojectStore) GetDoc(ctx context.Context, id string) (*eoprojectPhotoDocument, error) {
+	var d eoprojectPhotoDocument
+	err := s.docs().FindOne(ctx, bson.M{"_id": id}).Decode(&d)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &d, nil
+}
+
+func (s *mongoEoprojectStore) ListDocsByPhoto(ctx context.Context, photoID string) ([]*eoprojectPhotoDocument, error) {
+	cur, err := s.docs().Find(ctx, bson.M{"photo_id": photoID}, options.Find().SetSort(bson.D{{Key: "created_at", Value: -1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var out []*eoprojectPhotoDocument
+	for cur.Next(ctx) {
+		var d eoprojectPhotoDocument
+		if err := cur.Decode(&d); err != nil {
+			return nil, err
+		}
+		out = append(out, &d)
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoEoprojectStore) DeleteDoc(ctx context.Context, id string) error {
+	_, err := s.docs().DeleteOne(ctx, bson.M{"_id": id})
+	return err
+}
+
+func (s *mongoEoprojectStore) DeleteDocsByProject(ctx context.Context, projectID string) error {
+	_, err := s.docs().DeleteMany(ctx, bson.M{"project_id": projectID})
+	return err
+}
+
+func (s *mongoEoprojectStore) DeleteDocsByStage(ctx context.Context, stageID string) error {
+	_, err := s.docs().DeleteMany(ctx, bson.M{"stage_id": stageID})
+	return err
+}
+
+func (s *mongoEoprojectStore) DeleteDocsByPhoto(ctx context.Context, photoID string) error {
+	_, err := s.docs().DeleteMany(ctx, bson.M{"photo_id": photoID})
 	return err
 }
 

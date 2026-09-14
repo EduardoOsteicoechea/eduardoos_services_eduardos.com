@@ -46,8 +46,10 @@ import Layout from "../../layouts/Layout.astro";
     type EoprojectPhotoViewerItem,
   } from "../../lib/eoproject-photo-viewer";
   import {
+    eoprojectInviteDocumentUrl,
     eoprojectInviteIfcUrl,
     eoprojectInvitePhotoUrl,
+    eoprojectInviteVideoUrl,
     fetchEoprojectInvite,
     type EoprojectStageBundle,
   } from "../../lib/eoproject";
@@ -158,6 +160,11 @@ import Layout from "../../layouts/Layout.astro";
       openBtn.appendChild(img);
       openBtn.addEventListener("click", () => photoViewer.open(items, photoIndex));
 
+      const tag = document.createElement("p");
+      tag.className = "eoproject__photo-tag";
+      tag.textContent = photo.tag || "";
+      tag.hidden = !photo.tag;
+
       const caption = document.createElement("div");
       caption.className = "eoproject__photo-caption";
       caption.textContent = photo.originalName || photo.id;
@@ -178,7 +185,20 @@ import Layout from "../../layouts/Layout.astro";
         }
       });
       actions.appendChild(downloadBtn);
-      card.append(openBtn, caption, actions);
+      const docList = document.createElement("ul");
+      docList.className = "eoproject__doc-list";
+      for (const d of photo.documents ?? []) {
+        const li = document.createElement("li");
+        li.className = "eoproject__doc-row";
+        const link = document.createElement("a");
+        link.href = d.url || eoprojectInviteDocumentUrl(token, photo.id, d.id);
+        link.textContent = d.originalName || d.id;
+        link.target = "_blank";
+        link.rel = "noopener";
+        li.appendChild(link);
+        docList.appendChild(li);
+      }
+      card.append(openBtn, tag, caption, actions, docList);
       gallery.appendChild(card);
     });
 
@@ -223,11 +243,25 @@ import Layout from "../../layouts/Layout.astro";
       void loadIfc(bundle.stage.id, select.value, viewerStatus);
     });
     ifcRow.append(select, viewBtn);
+    const videoHead = document.createElement("h3");
+    videoHead.className = "eoproject__subhead";
+    videoHead.textContent = "Videos";
+    const videoList = document.createElement("div");
+    videoList.className = "eoproject__videos";
+    for (const video of bundle.videos ?? []) {
+      const player = document.createElement("video");
+      player.className = "eoproject__video";
+      player.controls = true;
+      player.preload = "metadata";
+      player.src = video.url || eoprojectInviteVideoUrl(token, video.id);
+      videoList.appendChild(player);
+    }
+
     const viewerWrap = document.createElement("div");
     viewerWrap.className = "eoproject__viewer-wrap";
     viewerWrap.append(viewerHost, viewerStatus);
 
-    section.append(head, photoHead, gallery, ifcHead, ifcRow, viewerWrap);
+    section.append(head, photoHead, gallery, ifcHead, ifcRow, videoHead, videoList, viewerWrap);
     return section;
   }
 

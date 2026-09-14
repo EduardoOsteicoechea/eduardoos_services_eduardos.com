@@ -2,7 +2,14 @@
  * eoProject client — projects / stages / photos / IFC versions / share links.
  */
 
-import { apiRequest, deleteJSON, patchJSON, uploadFile } from "./api";
+import {
+  apiRequest,
+  deleteJSON,
+  patchJSON,
+  uploadFile,
+  uploadFileWithProgress,
+  type UploadProgress,
+} from "./api";
 import { mustLog } from "./dev-log";
 
 export type EoprojectProject = {
@@ -32,6 +39,8 @@ export type EoprojectPhoto = {
   originalName: string;
   contentType: string;
   size: number;
+  tag?: string;
+  documents?: EoprojectPhotoDocument[];
   createdAt: string;
   url?: string;
 };
@@ -44,6 +53,31 @@ export type EoprojectIfcVersion = {
   version: number;
   label?: string;
   originalName: string;
+  size: number;
+  createdAt: string;
+  url?: string;
+};
+
+export type EoprojectVideo = {
+  id: string;
+  projectId: string;
+  stageId: string;
+  userId: string;
+  originalName: string;
+  contentType: string;
+  size: number;
+  createdAt: string;
+  url?: string;
+};
+
+export type EoprojectPhotoDocument = {
+  id: string;
+  projectId: string;
+  stageId: string;
+  photoId: string;
+  userId: string;
+  originalName: string;
+  contentType: string;
   size: number;
   createdAt: string;
   url?: string;
@@ -65,6 +99,7 @@ export type EoprojectStageBundle = {
   stage: EoprojectStage;
   photos: EoprojectPhoto[];
   ifcVersions: EoprojectIfcVersion[];
+  videos: EoprojectVideo[];
 };
 
 export type EoprojectDashboard = {
@@ -242,10 +277,13 @@ export async function uploadEoprojectPhoto(
   projectId: string,
   stageId: string,
   file: File,
+  opts: { tag?: string; onProgress?: (progress: UploadProgress) => void } = {},
 ): Promise<{ photo: EoprojectPhoto | null; error?: string; requestId?: string }> {
-  const { status, data, requestId } = await uploadFile<{ photo?: EoprojectPhoto }>(
+  const fields = opts.tag?.trim() ? { tag: opts.tag.trim() } : undefined;
+  const { status, data, requestId } = await uploadFileWithProgress<{ photo?: EoprojectPhoto }>(
     `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos`,
     file,
+    { field: "file", fields, onProgress: opts.onProgress },
   );
   if (status < 200 || status >= 300) {
     return { photo: null, error: failMsg(data, "Photo upload failed."), requestId };
@@ -271,14 +309,13 @@ export async function uploadEoprojectIfc(
   projectId: string,
   stageId: string,
   file: File,
-  label?: string,
+  opts: { label?: string; onProgress?: (progress: UploadProgress) => void } = {},
 ): Promise<{ version: EoprojectIfcVersion | null; error?: string; requestId?: string }> {
-  const fields = label?.trim() ? { label: label.trim() } : undefined;
-  const { status, data, requestId } = await uploadFile<{ version?: EoprojectIfcVersion }>(
+  const fields = opts.label?.trim() ? { label: opts.label.trim() } : undefined;
+  const { status, data, requestId } = await uploadFileWithProgress<{ version?: EoprojectIfcVersion }>(
     `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/ifc`,
     file,
-    "file",
-    fields,
+    { field: "file", fields, onProgress: opts.onProgress },
   );
   if (status < 200 || status >= 300) {
     return { version: null, error: failMsg(data, "IFC upload failed."), requestId };
@@ -389,4 +426,119 @@ export function eoprojectInviteIfcUrl(token: string, versionId: string): string 
 
 export function eoprojectInvitePageUrl(token: string): string {
   return `/eoproject/invite?token=${encodeURIComponent(token)}`;
+}
+
+export function eoprojectVideoFileUrl(projectId: string, stageId: string, videoId: string): string {
+  return `/api/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/videos/${encodeURIComponent(videoId)}/file`;
+}
+
+export function eoprojectInviteVideoUrl(token: string, videoId: string): string {
+  return `/api/eoproject/invite/${encodeURIComponent(token)}/videos/${encodeURIComponent(videoId)}/file`;
+}
+
+export async function uploadEoprojectVideo(
+  projectId: string,
+  stageId: string,
+  file: File,
+  onProgress?: (progress: UploadProgress) => void,
+): Promise<{ video: EoprojectVideo | null; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await uploadFileWithProgress<{ video?: EoprojectVideo }>(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/videos`,
+    file,
+    { field: "file", onProgress },
+  );
+  if (status < 200 || status >= 300) {
+    return { video: null, error: failMsg(data, "Video upload failed."), requestId };
+  }
+  return { video: data.video ?? null, requestId };
+}
+
+export async function deleteEoprojectVideo(
+  projectId: string,
+  stageId: string,
+  videoId: string,
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await deleteJSON(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/videos/${encodeURIComponent(videoId)}`,
+  );
+  if (status < 200 || status >= 300) {
+    return { ok: false, error: failMsg(data, "Could not delete video."), requestId };
+  }
+  return { ok: true, requestId };
+}
+
+export async function updateEoprojectPhotoTag(
+  projectId: string,
+  stageId: string,
+  photoId: string,
+  tag: string,
+): Promise<{ photo: EoprojectPhoto | null; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await patchJSON<{ photo?: EoprojectPhoto }>(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/${encodeURIComponent(photoId)}`,
+    { tag },
+  );
+  if (status < 200 || status >= 300) {
+    return { photo: null, error: failMsg(data, "Could not update tag."), requestId };
+  }
+  return { photo: data.photo ?? null, requestId };
+}
+
+export async function listEoprojectDocuments(
+  projectId: string,
+  stageId: string,
+  photoId: string,
+): Promise<{ documents: EoprojectPhotoDocument[]; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await apiRequest<{ documents?: EoprojectPhotoDocument[] }>(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/${encodeURIComponent(photoId)}/documents`,
+  );
+  if (status < 200 || status >= 300) {
+    return { documents: [], error: failMsg(data, "Could not list documents."), requestId };
+  }
+  return { documents: data.documents ?? [], requestId };
+}
+
+export function eoprojectDocumentFileUrl(
+  projectId: string,
+  stageId: string,
+  photoId: string,
+  docId: string,
+): string {
+  return `/api/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/${encodeURIComponent(photoId)}/documents/${encodeURIComponent(docId)}/file`;
+}
+
+export function eoprojectInviteDocumentUrl(token: string, photoId: string, docId: string): string {
+  return `/api/eoproject/invite/${encodeURIComponent(token)}/photos/${encodeURIComponent(photoId)}/documents/${encodeURIComponent(docId)}/file`;
+}
+
+export async function uploadEoprojectDocument(
+  projectId: string,
+  stageId: string,
+  photoId: string,
+  file: File,
+  onProgress?: (progress: UploadProgress) => void,
+): Promise<{ document: EoprojectPhotoDocument | null; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await uploadFileWithProgress<{ document?: EoprojectPhotoDocument }>(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/${encodeURIComponent(photoId)}/documents`,
+    file,
+    { field: "file", onProgress },
+  );
+  if (status < 200 || status >= 300) {
+    return { document: null, error: failMsg(data, "Document upload failed."), requestId };
+  }
+  return { document: data.document ?? null, requestId };
+}
+
+export async function deleteEoprojectDocument(
+  projectId: string,
+  stageId: string,
+  photoId: string,
+  docId: string,
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await deleteJSON(
+    `/eoproject/projects/${encodeURIComponent(projectId)}/stages/${encodeURIComponent(stageId)}/photos/${encodeURIComponent(photoId)}/documents/${encodeURIComponent(docId)}`,
+  );
+  if (status < 200 || status >= 300) {
+    return { ok: false, error: failMsg(data, "Could not delete document."), requestId };
+  }
+  return { ok: true, requestId };
 }

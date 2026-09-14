@@ -78,6 +78,12 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EreportMaxPayloadBytes <= 0 {
 		cfg.EreportMaxPayloadBytes = defaultMaxPayloadBytes
 	}
+	if cfg.EoprojectMaxVideoBytes <= 0 {
+		cfg.EoprojectMaxVideoBytes = defaultEoprojectMaxVideoBytes
+	}
+	if cfg.EoprojectMaxDocumentBytes <= 0 {
+		cfg.EoprojectMaxDocumentBytes = defaultEoprojectMaxDocBytes
+	}
 	cfg.CalvinParagraphsRoot = resolveCalvinParagraphsRoot(cfg.CalvinParagraphsRoot)
 	if strings.TrimSpace(cfg.EvoiceMediaRoot) == "" {
 		cfg.EvoiceMediaRoot = cfg.MediaRoot + "/evoice"
