@@ -22,6 +22,7 @@ vi.mock("./api", () => ({
 vi.mock("./chat", () => ({
   setAgentChatDraft: vi.fn(),
   currentAgentHistory: vi.fn(() => []),
+  setAgentChatBusy: vi.fn(),
 }));
 
 vi.mock("./error-modal", () => ({

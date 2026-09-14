@@ -6,7 +6,7 @@ import {
   startVoiceStream,
   stopVoiceStream,
 } from "./api";
-import { currentAgentHistory, setAgentChatDraft } from "./chat";
+import { currentAgentHistory, setAgentChatBusy, setAgentChatDraft } from "./chat";
 import { sessionLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 
@@ -152,7 +152,7 @@ function paintTranscript(ui: VoiceUi | null, finalText: string, partial = ""): v
   if (ui.caption) {
     ui.caption.hidden = !state.recording && !live;
     if (state.recording) {
-      ui.caption.textContent = live || "Listening… press the stop button to finish.";
+      ui.caption.textContent = live || "Recording… press the stop button to finish.";
     } else {
       ui.caption.textContent = live;
     }
@@ -229,6 +229,60 @@ export function stopVoicePlayback(): void {
   audioPlaying = false;
 }
 
+function teardownCapture(): void {
+  if (state.node) {
+    state.node.port.onmessage = null;
+  }
+  try {
+    state.source?.disconnect();
+  } catch {
+    /* ignore */
+  }
+  try {
+    state.node?.disconnect();
+  } catch {
+    /* ignore */
+  }
+  try {
+    state.sink?.disconnect();
+  } catch {
+    /* ignore */
+  }
+  state.media?.getTracks().forEach((track) => track.stop());
+  const ctx = state.ctx;
+  state.media = null;
+  state.ctx = null;
+  state.source = null;
+  state.node = null;
+  state.sink = null;
+  if (ctx) {
+    void ctx.close().catch(() => undefined);
+  }
+}
+
+/** Stops voice, frees the composer for typing, and shows why. */
+function abortVoice(message: string): void {
+  const ui = resolveUi();
+  const streamId = state.streamId;
+  state.streamId = null;
+  state.recording = false;
+  state.starting = false;
+  state.transcript = "";
+  state.partial = "";
+  teardownCapture();
+  if (streamId) {
+    void cancelVoiceStream(streamId);
+  }
+  setAgentChatBusy(false);
+  if (ui) {
+    paintUi(ui);
+    if (ui.caption) {
+      ui.caption.hidden = false;
+      ui.caption.textContent = message;
+    }
+  }
+}
+
 function enqueueChunk(buffer: ArrayBuffer): void {
   state.chain = state.chain
     .then(async () => {
@@ -243,6 +297,7 @@ function enqueueChunk(buffer: ArrayBuffer): void {
           error: result.data.error,
           bytes: buffer.byteLength,
         });
+        abortVoice("Voice connection lost. You can type instead.");
         return;
       }
       const text = (result.data.text || "").trim();
@@ -350,6 +405,7 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     state.recording = true;
     state.chain = Promise.resolve();
     stopVoicePlayback();
+    setAgentChatBusy(true);
     sessionLog("voice.record.started", { streamId, sampleRate: ctx.sampleRate });
     setIcon(ui.mic, "stop_circle");
     paintTranscript(ui, "");
@@ -360,6 +416,7 @@ async function startRecording(ui: VoiceUi): Promise<void> {
       message,
       reason: err instanceof Error ? `${err.name}: ${err.message}` : String(err),
     });
+    setAgentChatBusy(false);
     media?.getTracks().forEach((track) => track.stop());
     if (ctx) {
       try {
@@ -385,77 +442,50 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
   state.recording = false;
   sessionLog("voice.record.stop", { streamId: state.streamId });
   paintUi(ui);
-  if (state.node) {
-    state.node.port.onmessage = null;
-  }
-  try {
-    state.source?.disconnect();
-  } catch {
-    /* ignore */
-  }
-  try {
-    state.node?.disconnect();
-  } catch {
-    /* ignore */
-  }
-  try {
-    state.sink?.disconnect();
-  } catch {
-    /* ignore */
-  }
-  state.media?.getTracks().forEach((track) => track.stop());
-  const ctx = state.ctx;
   const streamId = state.streamId;
-  state.media = null;
-  state.ctx = null;
-  state.source = null;
-  state.node = null;
-  state.sink = null;
   state.streamId = null;
-  if (ctx) {
-    try {
-      await ctx.close();
-    } catch {
-      /* ignore */
-    }
-  }
+  teardownCapture();
   if (ui.caption) {
     ui.caption.hidden = false;
     ui.caption.textContent = "Transcribing…";
   }
-  await state.chain.catch(() => undefined);
-  let text = [state.transcript, state.partial].filter(Boolean).join(" ").trim();
-  if (streamId) {
-    const finalText = await stopVoiceStream(streamId);
+  try {
+    await state.chain.catch(() => undefined);
+    let text = [state.transcript, state.partial].filter(Boolean).join(" ").trim();
+    if (streamId) {
+      const finalText = await stopVoiceStream(streamId);
+      if (finalText) {
+        text = finalText;
+      }
+    }
+    state.transcript = "";
+    state.partial = "";
+    let finalText = text.trim();
+    sessionLog("voice.record.final", { streamId, runes: finalText.length });
     if (finalText) {
-      text = finalText;
-    }
-  }
-  state.transcript = "";
-  state.partial = "";
-  let finalText = text.trim();
-  sessionLog("voice.record.final", { streamId, runes: finalText.length });
-  if (finalText) {
-    if (ui.caption) {
+      if (ui.caption) {
+        ui.caption.hidden = false;
+        ui.caption.textContent = "Interpreting…";
+      }
+      const cleaned = await interpretVoiceMessage(finalText, currentAgentHistory(), state.lang);
+      sessionLog("voice.record.interpreted", {
+        inRunes: finalText.length,
+        outRunes: cleaned.length,
+      });
+      if (cleaned) {
+        finalText = cleaned;
+      }
+      setAgentChatDraft(finalText);
+      if (ui.caption) {
+        ui.caption.textContent = "Contextualized. Edit, then press send.";
+      }
+      ui.input.focus();
+    } else if (ui.caption) {
       ui.caption.hidden = false;
-      ui.caption.textContent = "Interpreting…";
+      ui.caption.textContent = "No speech detected. You can type instead.";
     }
-    const cleaned = await interpretVoiceMessage(finalText, currentAgentHistory(), state.lang);
-    sessionLog("voice.record.interpreted", {
-      inRunes: finalText.length,
-      outRunes: cleaned.length,
-    });
-    if (cleaned) {
-      finalText = cleaned;
-    }
-    setAgentChatDraft(finalText);
-    if (ui.caption) {
-      ui.caption.textContent = "Contextualized. Edit, then press send.";
-    }
-    ui.input.focus();
-  } else if (ui.caption) {
-    ui.caption.hidden = false;
-    ui.caption.textContent = "No speech detected.";
+  } finally {
+    setAgentChatBusy(false);
   }
 }
 

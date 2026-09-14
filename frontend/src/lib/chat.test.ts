@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { postChatStream } from "./api";
-import { resetAgentChat, startAgentChat } from "./chat";
+import { resetAgentChat, setAgentChatBusy, startAgentChat } from "./chat";
 import { showErrorModal } from "./error-modal";
 import { enqueueVoiceAudio, stopVoicePlayback, voiceReplyEnabled } from "./voice";
 
@@ -149,6 +149,20 @@ describe("agent chat tray", () => {
     expect(options?.speak).toBe(true);
     expect(stopVoicePlayback).toHaveBeenCalled();
     vi.mocked(voiceReplyEnabled).mockReturnValue(false);
+  });
+
+  it("disables Send while the voice agent is busy", () => {
+    mountTray();
+    startAgentChat();
+    const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
+    const send = document.querySelector("[data-agent-send]") as HTMLButtonElement;
+    input.value = "hola";
+    input.dispatchEvent(new Event("input"));
+    expect(send.disabled).toBe(false);
+    setAgentChatBusy(true);
+    expect(send.disabled).toBe(true);
+    setAgentChatBusy(false);
+    expect(send.disabled).toBe(false);
   });
 
   it("archives the conversation into the history tray and persists it", async () => {

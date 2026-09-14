@@ -46,6 +46,7 @@ let selectMode = false;
 let selected = new Set<number>();
 let openMenu = -1;
 let sidebarWidthRem = SIDEBAR_DEFAULT_REM;
+let agentBusy = false;
 
 // Restore the previous conversation and saved chats across reloads.
 loadPersistedChats();
@@ -163,7 +164,17 @@ function hasComposerContent(input: HTMLTextAreaElement): boolean {
 
 function syncSend(input: HTMLTextAreaElement, send: HTMLButtonElement | null): void {
   if (send) {
-    send.disabled = !hasComposerContent(input);
+    send.disabled = agentBusy || !hasComposerContent(input);
+  }
+}
+
+/** Locks the composer (Send disabled) while voice is recording/transcribing. */
+export function setAgentChatBusy(busy: boolean): void {
+  agentBusy = busy;
+  const input = document.querySelector("[data-agent-input]");
+  const send = document.querySelector("[data-agent-send]");
+  if (input instanceof HTMLTextAreaElement) {
+    syncSend(input, send instanceof HTMLButtonElement ? send : null);
   }
 }
 
@@ -504,6 +515,9 @@ function paintAssistantStream(content: string): void {
 }
 
 async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | null): Promise<void> {
+  if (agentBusy) {
+    return;
+  }
   const text = input.value.trim();
   if ((!text && !pendingImages.length) || text.length > MAX_MESSAGE) {
     return;
