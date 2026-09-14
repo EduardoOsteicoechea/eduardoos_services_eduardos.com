@@ -508,29 +508,41 @@ export function companyIdFromPath(
   return decodeURIComponent(parts[1]);
 }
 
-/** Resolve company + product ids from a product detail path. */
+/** Resolve company + product ids from a product detail URL (query or legacy path). */
 export function productRefFromPath(
   pathname = window.location.pathname,
+  search = window.location.search,
 ): { companyId: string; productId: string } {
-  const parts = pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+  const path = pathname.replace(/\/+$/, "") || "/";
+  if (path === "/store/product") {
+    const params = new URLSearchParams(search);
+    return {
+      companyId: (params.get("company") || "").trim(),
+      productId: (params.get("id") || "").trim(),
+    };
+  }
+  const parts = path.split("/").filter(Boolean);
   if (parts[0] !== "store" || parts.length < 3) return { companyId: "", productId: "" };
   const companyId = decodeURIComponent(parts[1]);
   const productId = decodeURIComponent(parts[2]);
-  if (!companyId || !productId || productId === "cart" || productId === "company") {
+  if (!companyId || !productId || productId === "cart" || productId === "company" || companyId === "product") {
     return { companyId: "", productId: "" };
   }
   return { companyId, productId };
 }
 
-/** Clean, stable storefront URLs served by nginx rewrites to the static shells. */
+/**
+ * Storefront URLs use query strings so the static shells resolve through the
+ * generic nginx try_files (no per-route rewrites required).
+ */
 export function companyStoreHref(companyId: string): string {
-  return `/store/${encodeURIComponent(companyId)}`;
+  return `/store/company?id=${encodeURIComponent(companyId)}`;
 }
 
 export function companyCartHref(companyId: string): string {
-  return `/store/${encodeURIComponent(companyId)}/cart`;
+  return `/store/company/cart?id=${encodeURIComponent(companyId)}`;
 }
 
 export function companyProductHref(companyId: string, productId: string): string {
-  return `/store/${encodeURIComponent(companyId)}/${encodeURIComponent(productId)}`;
+  return `/store/product?company=${encodeURIComponent(companyId)}&id=${encodeURIComponent(productId)}`;
 }

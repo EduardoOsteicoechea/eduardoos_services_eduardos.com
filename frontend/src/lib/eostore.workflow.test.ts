@@ -151,10 +151,10 @@ describe("validateProductInput", () => {
 });
 
 describe("storefront routes", () => {
-  it("builds clean URLs", () => {
-    expect(companyStoreHref("acme")).toBe("/store/acme");
-    expect(companyCartHref("acme")).toBe("/store/acme/cart");
-    expect(companyProductHref("acme", "beach-towel")).toBe("/store/acme/beach-towel");
+  it("builds query URLs that resolve without nginx rewrites", () => {
+    expect(companyStoreHref("acme")).toBe("/store/company?id=acme");
+    expect(companyCartHref("acme")).toBe("/store/company/cart?id=acme");
+    expect(companyProductHref("acme", "beach-towel")).toBe("/store/product?company=acme&id=beach-towel");
   });
   it("parses company from clean and query paths", () => {
     expect(companyIdFromPath("/store/acme", "")).toBe("acme");
@@ -163,6 +163,10 @@ describe("storefront routes", () => {
     expect(companyIdFromPath("/articles/read", "?id=x")).toBe("");
   });
   it("parses a product reference", () => {
+    expect(productRefFromPath("/store/product", "?company=acme&id=beach-towel")).toEqual({
+      companyId: "acme",
+      productId: "beach-towel",
+    });
     expect(productRefFromPath("/store/acme/beach-towel")).toEqual({ companyId: "acme", productId: "beach-towel" });
     expect(productRefFromPath("/store/acme/cart")).toEqual({ companyId: "", productId: "" });
     expect(productRefFromPath("/store/acme")).toEqual({ companyId: "", productId: "" });

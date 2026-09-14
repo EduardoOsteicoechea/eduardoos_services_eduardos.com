@@ -581,3 +581,102 @@
   border-radius: var(--border-radius);
 }
 
+.shop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.shop-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.shop-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: center;
+}
+
+.shop-track {
+  display: flex;
+  gap: var(--rail-gap);
+  padding-bottom: var(--rail-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+.shop-card {
+  display: flex;
+  flex: 0 0 16rem;
+  flex-direction: column;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  scroll-snap-align: start;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.shop-card:hover,
+.shop-card:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.shop-card-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--color-bg);
+}
+
+.shop-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shop-card-placeholder {
+  font-size: var(--font-size-3xl);
+  color: var(--color-muted);
+}
+
+.shop-card-media .eostore-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.shop-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+}
+
+.shop-card-title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.shop-card-price {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.shop-card-bs {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
