@@ -1,16 +1,19 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path"
 	"sort"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -91,6 +94,63 @@ func (a *App) canAccessEvoiceOwner(r *http.Request, caller *User, ownerSafe stri
 		return true
 	}
 	return caller.ID == strings.TrimSpace(ownerSafe)
+}
+
+// ensureEvoiceProjectMeta records (or refreshes) the project document so an
+// implicitly created project (first upload/paste/crawl) still appears in lists.
+func (a *App) ensureEvoiceProjectMeta(ctx context.Context, owner, project string) {
+	now := time.Now().UTC()
+	doc := &evoiceProjectDoc{
+		ID:        randomID(12),
+		UserID:    owner,
+		Name:      project,
+		CreatedAt: now,
+		UpdatedAt: now,
+	}
+	if existing, err := a.evoiceMeta.GetProject(ctx, owner, project); err == nil && existing != nil {
+		doc.ID = existing.ID
+		doc.CreatedAt = existing.CreatedAt
+	}
+	_ = a.evoiceMeta.UpsertProject(ctx, doc)
+}
+
+// evoiceIsPublicIP blocks loopback, private, link-local, unspecified, and
+// multicast addresses so the URL crawler cannot reach the VPS or its network.
+func evoiceIsPublicIP(ip net.IP) bool {
+	if ip == nil {
+		return false
+	}
+	if ip.IsLoopback() || ip.IsPrivate() || ip.IsUnspecified() ||
+		ip.IsLinkLocalUnicast() || ip.IsLinkLocalMulticast() || ip.IsMulticast() {
+		return false
+	}
+	return true
+}
+
+// evoiceSafeHTTPClient validates the resolved address at dial time, which also
+// defeats DNS-rebinding (the name is resolved once, then dialed).
+func evoiceSafeHTTPClient() *http.Client {
+	dialer := &net.Dialer{
+		Timeout: 10 * time.Second,
+		Control: func(_, address string, _ syscall.RawConn) error {
+			host, _, err := net.SplitHostPort(address)
+			if err != nil {
+				return err
+			}
+			if !evoiceIsPublicIP(net.ParseIP(host)) {
+				return fmt.Errorf("evoice crawl: blocked non-public address")
+			}
+			return nil
+		},
+	}
+	return &http.Client{
+		Timeout: 20 * time.Second,
+		Transport: &http.Transport{
+			DialContext:           dialer.DialContext,
+			TLSHandshakeTimeout:   10 * time.Second,
+			ResponseHeaderTimeout: 15 * time.Second,
+		},
+	}
 }
 
 func (a *App) evoiceGetMe(w http.ResponseWriter, r *http.Request) {
@@ -197,25 +257,11 @@ func (a *App) evoiceCreateProject(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	now := time.Now().UTC()
-	doc := &evoiceProjectDoc{
-		ID:        randomID(12),
-		UserID:    owner,
-		Name:      name,
-		CreatedAt: now,
-		UpdatedAt: now,
-	}
-	if existing, err := a.evoiceMeta.GetProject(r.Context(), owner, name); err == nil && existing != nil {
-		doc.ID = existing.ID
-		doc.CreatedAt = existing.CreatedAt
-	}
-	if err := a.evoiceMeta.UpsertProject(r.Context(), doc); err != nil {
-		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-		return
-	}
+	a.ensureEvoiceProjectMeta(r.Context(), owner, name)
 	if a.cfg.MustLog {
 		a.log.Info("evoice.projects.create", "owner", owner, "project", name)
 	}
+	a.auditEvent(r, "evoice_project_create", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{
 		"ownerSafe": owner,
 		"project":   name,
@@ -239,6 +285,10 @@ func (a *App) evoiceDeleteProject(w http.ResponseWriter, r *http.Request) {
 	}
 	_ = a.evoiceMeta.DeleteProject(r.Context(), owner, project)
 	_ = a.evoiceFS.removeProject(owner, project)
+	if a.cfg.MustLog {
+		a.log.Info("evoice.projects.delete", "owner", owner, "project", project)
+	}
+	a.auditEvent(r, "evoice_project_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"deleted": true})
 }
 
@@ -320,6 +370,7 @@ func (a *App) evoiceUploadDoc(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.ensureEvoiceProjectMeta(r.Context(), owner, project)
 	if err := a.evoiceFS.putFile(owner, project, "docs", name, body); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -327,6 +378,7 @@ func (a *App) evoiceUploadDoc(w http.ResponseWriter, r *http.Request) {
 	if a.cfg.MustLog {
 		a.log.Info("evoice.docs.upload", "owner", owner, "project", project, "name", name, "bytes", len(body))
 	}
+	a.auditEvent(r, "evoice_doc_upload", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{
 		"ownerSafe": owner,
 		"project":   project,
@@ -373,11 +425,16 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.ensureEvoiceProjectMeta(r.Context(), owner, project)
 	raw := []byte(text)
 	if err := a.evoiceFS.putFile(owner, project, "docs", name, raw); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.docs.paste", "owner", owner, "project", project, "name", name, "bytes", len(raw))
+	}
+	a.auditEvent(r, "evoice_doc_paste", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{
 		"ownerSafe": owner,
 		"project":   project,
@@ -389,7 +446,7 @@ func (a *App) evoicePasteDocText(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
-	user := a.requireEvoiceUser(w, r)
+	user := a.requireEvoiceUnsafe(w, r)
 	if user == nil {
 		return
 	}
@@ -416,13 +473,16 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	client := &http.Client{Timeout: 20 * time.Second}
+	client := evoiceSafeHTTPClient()
 	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, parsed.String(), nil)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	req.Header.Set("User-Agent", "eduardoos-evoice-crawler/1.0")
+	if a.cfg.MustLog {
+		a.log.Info("evoice.docs.crawl.start", "owner", owner, "project", project, "host", parsed.Hostname())
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadGateway, "upstream_error")
@@ -460,11 +520,16 @@ func (a *App) evoiceCrawlDocURL(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.ensureEvoiceProjectMeta(r.Context(), owner, project)
 	raw := []byte(text)
 	if err := a.evoiceFS.putFile(owner, project, "docs", name, raw); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.docs.crawl", "owner", owner, "project", project, "name", name, "bytes", len(raw))
+	}
+	a.auditEvent(r, "evoice_doc_crawl", "ok", user.ID)
 	preview := text
 	if len(preview) > 280 {
 		preview = preview[:280] + "…"
@@ -546,6 +611,10 @@ func (a *App) evoiceDeleteDoc(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.docs.delete", "owner", owner, "project", project, "name", name)
+	}
+	a.auditEvent(r, "evoice_doc_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"deleted": true, "key": evoiceRelKey(owner, project, "docs", name)})
 }
 
@@ -573,6 +642,10 @@ func (a *App) evoiceDeleteAudio(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.audios.delete", "owner", owner, "project", project, "name", name)
+	}
+	a.auditEvent(r, "evoice_audio_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"deleted": true, "key": evoiceRelKey(owner, project, "audios", name)})
 }
 
@@ -718,6 +791,10 @@ func (a *App) evoiceStopJob(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.job.stop", "job_id", jobID, "owner", job.Owner, "project", job.Project)
+	}
+	a.auditEvent(r, "evoice_job_stop", "ok", user.ID)
 	writeJSON(w, http.StatusOK, stopped)
 }
 
@@ -756,6 +833,10 @@ func (a *App) evoiceResumeJob(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.job.resume", "job_id", newID, "from", jobID, "owner", job.Owner, "project", job.Project, "files", len(files))
+	}
+	a.auditEvent(r, "evoice_job_resume", "ok", user.ID)
 	writeJSON(w, http.StatusAccepted, map[string]any{
 		"jobId":          newID,
 		"premium":        opts.PremiumCompat(),
@@ -771,7 +852,7 @@ func (a *App) evoiceInviteLandingURL(token string) string {
 	if base == "" {
 		base = "https://eduardoos.com"
 	}
-	return base + "/evoice/invite/?token=" + url.QueryEscape(strings.TrimSpace(token))
+	return base + "/evoice/invite?token=" + url.QueryEscape(strings.TrimSpace(token))
 }
 
 func (a *App) evoiceCreatePlaylistShare(w http.ResponseWriter, r *http.Request) {
@@ -944,10 +1025,7 @@ func (a *App) evoiceAcceptPlaylistShareInvite(w http.ResponseWriter, r *http.Req
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	now := time.Now().UTC()
-	_ = a.evoiceMeta.UpsertProject(r.Context(), &evoiceProjectDoc{
-		ID: randomID(12), UserID: invitee, Name: project, CreatedAt: now, UpdatedAt: now,
-	})
+	a.ensureEvoiceProjectMeta(r.Context(), invitee, project)
 	existing, _ := a.evoiceFS.listKind(invitee, project, "audios")
 	taken := map[string]bool{}
 	for _, o := range existing {
@@ -975,6 +1053,10 @@ func (a *App) evoiceAcceptPlaylistShareInvite(w http.ResponseWriter, r *http.Req
 		taken[destName] = true
 		imported = append(imported, destName)
 	}
+	if a.cfg.MustLog {
+		a.log.Info("evoice.share.accept", "owner", share.OwnerSafe, "project", share.Project, "invitee", invitee, "imported", len(imported))
+	}
+	a.auditEvent(r, "evoice_share_accept", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"project":  project,
 		"imported": imported,

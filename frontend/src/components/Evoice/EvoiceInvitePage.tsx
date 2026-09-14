@@ -12,10 +12,10 @@ import {
   type EvoiceShareInvite,
 } from "../../lib/evoice";
 import { getAuthToken } from "../../lib/auth";
+import { sessionLog } from "../../lib/dev-log";
 import { openServerErrorModal } from "../ServerErrorModal/ServerErrorModal";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import ServiceGate from "../ServiceGate/ServiceGate";
-import "./Evoice.css";
 
 function readInviteToken(): string {
   if (typeof window === "undefined") return "";
@@ -54,6 +54,7 @@ export default function EvoiceInvitePage() {
       return;
     }
     let cancelled = false;
+    sessionLog("evoice.invite.load.start", { hasToken: Boolean(token) });
     (async () => {
       setLoading(true);
       try {
@@ -109,8 +110,13 @@ export default function EvoiceInvitePage() {
     }
     setBusy(true);
     setDoneMsg("");
+    sessionLog("evoice.invite.import.start", { project: target });
     try {
       const res = await acceptEvoicePlaylistInvite(token, target);
+      sessionLog("evoice.invite.import.done", {
+        project: res.project,
+        imported: res.imported.length,
+      });
       const renameNote =
         Object.keys(res.renamed).length > 0
           ? ` Renamed: ${Object.entries(res.renamed)

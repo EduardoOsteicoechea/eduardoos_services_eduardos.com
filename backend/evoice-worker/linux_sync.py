@@ -168,13 +168,16 @@ def deepseek_system_for(pct: int) -> str:
 
 
 def list_stem_audios(audios_dir: Path, stem: str) -> list[Path]:
+    """Every MP3 belonging to a stem: legacy mono, versioned mono, and chapters."""
     out: list[Path] = []
-    mono = audios_dir / f"{stem}.mp3"
-    if mono.is_file():
-        out.append(mono)
-    prefix = f"{stem}.c"
+    if not audios_dir.is_dir():
+        return out
     for p in audios_dir.iterdir():
-        if p.is_file() and p.name.startswith(prefix) and p.suffix.lower() == ".mp3":
+        if not p.is_file() or p.suffix.lower() != ".mp3":
+            continue
+        m = VERSION_AUDIO_RE.match(p.name)
+        base = m.group("stem") if m else p.stem
+        if base == stem:
             out.append(p)
     return out
 
@@ -184,16 +187,16 @@ def needs_regen_stem(doc: Path, audios_dir: Path, stem: str, *, premium: bool) -
     if not existing:
         return True
     if premium:
-        # Premium expects chapter files; a lone legacy stem.mp3 means regenerate.
-        chapters = [p for p in existing if f"{stem}.c" in p.name]
+        # Premium expects chapter files; a lone mono file means regenerate.
+        chapters = [p for p in existing if re.search(r"\.c\d+-", p.name)]
         if not chapters:
             return True
         newest_audio = max(p.stat().st_mtime for p in chapters)
     else:
-        mono = audios_dir / f"{stem}.mp3"
-        if not mono.is_file():
+        mono = [p for p in existing if not re.search(r"\.c\d+-", p.name)]
+        if not mono:
             return True
-        newest_audio = mono.stat().st_mtime
+        newest_audio = max(p.stat().st_mtime for p in mono)
     return doc.stat().st_mtime > newest_audio
 
 
@@ -889,6 +892,11 @@ def sync_project(
         return stats
     for idx, doc in enumerate(docs, start=1):
         stem = doc.stem
+        if not needs_regen_stem(doc, audios_dir, stem, premium=use_deepseek):
+            stats["skipped"] += 1
+            log(f"FILE {doc.name} state=skipped")
+            log(f"skip   {doc.name} (already up to date)")
+            continue
         log(f"FILE {doc.name} state=active")
         log(f"STEP convert doc={idx}/{len(docs)} file={doc.name}")
         ver = next_audio_version(audios_dir, stem)

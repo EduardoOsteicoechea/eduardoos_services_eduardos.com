@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"mime/multipart"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -158,6 +159,43 @@ func TestEvoiceDenyWithoutEntitlement(t *testing.T) {
 	rec := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/evoice/me", "")
 	if rec.Code != http.StatusForbidden {
 		t.Fatalf("expected forbidden, got %d %s", rec.Code, rec.Body.String())
+	}
+}
+
+func TestEvoiceCrawlBlocksNonPublicIPs(t *testing.T) {
+	blocked := []string{"127.0.0.1", "10.0.0.1", "172.16.0.9", "192.168.1.1", "169.254.169.254", "::1", "0.0.0.0", "fe80::1"}
+	for _, raw := range blocked {
+		if evoiceIsPublicIP(net.ParseIP(raw)) {
+			t.Fatalf("expected %s to be blocked", raw)
+		}
+	}
+	allowed := []string{"8.8.8.8", "1.1.1.1", "2606:4700:4700::1111"}
+	for _, raw := range allowed {
+		if !evoiceIsPublicIP(net.ParseIP(raw)) {
+			t.Fatalf("expected %s to be allowed", raw)
+		}
+	}
+}
+
+func TestEvoiceImplicitProjectAppearsInList(t *testing.T) {
+	app := newEvoiceTestApp(t)
+	ctx := context.Background()
+	if err := app.evoiceFS.ensureProject("member-1", "implicit"); err != nil {
+		t.Fatal(err)
+	}
+	app.ensureEvoiceProjectMeta(ctx, "member-1", "implicit")
+	docs, err := app.evoiceMeta.ListProjects(ctx, "member-1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, d := range docs {
+		if d.Name == "implicit" {
+			found = true
+		}
+	}
+	if !found {
+		t.Fatalf("implicitly created project missing from list: %+v", docs)
 	}
 }
 

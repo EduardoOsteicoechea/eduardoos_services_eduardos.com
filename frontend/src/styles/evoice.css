@@ -9,24 +9,44 @@
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  --evoice-section-body-max: 600px;
+  --evoice-section-body-max: 37.5rem;
 }
 
 .evoice__toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
   gap: 1rem;
   align-items: end;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .evoice__toolbar {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .evoice__create {
-  display: contents;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.evoice__create .evoice__field--grow {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.evoice__create-btn {
+  flex: 0 0 auto;
+}
+
+.evoice__field-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
 }
 
 .evoice__field {
@@ -85,7 +105,7 @@
 }
 
 .evoice__section-clip {
-  max-height: var(--evoice-section-body-max, 600px);
+  max-height: var(--evoice-section-body-max, 37.5rem);
   overflow: hidden;
 }
 
@@ -104,11 +124,77 @@
   font-size: 0.85rem;
 }
 
+/* First-run onboarding when no project is selected */
+.evoice__onboarding {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-text) 8%);
+  box-shadow: 0 0.125rem 0.5rem color-mix(in srgb, #000 18%, transparent);
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.evoice__onboarding-title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.evoice__onboarding-lead {
+  margin: 0;
+  max-width: 42rem;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.evoice__onboarding-steps {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.evoice__onboarding-steps li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+}
+
+.evoice__onboarding-steps .material-symbols-outlined {
+  color: var(--color-accent);
+  font-size: var(--icon-size);
+  line-height: 1;
+}
+
+.evoice__onboarding-steps li > span:last-child {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.evoice__onboarding-steps strong {
+  font-size: var(--font-size-md);
+}
+
+.evoice__onboarding-steps em {
+  font-style: normal;
+  font-size: var(--font-size-sm);
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
 /* Collapsible sections */
 .evoice__section {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  background: color-mix(in srgb, var(--color-surface)) 92%, var(--color-text) 8%);
+  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-text) 8%);
+  box-shadow: 0 0.125rem 0.5rem color-mix(in srgb, #000 18%, transparent);
+  overflow: hidden;
 }
 
 .evoice__section-head-row {
@@ -210,7 +296,7 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 56.25rem) {
   .evoice__docs-console:not(.evoice__docs-console--solo) {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     align-items: start;
@@ -408,9 +494,9 @@
   padding: 1rem 1.1rem 1.15rem;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  background: var(--color-surface));
+  background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 12px 40px color-mix(in srgb, #000 35%, transparent);
+  box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, #000 35%, transparent);
 }
 
 .evoice__modal-head {
@@ -571,7 +657,7 @@
 .evoice__version-block {
   margin-left: 0.5rem;
   padding-left: 0.65rem;
-  border-left: 2px solid color-mix(in srgb, var(--color-accent) 35%, var(--site-border, #ccc));
+  border-left: 0.125rem solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
   margin-bottom: 0.55rem;
 }
 
@@ -657,7 +743,7 @@
 
 .evoice__icon-btn--accent {
   color: var(--color-accent);
-  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--site-border, #ccc));
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
 }
 
 .evoice__icon-btn--accent:hover:not(:disabled) {
@@ -666,12 +752,12 @@
 }
 
 .evoice__icon-btn--danger {
-  color: var(--site-danger, #b42318);
+  color: var(--color-err, #b42318);
 }
 
 .evoice__icon-btn--danger:hover:not(:disabled) {
-  border-color: var(--site-danger, #b42318);
-  background: color-mix(in srgb, var(--site-danger, #b42318) 10%, transparent);
+  border-color: var(--color-err, #b42318);
+  background: color-mix(in srgb, var(--color-err, #b42318) 10%, transparent);
 }
 
 .evoice__icon-btn:disabled {

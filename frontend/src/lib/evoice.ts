@@ -266,8 +266,8 @@ export async function pasteEvoiceDocText(
 }
 
 /**
- * URL crawl — original client path. Current Go mux has no crawl handler;
- * failures surface as API errors for the UI.
+ * URL crawl — server-side fetch of a public URL converted to a docs text file.
+ * The Go API enforces CSRF and blocks private/loopback addresses (SSRF guard).
  */
 export async function crawlEvoiceDocURL(
   ownerSafe: string,

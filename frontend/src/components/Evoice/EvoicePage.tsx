@@ -40,10 +40,10 @@ import {
   type EvoiceObjectMeta,
 } from "../../lib/evoice";
 import { getAuthToken } from "../../lib/auth";
+import { sessionLog } from "../../lib/dev-log";
 import { openServerErrorModal } from "../ServerErrorModal/ServerErrorModal";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
-import "./Evoice.css";
 
 /** Left → right: 5% … 100% (full content = slider right). */
 const CONTENT_PERCENTS = [5, 10, 25, 50, 75, 100] as const;
@@ -545,10 +545,12 @@ function EvoiceWorkspace() {
   const reloadProjects = useCallback(async (owner: string) => {
     const res = await fetchEvoiceProjects(owner);
     if (res.error) {
+      sessionLog("evoice.projects.error", { owner, error: res.error, requestId: res.requestId });
       showError("eVoice projects", res.error);
       setProjects([]);
       return;
     }
+    sessionLog("evoice.projects.loaded", { owner, count: res.projects.length });
     setProjects(res.projects);
     if (res.projects.length === 0) {
       setProject("");
@@ -594,6 +596,7 @@ function EvoiceWorkspace() {
 
   useEffect(() => {
     let cancelled = false;
+    sessionLog("evoice.workspace.mount");
     void (async () => {
       const me = await fetchEvoiceMe();
       if (cancelled) return;
@@ -882,12 +885,15 @@ function EvoiceWorkspace() {
     const name = newProject.trim();
     if (!name || busy) return;
     setBusy(true);
+    sessionLog("evoice.project.create.start", { name, isAdmin });
     const res = await createEvoiceProject(name, isAdmin ? ownerSafe : undefined);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.project.create.error", { name, error: res.error });
       showError("eVoice", res.error);
       return;
     }
+    sessionLog("evoice.project.create.done", { name: res.project });
     setNewProject("");
     setProject(res.project);
     await reloadProjects(res.ownerSafe || ownerSafe);
@@ -898,12 +904,15 @@ function EvoiceWorkspace() {
     ev.target.value = "";
     if (!file || !ownerSafe || !project || busy) return;
     setBusy(true);
+    sessionLog("evoice.doc.upload.start", { ownerSafe, project, name: file.name, bytes: file.size });
     const res = await uploadEvoiceDoc(ownerSafe, project, file);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.doc.upload.error", { name: file.name, error: res.error });
       showError("eVoice", res.error);
       return;
     }
+    sessionLog("evoice.doc.upload.done", { name: res.name });
     await reloadDocsAudios(ownerSafe, project);
   }
 
@@ -912,12 +921,15 @@ function EvoiceWorkspace() {
     const text = pasteText.trim();
     if (!text || !ownerSafe || !project || busy) return;
     setBusy(true);
+    sessionLog("evoice.doc.paste.start", { ownerSafe, project, chars: text.length });
     const res = await pasteEvoiceDocText(ownerSafe, project, text);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.doc.paste.error", { error: res.error });
       showError("eVoice", res.error);
       return;
     }
+    sessionLog("evoice.doc.paste.done", { name: res.name });
     setPasteText("");
     await reloadDocsAudios(ownerSafe, project);
   }
@@ -927,12 +939,15 @@ function EvoiceWorkspace() {
     const url = crawlUrl.trim();
     if (!url || !ownerSafe || !project || busy) return;
     setBusy(true);
+    sessionLog("evoice.doc.crawl.start", { ownerSafe, project, url });
     const res = await crawlEvoiceDocURL(ownerSafe, project, url);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.doc.crawl.error", { url, error: res.error });
       showError("Crawl", res.error);
       return;
     }
+    sessionLog("evoice.doc.crawl.done", { name: res.name });
     setCrawlUrl("");
     await reloadDocsAudios(ownerSafe, project);
   }
@@ -943,12 +958,15 @@ function EvoiceWorkspace() {
       return;
     }
     setBusy(true);
+    sessionLog("evoice.doc.delete.start", { name });
     const res = await deleteEvoiceDoc(ownerSafe, project, name);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.doc.delete.error", { name, error: res.error });
       showError("eVoice", res.error);
       return;
     }
+    sessionLog("evoice.doc.delete.done", { name });
     setSelectedDocs((prev) => prev.filter((n) => n !== name));
     setFileProgress((prev) => prev.filter((f) => f.name !== name));
     await reloadDocsAudios(ownerSafe, project);
@@ -958,12 +976,15 @@ function EvoiceWorkspace() {
     if (!ownerSafe || !project || busy) return;
     if (!window.confirm(`Delete audio ${mp3Name}?`)) return;
     setBusy(true);
+    sessionLog("evoice.audio.delete.start", { name: mp3Name });
     const res = await deleteEvoiceAudio(ownerSafe, project, mp3Name);
     setBusy(false);
     if (res.error) {
+      sessionLog("evoice.audio.delete.error", { name: mp3Name, error: res.error });
       showError("eVoice", res.error);
       return;
     }
+    sessionLog("evoice.audio.delete.done", { name: mp3Name });
     await reloadDocsAudios(ownerSafe, project);
   }
 
@@ -1020,10 +1041,17 @@ function EvoiceWorkspace() {
       pct,
     );
     if (started.error || !started.jobId) {
+      sessionLog("evoice.generate.error", { mode, pct, error: started.error });
       setBusy(false);
       showError("Generate", started.error || "Could not start generate");
       return;
     }
+    sessionLog("evoice.generate.start", {
+      mode,
+      contentPercent: pct,
+      files: targets?.length ?? "all",
+      jobId: started.jobId,
+    });
     setActiveJobId(started.jobId);
     const outcome = await pollUntilDone(
       started.jobId,
@@ -1033,6 +1061,7 @@ function EvoiceWorkspace() {
       mode,
       pct,
     );
+    sessionLog("evoice.generate.outcome", { jobId: started.jobId, outcome });
     setBusy(false);
     if (outcome === "stopped") setJobStopped(true);
     await reloadDocsAudios(ownerSafe, project);
@@ -1041,6 +1070,7 @@ function EvoiceWorkspace() {
   async function onStopGenerate() {
     if (!activeJobId) return;
     stopRequestedRef.current = true;
+    sessionLog("evoice.generate.stop", { jobId: activeJobId });
     setLogs((prev) => [...prev, "stop: requesting cancel…"]);
     const res = await stopEvoiceJob(activeJobId);
     if (res.error) {
@@ -1063,6 +1093,7 @@ function EvoiceWorkspace() {
     setBusy(true);
     setJobStopped(false);
     stopRequestedRef.current = false;
+    sessionLog("evoice.generate.resume", { jobId: activeJobId });
     setLogs((prev) => [...prev, "resume: continuing unfinished files…"]);
     const resumed = await resumeEvoiceJob(activeJobId);
     if (resumed.error || !resumed.jobId) {
@@ -1210,6 +1241,7 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
   }
 
   function toggleWorkspaceCollapsed() {
+    sessionLog("evoice.workspace.toggleCollapse", { collapsed: !workspaceCollapsed });
     setWorkspaceCollapsed((collapsed) => {
       if (!collapsed) {
         sectionOpenBeforeCollapse.current = {
@@ -1251,6 +1283,7 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
     setShareBusy(true);
     setShareLink("");
     setShareNote("");
+    sessionLog("evoice.share.start", { email, checked: checkedTracks.size });
     try {
       const files = shareTrackNames();
       const { link, invite } = await createEvoicePlaylistShare(
@@ -1482,8 +1515,8 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
           className="evoice__section--project"
         >
           <div className="evoice__toolbar">
-            <label className="evoice__field evoice__field--twin">
-              <span>Project</span>
+            <label className="evoice__field">
+              <span className="evoice__field-label">Current project</span>
               <select
                 className="evoice__select"
                 value={project}
@@ -1491,7 +1524,7 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                 disabled={!projects.length}
               >
                 {projects.length === 0 ? (
-                  <option value="">No projects yet</option>
+                  <option value="">No projects yet — create one</option>
                 ) : (
                   projects.map((p) => (
                     <option key={p} value={p}>
@@ -1502,8 +1535,8 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
               </select>
             </label>
             <form className="evoice__create" onSubmit={onCreateProject}>
-              <label className="evoice__field evoice__field--twin">
-                <span>New project</span>
+              <label className="evoice__field evoice__field--grow">
+                <span className="evoice__field-label">New project</span>
                 <input
                   className="evoice__input"
                   value={newProject}
@@ -1513,12 +1546,55 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                   required
                 />
               </label>
-              <button type="submit" className="btn btn--primary" disabled={busy}>
+              <button
+                type="submit"
+                className="btn btn--primary evoice__create-btn"
+                disabled={busy}
+              >
                 Create
               </button>
             </form>
           </div>
         </CollapsibleSection>
+
+        {!project ? (
+          <section className="evoice__onboarding" aria-label="Get started with eVoice">
+            <h2 className="evoice__onboarding-title">Turn documents into audio</h2>
+            <p className="evoice__onboarding-lead">
+              Create a project, add source documents, then generate MP3s you can
+              play or share.
+            </p>
+            <ol className="evoice__onboarding-steps">
+              <li>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  create_new_folder
+                </span>
+                <span>
+                  <strong>Create a project</strong>
+                  <em>Pick a short name for this audio collection.</em>
+                </span>
+              </li>
+              <li>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  upload_file
+                </span>
+                <span>
+                  <strong>Add documents</strong>
+                  <em>Upload a file, paste text, or crawl a URL (PDF, DOCX, TXT, images).</em>
+                </span>
+              </li>
+              <li>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  graphic_eq
+                </span>
+                <span>
+                  <strong>Generate and play</strong>
+                  <em>Choose quality and content length, then listen or share a playlist.</em>
+                </span>
+              </li>
+            </ol>
+          </section>
+        ) : null}
 
         {project ? (
           <>
