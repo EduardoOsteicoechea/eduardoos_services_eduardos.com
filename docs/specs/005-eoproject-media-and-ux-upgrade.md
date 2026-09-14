@@ -4,7 +4,7 @@ Target product: `eduardoos.com` (backend `eduardoos.com/backend`, frontend `edua
 
 ## Decisions
 
-1. **WebP conversion**: performed **on the server in Go** using a pure-Go WebP encoder (`github.com/chai2010/webp`, no cgo/native dependency). Uploaded JPEG/PNG/WebP photos are decoded, optionally downscaled, and re-encoded to a smaller `.webp` before storage. Original bytes are not retained.
+1. **WebP conversion**: performed **on the server in Go** using a cgo-free WebP encoder (`github.com/gen2brain/webp`, libwebp transpiled to pure Go via wasm2go). Uploaded JPEG/PNG/WebP photos are decoded, optionally downscaled, and re-encoded to a smaller lossy `.webp` before storage. Original bytes are not retained.
 2. **Video**: accept up to 10 minutes of 4K video, stored as-is with a **streaming** upload and **no transcoding**. Serving uses HTTP Range for seeking.
 3. **Tags**: a single short label rendered **above each image** (caption-style), editable by the owner, read-only on invite pages.
 4. **Documents**: multiple documents may be attached to a photo; generic file types with a size cap.
@@ -33,7 +33,7 @@ Target product: `eduardoos.com` (backend `eduardoos.com/backend`, frontend `edua
 
 ### Photo → WebP conversion (`eoproject_http.go` + `go.mod`)
 
-- Add dependency `github.com/chai2010/webp`.
+- Add dependency `github.com/gen2brain/webp` (cgo-free, required because CI builds with `CGO_ENABLED=0`).
 - In `eoprojectUploadPhoto`: keep JPEG/PNG/WebP input validation, decode to `image.Image` (stdlib), optionally downscale to a max edge, encode with `webp.Encode` at a configurable quality (e.g. 82), and store the result with `.webp` extension and `image/webp` content type. If encoding fails, fail the upload rather than silently storing the original.
 
 ### Config (`config.go`, `app.go`)
@@ -66,7 +66,7 @@ Target product: `eduardoos.com` (backend `eduardoos.com/backend`, frontend `edua
 
 ## Risks / notes
 
-- `chai2010/webp` is pure Go and avoids native build deps, but is slower than libvips; acceptable at the current photo size cap (12 MiB).
+- `gen2brain/webp` avoids native build deps (works under `CGO_ENABLED=0`) but is slower than libvips; acceptable at the current photo size cap (12 MiB).
 - HEIC/HEIF input remains unsupported (Go stdlib cannot decode it).
 - Large video files imply high disk usage; consider lifecycle cleanup and quotas later.
 - Files larger than a single Nginx request may need chunked/resumable upload in the future.

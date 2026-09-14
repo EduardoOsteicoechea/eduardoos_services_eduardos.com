@@ -8,7 +8,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/chai2010/webp"
+	"github.com/gen2brain/webp"
 	"golang.org/x/image/draw"
 )
 
@@ -30,7 +30,7 @@ func eoprojectToWebp(data []byte, mime string) ([]byte, error) {
 	}
 	src = downscaleEoprojectImage(src, eoprojectMaxPhotoEdge)
 	var buf bytes.Buffer
-	if err := webp.Encode(&buf, src, &webp.Options{Lossless: false, Quality: eoprojectWebpQuality}); err != nil {
+	if err := webp.Encode(&buf, src, webp.Options{Quality: eoprojectWebpQuality}); err != nil {
 		return nil, err
 	}
 	return buf.Bytes(), nil
