@@ -202,7 +202,7 @@ func (c openAICompatClient) completeWith(ctx context.Context, system string, his
 
 	resp, err := c.http.Do(req)
 	if err != nil {
-		return ChatResult{}, fmt.Errorf("provider unavailable")
+		return ChatResult{}, fmt.Errorf("provider request failed: %w", err)
 	}
 	defer resp.Body.Close()
 	raw, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
