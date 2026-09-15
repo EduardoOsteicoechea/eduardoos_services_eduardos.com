@@ -144,42 +144,17 @@
   margin-top: var(--space-padding);
 }
 
-.eocode-files {
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  padding: var(--rail-gap);
-  background: var(--color-surface);
-}
-
-.eocode-files summary {
-  cursor: pointer;
-  font-size: var(--font-size-sm);
-  color: var(--color-muted);
-}
-
-.eocode-files ul {
-  margin: var(--rail-gap) 0 0;
+.eocode-send {
+  width: var(--button-size);
+  min-width: var(--button-size);
+  height: var(--button-size);
+  min-height: var(--button-size);
   padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--rail-gap) * 0.5);
-  max-height: 12rem;
-  overflow-y: auto;
+  border-radius: var(--border-radius);
 }
 
-.eocode-file {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--rail-gap) * 0.5);
-  font-size: var(--font-size-xs);
-  color: var(--color-muted);
-  overflow-wrap: anywhere;
-}
-
-.eocode-file .material-symbols-outlined {
-  font-size: var(--font-size-md);
-  flex-shrink: 0;
+.eocode-send:disabled {
+  opacity: 0.5;
 }
 
 .eocode-frame {

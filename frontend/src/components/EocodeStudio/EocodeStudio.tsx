@@ -7,7 +7,6 @@ import {
   identifyEocode,
   uploadEocodeAsset,
   validateEocode,
-  type EocodeFileEntry,
 } from "../../lib/eocode";
 import { renderMarkdown } from "../../lib/markdown";
 import {
@@ -56,8 +55,7 @@ function Markdown({ text }: { text: string }) {
 
 export default function EocodeStudio() {
   const [access, setAccess] = useState<AccessState>("loading");
-  const [files, setFiles] = useState<EocodeFileEntry[]>([]);
-  const [previewUrl, setPreviewUrl] = useState("/api/eocode/preview/index.html");
+  const [previewUrl, setPreviewUrl] = useState("/api/eocode/preview/");
   const [previewVersion, setPreviewVersion] = useState(0);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
@@ -75,7 +73,6 @@ export default function EocodeStudio() {
   const reload = useCallback(async () => {
     const result = await fetchEocodeState();
     if (result.status === 200 && result.state) {
-      setFiles(result.state.files);
       if (result.state.preview_url) {
         setPreviewUrl(result.state.preview_url);
       }
@@ -100,8 +97,7 @@ export default function EocodeStudio() {
           setAccess("error");
           return;
         }
-        setFiles(result.state.files);
-        setPreviewUrl(result.state.preview_url || "/api/eocode/preview/index.html");
+        setPreviewUrl(result.state.preview_url || "/api/eocode/preview/");
         setAccess("ok");
       } catch {
         if (!cancelled) setAccess("error");
@@ -405,11 +401,6 @@ export default function EocodeStudio() {
                 aria-label="Mensaje"
                 placeholder="Describe el cambio o pregunta sobre tu sitio."
               />
-              <div className="agent-chat-tools">
-                <button className="icon-btn" type="submit" disabled={busy || (!draft.trim() && pendingAssets.length === 0)} aria-label="Enviar">
-                  <span className="material-symbols-outlined" aria-hidden="true">send</span>
-                </button>
-              </div>
             </div>
             <div className="agent-chat-compose-row">
               <label className="agent-chat-drop">
@@ -450,24 +441,19 @@ export default function EocodeStudio() {
                 >
                   <span className="material-symbols-outlined" aria-hidden="true">mic</span>
                 </button>
+                <button
+                  className="btn btn--primary eocode-send"
+                  type="submit"
+                  disabled={busy || (!draft.trim() && pendingAssets.length === 0)}
+                  aria-label="Enviar"
+                  title="Enviar"
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">send</span>
+                </button>
               </div>
             </div>
           </div>
         </form>
-
-        <details className="eocode-files">
-          <summary>Archivos ({files.length})</summary>
-          <ul>
-            {files.map((file) => (
-              <li key={file.path} className={`eocode-file eocode-file-${file.type}`}>
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  {file.type === "python" ? "code" : file.type === "image" ? "image" : file.type === "svg" ? "polyline" : file.type === "rule" ? "rule" : "description"}
-                </span>
-                {file.path}
-              </li>
-            ))}
-          </ul>
-        </details>
       </section>
 
       <section className="eocode-preview-pane" aria-label="Vista del sitio">
