@@ -33,6 +33,8 @@ type App struct {
 	aiSiteLimit     *limiter
 	chatIPLimit     *limiter
 	chatUserLimit   *limiter
+	eocodeIPLimit   *limiter
+	eocodeUserLimit *limiter
 	voice           *voiceManager
 	voiceSTT        STTEngine
 	voiceTTS        TTSEngine
@@ -134,6 +136,8 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
 		chatIPLimit:     newLimiter(publicChatWindow, publicChatIPMax),
 		chatUserLimit:   newLimiter(publicChatWindow, publicChatUserMax),
+		eocodeIPLimit:   newLimiter(eocodeRateWindow, eocodeIPMax),
+		eocodeUserLimit: newLimiter(eocodeRateWindow, eocodeUserMax),
 		voiceIPLimit:    newLimiter(voiceRateSpace, voiceIPMax),
 		voiceUserLimit:  newLimiter(voiceRateSpace, voiceUserMax),
 		voiceSpeakLimit: newLimiter(voiceRateSpace, voiceSpeakMax),
@@ -201,6 +205,14 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
 	mux.HandleFunc("POST /api/chat", a.publicChatHandler)
 	mux.HandleFunc("POST /api/profile/ask", a.profileAskHandler)
+
+	mux.HandleFunc("GET /api/eocode/state", a.eocodeStateHandler)
+	mux.HandleFunc("POST /api/eocode/identify", a.eocodeIdentifyHandler)
+	mux.HandleFunc("POST /api/eocode/analyze", a.eocodeAnalyzeHandler)
+	mux.HandleFunc("POST /api/eocode/edit", a.eocodeEditHandler)
+	mux.HandleFunc("POST /api/eocode/validate", a.eocodeValidateHandler)
+	mux.HandleFunc("POST /api/eocode/upload", a.eocodeUploadHandler)
+	mux.HandleFunc("GET /api/eocode/preview/{path...}", a.eocodePreviewHandler)
 
 	mux.HandleFunc("GET /api/subscriptions/catalog", a.subscriptionsCatalogHandler)
 	mux.HandleFunc("GET /api/subscriptions/entitlements", a.subscriptionsEntitlementsHandler)

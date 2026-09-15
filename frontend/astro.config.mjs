@@ -25,6 +25,7 @@ export default defineConfig({
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
         !page.includes("/eoproject") &&
+        !page.includes("/eocode") &&
         !page.includes("/eoadmin") &&
         !page.includes("/eostore") &&
         !page.includes("/store/company") &&

@@ -30,6 +30,9 @@ func (a *App) subscriptionsCatalogHandler(w http.ResponseWriter, r *http.Request
 	a.mustLogf(r, "subscriptions.catalog")
 	out := make([]map[string]any, 0, len(serviceCatalog))
 	for _, s := range serviceCatalog {
+		if s.MonthlyUSD <= 0 {
+			continue
+		}
 		out = append(out, map[string]any{
 			"id":          s.ID,
 			"label":       s.Label,
@@ -212,6 +215,13 @@ func (a *App) paymentsCreateIntentHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 	services := normalizeServiceIDs(body.Services)
+	payable := make([]string, 0, len(services))
+	for _, id := range services {
+		if payableService(id) {
+			payable = append(payable, id)
+		}
+	}
+	services = payable
 	billing := strings.ToLower(strings.TrimSpace(body.BillingPeriod))
 	if billing == "" {
 		billing = "monthly"

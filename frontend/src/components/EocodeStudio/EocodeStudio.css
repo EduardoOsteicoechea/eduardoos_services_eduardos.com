@@ -1,0 +1,192 @@
+/* eocode — agent coding studio (page surface, rem-only, shared tokens). */
+
+.eocode-gate {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  max-width: 40rem;
+}
+
+.eocode-studio {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: stretch;
+  gap: var(--rail-gap);
+  min-height: 44rem;
+}
+
+.eocode-chat-pane,
+.eocode-preview-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
+.eocode-chat-pane {
+  flex: 0 0 24rem;
+}
+
+.eocode-preview-pane {
+  flex: 1;
+}
+
+.eocode-pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+}
+
+.eocode-pane-head h1,
+.eocode-pane-head h2 {
+  margin: 0;
+}
+
+.eocode-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.eocode-log {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-padding);
+  min-height: 22rem;
+  overflow-y: auto;
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eocode-msg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  font-size: var(--font-size-sm);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+.eocode-msg-user {
+  align-self: flex-start;
+  margin-right: auto;
+  max-width: 32rem;
+  border-color: var(--color-accent);
+}
+
+.eocode-msg-assistant {
+  align-self: flex-end;
+  margin-left: auto;
+  max-width: 40rem;
+}
+
+.eocode-msg-body p,
+.eocode-msg-body ul,
+.eocode-msg-body pre {
+  margin: 0 0 var(--rail-gap);
+}
+
+.eocode-msg-body p:last-child,
+.eocode-msg-body ul:last-child,
+.eocode-msg-body pre:last-child {
+  margin-bottom: 0;
+}
+
+.eocode-msg-body pre {
+  overflow-x: auto;
+  padding: var(--rail-gap);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eocode-msg-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xs);
+}
+
+.eocode-stage {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+}
+
+.eocode-pending {
+  margin-top: var(--space-padding);
+}
+
+.eocode-files {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--rail-gap);
+  background: var(--color-surface);
+}
+
+.eocode-files summary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.eocode-files ul {
+  margin: var(--rail-gap) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rail-gap) * 0.5);
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.eocode-file {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rail-gap) * 0.5);
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}
+
+.eocode-file .material-symbols-outlined {
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
+.eocode-frame {
+  flex: 1;
+  align-self: stretch;
+  min-height: 34rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: #ffffff;
+}
+
+@media (max-width: 63.999rem) {
+  .eocode-studio {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .eocode-chat-pane {
+    flex: 0 0 auto;
+  }
+
+  .eocode-chat-pane .eocode-log {
+    min-height: 16rem;
+    max-height: 24rem;
+  }
+
+  .eocode-frame {
+    min-height: 24rem;
+  }
+}

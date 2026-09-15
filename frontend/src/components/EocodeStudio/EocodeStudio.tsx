@@ -1,0 +1,400 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  analyzeEocode,
+  editEocode,
+  fetchEocodeState,
+  identifyEocode,
+  uploadEocodeAsset,
+  validateEocode,
+  type EocodeFileEntry,
+} from "../../lib/eocode";
+import { renderMarkdown } from "../../lib/markdown";
+import "./EocodeStudio.css";
+
+type ChatRole = "user" | "assistant";
+
+type ChatMessage = {
+  id: number;
+  role: ChatRole;
+  content: string;
+  assets?: { url: string; path: string }[];
+};
+
+type AccessState = "loading" | "ok" | "signin" | "denied" | "error";
+
+function Markdown({ text }: { text: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (ref.current) {
+      renderMarkdown(text, ref.current);
+    }
+  }, [text]);
+  return <div className="eocode-msg-body" ref={ref} />;
+}
+
+export default function EocodeStudio() {
+  const [access, setAccess] = useState<AccessState>("loading");
+  const [files, setFiles] = useState<EocodeFileEntry[]>([]);
+  const [previewUrl, setPreviewUrl] = useState("/api/eocode/preview/index.html");
+  const [previewVersion, setPreviewVersion] = useState(0);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [draft, setDraft] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [stage, setStage] = useState("");
+  const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const logRef = useRef<HTMLDivElement | null>(null);
+  const nextId = useRef(1);
+
+  const reload = useCallback(async () => {
+    const result = await fetchEocodeState();
+    if (result.status === 200 && result.state) {
+      setFiles(result.state.files);
+      if (result.state.preview_url) {
+        setPreviewUrl(result.state.preview_url);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const result = await fetchEocodeState();
+        if (cancelled) return;
+        if (result.status === 401) {
+          setAccess("signin");
+          return;
+        }
+        if (result.status === 403) {
+          setAccess("denied");
+          return;
+        }
+        if (result.status !== 200 || !result.state) {
+          setAccess("error");
+          return;
+        }
+        setFiles(result.state.files);
+        setPreviewUrl(result.state.preview_url || "/api/eocode/preview/index.html");
+        setAccess("ok");
+      } catch {
+        if (!cancelled) setAccess("error");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const log = logRef.current;
+    if (log) {
+      log.scrollTop = log.scrollHeight;
+    }
+  }, [messages, stage]);
+
+  const pushMessage = useCallback((role: ChatRole, content: string, assets?: ChatMessage["assets"]) => {
+    setMessages((prev) => [...prev, { id: nextId.current++, role, content, assets }]);
+  }, []);
+
+  const patchLastAssistant = useCallback((content: string) => {
+    setMessages((prev) => {
+      const copy = [...prev];
+      for (let i = copy.length - 1; i >= 0; i -= 1) {
+        if (copy[i].role === "assistant") {
+          copy[i] = { ...copy[i], content };
+          break;
+        }
+      }
+      return copy;
+    });
+  }, []);
+
+  const onAttach = useCallback(async (list: FileList | null) => {
+    if (!list) return;
+    for (const file of Array.from(list)) {
+      const result = await uploadEocodeAsset(file);
+      if (result.ok) {
+        setPendingAssets((prev) => [...prev, { url: result.data.url, path: result.data.path }]);
+      }
+    }
+  }, []);
+
+  const send = useCallback(async () => {
+    if (busy) return;
+    const text = draft.trim();
+    if (!text && pendingAssets.length === 0) return;
+    const attached = pendingAssets;
+    setPendingAssets([]);
+    setDraft("");
+    const message = text || "Revisa las imagenes que adjunte.";
+    const withAssets = attached.length
+      ? `${message}\n\n[Imagenes subidas: ${attached.map((a) => a.path).join(", ")}]`
+      : message;
+    pushMessage("user", text || "Imagen adjunta", attached);
+    pushMessage("assistant", "");
+    setBusy(true);
+    const setAssistant = (next: string) => {
+      patchLastAssistant(next);
+    };
+    try {
+      setStage("Clasificando la peticion...");
+      const identified = await identifyEocode(withAssets);
+      if (!identified.ok) {
+        setAssistant(identified.message);
+        return;
+      }
+      if (identified.data.type === "consult") {
+        setAssistant(identified.data.text || "(Sin respuesta)");
+        return;
+      }
+      setStage("Analizando el cambio...");
+      const analyzed = await analyzeEocode(withAssets);
+      if (!analyzed.ok) {
+        setAssistant(analyzed.message);
+        return;
+      }
+      const plan = analyzed.data;
+      const targets = [...plan.files_to_edit.map((p) => p.path), ...plan.new_files.map((p) => p.path)];
+      let summary = plan.preliminary || "";
+      if (targets.length) {
+        summary += `\n\n**Archivos previstos:** ${targets.map((t) => `\`${t}\``).join(", ")}`;
+      }
+      if (plan.delete_files.length) {
+        summary += `\n\n**Archivos a borrar:** ${plan.delete_files.map((p) => `\`${p.path}\``).join(", ")}`;
+      }
+      if (plan.questions.length) {
+        summary += `\n\n**Preguntas de clarificacion:**\n${plan.questions.map((q) => `- ${q}`).join("\n")}`;
+      }
+      setAssistant(summary);
+      if (!targets.length && plan.delete_files.length === 0) {
+        return;
+      }
+      setStage("Escribiendo archivos...");
+      const edited = await editEocode(withAssets, plan);
+      if (!edited.ok) {
+        setAssistant(`${summary}\n\n${edited.message}`);
+        return;
+      }
+      const written = edited.data.files;
+      let done = `${summary}\n\n**Archivos escritos:** ${written.map((f) => `\`${f}\``).join(", ")}`;
+      if (edited.data.deleted.length) {
+        done += `\n\n**Archivos borrados:** ${edited.data.deleted.map((f) => `\`${f}\``).join(", ")}`;
+      }
+      setAssistant(done);
+      if (written.length) {
+        setStage("Validando el cambio...");
+        const validated = await validateEocode(withAssets, written);
+        if (validated.ok) {
+          let tail = "";
+          if (validated.data.needs_correction && validated.data.files.length) {
+            tail = `\n\n**Corregidos:** ${validated.data.files.map((f) => `\`${f}\``).join(", ")}`;
+          }
+          if (validated.data.notes) {
+            tail += `\n\n${validated.data.notes}`;
+          }
+          setAssistant(`${done}${tail}`);
+        }
+      }
+      await reload();
+      setPreviewVersion((v) => v + 1);
+    } catch {
+      setAssistant("Algo salio mal. Intenta de nuevo.");
+    } finally {
+      setBusy(false);
+      setStage("");
+    }
+  }, [busy, draft, pendingAssets, pushMessage, patchLastAssistant, reload]);
+
+  const printPreview = useCallback(() => {
+    const win = iframeRef.current?.contentWindow;
+    if (win) {
+      win.focus();
+      win.print();
+    }
+  }, []);
+
+  if (access === "loading") {
+    return (
+      <section className="eocode-gate">
+        <h1>eocode</h1>
+        <p className="lede">Cargando el estudio de programacion...</p>
+      </section>
+    );
+  }
+
+  if (access === "signin") {
+    return (
+      <section className="eocode-gate">
+        <h1>eocode</h1>
+        <p className="lede">Inicia sesion para usar el estudio de programacion.</p>
+        <a className="btn btn--primary" href="/session?next=%2Feocode">
+          Iniciar sesion
+        </a>
+      </section>
+    );
+  }
+
+  if (access === "denied") {
+    return (
+      <section className="eocode-gate">
+        <h1>eocode</h1>
+        <p className="lede">
+          eocode es un estudio privado. Pidele a un administrador que te conceda acceso.
+        </p>
+        <a className="btn" href="/contact">
+          Contacto
+        </a>
+      </section>
+    );
+  }
+
+  if (access === "error") {
+    return (
+      <section className="eocode-gate">
+        <h1>eocode</h1>
+        <p className="lede">No se pudo cargar el estudio. Intenta recargar la pagina.</p>
+      </section>
+    );
+  }
+
+  return (
+    <div className="eocode-studio">
+      <section className="eocode-chat-pane" aria-label="Chat de programacion">
+        <header className="eocode-pane-head">
+          <h1>eocode</h1>
+          <button className="icon-btn" type="button" onClick={() => void reload()} aria-label="Recargar archivos" title="Recargar archivos">
+            <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
+          </button>
+        </header>
+
+        <div className="eocode-log" ref={logRef}>
+          {messages.length === 0 ? (
+            <p className="hint">
+              Pidele al agente que programe tu portafolio. Solo HTML, CSS y JavaScript vanilla.
+            </p>
+          ) : null}
+          {messages.map((item) => (
+            <article key={item.id} className={`eocode-msg eocode-msg-${item.role}`}>
+              {item.assets?.length ? (
+                <div className="agent-chat-msg-thumbs">
+                  {item.assets.map((asset) => (
+                    <img key={asset.path} src={asset.url} alt="" />
+                  ))}
+                </div>
+              ) : null}
+              <Markdown text={item.content} />
+            </article>
+          ))}
+          {stage ? <p className="eocode-stage">{stage}</p> : null}
+        </div>
+
+        {pendingAssets.length ? (
+          <div className="agent-chat-thumbs eocode-pending">
+            {pendingAssets.map((asset) => (
+              <span className="agent-chat-thumb" key={asset.path}>
+                <img src={asset.url} alt="" />
+                <button
+                  className="icon-btn"
+                  type="button"
+                  aria-label="Quitar imagen"
+                  onClick={() => setPendingAssets((prev) => prev.filter((a) => a.path !== asset.path))}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">close</span>
+                </button>
+              </span>
+            ))}
+          </div>
+        ) : null}
+
+        <form
+          className="agent-chat-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void send();
+          }}
+        >
+          <div className="agent-chat-composer">
+            <div className="agent-chat-compose-row">
+              <textarea
+                value={draft}
+                onChange={(event) => setDraft(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    void send();
+                  }
+                }}
+                rows={1}
+                maxLength={4000}
+                aria-label="Mensaje"
+                placeholder="Describe el cambio o pregunta sobre tu sitio."
+              />
+              <div className="agent-chat-tools">
+                <button className="icon-btn" type="submit" disabled={busy || (!draft.trim() && pendingAssets.length === 0)} aria-label="Enviar">
+                  <span className="material-symbols-outlined" aria-hidden="true">send</span>
+                </button>
+              </div>
+            </div>
+            <div className="agent-chat-compose-row">
+              <label className="agent-chat-drop">
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  multiple
+                  hidden
+                  onChange={(event) => {
+                    const list = event.target.files;
+                    event.target.value = "";
+                    void onAttach(list);
+                  }}
+                />
+                <span className="material-symbols-outlined" aria-hidden="true">imagesmode</span>
+                <span className="hint">Imagenes</span>
+              </label>
+            </div>
+          </div>
+        </form>
+
+        <details className="eocode-files">
+          <summary>Archivos ({files.length})</summary>
+          <ul>
+            {files.map((file) => (
+              <li key={file.path} className={`eocode-file eocode-file-${file.type}`}>
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {file.type === "html" ? "html" : file.type === "css" ? "css" : file.type === "js" ? "javascript" : file.type === "image" ? "image" : "description"}
+                </span>
+                {file.path}
+              </li>
+            ))}
+          </ul>
+        </details>
+      </section>
+
+      <section className="eocode-preview-pane" aria-label="Vista del sitio">
+        <header className="eocode-pane-head">
+          <h2>Vista del sitio</h2>
+          <div className="eocode-preview-actions">
+            <button className="icon-btn" type="button" onClick={() => setPreviewVersion((v) => v + 1)} aria-label="Recargar vista" title="Recargar vista">
+              <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
+            </button>
+            <button className="icon-btn" type="button" onClick={printPreview} aria-label="Imprimir a PDF" title="Imprimir a PDF">
+              <span className="material-symbols-outlined" aria-hidden="true">print</span>
+            </button>
+            <a className="icon-btn" href={previewUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir en otra pestana" title="Abrir en otra pestana">
+              <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
+            </a>
+          </div>
+        </header>
+        <iframe
+          key={previewVersion}
+          ref={iframeRef}
+          className="eocode-frame"
+          src={previewUrl}
+          title="Vista previa del sitio"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
+        />
+      </section>
+    </div>
+  );
+}

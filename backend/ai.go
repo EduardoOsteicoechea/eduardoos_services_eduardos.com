@@ -146,6 +146,22 @@ func (c openAICompatClient) Chat(ctx context.Context, prompt string) (ChatResult
 }
 
 func (c openAICompatClient) Complete(ctx context.Context, system string, history []ChatMessage) (ChatResult, error) {
+	return c.completeWith(ctx, system, history, 512)
+}
+
+// CompleteLong is the same as Complete but lets callers raise the output
+// ceiling for large responses (e.g. full static file contents).
+func (c openAICompatClient) CompleteLong(ctx context.Context, system string, history []ChatMessage, maxTokens int) (ChatResult, error) {
+	if maxTokens < 256 {
+		maxTokens = 256
+	}
+	if maxTokens > 16384 {
+		maxTokens = 16384
+	}
+	return c.completeWith(ctx, system, history, maxTokens)
+}
+
+func (c openAICompatClient) completeWith(ctx context.Context, system string, history []ChatMessage, maxTokens int) (ChatResult, error) {
 	if c.apiKey == "" {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
@@ -163,11 +179,11 @@ func (c openAICompatClient) Complete(ctx context.Context, system string, history
 	payload := map[string]any{
 		"model":      c.model,
 		"messages":   messages,
-		"max_tokens": 512,
+		"max_tokens": maxTokens,
 	}
 	if c.name == "kimi" {
 		delete(payload, "max_tokens")
-		payload["max_completion_tokens"] = 512
+		payload["max_completion_tokens"] = maxTokens
 		payload["reasoning_effort"] = "low"
 	} else {
 		payload["temperature"] = 0.2

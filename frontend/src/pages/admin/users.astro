@@ -122,7 +122,7 @@ import Layout from "../../layouts/Layout.astro";
         const form = document.createElement("form");
         form.dataset.userServices = user.id;
         const granted = new Set(user.admin_services ?? []);
-        for (const service of ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api"]) {
+        for (const service of ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"]) {
           const label = document.createElement("label");
           const input = document.createElement("input");
           input.type = "checkbox";

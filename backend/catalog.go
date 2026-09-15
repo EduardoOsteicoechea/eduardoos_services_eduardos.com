@@ -22,6 +22,8 @@ var serviceCatalog = []serviceInfo{
 	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1},
 	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1},
 	{ID: "api", Label: "API", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3},
+	// eocode is not sold: it is granted by an administrator from /admin/users.
+	{ID: eocodeServiceID, Label: "eocode", Description: "Agent coding studio (admin-granted).", MonthlyUSD: 0},
 }
 
 var serviceByID map[string]serviceInfo
@@ -36,6 +38,13 @@ func init() {
 func knownService(id string) bool {
 	_, ok := serviceByID[strings.ToLower(strings.TrimSpace(id))]
 	return ok
+}
+
+// payableService reports whether a service is sold via subscriptions. Some
+// known services (e.g. eocode) are admin-granted only, so they are valid for
+// admin_services preferences but never appear in checkout.
+func payableService(id string) bool {
+	return knownService(id) && monthlyPriceUSD(id) > 0
 }
 
 func serviceLabel(id string) string {
