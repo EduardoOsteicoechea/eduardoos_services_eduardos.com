@@ -1,5 +1,10 @@
 /* eocode — agent coding studio (page surface, rem-only, shared tokens). */
 
+.eocode-gate [hidden],
+.eocode-studio [hidden] {
+  display: none !important;
+}
+
 .eocode-gate {
   grid-column: 1 / -1;
   display: flex;

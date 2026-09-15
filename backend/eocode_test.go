@@ -228,6 +228,38 @@ func TestEocodePreviewServesSeededIndex(t *testing.T) {
 	}
 }
 
+func TestEocodeEditStripsFenceAndPreviewServesUpdate(t *testing.T) {
+	app := newTestApp(true)
+	app.chat["deepseek"] = &recordingChat{
+		provider: "deepseek",
+		text:     "{\"files\":[{\"path\":\"styles.css\",\"content\":\"```css\\n:root{--color-bg:#0b1220}\\n```\"}]}",
+	}
+	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"cambia el fondo","files_to_edit":[{"path":"styles.css"}]}`)
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
+	}
+	ws := app.eocodeWorkspace(app.mustUser("admin@eduardoos.com").ID)
+	content, err := ws.readFile("styles.css")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(content, "```") {
+		t.Fatalf("code fence not stripped: %q", content)
+	}
+	if !strings.Contains(content, "#0b1220") {
+		t.Fatalf("edited content missing: %q", content)
+	}
+	getReq, getRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/preview/styles.css")
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("preview: expected 200, got %d", getRec.Code)
+	}
+	if !strings.Contains(getRec.Body.String(), "#0b1220") {
+		t.Fatalf("preview served stale content: %s", getRec.Body.String())
+	}
+}
+
 func TestEocodeSafeRelPath(t *testing.T) {
 	bad := []string{"", "../a.html", "/etc/passwd", "a/../../b.html", "evil.exe", "a.svg.js.exe"}
 	for _, in := range bad {

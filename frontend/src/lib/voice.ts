@@ -5,24 +5,33 @@ import {
   postVoiceChunk,
   startVoiceStream,
   stopVoiceStream,
+  type ChatTurn,
 } from "./api";
 import { currentAgentHistory, setAgentChatBusy, setAgentChatDraft } from "./chat";
 import { sessionLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 
-// Global voice input for the agent dock. Captures 16 kHz mono PCM through an
-// AudioWorklet, streams chunks to the Go STT endpoint for live transcription,
-// and plays back the assistant's spoken replies queued from the chat SSE
-// stream. Everything is best-effort: when the feature is off or unsupported,
-// the mic button stays hidden and the text chat is unaffected.
+// Global voice input. Captures 16 kHz mono PCM through an AudioWorklet,
+// streams chunks to the Go STT endpoint for live transcription, and plays back
+// synthesized replies queued from the chat SSE stream or /api/voice/speak.
+// Any chat surface can attach through startVoiceHost; the agent dock uses the
+// thin startVoiceChat wrapper below. Everything is best-effort: when the
+// feature is off or unsupported, the mic button stays hidden.
 
 const VOICE_REPLY_KEY = "eduardoos.voice.reply";
 
-type VoiceUi = {
+export type VoiceHost = {
   mic: HTMLButtonElement;
   toggle: HTMLButtonElement | null;
-  input: HTMLTextAreaElement;
   caption: HTMLElement | null;
+  /** Composer input, when the surface uses a plain textarea. */
+  input?: HTMLTextAreaElement | null;
+  /** Places the live transcript into the composer for review. */
+  setDraft: (text: string) => void;
+  /** Locks the composer while recording. */
+  setBusy: (busy: boolean) => void;
+  /** Recent conversation, used to contextualize the transcript. */
+  history: () => ChatTurn[];
 };
 
 type VoiceState = {
@@ -62,6 +71,7 @@ const state: VoiceState = {
 };
 
 let bound = false;
+let activeHost: VoiceHost | null = null;
 const audioQueue: string[] = [];
 let audioPlaying = false;
 let currentAudio: HTMLAudioElement | null = null;
@@ -97,22 +107,6 @@ function storeReply(value: boolean): void {
   }
 }
 
-function resolveUi(): VoiceUi | null {
-  const mic = document.querySelector("[data-agent-mic]");
-  const input = document.querySelector("[data-agent-input]");
-  const toggle = document.querySelector("[data-agent-speak-toggle]");
-  const caption = document.querySelector("[data-agent-voice]");
-  if (!(mic instanceof HTMLButtonElement) || !(input instanceof HTMLTextAreaElement)) {
-    return null;
-  }
-  return {
-    mic,
-    toggle: toggle instanceof HTMLButtonElement ? toggle : null,
-    input,
-    caption: caption instanceof HTMLElement ? caption : null,
-  };
-}
-
 function setIcon(button: HTMLButtonElement | null, name: string): void {
   const icon = button?.querySelector(".material-symbols-outlined");
   if (icon) {
@@ -120,41 +114,44 @@ function setIcon(button: HTMLButtonElement | null, name: string): void {
   }
 }
 
-function paintUi(ui: VoiceUi | null): void {
-  if (!ui) {
+function paintUi(host: VoiceHost | null): void {
+  if (!host) {
     return;
   }
-  ui.mic.hidden = !state.enabled;
-  ui.mic.disabled = state.starting;
-  ui.mic.classList.toggle("agent-chat-mic--recording", state.recording);
-  ui.mic.setAttribute("aria-pressed", state.recording ? "true" : "false");
-  ui.mic.setAttribute("aria-label", state.recording ? "Stop and view text" : "Record voice");
-  ui.mic.setAttribute("title", state.recording ? "Stop and view text" : "Record voice");
-  setIcon(ui.mic, state.recording ? "stop_circle" : "mic");
-  if (ui.toggle) {
-    ui.toggle.hidden = !state.enabled;
-    ui.toggle.setAttribute("aria-pressed", state.reply ? "true" : "false");
-    ui.toggle.setAttribute("aria-label", state.reply ? "Mute spoken replies" : "Speak replies");
-    ui.toggle.setAttribute("title", state.reply ? "Mute spoken replies" : "Speak replies");
-    setIcon(ui.toggle, state.reply ? "volume_up" : "volume_off");
+  host.mic.hidden = !state.enabled;
+  host.mic.disabled = state.starting;
+  host.mic.classList.toggle("agent-chat-mic--recording", state.recording);
+  host.mic.setAttribute("aria-pressed", state.recording ? "true" : "false");
+  host.mic.setAttribute("aria-label", state.recording ? "Stop and view text" : "Record voice");
+  host.mic.setAttribute("title", state.recording ? "Stop and view text" : "Record voice");
+  setIcon(host.mic, state.recording ? "stop_circle" : "mic");
+  if (host.toggle) {
+    host.toggle.hidden = !state.enabled;
+    host.toggle.setAttribute("aria-pressed", state.reply ? "true" : "false");
+    host.toggle.setAttribute("aria-label", state.reply ? "Mute spoken replies" : "Speak replies");
+    host.toggle.setAttribute("title", state.reply ? "Mute spoken replies" : "Speak replies");
+    setIcon(host.toggle, state.reply ? "volume_up" : "volume_off");
   }
 }
 
-function paintTranscript(ui: VoiceUi | null, finalText: string, partial = ""): void {
-  if (!ui) {
+function paintTranscript(host: VoiceHost | null, finalText: string, partial = ""): void {
+  if (!host) {
     return;
   }
   const live = [finalText, partial].filter(Boolean).join(" ").trim();
   if (live) {
-    ui.input.value = live;
-    ui.input.dispatchEvent(new Event("input", { bubbles: true }));
+    if (host.input) {
+      host.input.value = live;
+      host.input.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    host.setDraft(live);
   }
-  if (ui.caption) {
-    ui.caption.hidden = !state.recording && !live;
+  if (host.caption) {
+    host.caption.hidden = !state.recording && !live;
     if (state.recording) {
-      ui.caption.textContent = live || "Recording… press the stop button to finish.";
+      host.caption.textContent = live || "Recording… press the stop button to finish.";
     } else {
-      ui.caption.textContent = live;
+      host.caption.textContent = live;
     }
   }
 }
@@ -262,7 +259,7 @@ function teardownCapture(): void {
 
 /** Stops voice, frees the composer for typing, and shows why. */
 function abortVoice(message: string): void {
-  const ui = resolveUi();
+  const host = activeHost;
   const streamId = state.streamId;
   state.streamId = null;
   state.recording = false;
@@ -273,12 +270,12 @@ function abortVoice(message: string): void {
   if (streamId) {
     void cancelVoiceStream(streamId);
   }
-  setAgentChatBusy(false);
-  if (ui) {
-    paintUi(ui);
-    if (ui.caption) {
-      ui.caption.hidden = false;
-      ui.caption.textContent = message;
+  host?.setBusy(false);
+  if (host) {
+    paintUi(host);
+    if (host.caption) {
+      host.caption.hidden = false;
+      host.caption.textContent = message;
     }
   }
 }
@@ -312,7 +309,7 @@ function enqueueChunk(buffer: ArrayBuffer): void {
           bytes: buffer.byteLength,
         });
       }
-      paintTranscript(resolveUi(), text, partial);
+      paintTranscript(activeHost, text, partial);
     })
     .catch((err) => {
       sessionLog("voice.chunk.throw", { streamId: state.streamId, message: String(err) });
@@ -357,13 +354,14 @@ function voiceErrorMessage(err: unknown): { code: string; message: string } {
   }
 }
 
-async function startRecording(ui: VoiceUi): Promise<void> {
+async function startRecording(host: VoiceHost): Promise<void> {
   if (state.starting || state.recording) {
     return;
   }
   state.starting = true;
+  activeHost = host;
   sessionLog("voice.record.start", { lang: state.lang, sampleRate: state.sampleRate });
-  paintUi(ui);
+  paintUi(host);
   let media: MediaStream | null = null;
   let ctx: AudioContext | null = null;
   let streamId: string | null = null;
@@ -405,10 +403,10 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     state.recording = true;
     state.chain = Promise.resolve();
     stopVoicePlayback();
-    setAgentChatBusy(true);
+    host.setBusy(true);
     sessionLog("voice.record.started", { streamId, sampleRate: ctx.sampleRate });
-    setIcon(ui.mic, "stop_circle");
-    paintTranscript(ui, "");
+    setIcon(host.mic, "stop_circle");
+    paintTranscript(host, "");
   } catch (err) {
     const { code, message } = voiceErrorMessage(err);
     sessionLog("voice.record.error", {
@@ -416,7 +414,7 @@ async function startRecording(ui: VoiceUi): Promise<void> {
       message,
       reason: err instanceof Error ? `${err.name}: ${err.message}` : String(err),
     });
-    setAgentChatBusy(false);
+    host.setBusy(false);
     media?.getTracks().forEach((track) => track.stop());
     if (ctx) {
       try {
@@ -431,23 +429,23 @@ async function startRecording(ui: VoiceUi): Promise<void> {
     showErrorModal({ message });
   } finally {
     state.starting = false;
-    paintUi(ui);
+    paintUi(host);
   }
 }
 
-async function stopRecording(ui: VoiceUi): Promise<void> {
+async function stopRecording(host: VoiceHost): Promise<void> {
   if (!state.recording) {
     return;
   }
   state.recording = false;
   sessionLog("voice.record.stop", { streamId: state.streamId });
-  paintUi(ui);
+  paintUi(host);
   const streamId = state.streamId;
   state.streamId = null;
   teardownCapture();
-  if (ui.caption) {
-    ui.caption.hidden = false;
-    ui.caption.textContent = "Transcribing…";
+  if (host.caption) {
+    host.caption.hidden = false;
+    host.caption.textContent = "Transcribing…";
   }
   try {
     await state.chain.catch(() => undefined);
@@ -463,11 +461,11 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
     let finalText = text.trim();
     sessionLog("voice.record.final", { streamId, runes: finalText.length });
     if (finalText) {
-      if (ui.caption) {
-        ui.caption.hidden = false;
-        ui.caption.textContent = "Interpreting…";
+      if (host.caption) {
+        host.caption.hidden = false;
+        host.caption.textContent = "Interpreting…";
       }
-      const cleaned = await interpretVoiceMessage(finalText, currentAgentHistory(), state.lang);
+      const cleaned = await interpretVoiceMessage(finalText, host.history(), state.lang);
       sessionLog("voice.record.interpreted", {
         inRunes: finalText.length,
         outRunes: cleaned.length,
@@ -475,59 +473,80 @@ async function stopRecording(ui: VoiceUi): Promise<void> {
       if (cleaned) {
         finalText = cleaned;
       }
-      setAgentChatDraft(finalText);
-      if (ui.caption) {
-        ui.caption.textContent = "Contextualized. Edit, then press send.";
+      host.setDraft(finalText);
+      if (host.caption) {
+        host.caption.textContent = "Contextualized. Edit, then press send.";
       }
-      ui.input.focus();
-    } else if (ui.caption) {
-      ui.caption.hidden = false;
-      ui.caption.textContent = "No speech detected. You can type instead.";
+    } else if (host.caption) {
+      host.caption.hidden = false;
+      host.caption.textContent = "No speech detected. You can type instead.";
     }
   } finally {
-    setAgentChatBusy(false);
+    host.setBusy(false);
   }
 }
 
-export function startVoiceChat(): void {
-  const ui = resolveUi();
-  if (!ui) {
-    return;
-  }
-  if (ui.mic.dataset.voiceBound !== "true") {
-    ui.mic.dataset.voiceBound = "true";
+export function startVoiceHost(host: VoiceHost): void {
+  if (host.mic.dataset.voiceBound !== "true") {
+    host.mic.dataset.voiceBound = "true";
     if (!bound) {
       bound = true;
       state.reply = readStoredReply();
     }
-    ui.mic.addEventListener("click", () => {
+    host.mic.addEventListener("click", () => {
       if (state.recording) {
-        void stopRecording(ui);
+        void stopRecording(host);
       } else {
-        void startRecording(ui);
+        void startRecording(host);
       }
     });
-    ui.toggle?.addEventListener("click", () => {
+    host.toggle?.addEventListener("click", () => {
       state.reply = !state.reply;
       storeReply(state.reply);
       sessionLog("voice.reply.toggle", { enabled: state.reply });
       if (!state.reply) {
         stopVoicePlayback();
       }
-      paintUi(ui);
+      paintUi(host);
     });
-    void initVoice(ui);
+    void initVoice(host);
   }
-  paintUi(ui);
+  paintUi(host);
 }
 
-async function initVoice(ui: VoiceUi): Promise<void> {
+function resolveAgentHost(): VoiceHost | null {
+  const mic = document.querySelector("[data-agent-mic]");
+  if (!(mic instanceof HTMLButtonElement)) {
+    return null;
+  }
+  const toggle = document.querySelector("[data-agent-speak-toggle]");
+  const caption = document.querySelector("[data-agent-voice]");
+  const input = document.querySelector("[data-agent-input]");
+  return {
+    mic,
+    toggle: toggle instanceof HTMLButtonElement ? toggle : null,
+    caption: caption instanceof HTMLElement ? caption : null,
+    input: input instanceof HTMLTextAreaElement ? input : null,
+    setDraft: setAgentChatDraft,
+    setBusy: setAgentChatBusy,
+    history: currentAgentHistory,
+  };
+}
+
+export function startVoiceChat(): void {
+  const host = resolveAgentHost();
+  if (host) {
+    startVoiceHost(host);
+  }
+}
+
+async function initVoice(host: VoiceHost): Promise<void> {
   const config = await getVoiceConfig();
   if (!config) {
     state.enabled = false;
-    ui.mic.hidden = true;
-    if (ui.toggle) {
-      ui.toggle.hidden = true;
+    host.mic.hidden = true;
+    if (host.toggle) {
+      host.toggle.hidden = true;
     }
     sessionLog("voice.config", { enabled: false });
     return;
@@ -541,5 +560,5 @@ async function initVoice(ui: VoiceUi): Promise<void> {
     lang: state.lang,
     langs: config.langs,
   });
-  paintUi(ui);
+  paintUi(host);
 }

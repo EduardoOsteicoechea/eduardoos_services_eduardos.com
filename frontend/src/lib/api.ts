@@ -830,6 +830,49 @@ export async function interpretVoiceMessage(
   return message;
 }
 
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
+/** Synthesizes speech for a text reply (POST /api/voice/speak). Best-effort. */
+export async function synthesizeVoice(
+  text: string,
+  lang: string,
+): Promise<{ base64: string; mime: string } | null> {
+  await getCsrf(false);
+  const headers = new Headers();
+  headers.set("Content-Type", "application/json");
+  headers.set("Accept", "audio/*");
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+  try {
+    const response = await fetch(apiUrl("/voice/speak"), {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: JSON.stringify({ text, lang }),
+    });
+    if (response.status !== 200) {
+      return null;
+    }
+    const mime = response.headers.get("Content-Type") || "audio/mpeg";
+    const buffer = await response.arrayBuffer();
+    if (!buffer.byteLength) {
+      return null;
+    }
+    return { base64: arrayBufferToBase64(buffer), mime };
+  } catch {
+    return null;
+  }
+}
+
 export async function patchJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   return apiSend<T>(path, {
     method: "PATCH",

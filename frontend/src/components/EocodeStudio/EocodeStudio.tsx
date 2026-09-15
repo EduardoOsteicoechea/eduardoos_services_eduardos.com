@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { synthesizeVoice } from "../../lib/api";
 import {
   analyzeEocode,
   editEocode,
@@ -9,6 +10,13 @@ import {
   type EocodeFileEntry,
 } from "../../lib/eocode";
 import { renderMarkdown } from "../../lib/markdown";
+import {
+  enqueueVoiceAudio,
+  startVoiceHost,
+  voiceLang,
+  voiceReplyEnabled,
+  type VoiceHost,
+} from "../../lib/voice";
 import "./EocodeStudio.css";
 
 type ChatRole = "user" | "assistant";
@@ -21,6 +29,20 @@ type ChatMessage = {
 };
 
 type AccessState = "loading" | "ok" | "signin" | "denied" | "error";
+
+/** Strips markdown so spoken replies stay readable. */
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]*)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^\s*[-*]\s+/gm, "")
+    .replace(/^\s*#+\s*/gm, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 function Markdown({ text }: { text: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -44,6 +66,10 @@ export default function EocodeStudio() {
   const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
+  const micRef = useRef<HTMLButtonElement | null>(null);
+  const speakToggleRef = useRef<HTMLButtonElement | null>(null);
+  const voiceCaptionRef = useRef<HTMLParagraphElement | null>(null);
+  const messagesRef = useRef<ChatMessage[]>([]);
   const nextId = useRef(1);
 
   const reload = useCallback(async () => {
@@ -93,6 +119,47 @@ export default function EocodeStudio() {
     }
   }, [messages, stage]);
 
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
+
+  const speakReply = useCallback(async (text: string) => {
+    if (!voiceReplyEnabled()) {
+      return;
+    }
+    const plain = stripMarkdown(text).slice(0, 500);
+    if (!plain) {
+      return;
+    }
+    const audio = await synthesizeVoice(plain, voiceLang());
+    if (audio) {
+      enqueueVoiceAudio(audio.base64, audio.mime);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (access !== "ok") {
+      return;
+    }
+    const mic = micRef.current;
+    if (!mic) {
+      return;
+    }
+    const host: VoiceHost = {
+      mic,
+      toggle: speakToggleRef.current,
+      caption: voiceCaptionRef.current,
+      setDraft: (text) => setDraft(text),
+      setBusy: (value) => setBusy(value),
+      history: () =>
+        messagesRef.current
+          .slice(-6)
+          .map((message) => ({ role: message.role, content: message.content }))
+          .filter((message) => message.content),
+    };
+    startVoiceHost(host);
+  }, [access]);
+
   const pushMessage = useCallback((role: ChatRole, content: string, assets?: ChatMessage["assets"]) => {
     setMessages((prev) => [...prev, { id: nextId.current++, role, content, assets }]);
   }, []);
@@ -134,7 +201,9 @@ export default function EocodeStudio() {
     pushMessage("user", text || "Imagen adjunta", attached);
     pushMessage("assistant", "");
     setBusy(true);
+    let finalText = "";
     const setAssistant = (next: string) => {
+      finalText = next;
       patchLastAssistant(next);
     };
     try {
@@ -146,6 +215,7 @@ export default function EocodeStudio() {
       }
       if (identified.data.type === "consult") {
         setAssistant(identified.data.text || "(Sin respuesta)");
+        void speakReply(finalText);
         return;
       }
       setStage("Analizando el cambio...");
@@ -198,13 +268,14 @@ export default function EocodeStudio() {
       }
       await reload();
       setPreviewVersion((v) => v + 1);
+      void speakReply(finalText);
     } catch {
       setAssistant("Algo salio mal. Intenta de nuevo.");
     } finally {
       setBusy(false);
       setStage("");
     }
-  }, [busy, draft, pendingAssets, pushMessage, patchLastAssistant, reload]);
+  }, [busy, draft, pendingAssets, pushMessage, patchLastAssistant, reload, speakReply]);
 
   const printPreview = useCallback(() => {
     const win = iframeRef.current?.contentWindow;
@@ -257,6 +328,8 @@ export default function EocodeStudio() {
       </section>
     );
   }
+
+  const previewSrc = `${previewUrl}${previewUrl.includes("?") ? "&" : "?"}v=${previewVersion}`;
 
   return (
     <div className="eocode-studio">
@@ -315,6 +388,7 @@ export default function EocodeStudio() {
           }}
         >
           <div className="agent-chat-composer">
+            <p className="agent-chat-voice" ref={voiceCaptionRef} hidden aria-live="polite"></p>
             <div className="agent-chat-compose-row">
               <textarea
                 value={draft}
@@ -352,6 +426,30 @@ export default function EocodeStudio() {
                 <span className="material-symbols-outlined" aria-hidden="true">imagesmode</span>
                 <span className="hint">Imagenes</span>
               </label>
+              <div className="agent-chat-tools">
+                <button
+                  ref={speakToggleRef}
+                  className="icon-btn"
+                  type="button"
+                  hidden
+                  aria-pressed="true"
+                  aria-label="Leer respuestas"
+                  title="Leer respuestas"
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">volume_up</span>
+                </button>
+                <button
+                  ref={micRef}
+                  className="icon-btn"
+                  type="button"
+                  hidden
+                  aria-pressed="false"
+                  aria-label="Grabar voz"
+                  title="Grabar voz"
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">mic</span>
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -390,7 +488,7 @@ export default function EocodeStudio() {
           key={previewVersion}
           ref={iframeRef}
           className="eocode-frame"
-          src={previewUrl}
+          src={previewSrc}
           title="Vista previa del sitio"
           sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
         />

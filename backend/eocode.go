@@ -467,16 +467,17 @@ func eocodeComplete(ctx context.Context, client ChatClient, system string, histo
 // markdown code fences and surrounding prose.
 func eocodeExtractJSON(raw string) string {
 	s := strings.TrimSpace(raw)
-	if idx := strings.Index(s, "```"); idx >= 0 {
-		s = s[idx+3:]
+	// Only strip a fence that wraps the whole reply. A fence inside a JSON
+	// string value (e.g. file content) must be preserved.
+	if strings.HasPrefix(s, "```") {
 		if nl := strings.IndexByte(s, '\n'); nl >= 0 {
 			s = s[nl+1:]
 		}
-		if end := strings.Index(s, "```"); end >= 0 {
+		if end := strings.LastIndex(s, "```"); end >= 0 {
 			s = s[:end]
 		}
+		s = strings.TrimSpace(s)
 	}
-	s = strings.TrimSpace(s)
 	start := strings.IndexByte(s, '{')
 	if start < 0 {
 		return ""
@@ -522,6 +523,24 @@ func eocodeParseJSON[T any](raw string) (T, error) {
 		return out, err
 	}
 	return out, nil
+}
+
+// eocodeStripFileFence removes a markdown code fence the model may have wrapped
+// around a file body. A stray ```css line would otherwise corrupt styles.css.
+func eocodeStripFileFence(content string) string {
+	s := strings.TrimSpace(content)
+	if !strings.HasPrefix(s, "```") {
+		return content
+	}
+	nl := strings.IndexByte(s, '\n')
+	if nl < 0 {
+		return content
+	}
+	s = s[nl+1:]
+	if end := strings.LastIndex(s, "```"); end >= 0 {
+		s = s[:end]
+	}
+	return strings.TrimRight(s, "\n") + "\n"
 }
 
 // ---------------------------------------------------------------------------
@@ -905,7 +924,7 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 		if !ok {
 			continue
 		}
-		if err := ws.writeFile(safe, file.Content); err != nil {
+		if err := ws.writeFile(safe, eocodeStripFileFence(file.Content)); err != nil {
 			a.mustLogf(r, "eocode.edit.write_error", "path", safe, "err", redactLogValue(err.Error()))
 			continue
 		}
@@ -1014,7 +1033,7 @@ func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
 			if !ok {
 				continue
 			}
-			if err := ws.writeFile(safe, file.Content); err != nil {
+			if err := ws.writeFile(safe, eocodeStripFileFence(file.Content)); err != nil {
 				continue
 			}
 			corrected = append(corrected, safe)
