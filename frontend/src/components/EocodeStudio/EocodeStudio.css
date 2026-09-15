@@ -36,7 +36,8 @@
   display: flex;
   align-items: stretch;
   gap: var(--rail-gap);
-  min-height: 100vh;
+  height: 41.25rem;
+  max-height: 41.25rem;
 }
 
 .eocode-dhs {
@@ -161,6 +162,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow-y: auto;
 }
 
 .eocode-send {
@@ -298,7 +300,8 @@
 @media (max-width: 63.999rem) {
   .eocode-studio {
     flex-direction: column;
-    min-height: calc(100vh - var(--mobile-header-height));
+    height: auto;
+    max-height: 41.25rem;
   }
 
   .eocode-chat-pane {
