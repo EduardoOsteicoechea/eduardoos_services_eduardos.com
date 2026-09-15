@@ -100,10 +100,12 @@ export default function EocodeStudio() {
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState("");
   const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
+  const [dragActive, setDragActive] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const previewPaneRef = useRef<HTMLElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
   const micRef = useRef<HTMLButtonElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const speakToggleRef = useRef<HTMLButtonElement | null>(null);
   const voiceCaptionRef = useRef<HTMLParagraphElement | null>(null);
   const messagesRef = useRef<ChatMessage[]>([]);
@@ -221,15 +223,20 @@ export default function EocodeStudio() {
     });
   }, []);
 
-  const onAttach = useCallback(async (list: FileList | null) => {
-    if (!list) return;
-    for (const file of Array.from(list)) {
-      const result = await uploadEocodeAsset(file);
-      if (result.ok) {
-        setPendingAssets((prev) => [...prev, { url: result.data.url, path: result.data.path }]);
+  const onAttach = useCallback(
+    async (list: FileList | null) => {
+      if (!list || list.length === 0) return;
+      for (const file of Array.from(list)) {
+        const result = await uploadEocodeAsset(file);
+        if (result.ok) {
+          setPendingAssets((prev) => [...prev, { url: result.data.url, path: result.data.path }]);
+        } else {
+          pushMessage("assistant", `No se pudo subir la imagen: ${result.message}`);
+        }
       }
-    }
-  }, []);
+    },
+    [pushMessage],
+  );
 
   const openFile = useCallback(async (file: EocodeFileEntry) => {
     if (file.type === "image" || file.type === "svg") {
@@ -430,49 +437,58 @@ export default function EocodeStudio() {
     ? createPortal(
         <div
           id="eocode-header-menu"
-          className="header-dynamic-menu"
+          className="eocode-dhs"
+          role="toolbar"
+          aria-label="eocode tools"
           ref={(node) => {
             if (node) {
               window.__eduardoosHeaderDynamicMenu = node;
             }
           }}
         >
-          <div
-            className="header-dynamic-menu__inner header-dynamic-menu__actions"
-            role="toolbar"
-            aria-label="eocode tools"
+          <button className="dhs-action" type="button" title="Nuevo chat" aria-label="Nuevo chat" onClick={newChat}>
+            <span className="icon-btn" aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">add_comment</span>
+            </span>
+            Nuevo chat
+          </button>
+          <button className="dhs-action" type="button" title="Recargar sitio" aria-label="Recargar sitio" onClick={reloadSite}>
+            <span className="icon-btn" aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
+            </span>
+            Recargar sitio
+          </button>
+          <button className="dhs-action" type="button" title="Imprimir a PDF" aria-label="Imprimir a PDF" onClick={printPreview}>
+            <span className="icon-btn" aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">print</span>
+            </span>
+            Imprimir a PDF
+          </button>
+          <button
+            className="dhs-action"
+            type="button"
+            aria-pressed={isFullscreen}
+            title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+            aria-label={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+            onClick={toggleFullscreen}
           >
-            <button type="button" className="header-dynamic-menu__btn" title="Nuevo chat" aria-label="Nuevo chat" onClick={newChat}>
-              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">add_comment</span>
-            </button>
-            <button type="button" className="header-dynamic-menu__btn" title="Recargar sitio" aria-label="Recargar sitio" onClick={reloadSite}>
-              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">refresh</span>
-            </button>
-            <button type="button" className="header-dynamic-menu__btn" title="Imprimir a PDF" aria-label="Imprimir a PDF" onClick={printPreview}>
-              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">print</span>
-            </button>
-            <button
-              type="button"
-              className={`header-dynamic-menu__btn${isFullscreen ? " is-active" : ""}`}
-              aria-pressed={isFullscreen}
-              title="Pantalla completa"
-              aria-label="Pantalla completa"
-              onClick={toggleFullscreen}
-            >
-              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">
+            <span className="icon-btn" aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">
                 {isFullscreen ? "fullscreen_exit" : "fullscreen"}
               </span>
-            </button>
-          </div>
+            </span>
+            {isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+          </button>
         </div>,
         hdsHost,
       )
     : null;
 
   return (
-    <div className="eocode-studio">
-      {eocodeHeaderMenu}
-      <section className="eocode-chat-pane" aria-label="Chat de programacion">
+    <>
+      <div className="eocode-studio">
+        {eocodeHeaderMenu}
+        <section className="eocode-chat-pane" aria-label="Chat de programacion">
         <div className="eocode-log" ref={logRef}>
           {messages.length === 0 ? (
             <p className="hint">
@@ -514,7 +530,17 @@ export default function EocodeStudio() {
         ) : null}
 
         <form
-          className="agent-chat-form"
+          className={`agent-chat-form${dragActive ? " eocode-drag" : ""}`}
+          onDragOver={(event) => {
+            event.preventDefault();
+            setDragActive(true);
+          }}
+          onDragLeave={() => setDragActive(false)}
+          onDrop={(event) => {
+            event.preventDefault();
+            setDragActive(false);
+            void onAttach(event.dataTransfer?.files ?? null);
+          }}
           onSubmit={(event) => {
             event.preventDefault();
             void send();
@@ -538,8 +564,21 @@ export default function EocodeStudio() {
                   aria-label="Mensaje"
                   placeholder="Describe el cambio o pregunta sobre tu sitio."
                 />
-                <label className="agent-chat-drop">
+                <div
+                  className="agent-chat-drop"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Agregar imagenes"
+                  onClick={() => fileInputRef.current?.click()}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      fileInputRef.current?.click();
+                    }
+                  }}
+                >
                   <input
+                    ref={fileInputRef}
                     type="file"
                     accept="image/jpeg,image/png,image/webp,image/gif"
                     multiple
@@ -552,7 +591,7 @@ export default function EocodeStudio() {
                   />
                   <span className="material-symbols-outlined" aria-hidden="true">imagesmode</span>
                   <span className="hint">Imagenes</span>
-                </label>
+                </div>
               </div>
               <div className="agent-chat-tools">
                 <button
@@ -621,26 +660,27 @@ export default function EocodeStudio() {
             />
           )}
         </div>
-
-        <details className="eocode-files">
-          <summary>Archivos ({files.length})</summary>
-          <ul>
-            {files.map((file) => (
-              <li key={file.path}>
-                <button
-                  type="button"
-                  className="eocode-file"
-                  aria-current={viewFile?.path === file.path ? "true" : undefined}
-                  onClick={() => void openFile(file)}
-                >
-                  <span className="material-symbols-outlined" aria-hidden="true">{fileIcon(file.type)}</span>
-                  {file.path}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </details>
       </section>
-    </div>
+      </div>
+
+      <details className="eocode-files">
+        <summary>Archivos ({files.length})</summary>
+        <ul>
+          {files.map((file) => (
+            <li key={file.path}>
+              <button
+                type="button"
+                className="eocode-file"
+                aria-current={viewFile?.path === file.path ? "true" : undefined}
+                onClick={() => void openFile(file)}
+              >
+                <span className="material-symbols-outlined" aria-hidden="true">{fileIcon(file.type)}</span>
+                {file.path}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </>
   );
 }
