@@ -350,6 +350,13 @@
   }
 }
 
+/* Tablet: keep the site webview at most 960px (48rem at the 20px tablet root). */
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .eocode-preview-pane {
+    max-width: 48rem;
+  }
+}
+
 /* Phone: chat overlay ~70% of the 8-col canvas (span two-thirds). */
 @media (max-width: 47.999rem) {
   .eocode-studio {
