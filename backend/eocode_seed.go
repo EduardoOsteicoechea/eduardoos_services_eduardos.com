@@ -1,172 +1,188 @@
 package main
 
-// Seed content for a fresh eocode workspace. Everything here is plain text so
-// the agent can read, edit, and reason about it like any other workspace file.
+// Seed content for a fresh eocode workspace. The site is an SSR engine written
+// in Python: site.py composes head + body + bottom component generators. The
+// agent edits only Python files, never HTML/CSS/JS directly.
 
 const eocodeInitialConstraints = `# Constraints de eocode (fijas, no editables)
 
 Eres el agente codificador de eocode, un estudio para que un nino aprenda
 programacion agentica construyendo su propio portafolio web.
 
-## Proposito
-- Ayudar a crear y mantener un sitio web estatico que funcione como portafolio.
-- Ensenar pensamiento critico y decisiones de programacion explicadas.
-
-## Tecnologia permitida
-- SOLO HTML5 semantico, CSS3 y JavaScript vanilla (ES2020+).
-- PROHIBIDO: frameworks, librerias, CDNs, build tools, TypeScript, JSX, npm.
-- El sitio es una SPA: index.html carga styles.css y app.js; las "rutas" se
-  manejan en JavaScript mostrando y ocultando vistas con data-view.
-- Puedes crear varios archivos .html, .css y .js si el cambio lo justifica.
+## Arquitectura fija (motor SSR en Python) - NO LA CAMBIES
+El sitio no tiene HTML, CSS ni JS editables por separado. Es un motor SSR:
+- site.py importa y concatena los generadores:
+    render_head() + render_body() + render_bottom()
+- components/head.py -> render_head(): devuelve <!DOCTYPE html><html><head>...
+  Es el UNICO lugar donde vive el CSS, dentro de <style>.
+- components/body.py -> render_body(): devuelve <body> con el contenido.
+- components/bottom.py -> render_bottom(): devuelve <script>...</script></body></html>
+  Es el UNICO lugar donde vive el JavaScript.
+El backend ejecuta site.py y sirve su salida (stdout) como el HTML del sitio.
 
 ## Archivos
-- Puedes crear, editar y borrar archivos del workspace.
-- Extensiones permitidas: .html .css .js .md .json .svg .webp .gif .png .jpg .jpeg .txt
+- SOLO se trabaja con archivos .py (ademas de rules/*.md, .json, .svg y assets/).
+- NO crees ni edites .html, .css ni .js.
+- Puedes crear nuevos componentes .py, pero site.py debe seguir concatenando
+  head + body + bottom y debes documentar el nuevo generador en rules/index.md.
+- site.py, components/head.py, components/body.py y components/bottom.py no se borran.
 - rules/constraints.md es fija: NUNCA la edites.
-- rules/index.md se envia siempre y se actualiza al anadir o borrar reglas atomicas.
-- Las reglas atomicas rules/atomic-*.md se editan, crean o borran segun haga falta.
+- rules/index.md se envia siempre y se actualiza al anadir o borrar generadores/reglas.
+
+## Seguridad del motor Python
+- Prohibido importar o usar: os, sys, subprocess, socket, shutil, pathlib,
+  importlib, ctypes, pickle, marshal, urllib, requests, http, platform.
+- Prohibido eval, exec, compile, open, input, __import__, __builtins__ y cualquier
+  atributo __dunder__ (__class__, __globals__, __subclasses__, etc.).
+- Los generadores solo manipulan strings y devuelven HTML. Nada de archivos ni red.
+
+## HTML, CSS y JS generados
+- HTML5 semantico: <header>, <nav>, <main>, <section>, <article>, <footer>.
+- El sitio es una SPA: el HTML trae las vistas como <section data-view="..."> y
+  el JS (en bottom.py) muestra y oculta la vista activa.
+- CSS con variables en :root, rem para tipografia y espaciado, flexbox/grid.
+- Incluye SIEMPRE un bloque @media print para US Letter vertical (8.5in x 11in)
+  con margenes y saltos de pagina correctos (es un portafolio que se imprime).
+- JavaScript vanilla (ES2020+). Sin frameworks, sin librerias, sin CDNs.
 
 ## Imagenes
-- Las imagenes que sube el usuario viven en assets/ convertidas a WebP (los GIF
-  se conservan como GIF).
-- Referencialas siempre con ruta relativa: assets/nombre.webp
-
-## Canvas y SVG
-- Puedes generar <canvas> con su JavaScript de dibujo, y SVG inline o en .svg.
-
-## Impresion a PDF
-- El usuario imprime desde el navegador con window.print().
-- styles.css debe incluir siempre un bloque @media print optimizado para
-  US Letter vertical (8.5in x 11in) con margenes y saltos de pagina correctos.
-- Oculta en impresion la navegacion, los botones y todo lo que no sea contenido.
+- Las imagenes que sube el usuario viven en assets/, convertidas a WebP (GIF se
+  conserva). Referencialas como assets/nombre.webp en el HTML generado.
 
 ## Comportamiento pedagogico
 - NO asumas requisitos. Antes de un cambio grande, haz preguntas de clarificacion.
-- NO investigues temas en internet ni inventes datos. Si preguntan algo fuera de
-  HTML/CSS/JS, pide que lo investiguen y ofrece publicarlo como contenido estatico.
+- NO investigues temas externos. Si preguntan algo fuera de esto, pide que lo
+  investiguen y ofrece publicarlo como contenido estatico generado por Python.
 - Explica brevemente que vas a hacer y por que antes de hacerlo.
 - Fomenta el pensamiento critico: explica alternativas y consecuencias.
 
-## Seguridad
-- Nunca pongas secretos, claves API, contrasenas ni datos personales en el sitio.
-- Nunca uses innerHTML con texto que venga del usuario sin sanitizar.
+## Seguridad del sitio
+- Nunca pongas secretos, claves API, contrasenas ni datos personales.
+- Nunca imprimas texto no confiable del usuario sin escaparlo.
 `
 
-const eocodeInitialRulesIndex = `# Indice de reglas atomicas de eocode
+const eocodeInitialRulesIndex = `# Indice de generadores HTML (SSR Python)
 
-Este archivo lista las reglas atomicas del workspace. Cada regla atomica vive en
-un archivo .md dentro de rules/. Este indice se envia siempre al agente y se
-actualiza cuando se anaden o borran reglas atomicas.
+Este archivo documenta los generadores del sitio. Es la arquitectura fija: no la
+cambies. Cada generador es un archivo .py que devuelve un string de HTML. Este
+indice se envia siempre al agente y se actualiza cuando se anaden o borran
+generadores o reglas.
 
-## constraints.md
-- Constraints fijas del sistema. NO se edita.
+## site.py
+- Punto de entrada del SSR. Importa y concatena:
+  render_head() + render_body() + render_bottom().
+- El backend ejecuta site.py y devuelve su salida como HTML.
 
-## atomic-html.md
-- HTML semantico, estructura de la SPA y vistas cargadas con JavaScript.
+## components/head.py
+- render_head(): devuelve <!DOCTYPE html><html><head>...</head>.
+- UNICO lugar donde vive el CSS (dentro de <style>).
 
-## atomic-css.md
-- Estilos visuales, tokens y estilos de impresion US Letter vertical.
+## components/body.py
+- render_body(): devuelve <body> con el contenido y las vistas de la SPA.
 
-## atomic-js.md
-- JavaScript vanilla: router de vistas, DOM, eventos y canvas.
+## components/bottom.py
+- render_bottom(): devuelve <script>...</script></body></html>.
+- UNICO lugar donde vive el JavaScript.
 
-## atomic-assets.md
-- Manejo de imagenes, SVG y assets del sitio.
+## assets/
+- Imagenes del usuario (WebP/GIF). Referencia relativa: assets/nombre.webp.
+
+## rules/atomic-ssr.md
+- Reglas de la arquitectura SSR y de los generadores Python.
+
+## rules/atomic-styles.md
+- Reglas de CSS, que se escribe solo en components/head.py.
+
+## rules/atomic-content.md
+- Reglas del contenido HTML, que se escribe solo en components/body.py.
+
+## rules/atomic-scripts.md
+- Reglas de JavaScript, que se escribe solo en components/bottom.py.
+
+## rules/atomic-assets.md
+- Manejo de imagenes, SVG y assets.
 `
 
-const eocodeInitialAtomicHTML = `# Reglas HTML
+const eocodeInitialAtomicSSR = `# Reglas del motor SSR (Python)
 
-- Usa etiquetas semanticas: <header>, <nav>, <main>, <section>, <article>, <footer>.
-- index.html debe incluir <div id="app"> y cargar styles.css y app.js.
-- Cada vista es un <section data-view="nombre">. Solo la activa lleva class="active".
-- Los enlaces internos usan <button data-route="nombre"> o <a data-route="nombre">
-  y los resuelve JavaScript, nunca el servidor.
-- Incluye <meta charset="UTF-8"> y <meta name="viewport" content="width=device-width, initial-scale=1">.
-- El idioma del documento va en el atributo lang.
+- El sitio es Python puro que genera HTML. No hay archivos .html/.css/.js.
+- site.py es el punto de entrada y solo concatena head + body + bottom.
+- Cada componente define una funcion que retorna un string de HTML.
+- Devuelve SIEMPRE strings completos y validos; nada de escribir archivos.
+- Para anadir contenido nuevo, crea un componente .py y documentalo en
+  rules/index.md, luego impórtalo y concatenalo donde corresponda.
+- Prohibido os, sys, subprocess, socket, file I/O, red, eval, exec y __dunder__.
 `
 
-const eocodeInitialAtomicCSS = `# Reglas CSS
+const eocodeInitialAtomicStyles = `# Reglas CSS (solo en components/head.py)
 
+- Todo el CSS vive en components/head.py dentro de un bloque <style>.
 - Define variables en :root para colores, espaciado y tipografia.
-- Diseno responsive con flexbox y grid.
 - Usa rem para tipografia y espaciado; evita px para el texto.
-- Las vistas .view se ocultan con display:none y la activa se muestra con display:block.
+- Diseno responsive con flexbox y grid.
+- Las vistas .view se ocultan con display:none y la activa con display:block.
 - Incluye siempre @media print para US Letter vertical:
   @page { size: letter portrait; margin: 0.5in; }
   Oculta nav, botones y footer con display:none !important.
-  Muestra todas las vistas relevantes y evita cortes dentro de tarjetas con
-  break-inside: avoid; page-break-inside: avoid;
+  Evita cortes con break-inside: avoid; page-break-inside: avoid;
 `
 
-const eocodeInitialAtomicJS = `# Reglas JavaScript
+const eocodeInitialAtomicContent = `# Reglas de contenido (solo en components/body.py)
 
-- JavaScript vanilla, sin frameworks ni modulos externos.
-- Un router simple escucha clicks en [data-route] y activa el [data-view] correspondiente.
-- Usa funciones pequenas y con nombres claros.
-- Prefiere textContent sobre innerHTML para datos que vengan del usuario.
-- Para canvas, obten el contexto con getContext("2d") y dibuja tras DOMContentLoaded.
+- render_body() devuelve <body> con el contenido de la SPA.
+- Usa etiquetas semanticas: <header>, <nav>, <main>, <section>, <article>, <footer>.
+- Cada vista es un <section data-view="nombre">; solo la activa lleva class="active".
+- Los enlaces internos usan <button data-route="nombre"> y los resuelve el JS.
+- Referencia imagenes como assets/nombre.webp.
+- Para datos dinamicos usa formato de strings de Python (f-strings) con cuidado.
+`
+
+const eocodeInitialAtomicScripts = `# Reglas JavaScript (solo en components/bottom.py)
+
+- Todo el JavaScript vive en components/bottom.py dentro de un <script>.
+- render_bottom() devuelve <script>...</script></body></html>.
+- Vanilla JS (ES2020+), sin frameworks ni imports externos.
+- Un router simple escucha clicks en [data-route] y activa el [data-view] correcto.
+- Usa funciones pequenas y con nombres claros; usa textContent, no innerHTML.
 - Escucha DOMContentLoaded antes de consultar el DOM.
+- Para canvas, obten el contexto con getContext("2d") y dibuja tras DOMContentLoaded.
 `
 
 const eocodeInitialAtomicAssets = `# Reglas de assets
 
 - Imagenes en assets/. Referencia relativa: assets/nombre.webp o assets/nombre.gif.
 - Prefiere WebP para fotos; conserva GIF cuando necesites animacion.
-- SVG: inline si es pequeno o como archivo .svg si es reutilizable.
+- SVG: inline en el HTML generado o como archivo .svg si es reutilizable.
 - No subas binarios pesados: el limite es 8 MB y 2048 px por lado.
 `
 
-const eocodeInitialIndexHTML = `<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mi Portafolio</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <h1 class="site-title">Mi Portafolio</h1>
-      <nav class="site-nav" aria-label="Principal">
-        <button type="button" data-route="inicio" class="active">Inicio</button>
-        <button type="button" data-route="sobre-mi">Sobre mi</button>
-        <button type="button" data-route="proyectos">Proyectos</button>
-        <button type="button" data-route="contacto">Contacto</button>
-      </nav>
-    </header>
+const eocodeInitialSitePy = `"""SSR entry point for the portfolio site.
 
-    <main id="app">
-      <section data-view="inicio" class="view active">
-        <h2>Bienvenido</h2>
-        <p>Este es mi portafolio. Pidele al agente que lo construya contigo.</p>
-      </section>
+This module is the fixed entry: it imports the HTML component generators and
+returns the complete document as their concatenation. Do not change the
+architecture; add new components under components/ and document them in
+rules/index.md.
+"""
+from components.head import render_head
+from components.body import render_body
+from components.bottom import render_bottom
 
-      <section data-view="sobre-mi" class="view">
-        <h2>Sobre mi</h2>
-        <p>Aqui puedes contar quien eres y que te gusta.</p>
-      </section>
 
-      <section data-view="proyectos" class="view">
-        <h2>Proyectos</h2>
-        <p>Aqui van tus proyectos con imagenes y descripciones.</p>
-      </section>
+def render_page():
+    return render_head() + render_body() + render_bottom()
 
-      <section data-view="contacto" class="view">
-        <h2>Contacto</h2>
-        <p>Aqui puedes poner como contactarte.</p>
-      </section>
-    </main>
 
-    <footer class="site-footer">
-      <p>Hecho con eocode</p>
-    </footer>
-
-    <script src="app.js"></script>
-  </body>
-</html>
+if __name__ == "__main__":
+    print(render_page())
 `
 
-const eocodeInitialStylesCSS = `:root {
+const eocodeInitialComponentsInit = `"""HTML component generators for the eocode SSR site."""
+`
+
+const eocodeInitialHeadPy = `"""Head generator. This is the only place where CSS lives."""
+
+STYLES = """
+:root {
   --color-bg: #ffffff;
   --color-surface: #f4f4f5;
   --color-text: #18181b;
@@ -275,9 +291,70 @@ main,
     padding: 0;
   }
 }
+"""
+
+
+def render_head():
+    return (
+        "<!DOCTYPE html>"
+        '<html lang="es">'
+        "<head>"
+        '<meta charset="UTF-8">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        "<title>Mi Portafolio</title>"
+        "<style>" + STYLES + "</style>"
+        "</head>"
+    )
 `
 
-const eocodeInitialAppJS = `document.addEventListener("DOMContentLoaded", function () {
+const eocodeInitialBodyPy = `"""Body generator. It returns the page content and SPA views."""
+
+
+def render_body():
+    return """
+<body>
+  <header class="site-header">
+    <h1 class="site-title">Mi Portafolio</h1>
+    <nav class="site-nav" aria-label="Principal">
+      <button type="button" data-route="inicio" class="active">Inicio</button>
+      <button type="button" data-route="sobre-mi">Sobre mi</button>
+      <button type="button" data-route="proyectos">Proyectos</button>
+      <button type="button" data-route="contacto">Contacto</button>
+    </nav>
+  </header>
+
+  <main id="app">
+    <section data-view="inicio" class="view active">
+      <h2>Bienvenido</h2>
+      <p>Este es mi portafolio. Pidele al agente que lo construya contigo.</p>
+    </section>
+
+    <section data-view="sobre-mi" class="view">
+      <h2>Sobre mi</h2>
+      <p>Aqui puedes contar quien eres y que te gusta.</p>
+    </section>
+
+    <section data-view="proyectos" class="view">
+      <h2>Proyectos</h2>
+      <p>Aqui van tus proyectos con imagenes y descripciones.</p>
+    </section>
+
+    <section data-view="contacto" class="view">
+      <h2>Contacto</h2>
+      <p>Aqui puedes poner como contactarte.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Hecho con eocode</p>
+  </footer>
+"""
+`
+
+const eocodeInitialBottomPy = `"""Bottom generator. This is the only place where JavaScript lives."""
+
+SCRIPTS = """
+document.addEventListener("DOMContentLoaded", function () {
   var buttons = document.querySelectorAll("[data-route]");
   var views = document.querySelectorAll("[data-view]");
 
@@ -298,4 +375,24 @@ const eocodeInitialAppJS = `document.addEventListener("DOMContentLoaded", functi
 
   showView("inicio");
 });
+"""
+
+
+def render_bottom():
+    return "<script>" + SCRIPTS + "</script></body></html>"
 `
+
+var eocodeInitialFiles = map[string]string{
+	"site.py":                 eocodeInitialSitePy,
+	"components/__init__.py":  eocodeInitialComponentsInit,
+	"components/head.py":      eocodeInitialHeadPy,
+	"components/body.py":      eocodeInitialBodyPy,
+	"components/bottom.py":    eocodeInitialBottomPy,
+	"rules/constraints.md":    eocodeInitialConstraints,
+	"rules/index.md":          eocodeInitialRulesIndex,
+	"rules/atomic-ssr.md":     eocodeInitialAtomicSSR,
+	"rules/atomic-styles.md":  eocodeInitialAtomicStyles,
+	"rules/atomic-content.md": eocodeInitialAtomicContent,
+	"rules/atomic-scripts.md": eocodeInitialAtomicScripts,
+	"rules/atomic-assets.md":  eocodeInitialAtomicAssets,
+}

@@ -4,6 +4,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -46,6 +47,8 @@ type config struct {
 	EreportMaxPayloadBytes    int64
 	EoprojectMaxVideoBytes    int64
 	EoprojectMaxDocumentBytes int64
+	EocodePython              string
+	EocodeSSREnabled          bool
 	CalvinParagraphsRoot      string
 	PublicBaseURL             string
 	PublicArticlesOwnerEmail  string
@@ -213,6 +216,15 @@ func loadConfig() config {
 		publicArticlesOwner = "eduardooost@gmail.com"
 	}
 
+	eocodePython := strings.TrimSpace(os.Getenv("EOCODE_PYTHON"))
+	if eocodePython == "" {
+		if runtime.GOOS == "windows" {
+			eocodePython = "python"
+		} else {
+			eocodePython = "python3"
+		}
+	}
+
 	return config{
 		ListenAddr:                listenHost + ":" + port,
 		MongoURI:                  mongoURIFromEnv(),
@@ -242,6 +254,8 @@ func loadConfig() config {
 		EreportMaxPayloadBytes:    envInt64("EREPORT_MAX_PAYLOAD_BYTES", defaultMaxPayloadBytes),
 		EoprojectMaxVideoBytes:    envInt64("EOPROJECT_MAX_VIDEO_BYTES", defaultEoprojectMaxVideoBytes),
 		EoprojectMaxDocumentBytes: envInt64("EOPROJECT_MAX_DOCUMENT_BYTES", defaultEoprojectMaxDocBytes),
+		EocodePython:              eocodePython,
+		EocodeSSREnabled:          envBool("EOCODE_SSR_ENABLED", true),
 		CalvinParagraphsRoot:      calvinRoot,
 		PublicBaseURL:             publicBase,
 		PublicArticlesOwnerEmail:  publicArticlesOwner,

@@ -80,17 +80,22 @@ func (w *eocodeWorkspace) ensure() error {
 }
 
 var eocodeAllowedExt = map[string]bool{
-	".html": true, ".css": true, ".js": true, ".md": true, ".json": true,
+	".py": true, ".md": true, ".json": true, ".txt": true,
 	".svg": true, ".webp": true, ".gif": true, ".png": true, ".jpg": true,
-	".jpeg": true, ".txt": true,
+	".jpeg": true,
+}
+
+// eocodePreviewStaticExt is the subset served directly to the preview iframe.
+// Everything else (including .py source) must never be served.
+var eocodePreviewStaticExt = map[string]bool{
+	".svg": true, ".webp": true, ".gif": true, ".png": true, ".jpg": true, ".jpeg": true,
 }
 
 var eocodeProtectedFiles = map[string]bool{
-	"index.html":           true,
-	"styles.css":           true,
-	"app.js":               true,
-	"rules/constraints.md": true,
-	"rules/index.md":       true,
+	"site.py":              true,
+	"components/head.py":   true,
+	"components/body.py":   true,
+	"components/bottom.py": true,
 }
 
 func eocodeSafeRelPath(raw string) (string, bool) {
@@ -157,6 +162,9 @@ func (w *eocodeWorkspace) writeFile(rel, content string) error {
 	if !ok {
 		return fmt.Errorf("invalid path")
 	}
+	if safe == "rules/constraints.md" {
+		return fmt.Errorf("protected file")
+	}
 	full := w.fullPath(safe)
 	if err := os.MkdirAll(filepath.Dir(full), 0750); err != nil {
 		return err
@@ -198,13 +206,37 @@ type eocodeFileIndex struct {
 }
 
 var (
-	eocodeHTMLRefRe = regexp.MustCompile(`(?i)(?:href|src)\s*=\s*["']([^"']+)["']`)
-	eocodeCSSURLRe  = regexp.MustCompile(`(?i)url\(\s*["']?([^"')]+)`)
-	eocodeViewRe    = regexp.MustCompile(`(?i)data-(?:view|route)\s*=\s*["']([^"']+)["']`)
+	eocodeHTMLRefRe  = regexp.MustCompile(`(?i)(?:href|src)\s*=\s*["']([^"']+)["']`)
+	eocodeCSSURLRe   = regexp.MustCompile(`(?i)url\(\s*["']?([^"')]+)`)
+	eocodeViewRe     = regexp.MustCompile(`(?i)data-(?:view|route)\s*=\s*["']([^"']+)["']`)
+	eocodePyImportRe = regexp.MustCompile(`(?m)^\s*from\s+([A-Za-z_][\w.]*)\s+import\s+`)
 )
+
+// eocodePythonDeps maps `from components.x import y` to components/x.py so the
+// file index exposes the generator graph (site.py -> head/body/bottom).
+func eocodePythonDeps(content string) []string {
+	var out []string
+	seen := map[string]bool{}
+	for _, m := range eocodePyImportRe.FindAllStringSubmatch(content, -1) {
+		mod := m[1]
+		if !strings.HasPrefix(mod, "components") {
+			continue
+		}
+		rel := strings.ReplaceAll(mod, ".", "/") + ".py"
+		if seen[rel] {
+			continue
+		}
+		seen[rel] = true
+		out = append(out, rel)
+	}
+	sort.Strings(out)
+	return out
+}
 
 func eocodeFileType(rel string) string {
 	switch strings.ToLower(path.Ext(rel)) {
+	case ".py":
+		return "python"
 	case ".html":
 		return "html"
 	case ".css":
@@ -275,6 +307,10 @@ func (w *eocodeWorkspace) buildIndex() (*eocodeFileIndex, error) {
 			if content, readErr := w.readFile(rel); readErr == nil {
 				entry.Dependencies = eocodeLocalRefs(content, eocodeCSSURLRe)
 			}
+		case "python":
+			if content, readErr := w.readFile(rel); readErr == nil {
+				entry.Dependencies = eocodePythonDeps(content)
+			}
 		case "image":
 			index.Media = append(index.Media, rel)
 		case "rule":
@@ -342,14 +378,21 @@ func eocodeRelevantRule(rules eocodeRules, files []string) string {
 	var b strings.Builder
 	want := map[string]bool{}
 	for _, rel := range files {
-		switch strings.ToLower(path.Ext(rel)) {
-		case ".html", ".svg":
-			want["rules/atomic-html.md"] = true
-		case ".css":
-			want["rules/atomic-css.md"] = true
-		case ".js":
-			want["rules/atomic-js.md"] = true
-		case ".webp", ".gif", ".png", ".jpg", ".jpeg":
+		switch {
+		case strings.HasSuffix(rel, ".py"):
+			switch {
+			case strings.HasSuffix(rel, "head.py"):
+				want["rules/atomic-styles.md"] = true
+			case strings.HasSuffix(rel, "body.py"):
+				want["rules/atomic-content.md"] = true
+			case strings.HasSuffix(rel, "bottom.py"):
+				want["rules/atomic-scripts.md"] = true
+			default:
+				want["rules/atomic-ssr.md"] = true
+			}
+		case strings.HasSuffix(rel, ".svg"), strings.HasSuffix(rel, ".webp"),
+			strings.HasSuffix(rel, ".gif"), strings.HasSuffix(rel, ".png"),
+			strings.HasSuffix(rel, ".jpg"), strings.HasSuffix(rel, ".jpeg"):
 			want["rules/atomic-assets.md"] = true
 		}
 	}
@@ -375,8 +418,24 @@ func eocodeRelevantRule(rules eocodeRules, files []string) string {
 // Prompts
 // ---------------------------------------------------------------------------
 
+const eocodeArchitectureBlock = `# ARQUITECTURA FIJA (SSR Python) - NO LA CAMBIES
+El sitio es un motor SSR en Python. site.py importa y concatena:
+  components/head.py -> render_head()  (devuelve <!DOCTYPE html><html><head> con el <style>)
+  components/body.py -> render_body()  (devuelve <body> con el contenido)
+  components/bottom.py -> render_bottom() (devuelve <script>...</script></body></html>)
+El backend ejecuta site.py y devuelve su salida como el HTML del sitio.
+SOLO se trabaja con archivos .py. NO crees ni edites .html, .css ni .js.
+El CSS vive UNICAMENTE en components/head.py; el JavaScript UNICAMENTE en
+components/bottom.py. Las imagenes viven en assets/ y se referencian como
+assets/nombre.webp. Puedes anadir componentes .py nuevos, pero site.py debe seguir
+concatenando head + body + bottom y debes documentar cada generador en rules/index.md.
+Prohibido os, sys, subprocess, socket, open, eval, exec y atributos __dunder__.
+
+`
+
 func eocodeIdentifySystem(fileIndexJSON string, rules eocodeRules) string {
 	return "Eres el agente clasificador de eocode, un estudio de programacion para un nino.\n\n" +
+		eocodeArchitectureBlock +
 		"# WORKSPACE FILE INDEX\n" + fileIndexJSON + "\n\n" +
 		eocodeRulesPreamble(rules) + "\n\n" +
 		`# TU TAREA
@@ -390,11 +449,12 @@ Responde SOLO con un JSON valido, sin texto extra:
 Si type es "consult": text = respuesta clara en markdown.
 Si type es "coding": text = respuesta preliminar breve. Si algo no esta claro, haz preguntas de clarificacion y NO asumas. No generes codigo todavia.
 
-Nunca investigues temas externos. Si preguntan algo fuera de HTML/CSS/JS, pide que lo investiguen y ofrece publicarlo como contenido estatico.`
+Nunca investigues temas externos. Si preguntan algo fuera del sitio, pide que lo investiguen y ofrece publicarlo como contenido generado por Python.`
 }
 
 func eocodeAnalyzeSystem(fileIndexJSON string, rules eocodeRules) string {
 	return "Eres el agente planificador de eocode. El usuario quiere un cambio de codigo.\n\n" +
+		eocodeArchitectureBlock +
 		"# WORKSPACE FILE INDEX\n" + fileIndexJSON + "\n\n" +
 		eocodeRulesPreamble(rules) + "\n\n" +
 		`# TU TAREA
@@ -409,43 +469,49 @@ Devuelve un plan. Responde SOLO con JSON valido:
 }
 
 Reglas del plan:
-- Puedes crear, editar y borrar archivos.
-- Extensiones permitidas: .html .css .js .md .json .svg .webp .gif .png .jpg .jpeg .txt
+- Solo archivos .py (mas rules/*.md, .json, .svg y assets/).
+- Si el cambio es de estilos, edita components/head.py.
+- Si es de contenido, edita components/body.py.
+- Si es de comportamiento/JS, edita components/bottom.py.
+- Si creas un componente nuevo, documentalo en rules/index.md.
 - rules/constraints.md es fija: no la edites.
-- rules/index.md siempre se envia y se actualiza si anades o borras reglas atomicas.
-- Las reglas atomicas (rules/atomic-*.md) se editan, crean o borran segun haga falta.
+- rules/index.md siempre se envia y se actualiza si anades o borras reglas o generadores.
+- site.py y los componentes head/body/bottom no se borran.
 - Si necesitas clarificacion, deja las listas de archivos vacias y llena "questions".
 - No incluyas el contenido de los archivos en el plan, solo las rutas y el motivo.`
 }
 
 func eocodeEditSystem(rules eocodeRules) string {
 	return "Eres el agente codificador de eocode. Debes escribir el contenido COMPLETO de cada archivo.\n\n" +
+		eocodeArchitectureBlock +
 		eocodeRulesPreamble(rules) + "\n\n" +
 		`# TU TAREA
 Responde SOLO con JSON valido:
 {"files":[{"path":"...","content":"..."}]}
 
 Restricciones:
-- Solo HTML5, CSS3 y JavaScript vanilla (ES2020+). Sin frameworks, sin CDNs, sin build tools.
-- El sitio es una SPA: index.html carga styles.css y app.js; las vistas se cambian con JS.
+- SOLO archivos .py. Escribe Python valido que devuelva strings de HTML.
+- No crees .html, .css ni .js.
+- El CSS va en components/head.py; el JavaScript va en components/bottom.py.
 - Referencia imagenes como assets/nombre.webp (o .gif).
-- Incluye @media print optimizado para US Letter vertical (8.5in x 11in) en styles.css.
+- El HTML generado debe incluir @media print para US Letter vertical.
 - No dejes placeholders, TODO ni fragmentos elididos.
-- Escribe el contenido completo de cada archivo.
-- Puedes anadir o borrar reglas atomicas si el plan lo requiere.`
+- Escribe el contenido completo de cada archivo.`
 }
 
 func eocodeValidateSystem(rules eocodeRules, relevant string) string {
 	return "Eres el agente validador de eocode. Revisa los archivos recien escritos.\n\n" +
+		eocodeArchitectureBlock +
 		eocodeRulesPreamble(rules) + "\n\n" +
 		"# REGLA RELEVANTE\n" + relevant + "\n\n" +
 		`# TU TAREA
 Responde SOLO con JSON valido:
 {"needs_correction": true|false, "files":[{"path":"...","content":"contenido completo corregido"}], "notes":"notas breves"}
 
-- needs_correction = true solo si hay errores reales de HTML/CSS/JS, de rutas de assets o de impresion.
-- Si no hay que corregir, devuelve files vacio y needs_correction false.
-- Si corriges, escribe el contenido COMPLETO del archivo afectado.`
+- needs_correction = true solo si hay errores reales de Python, del HTML generado,
+  de rutas de assets o de impresion.
+- Selecciona los archivos por su extension .py y reescribelos completos.
+- Si no hay que corregir, devuelve files vacio y needs_correction false.`
 }
 
 // ---------------------------------------------------------------------------
@@ -678,7 +744,7 @@ func (a *App) eocodeStateHandler(w http.ResponseWriter, r *http.Request) {
 		"files":       index.Files,
 		"media":       index.Media,
 		"rules":       index.Rules,
-		"preview_url": "/api/eocode/preview/index.html",
+		"preview_url": "/api/eocode/preview/",
 		"rules_index": rules.Index,
 	})
 }
@@ -1131,16 +1197,34 @@ func (a *App) eocodePreviewHandler(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		return
 	}
-	raw := strings.TrimPrefix(r.PathValue("path"), "/")
-	if strings.TrimSpace(raw) == "" {
-		raw = "index.html"
+	ws := a.eocodeWorkspace(user.ID)
+	if err := ws.ensure(); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
 	}
+	raw := strings.TrimPrefix(r.PathValue("path"), "/")
+
+	// The document route runs the Python SSR entry and returns generated HTML.
+	if strings.TrimSpace(raw) == "" || strings.EqualFold(raw, "index.html") {
+		html, err := a.eocodeRenderSite(r.Context(), ws)
+		if err != nil {
+			a.mustLogf(r, "eocode.ssr.render_error", "err", redactLogValue(err.Error()))
+			a.writeSafeError(w, r, http.StatusBadGateway, "internal_error")
+			return
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Header().Set("Cache-Control", "private, no-store")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		_, _ = io.WriteString(w, html)
+		return
+	}
+
+	// Only image/svg assets are served directly; never Python or rule source.
 	safe, ok := eocodeSafeRelPath(raw)
-	if !ok {
+	if !ok || !eocodePreviewStaticExt[strings.ToLower(path.Ext(safe))] {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	ws := a.eocodeWorkspace(user.ID)
 	full := ws.fullPath(safe)
 	file, err := os.Open(full)
 	if err != nil {
@@ -1187,17 +1271,5 @@ func eocodeContentType(rel string) string {
 }
 
 // ---------------------------------------------------------------------------
-// Initial workspace files
+// Initial workspace files (see eocode_seed.go)
 // ---------------------------------------------------------------------------
-
-var eocodeInitialFiles = map[string]string{
-	"index.html":             eocodeInitialIndexHTML,
-	"styles.css":             eocodeInitialStylesCSS,
-	"app.js":                 eocodeInitialAppJS,
-	"rules/constraints.md":   eocodeInitialConstraints,
-	"rules/index.md":         eocodeInitialRulesIndex,
-	"rules/atomic-html.md":   eocodeInitialAtomicHTML,
-	"rules/atomic-css.md":    eocodeInitialAtomicCSS,
-	"rules/atomic-js.md":     eocodeInitialAtomicJS,
-	"rules/atomic-assets.md": eocodeInitialAtomicAssets,
-}

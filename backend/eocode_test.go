@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -80,17 +81,17 @@ func TestEocodeStateSeedsWorkspace(t *testing.T) {
 	if !body.IsAdmin {
 		t.Fatal("expected is_admin true")
 	}
-	if body.PreviewURL != "/api/eocode/preview/index.html" {
+	if body.PreviewURL != "/api/eocode/preview/" {
 		t.Fatalf("unexpected preview url %q", body.PreviewURL)
 	}
-	if body.RulesIndex == "" || !strings.Contains(body.RulesIndex, "atomic-html.md") {
+	if body.RulesIndex == "" || !strings.Contains(body.RulesIndex, "components/head.py") {
 		t.Fatalf("rules index not seeded: %q", body.RulesIndex)
 	}
 	paths := map[string]bool{}
 	for _, f := range body.Files {
 		paths[f.Path] = true
 	}
-	for _, want := range []string{"index.html", "styles.css", "app.js", "rules/constraints.md", "rules/index.md"} {
+	for _, want := range []string{"site.py", "components/head.py", "components/body.py", "components/bottom.py", "rules/constraints.md", "rules/index.md"} {
 		if !paths[want] {
 			t.Fatalf("missing seeded file %q in %v", want, paths)
 		}
@@ -119,27 +120,27 @@ func TestEocodeIdentifyConsult(t *testing.T) {
 
 func TestEocodeEditWritesFiles(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"custom.css","content":"body{color:red}"}]}`}
-	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"usa rojo","files_to_edit":[{"path":"custom.css","reason":"color"}]}`)
+	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"components/extra.py","content":"def render_extra():\n    return '<p>hola</p>'\n"}]}`}
+	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"usa rojo","files_to_edit":[{"path":"components/extra.py","reason":"color"}]}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
 	}
 	admin := app.mustUser("admin@eduardoos.com")
 	ws := app.eocodeWorkspace(admin.ID)
-	content, err := ws.readFile("custom.css")
+	content, err := ws.readFile("components/extra.py")
 	if err != nil {
 		t.Fatalf("written file missing: %v", err)
 	}
-	if content != "body{color:red}" {
+	if !strings.Contains(content, "render_extra") {
 		t.Fatalf("unexpected content %q", content)
 	}
 }
 
 func TestEocodeEditRejectsTraversal(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"../../evil.html","content":"x"}]}`}
-	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"x","files_to_edit":[{"path":"../../evil.html"}]}`)
+	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"../../evil.py","content":"x=1"}]}`}
+	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"x","files_to_edit":[{"path":"../../evil.py"}]}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code == http.StatusOK {
 		var body map[string]any
@@ -148,7 +149,7 @@ func TestEocodeEditRejectsTraversal(t *testing.T) {
 			t.Fatal("traversal edit must not succeed")
 		}
 	}
-	if _, err := os.Stat(filepath.Join(app.cfg.MediaRoot, "evil.html")); err == nil {
+	if _, err := os.Stat(filepath.Join(app.cfg.MediaRoot, "evil.py")); err == nil {
 		t.Fatal("traversal wrote outside workspace")
 	}
 }
@@ -207,15 +208,41 @@ func TestEocodeUploadConvertsToWebp(t *testing.T) {
 	}
 }
 
-func TestEocodePreviewServesSeededIndex(t *testing.T) {
+func TestEocodeEditStripsFence(t *testing.T) {
 	app := newTestApp(true)
-	// Seed the workspace first.
+	app.chat["deepseek"] = &recordingChat{
+		provider: "deepseek",
+		text:     "{\"files\":[{\"path\":\"components/body.py\",\"content\":\"```python\\ndef render_body():\\n    return '<body>x</body>'\\n```\"}]}",
+	}
+	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"cambia el body","files_to_edit":[{"path":"components/body.py"}]}`)
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
+	}
+	ws := app.eocodeWorkspace(app.mustUser("admin@eduardoos.com").ID)
+	content, err := ws.readFile("components/body.py")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(content, "```") {
+		t.Fatalf("code fence not stripped: %q", content)
+	}
+	if !strings.Contains(content, "render_body") {
+		t.Fatalf("edited content missing: %q", content)
+	}
+}
+
+func TestEocodePreviewRendersPythonSSR(t *testing.T) {
+	app := newTestApp(true)
+	if _, err := exec.LookPath(app.cfg.EocodePython); err != nil {
+		t.Skipf("python %q not available", app.cfg.EocodePython)
+	}
 	seedReq, seedRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/state")
 	app.Handler().ServeHTTP(seedRec, seedReq)
 	if seedRec.Code != http.StatusOK {
-		t.Fatalf("seed state: %d", seedRec.Code)
+		t.Fatalf("seed state: %d %s", seedRec.Code, seedRec.Body.String())
 	}
-	req, rec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/preview/index.html")
+	req, rec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/preview/")
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
@@ -223,51 +250,34 @@ func TestEocodePreviewServesSeededIndex(t *testing.T) {
 	if ct := rec.Header().Get("Content-Type"); !strings.Contains(ct, "text/html") {
 		t.Fatalf("expected html content type, got %q", ct)
 	}
-	if !strings.Contains(rec.Body.String(), "<!DOCTYPE html>") {
-		t.Fatal("preview did not serve index.html")
+	body := rec.Body.String()
+	if !strings.Contains(body, "<!DOCTYPE html>") || !strings.Contains(body, "Mi Portafolio") {
+		t.Fatalf("unexpected SSR output: %s", body)
 	}
 }
 
-func TestEocodeEditStripsFenceAndPreviewServesUpdate(t *testing.T) {
+func TestEocodeSSRBlocksForbiddenPython(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{
-		provider: "deepseek",
-		text:     "{\"files\":[{\"path\":\"styles.css\",\"content\":\"```css\\n:root{--color-bg:#0b1220}\\n```\"}]}",
-	}
-	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"cambia el fondo","files_to_edit":[{"path":"styles.css"}]}`)
-	app.Handler().ServeHTTP(rec, req)
-	if rec.Code != http.StatusOK {
-		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
-	}
 	ws := app.eocodeWorkspace(app.mustUser("admin@eduardoos.com").ID)
-	content, err := ws.readFile("styles.css")
-	if err != nil {
+	if err := ws.ensure(); err != nil {
 		t.Fatal(err)
 	}
-	if strings.Contains(content, "```") {
-		t.Fatalf("code fence not stripped: %q", content)
+	if err := ws.writeFile("components/evil.py", "import os\n"); err != nil {
+		t.Fatal(err)
 	}
-	if !strings.Contains(content, "#0b1220") {
-		t.Fatalf("edited content missing: %q", content)
-	}
-	getReq, getRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/preview/styles.css")
-	app.Handler().ServeHTTP(getRec, getReq)
-	if getRec.Code != http.StatusOK {
-		t.Fatalf("preview: expected 200, got %d", getRec.Code)
-	}
-	if !strings.Contains(getRec.Body.String(), "#0b1220") {
-		t.Fatalf("preview served stale content: %s", getRec.Body.String())
+	if _, err := app.eocodeRenderSite(context.Background(), ws); err == nil {
+		t.Fatal("expected forbidden import to block SSR execution")
 	}
 }
 
 func TestEocodeSafeRelPath(t *testing.T) {
-	bad := []string{"", "../a.html", "/etc/passwd", "a/../../b.html", "evil.exe", "a.svg.js.exe"}
+	bad := []string{"", "../a.html", "/etc/passwd", "a/../../b.py", "evil.exe", "index.html", "app.js", "styles.css"}
 	for _, in := range bad {
 		if got, ok := eocodeSafeRelPath(in); ok {
 			t.Fatalf("expected rejection for %q, got %q", in, got)
 		}
 	}
-	good := []string{"index.html", "assets/a.webp", "rules/atomic-css.md", "deep/path/app.js"}
+	good := []string{"site.py", "components/head.py", "assets/a.webp", "rules/atomic-ssr.md", "data.json"}
 	for _, in := range good {
 		if _, ok := eocodeSafeRelPath(in); !ok {
 			t.Fatalf("expected acceptance for %q", in)

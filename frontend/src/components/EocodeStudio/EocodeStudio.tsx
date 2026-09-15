@@ -344,7 +344,8 @@ export default function EocodeStudio() {
         <div className="eocode-log" ref={logRef}>
           {messages.length === 0 ? (
             <p className="hint">
-              Pidele al agente que programe tu portafolio. Solo HTML, CSS y JavaScript vanilla.
+              Pidele al agente que programe tu portafolio. El sitio es un motor SSR en
+              Python: el agente edita los generadores de HTML.
             </p>
           ) : null}
           {messages.map((item) => (
@@ -460,7 +461,7 @@ export default function EocodeStudio() {
             {files.map((file) => (
               <li key={file.path} className={`eocode-file eocode-file-${file.type}`}>
                 <span className="material-symbols-outlined" aria-hidden="true">
-                  {file.type === "html" ? "html" : file.type === "css" ? "css" : file.type === "js" ? "javascript" : file.type === "image" ? "image" : "description"}
+                  {file.type === "python" ? "code" : file.type === "image" ? "image" : file.type === "svg" ? "polyline" : file.type === "rule" ? "rule" : "description"}
                 </span>
                 {file.path}
               </li>

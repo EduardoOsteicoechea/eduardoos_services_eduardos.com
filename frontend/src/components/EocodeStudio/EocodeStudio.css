@@ -1,5 +1,20 @@
 /* eocode — agent coding studio (page surface, rem-only, shared tokens). */
 
+/* Full-bleed studio: drop the lateral main padding on this route only. */
+@media (min-width: 64rem) {
+  html[data-page="eocode"] main {
+    padding-left: var(--rail-width);
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 63.999rem) {
+  html[data-page="eocode"] main {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .eocode-gate [hidden],
 .eocode-studio [hidden] {
   display: none !important;
