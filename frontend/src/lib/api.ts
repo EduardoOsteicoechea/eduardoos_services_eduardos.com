@@ -301,18 +301,6 @@ function logApiFailure(
   if (path.includes("/auth/me") && status === 401) {
     return;
   }
-  // Missing/empty cart is an expected state, not a console error.
-  if (status === 404 && path.includes("/eostore/cart/")) {
-    console.log("[api.status]", {
-      method,
-      path,
-      status,
-      requestId,
-      error: data.error,
-      message: data.message || "cart empty or not found",
-    });
-    return;
-  }
   console.error("[api.error]", {
     method,
     path,

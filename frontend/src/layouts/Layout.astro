@@ -8,8 +8,6 @@ import "../styles/pamphlet-layout.css";
 import "../styles/pamphlet-hub.css";
 import "../styles/evoice.css";
 import "../styles/eoproject.css";
-import "../styles/eoadmin.css";
-import "../styles/eostore.css";
 import "../styles/apikeys.css";
 import "../styles/eduardoos.css";
 import "../components/HeaderDynamicMenu/HeaderDynamicMenu.css";
@@ -55,8 +53,6 @@ const privateByDefault =
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
   path.startsWith("/eoproject") ||
-  path.startsWith("/eoadmin") ||
-  path.startsWith("/eostore") ||
   path.startsWith("/eocode") ||
   path.startsWith("/payments");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
@@ -176,17 +172,6 @@ const jsonLdString =
           </div>
         ) : null}
         <div class="header-cluster header-cluster--tools" data-header-chrome>
-          <a
-            class="header-cart icon-btn"
-            href="/store"
-            data-route
-            data-cart-fab
-            hidden
-            aria-label="Open shopping cart"
-            title="Cart"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
-          </a>
           {!isPamphlet ? (
             <button class="header-dynamic icon-btn" type="button" aria-controls="dynamic-header" aria-expanded="false" aria-label={isEreport ? "Open tools" : "Open page actions"} title={isEreport ? "Open tools" : "Open page actions"}>
               <span class="material-symbols-outlined" aria-hidden="true">{isEreport ? "tune" : "space_dashboard"}</span>
@@ -231,17 +216,6 @@ const jsonLdString =
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
             <p class="sidebar-nav-label">Services</p>
-            <a
-              href="/store"
-              data-route
-              data-store-hub-nav
-              data-full-nav
-              aria-current={path === "/store" ? "page" : undefined}
-            >
-              <span class="material-symbols-outlined" aria-hidden="true">store</span>
-              Store
-            </a>
-            <div class="sidebar-nav-stores" data-eostore-nav data-full-nav aria-label="Company stores"></div>
             <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">payments</span>
               Subscriptions
@@ -278,10 +252,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
               eReport
             </a>
-            <a href="/eoadmin" data-route data-authed-only data-full-nav hidden aria-current={path === "/eoadmin" || path.startsWith("/eoadmin/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">payments</span>
-              eoadmin
-            </a>
             <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">api</span>
               API docs
@@ -292,14 +262,6 @@ const jsonLdString =
             <a href="/admin/users" data-route aria-current={path === "/admin/users" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">group</span>
               Users
-            </a>
-            <a href="/eoadmin/admin" data-route aria-current={path.startsWith("/eoadmin/admin") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">admin_panel_settings</span>
-              eoadmin board
-            </a>
-            <a href="/eostore" data-route aria-current={path === "/eostore" || path.startsWith("/eostore/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">storefront</span>
-              eostore
             </a>
             <a href="/admin/api" data-route aria-current={path === "/admin/api" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">key</span>
@@ -366,7 +328,6 @@ const jsonLdString =
           <div>
             <p class="site-footer__title">Services</p>
             <ul class="site-footer__list">
-              <li><a href="/store" data-route>Store</a></li>
               <li><a href="/payments/subscription" data-route>Subscriptions</a></li>
             </ul>
           </div>

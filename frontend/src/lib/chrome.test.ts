@@ -1,7 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMe } from "./api";
-import { companyIdFromPath, getCart, listPublicCompanies } from "./eostore";
-import { applyHeaderCartFab, applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
+import { applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
 import { go } from "./router";
 
@@ -9,18 +8,6 @@ vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
   return { ...actual, getMe: vi.fn() };
 });
-
-vi.mock("./eostore", () => ({
-  listPublicCompanies: vi.fn().mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } }),
-  companyIdFromPath: vi.fn().mockReturnValue(""),
-  companyCartHref: vi.fn((companyId: string) => `/store/${companyId}/cart`),
-  companyStoreHref: vi.fn((companyId: string) => `/store/${companyId}`),
-  getCart: vi.fn().mockResolvedValue({
-    status: 200,
-    requestId: "rid-cart",
-    data: { cart: { count: 0, items: [] } },
-  }),
-}));
 
 vi.mock("./serviceAccess", () => ({
   checkServiceAccess: vi.fn(),
@@ -39,8 +26,6 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
   const guestHidden = options.guestVisible === false ? "hidden" : "";
   const authedHidden = options.guestVisible === false ? "" : "hidden";
   document.body.innerHTML = `
-    <a href="/store/demo-co/cart" data-cart-fab hidden>Cart</a>
-    <a href="/store/demo-co/cart" data-cart-link hidden>Cart link</a>
     <aside id="main-menu">
       <a href="/session" data-guest-only ${guestHidden}>Sign in</a>
       <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
@@ -48,23 +33,18 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
       <a href="/about" data-full-nav>About</a>
       <a href="/contact">Contact</a>
-      <a href="/store" data-store-hub-nav data-full-nav>Store</a>
       <a href="/payments/subscription">Subscriptions</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
       <a href="/evoice" data-service="evoice" hidden>eVoice</a>
       <a href="/ereport" data-service="ereport" hidden>eReport</a>
       <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
-      <a href="/eoadmin" data-authed-only data-full-nav ${authedHidden}>eoadmin</a>
       <a href="/admin/users" data-admin-only hidden>Users</a>
-      <div data-eostore-nav data-full-nav></div>
     </aside>
   `;
 }
 
 describe("main-menu session chrome", () => {
   beforeEach(() => {
-    vi.mocked(companyIdFromPath).mockReturnValue("");
-    vi.mocked(listPublicCompanies).mockResolvedValue({ status: 200, requestId: "rid-store", data: { companies: [] } });
     window.__chromeStarted = false;
     mountChrome();
     vi.mocked(checkServiceAccess).mockResolvedValue({
@@ -140,8 +120,7 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector('[data-service="evoice"]') as HTMLElement).hidden).toBe(true);
   });
 
-
-  it("keeps the storefront for plain members but hides admin and marketing links", async () => {
+  it("keeps subscriptions and session links for plain members but hides marketing about and admin", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-plain",
@@ -155,19 +134,17 @@ describe("main-menu session chrome", () => {
     });
     await refreshAuthChrome();
     expect((document.querySelector('[href="/about"]') as HTMLElement).hidden).toBe(true);
-    expect((document.querySelector('[href="/store"]') as HTMLElement).hidden).toBe(false);
-    expect((document.querySelector("[data-eostore-nav]") as HTMLElement).hidden).toBe(false);
-    expect((document.querySelector('[href="/eoadmin"]') as HTMLElement).hidden).toBe(true);
     expect((document.querySelector('[href="/contact"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[href="/payments/subscription"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector("[data-admin-only]") as HTMLElement).hidden).toBe(true);
   });
 
-  it("does not redirect plain members away from a store route", async () => {
-    window.history.pushState({}, "", "/store/demo-co");
+  it("does not redirect plain members away from the subscription route", async () => {
+    window.history.pushState({}, "", "/payments/subscription");
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
-      requestId: "rid-plain-store",
+      requestId: "rid-plain-pay",
       data: { id: "member-3", role: "user" },
     });
     vi.mocked(checkServiceAccess).mockResolvedValue({
@@ -193,77 +170,9 @@ describe("main-menu session chrome", () => {
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
-  it("hides header cart when the cart is empty", async () => {
-    vi.mocked(getMe).mockResolvedValue({
-      status: 200,
-      requestId: "rid-admin-cart",
-      data: { id: "admin-1", role: "admin" },
-    });
-    await refreshAuthChrome();
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
-  });
-
-  it("shows header cart when the cart has payable items", async () => {
-    vi.mocked(companyIdFromPath).mockReturnValue("demo-co");
-    vi.mocked(listPublicCompanies).mockResolvedValue({
-      status: 200,
-      requestId: "rid-store-demo",
-      data: { companies: [{ id: "demo-co", name: "Demo" }] },
-    });
-    vi.mocked(getCart).mockResolvedValue({
-      status: 200,
-      requestId: "rid-cart-items",
-      data: { cart: { count: 1, items: [{ units: 2 }] } },
-    });
-    vi.mocked(getMe).mockResolvedValue({
-      status: 200,
-      requestId: "rid-admin-cart-show",
-      data: { id: "admin-1", role: "admin" },
-    });
-    await refreshAuthChrome();
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
-  });
-
-  it("shows header cart for plain members when the cart has payable items", async () => {
-    vi.mocked(companyIdFromPath).mockReturnValue("demo-co");
-    vi.mocked(listPublicCompanies).mockResolvedValue({
-      status: 200,
-      requestId: "rid-store-demo",
-      data: { companies: [{ id: "demo-co", name: "Demo" }] },
-    });
-    vi.mocked(getCart).mockResolvedValue({
-      status: 200,
-      requestId: "rid-cart-plain",
-      data: { cart: { count: 1, items: [{ units: 1 }] } },
-    });
-    vi.mocked(getMe).mockResolvedValue({
-      status: 200,
-      requestId: "rid-plain-cart",
-      data: { id: "member-2", role: "user" },
-    });
-    vi.mocked(checkServiceAccess).mockResolvedValue({
-      allowed: false,
-      isAdmin: false,
-      hasEntitlement: false,
-      isHomescoolStudent: false,
-    });
-    await refreshAuthChrome();
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
-  });
-
-  it("updates header cart visibility from applyHeaderCartFab", async () => {
-    vi.mocked(getMe).mockResolvedValue({
-      status: 200,
-      requestId: "rid-admin-apply",
-      data: { id: "admin-1", role: "admin" },
-    });
-    await refreshAuthChrome();
-    applyHeaderCartFab("demo-co", { count: 2, items: [{ units: 1 }] });
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(false);
-    expect((document.querySelector("[data-cart-link]") as HTMLElement).hidden).toBe(false);
-    applyHeaderCartFab("demo-co", { count: 0, items: [] });
-    expect((document.querySelector("[data-cart-fab]") as HTMLElement).hidden).toBe(true);
-    expect((document.querySelector("[data-cart-link]") as HTMLElement).hidden).toBe(true);
+  it("does not render a shopping cart control", () => {
+    expect(document.querySelector("[data-cart-fab]")).toBeNull();
+    expect(document.querySelector(".header-cart")).toBeNull();
   });
 
   it("restores session chrome after a client navigation swap", async () => {

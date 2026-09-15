@@ -50,9 +50,6 @@ type App struct {
 	evoiceFS        *evoiceFS
 	evoiceJobs      *evoiceJobStore
 	homescool       HomescoolStore
-	eoadmin         EoadminStore
-	eostore         EostoreStore
-	eostoreCart     EostoreCartStore
 	eoproject       eoprojectStore
 	eoprojectFS     *eoprojectFS
 	failClosedEnt   bool
@@ -112,9 +109,6 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		scrib:           openScribStore(store),
 		pamphlet:        openPamphletStore(store, cfg.MediaRoot),
 		homescool:       openHomescoolStore(store, cfg.MediaRoot),
-		eoadmin:         openEoadminStore(store),
-		eostore:         openEostoreStore(store),
-		eostoreCart:     openEostoreCartStore(store),
 		eoproject:       newEoprojectStoreFromDataStore(store),
 		eoprojectFS:     newEoprojectFS(cfg.EoprojectMediaRoot),
 		mailer:          smtpMailer{cfg: cfg},
@@ -328,10 +322,6 @@ func (a *App) Handler() http.Handler {
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)
-	a.registerEoadminRoutes(mux)
-	a.registerEostoreRoutes(mux)
-	a.registerEostoreShopRoutes(mux)
-	a.registerEostoreAPIRoutes(mux)
 	a.registerVoiceRoutes(mux)
 
 	return a.withObservability(mux)

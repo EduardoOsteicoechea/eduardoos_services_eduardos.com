@@ -4,218 +4,8 @@ import { sessionLog, sessionLogStorage } from "./dev-log";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { startVoiceChat } from "./voice";
-import {
-  companyCartHref,
-  companyIdFromPath,
-  companyStoreHref,
-  getCart,
-  listPublicCompanies,
-  type EostoreCart,
-} from "./eostore";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
-
-const EOSTORE_LAST_COMPANY_KEY = "eostore.lastCompanyId";
-
-function rememberEostoreCompany(companyId: string): void {
-  const id = companyId.trim();
-  if (!id) return;
-  try {
-    localStorage.setItem(EOSTORE_LAST_COMPANY_KEY, id);
-  } catch {
-    /* private mode / blocked storage */
-  }
-}
-
-function forgetEostoreCompany(companyId?: string): void {
-  try {
-    const current = (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
-    if (!companyId || current === companyId.trim()) {
-      localStorage.removeItem(EOSTORE_LAST_COMPANY_KEY);
-    }
-  } catch {
-    /* private mode / blocked storage */
-  }
-}
-
-function lastEostoreCompanyId(): string {
-  const fromPath = companyIdFromPath();
-  if (fromPath) {
-    rememberEostoreCompany(fromPath);
-    return fromPath;
-  }
-  try {
-    return (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
-  } catch {
-    return "";
-  }
-}
-
-type CartFabPolicy = { authed: boolean; allowCart: boolean };
-
-let cartFabPolicy: CartFabPolicy = { authed: false, allowCart: false };
-
-function setCartFabPolicy(authed: boolean, allowCart: boolean): void {
-  cartFabPolicy = { authed, allowCart };
-}
-
-function cartHasPayableItems(cart?: EostoreCart | null): boolean {
-  if (!cart) return false;
-  if ((cart.count ?? 0) > 0) return true;
-  return (cart.items || []).some((line) => line.units > 0);
-}
-
-const CART_CHROME_SELECTOR = "[data-cart-fab], [data-cart-link]";
-
-function applyCartFabHref(companyId: string): void {
-  const href = companyId ? companyCartHref(companyId) : "/store";
-  document.querySelectorAll(CART_CHROME_SELECTOR).forEach((node) => {
-    if (!(node instanceof HTMLAnchorElement)) return;
-    node.href = href;
-    node.title = companyId ? `Cart · ${companyId}` : "Cart · Store";
-    node.setAttribute("aria-label", companyId ? `Open cart for ${companyId}` : "Open shopping cart");
-  });
-}
-
-function setCartFabHidden(hidden: boolean): void {
-  document.querySelectorAll(CART_CHROME_SELECTOR).forEach((node) => {
-    if (node instanceof HTMLElement) {
-      node.hidden = hidden;
-    }
-  });
-}
-
-export function applyHeaderCartFab(companyId: string, cart?: EostoreCart | null): void {
-  if (companyId) {
-    rememberEostoreCompany(companyId);
-    applyCartFabHref(companyId);
-  }
-  const show =
-    cartFabPolicy.authed && cartFabPolicy.allowCart && Boolean(companyId) && cartHasPayableItems(cart);
-  setCartFabHidden(!show);
-}
-
-async function applyCartFetchResult(
-  companyId: string,
-  status: number,
-  cart?: EostoreCart | null,
-): Promise<void> {
-  if (status === 200) {
-    applyHeaderCartFab(companyId, cart ?? null);
-    sessionLog("chrome.cart.status", {
-      companyId,
-      status,
-      count: cart?.count ?? 0,
-      empty: !cartHasPayableItems(cart),
-    });
-    return;
-  }
-  if (status === 404) {
-    forgetEostoreCompany(companyId);
-    setCartFabHidden(true);
-    sessionLog("chrome.cart.status", { companyId, status, empty: true });
-    return;
-  }
-  setCartFabHidden(true);
-  sessionLog("chrome.cart.status", { companyId, status, empty: true });
-}
-
-async function syncCartFab(knownCompanyIds?: string[]): Promise<void> {
-  if (!cartFabPolicy.authed || !cartFabPolicy.allowCart) {
-    setCartFabHidden(true);
-    return;
-  }
-
-  let knownIds = knownCompanyIds;
-  if (knownIds === undefined) {
-    try {
-      const res = await listPublicCompanies();
-      knownIds =
-        res.status === 200
-          ? (res.data.companies || []).map((c) => c.id).filter(Boolean)
-          : [];
-    } catch {
-      knownIds = [];
-    }
-  }
-
-  const known = new Set(knownIds.map((id) => id.trim()).filter(Boolean));
-
-  let companyId = (companyIdFromPath() || "").trim();
-  if (!companyId) {
-    try {
-      companyId = (localStorage.getItem(EOSTORE_LAST_COMPANY_KEY) || "").trim();
-    } catch {
-      companyId = "";
-    }
-  }
-  // Only fetch carts for companies that exist in the public catalog.
-  // Clears poisoned localStorage ids (e.g. article UUIDs) without a 404.
-  if (companyId && !known.has(companyId)) {
-    forgetEostoreCompany(companyId);
-    sessionLog("chrome.cart.status", {
-      companyId,
-      empty: true,
-      skipped: "unknown_company",
-    });
-    companyId = "";
-  }
-  if (!companyId && known.size === 1) {
-    companyId = [...known][0];
-  }
-  if (!companyId) {
-    setCartFabHidden(true);
-    return;
-  }
-
-  rememberEostoreCompany(companyId);
-  try {
-    const res = await getCart(companyId);
-    await applyCartFetchResult(companyId, res.status, res.data.cart);
-  } catch {
-    setCartFabHidden(true);
-  }
-}
-
-/** Refresh header cart icon after store cart changes (or on auth chrome load). */
-export async function refreshHeaderCartFab(
-  companyId?: string,
-  cart?: EostoreCart | null,
-): Promise<void> {
-  if (companyId !== undefined) {
-    if (cart !== undefined) {
-      applyHeaderCartFab(companyId, cart);
-      sessionLog("chrome.cart.status", {
-        companyId,
-        status: 200,
-        count: cart?.count ?? 0,
-        empty: !cartHasPayableItems(cart),
-      });
-      return;
-    }
-    try {
-      const res = await getCart(companyId);
-      await applyCartFetchResult(companyId, res.status, res.data.cart);
-    } catch {
-      setCartFabHidden(true);
-    }
-    return;
-  }
-  await syncCartFab();
-}
-
-/** Re-sync the global store links and cart after catalog changes (add/delete store). */
-export async function refreshStoreChrome(): Promise<void> {
-  await syncEostoreNav({ syncCart: true });
-}
-
-function syncStaticStoreNav(companyCount: number): void {
-  document.querySelectorAll("[data-store-hub-nav]").forEach((node) => {
-    if (!(node instanceof HTMLElement)) return;
-    // One storefront entry per company; hide the generic hub when companies exist.
-    node.hidden = companyCount > 0;
-  });
-}
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
@@ -294,10 +84,6 @@ function syncExpanded(): void {
 
 function isEreportPage(): boolean {
   return (document.documentElement.dataset.page || "").startsWith("ereport");
-}
-
-function isCompactChrome(): boolean {
-  return window.matchMedia("(max-width: 63.999rem)").matches;
 }
 
 function closeAllPanels(except?: string): void {
@@ -402,8 +188,7 @@ function scheduleSessionRefresh(): void {
   sessionRefreshTimer = setInterval(() => {
     void refreshSession().then((result) => {
       if (result.status === 200 && result.data.id) {
-        // Session keepalive only — do not re-poll the cart.
-        void refreshAuthChrome({ syncCart: false });
+        void refreshAuthChrome();
         return;
       }
       clearSessionRefreshTimer();
@@ -418,7 +203,7 @@ function scheduleSessionRefresh(): void {
       sessionLog("chrome.visibility.refresh");
       void refreshSession().then((result) => {
         if (result.status === 200 && result.data.id) {
-          void refreshAuthChrome({ syncCart: false });
+          void refreshAuthChrome();
         }
       });
     });
@@ -476,63 +261,6 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   });
 }
 
-async function syncEostoreNav(opts: { syncCart?: boolean } = {}): Promise<void> {
-  const syncCart = opts.syncCart !== false;
-  const hosts = document.querySelectorAll("[data-eostore-nav]");
-  let companyIds: string[] = [];
-  if (!hosts.length) {
-    syncStaticStoreNav(0);
-    if (syncCart) await syncCartFab();
-    return;
-  }
-  try {
-    const res = await listPublicCompanies();
-    const companies = res.status === 200 ? res.data.companies || [] : [];
-    companyIds = companies.map((c) => c.id).filter(Boolean);
-    syncStaticStoreNav(companies.length);
-    if (companies.length === 1) {
-      rememberEostoreCompany(companies[0].id);
-    }
-    const activeId = companyIdFromPath();
-    const path = window.location.pathname.replace(/\/+$/, "") || "/";
-    hosts.forEach((host) => {
-      if (!(host instanceof HTMLElement)) return;
-      host.replaceChildren();
-      if (!companies.length) {
-        const hint = document.createElement("p");
-        hint.className = "sidebar-nav-hint";
-        hint.textContent = "No store companies yet.";
-        host.appendChild(hint);
-        return;
-      }
-      companies.forEach((company) => {
-        if (!company.id) return;
-        const href = companyStoreHref(company.id);
-        const link = document.createElement("a");
-        link.href = href;
-        link.setAttribute("data-route", "");
-        link.setAttribute("data-eostore-company", company.id);
-        if (activeId === company.id || path === href || path.startsWith(`/store/${encodeURIComponent(company.id)}`)) {
-          link.setAttribute("aria-current", "page");
-          rememberEostoreCompany(company.id);
-        }
-        const icon = document.createElement("span");
-        icon.className = "material-symbols-outlined";
-        icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "storefront";
-        link.append(icon, document.createTextNode(company.name || company.id));
-        host.appendChild(link);
-      });
-    });
-    sessionLog("chrome.eostoreNav", { count: companies.length, ids: companies.map((c) => c.id) });
-  } catch {
-    syncStaticStoreNav(0);
-    sessionLog("chrome.eostoreNav.error");
-  }
-  if (syncCart) await syncCartFab(companyIds);
-}
-
-
 function plainUserBlockedPath(pathname: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (path === "/" || path === "/contact") return false;
@@ -553,8 +281,6 @@ function plainUserBlockedPath(pathname: string): boolean {
   return (
     path === "/about" ||
     path.includes("calvins-institutes") ||
-    path.startsWith("/eoadmin") ||
-    path.startsWith("/eostore") ||
     path.startsWith("/admin")
   );
 }
@@ -574,9 +300,8 @@ function enforceGuestInstitutesAccess(authed: boolean): void {
   go("/session");
 }
 
-export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Promise<void> {
-  const syncCart = opts.syncCart !== false;
-  sessionLog("chrome.refreshAuth.start", { syncCart });
+export async function refreshAuthChrome(): Promise<void> {
+  sessionLog("chrome.refreshAuth.start", {});
   const { status, data } = await getMe();
   const authed = status === 200 && Boolean(data.id);
   const isAdmin = authed && data.role === "admin";
@@ -605,14 +330,12 @@ export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Prom
       node.hidden = !isAdmin;
     }
   });
-  // Guests + admins keep marketing/store; Institutes and eoadmin need auth (admins via full-nav).
-  // Plain members keep the storefront (stores + cart) plus session links.
+  // Guests and admins keep marketing links. Institutes stay auth-gated.
+  // Plain members keep subscriptions and session links; this site has no storefront.
   document.querySelectorAll("[data-full-nav]").forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (isPlainUser) {
-      const storeSurface =
-        node.hasAttribute("data-eostore-nav") || node.hasAttribute("data-store-hub-nav");
-      node.hidden = !storeSurface;
+      node.hidden = true;
       return;
     }
     if (node.hasAttribute("data-authed-only")) {
@@ -625,9 +348,7 @@ export async function refreshAuthChrome(opts: { syncCart?: boolean } = {}): Prom
     }
     node.hidden = false;
   });
-  setCartFabPolicy(authed, true);
   await syncSubscriptionNav(isAdmin, authed);
-  await syncEostoreNav({ syncCart });
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {

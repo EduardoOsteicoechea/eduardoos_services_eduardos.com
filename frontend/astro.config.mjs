@@ -26,10 +26,6 @@ export default defineConfig({
         !page.includes("/evoice") &&
         !page.includes("/eoproject") &&
         !page.includes("/eocode") &&
-        !page.includes("/eoadmin") &&
-        !page.includes("/eostore") &&
-        !page.includes("/store/company") &&
-        !page.includes("/store/product") &&
         !page.includes("/payments") &&
         !page.includes("/dashboard/latin") &&
         !page.includes("calvins-institutes"),

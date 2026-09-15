@@ -1315,7 +1315,7 @@ section.diag .panel:not(form) {
 
   /*
    * Phone/tablet (all routes): bar end-aligned; order =
-   * [eReport guest auth when visible] → AI → session avatar → cart →
+   * [eReport guest auth when visible] → AI → session avatar →
    * dynamic actions → menu (menu flush end).
    */
   .header-cluster--menu,
@@ -1333,10 +1333,6 @@ section.diag .panel:not(form) {
 
   .header-session:not([hidden]) {
     order: 2;
-  }
-
-  .header-cart {
-    order: 3;
   }
 
   .header-dynamic {
