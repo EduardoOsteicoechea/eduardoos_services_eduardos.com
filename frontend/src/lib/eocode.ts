@@ -141,7 +141,7 @@ export async function identifyEocode(message: string, signal?: AbortSignal): Pro
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/identify", { message }, { timeoutMs: 70000, signal });
+  }>("/eocode/identify", { message }, { timeoutMs: 90000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not reply.", detail: data.detail };
   }
@@ -160,7 +160,7 @@ export async function analyzeEocode(message: string, signal?: AbortSignal): Prom
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/analyze", { message }, { timeoutMs: 85000, signal });
+  }>("/eocode/analyze", { message }, { timeoutMs: 120000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not plan the change.", detail: data.detail };
   }
@@ -200,7 +200,7 @@ export async function editEocode(
       new_files: plan.new_files,
       delete_files: plan.delete_files,
     },
-    { timeoutMs: 140000, signal },
+    { timeoutMs: 320000, signal },
   );
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not write the files.", detail: data.detail };
@@ -231,7 +231,7 @@ export async function validateEocode(
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/validate", { message, files }, { timeoutMs: 140000, signal });
+  }>("/eocode/validate", { message, files }, { timeoutMs: 320000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not validate the change.", detail: data.detail };
   }

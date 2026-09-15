@@ -207,7 +207,7 @@ func (c openAICompatClient) completeWith(ctx context.Context, system string, his
 	defer resp.Body.Close()
 	raw, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return ChatResult{}, fmt.Errorf("provider unavailable")
+		return ChatResult{}, fmt.Errorf("provider status %d: %s", resp.StatusCode, sanitizeModelTextMax(string(raw), 300))
 	}
 	var parsed struct {
 		Choices []struct {
@@ -425,5 +425,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 }
 
 func newHTTPClient() *http.Client {
-	return &http.Client{Timeout: 45 * time.Second}
+	// Long generations (e.g. eocode writing full files) can exceed a minute;
+	// each handler still bounds the call with its own context deadline.
+	return &http.Client{Timeout: 300 * time.Second}
 }

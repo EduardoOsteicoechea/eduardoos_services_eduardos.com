@@ -860,7 +860,7 @@ func (a *App) eocodeErrorReply(w http.ResponseWriter, r *http.Request, code, mes
 func eocodeSnippet(s string, max int) string {
 	s = strings.TrimSpace(s)
 	if len(s) > max {
-		return s[:max] + "…"
+		return s[:max] + "..."
 	}
 	return s
 }
@@ -1115,7 +1115,7 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 
 	system := eocodeEditSystem(rules) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := []ChatMessage{{Role: "user", Content: userMsg.String()}}
-	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
+	ctx, cancel := context.WithTimeout(r.Context(), 290*time.Second)
 	defer cancel()
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensEdit)
 	if err != nil {
@@ -1244,7 +1244,7 @@ func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	system := eocodeValidateSystem(rules, relevant) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := []ChatMessage{{Role: "user", Content: userMsg.String()}}
-	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
+	ctx, cancel := context.WithTimeout(r.Context(), 290*time.Second)
 	defer cancel()
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensValidate)
 	if err != nil {
