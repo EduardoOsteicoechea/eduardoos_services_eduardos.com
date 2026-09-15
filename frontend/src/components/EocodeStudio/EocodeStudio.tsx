@@ -14,6 +14,7 @@ import {
   validateEocode,
   type EocodeFileEntry,
 } from "../../lib/eocode";
+import { mustLog } from "../../lib/dev-log";
 import { renderMarkdown } from "../../lib/markdown";
 import {
   enqueueVoiceAudio,
@@ -24,6 +25,8 @@ import {
 } from "../../lib/voice";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "./EocodeStudio.css";
+
+const COMPACT_MQ = "(max-width: 63.999rem)";
 
 type ChatRole = "user" | "assistant";
 
@@ -105,6 +108,7 @@ export default function EocodeStudio() {
   const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const [historyLoaded, setHistoryLoaded] = useState(false);
+  const [chatVisible, setChatVisible] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const previewPaneRef = useRef<HTMLElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
@@ -320,6 +324,50 @@ export default function EocodeStudio() {
     }
   }, []);
 
+  const isCompact = useCallback(() => {
+    return window.matchMedia(COMPACT_MQ).matches;
+  }, []);
+
+  const toggleChat = useCallback(() => {
+    setChatVisible((prev) => {
+      const next = !prev;
+      if (mustLog) {
+        console.log("[eocode]", "chat.visible", { visible: next });
+      }
+      return next;
+    });
+  }, []);
+
+  const hideChat = useCallback(() => {
+    setChatVisible((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      if (mustLog) {
+        console.log("[eocode]", "chat.visible", { visible: false });
+      }
+      return false;
+    });
+  }, []);
+
+  // Compact overlay: Escape and the dimmed preview close the chat sidebar.
+  useEffect(() => {
+    if (!chatVisible) {
+      return;
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !isCompact()) {
+        return;
+      }
+      if (document.documentElement.dataset.trayOpen) {
+        return;
+      }
+      hideChat();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [chatVisible, hideChat, isCompact]);
+
   const send = useCallback(async () => {
     if (busy) return;
     const text = draft.trim();
@@ -522,6 +570,22 @@ export default function EocodeStudio() {
             }
           }}
         >
+          <button
+            className="dhs-action"
+            type="button"
+            aria-pressed={chatVisible}
+            aria-controls="eocode-chat-pane"
+            title={chatVisible ? "Ocultar chat" : "Mostrar chat"}
+            aria-label={chatVisible ? "Ocultar chat" : "Mostrar chat"}
+            onClick={toggleChat}
+          >
+            <span className="icon-btn" aria-hidden="true">
+              <span className="material-symbols-outlined" aria-hidden="true">
+                {chatVisible ? "left_panel_close" : "left_panel_open"}
+              </span>
+            </span>
+            {chatVisible ? "Ocultar chat" : "Mostrar chat"}
+          </button>
           <button className="dhs-action" type="button" title="Nuevo chat" aria-label="Nuevo chat" onClick={newChat}>
             <span className="icon-btn" aria-hidden="true">
               <span className="material-symbols-outlined" aria-hidden="true">add_comment</span>
@@ -562,9 +626,22 @@ export default function EocodeStudio() {
 
   return (
     <>
-      <div className="eocode-studio">
+      <div className={`eocode-studio${chatVisible ? "" : " eocode-studio--chat-hidden"}`}>
         {eocodeHeaderMenu}
-        <section className="eocode-chat-pane" aria-label="Chat de programacion">
+        {chatVisible ? (
+          <button
+            type="button"
+            className="eocode-chat-backdrop"
+            aria-label="Cerrar chat"
+            onClick={hideChat}
+          />
+        ) : null}
+        <section
+          id="eocode-chat-pane"
+          className="eocode-chat-pane"
+          aria-label="Chat de programacion"
+          hidden={!chatVisible}
+        >
         <div className="eocode-log" ref={logRef}>
           {messages.length === 0 ? (
             <p className="hint">

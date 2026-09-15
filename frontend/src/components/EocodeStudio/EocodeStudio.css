@@ -64,8 +64,18 @@
   flex: 0 0 var(--eocode-chat-width);
 }
 
+.eocode-studio--chat-hidden .eocode-chat-pane,
+.eocode-chat-pane[hidden] {
+  display: none !important;
+}
+
 .eocode-preview-pane {
   flex: 1;
+}
+
+/* Compact overlay uses this; desktop keeps the inline pane with no dimmer. */
+.eocode-chat-backdrop {
+  display: none;
 }
 
 .eocode-fields {
@@ -297,23 +307,56 @@
   padding: var(--space-padding);
 }
 
+/* Tablet: chat as a left overlay (~50% of the 16-col canvas). */
 @media (max-width: 63.999rem) {
   .eocode-studio {
-    flex-direction: column;
-    height: auto;
+    --eocode-chat-width: calc(
+      (var(--span-half) / var(--page-col-count)) *
+        (var(--content-basis) - ((var(--page-col-count) - 1) * var(--page-gutter))) +
+        ((var(--span-half) - 1) * var(--page-gutter))
+    );
+    height: 41.25rem;
     max-height: 41.25rem;
   }
 
-  .eocode-chat-pane {
-    flex: 0 0 auto;
+  .eocode-chat-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-content);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: color-mix(in srgb, var(--color-text) 28%, transparent);
+    cursor: pointer;
   }
 
-  .eocode-chat-pane .eocode-log {
-    min-height: 16rem;
-    max-height: 24rem;
+  .eocode-chat-pane {
+    position: fixed;
+    z-index: calc(var(--z-content) + 1);
+    top: var(--mobile-header-height);
+    bottom: 0;
+    left: 0;
+    flex: none;
+    width: var(--eocode-chat-width);
+    padding: var(--space-padding);
+    background: var(--color-surface);
+    border-right: var(--border-width) solid var(--color-border);
+    overflow: hidden;
   }
 
   .eocode-view {
-    min-height: 24rem;
+    min-height: 0;
+  }
+}
+
+/* Phone: chat overlay ~70% of the 8-col canvas (span two-thirds). */
+@media (max-width: 47.999rem) {
+  .eocode-studio {
+    --eocode-chat-width: calc(
+      (var(--span-two-thirds) / var(--page-col-count)) *
+        (var(--content-basis) - ((var(--page-col-count) - 1) * var(--page-gutter))) +
+        ((var(--span-two-thirds) - 1) * var(--page-gutter))
+    );
   }
 }
