@@ -3,10 +3,13 @@ import { createPortal } from "react-dom";
 import { synthesizeVoice } from "../../lib/api";
 import {
   analyzeEocode,
+  clearEocodeHistory,
   editEocode,
   fetchEocodeFile,
+  fetchEocodeHistory,
   fetchEocodeState,
   identifyEocode,
+  saveEocodeHistory,
   uploadEocodeAsset,
   validateEocode,
   type EocodeFileEntry,
@@ -101,6 +104,7 @@ export default function EocodeStudio() {
   const [stage, setStage] = useState("");
   const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
   const [dragActive, setDragActive] = useState(false);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const previewPaneRef = useRef<HTMLElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
@@ -110,6 +114,7 @@ export default function EocodeStudio() {
   const voiceCaptionRef = useRef<HTMLParagraphElement | null>(null);
   const messagesRef = useRef<ChatMessage[]>([]);
   const nextId = useRef(1);
+  const controllerRef = useRef<AbortController | null>(null);
   const hdsHost = useHeaderDynamicHost("eocode-header-menu");
 
   const loadState = useCallback(async () => {
@@ -162,6 +167,39 @@ export default function EocodeStudio() {
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
+
+  // Restore the persisted conversation so a reload keeps the same chat.
+  useEffect(() => {
+    if (access !== "ok") {
+      return;
+    }
+    let cancelled = false;
+    void (async () => {
+      const turns = await fetchEocodeHistory();
+      if (cancelled) {
+        return;
+      }
+      if (turns.length) {
+        setMessages(turns.map((turn, index) => ({ id: index + 1, role: turn.role, content: turn.content })));
+        nextId.current = turns.length + 1;
+      }
+      setHistoryLoaded(true);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [access]);
+
+  // Persist the conversation when it settles (never mid-turn).
+  useEffect(() => {
+    if (access !== "ok" || !historyLoaded || busy) {
+      return;
+    }
+    const turns = messages
+      .filter((message) => message.content.trim())
+      .map((message) => ({ role: message.role, content: message.content }));
+    void saveEocodeHistory(turns);
+  }, [messages, busy, access, historyLoaded]);
 
   useEffect(() => {
     const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
@@ -257,8 +295,13 @@ export default function EocodeStudio() {
     setMessages([]);
     setStage("");
     setViewFile(null);
+    void clearEocodeHistory();
     void loadState();
   }, [loadState]);
+
+  const cancelRun = useCallback(() => {
+    controllerRef.current?.abort();
+  }, []);
 
   const reloadSite = useCallback(() => {
     setViewFile(null);
@@ -291,14 +334,39 @@ export default function EocodeStudio() {
     pushMessage("user", text || "Imagen adjunta", attached);
     pushMessage("assistant", "");
     setBusy(true);
+    const controller = new AbortController();
+    controllerRef.current = controller;
+    const maxAttempts = 3;
+    const runStage = async <T extends { ok: boolean }>(
+      label: string,
+      call: (signal: AbortSignal) => Promise<T>,
+    ): Promise<T> => {
+      setStage(label);
+      let result = await call(controller.signal);
+      for (let attempt = 1; attempt < maxAttempts && !result.ok; attempt += 1) {
+        if (controller.signal.aborted) {
+          break;
+        }
+        setStage(`${label} — reintento ${attempt}/2...`);
+        await new Promise((resolve) => setTimeout(resolve, 700 * attempt));
+        if (controller.signal.aborted) {
+          break;
+        }
+        result = await call(controller.signal);
+      }
+      return result;
+    };
     let finalText = "";
     const setAssistant = (next: string) => {
       finalText = next;
       patchLastAssistant(next);
     };
     try {
-      setStage("Clasificando la peticion...");
-      const identified = await identifyEocode(withAssets);
+      const identified = await runStage("Clasificando la peticion...", (signal) => identifyEocode(withAssets, signal));
+      if (controller.signal.aborted) {
+        setAssistant("Cancelado.");
+        return;
+      }
       if (!identified.ok) {
         setAssistant(withDetail(identified.message, identified.detail));
         return;
@@ -308,8 +376,11 @@ export default function EocodeStudio() {
         void speakReply(finalText);
         return;
       }
-      setStage("Analizando el cambio...");
-      const analyzed = await analyzeEocode(withAssets);
+      const analyzed = await runStage("Analizando el cambio...", (signal) => analyzeEocode(withAssets, signal));
+      if (controller.signal.aborted) {
+        setAssistant("Cancelado.");
+        return;
+      }
       if (!analyzed.ok) {
         setAssistant(withDetail(analyzed.message, analyzed.detail));
         return;
@@ -330,8 +401,11 @@ export default function EocodeStudio() {
       if (!targets.length && plan.delete_files.length === 0) {
         return;
       }
-      setStage("Escribiendo archivos...");
-      const edited = await editEocode(withAssets, plan);
+      const edited = await runStage("Escribiendo archivos...", (signal) => editEocode(withAssets, plan, signal));
+      if (controller.signal.aborted) {
+        setAssistant("Cancelado.");
+        return;
+      }
       if (!edited.ok) {
         setAssistant(`${summary}\n\n${withDetail(edited.message, edited.detail)}`);
         return;
@@ -352,9 +426,10 @@ export default function EocodeStudio() {
       }
       setAssistant(done);
       if (written.length) {
-        setStage("Validando el cambio...");
-        const validated = await validateEocode(withAssets, written);
-        if (!validated.ok) {
+        const validated = await runStage("Validando el cambio...", (signal) => validateEocode(withAssets, written, signal));
+        if (controller.signal.aborted) {
+          setAssistant(`${done}\n\nCancelado.`);
+        } else if (!validated.ok) {
           setAssistant(`${done}\n\n${withDetail(validated.message, validated.detail)}`);
         } else {
           let tail = "";
@@ -374,6 +449,7 @@ export default function EocodeStudio() {
     } catch {
       setAssistant("Algo salio mal. Intenta de nuevo.");
     } finally {
+      controllerRef.current = null;
       setBusy(false);
       setStage("");
     }
@@ -618,12 +694,13 @@ export default function EocodeStudio() {
                 </button>
                 <button
                   className="btn btn--primary eocode-send"
-                  type="submit"
-                  disabled={busy || (!draft.trim() && pendingAssets.length === 0)}
-                  aria-label="Enviar"
-                  title="Enviar"
+                  type={busy ? "button" : "submit"}
+                  onClick={busy ? cancelRun : undefined}
+                  disabled={!busy && !draft.trim() && pendingAssets.length === 0}
+                  aria-label={busy ? "Detener" : "Enviar"}
+                  title={busy ? "Detener" : "Enviar"}
                 >
-                  <span className="material-symbols-outlined" aria-hidden="true">send</span>
+                  <span className="material-symbols-outlined" aria-hidden="true">{busy ? "stop" : "send"}</span>
                 </button>
               </div>
             </div>

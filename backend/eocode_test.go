@@ -29,6 +29,66 @@ func eocodeGet(t *testing.T, app *App, email, path string) (*http.Request, *http
 	return req, httptest.NewRecorder()
 }
 
+func eocodeRequest(t *testing.T, app *App, email, method, path, body string) (*http.Request, *httptest.ResponseRecorder) {
+	t.Helper()
+	seed := httptest.NewRecorder()
+	sess, err := app.issueSession(seed, app.mustUser(email))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var reader *strings.Reader
+	if body != "" {
+		reader = strings.NewReader(body)
+	}
+	var req *http.Request
+	if reader != nil {
+		req = httptest.NewRequest(method, path, reader)
+		req.Header.Set("Content-Type", "application/json")
+	} else {
+		req = httptest.NewRequest(method, path, nil)
+	}
+	req.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	req.Header.Set("X-CSRF-Token", sess.CSRF)
+	copyCookies(req, seed)
+	return req, httptest.NewRecorder()
+}
+
+func TestEocodeHistoryRoundTrip(t *testing.T) {
+	app := newTestApp(true)
+	seedReq, seedRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/state")
+	app.Handler().ServeHTTP(seedRec, seedReq)
+	if seedRec.Code != http.StatusOK {
+		t.Fatalf("seed: %d", seedRec.Code)
+	}
+
+	saveReq, saveRec := eocodeRequest(t, app, "admin@eduardoos.com", http.MethodPut, "/api/eocode/history", `{"turns":[{"role":"user","content":"hola"},{"role":"assistant","content":"que tal"}]}`)
+	app.Handler().ServeHTTP(saveRec, saveReq)
+	if saveRec.Code != http.StatusOK {
+		t.Fatalf("save: %d %s", saveRec.Code, saveRec.Body.String())
+	}
+
+	getReq, getRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/history")
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("get: %d", getRec.Code)
+	}
+	var body struct {
+		Turns []eocodeChatTurn `json:"turns"`
+	}
+	if err := json.NewDecoder(getRec.Body).Decode(&body); err != nil {
+		t.Fatal(err)
+	}
+	if len(body.Turns) != 2 || body.Turns[0].Content != "hola" {
+		t.Fatalf("unexpected turns %+v", body.Turns)
+	}
+
+	stateReq, stateRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/state")
+	app.Handler().ServeHTTP(stateRec, stateReq)
+	if strings.Contains(stateRec.Body.String(), "history.json") {
+		t.Fatal("history file must not appear in the workspace index")
+	}
+}
+
 func TestEocodeRequiresAdminOrGrant(t *testing.T) {
 	app := newTestApp(true)
 

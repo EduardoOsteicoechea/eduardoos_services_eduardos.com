@@ -6,7 +6,7 @@
  * plus asset upload and the static-site preview served to the iframe.
  */
 
-import { apiRequest, postJSON, uploadFile } from "./api";
+import { apiRequest, deleteJSON, postJSON, putJSON, uploadFile } from "./api";
 import { mustLog } from "./dev-log";
 
 export type EocodeAsset = {
@@ -105,7 +105,35 @@ export async function fetchEocodeFile(path: string): Promise<EocodeFileContent |
   return { path: data.path || normalized, type: data.type || "", content: data.content };
 }
 
-export async function identifyEocode(message: string): Promise<EocodeResult<EocodeIdentifyResult>> {
+export type EocodeChatTurn = { role: "user" | "assistant"; content: string };
+
+/** Loads the persisted conversation so a reload keeps the same chat. */
+export async function fetchEocodeHistory(): Promise<EocodeChatTurn[]> {
+  const { status, data } = await apiRequest<{ turns?: EocodeChatTurn[] }>("/eocode/history");
+  if (status < 200 || status >= 300) {
+    return [];
+  }
+  return (data.turns || []).filter((turn) => turn && typeof turn.content === "string");
+}
+
+/** Persists the conversation to the workspace chat history file. */
+export async function saveEocodeHistory(turns: EocodeChatTurn[]): Promise<void> {
+  try {
+    await putJSON("/eocode/history", { turns });
+  } catch {
+    /* best-effort */
+  }
+}
+
+export async function clearEocodeHistory(): Promise<void> {
+  try {
+    await deleteJSON("/eocode/history");
+  } catch {
+    /* best-effort */
+  }
+}
+
+export async function identifyEocode(message: string, signal?: AbortSignal): Promise<EocodeResult<EocodeIdentifyResult>> {
   const { status, data } = await postJSON<{
     ok?: boolean;
     type?: string;
@@ -113,7 +141,7 @@ export async function identifyEocode(message: string): Promise<EocodeResult<Eoco
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/identify", { message }, { timeoutMs: 70000 });
+  }>("/eocode/identify", { message }, { timeoutMs: 70000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not reply.", detail: data.detail };
   }
@@ -121,7 +149,7 @@ export async function identifyEocode(message: string): Promise<EocodeResult<Eoco
   return { ok: true, data: { type, text: data.text || "" } };
 }
 
-export async function analyzeEocode(message: string): Promise<EocodeResult<EocodeAnalyzeResult>> {
+export async function analyzeEocode(message: string, signal?: AbortSignal): Promise<EocodeResult<EocodeAnalyzeResult>> {
   const { status, data } = await postJSON<{
     ok?: boolean;
     preliminary?: string;
@@ -132,7 +160,7 @@ export async function analyzeEocode(message: string): Promise<EocodeResult<Eocod
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/analyze", { message }, { timeoutMs: 85000 });
+  }>("/eocode/analyze", { message }, { timeoutMs: 85000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not plan the change.", detail: data.detail };
   }
@@ -151,6 +179,7 @@ export async function analyzeEocode(message: string): Promise<EocodeResult<Eocod
 export async function editEocode(
   message: string,
   plan: Pick<EocodeAnalyzeResult, "files_to_edit" | "new_files" | "delete_files">,
+  signal?: AbortSignal,
 ): Promise<EocodeResult<EocodeEditResult>> {
   const { status, data } = await postJSON<{
     ok?: boolean;
@@ -171,7 +200,7 @@ export async function editEocode(
       new_files: plan.new_files,
       delete_files: plan.delete_files,
     },
-    { timeoutMs: 140000 },
+    { timeoutMs: 140000, signal },
   );
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not write the files.", detail: data.detail };
@@ -189,7 +218,11 @@ export async function editEocode(
   };
 }
 
-export async function validateEocode(message: string, files: string[]): Promise<EocodeResult<EocodeValidateResult>> {
+export async function validateEocode(
+  message: string,
+  files: string[],
+  signal?: AbortSignal,
+): Promise<EocodeResult<EocodeValidateResult>> {
   const { status, data } = await postJSON<{
     ok?: boolean;
     needs_correction?: boolean;
@@ -198,7 +231,7 @@ export async function validateEocode(message: string, files: string[]): Promise<
     error?: string;
     message?: string;
     detail?: string;
-  }>("/eocode/validate", { message, files }, { timeoutMs: 140000 });
+  }>("/eocode/validate", { message, files }, { timeoutMs: 140000, signal });
   if (status < 200 || status >= 300 || data.ok === false) {
     return { ok: false, status, message: data.message || "The agent could not validate the change.", detail: data.detail };
   }

@@ -36,6 +36,10 @@ const (
 	eocodeMaxTokensEdit     = 8192
 	eocodeMaxTokensValidate = 8192
 	eocodeMaxPromptBytes    = 180000
+	eocodeHistoryPath       = "chat/history.json"
+	eocodeHistoryMaxTurns   = 60
+	eocodeHistoryMaxRunes   = 4000
+	eocodeHistoryPromptTurn = 12
 )
 
 // ---------------------------------------------------------------------------
@@ -103,6 +107,82 @@ func (w *eocodeWorkspace) migrateFromStaticSite() {
 	_ = os.WriteFile(filepath.Join(w.Root, "rules", "index.md"), []byte(eocodeInitialRulesIndex), 0640)
 }
 
+// eocodeChatTurn is one persisted conversation turn. The history file lets the
+// agent remember the running chat across requests and page reloads.
+type eocodeChatTurn struct {
+	Role    string `json:"role"`
+	Content string `json:"content"`
+	At      string `json:"at,omitempty"`
+}
+
+func (w *eocodeWorkspace) historyPath() string {
+	return filepath.Join(w.Root, "chat", "history.json")
+}
+
+func (w *eocodeWorkspace) loadHistory() []eocodeChatTurn {
+	data, err := os.ReadFile(w.historyPath())
+	if err != nil {
+		return nil
+	}
+	var turns []eocodeChatTurn
+	if err := json.Unmarshal(data, &turns); err != nil {
+		return nil
+	}
+	return turns
+}
+
+func (w *eocodeWorkspace) saveHistory(turns []eocodeChatTurn) error {
+	out := make([]eocodeChatTurn, 0, len(turns))
+	for _, turn := range turns {
+		role := strings.ToLower(strings.TrimSpace(turn.Role))
+		if role != "user" && role != "assistant" {
+			continue
+		}
+		content := strings.TrimSpace(turn.Content)
+		if content == "" {
+			continue
+		}
+		if utf8.RuneCountInString(content) > eocodeHistoryMaxRunes {
+			content = string([]rune(content)[:eocodeHistoryMaxRunes])
+		}
+		out = append(out, eocodeChatTurn{Role: role, Content: content, At: strings.TrimSpace(turn.At)})
+	}
+	if len(out) > eocodeHistoryMaxTurns {
+		out = out[len(out)-eocodeHistoryMaxTurns:]
+	}
+	full := w.historyPath()
+	if err := os.MkdirAll(filepath.Dir(full), 0750); err != nil {
+		return err
+	}
+	data, err := json.MarshalIndent(out, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(full, data, 0640)
+}
+
+// eocodeHistoryBlock formats the most recent turns so the model keeps the same
+// chat context on every stage.
+func eocodeHistoryBlock(turns []eocodeChatTurn) string {
+	if len(turns) == 0 {
+		return ""
+	}
+	start := 0
+	if len(turns) > eocodeHistoryPromptTurn {
+		start = len(turns) - eocodeHistoryPromptTurn
+	}
+	var b strings.Builder
+	b.WriteString("# CONVERSACION RECIENTE (mismo chat; no lo olvides)\n")
+	for _, turn := range turns[start:] {
+		role := "Usuario"
+		if turn.Role == "assistant" {
+			role = "Agente"
+		}
+		b.WriteString(role + ": " + strings.TrimSpace(turn.Content) + "\n")
+	}
+	return b.String()
+}
+
 var eocodeAllowedExt = map[string]bool{
 	".py": true, ".md": true, ".json": true, ".txt": true,
 	".svg": true, ".webp": true, ".gif": true, ".png": true, ".jpg": true,
@@ -156,6 +236,9 @@ func (w *eocodeWorkspace) listRelFiles() ([]string, error) {
 			return nil
 		}
 		rel = filepath.ToSlash(rel)
+		if strings.HasPrefix(rel, "chat/") {
+			return nil
+		}
 		if _, ok := eocodeSafeRelPath(rel); !ok {
 			return nil
 		}
@@ -186,7 +269,7 @@ func (w *eocodeWorkspace) writeFile(rel, content string) error {
 	if !ok {
 		return fmt.Errorf("invalid path")
 	}
-	if safe == "rules/constraints.md" {
+	if safe == "rules/constraints.md" || safe == eocodeHistoryPath {
 		return fmt.Errorf("protected file")
 	}
 	full := w.fullPath(safe)
@@ -842,7 +925,7 @@ func (a *App) eocodeIdentifyHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	indexJSON, _ := json.Marshal(index)
 	rules := ws.loadRules()
-	system := eocodeIdentifySystem(string(indexJSON), rules)
+	system := eocodeIdentifySystem(string(indexJSON), rules) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := sanitizeChatTurns(body.History)
 	history = append(history, ChatMessage{Role: "user", Content: message})
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
@@ -906,7 +989,7 @@ func (a *App) eocodeAnalyzeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	indexJSON, _ := json.Marshal(index)
 	rules := ws.loadRules()
-	system := eocodeAnalyzeSystem(string(indexJSON), rules)
+	system := eocodeAnalyzeSystem(string(indexJSON), rules) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := sanitizeChatTurns(body.History)
 	history = append(history, ChatMessage{Role: "user", Content: message})
 	ctx, cancel := context.WithTimeout(r.Context(), 75*time.Second)
@@ -1023,7 +1106,7 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	system := eocodeEditSystem(rules)
+	system := eocodeEditSystem(rules) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := []ChatMessage{{Role: "user", Content: userMsg.String()}}
 	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
 	defer cancel()
@@ -1152,7 +1235,7 @@ func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		userMsg.WriteString(block)
 	}
-	system := eocodeValidateSystem(rules, relevant)
+	system := eocodeValidateSystem(rules, relevant) + "\n\n" + eocodeHistoryBlock(ws.loadHistory())
 	history := []ChatMessage{{Role: "user", Content: userMsg.String()}}
 	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
 	defer cancel()
@@ -1275,6 +1358,58 @@ func (a *App) eocodeUploadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // eocodePreviewHandler serves the workspace static site to the preview iframe.
+func (a *App) eocodeHistoryHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEocodeAccess(w, r)
+	if user == nil {
+		return
+	}
+	ws := a.eocodeWorkspace(user.ID)
+	if err := ws.ensure(); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	turns := ws.loadHistory()
+	a.eocodeLog(r, "history.load", "user_id", user.ID, "turns", len(turns))
+	writeJSON(w, http.StatusOK, map[string]any{"turns": turns})
+}
+
+func (a *App) eocodeSaveHistoryHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEocodeUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	var body struct {
+		Turns []eocodeChatTurn `json:"turns"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 512<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	ws := a.eocodeWorkspace(user.ID)
+	if err := ws.ensure(); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if err := ws.saveHistory(body.Turns); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.eocodeLog(r, "history.save", "user_id", user.ID, "turns", len(body.Turns))
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "count": len(body.Turns)})
+}
+
+func (a *App) eocodeClearHistoryHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEocodeUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	ws := a.eocodeWorkspace(user.ID)
+	_ = ws.ensure()
+	_ = ws.saveHistory(nil)
+	a.eocodeLog(r, "history.clear", "user_id", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+}
+
 // eocodeFileHandler returns one workspace file's text for the studio viewer.
 // It is owner-scoped like every eocode route and never affects the SSR render.
 func (a *App) eocodeFileHandler(w http.ResponseWriter, r *http.Request) {

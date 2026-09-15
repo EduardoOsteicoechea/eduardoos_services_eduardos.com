@@ -556,7 +556,7 @@ function shouldForceCsrf(path: string): boolean {
 export async function postJSON<T = MeResponse>(
   path: string,
   body: Record<string, unknown>,
-  opts?: { timeoutMs?: number },
+  opts?: { timeoutMs?: number; signal?: AbortSignal },
 ): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
   return apiSend<T>(
     path,
@@ -564,6 +564,7 @@ export async function postJSON<T = MeResponse>(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      signal: opts?.signal,
     },
     { timeoutMs: opts?.timeoutMs, forceCsrfRefresh: shouldForceCsrf(path) },
   );
