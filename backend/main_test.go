@@ -270,6 +270,8 @@ func newTestApp(enable bool) *App {
 		DeepSeekModel:          "deepseek-v4-flash",
 		KimiBaseURL:            "https://api.moonshot.ai/v1",
 		KimiModel:              "kimi-k3",
+		DeepSeekKey:            "test-deepseek-key",
+		KimiKey:                "test-kimi-key",
 		EocodePython:           testPythonBinary(),
 		EocodeSSREnabled:       true,
 	}

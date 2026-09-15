@@ -168,6 +168,12 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		model:   cfg.KimiModel,
 		http:    httpClient,
 	}
+	app.log.Info("ai.providers",
+		"deepseek_configured", strings.TrimSpace(cfg.DeepSeekKey) != "",
+		"deepseek_model", cfg.DeepSeekModel,
+		"kimi_configured", strings.TrimSpace(cfg.KimiKey) != "",
+		"kimi_model", cfg.KimiModel,
+	)
 	app.bootstrapAdmin()
 	return app
 }

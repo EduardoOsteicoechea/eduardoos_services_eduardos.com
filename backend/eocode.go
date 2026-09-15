@@ -815,6 +815,13 @@ func (a *App) eocodeRateLimited(w http.ResponseWriter, r *http.Request, userID s
 }
 
 func (a *App) eocodeClient(w http.ResponseWriter, r *http.Request) ChatClient {
+	if strings.TrimSpace(a.cfg.DeepSeekKey) == "" {
+		a.eocodeLog(r, "client.missing_key", "provider", "deepseek")
+		a.eocodeErrorReply(w, r, "provider_unavailable",
+			"El backend de DeepSeek no tiene API key configurada.",
+			"DEEPSEEK_API_KEY esta vacia. Configurala en el entorno (o /etc/<site>-api.env) y reinicia la API.")
+		return nil
+	}
 	client, ok := a.chat["deepseek"]
 	if !ok {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
