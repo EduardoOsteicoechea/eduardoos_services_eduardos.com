@@ -277,6 +277,9 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 			_ = a.store.UpdateSession(r.Context(), sess)
 			return token
 		}
+		// Stale refresh must not keep winning over guest csrfbind on the next login.
+		a.clearCookie(w, a.refreshCookieName())
+		a.clearCookie(w, a.accessCookieName())
 	}
 	challenge := &CSRFChallenge{
 		ID:        randomID(16),
@@ -299,20 +302,22 @@ func (a *App) validOrigin(r *http.Request) bool {
 		return false
 	}
 	referer := strings.TrimSpace(r.Header.Get("Referer"))
-	if referer == "" {
-		return false
-	}
-	parsed, err := url.Parse(referer)
-	if err != nil {
-		return false
-	}
-	refOrigin := parsed.Scheme + "://" + parsed.Host
-	for _, allowed := range a.cfg.AllowedOrigins {
-		if refOrigin == allowed {
-			return true
+	if referer != "" {
+		parsed, err := url.Parse(referer)
+		if err != nil {
+			return false
 		}
+		refOrigin := parsed.Scheme + "://" + parsed.Host
+		for _, allowed := range a.cfg.AllowedOrigins {
+			if refOrigin == allowed {
+				return true
+			}
+		}
+		return false
 	}
-	return false
+	// Some mobile browsers omit Origin/Referer on same-origin fetch; Sec-Fetch-Site remains reliable.
+	site := strings.ToLower(strings.TrimSpace(r.Header.Get("Sec-Fetch-Site")))
+	return site == "same-origin"
 }
 
 func (a *App) validCSRF(r *http.Request) bool {

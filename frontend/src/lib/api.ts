@@ -540,6 +540,19 @@ export async function getJSON<T = MeResponse>(path: string): Promise<{ status: n
   return apiSend<T>(path);
 }
 
+function shouldForceCsrf(path: string): boolean {
+  const normalized = path.startsWith("/api/") ? path.slice(4) : path.startsWith("/") ? path : `/${path}`;
+  return (
+    normalized === "/auth/login" ||
+    normalized === "/auth/register" ||
+    normalized === "/auth/verify-email" ||
+    normalized === "/auth/resend-verification" ||
+    normalized === "/auth/request-password-reset" ||
+    normalized === "/auth/reset-password" ||
+    normalized === "/auth/refresh"
+  );
+}
+
 export async function postJSON<T = MeResponse>(
   path: string,
   body: Record<string, unknown>,
@@ -552,7 +565,7 @@ export async function postJSON<T = MeResponse>(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     },
-    { timeoutMs: opts?.timeoutMs },
+    { timeoutMs: opts?.timeoutMs, forceCsrfRefresh: shouldForceCsrf(path) },
   );
 }
 

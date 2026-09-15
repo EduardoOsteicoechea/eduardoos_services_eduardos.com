@@ -118,6 +118,7 @@ describe("api csrf and errors", () => {
       .fn()
       .mockResolvedValueOnce(jsonResponse(200, { csrf: "csrf-1" }))
       .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", message: "expired" }, { "X-Request-ID": "rid-1" }))
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "csrf-refresh" }))
       .mockResolvedValueOnce(jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user", csrf: "csrf-2" }))
       .mockResolvedValueOnce(jsonResponse(200, { ok: true }, { "X-Request-ID": "rid-2" }));
     vi.stubGlobal("fetch", fetchMock);
