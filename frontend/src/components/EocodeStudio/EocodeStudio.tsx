@@ -3,10 +3,12 @@ import { synthesizeVoice } from "../../lib/api";
 import {
   analyzeEocode,
   editEocode,
+  fetchEocodeFile,
   fetchEocodeState,
   identifyEocode,
   uploadEocodeAsset,
   validateEocode,
+  type EocodeFileEntry,
 } from "../../lib/eocode";
 import { renderMarkdown } from "../../lib/markdown";
 import {
@@ -27,6 +29,12 @@ type ChatMessage = {
   assets?: { url: string; path: string }[];
 };
 
+type ViewFile = {
+  path: string;
+  type: string;
+  content: string;
+};
+
 type AccessState = "loading" | "ok" | "signin" | "denied" | "error";
 
 /** Strips markdown so spoken replies stay readable. */
@@ -43,26 +51,50 @@ function stripMarkdown(text: string): string {
     .trim();
 }
 
-function Markdown({ text }: { text: string }) {
+function isMarkdownPath(path: string): boolean {
+  return path.toLowerCase().endsWith(".md");
+}
+
+function fileIcon(type: string): string {
+  switch (type) {
+    case "python":
+      return "code";
+    case "image":
+      return "image";
+    case "svg":
+      return "polyline";
+    case "rule":
+    case "markdown":
+      return "rule";
+    default:
+      return "description";
+  }
+}
+
+function Markdown({ text, className = "eocode-msg-body" }: { text: string; className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (ref.current) {
       renderMarkdown(text, ref.current);
     }
   }, [text]);
-  return <div className="eocode-msg-body" ref={ref} />;
+  return <div className={className} ref={ref} />;
 }
 
 export default function EocodeStudio() {
   const [access, setAccess] = useState<AccessState>("loading");
+  const [files, setFiles] = useState<EocodeFileEntry[]>([]);
+  const [viewFile, setViewFile] = useState<ViewFile | null>(null);
   const [previewUrl, setPreviewUrl] = useState("/api/eocode/preview/");
   const [previewVersion, setPreviewVersion] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState("");
   const [pendingAssets, setPendingAssets] = useState<{ url: string; path: string }[]>([]);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const previewPaneRef = useRef<HTMLElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
   const micRef = useRef<HTMLButtonElement | null>(null);
   const speakToggleRef = useRef<HTMLButtonElement | null>(null);
@@ -70,9 +102,10 @@ export default function EocodeStudio() {
   const messagesRef = useRef<ChatMessage[]>([]);
   const nextId = useRef(1);
 
-  const reload = useCallback(async () => {
+  const loadState = useCallback(async () => {
     const result = await fetchEocodeState();
     if (result.status === 200 && result.state) {
+      setFiles(result.state.files);
       if (result.state.preview_url) {
         setPreviewUrl(result.state.preview_url);
       }
@@ -97,6 +130,7 @@ export default function EocodeStudio() {
           setAccess("error");
           return;
         }
+        setFiles(result.state.files);
         setPreviewUrl(result.state.preview_url || "/api/eocode/preview/");
         setAccess("ok");
       } catch {
@@ -118,6 +152,12 @@ export default function EocodeStudio() {
   useEffect(() => {
     messagesRef.current = messages;
   }, [messages]);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
 
   const speakReply = useCallback(async (text: string) => {
     if (!voiceReplyEnabled()) {
@@ -180,6 +220,45 @@ export default function EocodeStudio() {
       if (result.ok) {
         setPendingAssets((prev) => [...prev, { url: result.data.url, path: result.data.path }]);
       }
+    }
+  }, []);
+
+  const openFile = useCallback(async (file: EocodeFileEntry) => {
+    if (file.type === "image" || file.type === "svg") {
+      setViewFile({ path: file.path, type: file.type, content: "" });
+      return;
+    }
+    const content = await fetchEocodeFile(file.path);
+    if (content) {
+      setViewFile(content);
+    }
+  }, []);
+
+  const backToSite = useCallback(() => {
+    setViewFile(null);
+  }, []);
+
+  const newChat = useCallback(() => {
+    setMessages([]);
+    setStage("");
+    setViewFile(null);
+    void loadState();
+  }, [loadState]);
+
+  const reloadSite = useCallback(() => {
+    setViewFile(null);
+    setPreviewVersion((v) => v + 1);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    const node = previewPaneRef.current;
+    if (!node) {
+      return;
+    }
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    } else {
+      void node.requestFullscreen?.();
     }
   }, []);
 
@@ -262,7 +341,8 @@ export default function EocodeStudio() {
           setAssistant(`${done}${tail}`);
         }
       }
-      await reload();
+      await loadState();
+      setViewFile(null);
       setPreviewVersion((v) => v + 1);
       void speakReply(finalText);
     } catch {
@@ -271,7 +351,7 @@ export default function EocodeStudio() {
       setBusy(false);
       setStage("");
     }
-  }, [busy, draft, pendingAssets, pushMessage, patchLastAssistant, reload, speakReply]);
+  }, [busy, draft, pendingAssets, pushMessage, patchLastAssistant, loadState, speakReply]);
 
   const printPreview = useCallback(() => {
     const win = iframeRef.current?.contentWindow;
@@ -330,13 +410,6 @@ export default function EocodeStudio() {
   return (
     <div className="eocode-studio">
       <section className="eocode-chat-pane" aria-label="Chat de programacion">
-        <header className="eocode-pane-head">
-          <h1>eocode</h1>
-          <button className="icon-btn" type="button" onClick={() => void reload()} aria-label="Recargar archivos" title="Recargar archivos">
-            <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
-          </button>
-        </header>
-
         <div className="eocode-log" ref={logRef}>
           {messages.length === 0 ? (
             <p className="hint">
@@ -454,31 +527,71 @@ export default function EocodeStudio() {
             </div>
           </div>
         </form>
+
+        <div className="eocode-actions" role="toolbar" aria-label="Acciones del estudio">
+          <button className="icon-btn" type="button" onClick={newChat} aria-label="Nuevo chat" title="Nuevo chat">
+            <span className="material-symbols-outlined" aria-hidden="true">add_comment</span>
+          </button>
+          <button className="icon-btn" type="button" onClick={reloadSite} aria-label="Recargar sitio" title="Recargar sitio">
+            <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
+          </button>
+          <button className="icon-btn" type="button" onClick={printPreview} aria-label="Imprimir a PDF" title="Imprimir a PDF">
+            <span className="material-symbols-outlined" aria-hidden="true">print</span>
+          </button>
+          <button className="icon-btn" type="button" onClick={toggleFullscreen} aria-label="Pantalla completa" title="Pantalla completa">
+            <span className="material-symbols-outlined" aria-hidden="true">
+              {isFullscreen ? "fullscreen_exit" : "fullscreen"}
+            </span>
+          </button>
+        </div>
+
+        <details className="eocode-files">
+          <summary>Archivos ({files.length})</summary>
+          <ul>
+            {files.map((file) => (
+              <li key={file.path}>
+                <button
+                  type="button"
+                  className="eocode-file"
+                  aria-current={viewFile?.path === file.path ? "true" : undefined}
+                  onClick={() => void openFile(file)}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">{fileIcon(file.type)}</span>
+                  {file.path}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </details>
       </section>
 
-      <section className="eocode-preview-pane" aria-label="Vista del sitio">
-        <header className="eocode-pane-head">
-          <h2>Vista del sitio</h2>
-          <div className="eocode-preview-actions">
-            <button className="icon-btn" type="button" onClick={() => setPreviewVersion((v) => v + 1)} aria-label="Recargar vista" title="Recargar vista">
-              <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
-            </button>
-            <button className="icon-btn" type="button" onClick={printPreview} aria-label="Imprimir a PDF" title="Imprimir a PDF">
-              <span className="material-symbols-outlined" aria-hidden="true">print</span>
-            </button>
-            <a className="icon-btn" href={previewUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir en otra pestana" title="Abrir en otra pestana">
-              <span className="material-symbols-outlined" aria-hidden="true">open_in_new</span>
-            </a>
+      <section className="eocode-preview-pane" aria-label="Vista del sitio" ref={previewPaneRef}>
+        {viewFile ? (
+          <div className="eocode-fileview">
+            <header className="eocode-fileview-head">
+              <span className="eocode-fileview-path">{viewFile.path}</span>
+              <button className="icon-btn" type="button" onClick={backToSite} aria-label="Volver al sitio" title="Volver al sitio">
+                <span className="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+            </header>
+            {viewFile.type === "image" || viewFile.type === "svg" ? (
+              <img className="eocode-fileview-img" src={`${previewUrl}${viewFile.path}`} alt="" />
+            ) : isMarkdownPath(viewFile.path) ? (
+              <Markdown text={viewFile.content} className="eocode-fileview-body" />
+            ) : (
+              <pre className="eocode-fileview-pre">{viewFile.content}</pre>
+            )}
           </div>
-        </header>
-        <iframe
-          key={previewVersion}
-          ref={iframeRef}
-          className="eocode-frame"
-          src={previewSrc}
-          title="Vista previa del sitio"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
-        />
+        ) : (
+          <iframe
+            key={previewVersion}
+            ref={iframeRef}
+            className="eocode-frame"
+            src={previewSrc}
+            title="Vista previa del sitio"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
+          />
+        )}
       </section>
     </div>
   );

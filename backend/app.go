@@ -207,6 +207,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/profile/ask", a.profileAskHandler)
 
 	mux.HandleFunc("GET /api/eocode/state", a.eocodeStateHandler)
+	mux.HandleFunc("GET /api/eocode/file/{path...}", a.eocodeFileHandler)
 	mux.HandleFunc("POST /api/eocode/identify", a.eocodeIdentifyHandler)
 	mux.HandleFunc("POST /api/eocode/analyze", a.eocodeAnalyzeHandler)
 	mux.HandleFunc("POST /api/eocode/edit", a.eocodeEditHandler)

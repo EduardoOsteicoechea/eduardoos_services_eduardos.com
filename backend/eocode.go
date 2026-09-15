@@ -1192,6 +1192,32 @@ func (a *App) eocodeUploadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // eocodePreviewHandler serves the workspace static site to the preview iframe.
+// eocodeFileHandler returns one workspace file's text for the studio viewer.
+// It is owner-scoped like every eocode route and never affects the SSR render.
+func (a *App) eocodeFileHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEocodeAccess(w, r)
+	if user == nil {
+		return
+	}
+	raw := strings.TrimPrefix(r.PathValue("path"), "/")
+	safe, ok := eocodeSafeRelPath(raw)
+	if !ok {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	ws := a.eocodeWorkspace(user.ID)
+	content, err := ws.readFile(safe)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{
+		"path":    safe,
+		"type":    eocodeFileType(safe),
+		"content": content,
+	})
+}
+
 func (a *App) eocodePreviewHandler(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEocodeAccess(w, r)
 	if user == nil {

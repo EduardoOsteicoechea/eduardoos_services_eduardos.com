@@ -81,6 +81,24 @@ export async function fetchEocodeState(): Promise<
   return { status, state: data };
 }
 
+export type EocodeFileContent = {
+  path: string;
+  type: string;
+  content: string;
+};
+
+/** Reads one workspace file for the studio viewer (owner-scoped). */
+export async function fetchEocodeFile(path: string): Promise<EocodeFileContent | null> {
+  const normalized = path.replace(/^\/+/, "");
+  const { status, data } = await apiRequest<EocodeFileContent & { error?: string }>(
+    `/eocode/file/${normalized}`,
+  );
+  if (status < 200 || status >= 300 || typeof data.content !== "string") {
+    return null;
+  }
+  return { path: data.path || normalized, type: data.type || "", content: data.content };
+}
+
 export async function identifyEocode(message: string): Promise<EocodeResult<EocodeIdentifyResult>> {
   const { status, data } = await postJSON<{
     ok?: boolean;

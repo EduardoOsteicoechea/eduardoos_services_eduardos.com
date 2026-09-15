@@ -1,10 +1,12 @@
 /* eocode — agent coding studio (page surface, rem-only, shared tokens). */
 
-/* Full-bleed studio: drop the lateral main padding on this route only. */
+/* Full-bleed studio: drop lateral padding and meet the top edge. */
 @media (min-width: 64rem) {
   html[data-page="eocode"] main {
     padding-left: var(--rail-width);
     padding-right: 0;
+    padding-top: var(--rail-gap);
+    padding-bottom: 0;
   }
 }
 
@@ -29,6 +31,7 @@
 }
 
 .eocode-studio {
+  --eocode-chat-width: 24rem;
   grid-column: 1 / -1;
   display: flex;
   align-items: stretch;
@@ -45,29 +48,11 @@
 }
 
 .eocode-chat-pane {
-  flex: 0 0 24rem;
+  flex: 0 0 var(--eocode-chat-width);
 }
 
 .eocode-preview-pane {
   flex: 1;
-}
-
-.eocode-pane-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--rail-gap);
-}
-
-.eocode-pane-head h1,
-.eocode-pane-head h2 {
-  margin: 0;
-}
-
-.eocode-preview-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--rail-gap);
 }
 
 .eocode-log {
@@ -79,7 +64,7 @@
   min-height: 22rem;
   overflow-y: auto;
   padding: var(--space-padding);
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
@@ -88,47 +73,54 @@
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
+  max-width: calc((var(--eocode-chat-width) - (var(--space-padding) * 2)) * 0.8);
   padding: var(--space-padding);
   font-size: var(--font-size-sm);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  background: var(--color-bg);
+  background: var(--color-surface);
 }
 
 .eocode-msg-user {
   align-self: flex-start;
   margin-right: auto;
-  max-width: 32rem;
   border-color: var(--color-accent);
 }
 
 .eocode-msg-assistant {
   align-self: flex-end;
   margin-left: auto;
-  max-width: 40rem;
 }
 
 .eocode-msg-body p,
 .eocode-msg-body ul,
-.eocode-msg-body pre {
+.eocode-msg-body pre,
+.eocode-fileview-body p,
+.eocode-fileview-body ul,
+.eocode-fileview-body pre {
   margin: 0 0 var(--rail-gap);
 }
 
 .eocode-msg-body p:last-child,
 .eocode-msg-body ul:last-child,
-.eocode-msg-body pre:last-child {
+.eocode-msg-body pre:last-child,
+.eocode-fileview-body p:last-child,
+.eocode-fileview-body ul:last-child,
+.eocode-fileview-body pre:last-child {
   margin-bottom: 0;
 }
 
-.eocode-msg-body pre {
+.eocode-msg-body pre,
+.eocode-fileview-body pre {
   overflow-x: auto;
   padding: var(--rail-gap);
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
 
-.eocode-msg-body code {
+.eocode-msg-body code,
+.eocode-fileview-body code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: var(--font-size-xs);
 }
@@ -144,6 +136,13 @@
   margin-top: var(--space-padding);
 }
 
+.eocode-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  flex-shrink: 0;
+}
+
 .eocode-send {
   width: var(--button-size);
   min-width: var(--button-size);
@@ -157,6 +156,63 @@
   opacity: 0.5;
 }
 
+.eocode-files {
+  flex-shrink: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--rail-gap);
+  background: var(--color-surface);
+}
+
+.eocode-files summary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.eocode-files ul {
+  margin: var(--rail-gap) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rail-gap) * 0.5);
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.eocode-files li {
+  display: flex;
+}
+
+.eocode-file {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rail-gap) * 0.5);
+  padding: calc(var(--rail-gap) * 0.25) calc(var(--rail-gap) * 0.5);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.eocode-file:hover,
+.eocode-file[aria-current="true"] {
+  color: var(--color-accent);
+  background: var(--color-bg);
+}
+
+.eocode-file .material-symbols-outlined {
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
 .eocode-frame {
   flex: 1;
   align-self: stretch;
@@ -164,6 +220,58 @@
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: #ffffff;
+}
+
+.eocode-fileview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 34rem;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+}
+
+.eocode-fileview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+  padding: var(--rail-gap);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.eocode-fileview-path {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.eocode-fileview-body,
+.eocode-fileview-pre {
+  flex: 1;
+  margin: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-padding);
+}
+
+.eocode-fileview-pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xs);
+  white-space: pre;
+  color: var(--color-text);
+}
+
+.eocode-fileview-img {
+  flex: 1;
+  align-self: center;
+  min-height: 0;
+  object-fit: contain;
+  padding: var(--space-padding);
 }
 
 @media (max-width: 63.999rem) {
@@ -181,7 +289,8 @@
     max-height: 24rem;
   }
 
-  .eocode-frame {
+  .eocode-frame,
+  .eocode-fileview {
     min-height: 24rem;
   }
 }

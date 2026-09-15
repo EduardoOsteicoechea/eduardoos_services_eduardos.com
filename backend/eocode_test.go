@@ -270,6 +270,31 @@ func TestEocodeSSRBlocksForbiddenPython(t *testing.T) {
 	}
 }
 
+func TestEocodeFileReturnsContent(t *testing.T) {
+	app := newTestApp(true)
+	seedReq, seedRec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/state")
+	app.Handler().ServeHTTP(seedRec, seedReq)
+	if seedRec.Code != http.StatusOK {
+		t.Fatalf("seed state: %d %s", seedRec.Code, seedRec.Body.String())
+	}
+	req, rec := eocodeGet(t, app, "admin@eduardoos.com", "/api/eocode/file/components/body.py")
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d %s", rec.Code, rec.Body.String())
+	}
+	var body struct {
+		Path    string `json:"path"`
+		Type    string `json:"type"`
+		Content string `json:"content"`
+	}
+	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
+		t.Fatal(err)
+	}
+	if body.Type != "python" || !strings.Contains(body.Content, "render_body") {
+		t.Fatalf("unexpected file payload %+v", body)
+	}
+}
+
 func TestEocodeSafeRelPath(t *testing.T) {
 	bad := []string{"", "../a.html", "/etc/passwd", "a/../../b.py", "evil.exe", "index.html", "app.js", "styles.css"}
 	for _, in := range bad {
