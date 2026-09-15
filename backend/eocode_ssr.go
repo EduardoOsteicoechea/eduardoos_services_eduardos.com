@@ -94,6 +94,7 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 			continue
 		}
 		if err := eocodeScanPythonSource(rel, content); err != nil {
+			a.mustLogf(nil, "eocode.ssr.blocked", "user_id", ws.UserID, "path", rel, "err", redactLogValue(err.Error()))
 			return "", fmt.Errorf("%s: %w", rel, err)
 		}
 	}
@@ -102,6 +103,7 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 	if python == "" {
 		python = "python3"
 	}
+	a.mustLogf(nil, "eocode.ssr.run", "user_id", ws.UserID, "python", python, "files", len(relFiles))
 	tctx, cancel := context.WithTimeout(ctx, eocodeSSRTimeout)
 	defer cancel()
 	cmd := exec.CommandContext(tctx, python, "site.py")
@@ -111,6 +113,7 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
+		a.mustLogf(nil, "eocode.ssr.run_error", "user_id", ws.UserID, "err", redactLogValue(err.Error()), "stderr", eocodeTruncateErr(stderr.String()))
 		return "", fmt.Errorf("run: %v: %s", err, eocodeTruncateErr(stderr.String()))
 	}
 	out := stdout.String()
@@ -118,8 +121,10 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 		out = out[:eocodeSSRMaxOutput]
 	}
 	if strings.TrimSpace(out) == "" {
+		a.mustLogf(nil, "eocode.ssr.empty", "user_id", ws.UserID, "stderr", eocodeTruncateErr(stderr.String()))
 		return "", fmt.Errorf("empty output")
 	}
+	a.mustLogf(nil, "eocode.ssr.ok", "user_id", ws.UserID, "bytes", len(out))
 	return out, nil
 }
 

@@ -54,6 +54,10 @@ export type EocodeAnalyzeResult = {
 export type EocodeEditResult = {
   files: string[];
   deleted: string[];
+  changed: string[];
+  unchanged: string[];
+  render_ok: boolean;
+  render_error?: string;
 };
 
 export type EocodeValidateResult = {
@@ -62,7 +66,9 @@ export type EocodeValidateResult = {
   notes: string;
 };
 
-export type EocodeResult<T> = { ok: true; data: T } | { ok: false; status: number; message: string };
+export type EocodeResult<T> =
+  | { ok: true; data: T }
+  | { ok: false; status: number; message: string; detail?: string };
 
 function log(step: string, detail: Record<string, unknown> = {}): void {
   if (mustLog) {
@@ -106,9 +112,10 @@ export async function identifyEocode(message: string): Promise<EocodeResult<Eoco
     text?: string;
     error?: string;
     message?: string;
+    detail?: string;
   }>("/eocode/identify", { message }, { timeoutMs: 70000 });
   if (status < 200 || status >= 300 || data.ok === false) {
-    return { ok: false, status, message: data.message || "The agent could not reply." };
+    return { ok: false, status, message: data.message || "The agent could not reply.", detail: data.detail };
   }
   const type = data.type === "coding" ? "coding" : "consult";
   return { ok: true, data: { type, text: data.text || "" } };
@@ -124,9 +131,10 @@ export async function analyzeEocode(message: string): Promise<EocodeResult<Eocod
     questions?: string[];
     error?: string;
     message?: string;
+    detail?: string;
   }>("/eocode/analyze", { message }, { timeoutMs: 85000 });
   if (status < 200 || status >= 300 || data.ok === false) {
-    return { ok: false, status, message: data.message || "The agent could not plan the change." };
+    return { ok: false, status, message: data.message || "The agent could not plan the change.", detail: data.detail };
   }
   return {
     ok: true,
@@ -147,9 +155,14 @@ export async function editEocode(
   const { status, data } = await postJSON<{
     ok?: boolean;
     files?: string[];
+    changed?: string[];
+    unchanged?: string[];
     deleted?: string[];
+    render_ok?: boolean;
+    render_error?: string;
     error?: string;
     message?: string;
+    detail?: string;
   }>(
     "/eocode/edit",
     {
@@ -158,12 +171,22 @@ export async function editEocode(
       new_files: plan.new_files,
       delete_files: plan.delete_files,
     },
-    { timeoutMs: 130000 },
+    { timeoutMs: 140000 },
   );
   if (status < 200 || status >= 300 || data.ok === false) {
-    return { ok: false, status, message: data.message || "The agent could not write the files." };
+    return { ok: false, status, message: data.message || "The agent could not write the files.", detail: data.detail };
   }
-  return { ok: true, data: { files: data.files || [], deleted: data.deleted || [] } };
+  return {
+    ok: true,
+    data: {
+      files: data.files || [],
+      changed: data.changed || [],
+      unchanged: data.unchanged || [],
+      deleted: data.deleted || [],
+      render_ok: data.render_ok !== false,
+      render_error: data.render_error,
+    },
+  };
 }
 
 export async function validateEocode(message: string, files: string[]): Promise<EocodeResult<EocodeValidateResult>> {
@@ -174,9 +197,10 @@ export async function validateEocode(message: string, files: string[]): Promise<
     notes?: string;
     error?: string;
     message?: string;
-  }>("/eocode/validate", { message, files }, { timeoutMs: 130000 });
+    detail?: string;
+  }>("/eocode/validate", { message, files }, { timeoutMs: 140000 });
   if (status < 200 || status >= 300 || data.ok === false) {
-    return { ok: false, status, message: data.message || "The agent could not validate the change." };
+    return { ok: false, status, message: data.message || "The agent could not validate the change.", detail: data.detail };
   }
   return {
     ok: true,

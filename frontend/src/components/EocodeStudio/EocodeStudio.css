@@ -36,7 +36,7 @@
   display: flex;
   align-items: stretch;
   gap: var(--rail-gap);
-  min-height: 44rem;
+  height: 44rem;
 }
 
 .eocode-chat-pane,
@@ -45,6 +45,7 @@
   flex-direction: column;
   gap: var(--rail-gap);
   min-width: 0;
+  min-height: 0;
 }
 
 .eocode-chat-pane {
@@ -55,13 +56,21 @@
   flex: 1;
 }
 
+.eocode-fields {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
 .eocode-log {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-padding);
-  min-height: 22rem;
+  min-height: 0;
   overflow-y: auto;
   padding: var(--space-padding);
   background: var(--color-bg);
@@ -277,7 +286,7 @@
 @media (max-width: 63.999rem) {
   .eocode-studio {
     flex-direction: column;
-    min-height: 0;
+    height: auto;
   }
 
   .eocode-chat-pane {

@@ -55,6 +55,11 @@ function isMarkdownPath(path: string): boolean {
   return path.toLowerCase().endsWith(".md");
 }
 
+/** Appends a redacted backend detail block so failures are visible in the chat. */
+function withDetail(message: string, detail?: string): string {
+  return detail ? `${message}\n\n\`\`\`\n${detail}\n\`\`\`` : message;
+}
+
 function fileIcon(type: string): string {
   switch (type) {
     case "python":
@@ -285,7 +290,7 @@ export default function EocodeStudio() {
       setStage("Clasificando la peticion...");
       const identified = await identifyEocode(withAssets);
       if (!identified.ok) {
-        setAssistant(identified.message);
+        setAssistant(withDetail(identified.message, identified.detail));
         return;
       }
       if (identified.data.type === "consult") {
@@ -296,7 +301,7 @@ export default function EocodeStudio() {
       setStage("Analizando el cambio...");
       const analyzed = await analyzeEocode(withAssets);
       if (!analyzed.ok) {
-        setAssistant(analyzed.message);
+        setAssistant(withDetail(analyzed.message, analyzed.detail));
         return;
       }
       const plan = analyzed.data;
@@ -318,19 +323,30 @@ export default function EocodeStudio() {
       setStage("Escribiendo archivos...");
       const edited = await editEocode(withAssets, plan);
       if (!edited.ok) {
-        setAssistant(`${summary}\n\n${edited.message}`);
+        setAssistant(`${summary}\n\n${withDetail(edited.message, edited.detail)}`);
         return;
       }
       const written = edited.data.files;
       let done = `${summary}\n\n**Archivos escritos:** ${written.map((f) => `\`${f}\``).join(", ")}`;
+      if (edited.data.changed.length) {
+        done += `\n\n**Con cambios reales:** ${edited.data.changed.map((f) => `\`${f}\``).join(", ")}`;
+      }
+      if (edited.data.unchanged.length) {
+        done += `\n\n**Sin cambios reales:** ${edited.data.unchanged.map((f) => `\`${f}\``).join(", ")} (el agente devolvio el mismo contenido).`;
+      }
       if (edited.data.deleted.length) {
         done += `\n\n**Archivos borrados:** ${edited.data.deleted.map((f) => `\`${f}\``).join(", ")}`;
+      }
+      if (edited.data.render_ok === false) {
+        done += `\n\n**El sitio no renderiza.**${edited.data.render_error ? `\n\n\`\`\`\n${edited.data.render_error}\n\`\`\`` : ""}`;
       }
       setAssistant(done);
       if (written.length) {
         setStage("Validando el cambio...");
         const validated = await validateEocode(withAssets, written);
-        if (validated.ok) {
+        if (!validated.ok) {
+          setAssistant(`${done}\n\n${withDetail(validated.message, validated.detail)}`);
+        } else {
           let tail = "";
           if (validated.data.needs_correction && validated.data.files.length) {
             tail = `\n\n**Corregidos:** ${validated.data.files.map((f) => `\`${f}\``).join(", ")}`;
@@ -460,37 +476,37 @@ export default function EocodeStudio() {
           <div className="agent-chat-composer">
             <p className="agent-chat-voice" ref={voiceCaptionRef} hidden aria-live="polite"></p>
             <div className="agent-chat-compose-row">
-              <textarea
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" && !event.shiftKey) {
-                    event.preventDefault();
-                    void send();
-                  }
-                }}
-                rows={1}
-                maxLength={4000}
-                aria-label="Mensaje"
-                placeholder="Describe el cambio o pregunta sobre tu sitio."
-              />
-            </div>
-            <div className="agent-chat-compose-row">
-              <label className="agent-chat-drop">
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,image/gif"
-                  multiple
-                  hidden
-                  onChange={(event) => {
-                    const list = event.target.files;
-                    event.target.value = "";
-                    void onAttach(list);
+              <div className="eocode-fields">
+                <textarea
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !event.shiftKey) {
+                      event.preventDefault();
+                      void send();
+                    }
                   }}
+                  rows={1}
+                  maxLength={4000}
+                  aria-label="Mensaje"
+                  placeholder="Describe el cambio o pregunta sobre tu sitio."
                 />
-                <span className="material-symbols-outlined" aria-hidden="true">imagesmode</span>
-                <span className="hint">Imagenes</span>
-              </label>
+                <label className="agent-chat-drop">
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    multiple
+                    hidden
+                    onChange={(event) => {
+                      const list = event.target.files;
+                      event.target.value = "";
+                      void onAttach(list);
+                    }}
+                  />
+                  <span className="material-symbols-outlined" aria-hidden="true">imagesmode</span>
+                  <span className="hint">Imagenes</span>
+                </label>
+              </div>
               <div className="agent-chat-tools">
                 <button
                   ref={speakToggleRef}

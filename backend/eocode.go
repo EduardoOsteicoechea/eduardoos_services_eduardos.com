@@ -716,6 +716,39 @@ func (a *App) eocodeClient(w http.ResponseWriter, r *http.Request) ChatClient {
 	return client
 }
 
+// eocodeLog emits an exhaustive diagnostic line when MUST_LOG is on.
+func (a *App) eocodeLog(r *http.Request, stage string, args ...any) {
+	a.mustLogf(r, "eocode."+stage, args...)
+}
+
+// eocodeDebugAllowed reports whether the caller may receive a detail string.
+func (a *App) eocodeDebugAllowed(r *http.Request) bool {
+	return a.allowClientDebug(r)
+}
+
+// eocodeErrorReply writes a generic 200 JSON error plus a bounded, redacted
+// detail when the caller is allowed to see debug output.
+func (a *App) eocodeErrorReply(w http.ResponseWriter, r *http.Request, code, message, detail string) {
+	payload := map[string]any{
+		"ok":         false,
+		"error":      code,
+		"message":    message,
+		"request_id": requestIDFrom(r, w),
+	}
+	if detail != "" && a.eocodeDebugAllowed(r) {
+		payload["detail"] = redactLogValue(detail)
+	}
+	writeJSON(w, http.StatusOK, payload)
+}
+
+func eocodeSnippet(s string, max int) string {
+	s = strings.TrimSpace(s)
+	if len(s) > max {
+		return s[:max] + "…"
+	}
+	return s
+}
+
 // ---------------------------------------------------------------------------
 // Handlers
 // ---------------------------------------------------------------------------
@@ -791,20 +824,20 @@ func (a *App) eocodeIdentifyHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensIdentify)
 	if err != nil {
 		a.auditEvent(r, "eocode_identify", "failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok": false, "error": "provider_unavailable",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent could not reply.",
-		})
+		a.eocodeLog(r, "identify.provider_error", "user_id", user.ID, "err", redactLogValue(err.Error()))
+		a.eocodeErrorReply(w, r, "provider_unavailable", "The coding agent could not reply.", err.Error())
 		return
 	}
+	a.eocodeLog(r, "identify.reply", "user_id", user.ID, "runes", utf8.RuneCountInString(result.Text))
 	parsed, parseErr := eocodeParseJSON[eocodeIdentifyResult](result.Text)
 	if parseErr != nil || (parsed.Type != "consult" && parsed.Type != "coding") {
 		// Fall back to a consult so the user always gets an answer.
+		a.eocodeLog(r, "identify.parse_fallback", "user_id", user.ID, "err", redactLogValue(fmt.Sprint(parseErr)), "reply", eocodeSnippet(result.Text, 400))
 		parsed = eocodeIdentifyResult{Type: "consult", Text: sanitizeModelTextMax(result.Text, 8000)}
 	}
 	parsed.Text = sanitizeModelTextMax(parsed.Text, 8000)
 	a.auditEvent(r, "eocode_identify", "ok", user.ID)
+	a.eocodeLog(r, "identify.ok", "user_id", user.ID, "type", parsed.Type)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":         true,
 		"type":       parsed.Type,
@@ -855,16 +888,15 @@ func (a *App) eocodeAnalyzeHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensAnalyze)
 	if err != nil {
 		a.auditEvent(r, "eocode_analyze", "failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok": false, "error": "provider_unavailable",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent could not plan the change.",
-		})
+		a.eocodeLog(r, "analyze.provider_error", "user_id", user.ID, "err", redactLogValue(err.Error()))
+		a.eocodeErrorReply(w, r, "provider_unavailable", "The coding agent could not plan the change.", err.Error())
 		return
 	}
+	a.eocodeLog(r, "analyze.reply", "user_id", user.ID, "runes", utf8.RuneCountInString(result.Text))
 	plan, parseErr := eocodeParseJSON[eocodeAnalyzeResult](result.Text)
 	if parseErr != nil {
 		a.auditEvent(r, "eocode_analyze", "parse_failed", user.ID)
+		a.eocodeLog(r, "analyze.parse_error", "user_id", user.ID, "err", redactLogValue(parseErr.Error()), "reply", eocodeSnippet(result.Text, 600))
 		writeJSON(w, http.StatusOK, map[string]any{
 			"ok":            true,
 			"preliminary":   sanitizeModelTextMax(result.Text, 8000),
@@ -876,6 +908,7 @@ func (a *App) eocodeAnalyzeHandler(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+	a.eocodeLog(r, "analyze.plan", "user_id", user.ID, "edit", len(plan.FilesToEdit), "new", len(plan.NewFiles), "delete", len(plan.DeleteFiles), "questions", len(plan.Questions), "rules_changed", strings.TrimSpace(plan.ModifiedRulesIndex) != strings.TrimSpace(rules.Index))
 	if idx := strings.TrimSpace(plan.ModifiedRulesIndex); idx != "" && idx != strings.TrimSpace(rules.Index) {
 		if err := ws.writeFile("rules/index.md", idx); err != nil {
 			a.mustLogf(r, "eocode.analyze.rules_write_error", "err", redactLogValue(err.Error()))
@@ -922,14 +955,19 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	rules := ws.loadRules()
 
-	paths := make([]string, 0, len(body.FilesToEdit)+len(body.NewFiles))
-	for _, plan := range append(append([]eocodeFilePlan{}, body.FilesToEdit...), body.NewFiles...) {
+	requested := append(append([]eocodeFilePlan{}, body.FilesToEdit...), body.NewFiles...)
+	paths := make([]string, 0, len(requested))
+	rejected := make([]string, 0)
+	for _, plan := range requested {
 		if safe, ok := eocodeSafeRelPath(plan.Path); ok {
 			paths = append(paths, safe)
+		} else {
+			rejected = append(rejected, plan.Path)
 		}
 	}
+	a.eocodeLog(r, "edit.start", "user_id", user.ID, "requested", len(requested), "accepted", len(paths), "rejected", rejected, "message_runes", utf8.RuneCountInString(message))
 	if len(paths) == 0 {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		a.eocodeErrorReply(w, r, "invalid_request", "The plan did not name any editable file.", "rejected paths: "+strings.Join(rejected, ", "))
 		return
 	}
 	if len(paths) > 40 {
@@ -966,35 +1004,44 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensEdit)
 	if err != nil {
 		a.auditEvent(r, "eocode_edit", "failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok": false, "error": "provider_unavailable",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent could not write the files.",
-		})
+		a.eocodeLog(r, "edit.provider_error", "user_id", user.ID, "err", redactLogValue(err.Error()))
+		a.eocodeErrorReply(w, r, "provider_unavailable", "The coding agent could not write the files.", err.Error())
 		return
 	}
+	a.eocodeLog(r, "edit.reply", "user_id", user.ID, "runes", utf8.RuneCountInString(result.Text))
 	edited, parseErr := eocodeParseJSON[eocodeEditResult](result.Text)
 	if parseErr != nil {
 		a.auditEvent(r, "eocode_edit", "parse_failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok":         false,
-			"error":      "invalid_request",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent returned an unreadable edit.",
-		})
+		a.eocodeLog(r, "edit.parse_error", "user_id", user.ID, "err", redactLogValue(parseErr.Error()), "reply", eocodeSnippet(result.Text, 600))
+		a.eocodeErrorReply(w, r, "invalid_request", "The coding agent returned an unreadable edit.", parseErr.Error()+"\n--- reply ---\n"+eocodeSnippet(result.Text, 1500))
 		return
 	}
+	a.eocodeLog(r, "edit.parsed", "user_id", user.ID, "files", len(edited.Files))
 	written := []string{}
+	changed := []string{}
+	unchanged := []string{}
+	writeErrors := []string{}
 	for _, file := range edited.Files {
 		safe, ok := eocodeSafeRelPath(file.Path)
 		if !ok {
+			writeErrors = append(writeErrors, file.Path+": invalid path")
 			continue
 		}
-		if err := ws.writeFile(safe, eocodeStripFileFence(file.Content)); err != nil {
-			a.mustLogf(r, "eocode.edit.write_error", "path", safe, "err", redactLogValue(err.Error()))
+		newContent := eocodeStripFileFence(file.Content)
+		oldContent, _ := ws.readFile(safe)
+		if err := ws.writeFile(safe, newContent); err != nil {
+			writeErrors = append(writeErrors, safe+": "+err.Error())
+			a.eocodeLog(r, "edit.write_error", "path", safe, "err", redactLogValue(err.Error()))
 			continue
 		}
 		written = append(written, safe)
+		if oldContent != newContent {
+			changed = append(changed, safe)
+			a.eocodeLog(r, "edit.wrote", "path", safe, "bytes", len(newContent))
+		} else {
+			unchanged = append(unchanged, safe)
+			a.eocodeLog(r, "edit.unchanged", "path", safe, "bytes", len(newContent))
+		}
 	}
 	deleted := []string{}
 	for _, plan := range body.DeleteFiles {
@@ -1008,21 +1055,30 @@ func (a *App) eocodeEditHandler(w http.ResponseWriter, r *http.Request) {
 		deleted = append(deleted, safe)
 	}
 	if len(written) == 0 {
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok":         false,
-			"error":      "invalid_request",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent did not produce valid files.",
-		})
+		a.eocodeLog(r, "edit.no_files", "user_id", user.ID, "errors", writeErrors)
+		a.eocodeErrorReply(w, r, "invalid_request", "The coding agent did not produce valid files.", strings.Join(writeErrors, "\n"))
 		return
 	}
 	a.auditEvent(r, "eocode_edit", "ok", user.ID)
-	writeJSON(w, http.StatusOK, map[string]any{
+	renderErr := ""
+	if _, rerr := a.eocodeRenderSite(r.Context(), ws); rerr != nil {
+		renderErr = rerr.Error()
+		a.eocodeLog(r, "edit.render_error", "user_id", user.ID, "err", redactLogValue(renderErr))
+	}
+	a.eocodeLog(r, "edit.ok", "user_id", user.ID, "written", written, "changed", changed, "unchanged", unchanged, "deleted", deleted, "render_ok", renderErr == "")
+	payload := map[string]any{
 		"ok":         true,
 		"files":      written,
+		"changed":    changed,
+		"unchanged":  unchanged,
 		"deleted":    deleted,
+		"render_ok":  renderErr == "",
 		"request_id": requestIDFrom(r, w),
-	})
+	}
+	if renderErr != "" && a.eocodeDebugAllowed(r) {
+		payload["render_error"] = redactLogValue(renderErr)
+	}
+	writeJSON(w, http.StatusOK, payload)
 }
 
 func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
@@ -1077,15 +1133,14 @@ func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := eocodeComplete(ctx, client, system, history, eocodeMaxTokensValidate)
 	if err != nil {
 		a.auditEvent(r, "eocode_validate", "failed", user.ID)
-		writeJSON(w, http.StatusOK, map[string]any{
-			"ok": false, "error": "provider_unavailable",
-			"request_id": requestIDFrom(r, w),
-			"message":    "The coding agent could not validate the change.",
-		})
+		a.eocodeLog(r, "validate.provider_error", "user_id", user.ID, "err", redactLogValue(err.Error()))
+		a.eocodeErrorReply(w, r, "provider_unavailable", "The coding agent could not validate the change.", err.Error())
 		return
 	}
+	a.eocodeLog(r, "validate.reply", "user_id", user.ID, "files", len(paths), "runes", utf8.RuneCountInString(result.Text))
 	parsed, parseErr := eocodeParseJSON[eocodeValidateResult](result.Text)
 	if parseErr != nil {
+		a.eocodeLog(r, "validate.parse_error", "user_id", user.ID, "err", redactLogValue(parseErr.Error()), "reply", eocodeSnippet(result.Text, 400))
 		writeJSON(w, http.StatusOK, map[string]any{
 			"ok": true, "needs_correction": false, "notes": "",
 			"request_id": requestIDFrom(r, w),
@@ -1100,12 +1155,14 @@ func (a *App) eocodeValidateHandler(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			if err := ws.writeFile(safe, eocodeStripFileFence(file.Content)); err != nil {
+				a.eocodeLog(r, "validate.write_error", "path", safe, "err", redactLogValue(err.Error()))
 				continue
 			}
 			corrected = append(corrected, safe)
 		}
 	}
 	a.auditEvent(r, "eocode_validate", "ok", user.ID)
+	a.eocodeLog(r, "validate.ok", "user_id", user.ID, "needs_correction", parsed.NeedsCorrection, "corrected", corrected)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":               true,
 		"needs_correction": parsed.NeedsCorrection,
@@ -1235,7 +1292,7 @@ func (a *App) eocodePreviewHandler(w http.ResponseWriter, r *http.Request) {
 		html, err := a.eocodeRenderSite(r.Context(), ws)
 		if err != nil {
 			a.mustLogf(r, "eocode.ssr.render_error", "err", redactLogValue(err.Error()))
-			a.writeSafeError(w, r, http.StatusBadGateway, "internal_error")
+			a.writeAPIError(w, r, http.StatusBadGateway, "internal_error", err.Error())
 			return
 		}
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
