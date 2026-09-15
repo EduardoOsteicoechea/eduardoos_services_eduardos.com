@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { synthesizeVoice } from "../../lib/api";
 import {
   analyzeEocode,
@@ -18,6 +19,7 @@ import {
   voiceReplyEnabled,
   type VoiceHost,
 } from "../../lib/voice";
+import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "./EocodeStudio.css";
 
 type ChatRole = "user" | "assistant";
@@ -106,6 +108,7 @@ export default function EocodeStudio() {
   const voiceCaptionRef = useRef<HTMLParagraphElement | null>(null);
   const messagesRef = useRef<ChatMessage[]>([]);
   const nextId = useRef(1);
+  const hdsHost = useHeaderDynamicHost("eocode-header-menu");
 
   const loadState = useCallback(async () => {
     const result = await fetchEocodeState();
@@ -423,8 +426,52 @@ export default function EocodeStudio() {
 
   const previewSrc = `${previewUrl}${previewUrl.includes("?") ? "&" : "?"}v=${previewVersion}`;
 
+  const eocodeHeaderMenu = hdsHost
+    ? createPortal(
+        <div
+          id="eocode-header-menu"
+          className="header-dynamic-menu"
+          ref={(node) => {
+            if (node) {
+              window.__eduardoosHeaderDynamicMenu = node;
+            }
+          }}
+        >
+          <div
+            className="header-dynamic-menu__inner header-dynamic-menu__actions"
+            role="toolbar"
+            aria-label="eocode tools"
+          >
+            <button type="button" className="header-dynamic-menu__btn" title="Nuevo chat" aria-label="Nuevo chat" onClick={newChat}>
+              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">add_comment</span>
+            </button>
+            <button type="button" className="header-dynamic-menu__btn" title="Recargar sitio" aria-label="Recargar sitio" onClick={reloadSite}>
+              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">refresh</span>
+            </button>
+            <button type="button" className="header-dynamic-menu__btn" title="Imprimir a PDF" aria-label="Imprimir a PDF" onClick={printPreview}>
+              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">print</span>
+            </button>
+            <button
+              type="button"
+              className={`header-dynamic-menu__btn${isFullscreen ? " is-active" : ""}`}
+              aria-pressed={isFullscreen}
+              title="Pantalla completa"
+              aria-label="Pantalla completa"
+              onClick={toggleFullscreen}
+            >
+              <span className="material-symbols-outlined header-dynamic-menu__icon" aria-hidden="true">
+                {isFullscreen ? "fullscreen_exit" : "fullscreen"}
+              </span>
+            </button>
+          </div>
+        </div>,
+        hdsHost,
+      )
+    : null;
+
   return (
     <div className="eocode-studio">
+      {eocodeHeaderMenu}
       <section className="eocode-chat-pane" aria-label="Chat de programacion">
         <div className="eocode-log" ref={logRef}>
           {messages.length === 0 ? (
@@ -543,22 +590,36 @@ export default function EocodeStudio() {
             </div>
           </div>
         </form>
+      </section>
 
-        <div className="eocode-actions" role="toolbar" aria-label="Acciones del estudio">
-          <button className="icon-btn" type="button" onClick={newChat} aria-label="Nuevo chat" title="Nuevo chat">
-            <span className="material-symbols-outlined" aria-hidden="true">add_comment</span>
-          </button>
-          <button className="icon-btn" type="button" onClick={reloadSite} aria-label="Recargar sitio" title="Recargar sitio">
-            <span className="material-symbols-outlined" aria-hidden="true">refresh</span>
-          </button>
-          <button className="icon-btn" type="button" onClick={printPreview} aria-label="Imprimir a PDF" title="Imprimir a PDF">
-            <span className="material-symbols-outlined" aria-hidden="true">print</span>
-          </button>
-          <button className="icon-btn" type="button" onClick={toggleFullscreen} aria-label="Pantalla completa" title="Pantalla completa">
-            <span className="material-symbols-outlined" aria-hidden="true">
-              {isFullscreen ? "fullscreen_exit" : "fullscreen"}
-            </span>
-          </button>
+      <section className="eocode-preview-pane" aria-label="Vista del sitio" ref={previewPaneRef}>
+        <div className="eocode-view">
+          {viewFile ? (
+            <div className="eocode-fileview">
+              <header className="eocode-fileview-head">
+                <span className="eocode-fileview-path">{viewFile.path}</span>
+                <button className="icon-btn" type="button" onClick={backToSite} aria-label="Volver al sitio" title="Volver al sitio">
+                  <span className="material-symbols-outlined" aria-hidden="true">close</span>
+                </button>
+              </header>
+              {viewFile.type === "image" || viewFile.type === "svg" ? (
+                <img className="eocode-fileview-img" src={`${previewUrl}${viewFile.path}`} alt="" />
+              ) : isMarkdownPath(viewFile.path) ? (
+                <Markdown text={viewFile.content} className="eocode-fileview-body" />
+              ) : (
+                <pre className="eocode-fileview-pre">{viewFile.content}</pre>
+              )}
+            </div>
+          ) : (
+            <iframe
+              key={previewVersion}
+              ref={iframeRef}
+              className="eocode-frame"
+              src={previewSrc}
+              title="Vista previa del sitio"
+              sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
+            />
+          )}
         </div>
 
         <details className="eocode-files">
@@ -579,35 +640,6 @@ export default function EocodeStudio() {
             ))}
           </ul>
         </details>
-      </section>
-
-      <section className="eocode-preview-pane" aria-label="Vista del sitio" ref={previewPaneRef}>
-        {viewFile ? (
-          <div className="eocode-fileview">
-            <header className="eocode-fileview-head">
-              <span className="eocode-fileview-path">{viewFile.path}</span>
-              <button className="icon-btn" type="button" onClick={backToSite} aria-label="Volver al sitio" title="Volver al sitio">
-                <span className="material-symbols-outlined" aria-hidden="true">close</span>
-              </button>
-            </header>
-            {viewFile.type === "image" || viewFile.type === "svg" ? (
-              <img className="eocode-fileview-img" src={`${previewUrl}${viewFile.path}`} alt="" />
-            ) : isMarkdownPath(viewFile.path) ? (
-              <Markdown text={viewFile.content} className="eocode-fileview-body" />
-            ) : (
-              <pre className="eocode-fileview-pre">{viewFile.content}</pre>
-            )}
-          </div>
-        ) : (
-          <iframe
-            key={previewVersion}
-            ref={iframeRef}
-            className="eocode-frame"
-            src={previewSrc}
-            title="Vista previa del sitio"
-            sandbox="allow-same-origin allow-scripts allow-forms allow-modals allow-popups"
-          />
-        )}
       </section>
     </div>
   );

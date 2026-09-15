@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -68,6 +69,21 @@ func eocodeTruncateErr(s string) string {
 	return s
 }
 
+// eocodeSanitizePaths removes the workspace root from a diagnostic string so
+// the API never returns a VPS filesystem path.
+func eocodeSanitizePaths(s, root string) string {
+	root = strings.TrimSpace(root)
+	if root == "" {
+		return s
+	}
+	for _, variant := range []string{root, filepath.ToSlash(root), filepath.FromSlash(root)} {
+		if variant != "" {
+			s = strings.ReplaceAll(s, variant, ".")
+		}
+	}
+	return s
+}
+
 // eocodeRenderSite runs `site.py` and returns its stdout as the HTML document.
 func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string, error) {
 	if !a.cfg.EocodeSSREnabled {
@@ -113,8 +129,9 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		a.mustLogf(nil, "eocode.ssr.run_error", "user_id", ws.UserID, "err", redactLogValue(err.Error()), "stderr", eocodeTruncateErr(stderr.String()))
-		return "", fmt.Errorf("run: %v: %s", err, eocodeTruncateErr(stderr.String()))
+		msg := eocodeSanitizePaths(eocodeTruncateErr(stderr.String()), ws.Root)
+		a.mustLogf(nil, "eocode.ssr.run_error", "user_id", ws.UserID, "err", redactLogValue(err.Error()), "stderr", msg)
+		return "", fmt.Errorf("run: %v: %s", err, msg)
 	}
 	out := stdout.String()
 	if len(out) > eocodeSSRMaxOutput {

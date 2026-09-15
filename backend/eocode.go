@@ -76,7 +76,31 @@ func (w *eocodeWorkspace) ensure() error {
 			return err
 		}
 	}
+	w.migrateFromStaticSite()
 	return nil
+}
+
+// migrateFromStaticSite upgrades a workspace created before the SSR pivot. The
+// old static seed files and atomic rules mislead the agent into editing
+// index.html/styles.css/app.js, so remove them and refresh the rules index to
+// document the Python generators.
+func (w *eocodeWorkspace) migrateFromStaticSite() {
+	old := []string{
+		"index.html", "styles.css", "app.js",
+		"rules/atomic-html.md", "rules/atomic-css.md", "rules/atomic-js.md",
+	}
+	hadStatic := false
+	for _, rel := range old {
+		full := filepath.Join(w.Root, filepath.FromSlash(rel))
+		if _, err := os.Stat(full); err == nil {
+			hadStatic = true
+			_ = os.Remove(full)
+		}
+	}
+	if !hadStatic {
+		return
+	}
+	_ = os.WriteFile(filepath.Join(w.Root, "rules", "index.md"), []byte(eocodeInitialRulesIndex), 0640)
 }
 
 var eocodeAllowedExt = map[string]bool{
@@ -722,8 +746,10 @@ func (a *App) eocodeLog(r *http.Request, stage string, args ...any) {
 }
 
 // eocodeDebugAllowed reports whether the caller may receive a detail string.
+// eocode is an admin/grantee-only surface, so the owner always receives the
+// redacted diagnostics needed to understand a failed generation.
 func (a *App) eocodeDebugAllowed(r *http.Request) bool {
-	return a.allowClientDebug(r)
+	return a.currentUser(r) != nil
 }
 
 // eocodeErrorReply writes a generic 200 JSON error plus a bounded, redacted

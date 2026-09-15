@@ -145,11 +145,11 @@
   margin-top: var(--space-padding);
 }
 
-.eocode-actions {
+.eocode-view {
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: var(--rail-gap);
-  flex-shrink: 0;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .eocode-send {
@@ -225,7 +225,7 @@
 .eocode-frame {
   flex: 1;
   align-self: stretch;
-  min-height: 34rem;
+  min-height: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: #ffffff;
@@ -235,7 +235,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 34rem;
+  min-height: 0;
   overflow: hidden;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -298,8 +298,7 @@
     max-height: 24rem;
   }
 
-  .eocode-frame,
-  .eocode-fileview {
+  .eocode-view {
     min-height: 24rem;
   }
 }

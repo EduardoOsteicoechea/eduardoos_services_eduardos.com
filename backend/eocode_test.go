@@ -295,6 +295,36 @@ func TestEocodeFileReturnsContent(t *testing.T) {
 	}
 }
 
+func TestEocodeMigratesStaticWorkspace(t *testing.T) {
+	app := newTestApp(true)
+	ws := app.eocodeWorkspace(app.mustUser("admin@eduardoos.com").ID)
+	if err := os.MkdirAll(filepath.Join(ws.Root, "rules"), 0750); err != nil {
+		t.Fatal(err)
+	}
+	_ = os.WriteFile(filepath.Join(ws.Root, "index.html"), []byte("<html></html>"), 0640)
+	_ = os.WriteFile(filepath.Join(ws.Root, "styles.css"), []byte("body{}"), 0640)
+	_ = os.WriteFile(filepath.Join(ws.Root, "rules", "atomic-html.md"), []byte("old"), 0640)
+	_ = os.WriteFile(filepath.Join(ws.Root, "rules", "index.md"), []byte("old index atomic-html.md"), 0640)
+	if err := ws.ensure(); err != nil {
+		t.Fatal(err)
+	}
+	for _, gone := range []string{"index.html", "styles.css", "rules/atomic-html.md"} {
+		if _, err := os.Stat(ws.fullPath(gone)); err == nil {
+			t.Fatalf("expected %s removed by migration", gone)
+		}
+	}
+	if _, err := os.Stat(ws.fullPath("site.py")); err != nil {
+		t.Fatal("site.py not seeded after migration")
+	}
+	idx, err := ws.readFile("rules/index.md")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(idx, "components/head.py") {
+		t.Fatalf("rules index not migrated: %q", idx)
+	}
+}
+
 func TestEocodeSafeRelPath(t *testing.T) {
 	bad := []string{"", "../a.html", "/etc/passwd", "a/../../b.py", "evil.exe", "index.html", "app.js", "styles.css"}
 	for _, in := range bad {
