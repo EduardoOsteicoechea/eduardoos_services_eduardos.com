@@ -160,7 +160,7 @@ func TestEocodeStateSeedsWorkspace(t *testing.T) {
 
 func TestEocodeIdentifyConsult(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"type":"consult","text":"Hola, **bienvenido**."}`}
+	app.chat[eocodeProvider] = &recordingChat{provider: eocodeProvider, text: `{"type":"consult","text":"Hola, **bienvenido**."}`}
 	req, rec := app.adminPOST(t, "/api/eocode/identify", `{"message":"que es HTML?"}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
@@ -180,7 +180,7 @@ func TestEocodeIdentifyConsult(t *testing.T) {
 
 func TestEocodeEditWritesFiles(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"components/extra.py","content":"def render_extra():\n    return '<p>hola</p>'\n"}]}`}
+	app.chat[eocodeProvider] = &recordingChat{provider: eocodeProvider, text: `{"files":[{"path":"components/extra.py","content":"def render_extra():\n    return '<p>hola</p>'\n"}]}`}
 	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"usa rojo","files_to_edit":[{"path":"components/extra.py","reason":"color"}]}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
@@ -199,7 +199,7 @@ func TestEocodeEditWritesFiles(t *testing.T) {
 
 func TestEocodeEditRejectsTraversal(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: `{"files":[{"path":"../../evil.py","content":"x=1"}]}`}
+	app.chat[eocodeProvider] = &recordingChat{provider: eocodeProvider, text: `{"files":[{"path":"../../evil.py","content":"x=1"}]}`}
 	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"x","files_to_edit":[{"path":"../../evil.py"}]}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code == http.StatusOK {
@@ -270,8 +270,8 @@ func TestEocodeUploadConvertsToWebp(t *testing.T) {
 
 func TestEocodeEditStripsFence(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"] = &recordingChat{
-		provider: "deepseek",
+	app.chat[eocodeProvider] = &recordingChat{
+		provider: eocodeProvider,
 		text:     "{\"files\":[{\"path\":\"components/body.py\",\"content\":\"```python\\ndef render_body():\\n    return '<body>x</body>'\\n```\"}]}",
 	}
 	req, rec := app.adminPOST(t, "/api/eocode/edit", `{"message":"cambia el body","files_to_edit":[{"path":"components/body.py"}]}`)

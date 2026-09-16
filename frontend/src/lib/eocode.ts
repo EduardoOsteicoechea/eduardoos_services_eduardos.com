@@ -1,7 +1,7 @@
 /**
  * eocode — agent coding studio API client.
  *
- * The backend orchestrates four DeepSeek steps:
+ * The backend orchestrates four OpenRouter steps:
  *   identify -> (consult) | (coding) analyze -> edit -> validate
  * plus asset upload and the static-site preview served to the iframe.
  */

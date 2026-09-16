@@ -146,7 +146,7 @@ This site follows the parent-workspace contract [`.cursor/rules/email-otp-notifi
 
 ## AI chat and agent workflows
 
-This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek, Kimi, and OpenRouter are backend-only. Public `/api/chat` uses OpenRouter (`OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` / `OPENROUTER_API_BASE`). DeepSeek remains for eoCode and other site features. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
+This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek, Kimi, and OpenRouter are backend-only. Public `/api/chat` and eoCode use OpenRouter (`OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` / `OPENROUTER_API_BASE`). DeepSeek remains for other site features. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
 
 ## Global voice (speech-to-text and spoken replies)
 

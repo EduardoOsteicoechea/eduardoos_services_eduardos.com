@@ -18,9 +18,10 @@ import (
 )
 
 // eocode is the agent coding studio: a private workspace where an admin (or an
-// admin-granted user) chats with a DeepSeek agent that writes a static site.
+// admin-granted user) chats with an OpenRouter agent that writes a static site.
 const (
 	eocodeServiceID         = "eocode"
+	eocodeProvider          = "openrouter"
 	eocodeDirName           = "eocode"
 	eocodeMaxPromptRunes    = 4000
 	eocodeMaxFileBytes      = 1024 * 1024
@@ -815,14 +816,14 @@ func (a *App) eocodeRateLimited(w http.ResponseWriter, r *http.Request, userID s
 }
 
 func (a *App) eocodeClient(w http.ResponseWriter, r *http.Request) ChatClient {
-	if strings.TrimSpace(a.cfg.DeepSeekKey) == "" {
-		a.eocodeLog(r, "client.missing_key", "provider", "deepseek")
+	if strings.TrimSpace(a.cfg.OpenRouterKey) == "" {
+		a.eocodeLog(r, "client.missing_key", "provider", eocodeProvider)
 		a.eocodeErrorReply(w, r, "provider_unavailable",
-			"El backend de DeepSeek no tiene API key configurada.",
-			"DEEPSEEK_API_KEY esta vacia. Configurala en el entorno (o /etc/<site>-api.env) y reinicia la API.")
+			"El backend de OpenRouter no tiene API key configurada.",
+			"OPENROUTER_API_KEY esta vacia. Configurala en el entorno (o /etc/<site>-api.env) y reinicia la API.")
 		return nil
 	}
-	client, ok := a.chat["deepseek"]
+	client, ok := a.chat[eocodeProvider]
 	if !ok {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return nil
