@@ -29,7 +29,7 @@ const (
 	publicChatIPMax      = 20
 	publicChatUserMax    = 40
 	publicChatWindow     = time.Hour
-	publicChatProvider   = "deepseek"
+	publicChatProvider   = "openrouter"
 )
 
 type publicChatTurn struct {
@@ -140,33 +140,20 @@ func writeSSE(w http.ResponseWriter, payload any) error {
 	return nil
 }
 
-func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
-	a.handlePublicChat(w, r, "public-chat")
-}
-
-// profileAskHandler is an alias of public chat for the home dock (/api/profile/ask).
-func (a *App) profileAskHandler(w http.ResponseWriter, r *http.Request) {
-	a.handlePublicChat(w, r, "profile-ask")
-}
-
-func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind string) {
-	originOK := a.validOrigin(r)
-	csrfOK := a.validCSRF(r)
-	if !originOK || !csrfOK {
-		a.logAuthDebug(r, "public_chat_denied",
-			slog.String("audit_kind", auditKind),
-			slog.Bool("origin_ok", originOK),
-			slog.Bool("csrf_ok", csrfOK),
-			slog.String("csrf_reason", a.csrfFailureReason(r)),
-		)
-		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+func (a *App) handleAIChat(w http.ResponseWriter, r *http.Request) {
+	// Verificar autenticación
+	user := a.currentUser(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+
 	var body publicChatRequest
 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 32<<10)).Decode(&body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+
 	message := strings.TrimSpace(body.Message)
 	if message == "" {
 		message = strings.TrimSpace(body.Question)
@@ -175,35 +162,39 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+
+	userID := user.ID
+
+	// Rate limiting
 	ip := clientIP(r.RemoteAddr)
-	user := a.currentUser(r)
-	userID := ""
-	if user != nil {
-		userID = user.ID
-	}
 	if !a.chatIPLimit.allow(ip) || (userID != "" && !a.chatUserLimit.allow(userID)) {
-		a.auditEventExtra(r, auditKind, "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
+		a.auditEventExtra(r, "ai-chat", "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
+
 	client, ok := a.chat[publicChatProvider]
 	if !ok {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+
 	systemPrompt := chatSystemPrompt(body.Path, body.PageContext)
 	if a.cfg.MustLog {
 		a.log.Info("chat.system_prompt",
 			"request_id", requestIDFrom(r, nil),
-			"kind", auditKind,
+			"kind", "ai-chat",
 			"prompt_len", utf8.RuneCountInString(systemPrompt),
 			"has_profile_corpus", strings.Contains(systemPrompt, "eduardooost@gmail.com"),
 		)
 	}
+
 	history := sanitizeChatTurns(body.History)
 	history = append(history, ChatMessage{Role: "user", Content: message})
+
 	ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
 	defer cancel()
+
 	if body.Stream {
 		rid := requestIDFrom(r, w)
 		w.Header().Set("Content-Type", "text/event-stream")
@@ -211,12 +202,7 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 		w.Header().Set("Connection", "keep-alive")
 		w.Header().Set("X-Accel-Buffering", "no")
 		w.WriteHeader(http.StatusOK)
-		var streamer *voiceSentenceStreamer
-		speakLang := ""
-		if body.Speak && a.voiceTTS != nil {
-			speakLang = normalizeVoiceLang(body.Lang, a.cfg.VoiceSTTLangDefault)
-			streamer = &voiceSentenceStreamer{}
-		}
+
 		emit := func(delta string) error {
 			clean := sanitizeModelDelta(delta)
 			if clean == "" {
@@ -225,16 +211,29 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 			if err := writeSSE(w, map[string]any{"delta": clean}); err != nil {
 				return err
 			}
-			if streamer != nil {
-				for _, sentence := range streamer.push(clean) {
-					a.emitVoiceAudio(ctx, w, speakLang, streamer, sentence)
-				}
-			}
 			return nil
 		}
+
 		result, err := client.Stream(ctx, systemPrompt, history, emit)
 		if err != nil {
-			a.auditEventExtra(r, auditKind, "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
+			// Handle rate limiting
+			if err.Error() == "rate_limited" {
+				a.auditEventExtra(r, "ai-chat", "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
+				a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
+				return
+			}
+			
+			// Handle provider auth errors
+			if err.Error() == "provider_auth_error" {
+				a.log.Error("ai.provider_auth_error", 
+					slog.String("request_id", requestIDFrom(r, w)),
+					slog.String("provider", publicChatProvider),
+					slog.String("user_id", userID))
+				a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+				return
+			}
+			
+			a.auditEventExtra(r, "ai-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
 			_ = writeSSE(w, map[string]any{
 				"ok": false, "error": "provider_unavailable",
 				"request_id": rid,
@@ -242,12 +241,8 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 			})
 			return
 		}
-		if streamer != nil {
-			if tail := streamer.flush(); tail != "" {
-				a.emitVoiceAudio(ctx, w, speakLang, streamer, tail)
-			}
-		}
-		a.auditEventExtra(r, auditKind, "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
+
+		a.auditEventExtra(r, "ai-chat", "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
 		_ = writeSSE(w, map[string]any{
 			"ok": true, "done": true,
 			"request_id": rid,
@@ -255,9 +250,27 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 		})
 		return
 	}
+
 	result, err := client.Complete(ctx, systemPrompt, history)
 	if err != nil {
-		a.auditEventExtra(r, auditKind, "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
+		// Handle rate limiting
+		if err.Error() == "rate_limited" {
+			a.auditEventExtra(r, "ai-chat", "rate_limited", userID, publicChatProvider, utf8.RuneCountInString(message))
+			a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
+			return
+		}
+		
+		// Handle provider auth errors
+		if err.Error() == "provider_auth_error" {
+			a.log.Error("ai.provider_auth_error", 
+				slog.String("request_id", requestIDFrom(r, w)),
+				slog.String("provider", publicChatProvider),
+				slog.String("user_id", userID))
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		
+		a.auditEventExtra(r, "ai-chat", "failed", userID, publicChatProvider, utf8.RuneCountInString(message))
 		writeJSON(w, http.StatusOK, map[string]any{
 			"ok": false, "error": "provider_unavailable",
 			"request_id": requestIDFrom(r, w),
@@ -265,7 +278,8 @@ func (a *App) handlePublicChat(w http.ResponseWriter, r *http.Request, auditKind
 		})
 		return
 	}
-	a.auditEventExtra(r, auditKind, "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
+
+	a.auditEventExtra(r, "ai-chat", "ok", userID, publicChatProvider, utf8.RuneCountInString(message))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":         true,
 		"request_id": requestIDFrom(r, w),

@@ -77,6 +77,7 @@ type config struct {
 	KimiKey                   string
 	KimiBaseURL               string
 	KimiModel                 string
+	OpenRouterKey             string
 	PayPalHostedButtonID      string
 	PayPalCheckoutURL         string
 	AllowedOrigins            []string
@@ -284,6 +285,7 @@ func loadConfig() config {
 		KimiKey:                   os.Getenv("KIMI_API_KEY"),
 		KimiBaseURL:               strings.TrimRight(kimiBase, "/"),
 		KimiModel:                 kimiModel,
+		OpenRouterKey:             os.Getenv("OPENROUTER_API_KEY"),
 		PayPalHostedButtonID:      strings.TrimSpace(os.Getenv("PAYPAL_HOSTED_BUTTON_ID")),
 		PayPalCheckoutURL:         paypalCheckout,
 		AllowedOrigins: []string{

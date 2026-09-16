@@ -147,14 +147,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	app.voice, app.voiceSTT, app.voiceTTS = resolveVoice(cfg, app.log)
 	app.ereport.owner = app.ereportOwnerLookup
 	httpClient := newHTTPClient()
-	app.chat["deepseek"] = openAICompatClient{
-		name:        "deepseek",
-		baseURL:     cfg.DeepSeekBaseURL,
-		apiKey:      cfg.DeepSeekKey,
-		model:       cfg.DeepSeekModel,
-		visionModel: cfg.DeepSeekVisionModel,
-		http:        httpClient,
-	}
+	app.chat["openrouter"] = newOpenRouterClient(cfg.OpenRouterKey)
 	app.chat["kimi"] = openAICompatClient{
 		name:    "kimi",
 		baseURL: cfg.KimiBaseURL,
@@ -163,6 +156,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		http:    httpClient,
 	}
 	app.log.Info("ai.providers",
+		"openrouter_configured", strings.TrimSpace(cfg.OpenRouterKey) != "",
 		"deepseek_configured", strings.TrimSpace(cfg.DeepSeekKey) != "",
 		"deepseek_model", cfg.DeepSeekModel,
 		"kimi_configured", strings.TrimSpace(cfg.KimiKey) != "",
@@ -203,8 +197,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PUT /api/admin/articles/{id}", a.setArticlePublicationHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
-	mux.HandleFunc("POST /api/chat", a.publicChatHandler)
-	mux.HandleFunc("POST /api/profile/ask", a.profileAskHandler)
+	mux.HandleFunc("POST /api/ai/chat", a.handleAIChat)
 
 	mux.HandleFunc("GET /api/eocode/state", a.eocodeStateHandler)
 	mux.HandleFunc("GET /api/eocode/file/{path...}", a.eocodeFileHandler)
