@@ -29,7 +29,7 @@ var evoicePremiumPlan = []evoiceJobStep{
 	{ID: "download_docs", Label: "Load documents", State: "pending"},
 	{ID: "download_audios", Label: "Load existing audios", State: "pending"},
 	{ID: "extract_speech", Label: "Convert to speech (extract)", State: "pending"},
-	{ID: "refine_deepseek", Label: "Refine with DeepSeek", State: "pending"},
+	{ID: "refine_deepseek", Label: "Refine with OpenRouter", State: "pending"},
 	{ID: "convert_audio", Label: "Convert to audio", State: "pending"},
 	{ID: "upload", Label: "Persist audios", State: "pending"},
 	{ID: "finalize", Label: "Finalize", State: "pending"},
@@ -117,8 +117,12 @@ func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []st
 }
 
 type evoicePythonRunner struct {
-	Python string
-	Script string
+	Python                string
+	Script                string
+	OpenRouterKey         string
+	OpenRouterBase        string
+	OpenRouterModel       string
+	OpenRouterVisionModel string
 }
 
 func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFiles []string, opts evoiceGenerateOpts, logFn func(string)) (evoiceJobStats, error) {
@@ -145,7 +149,7 @@ func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFile
 	}
 	cmd := exec.CommandContext(ctx, py, args...)
 	tmpDir := filepath.Dir(projectDir)
-	cmd.Env = append(os.Environ(), "PYTHONUNBUFFERED=1", "TMPDIR="+tmpDir, "TEMP="+tmpDir, "TMP="+tmpDir)
+	cmd.Env = append(os.Environ(), p.childEnv(tmpDir)...)
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return evoiceJobStats{}, err
@@ -245,7 +249,29 @@ func resolveEvoiceRunner(cfg config) evoiceJobRunner {
 	if script == "" {
 		script = defaultEvoiceWorkerScript()
 	}
-	return evoicePythonRunner{Python: py, Script: script}
+	return evoicePythonRunner{
+		Python:                py,
+		Script:                script,
+		OpenRouterKey:         cfg.OpenRouterKey,
+		OpenRouterBase:        cfg.OpenRouterBaseURL,
+		OpenRouterModel:       cfg.OpenRouterModel,
+		OpenRouterVisionModel: cfg.OpenRouterVisionModel,
+	}
+}
+
+func (p evoicePythonRunner) childEnv(tmpDir string) []string {
+	return []string{
+		"PYTHONUNBUFFERED=1",
+		"TMPDIR=" + tmpDir,
+		"TEMP=" + tmpDir,
+		"TMP=" + tmpDir,
+		"OPENROUTER_API_KEY=" + strings.TrimSpace(p.OpenRouterKey),
+		"OPENROUTER_API_BASE=" + strings.TrimSpace(p.OpenRouterBase),
+		"OPENROUTER_MODEL=" + strings.TrimSpace(p.OpenRouterModel),
+		"OPENROUTER_VISION_MODEL=" + strings.TrimSpace(p.OpenRouterVisionModel),
+		// Blank so a leftover DeepSeek key in systemd cannot bill the empty account.
+		"DEEPSEEK_API_KEY=",
+	}
 }
 
 type evoiceJobStore struct {

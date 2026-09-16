@@ -15,10 +15,11 @@ Environment (documented for operators; Go sets most of these):
   EVOICE_JOB_TIMEOUT     — Go convert timeout (e.g. 45m)
   EVOICE_PIPER_MODEL     — Path to the Piper .onnx voice (falls back to bundled models/)
   EVOICE_WORK_DIR        — Optional temp base (legacy); jobs now run in-place under media
-  DEEPSEEK_API_KEY       — Premium / super_premium DeepSeek refine + vision
-  DEEPSEEK_MODEL         — DeepSeek chat model for premium refine (Go config name)
-  DEEPSEEK_VISION_MODEL  — DeepSeek vision model for super_premium (Go config name)
-  TMPDIR / TEMP / TMP    — Set by Go to the parent of --project-dir
+  OPENROUTER_API_KEY         — Premium / super_premium refine + vision (required)
+  OPENROUTER_API_BASE        — OpenRouter API root (default https://openrouter.ai/api/v1)
+  OPENROUTER_MODEL           — Chat model for premium refine (default deepseek/deepseek-chat)
+  OPENROUTER_VISION_MODEL    — Vision model for super_premium pages (default deepseek/deepseek-v4.1-flash)
+  TMPDIR / TEMP / TMP        — Set by Go to the parent of --project-dir
 
 Emits frequent progress lines and a final STATS line for the Go job poller.
 """
@@ -51,6 +52,10 @@ DOC_EXTENSIONS = {
     ".gif",
 }
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff", ".bmp", ".gif"}
+
+OPENROUTER_DEFAULT_BASE = "https://openrouter.ai/api/v1"
+OPENROUTER_DEFAULT_MODEL = "deepseek/deepseek-chat"
+OPENROUTER_DEFAULT_VISION_MODEL = "deepseek/deepseek-v4.1-flash"
 
 PREMIUM_SYSTEM = (
     "Eres un editor de guiones hablados en español para audiolibros / MP3. "
@@ -171,8 +176,63 @@ def content_percent_instruction(pct: int) -> str:
     )
 
 
-def deepseek_system_for(pct: int) -> str:
+def premium_system_for(pct: int) -> str:
     return PREMIUM_SYSTEM + content_percent_instruction(pct)
+
+
+def openrouter_key() -> str:
+    key = (os.environ.get("OPENROUTER_API_KEY") or "").strip()
+    if not key:
+        raise RuntimeError("OPENROUTER_API_KEY not configured for eVoice")
+    return key
+
+
+def openrouter_base() -> str:
+    return (os.environ.get("OPENROUTER_API_BASE") or OPENROUTER_DEFAULT_BASE).rstrip("/")
+
+
+def openrouter_chat_model() -> str:
+    return (os.environ.get("OPENROUTER_MODEL") or OPENROUTER_DEFAULT_MODEL).strip()
+
+
+def openrouter_vision_model() -> str:
+    return (
+        os.environ.get("OPENROUTER_VISION_MODEL") or OPENROUTER_DEFAULT_VISION_MODEL
+    ).strip()
+
+
+def openrouter_headers(extra: dict[str, str] | None = None) -> dict[str, str]:
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {openrouter_key()}",
+        "HTTP-Referer": "https://eduardoos.com",
+        "X-Title": "Eduardoos",
+    }
+    if extra:
+        headers.update(extra)
+    return headers
+
+
+def openrouter_message_text(body: object) -> str:
+    if not isinstance(body, dict):
+        return ""
+    choices = body.get("choices") or [{}]
+    if not choices or not isinstance(choices, list):
+        return ""
+    first = choices[0] if isinstance(choices[0], dict) else {}
+    message = first.get("message") or {}
+    content = message.get("content", "") if isinstance(message, dict) else ""
+    if isinstance(content, list):
+        parts: list[str] = []
+        for part in content:
+            if isinstance(part, dict):
+                text = part.get("text") or ""
+                if text:
+                    parts.append(str(text))
+            elif part:
+                parts.append(str(part))
+        return "".join(parts).strip()
+    return str(content or "").strip()
 
 
 def list_stem_audios(audios_dir: Path, stem: str) -> list[Path]:
@@ -331,7 +391,7 @@ def extract_pdf_via_ocr(path: Path) -> str:
 
 
 def extract_pdf(path: Path) -> str:
-    """PDF with text layer and/or image pages — always produce text for premium DeepSeek."""
+    """PDF with text layer and/or image pages — always produce text for premium OpenRouter."""
     name = path.name
     log(f"EXTRACT {name} pct=8 detail=pdf_text_layer")
     layer = extract_pdf_text_layer(path)
@@ -381,21 +441,14 @@ def load_doc_text(path: Path) -> str:
 
 
 def premium_optimize(text: str, name: str, content_percent: int = 100) -> str:
-    """DeepSeek chat completions with stream=true + system role; required when DeepSeek runs."""
-    key = (os.environ.get("DEEPSEEK_API_KEY") or "").strip()
-    if not key:
-        raise RuntimeError("DEEPSEEK_API_KEY not configured for premium")
-    model = (
-        os.environ.get("DEEPSEEK_MODEL")
-        or os.environ.get("DEEPSEEK_MODEL_REASONING")
-        or "deepseek-chat"
-    ).strip()
-    base = (os.environ.get("DEEPSEEK_BASE_URL") or "https://api.deepseek.com").rstrip("/")
-    log(f"PREMIUM {name} pct=5 detail=deepseek_stream_start model={model} contentPercent={content_percent}")
+    """OpenRouter chat completions with stream=true + system role; required when premium runs."""
+    model = openrouter_chat_model()
+    base = openrouter_base()
+    log(f"PREMIUM {name} pct=5 detail=openrouter_stream_start model={model} contentPercent={content_percent}")
     payload = {
         "model": model,
         "messages": [
-            {"role": "system", "content": deepseek_system_for(content_percent)},
+            {"role": "system", "content": premium_system_for(content_percent)},
             {"role": "user", "content": text[:120000]},
         ],
         "temperature": 0.3,
@@ -404,11 +457,7 @@ def premium_optimize(text: str, name: str, content_percent: int = 100) -> str:
     req = urllib.request.Request(
         f"{base}/chat/completions",
         data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {key}",
-            "Accept": "text/event-stream",
-        },
+        headers=openrouter_headers({"Accept": "text/event-stream"}),
         method="POST",
     )
     parts: list[str] = []
@@ -448,26 +497,18 @@ def premium_optimize(text: str, name: str, content_percent: int = 100) -> str:
                     log(f"PREMIUM {name} pct={pct} detail=chars={n} {snippet}")
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:400]
-        raise RuntimeError(f"deepseek HTTP {exc.code}: {detail}") from exc
+        raise RuntimeError(f"openrouter HTTP {exc.code}: {detail}") from exc
     content = "".join(parts).strip()
     if not content:
-        raise RuntimeError("deepseek returned empty content")
+        raise RuntimeError("openrouter returned empty content")
     log(f"PREMIUM {name} pct=100 detail=optimized {len(text)}→{len(content)} chars")
     return content
 
 
 def vision_image_to_text(image_path: Path, name: str, page_label: str = "") -> str:
-    """One page image → DeepSeek Vision (spec 069)."""
-    key = (os.environ.get("DEEPSEEK_API_KEY") or "").strip()
-    if not key:
-        raise RuntimeError("DEEPSEEK_API_KEY not configured for super premium vision")
-    model = (
-        os.environ.get("DEEPSEEK_VISION_MODEL")
-        or os.environ.get("DEEPSEEK_MODEL_VISION")
-        or os.environ.get("DEEPSEEK_MODEL")
-        or "deepseek-chat"
-    ).strip()
-    base = (os.environ.get("DEEPSEEK_BASE_URL") or "https://api.deepseek.com").rstrip("/")
+    """One page image → OpenRouter vision model (multimodal chat completions)."""
+    model = openrouter_vision_model()
+    base = openrouter_base()
     tag = f"{name}{(' ' + page_label) if page_label else ''}"
     log(f"VISION {tag} pct=10 detail=encode")
     import base64
@@ -508,10 +549,7 @@ def vision_image_to_text(image_path: Path, name: str, page_label: str = "") -> s
     req = urllib.request.Request(
         f"{base}/chat/completions",
         data=body_bytes,
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {key}",
-        },
+        headers=openrouter_headers(),
         method="POST",
     )
     del body_bytes
@@ -522,14 +560,11 @@ def vision_image_to_text(image_path: Path, name: str, page_label: str = "") -> s
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:400]
         raise RuntimeError(f"vision HTTP {exc.code}: {detail}") from exc
-    text = (
-        body.get("choices", [{}])[0]
-        .get("message", {})
-        .get("content", "")
-        or ""
-    ).strip()
+    text = openrouter_message_text(body)
     del body
     gc.collect()
+    if not text:
+        raise RuntimeError("openrouter vision returned empty content")
     log(f"VISION {tag} pct=100 detail=chars={len(text)}")
     return text
 
@@ -1108,7 +1143,7 @@ def sync_project(
         mode = "standard"
     if content_percent not in {100, 75, 50, 25, 10, 5}:
         content_percent = 100
-    use_deepseek = mode in {"premium", "super_premium"} or content_percent < 100
+    use_llm = mode in {"premium", "super_premium"} or content_percent < 100
     docs_dir = project_dir / "docs"
     audios_dir = project_dir / "audios"
     audios_dir.mkdir(parents=True, exist_ok=True)
@@ -1129,7 +1164,7 @@ def sync_project(
         return stats
     for idx, doc in enumerate(docs, start=1):
         stem = doc.stem
-        if not needs_regen_stem(doc, audios_dir, stem, premium=use_deepseek):
+        if not needs_regen_stem(doc, audios_dir, stem, premium=use_llm):
             stats["skipped"] += 1
             log(f"FILE {doc.name} state=skipped")
             log(f"skip   {doc.name} (already up to date)")
@@ -1155,7 +1190,7 @@ def sync_project(
                 text = load_doc_text(doc)
             if not text.strip():
                 raise ValueError("No readable text extracted")
-            if use_deepseek:
+            if use_llm:
                 log(
                     f"PREMIUM {doc.name} detail=system_role_prep modality={doc.suffix.lower()} "
                     f"mode={mode}"
@@ -1166,7 +1201,7 @@ def sync_project(
                 log(f"PREMIUM {doc.name} detail=wrote {premium_path.name}")
                 chapters = parse_chapters(text)
                 if not chapters:
-                    raise ValueError("deepseek produced no chapters")
+                    raise ValueError("openrouter produced no chapters")
                 log(f"PREMIUM {doc.name} detail=chapters={len(chapters)}")
                 for i, (n, title, body) in enumerate(chapters, start=1):
                     mp3_name = chapter_mp3_name(stem, n, title, version=ver)

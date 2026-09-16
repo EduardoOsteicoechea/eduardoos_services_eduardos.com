@@ -64,23 +64,23 @@ type evoiceJobStats struct {
 }
 
 type evoiceJobStatus struct {
-	ID             string                   `json:"id" bson:"_id"`
-	State          string                   `json:"state" bson:"state"`
-	Owner          string                   `json:"ownerSafe" bson:"owner_user_id"`
-	Project        string                   `json:"project" bson:"project"`
-	OnlyFiles      []string                 `json:"onlyFiles,omitempty" bson:"only_files,omitempty"`
-	Premium        bool                     `json:"premium,omitempty" bson:"premium,omitempty"`
-	Mode           string                   `json:"mode,omitempty" bson:"mode,omitempty"`
-	ContentPercent int                      `json:"contentPercent,omitempty" bson:"content_percent,omitempty"`
-	Logs           []string                 `json:"logs" bson:"logs"`
-	Steps          []evoiceJobStep          `json:"steps" bson:"steps"`
-	Files          []evoiceJobFileProgress  `json:"files" bson:"files"`
-	Progress       int                      `json:"progress" bson:"progress"`
-	CurrentStep    string                   `json:"currentStep,omitempty" bson:"current_step,omitempty"`
-	Error          string                   `json:"error,omitempty" bson:"error,omitempty"`
-	Stats          *evoiceJobStats          `json:"stats,omitempty" bson:"stats,omitempty"`
-	UpdatedAt      time.Time                `json:"-" bson:"updated_at"`
-	CreatedAt      time.Time                `json:"-" bson:"created_at"`
+	ID             string                  `json:"id" bson:"_id"`
+	State          string                  `json:"state" bson:"state"`
+	Owner          string                  `json:"ownerSafe" bson:"owner_user_id"`
+	Project        string                  `json:"project" bson:"project"`
+	OnlyFiles      []string                `json:"onlyFiles,omitempty" bson:"only_files,omitempty"`
+	Premium        bool                    `json:"premium,omitempty" bson:"premium,omitempty"`
+	Mode           string                  `json:"mode,omitempty" bson:"mode,omitempty"`
+	ContentPercent int                     `json:"contentPercent,omitempty" bson:"content_percent,omitempty"`
+	Logs           []string                `json:"logs" bson:"logs"`
+	Steps          []evoiceJobStep         `json:"steps" bson:"steps"`
+	Files          []evoiceJobFileProgress `json:"files" bson:"files"`
+	Progress       int                     `json:"progress" bson:"progress"`
+	CurrentStep    string                  `json:"currentStep,omitempty" bson:"current_step,omitempty"`
+	Error          string                  `json:"error,omitempty" bson:"error,omitempty"`
+	Stats          *evoiceJobStats         `json:"stats,omitempty" bson:"stats,omitempty"`
+	UpdatedAt      time.Time               `json:"-" bson:"updated_at"`
+	CreatedAt      time.Time               `json:"-" bson:"created_at"`
 }
 
 type evoicePlaylistShareFile struct {
@@ -89,15 +89,15 @@ type evoicePlaylistShareFile struct {
 }
 
 type evoicePlaylistShare struct {
-	ID         string                    `json:"-" bson:"_id"`
-	TokenHash  string                    `json:"-" bson:"token_hash"`
-	OwnerSafe  string                    `json:"ownerSafe" bson:"owner_user_id"`
-	Project    string                    `json:"project" bson:"project"`
-	Email      string                    `json:"email" bson:"email"`
-	Files      []evoicePlaylistShareFile `json:"files" bson:"files"`
-	ExpiresAt  time.Time                 `json:"expiresAt" bson:"expires_at"`
-	CreatedAt  time.Time                 `json:"createdAt" bson:"created_at"`
-	RawToken   string                    `json:"token,omitempty" bson:"-"`
+	ID        string                    `json:"-" bson:"_id"`
+	TokenHash string                    `json:"-" bson:"token_hash"`
+	OwnerSafe string                    `json:"ownerSafe" bson:"owner_user_id"`
+	Project   string                    `json:"project" bson:"project"`
+	Email     string                    `json:"email" bson:"email"`
+	Files     []evoicePlaylistShareFile `json:"files" bson:"files"`
+	ExpiresAt time.Time                 `json:"expiresAt" bson:"expires_at"`
+	CreatedAt time.Time                 `json:"createdAt" bson:"created_at"`
+	RawToken  string                    `json:"token,omitempty" bson:"-"`
 }
 
 type evoiceProjectDoc struct {
@@ -113,6 +113,7 @@ type evoiceGenerateOpts struct {
 	ContentPercent int
 }
 
+// UsesDeepSeek is the premium/super_premium LLM path (OpenRouter refine + vision).
 func (o evoiceGenerateOpts) UsesDeepSeek() bool {
 	if o.Mode == ModePremium || o.Mode == ModeSuperPremium {
 		return true

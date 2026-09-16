@@ -80,6 +80,7 @@ type config struct {
 	OpenRouterKey             string
 	OpenRouterBaseURL         string
 	OpenRouterModel           string
+	OpenRouterVisionModel     string
 	PayPalHostedButtonID      string
 	PayPalCheckoutURL         string
 	AllowedOrigins            []string
@@ -129,6 +130,10 @@ func loadConfig() config {
 	openRouterModel := strings.TrimSpace(os.Getenv("OPENROUTER_MODEL"))
 	if openRouterModel == "" {
 		openRouterModel = openRouterDefaultModel
+	}
+	openRouterVision := strings.TrimSpace(os.Getenv("OPENROUTER_VISION_MODEL"))
+	if openRouterVision == "" {
+		openRouterVision = openRouterDefaultVisionModel
 	}
 	paypalCheckout := strings.TrimSpace(os.Getenv("PAYPAL_CHECKOUT_URL"))
 	if paypalCheckout == "" {
@@ -298,6 +303,7 @@ func loadConfig() config {
 		OpenRouterKey:             os.Getenv("OPENROUTER_API_KEY"),
 		OpenRouterBaseURL:         strings.TrimRight(openRouterBase, "/"),
 		OpenRouterModel:           openRouterModel,
+		OpenRouterVisionModel:     openRouterVision,
 		PayPalHostedButtonID:      strings.TrimSpace(os.Getenv("PAYPAL_HOSTED_BUTTON_ID")),
 		PayPalCheckoutURL:         paypalCheckout,
 		AllowedOrigins: []string{

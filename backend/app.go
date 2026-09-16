@@ -155,7 +155,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		visionModel: cfg.DeepSeekVisionModel,
 		http:        httpClient,
 	}
-	app.chat["openrouter"] = newOpenRouterClient(cfg.OpenRouterKey, cfg.OpenRouterModel, cfg.OpenRouterBaseURL, httpClient)
+	app.chat["openrouter"] = newOpenRouterClient(cfg.OpenRouterKey, cfg.OpenRouterModel, cfg.OpenRouterVisionModel, cfg.OpenRouterBaseURL, httpClient)
 	app.chat["kimi"] = openAICompatClient{
 		name:    "kimi",
 		baseURL: cfg.KimiBaseURL,
@@ -166,6 +166,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	app.log.Info("ai.providers",
 		"openrouter_configured", strings.TrimSpace(cfg.OpenRouterKey) != "",
 		"openrouter_model", cfg.OpenRouterModel,
+		"openrouter_vision_model", cfg.OpenRouterVisionModel,
 		"deepseek_configured", strings.TrimSpace(cfg.DeepSeekKey) != "",
 		"deepseek_model", cfg.DeepSeekModel,
 		"kimi_configured", strings.TrimSpace(cfg.KimiKey) != "",

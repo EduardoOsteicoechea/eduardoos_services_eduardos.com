@@ -61,8 +61,8 @@ Provisioning complete. Add these to /etc/eduardoos-api.env:
   EVOICE_PYTHON=${VENV_DIR}/bin/python
   EVOICE_WORKER_SCRIPT=evoice-worker/linux_sync.py
   EVOICE_PIPER_MODEL=${PIPER_MODEL}
-  DEEPSEEK_MODEL=<deepseek chat model id>
-  DEEPSEEK_VISION_MODEL=<deepseek vision model id>
+  OPENROUTER_MODEL=deepseek/deepseek-chat
+  OPENROUTER_VISION_MODEL=deepseek/deepseek-v4.1-flash
 
 EVOICE_WORKER_SCRIPT is resolved relative to the systemd WorkingDirectory
 (the current release), so it stays correct on every deploy. The worker also

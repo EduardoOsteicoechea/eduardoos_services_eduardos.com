@@ -146,7 +146,7 @@ This site follows the parent-workspace contract [`.cursor/rules/email-otp-notifi
 
 ## AI chat and agent workflows
 
-This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek, Kimi, and OpenRouter are backend-only. Public `/api/chat` and eoCode use OpenRouter (`OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` / `OPENROUTER_API_BASE`). DeepSeek remains for other site features. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
+This site follows the parent-workspace contract [`.cursor/rules/ai-agents.mdc`](../.cursor/rules/ai-agents.mdc). DeepSeek, Kimi, and OpenRouter are backend-only. Public `/api/chat`, eoCode, and eVoice (premium refine + super-premium vision) use OpenRouter (`OPENROUTER_API_KEY`, optional `OPENROUTER_MODEL` / `OPENROUTER_VISION_MODEL` / `OPENROUTER_API_BASE`). DeepSeek remains for other site features. Production keys live only in the protected `/etc/eduardoos-api.env` file. They are never in Astro, the browser, Git, or CI/CD.
 
 ## Global voice (speech-to-text and spoken replies)
 
@@ -192,7 +192,7 @@ be exposed publicly.
 
 `/evoice` turns uploaded documents (`.docx`, `.txt`, `.pdf`, images) into MP3
 audio. The Go API shells out to `backend/evoice-worker/linux_sync.py`, which
-extracts text (Tesseract OCR / PyMuPDF), optionally refines it with DeepSeek, and
+extracts text (Tesseract OCR / PyMuPDF), optionally refines it with OpenRouter, and
 synthesizes speech with Piper (fallback: espeak-ng) encoded to **MP3 mono
 64 kbps 44.1 kHz** via ffmpeg.
 
@@ -217,8 +217,8 @@ EVOICE_MEDIA_ROOT=/var/www/eduardoos.com/media/evoice
 EVOICE_PYTHON=/opt/apps/eduardoos/evoice-venv/bin/python
 EVOICE_WORKER_SCRIPT=evoice-worker/linux_sync.py
 EVOICE_PIPER_MODEL=/var/www/eduardoos.com/models/evoice/es_ES-sharvard-medium.onnx
-DEEPSEEK_MODEL=<deepseek chat model id>
-DEEPSEEK_VISION_MODEL=<deepseek vision model id>
+OPENROUTER_MODEL=deepseek/deepseek-chat
+OPENROUTER_VISION_MODEL=deepseek/deepseek-v4.1-flash
 ```
 
 `EVOICE_WORKER_SCRIPT` is resolved relative to the systemd `WorkingDirectory`

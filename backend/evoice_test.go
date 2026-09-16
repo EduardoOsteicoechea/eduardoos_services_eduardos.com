@@ -244,6 +244,33 @@ func TestEvoiceConvertTimeoutUsesDeepSeek(t *testing.T) {
 	}
 }
 
+func TestEvoicePythonRunnerChildEnvUsesOpenRouter(t *testing.T) {
+	runner := evoicePythonRunner{
+		OpenRouterKey:         "or-live-key",
+		OpenRouterBase:        openRouterBaseURL,
+		OpenRouterModel:       openRouterDefaultModel,
+		OpenRouterVisionModel: openRouterDefaultVisionModel,
+	}
+	env := runner.childEnv("/tmp/evoice-job")
+	got := map[string]string{}
+	for _, item := range env {
+		key, value, ok := strings.Cut(item, "=")
+		if !ok {
+			continue
+		}
+		got[key] = value
+	}
+	if got["OPENROUTER_API_KEY"] != "or-live-key" {
+		t.Fatalf("openrouter key %q", got["OPENROUTER_API_KEY"])
+	}
+	if got["OPENROUTER_VISION_MODEL"] != openRouterDefaultVisionModel {
+		t.Fatalf("vision model %q", got["OPENROUTER_VISION_MODEL"])
+	}
+	if got["DEEPSEEK_API_KEY"] != "" {
+		t.Fatalf("deepseek key should be blank, got %q", got["DEEPSEEK_API_KEY"])
+	}
+}
+
 func TestEvoicePythonRunnerMissingScript(t *testing.T) {
 	runner := evoicePythonRunner{Python: "python3", Script: filepath.Join(t.TempDir(), "missing.py")}
 	if _, err := runner.Run(context.Background(), t.TempDir(), nil, evoiceGenerateOpts{Mode: ModeStandard, ContentPercent: 100}, func(string) {}); err == nil {

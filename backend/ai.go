@@ -35,7 +35,7 @@ type ChatClient interface {
 	Stream(ctx context.Context, system string, history []ChatMessage, emit func(string) error) (ChatResult, error)
 }
 
-// VisionChatClient is optional; DeepSeek vision uses multimodal chat completions.
+// VisionChatClient is optional; OpenRouter/DeepSeek vision uses multimodal chat completions.
 type VisionChatClient interface {
 	CompleteVision(ctx context.Context, system, prompt, imageMIME string, imageData []byte, maxTokens int) (ChatResult, error)
 }
