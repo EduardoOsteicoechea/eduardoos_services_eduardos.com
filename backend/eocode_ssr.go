@@ -141,6 +141,7 @@ func (a *App) eocodeRenderSite(ctx context.Context, ws *eocodeWorkspace) (string
 		a.mustLogf(nil, "eocode.ssr.empty", "user_id", ws.UserID, "stderr", eocodeTruncateErr(stderr.String()))
 		return "", fmt.Errorf("empty output")
 	}
+	out = eocodeNormalizeSPA(out)
 	a.mustLogf(nil, "eocode.ssr.ok", "user_id", ws.UserID, "bytes", len(out))
 	return out, nil
 }

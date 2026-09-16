@@ -151,7 +151,7 @@ func TestEocodeStateSeedsWorkspace(t *testing.T) {
 	for _, f := range body.Files {
 		paths[f.Path] = true
 	}
-	for _, want := range []string{"site.py", "components/head.py", "components/body.py", "components/bottom.py", "rules/constraints.md", "rules/index.md"} {
+	for _, want := range []string{"site.py", "components/head.py", "components/body.py", "components/bottom.py", "views/inicio.py", "rules/constraints.md", "rules/index.md"} {
 		if !paths[want] {
 			t.Fatalf("missing seeded file %q in %v", want, paths)
 		}
@@ -314,6 +314,12 @@ func TestEocodePreviewRendersPythonSSR(t *testing.T) {
 	if !strings.Contains(body, "<!DOCTYPE html>") || !strings.Contains(body, "Mi Portafolio") {
 		t.Fatalf("unexpected SSR output: %s", body)
 	}
+	if !strings.Contains(body, `data-view="inicio"`) || !strings.Contains(body, `data-route="sobre-mi"`) {
+		t.Fatalf("SPA views missing from SSR output: %s", body)
+	}
+	if !strings.Contains(body, eocodeSPACSSMarker) {
+		t.Fatal("expected SPA CSS fallback in preview HTML")
+	}
 }
 
 func TestEocodeSSRBlocksForbiddenPython(t *testing.T) {
@@ -392,10 +398,39 @@ func TestEocodeSafeRelPath(t *testing.T) {
 			t.Fatalf("expected rejection for %q, got %q", in, got)
 		}
 	}
-	good := []string{"site.py", "components/head.py", "assets/a.webp", "rules/atomic-ssr.md", "data.json"}
+	good := []string{"site.py", "components/head.py", "assets/a.webp", "rules/atomic-ssr.md", "data.json", "views/inicio.py"}
 	for _, in := range good {
 		if _, ok := eocodeSafeRelPath(in); !ok {
 			t.Fatalf("expected acceptance for %q", in)
 		}
+	}
+}
+
+func TestEocodeWriteSitePyKeepsCanonicalEntry(t *testing.T) {
+	app := newTestApp(true)
+	ws := app.eocodeWorkspace(app.mustUser("admin@eduardoos.com").ID)
+	if err := ws.ensure(); err != nil {
+		t.Fatal(err)
+	}
+	if err := ws.writeFile("site.py", "print('nope')\nfrom views.inicio import render\n"); err != nil {
+		t.Fatal(err)
+	}
+	got, err := ws.readFile("site.py")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != eocodeInitialSitePy {
+		t.Fatalf("site.py must stay the canonical SSR entry, got %q", got)
+	}
+	if !strings.Contains(got, "render_head() + render_body() + render_bottom()") {
+		t.Fatal("canonical site.py missing the three-part concat")
+	}
+}
+
+func TestEocodePythonDepsIncludesViews(t *testing.T) {
+	deps := eocodePythonDeps("from views.inicio import render\nfrom components.body import render_body\n")
+	joined := strings.Join(deps, ",")
+	if !strings.Contains(joined, "views/inicio.py") || !strings.Contains(joined, "components/body.py") {
+		t.Fatalf("deps=%v", deps)
 	}
 }

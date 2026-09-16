@@ -11,20 +11,24 @@ programacion agentica construyendo su propio portafolio web.
 
 ## Arquitectura fija (motor SSR en Python) - NO LA CAMBIES
 El sitio no tiene HTML, CSS ni JS editables por separado. Es un motor SSR:
-- site.py importa y concatena los generadores:
+- site.py SOLO concatena tres generadores:
     render_head() + render_body() + render_bottom()
+  site.py es inmutable: no lo edites ni le anadas mas concatenaciones.
 - components/head.py -> render_head(): devuelve <!DOCTYPE html><html><head>...
   Es el UNICO lugar donde vive el CSS, dentro de <style>.
-- components/body.py -> render_body(): devuelve <body> con el contenido.
+- components/body.py -> render_body(): arma el <body>, el nav y envuelve cada
+  vista en <section data-view="...">.
 - components/bottom.py -> render_bottom(): devuelve <script>...</script></body></html>
   Es el UNICO lugar donde vive el JavaScript.
+- views/<nombre>.py -> NAME, LABEL, render(): HTML INTERIOR de UNA vista.
+  Sin <html>, <head>, <body>, nav ni script. Una vista = una "ruta" de la SPA.
 El backend ejecuta site.py y sirve su salida (stdout) como el HTML del sitio.
 
 ## Archivos
 - SOLO se trabaja con archivos .py (ademas de rules/*.md, .json, .svg y assets/).
 - NO crees ni edites .html, .css ni .js.
-- Puedes crear nuevos componentes .py, pero site.py debe seguir concatenando
-  head + body + bottom y debes documentar el nuevo generador en rules/index.md.
+- Para una vista/ruta nueva: crea views/<nombre>.py y actualiza VIEWS en
+  components/body.py. NUNCA concatenes esa vista en site.py.
 - site.py, components/head.py, components/body.py y components/bottom.py no se borran.
 - rules/constraints.md es fija: NUNCA la edites.
 - rules/index.md se envia siempre y se actualiza al anadir o borrar generadores/reglas.
@@ -38,8 +42,10 @@ El backend ejecuta site.py y sirve su salida (stdout) como el HTML del sitio.
 
 ## HTML, CSS y JS generados
 - HTML5 semantico: <header>, <nav>, <main>, <section>, <article>, <footer>.
-- El sitio es una SPA: el HTML trae las vistas como <section data-view="..."> y
-  el JS (en bottom.py) muestra y oculta la vista activa.
+- El sitio es una SPA: cada vista es <section data-view="nombre" class="view">.
+  Solo la activa lleva class="active". El CSS oculta las demas.
+- Los enlaces internos son <button type="button" data-route="nombre"> o
+  <a href="#nombre">. Prohibido <a href="/pagina"> y archivos .html de ruta.
 - CSS con variables en :root, rem para tipografia y espaciado, flexbox/grid.
 - Incluye SIEMPRE un bloque @media print para US Letter vertical (8.5in x 11in)
   con margenes y saltos de pagina correctos (es un portafolio que se imprime).
@@ -69,20 +75,28 @@ indice se envia siempre al agente y se actualiza cuando se anaden o borran
 generadores o reglas.
 
 ## site.py
-- Punto de entrada del SSR. Importa y concatena:
+- Punto de entrada del SSR. Importa y concatena SOLO:
   render_head() + render_body() + render_bottom().
+- Inmutable. El backend lo restaura si se modifica.
 - El backend ejecuta site.py y devuelve su salida como HTML.
 
 ## components/head.py
 - render_head(): devuelve <!DOCTYPE html><html><head>...</head>.
 - UNICO lugar donde vive el CSS (dentro de <style>).
+- Debe ocultar .view { display:none } y mostrar .view.active { display:block }.
 
 ## components/body.py
-- render_body(): devuelve <body> con el contenido y las vistas de la SPA.
+- render_body(): devuelve <body> con nav y las secciones data-view.
+- Importa cada vista de views/ y las envuelve. No apila paginas completas.
 
 ## components/bottom.py
 - render_bottom(): devuelve <script>...</script></body></html>.
-- UNICO lugar donde vive el JavaScript.
+- UNICO lugar donde vive el JavaScript. Router por hash (#nombre).
+
+## views/
+- Un archivo por vista/ruta: NAME, LABEL, render().
+- render() devuelve solo el HTML interior (titulos, textos, imagenes).
+- Sin <html>, <body>, nav, <style> ni <script>.
 
 ## assets/
 - Imagenes del usuario (WebP/GIF). Referencia relativa: assets/nombre.webp.
@@ -106,11 +120,11 @@ generadores o reglas.
 const eocodeInitialAtomicSSR = `# Reglas del motor SSR (Python)
 
 - El sitio es Python puro que genera HTML. No hay archivos .html/.css/.js.
-- site.py es el punto de entrada y solo concatena head + body + bottom.
-- Cada componente define una funcion que retorna un string de HTML.
+- site.py es el punto de entrada y SOLO concatena head + body + bottom.
+- NUNCA importes ni concatenes vistas extra en site.py: eso apila todo en una pagina.
+- Cada vista es un modulo en views/ con NAME, LABEL y render().
+- body.py importa las vistas y las envuelve en <section data-view>.
 - Devuelve SIEMPRE strings completos y validos; nada de escribir archivos.
-- Para anadir contenido nuevo, crea un componente .py y documentalo en
-  rules/index.md, luego impórtalo y concatenalo donde corresponda.
 - Prohibido os, sys, subprocess, socket, file I/O, red, eval, exec y __dunder__.
 `
 
@@ -127,12 +141,15 @@ const eocodeInitialAtomicStyles = `# Reglas CSS (solo en components/head.py)
   Evita cortes con break-inside: avoid; page-break-inside: avoid;
 `
 
-const eocodeInitialAtomicContent = `# Reglas de contenido (solo en components/body.py)
+const eocodeInitialAtomicContent = `# Reglas de contenido (solo en components/body.py y views/)
 
-- render_body() devuelve <body> con el contenido de la SPA.
+- render_body() arma <body>, el nav y las secciones de la SPA.
+- Cada vista vive en views/<nombre>.py y solo devuelve el HTML interior.
+- Cada vista es un <section data-view="nombre" class="view">; solo la activa
+  lleva class="active".
+- Los enlaces internos usan <button type="button" data-route="nombre">.
+  Prohibido <a href="/ruta"> y .html de navegacion.
 - Usa etiquetas semanticas: <header>, <nav>, <main>, <section>, <article>, <footer>.
-- Cada vista es un <section data-view="nombre">; solo la activa lleva class="active".
-- Los enlaces internos usan <button data-route="nombre"> y los resuelve el JS.
 - Referencia imagenes como assets/nombre.webp.
 - Para datos dinamicos usa formato de strings de Python (f-strings) con cuidado.
 `
@@ -142,7 +159,10 @@ const eocodeInitialAtomicScripts = `# Reglas JavaScript (solo en components/bott
 - Todo el JavaScript vive en components/bottom.py dentro de un <script>.
 - render_bottom() devuelve <script>...</script></body></html>.
 - Vanilla JS (ES2020+), sin frameworks ni imports externos.
-- Un router simple escucha clicks en [data-route] y activa el [data-view] correcto.
+- El router escucha clicks en [data-route] y <a href="#nombre">, activa el
+  [data-view] correcto y escribe location.hash.
+- Nunca uses location.pathname ni archivos .html para navegar: el preview
+  solo tiene un documento.
 - Usa funciones pequenas y con nombres claros; usa textContent, no innerHTML.
 - Escucha DOMContentLoaded antes de consultar el DOM.
 - Para canvas, obten el contexto con getContext("2d") y dibuja tras DOMContentLoaded.
@@ -158,10 +178,8 @@ const eocodeInitialAtomicAssets = `# Reglas de assets
 
 const eocodeInitialSitePy = `"""SSR entry point for the portfolio site.
 
-This module is the fixed entry: it imports the HTML component generators and
-returns the complete document as their concatenation. Do not change the
-architecture; add new components under components/ and document them in
-rules/index.md.
+This module is immutable: it concatenates head + body + bottom only.
+Never import views here. Extra views belong in views/*.py and body.py.
 """
 from components.head import render_head
 from components.body import render_body
@@ -307,73 +325,112 @@ def render_head():
     )
 `
 
-const eocodeInitialBodyPy = `"""Body generator. It returns the page content and SPA views."""
+const eocodeInitialBodyPy = `"""Body generator. Assembles SPA views; it never concatenates full pages."""
+
+from views.contacto import LABEL as CONTACTO_LABEL
+from views.contacto import NAME as CONTACTO_NAME
+from views.contacto import render as render_contacto
+from views.inicio import LABEL as INICIO_LABEL
+from views.inicio import NAME as INICIO_NAME
+from views.inicio import render as render_inicio
+from views.proyectos import LABEL as PROYECTOS_LABEL
+from views.proyectos import NAME as PROYECTOS_NAME
+from views.proyectos import render as render_proyectos
+from views.sobre_mi import LABEL as SOBRE_LABEL
+from views.sobre_mi import NAME as SOBRE_NAME
+from views.sobre_mi import render as render_sobre
+
+VIEWS = [
+    (INICIO_NAME, INICIO_LABEL, render_inicio),
+    (SOBRE_NAME, SOBRE_LABEL, render_sobre),
+    (PROYECTOS_NAME, PROYECTOS_LABEL, render_proyectos),
+    (CONTACTO_NAME, CONTACTO_LABEL, render_contacto),
+]
+
+
+def render_nav():
+    parts = []
+    for i, (name, label, _) in enumerate(VIEWS):
+        active = ' class="active"' if i == 0 else ""
+        parts.append(
+            '<button type="button" data-route="'
+            + name
+            + '"'
+            + active
+            + ">"
+            + label
+            + "</button>"
+        )
+    return "".join(parts)
+
+
+def render_sections():
+    parts = []
+    for i, (name, _, fn) in enumerate(VIEWS):
+        cls = "view active" if i == 0 else "view"
+        parts.append(
+            '<section data-view="' + name + '" class="' + cls + '">' + fn() + "</section>"
+        )
+    return "".join(parts)
 
 
 def render_body():
-    return """
-<body>
-  <header class="site-header">
-    <h1 class="site-title">Mi Portafolio</h1>
-    <nav class="site-nav" aria-label="Principal">
-      <button type="button" data-route="inicio" class="active">Inicio</button>
-      <button type="button" data-route="sobre-mi">Sobre mi</button>
-      <button type="button" data-route="proyectos">Proyectos</button>
-      <button type="button" data-route="contacto">Contacto</button>
-    </nav>
-  </header>
-
-  <main id="app">
-    <section data-view="inicio" class="view active">
-      <h2>Bienvenido</h2>
-      <p>Este es mi portafolio. Pidele al agente que lo construya contigo.</p>
-    </section>
-
-    <section data-view="sobre-mi" class="view">
-      <h2>Sobre mi</h2>
-      <p>Aqui puedes contar quien eres y que te gusta.</p>
-    </section>
-
-    <section data-view="proyectos" class="view">
-      <h2>Proyectos</h2>
-      <p>Aqui van tus proyectos con imagenes y descripciones.</p>
-    </section>
-
-    <section data-view="contacto" class="view">
-      <h2>Contacto</h2>
-      <p>Aqui puedes poner como contactarte.</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>Hecho con eocode</p>
-  </footer>
-"""
+    return (
+        "<body>"
+        '<header class="site-header">'
+        '<h1 class="site-title">Mi Portafolio</h1>'
+        '<nav class="site-nav" aria-label="Principal">'
+        + render_nav()
+        + "</nav></header>"
+        '<main id="app">'
+        + render_sections()
+        + "</main>"
+        '<footer class="site-footer"><p>Hecho con eocode</p></footer>'
+    )
 `
 
 const eocodeInitialBottomPy = `"""Bottom generator. This is the only place where JavaScript lives."""
 
 SCRIPTS = """
 document.addEventListener("DOMContentLoaded", function () {
+  var views = Array.prototype.slice.call(document.querySelectorAll("[data-view]"));
   var buttons = document.querySelectorAll("[data-route]");
-  var views = document.querySelectorAll("[data-view]");
 
   function showView(name) {
+    name = String(name || "").replace(/^#/, "").replace(/^\//, "");
+    var found = false;
     views.forEach(function (view) {
-      view.classList.toggle("active", view.getAttribute("data-view") === name);
+      var match = view.getAttribute("data-view") === name;
+      view.classList.toggle("active", match);
+      if (match) found = true;
     });
+    if (!found && views[0]) {
+      views.forEach(function (view, i) { view.classList.toggle("active", i === 0); });
+      name = views[0].getAttribute("data-view");
+    }
     buttons.forEach(function (button) {
       button.classList.toggle("active", button.getAttribute("data-route") === name);
     });
+    if (name && location.hash !== "#" + name) {
+      try { history.replaceState(null, "", "#" + name); } catch (err) {}
+    }
   }
 
-  buttons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      showView(button.getAttribute("data-route"));
-    });
+  document.addEventListener("click", function (ev) {
+    var raw = ev.target;
+    if (raw && raw.nodeType !== 1) raw = raw.parentElement;
+    if (!raw || !raw.closest) return;
+    var el = raw.closest("[data-route], a[href^='#']");
+    if (!el) return;
+    var route = el.getAttribute("data-route");
+    if (!route && el.getAttribute("href")) route = el.getAttribute("href").replace(/^#/, "");
+    if (!route) return;
+    ev.preventDefault();
+    showView(route);
   });
 
-  showView("inicio");
+  window.addEventListener("hashchange", function () { showView(location.hash); });
+  showView(location.hash || (views[0] && views[0].getAttribute("data-view")) || "inicio");
 });
 """
 
@@ -382,12 +439,72 @@ def render_bottom():
     return "<script>" + SCRIPTS + "</script></body></html>"
 `
 
+const eocodeInitialViewsInit = `"""SPA view generators. Each module exposes NAME, LABEL, and render()."""
+`
+
+const eocodeInitialViewInicio = `"""Vista de inicio."""
+
+NAME = "inicio"
+LABEL = "Inicio"
+
+
+def render():
+    return """
+      <h2>Bienvenido</h2>
+      <p>Este es mi portafolio. Pidele al agente que lo construya contigo.</p>
+    """
+`
+
+const eocodeInitialViewSobreMi = `"""Vista sobre mi."""
+
+NAME = "sobre-mi"
+LABEL = "Sobre mi"
+
+
+def render():
+    return """
+      <h2>Sobre mi</h2>
+      <p>Aqui puedes contar quien eres y que te gusta.</p>
+    """
+`
+
+const eocodeInitialViewProyectos = `"""Vista de proyectos."""
+
+NAME = "proyectos"
+LABEL = "Proyectos"
+
+
+def render():
+    return """
+      <h2>Proyectos</h2>
+      <p>Aqui van tus proyectos con imagenes y descripciones.</p>
+    """
+`
+
+const eocodeInitialViewContacto = `"""Vista de contacto."""
+
+NAME = "contacto"
+LABEL = "Contacto"
+
+
+def render():
+    return """
+      <h2>Contacto</h2>
+      <p>Aqui puedes poner como contactarte.</p>
+    """
+`
+
 var eocodeInitialFiles = map[string]string{
 	"site.py":                 eocodeInitialSitePy,
 	"components/__init__.py":  eocodeInitialComponentsInit,
 	"components/head.py":      eocodeInitialHeadPy,
 	"components/body.py":      eocodeInitialBodyPy,
 	"components/bottom.py":    eocodeInitialBottomPy,
+	"views/__init__.py":       eocodeInitialViewsInit,
+	"views/inicio.py":         eocodeInitialViewInicio,
+	"views/sobre_mi.py":       eocodeInitialViewSobreMi,
+	"views/proyectos.py":      eocodeInitialViewProyectos,
+	"views/contacto.py":       eocodeInitialViewContacto,
 	"rules/constraints.md":    eocodeInitialConstraints,
 	"rules/index.md":          eocodeInitialRulesIndex,
 	"rules/atomic-ssr.md":     eocodeInitialAtomicSSR,

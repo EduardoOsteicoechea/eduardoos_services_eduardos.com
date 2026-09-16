@@ -69,7 +69,12 @@ func (w *eocodeWorkspace) ensure() error {
 	if err := os.MkdirAll(filepath.Join(w.Root, "rules"), 0750); err != nil {
 		return err
 	}
+	_, siteErr := os.Stat(filepath.Join(w.Root, "site.py"))
+	fresh := siteErr != nil
 	for rel, content := range eocodeInitialFiles {
+		if !fresh && strings.HasPrefix(rel, "views/") {
+			continue
+		}
 		full := filepath.Join(w.Root, filepath.FromSlash(rel))
 		if _, err := os.Stat(full); err == nil {
 			continue
@@ -82,6 +87,7 @@ func (w *eocodeWorkspace) ensure() error {
 		}
 	}
 	w.migrateFromStaticSite()
+	w.lockSSREntry()
 	return nil
 }
 
@@ -106,6 +112,24 @@ func (w *eocodeWorkspace) migrateFromStaticSite() {
 		return
 	}
 	_ = os.WriteFile(filepath.Join(w.Root, "rules", "index.md"), []byte(eocodeInitialRulesIndex), 0640)
+}
+
+func (w *eocodeWorkspace) lockSSREntry() {
+	if w == nil || strings.TrimSpace(w.Root) == "" {
+		return
+	}
+	_ = os.MkdirAll(filepath.Join(w.Root, "rules"), 0750)
+	_ = os.WriteFile(filepath.Join(w.Root, "site.py"), []byte(eocodeInitialSitePy), 0640)
+	_ = os.WriteFile(filepath.Join(w.Root, "rules", "constraints.md"), []byte(eocodeInitialConstraints), 0640)
+	atomics := map[string]string{
+		"atomic-ssr.md":     eocodeInitialAtomicSSR,
+		"atomic-styles.md":  eocodeInitialAtomicStyles,
+		"atomic-content.md": eocodeInitialAtomicContent,
+		"atomic-scripts.md": eocodeInitialAtomicScripts,
+	}
+	for name, content := range atomics {
+		_ = os.WriteFile(filepath.Join(w.Root, "rules", name), []byte(content), 0640)
+	}
 }
 
 // eocodeChatTurn is one persisted conversation turn. The history file lets the
@@ -273,6 +297,9 @@ func (w *eocodeWorkspace) writeFile(rel, content string) error {
 	if safe == "rules/constraints.md" || safe == eocodeHistoryPath {
 		return fmt.Errorf("protected file")
 	}
+	if safe == "site.py" {
+		content = eocodeInitialSitePy
+	}
 	full := w.fullPath(safe)
 	if err := os.MkdirAll(filepath.Dir(full), 0750); err != nil {
 		return err
@@ -327,7 +354,7 @@ func eocodePythonDeps(content string) []string {
 	seen := map[string]bool{}
 	for _, m := range eocodePyImportRe.FindAllStringSubmatch(content, -1) {
 		mod := m[1]
-		if !strings.HasPrefix(mod, "components") {
+		if !strings.HasPrefix(mod, "components") && !strings.HasPrefix(mod, "views") {
 			continue
 		}
 		rel := strings.ReplaceAll(mod, ".", "/") + ".py"
@@ -526,17 +553,23 @@ func eocodeRelevantRule(rules eocodeRules, files []string) string {
 // Prompts
 // ---------------------------------------------------------------------------
 
-const eocodeArchitectureBlock = `# ARQUITECTURA FIJA (SSR Python) - NO LA CAMBIES
-El sitio es un motor SSR en Python. site.py importa y concatena:
+const eocodeArchitectureBlock = `# ARQUITECTURA FIJA (SSR Python + SPA de vistas) - NO LA CAMBIES
+El sitio es un motor SSR en Python. site.py SOLO concatena tres funciones:
   components/head.py -> render_head()  (devuelve <!DOCTYPE html><html><head> con el <style>)
-  components/body.py -> render_body()  (devuelve <body> con el contenido)
+  components/body.py -> render_body()  (devuelve <body> con nav + secciones data-view)
   components/bottom.py -> render_bottom() (devuelve <script>...</script></body></html>)
-El backend ejecuta site.py y devuelve su salida como el HTML del sitio.
+NUNCA concatenes otras funciones en site.py. site.py es inmutable.
+Las "rutas" NO son paginas ni archivos HTML. Son vistas de una SPA:
+  views/<nombre>.py -> NAME, LABEL, render()  (HTML INTERIOR de UNA vista, sin <body> ni <html>)
+  body.py importa las vistas, pinta <button data-route> y envuelve cada una en
+  <section data-view="NAME" class="view">. Solo la primera lleva class="active".
+El CSS oculta .view y muestra .view.active. El JS en bottom.py cambia la vista
+con el hash (#inicio). No uses <a href="/pagina"> ni .html: el preview solo sirve un documento.
 SOLO se trabaja con archivos .py. NO crees ni edites .html, .css ni .js.
 El CSS vive UNICAMENTE en components/head.py; el JavaScript UNICAMENTE en
 components/bottom.py. Las imagenes viven en assets/ y se referencian como
-assets/nombre.webp. Puedes anadir componentes .py nuevos, pero site.py debe seguir
-concatenando head + body + bottom y debes documentar cada generador en rules/index.md.
+assets/nombre.webp. Puedes anadir vistas .py nuevas, pero documentalas en
+rules/index.md e importalas en body.py (nunca en site.py).
 Prohibido os, sys, subprocess, socket, open, eval, exec y atributos __dunder__.
 
 `
@@ -579,10 +612,12 @@ Devuelve un plan. Responde SOLO con JSON valido:
 Reglas del plan:
 - Solo archivos .py (mas rules/*.md, .json, .svg y assets/).
 - Si el cambio es de estilos, edita components/head.py.
-- Si es de contenido, edita components/body.py.
+- Si es de contenido de una vista, edita views/<nombre>.py o components/body.py.
+- Para una vista/ruta nueva: crea views/<nombre>.py (NAME, LABEL, render) y actualiza
+  el arreglo VIEWS en components/body.py. NO toques site.py.
 - Si es de comportamiento/JS, edita components/bottom.py.
-- Si creas un componente nuevo, documentalo en rules/index.md.
-- rules/constraints.md es fija: no la edites.
+- Si creas un componente o vista nueva, documentalo en rules/index.md.
+- rules/constraints.md y site.py son fijos: no los edites.
 - rules/index.md siempre se envia y se actualiza si anades o borras reglas o generadores.
 - site.py y los componentes head/body/bottom no se borran.
 - Si necesitas clarificacion, deja las listas de archivos vacias y llena "questions".
@@ -601,6 +636,9 @@ Restricciones:
 - SOLO archivos .py. Escribe Python valido que devuelva strings de HTML.
 - No crees .html, .css ni .js.
 - El CSS va en components/head.py; el JavaScript va en components/bottom.py.
+- Cada vista vive en views/<nombre>.py y solo devuelve el HTML interior.
+- body.py envuelve vistas con <section data-view> y nav con <button data-route>.
+- No concatenes paginas extra en site.py. No uses <a href="/ruta">.
 - Referencia imagenes como assets/nombre.webp (o .gif).
 - El HTML generado debe incluir @media print para US Letter vertical.
 - No dejes placeholders, TODO ni fragmentos elididos.
@@ -616,8 +654,10 @@ func eocodeValidateSystem(rules eocodeRules, relevant string) string {
 Responde SOLO con JSON valido:
 {"needs_correction": true|false, "files":[{"path":"...","content":"contenido completo corregido"}], "notes":"notas breves"}
 
-- needs_correction = true solo si hay errores reales de Python, del HTML generado,
-  de rutas de assets o de impresion.
+- needs_correction = true si hay errores de Python, del HTML generado,
+  de rutas de assets, de impresion, o si las vistas SPA estan rotas
+  (faltan data-view/data-route, se concatenan paginas en site.py, o
+  se usan <a href> internos en vez del router).
 - Selecciona los archivos por su extension .py y reescribelos completos.
 - Si no hay que corregir, devuelve files vacio y needs_correction false.`
 }
