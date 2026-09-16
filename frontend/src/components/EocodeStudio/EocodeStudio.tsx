@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { synthesizeVoice } from "../../lib/api";
+import { markSessionHint, refreshSession, synthesizeVoice } from "../../lib/api";
 import {
   analyzeEocode,
   clearEocodeHistory,
@@ -149,6 +149,7 @@ export default function EocodeStudio() {
           setAccess("error");
           return;
         }
+        markSessionHint();
         setFiles(result.state.files);
         setPreviewUrl(result.state.preview_url || "/api/eocode/preview/");
         setAccess("ok");
@@ -391,6 +392,18 @@ export default function EocodeStudio() {
     ): Promise<T> => {
       setStage(label);
       let result = await call(controller.signal);
+      if (
+        !result.ok &&
+        "status" in result &&
+        (result as { status?: number }).status === 401 &&
+        !controller.signal.aborted
+      ) {
+        setStage(`${label} — renovando sesion...`);
+        const refreshed = await refreshSession();
+        if (refreshed.status === 200 && refreshed.data.id && !controller.signal.aborted) {
+          result = await call(controller.signal);
+        }
+      }
       for (let attempt = 1; attempt < maxAttempts && !result.ok; attempt += 1) {
         if (controller.signal.aborted) {
           break;
@@ -448,6 +461,9 @@ export default function EocodeStudio() {
       setAssistant(summary);
       if (!targets.length && plan.delete_files.length === 0) {
         return;
+      }
+      if (!controller.signal.aborted) {
+        await refreshSession();
       }
       const edited = await runStage("Escribiendo archivos...", (signal) => editEocode(withAssets, plan, signal));
       if (controller.signal.aborted) {
