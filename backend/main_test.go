@@ -174,14 +174,15 @@ func TestAIProviderSelectionAndLimit(t *testing.T) {
 	app := newTestApp(true)
 	deepseek := app.chat["deepseek"].(*recordingChat)
 	kimi := app.chat["kimi"].(*recordingChat)
+	openrouter := app.chat["openrouter"].(*recordingChat)
 
 	req, rec := app.adminPOST(t, "/api/admin/diagnostics/ai-chat-test", `{"provider":"deepseek","prompt":"ping"}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("deepseek: %d %s", rec.Code, rec.Body.String())
 	}
-	if deepseek.calls != 1 || kimi.calls != 0 {
-		t.Fatalf("expected only deepseek, deepseek=%d kimi=%d", deepseek.calls, kimi.calls)
+	if deepseek.calls != 1 || kimi.calls != 0 || openrouter.calls != 0 {
+		t.Fatalf("expected only deepseek, deepseek=%d kimi=%d openrouter=%d", deepseek.calls, kimi.calls, openrouter.calls)
 	}
 
 	bad, badRec := app.adminPOST(t, "/api/admin/diagnostics/ai-chat-test", `{"provider":"openai","prompt":"ping"}`)
@@ -214,6 +215,16 @@ func TestAIProviderSelectionAndLimit(t *testing.T) {
 		t.Fatalf("unexpected text %v", body["text"])
 	}
 	assertNoSecrets(t, okRec.Body.String())
+
+	or, orRec := app.adminPOST(t, "/api/admin/diagnostics/ai-chat-test", `{"provider":"openrouter","prompt":"hello"}`)
+	app.Handler().ServeHTTP(orRec, or)
+	if orRec.Code != http.StatusOK {
+		t.Fatalf("openrouter: %d %s", orRec.Code, orRec.Body.String())
+	}
+	if openrouter.calls != 1 {
+		t.Fatalf("expected openrouter call")
+	}
+	assertNoSecrets(t, orRec.Body.String())
 }
 
 func TestAIProviderFailureIsSafe(t *testing.T) {
@@ -272,6 +283,9 @@ func newTestApp(enable bool) *App {
 		KimiModel:              "kimi-k3",
 		DeepSeekKey:            "test-deepseek-key",
 		KimiKey:                "test-kimi-key",
+		OpenRouterKey:          "test-openrouter-key",
+		OpenRouterBaseURL:      openRouterBaseURL,
+		OpenRouterModel:        openRouterDefaultModel,
 		EocodePython:           testPythonBinary(),
 		EocodeSSREnabled:       true,
 	}
@@ -279,6 +293,7 @@ func newTestApp(enable bool) *App {
 	app.mailer = &recordingMailer{}
 	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: "deepseek-ok", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 1}}
 	app.chat["kimi"] = &recordingChat{provider: "kimi", text: "kimi-ok", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 2}}
+	app.chat["openrouter"] = &recordingChat{provider: "openrouter", text: "openrouter-ok", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 1}}
 	hash, err := hashPassword("correct-horse-battery")
 	if err != nil {
 		panic(err)
@@ -346,7 +361,7 @@ func (a *App) authedPOST(t *testing.T, email, path, body string) (*http.Request,
 func assertNoSecrets(t *testing.T, raw string) {
 	t.Helper()
 	lower := strings.ToLower(raw)
-	for _, needle := range []string{"smtp_password", "mongo_uri", "mongodb+srv", "sk-", "deepseek_api_key", "kimi_api_key", "jwt_secret", "correct-horse-battery", "test-jwt-secret"} {
+	for _, needle := range []string{"smtp_password", "mongo_uri", "mongodb+srv", "sk-", "deepseek_api_key", "kimi_api_key", "openrouter_api_key", "jwt_secret", "correct-horse-battery", "test-jwt-secret"} {
 		if strings.Contains(lower, needle) {
 			t.Fatalf("response leaked %q: %s", needle, raw)
 		}

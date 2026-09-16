@@ -108,7 +108,7 @@ func (a *App) aiChatTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	provider := strings.ToLower(strings.TrimSpace(body.Provider))
 	prompt := strings.TrimSpace(body.Prompt)
-	if provider != "deepseek" && provider != "kimi" {
+	if provider != "deepseek" && provider != "kimi" && provider != "openrouter" {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -128,7 +128,7 @@ func (a *App) aiChatTestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	timeout := 12 * time.Second
-	if provider == "kimi" {
+	if provider == "kimi" || provider == "openrouter" {
 		timeout = 45 * time.Second
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), timeout)

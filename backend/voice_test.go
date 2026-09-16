@@ -41,6 +41,7 @@ func newVoiceTestApp(t *testing.T) *App {
 	app := newApp(cfg)
 	app.mailer = &recordingMailer{}
 	app.chat["deepseek"] = &recordingChat{provider: "deepseek", text: "hola. mundo. fin.", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 1}}
+	app.chat["openrouter"] = &recordingChat{provider: "openrouter", text: "hola. mundo. fin.", usage: ChatUsage{PromptTokens: 1, CompletionTokens: 1}}
 	t.Cleanup(func() {
 		if app.voice != nil {
 			app.voice.Close()

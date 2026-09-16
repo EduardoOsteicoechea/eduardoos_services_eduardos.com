@@ -99,12 +99,26 @@ func (c *recordingChat) CompleteVision(_ context.Context, system, prompt, imageM
 }
 
 type openAICompatClient struct {
-	name        string
-	baseURL     string
-	apiKey      string
-	model       string
-	visionModel string
-	http        *http.Client
+	name         string
+	baseURL      string
+	apiKey       string
+	model        string
+	visionModel  string
+	extraHeaders map[string]string
+	http         *http.Client
+}
+
+func (c openAICompatClient) applyHeaders(req *http.Request) {
+	req.Header.Set("Authorization", "Bearer "+c.apiKey)
+	req.Header.Set("Content-Type", "application/json")
+	for key, value := range c.extraHeaders {
+		key = strings.TrimSpace(key)
+		value = strings.TrimSpace(value)
+		if key == "" || value == "" {
+			continue
+		}
+		req.Header.Set(key, value)
+	}
 }
 
 func (c openAICompatClient) visionHTTP() *http.Client {
@@ -197,10 +211,12 @@ func (c openAICompatClient) completeWith(ctx context.Context, system string, his
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	req.Header.Set("Authorization", "Bearer "+c.apiKey)
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := c.http.Do(req)
+	c.applyHeaders(req)
+	httpClient := c.http
+	if httpClient == nil {
+		httpClient = newHTTPClient()
+	}
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider request failed: %w", err)
 	}
@@ -263,8 +279,7 @@ func (c openAICompatClient) Stream(ctx context.Context, system string, history [
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	req.Header.Set("Authorization", "Bearer "+c.apiKey)
-	req.Header.Set("Content-Type", "application/json")
+	c.applyHeaders(req)
 	resp, err := c.http.Do(req)
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
@@ -395,8 +410,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	req.Header.Set("Authorization", "Bearer "+c.apiKey)
-	req.Header.Set("Content-Type", "application/json")
+	c.applyHeaders(req)
 	resp, err := c.visionHTTP().Do(req)
 	if err != nil {
 		return ChatResult{}, fmt.Errorf("provider unavailable")

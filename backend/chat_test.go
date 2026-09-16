@@ -48,10 +48,10 @@ func TestPublicChatRejectsEmptyAndUsesSitePrompt(t *testing.T) {
 	if err := json.NewDecoder(rec.Body).Decode(&body); err != nil {
 		t.Fatal(err)
 	}
-	if body["ok"] != true || body["text"] != "deepseek-ok" {
+	bot := app.chat[publicChatProvider].(*recordingChat)
+	if body["ok"] != true || body["text"] != bot.text {
 		t.Fatalf("unexpected body %v", body)
 	}
-	bot := app.chat["deepseek"].(*recordingChat)
 	if !strings.Contains(bot.lastSystem, "eduardoos.com") {
 		t.Fatalf("server must inject this site prompt, got %q", bot.lastSystem)
 	}
@@ -74,7 +74,7 @@ func TestProfileAskAliasUsesSamePrompt(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("profile ask: %d %s", rec.Code, rec.Body.String())
 	}
-	bot := app.chat["deepseek"].(*recordingChat)
+	bot := app.chat[publicChatProvider].(*recordingChat)
 	if !strings.Contains(bot.lastSystem, "eduardooost@gmail.com") {
 		t.Fatalf("profile ask must inject profile corpus, got %q", bot.lastSystem)
 	}
@@ -82,7 +82,7 @@ func TestProfileAskAliasUsesSamePrompt(t *testing.T) {
 
 func TestPublicChatProviderFailureIsSafe(t *testing.T) {
 	app := newTestApp(true)
-	app.chat["deepseek"].(*recordingChat).fail = true
+	app.chat[publicChatProvider].(*recordingChat).fail = true
 	rec := app.anonPOST(t, "/api/chat", `{"message":"hello"}`)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("expected 200, got %d", rec.Code)

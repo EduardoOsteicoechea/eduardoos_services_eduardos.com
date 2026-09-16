@@ -78,6 +78,8 @@ type config struct {
 	KimiBaseURL               string
 	KimiModel                 string
 	OpenRouterKey             string
+	OpenRouterBaseURL         string
+	OpenRouterModel           string
 	PayPalHostedButtonID      string
 	PayPalCheckoutURL         string
 	AllowedOrigins            []string
@@ -119,6 +121,14 @@ func loadConfig() config {
 	kimiModel := strings.TrimSpace(os.Getenv("KIMI_MODEL"))
 	if kimiModel == "" {
 		kimiModel = "kimi-k3"
+	}
+	openRouterBase := strings.TrimSpace(os.Getenv("OPENROUTER_API_BASE"))
+	if openRouterBase == "" {
+		openRouterBase = openRouterBaseURL
+	}
+	openRouterModel := strings.TrimSpace(os.Getenv("OPENROUTER_MODEL"))
+	if openRouterModel == "" {
+		openRouterModel = openRouterDefaultModel
 	}
 	paypalCheckout := strings.TrimSpace(os.Getenv("PAYPAL_CHECKOUT_URL"))
 	if paypalCheckout == "" {
@@ -286,6 +296,8 @@ func loadConfig() config {
 		KimiBaseURL:               strings.TrimRight(kimiBase, "/"),
 		KimiModel:                 kimiModel,
 		OpenRouterKey:             os.Getenv("OPENROUTER_API_KEY"),
+		OpenRouterBaseURL:         strings.TrimRight(openRouterBase, "/"),
+		OpenRouterModel:           openRouterModel,
 		PayPalHostedButtonID:      strings.TrimSpace(os.Getenv("PAYPAL_HOSTED_BUTTON_ID")),
 		PayPalCheckoutURL:         paypalCheckout,
 		AllowedOrigins: []string{
