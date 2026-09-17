@@ -68,6 +68,8 @@ describe("eReport public invite routing", () => {
     expect(css).toMatch(/\.btn--red,[\s\S]{0,80}\.btn--danger/);
     expect(css).toContain("minmax(11rem, 1fr)");
     expect(css).toContain("calc(var(--bmh) * 3)");
+    expect(css).toContain("--page-inline-pad: 0;");
+    expect(css).toMatch(/html\[data-page="ereport"\] main \{\s*padding-left: 0;\s*padding-right: 0;/);
     expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*product-dash__grid[\s\S]*minmax\(0, 1fr\)/);
     expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*\.btn \{[\s\S]*max-height: none/);
   });

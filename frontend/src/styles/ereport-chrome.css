@@ -34,7 +34,7 @@ html[data-page^="ereport"] {
   --p5: 1.5rem;
   --m1: 0.5rem;
   --m2: 0.75rem;
-  --page-inline-pad: var(--p3);
+  --page-inline-pad: 0;
   --ui-scale: 1.3333;
   --chrome-control-size: 1.75rem;
   --header-dynamic-control-size: var(--chrome-control-size);
@@ -278,7 +278,20 @@ html[data-page^="ereport"] .product-dash {
   flex-direction: column;
   gap: var(--p3);
   max-width: none;
-  padding: var(--p3) var(--page-inline-pad) var(--p5);
+  padding: var(--p3) 0 var(--p5);
+}
+
+/* Hub: no lateral main padding. Desktop keeps only the rail offset. */
+html[data-page="ereport"] main {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 64rem) {
+  html[data-page="ereport"] main {
+    padding-left: var(--rail-width);
+    padding-right: 0;
+  }
 }
 
 html[data-page^="ereport"] .product-dash > h1 {
@@ -547,11 +560,6 @@ html[data-page^="ereport"] .ereport-hub__error {
 }
 
 @media (max-width: 47.999rem) {
-  /* Main already insets with --main-inline; avoid double horizontal pad that squashes copy. */
-  html[data-page^="ereport"] {
-    --page-inline-pad: 0;
-  }
-
   html[data-page^="ereport"] .app-header {
     gap: 0;
     padding: 0 var(--rail-gap);
