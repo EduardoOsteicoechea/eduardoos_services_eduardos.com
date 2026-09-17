@@ -46,11 +46,10 @@ import Layout from "../../layouts/Layout.astro";
   <section class="product-dash ereport-hub" data-ereport-hub>
     <h1>eReport</h1>
     <p class="status" data-banner>Loading session…</p>
-    <p class="panel" data-guest-fallback hidden>
+    <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open your eReport hub.
-      <span class="hint session-links">
-        <a href="/session" data-route>Sign in</a>
-      </span>
+      <a class="btn btn--primary" href="/session" data-route>Log in</a>
+      <a class="ereport-signin-card__alt" href="/session/register" data-route>Create an account</a>
     </p>
 
     <div class="product-gate panel" data-subscription-gate hidden>

@@ -93,11 +93,10 @@ import Layout from "../../layouts/Layout.astro";
 
   <section class="ereport-workspace" data-ereport-workspace>
     <p class="status" data-banner>Loading session…</p>
-    <p class="panel" data-guest-fallback hidden>
+    <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open this report.
-      <span class="hint session-links">
-        <a href="/session" data-route>Sign in</a>
-      </span>
+      <a class="btn btn--primary" href="/session" data-route>Log in</a>
+      <a class="ereport-signin-card__alt" href="/session/register" data-route>Create an account</a>
     </p>
     <div class="ereport-workspace-body" data-authed-panel hidden>
       <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>

@@ -154,11 +154,67 @@ html[data-page^="ereport"] .header-dynamic[aria-expanded="true"] {
 
 html[data-page^="ereport"] .ereport-guest-auth {
   display: flex;
-  gap: 0.35rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
 html[data-page^="ereport"] .ereport-guest-auth[hidden] {
   display: none;
+}
+
+html[data-page^="ereport"] .ereport-guest-auth__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--chrome-control-size);
+  min-height: var(--chrome-control-size);
+  max-height: var(--chrome-control-size);
+  min-width: 0;
+  width: auto;
+  padding: 0 0.7rem;
+  font: 600 var(--font-sm) / 1 var(--font-sans);
+  color: var(--site-body-fg);
+  background: var(--site-surface);
+  border: var(--border-width) solid var(--site-input-border);
+  border-radius: var(--br);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+html[data-page^="ereport"] .ereport-guest-auth__link--primary {
+  background: var(--btn-blue);
+  border-color: var(--btn-blue);
+  color: var(--btn-blue-fg);
+}
+
+html[data-page^="ereport"] .ereport-signin-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: 22rem;
+  margin: 3rem auto;
+}
+
+html[data-page^="ereport"] .ereport-signin-card[hidden] {
+  display: none;
+}
+
+html[data-page^="ereport"] .ereport-signin-card .btn {
+  width: auto;
+  min-width: 7.5rem;
+  height: var(--bmh);
+  min-height: var(--bmh);
+  max-height: var(--bmh);
+  white-space: nowrap;
+}
+
+html[data-page^="ereport"] .ereport-signin-card__alt {
+  color: var(--site-muted-fg);
+  font-size: var(--font-sm);
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action .icon-btn {
@@ -616,6 +672,17 @@ html[data-page^="ereport"] .ereport-hub__error {
     line-height: 1.25;
     padding-block: var(--p1);
     box-sizing: border-box;
+  }
+
+  html[data-page^="ereport"] .ereport-guest-auth__link,
+  html[data-page^="ereport"] .ereport-signin-card .btn {
+    height: var(--chrome-control-size);
+    min-height: var(--chrome-control-size);
+    max-height: var(--chrome-control-size);
+    width: auto;
+    max-width: none;
+    white-space: nowrap;
+    padding-block: 0;
   }
 
   html[data-page^="ereport"] .product-dash input,

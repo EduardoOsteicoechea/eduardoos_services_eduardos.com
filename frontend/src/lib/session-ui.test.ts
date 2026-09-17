@@ -239,6 +239,28 @@ describe("session forms", () => {
     expect(root.querySelector("[data-banner]")?.textContent).toBe("Could not load the session.");
   });
 
+  it("shows the guest fallback without a red sign-in banner", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 401,
+      requestId: "rid-guest",
+      data: { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-guest" },
+    });
+    document.body.innerHTML = `
+      <section data-ereport-hub>
+        <p data-banner>Loading session…</p>
+        <p data-guest-fallback hidden>Sign in to open this report.</p>
+        <div data-authed-panel hidden>hub</div>
+      </section>
+    `;
+    const root = document.querySelector("[data-ereport-hub]") as HTMLElement;
+    const me = await requireAuth(root, sessionCopy());
+    expect(me).toBeNull();
+    expect((root.querySelector("[data-guest-fallback]") as HTMLElement).hidden).toBe(false);
+    expect((root.querySelector("[data-authed-panel]") as HTMLElement).hidden).toBe(true);
+    expect((root.querySelector("[data-banner]") as HTMLElement).hidden).toBe(true);
+    expect(root.querySelector("[data-banner]")?.textContent).toBe("");
+  });
+
   it("saves profile from the persistent layout click listener", async () => {
     const saved = {
       email: "member@eduardoos.com",

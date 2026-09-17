@@ -436,7 +436,9 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
     if (status === 401) {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
       setPanelsHidden(true);
-      setBanner(root, copy.unauthorized, "err");
+      // Guest is expected. Don't paint a red "Sign in to continue." over the
+      // page copy — the fallback already explains how to open the surface.
+      setBanner(root, fallback instanceof HTMLElement ? "" : copy.unauthorized);
       return null;
     }
     if (status !== 200) {
