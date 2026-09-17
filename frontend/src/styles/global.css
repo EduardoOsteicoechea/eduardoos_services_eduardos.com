@@ -1710,14 +1710,14 @@ html[data-page="ereport-invite"] main > * {
 @media (max-width: 63.999rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: var(--mobile-header-height) 0 0;
+    padding: var(--mobile-header-height) 0 0 var(--space-padding);
   }
 }
 
 @media (min-width: 64rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: 0 0 0 var(--rail-width);
+    padding: 0 0 0 calc(var(--rail-width) + var(--space-padding));
   }
 }
 

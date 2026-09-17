@@ -39,7 +39,7 @@ describe("eReport public invite routing", () => {
       /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: 0;/,
     );
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
-    expect(css).toContain("padding: 0 0 0 var(--rail-width)");
+    expect(css).toContain("padding: 0 0 0 calc(var(--rail-width) + var(--space-padding))");
   });
 
   it("switches hub views from ?view= and offers a way back to the dashboard", () => {
