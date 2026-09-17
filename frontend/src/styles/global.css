@@ -1696,30 +1696,28 @@ html[data-page="ereport-invite"] main {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(var(--page-col-count), minmax(0, 1fr));
-  column-gap: var(--page-gutter);
-  row-gap: var(--rail-gap);
+  column-gap: 0;
+  row-gap: 0;
   min-height: 0;
-}
-
-html[data-page="ereport-workspace"] main > * {
-  grid-column: 1 / -1;
-}
-
-html[data-page="ereport-workspace"] main {
   padding: 0;
 }
 
-@media (max-width: 63.999rem) {
-  html[data-page="ereport-workspace"] main {
-    padding: var(--mobile-header-height) 0 var(--mobile-footer-height);
-  }
+html[data-page="ereport-workspace"] main > *,
+html[data-page="ereport-invite"] main > * {
+  grid-column: 1 / -1;
+}
 
-  
+@media (max-width: 63.999rem) {
+  html[data-page="ereport-workspace"] main,
+  html[data-page="ereport-invite"] main {
+    padding: var(--mobile-header-height) 0 0;
+  }
 }
 
 @media (min-width: 64rem) {
-  html[data-page="ereport-workspace"] main {
-    padding: 0 var(--main-inline) 0 calc(var(--rail-width) + var(--main-inline));
+  html[data-page="ereport-workspace"] main,
+  html[data-page="ereport-invite"] main {
+    padding: 0 0 0 var(--rail-width);
   }
 }
 
