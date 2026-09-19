@@ -83,6 +83,8 @@ type config struct {
 	OpenRouterVisionModel     string
 	PayPalHostedButtonID      string
 	PayPalCheckoutURL         string
+	OrdinatoBaseURL           string
+	OrdinatoSiteKey           string
 	AllowedOrigins            []string
 }
 
@@ -306,6 +308,8 @@ func loadConfig() config {
 		OpenRouterVisionModel:     openRouterVision,
 		PayPalHostedButtonID:      strings.TrimSpace(os.Getenv("PAYPAL_HOSTED_BUTTON_ID")),
 		PayPalCheckoutURL:         paypalCheckout,
+		OrdinatoBaseURL:           strings.TrimRight(strings.TrimSpace(os.Getenv("ORDINATO_BASE_URL")), "/"),
+		OrdinatoSiteKey:           strings.TrimSpace(os.Getenv("ORDINATO_SITE_KEY")),
 		AllowedOrigins: []string{
 			"https://" + siteName,
 			"http://127.0.0.1:4321",

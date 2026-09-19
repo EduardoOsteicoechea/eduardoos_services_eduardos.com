@@ -45,6 +45,7 @@ type App struct {
 	inviteOTPLimit  *limiter
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
+	ordinatoLimit   *limiter
 	ereport         *ereportFS
 	evoiceMeta      evoiceMetaStore
 	evoiceFS        *evoiceFS
@@ -139,6 +140,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		inviteOTPLimit:  newLimiter(time.Hour, 8),
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
+		ordinatoLimit:   newLimiter(ordinatoProxyWindow, ordinatoProxyMax),
 		ereport:         newEreportFS(cfg.EreportMediaRoot),
 		evoiceMeta:      newEvoiceMetaFromStore(store),
 		evoiceFS:        newEvoiceFS(cfg.EvoiceMediaRoot),
@@ -208,6 +210,9 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)
 	mux.HandleFunc("POST /api/chat", a.publicChatHandler)
+	mux.HandleFunc("POST /api/ordinato/runs", a.ordinatoCreateRunHandler)
+	mux.HandleFunc("GET /api/ordinato/runs/{id}", a.ordinatoGetRunHandler)
+	mux.HandleFunc("GET /api/ordinato/runs/{id}/events", a.ordinatoEventsHandler)
 	mux.HandleFunc("POST /api/profile/ask", a.publicChatHandler)
 
 	mux.HandleFunc("GET /api/eocode/state", a.eocodeStateHandler)

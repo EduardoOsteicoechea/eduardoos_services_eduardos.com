@@ -32,6 +32,8 @@ The frontend never contains backend URLs, MongoDB URIs, or secrets. Those stay i
 
 This site follows the parent-workspace contract [`.cursor/rules/auth-security.mdc`](../.cursor/rules/auth-security.mdc). Users, JWTs, refresh tokens, and cookies are local to `eduardoos.com`. Frontend route guards are UX only. Real authorization decisions are enforced by this site’s Go API.
 
+**Ordinato:** existing products stay on this API; new agentic orchestration goes through Ordinato (same-origin `/api/ordinato/...` proxy). Contract: [`docs/ordinato.md`](docs/ordinato.md).
+
 Locked specification: [`docs/specs/001-authentication-and-profiles.md`](docs/specs/001-authentication-and-profiles.md). Cookie authentication, MongoDB users/sessions, email OTP, and private avatars are implemented. Nginx templates live in [`docs/nginx/eduardoos.com.conf`](docs/nginx/eduardoos.com.conf).
 
 Passwords are **8–128** characters and hashed with Argon2id. `BOOTSTRAP_ADMIN_PASSWORD` and `ADMIN_PASSWORD` must meet that length when set.
