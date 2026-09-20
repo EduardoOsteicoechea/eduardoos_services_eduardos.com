@@ -312,22 +312,44 @@ function syncMobileViewScale(): void {
 }
 
 function desktopAvailableWidth(): number {
-    // Viewport minus the left rail only — do not trust shellMain.clientWidth when
-    // the unscaled letter has already expanded min-content past the viewport.
-    const vw = window.visualViewport?.width ?? window.innerWidth;
+    // Clipped desktop view width minus the lateral rail — use the rail's
+    // right edge in viewport coordinates (not shellMain, which can grow with
+    // the unscaled letter and inflate the measure).
+    const layoutVw = document.documentElement.clientWidth;
+    const visualVw = window.visualViewport?.width;
+    const vw =
+        typeof visualVw === "number" && Number.isFinite(visualVw)
+            ? Math.min(layoutVw, visualVw)
+            : layoutVw;
     const rail = document.querySelector<HTMLElement>(".app-header--start");
-    const railW =
+    const railRight =
         rail && window.matchMedia("(min-width: 64rem)").matches
-            ? rail.getBoundingClientRect().width
+            ? Math.ceil(rail.getBoundingClientRect().right)
             : 0;
-    return Math.max(20, Math.floor(vw - railW));
+    return Math.max(20, Math.floor(vw - railRight));
 }
 
-/** Intrinsic letter width in px (scrollWidth survives parent max-width shrink). */
+/**
+ * Intrinsic letter size in CSS px from the mm tokens — never from the live
+ * sheet's offset/scroll width (parents can shrink those while the mm grid
+ * still paints at full letter size, which made scale ≫ 1 and clipped right).
+ */
 function desktopLetterLayoutSize(): { w: number; h: number } {
-    const w = Math.max(main.offsetWidth, main.scrollWidth, 1);
-    const h = Math.max(main.offsetHeight, main.scrollHeight, 1);
-    return { w, h };
+    const probe = document.createElement("div");
+    probe.setAttribute("aria-hidden", "true");
+    probe.style.cssText =
+        "position:absolute;left:-99999px;top:0;visibility:hidden;pointer-events:none;" +
+        "width:var(--letter-landscape-width);height:var(--sheet-stack-height);" +
+        "margin:0;padding:0;border:0;box-sizing:border-box;";
+    appRoot.appendChild(probe);
+    const w = probe.offsetWidth;
+    const h = probe.offsetHeight;
+    probe.remove();
+    if (w > 0 && h > 0) return { w, h };
+    return {
+        w: Math.max(main.offsetWidth, 1),
+        h: Math.max(main.offsetHeight, 1),
+    };
 }
 
 function syncDesktopViewScale(): void {
@@ -338,9 +360,9 @@ function syncDesktopViewScale(): void {
         main.style.marginRight = "";
         return;
     }
-    // Fit letter to workspace width (rail → right edge). Origin is top left so the
-    // visual left edge stays flush; scale may be >1 or <1. Transform does not
-    // change layout box — extend margin-right/bottom to match the visual size.
+    // Fit letter into (viewport − rail). Origin top left → flush to rail;
+    // visual right edge lands on the viewport right. Margins only patch the
+    // layout box so Y-scroll reaches the scaled second page.
     const { w: layoutW, h: layoutH } = desktopLetterLayoutSize();
     const available = desktopAvailableWidth();
     const scale = layoutW > 0 ? Math.max(0.01, available / layoutW) : 1;
