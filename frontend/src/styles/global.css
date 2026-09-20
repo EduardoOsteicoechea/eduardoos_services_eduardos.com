@@ -1848,13 +1848,6 @@ html[data-page="ereport-workspace"] .ereport-workspace {
   gap: 0;
 }
 
-html[data-page="ereport-workspace"] .ereport-workspace > h1 {
-  flex: 0 0 auto;
-  margin: 0;
-  padding: var(--space-padding);
-  padding-bottom: var(--rail-gap);
-}
-
 html[data-page="ereport-workspace"] .ereport-workspace > .status {
   position: absolute;
   z-index: 2;

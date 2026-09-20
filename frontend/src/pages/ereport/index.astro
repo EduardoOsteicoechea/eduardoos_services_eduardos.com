@@ -72,42 +72,36 @@ import Layout from "../../layouts/Layout.astro";
           <p class="hint" data-dashboard-recents-empty hidden>No recent reports yet. Create one to get started.</p>
         </section>
 
-        <h2 class="product-dash__section-title">Orgs</h2>
-        <div class="product-dash__grid">
-          <button class="product-dash__card" type="button" data-hub-view="orgs">
-            <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
-            <span class="product-dash__card-title">Orgs</span>
-            <span class="product-dash__card-desc" data-count-orgs>0 visible</span>
-          </button>
-          <button class="product-dash__card" type="button" data-hub-view="register">
-            <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
-            <span class="product-dash__card-title">+ New org</span>
-            <span class="product-dash__card-desc">Create a client organization</span>
-          </button>
-        </div>
-
-        <h2 class="product-dash__section-title">Reports</h2>
-        <div class="product-dash__grid">
-          <button class="product-dash__card" type="button" data-hub-view="recent">
-            <span class="material-symbols-outlined" aria-hidden="true">history</span>
-            <span class="product-dash__card-title">Recent reports</span>
-            <span class="product-dash__card-desc" data-count-recent>0 recent</span>
-          </button>
-          <button class="product-dash__card" type="button" data-hub-view="new-report">
-            <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
-            <span class="product-dash__card-title">+ New report</span>
-            <span class="product-dash__card-desc">Create report in an org</span>
-          </button>
-        </div>
-
-        <h2 class="product-dash__section-title">Manage</h2>
-        <div class="product-dash__grid">
-          <button class="product-dash__card" type="button" data-hub-view="manage">
-            <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
-            <span class="product-dash__card-title">Manage orgs</span>
-            <span class="product-dash__card-desc">Order, hide, delete</span>
-          </button>
-        </div>
+        <section class="ereport-hub__options" aria-labelledby="ereport-options-title">
+          <h2 class="product-dash__section-title" id="ereport-options-title">eReport options</h2>
+          <div class="product-dash__grid">
+            <button class="product-dash__card" type="button" data-hub-view="orgs">
+              <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
+              <span class="product-dash__card-title">Orgs</span>
+              <span class="product-dash__card-desc" data-count-orgs>0 visible</span>
+            </button>
+            <button class="product-dash__card" type="button" data-hub-view="register">
+              <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
+              <span class="product-dash__card-title">+ New org</span>
+              <span class="product-dash__card-desc">Create a client organization</span>
+            </button>
+            <button class="product-dash__card" type="button" data-hub-view="recent">
+              <span class="material-symbols-outlined" aria-hidden="true">history</span>
+              <span class="product-dash__card-title">Recent reports</span>
+              <span class="product-dash__card-desc" data-count-recent>0 recent</span>
+            </button>
+            <button class="product-dash__card" type="button" data-hub-view="new-report">
+              <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
+              <span class="product-dash__card-title">+ New report</span>
+              <span class="product-dash__card-desc">Create report in an org</span>
+            </button>
+            <button class="product-dash__card" type="button" data-hub-view="manage">
+              <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+              <span class="product-dash__card-title">Manage orgs</span>
+              <span class="product-dash__card-desc">Order, hide, delete</span>
+            </button>
+          </div>
+        </section>
       </div>
 
       <div data-view="orgs">

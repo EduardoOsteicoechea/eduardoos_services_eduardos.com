@@ -24,33 +24,36 @@ import Layout from "../../layouts/Layout.astro";
       </p>
     </section>
 
-    <div class="pamphlet-vanilla-dash__grid">
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
-        <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
-        <span class="pamphlet-vanilla-dash__card-title">New</span>
-        <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
-      </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/open" data-pamphlet-nav="open">
-        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
-        <span class="pamphlet-vanilla-dash__card-title">Open</span>
-        <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
-      </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/recent" data-pamphlet-nav="recent">
-        <span class="material-symbols-outlined" aria-hidden="true">history</span>
-        <span class="pamphlet-vanilla-dash__card-title">Recent</span>
-        <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
-      </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/manage" data-pamphlet-nav="manage">
-        <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
-        <span class="pamphlet-vanilla-dash__card-title">Manage</span>
-        <span class="pamphlet-vanilla-dash__card-desc">Manage cloud docs or load a .epam.</span>
-      </a>
-      <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/footers" data-pamphlet-nav="footers">
-        <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
-        <span class="pamphlet-vanilla-dash__card-title">Footers</span>
-        <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
-      </a>
-    </div>
+    <section class="pamphlet-vanilla-dash__options" aria-labelledby="pamphlet-options-title">
+      <h2 class="pamphlet-vanilla-dash__section-title" id="pamphlet-options-title">Pamphlet options</h2>
+      <div class="pamphlet-vanilla-dash__grid">
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
+          <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
+          <span class="pamphlet-vanilla-dash__card-title">New</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
+        </a>
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/open" data-pamphlet-nav="open">
+          <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
+          <span class="pamphlet-vanilla-dash__card-title">Open</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Open a cloud or local .epam.</span>
+        </a>
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/recent" data-pamphlet-nav="recent">
+          <span class="material-symbols-outlined" aria-hidden="true">history</span>
+          <span class="pamphlet-vanilla-dash__card-title">Recent</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
+        </a>
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/manage" data-pamphlet-nav="manage">
+          <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
+          <span class="pamphlet-vanilla-dash__card-title">Manage</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Manage cloud docs or load a .epam.</span>
+        </a>
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/footers" data-pamphlet-nav="footers">
+          <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
+          <span class="pamphlet-vanilla-dash__card-title">Footers</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
+        </a>
+      </div>
+    </section>
   </section>
 
   <div id="pamphlet-root" class="pamphlet-route-root pamphlet-layout-workspace" hidden></div>
@@ -60,7 +63,7 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-vanilla-dash {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: calc(var(--space-padding) * 2.5);
     /* Align with .site-footer: shell main already supplies footer-matching inset */
     padding: 0;
     color: var(--color-text);
@@ -82,7 +85,8 @@ import Layout from "../../layouts/Layout.astro";
     color: var(--color-muted);
   }
 
-  .pamphlet-vanilla-dash__recents {
+  .pamphlet-vanilla-dash__recents,
+  .pamphlet-vanilla-dash__options {
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);

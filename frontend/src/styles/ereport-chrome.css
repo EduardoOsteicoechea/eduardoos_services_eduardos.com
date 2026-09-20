@@ -508,13 +508,35 @@ html[data-page^="ereport"] .ereport-hub__error {
   }
 }
 
-/* Hub dashboard: recent strip + site-aligned cards (shared product-dash tokens). */
-html[data-page="ereport"] .ereport-hub {
-  gap: var(--space-padding);
-  padding-block: 0 var(--space-padding);
+/* Hub dashboard: match pamphlet vanilla dash (site tokens, simple cards). */
+html[data-page="ereport"] .ereport-hub.product-dash {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-padding) * 2.5);
+  padding: 0 0 var(--space-padding);
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
-/* Nested view stacks (not direct .ereport-hub children) need their own column gap. */
+html[data-page="ereport"] .ereport-hub > h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__section-title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-text);
+}
+
 html[data-page="ereport"] .ereport-hub [data-authed-panel]:not([hidden]),
 html[data-page="ereport"] .ereport-hub [data-view]:not([hidden]),
 html[data-page="ereport"] .ereport-hub [data-org-detail]:not([hidden]),
@@ -524,7 +546,12 @@ html[data-page="ereport"] .ereport-hub [data-org-panel-view]:not([hidden]) {
   gap: var(--space-padding);
 }
 
-html[data-page="ereport"] .ereport-hub__recents {
+html[data-page="ereport"] .ereport-hub [data-view="dashboard"]:not([hidden]) {
+  gap: calc(var(--space-padding) * 2.5);
+}
+
+html[data-page="ereport"] .ereport-hub__recents,
+html[data-page="ereport"] .ereport-hub__options {
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
@@ -538,6 +565,65 @@ html[data-page="ereport"] .ereport-hub__recents-grid {
   gap: var(--space-padding);
   margin: 0;
   padding: 0;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--rail-gap);
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card {
+  position: static;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--rail-gap);
+  min-height: calc(var(--control-height) * 4);
+  height: auto;
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: none;
+  transform: none;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card::after {
+  content: none;
+  display: none;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card:hover,
+html[data-page="ereport"] .ereport-hub .product-dash__card:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: none;
+  outline: none;
+  transform: none;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card .material-symbols-outlined {
+  display: inline-flex;
+  width: auto;
+  height: auto;
+  font-size: var(--icon-size);
+  color: var(--color-text);
+  background: transparent;
+  border-radius: 0;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card-title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+html[data-page="ereport"] .ereport-hub .product-dash__card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  line-height: 1.35;
 }
 
 html[data-page="ereport"] .ereport-hub__recent-card {
@@ -569,6 +655,10 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
 
 @media (max-width: 47.999rem) {
   html[data-page="ereport"] .ereport-hub__recents-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html[data-page="ereport"] .ereport-hub .product-dash__grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }

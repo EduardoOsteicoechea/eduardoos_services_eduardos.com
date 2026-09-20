@@ -64,6 +64,8 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("btn btn--primary");
     expect(hubSrc).toContain("btn btn--red");
     expect(hubSrc).toContain("data-dashboard-recent-cards");
+    expect(hubSrc).toContain("ereport-hub__options");
+    expect(hubSrc).toContain("eReport options");
     expect(hubSrc).toContain("<h1>eReport</h1>");
     expect(hubSrc).not.toContain('"Signed in."');
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
@@ -72,10 +74,14 @@ describe("eReport public invite routing", () => {
     expect(css).toContain("--m2: 0.75rem");
     expect(css).toMatch(/\.btn--red,[\s\S]{0,80}\.btn--danger/);
     expect(css).toContain("ereport-hub__recents-grid");
+    expect(css).toContain("ereport-hub__options");
     expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*\.btn \{[\s\S]*max-height: none/);
     const globalCss = readFileSync(join(here, "../styles/global.css"), "utf8");
     expect(globalCss).toMatch(/html\[data-page="ereport-workspace"\] \.site-footer/);
     expect(globalCss).not.toMatch(/html\[data-page\^="ereport"\] \.site-footer/);
+    expect(globalCss).not.toContain('html[data-page="ereport-workspace"] .ereport-workspace > h1');
+    const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
+    expect(workspaceSrc).not.toContain("<h1>eReport workspace</h1>");
   });
 
   it("does not AuthGate the invite page", () => {
