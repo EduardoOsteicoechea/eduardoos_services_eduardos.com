@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node ./scripts/copy-pdf-worker.mjs",
+    "prebuild": "node ./scripts/copy-pdf-worker.mjs",
     "dev": "astro dev",
     "dev:local": "cross-env API_PROXY_TARGET=http://127.0.0.1:8081 astro dev",
     "build": "astro build",

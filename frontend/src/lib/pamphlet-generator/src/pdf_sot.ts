@@ -2,7 +2,6 @@
  * PDF-first pamphlet source of truth: preview fetch, pdf.js canvas pages, hit overlays.
  */
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy } from "pdfjs-dist";
-import pdfWorkerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import { DOCUMENT_ROUTES } from "../../../config/routes";
 import { currentCsrf, getCsrf } from "../../api";
 import { mustLog } from "../../dev-log";
@@ -13,7 +12,9 @@ import {
     type PamphletStructure,
 } from "./pamphlet_schema";
 
-GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+// Stable public URL (copied by scripts/copy-pdf-worker.mjs on prebuild/predev).
+// Avoid hashed /_astro/*.mjs — Nginx often fails ES-module fetch for those.
+GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
 export type PamphletLayoutHit = {
     id: string;
