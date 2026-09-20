@@ -584,16 +584,23 @@
 
 /* Desktop: scale the letter sheet to the workspace width (PDF-viewer fit-to-width).
    Layout mm math stays 279.4×215.9; only the on-screen transform changes.
-   Flush to view top; lateral edges meet the content area (rail → right).
+   Origin top left keeps the sheet flush to the rail; scale fills to the right edge.
    Do not overflow:clip here — scale may be >1 and would crop the upscaled letter;
    column overflow:clip still contains ink inside the mm grid. */
+.pamphlet-app[data-view-mode="desktop"] {
+    align-items: flex-start;
+}
+
 .pamphlet-app[data-view-mode="desktop"] main.pamphlet-sheet {
     transform: scale(var(--desktop-view-scale, 1));
-    transform-origin: top center;
+    transform-origin: top left;
+    width: var(--letter-landscape-width);
+    max-width: none;
+    flex-shrink: 0;
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
     overflow: visible;
     contain: none;
 }

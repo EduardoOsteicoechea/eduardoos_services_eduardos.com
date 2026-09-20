@@ -113,6 +113,9 @@ body.page-pamphlet .pamphlet-layout-workspace {
   body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none;
     border: 0;
   }
 
@@ -362,13 +365,22 @@ body.page-pamphlet #modal-confirm {
 
 /* Sheet paper follows site theme on screen; print / PDF stay white via token overrides. */
 body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
-  margin-left: auto !important;
-  margin-right: auto !important;
   margin-top: 1rem;
   margin-bottom: 1rem;
   background: var(--pamphlet-paper-bg, var(--site-body-bg));
   color: var(--pamphlet-ink, var(--site-body-fg));
   flex-shrink: 0;
+}
+
+/* Desktop: flush to rail / top; horizontal fit is --desktop-view-scale (origin top left). */
+@media (min-width: 64rem) {
+  body.page-pamphlet .pamphlet-app[data-view-mode="desktop"] main.pamphlet-sheet {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none;
+  }
 }
 
 /* Desktop columns + body ink (layout override must not leave inherited #000). */

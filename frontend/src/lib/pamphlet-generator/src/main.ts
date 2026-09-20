@@ -312,25 +312,22 @@ function syncMobileViewScale(): void {
 }
 
 function desktopAvailableWidth(): number {
-    // Prefer the viewport-visible slice of the shell main — never host.clientWidth when
-    // min-content descendants expanded the host past the viewport (scale stayed 1).
-    const shellMain = document.querySelector<HTMLElement>("main:not(.pamphlet-sheet)");
+    // Viewport minus the left rail only — do not trust shellMain.clientWidth when
+    // the unscaled letter has already expanded min-content past the viewport.
     const vw = window.visualViewport?.width ?? window.innerWidth;
-    if (shellMain) {
-        const rect = shellMain.getBoundingClientRect();
-        const cs = getComputedStyle(shellMain);
-        const padL = Number.parseFloat(cs.paddingLeft) || 0;
-        const padR = Number.parseFloat(cs.paddingRight) || 0;
-        const visible = Math.min(rect.right, vw) - Math.max(rect.left, 0);
-        const inner = visible - padL - padR;
-        if (inner > 20) return inner;
-    }
     const rail = document.querySelector<HTMLElement>(".app-header--start");
     const railW =
         rail && window.matchMedia("(min-width: 64rem)").matches
             ? rail.getBoundingClientRect().width
             : 0;
-    return Math.max(20, vw - railW);
+    return Math.max(20, Math.floor(vw - railW));
+}
+
+/** Intrinsic letter width in px (scrollWidth survives parent max-width shrink). */
+function desktopLetterLayoutSize(): { w: number; h: number } {
+    const w = Math.max(main.offsetWidth, main.scrollWidth, 1);
+    const h = Math.max(main.offsetHeight, main.scrollHeight, 1);
+    return { w, h };
 }
 
 function syncDesktopViewScale(): void {
@@ -341,26 +338,23 @@ function syncDesktopViewScale(): void {
         main.style.marginRight = "";
         return;
     }
-    // Fit letter width to the workspace (rail → right edge), scale up or down.
-    // Transform does not change layout box — compensate scroll height; only when
-    // scaling down, negative side margins shrink the footprint to the visual width.
-    const layoutW = main.offsetWidth;
-    const layoutH = main.offsetHeight;
+    // Fit letter to workspace width (rail → right edge). Origin is top left so the
+    // visual left edge stays flush; scale may be >1 or <1. Transform does not
+    // change layout box — extend margin-right/bottom to match the visual size.
+    const { w: layoutW, h: layoutH } = desktopLetterLayoutSize();
     const available = desktopAvailableWidth();
     const scale = layoutW > 0 ? Math.max(0.01, available / layoutW) : 1;
     appRoot.style.setProperty("--desktop-view-scale", String(scale));
+    main.style.marginLeft = "0px";
+    if (layoutW > 0 && scale !== 1) {
+        main.style.marginRight = `${layoutW * (scale - 1)}px`;
+    } else {
+        main.style.marginRight = "";
+    }
     if (layoutH > 0 && scale !== 1) {
-        main.style.marginBottom = `${layoutH * scale - layoutH}px`;
+        main.style.marginBottom = `${layoutH * (scale - 1)}px`;
     } else {
         main.style.marginBottom = "";
-    }
-    if (layoutW > 0 && scale < 1) {
-        const side = (layoutW * (scale - 1)) / 2;
-        main.style.marginLeft = `${side}px`;
-        main.style.marginRight = `${side}px`;
-    } else {
-        main.style.marginLeft = "";
-        main.style.marginRight = "";
     }
 }
 
