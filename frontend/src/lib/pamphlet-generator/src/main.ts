@@ -179,6 +179,11 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const footerProfileForm = requireElement<HTMLFormElement>("#footer-profile-form");
     const footerFormId = requireElement<HTMLInputElement>("#footer-form-id");
     const footerFormName = requireElement<HTMLInputElement>("#footer-form-name");
+    const syncBanner = requireElement<HTMLElement>("#pamphlet-sync-banner");
+    const syncBannerMsg = requireElement<HTMLElement>("[data-sync-msg]");
+    const syncDownloadBtn = requireElement<HTMLButtonElement>("#pamphlet-sync-download");
+    const syncUploadBtn = requireElement<HTMLButtonElement>("#pamphlet-sync-upload");
+    const syncUploadInput = requireElement<HTMLInputElement>("#pamphlet-sync-upload-input");
     const footerFormAction = requireElement<HTMLInputElement>("#footer-form-action");
     const footerFormMessage = requireElement<HTMLInputElement>("#footer-form-message");
     const footerFormValue1 = requireElement<HTMLInputElement>("#footer-form-value1");
@@ -619,10 +624,14 @@ let currentDoc: PamphletStructure | null = null;
 let undoSnapshot: PamphletStructure | null = null;
 let suppressEditOpenSave = false;
 let pendingInsert: PendingInsert | null = null;
-/** When set, edits can persist to DynamoDB/S3 without a local FileSystem handle. */
+/** When set, edits can persist to cloud without a local FileSystem handle. */
 let cloudEpamId: string | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
 let memorySession = false;
+/** Latest client snapshot waiting for background disk/cloud flush (coalesced). */
+let pendingPersistDoc: PamphletStructure | null = null;
+let persistQueued = false;
+let persistFlushing = false;
 
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
@@ -1202,31 +1211,103 @@ async function persistCloud(data: PamphletStructure): Promise<PamphletStructure>
     return saved.document;
 }
 
-async function commitDocument(data: PamphletStructure, openEdit: boolean): Promise<void> {
+function canBackgroundPersist(): boolean {
+    return hasOpenFile() || cloudEpamId !== null;
+}
+
+function showSyncBanner(message: string): void {
+    syncBannerMsg.textContent = message;
+    syncBanner.hidden = false;
+}
+
+function hideSyncBanner(): void {
+    syncBanner.hidden = true;
+}
+
+function schedulePersist(): void {
+    if (!canBackgroundPersist() || !currentDoc) return;
+    pendingPersistDoc = clonePamphlet(currentDoc);
+    persistQueued = true;
+    void flushPersist();
+}
+
+async function flushPersist(): Promise<void> {
+    if (persistFlushing) return;
+    if (!persistQueued || !pendingPersistDoc) return;
+    if (!canBackgroundPersist()) {
+        persistQueued = false;
+        pendingPersistDoc = null;
+        return;
+    }
+
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        showSyncBanner(
+            "Sin conexión con el servidor. Los cambios siguen en este navegador. Puedes descargar el .epam y subirlo luego.",
+        );
+        return;
+    }
+
+    persistFlushing = true;
+    persistQueued = false;
+    const toSave = clonePamphlet(pendingPersistDoc);
+
+    try {
+        if (hasOpenFile()) {
+            await savePamphlet(toSave);
+        } else if (cloudEpamId) {
+            await persistCloud(toSave);
+        }
+        if (!persistQueued) {
+            pendingPersistDoc = null;
+            hideSyncBanner();
+        }
+    } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        persistQueued = true;
+        if (!pendingPersistDoc) pendingPersistDoc = toSave;
+        showSyncBanner(
+            `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
+        );
+    } finally {
+        persistFlushing = false;
+        if (persistQueued) void flushPersist();
+    }
+}
+
+/**
+ * Apply an edit to the in-memory document and re-render immediately.
+ * Disk/cloud persistence runs in the background via schedulePersist.
+ */
+function applyLocalDoc(
+    data: PamphletStructure,
+    opts: { openEdit?: boolean; chromeOnly?: boolean } = {},
+): void {
+    const next = ensureDocumentId(data);
+    currentDoc = next;
+    currentHeader = { ...next.header };
+    if (opts.chromeOnly) {
+        renderPageChrome(main, next);
+        syncSheetScale();
+    } else {
+        renderDocument(next, opts.openEdit ?? false);
+    }
+    clearError();
+    schedulePersist();
+}
+
+function commitDocument(data: PamphletStructure, openEdit: boolean): void {
     if (!hasEditableSession()) {
         setError("No pamphlet file is open. Open or create a file first.");
         return;
     }
 
-    try {
-        let next = ensureDocumentId(data);
-        if (hasOpenFile()) {
-            await savePamphlet(next);
-            renderDocument(next, openEdit);
-            setStatus(`Saved: ${getOpenFileName() || "document"}`, "success");
-        } else if (cloudEpamId) {
-            next = await persistCloud(next);
-            renderDocument(next, openEdit);
-            setStatus(`Saved to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
-        } else {
-            // Memory-only: keep the sheet editable without a disk/cloud write.
-            renderDocument(next, openEdit);
-            setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
-        }
-        clearError();
-    } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(`Save failed: ${message}`);
+    applyLocalDoc(data, { openEdit });
+    if (hasOpenFile()) {
+        setStatus(`Saving: ${getOpenFileName() || "document"}`, "success");
+    } else if (cloudEpamId) {
+        setStatus(`Saving to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
+    } else {
+        setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
     }
 }
 
@@ -1234,42 +1315,28 @@ async function commitDocument(data: PamphletStructure, openEdit: boolean): Promi
  * Persist header/footer chrome without reflowing body columns.
  * Full renderDocument/reflow after chrome edits reshuffled / hid column 8 ink.
  */
-async function commitChromeOnly(data: PamphletStructure): Promise<void> {
+function commitChromeOnly(data: PamphletStructure): void {
     if (!hasEditableSession()) {
         setError("No pamphlet file is open. Open or create a file first.");
         return;
     }
 
-    try {
-        let next = ensureDocumentId(data);
-        if (next.footer_bind === "linked" && currentDoc?.footer_bind === "linked") {
-            const before = JSON.stringify(currentDoc.footer);
-            const after = JSON.stringify(next.footer);
-            if (before !== after) {
-                next = { ...next, footer_bind: "snapshot" };
-                setStatus("Pie desvinculado — los cambios son solo de este panfleto.", "info");
-            }
+    let next = ensureDocumentId(data);
+    if (next.footer_bind === "linked" && currentDoc?.footer_bind === "linked") {
+        const before = JSON.stringify(currentDoc.footer);
+        const after = JSON.stringify(next.footer);
+        if (before !== after) {
+            next = { ...next, footer_bind: "snapshot" };
+            setStatus("Pie desvinculado — los cambios son solo de este panfleto.", "info");
         }
-        currentDoc = next;
-        currentHeader = { ...next.header };
-        renderPageChrome(main, next);
-        if (hasOpenFile()) {
-            await savePamphlet(next);
-            setStatus(`Saved: ${getOpenFileName() || "document"}`, "success");
-        } else if (cloudEpamId) {
-            next = await persistCloud(next);
-            currentDoc = next;
-            currentHeader = { ...next.header };
-            renderPageChrome(main, next);
-            setStatus(`Saved to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
-        } else {
-            setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
-        }
-        clearError();
-        syncSheetScale();
-    } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(`Save failed: ${message}`);
+    }
+    applyLocalDoc(next, { chromeOnly: true });
+    if (hasOpenFile()) {
+        setStatus(`Saving: ${getOpenFileName() || "document"}`, "success");
+    } else if (cloudEpamId) {
+        setStatus(`Saving to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
+    } else {
+        setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
     }
 }
 
@@ -1379,7 +1446,7 @@ async function confirmItemType(type: PamphletItemType): Promise<void> {
 
     base.last_edited_element = focus;
     pushUndoSnapshot();
-    await commitDocument(base, true);
+    commitDocument(base, true);
 }
 
 async function handleAddItemButton(column: number): Promise<void> {
@@ -1479,7 +1546,7 @@ async function removeNoteEntry(id: string): Promise<void> {
     }
     base.last_edited_element = notesSession.loc;
     pushUndoSnapshot();
-    await commitDocument(base, notesSession.reopenEdit);
+    commitDocument(base, notesSession.reopenEdit);
 }
 
 async function addNoteFromInput(): Promise<void> {
@@ -1518,7 +1585,7 @@ async function addNoteFromInput(): Promise<void> {
     notesSession = { ...notesSession, mode: "manage" };
     base.last_edited_element = notesSession.loc;
     pushUndoSnapshot();
-    await commitDocument(base, notesSession.reopenEdit);
+    commitDocument(base, notesSession.reopenEdit);
 }
 
 async function saveNotesCreate(): Promise<void> {
@@ -1614,26 +1681,20 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         if (!loc) return;
         const next = snapshotFromDom(loc);
         if (!next) return;
-        currentDoc = next;
-        currentHeader = { ...next.header };
-        try {
-            if (hasOpenFile()) {
-                await savePamphlet(next);
-                setStatus(`Saved: ${getOpenFileName()}`, "success");
-            } else if (cloudEpamId) {
-                await persistCloud(next);
-                setStatus(`Saved to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
-            } else if (memorySession || currentDoc) {
-                setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
-            } else {
-                setError("No pamphlet file is open. Open or create a file first.");
-                return;
-            }
-            clearError();
-        } catch (err) {
-            const message = err instanceof Error ? err.message : String(err);
-            setError(`Save failed: ${message}`);
+        currentDoc = ensureDocumentId(next);
+        currentHeader = { ...currentDoc.header };
+        schedulePersist();
+        if (hasOpenFile()) {
+            setStatus(`Saving: ${getOpenFileName()}`, "success");
+        } else if (cloudEpamId) {
+            setStatus(`Saving to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
+        } else if (memorySession || currentDoc) {
+            setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
+        } else {
+            setError("No pamphlet file is open. Open or create a file first.");
+            return;
         }
+        clearError();
         return;
     }
 
@@ -1645,7 +1706,7 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         }
         const restored = clonePamphlet(undoSnapshot);
         undoSnapshot = currentDoc ? clonePamphlet(currentDoc) : null;
-        await commitDocument(restored, true);
+        commitDocument(restored, true);
         return;
     }
 
@@ -1669,7 +1730,7 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
             currentHeader = { ...base.header };
         }
         pushUndoSnapshot();
-        await commitChromeOnly(base);
+        commitChromeOnly(base);
         return;
     }
 
@@ -1741,7 +1802,7 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
 
     if (!nextDoc) return;
     pushUndoSnapshot();
-    await commitDocument(nextDoc, openEdit);
+    commitDocument(nextDoc, openEdit);
 }
 
 function loadPamphlet(data: PamphletStructure): void {
@@ -2305,26 +2366,23 @@ on(seriesForm, "submit", (event: Event) => {
         currentHeader = nextHeader;
         const base = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
         const nextDoc: PamphletStructure = { ...base, header: nextHeader };
-        currentDoc = nextDoc;
-        renderPageChrome(main, nextDoc);
-        try {
-            if (getAuthToken() && isAuthenticated()) {
-                const saved = await persistCloud(nextDoc);
-                memorySession = false;
-                renderDocument(saved, false);
-            } else {
-                renderDocument(nextDoc, false);
-            }
-            closeSeriesModal();
-            setStatus("Series updated", "success");
-        } catch (err) {
-            const message = err instanceof Error ? err.message : String(err);
-            setError(`Series save failed: ${message}`);
-            openApiErrorModal(message, {
-                title: "Series save error",
-                summary: "Could not save series metadata for this pamphlet.",
-            });
+        applyLocalDoc(nextDoc, { openEdit: false });
+        if (getAuthToken() && isAuthenticated() && !canBackgroundPersist()) {
+            void (async () => {
+                try {
+                    await persistCloud(nextDoc);
+                    memorySession = false;
+                    hideSyncBanner();
+                } catch (err) {
+                    const message = err instanceof Error ? err.message : String(err);
+                    showSyncBanner(
+                        `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
+                    );
+                }
+            })();
         }
+        closeSeriesModal();
+        setStatus("Series updated", "success");
     })();
 });
 
@@ -2369,34 +2427,14 @@ async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "li
     };
     currentDoc = next;
     renderPageChrome(main, next);
-    try {
-        if (hasOpenFile()) {
-            await savePamphlet(next);
-        } else if (getAuthToken() && isAuthenticated() && cloudEpamId) {
-            const saved = await persistCloud(next);
-            currentDoc = {
-                ...saved,
-                footer: next.footer,
-                footer_profile_id: next.footer_profile_id,
-                footer_bind: next.footer_bind,
-            };
-            renderPageChrome(main, currentDoc);
-        }
-        setStatus(
-            bind === "linked"
-                ? `Pie vinculado: ${profile.name}`
-                : `Pie copiado: ${profile.name}`,
-            "success",
-        );
-        await refreshFooterProfiles();
-    } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(`Footer apply failed: ${message}`);
-        openApiErrorModal(message, {
-            title: "Pie de página",
-            summary: "No se pudo aplicar el pie al panfleto.",
-        });
-    }
+    schedulePersist();
+    setStatus(
+        bind === "linked"
+            ? `Pie vinculado: ${profile.name}`
+            : `Pie copiado: ${profile.name}`,
+        "success",
+    );
+    await refreshFooterProfiles();
 }
 
 async function refreshFooterProfiles(): Promise<void> {
@@ -2583,6 +2621,69 @@ function downloadEpamFile(data: PamphletStructure, suggestedName?: string): stri
     return filename;
 }
 
+async function importEpamFromFile(file: File): Promise<void> {
+    const text = await file.text();
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(text);
+    } catch {
+        throw new Error("El archivo .epam no es JSON válido.");
+    }
+    const normalized = normalizePamphletData(parsed);
+    assertPamphletStructure(normalized);
+    if (file.name.trim()) setOpenFileName(file.name.trim());
+    applyLocalDoc(normalized, { openEdit: false });
+    updatePrintAvailability();
+    setStatus(`Loaded ${file.name || "document"} from device`, "success");
+}
+
+on(syncDownloadBtn, "click", () => {
+    if (!currentDoc) {
+        setError("No hay panfleto abierto para descargar.");
+        return;
+    }
+    const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
+    const withId = ensureDocumentId(live);
+    currentDoc = withId;
+    const name = downloadEpamFile(withId, getOpenFileName() || undefined);
+    setStatus(`Downloaded ${name}`, "success");
+});
+
+on(syncUploadBtn, "click", () => {
+    syncUploadInput.value = "";
+    syncUploadInput.click();
+});
+
+on(syncUploadInput, "change", () => {
+    const file = syncUploadInput.files?.[0];
+    if (!file) return;
+    void (async () => {
+        try {
+            await importEpamFromFile(file);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            setError(`Upload failed: ${message}`);
+            showSyncBanner(
+                `No se pudo importar el .epam (${message}). Los cambios actuales siguen en este navegador.`,
+            );
+        } finally {
+            syncUploadInput.value = "";
+        }
+    })();
+});
+
+on(window, "online", () => {
+    if (persistQueued || pendingPersistDoc) void flushPersist();
+});
+
+on(window, "offline", () => {
+    if (canBackgroundPersist() && (persistQueued || pendingPersistDoc || currentDoc)) {
+        showSyncBanner(
+            "Sin conexión con el servidor. Los cambios siguen en este navegador. Puedes descargar el .epam y subirlo luego.",
+        );
+    }
+});
+
 on(saveCloudBtn, "click", async () => {
     clearError();
     if (!currentDoc) {
@@ -2606,6 +2707,9 @@ on(saveCloudBtn, "click", async () => {
         if (getAuthToken() && isAuthenticated()) {
             const savedDoc = await persistCloud({ ...withId });
             memorySession = false;
+            pendingPersistDoc = null;
+            persistQueued = false;
+            hideSyncBanner();
             renderDocument(savedDoc, false);
             updatePrintAvailability();
             setStatus(
@@ -2624,6 +2728,9 @@ on(saveCloudBtn, "click", async () => {
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         setError(`Save failed: ${message}`);
+        showSyncBanner(
+            `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
+        );
     }
 });
 
