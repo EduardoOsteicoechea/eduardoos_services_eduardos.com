@@ -60,14 +60,6 @@ function syncExpanded(): void {
         return;
       }
       button.setAttribute("aria-expanded", open ? "true" : "false");
-      if (selector === ".header-menu" && isEreportPage()) {
-        button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        button.setAttribute("title", open ? "Close menu" : "Open menu");
-        const path = button.querySelector(".header-menu-svg path");
-        if (path instanceof SVGPathElement) {
-          path.setAttribute("d", open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16");
-        }
-      }
     });
   }
   syncTrayOpenAttr();

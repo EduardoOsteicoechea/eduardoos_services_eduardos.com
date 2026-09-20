@@ -1,4 +1,5 @@
-/* 073 — eReport host chrome only. Do not apply these tokens inside the tracker iframe. */
+/* 073 — eReport product surface. Shell chrome (header / #main-menu / #dynamic-header)
+   uses shared global.css; do not restyle those here. Tracker iframe is separate. */
 
 html[data-page^="ereport"] {
   --bg: #0e1116;
@@ -48,20 +49,7 @@ html[data-page^="ereport"] {
   --font-sm: 0.875rem;
   --font-base: 1rem;
   --font-lg: 1.125rem;
-  --color-bg: var(--site-body-bg);
-  --color-surface: var(--site-surface);
-  --color-text: var(--site-body-fg);
-  --color-muted: var(--site-muted-fg);
-  --color-accent: var(--site-accent);
-  --color-border: var(--site-input-border);
-  --color-ok: var(--btn-green);
-  --color-err: var(--btn-red);
-  --color-button-bg: var(--site-surface);
-  --color-button-fg: var(--site-body-fg);
-  --border-radius: var(--br);
-  --font-family: var(--font-brand);
-  --mobile-header-height: calc(var(--chrome-control-size) + (var(--rail-gap) * 2));
-  font-family: var(--font-brand);
+  /* Workspace / invite text scale (font +/-). Chrome keeps site --color-*. */
   font-size: calc(16px * var(--site-text-scale));
   color-scheme: dark;
 }
@@ -82,67 +70,38 @@ html[data-page^="ereport"][data-theme="light"] {
   }
 }
 
-html[data-page^="ereport"] .app-header {
-  background: transparent;
-  backdrop-filter: none;
-  border: var(--border_001);
+/* Product surfaces keep the eReport palette; shell chrome keeps site tokens. */
+html[data-page^="ereport"] .product-dash,
+html[data-page^="ereport"] .ereport-modal,
+html[data-page^="ereport"] .ereport-signin-card,
+html[data-page^="ereport"] .ereport-list,
+html[data-page^="ereport"] .ereport-cards,
+html[data-page^="ereport"] .ereport-hub__error {
+  --color-bg: var(--site-body-bg);
+  --color-surface: var(--site-surface);
+  --color-text: var(--site-body-fg);
+  --color-muted: var(--site-muted-fg);
+  --color-accent: var(--site-accent);
+  --color-border: var(--site-input-border);
+  --color-ok: var(--btn-green);
+  --color-err: var(--btn-red);
+  --color-button-bg: var(--site-surface);
+  --color-button-fg: var(--site-body-fg);
+  --border-radius: var(--br);
+  --font-family: var(--font-brand);
+  font-family: var(--font-brand);
+  color: var(--site-body-fg);
 }
 
 html[data-page^="ereport"] .agent-fab {
   display: none;
 }
 
-html[data-page^="ereport"] .header-menu-symbol {
-  display: none;
-}
-
-html[data-page^="ereport"] .header-menu-svg {
-  display: block;
-  width: calc(var(--chrome-control-size) * 0.72);
-  height: calc(var(--chrome-control-size) * 0.72);
-}
-
-html[data-page^="ereport"] .header-menu {
-  width: var(--chrome-control-size);
-  height: var(--chrome-control-size);
-  border-radius: var(--br);
-  background: transparent;
-  border: var(--border_001);
-  color: var(--site-body-fg);
-}
-
-html[data-page^="ereport"] .header-menu:hover {
-  color: var(--btn-blue);
-}
-
-html[data-page^="ereport"] .header-session {
-  width: var(--chrome-control-size);
-  height: var(--chrome-control-size);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--site-body-fg);
-  border: 0;
-  outline: 0;
-  overflow: hidden;
-}
-
-html[data-page^="ereport"] .header-session:hover {
-  color: var(--site-accent);
-  filter: none;
-  outline: 0;
-}
-
-html[data-page^="ereport"] .header-session-photo {
-  width: var(--chrome-control-size);
-  height: var(--chrome-control-size);
-  border-radius: 50%;
-}
-
 html[data-page^="ereport"] .ereport-guest-auth {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--rail-gap);
   min-width: 0;
 }
 
@@ -155,17 +114,17 @@ html[data-page^="ereport"] .ereport-guest-auth__link {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  height: var(--chrome-control-size);
-  min-height: var(--chrome-control-size);
-  max-height: var(--chrome-control-size);
+  height: var(--rail-button-size);
+  min-height: var(--rail-button-size);
+  max-height: var(--rail-button-size);
   min-width: 0;
   width: auto;
-  padding: 0 0.7rem;
-  font: 600 var(--font-sm) / 1 var(--font-sans);
-  color: var(--site-body-fg);
-  background: var(--site-surface);
-  border: var(--border-width) solid var(--site-input-border);
-  border-radius: var(--br);
+  padding: 0 var(--control-padding-inline);
+  font: 600 var(--font-size-sm) / 1 var(--font-family);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -203,36 +162,7 @@ html[data-page^="ereport"] .ereport-signin-card__alt {
   font-size: var(--font-sm);
 }
 
-html[data-page^="ereport"] #dynamic-header .dhs-action .icon-btn {
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
-  border-radius: var(--header-button-radius);
-  background: transparent;
-  border: 0;
-  color: var(--color-text);
-}
-
-html[data-page^="ereport"] #dynamic-header .dhs-action:hover .icon-btn,
-html[data-page^="ereport"] #dynamic-header .dhs-action:focus-visible .icon-btn {
-  color: var(--color-accent);
-}
-
-html[data-page^="ereport"] #dynamic-header .dhs-action[aria-pressed="true"] .icon-btn,
-html[data-page^="ereport"] #dynamic-header .dhs-action[data-active] .icon-btn {
-  background: transparent;
-  border: 0;
-  color: var(--color-accent);
-}
-
-html[data-page^="ereport"] #dynamic-header .dhs-action:disabled {
-  opacity: 0.45;
-}
-
-html[data-page^="ereport"] #dynamic-header .dhs-action .material-symbols-outlined {
-  font-size: calc(var(--rail-button-size) * 0.75);
-  line-height: 1;
-}
-
+/* Workspace tool icons only — row chrome matches shared .dhs-action */
 html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
   width: calc(var(--rail-button-size) * 0.72);
   height: calc(var(--rail-button-size) * 0.72);
@@ -244,7 +174,7 @@ html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
 html[data-page^="ereport"] .ereport-hds-cloud-save .icon-btn {
   background: transparent;
   border: 0;
-  color: var(--color-ok);
+  color: var(--btn-green);
 }
 
 html[data-page^="ereport"] .ereport-hds-cloud-save:hover .icon-btn,
@@ -252,25 +182,6 @@ html[data-page^="ereport"] .ereport-hds-cloud-save[aria-pressed="true"] .icon-bt
   background: #1b5e20;
   border-color: #1b5e20;
   color: #fff;
-}
-
-html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn {
-  min-width: var(--bmw);
-  min-height: var(--bmh);
-  border-radius: var(--br);
-  background: transparent;
-  border: 0;
-  color: inherit;
-}
-
-html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn:hover,
-html[data-page^="ereport"] #main-menu .sidebar-toolbar .icon-btn:focus-visible {
-  background: transparent;
-  color: var(--site-accent);
-}
-
-html[data-page^="ereport"] [data-close-menu] {
-  display: inline-flex;
 }
 
 html[data-page^="ereport"] .btn {
@@ -600,12 +511,6 @@ html[data-page^="ereport"] .ereport-hub__error {
 }
 
 @media (max-width: 47.999rem) {
-  html[data-page^="ereport"] .app-header {
-    gap: 0;
-    padding: 0 var(--rail-gap);
-    background: transparent;
-  }
-
   html[data-page^="ereport"] .site-header__backdrop,
   html[data-page^="ereport"] .header-dynamic-menu__phone-backdrop {
     background: color-mix(in srgb, var(--site-body-fg) 28%, transparent);
@@ -660,9 +565,9 @@ html[data-page^="ereport"] .ereport-hub__error {
 
   html[data-page^="ereport"] .ereport-guest-auth__link,
   html[data-page^="ereport"] .ereport-signin-card .btn {
-    height: var(--chrome-control-size);
-    min-height: var(--chrome-control-size);
-    max-height: var(--chrome-control-size);
+    height: var(--rail-button-size);
+    min-height: var(--rail-button-size);
+    max-height: var(--rail-button-size);
     width: auto;
     max-width: none;
     white-space: nowrap;
@@ -691,19 +596,3 @@ html[data-page^="ereport"] .ereport-hub__error {
   }
 }
 
-@media (min-width: 48rem) {
-  html[data-page^="ereport"] .app-header {
-    background: transparent;
-    backdrop-filter: none;
-    gap: 0;
-  }
-
-  html[data-page^="ereport"] .header-cluster--top {
-    gap: var(--rail-gap);
-  }
-
-  html[data-page^="ereport"] .header-menu {
-    background: var(--site-surface);
-    border: var(--border-width) solid var(--site-input-border);
-  }
-}
