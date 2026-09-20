@@ -529,7 +529,7 @@ main > .diag{
   letter-spacing: 0.02em;
   color: var(--color-muted);
   background: transparent;
-  border: var(--border-width) solid var(--color-border);
+  border: 0;
   border-radius: var(--border-radius);
 }
 
