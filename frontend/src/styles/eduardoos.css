@@ -27,7 +27,6 @@
 .product-dash,
 .eoproject,
 article.article-page,
-.articles-page,
 .session-grid,
 .diag{
   max-width: 72rem;
@@ -580,15 +579,9 @@ main > .diag{
 
 .articles-page{
   grid-column: 1 / span var(--span-full);
-  max-width: 60rem;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
   gap: var(--space-padding);
-}
-
-.articles-page h1{
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
-  letter-spacing: -0.02em;
 }
 
 .articles-page__tree{

@@ -7,28 +7,51 @@ import Layout from "../layouts/Layout.astro";
   description="Public reading copies of selected Eduardoos pamphlets, organized by series and chapter."
   robots="index,follow"
 >
-  <div class="page">
-    <header class="hero">
-      <p class="eyebrow">
-        <span class="material-symbols-outlined" aria-hidden="true">article</span>
-        Writing
-      </p>
-      <h1 class="hero__title" id="articles-title">Articles</h1>
-      <p class="hero__lede">
-        Selected pamphlets published for public reading, grouped by series and
-        chapter. Each piece is a reading copy of work originally written in the
-        pamphlet editor.
-      </p>
-      <p class="status" data-articles-status>Loading articles…</p>
-    </header>
+  <header class="seo-only">
+    <p class="eyebrow">
+      <span class="material-symbols-outlined" aria-hidden="true">article</span>
+      Writing
+    </p>
+    <h1 id="articles-title">Articles</h1>
+    <p class="lede">
+      Selected pamphlets published for public reading, grouped by series and
+      chapter. Each piece is a reading copy of work originally written in the
+      pamphlet editor.
+    </p>
+  </header>
 
-    <section class="articles-page" data-articles aria-labelledby="articles-title">
-      <div class="articles-page__tree" data-articles-list></div>
-    </section>
-  </div>
+  <section class="articles-page" data-articles aria-labelledby="articles-title">
+    <p class="status" data-articles-status>Loading articles…</p>
+    <div class="articles-page__tree" data-articles-list></div>
+  </section>
 </Layout>
 
 <style is:global>
+  /* Keep copy in the document for crawlers; hide from the visual layout. */
+  .seo-only {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Match site-footer width: main already supplies --main-inline. */
+  .articles-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    grid-column: 1 / span var(--span-full);
+    max-width: none;
+    margin-inline: 0;
+    width: auto;
+    min-width: 0;
+  }
+
   .articles-page__empty {
     margin: 0;
     padding: var(--space-padding);
@@ -36,7 +59,7 @@ import Layout from "../layouts/Layout.astro";
     font-size: var(--font-size-sm);
     background: var(--surface-sunken);
     border: var(--border-width) dashed var(--eo-line-strong, var(--color-border));
-    border-radius: var(--radius-lg);
+    border-radius: var(--border-radius);
   }
 </style>
 
@@ -148,7 +171,6 @@ import Layout from "../layouts/Layout.astro";
   }
 
   async function loadArticles() {
-    const root = document.querySelector("[data-articles]");
     const status = document.querySelector("[data-articles-status]");
     const list = document.querySelector("[data-articles-list]");
     if (!(status instanceof HTMLElement) || !(list instanceof HTMLElement)) return;
@@ -170,16 +192,17 @@ import Layout from "../layouts/Layout.astro";
     }
     const articles = data.articles ?? [];
     const tree = groupBySeries(articles);
-    status.textContent = tree.count
-      ? `${tree.count} article${tree.count === 1 ? "" : "s"} across ${tree.series.length} series.`
-      : "No public articles are available.";
     renderTree(list, tree);
     if (!tree.count) {
+      status.hidden = false;
+      status.textContent = "No public articles are available.";
       const empty = document.createElement("p");
       empty.className = "articles-page__empty";
       empty.textContent = "Articles will appear here when they are published for public reading.";
       list.appendChild(empty);
+      return;
     }
+    status.hidden = true;
   }
 
   document.addEventListener("astro:page-load", () => {
