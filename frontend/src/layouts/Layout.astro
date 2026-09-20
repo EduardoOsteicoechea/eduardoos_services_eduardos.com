@@ -125,16 +125,13 @@ const jsonLdString =
     <div class="shell">
       <button type="button" class="tray-backdrop" data-tray-backdrop hidden aria-label="Close panel"></button>
       <header class="app-header app-header--start">
-        <a href="/" class="header-logo" data-route aria-label="Home" title="Home">
-          <img class="header-logo__img" src="/favicon-32.png" width="32" height="32" alt="" />
-        </a>
+        {isEreport ? (
+          <div class="ereport-guest-auth" data-header-chrome data-guest-only>
+            <a class="ereport-guest-auth__link" href="/session/register" data-route>Register</a>
+            <a class="ereport-guest-auth__link ereport-guest-auth__link--primary" href="/session" data-route>Log in</a>
+          </div>
+        ) : null}
         <div class="header-cluster header-cluster--menu" data-header-chrome>
-          <button class="header-menu header-menu--mobile icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
-            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
-          </button>
-          <button class="header-menu header-menu--desktop icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
-            <span class="material-symbols-outlined header-menu-symbol" aria-hidden="true">menu</span>
-          </button>
           <a
             href="/session/profile"
             class="header-session icon-btn"
@@ -148,16 +145,11 @@ const jsonLdString =
             <img class="header-session-photo" data-header-avatar-img hidden alt="" />
             <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
           </a>
-        </div>
-        {isEreport ? (
-          <div class="ereport-guest-auth" data-header-chrome data-guest-only>
-            <a class="ereport-guest-auth__link" href="/session/register" data-route>Register</a>
-            <a class="ereport-guest-auth__link ereport-guest-auth__link--primary" href="/session" data-route>Log in</a>
-          </div>
-        ) : null}
-        <div class="header-cluster header-cluster--tools" data-header-chrome>
-          <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
-            <span class="agent-fab-label" aria-hidden="true">AI</span>
+          <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
+            <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <line x1="5" y1="9" x2="19" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="15" x2="19" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
           </button>
         </div>
       </header>
@@ -172,6 +164,9 @@ const jsonLdString =
           </button>
           <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
             <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+          </button>
+          <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
+            <span class="agent-fab-label" aria-hidden="true">AI</span>
           </button>
           <button class="icon-btn" type="button" data-close-menu aria-label="Close menu" title="Close menu">
             <span class="material-symbols-outlined" aria-hidden="true">close</span>

@@ -106,22 +106,28 @@ function togglePanel(id: string): void {
   }
   const willOpen = node.hidden;
 
-  // Agent stays exclusive. Global menu owns the route DHS tray (no separate opener).
+  // AI docks beside the global menu (same slot pattern as DHS; exclusive with DHS).
   if (id === "agent-sidebar") {
-    closeAllPanels(willOpen ? id : undefined);
-    setPanelHidden(id, !willOpen);
+    if (willOpen) {
+      setPanelHidden("main-menu", false);
+      setPanelHidden("dynamic-header", true);
+      setPanelHidden("agent-sidebar", false);
+    } else {
+      setPanelHidden("agent-sidebar", true);
+    }
     syncExpanded();
     return;
   }
 
   if (id === "main-menu") {
-    setPanelHidden("agent-sidebar", true);
     if (willOpen) {
+      setPanelHidden("agent-sidebar", true);
       setPanelHidden("main-menu", false);
       setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
     } else {
       setPanelHidden("main-menu", true);
       setPanelHidden("dynamic-header", true);
+      setPanelHidden("agent-sidebar", true);
     }
     syncExpanded();
     return;
