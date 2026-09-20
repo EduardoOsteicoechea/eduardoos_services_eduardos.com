@@ -528,13 +528,13 @@ main > .diag{
   font-size: var(--font-size-xs);
   letter-spacing: 0.02em;
   color: var(--color-muted);
-  background: var(--surface-raised);
+  background: transparent;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
 
 .article-page__body{
-  gap: calc(1.25rem * 1.35);
+  gap: calc(1.25rem * 1.35 * 1.5);
   font-size: var(--font-size-md);
   line-height: 1.8;
 }
@@ -547,7 +547,7 @@ main > .diag{
 
 @media (min-width: 48rem) and (max-width: 63.999rem) {
   .article-page__body {
-    gap: calc(1.25rem * 1.35);
+    gap: calc(1.25rem * 1.35 * 1.5);
     line-height: calc(1.8 * 0.9);
   }
 
