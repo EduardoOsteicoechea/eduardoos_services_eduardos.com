@@ -545,6 +545,17 @@ main > .diag{
   text-wrap: pretty;
 }
 
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .article-page__body {
+    gap: calc(1.25rem * 1.25);
+    line-height: calc(1.8 * 0.9);
+  }
+
+  .article-page__body p {
+    line-height: calc(1.8 * 0.9);
+  }
+}
+
 .article-page__body > p:first-of-type::first-letter{
   float: left;
   margin: 0.375rem 0.5rem 0 0;
