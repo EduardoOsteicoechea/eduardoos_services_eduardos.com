@@ -582,14 +582,20 @@
     color: var(--pamphlet-ink);
 }
 
-/* Desktop: scale the letter sheet to the viewport width (PDF-viewer fit-to-width).
-   Layout mm math stays 279.4×215.9; only the on-screen transform changes. */
+/* Desktop: scale the letter sheet to the workspace width (PDF-viewer fit-to-width).
+   Layout mm math stays 279.4×215.9; only the on-screen transform changes.
+   Flush to view top; lateral edges meet the content area (rail → right).
+   Do not overflow:clip here — scale may be >1 and would crop the upscaled letter;
+   column overflow:clip still contains ink inside the mm grid. */
 .pamphlet-app[data-view-mode="desktop"] main.pamphlet-sheet {
     transform: scale(var(--desktop-view-scale, 1));
     transform-origin: top center;
-    /* Clip all ink to the letter box (stops col 7–8 glyphs in the left page margin). */
-    overflow: clip;
-    contain: paint;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: visible;
+    contain: none;
 }
 
 /* Spec 035: edit trays paint below items — escape the letter clip while a tray is open. */

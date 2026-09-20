@@ -341,19 +341,20 @@ function syncDesktopViewScale(): void {
         main.style.marginRight = "";
         return;
     }
-    // Fit letter width into the visible workspace. Cap at 1 (true CSS mm).
-    // Negative side margins shrink the layout box to match the visual scale.
+    // Fit letter width to the workspace (rail → right edge), scale up or down.
+    // Transform does not change layout box — compensate scroll height; only when
+    // scaling down, negative side margins shrink the footprint to the visual width.
     const layoutW = main.offsetWidth;
     const layoutH = main.offsetHeight;
     const available = desktopAvailableWidth();
-    const scale = layoutW > 0 ? Math.min(1, available / layoutW) : 1;
+    const scale = layoutW > 0 ? Math.max(0.01, available / layoutW) : 1;
     appRoot.style.setProperty("--desktop-view-scale", String(scale));
     if (layoutH > 0 && scale !== 1) {
         main.style.marginBottom = `${layoutH * scale - layoutH}px`;
     } else {
         main.style.marginBottom = "";
     }
-    if (layoutW > 0 && scale !== 1) {
+    if (layoutW > 0 && scale < 1) {
         const side = (layoutW * (scale - 1)) / 2;
         main.style.marginLeft = `${side}px`;
         main.style.marginRight = `${side}px`;

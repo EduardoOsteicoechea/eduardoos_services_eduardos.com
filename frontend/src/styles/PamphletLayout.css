@@ -100,18 +100,19 @@ body.page-pamphlet .pamphlet-layout-workspace {
   padding: 0;
 }
 
-/* Desktop: main inset = rail + same gap the vertical header uses as its padding. */
+/* Desktop: full workspace beside the rail — sheet flush to view top, edge-to-edge. */
 @media (min-width: 64rem) {
   body.page-pamphlet main:not(.pamphlet-sheet) {
-    padding-top: var(--rail-gap);
-    padding-bottom: var(--rail-gap);
-    padding-left: calc(var(--rail-width) + var(--rail-gap));
-    padding-right: var(--rail-gap);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(--rail-width);
+    padding-right: 0;
+    row-gap: 0;
   }
 
   body.page-pamphlet .pamphlet-app main.pamphlet-sheet {
-    margin-top: 0;
-    margin-bottom: var(--rail-gap);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
     border: 0;
   }
 
