@@ -411,7 +411,17 @@ export class PamphletPdfSot {
                 log("render.page.ok", { seq, pageNum, hits: pageHits.length });
             }
         } finally {
-            void pdf.destroy();
+            // pdfjs-dist v5+/v6: PDFDocumentProxy has cleanup(); destroy() lives on loadingTask.
+            try {
+                await pdf.cleanup();
+            } catch {
+                /* ignore */
+            }
+            try {
+                await pdf.loadingTask.destroy();
+            } catch {
+                /* ignore */
+            }
         }
 
         if (this.destroyed || seq !== this.previewSeq || this.previewQueued) {
