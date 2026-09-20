@@ -312,21 +312,39 @@ function syncMobileViewScale(): void {
 }
 
 function desktopAvailableWidth(): number {
-    // Clipped desktop view width minus the lateral rail — use the rail's
-    // right edge in viewport coordinates (not shellMain, which can grow with
-    // the unscaled letter and inflate the measure).
+    // Fit into the visible content strip of the shell main (viewport-clamped).
+    // Do NOT use .app-header--start.right — after the top-bar chrome refactor that
+    // node spans the full viewport, so right≈vw and scale collapsed to ~0.01.
     const layoutVw = document.documentElement.clientWidth;
     const visualVw = window.visualViewport?.width;
     const vw =
         typeof visualVw === "number" && Number.isFinite(visualVw)
             ? Math.min(layoutVw, visualVw)
             : layoutVw;
+
+    const shellMain = document.querySelector<HTMLElement>("main:not(.pamphlet-sheet)");
+    if (shellMain) {
+        const cs = getComputedStyle(shellMain);
+        const padL = Number.parseFloat(cs.paddingLeft) || 0;
+        const padR = Number.parseFloat(cs.paddingRight) || 0;
+        const rect = shellMain.getBoundingClientRect();
+        const left = Math.max(rect.left + padL, 0);
+        const right = Math.min(rect.right - padR, vw);
+        const visible = Math.floor(right - left);
+        if (visible > 40) return visible;
+    }
+
+    // Legacy left rail only when it is actually a tall narrow strip.
     const rail = document.querySelector<HTMLElement>(".app-header--start");
-    const railRight =
-        rail && window.matchMedia("(min-width: 64rem)").matches
-            ? Math.ceil(rail.getBoundingClientRect().right)
-            : 0;
-    return Math.max(20, Math.floor(vw - railRight));
+    if (rail && window.matchMedia("(min-width: 64rem)").matches) {
+        const r = rail.getBoundingClientRect();
+        const isVerticalRail =
+            r.height > r.width * 1.5 && r.width < vw * 0.35 && r.left <= 2;
+        if (isVerticalRail) {
+            return Math.max(20, Math.floor(vw - Math.ceil(r.right)));
+        }
+    }
+    return Math.max(20, Math.floor(vw));
 }
 
 /**
