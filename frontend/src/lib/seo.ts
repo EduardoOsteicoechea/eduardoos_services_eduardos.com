@@ -59,18 +59,6 @@ export function graph(...nodes: Record<string, unknown>[]) {
   };
 }
 
-export function aboutPageSchema() {
-  return {
-    "@type": "AboutPage",
-    "@id": `${SITE_ORIGIN}/about`,
-    url: `${SITE_ORIGIN}/about`,
-    name: `About · ${SITE_NAME}`,
-    isPartOf: { "@id": `${SITE_ORIGIN}/#website` },
-    about: { "@id": `${SITE_ORIGIN}/#person` },
-    inLanguage: "en",
-  };
-}
-
 export function contactPageSchema() {
   return {
     "@type": "ContactPage",

@@ -31,7 +31,6 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
       <a href="/session/profile" data-authed-only ${authedHidden}>Profile</a>
       <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
-      <a href="/about" data-full-nav>About</a>
       <a href="/contact">Contact</a>
       <a href="/payments/subscription">Subscriptions</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>
@@ -120,7 +119,7 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector('[data-service="evoice"]') as HTMLElement).hidden).toBe(true);
   });
 
-  it("keeps subscriptions and session links for plain members but hides marketing about and admin", async () => {
+  it("keeps subscriptions and session links for plain members but hides admin", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-plain",
@@ -133,7 +132,6 @@ describe("main-menu session chrome", () => {
       isHomescoolStudent: false,
     });
     await refreshAuthChrome();
-    expect((document.querySelector('[href="/about"]') as HTMLElement).hidden).toBe(true);
     expect((document.querySelector('[href="/contact"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[href="/payments/subscription"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);

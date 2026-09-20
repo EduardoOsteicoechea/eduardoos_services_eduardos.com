@@ -10,8 +10,7 @@ Current employment: BIM Software Developer at Hexagon Multivista (formerly Voyan
 
 Primary public pages:
 
-- Home explains who he is, what he builds, and answers common questions.
-- About expands credentials, craft, and how the site is operated.
+- Home explains who he is, what he builds, credentials, craft, and answers common questions.
 - Contact lists public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, and YouTube.
 - API docs describes the external API catalog for API-key clients; eReport bytes live on the VPS filesystem, not S3, and not in MongoDB.
 

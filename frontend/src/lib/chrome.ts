@@ -311,7 +311,6 @@ function plainUserBlockedPath(pathname: string): boolean {
     return false;
   }
   return (
-    path === "/about" ||
     path.includes("calvins-institutes") ||
     path.startsWith("/admin")
   );
