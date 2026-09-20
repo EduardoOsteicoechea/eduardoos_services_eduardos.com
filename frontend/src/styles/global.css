@@ -1245,6 +1245,7 @@ section.diag .panel:not(form) {
   min-height: var(--control-height);
   align-self: start;
   margin-top: 0;
+  margin-bottom: var(--space-margin);
 }
 
 .phone-field {
