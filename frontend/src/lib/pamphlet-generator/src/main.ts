@@ -420,6 +420,10 @@ function applyViewMode(mode: ViewMode, options?: { closeTray?: boolean }): void 
     viewMobileBtn.setAttribute("aria-pressed", mode === "mobile" ? "true" : "false");
     syncSheetScale();
     if (options?.closeTray !== false) {
+        // Keep dock open across view toggles; preview still useful on desktop.
+    }
+    if (mode === "desktop" && currentDoc) {
+        schedulePreviewRegen();
     }
 }
 
@@ -673,6 +677,9 @@ let memorySession = false;
 let pendingPersistDoc: PamphletStructure | null = null;
 let persistQueued = false;
 let persistFlushing = false;
+
+let pdfSot!: PamphletPdfSot;
+let editDock!: EditDockController;
 
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
@@ -1147,7 +1154,48 @@ function clickInner(target: HTMLElement | undefined): void {
     });
 }
 
-function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
+function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
+    if (!currentDoc || loc.column < 1 || loc.column > 8) return null;
+    const data = currentDoc;
+    const region = getRegionItems(data, loc.column);
+    if (region.length === 0) return null;
+
+    const oddLead =
+        data.type === "pamphlet_structured_images" &&
+        (loc.column === 1 || loc.column === 3 || loc.column === 5 || loc.column === 7) &&
+        region[0]?.type === "image";
+
+    if (oddLead && loc.index === 0) {
+        return (
+            main.querySelector<HTMLElement>(
+                `:scope > .pamphlet-lead-${loc.column} > .pamphlet-item`,
+            ) ?? null
+        );
+    }
+
+    let bodyFlat = 0;
+    for (let c = 1; c < loc.column; c++) {
+        const items = getRegionItems(data, c);
+        const lead =
+            data.type === "pamphlet_structured_images" &&
+            (c === 1 || c === 3 || c === 5 || c === 7) &&
+            items[0]?.type === "image";
+        bodyFlat += Math.max(0, items.length - (lead ? 1 : 0));
+    }
+    const bodyIndexInCol = oddLead ? loc.index - 1 : loc.index;
+    if (bodyIndexInCol < 0) return null;
+    bodyFlat += bodyIndexInCol;
+
+    const items = Array.from(
+        main.querySelectorAll<HTMLElement>(
+            ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
+        ),
+    );
+    if (items.length === 0) return null;
+    return items[Math.min(Math.max(bodyFlat, 0), items.length - 1)] ?? null;
+}
+
+function activateEditAtChrome(data: PamphletStructure, loc: LastEditedElement): void {
     if (loc.column === HEADER_COLUMN) {
         const field = HEADER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), HEADER_FIELD_KEYS.length - 1)];
         const item = main.querySelector<HTMLElement>(
@@ -1163,48 +1211,15 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
             `:scope > .pamphlet-page-footer .pamphlet-item[data-footer-field="${field}"]`,
         );
         if (item) clickInner(item);
+    }
+}
+
+function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
+    if (loc.column >= 1 && loc.column <= 8) {
+        editDock.open(loc);
         return;
     }
-
-    const region = getRegionItems(data, loc.column);
-    if (region.length === 0) return;
-
-    const oddLead =
-        data.type === "pamphlet_structured_images" &&
-        (loc.column === 1 || loc.column === 3 || loc.column === 5 || loc.column === 7) &&
-        region[0]?.type === "image";
-
-    if (oddLead && loc.index === 0) {
-        const leadItem = main.querySelector<HTMLElement>(
-            `:scope > .pamphlet-lead-${loc.column} > .pamphlet-item`,
-        );
-        if (leadItem) {
-            clickInner(leadItem);
-            return;
-        }
-    }
-
-    // DOM body items exclude structured leads; map JSON index → body slot.
-    let bodyFlat = 0;
-    for (let c = 1; c < loc.column; c++) {
-        const items = getRegionItems(data, c);
-        const lead =
-            data.type === "pamphlet_structured_images" &&
-            (c === 1 || c === 3 || c === 5 || c === 7) &&
-            items[0]?.type === "image";
-        bodyFlat += Math.max(0, items.length - (lead ? 1 : 0));
-    }
-    const bodyIndexInCol = oddLead ? loc.index - 1 : loc.index;
-    if (bodyIndexInCol < 0) return;
-    bodyFlat += bodyIndexInCol;
-
-    const items = Array.from(
-        main.querySelectorAll<HTMLElement>(
-            ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
-        ),
-    );
-    if (items.length === 0) return;
-    clickInner(items[Math.min(Math.max(bodyFlat, 0), items.length - 1)]);
+    activateEditAtChrome(data, loc);
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
@@ -1319,9 +1334,29 @@ async function flushPersist(): Promise<void> {
  * Apply an edit to the in-memory document and re-render immediately.
  * Disk/cloud persistence runs in the background via schedulePersist.
  */
+function schedulePreviewRegen(): void {
+    if (!currentDoc || !hasEditableSession()) return;
+    if (!getAuthToken() || !isAuthenticated()) return;
+    const snap = clonePamphlet(currentDoc);
+    void (async () => {
+        try {
+            await ensurePamphletImagesAreJpeg(snap);
+        } catch {
+            /* preview still attempted */
+        }
+        if (mustLog) {
+            console.log("[pamphlet-main]", {
+                step: "schedulePreviewRegen",
+                at: new Date().toISOString(),
+            });
+        }
+        pdfSot.schedulePreview(snap);
+    })();
+}
+
 function applyLocalDoc(
     data: PamphletStructure,
-    opts: { openEdit?: boolean; chromeOnly?: boolean } = {},
+    opts: { openEdit?: boolean; chromeOnly?: boolean; skipPreview?: boolean } = {},
 ): void {
     const next = ensureDocumentId(data);
     currentDoc = next;
@@ -1334,7 +1369,42 @@ function applyLocalDoc(
     }
     clearError();
     schedulePersist();
+    if (!opts.skipPreview) schedulePreviewRegen();
 }
+
+pdfSot = new PamphletPdfSot({
+    stage: pdfStage,
+    onHitClick: (column, index, kind) => {
+        editDock.open({ column, index }, kind);
+    },
+});
+
+editDock = setupEditDock(editDockRoot, {
+    getDoc: () => currentDoc,
+    setDoc: (doc) => {
+        currentDoc = doc;
+        currentHeader = { ...doc.header };
+    },
+    ensureDocumentId,
+    hasEditableSession,
+    schedulePersist,
+    schedulePreview: schedulePreviewRegen,
+    setError,
+    setSelected: (column, index) => pdfSot.setSelected(column, index),
+    pushUndoSnapshot,
+    getUndoSnapshot: () => undoSnapshot,
+    setUndoSnapshot: (doc) => {
+        undoSnapshot = doc;
+    },
+    commitDocument: (doc, openEdit) => commitDocument(doc, openEdit),
+    applyLocalDoc: (doc, opts) => applyLocalDoc(doc, opts),
+    openItemTypeModal,
+    openNotesModal: async (detail) => {
+        await openNotesModal(detail);
+    },
+    findBodyItemContainer,
+    activateChromeEdit: (doc, loc) => activateEditAtChrome(doc, loc),
+});
 
 function commitDocument(data: PamphletStructure, openEdit: boolean): void {
     if (!hasEditableSession()) {
@@ -1725,6 +1795,11 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         currentDoc = ensureDocumentId(next);
         currentHeader = { ...currentDoc.header };
         schedulePersist();
+        if (loc.column >= 1 && loc.column <= 8) {
+            editDock.open(loc);
+            clearError();
+            return;
+        }
         if (hasOpenFile()) {
             setStatus(`Saving: ${getOpenFileName()}`, "success");
         } else if (cloudEpamId) {
@@ -1848,7 +1923,9 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
 
 function loadPamphlet(data: PamphletStructure): void {
     undoSnapshot = null;
+    editDock.close();
     renderDocument(data, false);
+    schedulePreviewRegen();
     setStatus(`Open: ${getOpenFileName()}`, "success");
     clearError();
     updatePrintAvailability();
@@ -1856,13 +1933,32 @@ function loadPamphlet(data: PamphletStructure): void {
 
 on(main, "click", (event: MouseEvent) => {
     const target = event.target as HTMLElement | null;
-    const btn = target?.closest<HTMLButtonElement>(".pamphlet-add-item-button");
+    if (!target) return;
+
+    const item = target.closest<HTMLElement>(".pamphlet-item");
+    if (
+        item &&
+        main.contains(item) &&
+        !target.closest(".element_edit_tray") &&
+        !target.closest(".pamphlet-add-item-button") &&
+        !target.closest(".pamphlet-note-mark")
+    ) {
+        const loc = getItemLocation(item);
+        if (loc && loc.column >= 1 && loc.column <= 8) {
+            event.preventDefault();
+            event.stopPropagation();
+            editDock.open(loc);
+            return;
+        }
+    }
+
+    const btn = target.closest<HTMLButtonElement>(".pamphlet-add-item-button");
     if (!btn || !main.contains(btn)) return;
     const column = Number(btn.dataset.addColumn);
     if (!Number.isFinite(column)) return;
     event.preventDefault();
     void handleAddItemButton(column);
-});
+}, true);
 
 on(main, "pamphlet-tray-action", (event: Event) => {
     const custom = event as CustomEvent<PamphletTrayAction>;
@@ -3139,6 +3235,8 @@ if (window.visualViewport) {
 
     return {
         destroy() {
+            pdfSot.destroy();
+            editDock.destroy();
             for (const dispose of disposers) dispose();
             disposers.length = 0;
             appRoot.querySelector(":scope > .pamphlet-measure-root")?.remove();
