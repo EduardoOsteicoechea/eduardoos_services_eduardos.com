@@ -84,11 +84,13 @@ import {
     PAMPHLET_FOOTER_LAYOUT_MM,
     PAMPHLET_HEADER_LAYOUT_MM,
     createParagraphItem,
+    assertPamphletStructure,
     createEmptyPamphlet,
     emptyFooter,
     LEAD_IMAGE_GAP_MM,
     LEAD_IMAGE_HEIGHT_MM,
     ensureStructuredLeadImages,
+    normalizePamphletData,
     stripStructuredLeadImages,
     type CreatePamphletMeta,
     type FooterFieldKey,
@@ -233,8 +235,8 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
         return true;
     }
 
-    // Mount tools into the DHS host only — do not auto-open #dynamic-header.
-    // The user opens the tray via the shared .header-dynamic control.
+    // Mount tools into the DHS host only — the shared .header-menu opens
+    // #dynamic-header beside #main-menu when actions are present.
 
     if (!mountHeaderMenu()) {
         document.body.append(headerMenu);

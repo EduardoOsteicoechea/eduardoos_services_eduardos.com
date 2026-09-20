@@ -51,7 +51,6 @@ function syncTrayOpenAttr(): void {
 function syncExpanded(): void {
   const pairs: Array<[string, string]> = [
     [".header-menu", "main-menu"],
-    [".header-dynamic", "dynamic-header"],
     [".agent-fab", "agent-sidebar"],
   ];
   for (const [selector, id] of pairs) {
@@ -61,14 +60,6 @@ function syncExpanded(): void {
         return;
       }
       button.setAttribute("aria-expanded", open ? "true" : "false");
-      if (selector === ".header-dynamic" && isEreportPage()) {
-        button.setAttribute("aria-label", open ? "Close tools" : "Open tools");
-        button.setAttribute("title", open ? "Close tools" : "Open tools");
-        const icon = button.querySelector(".material-symbols-outlined");
-        if (icon instanceof HTMLElement) {
-          icon.textContent = open ? "close" : "tune";
-        }
-      }
       if (selector === ".header-menu" && isEreportPage()) {
         button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
         button.setAttribute("title", open ? "Close menu" : "Open menu");
@@ -107,6 +98,15 @@ function dynamicHeaderHasActions(): boolean {
   return host instanceof HTMLElement && host.childElementCount > 0;
 }
 
+/** Keep DHS tray in sync with the global menu: show only when menu is open and route has actions. */
+function syncDynamicHeaderWithMenu(): void {
+  if (!panelOpen("main-menu")) {
+    setPanelHidden("dynamic-header", true);
+    return;
+  }
+  setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
+}
+
 function togglePanel(id: string): void {
   const node = document.getElementById(id);
   if (!(node instanceof HTMLElement)) {
@@ -114,8 +114,7 @@ function togglePanel(id: string): void {
   }
   const willOpen = node.hidden;
 
-  // Agent stays exclusive. Global menu + route DHS open together so both
-  // trays can sit side by side (menu left, dynamic actions to its right).
+  // Agent stays exclusive. Global menu owns the route DHS tray (no separate opener).
   if (id === "agent-sidebar") {
     closeAllPanels(willOpen ? id : undefined);
     setPanelHidden(id, !willOpen);
@@ -123,14 +122,14 @@ function togglePanel(id: string): void {
     return;
   }
 
-  if (id === "main-menu" || id === "dynamic-header") {
+  if (id === "main-menu") {
     setPanelHidden("agent-sidebar", true);
     if (willOpen) {
       setPanelHidden("main-menu", false);
-      const openDhs = id === "dynamic-header" || dynamicHeaderHasActions();
-      setPanelHidden("dynamic-header", !openDhs);
+      setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
     } else {
-      setPanelHidden(id, true);
+      setPanelHidden("main-menu", true);
+      setPanelHidden("dynamic-header", true);
     }
     syncExpanded();
     return;
@@ -410,10 +409,6 @@ function syncEreportChrome(): void {
   clearHeaderCollapsed();
   document.documentElement.style.fontSize = "";
   setChromeHidden(document.querySelector(".agent-fab"), true);
-  const opener = document.querySelector(".header-dynamic");
-  if (opener instanceof HTMLElement) {
-    opener.hidden = false;
-  }
   const storedScale = localStorage.getItem("site-text-scale");
   if (storedScale) {
     document.documentElement.style.setProperty("--site-text-scale", storedScale);
@@ -513,10 +508,6 @@ export function startChrome(): void {
         togglePanel("main-menu");
         return;
       }
-      if (node?.closest(".header-dynamic")) {
-        togglePanel("dynamic-header");
-        return;
-      }
       if (node?.closest(".agent-fab")) {
         togglePanel("agent-sidebar");
         return;
@@ -579,6 +570,14 @@ export function startChrome(): void {
     document.addEventListener("astro:after-swap", () => {
       restoreChromeAfterNavigation();
     });
+
+    const dhs = document.getElementById("dynamic-header");
+    if (dhs) {
+      new MutationObserver(() => {
+        syncDynamicHeaderWithMenu();
+        syncExpanded();
+      }).observe(dhs, { childList: true, subtree: true });
+    }
   }
 
   restoreChromeAfterNavigation();

@@ -347,6 +347,26 @@ export function renderShell(_menuIconSrc?: string): string {
   </div>
 </dialog>
 
+<div id="pamphlet-sync-banner" class="pamphlet-sync-banner" hidden role="status" aria-live="polite">
+  <p class="pamphlet-sync-banner__msg" data-sync-msg>
+    No se pudo guardar en el servidor. Los cambios siguen en este navegador.
+  </p>
+  <div class="pamphlet-sync-banner__actions">
+    <button type="button" id="pamphlet-sync-download" class="pamphlet-sync-banner__btn">
+      Descargar .epam
+    </button>
+    <button type="button" id="pamphlet-sync-upload" class="pamphlet-sync-banner__btn">
+      Subir .epam
+    </button>
+  </div>
+  <input
+    type="file"
+    id="pamphlet-sync-upload-input"
+    class="pamphlet-sync-upload-input"
+    accept=".epam,application/x-epam"
+    hidden
+  />
+</div>
 <div id="pamphlet-chrome-status" class="pamphlet-chrome-status" hidden aria-live="polite"></div>
 <main class="pamphlet-sheet"></main>
 `.trim();

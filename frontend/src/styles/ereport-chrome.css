@@ -138,20 +138,6 @@ html[data-page^="ereport"] .header-session-photo {
   border-radius: 50%;
 }
 
-html[data-page^="ereport"] .header-dynamic {
-  width: var(--chrome-control-size);
-  height: var(--chrome-control-size);
-  border-radius: var(--br);
-  background: transparent;
-  border: 0;
-  color: var(--site-body-fg);
-}
-
-html[data-page^="ereport"] .header-dynamic[aria-expanded="true"] {
-  background: transparent;
-  color: var(--site-accent);
-}
-
 html[data-page^="ereport"] .ereport-guest-auth {
   display: flex;
   flex: 0 0 auto;

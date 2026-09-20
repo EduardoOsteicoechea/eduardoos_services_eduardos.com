@@ -1369,6 +1369,57 @@
   min-height: 0;
 }
 
+.pamphlet-sync-banner {
+  position: sticky;
+  top: 0;
+  z-index: 41;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap, 0.5rem);
+  padding: var(--space-padding, 1rem);
+  font-family: var(--font-family, inherit);
+  font-size: var(--font-size-xs, 0.75rem);
+  line-height: 1.3;
+  color: var(--color-text, var(--site-body-fg, inherit));
+  background: var(--color-surface, var(--site-body-bg, #fff));
+  border-bottom: var(--border-width, 0.0625rem) solid var(--color-err, #b00020);
+}
+
+.pamphlet-sync-banner[hidden] {
+  display: none !important;
+}
+
+.pamphlet-sync-banner__msg {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.pamphlet-sync-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap, 0.5rem);
+}
+
+.pamphlet-sync-banner__btn {
+  height: var(--control-height, 2rem);
+  padding: var(--control-padding-block, 0.125rem) var(--control-padding-inline, 0.375rem);
+  border: var(--border-width, 0.0625rem) solid var(--color-border, currentColor);
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-button-bg, transparent);
+  color: var(--color-button-fg, inherit);
+  font: inherit;
+  cursor: pointer;
+}
+
+.pamphlet-sync-banner__btn:hover,
+.pamphlet-sync-banner__btn:focus-visible {
+  outline: var(--border-width, 0.0625rem) solid var(--color-accent, currentColor);
+  outline-offset: 0.125rem;
+}
+
 .pamphlet-chrome-status {
   position: sticky;
   top: 0;

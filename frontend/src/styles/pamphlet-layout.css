@@ -144,17 +144,13 @@ body.page-pamphlet .item-type-options button:hover {
   background: color-mix(in srgb, var(--color-text) 22%, var(--color-bg));
 }
 
-/* Pamphlet rail: menu → dynamic actions → session avatar. */
+/* Pamphlet rail: menu → session avatar. */
 body.page-pamphlet .header-cluster--menu .header-menu--desktop {
   order: 0;
 }
 
-body.page-pamphlet .header-cluster--menu .header-dynamic {
-  order: 1;
-}
-
 body.page-pamphlet .header-cluster--menu .header-session {
-  order: 2;
+  order: 1;
 }
 
 /* Pamphlet tools tray: icon left, label right, descriptive title tooltip. */
