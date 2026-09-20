@@ -1246,7 +1246,7 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
     ? createPortal(
         <div
           id="evoice-header-menu"
-          className="header-dynamic-menu"
+          className="header-dynamic-menu header-dynamic-menu--labeled"
           ref={(node) => {
             if (node) window.__eduardoosHeaderDynamicMenu = node;
           }}
@@ -1260,8 +1260,8 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
               type="button"
               className={
                 workspaceCollapsed
-                  ? "header-dynamic-menu__btn header-dynamic-menu__btn--active is-active"
-                  : "header-dynamic-menu__btn"
+                  ? "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--active is-active"
+                  : "header-dynamic-menu__btn dhs-action"
               }
               title={workspaceCollapsed ? "Expand workspace" : "Collapse workspace"}
               aria-label={
@@ -1270,11 +1270,13 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
               aria-pressed={workspaceCollapsed}
               onClick={toggleWorkspaceCollapsed}
             >
-              <span
-                className="material-symbols-outlined header-dynamic-menu__icon"
-                aria-hidden="true"
-              >
-                {workspaceCollapsed ? "unfold_more" : "unfold_less"}
+              <span className="icon-btn" aria-hidden="true">
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {workspaceCollapsed ? "unfold_more" : "unfold_less"}
+                </span>
+              </span>
+              <span className="header-dynamic-menu__label">
+                {workspaceCollapsed ? "Expand workspace" : "Collapse workspace"}
               </span>
             </button>
             {isAdmin ? (
@@ -1282,20 +1284,20 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:0.95rem}
                 type="button"
                 className={
                   adminModalOpen
-                    ? "header-dynamic-menu__btn header-dynamic-menu__btn--active is-active"
-                    : "header-dynamic-menu__btn"
+                    ? "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--active is-active"
+                    : "header-dynamic-menu__btn dhs-action"
                 }
                 title="Switch owner"
                 aria-label="Switch owner"
                 aria-pressed={adminModalOpen}
                 onClick={() => setAdminModalOpen((v) => !v)}
               >
-                <span
-                  className="material-symbols-outlined header-dynamic-menu__icon"
-                  aria-hidden="true"
-                >
-                  admin_panel_settings
+                <span className="icon-btn" aria-hidden="true">
+                  <span className="material-symbols-outlined" aria-hidden="true">
+                    admin_panel_settings
+                  </span>
                 </span>
+                <span className="header-dynamic-menu__label">Switch owner</span>
               </button>
             ) : null}
           </div>

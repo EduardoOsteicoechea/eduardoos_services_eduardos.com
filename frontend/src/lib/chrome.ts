@@ -95,14 +95,49 @@ function closeAllPanels(except?: string): void {
   syncExpanded();
 }
 
+function dynamicHeaderHasActions(): boolean {
+  const dhs = document.getElementById("dynamic-header");
+  if (!(dhs instanceof HTMLElement)) {
+    return false;
+  }
+  if (dhs.querySelector(".dhs-action, .header-dynamic-menu__btn")) {
+    return true;
+  }
+  const host = dhs.querySelector("#header-dynamic-menu-host, [data-hds-host]");
+  return host instanceof HTMLElement && host.childElementCount > 0;
+}
+
 function togglePanel(id: string): void {
   const node = document.getElementById(id);
   if (!(node instanceof HTMLElement)) {
     return;
   }
-  const next = node.hidden;
-  closeAllPanels(next ? id : undefined);
-  setPanelHidden(id, !next);
+  const willOpen = node.hidden;
+
+  // Agent stays exclusive. Global menu + route DHS open together so both
+  // trays can sit side by side (menu left, dynamic actions to its right).
+  if (id === "agent-sidebar") {
+    closeAllPanels(willOpen ? id : undefined);
+    setPanelHidden(id, !willOpen);
+    syncExpanded();
+    return;
+  }
+
+  if (id === "main-menu" || id === "dynamic-header") {
+    setPanelHidden("agent-sidebar", true);
+    if (willOpen) {
+      setPanelHidden("main-menu", false);
+      const openDhs = id === "dynamic-header" || dynamicHeaderHasActions();
+      setPanelHidden("dynamic-header", !openDhs);
+    } else {
+      setPanelHidden(id, true);
+    }
+    syncExpanded();
+    return;
+  }
+
+  closeAllPanels(willOpen ? id : undefined);
+  setPanelHidden(id, !willOpen);
   syncExpanded();
 }
 

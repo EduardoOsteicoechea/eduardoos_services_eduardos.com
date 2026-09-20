@@ -218,25 +218,24 @@ html[data-page^="ereport"] .ereport-signin-card__alt {
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action .icon-btn {
-  width: var(--header-dynamic-control-size);
-  height: var(--header-dynamic-control-size);
-  border-radius: var(--br);
-  background: var(--site-surface);
-  border: var(--border-width) solid var(--site-input-border);
-  color: var(--site-body-fg);
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border-radius: var(--header-button-radius);
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action:hover .icon-btn,
 html[data-page^="ereport"] #dynamic-header .dhs-action:focus-visible .icon-btn {
-  border-color: var(--site-accent);
-  color: var(--site-accent);
+  color: var(--color-accent);
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action[aria-pressed="true"] .icon-btn,
 html[data-page^="ereport"] #dynamic-header .dhs-action[data-active] .icon-btn {
-  background: var(--site-accent);
-  border-color: var(--site-accent);
-  color: var(--site-accent-fg);
+  background: transparent;
+  border: 0;
+  color: var(--color-accent);
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action:disabled {
@@ -244,23 +243,22 @@ html[data-page^="ereport"] #dynamic-header .dhs-action:disabled {
 }
 
 html[data-page^="ereport"] #dynamic-header .dhs-action .material-symbols-outlined {
-  font-size: calc(var(--header-dynamic-control-size) * 0.78);
+  font-size: calc(var(--rail-button-size) * 0.75);
   line-height: 1;
-  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 
 html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
-  width: calc(var(--header-dynamic-control-size) * 0.72);
-  height: calc(var(--header-dynamic-control-size) * 0.72);
+  width: calc(var(--rail-button-size) * 0.72);
+  height: calc(var(--rail-button-size) * 0.72);
   fill: none;
   stroke: currentColor;
   stroke-width: 0.125rem;
 }
 
 html[data-page^="ereport"] .ereport-hds-cloud-save .icon-btn {
-  background: #2e7d32;
-  border-color: #2e7d32;
-  color: #fff;
+  background: transparent;
+  border: 0;
+  color: var(--color-ok);
 }
 
 html[data-page^="ereport"] .ereport-hds-cloud-save:hover .icon-btn,

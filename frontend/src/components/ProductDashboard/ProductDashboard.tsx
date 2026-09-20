@@ -88,11 +88,11 @@ export function DashboardGrid({
   );
 }
 
-/** HDS item: label is accessibility-only; icon is the only visible chrome. */
+/** HDS item: Material icon + visible label (shared .dhs-action row). */
 export type HeaderMenuItem = {
   id: string;
   label: string;
-  /** Google Material Symbols ligature name (required — icon-only, no text). */
+  /** Google Material Symbols ligature name. */
   icon: string;
 };
 
@@ -114,7 +114,7 @@ export function ProductHeaderMenu({
   return createPortal(
     <div
       id={menuId}
-      className="header-dynamic-menu product-dash__header-menu"
+      className="header-dynamic-menu header-dynamic-menu--labeled product-dash__header-menu"
       ref={(node) => {
         if (node) window.__eduardoosHeaderDynamicMenu = node;
       }}
@@ -132,8 +132,8 @@ export function ProductHeaderMenu({
               type="button"
               className={
                 active
-                  ? "header-dynamic-menu__btn header-dynamic-menu__btn--active is-active"
-                  : "header-dynamic-menu__btn"
+                  ? "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--active is-active"
+                  : "header-dynamic-menu__btn dhs-action"
               }
               onClick={() => onSelect(item.id)}
               title={item.label}
@@ -141,12 +141,12 @@ export function ProductHeaderMenu({
               aria-current={active ? "page" : undefined}
               aria-pressed={active}
             >
-              <span
-                className="material-symbols-outlined header-dynamic-menu__icon"
-                aria-hidden="true"
-              >
-                {item.icon}
+              <span className="icon-btn" aria-hidden="true">
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  {item.icon}
+                </span>
               </span>
+              <span className="header-dynamic-menu__label">{item.label}</span>
             </button>
           );
         })}
