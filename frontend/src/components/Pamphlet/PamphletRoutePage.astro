@@ -16,10 +16,6 @@ import Layout from "../../layouts/Layout.astro";
   <span slot="dhs" hidden></span>
 
   <section id="pamphlet-dash" class="pamphlet-vanilla-dash" aria-label="Pamphlet">
-    <h1 class="pamphlet-vanilla-dash__title">Pamphlet</h1>
-    <p class="pamphlet-vanilla-dash__lede">
-      Create and edit letter pamphlets. Click New to open the creator.
-    </p>
     <div class="pamphlet-vanilla-dash__grid">
       <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
         <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
@@ -64,18 +60,6 @@ import Layout from "../../layouts/Layout.astro";
 
   .pamphlet-vanilla-dash[hidden] {
     display: none;
-  }
-
-  .pamphlet-vanilla-dash__title {
-    margin: 0;
-    font-size: var(--font-size-xl);
-    font-family: var(--font-family);
-  }
-
-  .pamphlet-vanilla-dash__lede {
-    margin: 0;
-    font-size: var(--font-size-sm);
-    color: var(--color-muted);
   }
 
   .pamphlet-vanilla-dash__grid {
