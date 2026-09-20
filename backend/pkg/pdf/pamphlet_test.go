@@ -573,7 +573,7 @@ func TestDrawColumnKeepsParagraphInPageMargin(t *testing.T) {
 		{Type: "paragraph", Content: "Mira como dice Romanos"},
 	}
 	var s strings.Builder
-	drawColumn(&s, items, 10, top, PamphletColWidthMm, height, nil, false)
+	drawColumn(&s, items, 10, top, PamphletColWidthMm, height, nil, false, 1, 1, nil)
 	out := s.String()
 	if !strings.Contains(out, "afianzar") {
 		t.Fatalf("heading missing: %q", out)
@@ -600,7 +600,7 @@ func TestDrawColumnKeepsTrailingHeadingAndParagraph(t *testing.T) {
 		{Type: "paragraph", Content: "Mira como dice Romanos"},
 	}
 	var s strings.Builder
-	drawColumn(&s, items, 10, top, PamphletColWidthMm, height, nil, false)
+	drawColumn(&s, items, 10, top, PamphletColWidthMm, height, nil, false, 1, 1, nil)
 	out := s.String()
 	if !strings.Contains(out, "afianzar") {
 		t.Fatalf("trailing heading clipped: %q", out)
@@ -764,6 +764,42 @@ func TestDrawImageAppliesPanDownOffset(t *testing.T) {
 	}
 	if !strings.Contains(string(panned), "cm /Im1 Do") {
 		t.Fatal("expected image paint in panned PDF")
+	}
+}
+
+func TestBuildPamphletPDFWithLayoutHits(t *testing.T) {
+	_, layout := BuildPamphletPDFWithLayout(PamphletDocument{
+		Type:   "pamphlet_single_sheet",
+		Header: PamphletHeader{Title: "Hits"},
+		Column1: []PamphletItem{
+			{Type: "heading_1", Content: "Titulo"},
+			{Type: "paragraph", Content: "Cuerpo del panfleto"},
+		},
+		Column2: []PamphletItem{
+			{Type: "paragraph", Content: "Columna dos"},
+		},
+	})
+	if layout.PageCount != 2 {
+		t.Fatalf("page_count=%d", layout.PageCount)
+	}
+	if layout.PageWidthMm != PamphletPageWidthMm || layout.PageHeightMm != PamphletPageHeightMm {
+		t.Fatalf("page size %#v", layout)
+	}
+	if len(layout.Hits) < 3 {
+		t.Fatalf("expected >=3 hits, got %d", len(layout.Hits))
+	}
+	seen := map[string]bool{}
+	for _, h := range layout.Hits {
+		if h.ID == "" || h.WMm <= 0 || h.HMm <= 0 {
+			t.Fatalf("bad hit %#v", h)
+		}
+		if h.Page < 1 || h.Page > 2 {
+			t.Fatalf("bad page %#v", h)
+		}
+		seen[h.ID] = true
+	}
+	if !seen["c1:0"] || !seen["c1:1"] || !seen["c2:0"] {
+		t.Fatalf("missing expected ids in %#v", seen)
 	}
 }
 

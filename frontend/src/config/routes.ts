@@ -1,6 +1,7 @@
 /** Route constants used by pamphlet-generator and product islands. */
 export const DOCUMENT_ROUTES = {
   pamphletPdf: "/api/documents/pamphlet/pdf",
+  pamphletPreview: "/api/documents/pamphlet/preview",
 } as const;
 
 export const EPAM_ROUTES = {

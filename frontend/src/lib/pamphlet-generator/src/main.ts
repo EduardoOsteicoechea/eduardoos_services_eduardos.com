@@ -16,6 +16,9 @@ declare global {
 }
 import type { PamphletTrayAction } from "./create_element";
 import { normalizeImageDataUrlToJpeg } from "./create_element";
+import { PamphletPdfSot } from "./pdf_sot";
+import { setupEditDock, type EditDockController } from "./edit_dock";
+import { mustLog } from "../../dev-log";
 import {
     appendItem,
     applyBoldRange,
@@ -114,6 +117,7 @@ export interface PamphletMountHandle {
 export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const appRoot = document.createElement("div");
     appRoot.className = "pamphlet-app";
+    appRoot.setAttribute("data-pdf-sot", "");
     appRoot.innerHTML = renderShell();
     host.replaceChildren(appRoot);
 
@@ -124,6 +128,8 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     }
 
     const main = requireElement<HTMLElement>("main.pamphlet-sheet");
+    const pdfStage = requireElement<HTMLElement>("#pamphlet-pdf-stage");
+    const editDockRoot = requireElement<HTMLElement>("#pamphlet-edit-dock");
     const dashboardBtn = requireElement<HTMLButtonElement>("#btn-dashboard");
     const openBtn = requireElement<HTMLButtonElement>("#btn-open");
     const createBtn = requireElement<HTMLButtonElement>("#btn-create");

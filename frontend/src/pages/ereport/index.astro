@@ -3,39 +3,39 @@ import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="eReport · Eduardoos" page="ereport">
+<Layout title="eReport" page="ereport">
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-hub-view="dashboard" title="Dashboard" aria-label="Dashboard">
+    <button class="dhs-action" type="button" data-hub-view="dashboard" title="eReport" aria-label="Dashboard">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
       </span>
       Dashboard
     </button>
-    <button class="dhs-action" type="button" data-hub-view="orgs" title="Orgs" aria-label="Orgs">
+    <button class="dhs-action" type="button" data-hub-view="orgs" title="eReport" aria-label="Orgs">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">corporate_fare</span>
       </span>
       Orgs
     </button>
-    <button class="dhs-action" type="button" data-hub-view="register" title="New org" aria-label="New org">
+    <button class="dhs-action" type="button" data-hub-view="register" title="eReport" aria-label="New org">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">domain_add</span>
       </span>
       New org
     </button>
-    <button class="dhs-action" type="button" data-hub-view="new-report" title="New report" aria-label="New report">
+    <button class="dhs-action" type="button" data-hub-view="new-report" title="eReport" aria-label="New report">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">post_add</span>
       </span>
       New report
     </button>
-    <button class="dhs-action" type="button" data-hub-view="recent" title="Recent" aria-label="Recent">
+    <button class="dhs-action" type="button" data-hub-view="recent" title="eReport" aria-label="Recent">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">history</span>
       </span>
       Recent
     </button>
-    <button class="dhs-action" type="button" data-hub-view="manage" title="Manage" aria-label="Manage">
+    <button class="dhs-action" type="button" data-hub-view="manage" title="eReport" aria-label="Manage">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
       </span>
@@ -44,6 +44,7 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="product-dash ereport-hub" data-ereport-hub>
+    <h1>eReport</h1>
     <p class="status" data-banner>Loading session…</p>
     <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open your eReport hub.

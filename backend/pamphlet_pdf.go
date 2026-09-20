@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -26,28 +27,11 @@ func (a *App) pamphletPDFHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	a.mustLogf(r, "documents.pamphlet_pdf.begin", "user_id", user.ID, "content_length", r.ContentLength)
 
-	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 16<<20))
-	if err != nil {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-		return
-	}
-	trimmed := []byte(strings.TrimSpace(string(raw)))
-	if len(trimmed) == 0 {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-		return
-	}
-
-	var doc pdf.PamphletDocument
-	if err := json.Unmarshal(trimmed, &doc); err != nil {
-		a.mustLogf(r, "documents.pamphlet_pdf.json_error", "err", err.Error())
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+	doc, ok := a.readPamphletPDFDoc(w, r)
+	if !ok {
 		return
 	}
 	t := strings.TrimSpace(doc.Type)
-	if _, ok := allowedPamphletTypes[t]; !ok {
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-		return
-	}
 
 	data := pdf.BuildPamphletPDF(doc)
 	downloadName := "panfleto.pdf"
@@ -67,6 +51,62 @@ func (a *App) pamphletPDFHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Expose-Headers", "Content-Disposition")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(data)
+}
+
+// pamphletPreviewHandler returns PDF bytes (base64) + layout hit-boxes from the same packer.
+func (a *App) pamphletPreviewHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requirePamphletWrite(w, r)
+	if user == nil {
+		return
+	}
+	a.mustLogf(r, "documents.pamphlet_preview.begin", "user_id", user.ID, "content_length", r.ContentLength)
+
+	doc, ok := a.readPamphletPDFDoc(w, r)
+	if !ok {
+		return
+	}
+	t := strings.TrimSpace(doc.Type)
+
+	data, layout := pdf.BuildPamphletPDFWithLayout(doc)
+	a.mustLogf(r, "documents.pamphlet_preview.ok",
+		"user_id", user.ID,
+		"pdf_bytes", len(data),
+		"hits", len(layout.Hits),
+		"ink", strings.TrimSpace(doc.InkColor),
+		"type", t,
+	)
+	a.auditEvent(r, "pamphlet_preview", "ok", user.ID)
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"pdf_base64": base64.StdEncoding.EncodeToString(data),
+		"layout":     layout,
+	})
+}
+
+func (a *App) readPamphletPDFDoc(w http.ResponseWriter, r *http.Request) (pdf.PamphletDocument, bool) {
+	var doc pdf.PamphletDocument
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 16<<20))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return doc, false
+	}
+	trimmed := []byte(strings.TrimSpace(string(raw)))
+	if len(trimmed) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return doc, false
+	}
+
+	if err := json.Unmarshal(trimmed, &doc); err != nil {
+		a.mustLogf(r, "documents.pamphlet_pdf.json_error", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return doc, false
+	}
+	t := strings.TrimSpace(doc.Type)
+	if _, ok := allowedPamphletTypes[t]; !ok {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return doc, false
+	}
+	return doc, true
 }
 
 func contentDispositionAttachment(rawName string) string {

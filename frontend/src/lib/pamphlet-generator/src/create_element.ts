@@ -321,6 +321,11 @@ function editTray(
 
     dispatchTrayAction(elContainer, { action: "edit-open", container: elContainer });
 
+    // PDF-first mode: docked editor only — no absolute inline tray on the sheet.
+    if (document.querySelector(".pamphlet-app[data-pdf-sot]")) {
+        return;
+    }
+
     const imageMode = isImageContainer(elContainer);
     const imageEl = getImageEl(elContainer);
     const initialContent = imageMode ? (imageEl?.getAttribute("src") ?? "") : (el.textContent || "");

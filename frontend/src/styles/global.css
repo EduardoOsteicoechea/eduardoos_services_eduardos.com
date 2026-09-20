@@ -7,7 +7,7 @@
   --page-gutter: 1rem;
   --page-col-count: 24;
   --span-form: 6;
-  --span-sidebar: 6;
+  --span-sidebar: 7;
   --span-modal: 8;
   --span-half: 12;
   --span-two-thirds: 16;
@@ -243,15 +243,16 @@ a {
   width: var(--menu-button-size);
   height: var(--menu-button-size);
   border-radius: 50%;
-  background: transparent;
+  background: var(--color-text);
   border: 0;
-  color: var(--color-text);
+  color: var(--color-bg);
 }
 
 .app-header .header-menu.icon-btn:hover,
 .app-header .header-menu.icon-btn:focus-visible {
-  background: transparent;
-  color: var(--color-accent);
+  background: var(--color-text);
+  color: var(--color-bg);
+  filter: brightness(1.08);
 }
 
 .app-header .header-menu.icon-btn[aria-expanded="true"],
@@ -259,6 +260,8 @@ a {
 .app-header .header-menu.icon-btn[aria-expanded="true"]:focus-visible {
   background: var(--color-text);
   color: var(--color-bg);
+  filter: none;
+  outline: var(--border-width) solid var(--color-bg);
 }
 
 .header-session {
@@ -545,6 +548,21 @@ a {
   background: var(--color-bg);
   color: var(--color-text);
   outline: var(--border-width) solid var(--color-text);
+}
+
+.sidebar-toolbar .header-session {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border-radius: 50%;
+  padding: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sidebar-toolbar .header-session:hover,
+.sidebar-toolbar .header-session:focus-visible {
+  color: inherit;
+  filter: brightness(1.08);
 }
 
 .sidebar-left nav {
@@ -1394,7 +1412,7 @@ section.diag .panel:not(form) {
     --mobile-footer-height: 0rem;
     --page-col-count: 16;
     --span-form: 4;
-    --span-sidebar: 4;
+    --span-sidebar: 5;
     --span-modal: 6;
     --span-half: 8;
     --span-two-thirds: 11;
@@ -1448,7 +1466,7 @@ section.diag .panel:not(form) {
 
   .sidebar-left,
   .sidebar-right {
-    top: var(--mobile-header-height);
+    top: 0;
     bottom: 0;
     left: 0;
     right: auto;
@@ -1485,6 +1503,27 @@ section.diag .panel:not(form) {
   html {
     font-size: 20px;
   }
+
+  :root {
+    /* Half of the 16-col tablet grid - session/diag use usable width */
+    --span-form: 8;
+    --span-button: 4;
+  }
+
+  main > .session-grid,
+  main > section.diag,
+  main > form {
+    grid-column: 5 / span var(--span-form);
+  }
+
+  .session-grid form,
+  .diag form {
+    grid-template-columns: 2fr 1rem 3fr;
+  }
+
+  .session-grid [data-profile-form] {
+    grid-template-columns: 3fr 1rem 2fr;
+  }
 }
 
 @media (max-width: 47.999rem) {
@@ -1497,8 +1536,8 @@ section.diag .panel:not(form) {
     --content-basis: 30rem;
     --page-col-count: 8;
     --span-form: 8;
-    /* Half of the 8-col phone grid ≈ 50% screen (rem-legal) */
-    --span-sidebar: 4;
+    /* Slightly wider than half of the 8-col phone grid for menu toolbar */
+    --span-sidebar: 5;
     --span-modal: 8;
     --span-half: 4;
     --span-two-thirds: 6;
@@ -1527,7 +1566,7 @@ section.diag .panel:not(form) {
     --page-col-count: 24;
     /* Columns 10–15: six-col form centered on the 24-col desktop grid */
     --span-form: 6;
-    --span-sidebar: 6;
+    --span-sidebar: 7;
     --span-modal: 8;
     --span-half: 12;
     --span-two-thirds: 16;
@@ -1609,7 +1648,7 @@ section.diag .panel:not(form) {
 
   .sidebar-left,
   .sidebar-right {
-    top: var(--mobile-header-height);
+    top: 0;
     bottom: 0;
     left: 0;
     right: auto;
@@ -1807,6 +1846,13 @@ html[data-page="ereport-invite"] main > * {
 html[data-page="ereport-workspace"] .ereport-workspace {
   position: relative;
   gap: 0;
+}
+
+html[data-page="ereport-workspace"] .ereport-workspace > h1 {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: var(--space-padding);
+  padding-bottom: var(--rail-gap);
 }
 
 html[data-page="ereport-workspace"] .ereport-workspace > .status {

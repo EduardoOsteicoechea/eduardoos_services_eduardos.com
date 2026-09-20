@@ -132,19 +132,6 @@ const jsonLdString =
           </div>
         ) : null}
         <div class="header-cluster header-cluster--menu" data-header-chrome>
-          <a
-            href="/session/profile"
-            class="header-session icon-btn"
-            data-route
-            data-header-avatar
-            data-authed-only
-            hidden
-            aria-label="Profile"
-            title="Profile"
-          >
-            <img class="header-session-photo" data-header-avatar-img hidden alt="" />
-            <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
-          </a>
           <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <line x1="5" y1="9" x2="19" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -168,6 +155,19 @@ const jsonLdString =
           <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
             <span class="agent-fab-label" aria-hidden="true">AI</span>
           </button>
+          <a
+            href="/session/profile"
+            class="header-session icon-btn"
+            data-route
+            data-header-avatar
+            data-authed-only
+            hidden
+            aria-label="Profile"
+            title="Profile"
+          >
+            <img class="header-session-photo" data-header-avatar-img hidden alt="" />
+            <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
+          </a>
           <button class="icon-btn" type="button" data-close-menu aria-label="Close menu" title="Close menu">
             <span class="material-symbols-outlined" aria-hidden="true">close</span>
           </button>

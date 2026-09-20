@@ -3,33 +3,33 @@ import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
+<Layout title="eReport workspace" page="ereport-workspace">
   <Fragment slot="dhs">
-    <a class="dhs-action" href="/ereport" data-route title="Volver al Tablero" aria-label="Volver al Tablero">
+    <a class="dhs-action" href="/ereport" data-route title="eReport workspace" aria-label="Volver al Tablero">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
       </span>
       Volver al Tablero
     </a>
-    <button class="dhs-action" type="button" data-open-modal="open" title="Abrir" aria-label="Abrir reporte">
+    <button class="dhs-action" type="button" data-open-modal="open" title="eReport workspace" aria-label="Abrir reporte">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
       </span>
       Abrir
     </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
+    <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="eReport workspace" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">download</span>
       </span>
       Descargar
     </button>
-    <button class="dhs-action" type="button" data-open-modal="share" title="Compartir" aria-label="Compartir con usuarios">
+    <button class="dhs-action" type="button" data-open-modal="share" title="eReport workspace" aria-label="Compartir con usuarios">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">share</span>
       </span>
       Compartir
     </button>
-    <button class="dhs-action" type="button" data-open-modal="ids" title="Org ID y Report ID" aria-label="Mostrar Org ID y Report ID">
+    <button class="dhs-action" type="button" data-open-modal="ids" title="eReport workspace" aria-label="Mostrar Org ID y Report ID">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">tag</span>
       </span>
@@ -38,6 +38,7 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="ereport-workspace" data-ereport-workspace>
+    <h1>eReport workspace</h1>
     <p class="status" data-banner>Loading session…</p>
     <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open this report.
@@ -45,7 +46,7 @@ import Layout from "../../layouts/Layout.astro";
       <a class="ereport-signin-card__alt" href="/session/register" data-route>Create an account</a>
     </p>
     <div class="ereport-workspace-body" data-authed-panel hidden>
-      <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
+      <iframe class="ereport-iframe" title="eReport workspace" data-tracker></iframe>
     </div>
     <div class="ereport-modal" data-modal="open" hidden>
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-open-title">

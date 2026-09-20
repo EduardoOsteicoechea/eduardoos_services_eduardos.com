@@ -244,6 +244,52 @@ type PamphletItem struct {
 	HeightMm     float64 `json:"height_mm"`
 }
 
+// PamphletHit is one clickable region on a rendered PDF page (mm from page top-left).
+type PamphletHit struct {
+	ID     string  `json:"id"`
+	Kind   string  `json:"kind"`
+	Page   int     `json:"page"`
+	Column int     `json:"column"`
+	Index  int     `json:"index"`
+	XMm    float64 `json:"x_mm"`
+	TopMm  float64 `json:"top_mm"`
+	WMm    float64 `json:"w_mm"`
+	HMm    float64 `json:"h_mm"`
+}
+
+// PamphletLayout is the backend source of truth for sheet geometry and hit-testing.
+type PamphletLayout struct {
+	PageWidthMm  float64       `json:"page_width_mm"`
+	PageHeightMm float64       `json:"page_height_mm"`
+	PageCount    int           `json:"page_count"`
+	Hits         []PamphletHit `json:"hits"`
+}
+
+type layoutSink struct {
+	hits []PamphletHit
+}
+
+func (ls *layoutSink) add(page, col, idx int, kind string, x, cursorTop, w, h float64) {
+	if ls == nil || h <= 0 || w <= 0 {
+		return
+	}
+	topMm := PamphletPageHeightMm - cursorTop
+	if topMm < 0 {
+		topMm = 0
+	}
+	ls.hits = append(ls.hits, PamphletHit{
+		ID:     fmt.Sprintf("c%d:%d", col, idx),
+		Kind:   kind,
+		Page:   page,
+		Column: col,
+		Index:  idx,
+		XMm:    x,
+		TopMm:  topMm,
+		WMm:    w,
+		HMm:    h,
+	})
+}
+
 // pdfImage is one embedded JPEG XObject collected while walking the document.
 type pdfImage struct {
 	key    string // original item content (data URL) for lookup
@@ -290,8 +336,15 @@ func (b *pdfBuilder) bytes() []byte {
 // BuildPamphletPDF renders a two-page US Letter landscape PDF using the same
 // mm geometry as the frontend pamphlet sheet (279.4 × 215.9 mm per page).
 func BuildPamphletPDF(doc PamphletDocument) []byte {
+	data, _ := BuildPamphletPDFWithLayout(doc)
+	return data
+}
+
+// BuildPamphletPDFWithLayout renders the PDF and returns hit-boxes from the same packer.
+func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout) {
 	pageW := MmToPoints(PamphletPageWidthMm)
 	pageH := MmToPoints(PamphletPageHeightMm)
+	sink := &layoutSink{hits: make([]PamphletHit, 0, 64)}
 
 	images := collectPamphletImages(doc)
 
@@ -314,8 +367,8 @@ func BuildPamphletPDF(doc PamphletDocument) []byte {
 	}
 
 	ink := resolvePamphletInk(doc.InkColor)
-	content1 := applyPamphletInk(buildPage1Content(doc, imgByContent), ink)
-	content2 := applyPamphletInk(buildPage2Content(doc, imgByContent), ink)
+	content1 := applyPamphletInk(buildPage1Content(doc, imgByContent, sink), ink)
+	content2 := applyPamphletInk(buildPage2Content(doc, imgByContent, sink), ink)
 
 	resources := fmt.Sprintf("/Font << /F1 %d 0 R /F2 %d 0 R >>", f1, f2)
 	if xObjDecl.Len() > 0 {
@@ -343,7 +396,13 @@ func BuildPamphletPDF(doc PamphletDocument) []byte {
 		page1Num, page2Num,
 	))
 
-	return b.bytes()
+	layout := PamphletLayout{
+		PageWidthMm:  PamphletPageWidthMm,
+		PageHeightMm: PamphletPageHeightMm,
+		PageCount:    2,
+		Hits:         sink.hits,
+	}
+	return b.bytes(), layout
 }
 
 func collectPamphletImages(doc PamphletDocument) []pdfImage {
@@ -482,7 +541,7 @@ func colX(track int) float64 {
 	}
 }
 
-func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage) string {
+func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink) string {
 	var s strings.Builder
 	headerLayout := normalizeHeaderLayout(doc.HeaderLayout)
 	footerLayout := normalizeFooterLayout(doc.FooterLayout)
@@ -498,31 +557,31 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage) string
 	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
 
 	leftTop := PamphletPageHeightMm - PamphletMarginMm
-	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7)
-	drawColumn(&s, doc.Column8, colX(4), leftTop, PamphletColWidthMm, leftColH, images, false)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7, 1, sink)
+	drawColumn(&s, doc.Column8, colX(4), leftTop, PamphletColWidthMm, leftColH, images, false, 1, 8, sink)
 
 	// Col1 lead shares col2 top (after header→body gutter); body band shrinks by lead+gap.
 	rightTop := headerTop - headerH - bodyGutter
 	if structuredLead(doc, 1) {
-		drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1)
+		drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1, 1, sink)
 	} else {
-		drawColumn(&s, doc.Column1, colX(6), rightTop, PamphletColWidthMm, rightColH, images, false)
+		drawColumn(&s, doc.Column1, colX(6), rightTop, PamphletColWidthMm, rightColH, images, false, 1, 1, sink)
 	}
-	drawColumn(&s, doc.Column2, colX(8), rightTop, PamphletColWidthMm, rightColH, images, false)
+	drawColumn(&s, doc.Column2, colX(8), rightTop, PamphletColWidthMm, rightColH, images, false, 1, 2, sink)
 
 	footerTop := PamphletMarginMm + footerH
 	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
 	return s.String()
 }
 
-func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage) string {
+func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink) string {
 	var s strings.Builder
 	top := PamphletPageHeightMm - PamphletMarginMm
 	h := PamphletPage2BodyMm
-	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3)
-	drawColumn(&s, doc.Column4, colX(4), top, PamphletColWidthMm, h, images, false)
-	drawStructuredOrPlainColumn(&s, doc, doc.Column5, colX(6), top, h, images, 5)
-	drawColumn(&s, doc.Column6, colX(8), top, PamphletColWidthMm, h, images, false)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3, 2, sink)
+	drawColumn(&s, doc.Column4, colX(4), top, PamphletColWidthMm, h, images, false, 2, 4, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column5, colX(6), top, h, images, 5, 2, sink)
+	drawColumn(&s, doc.Column6, colX(8), top, PamphletColWidthMm, h, images, false, 2, 6, sink)
 	return s.String()
 }
 
@@ -1539,9 +1598,11 @@ func drawStructuredOrPlainColumn(
 	x, top, heightMm float64,
 	images map[string]*pdfImage,
 	colNum int,
+	page int,
+	sink *layoutSink,
 ) {
 	if !structuredLead(doc, colNum) {
-		drawColumn(s, items, x, top, PamphletColWidthMm, heightMm, images, false)
+		drawColumn(s, items, x, top, PamphletColWidthMm, heightMm, images, false, page, colNum, sink)
 		return
 	}
 	body := items
@@ -1550,18 +1611,24 @@ func drawStructuredOrPlainColumn(
 	if len(items) > 0 && items[0].Type == "image" {
 		drawImageOrPlaceholder(s, items[0], x, cursor, PamphletColWidthMm, pamphletLeadHeightMm, images)
 		drawLeadDoubleBorder(s, x, cursor, PamphletColWidthMm, pamphletLeadHeightMm)
+		sink.add(page, colNum, 0, "image", x, cursor, PamphletColWidthMm, pamphletLeadHeightMm)
 		cursor -= pamphletLeadHeightMm + pamphletLeadGapMm
 		h -= pamphletLeadHeightMm + pamphletLeadGapMm
 		body = items[1:]
+		if h <= 0 {
+			return
+		}
+		drawStackedItems(s, body, x, cursor, PamphletColWidthMm, h, images, pamphletBodySizePt, pamphletHeadingSizePt, pamphletBodyLH, pamphletHeadingLH, false, page, colNum, 1, sink)
+		return
 	}
 	if h <= 0 {
 		return
 	}
-	drawColumn(s, body, x, cursor, PamphletColWidthMm, h, images, false)
+	drawColumn(s, body, x, cursor, PamphletColWidthMm, h, images, false, page, colNum, sink)
 }
 
-func drawColumn(s *strings.Builder, items []PamphletItem, x, top, width, heightMm float64, images map[string]*pdfImage, leadFirst bool) {
-	drawStackedItems(s, items, x, top, width, heightMm, images, pamphletBodySizePt, pamphletHeadingSizePt, pamphletBodyLH, pamphletHeadingLH, leadFirst)
+func drawColumn(s *strings.Builder, items []PamphletItem, x, top, width, heightMm float64, images map[string]*pdfImage, leadFirst bool, page, col int, sink *layoutSink) {
+	drawStackedItems(s, items, x, top, width, heightMm, images, pamphletBodySizePt, pamphletHeadingSizePt, pamphletBodyLH, pamphletHeadingLH, leadFirst, page, col, 0, sink)
 }
 
 // drawStackedItems walks items from the CSS box top (not the first baseline).
@@ -1575,10 +1642,13 @@ func drawStackedItems(
 	images map[string]*pdfImage,
 	bodyPt, headingPt, bodyLH, headingLH float64,
 	leadFirst bool,
+	page, col, indexOffset int,
+	sink *layoutSink,
 ) {
 	cursorTop := top
 	floor := top - heightMm
 	for i, item := range items {
+		idx := indexOffset + i
 		// CSS .dumb-column { overflow: visible } — the last sheet line may start
 		// just below the grid floor and still sit in the 10mm page margin.
 		if cursorTop < floor-pamphletBodySizeMm*pamphletBodyLH {
@@ -1597,6 +1667,7 @@ func drawStackedItems(
 			if lead {
 				drawLeadDoubleBorder(s, x, cursorTop, width, h)
 			}
+			sink.add(page, col, idx, "image", x, cursorTop, width, h)
 			cursorTop -= h
 			if lead {
 				cursorTop -= pamphletLeadGapMm
@@ -1609,6 +1680,10 @@ func drawStackedItems(
 		sizeMm := bodyPt * 25.4 / 72.0
 		lh := bodyLH
 		font := "F1"
+		kind := item.Type
+		if kind == "" {
+			kind = "paragraph"
+		}
 		if item.Type == "heading_1" {
 			sizePt = headingPt
 			sizeMm = headingPt * 25.4 / 72.0
@@ -1626,6 +1701,7 @@ func drawStackedItems(
 		if used <= 0 {
 			break
 		}
+		sink.add(page, col, idx, kind, x, cursorTop, width, used)
 		cursorTop -= used
 		if i < len(items)-1 {
 			cursorTop -= PamphletItemGapMm

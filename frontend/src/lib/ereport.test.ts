@@ -39,7 +39,9 @@ describe("eReport public invite routing", () => {
       /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: 0;/,
     );
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
-    expect(css).toContain("padding: 0 0 0 calc(var(--rail-width) + var(--space-padding))");
+    expect(css).toMatch(
+      /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: var\(--mobile-header-height\) 0 0 var\(--space-padding\);/,
+    );
   });
 
   it("switches hub views from ?view= and offers a way back to the dashboard", () => {
@@ -62,7 +64,7 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("btn btn--primary");
     expect(hubSrc).toContain("btn btn--red");
     expect(hubSrc).toContain("data-dashboard-recent-cards");
-    expect(hubSrc).not.toContain("<h1>eReport</h1>");
+    expect(hubSrc).toContain("<h1>eReport</h1>");
     expect(hubSrc).not.toContain('"Signed in."');
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--font-base: 1rem");

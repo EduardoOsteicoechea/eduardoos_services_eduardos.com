@@ -8,7 +8,7 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Pamphlet · Eduardoos"
+  title="Pamphlet"
   description="Cloud pamphlet editor and print export."
   page="pamphlet"
   robots="noindex,nofollow"
@@ -16,6 +16,14 @@ import Layout from "../../layouts/Layout.astro";
   <span slot="dhs" hidden></span>
 
   <section id="pamphlet-dash" class="pamphlet-vanilla-dash" aria-label="Pamphlet">
+    <section class="pamphlet-vanilla-dash__recents" data-dashboard-recents>
+      <h2 class="pamphlet-vanilla-dash__section-title">Recent pamphlets</h2>
+      <div class="pamphlet-vanilla-dash__recents-grid" data-dashboard-recent-cards></div>
+      <p class="pamphlet-vanilla-dash__hint" data-dashboard-recents-empty hidden>
+        No recent pamphlets yet. Create one to get started.
+      </p>
+    </section>
+
     <div class="pamphlet-vanilla-dash__grid">
       <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
         <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
@@ -52,7 +60,7 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-vanilla-dash {
     display: flex;
     flex-direction: column;
-    gap: var(--rail-gap);
+    gap: var(--space-padding);
     /* Align with .site-footer: shell main already supplies footer-matching inset */
     padding: 0;
     color: var(--color-text);
@@ -62,10 +70,55 @@ import Layout from "../../layouts/Layout.astro";
     display: none;
   }
 
+  .pamphlet-vanilla-dash__section-title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+  }
+
+  .pamphlet-vanilla-dash__hint {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .pamphlet-vanilla-dash__recents {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    width: auto;
+    min-width: 0;
+  }
+
+  .pamphlet-vanilla-dash__recents-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-padding);
+    margin: 0;
+    padding: 0;
+  }
+
+  .pamphlet-vanilla-dash__recent-card {
+    min-height: calc(var(--control-height) * 4);
+    text-decoration: none;
+  }
+
   .pamphlet-vanilla-dash__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: var(--rail-gap);
+  }
+
+  @media (max-width: 63.999rem) {
+    .pamphlet-vanilla-dash__recents-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 47.999rem) {
+    .pamphlet-vanilla-dash__recents-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   .pamphlet-vanilla-dash__card {
@@ -114,6 +167,7 @@ import Layout from "../../layouts/Layout.astro";
 </style>
 
 <script>
+  import { fetchEpams } from "../../lib/epams";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
 
@@ -121,6 +175,55 @@ import Layout from "../../layouts/Layout.astro";
   const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers", "edit"]);
 
   let handle: PamphletMountHandle | null = null;
+
+  function formatEpamDate(value: string | undefined): string {
+    if (!value) return "";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+
+  async function loadDashboardRecents(): Promise<void> {
+    const dash = document.getElementById("pamphlet-dash");
+    if (!dash || dash.hidden) return;
+    const grid = dash.querySelector("[data-dashboard-recent-cards]");
+    const empty = dash.querySelector("[data-dashboard-recents-empty]");
+    if (!(grid instanceof HTMLElement)) return;
+
+    try {
+      const { epams } = await fetchEpams();
+      const items = [...epams]
+        .sort((a, b) => Date.parse(b.updatedAt || "") - Date.parse(a.updatedAt || ""))
+        .slice(0, 5);
+      grid.replaceChildren();
+      if (empty instanceof HTMLElement) empty.hidden = items.length > 0;
+      for (const epam of items) {
+        const card = document.createElement("a");
+        card.className = "pamphlet-vanilla-dash__card pamphlet-vanilla-dash__recent-card";
+        card.href = `${PAMPHLET_BASE}/e/${encodeURIComponent(epam.epamId)}`;
+        card.dataset.pamphletOpen = epam.epamId;
+        card.title = epam.title || epam.fileName || epam.epamId;
+
+        const title = document.createElement("span");
+        title.className = "pamphlet-vanilla-dash__card-title";
+        title.textContent = epam.title || epam.fileName || "Untitled pamphlet";
+
+        const meta = document.createElement("span");
+        meta.className = "pamphlet-vanilla-dash__card-desc";
+        const when = formatEpamDate(epam.updatedAt);
+        meta.textContent = when ? `Updated ${when}` : (epam.series || "Cloud pamphlet");
+
+        card.append(title, meta);
+        grid.append(card);
+      }
+    } catch {
+      grid.replaceChildren();
+      if (empty instanceof HTMLElement) {
+        empty.hidden = false;
+        empty.textContent = "Could not load recent pamphlets.";
+      }
+    }
+  }
 
   function pamphletPath(view: string): string {
     if (!view || view === "dashboard") return PAMPHLET_BASE;
@@ -195,6 +298,7 @@ import Layout from "../../layouts/Layout.astro";
     const host = document.getElementById("pamphlet-root");
     if (dash) dash.hidden = false;
     if (host) host.hidden = true;
+    void loadDashboardRecents();
   }
 
   function showEditor(view: string, epamId = ""): void {
@@ -234,6 +338,19 @@ import Layout from "../../layouts/Layout.astro";
   function onClick(event: Event): void {
     const el = event.target;
     if (!(el instanceof Element)) return;
+
+    const open = el.closest<HTMLAnchorElement>("[data-pamphlet-open]");
+    if (open) {
+      event.preventDefault();
+      const epamId = (open.dataset.pamphletOpen || "").trim();
+      if (!epamId) return;
+      const url = new URL(window.location.href);
+      url.searchParams.delete("view");
+      url.pathname = `${PAMPHLET_BASE}/e/${encodeURIComponent(epamId)}`;
+      window.history.pushState({}, "", url.toString());
+      showEditor("edit", epamId);
+      return;
+    }
 
     const nav = el.closest<HTMLAnchorElement>("[data-pamphlet-nav]");
     if (!nav) return;

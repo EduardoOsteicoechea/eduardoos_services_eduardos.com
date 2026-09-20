@@ -368,6 +368,45 @@ export function renderShell(_menuIconSrc?: string): string {
   />
 </div>
 <div id="pamphlet-chrome-status" class="pamphlet-chrome-status" hidden aria-live="polite"></div>
-<main class="pamphlet-sheet"></main>
+<div class="pamphlet-workspace">
+  <aside id="pamphlet-edit-dock" class="pamphlet-edit-dock" hidden aria-label="Editar elemento">
+    <div class="pamphlet-edit-dock__toolbar" role="toolbar" aria-label="Acciones de edición">
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="ok" title="Guardar y cerrar" aria-label="Guardar y cerrar"></button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-up" title="Mover arriba" aria-label="Mover arriba"></button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-down" title="Mover abajo" aria-label="Mover abajo"></button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-above" title="Añadir arriba" aria-label="Añadir arriba"></button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-below" title="Añadir abajo" aria-label="Añadir abajo"></button>
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="bold" title="Negrita" aria-label="Negrita">B</button>
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="copy" title="Copiar" aria-label="Copiar">⎘</button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="undo" title="Deshacer" aria-label="Deshacer"></button>
+      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="notes" title="Notas" aria-label="Notas"></button>
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--danger" data-dock-action="delete" title="Borrar" aria-label="Borrar"></button>
+    </div>
+    <div class="pamphlet-edit-dock__body">
+      <textarea id="pamphlet-edit-dock-textarea" class="pamphlet-edit-dock__textarea" spellcheck="true" hidden></textarea>
+      <div id="pamphlet-edit-dock-image" class="pamphlet-edit-dock__image-controls" hidden>
+        <div class="pamphlet-edit-dock__image-row">
+          <label class="pamphlet-edit-dock__file-label">Elegir imagen
+            <input type="file" id="pamphlet-edit-dock-file" class="pamphlet-edit-dock__file-input" accept="image/*" />
+          </label>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-taller" title="Más alto" aria-label="Más alto">+</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-shorter" title="Menos alto" aria-label="Menos alto">−</button>
+        </div>
+        <div class="pamphlet-edit-dock__image-row">
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-left" title="Izquierda" aria-label="Izquierda">←</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-up" title="Arriba" aria-label="Arriba">↑</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-right" title="Derecha" aria-label="Derecha">→</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-down" title="Abajo" aria-label="Abajo">↓</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-out" title="Alejar" aria-label="Alejar">－</button>
+          <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-in" title="Acercar" aria-label="Acercar">＋</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div id="pamphlet-pdf-stage" class="pamphlet-pdf-stage" aria-label="Vista previa PDF del panfleto">
+    <div class="pamphlet-pdf-stage__pages"></div>
+  </div>
+  <main class="pamphlet-sheet"></main>
+</div>
 `.trim();
 }
