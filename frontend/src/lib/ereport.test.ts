@@ -199,63 +199,59 @@ describe("tracker host bridge", () => {
 });
 
 describe("eReport workspace chrome", () => {
-  it("follows 073 HDS inventory: no add-section, green cloud-save only, Escape + backdrop", () => {
+  it("orders HDS as Tablero -> Abrir -> Descargar -> Compartir -> IDs and drops clear-all", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
-    expect(workspaceSrc).not.toContain("add-section");
-    expect(workspaceSrc).not.toContain("playlist_add");
-    expect(workspaceSrc).toContain("ereport-hds-cloud-save");
-    expect(workspaceSrc).toContain('title="Cómo usarla"');
-    expect(workspaceSrc).toContain('title="Guardar en nube"');
-    expect(workspaceSrc).toContain('data-modal="hub"');
-    expect(workspaceSrc).toContain("keydown");
-    expect(workspaceSrc).toContain("data-tracker-cmd=\"save-export\"");
-    expect(workspaceSrc).not.toMatch(/save-export[\s\S]{0,80}ereport-hds-cloud-save/);
+    expect(workspaceSrc).not.toContain("clear-all");
+    expect(workspaceSrc).not.toContain("Limpiar todo");
+    expect(workspaceSrc).not.toContain("data-site-scale");
+    expect(workspaceSrc).not.toContain("ereport-hds-cloud-save");
+    expect(workspaceSrc).not.toContain('data-modal="hub"');
+    expect(workspaceSrc).toContain("Volver al Tablero");
+    expect(workspaceSrc).toContain('href="/ereport"');
+    expect(workspaceSrc).toContain('data-open-modal="open"');
+    expect(workspaceSrc).toContain('data-open-source="device"');
+    expect(workspaceSrc).toContain('data-open-source="cloud"');
+    expect(workspaceSrc).toContain('data-tracker-cmd="save-export"');
+    expect(workspaceSrc).toContain('data-open-modal="share"');
+    expect(workspaceSrc).toContain('data-open-modal="ids"');
+    const tablero = workspaceSrc.indexOf("Volver al Tablero");
+    const abrir = workspaceSrc.indexOf('data-open-modal="open"');
+    const descargar = workspaceSrc.indexOf('data-tracker-cmd="save-export"');
+    const compartir = workspaceSrc.indexOf('data-open-modal="share"');
+    const ids = workspaceSrc.indexOf('data-open-modal="ids"');
+    expect(tablero).toBeGreaterThan(-1);
+    expect(abrir).toBeGreaterThan(tablero);
+    expect(descargar).toBeGreaterThan(abrir);
+    expect(compartir).toBeGreaterThan(descargar);
+    expect(ids).toBeGreaterThan(compartir);
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--br: 3.44px");
     expect(css).toContain("#f2f3f6");
     expect(css).toContain("Kumbh Sans");
   });
 
-  it("wires every workspace HDS button to a tracker command or modal", () => {
+  it("autosaves local vs cloud and listens for global menu font/theme on window", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
-    const trackerCmds = [
-      "tutorial",
-      "toggle-sidebar",
-      "upload",
-      "clear-all",
-      "progress",
-      "save-export",
-    ];
-    for (const cmd of trackerCmds) {
-      expect(workspaceSrc).toContain(`data-tracker-cmd="${cmd}"`);
-      expect(workspaceSrc).toContain("sendCmd(");
-    }
-    expect(workspaceSrc).toContain('data-site-scale="1"');
-    expect(workspaceSrc).toContain('data-site-scale="-1"');
-    expect(workspaceSrc).toContain("bumpUiScale(");
-    for (const modal of ["hub", "tema", "save", "share", "historial", "ids"]) {
-      expect(workspaceSrc).toContain(`data-open-modal="${modal}"`);
-      expect(workspaceSrc).toContain(`data-modal="${modal}"`);
-    }
+    expect(workspaceSrc).toContain('saveTarget: "cloud" | "local"');
+    expect(workspaceSrc).toContain("openLocalEreportFile");
+    expect(workspaceSrc).toContain("saveLocalEreportFile");
+    expect(workspaceSrc).toContain("persistLocal");
+    expect(workspaceSrc).toContain("persistCloud");
+    expect(workspaceSrc).toContain('onWin("ereport-ui-scale"');
+    expect(workspaceSrc).toContain('onWin("ereport-theme"');
     expect(workspaceSrc).toContain("data-ids-org");
-    expect(workspaceSrc).toContain("data-ids-report");
     expect(workspaceSrc).toContain("fillIdsFields");
-    expect(workspaceSrc).toContain("liveOrgId");
-    expect(workspaceSrc).toContain("data-save-now");
-    expect(workspaceSrc).toContain("host.collect()");
     expect(workspaceSrc).toContain("createReportInvite(");
-    expect(workspaceSrc).toContain("listReportHistory(");
-    expect(workspaceSrc).toContain("restoreReportHistory(");
   });
 
-  it("wires invite HDS tracker tools including scale upload and clear", () => {
+  it("wires invite HDS without clear-all and binds global font via window events", () => {
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
-    for (const cmd of ["tutorial", "toggle-sidebar", "upload", "clear-all", "progress", "save-export"]) {
-      expect(inviteSrc).toContain(`data-tracker-cmd="${cmd}"`);
-    }
-    expect(inviteSrc).toContain('data-site-scale="1"');
-    expect(inviteSrc).toContain('data-site-scale="-1"');
-    expect(inviteSrc).toContain("bumpUiScale(");
+    expect(inviteSrc).not.toContain("clear-all");
+    expect(inviteSrc).not.toContain("data-site-scale");
+    expect(inviteSrc).toContain('data-tracker-cmd="upload"');
+    expect(inviteSrc).toContain('data-tracker-cmd="save-export"');
+    expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');
+    expect(inviteSrc).toContain('window.addEventListener("ereport-theme"');
   });
 
   it("wires hub HDS view switches", () => {
@@ -302,12 +298,12 @@ describe("eReport workspace chrome", () => {
     }
   });
 
-  it("tears down workspace bind keys and awaits collect before save", () => {
+  it("tears down workspace bind keys on navigation", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
     expect(workspaceSrc).toContain("delete root.dataset.boundKey");
     expect(workspaceSrc).toContain("astro:before-swap");
-    expect(workspaceSrc).toContain("await host.collect()");
     expect(workspaceSrc).toContain("host?.destroy()");
+    expect(workspaceSrc).toContain("clearLocalEreportFile");
   });
 
   it("keeps tracker theme under the site toggle and shows date icons in dark mode", () => {

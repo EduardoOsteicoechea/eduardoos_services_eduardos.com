@@ -5,47 +5,17 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport workspace · Eduardoos" page="ereport-workspace">
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
+    <a class="dhs-action" href="/ereport" data-route title="Volver al Tablero" aria-label="Volver al Tablero">
       <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">help</span>
+        <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
       </span>
-      Tutorial
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
+      Volver al Tablero
+    </a>
+    <button class="dhs-action" type="button" data-open-modal="open" title="Abrir" aria-label="Abrir reporte">
       <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
       </span>
-      Sidebar
-    </button>
-    <button class="dhs-action" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
-      </span>
-      Agrandar fuente
-    </button>
-    <button class="dhs-action" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
-      </span>
-      Reducir fuente
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
-      </span>
-      Cargar
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
-      </span>
-      Limpiar todo
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
-      </span>
-      Progreso
+      Abrir
     </button>
     <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
@@ -53,35 +23,11 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Descargar
     </button>
-    <button class="dhs-action" type="button" data-open-modal="hub" title="Hub" aria-label="Abrir hub">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
-      </span>
-      Hub
-    </button>
-    <button class="dhs-action" type="button" data-open-modal="tema" title="Editar tema" aria-label="Editar tema">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">edit</span>
-      </span>
-      Editar tema
-    </button>
-    <button class="dhs-action ereport-hds-cloud-save" type="button" data-open-modal="save" title="Guardar en nube" aria-label="Guardar en nube">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
-      </span>
-      Guardar en nube
-    </button>
     <button class="dhs-action" type="button" data-open-modal="share" title="Compartir" aria-label="Compartir con usuarios">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">share</span>
       </span>
       Compartir
-    </button>
-    <button class="dhs-action" type="button" data-open-modal="historial" title="Historial" aria-label="Historial de versiones API">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">history</span>
-      </span>
-      Historial
     </button>
     <button class="dhs-action" type="button" data-open-modal="ids" title="Org ID y Report ID" aria-label="Mostrar Org ID y Report ID">
       <span class="icon-btn" aria-hidden="true">
@@ -101,39 +47,25 @@ import Layout from "../../layouts/Layout.astro";
     <div class="ereport-workspace-body" data-authed-panel hidden>
       <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
     </div>
-    <div class="ereport-modal" data-modal="hub" hidden>
-      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-hub-title">
-        <h2 id="ereport-hub-title">Hub eReport</h2>
-        <p class="hint">Salir al hub no guarda en silencio los cambios pendientes en la nube.</p>
+    <div class="ereport-modal" data-modal="open" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-open-title">
+        <h2 id="ereport-open-title">Abrir reporte</h2>
+        <p class="hint">Los cambios se guardan solos: en el archivo local si abriste desde el dispositivo, o en la nube si el reporte está en el VPS.</p>
         <div class="ereport-modal-actions">
-          <button class="btn" type="button" data-close-modal>Seguir editando</button>
-          <a class="btn btn--primary" href="/ereport" data-route data-hub-link>Ir al hub</a>
+          <button class="btn btn--primary" type="button" data-open-source="device">Desde el dispositivo</button>
+          <button class="btn btn--primary" type="button" data-open-source="cloud">Desde la nube</button>
+          <button class="btn" type="button" data-close-modal>Cerrar</button>
         </div>
       </div>
     </div>
-    <div class="ereport-modal" data-modal="tema" hidden>
-      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-tema-title">
-        <h2 id="ereport-tema-title">Tema del reporte</h2>
-        <form data-tema-form>
-          <label>
-            Tema
-            <input id="ereport-modal-tema" name="tema" maxlength="200" required />
-          </label>
-          <div class="ereport-modal-actions">
-            <button class="btn" type="button" data-close-modal>Cerrar</button>
-            <button class="btn btn--primary" type="submit" data-tema-save>Guardar tema</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="ereport-modal" data-modal="save" hidden>
-      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-save-title">
-        <h2 id="ereport-save-title">Guardar en nube</h2>
-        <p class="hint">El autoguardado escribe este reporte en el filesystem del VPS. Guardar ahora recoge el tracker en este momento.</p>
-        <p class="ereport-hub__error" data-save-error hidden></p>
+    <div class="ereport-modal" data-modal="open-cloud" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-open-cloud-title">
+        <h2 id="ereport-open-cloud-title">Reportes en la nube</h2>
+        <p class="hint">Elige un reporte; los cambios siguientes se guardan solo en la nube.</p>
+        <ul class="ereport-list" data-open-cloud-list></ul>
+        <p class="ereport-hub__error" data-open-cloud-error hidden></p>
         <div class="ereport-modal-actions">
           <button class="btn" type="button" data-close-modal>Cerrar</button>
-          <button class="btn btn--primary" type="button" data-save-now>Guardar ahora</button>
         </div>
       </div>
     </div>
@@ -153,16 +85,6 @@ import Layout from "../../layouts/Layout.astro";
         <p class="ereport-hub__error" data-share-error hidden></p>
         <div class="ereport-modal-actions">
           <button class="btn btn--primary" type="button" data-close-modal>Listo</button>
-        </div>
-      </div>
-    </div>
-    <div class="ereport-modal" data-modal="historial" hidden>
-      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-history-title">
-        <h2 id="ereport-history-title">Historial API</h2>
-        <ul class="ereport-list" data-history-list></ul>
-        <div class="ereport-modal-actions">
-          <button class="btn" type="button" data-history-refresh>Actualizar</button>
-          <button class="btn btn--primary" type="button" data-close-modal>Cerrar</button>
         </div>
       </div>
     </div>
@@ -203,27 +125,31 @@ import Layout from "../../layouts/Layout.astro";
         </form>
       </div>
     </div>
+    <input type="file" accept=".ereport,application/json" data-local-fallback hidden />
   </section>
 </Layout>
 
 <script>
   import {
     createReportInvite,
-    fetchEreportOrg,
     fetchEreportOrgs,
+    fetchEreportOrg,
     fetchOrgReport,
-    listReportHistory,
     ownerImageUploadPath,
     refreshCsrf,
     rememberedCsrf,
-    restoreReportHistory,
     saveOrgReport,
     updateEreportOrgs,
     type EreportPayload,
   } from "../../lib/ereport";
-  import { prettyHubHref, readPrettyEreportPath, TRACKER_SRC } from "../../lib/ereport-routes";
   import {
-    bumpUiScale,
+    clearLocalEreportFile,
+    hasLocalEreportFile,
+    openLocalEreportFile,
+    saveLocalEreportFile,
+  } from "../../lib/ereport-local-file";
+  import { readPrettyEreportPath, TRACKER_SRC, workspaceHref } from "../../lib/ereport-routes";
+  import {
     resolveUiScale,
     siteIsDark,
     startTrackerHost,
@@ -241,11 +167,12 @@ import Layout from "../../layouts/Layout.astro";
     let orgId = params.get("org")?.trim() || "";
     let reportId = params.get("report")?.trim() || pretty.reportId;
     let ownerSafe = params.get("user")?.trim() || pretty.ownerSafe;
+    /** Cloud = VPS report; local = File System Access .ereport (autosave only that side). */
+    let saveTarget: "cloud" | "local" = "cloud";
     const iframe = root.querySelector("[data-tracker]");
     let payload: EreportPayload | null = null;
     let tema = "";
     let host: TrackerHost | null = null;
-    let saving = false;
     let disposed = false;
     const pendingCmds: TrackerCommand[] = [];
     const invited = new Set<string>();
@@ -258,6 +185,11 @@ import Layout from "../../layouts/Layout.astro";
     ) => {
       document.addEventListener(type, listener as EventListener, options);
       disposers.push(() => document.removeEventListener(type, listener as EventListener, options));
+    };
+
+    const onWin = (type: string, listener: EventListener) => {
+      window.addEventListener(type, listener);
+      disposers.push(() => window.removeEventListener(type, listener));
     };
 
     const closeModals = () => {
@@ -279,6 +211,7 @@ import Layout from "../../layouts/Layout.astro";
       if (disposed) return;
       disposed = true;
       closeModals();
+      clearLocalEreportFile();
       host?.destroy();
       host = null;
       for (const stop of disposers.splice(0)) stop();
@@ -300,17 +233,60 @@ import Layout from "../../layouts/Layout.astro";
       pendingCmds.push(command);
     };
 
+    const persistCloud = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
+      if (disposed || !orgId || !reportId) return false;
+      payload = next;
+      const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
+      tema = nextTema;
+      const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
+      if (disposed) return false;
+      const orgName = String(next.orgName || "").trim();
+      if (res.status < 300 && orgName) {
+        await updateEreportOrgs([{ id: orgId, name: orgName }]);
+      }
+      const message = reportFailure(copy, res.status, res.data, "Autosaved.");
+      if (message.kind === "err") {
+        setBanner(root, message.text, message.kind);
+        return false;
+      }
+      if (!opts.silent) setBanner(root, "Autosaved.", "ok");
+      else setBanner(root, "Autosaved.", "ok");
+      return true;
+    };
+
+    const persistLocal = async (next: EreportPayload) => {
+      if (disposed || !hasLocalEreportFile()) return false;
+      payload = next;
+      tema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
+      try {
+        await saveLocalEreportFile(next);
+        setBanner(root, "Autosaved locally.", "ok");
+        return true;
+      } catch (err) {
+        setBanner(root, err instanceof Error ? err.message : "Could not save locally.", "err");
+        return false;
+      }
+    };
+
+    const persist = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
+      if (saveTarget === "local") {
+        return persistLocal(next);
+      }
+      return persistCloud(next, opts);
+    };
+
     const attachHost = (nextPayload: EreportPayload) => {
-      if (disposed || !(iframe instanceof HTMLIFrameElement) || !orgId || !reportId) return;
+      if (disposed || !(iframe instanceof HTMLIFrameElement)) return;
+      if (saveTarget === "cloud" && (!orgId || !reportId)) return;
       host?.destroy();
       host = startTrackerHost(iframe, {
         origin: window.location.origin,
-        uploadUrl: ownerImageUploadPath(orgId, reportId),
+        uploadUrl: orgId && reportId ? ownerImageUploadPath(orgId, reportId) : "",
         csrf: rememberedCsrf(),
         payload: nextPayload,
         handlers: {
           onCloudSave: (next) => {
-            void persist(next, { silent: true });
+            void persist(next as EreportPayload, { silent: true });
           },
           onError: (message) => setBanner(root, message, "err"),
         },
@@ -321,39 +297,19 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
-    const loadHistory = () => {
-      void listReportHistory(orgId, reportId).then((hist) => {
-        if (disposed) return;
-        const list = root.querySelector("[data-history-list]") || document.querySelector("[data-history-list]");
-        if (!(list instanceof HTMLElement)) return;
-        list.replaceChildren();
-        for (const item of hist.data.items || []) {
-          const li = document.createElement("li");
-          li.textContent = `${item.tema} · ${item.source} · ${item.createdAt}`;
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "btn";
-          btn.textContent = "Restaurar";
-          btn.dataset.restore = item.id;
-          li.append(btn);
-          list.append(li);
-        }
-      });
-    };
-
     const liveOrgId = () => orgId || params.get("org")?.trim() || "";
     const liveReportId = () => reportId || params.get("report")?.trim() || pretty.reportId || "";
 
     const fillIdsFields = (modal?: HTMLElement | null) => {
-      const host =
+      const hostEl =
         modal ||
         (root.querySelector('[data-modal="ids"]') as HTMLElement | null) ||
         (document.querySelector('[data-modal="ids"]') as HTMLElement | null);
-      if (!(host instanceof HTMLElement)) return;
+      if (!(hostEl instanceof HTMLElement)) return;
       const orgVal = liveOrgId();
       const reportVal = liveReportId();
-      const orgInput = host.querySelector("[data-ids-org]");
-      const reportInput = host.querySelector("[data-ids-report]");
+      const orgInput = hostEl.querySelector("[data-ids-org]");
+      const reportInput = hostEl.querySelector("[data-ids-report]");
       if (orgInput instanceof HTMLInputElement) {
         orgInput.value = orgVal;
         orgInput.defaultValue = orgVal;
@@ -366,6 +322,45 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const paintCloudList = async () => {
+      const list = root.querySelector("[data-open-cloud-list]") || document.querySelector("[data-open-cloud-list]");
+      const err = root.querySelector("[data-open-cloud-error]") || document.querySelector("[data-open-cloud-error]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      if (err instanceof HTMLElement) {
+        err.hidden = true;
+        err.textContent = "";
+      }
+      const listed = await fetchEreportOrgs();
+      if (disposed) return;
+      if (listed.status !== 200) {
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = listed.data.message || "Could not list reports.";
+        }
+        return;
+      }
+      ownerSafe = listed.data.ownerSafe || ownerSafe;
+      const recent = listed.data.recentReports || [];
+      if (!recent.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "No hay reportes recientes en la nube.";
+        list.append(empty);
+        return;
+      }
+      for (const item of recent) {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn";
+        btn.textContent = `${item.tema || "Sin tema"} · ${item.orgName || item.orgId}`;
+        btn.dataset.openCloudOrg = item.orgId;
+        btn.dataset.openCloudReport = item.id;
+        li.append(btn);
+        list.append(li);
+      }
+    };
+
     const openModal = (name: string) => {
       closeModals();
       const modal = root.querySelector(`[data-modal="${name}"]`) || document.querySelector(`[data-modal="${name}"]`);
@@ -375,13 +370,6 @@ import Layout from "../../layouts/Layout.astro";
       }
       modal.hidden = false;
       document.querySelector(`[data-open-modal="${name}"]`)?.setAttribute("aria-pressed", "true");
-      if (name === "tema") {
-        const input = modal.querySelector("#ereport-modal-tema");
-        if (input instanceof HTMLInputElement) {
-          input.value = tema;
-          input.focus();
-        }
-      }
       if (name === "ids") {
         fillIdsFields(modal);
         const status = modal.querySelector("[data-ids-copy-status]");
@@ -395,37 +383,51 @@ import Layout from "../../layouts/Layout.astro";
           orgInput.select();
         }
       }
-      if (name === "historial") loadHistory();
+      if (name === "open-cloud") {
+        void paintCloudList();
+      }
     };
 
-    const persist = async (next: EreportPayload, opts: { silent?: boolean; fromCollect?: boolean } = {}) => {
-      if (disposed) return false;
+    const loadCloudReport = async (nextOrg: string, nextReport: string) => {
+      if (disposed || !nextOrg || !nextReport) return;
+      clearLocalEreportFile();
+      saveTarget = "cloud";
+      orgId = nextOrg;
+      reportId = nextReport;
+      await refreshCsrf();
+      if (disposed) return;
+      const res = await fetchOrgReport(orgId, reportId);
+      if (disposed) return;
+      if (res.status !== 200 || !res.data.payload || !res.data.meta) {
+        reportFailure(copy, res.status, res.data, "");
+        setBanner(root, res.data.message || "Report not found.", "err");
+        return;
+      }
+      ownerSafe = res.data.meta.ownerSafe || ownerSafe;
+      tema = res.data.meta.tema;
+      payload = {
+        ...res.data.payload,
+        reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
+      };
+      fillIdsFields();
+      const href = workspaceHref(orgId, reportId, ownerSafe);
+      if (href && window.location.pathname + window.location.search !== href) {
+        window.history.replaceState({}, "", href);
+      }
+      setBanner(root, "Editing on the VPS filesystem.", "ok");
+      attachHost(payload);
+      closeModals();
+    };
+
+    const loadLocalPayload = (next: EreportPayload) => {
+      /* Caller already bound the File System Access handle via openLocalEreportFile. */
+      saveTarget = "local";
       payload = next;
-      const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
-      tema = nextTema;
-      const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
-      if (disposed) return false;
-      const orgName = String(next.orgName || "").trim();
-      if (res.status < 300 && orgName) {
-        await updateEreportOrgs([{ id: orgId, name: orgName }]);
-      }
-      const message = reportFailure(copy, res.status, res.data, "Saved.");
-      const saveErr = root.querySelector("[data-save-error]") || document.querySelector("[data-save-error]");
-      if (message.kind === "err") {
-        setBanner(root, message.text, message.kind);
-        if (saveErr instanceof HTMLElement && !opts.silent) {
-          saveErr.hidden = false;
-          saveErr.textContent = message.text;
-        }
-        return false;
-      }
-      if (saveErr instanceof HTMLElement) {
-        saveErr.hidden = true;
-        saveErr.textContent = "";
-      }
-      if (!opts.silent) setBanner(root, opts.fromCollect ? "Saved." : "Autosaved.", "ok");
-      else setBanner(root, "Autosaved.", "ok");
-      return true;
+      tema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
+      fillIdsFields();
+      setBanner(root, "Editing local .ereport (autosave to device).", "ok");
+      attachHost(next);
+      closeModals();
     };
 
     /** Pretty `/ereport/{user}/{id}` carries no org, so find the one holding this report. */
@@ -445,9 +447,21 @@ import Layout from "../../layouts/Layout.astro";
       return "";
     };
 
-    const pointHubLink = () => {
-      const link = root.querySelector("[data-hub-link]");
-      if (link instanceof HTMLAnchorElement) link.href = prettyHubHref(ownerSafe);
+    const openFromDevice = async () => {
+      try {
+        const data = await openLocalEreportFile();
+        if (disposed) return;
+        loadLocalPayload(data as EreportPayload);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        const fallback = root.querySelector("[data-local-fallback]");
+        if (fallback instanceof HTMLInputElement && /Chrome|Edge|HTTPS|localhost/i.test(msg)) {
+          fallback.value = "";
+          fallback.click();
+          return;
+        }
+        setBanner(root, msg || "Could not open local file.", "err");
+      }
     };
 
     void requireAuth(root, copy).then(async (me) => {
@@ -460,7 +474,8 @@ import Layout from "../../layouts/Layout.astro";
         setBanner(root, "Missing organization or report.", "err");
         return;
       }
-      pointHubLink();
+      saveTarget = "cloud";
+      clearLocalEreportFile();
       await refreshCsrf();
       if (disposed) return;
       const res = await fetchOrgReport(orgId, reportId);
@@ -471,7 +486,6 @@ import Layout from "../../layouts/Layout.astro";
         return;
       }
       ownerSafe = res.data.meta.ownerSafe || ownerSafe;
-      pointHubLink();
       tema = res.data.meta.tema;
       payload = {
         ...res.data.payload,
@@ -495,19 +509,25 @@ import Layout from "../../layouts/Layout.astro";
         closeModals();
         return;
       }
-      const scaleBtn = node.closest("[data-site-scale]");
-      if (scaleBtn instanceof HTMLElement && scaleBtn.dataset.siteScale) {
-        const scale = bumpUiScale(Number(scaleBtn.dataset.siteScale) || 0);
-        host?.post({ target: "ereport-tracker", type: "text-scale", scale });
+      const openSource = node.closest("[data-open-source]");
+      if (openSource instanceof HTMLElement && openSource.dataset.openSource) {
+        if (openSource.dataset.openSource === "device") {
+          void openFromDevice();
+          return;
+        }
+        if (openSource.dataset.openSource === "cloud") {
+          openModal("open-cloud");
+          return;
+        }
+      }
+      const cloudPick = node.closest("[data-open-cloud-org]");
+      if (cloudPick instanceof HTMLElement && cloudPick.dataset.openCloudOrg && cloudPick.dataset.openCloudReport) {
+        void loadCloudReport(cloudPick.dataset.openCloudOrg, cloudPick.dataset.openCloudReport);
         return;
       }
       const cmd = node.closest("[data-tracker-cmd]");
       if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
         sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
-        if (cmd.dataset.trackerCmd === "toggle-sidebar") {
-          const pressed = cmd.getAttribute("aria-pressed") === "true";
-          cmd.setAttribute("aria-pressed", pressed ? "false" : "true");
-        }
         return;
       }
       const modalBtn = node.closest("[data-open-modal]");
@@ -528,35 +548,41 @@ import Layout from "../../layouts/Layout.astro";
 
     const onScale = () => host?.post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
     const onTheme = () => host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-    document.addEventListener("ereport-ui-scale", onScale);
-    document.addEventListener("ereport-theme", onTheme);
-    disposers.push(() => document.removeEventListener("ereport-ui-scale", onScale));
-    disposers.push(() => document.removeEventListener("ereport-theme", onTheme));
+    onWin("ereport-ui-scale", onScale);
+    onWin("ereport-theme", onTheme);
 
     root.querySelector("[data-ids-form]")?.addEventListener("submit", (event) => {
       event.preventDefault();
     });
 
-    root.querySelector("[data-tema-form]")?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement) || !payload || saving || disposed) return;
-      const saveBtn = form.querySelector("[data-tema-save]");
-      tema = String(new FormData(form).get("tema") || tema);
-      payload = { ...payload, reportName: tema };
-      saving = true;
-      if (saveBtn instanceof HTMLButtonElement) {
-        saveBtn.disabled = true;
-        saveBtn.textContent = "Guardando…";
+    root.querySelector("[data-local-fallback]")?.addEventListener("change", (event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement) || !input.files?.length) return;
+      const file = input.files[0];
+      if (!/\.ereport$/i.test(file.name)) {
+        setBanner(root, "Solo archivos .ereport", "err");
+        return;
       }
-      host?.post(trackerLoadMessage(payload));
-      const ok = await persist(payload, { fromCollect: true });
-      saving = false;
-      if (saveBtn instanceof HTMLButtonElement) {
-        saveBtn.disabled = false;
-        saveBtn.textContent = "Guardar tema";
-      }
-      if (ok) closeModals();
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(String(reader.result || ""));
+          if (!data.sections || !Array.isArray(data.sections)) throw new Error("sin sections[]");
+          /* Fallback picker has no writable handle — stay on cloud target for this workspace. */
+          saveTarget = "cloud";
+          clearLocalEreportFile();
+          payload = data as EreportPayload;
+          tema = String(data.reportName || data.appTitle || tema || "Sin tema").trim() || tema;
+          host?.post(trackerLoadMessage(payload));
+          void persistCloud(payload);
+          setBanner(root, "Loaded local file into this cloud report (autosave → cloud).", "ok");
+          closeModals();
+        } catch (err) {
+          setBanner(root, err instanceof Error ? err.message : "Invalid .ereport", "err");
+        }
+      };
+      reader.readAsText(file);
+      input.value = "";
     });
 
     onDoc("click", async (event) => {
@@ -596,47 +622,6 @@ import Layout from "../../layouts/Layout.astro";
             status.textContent = "No se pudo copiar.";
           }
         }
-        return;
-      }
-      const saveNow = node.closest("[data-save-now]");
-      if (saveNow) {
-        const btn = saveNow instanceof HTMLButtonElement ? saveNow : null;
-        if (saving || !host) return;
-        saving = true;
-        if (btn) btn.disabled = true;
-        try {
-          const collected = await host.collect();
-          await persist(collected, { fromCollect: true });
-          closeModals();
-        } catch {
-          setBanner(root, "Could not collect the report from the tracker.", "err");
-        } finally {
-          saving = false;
-          if (btn) btn.disabled = false;
-        }
-        return;
-      }
-      if (node.closest("[data-history-refresh]")) {
-        loadHistory();
-        return;
-      }
-      if (!(node instanceof HTMLElement) || !node.dataset.restore) return;
-      if (!window.confirm("¿Restaurar esta versión? Se guardará la actual primero.")) return;
-      if (host) {
-        try {
-          const collected = await host.collect();
-          await persist(collected, { silent: true });
-        } catch {
-          /* best-effort current save before restore */
-        }
-      }
-      const res = await restoreReportHistory(orgId, reportId, node.dataset.restore);
-      const message = reportFailure(copy, res.status, res.data, "Restored.");
-      setBanner(root, message.text, message.kind);
-      if (res.status === 200 && res.data.payload) {
-        payload = res.data.payload;
-        host?.post(trackerLoadMessage(payload));
-        closeModals();
       }
     });
 
@@ -644,6 +629,10 @@ import Layout from "../../layouts/Layout.astro";
       event.preventDefault();
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement) || disposed) return;
+      if (saveTarget !== "cloud" || !orgId || !reportId) {
+        setBanner(root, "Compartir requiere un reporte en la nube.", "err");
+        return;
+      }
       const email = String(new FormData(form).get("email") || "").trim();
       const err = root.querySelector("[data-share-error]") || document.querySelector("[data-share-error]");
       const res = await createReportInvite(orgId, reportId, email);

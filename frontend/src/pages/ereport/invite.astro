@@ -5,47 +5,11 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport invite · Eduardoos" page="ereport-invite">
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-tracker-cmd="tutorial" title="Cómo usarla" aria-label="Tutorial">
+    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Abrir desde el dispositivo" aria-label="Abrir desde el dispositivo">
       <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">help</span>
+        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
       </span>
-      Tutorial
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar/ocultar sidebar" aria-label="Sidebar">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
-      </span>
-      Sidebar
-    </button>
-    <button class="dhs-action" type="button" data-site-scale="1" title="Agrandar fuente" aria-label="Agrandar fuente">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
-      </span>
-      Agrandar fuente
-    </button>
-    <button class="dhs-action" type="button" data-site-scale="-1" title="Reducir fuente" aria-label="Reducir fuente">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
-      </span>
-      Reducir fuente
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Cargar .ereport" aria-label="Cargar reporte">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">upload_file</span>
-      </span>
-      Cargar
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="clear-all" title="Limpiar todo" aria-label="Limpiar todo">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
-      </span>
-      Limpiar todo
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="progress" title="Progreso / qué falta" aria-label="Progreso">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">checklist</span>
-      </span>
-      Progreso
+      Abrir
     </button>
     <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
@@ -97,7 +61,13 @@ import Layout from "../../layouts/Layout.astro";
     type ReportCard,
   } from "../../lib/ereport";
   import { isPublicEreportInvitePath, readInviteParams, TRACKER_SRC } from "../../lib/ereport-routes";
-  import { startTrackerHost, trackerCommandMessage, bumpUiScale, siteIsDark, type TrackerCommand } from "../../lib/ereport-workspace";
+  import {
+    startTrackerHost,
+    trackerCommandMessage,
+    resolveUiScale,
+    siteIsDark,
+    type TrackerCommand,
+  } from "../../lib/ereport-workspace";
   import { showErrorModal } from "../../lib/error-modal";
   import { onBoundPageReady } from "../../lib/session-ui";
 
@@ -261,27 +231,22 @@ import Layout from "../../layouts/Layout.astro";
     document.addEventListener("click", (event) => {
       const node = event.target;
       if (!(node instanceof Element)) return;
-      const scaleBtn = node.closest("[data-site-scale]");
-      if (scaleBtn instanceof HTMLElement && scaleBtn.dataset.siteScale) {
-        const scale = bumpUiScale(Number(scaleBtn.dataset.siteScale) || 0);
-        host?.post({ target: "ereport-tracker", type: "text-scale", scale });
-        return;
-      }
       const cmd = node.closest("[data-tracker-cmd]");
       if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
         sendCmd(cmd.dataset.trackerCmd as TrackerCommand);
-        if (cmd.dataset.trackerCmd === "toggle-sidebar") {
-          const pressed = cmd.getAttribute("aria-pressed") === "true";
-          cmd.setAttribute("aria-pressed", pressed ? "false" : "true");
-        }
       }
     });
 
+    const onScale = () => host?.post({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
     const onTheme = () => host?.post({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
-    document.addEventListener("ereport-theme", onTheme);
+    window.addEventListener("ereport-ui-scale", onScale);
+    window.addEventListener("ereport-theme", onTheme);
     document.addEventListener(
       "astro:before-swap",
-      () => document.removeEventListener("ereport-theme", onTheme),
+      () => {
+        window.removeEventListener("ereport-ui-scale", onScale);
+        window.removeEventListener("ereport-theme", onTheme);
+      },
       { once: true },
     );
   });
