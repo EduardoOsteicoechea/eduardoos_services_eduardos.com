@@ -102,6 +102,15 @@ func (a *App) ereportGetOrgsHandler(w http.ResponseWriter, r *http.Request) {
 	if len(recent) > 20 {
 		recent = recent[:20]
 	}
+	for i := range recent {
+		_, payload, loadErr := a.ereport.loadReport(user.ID, recent[i].OrgID, recent[i].ID)
+		if loadErr != nil || payload == nil {
+			continue
+		}
+		open, completed := countEreportIssueOverview(payload)
+		recent[i].OpenCount = open
+		recent[i].CompletedCount = completed
+	}
 	a.auditEvent(r, "ereport_orgs_list", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ownerUserId":    user.ID,

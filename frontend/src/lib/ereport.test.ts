@@ -61,17 +61,19 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("product-dash__card--active");
     expect(hubSrc).toContain("btn btn--primary");
     expect(hubSrc).toContain("btn btn--red");
+    expect(hubSrc).toContain("data-dashboard-recent-cards");
+    expect(hubSrc).not.toContain("<h1>eReport</h1>");
+    expect(hubSrc).not.toContain('"Signed in."');
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--font-base: 1rem");
     expect(css).toContain("--p3: 1rem");
     expect(css).toContain("--m2: 0.75rem");
     expect(css).toMatch(/\.btn--red,[\s\S]{0,80}\.btn--danger/);
-    expect(css).toContain("minmax(11rem, 1fr)");
-    expect(css).toContain("calc(var(--bmh) * 3)");
-    expect(css).toContain("--page-inline-pad: 0;");
-    expect(css).toMatch(/html\[data-page="ereport"\] main \{\s*padding-left: 0;\s*padding-right: 0;/);
-    expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*product-dash__grid[\s\S]*minmax\(0, 1fr\)/);
+    expect(css).toContain("ereport-hub__recents-grid");
     expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*\.btn \{[\s\S]*max-height: none/);
+    const globalCss = readFileSync(join(here, "../styles/global.css"), "utf8");
+    expect(globalCss).toMatch(/html\[data-page="ereport-workspace"\] \.site-footer/);
+    expect(globalCss).not.toMatch(/html\[data-page\^="ereport"\] \.site-footer/);
   });
 
   it("does not AuthGate the invite page", () => {

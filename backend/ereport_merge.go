@@ -344,3 +344,23 @@ func countEreportItems(payload map[string]any) int {
 	}
 	return n
 }
+
+// countEreportIssueOverview tallies open vs completed issues from item.status.
+// completed = aprobado; open = empty or reprobado; no_aplica is ignored.
+func countEreportIssueOverview(payload map[string]any) (open, completed int) {
+	for _, sec := range asMapSlice(payload["sections"]) {
+		for _, g := range asMapSlice(sec["groups"]) {
+			for _, it := range asMapSlice(g["items"]) {
+				switch asString(it["status"]) {
+				case "aprobado":
+					completed++
+				case "no_aplica":
+					// neither open nor completed
+				default:
+					open++
+				}
+			}
+		}
+	}
+	return open, completed
+}

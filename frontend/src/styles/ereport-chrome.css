@@ -71,7 +71,6 @@ html[data-page^="ereport"][data-theme="light"] {
 }
 
 /* Product surfaces keep the eReport palette; shell chrome keeps site tokens. */
-html[data-page^="ereport"] .product-dash,
 html[data-page^="ereport"] .ereport-modal,
 html[data-page^="ereport"] .ereport-signin-card,
 html[data-page^="ereport"] .ereport-list,
@@ -224,97 +223,10 @@ html[data-page^="ereport"] .btn:disabled {
   cursor: not-allowed;
 }
 
-html[data-page^="ereport"] .product-dash {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p3);
-  max-width: none;
-  padding: var(--p3) 0 var(--p5);
-}
-
-/* Hub: no lateral main padding. Desktop keeps only the rail offset. */
-html[data-page="ereport"] main {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-@media (min-width: 64rem) {
-  html[data-page="ereport"] main {
-    padding-left: var(--rail-width);
-    padding-right: 0;
-  }
-}
-
-html[data-page^="ereport"] .product-dash > h1 {
-  margin: 0;
-  font-size: var(--font-lg);
-  font-weight: 650;
-}
-
-html[data-page^="ereport"] .product-dash .hint {
-  color: var(--site-muted-fg);
-  font-size: var(--font-sm);
-}
-
 html[data-page^="ereport"] [data-org-detail-name] {
   margin: var(--p3) 0 0;
   font-size: var(--font-base);
   font-weight: 650;
-}
-
-html[data-page^="ereport"] .product-dash__section-title {
-  margin: 0;
-  font-size: var(--font-base);
-  font-weight: 650;
-  text-transform: uppercase;
-  opacity: 0.72;
-}
-
-html[data-page^="ereport"] .product-dash__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: var(--m2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-html[data-page^="ereport"] .product-dash__card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--m1);
-  min-height: calc(var(--bmh) * 3);
-  padding: var(--p3);
-  color: var(--fg);
-  text-align: left;
-  background: var(--site-surface);
-  border: none;
-  border-radius: var(--br);
-  cursor: pointer;
-}
-
-html[data-page^="ereport"] .product-dash__card:hover {
-  background: color-mix(in srgb, var(--btn-blue) 12%, var(--site-surface));
-}
-
-html[data-page^="ereport"] .product-dash__card--active {
-  background: color-mix(in srgb, var(--btn-blue) 18%, var(--site-surface));
-}
-
-html[data-page^="ereport"] .product-dash__card .material-symbols-outlined {
-  font-size: 1.35rem;
-  color: var(--site-accent);
-}
-
-html[data-page^="ereport"] .product-dash__card-title {
-  font-size: var(--font-base);
-  font-weight: 650;
-}
-
-html[data-page^="ereport"] .product-dash__card-desc {
-  font-size: var(--font-sm);
-  opacity: 0.75;
 }
 
 html[data-page^="ereport"] .ereport-hub__form {
@@ -596,3 +508,57 @@ html[data-page^="ereport"] .ereport-hub__error {
   }
 }
 
+/* Hub dashboard: recent strip + site-aligned cards (shared product-dash tokens). */
+html[data-page="ereport"] .ereport-hub {
+  gap: var(--space-padding);
+  padding-block: 0 var(--space-padding);
+}
+
+html[data-page="ereport"] .ereport-hub__recents {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: auto;
+  min-width: 0;
+}
+
+html[data-page="ereport"] .ereport-hub__recents-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-padding);
+  margin: 0;
+  padding: 0;
+}
+
+html[data-page="ereport"] .ereport-hub__recent-card {
+  min-height: calc(var(--control-height) * 4);
+  text-decoration: none;
+}
+
+html[data-page="ereport"] .ereport-hub__recent-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  margin-top: auto;
+  font-size: var(--font-size-xs);
+}
+
+html[data-page="ereport"] .ereport-hub__recent-stat--open {
+  color: var(--color-err);
+}
+
+html[data-page="ereport"] .ereport-hub__recent-stat--done {
+  color: var(--color-ok);
+}
+
+@media (max-width: 63.999rem) {
+  html[data-page="ereport"] .ereport-hub__recents-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 47.999rem) {
+  html[data-page="ereport"] .ereport-hub__recents-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

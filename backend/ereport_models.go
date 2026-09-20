@@ -76,12 +76,14 @@ type ereportOrgMeta struct {
 }
 
 type ereportRecentCard struct {
-	OrgID        string `json:"orgId"`
-	OrgName      string `json:"orgName,omitempty"`
-	ID           string `json:"id"`
-	Tema         string `json:"tema"`
-	ReportNumber string `json:"reportNumber,omitempty"`
-	UpdatedAt    string `json:"updatedAt"`
+	OrgID          string `json:"orgId"`
+	OrgName        string `json:"orgName,omitempty"`
+	ID             string `json:"id"`
+	Tema           string `json:"tema"`
+	ReportNumber   string `json:"reportNumber,omitempty"`
+	UpdatedAt      string `json:"updatedAt"`
+	OpenCount      int    `json:"openCount"`
+	CompletedCount int    `json:"completedCount"`
 }
 
 type ereportInvite struct {

@@ -2621,7 +2621,8 @@ body.page-pamphlet {
   }
 }
 
-html[data-page^="ereport"] .site-footer,
+html[data-page="ereport-workspace"] .site-footer,
+html[data-page="ereport-invite"] .site-footer,
 html.page-pamphlet .site-footer {
   display: none;
 }

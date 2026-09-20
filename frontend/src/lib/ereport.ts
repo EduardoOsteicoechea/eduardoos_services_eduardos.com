@@ -30,6 +30,8 @@ export type ReportCard = {
 export type RecentReportCard = ReportCard & {
   orgId: string;
   orgName?: string;
+  openCount?: number;
+  completedCount?: number;
 };
 
 export type EreportMeta = {
