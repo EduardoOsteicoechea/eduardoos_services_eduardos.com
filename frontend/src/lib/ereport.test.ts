@@ -40,7 +40,7 @@ describe("eReport public invite routing", () => {
     );
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
     expect(css).toMatch(
-      /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: var\(--mobile-header-height\) 0 0 var\(--space-padding\);/,
+      /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: var\(--main-padding\) 0 0 var\(--space-padding\);/,
     );
   });
 

@@ -15,7 +15,7 @@
   --span-button: 6;
   --border-width: 0.0625rem;
   --border-radius: 0.25rem;
-  --menu-button-size: calc(var(--rail-button-size) * 2);
+  --menu-button-size: var(--rail-button-size);
   --header-size: calc(var(--menu-button-size) + (var(--rail-gap) * 2));
   --rail-width: 0rem;
   --mobile-header-height: var(--header-size);
@@ -161,7 +161,7 @@ a {
 }
 
 .app-header {
-  position: fixed;
+  position: absolute;
   z-index: var(--z-activity);
   display: flex;
   overflow: visible;
@@ -224,8 +224,8 @@ a {
 
 .header-menu-svg {
   display: block;
-  width: calc(var(--menu-button-size) * 0.45);
-  height: calc(var(--menu-button-size) * 0.45);
+  width: calc(var(--menu-button-size) * 0.55);
+  height: calc(var(--menu-button-size) * 0.55);
 }
 
 .header-menu-svg[hidden] {
@@ -240,9 +240,9 @@ a {
 }
 
 .app-header .header-menu.icon-btn {
-  width: var(--menu-button-size);
+  width: calc(var(--menu-button-size) * 1.4);
   height: var(--menu-button-size);
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   background: var(--color-text);
   border: 0;
   color: var(--color-bg);
@@ -1479,7 +1479,7 @@ section.diag .panel:not(form) {
   }
 
   main {
-    padding-top: calc(var(--mobile-header-height) + var(--main-padding));
+    padding-top: var(--main-padding);
     padding-bottom: var(--main-padding);
   }
 
@@ -1661,7 +1661,7 @@ section.diag .panel:not(form) {
   }
 
   main {
-    padding-top: calc(var(--mobile-header-height) + var(--main-padding-top));
+    padding-top: var(--main-padding-top);
     padding-left: var(--main-inline);
     padding-right: var(--main-inline);
   }
@@ -1824,14 +1824,14 @@ html[data-page="ereport-invite"] main > * {
 @media (max-width: 63.999rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: var(--mobile-header-height) 0 0 var(--space-padding);
+    padding: var(--main-padding) 0 0 var(--space-padding);
   }
 }
 
 @media (min-width: 64rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: var(--mobile-header-height) 0 0 var(--space-padding);
+    padding: var(--main-padding) 0 0 var(--space-padding);
   }
 }
 
