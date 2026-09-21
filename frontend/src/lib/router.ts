@@ -21,11 +21,41 @@ function assignSameOrigin(href: string): void {
   window.location.assign(`${url.pathname}${url.search}${url.hash}`);
 }
 
+/**
+ * `/documents/pamphlet/e/{id}` is pretty only when Nginx rewrites it to e/index.html.
+ * On VPS builds without that location, unknown paths fall through to the homepage HTML
+ * (URL stays /e/{id}, DOM is home). Redirect to a real static page + hash instead.
+ */
+function rewriteLegacyPamphletEditPath(): void {
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const match = /^\/documents\/pamphlet\/e\/([^/]+)$/.exec(path);
+  if (!match) return;
+  let id = match[1];
+  try {
+    id = decodeURIComponent(id);
+  } catch {
+    /* keep raw segment */
+  }
+  window.location.replace(`/documents/pamphlet/open#${encodeURIComponent(id)}`);
+}
+
 export function startClientRouting(): void {
   if (window.__clientRoutingStarted) {
     return;
   }
   window.__clientRoutingStarted = true;
+
+  rewriteLegacyPamphletEditPath();
+
+  // ClientRouter intercepts all same-origin links — not only [data-route].
+  // Cancel soft transitions that touch pamphlet so we never swap home HTML onto /e/{id}.
+  document.addEventListener("astro:before-preparation", (event) => {
+    const ev = event as Event & { from: URL; to: URL };
+    if (needsFullDocumentNav(ev.to.pathname) || needsFullDocumentNav(ev.from.pathname)) {
+      event.preventDefault();
+      assignSameOrigin(ev.to.href);
+    }
+  });
 
   document.addEventListener("click", (event) => {
     const target = event.target;

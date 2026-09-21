@@ -204,8 +204,10 @@ import Layout from "../../layouts/Layout.astro";
       for (const epam of items) {
         const card = document.createElement("a");
         card.className = "pamphlet-vanilla-dash__card pamphlet-vanilla-dash__recent-card";
-        card.href = `${PAMPHLET_BASE}/e/${encodeURIComponent(epam.epamId)}`;
+        // Use /open#id — a real static page. /e/{id} needs Nginx rewrite; without it the VPS serves home HTML.
+        card.href = `${PAMPHLET_BASE}/open#${encodeURIComponent(epam.epamId)}`;
         card.dataset.pamphletOpen = epam.epamId;
+        card.setAttribute("data-astro-reload", "");
         card.title = epam.title || epam.fileName || epam.epamId;
 
         const title = document.createElement("span");
@@ -350,7 +352,8 @@ import Layout from "../../layouts/Layout.astro";
       if (!epamId) return;
       const url = new URL(window.location.href);
       url.searchParams.delete("view");
-      url.pathname = `${PAMPHLET_BASE}/e/${encodeURIComponent(epamId)}`;
+      url.pathname = `${PAMPHLET_BASE}/open`;
+      url.hash = encodeURIComponent(epamId);
       window.history.pushState({}, "", url.toString());
       showEditor("edit", epamId);
       return;
