@@ -1229,6 +1229,16 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
+    const before = JSON.stringify({
+        c1: data.column_1?.[0]?.type,
+        c2: data.column_2?.[0]?.type,
+        c3: data.column_3?.[0]?.type,
+        c4: data.column_4?.[0]?.type,
+        c5: data.column_5?.[0]?.type,
+        c6: data.column_6?.[0]?.type,
+        c7: data.column_7?.[0]?.type,
+        c8: data.column_8?.[0]?.type,
+    });
     const migrated = migrateStructuredLeadsToEvenColumns(data);
     currentDoc = migrated;
     currentHeader = { ...migrated.header };
@@ -1244,6 +1254,20 @@ function renderDocument(data: PamphletStructure, openEdit: boolean): void {
     reflowAndReport(main);
     updatePrintAvailability();
     syncSheetScale();
+    const after = JSON.stringify({
+        c1: migrated.column_1?.[0]?.type,
+        c2: migrated.column_2?.[0]?.type,
+        c3: migrated.column_3?.[0]?.type,
+        c4: migrated.column_4?.[0]?.type,
+        c5: migrated.column_5?.[0]?.type,
+        c6: migrated.column_6?.[0]?.type,
+        c7: migrated.column_7?.[0]?.type,
+        c8: migrated.column_8?.[0]?.type,
+    });
+    // Persist lead-column migration so the next cloud/open reload stays on 2/4/6/8.
+    if (before !== after && hasEditableSession()) {
+        schedulePersist();
+    }
     if (openEdit) {
         activateEditAt(migrated, migrated.last_edited_element);
     }

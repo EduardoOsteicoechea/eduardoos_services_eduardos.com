@@ -340,8 +340,60 @@ func BuildPamphletPDF(doc PamphletDocument) []byte {
 	return data
 }
 
+// migrateStructuredLeadsToEvenColumns moves legacy lead images from odd columns
+// (1/3/5/7) onto even columns (2/4/6/8) and ensures empty lead placeholders exist.
+func migrateStructuredLeadsToEvenColumns(doc PamphletDocument) PamphletDocument {
+	if doc.Type != "pamphlet_structured_images" {
+		return doc
+	}
+	type pair struct {
+		odd  *[]PamphletItem
+		even *[]PamphletItem
+	}
+	pairs := []pair{
+		{&doc.Column1, &doc.Column2},
+		{&doc.Column3, &doc.Column4},
+		{&doc.Column5, &doc.Column6},
+		{&doc.Column7, &doc.Column8},
+	}
+	for _, p := range pairs {
+		odd := *p.odd
+		even := *p.even
+		if len(odd) > 0 && odd[0].Type == "image" {
+			lead := odd[0]
+			lead.HeightMm = pamphletLeadHeightMm
+			odd = odd[1:]
+			if len(even) > 0 && even[0].Type == "image" {
+				oddHas := strings.TrimSpace(lead.Content) != ""
+				evenHas := strings.TrimSpace(even[0].Content) != ""
+				if oddHas && !evenHas {
+					even[0] = lead
+				}
+			} else {
+				even = append([]PamphletItem{lead}, even...)
+			}
+			*p.odd = odd
+			*p.even = even
+		}
+		// Guarantee a lead slot on every even structured column.
+		even = *p.even
+		if len(even) == 0 || even[0].Type != "image" {
+			*p.even = append([]PamphletItem{{
+				Type:     "image",
+				Content:  "",
+				HeightMm: pamphletLeadHeightMm,
+			}}, even...)
+		} else if even[0].HeightMm != pamphletLeadHeightMm {
+			even[0].HeightMm = pamphletLeadHeightMm
+			*p.even = even
+		}
+	}
+	return doc
+}
+
 // BuildPamphletPDFWithLayout renders the PDF and returns hit-boxes from the same packer.
 func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout) {
+	doc = migrateStructuredLeadsToEvenColumns(doc)
 	pageW := MmToPoints(PamphletPageWidthMm)
 	pageH := MmToPoints(PamphletPageHeightMm)
 	sink := &layoutSink{hits: make([]PamphletHit, 0, 64)}

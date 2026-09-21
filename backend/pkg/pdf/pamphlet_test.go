@@ -653,7 +653,7 @@ func TestEmptyStructuredLeadHasNoImagenLabelOrBlackMatte(t *testing.T) {
 		Header: PamphletHeader{
 			Title: "Sin imagen",
 		},
-		Column1: []PamphletItem{{
+		Column2: []PamphletItem{{
 			Type:     "image",
 			Content:  "",
 			HeightMm: 52,
@@ -666,6 +666,45 @@ func TestEmptyStructuredLeadHasNoImagenLabelOrBlackMatte(t *testing.T) {
 	// Lead double border still strokes the frame (thin black rules, not a filled matte).
 	if !strings.Contains(s, " re ") && !strings.Contains(s, " m\n") {
 		t.Fatalf("expected lead border path operators in PDF")
+	}
+}
+
+func TestMigrateOddStructuredLeadsToEvenColumns(t *testing.T) {
+	_, layout := BuildPamphletPDFWithLayout(PamphletDocument{
+		Type: "pamphlet_structured_images",
+		Header: PamphletHeader{
+			Title: "Migrate",
+		},
+		Column1: []PamphletItem{
+			{Type: "image", Content: "", HeightMm: 52},
+			{Type: "paragraph", Content: "Cuerpo col1"},
+		},
+		Column3: []PamphletItem{
+			{Type: "image", Content: "", HeightMm: 52},
+		},
+	})
+	var leadCols []int
+	for _, h := range layout.Hits {
+		if h.Kind == "image" && h.Index == 0 {
+			leadCols = append(leadCols, h.Column)
+		}
+	}
+	for _, c := range leadCols {
+		if c != 2 && c != 4 && c != 6 && c != 8 {
+			t.Fatalf("lead hit on odd column %d; hits=%v", c, leadCols)
+		}
+	}
+	has2, has4 := false, false
+	for _, c := range leadCols {
+		if c == 2 {
+			has2 = true
+		}
+		if c == 4 {
+			has4 = true
+		}
+	}
+	if !has2 || !has4 {
+		t.Fatalf("expected leads on cols 2 and 4, got %v", leadCols)
 	}
 }
 

@@ -912,7 +912,8 @@ export function stripStructuredLeadImages(doc: PamphletStructure): PamphletStruc
 
 /**
  * Older structured docs stored leads on odd columns (1/3/5/7).
- * Move those lead images onto the matching even column (2/4/6/8).
+ * Move those onto even columns (2/4/6/8), drop leftover odd leads, and ensure
+ * every even column has a lead image slot.
  */
 export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): PamphletStructure {
     if (doc.type !== "pamphlet_structured_images") return doc;
@@ -925,13 +926,34 @@ export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): Pam
     let changed = false;
     const next: PamphletStructure = { ...doc };
     for (const [odd, even] of pairs) {
-        const oddItems = [...(next[odd] ?? [])];
-        const evenItems = [...(next[even] ?? [])];
-        if (oddItems[0]?.type === "image" && evenItems[0]?.type !== "image") {
-            next[odd] = oddItems.slice(1);
-            next[even] = [{ ...oddItems[0], height_mm: LEAD_IMAGE_HEIGHT_MM }, ...evenItems];
+        let oddItems = [...(next[odd] ?? [])];
+        let evenItems = [...(next[even] ?? [])];
+
+        if (oddItems[0]?.type === "image") {
+            const lead = { ...oddItems[0], height_mm: LEAD_IMAGE_HEIGHT_MM };
+            oddItems = oddItems.slice(1);
+            if (evenItems[0]?.type === "image") {
+                const oddHas = Boolean(lead.content?.trim());
+                const evenHas = Boolean(evenItems[0].content?.trim());
+                if (oddHas && !evenHas) {
+                    evenItems = [lead, ...evenItems.slice(1)];
+                }
+            } else {
+                evenItems = [lead, ...evenItems];
+            }
             changed = true;
         }
+
+        if (evenItems[0]?.type !== "image") {
+            evenItems = [createImageItem("", LEAD_IMAGE_HEIGHT_MM), ...evenItems];
+            changed = true;
+        } else if (evenItems[0].height_mm !== LEAD_IMAGE_HEIGHT_MM) {
+            evenItems = [{ ...evenItems[0], height_mm: LEAD_IMAGE_HEIGHT_MM }, ...evenItems.slice(1)];
+            changed = true;
+        }
+
+        next[odd] = oddItems;
+        next[even] = evenItems;
     }
     return changed ? next : doc;
 }
