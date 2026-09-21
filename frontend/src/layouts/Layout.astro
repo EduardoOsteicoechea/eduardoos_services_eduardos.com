@@ -53,6 +53,7 @@ const privateByDefault =
   path.startsWith("/evoice") ||
   path.startsWith("/eoproject") ||
   path.startsWith("/eocode") ||
+  path.startsWith("/publisher") ||
   path.startsWith("/payments");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
@@ -240,6 +241,10 @@ const jsonLdString =
             <a href="/admin/api" data-route aria-current={path === "/admin/api" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">key</span>
               API keys
+            </a>
+            <a href="/publisher" data-route aria-current={path === "/publisher" || path.startsWith("/publisher/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">campaign</span>
+              Publisher
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">

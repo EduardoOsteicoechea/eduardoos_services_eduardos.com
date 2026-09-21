@@ -312,7 +312,8 @@ function plainUserBlockedPath(pathname: string): boolean {
   }
   return (
     path.includes("calvins-institutes") ||
-    path.startsWith("/admin")
+    path.startsWith("/admin") ||
+    path.startsWith("/publisher")
   );
 }
 

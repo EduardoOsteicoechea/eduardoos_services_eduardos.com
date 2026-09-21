@@ -1,0 +1,271 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Publisher"
+  description="Publish video packages and articles to social networks via Orato."
+  robots="noindex,nofollow"
+>
+  <section class="session-grid" data-publisher>
+    <h1>Publisher</h1>
+    <p class="lede">
+      Upload a video (optional article) or publish an article with or without an image. Choose the networks Orato should fan out to.
+    </p>
+    <p class="status" data-banner>Checking session…</p>
+
+    <form class="panel" data-publisher-form hidden>
+      <fieldset data-mode-fieldset>
+        <legend>Package type</legend>
+        <label>
+          <input type="radio" name="mode" value="video" checked />
+          Video (± article)
+        </label>
+        <label>
+          <input type="radio" name="mode" value="article" />
+          Article only (± image)
+        </label>
+      </fieldset>
+
+      <label>
+        Title
+        <input name="title" maxlength="200" placeholder="Short title" />
+      </label>
+
+      <label>
+        Canonical link (optional)
+        <input name="link" type="url" maxlength="500" placeholder="https://eduardoos.com/…" />
+      </label>
+
+      <label data-video-field>
+        Video
+        <input name="video" type="file" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" />
+      </label>
+
+      <label>
+        Article body
+        <textarea name="article_body" rows="8" maxlength="20000" placeholder="Optional with video; required for article-only"></textarea>
+      </label>
+
+      <label>
+        Article image (optional)
+        <input name="article_image" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" />
+      </label>
+
+      <fieldset data-channels>
+        <legend>Networks</legend>
+        <label><input type="checkbox" name="channel" value="facebook" checked /> Facebook</label>
+        <label><input type="checkbox" name="channel" value="instagram" checked /> Instagram</label>
+        <label><input type="checkbox" name="channel" value="youtube" checked /> YouTube</label>
+        <label><input type="checkbox" name="channel" value="x" checked /> X</label>
+        <label><input type="checkbox" name="channel" value="tiktok" checked /> TikTok</label>
+        <label><input type="checkbox" name="channel" value="linkedin" checked /> LinkedIn</label>
+        <label><input type="checkbox" name="channel" value="whatsapp" checked /> WhatsApp</label>
+      </fieldset>
+
+      <p class="hint" data-mode-hint>
+        YouTube, TikTok, and Instagram need a video. Article-only posts work on Facebook, LinkedIn, X, and WhatsApp when those channels are wired.
+      </p>
+
+      <button type="submit" data-submit>Publish</button>
+    </form>
+
+    <div class="panel" data-job-panel hidden>
+      <h2>Job</h2>
+      <p class="hint" data-job-summary></p>
+      <ul class="ereport-list" data-job-results></ul>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { getMe } from "../../lib/api";
+  import { go } from "../../lib/router";
+  import { publishPackage, pollPublisherJob } from "../../lib/publisher";
+
+  const root = document.querySelector("[data-publisher]");
+  if (!(root instanceof HTMLElement)) {
+    throw new Error("publisher root missing");
+  }
+
+  const banner = root.querySelector("[data-banner]");
+  const form = root.querySelector("[data-publisher-form]");
+  const jobPanel = root.querySelector("[data-job-panel]");
+  const jobSummary = root.querySelector("[data-job-summary]");
+  const jobResults = root.querySelector("[data-job-results]");
+  const videoField = root.querySelector("[data-video-field]");
+  const submitBtn = root.querySelector("[data-submit]");
+
+  const setBanner = (text: string, kind = "") => {
+    if (!(banner instanceof HTMLElement)) return;
+    banner.textContent = text;
+    banner.classList.toggle("err", kind === "err");
+    banner.hidden = !text;
+  };
+
+  const modeValue = (): "video" | "article" => {
+    const checked = form?.querySelector('input[name="mode"]:checked');
+    return checked instanceof HTMLInputElement && checked.value === "article" ? "article" : "video";
+  };
+
+  const syncMode = () => {
+    const mode = modeValue();
+    if (videoField instanceof HTMLElement) {
+      videoField.hidden = mode === "article";
+    }
+    const videoInput = form?.querySelector('input[name="video"]');
+    if (videoInput instanceof HTMLInputElement) {
+      videoInput.required = mode === "video";
+      if (mode === "article") videoInput.value = "";
+    }
+  };
+
+  form?.querySelectorAll('input[name="mode"]').forEach((el) => {
+    el.addEventListener("change", syncMode);
+  });
+  syncMode();
+
+  void (async () => {
+    const me = await getMe();
+    if (!me || me.status !== 200 || me.data.role !== "admin") {
+      setBanner("Admin sign-in required.", "err");
+      go("/session");
+      return;
+    }
+    setBanner("");
+    if (form instanceof HTMLFormElement) form.hidden = false;
+  })();
+
+  form?.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!(form instanceof HTMLFormElement) || !(submitBtn instanceof HTMLButtonElement)) return;
+
+    const mode = modeValue();
+    const title = (form.elements.namedItem("title") as HTMLInputElement)?.value?.trim() || "";
+    const link = (form.elements.namedItem("link") as HTMLInputElement)?.value?.trim() || "";
+    const articleBody = (form.elements.namedItem("article_body") as HTMLTextAreaElement)?.value?.trim() || "";
+    const videoInput = form.elements.namedItem("video") as HTMLInputElement | null;
+    const imageInput = form.elements.namedItem("article_image") as HTMLInputElement | null;
+    const channels = [...form.querySelectorAll('input[name="channel"]:checked')]
+      .map((n) => (n instanceof HTMLInputElement ? n.value : ""))
+      .filter(Boolean);
+
+    if (channels.length === 0) {
+      showErrorModal({ message: "Select at least one network." });
+      return;
+    }
+    if (mode === "video") {
+      const file = videoInput?.files?.[0];
+      if (!file) {
+        showErrorModal({ message: "Choose a video file." });
+        return;
+      }
+    } else if (!articleBody) {
+      showErrorModal({ message: "Article body is required for article-only packages." });
+      return;
+    }
+
+    const body = new FormData();
+    body.set("kind", "package");
+    if (title) body.set("title", title);
+    if (link) body.set("link", link);
+    body.set("channels", channels.join(","));
+    if (mode === "video" && videoInput?.files?.[0]) {
+      body.set("video", videoInput.files[0]);
+    }
+    if (articleBody) body.set("article_body", articleBody);
+    if (imageInput?.files?.[0]) body.set("article_image", imageInput.files[0]);
+
+    submitBtn.disabled = true;
+    setBanner("Publishing…");
+    if (jobPanel instanceof HTMLElement) jobPanel.hidden = true;
+
+    void (async () => {
+      try {
+        const published = await publishPackage(body);
+        if (published.status >= 400 || !published.data.job_id) {
+          showErrorModal({
+            message: published.data.message || "Publish failed.",
+            requestId: published.requestId || published.data.request_id,
+            details: published.requestId ? `request_id=${published.requestId}` : "",
+          });
+          setBanner("Publish failed.", "err");
+          return;
+        }
+        const jobId = published.data.job_id;
+        setBanner(`Job ${jobId} accepted. Waiting for channel results…`);
+        if (mustLog) console.log("[publisher] poll", jobId);
+        const polled = await pollPublisherJob(jobId);
+        if (polled.status >= 400) {
+          showErrorModal({
+            message: polled.data.message || "Could not load job status.",
+            requestId: polled.requestId,
+          });
+          setBanner("Job status unavailable.", "err");
+          return;
+        }
+        if (jobPanel instanceof HTMLElement) jobPanel.hidden = false;
+        if (jobSummary instanceof HTMLElement) {
+          jobSummary.textContent = `Job ${jobId} — status: ${polled.data.status || "unknown"}`;
+        }
+        if (jobResults instanceof HTMLElement) {
+          jobResults.replaceChildren();
+          for (const row of polled.data.results || []) {
+            const li = document.createElement("li");
+            const bits = [row.channel || "?", row.status || "?"];
+            if (row.skip_reason) bits.push(`skip:${row.skip_reason}`);
+            if (row.url) bits.push(row.url);
+            if (row.error) bits.push(row.error);
+            li.textContent = bits.join(" · ");
+            jobResults.appendChild(li);
+          }
+        }
+        setBanner("Done.");
+      } catch (err) {
+        if (mustLog) console.log("[publisher] error", err);
+        showErrorModal({
+          message: err instanceof Error ? err.message : "Publish failed.",
+        });
+        setBanner("Publish failed.", "err");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    })();
+  });
+</script>
+
+<style>
+  [data-publisher] fieldset {
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--space-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  [data-publisher] fieldset legend {
+    font-size: var(--font-size-sm);
+    padding-inline: var(--control-padding-inline);
+  }
+
+  [data-publisher] fieldset label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  [data-publisher] textarea {
+    min-height: var(--textarea-min-height);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+</style>

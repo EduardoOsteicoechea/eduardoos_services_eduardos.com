@@ -85,6 +85,9 @@ type config struct {
 	PayPalCheckoutURL         string
 	OrdinatoBaseURL           string
 	OrdinatoSiteKey           string
+	OratoBaseURL              string
+	OratoServiceKey           string
+	OratoMaxUploadBytes       int64
 	AllowedOrigins            []string
 }
 
@@ -310,6 +313,9 @@ func loadConfig() config {
 		PayPalCheckoutURL:         paypalCheckout,
 		OrdinatoBaseURL:           strings.TrimRight(strings.TrimSpace(os.Getenv("ORDINATO_BASE_URL")), "/"),
 		OrdinatoSiteKey:           strings.TrimSpace(os.Getenv("ORDINATO_SITE_KEY")),
+		OratoBaseURL:              strings.TrimRight(strings.TrimSpace(os.Getenv("ORATO_BASE_URL")), "/"),
+		OratoServiceKey:           strings.TrimSpace(os.Getenv("ORATO_SERVICE_KEY")),
+		OratoMaxUploadBytes:       envInt64("ORATO_MAX_UPLOAD_BYTES", defaultOratoMaxBytes),
 		AllowedOrigins: []string{
 			"https://" + siteName,
 			"http://127.0.0.1:4321",
