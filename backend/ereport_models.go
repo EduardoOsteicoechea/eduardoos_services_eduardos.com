@@ -87,19 +87,21 @@ type ereportRecentCard struct {
 }
 
 type ereportInvite struct {
-	ID            string `json:"id"`
-	SecretHash    string `json:"secretHash"`
-	SessionHash   string `json:"sessionHash,omitempty"`
-	OTPRequests   int    `json:"otpRequests,omitempty"`
-	Scope         string `json:"scope"`
-	OwnerUserID   string `json:"ownerUserId"`
-	OrgID         string `json:"orgId"`
-	ReportID      string `json:"reportId,omitempty"`
-	InvitedEmail  string `json:"invitedEmail"`
-	ExpiresAt     string `json:"expiresAt"`
-	CreatedAt     string `json:"createdAt"`
-	CanEdit       bool   `json:"canEdit"`
-	ConsumedOTPAt string `json:"consumedOtpAt,omitempty"`
+	ID            string   `json:"id"`
+	SecretHash    string   `json:"secretHash"`
+	SessionHash   string   `json:"sessionHash,omitempty"`
+	OTPRequests   int      `json:"otpRequests,omitempty"`
+	Scope         string   `json:"scope"`
+	OwnerUserID   string   `json:"ownerUserId"`
+	OrgID         string   `json:"orgId"`
+	ReportID      string   `json:"reportId,omitempty"`
+	InvitedEmail  string   `json:"invitedEmail"`
+	Message       string   `json:"message,omitempty"`
+	NotifyEmails  []string `json:"notifyEmails,omitempty"`
+	ExpiresAt     string   `json:"expiresAt"`
+	CreatedAt     string   `json:"createdAt"`
+	CanEdit       bool     `json:"canEdit"`
+	ConsumedOTPAt string   `json:"consumedOtpAt,omitempty"`
 }
 
 type ereportInvitePublic struct {

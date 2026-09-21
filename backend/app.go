@@ -262,6 +262,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports/{reportId}/history/{snapshotId}/restore", a.ereportRestoreHistoryHandler)
 
 	mux.HandleFunc("GET /api/ereport/invites/{inviteId}", a.ereportGetInviteHandler)
+	mux.HandleFunc("GET /api/ereport/invites/{inviteId}/report", a.ereportInviteViewReportHandler)
+	mux.HandleFunc("GET /api/ereport/invites/{inviteId}/images/{imageId}", a.ereportInviteViewImageHandler)
 	mux.HandleFunc("POST /api/ereport/invites/{inviteId}/otp", a.ereportInviteOTPHandler)
 	mux.HandleFunc("POST /api/ereport/invites/{inviteId}/verify", a.ereportInviteVerifyHandler)
 	mux.HandleFunc("GET /api/ereport/invite-session", a.ereportInviteSessionHandler)

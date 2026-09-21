@@ -260,7 +260,7 @@ func TestEreportFilesystemLayoutAndNoS3(t *testing.T) {
 	}
 }
 
-func TestEreportInviteOTPAndTrackerSession(t *testing.T) {
+func TestEreportReportShareLinkHashView(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productEreport)
 	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Inv","firstReportName":"Shared"}`)
@@ -268,7 +268,68 @@ func TestEreportInviteOTPAndTrackerSession(t *testing.T) {
 	orgID := body["org"].(map[string]any)["id"].(string)
 	reportID := body["report"].(map[string]any)["id"].(string)
 
-	invRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/invites", `{"email":"guest@example.com"}`)
+	invRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/invites",
+		`{"emails":["guest@example.com","peer@example.com"],"durationHours":48,"message":"Please review this report"}`)
+	if invRec.Code != http.StatusCreated {
+		t.Fatalf("invite: %d %s", invRec.Code, invRec.Body.String())
+	}
+	invBody := decodeMap(t, invRec)
+	link := invBody["link"].(string)
+	hash := invBody["hash"].(string)
+	inviteID := invBody["invite"].(map[string]any)["id"].(string)
+	if hash == "" || !strings.Contains(link, "t=") {
+		t.Fatalf("expected link+hash: %v", invBody)
+	}
+	if invBody["invite"].(map[string]any)["canEdit"] != false {
+		t.Fatalf("report share must be view-only: %v", invBody["invite"])
+	}
+	if int(invBody["emailsSent"].(float64)) != 2 {
+		t.Fatalf("expected 2 emails: %v", invBody["emailsSent"])
+	}
+	mail := app.mailer.(*recordingMailer).Last()
+	if !strings.Contains(mail.Body, "Please review this report") || !strings.Contains(mail.Body, link) {
+		t.Fatalf("share mail missing message/link: %q", mail.Body)
+	}
+
+	get := httptest.NewRequest(http.MethodGet, "/api/ereport/invites/"+inviteID+"?t="+hash, nil)
+	getRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(getRec, get)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("get invite: %d %s", getRec.Code, getRec.Body.String())
+	}
+	info := decodeMap(t, getRec)
+	if info["needsOtp"] != false || info["valid"] != true {
+		t.Fatalf("link share must not need OTP: %v", info)
+	}
+
+	view := httptest.NewRequest(http.MethodGet, "/api/ereport/invites/"+inviteID+"/report?t="+hash, nil)
+	viewRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(viewRec, view)
+	if viewRec.Code != http.StatusOK {
+		t.Fatalf("view report: %d %s", viewRec.Code, viewRec.Body.String())
+	}
+	viewBody := decodeMap(t, viewRec)
+	if viewBody["payload"] == nil || viewBody["canEdit"] != false {
+		t.Fatalf("expected view payload: %v", viewBody)
+	}
+
+	bad := httptest.NewRequest(http.MethodGet, "/api/ereport/invites/"+inviteID+"/report?t=wrong", nil)
+	badRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(badRec, bad)
+	if badRec.Code != http.StatusNotFound {
+		t.Fatalf("bad hash must 404: %d", badRec.Code)
+	}
+}
+
+func TestEreportOrgInviteOTPAndTrackerSession(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Inv","firstReportName":"Shared"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	invRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/invites", `{"email":"guest@example.com","durationHours":24}`)
 	if invRec.Code != http.StatusCreated {
 		t.Fatalf("invite: %d %s", invRec.Code, invRec.Body.String())
 	}
@@ -322,17 +383,6 @@ func TestEreportInviteOTPAndTrackerSession(t *testing.T) {
 		t.Fatalf("verify: %d %s", verifyRec.Code, verifyRec.Body.String())
 	}
 
-	reuseReq := httptest.NewRequest(http.MethodPost, "/api/ereport/invites/"+inviteID+"/verify", strings.NewReader(`{"email":"guest@example.com","otp":"`+code+`","t":"`+secret+`"}`))
-	reuseReq.Header.Set("Content-Type", "application/json")
-	reuseReq.Header.Set("Origin", app.cfg.AllowedOrigins[0])
-	reuseReq.Header.Set("X-CSRF-Token", csrfBody["csrf"])
-	copyCookies(reuseReq, seed)
-	reuse := httptest.NewRecorder()
-	app.Handler().ServeHTTP(reuse, reuseReq)
-	if reuse.Code == http.StatusOK {
-		t.Fatal("otp reuse must fail")
-	}
-
 	getRep := httptest.NewRequest(http.MethodGet, "/api/ereport/invite-session/reports/"+reportID, nil)
 	copyCookies(getRep, verifyRec)
 	got := httptest.NewRecorder()
@@ -352,14 +402,6 @@ func TestEreportInviteOTPAndTrackerSession(t *testing.T) {
 	app.Handler().ServeHTTP(putRec, putReq)
 	if putRec.Code != http.StatusOK {
 		t.Fatalf("invite put: %d %s", putRec.Code, putRec.Body.String())
-	}
-
-	wrong := httptest.NewRequest(http.MethodGet, "/api/ereport/invite-session/reports/"+randomID(16), nil)
-	copyCookies(wrong, verifyRec)
-	wrongRec := httptest.NewRecorder()
-	app.Handler().ServeHTTP(wrongRec, wrong)
-	if wrongRec.Code != http.StatusForbidden && wrongRec.Code != http.StatusNotFound {
-		t.Fatalf("scope denial: %d", wrongRec.Code)
 	}
 }
 

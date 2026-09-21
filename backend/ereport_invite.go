@@ -4,12 +4,19 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
 
+const (
+	ereportShareMinHours = 1
+	ereportShareMaxHours = 24 * 30
+	ereportShareMsgMax   = 2000
+)
+
 func (a *App) inviteLandingURL(r *http.Request, inviteID, secret string) string {
-	return a.publicBase(r) + "/ereport/invite?invite=" + inviteID + "&t=" + secret
+	return a.publicBase(r) + "/ereport/invite?invite=" + url.QueryEscape(inviteID) + "&t=" + url.QueryEscape(secret)
 }
 
 func (a *App) verifyInviteSecret(inv ereportInvite, secret string) bool {
@@ -18,6 +25,11 @@ func (a *App) verifyInviteSecret(inv ereportInvite, secret string) bool {
 	}
 	want := a.hashOpaque("ereport-invite:"+inv.ID, secret)
 	return hmacEqual(want, inv.SecretHash)
+}
+
+func inviteNeedsOTP(inv ereportInvite) bool {
+	// Report link shares are open to anyone with the hash; org invites still gate with OTP.
+	return strings.TrimSpace(inv.InvitedEmail) != "" && inv.SessionHash == ""
 }
 
 func (a *App) ereportCreateOrgInviteHandler(w http.ResponseWriter, r *http.Request) {
@@ -44,14 +56,14 @@ func (a *App) ereportCreateOrgInviteHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	hours := body.DurationHours
-	if hours < 1 {
+	if hours < ereportShareMinHours {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if hours > 24*30 {
-		hours = 24 * 30
+	if hours > ereportShareMaxHours {
+		hours = ereportShareMaxHours
 	}
-	a.writeInvite(w, r, user, orgMeta.ID, "", inviteScopeOrg, to, time.Duration(hours)*time.Hour)
+	a.writeInvite(w, r, user, orgMeta.ID, "", inviteScopeOrg, to, time.Duration(hours)*time.Hour, "", nil, true)
 }
 
 func (a *App) ereportCreateReportInviteHandler(w http.ResponseWriter, r *http.Request) {
@@ -64,20 +76,70 @@ func (a *App) ereportCreateReportInviteHandler(w http.ResponseWriter, r *http.Re
 		return
 	}
 	var body struct {
-		Email string `json:"email"`
+		Email         string   `json:"email"`
+		Emails        []string `json:"emails"`
+		DurationHours int      `json:"durationHours"`
+		Message       string   `json:"message"`
 	}
 	if !a.decodeEreportJSON(w, r, &body) {
 		return
 	}
-	_, to, emailOK := normalizeEmail(body.Email)
-	if !emailOK {
+	hours := body.DurationHours
+	if hours < ereportShareMinHours {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	a.writeInvite(w, r, user, meta.OrgID, meta.ID, inviteScopeReport, to, time.Hour)
+	if hours > ereportShareMaxHours {
+		hours = ereportShareMaxHours
+	}
+	message := strings.TrimSpace(body.Message)
+	if len(message) > ereportShareMsgMax {
+		message = message[:ereportShareMsgMax]
+	}
+	emails := parseInviteEmails(body.Emails, body.Email)
+	if len(emails) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	// Report shares are view-only via link + hash; emails are notifications only.
+	a.writeInvite(w, r, user, meta.OrgID, meta.ID, inviteScopeReport, "", time.Duration(hours)*time.Hour, message, emails, false)
 }
 
-func (a *App) writeInvite(w http.ResponseWriter, r *http.Request, user *User, orgID, reportID, scope, email string, ttl time.Duration) {
+func parseInviteEmails(list []string, legacy string) []string {
+	seen := map[string]struct{}{}
+	out := make([]string, 0, len(list)+1)
+	add := func(raw string) {
+		for _, part := range strings.FieldsFunc(raw, func(r rune) bool {
+			return r == ',' || r == ';' || r == '\n' || r == '\r'
+		}) {
+			_, norm, ok := normalizeEmail(part)
+			if !ok {
+				continue
+			}
+			if _, exists := seen[norm]; exists {
+				continue
+			}
+			seen[norm] = struct{}{}
+			out = append(out, norm)
+		}
+	}
+	for _, e := range list {
+		add(e)
+	}
+	add(legacy)
+	return out
+}
+
+func (a *App) writeInvite(
+	w http.ResponseWriter,
+	r *http.Request,
+	user *User,
+	orgID, reportID, scope, email string,
+	ttl time.Duration,
+	message string,
+	notifyEmails []string,
+	canEdit bool,
+) {
 	now := time.Now().UTC()
 	id := randomID(16)
 	secret := randomID(24)
@@ -89,24 +151,46 @@ func (a *App) writeInvite(w http.ResponseWriter, r *http.Request, user *User, or
 		OrgID:        orgID,
 		ReportID:     reportID,
 		InvitedEmail: email,
+		Message:      message,
+		NotifyEmails: notifyEmails,
 		ExpiresAt:    now.Add(ttl).Format(time.RFC3339),
 		CreatedAt:    now.Format(time.RFC3339),
-		CanEdit:      true,
+		CanEdit:      canEdit,
 	}
 	if err := a.ereport.saveInvite(inv); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	link := a.inviteLandingURL(r, id, secret)
-	subject := "eReport invite"
-	body := fmt.Sprintf("You have been invited to collaborate on an eReport.\n\nOpen this link and enter the verification code sent to this mailbox:\n%s\n\nAccess expires at %s (UTC).\n", link, inv.ExpiresAt)
-	if err := a.mailer.Send(email, subject, body); err != nil {
-		a.logUnexpected(r, "ereport_invite_mail", "mail failed")
+	recipients := notifyEmails
+	if len(recipients) == 0 && email != "" {
+		recipients = []string{email}
+	}
+	for _, to := range recipients {
+		subject := "eReport invite"
+		var body string
+		if scope == inviteScopeReport && !canEdit {
+			subject = "eReport shared with you"
+			msg := message
+			if msg == "" {
+				msg = "You have been invited to view an eReport."
+			}
+			body = fmt.Sprintf("%s\n\nOpen this link to view the report (no sign-in required):\n%s\n\nAccess expires at %s (UTC).\n", msg, link, inv.ExpiresAt)
+		} else {
+			body = fmt.Sprintf("You have been invited to collaborate on an eReport.\n\nOpen this link and enter the verification code sent to this mailbox:\n%s\n\nAccess expires at %s (UTC).\n", link, inv.ExpiresAt)
+		}
+		if err := a.mailer.Send(to, subject, body); err != nil {
+			a.logUnexpected(r, "ereport_invite_mail", "mail failed")
+		}
 	}
 	a.auditEvent(r, "ereport_invite_create", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{
-		"invite": inv.public(),
-		"link":   link,
+		"invite":      inv.public(),
+		"link":        link,
+		"hash":        secret,
+		"emailsSent":  len(recipients),
+		"expiresAt":   inv.ExpiresAt,
+		"message":     message,
 	})
 }
 
@@ -120,12 +204,112 @@ func (a *App) ereportGetInviteHandler(w http.ResponseWriter, r *http.Request) {
 		"invite":   inv.public(),
 		"valid":    !expired,
 		"expired":  expired,
-		"needsOtp": inv.SessionHash == "",
+		"needsOtp": inviteNeedsOTP(inv) && !expired,
 		"canEdit":  inv.CanEdit && !expired,
 	})
 }
 
+func (a *App) ereportInviteViewReportHandler(w http.ResponseWriter, r *http.Request) {
+	inv, secret, ok := a.loadInviteWithSecretValue(w, r)
+	if !ok {
+		return
+	}
+	if inviteExpired(inv, time.Now().UTC()) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if inv.Scope != inviteScopeReport || inv.ReportID == "" {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if inviteNeedsOTP(inv) {
+		// Org-style email-bound invites still require the OTP session path.
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	meta, payload, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, inv.ReportID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	rewritten, _ := rewriteEreportImageURLs(payload, inv.ID, secret).(map[string]any)
+	if rewritten == nil {
+		rewritten = payload
+	}
+	writeJSON(w, http.StatusOK, map[string]any{
+		"meta":    meta,
+		"payload": rewritten,
+		"canEdit": false,
+		"isOwner": false,
+	})
+}
+
+func (a *App) ereportInviteViewImageHandler(w http.ResponseWriter, r *http.Request) {
+	inv, _, ok := a.loadInviteWithSecretValue(w, r)
+	if !ok {
+		return
+	}
+	if inviteExpired(inv, time.Now().UTC()) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if inv.Scope != inviteScopeReport || inviteNeedsOTP(inv) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	a.serveEreportImage(w, r, inv.OwnerUserID, inv.OrgID, inv.ReportID, r.PathValue("imageId"))
+}
+
+func rewriteEreportImageURLs(v any, inviteID, secret string) any {
+	switch t := v.(type) {
+	case map[string]any:
+		out := make(map[string]any, len(t))
+		for k, val := range t {
+			if k == "url" {
+				if s, ok := val.(string); ok {
+					if id := extractEreportImageID(s); id != "" {
+						out[k] = "/api/ereport/invites/" + inviteID + "/images/" + id + "?t=" + url.QueryEscape(secret)
+						continue
+					}
+				}
+			}
+			out[k] = rewriteEreportImageURLs(val, inviteID, secret)
+		}
+		return out
+	case []any:
+		out := make([]any, len(t))
+		for i, item := range t {
+			out[i] = rewriteEreportImageURLs(item, inviteID, secret)
+		}
+		return out
+	default:
+		return v
+	}
+}
+
+func extractEreportImageID(raw string) string {
+	path := strings.TrimSpace(raw)
+	if path == "" || !strings.Contains(path, "/images/") {
+		return ""
+	}
+	if i := strings.Index(path, "?"); i >= 0 {
+		path = path[:i]
+	}
+	parts := strings.Split(strings.Trim(path, "/"), "/")
+	for i := 0; i+1 < len(parts); i++ {
+		if parts[i] == "images" && validEreportID(parts[i+1]) {
+			return parts[i+1]
+		}
+	}
+	return ""
+}
+
 func (a *App) loadInviteWithSecret(w http.ResponseWriter, r *http.Request) (ereportInvite, bool) {
+	inv, _, ok := a.loadInviteWithSecretValue(w, r)
+	return inv, ok
+}
+
+func (a *App) loadInviteWithSecretValue(w http.ResponseWriter, r *http.Request) (ereportInvite, string, bool) {
 	id := r.PathValue("inviteId")
 	secret := strings.TrimSpace(r.URL.Query().Get("t"))
 	if secret == "" {
@@ -134,9 +318,9 @@ func (a *App) loadInviteWithSecret(w http.ResponseWriter, r *http.Request) (erep
 	inv, err := a.ereport.loadInvite(id)
 	if err != nil || !a.verifyInviteSecret(inv, secret) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
-		return ereportInvite{}, false
+		return ereportInvite{}, "", false
 	}
-	return inv, true
+	return inv, secret, true
 }
 
 func (a *App) ereportInviteOTPHandler(w http.ResponseWriter, r *http.Request) {

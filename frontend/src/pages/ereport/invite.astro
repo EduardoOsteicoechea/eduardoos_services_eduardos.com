@@ -5,12 +5,6 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport invite" page="ereport-invite">
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-tracker-cmd="upload" title="Abrir desde el dispositivo" aria-label="Abrir desde el dispositivo">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
-      </span>
-      Abrir
-    </button>
     <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">download</span>
@@ -50,6 +44,7 @@ import Layout from "../../layouts/Layout.astro";
   import {
     fetchInvitePreview,
     fetchInviteReport,
+    fetchInviteSharedReport,
     inviteImageUploadPath,
     refreshCsrf,
     rememberedCsrf,
@@ -100,6 +95,62 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
+      activeReportId = opts.reportId;
+      payload = reportPayload;
+      if (root instanceof HTMLElement) root.hidden = true;
+      if (editor instanceof HTMLElement) editor.hidden = false;
+      if (!(iframe instanceof HTMLIFrameElement)) return;
+      host?.destroy();
+      host = startTrackerHost(iframe, {
+        origin: window.location.origin,
+        uploadUrl: opts.uploadUrl,
+        csrf: rememberedCsrf(),
+        payload,
+        handlers: {
+          onCloudSave: (next) => {
+            if (!opts.canEdit) return;
+            payload = next;
+            void saveInviteReport(opts.reportId, {
+              payload: next,
+              tema: String(next.reportName || next.appTitle || "").trim(),
+            }).then((saved) => {
+              if (saved.status >= 300) {
+                showErrorModal({
+                  message: saved.data.message || "Could not save.",
+                  requestId: saved.data.request_id,
+                  details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
+                });
+              }
+            });
+          },
+          onError: (message) => showErrorModal({ message }),
+        },
+      });
+      iframe.src = TRACKER_SRC;
+      for (const command of pendingCmds.splice(0)) {
+        host.post(trackerCommandMessage(command));
+      }
+    };
+
+    const openSharedReport = async () => {
+      const res = await fetchInviteSharedReport(inviteId, secret);
+      if (res.status !== 200 || !res.data.payload) {
+        showErrorModal({
+          message: res.data.message || "Could not open the shared report.",
+          requestId: res.data.request_id,
+          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+        });
+        return;
+      }
+      setStatus("Shared report open (view only).", "ok");
+      mountTracker(res.data.payload, {
+        uploadUrl: "",
+        canEdit: false,
+        reportId: String(res.data.meta?.id || ""),
+      });
+    };
+
     const openTracker = async (reportId: string) => {
       await refreshCsrf();
       const res = await fetchInviteReport(reportId);
@@ -111,41 +162,11 @@ import Layout from "../../layouts/Layout.astro";
         });
         return;
       }
-      activeReportId = reportId;
-      payload = res.data.payload;
-      if (root instanceof HTMLElement) root.hidden = true;
-      if (editor instanceof HTMLElement) editor.hidden = false;
-      if (iframe instanceof HTMLIFrameElement) {
-        host?.destroy();
-        host = startTrackerHost(iframe, {
-          origin: window.location.origin,
-          uploadUrl: inviteImageUploadPath(reportId),
-          csrf: rememberedCsrf(),
-          payload,
-          handlers: {
-            onCloudSave: (next) => {
-              payload = next;
-              void saveInviteReport(reportId, {
-                payload: next,
-                tema: String(next.reportName || next.appTitle || "").trim(),
-              }).then((saved) => {
-                if (saved.status >= 300) {
-                  showErrorModal({
-                    message: saved.data.message || "Could not save.",
-                    requestId: saved.data.request_id,
-                    details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
-                  });
-                }
-              });
-            },
-            onError: (message) => showErrorModal({ message }),
-          },
-        });
-        iframe.src = TRACKER_SRC;
-        for (const command of pendingCmds.splice(0)) {
-          host.post(trackerCommandMessage(command));
-        }
-      }
+      mountTracker(res.data.payload, {
+        uploadUrl: inviteImageUploadPath(reportId),
+        canEdit: Boolean(res.data.canEdit),
+        reportId,
+      });
     };
 
     const paintReports = (reports: ReportCard[]) => {
@@ -176,6 +197,11 @@ import Layout from "../../layouts/Layout.astro";
       }
       if (preview.data.expired) {
         setStatus("This invite has expired.", "err");
+        return;
+      }
+      if (!preview.data.needsOtp) {
+        setStatus("Opening shared report…", "ok");
+        await openSharedReport();
         return;
       }
       setStatus("Enter the invited email to receive a one-time code.", "ok");

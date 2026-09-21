@@ -175,6 +175,32 @@ import Layout from "../../layouts/Layout.astro";
             </form>
             <p class="hint" data-invite-link hidden></p>
           </div>
+
+          <div data-org-panel-view="report-share" hidden>
+            <button class="btn" type="button" data-org-panel-back>Back to reports</button>
+            <h2 class="product-dash__section-title">Share report</h2>
+            <p class="hint" data-report-share-name></p>
+            <form class="ereport-hub__form" data-report-share-form>
+              <input type="hidden" name="reportId" data-report-share-id />
+              <label>
+                Duration (hours)
+                <input name="hours" type="number" min="1" max="720" value="24" required />
+              </label>
+              <label>
+                Invitation message
+                <textarea name="message" rows="3" maxlength="2000" required placeholder="Please review this eReport."></textarea>
+              </label>
+              <label>
+                Emails to notify (one per line)
+                <textarea name="emails" rows="4" required placeholder="person@company.com"></textarea>
+              </label>
+              <div class="ereport-hub__row">
+                <button class="btn btn--primary" type="submit">Create link and email</button>
+              </div>
+            </form>
+            <p class="hint">Anyone with the link + hash can view the report until it expires.</p>
+            <p class="hint" data-report-share-link hidden></p>
+          </div>
         </div>
       </div>
 
@@ -520,8 +546,9 @@ import Layout from "../../layouts/Layout.astro";
         const invite = document.createElement("button");
         invite.type = "button";
         invite.className = "btn";
-        invite.textContent = "Invite";
+        invite.textContent = "Share";
         invite.dataset.inviteReport = report.id;
+        invite.dataset.reportName = report.tema || report.id;
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn btn--red";
@@ -651,6 +678,11 @@ import Layout from "../../layouts/Layout.astro";
         return;
       }
       if (node.closest("[data-org-panel-back]")) {
+        const sharePanel = root.querySelector('[data-org-panel-view="report-share"]');
+        if (sharePanel instanceof HTMLElement && !sharePanel.hidden) {
+          showOrgPanel("reports");
+          return;
+        }
         resetOrgPanels();
         return;
       }
@@ -687,12 +719,18 @@ import Layout from "../../layouts/Layout.astro";
 
       const inviteBtn = node.closest("[data-invite-report]");
       if (inviteBtn instanceof HTMLElement && inviteBtn.dataset.inviteReport && activeOrgId) {
-        const email = window.prompt("Invite email (1 hour edit access)");
-        if (!email) return;
-        const res = await createReportInvite(activeOrgId, inviteBtn.dataset.inviteReport, email.trim());
-        const message = fail(res.status, res.data, "Invite sent.");
-        setBanner(root, message.text, message.kind);
-        if (res.data.link) window.alert(res.data.link);
+        const idInput = root.querySelector("[data-report-share-id]");
+        const nameEl = root.querySelector("[data-report-share-name]");
+        if (idInput instanceof HTMLInputElement) idInput.value = inviteBtn.dataset.inviteReport;
+        if (nameEl instanceof HTMLElement) {
+          nameEl.textContent = inviteBtn.dataset.reportName || inviteBtn.dataset.inviteReport;
+        }
+        const link = root.querySelector("[data-report-share-link]");
+        if (link instanceof HTMLElement) {
+          link.hidden = true;
+          link.replaceChildren();
+        }
+        showOrgPanel("report-share");
         return;
       }
 
@@ -869,6 +907,48 @@ import Layout from "../../layouts/Layout.astro";
         a.href = res.data.link;
         a.textContent = res.data.link;
         link.replaceChildren(a);
+        link.hidden = false;
+      }
+    });
+
+    root.querySelector("[data-report-share-form]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement) || !activeOrgId) return;
+      const data = new FormData(form);
+      const reportId = String(data.get("reportId") || "").trim();
+      const hours = Math.max(1, Math.min(720, Number(data.get("hours") || 24)));
+      const messageText = String(data.get("message") || "").trim();
+      const emails = String(data.get("emails") || "")
+        .split(/[\n,;]+/)
+        .map((e) => e.trim())
+        .filter(Boolean);
+      if (!reportId || !messageText || emails.length === 0) {
+        setHubError("Indica duración, mensaje y al menos un correo.");
+        return;
+      }
+      const res = await createReportInvite(activeOrgId, reportId, {
+        emails,
+        durationHours: hours,
+        message: messageText,
+      });
+      const message = fail(res.status, res.data, "Link creado y correos enviados.");
+      setBanner(root, message.text, message.kind);
+      setHubError(message.kind === "err" ? message.text : "");
+      const link = root.querySelector("[data-report-share-link]");
+      if (link instanceof HTMLElement && res.data.link) {
+        link.replaceChildren();
+        const a = document.createElement("a");
+        a.href = res.data.link;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = res.data.link;
+        link.append(a);
+        if (res.data.hash) {
+          const hash = document.createElement("span");
+          hash.textContent = `Hash: ${res.data.hash}`;
+          link.append(document.createElement("br"), hash);
+        }
         link.hidden = false;
       }
     });

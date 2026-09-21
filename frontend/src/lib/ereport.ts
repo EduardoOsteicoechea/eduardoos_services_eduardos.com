@@ -148,15 +148,30 @@ export function createOrgInvite(orgId: string, email: string, durationHours: num
   });
 }
 
-export function createReportInvite(orgId: string, reportId: string, email: string) {
-  return postJSON<{ invite?: EreportInvite; link?: string }>(`/ereport/orgs/${orgId}/reports/${reportId}/invites`, {
-    email,
-  });
+export function createReportInvite(
+  orgId: string,
+  reportId: string,
+  body: { emails: string[]; durationHours: number; message: string },
+) {
+  return postJSON<{
+    invite?: EreportInvite;
+    link?: string;
+    hash?: string;
+    emailsSent?: number;
+    expiresAt?: string;
+    message?: string;
+  }>(`/ereport/orgs/${orgId}/reports/${reportId}/invites`, body);
 }
 
 export function fetchInvitePreview(inviteId: string, secret: string) {
   return apiRequest<{ invite?: EreportInvite; valid?: boolean; expired?: boolean; needsOtp?: boolean; canEdit?: boolean }>(
     `/ereport/invites/${inviteId}?t=${encodeURIComponent(secret)}`,
+  );
+}
+
+export function fetchInviteSharedReport(inviteId: string, secret: string) {
+  return apiRequest<{ meta?: EreportMeta; payload?: EreportPayload; canEdit?: boolean }>(
+    `/ereport/invites/${inviteId}/report?t=${encodeURIComponent(secret)}`,
   );
 }
 

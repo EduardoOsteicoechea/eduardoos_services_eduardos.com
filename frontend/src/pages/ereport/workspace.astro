@@ -80,16 +80,25 @@ import Layout from "../../layouts/Layout.astro";
         <h2 id="ereport-share-title">Compartir</h2>
         <form data-share-form>
           <label>
-            Email
-            <input name="email" type="email" required />
+            Duración (horas)
+            <input name="hours" type="number" min="1" max="720" value="24" required />
           </label>
-          <button class="btn btn--primary" type="submit">Enviar invitación</button>
+          <label>
+            Mensaje de invitación
+            <textarea name="message" rows="3" maxlength="2000" required placeholder="Te comparto este eReport para revisión."></textarea>
+          </label>
+          <label>
+            Correos a enviar (uno por línea)
+            <textarea name="emails" rows="4" required placeholder="persona@empresa.com"></textarea>
+          </label>
+          <button class="btn btn--primary" type="submit">Crear link y enviar</button>
         </form>
         <ul class="ereport-list" data-share-list></ul>
-        <p class="hint">Las invitaciones expiran; el enlace completo aparece abajo al crearlas.</p>
+        <p class="hint">Cualquiera con el link + hash puede ver el reporte (solo lectura) hasta que expire.</p>
         <p class="hint" data-share-link hidden></p>
         <p class="ereport-hub__error" data-share-error hidden></p>
         <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-share-copy hidden>Copiar link</button>
           <button class="btn btn--primary" type="button" data-close-modal>Listo</button>
         </div>
       </div>
@@ -639,25 +648,43 @@ import Layout from "../../layouts/Layout.astro";
         setBanner(root, "Compartir requiere un reporte en la nube.", "err");
         return;
       }
-      const email = String(new FormData(form).get("email") || "").trim();
+      const data = new FormData(form);
+      const hours = Math.max(1, Math.min(720, Number(data.get("hours") || 24)));
+      const message = String(data.get("message") || "").trim();
+      const emails = String(data.get("emails") || "")
+        .split(/[\n,;]+/)
+        .map((e) => e.trim())
+        .filter(Boolean);
       const err = root.querySelector("[data-share-error]") || document.querySelector("[data-share-error]");
-      const res = await createReportInvite(orgId, reportId, email);
-      const message = reportFailure(copy, res.status, res.data, "Invite sent.");
-      if (message.kind === "err") {
-        setBanner(root, message.text, message.kind);
+      const copyBtn = root.querySelector("[data-share-copy]") || document.querySelector("[data-share-copy]");
+      if (!message || emails.length === 0) {
         if (err instanceof HTMLElement) {
           err.hidden = false;
-          err.textContent = message.text;
+          err.textContent = "Indica un mensaje y al menos un correo.";
+        }
+        return;
+      }
+      const res = await createReportInvite(orgId, reportId, {
+        emails,
+        durationHours: hours,
+        message,
+      });
+      const messageResult = reportFailure(copy, res.status, res.data, "Link creado y correos enviados.");
+      if (messageResult.kind === "err") {
+        setBanner(root, messageResult.text, messageResult.kind);
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = messageResult.text;
         }
         return;
       }
       if (err instanceof HTMLElement) err.hidden = true;
-      invited.add(email);
+      for (const email of emails) invited.add(email);
       const list = root.querySelector("[data-share-list]");
       if (list instanceof HTMLElement) {
         const li = document.createElement("li");
         const label = document.createElement("span");
-        label.textContent = email;
+        label.textContent = `${emails.join(", ")} · ${hours}h`;
         li.append(label);
         if (res.data.link) {
           const link = document.createElement("a");
@@ -672,10 +699,34 @@ import Layout from "../../layouts/Layout.astro";
       const linkBox = root.querySelector("[data-share-link]");
       if (linkBox instanceof HTMLElement && res.data.link) {
         linkBox.hidden = false;
-        linkBox.textContent = res.data.link;
+        linkBox.replaceChildren();
+        const linkText = document.createElement("a");
+        linkText.href = res.data.link;
+        linkText.target = "_blank";
+        linkText.rel = "noopener noreferrer";
+        linkText.textContent = res.data.link;
+        linkBox.append(linkText);
+        if (res.data.hash) {
+          const hashLine = document.createElement("span");
+          hashLine.textContent = `Hash: ${res.data.hash}`;
+          linkBox.append(document.createElement("br"), hashLine);
+        }
+        if (copyBtn instanceof HTMLButtonElement) {
+          copyBtn.hidden = false;
+          copyBtn.onclick = async () => {
+            try {
+              await navigator.clipboard.writeText(String(res.data.link || ""));
+              setBanner(root, "Link copiado.", "ok");
+            } catch {
+              setBanner(root, "No se pudo copiar el link.", "err");
+            }
+          };
+        }
       }
       form.reset();
-      setBanner(root, message.text, message.kind);
+      const hoursInput = form.elements.namedItem("hours");
+      if (hoursInput instanceof HTMLInputElement) hoursInput.value = "24";
+      setBanner(root, messageResult.text, messageResult.kind);
     });
   });
 </script>

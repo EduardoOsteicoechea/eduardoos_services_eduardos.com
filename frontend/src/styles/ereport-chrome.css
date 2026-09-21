@@ -291,12 +291,19 @@ html[data-page^="ereport"] .ereport-modal label {
   font-size: var(--font-sm);
 }
 
-html[data-page^="ereport"] .ereport-modal label input {
+html[data-page^="ereport"] .ereport-modal label input,
+html[data-page^="ereport"] .ereport-modal label textarea {
   align-self: stretch;
   min-width: 0;
   box-sizing: border-box;
   font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
   font-size: var(--font-sm);
+}
+
+html[data-page^="ereport"] .ereport-modal label textarea {
+  min-height: var(--textarea-min-height);
+  font-family: var(--font-family);
+  resize: vertical;
 }
 
 html[data-page^="ereport"] .ereport-modal .ereport-ids-panel {

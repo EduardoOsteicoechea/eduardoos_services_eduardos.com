@@ -255,14 +255,19 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain("data-ids-org");
     expect(workspaceSrc).toContain("fillIdsFields");
     expect(workspaceSrc).toContain("createReportInvite(");
+    expect(workspaceSrc).toContain('name="hours"');
+    expect(workspaceSrc).toContain('name="message"');
+    expect(workspaceSrc).toContain('name="emails"');
+    expect(workspaceSrc).toContain("data-share-copy");
   });
 
   it("wires invite HDS without clear-all and binds global font via window events", () => {
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
     expect(inviteSrc).not.toContain("clear-all");
     expect(inviteSrc).not.toContain("data-site-scale");
-    expect(inviteSrc).toContain('data-tracker-cmd="upload"');
+    expect(inviteSrc).not.toContain('data-tracker-cmd="upload"');
     expect(inviteSrc).toContain('data-tracker-cmd="save-export"');
+    expect(inviteSrc).toContain("fetchInviteSharedReport");
     expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');
     expect(inviteSrc).toContain('window.addEventListener("ereport-theme"');
   });
