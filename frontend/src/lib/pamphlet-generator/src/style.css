@@ -2711,9 +2711,24 @@ html[data-theme="light"] .pamphlet-pdf-page__canvas {
   display: block;
 }
 
+/*
+ * Toolbar glyph SVGs ship as #E3E3E3 (Material light). On light surfaces they
+ * vanish; force black ink in light and white ink in dark. Footer delete/approve
+ * keep their own invert-to-white filters below.
+ */
+.pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
+  filter: brightness(0);
+}
+
+html[data-theme="dark"] .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img,
+html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
+  filter: brightness(0) invert(1);
+}
+
 .pamphlet-edit-dock__btn--text {
   font-size: var(--font-size-sm, 0.875rem);
   font-weight: 700;
+  color: var(--color-text, #17171a);
 }
 
 .pamphlet-edit-dock__btn--delete {
