@@ -219,21 +219,35 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const headerMenu = requireElement<HTMLElement>("#pamphlet-header-menu");
 
     type ViewMode = "desktop" | "mobile" | "tablet";
-    /** Phone → stacked cols; tablet band → cols + left dock; desktop → PDF. */
+    /** Phone → cols; tablet portrait → cols; tablet landscape / desktop → PDF. */
     const mobileViewportMq = window.matchMedia("(max-width: 47.999rem)");
     const tabletViewportMq = window.matchMedia("(min-width: 48rem) and (max-width: 63.999rem)");
+    const landscapeMq = window.matchMedia("(orientation: landscape)");
+    const tabletTouchMq = window.matchMedia("(hover: none) and (pointer: coarse)");
     function preferredViewMode(): ViewMode {
         if (mobileViewportMq.matches) return "mobile";
-        if (tabletViewportMq.matches) return "tablet";
+        // Tablet width band: portrait = cols preview; landscape = PDF like desktop.
+        if (tabletViewportMq.matches) {
+            return landscapeMq.matches ? "desktop" : "tablet";
+        }
         return "desktop";
     }
     let viewMode: ViewMode = preferredViewMode();
     function isColsViewMode(mode: ViewMode = viewMode): boolean {
         return mode === "mobile" || mode === "tablet";
     }
+    /** Dock tracks visualViewport height on tablet portrait cols and tablet landscape PDF. */
+    function needsViewportDockHeight(mode: ViewMode = viewMode): boolean {
+        if (mode === "tablet") return true;
+        if (mode === "desktop" && tabletTouchMq.matches && !mobileViewportMq.matches) {
+            return true;
+        }
+        return false;
+    }
     appRoot.setAttribute("data-view-mode", viewMode);
     appRoot.style.setProperty("--mobile-view-scale", "1");
     appRoot.style.setProperty("--mobile-inv-scale", "1");
+    appRoot.style.setProperty("--mm-visual-boost", viewMode === "tablet" ? "2" : "1");
     appRoot.style.setProperty("--pamphlet-dock-vvh", "40rem");
     appRoot.style.setProperty("--pamphlet-dock-vvt", "0rem");
 
@@ -301,7 +315,11 @@ const mobileColumnWidthMm = 57.85;
 
 /** Keep tablet edit dock inside the visual viewport (keyboard-safe; rem height). */
 function syncTabletDockViewportHeight(): void {
-    if (viewMode !== "tablet") return;
+    if (!needsViewportDockHeight()) {
+        appRoot.removeAttribute("data-dock-vvh");
+        return;
+    }
+    appRoot.setAttribute("data-dock-vvh", "");
     const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
     const vv = window.visualViewport;
     const hPx = vv?.height ?? window.innerHeight;
@@ -314,11 +332,14 @@ function syncMobileViewScale(): void {
     if (!isColsViewMode()) {
         appRoot.style.setProperty("--mobile-view-scale", "1");
         appRoot.style.setProperty("--mobile-inv-scale", "1");
+        appRoot.style.setProperty("--mm-visual-boost", "1");
         if (viewMode !== "desktop") {
             main.style.marginBottom = "";
         }
         return;
     }
+    // Tablet portrait cols preview: 2× visual size; phone stays 1× fit.
+    appRoot.style.setProperty("--mm-visual-boost", viewMode === "tablet" ? "2" : "1");
     const padPx = 16;
     const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
     const dockPx = viewMode === "tablet" ? 18 * rootFs : 0;
@@ -959,6 +980,63 @@ function reflowAndReport(container: HTMLElement) {
     const leadSlots = Array.from(
         container.querySelectorAll<HTMLElement>(":scope > .pamphlet-lead-slot"),
     );
+    const structured = currentDoc?.type === "pamphlet_structured_images";
+
+    // Structured leads shrink even columns; keep body items in their source
+    // columns so lead insertion does not cascade col2→3→4 (white gaps).
+    if (structured) {
+        const byColumn: HTMLElement[][] = Array.from({ length: 8 }, () => []);
+        for (let i = 1; i <= 8; i++) {
+            const col = container.querySelector<HTMLElement>(
+                `:scope > .dumb-column.pamphlet-column-${i}`,
+            );
+            if (!col) continue;
+            byColumn[i - 1] = Array.from(
+                col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item"),
+            );
+        }
+        container.innerHTML = "";
+
+        const filledByColumn = new Map<number, number>();
+        let lastFilledColumn = 1;
+        for (let i = 1; i <= 8; i++) {
+            const col = document.createElement("div");
+            col.className = `dumb-column pamphlet-column-${i}`;
+            container.appendChild(col);
+            const items = byColumn[i - 1];
+            let filledMm = 0;
+            items.forEach((item, itemIndex) => {
+                const staleSpacer = item.nextElementSibling;
+                if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
+                    staleSpacer.remove();
+                }
+                const spacer = createItemSpacer();
+                const measured = measureBlockInSandbox(item, spacer);
+                col.appendChild(item);
+                if (itemIndex < items.length - 1) {
+                    col.appendChild(spacer);
+                    filledMm += measured.blockMm;
+                } else {
+                    filledMm += measured.itemMm;
+                }
+            });
+            ensureMeasureRoot().column.replaceChildren();
+            filledByColumn.set(i, filledMm);
+            if (items.length > 0) lastFilledColumn = i;
+        }
+        for (const slot of leadSlots) {
+            container.appendChild(slot);
+        }
+        placeColumnAddButton(container, filledByColumn, lastFilledColumn);
+        if (currentDoc) {
+            renderPageChrome(container, currentDoc);
+        }
+        requestAnimationFrame(() => {
+            syncSheetScale();
+        });
+        return;
+    }
+
     const items = Array.from(
         container.querySelectorAll<HTMLElement>(
             ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
@@ -3264,7 +3342,11 @@ on(viewDesktopBtn, "click", () => {
 });
 
 on(viewMobileBtn, "click", () => {
-    setViewMode(tabletViewportMq.matches ? "tablet" : "mobile");
+    if (mobileViewportMq.matches) {
+        setViewMode("mobile");
+    } else {
+        setViewMode("tablet");
+    }
 });
 
 on(templateBtn, "click", () => {
@@ -3283,6 +3365,35 @@ on(templateBtn, "click", () => {
 updatePrintAvailability();
 syncFixedChromeScale();
 applyViewMode(viewMode, { closeTray: false });
+
+function syncPreferredViewFromViewport(): void {
+    const preferred = preferredViewMode();
+    if (preferred === viewMode) {
+        syncTabletDockViewportHeight();
+        return;
+    }
+    // Follow orientation / breakpoint: portrait tablet → cols; landscape → PDF.
+    applyViewMode(preferred, { closeTray: false });
+}
+
+function onViewportModeMqChange(): void {
+    syncPreferredViewFromViewport();
+}
+if (typeof landscapeMq.addEventListener === "function") {
+    landscapeMq.addEventListener("change", onViewportModeMqChange);
+    disposers.push(() => landscapeMq.removeEventListener("change", onViewportModeMqChange));
+} else {
+    landscapeMq.addListener(onViewportModeMqChange);
+    disposers.push(() => landscapeMq.removeListener(onViewportModeMqChange));
+}
+if (typeof tabletViewportMq.addEventListener === "function") {
+    tabletViewportMq.addEventListener("change", onViewportModeMqChange);
+    disposers.push(() => tabletViewportMq.removeEventListener("change", onViewportModeMqChange));
+} else {
+    tabletViewportMq.addListener(onViewportModeMqChange);
+    disposers.push(() => tabletViewportMq.removeListener(onViewportModeMqChange));
+}
+
 on(window, "resize", () => {
     syncFixedChromeScale();
     syncSheetScale();

@@ -2985,7 +2985,7 @@
   }
 }
 
-/* Tablet: dock fixed left at visual-viewport height; cols sheet (not PDF) to the right */
+/* Tablet portrait: dock fixed left at visual-viewport height; cols sheet centered to the right */
 @media (min-width: 48rem) and (max-width: 63.999rem) {
   .pamphlet-app[data-view-mode="tablet"] .pamphlet-edit-dock:not([hidden]) {
     top: var(--pamphlet-dock-vvt, 0rem);
@@ -3003,6 +3003,33 @@
     margin-left: 18rem;
     padding-left: 0;
   }
+
+  /* Cols preview: center the stacked sheet in the area right of the dock */
+  .pamphlet-app[data-view-mode="tablet"] .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) {
+    padding-left: 18rem;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .pamphlet-app[data-view-mode="tablet"] .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Tablet portrait cols: 2× visual size (on top of fit scale) */
+.pamphlet-app[data-view-mode="tablet"] {
+  --mm-visual-boost: 2;
+}
+
+/* Tablet landscape / touch desktop PDF: same chrome as desktop, dock = visual viewport height */
+.pamphlet-app[data-dock-vvh] .pamphlet-edit-dock:not([hidden]) {
+  top: var(--pamphlet-dock-vvt, 0rem);
+  bottom: auto;
+  height: var(--pamphlet-dock-vvh);
+  max-height: var(--pamphlet-dock-vvh);
+  min-height: 0;
 }
 
 /* Mobile stacked sheet: highlight the item open in the edit dock */
