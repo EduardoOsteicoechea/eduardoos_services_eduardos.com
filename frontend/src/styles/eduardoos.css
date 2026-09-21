@@ -535,24 +535,13 @@ main > .diag{
 .article-page__body{
   gap: calc(1.25rem * 1.35 * 1.5);
   font-size: var(--font-size-md);
-  line-height: 1.8;
+  line-height: 1.15;
 }
 
 .article-page__body p{
   font-size: var(--font-size-md);
-  line-height: 1.8;
+  line-height: 1.15;
   text-wrap: pretty;
-}
-
-@media (min-width: 48rem) and (max-width: 63.999rem) {
-  .article-page__body {
-    gap: calc(1.25rem * 1.35 * 1.5);
-    line-height: calc(1.8 * 0.9);
-  }
-
-  .article-page__body p {
-    line-height: calc(1.8 * 0.9);
-  }
 }
 
 .article-page__body h2{
