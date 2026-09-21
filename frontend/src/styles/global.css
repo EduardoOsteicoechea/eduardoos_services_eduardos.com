@@ -156,7 +156,7 @@ a {
 }
 
 .app-header {
-  position: absolute;
+  position: fixed;
   z-index: var(--z-activity);
   display: flex;
   overflow: visible;
