@@ -80,6 +80,16 @@ import Layout from "../../layouts/Layout.astro";
   function appendBlock(host: HTMLElement, text: string, heading = false, meta = false) {
     const value = text.trim();
     if (!value) return;
+    if (!heading && !meta) {
+      for (const para of value.split(/\n\n+/)) {
+        const chunk = para.trim();
+        if (!chunk) continue;
+        const node = document.createElement("p");
+        node.textContent = chunk;
+        host.appendChild(node);
+      }
+      return;
+    }
     const node = document.createElement(heading ? "h2" : "p");
     if (meta) node.className = "article-page__meta";
     node.textContent = value;

@@ -311,7 +311,7 @@ function logApiFailure(
   });
 }
 
-async function apiSend<T>(
+export async function apiSend<T>(
   path: string,
   init: RequestInit = {},
   opts: ApiSendOpts = {},
