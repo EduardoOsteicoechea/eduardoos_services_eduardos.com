@@ -54,10 +54,11 @@ import Layout from "../../layouts/Layout.astro";
     type EreportPayload,
     type ReportCard,
   } from "../../lib/ereport";
-  import { isPublicEreportInvitePath, readInviteParams, TRACKER_SRC } from "../../lib/ereport-routes";
+  import { isPublicEreportInvitePath, readInviteParams, trackerIframeSrc } from "../../lib/ereport-routes";
   import {
     startTrackerHost,
     trackerCommandMessage,
+    trackerConfigMessage,
     resolveUiScale,
     siteIsDark,
     type TrackerCommand,
@@ -101,6 +102,12 @@ import Layout from "../../layouts/Layout.astro";
       if (root instanceof HTMLElement) root.hidden = true;
       if (editor instanceof HTMLElement) editor.hidden = false;
       if (!(iframe instanceof HTMLIFrameElement)) return;
+      const pushConfig = () => {
+        void refreshCsrf().then(() => {
+          if (!host) return;
+          host.post(trackerConfigMessage(opts.uploadUrl, rememberedCsrf()));
+        });
+      };
       host?.destroy();
       host = startTrackerHost(iframe, {
         origin: window.location.origin,
@@ -125,9 +132,12 @@ import Layout from "../../layouts/Layout.astro";
             });
           },
           onError: (message) => showErrorModal({ message }),
+          onNeedConfig: () => {
+            pushConfig();
+          },
         },
       });
-      iframe.src = TRACKER_SRC;
+      iframe.src = trackerIframeSrc();
       for (const command of pendingCmds.splice(0)) {
         host.post(trackerCommandMessage(command));
       }

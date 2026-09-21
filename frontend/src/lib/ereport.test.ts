@@ -10,6 +10,7 @@ import {
   readInviteParams,
   readPrettyEreportPath,
   TRACKER_SRC,
+  trackerIframeSrc,
   workspaceHref,
 } from "./ereport-routes";
 import { bumpUiScale, handleTrackerMessage, SITE_TEXT_SCALE_STEPS, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
@@ -309,11 +310,34 @@ describe("eReport workspace chrome", () => {
 
   it("cache-busts the tracker canvas from one shared constant", () => {
     expect(TRACKER_SRC).toMatch(/^\/ereport-tracker\.html\?v=\w+$/);
+    expect(trackerIframeSrc()).toMatch(/^\/ereport-tracker\.html\?v=\w+&_=\d+$/);
     for (const page of ["workspace", "invite"]) {
       const src = readFileSync(join(here, `../pages/ereport/${page}.astro`), "utf8");
-      expect(src).toContain("iframe.src = TRACKER_SRC");
+      expect(src).toContain("iframe.src = trackerIframeSrc()");
       expect(src).not.toContain('iframe.src = "/ereport-tracker.html"');
+      expect(src).toContain("onNeedConfig");
+      expect(src).toContain("trackerConfigMessage");
     }
+  });
+
+  it("routes need-config from the tracker to the host handler", () => {
+    let needed = 0;
+    const ok = handleTrackerMessage(
+      {
+        origin: "https://eduardoos.com",
+        data: { source: "ereport-tracker", type: "need-config" },
+      } as MessageEvent,
+      "https://eduardoos.com",
+      {
+        onCloudSave: () => undefined,
+        onError: () => undefined,
+        onNeedConfig: () => {
+          needed += 1;
+        },
+      },
+    );
+    expect(ok).toBe(true);
+    expect(needed).toBe(1);
   });
 
   it("tears down workspace bind keys on navigation", () => {

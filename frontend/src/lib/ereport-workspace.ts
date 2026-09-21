@@ -22,6 +22,8 @@ export type TrackerHostHandlers = {
   onCloudSave: (payload: Record<string, unknown>) => void;
   onError: (message: string) => void;
   onState?: (payload: Record<string, unknown>) => void;
+  /** Tracker asks the host to (re)send uploadUrl + CSRF when paste/upload runs without config. */
+  onNeedConfig?: () => void;
 };
 
 export type TrackerHost = {
@@ -115,6 +117,10 @@ export function handleTrackerMessage(
   }
   if (data.type === "error") {
     handlers.onError(String(data.message || "Tracker error"));
+    return true;
+  }
+  if (data.type === "need-config") {
+    handlers.onNeedConfig?.();
     return true;
   }
   return false;

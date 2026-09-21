@@ -65,6 +65,11 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("fileToDataUrl");
     expect(tracker).toContain("ingestImageFiles");
     expect(tracker).toContain("bindThumbSources");
+    expect(tracker).toContain("ensureImageUploadConfig");
+    expect(tracker).toContain("need-config");
+    expect(tracker).toContain("bindColumnImageDrop");
+    expect(tracker).toContain('data-act="pick-img"');
+    expect(tracker).toContain("img-pick");
     expect(tracker).toContain('document.addEventListener("paste"');
     expect(tracker).toContain("thumb-load-bar");
     expect(tracker).toContain("im.dataUrl || im.url");

@@ -163,12 +163,13 @@ import Layout from "../../layouts/Layout.astro";
     openLocalEreportFile,
     saveLocalEreportFile,
   } from "../../lib/ereport-local-file";
-  import { readPrettyEreportPath, TRACKER_SRC, workspaceHref } from "../../lib/ereport-routes";
+  import { readPrettyEreportPath, trackerIframeSrc, workspaceHref } from "../../lib/ereport-routes";
   import {
     resolveUiScale,
     siteIsDark,
     startTrackerHost,
     trackerCommandMessage,
+    trackerConfigMessage,
     trackerLoadMessage,
     type TrackerCommand,
     type TrackerHost,
@@ -293,10 +294,17 @@ import Layout from "../../layouts/Layout.astro";
     const attachHost = (nextPayload: EreportPayload) => {
       if (disposed || !(iframe instanceof HTMLIFrameElement)) return;
       if (saveTarget === "cloud" && (!orgId || !reportId)) return;
+      const uploadUrl = orgId && reportId ? ownerImageUploadPath(orgId, reportId) : "";
+      const pushConfig = () => {
+        void refreshCsrf().then(() => {
+          if (disposed || !host) return;
+          host.post(trackerConfigMessage(uploadUrl, rememberedCsrf()));
+        });
+      };
       host?.destroy();
       host = startTrackerHost(iframe, {
         origin: window.location.origin,
-        uploadUrl: orgId && reportId ? ownerImageUploadPath(orgId, reportId) : "",
+        uploadUrl,
         csrf: rememberedCsrf(),
         payload: nextPayload,
         handlers: {
@@ -304,9 +312,13 @@ import Layout from "../../layouts/Layout.astro";
             void persist(next as EreportPayload, { silent: true });
           },
           onError: (message) => setBanner(root, message, "err"),
+          onNeedConfig: () => {
+            pushConfig();
+          },
         },
       });
-      iframe.src = TRACKER_SRC;
+      // Bust cache so the iframe always reboots and receives a fresh config message.
+      iframe.src = trackerIframeSrc();
       for (const command of pendingCmds.splice(0)) {
         host.post(trackerCommandMessage(command));
       }

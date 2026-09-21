@@ -2150,6 +2150,38 @@ function onImagesSelected(sid, gid, iid, which, fileList) {
   void ingestImageFiles(sid, gid, iid, which, fileList);
 }
 
+function bindColumnImageDrop(col, sid, gid, iid, which) {
+  if (!(col instanceof HTMLElement)) return;
+  const hasFiles = (dt) => {
+    if (!dt) return false;
+    const types = dt.types ? Array.from(dt.types) : [];
+    return types.includes("Files");
+  };
+  col.addEventListener("dragenter", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    col.classList.add("is-drop-target");
+  });
+  col.addEventListener("dragover", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+    col.classList.add("is-drop-target");
+  });
+  col.addEventListener("dragleave", (e) => {
+    const related = e.relatedTarget;
+    if (related instanceof Node && col.contains(related)) return;
+    col.classList.remove("is-drop-target");
+  });
+  col.addEventListener("drop", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    col.classList.remove("is-drop-target");
+    const files = e.dataTransfer && e.dataTransfer.files;
+    if (files && files.length) void ingestImageFiles(sid, gid, iid, which, files);
+  });
+}
+
 function removeImage(sid, gid, iid, which, idx) {
   collectFromDom();
   const found = locateItem(sid, gid, iid);
@@ -2593,6 +2625,15 @@ function render() {
     const imgSol = card.querySelector(".img-sol");
     if (imgInc) imgInc.onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
     if (imgSol) imgSol.onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
+    card.querySelectorAll('[data-act="pick-img"]').forEach((btn) => {
+      btn.onclick = () => {
+        const which = btn.dataset.which === "solucion" ? "solucion" : "incidencia";
+        const input = which === "solucion" ? imgSol : imgInc;
+        if (input instanceof HTMLInputElement) input.click();
+      };
+    });
+    bindColumnImageDrop(card.querySelector(".col-incidencia"), sid, gid, iid, "incidencia");
+    bindColumnImageDrop(card.querySelector(".col-sol"), sid, gid, iid, "solucion");
     card.querySelectorAll(".thumb-del").forEach(btn => {
       btn.onclick = (e) => {
         e.stopPropagation();
