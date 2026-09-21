@@ -544,7 +544,7 @@ main > .diag{
 .article-page__body{
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
+  gap: 1.75rem;
   font-size: var(--font-size-md);
   line-height: 1.5rem;
 }
@@ -582,6 +582,10 @@ main > .diag{
   .article-page {
     max-width: 37.5rem;
     padding-inline: 0;
+  }
+
+  .article-page__body {
+    gap: 2.25rem;
   }
 }
 
