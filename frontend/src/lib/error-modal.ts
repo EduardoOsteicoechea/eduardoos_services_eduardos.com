@@ -1,9 +1,12 @@
+import { mustLog } from "./dev-log";
+
 export type ErrorModalCopy = {
   title: string;
   close: string;
   copyMessage: string;
   copyDetails: string;
   copyDebug: string;
+  downloadEpam: string;
   copied: string;
 };
 
@@ -13,6 +16,7 @@ const en: ErrorModalCopy = {
   copyMessage: "Copy message",
   copyDetails: "Copy details",
   copyDebug: "Copy debug",
+  downloadEpam: "Download .epam",
   copied: "Copied",
 };
 
@@ -22,6 +26,7 @@ const es: ErrorModalCopy = {
   copyMessage: "Copiar mensaje",
   copyDetails: "Copiar detalles",
   copyDebug: "Copiar depuración",
+  downloadEpam: "Descargar .epam",
   copied: "Copiado",
 };
 
@@ -35,6 +40,8 @@ export type ErrorPayload = {
   details?: string;
   debug?: string;
 };
+
+let lastPayload: ErrorPayload | null = null;
 
 function textOf(el: Element | null): HTMLElement | null {
   return el instanceof HTMLElement ? el : null;
@@ -83,16 +90,43 @@ async function copyText(value: string): Promise<void> {
   area.remove();
 }
 
-export function showErrorModal(payload: ErrorPayload): void {
-  console.error("[error-modal]", {
+function downloadErrorEpam(payload: ErrorPayload): void {
+  const body = {
+    kind: "error-snapshot",
+    createdAt: new Date().toISOString(),
     message: payload.message,
-    requestId: payload.requestId,
-    details: payload.details,
-    hasDebug: Boolean(payload.debug),
-  });
+    requestId: payload.requestId || "",
+    details: payload.details || (payload.requestId ? `request_id=${payload.requestId}` : ""),
+    debug: payload.debug || "",
+  };
+  const blob = new Blob([`${JSON.stringify(body, null, 2)}\n`], { type: "application/x-epam" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const stamp = payload.requestId || String(Date.now());
+  link.href = url;
+  link.download = `error-${stamp}.epam`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** Global error toast (Layout `#error-modal`). Same API for every site. */
+export function showErrorModal(payload: ErrorPayload): void {
+  lastPayload = payload;
+  if (mustLog) {
+    console.log("[error-toast]", {
+      message: payload.message,
+      requestId: payload.requestId,
+      details: payload.details,
+      hasDebug: Boolean(payload.debug),
+    });
+  }
   const modal = document.getElementById("error-modal");
   if (!(modal instanceof HTMLElement)) {
-    console.error("[error-modal] #error-modal missing from Layout");
+    if (mustLog) {
+      console.log("[error-toast] #error-modal missing from Layout");
+    }
     return;
   }
   const copy = errorModalCopy();
@@ -106,6 +140,7 @@ export function showErrorModal(payload: ErrorPayload): void {
   const copyMessage = textOf(modal.querySelector("[data-error-copy-message]"));
   const copyDetails = textOf(modal.querySelector("[data-error-copy-details]"));
   const copyDebug = textOf(modal.querySelector("[data-error-copy-debug]"));
+  const downloadEpam = textOf(modal.querySelector("[data-error-download-epam]"));
   const closeBtn = textOf(modal.querySelector("[data-error-close]"));
   if (message) {
     message.textContent = payload.message;
@@ -129,6 +164,9 @@ export function showErrorModal(payload: ErrorPayload): void {
   if (copyDetails) {
     copyDetails.textContent = copy.copyDetails;
   }
+  if (downloadEpam) {
+    downloadEpam.textContent = copy.downloadEpam;
+  }
   if (closeBtn) {
     closeBtn.setAttribute("aria-label", copy.close);
   }
@@ -138,6 +176,9 @@ export function showErrorModal(payload: ErrorPayload): void {
   }
   closeBtn?.focus();
 }
+
+/** Alias for the global error toast. */
+export const showErrorToast = showErrorModal;
 
 declare global {
   interface Window {
@@ -164,12 +205,10 @@ export function startErrorModal(): void {
   const copyMessage = textOf(modal.querySelector("[data-error-copy-message]"));
   const copyDetails = textOf(modal.querySelector("[data-error-copy-details]"));
   const copyDebug = textOf(modal.querySelector("[data-error-copy-debug]"));
+  const downloadEpam = textOf(modal.querySelector("[data-error-download-epam]"));
   modal.addEventListener("click", (event) => {
     const node = event.target instanceof Element ? event.target.closest("button") : null;
     if (!node) {
-      if (event.target === modal) {
-        closeErrorModal();
-      }
       return;
     }
     if (node.matches("[data-error-close]")) {
@@ -193,6 +232,17 @@ export function startErrorModal(): void {
       void copyText(debug).then(() => {
         if (copyDebug) copyDebug.textContent = copy.copied;
       });
+    }
+    if (node.matches("[data-error-download-epam]")) {
+      if (lastPayload) {
+        downloadErrorEpam(lastPayload);
+      }
+      if (downloadEpam) {
+        downloadEpam.textContent = copy.copied;
+        window.setTimeout(() => {
+          if (downloadEpam) downloadEpam.textContent = copy.downloadEpam;
+        }, 1200);
+      }
     }
   });
   document.addEventListener("keydown", (event) => {

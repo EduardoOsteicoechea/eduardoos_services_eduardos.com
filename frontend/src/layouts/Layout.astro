@@ -377,8 +377,8 @@ const jsonLdString =
         </form>
       </aside>
     </div>
-    <div id="error-modal" class="error-modal" hidden>
-      <div class="error-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="error-modal-title">
+    <div id="error-modal" class="error-modal error-toast" hidden>
+      <div class="error-modal-dialog" role="alertdialog" aria-modal="true" aria-labelledby="error-modal-title">
         <header class="error-modal-toolbar">
           <h2 id="error-modal-title">Something went wrong</h2>
           <button class="icon-btn" type="button" data-error-close aria-label="Close">
@@ -390,6 +390,7 @@ const jsonLdString =
         <div class="error-modal-actions">
           <button type="button" data-error-copy-message>Copy message</button>
           <button type="button" data-error-copy-details>Copy details</button>
+          <button type="button" data-error-download-epam>Download .epam</button>
         </div>
         <div class="error-modal-box" data-error-debug hidden></div>
         <button type="button" data-error-copy-debug hidden>Copy debug</button>

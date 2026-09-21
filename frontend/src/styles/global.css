@@ -1738,12 +1738,17 @@ section.diag .panel:not(form) {
 .error-modal {
   position: fixed;
   z-index: var(--z-modal);
-  inset: 0;
+  top: 0.1rem;
+  left: 0.1rem;
+  right: 0.1rem;
+  bottom: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-padding);
-  background: var(--color-bg);
+  align-items: flex-start;
+  justify-content: stretch;
+  padding: 0;
+  gap: var(--rail-gap);
+  background: transparent;
+  pointer-events: none;
 }
 
 .error-modal[hidden],
@@ -1752,23 +1757,26 @@ section.diag .panel:not(form) {
 }
 
 .error-modal-dialog {
-  width: var(--modal-width);
-  max-width: calc(100% - 2rem);
-  max-height: calc(100% - 2rem);
+  flex: 1;
+  min-width: 0;
+  max-height: calc(var(--content-basis, 64rem) * 0.45);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: var(--space-padding);
+  gap: var(--rail-gap);
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
+  pointer-events: auto;
+  box-shadow: 0 0.25rem 0.75rem color-mix(in srgb, var(--color-text) 18%, transparent);
 }
 
 .error-modal-toolbar {
   display: flex;
   align-items: center;
-  gap: var(--space-padding);
-  margin: 0 0 var(--space-margin);
+  gap: var(--rail-gap);
+  margin: 0;
   flex-shrink: 0;
 }
 
@@ -1778,8 +1786,14 @@ section.diag .panel:not(form) {
   font-size: var(--font-size-lg);
 }
 
+.error-modal-toolbar [data-error-close] {
+  flex-shrink: 0;
+  margin-left: auto;
+  border-radius: 50%;
+}
+
 .error-modal-box {
-  margin: 0 0 var(--space-margin);
+  margin: 0;
   padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -1787,13 +1801,15 @@ section.diag .panel:not(form) {
   font-size: var(--font-size-sm);
   overflow-y: auto;
   overflow-x: hidden;
+  flex-shrink: 1;
+  min-height: 0;
 }
 
 .error-modal-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-padding);
-  margin: 0 0 var(--space-margin);
+  gap: var(--rail-gap);
+  margin: 0;
   flex-shrink: 0;
 }
 

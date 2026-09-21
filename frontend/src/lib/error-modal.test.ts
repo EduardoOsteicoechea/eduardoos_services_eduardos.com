@@ -3,8 +3,8 @@ import { closeErrorModal, showErrorModal, startErrorModal } from "./error-modal"
 
 function mountModal(): void {
   document.body.innerHTML = `
-    <div id="error-modal" class="error-modal" hidden>
-      <div class="error-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="error-modal-title">
+    <div id="error-modal" class="error-modal error-toast" hidden>
+      <div class="error-modal-dialog" role="alertdialog" aria-modal="true" aria-labelledby="error-modal-title">
         <header class="error-modal-toolbar">
           <h2 id="error-modal-title">Something went wrong</h2>
           <button class="icon-btn" type="button" data-error-close aria-label="Close">close</button>
@@ -14,6 +14,7 @@ function mountModal(): void {
         <div class="error-modal-actions">
           <button type="button" data-error-copy-message>Copy message</button>
           <button type="button" data-error-copy-details>Copy details</button>
+          <button type="button" data-error-download-epam>Download .epam</button>
         </div>
         <div class="error-modal-box" data-error-debug hidden></div>
         <button type="button" data-error-copy-debug hidden>Copy debug</button>
@@ -25,7 +26,7 @@ function mountModal(): void {
   startErrorModal();
 }
 
-describe("error modal", () => {
+describe("error toast", () => {
   beforeEach(() => {
     document.documentElement.lang = "en";
     mountModal();
@@ -33,6 +34,7 @@ describe("error modal", () => {
 
   afterEach(() => {
     document.body.innerHTML = "";
+    vi.restoreAllMocks();
   });
 
   it("shows safe text without rendering HTML", () => {
@@ -67,6 +69,41 @@ describe("error modal", () => {
     await vi.waitFor(() => expect(writeText).toHaveBeenCalledWith("request_id=abc12345"));
   });
 
+  it("downloads an .epam snapshot for local copy", () => {
+    const createObjectURL = vi.fn(() => "blob:error-epam");
+    const revokeObjectURL = vi.fn();
+    Object.defineProperty(URL, "createObjectURL", { configurable: true, value: createObjectURL });
+    Object.defineProperty(URL, "revokeObjectURL", { configurable: true, value: revokeObjectURL });
+    let downloaded = "";
+    const click = vi.fn();
+    const realCreate = document.createElement.bind(document);
+    vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
+      const el = realCreate(tag);
+      if (tag === "a") {
+        Object.defineProperty(el, "click", {
+          configurable: true,
+          value: () => {
+            downloaded = (el as HTMLAnchorElement).download;
+            click();
+          },
+        });
+      }
+      return el;
+    });
+
+    showErrorModal({
+      message: "Could not reach the API.",
+      requestId: "rid-epam-1",
+      details: "error=internal_error",
+    });
+    document.querySelector("[data-error-download-epam]")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+
+    expect(createObjectURL).toHaveBeenCalled();
+    expect(click).toHaveBeenCalled();
+    expect(downloaded).toBe("error-rid-epam-1.epam");
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:error-epam");
+  });
+
   it("closes on Escape and traps focus", () => {
     showErrorModal({ message: "Safe message", requestId: "abc12345" });
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
@@ -74,7 +111,7 @@ describe("error modal", () => {
 
     showErrorModal({ message: "Again", requestId: "abc12345" });
     const close = document.querySelector("[data-error-close]");
-    const last = document.querySelector("[data-error-copy-details]");
+    const last = document.querySelector("[data-error-download-epam]");
     (last as HTMLButtonElement).focus();
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab", bubbles: true }));
     expect(document.activeElement).toBe(close);
@@ -86,5 +123,6 @@ describe("error modal", () => {
     showErrorModal({ message: "Fallo", requestId: "req-es-01" });
     expect(document.getElementById("error-modal-title")?.textContent).toBe("Algo salió mal");
     expect(document.querySelector("[data-error-copy-message]")?.textContent).toBe("Copiar mensaje");
+    expect(document.querySelector("[data-error-download-epam]")?.textContent).toBe("Descargar .epam");
   });
 });
