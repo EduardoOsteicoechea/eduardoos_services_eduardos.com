@@ -78,6 +78,8 @@ import {
     syncImageItemFromDom,
     syncItemContentFromTextarea,
     parseItemNotes,
+    parseStyleIndexes,
+    applyStyledContent,
 } from "./pamphlet_io";
 import {
     FOOTER_COLUMN,
@@ -217,8 +219,8 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const headerMenu = requireElement<HTMLElement>("#pamphlet-header-menu");
 
     type ViewMode = "desktop" | "mobile";
-    /** Narrow / phone viewports start in stacked mobile layout (letter sheet is desktop-only). */
-    const mobileViewportMq = window.matchMedia("(max-width: 900px)");
+    /** Narrow / phone viewports start in stacked mobile layout. Tablet (48rem+) uses PDF desktop. */
+    const mobileViewportMq = window.matchMedia("(max-width: 47.999rem)");
     function preferredViewMode(): ViewMode {
         return mobileViewportMq.matches ? "mobile" : "desktop";
     }
@@ -1496,7 +1498,34 @@ editDock = setupEditDock(editDockRoot, {
     },
     findBodyItemContainer,
     activateChromeEdit: (doc, loc) => activateEditAtChrome(doc, loc),
+    highlightBodyItem: (loc) => highlightMobileEditItem(loc),
+    syncLiveBodyContent: (loc, content) => syncMobileLiveContent(loc, content),
 });
+
+function highlightMobileEditItem(loc: LastEditedElement | null): void {
+    main.querySelectorAll<HTMLElement>(".pamphlet-item.is-editing").forEach((el) => {
+        el.classList.remove("is-editing");
+    });
+    if (!loc || loc.column < 1 || loc.column > 8) return;
+    const el = findBodyItemContainer(loc);
+    if (el) {
+        el.classList.add("is-editing");
+        if (viewMode === "mobile") {
+            el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        }
+    }
+}
+
+function syncMobileLiveContent(loc: LastEditedElement, content: string): void {
+    if (viewMode !== "mobile") return;
+    const el = findBodyItemContainer(loc);
+    if (!el || el.getAttribute("data-item-type") === "image") return;
+    const inner = el.firstElementChild as HTMLElement | null;
+    if (!inner) return;
+    const styles = parseStyleIndexes(el.getAttribute("data-style-indexes"));
+    const notes = parseItemNotes(el.getAttribute("data-notes"));
+    applyStyledContent(inner, content, styles, notes);
+}
 
 function commitDocument(data: PamphletStructure, openEdit: boolean): void {
     if (!hasEditableSession()) {

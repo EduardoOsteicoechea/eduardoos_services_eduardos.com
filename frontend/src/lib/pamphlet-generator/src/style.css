@@ -2926,7 +2926,7 @@
   }
 }
 
-/* Phone: fixed 12.5rem tray flush to viewport top, above header menu */
+/* Phone: fixed 12.5rem tray flush to viewport top; sheet scrolls below it */
 @media (max-width: 47.999rem) {
   .pamphlet-workspace {
     position: relative;
@@ -2947,10 +2947,14 @@
     max-height: 12.5rem;
     min-height: 12.5rem;
     z-index: calc(var(--z-activity, 20) + 5);
-    border-radius: 0;
+  2950|    border-radius: 0;
     border-left: 0;
     border-right: 0;
     border-top: 0;
+  }
+
+  .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
+    margin-top: 12.5rem;
   }
 
   .pamphlet-edit-dock__body {
@@ -2979,6 +2983,25 @@
   .pamphlet-app[data-view-mode="mobile"] .pamphlet-pdf-stage {
     display: none;
   }
+}
+
+/* Tablet: dock fixed left; sheet/PDF sit to the right (not under the dock) */
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
+    margin-left: 18rem;
+  }
+
+  .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) .pamphlet-pdf-stage {
+    margin-left: 18rem;
+    padding-left: 0;
+  }
+}
+
+/* Mobile stacked sheet: highlight the item open in the edit dock */
+.pamphlet-app[data-view-mode="mobile"] .pamphlet-item.is-editing {
+  outline: var(--border-width, 0.0625rem) solid var(--color-accent, #1976d2);
+  outline-offset: 0.125rem;
+  background: color-mix(in srgb, var(--color-accent, #1976d2) 14%, transparent);
 }
 
 /* Mobile view mode (stacked columns): hide PDF stage on wider viewports too */

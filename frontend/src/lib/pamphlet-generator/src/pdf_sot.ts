@@ -145,15 +145,30 @@ function surfacePreviewError(
     message: string,
     extras: { status?: number; requestId?: string; body?: string; cause?: unknown },
 ): void {
-    const details = [
-        extras.status != null ? `HTTP ${extras.status}` : null,
-        extras.requestId ? `request_id=${extras.requestId}` : null,
-        extras.body ? `body=${bodySnippet(extras.body)}` : null,
+    // Soft failures (abort, timeout, superseded preview) must not spam the global modal —
+    // the editor keeps working and a later preview usually succeeds.
+    const causeMsg =
         extras.cause instanceof Error
             ? extras.cause.message
             : extras.cause != null
               ? String(extras.cause)
-              : null,
+              : "";
+    if (
+        extras.status === 0 ||
+        /abort|timeout|superseded|preview aborted/i.test(`${message} ${causeMsg}`)
+    ) {
+        log("preview.soft_error", {
+            message,
+            status: extras.status ?? null,
+            requestId: extras.requestId ?? null,
+        });
+        return;
+    }
+    const details = [
+        extras.status != null ? `HTTP ${extras.status}` : null,
+        extras.requestId ? `request_id=${extras.requestId}` : null,
+        extras.body ? `body=${bodySnippet(extras.body)}` : null,
+        causeMsg || null,
     ]
         .filter(Boolean)
         .join("\n");
@@ -319,6 +334,15 @@ export class PamphletPdfSot {
             }
         } catch (err) {
             if (this.destroyed) return;
+            // Newer preview supersedes this failure — stay quiet.
+            if (this.previewQueued || seq !== this.previewSeq) {
+                log("flush.stale_error_ignored", {
+                    seq,
+                    current: this.previewSeq,
+                    queued: this.previewQueued,
+                });
+                return;
+            }
             const message =
                 err instanceof Error ? err.message : "No se pudo generar la vista previa PDF.";
             log("flush.error", { seq, message });
@@ -366,7 +390,20 @@ export class PamphletPdfSot {
             throw e;
         }
 
+        // Timed-out / aborted fetch — do not treat as a user-facing failure.
+        if (status === 0) {
+            const e = new Error("Preview aborted");
+            e.name = "PamphletPreviewSurfaced";
+            throw e;
+        }
+
         if (status < 200 || status >= 300) {
+            // A newer preview is already queued — skip the modal for this stale failure.
+            if (this.previewQueued || seq !== this.previewSeq) {
+                const e = new Error("Preview superseded");
+                e.name = "PamphletPreviewSurfaced";
+                throw e;
+            }
             const safeMsg =
                 (typeof data?.message === "string" && data.message) ||
                 (typeof data?.error === "string" && data.error) ||

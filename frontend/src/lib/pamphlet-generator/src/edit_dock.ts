@@ -70,6 +70,10 @@ export type EditDockHost = {
     openNotesModal: (detail: EditDockNotesRequest) => Promise<void>;
     findBodyItemContainer: (loc: LastEditedElement) => HTMLElement | null;
     activateChromeEdit: (doc: PamphletStructure, loc: LastEditedElement) => void;
+    /** Mobile stacked sheet: highlight the item being edited. */
+    highlightBodyItem: (loc: LastEditedElement | null) => void;
+    /** Mobile stacked sheet: paint live text into the DOM item. */
+    syncLiveBodyContent: (loc: LastEditedElement, content: string) => void;
 };
 
 type EditDockSession = {
@@ -190,6 +194,7 @@ export function setupEditDock(
         imagePanel.hidden = true;
         fileInput.value = "";
         host.setSelected(null, null);
+        host.highlightBodyItem(null);
         setIdle(true);
         if (isPersistent()) {
             showShell();
@@ -234,6 +239,8 @@ export function setupEditDock(
         updateItemContent(current, session.loc, value);
         const withId = host.ensureDocumentId(current);
         host.setDoc(withId);
+        host.syncLiveBodyContent(session.loc, value);
+        host.highlightBodyItem(session.loc);
         host.schedulePersist();
         host.schedulePreview();
         log("live-text", {
@@ -274,10 +281,10 @@ export function setupEditDock(
 
         const item = getBodyItemFromDoc(current, loc);
         if (!item) {
-            host.setError("No se encontró el elemento en el documento.");
-            openApiErrorModal("No se encontró el elemento seleccionado en el panfleto.", {
-                details: `column=${loc.column} index=${loc.index} kind=${kindHint || "(none)"}`,
-            });
+            // Hit/DOM race after reflow — do not spam the global error modal.
+            host.setError(
+                `No se encontró el elemento (columna ${loc.column}, índice ${loc.index}).`,
+            );
             return;
         }
 
@@ -294,6 +301,7 @@ export function setupEditDock(
         current.last_edited_element = { column: loc.column, index: loc.index };
         host.setDoc(host.ensureDocumentId(current));
         host.setSelected(loc.column, loc.index);
+        host.highlightBodyItem(loc);
 
         showShell();
         setIdle(false);
