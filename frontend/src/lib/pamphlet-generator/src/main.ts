@@ -812,8 +812,7 @@ async function tryAutoloadCloudPamphlet(): Promise<void> {
 
 /** Content column width in mm — same as CSS --column-content-width / PamphletColWidthMm. */
 const COLUMN_CONTENT_WIDTH_MM = 57.85;
-/** Vertical gap between items (CSS --item-gap-height). */
-const ITEM_GAP_HEIGHT_MM = 2.5;
+/** Vertical gap between items (CSS --item-gap-height) is measured live via spacers. */
 
 /**
  * Convert layout px → mm using the measure column’s real CSS mm width.
@@ -957,13 +956,12 @@ function placeColumnAddButton(
 
     const { newItemMm, buttonMm } = measureAddControlsMm(host);
     let colIdx = lastFilledColumn;
-    let filled = filledByColumn.get(colIdx) ?? 0;
+    // filledByColumn already stores content mm (no trailing item-gap).
+    let filledContent = filledByColumn.get(colIdx) ?? 0;
 
     while (colIdx <= 8) {
         const max = maxHeightForColumn(colIdx);
-        // Strip trailing item-gap from filled (last item has no spacer under it).
-        const filledContent = filled > 0 ? Math.max(0, filled - ITEM_GAP_HEIGHT_MM) : 0;
-        if (filledContent + newItemMm + buttonMm <= max) {
+        if (filledContent + newItemMm + buttonMm <= max + PACK_FIT_EPSILON_MM) {
             const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
             if (col) {
                 col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
@@ -972,8 +970,51 @@ function placeColumnAddButton(
             return;
         }
         colIdx++;
-        filled = 0;
+        filledContent = 0;
     }
+}
+
+/**
+ * PDF soft-floor allowance (~one body line). FE packing used to overflow a column
+ * a few mm early, leaving empty space at the bottom while the next item sat in the
+ * following column — visible as "col 3 has a piece of col 2".
+ */
+const PACK_FIT_EPSILON_MM = 2.5;
+
+/** Stable fingerprint of body columns for migration / densify persist checks. */
+function columnFingerprint(doc: PamphletStructure): string {
+    return JSON.stringify(
+        (
+            [
+                "column_1",
+                "column_2",
+                "column_3",
+                "column_4",
+                "column_5",
+                "column_6",
+                "column_7",
+                "column_8",
+            ] as const
+        ).map((key) =>
+            (doc[key] ?? []).map((item) =>
+                item.type === "image"
+                    ? { t: "image", h: item.height_mm }
+                    : { t: item.type, c: (item.content || "").slice(0, 120), h: item.height_mm },
+            ),
+        ),
+    );
+}
+
+/** Write packed DOM columns back into currentDoc so PDF SoT matches the densify. */
+function syncCurrentDocColumnsFromDom(container: HTMLElement): void {
+    if (!currentDoc) return;
+    const packed = serializePamphlet(
+        container,
+        currentDoc.last_edited_element,
+        currentDoc,
+    );
+    currentDoc = packed;
+    currentHeader = { ...packed.header };
 }
 
 function reflowAndReport(container: HTMLElement) {
@@ -1028,6 +1069,7 @@ function reflowAndReport(container: HTMLElement) {
             container.appendChild(slot);
         }
         placeColumnAddButton(container, filledByColumn, lastFilledColumn);
+        syncCurrentDocColumnsFromDom(container);
         if (currentDoc) {
             renderPageChrome(container, currentDoc);
         }
@@ -1037,6 +1079,8 @@ function reflowAndReport(container: HTMLElement) {
         return;
     }
 
+    // Simple pamphlet: densify reading order (col1→…→col8) so earlier columns
+    // fill before spilling — fixes empty bottoms with orphaned next-column text.
     const items = Array.from(
         container.querySelectorAll<HTMLElement>(
             ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
@@ -1044,101 +1088,46 @@ function reflowAndReport(container: HTMLElement) {
     );
     container.innerHTML = "";
 
-    const report = {
-        config: {
-            page2ColHeightMm: columnContentHeightMm,
-            page1RightColHeightMm, // cols 1–2: −header −gutter
-            page1LeftColHeightMm, // cols 7–8: −footer gutter −footer
-            columnWidth: "57.85mm",
-            pxToMmFactor: 25.4 / 96,
-            heightSource: "pamphlet-measure-root sandbox (57.85mm, pre-transform)",
-        },
-        columns: [] as {
-            columnIndex: number;
-            itemCount: number;
-            filledHeightMm: number;
-            maxHeightMm: number;
-            remainingSpaceMm: number;
-        }[],
-        itemTrace: [] as {
-            globalIndex: number;
-            column: number;
-            itemPx: number;
-            itemMm: number;
-            spacerPx: number;
-            spacerMm: number;
-            blockMm: number;
-            filledBeforeMm: number;
-            filledAfterMm: number;
-            maxColHeightMm: number;
-            overflowed: boolean;
-            preview: string;
-        }[],
-        totalItemsProcessed: items.length,
-    };
+    const filledByColumn = new Map<number, number>();
 
     function createAndAppendColumn() {
-        const index = container.querySelectorAll(
-            ":scope > .dumb-column[class*='pamphlet-column-']",
-        ).length + 1;
+        const index =
+            container.querySelectorAll(":scope > .dumb-column[class*='pamphlet-column-']")
+                .length + 1;
         const col = document.createElement("div");
         col.className = `dumb-column pamphlet-column-${index}`;
         container.appendChild(col);
         return col;
     }
 
-    function pushColumnSummary(index: number, itemCount: number, filledMm: number): void {
-        const maxHeightMm = maxHeightForColumn(index);
-        report.columns.push({
-            columnIndex: index,
-            itemCount,
-            filledHeightMm: Number(filledMm.toFixed(2)),
-            maxHeightMm,
-            remainingSpaceMm: Number((maxHeightMm - filledMm).toFixed(2)),
-        });
-    }
-
     let currentColumnDiv = createAndAppendColumn();
     let currentColumnFilledMm = 0;
     let currentColumnItemsCount = 0;
+    let trailingGapMm = 0;
     let columnIndex = 1;
 
-    items.forEach((item, globalIndex) => {
-        // Drop a stale spacer if this item was still paired in the previous layout
+    items.forEach((item) => {
         const staleSpacer = item.nextElementSibling;
         if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
             staleSpacer.remove();
         }
 
         const spacer = createItemSpacer();
-        // Measure in dedicated mm sandbox (not the on-screen scaled sheet).
         const measured = measureBlockInSandbox(item, spacer);
-        const { itemPx, spacerPx, itemMm, spacerMm, blockMm } = measured;
-        const filledBeforeMm = currentColumnFilledMm;
+        const { itemMm, spacerMm, blockMm } = measured;
         const currentMaxMm = maxHeightForColumn(columnIndex);
-        // Filled so far includes a trailing item-gap after the previous item; that gap is
-        // removed when the column ends. Fit the next item against content height only, or
-        // cols 1–6 leave ~2.5mm+ empty at the bottom and look under-packed.
-        const filledWithoutTrailingGap =
+        // Content height only (trailing gap is not part of the final column).
+        const filledContent =
             currentColumnItemsCount > 0
-                ? Math.max(0, currentColumnFilledMm - ITEM_GAP_HEIGHT_MM)
+                ? Math.max(0, currentColumnFilledMm - trailingGapMm)
                 : 0;
         const wouldOverflow =
-            currentColumnItemsCount > 0 && filledWithoutTrailingGap + itemMm > currentMaxMm;
-        const preview = (item.textContent ?? "").trim().slice(0, 48);
+            currentColumnItemsCount > 0 &&
+            filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
 
         if (wouldOverflow && columnIndex < 8) {
-            // Previous column's last item must not keep a spacer underneath.
-            const strippedMm = stripTrailingItemSpacer(currentColumnDiv);
-            currentColumnFilledMm -= strippedMm;
-            const prevLast = report.itemTrace.at(-1);
-            if (prevLast && prevLast.column === columnIndex && strippedMm > 0) {
-                prevLast.filledAfterMm = Number(currentColumnFilledMm.toFixed(3));
-                prevLast.spacerPx = 0;
-                prevLast.spacerMm = 0;
-                prevLast.blockMm = Number(prevLast.itemMm.toFixed(3));
-            }
-            pushColumnSummary(columnIndex, currentColumnItemsCount, currentColumnFilledMm);
+            stripTrailingItemSpacer(currentColumnDiv);
+            filledByColumn.set(columnIndex, filledContent);
 
             columnIndex++;
             currentColumnDiv = createAndAppendColumn();
@@ -1147,47 +1136,23 @@ function reflowAndReport(container: HTMLElement) {
 
             currentColumnFilledMm = blockMm;
             currentColumnItemsCount = 1;
+            trailingGapMm = spacerMm;
         } else {
-            // Spec 035: past col 8 capacity, keep packing into col 8 (CSS clips).
-            // Never create column_9+ that serializePamphlet would drop.
+            // Past col 8 capacity: keep packing into col 8 (CSS / PDF clips).
             currentColumnDiv.appendChild(item);
             currentColumnDiv.appendChild(spacer);
-            currentColumnFilledMm += blockMm;
+            currentColumnFilledMm = filledContent + blockMm;
             currentColumnItemsCount++;
+            trailingGapMm = spacerMm;
         }
-
-        const appliedMaxMm = maxHeightForColumn(columnIndex);
-        const entry = {
-            globalIndex,
-            column: columnIndex,
-            itemPx: Number(itemPx.toFixed(2)),
-            itemMm: Number(itemMm.toFixed(3)),
-            spacerPx: Number(spacerPx.toFixed(2)),
-            spacerMm: Number(spacerMm.toFixed(3)),
-            blockMm: Number(blockMm.toFixed(3)),
-            filledBeforeMm: Number(filledBeforeMm.toFixed(3)),
-            filledAfterMm: Number(currentColumnFilledMm.toFixed(3)),
-            maxColHeightMm: appliedMaxMm,
-            overflowed: wouldOverflow,
-            preview,
-        };
-        report.itemTrace.push(entry);
     });
 
-    // Clear sandbox so live sheet is the only owner of content nodes.
     ensureMeasureRoot().column.replaceChildren();
 
     if (currentColumnItemsCount > 0) {
-        currentColumnFilledMm -= stripTrailingItemSpacer(currentColumnDiv);
-        // Trace filledAfter for the final item should match column summary (no trailing spacer).
-        const lastTrace = report.itemTrace.at(-1);
-        if (lastTrace && lastTrace.column === columnIndex) {
-            lastTrace.filledAfterMm = Number(currentColumnFilledMm.toFixed(3));
-            lastTrace.spacerPx = 0;
-            lastTrace.spacerMm = 0;
-            lastTrace.blockMm = Number(lastTrace.itemMm.toFixed(3));
-        }
-        pushColumnSummary(columnIndex, currentColumnItemsCount, currentColumnFilledMm);
+        stripTrailingItemSpacer(currentColumnDiv);
+        const filledContent = Math.max(0, currentColumnFilledMm - trailingGapMm);
+        filledByColumn.set(columnIndex, filledContent);
     }
 
     while (
@@ -1200,54 +1165,47 @@ function reflowAndReport(container: HTMLElement) {
         container.appendChild(slot);
     }
 
-    const filledByColumn = new Map<number, number>();
-    for (const col of report.columns) {
-        filledByColumn.set(col.columnIndex, col.filledHeightMm);
-    }
     const lastFilledColumn =
-        report.columns.filter((c) => c.itemCount > 0).at(-1)?.columnIndex ?? 1;
+        [...filledByColumn.entries()].filter(([, mm]) => mm > 0).at(-1)?.[0] ?? 1;
     placeColumnAddButton(container, filledByColumn, lastFilledColumn);
+
+    syncCurrentDocColumnsFromDom(container);
 
     if (currentDoc) {
         renderPageChrome(container, currentDoc);
     }
 
-    // Readable column text for debugging (not nested object dumps).
-    const columnPayload = serializePamphlet(
-        container,
-        currentDoc?.last_edited_element ?? { column: 1, index: 0 },
-        currentDoc,
-    );
-    const lines: string[] = ["[pamphlet] column text"];
-    for (const key of [
-        "column_1",
-        "column_2",
-        "column_3",
-        "column_4",
-        "column_5",
-        "column_6",
-        "column_7",
-        "column_8",
-    ] as const) {
-        const items = columnPayload[key] ?? [];
-        lines.push(`=== ${key} (${items.length}) ===`);
-        if (items.length === 0) {
-            lines.push("(empty)");
-            continue;
-        }
-        items.forEach((item, i) => {
-            if (item.type === "image") {
-                lines.push(`[${i}] image height_mm=${item.height_mm}`);
-                return;
+    if (mustLog) {
+        const lines: string[] = ["[pamphlet] column text"];
+        for (const key of [
+            "column_1",
+            "column_2",
+            "column_3",
+            "column_4",
+            "column_5",
+            "column_6",
+            "column_7",
+            "column_8",
+        ] as const) {
+            const colItems = currentDoc?.[key] ?? [];
+            lines.push(`=== ${key} (${colItems.length}) ===`);
+            if (colItems.length === 0) {
+                lines.push("(empty)");
+                continue;
             }
-            const text = (item.content || "").replace(/\s+/g, " ").trim();
-            const preview = text.length > 160 ? `${text.slice(0, 160)}…` : text;
-            lines.push(`[${i}] ${item.type}: ${preview || "(blank)"}`);
-        });
+            colItems.forEach((entry, i) => {
+                if (entry.type === "image") {
+                    lines.push(`[${i}] image height_mm=${entry.height_mm}`);
+                    return;
+                }
+                const text = (entry.content || "").replace(/\s+/g, " ").trim();
+                const preview = text.length > 160 ? `${text.slice(0, 160)}…` : text;
+                lines.push(`[${i}] ${entry.type}: ${preview || "(blank)"}`);
+            });
+        }
+        console.log(lines.join("\n"));
     }
-    console.log(lines.join("\n"));
 
-    // After chrome/grid resolve, refresh scroll gap after reflow.
     requestAnimationFrame(() => {
         syncSheetScale();
     });
@@ -1333,16 +1291,7 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
-    const before = JSON.stringify({
-        c1: data.column_1?.[0]?.type,
-        c2: data.column_2?.[0]?.type,
-        c3: data.column_3?.[0]?.type,
-        c4: data.column_4?.[0]?.type,
-        c5: data.column_5?.[0]?.type,
-        c6: data.column_6?.[0]?.type,
-        c7: data.column_7?.[0]?.type,
-        c8: data.column_8?.[0]?.type,
-    });
+    const before = columnFingerprint(data);
     // Temporarily force simple pamphlet: structured lead columns are unreliable.
     let migrated = migrateStructuredLeadsToEvenColumns(data);
     if (migrated.type === "pamphlet_structured_images") {
@@ -1362,22 +1311,13 @@ function renderDocument(data: PamphletStructure, openEdit: boolean): void {
     reflowAndReport(main);
     updatePrintAvailability();
     syncSheetScale();
-    const after = JSON.stringify({
-        c1: migrated.column_1?.[0]?.type,
-        c2: migrated.column_2?.[0]?.type,
-        c3: migrated.column_3?.[0]?.type,
-        c4: migrated.column_4?.[0]?.type,
-        c5: migrated.column_5?.[0]?.type,
-        c6: migrated.column_6?.[0]?.type,
-        c7: migrated.column_7?.[0]?.type,
-        c8: migrated.column_8?.[0]?.type,
-    });
-    // Persist lead-column migration so the next cloud/open reload stays on 2/4/6/8.
+    const after = currentDoc ? columnFingerprint(currentDoc) : before;
+    // Persist strip / densify so PDF SoT and the next open keep the packed columns.
     if (before !== after && hasEditableSession()) {
         schedulePersist();
     }
     if (openEdit) {
-        activateEditAt(migrated, migrated.last_edited_element);
+        activateEditAt(currentDoc ?? migrated, (currentDoc ?? migrated).last_edited_element);
     }
 }
 
