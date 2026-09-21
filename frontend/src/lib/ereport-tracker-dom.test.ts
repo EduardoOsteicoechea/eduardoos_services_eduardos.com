@@ -92,7 +92,7 @@ describe("tracker canvas authoring", () => {
 });
 
 describe("tracker validation criteria", () => {
-  it("adds criteria that fan out to every item, and removes them again", async () => {
+  it("adds criteria chips and keeps them removable", async () => {
     const w = await boot();
     const addCriterion = (label: string) => {
       const input = w.document.getElementById("criteria-add-input") as HTMLInputElement;
@@ -102,11 +102,44 @@ describe("tracker validation criteria", () => {
     addCriterion("RVT2025");
     addCriterion("RVT2026");
     expect(all(w, ".criteria-chip").length).toBe(2);
-    expect(all(w, ".item-card")[0].querySelectorAll(".status-criteria-row").length).toBe(2);
 
     click(all(w, '.criteria-chip [data-act="crit-remove"]')[0]);
     expect(all(w, ".criteria-chip").length).toBe(1);
-    expect(all(w, ".item-card")[0].querySelectorAll(".status-criteria-row").length).toBe(1);
+  });
+});
+
+describe("tracker checklist status", () => {
+  it("derives reject / warning / approved from checklist checks", async () => {
+    const w = await boot();
+    const card = () => all(w, ".item-card")[0];
+    expect(card().classList.contains("is-reprobado")).toBe(true);
+
+    click(card().querySelector('[data-act="item-tab"][data-tab="checklist"]'));
+    click(card().querySelector('[data-act="add-check"]'));
+    click(card().querySelector('[data-act="add-check"]'));
+    expect(card().querySelectorAll(".checklist-row").length).toBe(2);
+    expect(card().classList.contains("is-reprobado")).toBe(true);
+
+    click(card().querySelectorAll('[data-act="toggle-check"]')[0]);
+    expect(card().classList.contains("is-none")).toBe(true);
+
+    click(card().querySelectorAll('[data-act="toggle-check"]')[1]);
+    expect(card().classList.contains("is-aprobado")).toBe(true);
+  });
+
+  it("opens product history from section and group concept buttons", async () => {
+    const w = await boot();
+    click(w.document.querySelector('.section-title-main [data-act="product-history"]'));
+    expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(true);
+    (w.document.getElementById("history-text") as HTMLTextAreaElement).value = "Section history";
+    click(w.document.getElementById("history-save"));
+    expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(false);
+
+    click(w.document.querySelector('.group-head-main [data-act="product-history"]'));
+    expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(true);
+    (w.document.getElementById("history-text") as HTMLTextAreaElement).value = "Item history";
+    click(w.document.getElementById("history-save"));
+    expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(false);
   });
 });
 

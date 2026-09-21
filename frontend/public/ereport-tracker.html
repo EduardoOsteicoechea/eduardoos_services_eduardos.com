@@ -493,9 +493,165 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   display: inline-flex; align-items: center; justify-content: center;
 }
 
+.concept-btn {
+  flex: 0 0 auto;
+  width: 1.9rem; height: 1.9rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--ink);
+  border: 0.0625rem solid var(--line); border-radius: var(--radius);
+  cursor: pointer;
+}
+.concept-btn:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); color: var(--warning); }
+.concept-btn .material-icons { font-size: 1.05rem; }
+.section-title-main .concept-btn,
+.group-head-main .concept-btn { width: 1.5rem; height: 1.5rem; }
+.section-title-main .concept-btn .material-icons,
+.group-head-main .concept-btn .material-icons { font-size: 0.95rem; }
+
+.item-status-badge {
+  flex: 0 0 auto;
+  width: 1.25rem; height: 1.25rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius);
+  border: 0.0625rem solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  line-height: 1;
+}
+.item-status-badge .material-icons { font-size: 0.9rem; }
+.item-status-badge.is-aprobado { background: var(--success); border-color: var(--success); color: #fff; }
+.item-status-badge.is-reprobado { background: var(--danger); border-color: var(--danger); color: #fff; }
+.item-status-badge.is-none { background: var(--warning); border-color: var(--warning); color: #000; }
+
+.item-body-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: stretch;
+  width: 100%;
+}
+.item-side-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+  padding: 0.15rem 0;
+}
+.item-side-tab {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 0.55rem 0.3rem;
+  min-height: 6.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  line-height: 1.1;
+}
+.item-side-tab.is-active {
+  color: var(--ink);
+  background: var(--card);
+  border-color: var(--ink);
+  box-shadow: inset 0.15rem 0 0 var(--warning);
+}
+.item-tab-panel { min-width: 0; }
+.item-tab-panel[hidden] { display: none !important; }
+
+.checklist-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 5.5rem;
+}
+.checklist-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.checklist-toggle {
+  flex: 0 0 auto;
+  width: 1.5rem; height: 1.5rem; padding: 0;
+  border-radius: 50%;
+  border: 0.125rem solid var(--line);
+  background: transparent;
+  color: transparent;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.checklist-toggle.is-checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+.checklist-toggle .material-icons { font-size: 0.95rem; }
+.checklist-label {
+  flex: 1;
+  min-width: 0;
+  height: var(--control-height, 2rem);
+  padding: 0.125rem 0.375rem;
+  border: 0.0625rem solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+}
+.checklist-label:focus {
+  outline: none;
+  border-color: var(--line);
+  background: var(--surface);
+}
+.checklist-row .danger {
+  flex: 0 0 auto;
+  width: 1.35rem; height: 1.35rem; padding: 0;
+}
+.checklist-add {
+  align-self: flex-start;
+  width: 2rem; height: 2rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #1565c0; color: #fff; border: 0.0625rem solid #1565c0;
+  border-radius: var(--radius); cursor: pointer;
+}
+.checklist-add:hover { filter: brightness(1.08); }
+.checklist-add .material-icons { font-size: 1.15rem; }
+.checklist-empty {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.history-modal-body { display: flex; flex-direction: column; gap: 0.6rem; }
+.history-modal-body textarea {
+  width: 100%;
+  min-height: 10rem;
+  resize: vertical;
+  padding: 0.55rem 0.65rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.history-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
 .item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
   padding: 0;
   align-items: stretch;
@@ -740,7 +896,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .modal-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; gap: 0.5rem; }
 
 @media (max-width: 68rem) {
-  .item-row { grid-template-columns: 1fr auto; }
+  .item-row { grid-template-columns: 1fr; }
   .qa-pair { grid-template-columns: 1fr; }
   .qa-half + .qa-half { border-left: none; border-top: none; }
   .meta-bar { grid-template-columns: 1fr; }
@@ -877,7 +1033,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     </div>
     <div class="howto-modal-body">
       <ol>
-        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> add per-issue review rows. Add a <strong>main section</strong> or a <strong>section open issue</strong> from the section header.</li>
+        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> label the report. Use the <strong>concept</strong> (lightbulb) button on a section or subsection to edit <strong>product history</strong>. Each issue has <strong>Issue / action</strong> and a <strong>Checklist</strong> tab — status is approved / warning / reject from checklist completion.</li>
         <li>Usá los iconos del menú superior del sitio para tamaño de fuente, cargar <strong>.ereport</strong>, limpiar, ver progreso o <strong>guardar todo</strong>. El tema claro/oscuro sigue el interruptor del menú global del sitio.</li>
         <li>El sidebar derecho navega por cada incidencia (tooltip: subartículo + nombre).</li>
         <li>Al guardar se exportan <strong>.ereport + HTML + PDF</strong>. Las imágenes van en base64 dentro del .ereport.</li>
@@ -921,9 +1077,26 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     </div>
   </div>
 </div>
+
+<div class="modal" id="history-modal" role="dialog" aria-modal="true" aria-labelledby="history-title">
+  <div class="modal-card modal-card-sm">
+    <div class="modal-head">
+      <h2 id="history-title">Product history</h2>
+      <button type="button" class="icon-btn" id="history-close" title="Cerrar" aria-label="Cerrar"><span class="material-icons">close</span></button>
+    </div>
+    <div class="history-modal-body">
+      <label for="history-text" class="hint">Concept / product history for this section</label>
+      <textarea id="history-text" rows="10" placeholder="Describe the product history / concept for this section…"></textarea>
+      <div class="history-modal-actions">
+        <button type="button" class="secondary" id="history-cancel">Cancel</button>
+        <button type="button" id="history-save">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
-<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "groups": [{"id": "group-1", "title": "General", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}]}]}</script>
+<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "productHistory": "", "groups": [{"id": "group-1", "title": "General", "productHistory": "", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "checklist": [], "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}], "items": []}]}</script>
 <script src="/vendor/html2canvas.min.js"></script>
 <script src="/vendor/jspdf.umd.min.js"></script>
 <script>
@@ -1025,6 +1198,15 @@ function fromDateTimeLocalValue(raw) {
   return s;
 }
 
+function normalizeChecklist(list) {
+  if (!Array.isArray(list)) return [];
+  return list.map((c) => ({
+    id: (c && c.id) || uid("check"),
+    label: String((c && (c.label != null ? c.label : c.text)) || "").trim() || "UX Test",
+    checked: !!(c && c.checked)
+  }));
+}
+
 function normalizeItem(it) {
   const sol = it.imagesSolucion != null ? it.imagesSolucion : (it.images || []);
   const criteriaStatus = {};
@@ -1041,6 +1223,7 @@ function normalizeItem(it) {
     fechaIncidencia: it.fechaIncidencia || "",
     status: it.status || "",
     criteriaStatus,
+    checklist: normalizeChecklist(it.checklist),
     solucion: it.solucion || "",
     fechaSolucion: it.fechaSolucion || "",
     imagesIncidencia: it.imagesIncidencia || it.imagesQueja || [],
@@ -1073,8 +1256,12 @@ function normalizeState(data) {
   }
   (data.sections || []).forEach(sec => {
     if (!Array.isArray(sec.groups)) sec.groups = [];
+    if (sec.productHistory == null) sec.productHistory = "";
+    else sec.productHistory = String(sec.productHistory);
     sec.items = (sec.items || []).map(normalizeItem);
     sec.groups.forEach(grp => {
+      if (grp.productHistory == null) grp.productHistory = "";
+      else grp.productHistory = String(grp.productHistory);
       grp.items = (grp.items || []).map(normalizeItem);
     });
   });
@@ -1165,17 +1352,24 @@ function refreshReportCode(opts) {
 }
 
 function effectiveStatus(item) {
-  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
-  if (!labels.length) return item.status || "";
-  const map = item.criteriaStatus || {};
-  const values = labels.map((label) => map[label] || "");
-  if (values.some((v) => !v)) return item.status || "";
-  if (values.every((v) => v === "no_aplica")) return "no_aplica";
-  if (values.some((v) => v === "reprobado")) return "reprobado";
-  const hasApproved = values.some((v) => v === "aprobado");
-  const onlyApprovedOrDisabled = values.every((v) => v === "aprobado" || v === "no_aplica");
-  if (hasApproved && onlyApprovedOrDisabled) return "aprobado";
-  return item.status || "";
+  const list = Array.isArray(item.checklist) ? item.checklist : [];
+  if (!list.length) return "reprobado";
+  const checked = list.filter((c) => !!c.checked).length;
+  if (checked === 0) return "reprobado";
+  if (checked === list.length) return "aprobado";
+  return ""; /* warning / partial */
+}
+
+function statusBadgeIcon(status) {
+  if (status === "aprobado") return "check";
+  if (status === "reprobado") return "close";
+  return "warning";
+}
+
+function statusBadgeTitle(status) {
+  if (status === "aprobado") return "Approved — all checklist items checked";
+  if (status === "reprobado") return "Reject — no checklist items checked";
+  return "Warning — checklist incomplete";
 }
 
 function renderCriteriaEditor() {
@@ -1402,15 +1596,112 @@ function collectFromDom() {
     item.solucion = readInplace(card.querySelector(".inplace-solucion"));
     item.fechaSolucion = fromDateTimeLocalValue(card.querySelector(".fecha-solucion")?.value);
     if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
+    if (!Array.isArray(item.checklist)) item.checklist = [];
+    card.querySelectorAll(".checklist-row").forEach((row) => {
+      const cid = row.dataset.checkId;
+      const entry = item.checklist.find((c) => c.id === cid);
+      if (!entry) return;
+      const labelEl = row.querySelector(".checklist-label");
+      if (labelEl) entry.label = String(labelEl.value || "").trim() || "UX Test";
+      entry.checked = row.querySelector(".checklist-toggle")?.classList.contains("is-checked") || false;
+    });
+    item.status = effectiveStatus(item);
   });
 }
 
-function setStatus(sid, gid, iid, status) {
+let historyCtx = null;
+const itemTabById = new Map();
+
+function openProductHistory(kind, sid, gid) {
+  collectFromDom();
+  historyCtx = { kind, sid, gid: gid || "" };
+  let text = "";
+  let title = "Product history";
+  if (kind === "section") {
+    const sec = (state.sections || []).find((s) => s.id === sid);
+    if (!sec) return;
+    text = sec.productHistory || "";
+    title = "Product history — " + (sec.title || "Section");
+  } else {
+    const sec = (state.sections || []).find((s) => s.id === sid);
+    const grp = sec && (sec.groups || []).find((g) => g.id === gid);
+    if (!grp) return;
+    text = grp.productHistory || "";
+    title = "Product history — " + (grp.title || "Section item");
+  }
+  const modal = document.getElementById("history-modal");
+  const titleEl = document.getElementById("history-title");
+  const area = document.getElementById("history-text");
+  if (titleEl) titleEl.textContent = title;
+  if (area) area.value = text;
+  modal.classList.add("open");
+  area?.focus();
+}
+
+function closeProductHistory() {
+  historyCtx = null;
+  document.getElementById("history-modal")?.classList.remove("open");
+}
+
+function saveProductHistory() {
+  if (!historyCtx) return;
+  const area = document.getElementById("history-text");
+  const text = area ? String(area.value || "") : "";
+  if (historyCtx.kind === "section") {
+    const sec = (state.sections || []).find((s) => s.id === historyCtx.sid);
+    if (sec) sec.productHistory = text;
+  } else {
+    const sec = (state.sections || []).find((s) => s.id === historyCtx.sid);
+    const grp = sec && (sec.groups || []).find((g) => g.id === historyCtx.gid);
+    if (grp) grp.productHistory = text;
+  }
+  closeProductHistory();
+  toast("Product history saved.");
+  updateStatus();
+}
+
+function setItemTab(iid, tab) {
+  itemTabById.set(iid, tab === "checklist" ? "checklist" : "issue");
+  collectFromDom();
+  render();
+}
+
+function addChecklistItem(sid, gid, iid) {
   collectFromDom();
   const found = locateItem(sid, gid, iid);
   if (!found) return;
-  found.item.status = found.item.status === status ? "" : status;
+  if (!Array.isArray(found.item.checklist)) found.item.checklist = [];
+  found.item.checklist.push({ id: uid("check"), label: "UX Test", checked: false });
+  itemTabById.set(iid, "checklist");
+  found.item.status = effectiveStatus(found.item);
   render();
+}
+
+function toggleChecklistItem(sid, gid, iid, cid) {
+  collectFromDom();
+  const found = locateItem(sid, gid, iid);
+  if (!found || !Array.isArray(found.item.checklist)) return;
+  const entry = found.item.checklist.find((c) => c.id === cid);
+  if (!entry) return;
+  entry.checked = !entry.checked;
+  found.item.status = effectiveStatus(found.item);
+  itemTabById.set(iid, "checklist");
+  render();
+}
+
+function removeChecklistItem(sid, gid, iid, cid) {
+  collectFromDom();
+  const found = locateItem(sid, gid, iid);
+  if (!found || !Array.isArray(found.item.checklist)) return;
+  found.item.checklist = found.item.checklist.filter((c) => c.id !== cid);
+  found.item.status = effectiveStatus(found.item);
+  itemTabById.set(iid, "checklist");
+  render();
+}
+
+function setStatus(sid, gid, iid, status) {
+  /* Status is derived from checklist; kept for host/legacy no-ops. */
+  void sid; void gid; void iid; void status;
 }
 
 function setCriteriaStatus(sid, gid, iid, label, status) {
@@ -1441,6 +1732,7 @@ function addSection() {
     id,
     title: n + ". New section",
     kind: "funcionalidades",
+    productHistory: "",
     items: [],
     groups: []
   });
@@ -1470,6 +1762,7 @@ function addGroup(sid) {
   sec.groups.push({
     id,
     title: (sec.kind === "subarticulos" ? "Nuevo subartículo " : "Nueva subsección ") + n,
+    productHistory: "",
     items: [normalizeItem({ id: uid(id) })]
   });
   collapseState.sections.delete(sid);
@@ -1833,69 +2126,81 @@ function renderStatusTrio(active, btnClass, dataActAttr) {
   `).join("");
 }
 
+function renderChecklist(item) {
+  const list = Array.isArray(item.checklist) ? item.checklist : [];
+  const rows = list.map((c) => `
+    <div class="checklist-row" data-check-id="${escapeAttr(c.id)}">
+      <button type="button" class="checklist-toggle${c.checked ? " is-checked" : ""}" data-act="toggle-check" title="${c.checked ? "Uncheck" : "Check"}" aria-pressed="${c.checked ? "true" : "false"}" aria-label="${c.checked ? "Uncheck" : "Check"} ${escapeAttr(c.label)}">
+        ${mi("check")}
+      </button>
+      <input type="text" class="checklist-label" value="${escapeAttr(c.label)}" maxlength="120" aria-label="Checklist item label" />
+      <button type="button" class="danger" data-act="del-check" title="Remove checklist item" aria-label="Remove checklist item">${mi("delete")}</button>
+    </div>
+  `).join("");
+  return `
+    <div class="checklist-panel" aria-label="Issue checklist">
+      ${rows || `<p class="checklist-empty">Add UX checks to approve this issue.</p>`}
+      <button type="button" class="checklist-add" data-act="add-check" title="Add checklist item" aria-label="Add checklist item">${mi("add")}</button>
+    </div>
+  `;
+}
+
 function renderItem(sec, grp, item) {
   const eff = effectiveStatus(item);
   const tone = statusToneClass(eff);
   const collapsed = isCollapsed("items", item.id);
-  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
-  const critMap = item.criteriaStatus || {};
-  const criteriaBlock = labels.length ? `
-        <div class="status-criteria" aria-label="Validation criteria">
-          ${labels.map((label) => `
-            <div class="status-criteria-row" data-crit-label="${escapeAttr(label)}">
-              <span class="status-criteria-label" title="${escapeAttr(label)}">${escapeHtml(label)}</span>
-              <div class="status-box">
-                ${renderStatusTrio(critMap[label] || "", "btn-status-crit", "data-crit-act")}
-              </div>
-            </div>
-          `).join("")}
-        </div>` : "";
+  const tab = itemTabById.get(item.id) === "checklist" ? "checklist" : "issue";
+  const badgeClass = statusToneClass(eff).trim() || "is-none";
   return `
-  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${escapeAttr(item.id)}" data-section="${escapeAttr(sec.id)}" data-group="${escapeAttr(grp.id)}" data-item="${escapeAttr(item.id)}">
+  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${escapeAttr(item.id)}" data-section="${escapeAttr(sec.id)}" data-group="${escapeAttr(grp.id)}" data-item="${escapeAttr(item.id)}" data-tab="${tab}">
     <div class="item-top">
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
+      <span class="item-status-badge ${badgeClass}" title="${escapeAttr(statusBadgeTitle(eff))}" aria-label="${escapeAttr(statusBadgeTitle(eff))}">${mi(statusBadgeIcon(eff))}</span>
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
       <button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>
     </div>
     <div class="item-body">
-    <div class="item-row">
-      <div class="qa-pair">
-        <div class="qa-half">
-          <div class="col col-incidencia">
-            ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
-            <div class="meta-bar">
-              <div class="meta-bar-time">
-                <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
-              </div>
-              <div class="meta-bar-imgs">
-                <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
-                <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
+    <div class="item-body-layout">
+      <div class="item-side-tabs" role="tablist" aria-label="Issue views">
+        <button type="button" class="item-side-tab${tab === "issue" ? " is-active" : ""}" role="tab" aria-selected="${tab === "issue" ? "true" : "false"}" data-act="item-tab" data-tab="issue" title="Issue / action">Issue / action</button>
+        <button type="button" class="item-side-tab${tab === "checklist" ? " is-active" : ""}" role="tab" aria-selected="${tab === "checklist" ? "true" : "false"}" data-act="item-tab" data-tab="checklist" title="Checklist">Checklist</button>
+      </div>
+      <div class="item-tab-panel" data-panel="issue" ${tab === "issue" ? "" : "hidden"}>
+        <div class="item-row">
+          <div class="qa-pair">
+            <div class="qa-half">
+              <div class="col col-incidencia">
+                ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
+                <div class="meta-bar">
+                  <div class="meta-bar-time">
+                    <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
+                  </div>
+                  <div class="meta-bar-imgs">
+                    <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
+                    <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="qa-half">
-          <div class="col col-sol">
-            ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
-            <div class="meta-bar">
-              <div class="meta-bar-time">
-                <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
-              </div>
-              <div class="meta-bar-imgs">
-                <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
-                <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
+            <div class="qa-half">
+              <div class="col col-sol">
+                ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
+                <div class="meta-bar">
+                  <div class="meta-bar-time">
+                    <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
+                  </div>
+                  <div class="meta-bar-imgs">
+                    <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
+                    <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col col-status">
-        <div class="status-stack">
-          ${criteriaBlock}
-          <div class="status-box status-box-main">
-            ${renderStatusTrio(item.status || "", "btn-status-main", "data-act")}
-          </div>
-        </div>
+      <div class="item-tab-panel" data-panel="checklist" ${tab === "checklist" ? "" : "hidden"}>
+        ${renderChecklist(item)}
       </div>
     </div>
   </div>
@@ -2076,6 +2381,7 @@ function render() {
       <div class="section-title">
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
+          <button type="button" class="concept-btn" data-act="product-history" data-kind="section" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
           ${renderInplace("input", "inplace-section-title", sec.title || "", "Main section name")}
         </div>
         <div class="section-actions">
@@ -2108,6 +2414,7 @@ function render() {
           <div class="group-head">
             <div class="group-head-main">
               <button type="button" class="collapse-toggle" data-collapse="groups" data-id="${escapeAttr(grp.id)}" title="Colapsar/expandir subartículo" aria-expanded="${grpCollapsed ? "false" : "true"}">${collapseChevron(grpCollapsed)}</button>
+              <button type="button" class="concept-btn" data-act="product-history" data-kind="group" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
               ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
             </div>
             <div class="group-actions">
@@ -2143,18 +2450,29 @@ function render() {
 
   root.querySelectorAll(".item-card").forEach(card => {
     const sid = card.dataset.section, gid = card.dataset.group, iid = card.dataset.item;
-    card.querySelectorAll(".btn-status-main").forEach(btn => {
-      btn.onclick = () => setStatus(sid, gid, iid, btn.dataset.act);
+    card.querySelectorAll('[data-act="item-tab"]').forEach(btn => {
+      btn.onclick = () => setItemTab(iid, btn.dataset.tab);
     });
-    card.querySelectorAll(".status-criteria-row").forEach(row => {
-      const label = row.dataset.critLabel;
-      row.querySelectorAll(".btn-status-crit").forEach(btn => {
-        btn.onclick = () => setCriteriaStatus(sid, gid, iid, label, btn.dataset.critAct);
-      });
+    card.querySelectorAll('[data-act="add-check"]').forEach(btn => {
+      btn.onclick = () => addChecklistItem(sid, gid, iid);
+    });
+    card.querySelectorAll(".checklist-row").forEach(row => {
+      const cid = row.dataset.checkId;
+      const toggle = row.querySelector('[data-act="toggle-check"]');
+      if (toggle) toggle.onclick = () => toggleChecklistItem(sid, gid, iid, cid);
+      const del = row.querySelector('[data-act="del-check"]');
+      if (del) del.onclick = () => removeChecklistItem(sid, gid, iid, cid);
+      const labelEl = row.querySelector(".checklist-label");
+      if (labelEl) {
+        labelEl.onchange = () => updateStatus();
+        labelEl.onblur = () => updateStatus();
+      }
     });
     card.querySelector('[data-act="remove"]').onclick = () => removeItem(sid, gid, iid);
-    card.querySelector(".img-incidencia").onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
-    card.querySelector(".img-sol").onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
+    const imgInc = card.querySelector(".img-incidencia");
+    const imgSol = card.querySelector(".img-sol");
+    if (imgInc) imgInc.onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
+    if (imgSol) imgSol.onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
     card.querySelectorAll(".thumb-del").forEach(btn => {
       btn.onclick = (e) => {
         e.stopPropagation();
@@ -2173,8 +2491,10 @@ function render() {
         if (item) openModal(item.imagesSolucion, Number(img.dataset.idx));
       };
     });
-    card.querySelector(".fecha-incidencia").onchange = () => updateStatus();
-    card.querySelector(".fecha-solucion").onchange = () => updateStatus();
+    const fechaInc = card.querySelector(".fecha-incidencia");
+    const fechaSol = card.querySelector(".fecha-solucion");
+    if (fechaInc) fechaInc.onchange = () => updateStatus();
+    if (fechaSol) fechaSol.onchange = () => updateStatus();
     const nomEl = card.querySelector(".inplace-nombre");
     const incEl = card.querySelector(".inplace-incidencia");
     const solEl = card.querySelector(".inplace-solucion");
@@ -2187,6 +2507,20 @@ function render() {
     }
     if (incEl) { incEl._value = itemValue(sid, gid, iid, "incidencia"); bindInplace(incEl, "Descripción de la incidencia", () => updateStatus()); }
     if (solEl) { solEl._value = itemValue(sid, gid, iid, "solucion"); bindInplace(solEl, "Qué se hizo / cómo se resolvió", () => updateStatus()); }
+  });
+
+  root.querySelectorAll('[data-act="product-history"]').forEach(btn => {
+    btn.onclick = () => {
+      const kind = btn.dataset.kind;
+      if (kind === "section") {
+        const sec = btn.closest(".section-block");
+        if (sec) openProductHistory("section", sec.dataset.section);
+        return;
+      }
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      if (block && sec) openProductHistory("group", sec.dataset.section, block.dataset.group);
+    };
   });
 
   root.querySelectorAll(".group-block").forEach(block => {
@@ -2265,20 +2599,20 @@ function escapeHtml(s) {
 function escapeAttr(s) { return escapeHtml(s).replace(/\n/g, " "); }
 
 function itemComplete(it) {
-  const eff = effectiveStatus(it);
-  return !!(it.incidencia && it.incidencia.trim()) && !!(it.solucion && it.solucion.trim()) &&
-    (eff === "aprobado" || eff === "reprobado" || eff === "no_aplica");
+  const list = Array.isArray(it.checklist) ? it.checklist : [];
+  return !!(it.incidencia && it.incidencia.trim()) && !!(it.solucion && it.solucion.trim()) && list.length > 0;
 }
 function itemStarted(it) {
   const hasCrit = it.criteriaStatus && Object.keys(it.criteriaStatus).some((k) => !!it.criteriaStatus[k]);
+  const hasCheck = Array.isArray(it.checklist) && it.checklist.length > 0;
   return !!(it.nombre && it.nombre.trim()) || !!(it.incidencia && it.incidencia.trim()) ||
-    !!(it.solucion && it.solucion.trim()) || !!it.status || hasCrit ||
+    !!(it.solucion && it.solucion.trim()) || !!it.status || hasCrit || hasCheck ||
     (it.imagesIncidencia && it.imagesIncidencia.length) || (it.imagesSolucion && it.imagesSolucion.length);
 }
 
 function updateStatus() {
   collectFromDom();
-  let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, na = 0;
+  let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, warning = 0;
   const missingList = [];
   const countItem = (it, idx, labelPrefix) => {
         total += 1;
@@ -2286,8 +2620,8 @@ function updateStatus() {
         if (itemComplete(it)) {
           filled += 1;
           if (eff === "aprobado") approved += 1;
-          if (eff === "reprobado") rejected += 1;
-          if (eff === "no_aplica") na += 1;
+          else if (eff === "reprobado") rejected += 1;
+          else warning += 1;
         } else {
           missing += 1;
           const label = (it.nombre && it.nombre.trim()) || `${labelPrefix} ${idx + 1}`;
@@ -2304,7 +2638,7 @@ function updateStatus() {
   document.getElementById("fill-status").innerHTML = `
     <li>Meta reporte: ${metaOk ? "completa" : "falta fecha y/o código"}</li>
     <li>Filas completas: <strong>${filled}</strong> / ${total}</li>
-    <li>Aprobadas: ${approved} · Reprobadas: ${rejected} · No aplica: ${na}</li>
+    <li>Aprobadas: ${approved} · Warning: ${warning} · Reprobadas: ${rejected}</li>
     <li>Pendientes: ${missing}${missingList.length ? " — " + missingList.slice(0, 8).join("; ") + (missingList.length > 8 ? "…" : "") : ""}</li>
   `;
   const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_");
@@ -2354,17 +2688,24 @@ function buildPdfReportElement(data) {
     </div>`;
   data.sections.forEach(sec => {
     html += `<h2 style="margin:22px 0 8px;border-bottom:3px solid #000000;padding-bottom:4px;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    if (sec.productHistory) {
+      html += `<p style="margin:0 0 8px;font-size:12px;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
+    }
     if ((sec.items || []).length) {
       html += `<h3 style="margin:14px 0 6px;color:#000000">Open issues</h3>`;
       (sec.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
-        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
-        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : "WARNING";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : "#f9a825";
         const name = (it.nombre && it.nombre.trim()) || `Open issue ${idx + 1}`;
-        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
+        const cardBg = !eff ? "#fff8e1" : "#fff";
+        const checkLine = (it.checklist || []).length
+          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
+          : "";
         html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
           <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+          ${checkLine}
           <p style="margin:8px 0 4px"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
           <p style="margin:8px 0 4px"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
@@ -2374,24 +2715,22 @@ function buildPdfReportElement(data) {
     }
     sec.groups.forEach(grp => {
       html += `<h3 style="margin:14px 0 6px;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      if (grp.productHistory) {
+        html += `<p style="margin:0 0 8px;font-size:12px;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
+      }
       (grp.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
-        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
-        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : "WARNING";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : "#f9a825";
         const name = (it.nombre && it.nombre.trim()) || `Fila ${idx + 1}`;
-        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
-        const critLabels = state.validationCriteria || [];
-        const critLine = critLabels.length
-          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${critLabels.map((lab) => {
-              const v = (it.criteriaStatus && it.criteriaStatus[lab]) || "";
-              const labSt = v === "aprobado" ? "OK" : v === "reprobado" ? "FAIL" : v === "no_aplica" ? "N/A" : "—";
-              return `${escapeHtml(lab)}:${labSt}`;
-            }).join(" · ")}</div>`
+        const cardBg = !eff ? "#fff8e1" : "#fff";
+        const checkLine = (it.checklist || []).length
+          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg};opacity:${eff === "no_aplica" ? "0.75" : "1"}">
+        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
           <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
-          ${critLine}
+          ${checkLine}
           <p style="margin:8px 0 4px"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
           <p style="margin:8px 0 4px"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
@@ -2638,8 +2977,18 @@ document.getElementById("howto-close").onclick = () => closeModal("howto-modal")
 document.getElementById("howto-modal").addEventListener("click", (e) => {
   if (e.target.id === "howto-modal") closeModal("howto-modal");
 });
+document.getElementById("history-close").onclick = () => closeProductHistory();
+document.getElementById("history-cancel").onclick = () => closeProductHistory();
+document.getElementById("history-save").onclick = () => saveProductHistory();
+document.getElementById("history-modal").addEventListener("click", (e) => {
+  if (e.target.id === "history-modal") closeProductHistory();
+});
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
+  if (document.getElementById("history-modal")?.classList.contains("open")) {
+    closeProductHistory();
+    return;
+  }
   ["howto-modal", "progress-modal", "img-modal"].forEach((id) => {
     const modal = document.getElementById(id);
     if (modal && modal.classList.contains("open")) closeModal(id);

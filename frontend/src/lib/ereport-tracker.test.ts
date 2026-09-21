@@ -70,12 +70,13 @@ describe("vendored tracker assets", () => {
     expect(tracker).not.toMatch(/aws-sdk|S3_BUCKET/i);
   });
 
-  it("pastes clipboard screenshots into the focused issue with an immediate base64 preview", () => {
-    expect(tracker).toContain("clipboardImageFiles");
-    expect(tracker).toContain("resolvePasteImageTarget");
-    expect(tracker).toContain("rememberPasteImageTarget");
-    expect(tracker).toContain("markImageReadyThenPersist");
-    expect(tracker).toContain("sanitizePayloadForSave");
-    expect(tracker).toContain("height: 0.3125rem");
+  it("uses checklist tabs and product-history concept buttons", () => {
+    expect(tracker).toContain('data-act="product-history"');
+    expect(tracker).toContain("function openProductHistory(");
+    expect(tracker).toContain("function effectiveStatus(");
+    expect(tracker).toContain('data-act="item-tab"');
+    expect(tracker).toContain('data-act="add-check"');
+    expect(tracker).toContain("function addChecklistItem(");
+    expect(tracker).not.toContain("btn-status-main");
   });
 });
