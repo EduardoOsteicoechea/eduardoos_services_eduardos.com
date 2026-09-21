@@ -23,6 +23,7 @@ export const APP_ROUTES = {
   scrib: "/scrib",
   pamphlet: "/documents/pamphlet",
   evoice: "/evoice",
+  publisher: "/publisher",
 } as const;
 
 /** Auth-required Latin / Institutes paragraph pack API. */
