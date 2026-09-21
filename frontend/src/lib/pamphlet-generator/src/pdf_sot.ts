@@ -67,6 +67,14 @@ function hitId(column: number, index: number): string {
     return `c${column}:${index}`;
 }
 
+function waitTwoFrames(): Promise<void> {
+    return new Promise((resolve) => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => resolve());
+        });
+    });
+}
+
 function log(step: string, detail: Record<string, unknown> = {}): void {
     if (!mustLog) return;
     console.log("[pamphlet-pdf-sot]", {
@@ -116,9 +124,13 @@ export class PamphletPdfSot {
     private previewFlushing = false;
     private previewSeq = 0;
     private pendingDoc: PamphletStructure | null = null;
+    private lastDoc: PamphletStructure | null = null;
+    private lastRenderWidthPx = 0;
     private destroyed = false;
     private lastLayout: PamphletPreviewLayout | null = null;
     private onPreviewOk: (() => void) | null = null;
+    private resizeObserver: ResizeObserver | null = null;
+    private resizeTimer: number | null = null;
 
     constructor(opts: PamphletPdfSotOptions) {
         this.stage = opts.stage;
@@ -127,6 +139,23 @@ export class PamphletPdfSot {
             const pages = document.createElement("div");
             pages.className = "pamphlet-pdf-stage__pages";
             this.stage.replaceChildren(pages);
+        }
+        if (typeof ResizeObserver !== "undefined") {
+            this.resizeObserver = new ResizeObserver(() => {
+                if (this.destroyed || !this.lastDoc) return;
+                if (this.resizeTimer != null) window.clearTimeout(this.resizeTimer);
+                this.resizeTimer = window.setTimeout(() => {
+                    this.resizeTimer = null;
+                    if (this.destroyed || !this.lastDoc) return;
+                    const w = this.measureStageWidthPx();
+                    if (Math.abs(w - this.lastRenderWidthPx) < 32) return;
+                    log("resize.rerender", { from: this.lastRenderWidthPx, to: w });
+                    this.schedulePreview(this.lastDoc);
+                }, 120);
+            });
+            this.resizeObserver.observe(this.stage);
+            const workspace = this.stage.closest(".pamphlet-workspace");
+            if (workspace instanceof HTMLElement) this.resizeObserver.observe(workspace);
         }
     }
 
@@ -150,6 +179,7 @@ export class PamphletPdfSot {
     schedulePreview(doc: PamphletStructure): void {
         if (this.destroyed) return;
         this.pendingDoc = doc;
+        this.lastDoc = doc;
         this.previewQueued = true;
         log("schedule", { seq: this.previewSeq, queued: true });
         void this.flushPreview();
@@ -159,7 +189,33 @@ export class PamphletPdfSot {
         this.destroyed = true;
         this.previewQueued = false;
         this.pendingDoc = null;
+        this.lastDoc = null;
+        if (this.resizeTimer != null) {
+            window.clearTimeout(this.resizeTimer);
+            this.resizeTimer = null;
+        }
+        this.resizeObserver?.disconnect();
+        this.resizeObserver = null;
         this.stage.replaceChildren();
+    }
+
+    /** Usable CSS px width for the letter page (fit-to-stage). */
+    private measureStageWidthPx(): number {
+        const stageW = this.stage.clientWidth;
+        if (stageW >= 240) return stageW;
+
+        const workspace = this.stage.closest(".pamphlet-workspace");
+        const app = this.stage.closest(".pamphlet-app");
+        const dock = app?.querySelector<HTMLElement>(".pamphlet-edit-dock:not([hidden])");
+        const dockW = dock ? dock.getBoundingClientRect().width : 0;
+        const padPx = rootFontSizePx() * 2;
+        const basis = Math.max(
+            workspace instanceof HTMLElement ? workspace.clientWidth : 0,
+            app instanceof HTMLElement ? app.clientWidth : 0,
+            document.documentElement.clientWidth,
+            320,
+        );
+        return Math.max(240, Math.floor(basis - dockW - padPx));
     }
 
     private applySelectedClass(): void {
@@ -189,6 +245,11 @@ export class PamphletPdfSot {
             }
             if (this.previewQueued) {
                 log("flush.skip_render_newer_queued", { seq });
+                return;
+            }
+            await waitTwoFrames();
+            if (this.destroyed || seq !== this.previewSeq || this.previewQueued) {
+                log("flush.skip_render_after_layout", { seq });
                 return;
             }
             await this.renderPreview(payload, seq);
@@ -322,14 +383,13 @@ export class PamphletPdfSot {
 
         const pageWidthMm = layout.page_width_mm > 0 ? layout.page_width_mm : 279.4;
         const pageHeightMm = layout.page_height_mm > 0 ? layout.page_height_mm : 215.9;
-        const stageCssPx = Math.max(
-            1,
-            this.stage.clientWidth || this.stage.parentElement?.clientWidth || 640,
-        );
+        const stageCssPx = this.measureStageWidthPx();
+        this.lastRenderWidthPx = stageCssPx;
         const pageWidthRem = pxToRem(stageCssPx);
         const mmToRem = pageWidthRem / pageWidthMm;
         const pageHeightRem = pageHeightMm * mmToRem;
         const dpr = Math.min(2.5, window.devicePixelRatio || 1);
+        log("render.measure", { seq, stageCssPx, pageWidthRem, dpr });
 
         const nextPages = document.createElement("div");
         nextPages.className = "pamphlet-pdf-stage__pages";

@@ -92,6 +92,12 @@ body.page-pamphlet .site-header__bar {
   min-height: 0;
 }
 
+/* PDF-first editor must stretch full width (not shrink-wrap to empty stage). */
+.pamphlet-route-root .pamphlet-app[data-pdf-sot],
+body.page-pamphlet .pamphlet-app[data-pdf-sot] {
+  align-items: stretch;
+}
+
 /*
  * Pamphlet tools live inside Header chrome (rail / mobile center slot).
  * Workspace padding matches the vertical header: --rail-gap on all sides.

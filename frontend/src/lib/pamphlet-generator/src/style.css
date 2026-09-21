@@ -2454,6 +2454,30 @@
 
 /* —— PDF-first stage + edit dock (rem / tokens only) —— */
 
+/*
+ * Parent chrome often uses align-items:center. Once the letter sheet is
+ * position:fixed off-screen, the workspace would shrink-wrap to an empty
+ * stage and pdf.js would rasterize a ~40px page. Force full width.
+ */
+.pamphlet-app[data-pdf-sot] {
+  align-items: stretch;
+}
+
+.pamphlet-app[data-pdf-sot] .pamphlet-workspace {
+  width: 100%;
+  align-self: stretch;
+}
+
+.pamphlet-app[data-pdf-sot][data-view-mode="desktop"] main.pamphlet-sheet {
+  position: fixed;
+  left: -200rem;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transform: none;
+}
+
 .pamphlet-workspace {
   display: flex;
   flex-direction: column;
@@ -2469,6 +2493,7 @@
   flex-direction: column;
   gap: var(--rail-gap, 0.5rem);
   flex: 1;
+  width: 100%;
   min-width: 0;
   min-height: 0;
   overflow: auto;
@@ -2480,6 +2505,7 @@
   flex-direction: column;
   gap: var(--rail-gap, 0.5rem);
   align-items: flex-start;
+  width: 100%;
 }
 
 .pamphlet-pdf-page {
@@ -2490,8 +2516,8 @@
 
 .pamphlet-pdf-page__canvas {
   display: block;
-  width: auto;
-  height: auto;
+  /* width/height set inline in rem by pdf_sot — do not use auto (intrinsic px). */
+  max-width: none;
   pointer-events: none;
 }
 
