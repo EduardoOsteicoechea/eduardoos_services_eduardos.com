@@ -160,12 +160,15 @@ export function ProductHubShell({
   title,
   children,
 }: {
+  /** Prefer omitting: menu + document title already name the hub. */
   title?: string;
   children: ReactNode;
 }) {
   return (
     <div className="product-dash">
-      {title ? <h1 className="product-dash__title">{title}</h1> : null}
+      {title ? (
+        <h1 className="product-dash__title page-title-sr">{title}</h1>
+      ) : null}
       {children}
     </div>
   );
@@ -176,12 +179,13 @@ export function DashboardSection({
   title,
   children,
 }: {
-  title: string;
+  /** Optional; omit when the section is the whole hub content. */
+  title?: string;
   children: ReactNode;
 }) {
   return (
     <section className="product-dash__section">
-      <h2 className="product-dash__section-title">{title}</h2>
+      {title ? <h2 className="product-dash__section-title">{title}</h2> : null}
       {children}
     </section>
   );

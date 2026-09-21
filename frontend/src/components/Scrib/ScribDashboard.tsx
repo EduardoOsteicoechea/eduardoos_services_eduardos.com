@@ -167,14 +167,8 @@ export default function ScribDashboard() {
 
   return (
     <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
-      <ProductHubShell title="Scrib">
-        <DashboardSection title="Books">
-        <p className="scrib-dashboard__lead">
-          Libros de hojas US Letter con capas de manuscrito. Todo se guarda
-          bajo <code>scrib/</code> en la nube. Haz clic en el nombre de un
-          libro o una hoja para editarlo.
-        </p>
-
+      <ProductHubShell>
+        <DashboardSection>
         <form className="scrib-dashboard__new-book" onSubmit={onCreateBook}>
           <label className="scrib-dashboard__label" htmlFor="scrib-book-name">
             Nuevo libro

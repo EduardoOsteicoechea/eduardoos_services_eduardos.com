@@ -117,7 +117,7 @@ function PamphletHubInner() {
         />
       ) : null}
       {!isEditor ? (
-        <ProductHubShell title="Pamphlet">
+        <ProductHubShell>
           <DashboardGrid cards={PAMPHLET_CARDS} onSelect={setView} />
         </ProductHubShell>
       ) : null}

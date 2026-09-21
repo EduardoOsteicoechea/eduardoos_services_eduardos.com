@@ -53,21 +53,6 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   margin-bottom: 1.25rem;
 }
 
-.scrib-dashboard__title {
-  margin: 0.15rem 0 0.35rem;
-  font-family: var(--font-family);
-  font-size: var(--font-size-xl);
-  font-weight: 650;
-}
-
-.scrib-dashboard__lead {
-  margin: 0;
-  max-width: 40rem;
-  font-family: var(--font-family);
-  line-height: 1.45;
-  opacity: 0.9;
-}
-
 .scrib-dashboard__new-book {
   margin: 1.25rem 0 1.5rem;
   display: grid;
