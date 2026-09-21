@@ -64,10 +64,21 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("imageSrc");
     expect(tracker).toContain("fileToDataUrl");
     expect(tracker).toContain("ingestImageFiles");
+    expect(tracker).toContain("bindThumbSources");
     expect(tracker).toContain('document.addEventListener("paste"');
     expect(tracker).toContain("thumb-load-bar");
+    expect(tracker).toContain("im.dataUrl || im.url");
     expect(tracker).not.toContain("reader.readAsDataURL(file)");
     expect(tracker).not.toMatch(/aws-sdk|S3_BUCKET/i);
+  });
+
+  it("pastes clipboard screenshots into the focused issue with an immediate base64 preview", () => {
+    expect(tracker).toContain("clipboardImageFiles");
+    expect(tracker).toContain("resolvePasteImageTarget");
+    expect(tracker).toContain("rememberPasteImageTarget");
+    expect(tracker).toContain("markImageReadyThenPersist");
+    expect(tracker).toContain("sanitizePayloadForSave");
+    expect(tracker).toContain("height: 0.3125rem");
   });
 
   it("uses checklist tabs and product-history concept buttons", () => {

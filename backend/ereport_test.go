@@ -427,7 +427,7 @@ func TestEreportInviteExpired(t *testing.T) {
 	}
 }
 
-func TestEreportImageUploadAndAccel(t *testing.T) {
+func TestEreportImageUploadAndGet(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.SecureCookies = true
 	_ = app.grantEntitlement("member-1", productEreport)
@@ -460,11 +460,16 @@ func TestEreportImageUploadAndAccel(t *testing.T) {
 	if getRec.Code != http.StatusOK {
 		t.Fatalf("get image: %d %s", getRec.Code, getRec.Body.String())
 	}
-	accel := getRec.Header().Get("X-Accel-Redirect")
-	if !strings.HasPrefix(accel, "/internal-media/ereport/") {
-		t.Fatalf("accel %q", accel)
+	if getRec.Header().Get("X-Accel-Redirect") != "" {
+		t.Fatal("image GET must ServeFile for <img> thumbs, not empty X-Accel bodies")
 	}
-	if strings.Contains(accel, app.cfg.EreportMediaRoot) || strings.Contains(getRec.Body.String(), app.cfg.EreportMediaRoot) {
+	if getRec.Header().Get("Content-Type") != "image/png" {
+		t.Fatalf("content-type %q", getRec.Header().Get("Content-Type"))
+	}
+	if !bytes.Equal(getRec.Body.Bytes(), png) {
+		t.Fatal("GET must return the uploaded image bytes")
+	}
+	if strings.Contains(getRec.Body.String(), app.cfg.EreportMediaRoot) {
 		t.Fatal("must not leak filesystem path")
 	}
 

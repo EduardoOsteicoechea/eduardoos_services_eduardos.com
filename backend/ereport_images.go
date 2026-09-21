@@ -158,7 +158,7 @@ func (a *App) ereportInviteGetImageHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (a *App) serveEreportImage(w http.ResponseWriter, r *http.Request, ownerUserID, orgID, reportID, imageID string) {
-	full, rel, err := a.ereport.findImage(ownerUserID, orgID, reportID, imageID)
+	full, _, err := a.ereport.findImage(ownerUserID, orgID, reportID, imageID)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
@@ -177,10 +177,7 @@ func (a *App) serveEreportImage(w http.ResponseWriter, r *http.Request, ownerUse
 	w.Header().Set("Content-Type", ctype)
 	w.Header().Set("Cache-Control", "private, no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
-	if a.cfg.SecureCookies {
-		w.Header().Set("X-Accel-Redirect", "/internal-media/"+rel)
-		w.WriteHeader(http.StatusOK)
-		return
-	}
+	// Serve through the API (same as avatars). <img src="/api/.../images/..."> needs a
+	// real body; X-Accel-only empty 200s leave broken thumbs when Nginx accel misses.
 	http.ServeFile(w, r, full)
 }

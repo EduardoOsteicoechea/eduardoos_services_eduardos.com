@@ -1879,7 +1879,8 @@ function clearSection(sid) {
 }
 
 function imageSrc(im) {
-  return (im && (im.url || im.dataUrl)) || "";
+  // Prefer in-memory base64 preview so thumbs stay visible while / after upload.
+  return (im && (im.dataUrl || im.url)) || "";
 }
 
 var imageUpload = { url: "", csrf: "" };
@@ -1994,7 +1995,13 @@ function markImageReadyThenPersist(item, key, tempId, ref) {
     render();
     return;
   }
-  const ready = Object.assign({}, ref, { justLoaded: true });
+  const prev = list[idx] || {};
+  const ready = Object.assign({}, ref, {
+    justLoaded: true,
+    // Keep base64 preview so the thumb does not go blank if the API URL is slow/fails.
+    dataUrl: prev.dataUrl || ref.dataUrl || ""
+  });
+  if (!ready.dataUrl) delete ready.dataUrl;
   list[idx] = ready;
   if (key === "imagesSolucion") item.images = item.imagesSolucion;
   render();
@@ -2089,14 +2096,32 @@ function stepModal(delta) {
 function renderThumbs(images, cls, which) {
   return (images || []).map((im, idx) => {
     const wrapClass = im && im.pending ? " is-pending" : im && im.justLoaded ? " is-ready" : "";
+    // Leave src empty in HTML; bindThumbSources sets it via the DOM property so large
+    // data: URLs are not parsed through innerHTML (which yields broken thumbs).
     return `
     <div class="thumb-wrap${wrapClass}">
-      <img src="${imageSrc(im)}" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" class="thumb ${cls}" />
+      <img src="" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" data-which="${which}" class="thumb ${cls}" />
       <span class="thumb-load-bar" aria-hidden="true"></span>
       <button type="button" class="thumb-del" data-act="del-img" data-which="${which}" data-idx="${idx}" title="Eliminar imagen" aria-label="Eliminar imagen">${mi("close")}</button>
     </div>
   `;
   }).join("");
+}
+
+function bindThumbSources(card, item) {
+  if (!(card instanceof HTMLElement) || !item) return;
+  card.querySelectorAll("img.thumb-q").forEach((img) => {
+    const im = (item.imagesIncidencia || [])[Number(img.dataset.idx)];
+    const src = imageSrc(im);
+    if (src) img.src = src;
+    else img.removeAttribute("src");
+  });
+  card.querySelectorAll("img.thumb-s").forEach((img) => {
+    const im = (item.imagesSolucion || [])[Number(img.dataset.idx)];
+    const src = imageSrc(im);
+    if (src) img.src = src;
+    else img.removeAttribute("src");
+  });
 }
 
 function statusToneClass(status) {
@@ -2479,16 +2504,18 @@ function render() {
         removeImage(sid, gid, iid, btn.dataset.which, Number(btn.dataset.idx));
       };
     });
+    const item = locateItem(sid, gid, iid)?.item;
+    bindThumbSources(card, item);
     card.querySelectorAll(".thumb-q").forEach(img => {
       img.onclick = () => {
-        const item = locateItem(sid, gid, iid)?.item;
-        if (item) openModal(item.imagesIncidencia, Number(img.dataset.idx));
+        const cur = locateItem(sid, gid, iid)?.item;
+        if (cur) openModal(cur.imagesIncidencia, Number(img.dataset.idx));
       };
     });
     card.querySelectorAll(".thumb-s").forEach(img => {
       img.onclick = () => {
-        const item = locateItem(sid, gid, iid)?.item;
-        if (item) openModal(item.imagesSolucion, Number(img.dataset.idx));
+        const cur = locateItem(sid, gid, iid)?.item;
+        if (cur) openModal(cur.imagesSolucion, Number(img.dataset.idx));
       };
     });
     const fechaInc = card.querySelector(".fecha-incidencia");
