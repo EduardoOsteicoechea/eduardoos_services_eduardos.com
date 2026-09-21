@@ -218,16 +218,24 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const itemTypeCancelBtn = requireElement<HTMLButtonElement>("#item-type-cancel");
     const headerMenu = requireElement<HTMLElement>("#pamphlet-header-menu");
 
-    type ViewMode = "desktop" | "mobile";
-    /** Narrow / phone viewports start in stacked mobile layout. Tablet (48rem+) uses PDF desktop. */
+    type ViewMode = "desktop" | "mobile" | "tablet";
+    /** Phone → stacked cols; tablet band → cols + left dock; desktop → PDF. */
     const mobileViewportMq = window.matchMedia("(max-width: 47.999rem)");
+    const tabletViewportMq = window.matchMedia("(min-width: 48rem) and (max-width: 63.999rem)");
     function preferredViewMode(): ViewMode {
-        return mobileViewportMq.matches ? "mobile" : "desktop";
+        if (mobileViewportMq.matches) return "mobile";
+        if (tabletViewportMq.matches) return "tablet";
+        return "desktop";
     }
     let viewMode: ViewMode = preferredViewMode();
+    function isColsViewMode(mode: ViewMode = viewMode): boolean {
+        return mode === "mobile" || mode === "tablet";
+    }
     appRoot.setAttribute("data-view-mode", viewMode);
     appRoot.style.setProperty("--mobile-view-scale", "1");
     appRoot.style.setProperty("--mobile-inv-scale", "1");
+    appRoot.style.setProperty("--pamphlet-dock-vvh", "40rem");
+    appRoot.style.setProperty("--pamphlet-dock-vvt", "0rem");
 
     const disposers: Array<() => void> = [];
     function on(
@@ -291,8 +299,19 @@ function syncSeriesButtonVisibility(): void {
 /** Body column width in mm — never wider than print; scale down only if viewport is narrower. */
 const mobileColumnWidthMm = 57.85;
 
+/** Keep tablet edit dock inside the visual viewport (keyboard-safe; rem height). */
+function syncTabletDockViewportHeight(): void {
+    if (viewMode !== "tablet") return;
+    const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const vv = window.visualViewport;
+    const hPx = vv?.height ?? window.innerHeight;
+    const topPx = vv?.offsetTop ?? 0;
+    appRoot.style.setProperty("--pamphlet-dock-vvh", `${hPx / rootFs}rem`);
+    appRoot.style.setProperty("--pamphlet-dock-vvt", `${topPx / rootFs}rem`);
+}
+
 function syncMobileViewScale(): void {
-    if (viewMode !== "mobile") {
+    if (!isColsViewMode()) {
         appRoot.style.setProperty("--mobile-view-scale", "1");
         appRoot.style.setProperty("--mobile-inv-scale", "1");
         if (viewMode !== "desktop") {
@@ -301,10 +320,12 @@ function syncMobileViewScale(): void {
         return;
     }
     const padPx = 16;
+    const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const dockPx = viewMode === "tablet" ? 18 * rootFs : 0;
     const fallbackRefPx = mobileColumnWidthMm * (96 / 25.4);
     const refPx = Math.max(1, main.offsetWidth || fallbackRefPx);
     const viewportW = window.visualViewport?.width ?? window.innerWidth;
-    const available = Math.max(120, viewportW - padPx * 2);
+    const available = Math.max(120, viewportW - padPx * 2 - dockPx);
     // Cap at 1 so columns stay at pamphlet mm width and sit centered with side margins.
     const scale = Math.min(1, available / refPx);
     appRoot.style.setProperty("--mobile-view-scale", String(scale));
@@ -412,6 +433,7 @@ function syncDesktopViewScale(): void {
 }
 
 function syncSheetScale(): void {
+    syncTabletDockViewportHeight();
     syncMobileViewScale();
     syncDesktopViewScale();
 }
@@ -419,12 +441,13 @@ function syncSheetScale(): void {
 function applyViewMode(mode: ViewMode, options?: { closeTray?: boolean }): void {
     viewMode = mode;
     appRoot.setAttribute("data-view-mode", mode);
+    const cols = isColsViewMode(mode);
     viewDesktopBtn.classList.toggle("is-active", mode === "desktop");
     viewDesktopBtn.classList.toggle("header-dynamic-menu__btn--active", mode === "desktop");
-    viewMobileBtn.classList.toggle("is-active", mode === "mobile");
-    viewMobileBtn.classList.toggle("header-dynamic-menu__btn--active", mode === "mobile");
+    viewMobileBtn.classList.toggle("is-active", cols);
+    viewMobileBtn.classList.toggle("header-dynamic-menu__btn--active", cols);
     viewDesktopBtn.setAttribute("aria-pressed", mode === "desktop" ? "true" : "false");
-    viewMobileBtn.setAttribute("aria-pressed", mode === "mobile" ? "true" : "false");
+    viewMobileBtn.setAttribute("aria-pressed", cols ? "true" : "false");
     syncSheetScale();
     if (options?.closeTray !== false) {
         // Keep dock open across view toggles; preview still useful on desktop.
@@ -444,7 +467,7 @@ let viewModeBeforePrint: ViewMode | null = null;
 function beginPrintDesktopLayout(): void {
     if (viewModeBeforePrint !== null) return;
     viewModeBeforePrint = viewMode;
-    if (viewMode === "mobile") {
+    if (isColsViewMode()) {
         applyViewMode("desktop", { closeTray: false });
         void main.offsetHeight;
     }
@@ -454,8 +477,8 @@ function endPrintDesktopLayout(): void {
     if (viewModeBeforePrint === null) return;
     const restore = viewModeBeforePrint;
     viewModeBeforePrint = null;
-    if (restore === "mobile") {
-        applyViewMode("mobile", { closeTray: false });
+    if (isColsViewMode(restore)) {
+        applyViewMode(restore, { closeTray: false });
     }
 }
 
@@ -1510,14 +1533,14 @@ function highlightMobileEditItem(loc: LastEditedElement | null): void {
     const el = findBodyItemContainer(loc);
     if (el) {
         el.classList.add("is-editing");
-        if (viewMode === "mobile") {
+        if (isColsViewMode()) {
             el.scrollIntoView({ block: "nearest", behavior: "smooth" });
         }
     }
 }
 
 function syncMobileLiveContent(loc: LastEditedElement, content: string): void {
-    if (viewMode !== "mobile") return;
+    if (!isColsViewMode()) return;
     const el = findBodyItemContainer(loc);
     if (!el || el.getAttribute("data-item-type") === "image") return;
     const inner = el.firstElementChild as HTMLElement | null;
@@ -3241,7 +3264,7 @@ on(viewDesktopBtn, "click", () => {
 });
 
 on(viewMobileBtn, "click", () => {
-    setViewMode("mobile");
+    setViewMode(tabletViewportMq.matches ? "tablet" : "mobile");
 });
 
 on(templateBtn, "click", () => {
