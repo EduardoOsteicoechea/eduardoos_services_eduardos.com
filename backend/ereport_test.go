@@ -607,6 +607,12 @@ func TestEreportAPIV1AdditiveAndHistory(t *testing.T) {
 			t.Fatal("docs must document append and replace modes")
 		}
 	}
+	if !strings.Contains(raw, "checklist") || !strings.Contains(raw, "UX cumplidas") {
+		t.Fatal("docs must document checklist and legacy UX cumplidas heal")
+	}
+	if !strings.Contains(raw, "productHistory") {
+		t.Fatal("docs must document productHistory on sections/groups")
+	}
 }
 
 func TestEreportAPIV1ReplaceFullSeed(t *testing.T) {
@@ -1003,6 +1009,53 @@ func TestPrepareReplacePayload_AllowsMixedStatuses(t *testing.T) {
 	}
 	if asString(out["theme"]) != "dark" || asString(out["orgName"]) != "Alcaldía" {
 		t.Fatalf("root meta lost: %v", out)
+	}
+}
+
+func TestHealEreportChecklistLegacy_PreservesApprovedWithoutUX(t *testing.T) {
+	payload := map[string]any{
+		"sections": []any{
+			map[string]any{
+				"id": "sec-1",
+				"items": []any{
+					map[string]any{"id": "open-ok", "incidencia": "section open", "status": "aprobado"},
+				},
+				"groups": []any{
+					map[string]any{
+						"id": "g-1",
+						"items": []any{
+							map[string]any{"id": "i-ok", "incidencia": "ok", "status": "aprobado"},
+							map[string]any{"id": "i-bad", "incidencia": "fail", "status": "reprobado"},
+							map[string]any{
+								"id": "i-has-check", "incidencia": "partial", "status": "aprobado",
+								"checklist": []any{
+									map[string]any{"id": "c1", "label": "Keep me", "checked": false},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	healEreportChecklistLegacy(payload)
+	open, completed := countEreportIssueOverview(payload)
+	if open != 2 || completed != 2 {
+		t.Fatalf("want open=2 completed=2 after heal, got open=%d completed=%d", open, completed)
+	}
+	ok := asMapSlice(asMapSlice(asMapSlice(payload["sections"])[0]["groups"])[0]["items"])[0]
+	list := asMapSlice(ok["checklist"])
+	if len(list) != 1 || asString(list[0]["label"]) != legacyUXCumplidasLabel || list[0]["checked"] != true {
+		t.Fatalf("aprobado without checklist not healed: %#v", ok["checklist"])
+	}
+	kept := asMapSlice(asMapSlice(asMapSlice(payload["sections"])[0]["groups"])[0]["items"])[2]
+	keptList := asMapSlice(kept["checklist"])
+	if len(keptList) != 1 || asString(keptList[0]["label"]) != "Keep me" {
+		t.Fatalf("existing checklist should not be replaced: %#v", kept["checklist"])
+	}
+	secOpen := asMapSlice(asMapSlice(payload["sections"])[0]["items"])[0]
+	if checklistLen(secOpen["checklist"]) != 1 {
+		t.Fatalf("section open aprobado not healed: %#v", secOpen["checklist"])
 	}
 }
 

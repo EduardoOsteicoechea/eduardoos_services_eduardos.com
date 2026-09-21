@@ -1228,20 +1228,28 @@ function normalizeItem(it) {
       criteriaStatus[k] = (v === "aprobado" || v === "reprobado" || v === "no_aplica") ? v : "";
     });
   }
-  return {
+  let checklist = normalizeChecklist(it.checklist);
+  const priorStatus = it.status || "";
+  /* Legacy reports: aprobado without UX checklist → seed one checked "UX cumplidas" so status is not lost. */
+  if (priorStatus === "aprobado" && checklist.length === 0) {
+    checklist = [{ id: "ux-cumplidas", label: "UX cumplidas", checked: true }];
+  }
+  const item = {
     id: it.id || uid("item"),
     nombre: it.nombre || "",
     incidencia: it.incidencia || it.queja || "",
     fechaIncidencia: it.fechaIncidencia || "",
-    status: it.status || "",
+    status: priorStatus,
     criteriaStatus,
-    checklist: normalizeChecklist(it.checklist),
+    checklist,
     solucion: it.solucion || "",
     fechaSolucion: it.fechaSolucion || "",
     imagesIncidencia: it.imagesIncidencia || it.imagesQueja || [],
     imagesSolucion: sol,
     images: sol
   };
+  item.status = effectiveStatus(item);
+  return item;
 }
 function normalizeState(data) {
   if (!data || typeof data !== "object") data = {};

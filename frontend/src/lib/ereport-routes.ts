@@ -1,5 +1,5 @@
 /** Bump when `public/ereport-tracker.html` changes so browsers drop the cached canvas. */
-export const TRACKER_SRC = "/ereport-tracker.html?v=079";
+export const TRACKER_SRC = "/ereport-tracker.html?v=080";
 
 export function isPublicEreportInvitePath(pathname: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";

@@ -88,6 +88,8 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('data-act="item-tab"');
     expect(tracker).toContain('data-act="add-check"');
     expect(tracker).toContain("function addChecklistItem(");
+    expect(tracker).toContain("UX cumplidas");
+    expect(tracker).toContain('priorStatus === "aprobado"');
     expect(tracker).not.toContain("btn-status-main");
   });
 });

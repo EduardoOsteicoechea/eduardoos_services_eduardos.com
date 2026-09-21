@@ -127,6 +127,59 @@ describe("tracker checklist status", () => {
     expect(card().classList.contains("is-aprobado")).toBe(true);
   });
 
+  it("heals legacy aprobado items without UX checklist into UX cumplidas", async () => {
+    const w = await boot();
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "load",
+        payload: {
+          reportName: "Legacy",
+          orgName: "Org",
+          theme: "dark",
+          validationCriteria: [],
+          sections: [
+            {
+              id: "sec-legacy",
+              title: "1. Legacy",
+              kind: "funcionalidades",
+              productHistory: "",
+              items: [],
+              groups: [
+                {
+                  id: "g-legacy",
+                  title: "General",
+                  productHistory: "",
+                  items: [
+                    {
+                      id: "legacy-ok",
+                      nombre: "Was approved",
+                      incidencia: "old approved issue",
+                      status: "aprobado",
+                      checklist: [],
+                      solucion: "",
+                      imagesIncidencia: [],
+                      imagesSolucion: [],
+                      images: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      "*",
+    );
+    await tick(80);
+    const card = all(w, ".item-card")[0];
+    expect(card.classList.contains("is-aprobado")).toBe(true);
+    click(card.querySelector('[data-act="item-tab"][data-tab="checklist"]'));
+    const labels = all(w, ".checklist-label").map((el) => (el as HTMLInputElement).value);
+    expect(labels).toEqual(["UX cumplidas"]);
+    expect(card.querySelector(".checklist-toggle")?.classList.contains("is-checked")).toBe(true);
+  });
+
   it("opens product history from section and group concept buttons", async () => {
     const w = await boot();
     click(w.document.querySelector('.section-title-main [data-act="product-history"]'));

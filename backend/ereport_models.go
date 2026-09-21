@@ -235,6 +235,7 @@ func emptyEreportItem(id string) map[string]any {
 		"fechaIncidencia":  "",
 		"status":           "",
 		"criteriaStatus":   map[string]any{},
+		"checklist":        []any{},
 		"solucion":         "",
 		"fechaSolucion":    "",
 		"imagesIncidencia": []any{},

@@ -44,6 +44,8 @@ func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 	if base == nil {
 		base = emptyEreportPayload()
 	}
+	healEreportChecklistLegacy(base)
+	healEreportChecklistLegacy(incoming)
 	out := deepCloneMap(base)
 
 	for k, v := range incoming {
@@ -252,6 +254,7 @@ func prepareReplacePayload(incoming map[string]any) (map[string]any, error) {
 	if strings.TrimSpace(asString(out["appTitle"])) == "" {
 		out["appTitle"] = "Issue Tracker"
 	}
+	healEreportChecklistLegacy(out)
 	return out, nil
 }
 
@@ -338,6 +341,7 @@ func toAnySlice(rows []map[string]any) []any {
 func countEreportItems(payload map[string]any) int {
 	n := 0
 	for _, sec := range asMapSlice(payload["sections"]) {
+		n += len(asMapSlice(sec["items"]))
 		for _, g := range asMapSlice(sec["groups"]) {
 			n += len(asMapSlice(g["items"]))
 		}
@@ -345,22 +349,108 @@ func countEreportItems(payload map[string]any) int {
 	return n
 }
 
-// countEreportIssueOverview tallies open vs completed issues from item.status.
+const legacyUXCumplidasLabel = "UX cumplidas"
+
+// healEreportChecklistLegacy seeds a checked "UX cumplidas" row on items that were
+// already aprobado but have no checklist, so checklist-derived status does not
+// rewrite historical approvals to reprobado.
+func healEreportChecklistLegacy(payload map[string]any) {
+	if payload == nil {
+		return
+	}
+	for _, sec := range asMapSlice(payload["sections"]) {
+		healEreportItemsChecklist(asMapSlice(sec["items"]))
+		for _, g := range asMapSlice(sec["groups"]) {
+			healEreportItemsChecklist(asMapSlice(g["items"]))
+		}
+	}
+}
+
+func healEreportItemsChecklist(items []map[string]any) {
+	for _, it := range items {
+		if it == nil {
+			continue
+		}
+		if _, ok := it["checklist"]; !ok {
+			it["checklist"] = []any{}
+		}
+		if asString(it["status"]) != "aprobado" {
+			continue
+		}
+		if checklistLen(it["checklist"]) > 0 {
+			continue
+		}
+		it["checklist"] = []any{
+			map[string]any{
+				"id":      "ux-cumplidas",
+				"label":   legacyUXCumplidasLabel,
+				"checked": true,
+			},
+		}
+		it["status"] = "aprobado"
+	}
+}
+
+func checklistLen(v any) int {
+	switch t := v.(type) {
+	case []any:
+		return len(t)
+	case []map[string]any:
+		return len(t)
+	default:
+		return len(asMapSlice(v))
+	}
+}
+
+// countEreportIssueOverview tallies open vs completed issues from checklist-derived
+// status when a checklist exists; otherwise falls back to item.status.
 // completed = aprobado; open = empty or reprobado; no_aplica is ignored.
 func countEreportIssueOverview(payload map[string]any) (open, completed int) {
-	for _, sec := range asMapSlice(payload["sections"]) {
-		for _, g := range asMapSlice(sec["groups"]) {
-			for _, it := range asMapSlice(g["items"]) {
-				switch asString(it["status"]) {
-				case "aprobado":
-					completed++
-				case "no_aplica":
-					// neither open nor completed
-				default:
-					open++
-				}
+	healEreportChecklistLegacy(payload)
+	tally := func(items []map[string]any) {
+		for _, it := range items {
+			switch itemOverviewStatus(it) {
+			case "aprobado":
+				completed++
+			case "no_aplica":
+				// neither open nor completed
+			default:
+				open++
 			}
 		}
 	}
+	for _, sec := range asMapSlice(payload["sections"]) {
+		tally(asMapSlice(sec["items"]))
+		for _, g := range asMapSlice(sec["groups"]) {
+			tally(asMapSlice(g["items"]))
+		}
+	}
 	return open, completed
+}
+
+func itemOverviewStatus(it map[string]any) string {
+	list := asMapSlice(it["checklist"])
+	if len(list) == 0 {
+		return asString(it["status"])
+	}
+	checked := 0
+	for _, c := range list {
+		switch v := c["checked"].(type) {
+		case bool:
+			if v {
+				checked++
+			}
+		case string:
+			if v == "true" || v == "1" {
+				checked++
+			}
+		}
+	}
+	if checked == 0 {
+		return "reprobado"
+	}
+	if checked == len(list) {
+		return "aprobado"
+	}
+	return ""
 }

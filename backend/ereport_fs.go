@@ -560,6 +560,7 @@ func (fs *ereportFS) loadReport(ownerUserID, orgID, reportID string) (ereportMet
 	if payload == nil {
 		payload = map[string]any{}
 	}
+	healEreportChecklistLegacy(payload)
 	return meta, payload, nil
 }
 
@@ -605,6 +606,7 @@ func (fs *ereportFS) saveReport(ownerUserID string, meta ereportMeta, payload ma
 	if payload == nil {
 		return nil
 	}
+	healEreportChecklistLegacy(payload)
 	payloadPath, err := fs.reportPayloadPath(ownerUserID, meta.OrgID, meta.ID)
 	if err != nil {
 		return err
