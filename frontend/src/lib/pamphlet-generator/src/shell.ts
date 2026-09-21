@@ -404,7 +404,7 @@ export function renderShell(_menuIconSrc?: string): string {
       <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--delete" data-dock-action="delete" title="Borrar" aria-label="Borrar"></button>
       <div class="pamphlet-edit-dock__footer-end">
         <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--cancel" data-dock-action="cancel" title="Descartar cambios de este elemento" aria-label="Descartar cambios de este elemento">
-          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          <span class="pamphlet-edit-dock__close-x" aria-hidden="true">×</span>
         </button>
         <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--approve" data-dock-action="ok" title="Aprobar y cerrar" aria-label="Aprobar y cerrar"></button>
       </div>

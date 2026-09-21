@@ -2641,6 +2641,20 @@
   background: var(--color-muted, #757575);
   border-color: var(--color-muted, #757575);
   color: #fff;
+  font-size: 0;
+  line-height: 0;
+}
+
+.pamphlet-edit-dock__btn--cancel .material-symbols-outlined,
+.pamphlet-edit-dock__btn--cancel .pamphlet-edit-dock__close-x {
+  font-size: var(--icon-size, 1.5rem);
+  line-height: 1;
+  width: var(--icon-size, 1.5rem);
+  height: var(--icon-size, 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
 }
 
 .pamphlet-edit-dock__btn--cancel:hover:not(:disabled),
@@ -2803,7 +2817,7 @@
   }
 }
 
-/* Phone: edit dock absolute top overlay above the menu button */
+/* Phone: fixed 12.5rem tray flush to viewport top, above header menu */
 @media (max-width: 47.999rem) {
   .pamphlet-workspace {
     position: relative;
@@ -2812,7 +2826,7 @@
 
   .pamphlet-edit-dock:not([hidden]) {
     order: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -2820,10 +2834,14 @@
     flex: none;
     display: flex;
     flex-direction: column;
-    height: 24rem;
-    max-height: 24rem;
+    height: 12.5rem;
+    max-height: 12.5rem;
+    min-height: 12.5rem;
     z-index: calc(var(--z-activity, 20) + 5);
-    border-radius: 0 0 var(--border-radius, 0.25rem) var(--border-radius, 0.25rem);
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
   }
 
   .pamphlet-edit-dock__body {
