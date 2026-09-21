@@ -662,7 +662,7 @@ function maxHeightForColumn(columnIndex: number): number {
     if (structured && (columnIndex === 4 || columnIndex === 6)) {
         return columnContentHeightMm - leadReserve;
     }
-    return columnContentHeightMm; // 3–6 (page 2) or odd cols
+    return columnContentHeightMm; // page-2 odd cols (3/5) or non-lead full bands
 }
 
 /** Captured at load; used to keep app chrome size stable across browser zoom. */
@@ -1166,12 +1166,12 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
     const region = getRegionItems(data, loc.column);
     if (region.length === 0) return null;
 
-    const oddLead =
+    const leadAt =
         data.type === "pamphlet_structured_images" &&
         isStructuredLeadColumn(loc.column) &&
         region[0]?.type === "image";
 
-    if (oddLead && loc.index === 0) {
+    if (leadAt && loc.index === 0) {
         return (
             main.querySelector<HTMLElement>(
                 `:scope > .pamphlet-lead-${loc.column} > .pamphlet-item`,
@@ -1188,7 +1188,7 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
             items[0]?.type === "image";
         bodyFlat += Math.max(0, items.length - (lead ? 1 : 0));
     }
-    const bodyIndexInCol = oddLead ? loc.index - 1 : loc.index;
+    const bodyIndexInCol = leadAt ? loc.index - 1 : loc.index;
     if (bodyIndexInCol < 0) return null;
     bodyFlat += bodyIndexInCol;
 

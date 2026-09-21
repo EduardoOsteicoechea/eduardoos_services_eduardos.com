@@ -643,7 +643,7 @@ export function getItemLocation(container: HTMLElement): LastEditedElement | nul
     const structured = app?.getAttribute("data-pamphlet-type") === "pamphlet_structured_images";
     const hasLead =
         structured &&
-        (column === 1 || column === 3 || column === 5 || column === 7) &&
+        (column === 2 || column === 4 || column === 6 || column === 8) &&
         Boolean(columnEl.parentElement?.querySelector(`:scope > .pamphlet-lead-${column}`));
     if (hasLead) index += 1;
 

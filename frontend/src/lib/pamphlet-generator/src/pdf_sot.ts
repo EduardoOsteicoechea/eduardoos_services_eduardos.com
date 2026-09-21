@@ -496,7 +496,7 @@ export class PamphletPdfSot {
                     pageEl.appendChild(hitEl);
                 }
 
-                this.appendAddControls(pageEl, pageNum, pageHits, mmToRem);
+                this.appendAddControl(pageEl, pageNum, hits, mmToRem);
 
                 nextPages.appendChild(pageEl);
                 log("render.page.ok", { seq, pageNum, hits: pageHits.length });
@@ -532,56 +532,76 @@ export class PamphletPdfSot {
     }
 
     /**
-     * One "+" control under the last hit of each column on this page.
-     * Empty columns get a control at the column body origin.
+     * Single "+" under the last content item in fill order (columns 1→8).
+     * Only rendered on the page that hosts that item.
      */
-    private appendAddControls(
+    private appendAddControl(
         pageEl: HTMLElement,
         pageNum: number,
-        pageHits: PamphletLayoutHit[],
+        allHits: PamphletLayoutHit[],
         mmToRem: number,
     ): void {
         if (!this.onAddClick) return;
 
-        const colsOnPage = pageNum === 1 ? [7, 8, 1, 2] : [3, 4, 5, 6];
+        let last: PamphletLayoutHit | null = null;
+        for (let col = 1; col <= 8; col++) {
+            const colHits = allHits
+                .filter((h) => h.column === col)
+                .sort((a, b) => a.index - b.index);
+            for (const h of colHits) last = h;
+        }
+
         const btnMm = 9;
         const gapMm = 1;
 
-        for (const column of colsOnPage) {
-            const colHits = pageHits.filter((h) => h.column === column);
-            let xMm: number;
-            let topMm: number;
-
-            if (colHits.length > 0) {
-                let bottom = colHits[0];
-                for (const h of colHits) {
-                    if (h.top_mm + h.h_mm > bottom.top_mm + bottom.h_mm) bottom = h;
-                }
-                xMm = bottom.x_mm;
-                topMm = bottom.top_mm + bottom.h_mm + gapMm;
-            } else {
-                xMm = pamphletColXMm(column);
-                topMm = pageNum === 1 && (column === 1 || column === 2)
-                    ? pamphletRightBodyTopMm()
-                    : PAMPHLET_MARGIN_MM;
-            }
-
-            const addEl = document.createElement("button");
-            addEl.type = "button";
-            addEl.className = "pamphlet-pdf-add";
-            addEl.dataset.addColumn = String(column);
-            addEl.setAttribute("aria-label", `Añadir elemento en columna ${column}`);
-            addEl.title = `Añadir en columna ${column}`;
-            addEl.style.left = `${xMm * mmToRem}rem`;
-            addEl.style.top = `${topMm * mmToRem}rem`;
-            addEl.style.width = `${btnMm * mmToRem}rem`;
-            addEl.style.height = `${btnMm * mmToRem}rem`;
-            addEl.addEventListener("click", (ev) => {
-                ev.preventDefault();
-                ev.stopPropagation();
-                this.onAddClick?.(column);
-            });
-            pageEl.appendChild(addEl);
+        if (!last) {
+            if (pageNum !== 1) return;
+            this.mountAddButton(
+                pageEl,
+                1,
+                pamphletColXMm(1),
+                pamphletRightBodyTopMm(),
+                btnMm,
+                mmToRem,
+            );
+            return;
         }
+
+        if (last.page !== pageNum) return;
+
+        this.mountAddButton(
+            pageEl,
+            last.column,
+            last.x_mm,
+            last.top_mm + last.h_mm + gapMm,
+            btnMm,
+            mmToRem,
+        );
+    }
+
+    private mountAddButton(
+        pageEl: HTMLElement,
+        column: number,
+        xMm: number,
+        topMm: number,
+        btnMm: number,
+        mmToRem: number,
+    ): void {
+        const addEl = document.createElement("button");
+        addEl.type = "button";
+        addEl.className = "pamphlet-pdf-add";
+        addEl.dataset.addColumn = String(column);
+        addEl.setAttribute("aria-label", `Añadir elemento en columna ${column}`);
+        addEl.title = `Añadir en columna ${column}`;
+        addEl.style.left = `${xMm * mmToRem}rem`;
+        addEl.style.top = `${topMm * mmToRem}rem`;
+        addEl.style.width = `${btnMm * mmToRem}rem`;
+        addEl.style.height = `${btnMm * mmToRem}rem`;
+        addEl.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.onAddClick?.(column);
+        });
+        pageEl.appendChild(addEl);
     }
 }
