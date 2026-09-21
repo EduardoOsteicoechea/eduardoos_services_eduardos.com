@@ -10,6 +10,8 @@ package pdf
 //
 // Text uses embedded Roboto / Roboto-Bold (website font) with WinAnsiEncoding.
 // Latin-1 glyphs are mapped to single WinAnsi bytes (never raw UTF-8 — that
+// caused Ã¡ / Â¿ mojibake). Those bytes are then PDF-octal-escaped in Tj
+// strings (\361 for ñ) so content streams stay ASCII-safe for pdf.js.
 // produced the Ã¡ / Â¿ mojibake). Images from data:image/*;base64,… items are
 // decoded via stdlib image/jpeg+png, re-encoded as JPEG, and embedded as
 // /XObject image streams.

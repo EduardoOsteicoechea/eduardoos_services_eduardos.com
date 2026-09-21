@@ -45,8 +45,32 @@ func BuildSamplePDF(title string) []byte {
 	return []byte(out)
 }
 
+// escape prepares a PDF literal string (… Tj). High bytes (WinAnsi accents like
+// ñ=0xF1) are written as three-digit octal escapes so the content stream stays
+// ASCII-safe — raw 0x80–0xFF bytes break some viewers (pdf.js shows "?").
 func escape(s string) string {
-	s = strings.ReplaceAll(s, `\`, `\\`)
-	s = strings.ReplaceAll(s, "(", `\(`)
-	return strings.ReplaceAll(s, ")", `\)`)
+	var b strings.Builder
+	b.Grow(len(s) * 2)
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		switch {
+		case c == '\\':
+			b.WriteString(`\\`)
+		case c == '(':
+			b.WriteString(`\(`)
+		case c == ')':
+			b.WriteString(`\)`)
+		case c == '\r':
+			b.WriteString(`\r`)
+		case c == '\n':
+			b.WriteString(`\n`)
+		case c == '\t':
+			b.WriteString(`\t`)
+		case c < 0x20 || c >= 0x7F:
+			fmt.Fprintf(&b, `\%03o`, c)
+		default:
+			b.WriteByte(c)
+		}
+	}
+	return b.String()
 }

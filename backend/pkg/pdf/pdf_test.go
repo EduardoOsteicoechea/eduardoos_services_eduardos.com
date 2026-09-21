@@ -23,8 +23,12 @@ func TestBuildSamplePDFWinAnsiAccents(t *testing.T) {
 	if bytes.Contains(data, []byte("Ã")) {
 		t.Fatal("sample PDF must not embed UTF-8 mojibake")
 	}
-	if !bytes.Contains(data, []byte{0xF3}) {
-		t.Fatal("expected WinAnsi o-acute in sample PDF")
+	// ó = WinAnsi 0xF3 → PDF octal \363 in the content stream
+	if !bytes.Contains(data, []byte(`\363`)) {
+		t.Fatal("expected PDF octal \\363 for o-acute in sample PDF")
+	}
+	if bytes.Contains(data, []byte{0xF3}) {
+		t.Fatal("raw WinAnsi high bytes must not appear unescaped in content")
 	}
 }
 
