@@ -2577,6 +2577,20 @@
   pointer-events: none;
 }
 
+/*
+ * PDF canvas is server ink on white paper. Light theme keeps print-true colors;
+ * dark theme inverts luminance (hue-rotate keeps relative image hues). Hits/add
+ * sit above the canvas and are not filtered.
+ */
+html[data-theme="dark"] .pamphlet-pdf-page__canvas,
+html.dark .pamphlet-pdf-page__canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="light"] .pamphlet-pdf-page__canvas {
+  filter: none;
+}
+
 .pamphlet-pdf-hit {
   position: absolute;
   box-sizing: border-box;
