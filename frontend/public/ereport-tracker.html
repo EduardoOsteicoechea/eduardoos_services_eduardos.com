@@ -658,11 +658,43 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 .thumbs img, .thumb-wrap img {
   width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
   border: 0.0625rem solid var(--line); cursor: zoom-in; background: var(--surface);
   display: block;
+}
+.thumb-load-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.3125rem;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: left center;
+  background: var(--warning);
+  transform: scaleX(0.15);
+  animation: thumb-load-indeterminate 0.9s ease-in-out infinite alternate;
+}
+.thumb-wrap.is-pending .thumb-load-bar {
+  display: block;
+}
+.thumb-wrap.is-ready .thumb-load-bar {
+  display: block;
+  background: var(--success);
+  animation: none;
+  transform: scaleX(1);
+  transition: transform 0.2s ease-out, background 0.2s ease-out;
+}
+.thumb-wrap:not(.is-pending):not(.is-ready) .thumb-load-bar {
+  display: none;
+}
+@keyframes thumb-load-indeterminate {
+  from { transform: scaleX(0.18); opacity: 0.7; }
+  to { transform: scaleX(0.92); opacity: 1; }
 }
 .thumb-del {
   position: absolute; top: 0.1rem; right: 0.1rem;
@@ -849,6 +881,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
         <li>Usá los iconos del menú superior del sitio para tamaño de fuente, cargar <strong>.ereport</strong>, limpiar, ver progreso o <strong>guardar todo</strong>. El tema claro/oscuro sigue el interruptor del menú global del sitio.</li>
         <li>El sidebar derecho navega por cada incidencia (tooltip: subartículo + nombre).</li>
         <li>Al guardar se exportan <strong>.ereport + HTML + PDF</strong>. Las imágenes van en base64 dentro del .ereport.</li>
+        <li>En Windows: captura con <strong>PrtSc</strong> / <strong>Win+Shift+S</strong> y pega con <strong>Ctrl+V</strong> sobre la incidencia o solución (preview base64 al instante + barra inferior al terminar la carga).</li>
       </ol>
     </div>
   </div>
@@ -1557,6 +1590,68 @@ function imageSrc(im) {
 }
 
 var imageUpload = { url: "", csrf: "" };
+var pasteImageCtx = { sid: "", gid: "", iid: "", which: "incidencia" };
+var pasteReadyTimers = Object.create(null);
+
+function rememberPasteImageTarget(card, which) {
+  if (!(card instanceof HTMLElement)) return;
+  const sid = card.dataset.section || "";
+  const gid = card.dataset.group || "";
+  const iid = card.dataset.item || "";
+  if (!sid || !gid || !iid) return;
+  pasteImageCtx = {
+    sid,
+    gid,
+    iid,
+    which: which === "solucion" ? "solucion" : "incidencia"
+  };
+}
+
+function resolvePasteImageTarget() {
+  if (pasteImageCtx.sid && pasteImageCtx.gid && pasteImageCtx.iid) {
+    const found = locateItem(pasteImageCtx.sid, pasteImageCtx.gid, pasteImageCtx.iid);
+    if (found && found.item) return { ...pasteImageCtx };
+  }
+  const active = document.activeElement;
+  const card = active instanceof Element ? active.closest(".item-card") : null;
+  if (card instanceof HTMLElement) {
+    const which = active.closest(".col-sol") ? "solucion" : "incidencia";
+    rememberPasteImageTarget(card, which);
+    return { ...pasteImageCtx };
+  }
+  const first = document.querySelector(".item-card");
+  if (first instanceof HTMLElement) {
+    rememberPasteImageTarget(first, "incidencia");
+    return { ...pasteImageCtx };
+  }
+  return null;
+}
+
+function fileToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result || ""));
+    fr.onerror = () => reject(fr.error || new Error("No se pudo leer la imagen."));
+    fr.readAsDataURL(blob);
+  });
+}
+
+function clipboardImageFiles(clipboardData) {
+  const out = [];
+  if (!clipboardData) return out;
+  const files = clipboardData.files ? Array.from(clipboardData.files) : [];
+  files.forEach((file) => {
+    if (file && /^image\//i.test(file.type || "")) out.push(file);
+  });
+  if (out.length) return out;
+  const items = clipboardData.items ? Array.from(clipboardData.items) : [];
+  items.forEach((item) => {
+    if (!item || !/^image\//i.test(item.type || "")) return;
+    const file = item.getAsFile && item.getAsFile();
+    if (file) out.push(file);
+  });
+  return out;
+}
 
 async function uploadImageFile(file) {
   if (!imageUpload.url) {
@@ -1580,25 +1675,92 @@ async function uploadImageFile(file) {
   return { id: data.id, mime: data.mime, name: data.name || file.name, url: data.url };
 }
 
-function onImagesSelected(sid, gid, iid, which, fileList) {
-  const files = Array.from(fileList || []);
+function clearPasteReadyTimer(tempId) {
+  if (pasteReadyTimers[tempId]) {
+    clearTimeout(pasteReadyTimers[tempId]);
+    delete pasteReadyTimers[tempId];
+  }
+}
+
+function markImageReadyThenPersist(item, key, tempId, ref) {
+  const list = item[key] || [];
+  const idx = list.findIndex((im) => im && im.id === tempId);
+  if (idx < 0) {
+    if (ref) {
+      list.push(ref);
+      if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    }
+    render();
+    updateStatus();
+    return;
+  }
+  if (!ref) {
+    clearPasteReadyTimer(tempId);
+    list.splice(idx, 1);
+    if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    render();
+    return;
+  }
+  const ready = Object.assign({}, ref, { justLoaded: true });
+  list[idx] = ready;
+  if (key === "imagesSolucion") item.images = item.imagesSolucion;
+  render();
+  clearPasteReadyTimer(tempId);
+  pasteReadyTimers[tempId] = setTimeout(() => {
+    delete pasteReadyTimers[tempId];
+    const still = (item[key] || []).find((im) => im && im.id === ref.id);
+    if (still && still.justLoaded) {
+      delete still.justLoaded;
+      render();
+    }
+    updateStatus();
+  }, 450);
+}
+
+async function ingestImageFiles(sid, gid, iid, which, fileList) {
+  const files = Array.from(fileList || []).filter((f) => {
+    if (!f) return false;
+    if (/^image\//i.test(f.type || "")) return true;
+    return /\.(png|jpe?g|webp|gif)$/i.test(f.name || "");
+  });
   if (!files.length) return;
   collectFromDom();
   const found = locateItem(sid, gid, iid);
   const item = found && found.item;
   if (!item) return;
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
-  let pending = files.length;
-  files.forEach(file => {
-    uploadImageFile(file).then(ref => {
-      if (ref) {
-        item[key].push(ref);
-        if (key === "imagesSolucion") item.images = item.imagesSolucion;
-      }
-      pending -= 1;
-      if (pending === 0) render();
+  if (!Array.isArray(item[key])) item[key] = [];
+  const cardSel = `.item-card[data-item="${String(iid).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"]`;
+  rememberPasteImageTarget(document.querySelector(cardSel), which);
+
+  for (const file of files) {
+    const tempId = "pending-" + uid("img");
+    let dataUrl = "";
+    try {
+      dataUrl = await fileToDataUrl(file);
+    } catch (_) {
+      toast("No se pudo convertir la captura a base64.");
+      continue;
+    }
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const name = file.name && file.name !== "image.png" ? file.name : `captura-${stamp}.png`;
+    item[key].push({
+      id: tempId,
+      name,
+      mime: file.type || "image/png",
+      dataUrl,
+      pending: true
     });
-  });
+    if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    render();
+    const uploadFile = file.name ? file : new File([file], name, { type: file.type || "image/png" });
+    const ref = await uploadImageFile(uploadFile);
+    markImageReadyThenPersist(item, key, tempId, ref);
+  }
+}
+
+function onImagesSelected(sid, gid, iid, which, fileList) {
+  void ingestImageFiles(sid, gid, iid, which, fileList);
 }
 
 function removeImage(sid, gid, iid, which, idx) {
@@ -1609,6 +1771,8 @@ function removeImage(sid, gid, iid, which, idx) {
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
   const list = item[key] || [];
   if (idx < 0 || idx >= list.length) return;
+  const removed = list[idx];
+  if (removed && removed.id) clearPasteReadyTimer(removed.id);
   list.splice(idx, 1);
   if (key === "imagesSolucion") item.images = item.imagesSolucion;
   render();
@@ -1630,12 +1794,16 @@ function stepModal(delta) {
 }
 
 function renderThumbs(images, cls, which) {
-  return (images || []).map((im, idx) => `
-    <div class="thumb-wrap">
+  return (images || []).map((im, idx) => {
+    const wrapClass = im && im.pending ? " is-pending" : im && im.justLoaded ? " is-ready" : "";
+    return `
+    <div class="thumb-wrap${wrapClass}">
       <img src="${imageSrc(im)}" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" class="thumb ${cls}" />
+      <span class="thumb-load-bar" aria-hidden="true"></span>
       <button type="button" class="thumb-del" data-act="del-img" data-which="${which}" data-idx="${idx}" title="Eliminar imagen" aria-label="Eliminar imagen">${mi("close")}</button>
     </div>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function statusToneClass(status) {
@@ -2477,6 +2645,36 @@ document.addEventListener("keydown", (e) => {
     if (modal && modal.classList.contains("open")) closeModal(id);
   });
 });
+
+document.addEventListener("focusin", (e) => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  const card = t.closest(".item-card");
+  if (!(card instanceof HTMLElement)) return;
+  const which = t.closest(".col-sol") ? "solucion" : t.closest(".col-incidencia") ? "incidencia" : pasteImageCtx.which;
+  rememberPasteImageTarget(card, which);
+});
+
+document.addEventListener("pointerdown", (e) => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  const card = t.closest(".item-card");
+  if (!(card instanceof HTMLElement)) return;
+  const which = t.closest(".col-sol") ? "solucion" : t.closest(".col-incidencia") ? "incidencia" : pasteImageCtx.which;
+  rememberPasteImageTarget(card, which);
+}, true);
+
+document.addEventListener("paste", (e) => {
+  const images = clipboardImageFiles(e.clipboardData);
+  if (!images.length) return;
+  const target = resolvePasteImageTarget();
+  if (!target) {
+    toast("Seleccioná una incidencia para pegar la captura.");
+    return;
+  }
+  e.preventDefault();
+  void ingestImageFiles(target.sid, target.gid, target.iid, target.which, images);
+});
 document.getElementById("progress-close").onclick = () => closeProgressModal();
 document.getElementById("progress-modal").addEventListener("click", (e) => {
   if (e.target.id === "progress-modal") closeProgressModal();
@@ -2506,6 +2704,33 @@ updateStatus();
     }
   }
 
+  function sanitizeImagesForSave(list) {
+    return (list || [])
+      .filter(function (im) { return im && !im.pending; })
+      .map(function (im) {
+        var out = { id: im.id, mime: im.mime, name: im.name, url: im.url };
+        if (!out.url && im.dataUrl) out.dataUrl = im.dataUrl;
+        return out;
+      });
+  }
+
+  function sanitizePayloadForSave(raw) {
+    var payload = structuredClone(raw);
+    function scrubItem(it) {
+      if (!it) return;
+      it.imagesIncidencia = sanitizeImagesForSave(it.imagesIncidencia);
+      it.imagesSolucion = sanitizeImagesForSave(it.imagesSolucion);
+      it.images = it.imagesSolucion;
+    }
+    (payload.sections || []).forEach(function (sec) {
+      (sec.items || []).forEach(scrubItem);
+      (sec.groups || []).forEach(function (grp) {
+        (grp.items || []).forEach(scrubItem);
+      });
+    });
+    return payload;
+  }
+
   function scheduleCloudSave() {
     if (!autoSaveEnabled) return;
     if (!window.parent || window.parent === window) return;
@@ -2513,7 +2738,7 @@ updateStatus();
     cloudSaveTimer = setTimeout(function () {
       try {
         collectFromDom();
-        emit("cloud-save", { payload: structuredClone(state) });
+        emit("cloud-save", { payload: sanitizePayloadForSave(state) });
       } catch (e) {
         emit("error", { message: String(e && e.message ? e.message : e) });
       }
@@ -2530,7 +2755,7 @@ updateStatus();
   var origSaveAll = saveAll;
   saveAll = async function () {
     try { collectFromDom(); } catch (e) {}
-    emit("cloud-save", { payload: structuredClone(state) });
+    emit("cloud-save", { payload: sanitizePayloadForSave(state) });
     return origSaveAll.apply(this, arguments);
   };
 

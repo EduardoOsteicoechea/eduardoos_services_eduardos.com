@@ -62,7 +62,20 @@ describe("vendored tracker assets", () => {
   it("uploads new images as files and keeps legacy dataUrl only as a display fallback", () => {
     expect(tracker).toContain("uploadImageFile");
     expect(tracker).toContain("imageSrc");
+    expect(tracker).toContain("fileToDataUrl");
+    expect(tracker).toContain("ingestImageFiles");
+    expect(tracker).toContain('document.addEventListener("paste"');
+    expect(tracker).toContain("thumb-load-bar");
     expect(tracker).not.toContain("reader.readAsDataURL(file)");
     expect(tracker).not.toMatch(/aws-sdk|S3_BUCKET/i);
+  });
+
+  it("pastes clipboard screenshots into the focused issue with an immediate base64 preview", () => {
+    expect(tracker).toContain("clipboardImageFiles");
+    expect(tracker).toContain("resolvePasteImageTarget");
+    expect(tracker).toContain("rememberPasteImageTarget");
+    expect(tracker).toContain("markImageReadyThenPersist");
+    expect(tracker).toContain("sanitizePayloadForSave");
+    expect(tracker).toContain("height: 0.3125rem");
   });
 });
