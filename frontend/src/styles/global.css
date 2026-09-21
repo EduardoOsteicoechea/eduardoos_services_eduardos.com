@@ -16,7 +16,7 @@
   --border-width: 0.0625rem;
   --border-radius: 0.25rem;
   --menu-button-size: calc(var(--rail-button-size) * 1.4);
-  --header-size: calc(var(--menu-button-size) + (var(--rail-gap) * 2));
+  --header-size: calc(var(--menu-button-size) + (var(--space-padding) * 2));
   --rail-width: 0rem;
   --mobile-header-height: var(--header-size);
   --mobile-footer-height: 0rem;
@@ -1004,6 +1004,19 @@ h1 {
   margin: 0 0 var(--space-margin);
 }
 
+/* Visually hidden page title — private/app routes (menu + tab name the page). */
+.page-title-sr {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 h2 {
   font-size: var(--font-size-md);
   margin: 0 0 var(--space-margin);
@@ -1427,7 +1440,7 @@ section.diag .panel:not(form) {
     align-items: center;
     justify-content: flex-end;
     gap: var(--rail-gap);
-    padding: var(--rail-gap);
+    padding: var(--space-padding);
   }
 
   .app-header--end {
@@ -1538,7 +1551,7 @@ section.diag .panel:not(form) {
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
-    --sidebar-width: calc(var(--content-basis) * 0.35);
+    --sidebar-width: calc(var(--content-basis) * 0.5);
   }
 
   .session-grid form > button,
@@ -1598,7 +1611,7 @@ section.diag .panel:not(form) {
     align-items: center;
     justify-content: flex-end;
     gap: var(--rail-gap);
-    padding: var(--rail-gap);
+    padding: var(--space-padding);
   }
 
   .app-header--end {
@@ -1820,14 +1833,14 @@ html[data-page="ereport-invite"] main > * {
 @media (max-width: 63.999rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: var(--main-padding) 0 0 var(--space-padding);
+    padding: var(--main-padding) var(--space-padding) 0 var(--space-padding);
   }
 }
 
 @media (min-width: 64rem) {
   html[data-page="ereport-workspace"] main,
   html[data-page="ereport-invite"] main {
-    padding: var(--main-padding) 0 0 var(--space-padding);
+    padding: var(--main-padding) var(--space-padding) 0 var(--space-padding);
   }
 }
 
