@@ -41,10 +41,12 @@ export type PamphletPreviewResponse = {
 };
 
 export type PdfHitClickHandler = (column: number, index: number, kind: string) => void;
+export type PdfAddClickHandler = (column: number) => void;
 
 export type PamphletPdfSotOptions = {
     stage: HTMLElement;
     onHitClick: PdfHitClickHandler;
+    onAddClick?: PdfAddClickHandler;
 };
 
 function rootFontSizePx(): number {
@@ -65,6 +67,53 @@ function bodySnippet(text: string, max = 800): string {
 
 function hitId(column: number, index: number): string {
     return `c${column}:${index}`;
+}
+
+const PAMPHLET_MARGIN_MM = 10;
+const PAMPHLET_COL_WIDTH_MM = 57.85;
+const PAMPHLET_GUTTER_NARROW_MM = 4;
+const PAMPHLET_GUTTER_WIDE_MM = 20;
+
+/** CSS-top (from page top) fallback for empty columns on page 1 right band. */
+function pamphletRightBodyTopMm(): number {
+    const headerH = PAMPHLET_HEADER_LAYOUT_MM.height;
+    const gutter = PAMPHLET_HEADER_LAYOUT_MM.body_gutter;
+    return PAMPHLET_MARGIN_MM + headerH + gutter;
+}
+
+/** Column left edge in mm (matches backend colX tracks). */
+function pamphletColXMm(column: number): number {
+    const track =
+        column === 7 || column === 3 ? 2
+        : column === 8 || column === 4 ? 4
+        : column === 1 || column === 5 ? 6
+        : 8;
+    switch (track) {
+        case 2:
+            return PAMPHLET_MARGIN_MM;
+        case 4:
+            return PAMPHLET_MARGIN_MM + PAMPHLET_COL_WIDTH_MM + PAMPHLET_GUTTER_NARROW_MM;
+        case 6:
+            return (
+                PAMPHLET_MARGIN_MM +
+                PAMPHLET_COL_WIDTH_MM +
+                PAMPHLET_GUTTER_NARROW_MM +
+                PAMPHLET_COL_WIDTH_MM +
+                PAMPHLET_GUTTER_WIDE_MM
+            );
+        case 8:
+            return (
+                PAMPHLET_MARGIN_MM +
+                PAMPHLET_COL_WIDTH_MM +
+                PAMPHLET_GUTTER_NARROW_MM +
+                PAMPHLET_COL_WIDTH_MM +
+                PAMPHLET_GUTTER_WIDE_MM +
+                PAMPHLET_COL_WIDTH_MM +
+                PAMPHLET_GUTTER_NARROW_MM
+            );
+        default:
+            return PAMPHLET_MARGIN_MM;
+    }
 }
 
 function waitTwoFrames(): Promise<void> {
@@ -119,6 +168,7 @@ function surfacePreviewError(
 export class PamphletPdfSot {
     private readonly stage: HTMLElement;
     private readonly onHitClick: PdfHitClickHandler;
+    private readonly onAddClick: PdfAddClickHandler | null;
     private selectedId: string | null = null;
     private previewQueued = false;
     private previewFlushing = false;
@@ -135,6 +185,7 @@ export class PamphletPdfSot {
     constructor(opts: PamphletPdfSotOptions) {
         this.stage = opts.stage;
         this.onHitClick = opts.onHitClick;
+        this.onAddClick = opts.onAddClick ?? null;
         if (!this.stage.querySelector(".pamphlet-pdf-stage__pages")) {
             const pages = document.createElement("div");
             pages.className = "pamphlet-pdf-stage__pages";
@@ -445,6 +496,8 @@ export class PamphletPdfSot {
                     pageEl.appendChild(hitEl);
                 }
 
+                this.appendAddControls(pageEl, pageNum, pageHits, mmToRem);
+
                 nextPages.appendChild(pageEl);
                 log("render.page.ok", { seq, pageNum, hits: pageHits.length });
             }
@@ -476,5 +529,59 @@ export class PamphletPdfSot {
         this.lastLayout = layout;
         this.applySelectedClass();
         log("render.swap.ok", { seq, hitCount: hits.length });
+    }
+
+    /**
+     * One "+" control under the last hit of each column on this page.
+     * Empty columns get a control at the column body origin.
+     */
+    private appendAddControls(
+        pageEl: HTMLElement,
+        pageNum: number,
+        pageHits: PamphletLayoutHit[],
+        mmToRem: number,
+    ): void {
+        if (!this.onAddClick) return;
+
+        const colsOnPage = pageNum === 1 ? [7, 8, 1, 2] : [3, 4, 5, 6];
+        const btnMm = 9;
+        const gapMm = 1;
+
+        for (const column of colsOnPage) {
+            const colHits = pageHits.filter((h) => h.column === column);
+            let xMm: number;
+            let topMm: number;
+
+            if (colHits.length > 0) {
+                let bottom = colHits[0];
+                for (const h of colHits) {
+                    if (h.top_mm + h.h_mm > bottom.top_mm + bottom.h_mm) bottom = h;
+                }
+                xMm = bottom.x_mm;
+                topMm = bottom.top_mm + bottom.h_mm + gapMm;
+            } else {
+                xMm = pamphletColXMm(column);
+                topMm = pageNum === 1 && (column === 1 || column === 2)
+                    ? pamphletRightBodyTopMm()
+                    : PAMPHLET_MARGIN_MM;
+            }
+
+            const addEl = document.createElement("button");
+            addEl.type = "button";
+            addEl.className = "pamphlet-pdf-add";
+            addEl.dataset.addColumn = String(column);
+            addEl.setAttribute("aria-label", `Añadir elemento en columna ${column}`);
+            addEl.title = `Añadir en columna ${column}`;
+            addEl.style.left = `${xMm * mmToRem}rem`;
+            addEl.style.top = `${topMm * mmToRem}rem`;
+            addEl.style.width = `${btnMm * mmToRem}rem`;
+            addEl.style.height = `${btnMm * mmToRem}rem`;
+            addEl.addEventListener("click", (ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                this.onAddClick?.(column);
+            });
+            pageEl.appendChild(addEl);
+        }
     }
 }

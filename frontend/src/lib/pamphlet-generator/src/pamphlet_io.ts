@@ -443,7 +443,7 @@ export function renderPageChrome(main: HTMLElement, data: PamphletStructure): vo
     main.appendChild(footerEl);
 }
 
-/** Lead slot above an odd body column (sibling of .dumb-column, not inside it). */
+/** Lead slot above an even body column (sibling of .dumb-column, not inside it). */
 export function createLeadSlotElement(columnNum: number, item: PamphletItem): HTMLElement {
     const slot = document.createElement("div");
     slot.className = `pamphlet-lead-slot pamphlet-lead-${columnNum}`;

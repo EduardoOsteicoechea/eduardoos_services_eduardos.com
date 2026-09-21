@@ -93,6 +93,8 @@ import {
     LEAD_IMAGE_GAP_MM,
     LEAD_IMAGE_HEIGHT_MM,
     ensureStructuredLeadImages,
+    isStructuredLeadColumn,
+    migrateStructuredLeadsToEvenColumns,
     normalizePamphletData,
     stripStructuredLeadImages,
     type CreatePamphletMeta,
@@ -645,22 +647,22 @@ function maxHeightForColumn(columnIndex: number): number {
     const structured = currentDoc?.type === "pamphlet_structured_images";
     const leadReserve = LEAD_IMAGE_HEIGHT_MM + LEAD_IMAGE_GAP_MM;
     if (columnIndex === 1 || columnIndex === 2) {
-        if (structured && columnIndex === 1) {
-            // Lead shares col2 top (after header-body-gutter); body is right band − lead − gap.
+        if (structured && columnIndex === 2) {
+            // Lead shares col1 top (after header-body-gutter); body is right band − lead − gap.
             return page1RightColHeightMm - leadReserve;
         }
         return page1RightColHeightMm;
     }
     if (columnIndex === 7 || columnIndex === 8) {
-        if (structured && columnIndex === 7) {
+        if (structured && columnIndex === 8) {
             return page1LeftColHeightMm - leadReserve;
         }
         return page1LeftColHeightMm;
     }
-    if (structured && (columnIndex === 3 || columnIndex === 5)) {
+    if (structured && (columnIndex === 4 || columnIndex === 6)) {
         return columnContentHeightMm - leadReserve;
     }
-    return columnContentHeightMm; // 3–6 (page 2) or even cols
+    return columnContentHeightMm; // 3–6 (page 2) or odd cols
 }
 
 /** Captured at load; used to keep app chrome size stable across browser zoom. */
@@ -1166,7 +1168,7 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
 
     const oddLead =
         data.type === "pamphlet_structured_images" &&
-        (loc.column === 1 || loc.column === 3 || loc.column === 5 || loc.column === 7) &&
+        isStructuredLeadColumn(loc.column) &&
         region[0]?.type === "image";
 
     if (oddLead && loc.index === 0) {
@@ -1182,7 +1184,7 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
         const items = getRegionItems(data, c);
         const lead =
             data.type === "pamphlet_structured_images" &&
-            (c === 1 || c === 3 || c === 5 || c === 7) &&
+            isStructuredLeadColumn(c) &&
             items[0]?.type === "image";
         bodyFlat += Math.max(0, items.length - (lead ? 1 : 0));
     }
@@ -1227,22 +1229,23 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
-    currentDoc = data;
-    currentHeader = { ...data.header };
-    appRoot.dataset.pamphletType = data.type;
-    const structured = data.type === "pamphlet_structured_images";
+    const migrated = migrateStructuredLeadsToEvenColumns(data);
+    currentDoc = migrated;
+    currentHeader = { ...migrated.header };
+    appRoot.dataset.pamphletType = migrated.type;
+    const structured = migrated.type === "pamphlet_structured_images";
     templateBtn.classList.toggle("header-dynamic-menu__btn--active", structured);
     templateBtn.classList.toggle("is-active", structured);
     templateBtn.setAttribute("aria-pressed", structured ? "true" : "false");
     templateBtn.title = structured
         ? "Plantilla: imágenes estructuradas (clic → simple)"
         : "Plantilla: simple (clic → imágenes estructuradas)";
-    renderFromPamphlet(main, data);
+    renderFromPamphlet(main, migrated);
     reflowAndReport(main);
     updatePrintAvailability();
     syncSheetScale();
     if (openEdit) {
-        activateEditAt(data, data.last_edited_element);
+        activateEditAt(migrated, migrated.last_edited_element);
     }
 }
 
@@ -1380,6 +1383,9 @@ pdfSot = new PamphletPdfSot({
     stage: pdfStage,
     onHitClick: (column, index, kind) => {
         editDock.open({ column, index }, kind);
+    },
+    onAddClick: (column) => {
+        void handleAddItemButton(column);
     },
 });
 
@@ -3059,7 +3065,7 @@ on(createSaveCloudBtn, "click", async () => {
 itemTypeModal.querySelectorAll<HTMLButtonElement>("[data-item-type]").forEach((btn) => {
     on(btn, "click", () => {
         const type = btn.dataset.itemType as PamphletItemType | undefined;
-        if (type !== "paragraph" && type !== "heading_1" && type !== "image") return;
+        if (type !== "paragraph" && type !== "heading_1") return;
         void confirmItemType(type);
     });
 });

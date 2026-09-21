@@ -161,13 +161,18 @@ export type PamphletStructure = {
     last_edited_element: LastEditedElement;
 } & Record<ColumnKey, PamphletItem[]>;
 
-/** Odd body columns that get a 10:9 lead image in structured_images mode. */
+/** Even body columns that get a 10:9 lead image in structured_images mode. */
 export const STRUCTURED_LEAD_COLUMNS: ColumnKey[] = [
-    "column_1",
-    "column_3",
-    "column_5",
-    "column_7",
+    "column_2",
+    "column_4",
+    "column_6",
+    "column_8",
 ];
+
+/** True when this column number hosts the structured lead image. */
+export function isStructuredLeadColumn(column: number): boolean {
+    return column === 2 || column === 4 || column === 6 || column === 8;
+}
 
 /** Column content width (mm) × 9/10 for 10:9 lead frames. */
 export const LEAD_IMAGE_HEIGHT_MM = 52;
@@ -870,7 +875,7 @@ export function createEmptyPamphlet(meta: CreatePamphletMeta): PamphletStructure
     };
 }
 
-/** Ensure odd columns start with an empty/lead image when switching to structured template. */
+/** Ensure even columns start with an empty/lead image when switching to structured template. */
 export function ensureStructuredLeadImages(doc: PamphletStructure): PamphletStructure {
     const next = { ...doc, type: "pamphlet_structured_images" as const };
     for (const col of STRUCTURED_LEAD_COLUMNS) {
@@ -890,7 +895,7 @@ export function ensureStructuredLeadImages(doc: PamphletStructure): PamphletStru
 
 /**
  * Leave structured template: leads never become body content.
- * Drop the first image on cols 1/3/5/7 and set type to simple so columns
+ * Drop the first image on cols 2/4/6/8 and set type to simple so columns
  * regain full height and reflow remaining items.
  */
 export function stripStructuredLeadImages(doc: PamphletStructure): PamphletStructure {
@@ -903,6 +908,32 @@ export function stripStructuredLeadImages(doc: PamphletStructure): PamphletStruc
         next[col] = items;
     }
     return next;
+}
+
+/**
+ * Older structured docs stored leads on odd columns (1/3/5/7).
+ * Move those lead images onto the matching even column (2/4/6/8).
+ */
+export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): PamphletStructure {
+    if (doc.type !== "pamphlet_structured_images") return doc;
+    const pairs: Array<[ColumnKey, ColumnKey]> = [
+        ["column_1", "column_2"],
+        ["column_3", "column_4"],
+        ["column_5", "column_6"],
+        ["column_7", "column_8"],
+    ];
+    let changed = false;
+    const next: PamphletStructure = { ...doc };
+    for (const [odd, even] of pairs) {
+        const oddItems = [...(next[odd] ?? [])];
+        const evenItems = [...(next[even] ?? [])];
+        if (oddItems[0]?.type === "image" && evenItems[0]?.type !== "image") {
+            next[odd] = oddItems.slice(1);
+            next[even] = [{ ...oddItems[0], height_mm: LEAD_IMAGE_HEIGHT_MM }, ...evenItems];
+            changed = true;
+        }
+    }
+    return changed ? next : doc;
 }
 
 export function itemTypeToTag(type: PamphletItemType): string {

@@ -319,7 +319,7 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="item-type-options">
       <button type="button" data-item-type="paragraph">Paragraph</button>
       <button type="button" data-item-type="heading_1">Heading</button>
-      <button type="button" data-item-type="image">Image</button>
+      <button type="button" data-item-type="image" hidden>Image</button>
     </div>
     <div class="create-modal-actions">
       <button type="button" id="item-type-cancel">Cancel</button>
@@ -402,12 +402,10 @@ export function renderShell(_menuIconSrc?: string): string {
     </div>
     <div class="pamphlet-edit-dock__footer" role="group" aria-label="Confirmar edición">
       <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--delete" data-dock-action="delete" title="Borrar" aria-label="Borrar"></button>
-      <div class="pamphlet-edit-dock__footer-end">
-        <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--cancel" data-dock-action="cancel" title="Descartar cambios de este elemento" aria-label="Descartar cambios de este elemento">
-          <span class="pamphlet-edit-dock__close-x" aria-hidden="true">×</span>
-        </button>
-        <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--approve" data-dock-action="ok" title="Aprobar y cerrar" aria-label="Aprobar y cerrar"></button>
-      </div>
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--cancel" data-dock-action="cancel" title="Descartar cambios de este elemento" aria-label="Descartar cambios de este elemento">
+        <span class="pamphlet-edit-dock__close-x" aria-hidden="true">×</span>
+      </button>
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--approve" data-dock-action="ok" title="Aprobar y cerrar" aria-label="Aprobar y cerrar"></button>
     </div>
   </aside>
   <div id="pamphlet-pdf-stage" class="pamphlet-pdf-stage" aria-label="Vista previa PDF del panfleto">

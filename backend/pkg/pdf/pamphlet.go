@@ -558,16 +558,12 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 
 	leftTop := PamphletPageHeightMm - PamphletMarginMm
 	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7, 1, sink)
-	drawColumn(&s, doc.Column8, colX(4), leftTop, PamphletColWidthMm, leftColH, images, false, 1, 8, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column8, colX(4), leftTop, leftColH, images, 8, 1, sink)
 
-	// Col1 lead shares col2 top (after header→body gutter); body band shrinks by lead+gap.
+	// Col2 lead shares col1 top (after header→body gutter); body band shrinks by lead+gap.
 	rightTop := headerTop - headerH - bodyGutter
-	if structuredLead(doc, 1) {
-		drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1, 1, sink)
-	} else {
-		drawColumn(&s, doc.Column1, colX(6), rightTop, PamphletColWidthMm, rightColH, images, false, 1, 1, sink)
-	}
-	drawColumn(&s, doc.Column2, colX(8), rightTop, PamphletColWidthMm, rightColH, images, false, 1, 2, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1, 1, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column2, colX(8), rightTop, rightColH, images, 2, 1, sink)
 
 	footerTop := PamphletMarginMm + footerH
 	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
@@ -579,9 +575,9 @@ func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 	top := PamphletPageHeightMm - PamphletMarginMm
 	h := PamphletPage2BodyMm
 	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3, 2, sink)
-	drawColumn(&s, doc.Column4, colX(4), top, PamphletColWidthMm, h, images, false, 2, 4, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column4, colX(4), top, h, images, 4, 2, sink)
 	drawStructuredOrPlainColumn(&s, doc, doc.Column5, colX(6), top, h, images, 5, 2, sink)
-	drawColumn(&s, doc.Column6, colX(8), top, PamphletColWidthMm, h, images, false, 2, 6, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column6, colX(8), top, h, images, 6, 2, sink)
 	return s.String()
 }
 
@@ -1581,7 +1577,7 @@ func structuredLead(doc PamphletDocument, colNum int) bool {
 	if doc.Type != "pamphlet_structured_images" {
 		return false
 	}
-	return colNum == 1 || colNum == 3 || colNum == 5 || colNum == 7
+	return colNum == 2 || colNum == 4 || colNum == 6 || colNum == 8
 }
 
 const (
