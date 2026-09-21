@@ -45,7 +45,6 @@ func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 		base = emptyEreportPayload()
 	}
 	healEreportChecklistLegacy(base)
-	healEreportChecklistLegacy(incoming)
 	out := deepCloneMap(base)
 
 	for k, v := range incoming {
@@ -94,6 +93,7 @@ func mergeAPIPayload(stored, incoming map[string]any) (map[string]any, error) {
 	}
 
 	out["sections"] = resultSecs
+	healEreportChecklistLegacy(out)
 	return out, nil
 }
 
@@ -160,7 +160,9 @@ func mergeItems(storedItems, incomingItems, resultItems []map[string]any) ([]any
 			resultByID[iid] = inItem
 			continue
 		}
-		if !jsonEqual(storedItem, inItem) {
+		inCmp := deepCloneMap(inItem)
+		healEreportItemsChecklist([]map[string]any{inCmp})
+		if !jsonEqual(storedItem, inCmp) {
 			return nil, apiWriteErr("append_existing_item_modified", "cannot modify existing issue "+iid)
 		}
 	}
@@ -175,6 +177,16 @@ func validateNewAPIItem(it map[string]any) error {
 	status := asString(it["status"])
 	if status != "reprobado" {
 		return apiWriteErr("append_invalid_new_item_status", "new issues must have status reprobado")
+	}
+	// New API items must carry an unchecked UX row so legacy heal does not flip them to aprobado.
+	if checklistLen(it["checklist"]) == 0 {
+		it["checklist"] = []any{
+			map[string]any{
+				"id":      "ux-test",
+				"label":   "UX Test",
+				"checked": false,
+			},
+		}
 	}
 	return nil
 }
@@ -351,9 +363,9 @@ func countEreportItems(payload map[string]any) int {
 
 const legacyUXCumplidasLabel = "UX cumplidas"
 
-// healEreportChecklistLegacy seeds a checked "UX cumplidas" row on items that were
-// already aprobado but have no checklist, so checklist-derived status does not
-// rewrite historical approvals to reprobado.
+// healEreportChecklistLegacy seeds a checked "UX cumplidas" row on any item that
+// has no UX checklist (except no_aplica), so legacy reports and corrupted
+// autosaves do not all render as reprobado after checklist-derived status.
 func healEreportChecklistLegacy(payload map[string]any) {
 	if payload == nil {
 		return
@@ -374,7 +386,7 @@ func healEreportItemsChecklist(items []map[string]any) {
 		if _, ok := it["checklist"]; !ok {
 			it["checklist"] = []any{}
 		}
-		if asString(it["status"]) != "aprobado" {
+		if asString(it["status"]) == "no_aplica" {
 			continue
 		}
 		if checklistLen(it["checklist"]) > 0 {

@@ -61,7 +61,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 					"checked": "boolean — true when the UX check passed",
 				},
 				"effectiveStatus": "No checklist rows → reprobado. All checked → aprobado. None checked → reprobado. Partial → empty (warning).",
-				"legacyHeal":      "On load/save, items with status aprobado and an empty/missing checklist receive one checked row labeled \"UX cumplidas\" so existing approved reports keep their status.",
+				"legacyHeal":      "On load/save, any item with an empty/missing checklist (except status no_aplica) receives one checked row labeled \"UX cumplidas\" so legacy reports and pre-checklist data stay approved. New UI/API issues are created with an unchecked \"UX Test\" row instead.",
 			},
 			"effectiveStatus": "Primary: derive from item.checklist (see checklist.effectiveStatus). Stored item.status is kept in sync by the editor. Legacy criteriaStatus remains optional metadata; it no longer overrides checklist-derived status in the tracker UI.",
 			"reportCodeRule":  "reportNumber is the Report Code. Dates fechaIncidencia/fechaSolucion round-trip as YYYY-MM-DD or YYYY-MM-DDTHH:mm.",

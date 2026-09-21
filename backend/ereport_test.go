@@ -1040,13 +1040,18 @@ func TestHealEreportChecklistLegacy_PreservesApprovedWithoutUX(t *testing.T) {
 	}
 	healEreportChecklistLegacy(payload)
 	open, completed := countEreportIssueOverview(payload)
-	if open != 2 || completed != 2 {
-		t.Fatalf("want open=2 completed=2 after heal, got open=%d completed=%d", open, completed)
+	if open != 1 || completed != 3 {
+		t.Fatalf("want open=1 completed=3 after heal, got open=%d completed=%d", open, completed)
 	}
 	ok := asMapSlice(asMapSlice(asMapSlice(payload["sections"])[0]["groups"])[0]["items"])[0]
 	list := asMapSlice(ok["checklist"])
 	if len(list) != 1 || asString(list[0]["label"]) != legacyUXCumplidasLabel || list[0]["checked"] != true {
 		t.Fatalf("aprobado without checklist not healed: %#v", ok["checklist"])
+	}
+	bad := asMapSlice(asMapSlice(asMapSlice(payload["sections"])[0]["groups"])[0]["items"])[1]
+	badList := asMapSlice(bad["checklist"])
+	if len(badList) != 1 || asString(badList[0]["label"]) != legacyUXCumplidasLabel || asString(bad["status"]) != "aprobado" {
+		t.Fatalf("empty-checklist reprobado should heal to UX cumplidas: %#v status=%s", bad["checklist"], asString(bad["status"]))
 	}
 	kept := asMapSlice(asMapSlice(asMapSlice(payload["sections"])[0]["groups"])[0]["items"])[2]
 	keptList := asMapSlice(kept["checklist"])

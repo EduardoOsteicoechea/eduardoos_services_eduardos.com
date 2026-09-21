@@ -115,7 +115,7 @@ describe("tracker checklist status", () => {
     expect(card().classList.contains("is-reprobado")).toBe(true);
 
     click(card().querySelector('[data-act="item-tab"][data-tab="checklist"]'));
-    click(card().querySelector('[data-act="add-check"]'));
+    expect(card().querySelectorAll(".checklist-row").length).toBe(1);
     click(card().querySelector('[data-act="add-check"]'));
     expect(card().querySelectorAll(".checklist-row").length).toBe(2);
     expect(card().classList.contains("is-reprobado")).toBe(true);
@@ -127,7 +127,7 @@ describe("tracker checklist status", () => {
     expect(card().classList.contains("is-aprobado")).toBe(true);
   });
 
-  it("heals legacy aprobado items without UX checklist into UX cumplidas", async () => {
+  it("heals legacy items without UX checklist into UX cumplidas (including former reprobado)", async () => {
     const w = await boot();
     w.postMessage(
       {
@@ -162,6 +162,17 @@ describe("tracker checklist status", () => {
                       imagesSolucion: [],
                       images: [],
                     },
+                    {
+                      id: "legacy-bad",
+                      nombre: "Was flipped to reject",
+                      incidencia: "autosave corrupted",
+                      status: "reprobado",
+                      checklist: [],
+                      solucion: "",
+                      imagesIncidencia: [],
+                      imagesSolucion: [],
+                      images: [],
+                    },
                   ],
                 },
               ],
@@ -172,12 +183,12 @@ describe("tracker checklist status", () => {
       "*",
     );
     await tick(80);
-    const card = all(w, ".item-card")[0];
-    expect(card.classList.contains("is-aprobado")).toBe(true);
-    click(card.querySelector('[data-act="item-tab"][data-tab="checklist"]'));
+    const cards = all(w, ".item-card");
+    expect(cards[0].classList.contains("is-aprobado")).toBe(true);
+    expect(cards[1].classList.contains("is-aprobado")).toBe(true);
+    click(cards[1].querySelector('[data-act="item-tab"][data-tab="checklist"]'));
     const labels = all(w, ".checklist-label").map((el) => (el as HTMLInputElement).value);
-    expect(labels).toEqual(["UX cumplidas"]);
-    expect(card.querySelector(".checklist-toggle")?.classList.contains("is-checked")).toBe(true);
+    expect(labels).toContain("UX cumplidas");
   });
 
   it("opens product history from section and group concept buttons", async () => {

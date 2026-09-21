@@ -1,5 +1,11 @@
 /** Bump when `public/ereport-tracker.html` changes so browsers drop the cached canvas. */
-export const TRACKER_SRC = "/ereport-tracker.html?v=080";
+export const TRACKER_SRC = "/ereport-tracker.html?v=082";
+
+/** Always force a fresh iframe document (same ?v= alone will not reload). */
+export function trackerIframeSrc(): string {
+  const join = TRACKER_SRC.includes("?") ? "&" : "?";
+  return `${TRACKER_SRC}${join}_=${Date.now()}`;
+}
 
 export function isPublicEreportInvitePath(pathname: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";

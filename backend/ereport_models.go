@@ -229,13 +229,19 @@ func emptyEreportPayload() map[string]any {
 
 func emptyEreportItem(id string) map[string]any {
 	return map[string]any{
-		"id":               id,
-		"nombre":           "",
-		"incidencia":       "",
-		"fechaIncidencia":  "",
-		"status":           "",
-		"criteriaStatus":   map[string]any{},
-		"checklist":        []any{},
+		"id":              id,
+		"nombre":          "",
+		"incidencia":      "",
+		"fechaIncidencia": "",
+		"status":          "reprobado",
+		"criteriaStatus":  map[string]any{},
+		"checklist": []any{
+			map[string]any{
+				"id":      "ux-test",
+				"label":   "UX Test",
+				"checked": false,
+			},
+		},
 		"solucion":         "",
 		"fechaSolucion":    "",
 		"imagesIncidencia": []any{},

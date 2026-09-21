@@ -676,27 +676,42 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .qa-half + .qa-half { border-left: none; }
 .col { display: flex; flex-direction: column; gap: 0.3rem; min-height: 100%; }
 .col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.col.is-drop-target {
+  outline: 0.125rem dashed var(--accent);
+  outline-offset: -0.125rem;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
 .col-head {
   display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap;
 }
 .col-head .lbl { flex: 0 0 auto; }
 .meta-bar {
   display: grid;
-  grid-template-columns: 20% minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem;
-  align-items: start;
+  align-items: stretch;
   width: 100%;
+  margin-top: auto;
 }
-.meta-bar-time { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
-.meta-bar-imgs { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.meta-bar-time,
+.meta-bar-imgs {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
 .col > .thumbs {
   width: 100%;
   margin-top: 0;
   margin-bottom: 0;
 }
-.moment-input {
+.moment-input,
+.img-pick {
+  box-sizing: border-box;
   width: 100%;
   max-width: none;
+  height: 2rem;
+  min-height: 2rem;
   font: inherit;
   font-size: 0.72rem;
   padding: 0.2rem 0.3rem;
@@ -704,6 +719,37 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   border-radius: var(--radius);
   background: var(--card);
   color: var(--ink);
+}
+.img-pick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.img-pick .material-icons {
+  font-size: 1.1rem;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+.img-pick:hover,
+.img-pick:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+.img-input {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .inplace { position: relative; min-width: 0; }
 .col > .inplace { flex: 1; display: flex; flex-direction: column; }
@@ -873,7 +919,6 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   display: inline-flex; align-items: center; justify-content: center;
 }
 .thumb-del:hover { filter: brightness(1.1); }
-.img-input { font-size: 0.75rem; width: 100%; }
 
 .footer-bar {
   margin-top: 1.5rem; padding: 1rem 1.1rem;
@@ -1108,7 +1153,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 </div>
 <div class="toast" id="toast"></div>
 
-<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "productHistory": "", "groups": [{"id": "group-1", "title": "General", "productHistory": "", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "checklist": [], "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}], "items": []}]}</script>
+<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "productHistory": "", "groups": [{"id": "group-1", "title": "General", "productHistory": "", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "checklist": [{"id": "ux-test", "label": "UX Test", "checked": false}], "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}], "items": []}]}</script>
 <script src="/vendor/html2canvas.min.js"></script>
 <script src="/vendor/jspdf.umd.min.js"></script>
 <script>
@@ -1219,7 +1264,7 @@ function normalizeChecklist(list) {
   }));
 }
 
-function normalizeItem(it) {
+function normalizeItem(it, opts) {
   const sol = it.imagesSolucion != null ? it.imagesSolucion : (it.images || []);
   const criteriaStatus = {};
   if (it.criteriaStatus && typeof it.criteriaStatus === "object" && !Array.isArray(it.criteriaStatus)) {
@@ -1230,9 +1275,15 @@ function normalizeItem(it) {
   }
   let checklist = normalizeChecklist(it.checklist);
   const priorStatus = it.status || "";
-  /* Legacy reports: aprobado without UX checklist → seed one checked "UX cumplidas" so status is not lost. */
-  if (priorStatus === "aprobado" && checklist.length === 0) {
-    checklist = [{ id: "ux-cumplidas", label: "UX cumplidas", checked: true }];
+  const isNew = !!(opts && opts.newIssue);
+  if (checklist.length === 0) {
+    if (isNew) {
+      /* New issues start rejected until UX checks are completed. */
+      checklist = [{ id: uid("check"), label: "UX Test", checked: false }];
+    } else if (priorStatus !== "no_aplica") {
+      /* Legacy / missing UX tests → treat as fulfilled so existing reports keep green status. */
+      checklist = [{ id: "ux-cumplidas", label: "UX cumplidas", checked: true }];
+    }
   }
   const item = {
     id: it.id || uid("item"),
@@ -1740,7 +1791,7 @@ function addItem(sid, gid) {
     return;
   }
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  grp.items.push(normalizeItem({ id: uid(gid) }));
+  grp.items.push(normalizeItem({ id: uid(gid) }, { newIssue: true }));
   render();
 }
 
@@ -1766,7 +1817,7 @@ function addSectionItem(sid) {
   const sec = state.sections.find(s => s.id === sid);
   if (!sec) return;
   const list = ensureSectionItems(sec);
-  list.push(normalizeItem({ id: uid("open") }));
+  list.push(normalizeItem({ id: uid("open") }, { newIssue: true }));
   collapseState.sections.delete(sid);
   syncCollapseToState();
   render();
@@ -1783,7 +1834,7 @@ function addGroup(sid) {
     id,
     title: (sec.kind === "subarticulos" ? "Nuevo subartículo " : "Nueva subsección ") + n,
     productHistory: "",
-    items: [normalizeItem({ id: uid(id) })]
+    items: [normalizeItem({ id: uid(id) }, { newIssue: true })]
   });
   collapseState.sections.delete(sid);
   collapseState.groups.delete(id);
@@ -1872,7 +1923,7 @@ function removeItem(sid, gid, iid) {
   if (gid === SECTION_ITEMS) {
     found.sec.items = found.list.filter(i => i.id !== iid);
   } else if (found.list.length <= 1) {
-    found.list[0] = normalizeItem({ id: uid(gid) });
+    found.list[0] = normalizeItem({ id: uid(gid) }, { newIssue: true });
   } else {
     found.grp.items = found.list.filter(i => i.id !== iid);
   }
@@ -1883,7 +1934,7 @@ function clearGroup(sid, gid) {
   if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
   collectFromDom();
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  grp.items = [normalizeItem({ id: uid(gid) })];
+  grp.items = [normalizeItem({ id: uid(gid) }, { newIssue: true })];
   render();
 }
 
@@ -1893,7 +1944,7 @@ function clearSection(sid) {
   const sec = state.sections.find(s => s.id === sid);
   sec.items = [];
   sec.groups.forEach(grp => {
-    grp.items = [normalizeItem({ id: uid(grp.id) })];
+    grp.items = [normalizeItem({ id: uid(grp.id) }, { newIssue: true })];
   });
   render();
 }
@@ -1967,11 +2018,27 @@ function clipboardImageFiles(clipboardData) {
   return out;
 }
 
+async function ensureImageUploadConfig() {
+  if (imageUpload.url) return true;
+  if (!(window.parent && window.parent !== window)) return false;
+  window.parent.postMessage({ source: "ereport-tracker", type: "need-config" }, "*");
+  const deadline = Date.now() + 2500;
+  while (!imageUpload.url && Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  return !!imageUpload.url;
+}
+
 async function uploadImageFile(file) {
-  if (!imageUpload.url) {
+  if (!(await ensureImageUploadConfig())) {
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ source: "ereport-tracker", type: "error", message: "Image upload is not configured." }, "*");
+      window.parent.postMessage({
+        source: "ereport-tracker",
+        type: "error",
+        message: "Image upload is not configured."
+      }, "*");
     }
+    toast("No se pudo subir la imagen: falta la configuración de carga.");
     return null;
   }
   const body = new FormData();
@@ -2222,7 +2289,11 @@ function renderItem(sec, grp, item) {
                     <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
                   </div>
                   <div class="meta-bar-imgs">
-                    <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
+                    <input type="file" accept="image/*" multiple class="img-input img-incidencia" tabindex="-1" aria-hidden="true" title="Imágenes incidencia" />
+                    <button type="button" class="img-pick" data-act="pick-img" data-which="incidencia" title="Añadir imagen a la incidencia" aria-label="Añadir imagen a la incidencia">
+                      <span class="material-icons" aria-hidden="true">image</span>
+                      Añadir imagen
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2236,7 +2307,11 @@ function renderItem(sec, grp, item) {
                     <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
                   </div>
                   <div class="meta-bar-imgs">
-                    <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
+                    <input type="file" accept="image/*" multiple class="img-input img-sol" tabindex="-1" aria-hidden="true" title="Imágenes solución" />
+                    <button type="button" class="img-pick" data-act="pick-img" data-which="solucion" title="Añadir imagen a la solución" aria-label="Añadir imagen a la solución">
+                      <span class="material-icons" aria-hidden="true">image</span>
+                      Añadir imagen
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2886,7 +2961,7 @@ function emptyLikeEmbedded() {
   (data.sections || []).forEach(sec => {
     sec.items = [];
     (sec.groups || []).forEach(grp => {
-      grp.items = [normalizeItem({ id: uid(grp.id || "item") })];
+      grp.items = [normalizeItem({ id: uid(grp.id || "item") }, { newIssue: true })];
     });
   });
   return normalizeState(data);
