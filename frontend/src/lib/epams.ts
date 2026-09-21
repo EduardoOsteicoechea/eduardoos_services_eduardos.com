@@ -113,7 +113,7 @@ export async function fetchEpam(epamId: string): Promise<EpamDocumentResponse> {
     epamId?: string;
     title?: string;
     body?: PamphletStructure;
-  }>(`/epams/${encodeURIComponent(epamId)}`);
+  }>(`/epams/${encodeURIComponent(epamId)}`, {}, { timeoutMs: 120000 });
   if (status < 200 || status >= 300) {
     throw new Error(data.message || "Could not load pamphlet.");
   }

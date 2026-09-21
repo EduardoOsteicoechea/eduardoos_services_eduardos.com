@@ -366,12 +366,22 @@ import Layout from "../../layouts/Layout.astro";
 
   function boot(): void {
     normalizeLegacyQuery();
-    document.addEventListener("click", onClick);
-    window.addEventListener("popstate", syncFromUrl);
-    document.addEventListener("astro:page-load", () => {
+    const onPageLoad = () => {
       normalizeLegacyQuery();
       syncFromUrl();
-    });
+    };
+    const onBeforeSwap = () => {
+      destroyEditor();
+      clearBleed();
+      document.removeEventListener("click", onClick);
+      window.removeEventListener("popstate", syncFromUrl);
+      document.removeEventListener("astro:page-load", onPageLoad);
+      document.removeEventListener("astro:before-swap", onBeforeSwap);
+    };
+    document.addEventListener("click", onClick);
+    window.addEventListener("popstate", syncFromUrl);
+    document.addEventListener("astro:page-load", onPageLoad);
+    document.addEventListener("astro:before-swap", onBeforeSwap);
     syncFromUrl();
   }
 

@@ -296,8 +296,14 @@ export class PamphletPdfSot {
                 credentials: "include",
                 headers,
                 body: JSON.stringify(printPayload),
+                signal: AbortSignal.timeout(180_000),
             });
         } catch (err) {
+            if (this.destroyed || seq !== this.previewSeq) {
+                const e = new Error("Preview aborted");
+                e.name = "PamphletPreviewSurfaced";
+                throw e;
+            }
             const message =
                 err instanceof Error ? err.message : "Network error during pamphlet preview.";
             surfacePreviewError(message, { cause: err });

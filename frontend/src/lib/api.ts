@@ -426,8 +426,12 @@ export async function apiGet<T>(path: string): Promise<T> {
   return data;
 }
 
-export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
-  return apiSend<T>(path, init);
+export async function apiRequest<T>(
+  path: string,
+  init: RequestInit = {},
+  opts: { timeoutMs?: number; signal?: AbortSignal; skipAuthRetry?: boolean; forceCsrfRefresh?: boolean } = {},
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(path, init, opts);
 }
 
 export function getHealth(): Promise<HealthResponse> {

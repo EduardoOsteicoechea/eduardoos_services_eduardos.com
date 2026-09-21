@@ -115,6 +115,7 @@ export interface PamphletMountHandle {
 }
 
 export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
+    mountAlive = true;
     const appRoot = document.createElement("div");
     appRoot.className = "pamphlet-app";
     appRoot.setAttribute("data-pdf-sot", "");
@@ -684,6 +685,9 @@ let editDock!: EditDockController;
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
 
+/** False after destroy() — blocks async open/preview from rewriting the URL after soft-leave. */
+let mountAlive = true;
+
 function rememberLastEpamId(epamId: string | null | undefined): void {
     if (!getAuthToken() || !isAuthenticated()) return;
     const id = epamId?.trim() || null;
@@ -701,19 +705,21 @@ async function readLastEpamId(): Promise<string | null> {
 
 function syncCloudEpamUrl(epamId: string): void {
     const id = epamId.trim();
-    if (!id) return;
+    if (!id || !mountAlive || !document.contains(host)) return;
+    // Never rewrite history after leaving the pamphlet editor (VT soft-nav race → home DOM + pamphlet URL).
+    if (!window.location.pathname.startsWith(PAMPHLET_BASE_PATH)) return;
     host.dataset.pamphletEpamId = id;
     window.__eduardoosPamphletEpamId = id;
     window.__eduardoosPamphletView = "open";
-    window.history.replaceState(
-        {},
-        "",
-        `${PAMPHLET_BASE_PATH}/open#${encodeURIComponent(id)}`,
-    );
+    const next = `${PAMPHLET_BASE_PATH}/open#${encodeURIComponent(id)}`;
+    const cur = `${window.location.pathname}${window.location.hash}`;
+    if (cur === next) return;
+    window.history.replaceState({}, "", next);
 }
 
 async function openCloudDocumentById(epamId: string): Promise<void> {
     const loaded = await fetchEpam(epamId);
+    if (!mountAlive || !document.contains(host)) return;
     const doc = loaded.document as PamphletStructure | undefined;
     if (!doc || typeof doc !== "object" || !(doc as { type?: string }).type) {
         throw new Error(
@@ -3235,6 +3241,7 @@ if (window.visualViewport) {
 
     return {
         destroy() {
+            mountAlive = false;
             pdfSot.destroy();
             editDock.destroy();
             for (const dispose of disposers) dispose();
