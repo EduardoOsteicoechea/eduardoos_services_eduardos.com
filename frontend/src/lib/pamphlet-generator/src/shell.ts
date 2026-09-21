@@ -131,7 +131,7 @@ export function renderShell(_menuIconSrc?: string): string {
         ICONS.template,
         "Tipo",
         "Cambiar entre panfleto simple o con imágenes estructuradas",
-        'aria-pressed="false"',
+        "hidden",
       )}
       ${actionBtn(
         "btn-footer",
@@ -319,7 +319,7 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="item-type-options">
       <button type="button" data-item-type="paragraph">Paragraph</button>
       <button type="button" data-item-type="heading_1">Heading</button>
-      <button type="button" data-item-type="image" hidden>Image</button>
+      <button type="button" data-item-type="image">Image</button>
     </div>
     <div class="create-modal-actions">
       <button type="button" id="item-type-cancel">Cancel</button>

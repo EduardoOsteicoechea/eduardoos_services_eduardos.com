@@ -1343,7 +1343,11 @@ function renderDocument(data: PamphletStructure, openEdit: boolean): void {
         c7: data.column_7?.[0]?.type,
         c8: data.column_8?.[0]?.type,
     });
-    const migrated = migrateStructuredLeadsToEvenColumns(data);
+    // Temporarily force simple pamphlet: structured lead columns are unreliable.
+    let migrated = migrateStructuredLeadsToEvenColumns(data);
+    if (migrated.type === "pamphlet_structured_images") {
+        migrated = stripStructuredLeadImages(migrated);
+    }
     currentDoc = migrated;
     currentHeader = { ...migrated.header };
     appRoot.dataset.pamphletType = migrated.type;
@@ -3277,7 +3281,7 @@ on(createSaveCloudBtn, "click", async () => {
 itemTypeModal.querySelectorAll<HTMLButtonElement>("[data-item-type]").forEach((btn) => {
     on(btn, "click", () => {
         const type = btn.dataset.itemType as PamphletItemType | undefined;
-        if (type !== "paragraph" && type !== "heading_1") return;
+        if (type !== "paragraph" && type !== "heading_1" && type !== "image") return;
         void confirmItemType(type);
     });
 });
