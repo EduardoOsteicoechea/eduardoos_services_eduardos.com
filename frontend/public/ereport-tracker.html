@@ -689,6 +689,11 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 .meta-bar-time { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
 .meta-bar-imgs { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.col > .thumbs {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
 .moment-input {
   width: 100%;
   max-width: none;
@@ -809,7 +814,14 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .btn-status.aprobado { background: var(--success); border-color: var(--success); color: #fff; opacity: 1; }
 .btn-status.reprobado { background: var(--danger); border-color: var(--danger); color: #fff; opacity: 1; }
 .btn-status.no_aplica { background: #757575; border-color: #757575; color: #fff; opacity: 1; }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr)); gap: 0.3rem; margin-top: 0.25rem; }
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+  gap: 0.3rem;
+  width: 100%;
+  min-width: 0;
+}
+.thumbs:empty { display: none; }
 .thumb-wrap {
   position: relative;
   width: 100%;
@@ -2196,13 +2208,13 @@ function renderItem(sec, grp, item) {
             <div class="qa-half">
               <div class="col col-incidencia">
                 ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
+                <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
                 <div class="meta-bar">
                   <div class="meta-bar-time">
                     <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
                   </div>
                   <div class="meta-bar-imgs">
                     <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
-                    <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
                   </div>
                 </div>
               </div>
@@ -2210,13 +2222,13 @@ function renderItem(sec, grp, item) {
             <div class="qa-half">
               <div class="col col-sol">
                 ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
+                <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
                 <div class="meta-bar">
                   <div class="meta-bar-time">
                     <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
                   </div>
                   <div class="meta-bar-imgs">
                     <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
-                    <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
                   </div>
                 </div>
               </div>
