@@ -552,20 +552,26 @@ main > .diag{
   line-height: 1.5rem;
 }
 
+.article-page__body > p,
+.article-page__body > h2,
+.article-page__body > img{
+  margin: 0 0 1.5rem;
+}
+
+.article-page__body > p:last-child,
+.article-page__body > h2:last-child,
+.article-page__body > img:last-child{
+  margin-bottom: 0;
+}
+
 .article-page__body > p{
-  margin: 0 0 1.75rem;
   font-size: var(--font-size-md);
   line-height: 1.5rem;
   color: var(--color-text);
   text-wrap: pretty;
 }
 
-.article-page__body > p:last-child{
-  margin-bottom: 0;
-}
-
 .article-page__body h2{
-  margin: 1rem 0 0.75rem;
   font-family: var(--font-family-display);
   font-size: var(--font-size-xl);
   line-height: var(--leading-tight);
@@ -590,14 +596,6 @@ main > .diag{
   .article-page {
     max-width: 37.5rem;
     padding-inline: 0;
-  }
-
-  .article-page__body > p {
-    margin-bottom: 2.25rem;
-  }
-
-  .article-page__body > p:last-child {
-    margin-bottom: 0;
   }
 }
 
