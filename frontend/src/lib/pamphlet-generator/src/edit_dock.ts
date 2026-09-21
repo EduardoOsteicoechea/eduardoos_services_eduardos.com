@@ -562,6 +562,18 @@ export function setupEditDock(
         if (event.key === "Escape") {
             event.preventDefault();
             void handleAction("cancel");
+            return;
+        }
+        // Enter → same as OK / approve. Shift+Enter keeps a newline in the field.
+        const isEnterOk =
+            event.key === "Enter" &&
+            !event.shiftKey &&
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey;
+        if (isEnterOk) {
+            event.preventDefault();
+            void handleAction("ok");
         }
     });
 
