@@ -38,6 +38,8 @@ import { mustLog } from "../../dev-log";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 
 const LIVE_DEBOUNCE_MS = 120;
+/** Tablet + desktop: dock stays open on the left. Phone: overlay only while editing. */
+const DOCK_PERSISTENT_MQ = "(min-width: 48rem)";
 
 export type EditDockInsertRequest =
     | { mode: "end"; column: number }
@@ -119,6 +121,7 @@ export function setupEditDock(
     const textarea = dockRoot.querySelector<HTMLTextAreaElement>("#pamphlet-edit-dock-textarea");
     const imagePanel = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-image");
     const fileInput = dockRoot.querySelector<HTMLInputElement>("#pamphlet-edit-dock-file");
+    const idleHint = dockRoot.querySelector<HTMLElement>("[data-dock-idle-hint]");
     if (!textarea || !imagePanel || !fileInput) {
         throw new Error("Edit dock markup missing required controls.");
     }
@@ -128,6 +131,7 @@ export function setupEditDock(
     let liveTimer: ReturnType<typeof setTimeout> | null = null;
     let destroyed = false;
     const disposers: Array<() => void> = [];
+    const persistentMq = window.matchMedia(DOCK_PERSISTENT_MQ);
 
     const on = <K extends keyof HTMLElementEventMap>(
         el: HTMLElement | Document | Window,
@@ -141,18 +145,30 @@ export function setupEditDock(
     };
 
     const iconMap: Record<string, { icon: string; label: string }> = {
-        ok: { icon: ICONS.check, label: "Guardar y cerrar" },
+        ok: { icon: ICONS.check, label: "Aprobar y cerrar" },
         "move-up": { icon: ICONS.arrowUp, label: "Mover arriba" },
         "move-down": { icon: ICONS.arrowDown, label: "Mover abajo" },
         "add-above": { icon: ICONS.addRowAbove, label: "Añadir arriba" },
         "add-below": { icon: ICONS.addRowBelow, label: "Añadir abajo" },
-        undo: { icon: ICONS.undo, label: "Deshacer" },
         notes: { icon: ICONS.stickyNote, label: "Notas" },
         delete: { icon: ICONS.delete, label: "Borrar" },
     };
     for (const [action, meta] of Object.entries(iconMap)) {
         const btn = dockRoot.querySelector<HTMLButtonElement>(`[data-dock-action="${action}"]`);
         if (btn) setDockButtonIcon(btn, meta.icon, meta.label);
+    }
+
+    function isPersistent(): boolean {
+        return persistentMq.matches;
+    }
+
+    function setIdle(idle: boolean): void {
+        if (idle) dockRoot.setAttribute("data-dock-idle", "");
+        else dockRoot.removeAttribute("data-dock-idle");
+        if (idleHint) idleHint.hidden = !idle;
+        for (const btn of dockRoot.querySelectorAll<HTMLButtonElement>("[data-dock-action]")) {
+            btn.disabled = idle;
+        }
     }
 
     function clearLiveTimer(): void {
@@ -162,16 +178,41 @@ export function setupEditDock(
         }
     }
 
+    function showShell(): void {
+        dockRoot.hidden = false;
+    }
+
     function close(): void {
         clearLiveTimer();
         session = null;
-        dockRoot.hidden = true;
         textarea.hidden = true;
         textarea.value = "";
         imagePanel.hidden = true;
         fileInput.value = "";
         host.setSelected(null, null);
-        log("close");
+        setIdle(true);
+        if (isPersistent()) {
+            showShell();
+        } else {
+            dockRoot.hidden = true;
+        }
+        log("close", { persistent: isPersistent() });
+    }
+
+    function syncPersistentShell(): void {
+        if (destroyed) return;
+        if (session) {
+            showShell();
+            setIdle(false);
+            return;
+        }
+        if (isPersistent()) {
+            showShell();
+            setIdle(true);
+        } else {
+            dockRoot.hidden = true;
+            setIdle(true);
+        }
     }
 
     function mutateDoc(mutator: (data: PamphletStructure, loc: FlatRef) => void): void {
@@ -254,7 +295,8 @@ export function setupEditDock(
         host.setDoc(host.ensureDocumentId(current));
         host.setSelected(loc.column, loc.index);
 
-        dockRoot.hidden = false;
+        showShell();
+        setIdle(false);
         suppressInput = true;
         if (imageMode) {
             textarea.hidden = true;
@@ -311,24 +353,17 @@ export function setupEditDock(
                 if (doc) host.applyLocalDoc(clonePamphlet(doc), { openEdit: false });
                 return;
             }
-            case "undo": {
-                if (session.imageMode) {
-                    mutateDoc((data, l) => {
-                        updateItemContent(data, l, session!.initialContent);
-                        updateItemHeightMm(data, l, session!.initialHeightMm);
-                        updateItemStyleIndexes(data, l, session!.initialStyles);
-                    });
-                    return;
-                }
-                const undoSnap = host.getUndoSnapshot();
-                if (!undoSnap) {
-                    host.setError("Nothing to undo.");
-                    return;
-                }
-                const restored = clonePamphlet(undoSnap);
-                host.setUndoSnapshot(current ? clonePamphlet(current) : null);
+            case "cancel": {
+                // Discard all edits for this item session (not the activity-bar single-step undo).
+                const snap = session;
+                mutateDoc((data, l) => {
+                    updateItemContent(data, l, snap.initialContent);
+                    if (snap.imageMode) {
+                        updateItemHeightMm(data, l, snap.initialHeightMm);
+                        updateItemStyleIndexes(data, l, snap.initialStyles);
+                    }
+                });
                 close();
-                host.commitDocument(restored, true);
                 return;
             }
             case "move-up": {
@@ -501,7 +536,7 @@ export function setupEditDock(
     on(dockRoot, "click", (event: MouseEvent) => {
         const target = event.target as Element | null;
         const btn = target?.closest<HTMLButtonElement>("[data-dock-action]");
-        if (!btn || !dockRoot.contains(btn)) return;
+        if (!btn || !dockRoot.contains(btn) || btn.disabled) return;
         const action = btn.dataset.dockAction;
         if (!action) return;
         event.preventDefault();
@@ -518,7 +553,7 @@ export function setupEditDock(
         if (event.isComposing) return;
         if (event.key === "Escape") {
             event.preventDefault();
-            void handleAction("ok");
+            void handleAction("cancel");
         }
     });
 
@@ -569,6 +604,17 @@ export function setupEditDock(
         reader.readAsDataURL(file);
     });
 
+    const onMqChange = () => syncPersistentShell();
+    if (typeof persistentMq.addEventListener === "function") {
+        persistentMq.addEventListener("change", onMqChange);
+        disposers.push(() => persistentMq.removeEventListener("change", onMqChange));
+    } else {
+        persistentMq.addListener(onMqChange);
+        disposers.push(() => persistentMq.removeListener(onMqChange));
+    }
+
+    syncPersistentShell();
+
     return {
         open,
         close,
@@ -577,7 +623,8 @@ export function setupEditDock(
             clearLiveTimer();
             for (const dispose of disposers) dispose();
             disposers.length = 0;
-            close();
+            session = null;
+            dockRoot.hidden = true;
             log("destroy");
         },
         isOpen: () => session != null && !dockRoot.hidden,

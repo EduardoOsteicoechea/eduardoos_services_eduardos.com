@@ -2524,21 +2524,20 @@
 .pamphlet-pdf-hit {
   position: absolute;
   box-sizing: border-box;
-  border: var(--border-width, 0.0625rem) solid transparent;
+  border: var(--border-width, 0.0625rem) dashed transparent;
   border-radius: var(--border-radius, 0.25rem);
   cursor: pointer;
   background: transparent;
 }
 
-.pamphlet-pdf-hit:hover {
-  border-color: color-mix(in srgb, var(--color-accent, #1976d2) 55%, transparent);
-  background: color-mix(in srgb, var(--color-accent, #1976d2) 12%, transparent);
+.pamphlet-pdf-hit:hover:not(.is-selected) {
+  border-color: rgb(33, 150, 243);
+  background: rgba(33, 150, 243, 0.7);
 }
 
 .pamphlet-pdf-hit.is-selected {
-  border-color: var(--color-accent, #1976d2);
-  background: color-mix(in srgb, var(--color-accent, #1976d2) 28%, transparent);
-  opacity: 0.92;
+  border-color: rgb(255, 152, 0);
+  background: rgba(255, 183, 77, 0.7);
 }
 
 .pamphlet-edit-dock {
@@ -2565,7 +2564,6 @@
   align-items: center;
   gap: var(--rail-gap, 0.5rem);
   min-height: var(--header-size, var(--mobile-header-height, 2.75rem));
-  height: var(--header-size, var(--mobile-header-height, 2.75rem));
   flex: 0 0 auto;
 }
 
@@ -2585,9 +2583,17 @@
   cursor: pointer;
 }
 
-.pamphlet-edit-dock__btn img {
+.pamphlet-edit-dock__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.pamphlet-edit-dock__btn img,
+.pamphlet-edit-dock__btn .material-symbols-outlined {
   width: var(--icon-size, 1.5rem);
   height: var(--icon-size, 1.5rem);
+  font-size: var(--icon-size, 1.5rem);
+  line-height: 1;
   display: block;
 }
 
@@ -2596,12 +2602,55 @@
   font-weight: 700;
 }
 
-.pamphlet-edit-dock__btn--danger {
-  color: var(--color-err, #b00020);
+.pamphlet-edit-dock__btn--delete {
+  background: var(--color-err, #b00020);
+  border-color: var(--color-err, #b00020);
+  color: #fff;
 }
 
-.pamphlet-edit-dock__btn:hover,
-.pamphlet-edit-dock__btn:focus-visible {
+.pamphlet-edit-dock__btn--delete img {
+  filter: brightness(0) invert(1);
+}
+
+.pamphlet-edit-dock__btn--delete:hover:not(:disabled),
+.pamphlet-edit-dock__btn--delete:focus-visible:not(:disabled) {
+  filter: brightness(1.08);
+  border-color: var(--color-err, #b00020);
+  color: #fff;
+}
+
+.pamphlet-edit-dock__btn--approve {
+  background: var(--color-ok, #2e7d32);
+  border-color: var(--color-ok, #2e7d32);
+  color: #fff;
+}
+
+.pamphlet-edit-dock__btn--approve img {
+  filter: brightness(0) invert(1);
+}
+
+.pamphlet-edit-dock__btn--approve:hover:not(:disabled),
+.pamphlet-edit-dock__btn--approve:focus-visible:not(:disabled) {
+  filter: brightness(1.08);
+  border-color: var(--color-ok, #2e7d32);
+  color: #fff;
+}
+
+.pamphlet-edit-dock__btn--cancel {
+  background: var(--color-muted, #757575);
+  border-color: var(--color-muted, #757575);
+  color: #fff;
+}
+
+.pamphlet-edit-dock__btn--cancel:hover:not(:disabled),
+.pamphlet-edit-dock__btn--cancel:focus-visible:not(:disabled) {
+  filter: brightness(1.08);
+  border-color: var(--color-muted, #757575);
+  color: #fff;
+}
+
+.pamphlet-edit-dock__btn:hover:not(:disabled):not(.pamphlet-edit-dock__btn--delete):not(.pamphlet-edit-dock__btn--approve):not(.pamphlet-edit-dock__btn--cancel),
+.pamphlet-edit-dock__btn:focus-visible:not(:disabled):not(.pamphlet-edit-dock__btn--delete):not(.pamphlet-edit-dock__btn--approve):not(.pamphlet-edit-dock__btn--cancel) {
   border-color: var(--color-accent, #1976d2);
   color: var(--color-accent, #1976d2);
 }
@@ -2613,6 +2662,33 @@
   flex: 1;
   min-height: 0;
   min-width: 0;
+}
+
+.pamphlet-edit-dock__idle-hint {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-muted, #757575);
+}
+
+.pamphlet-edit-dock:not([data-dock-idle]) .pamphlet-edit-dock__idle-hint {
+  display: none;
+}
+
+.pamphlet-edit-dock__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap, 0.5rem);
+  flex: 0 0 auto;
+}
+
+.pamphlet-edit-dock__footer-end {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--rail-gap, 0.5rem);
+  margin-left: auto;
 }
 
 .pamphlet-edit-dock__textarea {
@@ -2667,21 +2743,23 @@
   pointer-events: none;
 }
 
-/* Desktop / tablet: PDF stage primary; measure sheet off-screen; dock as sidebar */
+/* Desktop / tablet: dock sticky on the LEFT; PDF stage to the right */
 @media (min-width: 48rem) {
-  .pamphlet-app[data-view-mode="desktop"] .pamphlet-workspace {
+  .pamphlet-workspace {
+    position: relative;
     flex-direction: row;
     align-items: flex-start;
   }
 
-  .pamphlet-app[data-view-mode="desktop"] .pamphlet-pdf-stage {
+  .pamphlet-pdf-stage {
     display: flex;
-    order: 1;
+    order: 2;
     flex: 1;
+    min-width: 0;
   }
 
-  .pamphlet-app[data-view-mode="desktop"] .pamphlet-edit-dock:not([hidden]) {
-    order: 2;
+  .pamphlet-edit-dock:not([hidden]) {
+    order: 1;
     flex: 0 0 18rem;
     width: 18rem;
     max-width: 18rem;
@@ -2705,24 +2783,28 @@
   }
 }
 
-/* Phone: edit dock as top bar under header (15.625rem total) */
+/* Phone: edit dock absolute top overlay above the menu button */
 @media (max-width: 47.999rem) {
   .pamphlet-workspace {
+    position: relative;
     flex-direction: column;
   }
 
   .pamphlet-edit-dock:not([hidden]) {
-    order: -1;
-    flex: 0 0 15.625rem;
+    order: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    flex: none;
     height: 15.625rem;
     max-height: 15.625rem;
-    width: auto;
-    position: sticky;
-    top: var(--mobile-header-height, var(--header-size, 2.75rem));
+    z-index: calc(var(--z-activity, 20) + 5);
+    border-radius: 0 0 var(--border-radius, 0.25rem) var(--border-radius, 0.25rem);
   }
 
   .pamphlet-edit-dock__toolbar {
-    height: var(--mobile-header-height, var(--header-size, 2.75rem));
     min-height: var(--mobile-header-height, var(--header-size, 2.75rem));
   }
 

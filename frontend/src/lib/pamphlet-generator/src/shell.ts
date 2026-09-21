@@ -369,20 +369,18 @@ export function renderShell(_menuIconSrc?: string): string {
 </div>
 <div id="pamphlet-chrome-status" class="pamphlet-chrome-status" hidden aria-live="polite"></div>
 <div class="pamphlet-workspace">
-  <aside id="pamphlet-edit-dock" class="pamphlet-edit-dock" hidden aria-label="Editar elemento">
+  <aside id="pamphlet-edit-dock" class="pamphlet-edit-dock" hidden data-dock-idle aria-label="Editar elemento">
     <div class="pamphlet-edit-dock__toolbar" role="toolbar" aria-label="Acciones de edición">
-      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="ok" title="Guardar y cerrar" aria-label="Guardar y cerrar"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-up" title="Mover arriba" aria-label="Mover arriba"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-down" title="Mover abajo" aria-label="Mover abajo"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-above" title="Añadir arriba" aria-label="Añadir arriba"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-below" title="Añadir abajo" aria-label="Añadir abajo"></button>
       <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="bold" title="Negrita" aria-label="Negrita">B</button>
       <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="copy" title="Copiar" aria-label="Copiar">⎘</button>
-      <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="undo" title="Deshacer" aria-label="Deshacer"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="notes" title="Notas" aria-label="Notas"></button>
-      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--danger" data-dock-action="delete" title="Borrar" aria-label="Borrar"></button>
     </div>
     <div class="pamphlet-edit-dock__body">
+      <p class="pamphlet-edit-dock__idle-hint" data-dock-idle-hint>Selecciona un elemento del PDF para editarlo.</p>
       <textarea id="pamphlet-edit-dock-textarea" class="pamphlet-edit-dock__textarea" spellcheck="true" hidden></textarea>
       <div id="pamphlet-edit-dock-image" class="pamphlet-edit-dock__image-controls" hidden>
         <div class="pamphlet-edit-dock__image-row">
@@ -400,6 +398,15 @@ export function renderShell(_menuIconSrc?: string): string {
           <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-out" title="Alejar" aria-label="Alejar">－</button>
           <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-in" title="Acercar" aria-label="Acercar">＋</button>
         </div>
+      </div>
+    </div>
+    <div class="pamphlet-edit-dock__footer" role="group" aria-label="Confirmar edición">
+      <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--delete" data-dock-action="delete" title="Borrar" aria-label="Borrar"></button>
+      <div class="pamphlet-edit-dock__footer-end">
+        <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--cancel" data-dock-action="cancel" title="Descartar cambios de este elemento" aria-label="Descartar cambios de este elemento">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+        <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--approve" data-dock-action="ok" title="Aprobar y cerrar" aria-label="Aprobar y cerrar"></button>
       </div>
     </div>
   </aside>
