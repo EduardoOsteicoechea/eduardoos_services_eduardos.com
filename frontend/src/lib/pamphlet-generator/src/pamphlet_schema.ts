@@ -911,11 +911,9 @@ export function stripStructuredLeadImages(doc: PamphletStructure): PamphletStruc
 }
 
 /**
- * Older structured docs stored lead+body on odd columns (1/3/5/7).
- * Swap each odd/even pair when the odd column still hosts the lead and the even
- * column does not — so the lead stays with its body paragraphs on 2/4/6/8.
- * If both already have leads, strip the odd lead (prefer filled content).
- * Always ensure every even column has a lead image slot.
+ * Older structured docs stored lead images on odd columns (1/3/5/7).
+ * Move only the lead frame onto even columns (2/4/6/8); body paragraphs stay
+ * put so reading order is preserved. Ensure every even column has a lead slot.
  */
 export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): PamphletStructure {
     if (doc.type !== "pamphlet_structured_images") return doc;
@@ -931,21 +929,17 @@ export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): Pam
         let oddItems = [...(next[odd] ?? [])];
         let evenItems = [...(next[even] ?? [])];
 
-        const oddHasLead = oddItems[0]?.type === "image";
-        const evenHasLead = evenItems[0]?.type === "image";
-
-        if (oddHasLead && !evenHasLead) {
-            const tmp = oddItems;
-            oddItems = evenItems;
-            evenItems = tmp;
-            changed = true;
-        } else if (oddHasLead && evenHasLead) {
+        if (oddItems[0]?.type === "image") {
             const lead = { ...oddItems[0], height_mm: LEAD_IMAGE_HEIGHT_MM };
             oddItems = oddItems.slice(1);
-            const oddHas = Boolean(lead.content?.trim());
-            const evenHas = Boolean(evenItems[0].content?.trim());
-            if (oddHas && !evenHas) {
-                evenItems = [lead, ...evenItems.slice(1)];
+            if (evenItems[0]?.type === "image") {
+                const oddHas = Boolean(lead.content?.trim());
+                const evenHas = Boolean(evenItems[0].content?.trim());
+                if (oddHas && !evenHas) {
+                    evenItems = [lead, ...evenItems.slice(1)];
+                }
+            } else {
+                evenItems = [lead, ...evenItems];
             }
             changed = true;
         }

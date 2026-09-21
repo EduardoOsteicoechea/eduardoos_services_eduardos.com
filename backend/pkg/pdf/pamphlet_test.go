@@ -709,15 +709,12 @@ func TestMigrateOddStructuredLeadsToEvenColumns(t *testing.T) {
 	if !has2 || !has4 {
 		t.Fatalf("expected leads on cols 2 and 4, got %v", leadCols)
 	}
-	// Full pair swap keeps lead with its original body on the even column.
-	if len(drawn.Column2) < 2 || drawn.Column2[0].Type != "image" || drawn.Column2[1].Content != "Cuerpo col1" {
-		t.Fatalf("col2 should be [lead, Cuerpo col1], got %+v", drawn.Column2)
+	// Lead-only move: body stays on odd; lead lands on even ahead of existing even body.
+	if len(drawn.Column1) < 1 || drawn.Column1[0].Type == "image" || drawn.Column1[0].Content != "Cuerpo col1" {
+		t.Fatalf("col1 body must stay on odd without lead, got %+v", drawn.Column1)
 	}
-	if len(drawn.Column1) < 1 || drawn.Column1[0].Content != "Cuerpo col2" {
-		t.Fatalf("col1 should receive former col2 body, got %+v", drawn.Column1)
-	}
-	if len(drawn.Column1) > 0 && drawn.Column1[0].Type == "image" {
-		t.Fatalf("odd col1 must not keep a lead image")
+	if len(drawn.Column2) < 2 || drawn.Column2[0].Type != "image" || drawn.Column2[1].Content != "Cuerpo col2" {
+		t.Fatalf("col2 should be [lead, Cuerpo col2], got %+v", drawn.Column2)
 	}
 }
 

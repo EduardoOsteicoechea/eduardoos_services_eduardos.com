@@ -344,10 +344,9 @@ func BuildPamphletPDF(doc PamphletDocument) []byte {
 	return data
 }
 
-// migrateStructuredLeadsToEvenColumns moves legacy lead columns (1/3/5/7) onto
-// even columns (2/4/6/8). When the odd column still hosts the lead image and the
-// even column does not, the whole pair is swapped so the lead stays with its
-// body paragraphs. Then every even column is guaranteed a lead slot.
+// migrateStructuredLeadsToEvenColumns moves legacy lead images from odd columns
+// (1/3/5/7) onto even columns (2/4/6/8). Body paragraphs stay in their column so
+// reading order (7→8→1→2→…) is preserved — only the lead frame moves.
 func migrateStructuredLeadsToEvenColumns(doc PamphletDocument) PamphletDocument {
 	if !isStructuredImagesType(doc.Type) {
 		return doc
@@ -366,20 +365,18 @@ func migrateStructuredLeadsToEvenColumns(doc PamphletDocument) PamphletDocument 
 		odd := append([]PamphletItem(nil), *p.odd...)
 		even := append([]PamphletItem(nil), *p.even...)
 
-		oddHasLead := len(odd) > 0 && odd[0].Type == "image"
-		evenHasLead := len(even) > 0 && even[0].Type == "image"
-
-		if oddHasLead && !evenHasLead {
-			// Full swap: lead + its following body travel together onto the even column.
-			odd, even = even, odd
-		} else if oddHasLead && evenHasLead {
+		if len(odd) > 0 && odd[0].Type == "image" {
 			lead := odd[0]
 			lead.HeightMm = pamphletLeadHeightMm
 			odd = odd[1:]
-			oddHas := strings.TrimSpace(lead.Content) != ""
-			evenHas := strings.TrimSpace(even[0].Content) != ""
-			if oddHas && !evenHas {
-				even[0] = lead
+			if len(even) > 0 && even[0].Type == "image" {
+				oddHas := strings.TrimSpace(lead.Content) != ""
+				evenHas := strings.TrimSpace(even[0].Content) != ""
+				if oddHas && !evenHas {
+					even[0] = lead
+				}
+			} else {
+				even = append([]PamphletItem{lead}, even...)
 			}
 		}
 
@@ -467,7 +464,7 @@ func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout, P
 		PageHeightMm:  PamphletPageHeightMm,
 		PageCount:     2,
 		Hits:          sink.hits,
-		SchemaVersion: 3,
+		SchemaVersion: 4,
 	}
 	if isStructuredImagesType(doc.Type) {
 		layout.LeadColumns = []int{2, 4, 6, 8}

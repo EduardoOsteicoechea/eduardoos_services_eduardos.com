@@ -1412,24 +1412,50 @@ pdfSot = new PamphletPdfSot({
     onAddClick: (column) => {
         void handleAddItemButton(column);
     },
+    // PDF packer may remap leads; only sync lead slots — never replace body text
+    // mid-edit (that scrambled column sequence on approve/preview).
     onDocumentDrawn: (drawn) => {
-        // Backend remaps odd→even lead columns; adopt that body so FE matches the PDF.
-        if (!drawn || typeof drawn !== "object") return;
+        if (!drawn || typeof drawn !== "object" || !currentDoc) return;
+        if (currentDoc.type !== "pamphlet_structured_images") return;
         const normalized = normalizePamphletData(drawn);
         try {
             assertPamphletStructure(normalized);
         } catch {
             return;
         }
-        const nextDoc = normalized as PamphletStructure;
-        const prev = currentDoc ? JSON.stringify(columnLeadSignature(currentDoc)) : "";
-        const next = JSON.stringify(columnLeadSignature(nextDoc));
+        const drawnDoc = normalized as PamphletStructure;
+        const prev = JSON.stringify(columnLeadSignature(currentDoc));
+        const next = JSON.stringify(columnLeadSignature(drawnDoc));
         if (prev === next) return;
-        currentDoc = nextDoc;
-        currentHeader = { ...nextDoc.header };
-        appRoot.dataset.pamphletType = nextDoc.type;
-        renderFromPamphlet(main, nextDoc);
-        reflowAndReport(main);
+        // Pull lead frames only; keep FE body paragraphs in their columns.
+        const merged = clonePamphlet(currentDoc);
+        let changed = false;
+        for (const col of [2, 4, 6, 8] as const) {
+            const key = `column_${col}` as ColumnKey;
+            const oddKey = `column_${col - 1}` as ColumnKey;
+            const drawnEven = drawnDoc[key] ?? [];
+            const drawnLead = drawnEven[0]?.type === "image" ? drawnEven[0] : null;
+            if (!drawnLead) continue;
+            const localEven = [...(merged[key] ?? [])];
+            const localOdd = [...(merged[oddKey] ?? [])];
+            if (localOdd[0]?.type === "image") {
+                localOdd.shift();
+                merged[oddKey] = localOdd;
+                changed = true;
+            }
+            if (localEven[0]?.type !== "image") {
+                merged[key] = [{ ...drawnLead, height_mm: LEAD_IMAGE_HEIGHT_MM }, ...localEven];
+                changed = true;
+            } else if (
+                Boolean(drawnLead.content?.trim()) &&
+                !Boolean(localEven[0].content?.trim())
+            ) {
+                merged[key] = [{ ...drawnLead, height_mm: LEAD_IMAGE_HEIGHT_MM }, ...localEven.slice(1)];
+                changed = true;
+            }
+        }
+        if (!changed) return;
+        currentDoc = merged;
         if (hasEditableSession()) schedulePersist();
     },
 });
