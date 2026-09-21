@@ -26,13 +26,8 @@
   --collapsed-header-height: 0rem;
   --collapsed-footer-height: 0rem;
   --content-basis: 64rem;
-  --sidebar-width: calc(
-    (var(--span-sidebar) / var(--page-col-count)) *
-      (
-        var(--content-basis) - var(--activity-start-size) - var(--activity-end-size) -
-          ((var(--page-col-count) - 1) * var(--page-gutter))
-      ) + ((var(--span-sidebar) - 1) * var(--page-gutter))
-  );
+  /* Menu / DHS / AI tray: ~200px at default 16px root; phone overrides below */
+  --sidebar-width: 12.5rem;
   --modal-width: calc(
     (var(--span-modal) / var(--page-col-count)) *
       (
@@ -1537,13 +1532,13 @@ section.diag .panel:not(form) {
     --content-basis: 30rem;
     --page-col-count: 8;
     --span-form: 8;
-    /* Slightly wider than half of the 8-col phone grid for menu toolbar */
     --span-sidebar: 5;
     --span-modal: 8;
     --span-half: 4;
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
+    --sidebar-width: calc(var(--content-basis) * 0.35);
   }
 
   .session-grid form > button,
