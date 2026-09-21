@@ -262,9 +262,15 @@ func refreshSessionAlive(sess *Session) bool {
 }
 
 func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
-	token := randomID(16)
-	hash := a.hashOpaque("csrf", token)
+	// Authenticated sessions: reuse the existing synchronizer token when present.
+	// Reminting on every GET /auth/csrf races concurrent unsafe requests (preview+persist)
+	// and yields intermittent 403 forbidden.
 	if sess := a.currentSession(r); sess != nil {
+		if strings.TrimSpace(sess.CSRF) != "" {
+			return sess.CSRF
+		}
+		token := randomID(16)
+		hash := a.hashOpaque("csrf", token)
 		sess.CSRFHash = hash
 		sess.CSRF = token
 		_ = a.store.UpdateSession(r.Context(), sess)
@@ -272,6 +278,11 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil && refreshSessionAlive(sess) {
+			if strings.TrimSpace(sess.CSRF) != "" {
+				return sess.CSRF
+			}
+			token := randomID(16)
+			hash := a.hashOpaque("csrf", token)
 			sess.CSRFHash = hash
 			sess.CSRF = token
 			_ = a.store.UpdateSession(r.Context(), sess)
@@ -281,6 +292,8 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 		a.clearCookie(w, a.refreshCookieName())
 		a.clearCookie(w, a.accessCookieName())
 	}
+	token := randomID(16)
+	hash := a.hashOpaque("csrf", token)
 	challenge := &CSRFChallenge{
 		ID:        randomID(16),
 		Hash:      hash,

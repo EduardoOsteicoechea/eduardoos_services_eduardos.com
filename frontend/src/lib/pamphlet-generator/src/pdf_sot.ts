@@ -3,7 +3,7 @@
  */
 import { getDocument, GlobalWorkerOptions, type PDFDocumentProxy } from "pdfjs-dist";
 import { DOCUMENT_ROUTES } from "../../../config/routes";
-import { currentCsrf, getCsrf } from "../../api";
+import { apiRequest } from "../../api";
 import { mustLog } from "../../dev-log";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 import {
@@ -284,74 +284,46 @@ export class PamphletPdfSot {
         };
 
         log("fetch.start", { seq, path: DOCUMENT_ROUTES.pamphletPreview });
-        await getCsrf();
-        const headers = new Headers({ "Content-Type": "application/json" });
-        const csrf = currentCsrf();
-        if (csrf) headers.set("X-CSRF-Token", csrf);
 
-        let res: Response;
-        try {
-            res = await fetch(DOCUMENT_ROUTES.pamphletPreview, {
+        // Use apiRequest (not raw fetch) so a first-load CSRF mismatch gets one remint+retry
+        // like every other unsafe /api call — otherwise the first open shows 403 and reload “fixes” it.
+        const { status, data, requestId } = await apiRequest<PamphletPreviewResponse>(
+            "/documents/pamphlet/preview",
+            {
                 method: "POST",
-                credentials: "include",
-                headers,
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(printPayload),
-                signal: AbortSignal.timeout(180_000),
-            });
-        } catch (err) {
-            if (this.destroyed || seq !== this.previewSeq) {
-                const e = new Error("Preview aborted");
-                e.name = "PamphletPreviewSurfaced";
-                throw e;
-            }
-            const message =
-                err instanceof Error ? err.message : "Network error during pamphlet preview.";
-            surfacePreviewError(message, { cause: err });
-            const e = new Error(message);
+            },
+            { timeoutMs: 180_000 },
+        );
+
+        log("fetch.end", { seq, status, requestId: requestId || null });
+
+        if (this.destroyed || seq !== this.previewSeq) {
+            const e = new Error("Preview aborted");
             e.name = "PamphletPreviewSurfaced";
             throw e;
         }
 
-        const requestId =
-            res.headers.get("X-Request-ID") || res.headers.get("x-request-id") || undefined;
-        log("fetch.end", { seq, status: res.status, requestId: requestId || null });
-
-        const text = await res.text();
-        if (!res.ok) {
-            let safeMsg = "El servidor rechazó la vista previa del panfleto.";
-            try {
-                const parsed = JSON.parse(text) as { message?: string; error?: string };
-                if (parsed?.message) safeMsg = parsed.message;
-                else if (parsed?.error) safeMsg = parsed.error;
-            } catch {
-                /* keep default */
-            }
-            surfacePreviewError(safeMsg, { status: res.status, requestId, body: text });
+        if (status < 200 || status >= 300) {
+            const safeMsg =
+                (typeof data?.message === "string" && data.message) ||
+                (typeof data?.error === "string" && data.error) ||
+                "El servidor rechazó la vista previa del panfleto.";
+            surfacePreviewError(safeMsg, {
+                status,
+                requestId,
+                body: JSON.stringify({ error: data?.error, message: data?.message, request_id: data?.request_id }),
+            });
             const e = new Error(safeMsg);
             e.name = "PamphletPreviewSurfaced";
             throw e;
         }
 
-        let parsed: PamphletPreviewResponse;
-        try {
-            parsed = JSON.parse(text) as PamphletPreviewResponse;
-        } catch (err) {
-            surfacePreviewError("La respuesta de vista previa no es JSON válido.", {
-                status: res.status,
-                requestId,
-                body: text,
-                cause: err,
-            });
-            const e = new Error("Invalid preview JSON");
-            e.name = "PamphletPreviewSurfaced";
-            throw e;
-        }
-
-        if (!parsed?.pdf_base64 || !parsed?.layout) {
+        if (!data?.pdf_base64 || !data?.layout) {
             surfacePreviewError("La vista previa no incluye pdf_base64 o layout.", {
-                status: res.status,
+                status,
                 requestId,
-                body: text,
             });
             const e = new Error("Incomplete preview payload");
             e.name = "PamphletPreviewSurfaced";
@@ -361,10 +333,10 @@ export class PamphletPdfSot {
         log("fetch.ok", {
             seq,
             requestId: requestId || null,
-            hitCount: parsed.layout.hits?.length ?? 0,
-            pageCount: parsed.layout.page_count,
+            hitCount: data.layout.hits?.length ?? 0,
+            pageCount: data.layout.page_count,
         });
-        return parsed;
+        return data;
     }
 
     private async renderPreview(payload: PamphletPreviewResponse, seq: number): Promise<void> {

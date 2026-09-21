@@ -60,9 +60,9 @@ import {
     type FooterProfile,
 } from "../../pamphletFooters";
 import { getAuthToken, isAuthenticated, refreshAuthSession } from "../../auth";
+import { currentCsrf, getCsrf, resetCsrfMemory } from "../../api";
 import { getPreference, PREF_PAMPHLET_LAST_EPAM, putPreference } from "../../preferences";
 import { DOCUMENT_ROUTES } from "../../../config/routes";
-import { currentCsrf, getCsrf } from "../../api";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 import {
     createAddItemButton,
@@ -115,7 +115,8 @@ export interface PamphletMountHandle {
 }
 
 export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
-    mountAlive = true;
+    /** False after destroy() — blocks async open/preview from rewriting the URL after soft-leave. */
+    let mountAlive = true;
     const appRoot = document.createElement("div");
     appRoot.className = "pamphlet-app";
     appRoot.setAttribute("data-pdf-sot", "");
@@ -684,9 +685,6 @@ let editDock!: EditDockController;
 
 const FSA_HTTPS_HINT =
     "Local device files need HTTPS (or localhost) in Chrome or Edge. You can still create in this browser or use the cloud.";
-
-/** False after destroy() — blocks async open/preview from rewriting the URL after soft-leave. */
-let mountAlive = true;
 
 function rememberLastEpamId(epamId: string | null | undefined): void {
     if (!getAuthToken() || !isAuthenticated()) return;
@@ -3234,6 +3232,8 @@ if (window.visualViewport) {
 
     void (async () => {
         await refreshAuthSession();
+        // Drop any pre-refresh CSRF so the first preview/persist mint matches the live session.
+        resetCsrfMemory();
         if (!applyHubViewIntent()) {
             await tryAutoloadCloudPamphlet();
         }

@@ -80,7 +80,7 @@ type Session struct {
 	Revoked             bool      `bson:"revoked"`
 	RevokeReason        string    `bson:"revoke_reason,omitempty"`
 	CSRFHash            string    `bson:"csrf_hash"`
-	CSRF                string    `bson:"-"`
+	CSRF                string    `bson:"csrf,omitempty"`
 	ExpiresAt           time.Time `bson:"expires_at"`
 	AbsoluteExpiresAt   time.Time `bson:"absolute_expires_at"`
 	FamilyCreatedAt     time.Time `bson:"family_created_at"`
