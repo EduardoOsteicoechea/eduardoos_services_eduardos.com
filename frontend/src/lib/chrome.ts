@@ -9,9 +9,24 @@ import { checkServiceAccess } from "./serviceAccess";
 
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
+const PHONE_TRAY_MQ = "(max-width: 47.999rem)";
 const SESSION_REFRESH_MS = 10 * 60 * 1000;
 
 let sessionRefreshTimer: ReturnType<typeof setInterval> | undefined;
+
+function isPhoneTray(): boolean {
+  return window.matchMedia(PHONE_TRAY_MQ).matches;
+}
+
+function syncShellViewportWidth(): void {
+  const root = document.documentElement;
+  const fontSize = parseFloat(getComputedStyle(root).fontSize);
+  if (!Number.isFinite(fontSize) || fontSize <= 0) {
+    return;
+  }
+  const widthPx = window.visualViewport?.width ?? window.innerWidth;
+  root.style.setProperty("--shell-viewport-width", `${widthPx / fontSize}rem`);
+}
 
 declare global {
   interface Window {
@@ -106,11 +121,16 @@ function togglePanel(id: string): void {
   }
   const willOpen = node.hidden;
 
-  // AI docks beside the global menu (same slot pattern as DHS; exclusive with DHS).
+  // Phone: agent fills 75% and hides menu/DHS. Tablet/desktop: dock after DHS or menu.
   if (id === "agent-sidebar") {
     if (willOpen) {
-      setPanelHidden("main-menu", false);
-      setPanelHidden("dynamic-header", true);
+      if (isPhoneTray()) {
+        setPanelHidden("main-menu", true);
+        setPanelHidden("dynamic-header", true);
+      } else {
+        setPanelHidden("main-menu", false);
+        setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
+      }
       setPanelHidden("agent-sidebar", false);
     } else {
       setPanelHidden("agent-sidebar", true);
@@ -141,6 +161,7 @@ function togglePanel(id: string): void {
 function applyFont(size: string): void {
   document.documentElement.style.fontSize = size;
   localStorage.setItem("root-font-size", size);
+  syncShellViewportWidth();
   sessionLog("chrome.font.persist", { size });
 }
 
@@ -457,6 +478,7 @@ function stampDocumentPreferences(doc: Document): void {
 
 function restoreChromeAfterNavigation(): void {
   applyStoredPreferences();
+  syncShellViewportWidth();
   clearHeaderCollapsed();
   syncEreportChrome();
   syncExpanded();
@@ -476,6 +498,9 @@ export function startChrome(): void {
 
   if (!window.__chromeStarted) {
     window.__chromeStarted = true;
+    syncShellViewportWidth();
+    window.addEventListener("resize", syncShellViewportWidth);
+    window.visualViewport?.addEventListener("resize", syncShellViewportWidth);
 
     document.addEventListener("click", (event) => {
       const node = chromeClickTarget(event.target);

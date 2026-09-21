@@ -1482,9 +1482,16 @@ section.diag .panel:not(form) {
   }
 
   /* Route DHS / AI dock to the right of the global menu when both trays are open */
-  #main-menu:not([hidden]) ~ #dynamic-header,
+  #main-menu:not([hidden]) ~ #dynamic-header {
+    left: var(--sidebar-width);
+  }
+
   #main-menu:not([hidden]) ~ #agent-sidebar {
     left: var(--sidebar-width);
+  }
+
+  #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) ~ #agent-sidebar {
+    left: calc(var(--sidebar-width) * 2);
   }
 
   main {
@@ -1551,7 +1558,24 @@ section.diag .panel:not(form) {
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
-    --sidebar-width: calc(var(--content-basis) * 0.5);
+    --tray-half-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
+    --tray-agent-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.75);
+    --sidebar-width: var(--tray-half-width);
+    --agent-sidebar-width: var(--tray-agent-width);
+  }
+
+  #main-menu:not([hidden]) {
+    width: var(--tray-half-width);
+  }
+
+  #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
+    width: var(--tray-half-width);
+    left: var(--tray-half-width);
+  }
+
+  html[data-tray-open="agent-sidebar"] #agent-sidebar:not([hidden]) {
+    width: var(--tray-agent-width);
+    left: 0;
   }
 
   .session-grid form > button,
@@ -1664,9 +1688,16 @@ section.diag .panel:not(form) {
   }
 
   /* Route DHS / AI dock to the right of the global menu when both trays are open */
-  #main-menu:not([hidden]) ~ #dynamic-header,
+  #main-menu:not([hidden]) ~ #dynamic-header {
+    left: var(--sidebar-width);
+  }
+
   #main-menu:not([hidden]) ~ #agent-sidebar {
     left: var(--sidebar-width);
+  }
+
+  #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) ~ #agent-sidebar {
+    left: calc(var(--sidebar-width) * 2);
   }
 
   main {
