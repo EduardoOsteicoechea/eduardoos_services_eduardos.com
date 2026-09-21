@@ -24,13 +24,16 @@
 /* ---------- Page rhythm + technical grid ---------- */
 
 .page,
-.product-dash,
-.eoproject,
-article.article-page,
 .session-grid,
 .diag{
   max-width: 72rem;
   margin-inline: auto;
+  min-width: 0;
+}
+
+/* Product hubs stay left-aligned on the main grid (menu + tab = title). */
+.product-dash,
+.eoproject{
   min-width: 0;
 }
 
@@ -492,10 +495,16 @@ main > .diag{
 /* ---------- Long-form article reading ---------- */
 
 .article-page{
+  display: flex;
+  flex-direction: column;
   grid-column: 1 / span var(--span-full);
-  max-width: 46rem;
-  margin-inline: auto;
+  box-sizing: border-box;
+  /* Mobile: full main column + 1rem side padding (no % widths). */
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 1rem;
   gap: 1.5rem;
+  justify-self: start;
 }
 
 .article-page__header{
@@ -509,7 +518,7 @@ main > .diag{
 .article-page h1{
   font-family: var(--font-family-display);
   font-size: var(--font-size-3xl);
-  line-height: var(--leading-tight);
+  line-height: 1.5rem;
   letter-spacing: -0.02em;
 }
 
@@ -533,14 +542,17 @@ main > .diag{
 }
 
 .article-page__body{
-  gap: calc(1.25rem * 1.35 * 1.5);
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
   font-size: var(--font-size-md);
-  line-height: 1.15;
+  line-height: 1.5rem;
 }
 
 .article-page__body p{
+  margin: 0;
   font-size: var(--font-size-md);
-  line-height: 1.15;
+  line-height: 1.5rem;
   text-wrap: pretty;
 }
 
@@ -548,6 +560,7 @@ main > .diag{
   margin-top: 1rem;
   font-family: var(--font-family-display);
   font-size: var(--font-size-xl);
+  line-height: 1.5rem;
   letter-spacing: -0.015em;
 }
 
@@ -562,6 +575,14 @@ main > .diag{
   background: transparent;
   border: 0;
   border-top: var(--border-width) solid var(--color-border);
+}
+
+/* Tablet + desktop: left-aligned, max-width 600px → 37.5rem */
+@media (min-width: 48rem) {
+  .article-page {
+    max-width: 37.5rem;
+    padding-inline: 0;
+  }
 }
 
 /* ---------- Articles index ---------- */
