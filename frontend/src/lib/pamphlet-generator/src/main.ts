@@ -101,6 +101,7 @@ import {
     type FooterFieldKey,
     type HeaderFieldKey,
     type LastEditedElement,
+    type ColumnKey,
     type PamphletHeader,
     type PamphletItemType,
     type PamphletStructure,
@@ -1411,7 +1412,38 @@ pdfSot = new PamphletPdfSot({
     onAddClick: (column) => {
         void handleAddItemButton(column);
     },
+    onDocumentDrawn: (drawn) => {
+        // Backend remaps odd→even lead columns; adopt that body so FE matches the PDF.
+        if (!drawn || typeof drawn !== "object") return;
+        const normalized = normalizePamphletData(drawn);
+        try {
+            assertPamphletStructure(normalized);
+        } catch {
+            return;
+        }
+        const nextDoc = normalized as PamphletStructure;
+        const prev = currentDoc ? JSON.stringify(columnLeadSignature(currentDoc)) : "";
+        const next = JSON.stringify(columnLeadSignature(nextDoc));
+        if (prev === next) return;
+        currentDoc = nextDoc;
+        currentHeader = { ...nextDoc.header };
+        appRoot.dataset.pamphletType = nextDoc.type;
+        renderFromPamphlet(main, nextDoc);
+        reflowAndReport(main);
+        if (hasEditableSession()) schedulePersist();
+    },
 });
+
+function columnLeadSignature(doc: PamphletStructure): Record<string, string> {
+    const sig: Record<string, string> = { type: doc.type };
+    for (let i = 1; i <= 8; i++) {
+        const key = `column_${i}` as ColumnKey;
+        const items = doc[key];
+        const first = Array.isArray(items) ? items[0] : null;
+        sig[`c${i}`] = first?.type === "image" ? `image:${first.content ? "src" : "empty"}` : first?.type ?? "none";
+    }
+    return sig;
+}
 
 editDock = setupEditDock(editDockRoot, {
     getDoc: () => currentDoc,

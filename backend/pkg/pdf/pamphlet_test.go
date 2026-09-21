@@ -670,7 +670,7 @@ func TestEmptyStructuredLeadHasNoImagenLabelOrBlackMatte(t *testing.T) {
 }
 
 func TestMigrateOddStructuredLeadsToEvenColumns(t *testing.T) {
-	_, layout := BuildPamphletPDFWithLayout(PamphletDocument{
+	_, layout, drawn := BuildPamphletPDFWithLayout(PamphletDocument{
 		Type: "pamphlet_structured_images",
 		Header: PamphletHeader{
 			Title: "Migrate",
@@ -678,6 +678,9 @@ func TestMigrateOddStructuredLeadsToEvenColumns(t *testing.T) {
 		Column1: []PamphletItem{
 			{Type: "image", Content: "", HeightMm: 52},
 			{Type: "paragraph", Content: "Cuerpo col1"},
+		},
+		Column2: []PamphletItem{
+			{Type: "paragraph", Content: "Cuerpo col2"},
 		},
 		Column3: []PamphletItem{
 			{Type: "image", Content: "", HeightMm: 52},
@@ -705,6 +708,16 @@ func TestMigrateOddStructuredLeadsToEvenColumns(t *testing.T) {
 	}
 	if !has2 || !has4 {
 		t.Fatalf("expected leads on cols 2 and 4, got %v", leadCols)
+	}
+	// Full pair swap keeps lead with its original body on the even column.
+	if len(drawn.Column2) < 2 || drawn.Column2[0].Type != "image" || drawn.Column2[1].Content != "Cuerpo col1" {
+		t.Fatalf("col2 should be [lead, Cuerpo col1], got %+v", drawn.Column2)
+	}
+	if len(drawn.Column1) < 1 || drawn.Column1[0].Content != "Cuerpo col2" {
+		t.Fatalf("col1 should receive former col2 body, got %+v", drawn.Column1)
+	}
+	if len(drawn.Column1) > 0 && drawn.Column1[0].Type == "image" {
+		t.Fatalf("odd col1 must not keep a lead image")
 	}
 }
 
@@ -807,7 +820,7 @@ func TestDrawImageAppliesPanDownOffset(t *testing.T) {
 }
 
 func TestBuildPamphletPDFWithLayoutHits(t *testing.T) {
-	_, layout := BuildPamphletPDFWithLayout(PamphletDocument{
+	_, layout, _ := BuildPamphletPDFWithLayout(PamphletDocument{
 		Type:   "pamphlet_single_sheet",
 		Header: PamphletHeader{Title: "Hits"},
 		Column1: []PamphletItem{

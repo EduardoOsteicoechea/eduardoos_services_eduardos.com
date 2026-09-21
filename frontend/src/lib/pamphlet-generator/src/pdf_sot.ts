@@ -33,20 +33,28 @@ export type PamphletPreviewLayout = {
     page_height_mm: number;
     page_count: number;
     hits: PamphletLayoutHit[];
+    lead_columns?: number[];
+    schema_version?: number;
 };
 
 export type PamphletPreviewResponse = {
     pdf_base64: string;
     layout: PamphletPreviewLayout;
+    /** Post-migration document the PDF actually drew (even lead columns). */
+    document?: PamphletStructure;
+    schema_version?: number;
 };
 
 export type PdfHitClickHandler = (column: number, index: number, kind: string) => void;
 export type PdfAddClickHandler = (column: number) => void;
+export type PdfDocumentDrawnHandler = (doc: PamphletStructure) => void;
 
 export type PamphletPdfSotOptions = {
     stage: HTMLElement;
     onHitClick: PdfHitClickHandler;
     onAddClick?: PdfAddClickHandler;
+    /** Called when preview returns a migrated document body to adopt as SoT. */
+    onDocumentDrawn?: PdfDocumentDrawnHandler;
 };
 
 function rootFontSizePx(): number {
@@ -169,6 +177,7 @@ export class PamphletPdfSot {
     private readonly stage: HTMLElement;
     private readonly onHitClick: PdfHitClickHandler;
     private readonly onAddClick: PdfAddClickHandler | null;
+    private readonly onDocumentDrawn: PdfDocumentDrawnHandler | null;
     private selectedId: string | null = null;
     private previewQueued = false;
     private previewFlushing = false;
@@ -186,6 +195,7 @@ export class PamphletPdfSot {
         this.stage = opts.stage;
         this.onHitClick = opts.onHitClick;
         this.onAddClick = opts.onAddClick ?? null;
+        this.onDocumentDrawn = opts.onDocumentDrawn ?? null;
         if (!this.stage.querySelector(".pamphlet-pdf-stage__pages")) {
             const pages = document.createElement("div");
             pages.className = "pamphlet-pdf-stage__pages";
@@ -386,7 +396,12 @@ export class PamphletPdfSot {
             requestId: requestId || null,
             hitCount: data.layout.hits?.length ?? 0,
             pageCount: data.layout.page_count,
+            leadColumns: data.layout.lead_columns ?? null,
+            schemaVersion: data.schema_version ?? data.layout.schema_version ?? null,
         });
+        if (data.document && this.onDocumentDrawn) {
+            this.onDocumentDrawn(data.document);
+        }
         return data;
     }
 
@@ -532,8 +547,8 @@ export class PamphletPdfSot {
     }
 
     /**
-     * Single "+" under the last content item in fill order (columns 1→8).
-     * Only rendered on the page that hosts that item.
+     * Single "+" under the last content item in pamphlet reading order
+     * (page1: 7→8→1→2, page2: 3→4→5→6). Only rendered on that item's page.
      */
     private appendAddControl(
         pageEl: HTMLElement,
@@ -543,8 +558,9 @@ export class PamphletPdfSot {
     ): void {
         if (!this.onAddClick) return;
 
+        const readingOrder = [7, 8, 1, 2, 3, 4, 5, 6];
         let last: PamphletLayoutHit | null = null;
-        for (let col = 1; col <= 8; col++) {
+        for (const col of readingOrder) {
             const colHits = allHits
                 .filter((h) => h.column === col)
                 .sort((a, b) => a.index - b.index);

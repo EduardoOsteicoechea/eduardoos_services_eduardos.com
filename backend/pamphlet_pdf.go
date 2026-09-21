@@ -67,19 +67,23 @@ func (a *App) pamphletPreviewHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	t := strings.TrimSpace(doc.Type)
 
-	data, layout := pdf.BuildPamphletPDFWithLayout(doc)
+	data, layout, drawn := pdf.BuildPamphletPDFWithLayout(doc)
 	a.mustLogf(r, "documents.pamphlet_preview.ok",
 		"user_id", user.ID,
 		"pdf_bytes", len(data),
 		"hits", len(layout.Hits),
+		"lead_columns", layout.LeadColumns,
+		"schema_version", layout.SchemaVersion,
 		"ink", strings.TrimSpace(doc.InkColor),
 		"type", t,
 	)
 	a.auditEvent(r, "pamphlet_preview", "ok", user.ID)
 
 	writeJSON(w, http.StatusOK, map[string]any{
-		"pdf_base64": base64.StdEncoding.EncodeToString(data),
-		"layout":     layout,
+		"pdf_base64":      base64.StdEncoding.EncodeToString(data),
+		"layout":          layout,
+		"document":        drawn,
+		"schema_version":  layout.SchemaVersion,
 	})
 }
 
