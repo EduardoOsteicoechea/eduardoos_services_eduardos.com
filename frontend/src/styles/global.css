@@ -162,6 +162,18 @@ a {
   overflow: visible;
   background: transparent;
   border: 0;
+  /* Transparent bar stays above trays for the menu control, but must not
+     swallow clicks on sidebar toolbar buttons underneath. */
+  pointer-events: none;
+}
+
+.app-header a,
+.app-header button,
+.app-header .icon-btn,
+.app-header input,
+.app-header select,
+.app-header label {
+  pointer-events: auto;
 }
 
 .app-header--start,
