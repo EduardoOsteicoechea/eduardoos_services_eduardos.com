@@ -922,8 +922,13 @@ a {
   min-width: 0;
 }
 
+.agent-chat-compose-row--tools {
+  align-items: center;
+}
+
 .agent-chat-form textarea {
-  flex: 1;
+  flex: 1 1 auto;
+  align-self: stretch;
   min-width: 0;
   box-sizing: border-box;
   height: calc((var(--button-size) * 2) + var(--rail-gap));
@@ -1001,11 +1006,17 @@ a {
 
 .agent-chat-tools {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-shrink: 0;
   align-items: center;
   gap: var(--rail-gap);
+  width: auto;
+}
+
+.agent-chat-form [data-agent-send].icon-btn {
+  flex-shrink: 0;
   width: var(--button-size);
+  height: var(--button-size);
 }
 
 .agent-chat-form button:disabled {
