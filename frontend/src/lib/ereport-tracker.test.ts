@@ -111,11 +111,13 @@ describe("vendored tracker assets", () => {
     expect(tracker).not.toMatch(/function scrollSpyTopOffset\(\)\s*\{\s*return 58;\s*\}/);
   });
 
-  it("inlines credentialed images and keeps the PDF host in-viewport for html2canvas", () => {
+  it("embeds API images into exports and captures PDF off-screen without opacity:0", () => {
+    expect(tracker).toContain("function embedImagesInPayload(");
     expect(tracker).toContain("function inlineImagesForPdf(");
     expect(tracker).toContain('credentials: "include"');
-    expect(tracker).toContain("opacity:0");
-    expect(tracker).not.toContain("left:-625rem");
+    expect(tracker).toContain("translate(-120vw,-120vh)");
+    expect(tracker).not.toContain("opacity:0;pointer-events:none;z-index:-1");
     expect(tracker).toContain("PDF canvas empty");
+    expect(tracker).toContain("PDF canvas blank");
   });
 });

@@ -143,6 +143,7 @@ export function createReportHistory(
   return postJSON<{ id?: string; tema?: string; source?: string }>(
     `/ereport/orgs/${orgId}/reports/${reportId}/history`,
     body,
+    { timeoutMs: 120000 },
   );
 }
 

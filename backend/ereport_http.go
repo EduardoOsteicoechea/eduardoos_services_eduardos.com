@@ -63,6 +63,9 @@ func (a *App) ereportAccessHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
+	if ok {
+		a.redeemPendingShares(user)
+	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"canCreate":   ok,
 		"ownerUserId": user.ID,

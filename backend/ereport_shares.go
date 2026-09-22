@@ -8,6 +8,24 @@ import (
 )
 
 const ereportSharedIndexDir = ".shared"
+const ereportSharedPendingDir = "pending"
+
+type ereportPendingShare struct {
+	OwnerUserID  string `json:"ownerUserId"`
+	OrgID        string `json:"orgId"`
+	ReportID     string `json:"reportId"`
+	MemberEmail  string `json:"memberEmail"`
+	CanEdit      bool   `json:"canEdit"`
+	InviteID     string `json:"inviteId,omitempty"`
+	Tema         string `json:"tema,omitempty"`
+	ReportNumber string `json:"reportNumber,omitempty"`
+	CreatedAt    string `json:"createdAt"`
+	UpdatedAt    string `json:"updatedAt"`
+}
+
+type ereportPendingSharesFile struct {
+	Items []ereportPendingShare `json:"items"`
+}
 
 type ereportShareRecord struct {
 	ID           string `json:"id"`
@@ -118,15 +136,91 @@ func (fs *ereportFS) saveSharedIndex(memberUserID string, idx ereportSharedIndex
 	return fs.writeJSON(path, idx)
 }
 
+func (fs *ereportFS) sharedPendingPath(emailNorm string) (string, error) {
+	safe := ereportSafeEmail(emailNorm)
+	if safe == "" || !validEreportID(safe) {
+		return "", errEreportPath
+	}
+	return fs.resolve(ereportSharedIndexDir, ereportSharedPendingDir, safe+".json")
+}
+
+func (fs *ereportFS) loadPendingShares(emailNorm string) (ereportPendingSharesFile, error) {
+	var file ereportPendingSharesFile
+	path, err := fs.sharedPendingPath(emailNorm)
+	if err != nil {
+		return file, err
+	}
+	if err := fs.readJSON(path, &file); err != nil {
+		if errors.Is(err, errEreportNotFound) {
+			file.Items = []ereportPendingShare{}
+			return file, nil
+		}
+		return file, err
+	}
+	if file.Items == nil {
+		file.Items = []ereportPendingShare{}
+	}
+	return file, nil
+}
+
+func (fs *ereportFS) savePendingShares(emailNorm string, file ereportPendingSharesFile) error {
+	path, err := fs.sharedPendingPath(emailNorm)
+	if err != nil {
+		return err
+	}
+	if file.Items == nil {
+		file.Items = []ereportPendingShare{}
+	}
+	return fs.writeJSON(path, file)
+}
+
 func (a *App) upsertAccountShare(owner *User, orgID, reportID, inviteID string, memberEmail string, canEdit bool, meta ereportMeta) {
 	_, emailNorm, ok := normalizeEmail(memberEmail)
-	if !ok {
+	if !ok || owner == nil {
 		return
 	}
 	member, err := a.store.UserByEmail(context.Background(), emailNorm)
-	if err != nil || member == nil || member.ID == owner.ID {
+	if err != nil || member == nil {
+		// Not registered yet — keep a pending share until they sign in.
+		a.upsertPendingShare(owner, orgID, reportID, inviteID, emailNorm, canEdit, meta)
 		return
 	}
+	if member.ID == owner.ID {
+		return
+	}
+	a.writeAccountShare(owner, member, orgID, reportID, inviteID, emailNorm, canEdit, meta)
+}
+
+func (a *App) upsertPendingShare(owner *User, orgID, reportID, inviteID, emailNorm string, canEdit bool, meta ereportMeta) {
+	now := nowRFC3339()
+	file, err := a.ereport.loadPendingShares(emailNorm)
+	if err != nil {
+		return
+	}
+	kept := make([]ereportPendingShare, 0, len(file.Items)+1)
+	for _, item := range file.Items {
+		if item.OwnerUserID == owner.ID && item.OrgID == orgID && item.ReportID == reportID {
+			continue
+		}
+		kept = append(kept, item)
+	}
+	kept = append(kept, ereportPendingShare{
+		OwnerUserID:  owner.ID,
+		OrgID:        orgID,
+		ReportID:     reportID,
+		MemberEmail:  emailNorm,
+		CanEdit:      canEdit,
+		InviteID:     inviteID,
+		Tema:         meta.Tema,
+		ReportNumber: meta.ReportNumber,
+		CreatedAt:    now,
+		UpdatedAt:    now,
+	})
+	file.Items = kept
+	_ = a.ereport.savePendingShares(emailNorm, file)
+}
+
+func (a *App) writeAccountShare(owner, member *User, orgID, reportID, inviteID, emailNorm string, canEdit bool, meta ereportMeta) {
 	now := nowRFC3339()
 	file, err := a.ereport.loadReportShares(owner.ID, orgID, reportID)
 	if err != nil {
@@ -188,6 +282,38 @@ func (a *App) upsertAccountShare(owner *User, orgID, reportID, inviteID string, 
 	_ = a.ereport.saveSharedIndex(member.ID, idx)
 }
 
+func (a *App) redeemPendingShares(user *User) {
+	if user == nil {
+		return
+	}
+	_, emailNorm, ok := normalizeEmail(user.Email)
+	if !ok {
+		return
+	}
+	pending, err := a.ereport.loadPendingShares(emailNorm)
+	if err != nil || len(pending.Items) == 0 {
+		return
+	}
+	remaining := make([]ereportPendingShare, 0)
+	for _, item := range pending.Items {
+		owner, oErr := a.store.UserByID(context.Background(), item.OwnerUserID)
+		if oErr != nil || owner == nil || owner.ID == user.ID {
+			remaining = append(remaining, item)
+			continue
+		}
+		meta, _, loadErr := a.ereport.loadReport(item.OwnerUserID, item.OrgID, item.ReportID)
+		if loadErr != nil {
+			remaining = append(remaining, item)
+			continue
+		}
+		if strings.TrimSpace(item.Tema) != "" {
+			meta.Tema = item.Tema
+		}
+		a.writeAccountShare(owner, user, item.OrgID, item.ReportID, item.InviteID, emailNorm, item.CanEdit, meta)
+	}
+	_ = a.ereport.savePendingShares(emailNorm, ereportPendingSharesFile{Items: remaining})
+}
+
 func (a *App) findShareForMember(memberUserID, orgID, reportID string) (ereportShareRecord, ereportMeta, map[string]any, bool) {
 	idx, err := a.ereport.loadSharedIndex(memberUserID)
 	if err != nil {
@@ -244,6 +370,7 @@ func (a *App) ereportListSharedHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireEreportEntitled(w, r, user) {
 		return
 	}
+	a.redeemPendingShares(user)
 	idx, err := a.ereport.loadSharedIndex(user.ID)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

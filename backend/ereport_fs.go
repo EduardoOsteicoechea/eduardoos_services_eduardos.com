@@ -74,7 +74,7 @@ func (fs *ereportFS) resolve(parts ...string) (string, error) {
 		if p == "" || p == "." || p == ".." || strings.Contains(p, "..") || strings.ContainsAny(p, `/\`) || filepath.IsAbs(p) {
 			return "", errEreportTraversal
 		}
-		if !validEreportID(p) && p != "orgs.json" && p != "meta.json" && p != "library.json" && p != "report.ereport" && p != "history-index.json" && p != "orgs" && p != "reports" && p != "history" && p != "images" && p != "invites" {
+		if !validEreportID(p) && p != "orgs.json" && p != "meta.json" && p != "library.json" && p != "report.ereport" && p != "history-index.json" && p != "orgs" && p != "reports" && p != "history" && p != "images" && p != "invites" && p != "pending" && p != ereportSharedIndexDir && p != ereportOwnerIndexDir {
 			base := filepath.Base(p)
 			if !strings.HasSuffix(base, ".json") && !strings.HasSuffix(base, ".jpg") && !strings.HasSuffix(base, ".png") && !strings.HasSuffix(base, ".webp") && !strings.HasSuffix(base, ".ereport") {
 				return "", errEreportTraversal

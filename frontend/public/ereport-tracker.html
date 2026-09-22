@@ -3011,13 +3011,58 @@ async function inlineImagesForPdf(root) {
   );
 }
 
+async function embedImageRecord(im) {
+  if (!im || typeof im !== "object") return im;
+  if (im.dataUrl && String(im.dataUrl).startsWith("data:")) {
+    return { id: im.id, mime: im.mime, name: im.name, dataUrl: im.dataUrl };
+  }
+  const src = String(im.url || "").trim();
+  if (!src) return im;
+  if (src.startsWith("data:")) {
+    return { id: im.id, mime: im.mime, name: im.name, dataUrl: src };
+  }
+  try {
+    const res = await fetch(src, { credentials: "include", cache: "force-cache" });
+    if (!res.ok) return im;
+    const blob = await res.blob();
+    if (!blob || !blob.size) return im;
+    const dataUrl = await blobToDataURL(blob);
+    return { id: im.id, mime: im.mime || blob.type, name: im.name, dataUrl };
+  } catch (_) {
+    return im;
+  }
+}
+
+async function embedImagesInPayload(raw) {
+  const data = structuredClone(raw);
+  async function scrubItem(it) {
+    if (!it) return;
+    it.imagesIncidencia = await Promise.all((it.imagesIncidencia || []).map(embedImageRecord));
+    it.imagesSolucion = await Promise.all((it.imagesSolucion || []).map(embedImageRecord));
+    it.images = it.imagesSolucion;
+  }
+  for (const sec of data.sections || []) {
+    for (const it of sec.items || []) await scrubItem(it);
+    for (const grp of sec.groups || []) {
+      for (const it of grp.items || []) await scrubItem(it);
+    }
+  }
+  return data;
+}
+
 async function saveAll() {
   collectFromDom();
   updateStatus();
   const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_") || "sin-numero";
   const base = "reporte_qa_" + safeName;
-  const data = structuredClone(state);
+  let data = structuredClone(state);
   if (!Array.isArray(data.sections)) data.sections = [];
+  try {
+    data = await embedImagesInPayload(data);
+  } catch (err) {
+    console.error(err);
+    toast("Algunas imágenes no se pudieron embeber; se exporta con las URLs disponibles.");
+  }
 
   downloadBlob(base + ".ereport", new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   downloadBlob(base + ".html", new Blob([buildSavedHtml(data)], { type: "text/html;charset=utf-8" }));
@@ -3027,14 +3072,14 @@ async function saveAll() {
       throw new Error("PDF libraries missing");
     }
     const host = document.createElement("div");
-    // Keep in viewport (opacity 0): off-screen fixed nodes often capture as blank.
+    // Keep fully opaque but off-screen: opacity:0 often yields a blank canvas.
     host.style.cssText =
-      "position:fixed;left:0;top:0;width:56.25rem;opacity:0;pointer-events:none;z-index:-1;overflow:visible;";
+      "position:fixed;left:0;top:0;width:56.25rem;transform:translate(-120vw,-120vh);pointer-events:none;z-index:0;overflow:visible;background:#ffffff;";
     const report = buildPdfReportElement(data);
+    report.style.background = "#ffffff";
     host.appendChild(report);
     document.body.appendChild(host);
     await inlineImagesForPdf(report);
-    // Let layout settle after inlining data URLs.
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const canvas = await html2canvas(report, {
       scale: 1.25,
@@ -3042,15 +3087,41 @@ async function saveAll() {
       allowTaint: false,
       backgroundColor: "#ffffff",
       logging: false,
-      imageTimeout: 15000,
-      width: report.scrollWidth || report.offsetWidth || 900,
+      imageTimeout: 20000,
+      foreignObjectRendering: false,
+      width: Math.max(report.scrollWidth || 0, report.offsetWidth || 0, 900),
       height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
-      windowWidth: report.scrollWidth || 900,
+      windowWidth: Math.max(report.scrollWidth || 0, 900),
       windowHeight: Math.max(report.scrollHeight || 0, 200),
+      onclone: (_doc, cloned) => {
+        cloned.style.transform = "none";
+        cloned.style.opacity = "1";
+        cloned.style.visibility = "visible";
+        if (cloned.parentElement) {
+          cloned.parentElement.style.transform = "none";
+          cloned.parentElement.style.opacity = "1";
+          cloned.parentElement.style.left = "0";
+          cloned.parentElement.style.top = "0";
+        }
+      },
     });
     document.body.removeChild(host);
     if (!canvas || canvas.width < 8 || canvas.height < 8) {
       throw new Error("PDF canvas empty");
+    }
+    // Detect near-blank canvases (all white / transparent).
+    try {
+      const probe = canvas.getContext("2d");
+      if (probe) {
+        const sample = probe.getImageData(0, 0, Math.min(canvas.width, 40), Math.min(canvas.height, 40)).data;
+        let ink = 0;
+        for (let i = 0; i < sample.length; i += 4) {
+          if (sample[i] < 250 || sample[i + 1] < 250 || sample[i + 2] < 250) ink++;
+        }
+        if (ink < 8) throw new Error("PDF canvas blank");
+      }
+    } catch (probeErr) {
+      if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
     }
     const img = canvas.toDataURL("image/jpeg", 0.92);
     if (!img || img.length < 100) {

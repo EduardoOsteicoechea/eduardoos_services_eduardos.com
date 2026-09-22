@@ -35,7 +35,7 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Download
     </button>
-    <button class="dhs-action" type="button" data-open-modal="history" data-owner-only title="Historial de snapshots" aria-label="History">
+    <button class="dhs-action" type="button" data-open-modal="history" title="Historial de snapshots" aria-label="History">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">history</span>
       </span>
@@ -478,7 +478,15 @@ import Layout from "../../layouts/Layout.astro";
     const paintHistoryList = async () => {
       const list = root.querySelector("[data-history-list]") || document.querySelector("[data-history-list]");
       const err = root.querySelector("[data-history-error]") || document.querySelector("[data-history-error]");
-      if (!(list instanceof HTMLElement) || isShared || !orgId || !reportId) return;
+      if (!(list instanceof HTMLElement) || !orgId || !reportId) return;
+      if (isShared) {
+        list.replaceChildren();
+        const note = document.createElement("li");
+        note.className = "hint";
+        note.textContent = "Snapshot history is available to the report owner.";
+        list.append(note);
+        return;
+      }
       if (err instanceof HTMLElement) err.hidden = true;
       list.replaceChildren();
       const res = await listReportHistory(orgId, reportId);
@@ -492,7 +500,7 @@ import Layout from "../../layouts/Layout.astro";
       const items = res.data.items || [];
       if (!items.length) {
         const empty = document.createElement("li");
-        empty.textContent = "No snapshots yet.";
+        empty.textContent = "No snapshots yet. Use Save snapshot below.";
         list.append(empty);
         return;
       }
@@ -540,6 +548,10 @@ import Layout from "../../layouts/Layout.astro";
         void paintCloudList();
       }
       if (name === "history") {
+        const saveBtn = modal.querySelector("[data-history-save]");
+        if (saveBtn instanceof HTMLElement) {
+          saveBtn.hidden = isShared;
+        }
         void paintHistoryList();
       }
     };
@@ -693,21 +705,31 @@ import Layout from "../../layouts/Layout.astro";
       }
       if (node.closest("[data-workspace-save]")) {
         if (!host || (isShared && !canEditShared)) return;
-        void host.collect(8000).then(async (next) => {
+        void host.collect(60000).then(async (next) => {
           const ok = await persist(next as EreportPayload);
-          if (!ok || isShared || !orgId || !reportId) return;
-          await createReportHistory(orgId, reportId, {
+          if (!ok || isShared || !orgId || !reportId) {
+            if (ok) setBanner(root, "Saved.", "ok");
+            return;
+          }
+          const snap = await createReportHistory(orgId, reportId, {
             payload: next as EreportPayload,
             tema: String(next.reportName || next.appTitle || tema || "").trim(),
             label: "manual",
           });
+          if (snap.status >= 300) {
+            setBanner(root, snap.data.message || "Saved, but snapshot failed.", "err");
+            return;
+          }
           setBanner(root, "Saved + snapshot.", "ok");
         });
         return;
       }
       if (node.closest("[data-history-save]")) {
-        if (isShared || !orgId || !reportId || !host) return;
-        void host.collect(8000).then(async (next) => {
+        if (isShared || !orgId || !reportId || !host) {
+          if (isShared) setBanner(root, "Only the owner can save snapshots.", "err");
+          return;
+        }
+        void host.collect(60000).then(async (next) => {
           await persist(next as EreportPayload);
           const snap = await createReportHistory(orgId, reportId, {
             payload: next as EreportPayload,

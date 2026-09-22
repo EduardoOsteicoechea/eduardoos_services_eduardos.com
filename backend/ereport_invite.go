@@ -503,6 +503,7 @@ func (a *App) ereportInviteVerifyHandler(w http.ResponseWriter, r *http.Request)
 	if !ok {
 		return
 	}
+	a.grantAccountShareForSessionUser(r, &inv)
 	a.auditEvent(r, "ereport_invite_verify", "ok", "")
 	writeJSON(w, http.StatusOK, out)
 }
@@ -604,8 +605,31 @@ func (a *App) ereportInviteClaimHandler(w http.ResponseWriter, r *http.Request) 
 	if !ok {
 		return
 	}
+	a.grantAccountShareForSessionUser(r, &inv)
 	a.auditEvent(r, "ereport_invite_claim", "ok", "")
 	writeJSON(w, http.StatusOK, out)
+}
+
+// grantAccountShareForSessionUser puts the report under Shared with me when the
+// invitee is already signed into Eduardo OS (or queues a pending share by email).
+func (a *App) grantAccountShareForSessionUser(r *http.Request, inv *ereportInvite) {
+	if inv == nil || inv.Scope != inviteScopeReport || inv.ReportID == "" {
+		return
+	}
+	sessionUser := a.currentUser(r)
+	if sessionUser == nil {
+		return
+	}
+	owner, oErr := a.store.UserByID(r.Context(), inv.OwnerUserID)
+	if oErr != nil || owner == nil {
+		return
+	}
+	meta, _, loadErr := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, inv.ReportID)
+	if loadErr != nil {
+		return
+	}
+	a.upsertAccountShare(owner, inv.OrgID, inv.ReportID, inv.ID, sessionUser.Email, inv.CanEdit, meta)
+	a.redeemPendingShares(sessionUser)
 }
 
 func (a *App) requireInviteSession(w http.ResponseWriter, r *http.Request) *ereportInvite {

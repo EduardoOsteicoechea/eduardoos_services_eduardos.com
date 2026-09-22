@@ -556,7 +556,14 @@ import Layout from "../../layouts/Layout.astro";
 
     const refreshShared = async () => {
       const res = await fetchSharedReports();
-      sharedReports = res.status === 200 ? res.data.items || [] : [];
+      if (res.status === 200) {
+        sharedReports = res.data.items || [];
+      } else {
+        sharedReports = [];
+        if (res.status === 403) {
+          setBanner(root, "Shared with me requires an eReport subscription.", "err");
+        }
+      }
       paintSharedCards();
     };
 

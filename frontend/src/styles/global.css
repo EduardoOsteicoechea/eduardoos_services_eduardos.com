@@ -397,7 +397,7 @@ a {
 }
 
 .dhs-action[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .dhs-action:disabled {
