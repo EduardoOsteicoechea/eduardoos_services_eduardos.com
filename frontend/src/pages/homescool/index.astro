@@ -33,7 +33,6 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import { fetchHomescoolMaterials } from "../../lib/homescool";
   import { showErrorModal } from "../../lib/error-modal";
 
@@ -46,7 +45,6 @@ import Layout from "../../layouts/Layout.astro";
   const result = await requireService("homescool", { requireSubscription: false });
   const linkedOk = result.access.allowed || result.access.reason === "linked_student";
   if (!result.sessionOk || !linkedOk) {
-    // Teachers need subscription; linked students are allowed via access endpoint.
     const teacher = await requireService("homescool", { requireSubscription: true });
     if (!teacher.sessionOk || !teacher.access.allowed) {
       if (banner instanceof HTMLElement) {
@@ -55,13 +53,13 @@ import Layout from "../../layouts/Layout.astro";
       setHidden(gate, false);
       setHidden(authed, true);
     } else {
-      await renderDash(teacher);
+      await renderDash();
     }
   } else {
-    await renderDash(result);
+    await renderDash();
   }
 
-  async function renderDash(_gate: unknown) {
+  async function renderDash() {
     if (banner instanceof HTMLElement) banner.textContent = "Materials by cycle";
     setHidden(gate, true);
     setHidden(authed, false);
@@ -99,13 +97,5 @@ import Layout from "../../layouts/Layout.astro";
       a.append(icon, title, desc);
       cyclesEl.append(a);
     }
-    setAgentRoutePayload({
-      kind: "homescool_dashboard",
-      cycles: [...byCycle.entries()].map(([cycle, meta]) => ({
-        cycle,
-        count: meta.count,
-        empty: meta.empty,
-      })),
-    });
   }
 </script>
