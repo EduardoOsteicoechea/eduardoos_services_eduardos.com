@@ -5,7 +5,7 @@ import "../../styles/product-tree-sidebar.css";
 import "../../styles/homescool-workspace.css";
 ---
 
-<Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={true} pageHeading="Homescool">
+<Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
     <button
       class="dhs-action"
@@ -31,6 +31,8 @@ import "../../styles/homescool-workspace.css";
       Print
     </button>
   </Fragment>
+
+  <h1 class="page-title-sr">Homescool</h1>
 
   <div data-homescool-gate hidden class="product-gate">
     <p class="hint">Sign in with Homescool access to view study materials.</p>
@@ -225,6 +227,9 @@ import "../../styles/homescool-workspace.css";
     try {
       const doc = iframe.contentDocument;
       if (!doc?.head || !doc.body) return;
+      // Match site rem so the 1rem gap between sheets matches chrome tokens.
+      const parentFs = getComputedStyle(document.documentElement).fontSize;
+      doc.documentElement.style.fontSize = parentFs;
       normalizeLetterSections(doc);
       let style = doc.getElementById("homescool-embed-chrome");
       if (!style) {
@@ -235,8 +240,42 @@ import "../../styles/homescool-workspace.css";
       style.textContent = [
         ".print-fab, .print-menu { display: none !important; }",
         "html, body { height: auto !important; min-height: 0 !important; overflow: visible !important; }",
-        "body { background: #d8d8e4; margin: 0; padding: 0.5rem 0; }",
-        ".page { margin-left: auto; margin-right: auto; }",
+        "body {",
+        "  display: flex !important;",
+        "  flex-direction: column !important;",
+        "  align-items: center !important;",
+        "  gap: 1rem !important;",
+        "  margin: 0 !important;",
+        "  padding: 1rem 0 !important;",
+        "  background: #d8d8e4 !important;",
+        "}",
+        "/* Each section = one US Letter sheet (portrait or landscape). */",
+        ".page {",
+        "  margin: 0 !important;",
+        "  flex: 0 0 auto !important;",
+        "  box-sizing: border-box !important;",
+        "}",
+        ".page,",
+        ".page.page--portrait {",
+        "  width: 8.5in !important;",
+        "  height: 11in !important;",
+        "  min-width: 8.5in !important;",
+        "  min-height: 11in !important;",
+        "  max-width: 8.5in !important;",
+        "  max-height: 11in !important;",
+        "}",
+        ".page.page--landscape {",
+        "  width: 11in !important;",
+        "  height: 8.5in !important;",
+        "  min-width: 11in !important;",
+        "  min-height: 8.5in !important;",
+        "  max-width: 11in !important;",
+        "  max-height: 8.5in !important;",
+        "}",
+        "@media print {",
+        "  body { gap: 0 !important; padding: 0 !important; background: #fff !important; }",
+        "  .page { box-shadow: none !important; }",
+        "}",
       ].join("\n");
     } catch {
       /* cross-origin should not happen (same-origin API) */

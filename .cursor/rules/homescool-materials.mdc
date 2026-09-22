@@ -12,7 +12,7 @@ alwaysApply: false
 - **Main stage** (right): material HTML in a **same-origin iframe** (`/api/homescool/materials/:id/html`). Do **not** inject `.page` into the shell DOM — site `global.css` also defines `.page` and breaks quiz/sheet layout.
 - **DHS Print**: call `iframe.contentWindow.StudyPrint.print()` (falls back to `iframe.contentWindow.print()`). Each study `.page` is one PDF page.
 - Sheet geometry is **not** rem chrome: every material body is **only** `<section class="page page--portrait">` or `<section class="page page--landscape">` (plus activity modifiers like `page--quiz`). Padding **1cm**. The Homescool viewer normalizes loaded HTML to these sections before display.
-- **Workspaces** use `main { padding: 0 }` (no 1rem gutter). Homescool shows the Layout `.page-title` H1 band.
+- **Workspaces** use `main { padding: 0 }` (no 1rem gutter). Homescool hides the Layout H1 band so the stage fills the main panel; each material is shown as stacked US Letter `.page` sections (`page--portrait` 8.5×11in or `page--landscape` 11×8.5in) with **1rem** vertical gap between sections.
 
 ## Authoring CSS / components (reuse)
 

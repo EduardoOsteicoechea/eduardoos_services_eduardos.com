@@ -1,4 +1,4 @@
-﻿:root {
+﻿ï»¿:root {
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1rem;
@@ -152,7 +152,7 @@ body {
 }
 
 html {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
@@ -1109,8 +1109,7 @@ html[data-page="latin-institutes"] {
   --product-tree-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) * 0.35);
 }
 
-/* Offset H1 when the product tree sidebar is open. */
-html[data-page="homescool-workspace"] main:has(.product-workspace--tree-open) > .page-title,
+/* Offset H1 when the product tree sidebar is open (Institutes). */
 html[data-page="latin-institutes"] main:has(.product-workspace--tree-open) > .page-title {
   margin-left: var(--product-tree-width);
 }
@@ -1162,7 +1161,7 @@ h1 {
 }
 
 /*
- * Dedicated page H1 band — height matches the activity bar:
+ * Dedicated page H1 band Â height matches the activity bar:
  * 1rem padding + menu-button-size + 1rem margin. First line aligns with the menu button.
  */
 .page-title {
@@ -1194,7 +1193,7 @@ h1 {
   }
 }
 
-/* Legacy a11y clip — prefer .page-title; keep for any remaining callers. */
+/* Legacy a11y clip Â prefer .page-title; keep for any remaining callers. */
 .page-title-sr {
   position: absolute;
   width: 0.0625rem;
@@ -1745,8 +1744,8 @@ section.diag .panel:not(form) {
 
   /*
    * Top bar (all routes): end-aligned; order =
-   * [eReport guest auth when visible] → session avatar →
-   * cart (when present) → menu (flush end).
+   * [eReport guest auth when visible] ? session avatar ?
+   * cart (when present) ? menu (flush end).
    */
   .header-cluster--menu,
   .header-cluster--tools {
@@ -1813,7 +1812,7 @@ section.diag .panel:not(form) {
 @media (min-width: 48rem) and (max-width: 63.999rem) {
   /* Root scale on tablet. */
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   :root {
@@ -1844,7 +1843,7 @@ section.diag .panel:not(form) {
 @media (max-width: 47.999rem) {
   /* Root scale on phone. */
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   :root {
@@ -1897,7 +1896,7 @@ section.diag .panel:not(form) {
     --activity-start-size: 0rem;
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    /* Columns 10–15: six-col form centered on the 24-col desktop grid */
+    /* Columns 10Â15: six-col form centered on the 24-col desktop grid */
     --span-form: 6;
     --span-sidebar: 7;
     --span-modal: 8;
@@ -1906,7 +1905,7 @@ section.diag .panel:not(form) {
     --span-full: 24;
     --span-button: 2;
     --main-inline: 1rem;
-    /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2× menu) */
+    /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2Ã menu) */
     --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
     --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
     --main-padding-top: var(--main-padding);
@@ -2347,8 +2346,8 @@ html[data-page="ereport-workspace"] .ereport-iframe {
 
 .ereport-modal-dialog {
   width: var(--modal-width);
-  max-width: calc(100% - 2rem);
-  max-height: calc(100% - 2rem);
+  max-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  max-height: calc(var(--content-basis, 64rem) * 0.9);
   overflow-y: auto;
   padding: var(--space-padding);
   background: var(--color-surface);
