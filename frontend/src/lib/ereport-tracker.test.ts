@@ -98,4 +98,13 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('priorStatus !== "no_aplica"');
     expect(tracker).not.toContain("btn-status-main");
   });
+
+  it("scroll-spies the main column at 15% from its top", () => {
+    expect(tracker).toContain(".main-col");
+    expect(tracker).toContain("overflow: auto");
+    expect(tracker).toContain("function mainScrollEl(");
+    expect(tracker).toContain("scroller.clientHeight * 0.15");
+    expect(tracker).toContain('mainScroller.addEventListener("scroll", onScrollSpyScroll');
+    expect(tracker).not.toMatch(/function scrollSpyTopOffset\(\)\s*\{\s*return 58;\s*\}/);
+  });
 });

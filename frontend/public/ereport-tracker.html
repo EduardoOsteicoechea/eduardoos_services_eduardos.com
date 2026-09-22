@@ -2493,8 +2493,18 @@ function renderNavRail() {
   updateActiveNav();
 }
 
+function mainScrollEl() {
+  return document.querySelector(".main-col");
+}
+
+/** Activation line: 15% down from the visible top of the scrolling column. */
 function scrollSpyTopOffset() {
-  return 58;
+  const scroller = mainScrollEl();
+  if (scroller) {
+    const rect = scroller.getBoundingClientRect();
+    return rect.top + scroller.clientHeight * 0.15;
+  }
+  return (window.innerHeight || 0) * 0.15;
 }
 
 function updateActiveNav() {
@@ -2532,13 +2542,19 @@ function updateActiveNav() {
 }
 
 let scrollSpyRaf = 0;
-window.addEventListener("scroll", () => {
+function onScrollSpyScroll() {
   if (scrollSpyRaf) return;
   scrollSpyRaf = requestAnimationFrame(() => {
     scrollSpyRaf = 0;
     updateActiveNav();
   });
-}, { passive: true });
+}
+/* Scroll lives on .main-col (overflow:auto), not the window — listen there. */
+const mainScroller = mainScrollEl();
+if (mainScroller) {
+  mainScroller.addEventListener("scroll", onScrollSpyScroll, { passive: true });
+}
+window.addEventListener("scroll", onScrollSpyScroll, { passive: true });
 window.addEventListener("resize", () => {
   updateActiveNav();
   syncStickyOffsets();
@@ -3229,8 +3245,16 @@ document.getElementById("progress-close").onclick = () => closeProgressModal();
 document.getElementById("progress-modal").addEventListener("click", (e) => {
   if (e.target.id === "progress-modal") closeProgressModal();
 });
-document.getElementById("scroll-top").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-document.getElementById("scroll-bottom").onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+document.getElementById("scroll-top").onclick = () => {
+  const scroller = mainScrollEl();
+  if (scroller) scroller.scrollTo({ top: 0, behavior: "smooth" });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
+};
+document.getElementById("scroll-bottom").onclick = () => {
+  const scroller = mainScrollEl();
+  if (scroller) scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
+  else window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+};
 document.getElementById("modal-close").onclick = () => closeModal("img-modal");
 document.getElementById("modal-prev").onclick = () => stepModal(-1);
 document.getElementById("modal-next").onclick = () => stepModal(1);
