@@ -223,12 +223,16 @@ export default function ScribDashboard() {
                   Eliminar
                 </button>
               </div>
-              <div className="scrib-sheets" role="list">
+              <div className="product-dash__grid scrib-sheets" role="list">
                 {(book.sheets ?? []).map((sheet) => (
-                  <div key={sheet.id} className="scrib-sheet-card" role="listitem">
+                  <div
+                    key={sheet.id}
+                    className="product-dash__card scrib-sheet-card"
+                    role="listitem"
+                  >
                     <div className="scrib-sheet-card__body">
                       <input
-                        className="scrib-sheet-card__name-input"
+                        className="scrib-sheet-card__name-input product-dash__card-title"
                         aria-label="Nombre de la hoja"
                         defaultValue={sheet.name}
                         key={`${sheet.id}:${sheet.name}`}
@@ -244,7 +248,7 @@ export default function ScribDashboard() {
                         }
                         onKeyDown={onNameKeyDown}
                       />
-                      <span className="scrib-sheet-card__meta">
+                      <span className="scrib-sheet-card__meta product-dash__card-desc">
                         {sheet.updatedAt
                           ? new Date(sheet.updatedAt).toLocaleString()
                           : ""}
@@ -271,11 +275,16 @@ export default function ScribDashboard() {
                 ))}
                 <button
                   type="button"
-                  className="scrib-sheet-card scrib-sheet-card--new"
+                  className="product-dash__card scrib-sheet-card scrib-sheet-card--new"
                   onClick={() => void onNewSheet(book.id)}
                   disabled={busy || !userSafe}
                 >
-                  + Nueva hoja
+                  <span className="product-dash__card-head">
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      note_add
+                    </span>
+                    <span className="product-dash__card-title">Nueva hoja</span>
+                  </span>
                 </button>
               </div>
             </section>
