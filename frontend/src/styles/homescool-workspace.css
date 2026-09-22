@@ -14,13 +14,14 @@ html[data-page="homescool-workspace"] .shell {
   min-height: 100%;
 }
 
-/* Workspace canvas is full-bleed; the fixed menu floats over it. */
+/* Clear the fixed menu / activity bar — do not cover the menu button. */
 html[data-page="homescool-workspace"] main {
   display: flex;
   flex-direction: column;
   min-height: 0;
   height: 100%;
   padding: 0;
+  padding-top: var(--mobile-header-height, var(--header-size));
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);

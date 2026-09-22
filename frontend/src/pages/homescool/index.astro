@@ -60,7 +60,7 @@ import "../../styles/homescool-workspace.css";
   import { productTreeChevron, productTreeLabel, productTreeLeafIcon } from "../../lib/product-tree";
   import { showErrorModal } from "../../lib/error-modal";
 
-  const STUDY_CSS = "/api/homescool/web-assets/styles.css";
+  const STUDY_CSS = "/homescool-materials.css";
   const STUDY_MAP_JS = "/api/homescool/web-assets/map-grid.js";
 
   const gate = document.querySelector("[data-homescool-gate]");
@@ -215,7 +215,7 @@ import "../../styles/homescool-workspace.css";
   /** Read the shared skill sheet before displaying a material; a shadow root cannot inherit it from the document. */
   function loadStudyCss(): Promise<string> {
     if (!studyCssPromise) {
-      studyCssPromise = fetch(STUDY_CSS, { credentials: "include" }).then(async (response) => {
+      studyCssPromise = fetch(STUDY_CSS).then(async (response) => {
         if (!response.ok) throw new Error(`CSS ${response.status}`);
         return response.text();
       });
