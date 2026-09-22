@@ -439,7 +439,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 }
 
 func newHTTPClient() *http.Client {
-	// Long generations (e.g. eocode writing full files) can exceed a minute;
+	// Long generations (e.g. multi-file edits) can exceed a minute;
 	// each handler still bounds the call with its own context deadline.
 	return &http.Client{Timeout: 300 * time.Second}
 }

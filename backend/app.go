@@ -33,8 +33,6 @@ type App struct {
 	aiSiteLimit     *limiter
 	chatIPLimit     *limiter
 	chatUserLimit   *limiter
-	eocodeIPLimit   *limiter
-	eocodeUserLimit *limiter
 	voice           *voiceManager
 	voiceSTT        STTEngine
 	voiceTTS        TTSEngine
@@ -132,8 +130,6 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
 		chatIPLimit:     newLimiter(publicChatWindow, publicChatIPMax),
 		chatUserLimit:   newLimiter(publicChatWindow, publicChatUserMax),
-		eocodeIPLimit:   newLimiter(eocodeRateWindow, eocodeIPMax),
-		eocodeUserLimit: newLimiter(eocodeRateWindow, eocodeUserMax),
 		voiceIPLimit:    newLimiter(voiceRateSpace, voiceIPMax),
 		voiceUserLimit:  newLimiter(voiceRateSpace, voiceUserMax),
 		voiceSpeakLimit: newLimiter(voiceRateSpace, voiceSpeakMax),
@@ -219,18 +215,6 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/publisher/publish", a.publisherPublishHandler)
 	mux.HandleFunc("GET /api/publisher/jobs/{id}", a.publisherGetJobHandler)
 	mux.HandleFunc("POST /api/profile/ask", a.publicChatHandler)
-
-	mux.HandleFunc("GET /api/eocode/state", a.eocodeStateHandler)
-	mux.HandleFunc("GET /api/eocode/file/{path...}", a.eocodeFileHandler)
-	mux.HandleFunc("GET /api/eocode/history", a.eocodeHistoryHandler)
-	mux.HandleFunc("PUT /api/eocode/history", a.eocodeSaveHistoryHandler)
-	mux.HandleFunc("DELETE /api/eocode/history", a.eocodeClearHistoryHandler)
-	mux.HandleFunc("POST /api/eocode/identify", a.eocodeIdentifyHandler)
-	mux.HandleFunc("POST /api/eocode/analyze", a.eocodeAnalyzeHandler)
-	mux.HandleFunc("POST /api/eocode/edit", a.eocodeEditHandler)
-	mux.HandleFunc("POST /api/eocode/validate", a.eocodeValidateHandler)
-	mux.HandleFunc("POST /api/eocode/upload", a.eocodeUploadHandler)
-	mux.HandleFunc("GET /api/eocode/preview/{path...}", a.eocodePreviewHandler)
 
 	mux.HandleFunc("GET /api/subscriptions/catalog", a.subscriptionsCatalogHandler)
 	mux.HandleFunc("GET /api/subscriptions/entitlements", a.subscriptionsEntitlementsHandler)

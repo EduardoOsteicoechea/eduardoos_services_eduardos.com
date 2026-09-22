@@ -70,7 +70,6 @@ const privateByDefault =
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
   path.startsWith("/eoproject") ||
-  path.startsWith("/eocode") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
@@ -232,10 +231,6 @@ const jsonLdString =
             <a href="/eoproject" data-route data-service="eoproject" hidden aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
               eoProject
-            </a>
-            <a href="/eocode" data-route data-service="eocode" hidden aria-current={path === "/eocode" || path.startsWith("/eocode/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">code</span>
-              eocode
             </a>
             <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>

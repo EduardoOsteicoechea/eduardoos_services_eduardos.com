@@ -1773,7 +1773,7 @@ section.diag .panel:not(form) {
     --span-two-thirds: 16;
     --span-full: 24;
     --span-button: 2;
-    --main-inline: 2rem;
+    --main-inline: 1rem;
     --main-padding-top: var(--main-padding);
   }
 
@@ -2269,8 +2269,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
-  max-width: 68rem;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
   min-width: 0;
 }
 

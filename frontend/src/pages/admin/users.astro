@@ -28,7 +28,7 @@ import Layout from "../../layouts/Layout.astro";
   import { apiRequest, getAdminUsers, getMe } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
 
-  const SERVICES = ["epam", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"] as const;
+  const SERVICES = ["epam", "homescool", "scrib", "ereport", "evoice", "eoproject", "api"] as const;
 
   const root = document.querySelector("[data-admin-users]");
   if (root instanceof HTMLElement) {

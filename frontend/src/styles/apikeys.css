@@ -2,6 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
+  grid-column: 1 / span var(--span-full);
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+  min-width: 0;
 }
 
 .api-keys-body {

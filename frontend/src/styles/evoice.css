@@ -152,18 +152,18 @@
 
 .evoice__onboarding-steps {
   list-style: none;
-  margin: 0.75rem 0 0;
+  margin: var(--space-padding) 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1rem;
+  gap: var(--space-padding);
 }
 
 .evoice__onboarding-steps li {
   display: flex;
-  gap: 0.65rem;
+  gap: var(--rail-gap);
   align-items: flex-start;
-  padding: 0.85rem;
+  padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: color-mix(in srgb, var(--color-bg) 80%, transparent);

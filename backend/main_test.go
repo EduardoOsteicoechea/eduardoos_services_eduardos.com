@@ -8,7 +8,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -286,8 +285,6 @@ func newTestApp(enable bool) *App {
 		OpenRouterKey:          "test-openrouter-key",
 		OpenRouterBaseURL:      openRouterBaseURL,
 		OpenRouterModel:        openRouterDefaultModel,
-		EocodePython:           testPythonBinary(),
-		EocodeSSREnabled:       true,
 	}
 	app := newApp(cfg)
 	app.mailer = &recordingMailer{}
@@ -310,13 +307,6 @@ func newTestApp(enable bool) *App {
 		Role: roleUser, Status: statusVerified, EmailVerified: true, CreatedAt: now, UpdatedAt: now,
 	})
 	return app
-}
-
-func testPythonBinary() string {
-	if runtime.GOOS == "windows" {
-		return "python"
-	}
-	return "python3"
 }
 
 func (a *App) mustUser(email string) *User {

@@ -23,17 +23,17 @@
 
 /* ---------- Page rhythm + technical grid ---------- */
 
+/* Page rhythm — full main width; gutters come only from main (--main-inline: 1rem). */
 .page,
 .session-grid,
-.diag{
-  max-width: 72rem;
-  margin-inline: auto;
-  min-width: 0;
-}
-
-/* Product hubs stay left-aligned on the main grid (menu + tab = title). */
+.diag,
 .product-dash,
-.eoproject{
+.eoproject,
+.api-keys,
+.articles-page,
+.article-page {
+  max-width: none;
+  margin-inline: 0;
   min-width: 0;
 }
 
@@ -606,10 +606,10 @@ main > .diag{
   border-top: var(--border-width) solid var(--color-border);
 }
 
-/* Tablet + desktop: left-aligned, max-width 600px → 37.5rem */
+/* Article body stays full main width (1rem gutters from main only). */
 @media (min-width: 48rem) {
   .article-page {
-    max-width: 37.5rem;
+    max-width: none;
     padding-inline: 0;
   }
 }
