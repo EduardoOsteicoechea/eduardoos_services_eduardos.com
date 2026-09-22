@@ -14,21 +14,20 @@ html[data-page="homescool-workspace"] .shell {
   min-height: 100%;
 }
 
-/* Clear the fixed menu / activity bar — do not cover the menu button. */
+/* Workspace canvas and tree are flush with the viewport; menu floats above them. */
 html[data-page="homescool-workspace"] main {
   display: flex;
   flex-direction: column;
   min-height: 0;
   height: 100%;
   padding: 0;
-  padding-top: var(--mobile-header-height, var(--header-size));
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);
 }
 
 html[data-page="homescool-workspace"] .product-tree-sidebar {
-  top: var(--mobile-header-height, var(--header-size));
+  top: 0;
   z-index: calc(var(--z-activity) - 1);
   background: var(--color-surface);
   border-right-color: var(--color-border);
