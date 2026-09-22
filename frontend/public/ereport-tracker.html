@@ -2910,19 +2910,19 @@ function buildPdfReportElement(data) {
   el.style.cssText = "width:56.25rem;padding:1.5rem;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
   const prevCriteria = state.validationCriteria;
   state.validationCriteria = Array.isArray(data.validationCriteria) ? data.validationCriteria : [];
-  let html = `<div style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
+  let html = `<div class="pdf-block" style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
       <h1 style="margin:0 0 0.375rem;font-size:1.375rem">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
       <p style="margin:0 0 4px;opacity:.9"><strong>Organization:</strong> ${escapeHtml(data.orgName || "—")}</p>
       <p style="margin:0;opacity:.9"><strong>Report Date:</strong> ${escapeHtml(data.reportDate || "—")}
       &nbsp;·&nbsp; <strong>Report Code:</strong> ${escapeHtml(data.reportNumber || "—")}</p>
     </div>`;
   data.sections.forEach(sec => {
-    html += `<h2 style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    html += `<h2 class="pdf-block" style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
     if (sec.productHistory) {
-      html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
+      html += `<p class="pdf-block" style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
     }
     if ((sec.items || []).length) {
-      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
+      html += `<h3 class="pdf-block" style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
       (sec.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
@@ -2933,7 +2933,7 @@ function buildPdfReportElement(data) {
         const checkLine = (it.checklist || []).length
           ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+        html += `<div class="pdf-block" style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
           <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
           <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
@@ -2944,9 +2944,9 @@ function buildPdfReportElement(data) {
       });
     }
     sec.groups.forEach(grp => {
-      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      html += `<h3 class="pdf-block" style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
       if (grp.productHistory) {
-        html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
+        html += `<p class="pdf-block" style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
       }
       (grp.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
@@ -2958,7 +2958,7 @@ function buildPdfReportElement(data) {
         const checkLine = (it.checklist || []).length
           ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+        html += `<div class="pdf-block" style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
           <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
           <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
@@ -2972,6 +2972,78 @@ function buildPdfReportElement(data) {
   state.validationCriteria = prevCriteria;
   el.innerHTML = html;
   return el;
+}
+
+/** Block top/bottom in canvas pixels — cuts should land between these ranges. */
+function collectPdfBlockRanges(report, scale) {
+  const root = report.getBoundingClientRect();
+  const ranges = [];
+  report.querySelectorAll(".pdf-block").forEach((node) => {
+    const r = node.getBoundingClientRect();
+    const top = Math.max(0, (r.top - root.top) * scale);
+    const bottom = Math.max(top + 1, (r.bottom - root.top) * scale);
+    ranges.push({ top, bottom });
+  });
+  ranges.sort((a, b) => a.top - b.top || a.bottom - b.bottom);
+  return ranges;
+}
+
+/** Prefer ending a page at the bottom of a card/header instead of mid-block. */
+function findPdfPageEnd(startY, maxEnd, canvasH, ranges) {
+  const hard = Math.min(maxEnd, canvasH);
+  if (hard >= canvasH) return canvasH;
+  const minAdvance = 24;
+  let inside = null;
+  for (let i = 0; i < ranges.length; i++) {
+    const b = ranges[i];
+    if (b.top < hard && b.bottom > hard) {
+      inside = b;
+      break;
+    }
+  }
+  if (inside) {
+    if (inside.top > startY + minAdvance) return Math.ceil(inside.top);
+    // Block taller than one page: allow a hard split.
+    return Math.floor(hard);
+  }
+  let best = 0;
+  for (let i = 0; i < ranges.length; i++) {
+    const b = ranges[i];
+    if (b.bottom > startY + minAdvance && b.bottom <= hard) {
+      best = Math.max(best, b.bottom);
+    }
+  }
+  if (best > startY + minAdvance) return Math.ceil(best);
+  return Math.floor(hard);
+}
+
+function appendCanvasPagesAvoidingBlockSplits(pdf, canvas, ranges) {
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 28;
+  const usableW = pageW - margin * 2;
+  const usableH = pageH - margin * 2;
+  const pxPerPt = canvas.width / usableW;
+  const pageContentPx = usableH * pxPerPt;
+  let y = 0;
+  let first = true;
+  while (y < canvas.height - 0.5) {
+    const end = findPdfPageEnd(y, y + pageContentPx, canvas.height, ranges);
+    const sliceH = Math.max(1, Math.ceil(end - y));
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.width = canvas.width;
+    pageCanvas.height = sliceH;
+    const ctx = pageCanvas.getContext("2d");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+    ctx.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+    const imgData = pageCanvas.toDataURL("image/jpeg", 0.92);
+    const drawH = sliceH / pxPerPt;
+    if (!first) pdf.addPage();
+    first = false;
+    pdf.addImage(imgData, "JPEG", margin, margin, usableW, drawH);
+    y += sliceH;
+  }
 }
 
 function blobToDataURL(blob) {
@@ -3081,8 +3153,10 @@ async function saveAll() {
     document.body.appendChild(host);
     await inlineImagesForPdf(report);
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const pdfScale = 1.25;
+    const blockRanges = collectPdfBlockRanges(report, pdfScale);
     const canvas = await html2canvas(report, {
-      scale: 1.25,
+      scale: pdfScale,
       useCORS: true,
       allowTaint: false,
       backgroundColor: "#ffffff",
@@ -3123,27 +3197,9 @@ async function saveAll() {
     } catch (probeErr) {
       if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
     }
-    const img = canvas.toDataURL("image/jpeg", 0.92);
-    if (!img || img.length < 100) {
-      throw new Error("PDF image empty");
-    }
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
-    const pageW = pdf.internal.pageSize.getWidth();
-    const pageH = pdf.internal.pageSize.getHeight();
-    const margin = 28;
-    const usableW = pageW - margin * 2;
-    const imgH = canvas.height * (usableW / canvas.width);
-    let heightLeft = imgH;
-    let position = margin;
-    pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-    heightLeft -= pageH - margin * 2;
-    while (heightLeft > 0) {
-      position = margin - (imgH - heightLeft);
-      pdf.addPage();
-      pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-      heightLeft -= pageH - margin * 2;
-    }
+    appendCanvasPagesAvoidingBlockSplits(pdf, canvas, blockRanges);
     pdf.save(base + ".pdf");
   } catch (err) {
     console.error(err);

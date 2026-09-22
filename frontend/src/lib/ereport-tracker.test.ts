@@ -120,4 +120,12 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("PDF canvas empty");
     expect(tracker).toContain("PDF canvas blank");
   });
+
+  it("slices PDF pages between pdf-block cards instead of mid-card", () => {
+    expect(tracker).toContain('class="pdf-block"');
+    expect(tracker).toContain("function collectPdfBlockRanges(");
+    expect(tracker).toContain("function findPdfPageEnd(");
+    expect(tracker).toContain("function appendCanvasPagesAvoidingBlockSplits(");
+    expect(tracker).not.toContain("heightLeft -= pageH - margin * 2");
+  });
 });
