@@ -17,6 +17,8 @@ export type ScribSheetBgOptions = {
   espacioEntreLineasMm?: number;
   /** Top/bottom band inside each writing row (mm). Middle = alto − 2×this. */
   bandaExtremaMm?: number;
+  /** Top/bottom band inside each inter-row gap (mm). Middle = espacio − 2×this. */
+  bandaExtremaEspacioMm?: number;
   pageWidthMm?: number;
   pageHeightMm?: number;
 };
@@ -59,6 +61,8 @@ export const SCRIB_SHEET_BG_DEFAULTS = {
   espacioEntreLineasMm: 3,
   /** Top and bottom bands inside each writing row (middle = alto − 2×this). */
   bandaExtremaMm: 1.1,
+  /** Top and bottom bands inside each 3 mm gap (middle = espacio − 2×this). */
+  bandaExtremaEspacioMm: 0.9,
 } as const;
 
 /**
@@ -83,6 +87,10 @@ export function buildScribSheetBackgroundGeometry(
   const bandaExtremaMm = Math.min(
     options.bandaExtremaMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm,
     altoDeLineaMm / 2,
+  );
+  const bandaExtremaEspacioMm = Math.min(
+    options.bandaExtremaEspacioMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaEspacioMm,
+    espacioEntreLineasMm / 2,
   );
 
   const usableW = pageWidthMm - 2 * margenLateralMm;
@@ -137,9 +145,9 @@ export function buildScribSheetBackgroundGeometry(
 
       hLine(xStart, xEnd, yActual, colorOscuro);
 
-      const seccionEspacio = espacioEntreLineasMm / 3;
-      hLine(xStart, xEnd, yActual - (espacioEntreLineasMm - seccionEspacio), colorSuave);
-      hLine(xStart, xEnd, yActual - seccionEspacio, colorSuave);
+      // Gap: top bandaExtremaEspacio | middle | bottom (default 0.9 | 1.2 | 0.9).
+      hLine(xStart, xEnd, yActual - (espacioEntreLineasMm - bandaExtremaEspacioMm), colorSuave);
+      hLine(xStart, xEnd, yActual - bandaExtremaEspacioMm, colorSuave);
     }
   }
 

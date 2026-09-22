@@ -55,6 +55,27 @@ describe("scribSheetBackground", () => {
     expect(softYs).toContain(bottomOfFirstRow - edge); // 1.1 from bottom
     expect(edge + (alto - 2 * edge) + edge).toBe(alto);
   });
+
+  it("subdivides each 3 mm gap as 0.9 + 1.2 + 0.9", () => {
+    const g = buildScribSheetBackgroundGeometry();
+    const ml = SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const mv = SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm;
+    const alto = SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
+    const espacio = SCRIB_SHEET_BG_DEFAULTS.espacioEntreLineasMm;
+    const edge = SCRIB_SHEET_BG_DEFAULTS.bandaExtremaEspacioMm;
+    const bottomOfFirstGap = mv + alto + espacio;
+    const softYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorSuave &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1);
+    expect(softYs).toContain(bottomOfFirstGap - (espacio - edge));
+    expect(softYs).toContain(bottomOfFirstGap - edge);
+    expect(edge + (espacio - 2 * edge) + edge).toBe(espacio);
+  });
 });
 
 describe("scrib background layer", () => {
