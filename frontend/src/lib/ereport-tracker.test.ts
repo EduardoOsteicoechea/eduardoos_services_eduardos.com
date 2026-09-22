@@ -110,4 +110,12 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('mainScroller.addEventListener("scroll", onScrollSpyScroll');
     expect(tracker).not.toMatch(/function scrollSpyTopOffset\(\)\s*\{\s*return 58;\s*\}/);
   });
+
+  it("inlines credentialed images and keeps the PDF host in-viewport for html2canvas", () => {
+    expect(tracker).toContain("function inlineImagesForPdf(");
+    expect(tracker).toContain('credentials: "include"');
+    expect(tracker).toContain("opacity:0");
+    expect(tracker).not.toContain("left:-625rem");
+    expect(tracker).toContain("PDF canvas empty");
+  });
 });

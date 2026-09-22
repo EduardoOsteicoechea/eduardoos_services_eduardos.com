@@ -2974,25 +2974,88 @@ function buildPdfReportElement(data) {
   return el;
 }
 
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result || ""));
+    fr.onerror = () => reject(fr.error || new Error("No se pudo leer la imagen."));
+    fr.readAsDataURL(blob);
+  });
+}
+
+/** Fetch same-origin API images with cookies so html2canvas can paint them. */
+async function inlineImagesForPdf(root) {
+  const imgs = Array.from(root.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map(async (img) => {
+      const src = String(img.getAttribute("src") || "").trim();
+      if (!src || src.startsWith("data:")) return;
+      try {
+        const res = await fetch(src, { credentials: "include", cache: "force-cache" });
+        if (!res.ok) return;
+        const blob = await res.blob();
+        if (!blob || !blob.size) return;
+        img.src = await blobToDataURL(blob);
+      } catch (_) {
+        /* leave original src; text still exports */
+      }
+    }),
+  );
+  await Promise.all(
+    imgs.map((img) => {
+      if (typeof img.decode === "function") {
+        return img.decode().catch(() => undefined);
+      }
+      return Promise.resolve();
+    }),
+  );
+}
+
 async function saveAll() {
   collectFromDom();
   updateStatus();
   const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_") || "sin-numero";
   const base = "reporte_qa_" + safeName;
   const data = structuredClone(state);
+  if (!Array.isArray(data.sections)) data.sections = [];
 
   downloadBlob(base + ".ereport", new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   downloadBlob(base + ".html", new Blob([buildSavedHtml(data)], { type: "text/html;charset=utf-8" }));
 
   try {
+    if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
+      throw new Error("PDF libraries missing");
+    }
     const host = document.createElement("div");
-    host.style.cssText = "position:fixed;left:-625rem;top:0;";
+    // Keep in viewport (opacity 0): off-screen fixed nodes often capture as blank.
+    host.style.cssText =
+      "position:fixed;left:0;top:0;width:56.25rem;opacity:0;pointer-events:none;z-index:-1;overflow:visible;";
     const report = buildPdfReportElement(data);
     host.appendChild(report);
     document.body.appendChild(host);
-    const canvas = await html2canvas(report, { scale: 1.5, useCORS: true, backgroundColor: "#ffffff" });
+    await inlineImagesForPdf(report);
+    // Let layout settle after inlining data URLs.
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const canvas = await html2canvas(report, {
+      scale: 1.25,
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: "#ffffff",
+      logging: false,
+      imageTimeout: 15000,
+      width: report.scrollWidth || report.offsetWidth || 900,
+      height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
+      windowWidth: report.scrollWidth || 900,
+      windowHeight: Math.max(report.scrollHeight || 0, 200),
+    });
     document.body.removeChild(host);
+    if (!canvas || canvas.width < 8 || canvas.height < 8) {
+      throw new Error("PDF canvas empty");
+    }
     const img = canvas.toDataURL("image/jpeg", 0.92);
+    if (!img || img.length < 100) {
+      throw new Error("PDF image empty");
+    }
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
     const pageW = pdf.internal.pageSize.getWidth();
@@ -3003,12 +3066,12 @@ async function saveAll() {
     let heightLeft = imgH;
     let position = margin;
     pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-    heightLeft -= (pageH - margin * 2);
+    heightLeft -= pageH - margin * 2;
     while (heightLeft > 0) {
       position = margin - (imgH - heightLeft);
       pdf.addPage();
       pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-      heightLeft -= (pageH - margin * 2);
+      heightLeft -= pageH - margin * 2;
     }
     pdf.save(base + ".pdf");
   } catch (err) {
@@ -3016,7 +3079,9 @@ async function saveAll() {
     toast(".ereport y HTML OK. PDF falló. Abrí impresión como respaldo.");
     const w = window.open("", "_blank");
     if (w) {
-      w.document.write("<html><head><title>PDF</title></head><body>" + buildPdfReportElement(data).innerHTML + "</body></html>");
+      w.document.write(
+        "<html><head><title>PDF</title></head><body>" + buildPdfReportElement(data).innerHTML + "</body></html>",
+      );
       w.document.close();
       w.focus();
       w.print();
