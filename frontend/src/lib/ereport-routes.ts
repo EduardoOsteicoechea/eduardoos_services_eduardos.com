@@ -51,10 +51,13 @@ export function readPrettyEreportPath(pathname: string): { ownerSafe: string; re
   return { ownerSafe: decodeURIComponent(parts[1]), reportId: parts[2] ? decodeURIComponent(parts[2]) : "" };
 }
 
-export function workspaceHref(orgId: string, reportId: string, ownerSafe = ""): string {
+export function workspaceHref(orgId: string, reportId: string, ownerSafe = "", opts?: { shared?: boolean }): string {
   const q = new URLSearchParams({ org: orgId, report: reportId });
   if (ownerSafe) {
     q.set("user", ownerSafe);
+  }
+  if (opts?.shared) {
+    q.set("shared", "1");
   }
   return `/ereport/workspace?${q.toString()}`;
 }

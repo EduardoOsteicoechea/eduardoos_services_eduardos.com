@@ -23,19 +23,31 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Abrir
     </button>
+    <button class="dhs-action" type="button" data-workspace-save title="Guardar y snapshot" aria-label="Guardar">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+      </span>
+      Save
+    </button>
     <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="eReport workspace" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">download</span>
       </span>
-      Descargar
+      Download
     </button>
-    <button class="dhs-action" type="button" data-open-modal="share" title="eReport workspace" aria-label="Compartir con usuarios">
+    <button class="dhs-action" type="button" data-open-modal="history" data-owner-only title="Historial de snapshots" aria-label="History">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">history</span>
+      </span>
+      History
+    </button>
+    <button class="dhs-action" type="button" data-open-modal="share" data-owner-only title="eReport workspace" aria-label="Compartir con usuarios">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">share</span>
       </span>
       Compartir
     </button>
-    <button class="dhs-action" type="button" data-open-modal="ids" title="eReport workspace" aria-label="Mostrar Org ID y Report ID">
+    <button class="dhs-action" type="button" data-open-modal="ids" data-owner-only title="eReport workspace" aria-label="Mostrar Org ID y Report ID">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">tag</span>
       </span>
@@ -94,12 +106,27 @@ import Layout from "../../layouts/Layout.astro";
           <button class="btn btn--primary" type="submit">Crear link y enviar</button>
         </form>
         <ul class="ereport-list" data-share-list></ul>
-        <p class="hint">Cualquiera con el link + hash puede ver el reporte (solo lectura) hasta que expire.</p>
+        <p class="hint">Anyone with the link can edit the report until it expires. Registered Eduardo OS users with an eReport subscription also get it under Shared with me.</p>
         <p class="hint" data-share-link hidden></p>
         <p class="ereport-hub__error" data-share-error hidden></p>
         <div class="ereport-modal-actions">
           <button class="btn" type="button" data-share-copy hidden>Copiar link</button>
           <button class="btn btn--primary" type="button" data-close-modal>Listo</button>
+        </div>
+      </div>
+    </div>
+    <div class="ereport-modal" data-modal="history" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-history-title">
+        <h2 id="ereport-history-title">History</h2>
+        <p class="hint">Save a snapshot, restore, or download a .ereport file.</p>
+        <div class="ereport-modal-actions">
+          <button class="btn btn--primary" type="button" data-history-save>Save snapshot</button>
+          <button class="btn" type="button" data-history-refresh>Refresh</button>
+        </div>
+        <ul class="ereport-list" data-history-list></ul>
+        <p class="ereport-hub__error" data-history-error hidden></p>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-close-modal>Close</button>
         </div>
       </div>
     </div>
@@ -147,15 +174,24 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import {
+    createReportHistory,
     createReportInvite,
+    downloadEreportSnapshot,
     fetchEreportOrgs,
     fetchEreportOrg,
     fetchOrgReport,
+    fetchReportHistorySnapshot,
+    fetchSharedReport,
+    listReportHistory,
     ownerImageUploadPath,
     refreshCsrf,
     rememberedCsrf,
+    restoreReportHistory,
     saveOrgReport,
+    saveSharedReport,
+    sharedImageUploadPath,
     updateEreportOrgs,
+    type EreportHistoryCard,
     type EreportPayload,
   } from "../../lib/ereport";
   import {
@@ -184,6 +220,8 @@ import Layout from "../../layouts/Layout.astro";
     let orgId = params.get("org")?.trim() || "";
     let reportId = params.get("report")?.trim() || pretty.reportId;
     let ownerSafe = params.get("user")?.trim() || pretty.ownerSafe;
+    let isShared = params.get("shared") === "1";
+    let canEditShared = true;
     /** Cloud = VPS report; local = File System Access .ereport (autosave only that side). */
     let saveTarget: "cloud" | "local" = "cloud";
     const iframe = root.querySelector("[data-tracker]");
@@ -273,10 +311,12 @@ import Layout from "../../layouts/Layout.astro";
       publishAgentPayload(next);
       const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       tema = nextTema;
-      const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
+      const res = isShared
+        ? await saveSharedReport(orgId, reportId, { payload: next, tema: nextTema })
+        : await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
       if (disposed) return false;
       const orgName = String(next.orgName || "").trim();
-      if (res.status < 300 && orgName) {
+      if (!isShared && res.status < 300 && orgName) {
         await updateEreportOrgs([{ id: orgId, name: orgName }]);
       }
       // Background autosave must never open the global error modal: the user did not
@@ -325,11 +365,17 @@ import Layout from "../../layouts/Layout.astro";
       if (disposed || !(iframe instanceof HTMLIFrameElement)) return;
       if (saveTarget === "cloud" && (!orgId || !reportId)) return;
       publishAgentPayload(nextPayload);
-      const uploadUrl = orgId && reportId ? ownerImageUploadPath(orgId, reportId) : "";
+      const uploadUrl =
+        orgId && reportId
+          ? isShared
+            ? sharedImageUploadPath(orgId, reportId)
+            : ownerImageUploadPath(orgId, reportId)
+          : "";
+      const canDelete = !isShared || canEditShared;
       const pushConfig = () => {
         void refreshCsrf().then(() => {
           if (disposed || !host) return;
-          host.post(trackerConfigMessage(uploadUrl, rememberedCsrf()));
+          host.post(trackerConfigMessage(uploadUrl, rememberedCsrf(), { canDelete }));
         });
       };
       host?.destroy();
@@ -338,8 +384,10 @@ import Layout from "../../layouts/Layout.astro";
         uploadUrl,
         csrf: rememberedCsrf(),
         payload: nextPayload,
+        canDelete,
         handlers: {
           onCloudSave: (next) => {
+            if (isShared && !canEditShared) return;
             void persist(next as EreportPayload, { silent: true });
           },
           onError: (message) => setBanner(root, message, "err"),
@@ -419,6 +467,53 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const syncOwnerOnlyChrome = () => {
+      document.querySelectorAll("[data-owner-only]").forEach((node) => {
+        if (node instanceof HTMLElement) {
+          node.hidden = isShared;
+        }
+      });
+    };
+
+    const paintHistoryList = async () => {
+      const list = root.querySelector("[data-history-list]") || document.querySelector("[data-history-list]");
+      const err = root.querySelector("[data-history-error]") || document.querySelector("[data-history-error]");
+      if (!(list instanceof HTMLElement) || isShared || !orgId || !reportId) return;
+      if (err instanceof HTMLElement) err.hidden = true;
+      list.replaceChildren();
+      const res = await listReportHistory(orgId, reportId);
+      if (res.status !== 200) {
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = res.data.message || "Could not load history.";
+        }
+        return;
+      }
+      const items = res.data.items || [];
+      if (!items.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "No snapshots yet.";
+        list.append(empty);
+        return;
+      }
+      for (const item of items as EreportHistoryCard[]) {
+        const li = document.createElement("li");
+        li.textContent = `${item.tema || "Snapshot"} · ${item.source || "manual"} · ${item.createdAt || ""}`;
+        const restore = document.createElement("button");
+        restore.type = "button";
+        restore.className = "btn";
+        restore.textContent = "Restore";
+        restore.dataset.historyRestore = item.id;
+        const download = document.createElement("button");
+        download.type = "button";
+        download.className = "btn";
+        download.textContent = "Download .ereport";
+        download.dataset.historyDownload = item.id;
+        li.append(restore, download);
+        list.append(li);
+      }
+    };
+
     const openModal = (name: string) => {
       closeModals();
       const modal = root.querySelector(`[data-modal="${name}"]`) || document.querySelector(`[data-modal="${name}"]`);
@@ -443,6 +538,9 @@ import Layout from "../../layouts/Layout.astro";
       }
       if (name === "open-cloud") {
         void paintCloudList();
+      }
+      if (name === "history") {
+        void paintHistoryList();
       }
     };
 
@@ -524,7 +622,8 @@ import Layout from "../../layouts/Layout.astro";
 
     void requireAuth(root, copy).then(async (me) => {
       if (!me || disposed) return;
-      if (!orgId && reportId) {
+      syncOwnerOnlyChrome();
+      if (!orgId && reportId && !isShared) {
         orgId = await resolveOrgId(reportId);
         if (disposed) return;
       }
@@ -536,21 +635,28 @@ import Layout from "../../layouts/Layout.astro";
       clearLocalEreportFile();
       await refreshCsrf();
       if (disposed) return;
-      const res = await fetchOrgReport(orgId, reportId);
+      const res = isShared ? await fetchSharedReport(orgId, reportId) : await fetchOrgReport(orgId, reportId);
       if (disposed) return;
       if (res.status !== 200 || !res.data.payload || !res.data.meta) {
         reportFailure(copy, res.status, res.data, "");
-        setBanner(root, res.data.message || "Report not found.", "err");
+        setBanner(
+          root,
+          res.data.message || (isShared ? "Shared report not found (eReport subscription required)." : "Report not found."),
+          "err",
+        );
         return;
       }
       ownerSafe = res.data.meta.ownerSafe || ownerSafe;
       tema = res.data.meta.tema;
+      canEditShared = res.data.canEdit !== false;
+      isShared = isShared || Boolean((res.data as { shared?: boolean }).shared);
+      syncOwnerOnlyChrome();
       payload = {
         ...res.data.payload,
         reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
       };
       fillIdsFields();
-      setBanner(root, "Editing on the VPS filesystem.", "ok");
+      setBanner(root, isShared ? "Editing shared report." : "Editing on the VPS filesystem.", "ok");
       attachHost(payload);
     });
 
@@ -580,7 +686,72 @@ import Layout from "../../layouts/Layout.astro";
       }
       const cloudPick = node.closest("[data-open-cloud-org]");
       if (cloudPick instanceof HTMLElement && cloudPick.dataset.openCloudOrg && cloudPick.dataset.openCloudReport) {
+        isShared = false;
+        syncOwnerOnlyChrome();
         void loadCloudReport(cloudPick.dataset.openCloudOrg, cloudPick.dataset.openCloudReport);
+        return;
+      }
+      if (node.closest("[data-workspace-save]")) {
+        if (!host || (isShared && !canEditShared)) return;
+        void host.collect(8000).then(async (next) => {
+          const ok = await persist(next as EreportPayload);
+          if (!ok || isShared || !orgId || !reportId) return;
+          await createReportHistory(orgId, reportId, {
+            payload: next as EreportPayload,
+            tema: String(next.reportName || next.appTitle || tema || "").trim(),
+            label: "manual",
+          });
+          setBanner(root, "Saved + snapshot.", "ok");
+        });
+        return;
+      }
+      if (node.closest("[data-history-save]")) {
+        if (isShared || !orgId || !reportId || !host) return;
+        void host.collect(8000).then(async (next) => {
+          await persist(next as EreportPayload);
+          const snap = await createReportHistory(orgId, reportId, {
+            payload: next as EreportPayload,
+            tema: String(next.reportName || next.appTitle || tema || "").trim(),
+            label: "manual",
+          });
+          if (snap.status >= 300) {
+            setBanner(root, snap.data.message || "Could not save snapshot.", "err");
+            return;
+          }
+          setBanner(root, "Snapshot saved.", "ok");
+          void paintHistoryList();
+        });
+        return;
+      }
+      if (node.closest("[data-history-refresh]")) {
+        void paintHistoryList();
+        return;
+      }
+      const restoreBtn = node.closest("[data-history-restore]");
+      if (restoreBtn instanceof HTMLElement && restoreBtn.dataset.historyRestore && orgId && reportId) {
+        void restoreReportHistory(orgId, reportId, restoreBtn.dataset.historyRestore).then((res) => {
+          if (res.status !== 200 || !res.data.payload) {
+            setBanner(root, res.data.message || "Could not restore.", "err");
+            return;
+          }
+          payload = res.data.payload;
+          tema = res.data.meta?.tema || tema;
+          host?.post(trackerLoadMessage(payload));
+          setBanner(root, "Snapshot restored.", "ok");
+          closeModals();
+        });
+        return;
+      }
+      const downloadBtn = node.closest("[data-history-download]");
+      if (downloadBtn instanceof HTMLElement && downloadBtn.dataset.historyDownload && orgId && reportId) {
+        void fetchReportHistorySnapshot(orgId, reportId, downloadBtn.dataset.historyDownload).then((res) => {
+          const snap = res.data.snapshot as { payload?: EreportPayload; tema?: string; id?: string } | undefined;
+          if (res.status !== 200 || !snap?.payload) {
+            setBanner(root, res.data.message || "Could not download snapshot.", "err");
+            return;
+          }
+          downloadEreportSnapshot(`${snap.tema || "snapshot"}-${snap.id || "history"}`, snap.payload);
+        });
         return;
       }
       const cmd = node.closest("[data-tracker-cmd]");

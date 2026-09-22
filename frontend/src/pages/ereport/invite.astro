@@ -5,11 +5,23 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport invite" page="ereport-invite">
   <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Sidebar" aria-label="Toggle sidebar">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+      </span>
+      Sidebar
+    </button>
+    <button class="dhs-action" type="button" data-invite-save title="Guardar en la nube" aria-label="Guardar">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">cloud_upload</span>
+      </span>
+      Save
+    </button>
     <button class="dhs-action" type="button" data-tracker-cmd="save-export" title="Descargar (.ereport + HTML + PDF)" aria-label="Descargar reporte">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">download</span>
       </span>
-      Descargar
+      Download
     </button>
   </Fragment>
 
@@ -42,9 +54,9 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import {
+    claimInviteSession,
     fetchInvitePreview,
     fetchInviteReport,
-    fetchInviteSharedReport,
     inviteImageUploadPath,
     refreshCsrf,
     rememberedCsrf,
@@ -78,6 +90,7 @@ import Layout from "../../layouts/Layout.astro";
     const iframe = document.querySelector("[data-tracker]");
     let host: ReturnType<typeof startTrackerHost> | null = null;
     let activeReportId = "";
+    let canEditActive = false;
     let payload: EreportPayload | null = null;
     const pendingCmds: TrackerCommand[] = [];
 
@@ -98,8 +111,9 @@ import Layout from "../../layouts/Layout.astro";
 
     const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
       activeReportId = opts.reportId;
+      canEditActive = opts.canEdit;
       payload = reportPayload;
-      const canDelete = false;
+      const canDelete = opts.canEdit;
       setAgentRoutePayload({
         kind: "ereport_report",
         inviteId,
@@ -138,7 +152,6 @@ import Layout from "../../layouts/Layout.astro";
               payload: next,
               tema: String(next.reportName || next.appTitle || "").trim(),
             }).then((saved) => {
-              // Background autosave: no user action. Timeouts (status 0) stay quiet.
               if (saved.status === 0) return;
               if (saved.status >= 300) {
                 showErrorModal({
@@ -162,20 +175,23 @@ import Layout from "../../layouts/Layout.astro";
     };
 
     const openSharedReport = async () => {
-      const res = await fetchInviteSharedReport(inviteId, secret);
-      if (res.status !== 200 || !res.data.payload) {
+      await refreshCsrf();
+      const claimed = await claimInviteSession(inviteId, secret);
+      if (claimed.status !== 200 || !claimed.data.payload) {
         showErrorModal({
-          message: res.data.message || "Could not open the shared report.",
-          requestId: res.data.request_id,
-          details: res.data.request_id ? `request_id=${res.data.request_id}` : "",
+          message: claimed.data.message || "Could not open the shared report.",
+          requestId: claimed.data.request_id,
+          details: claimed.data.request_id ? `request_id=${claimed.data.request_id}` : "",
         });
         return;
       }
-      setStatus("Shared report open (view only).", "ok");
-      mountTracker(res.data.payload, {
-        uploadUrl: "",
-        canEdit: false,
-        reportId: String(res.data.meta?.id || ""),
+      const reportId = String(claimed.data.meta?.id || claimed.data.invite?.reportId || "");
+      const canEdit = Boolean(claimed.data.canEdit ?? claimed.data.invite?.canEdit);
+      setStatus(canEdit ? "Shared report open (editable)." : "Shared report open (view only).", "ok");
+      mountTracker(claimed.data.payload, {
+        uploadUrl: canEdit && reportId ? inviteImageUploadPath(reportId) : "",
+        canEdit,
+        reportId,
       });
     };
 
@@ -190,9 +206,10 @@ import Layout from "../../layouts/Layout.astro";
         });
         return;
       }
+      const canEdit = Boolean(res.data.canEdit);
       mountTracker(res.data.payload, {
-        uploadUrl: inviteImageUploadPath(reportId),
-        canEdit: Boolean(res.data.canEdit),
+        uploadUrl: canEdit ? inviteImageUploadPath(reportId) : "",
+        canEdit,
         reportId,
       });
     };
@@ -284,6 +301,29 @@ import Layout from "../../layouts/Layout.astro";
     document.addEventListener("click", (event) => {
       const node = event.target;
       if (!(node instanceof Element)) return;
+      const saveBtn = node.closest("[data-invite-save]");
+      if (saveBtn) {
+        if (!canEditActive || !host || !activeReportId) return;
+        void host.collect(8000).then((next) => {
+          payload = next;
+          return saveInviteReport(activeReportId, {
+            payload: next,
+            tema: String(next.reportName || next.appTitle || "").trim(),
+          });
+        }).then((saved) => {
+          if (!saved || saved.status === 0) return;
+          if (saved.status >= 300) {
+            showErrorModal({
+              message: saved.data.message || "Could not save.",
+              requestId: saved.data.request_id,
+              details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
+            });
+            return;
+          }
+          setStatus("Saved.", "ok");
+        });
+        return;
+      }
       const cmd = node.closest("[data-tracker-cmd]");
       if (cmd instanceof HTMLElement && cmd.dataset.trackerCmd) {
         sendCmd(cmd.dataset.trackerCmd as TrackerCommand);

@@ -135,11 +135,63 @@ export function listReportHistory(orgId: string, reportId: string) {
   return apiRequest<{ items?: EreportHistoryCard[] }>(`/ereport/orgs/${orgId}/reports/${reportId}/history`);
 }
 
+export function createReportHistory(
+  orgId: string,
+  reportId: string,
+  body: { tema?: string; payload?: EreportPayload; label?: string } = {},
+) {
+  return postJSON<{ id?: string; tema?: string; source?: string }>(
+    `/ereport/orgs/${orgId}/reports/${reportId}/history`,
+    body,
+  );
+}
+
+export function fetchReportHistorySnapshot(orgId: string, reportId: string, snapshotId: string) {
+  return apiRequest<{ snapshot?: EreportHistoryCard & { payload?: EreportPayload } }>(
+    `/ereport/orgs/${orgId}/reports/${reportId}/history/${snapshotId}`,
+  );
+}
+
 export function restoreReportHistory(orgId: string, reportId: string, snapshotId: string) {
   return postJSON<{ meta?: EreportMeta; payload?: EreportPayload }>(
     `/ereport/orgs/${orgId}/reports/${reportId}/history/${snapshotId}/restore`,
     {},
   );
+}
+
+export type EreportSharedCard = {
+  shareId: string;
+  ownerUserId: string;
+  ownerSafe?: string;
+  ownerEmail?: string;
+  orgId: string;
+  reportId: string;
+  tema: string;
+  reportNumber?: string;
+  canEdit: boolean;
+  updatedAt: string;
+  viewUrl?: string;
+};
+
+export function fetchSharedReports() {
+  return apiRequest<{ items?: EreportSharedCard[] }>("/ereport/shared");
+}
+
+export function fetchSharedReport(orgId: string, reportId: string) {
+  return apiRequest<{
+    meta?: EreportMeta;
+    payload?: EreportPayload;
+    canEdit?: boolean;
+    shared?: boolean;
+  }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`);
+}
+
+export function saveSharedReport(orgId: string, reportId: string, body: { tema?: string; payload?: EreportPayload }) {
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`, body, { timeoutMs: 120000 });
+}
+
+export function sharedImageUploadPath(orgId: string, reportId: string): string {
+  return `/api/ereport/shared/orgs/${orgId}/reports/${reportId}/images`;
 }
 
 export function createOrgInvite(orgId: string, email: string, durationHours: number) {
@@ -176,6 +228,16 @@ export function fetchInviteSharedReport(inviteId: string, secret: string) {
   );
 }
 
+export function claimInviteSession(inviteId: string, secret: string) {
+  return postJSON<{
+    invite?: EreportInvite;
+    canEdit?: boolean;
+    meta?: EreportMeta;
+    payload?: EreportPayload;
+    reports?: ReportCard[];
+  }>(`/ereport/invites/${inviteId}/claim`, { t: secret });
+}
+
 export function requestInviteOTP(inviteId: string, email: string, secret: string) {
   return postJSON(`/ereport/invites/${inviteId}/otp`, { email, t: secret });
 }
@@ -210,6 +272,16 @@ export function ownerImageUploadPath(orgId: string, reportId: string): string {
 
 export function inviteImageUploadPath(reportId: string): string {
   return `/api/ereport/invite-session/reports/${reportId}/images`;
+}
+
+export function downloadEreportSnapshot(filename: string, payload: EreportPayload) {
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.endsWith(".ereport") ? filename : `${filename || "snapshot"}.ereport`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export function listAPIKeys() {

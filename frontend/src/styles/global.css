@@ -2286,12 +2286,15 @@ html[data-page="ereport-invite"] main > * {
   gap: var(--space-padding);
 }
 
-html[data-page="ereport-workspace"] .ereport-workspace {
+html[data-page="ereport-workspace"] .ereport-workspace,
+html[data-page="ereport-invite"] .ereport-workspace {
   position: relative;
   gap: 0;
 }
 
-html[data-page="ereport-workspace"] .ereport-workspace > .status {
+html[data-page="ereport-workspace"] .ereport-workspace > .status,
+html[data-page="ereport-invite"] .ereport-workspace > .status,
+html[data-page="ereport-invite"] [data-ereport-invite] > .status {
   position: absolute;
   z-index: 2;
   top: 0;
@@ -2301,7 +2304,8 @@ html[data-page="ereport-workspace"] .ereport-workspace > .status {
   pointer-events: none;
 }
 
-html[data-page="ereport-workspace"] .ereport-workspace > .status.ok {
+html[data-page="ereport-workspace"] .ereport-workspace > .status.ok,
+html[data-page="ereport-invite"] [data-ereport-invite] > .status.ok {
   display: none;
 }
 
@@ -2321,7 +2325,8 @@ html[data-page="ereport-workspace"] .ereport-workspace > .status.ok {
   background: var(--color-surface);
 }
 
-html[data-page="ereport-workspace"] .ereport-iframe {
+html[data-page="ereport-workspace"] .ereport-iframe,
+html[data-page="ereport-invite"] .ereport-iframe {
   min-height: 0;
   align-self: stretch;
   border: 0;

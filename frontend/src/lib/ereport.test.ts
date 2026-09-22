@@ -39,7 +39,7 @@ describe("eReport public invite routing", () => {
     expect(css).toMatch(
       /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main,\s*html\[data-page="homescool-workspace"\] main[\s\S]*?\{[\s\S]*?padding: 0;/,
     );
-    expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
+    expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace,\s*html\[data-page="ereport-invite"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
     expect(css).not.toMatch(
       /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: var\(--main-padding\) var\(--space-padding\) 0 var\(--space-padding\);/,
     );
@@ -226,7 +226,7 @@ describe("tracker host bridge", () => {
 });
 
 describe("eReport workspace chrome", () => {
-  it("orders HDS as Sidebar -> Tablero -> Abrir -> Descargar -> Compartir -> IDs and drops clear-all", () => {
+  it("orders HDS as Sidebar -> Tablero -> Abrir -> Save -> Download -> History -> Compartir -> IDs and drops clear-all", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
     expect(workspaceSrc).not.toContain("clear-all");
     expect(workspaceSrc).not.toContain("Limpiar todo");
@@ -238,21 +238,27 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain('data-open-modal="open"');
     expect(workspaceSrc).toContain('data-open-source="device"');
     expect(workspaceSrc).toContain('data-open-source="cloud"');
+    expect(workspaceSrc).toContain("data-workspace-save");
     expect(workspaceSrc).toContain('data-tracker-cmd="save-export"');
+    expect(workspaceSrc).toContain('data-open-modal="history"');
     expect(workspaceSrc).toContain('data-open-modal="share"');
     expect(workspaceSrc).toContain('data-open-modal="ids"');
     expect(workspaceSrc).toContain('data-tracker-cmd="toggle-sidebar"');
     const sidebar = workspaceSrc.indexOf('data-tracker-cmd="toggle-sidebar"');
     const tablero = workspaceSrc.indexOf("Volver al Tablero");
     const abrir = workspaceSrc.indexOf('data-open-modal="open"');
+    const save = workspaceSrc.indexOf("data-workspace-save");
     const descargar = workspaceSrc.indexOf('data-tracker-cmd="save-export"');
+    const history = workspaceSrc.indexOf('data-open-modal="history"');
     const compartir = workspaceSrc.indexOf('data-open-modal="share"');
     const ids = workspaceSrc.indexOf('data-open-modal="ids"');
     expect(sidebar).toBeGreaterThan(-1);
     expect(tablero).toBeGreaterThan(sidebar);
     expect(abrir).toBeGreaterThan(tablero);
-    expect(descargar).toBeGreaterThan(abrir);
-    expect(compartir).toBeGreaterThan(descargar);
+    expect(save).toBeGreaterThan(abrir);
+    expect(descargar).toBeGreaterThan(save);
+    expect(history).toBeGreaterThan(descargar);
+    expect(compartir).toBeGreaterThan(history);
     expect(ids).toBeGreaterThan(compartir);
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--br: 0.215rem");
@@ -280,15 +286,18 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain("data-share-copy");
   });
 
-  it("wires invite HDS without clear-all and binds global font via window events", () => {
+  it("wires invite HDS with sidebar/save/download and claims editable sessions", () => {
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
     expect(inviteSrc).not.toContain("clear-all");
     expect(inviteSrc).not.toContain("data-site-scale");
     expect(inviteSrc).not.toContain('data-tracker-cmd="upload"');
     expect(inviteSrc).toContain("canDelete");
-    expect(inviteSrc).toContain("const canDelete = false");
+    expect(inviteSrc).toContain("const canDelete = opts.canEdit");
     expect(inviteSrc).toContain('data-tracker-cmd="save-export"');
-    expect(inviteSrc).toContain("fetchInviteSharedReport");
+    expect(inviteSrc).toContain('data-tracker-cmd="toggle-sidebar"');
+    expect(inviteSrc).toContain("data-invite-save");
+    expect(inviteSrc).toContain("claimInviteSession");
+    expect(inviteSrc).toContain("inviteImageUploadPath");
     expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');
     expect(inviteSrc).toContain('window.addEventListener("ereport-theme"');
   });

@@ -53,7 +53,8 @@ const hasDhsSlot = Astro.slots.has("dhs");
 const htmlPage = page || (path.startsWith("/ereport") ? path.slice(1).replace(/\//g, "-") : "");
 const isEreport = htmlPage.startsWith("ereport");
 const isWorkspace =
-  htmlPage === "ereport-workspace" ||
+	htmlPage === "ereport-workspace" ||
+  htmlPage === "ereport-invite" ||
   htmlPage === "homescool-workspace" ||
   htmlPage === "latin-institutes" ||
   htmlPage === "scrib-sheet" ||

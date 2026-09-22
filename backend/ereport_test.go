@@ -280,8 +280,8 @@ func TestEreportReportShareLinkHashView(t *testing.T) {
 	if hash == "" || !strings.Contains(link, "t=") {
 		t.Fatalf("expected link+hash: %v", invBody)
 	}
-	if invBody["invite"].(map[string]any)["canEdit"] != false {
-		t.Fatalf("report share must be view-only: %v", invBody["invite"])
+	if invBody["invite"].(map[string]any)["canEdit"] != true {
+		t.Fatalf("report share must be editable: %v", invBody["invite"])
 	}
 	if int(invBody["emailsSent"].(float64)) != 2 {
 		t.Fatalf("expected 2 emails: %v", invBody["emailsSent"])
@@ -309,8 +309,29 @@ func TestEreportReportShareLinkHashView(t *testing.T) {
 		t.Fatalf("view report: %d %s", viewRec.Code, viewRec.Body.String())
 	}
 	viewBody := decodeMap(t, viewRec)
-	if viewBody["payload"] == nil || viewBody["canEdit"] != false {
-		t.Fatalf("expected view payload: %v", viewBody)
+	if viewBody["payload"] == nil || viewBody["canEdit"] != true {
+		t.Fatalf("expected editable view payload: %v", viewBody)
+	}
+
+	seed := httptest.NewRecorder()
+	csrfReq := httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil)
+	app.Handler().ServeHTTP(seed, csrfReq)
+	var csrfBody map[string]string
+	_ = json.NewDecoder(seed.Body).Decode(&csrfBody)
+
+	claim := httptest.NewRequest(http.MethodPost, "/api/ereport/invites/"+inviteID+"/claim", strings.NewReader(`{"t":"`+hash+`"}`))
+	claim.Header.Set("Content-Type", "application/json")
+	claim.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	claim.Header.Set("X-CSRF-Token", csrfBody["csrf"])
+	copyCookies(claim, seed)
+	claimRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(claimRec, claim)
+	if claimRec.Code != http.StatusOK {
+		t.Fatalf("claim: %d %s", claimRec.Code, claimRec.Body.String())
+	}
+	claimBody := decodeMap(t, claimRec)
+	if claimBody["canEdit"] != true || claimBody["payload"] == nil {
+		t.Fatalf("claim must return editable payload: %v", claimBody)
 	}
 
 	bad := httptest.NewRequest(http.MethodGet, "/api/ereport/invites/"+inviteID+"/report?t=wrong", nil)

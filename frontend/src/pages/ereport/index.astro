@@ -81,6 +81,12 @@ import Layout from "../../layouts/Layout.astro";
           <p class="hint" data-dashboard-recents-empty hidden>No recent reports yet. Create one to get started.</p>
         </section>
 
+        <section class="ereport-hub__recents" data-dashboard-shared>
+          <h2 class="product-dash__section-title">Shared with me</h2>
+          <div class="ereport-hub__recents-grid" data-dashboard-shared-cards></div>
+          <p class="hint" data-dashboard-shared-empty hidden>No shared reports yet. Needs an eReport subscription when someone shares with your account.</p>
+        </section>
+
         <section class="ereport-hub__options" aria-labelledby="ereport-options-title">
           <h2 class="product-dash__section-title" id="ereport-options-title">eReport options</h2>
           <div class="product-dash__grid">
@@ -212,7 +218,7 @@ import Layout from "../../layouts/Layout.astro";
                 <button class="btn btn--primary" type="submit">Create link and email</button>
               </div>
             </form>
-            <p class="hint">Anyone with the link + hash can view the report until it expires.</p>
+            <p class="hint">Anyone with the link can edit until expiry. Eduardo OS accounts with eReport also get Shared with me.</p>
             <p class="hint" data-report-share-link hidden></p>
           </div>
         </div>
@@ -286,8 +292,20 @@ import Layout from "../../layouts/Layout.astro";
       <div data-view="manage-reports">
         <button class="btn" type="button" data-hub-back>Back to dashboard</button>
         <h2 class="product-dash__section-title">Manage reports</h2>
-        <p class="hint">Open a report or delete it permanently. Deletion cannot be undone.</p>
+        <p class="hint">Open, snapshot history, or delete permanently.</p>
         <ul class="ereport-list" data-manage-reports-list></ul>
+      </div>
+
+      <div data-view="history">
+        <button class="btn" type="button" data-hub-back>Back to manage reports</button>
+        <h2 class="product-dash__section-title">Report history</h2>
+        <p class="hint" data-history-report-name></p>
+        <div class="ereport-hub__row">
+          <button class="btn btn--primary" type="button" data-history-save-now>Save snapshot</button>
+          <button class="btn" type="button" data-history-refresh>Refresh</button>
+        </div>
+        <ul class="ereport-list" data-hub-history-list></ul>
+        <p class="ereport-hub__error" data-hub-history-error hidden></p>
       </div>
     </div>
   </section>
@@ -299,15 +317,24 @@ import Layout from "../../layouts/Layout.astro";
     createEreportOrg,
     createOrgInvite,
     createOrgReport,
+    createReportHistory,
     createReportInvite,
     deleteEreportOrg,
     deleteOrgReport,
+    downloadEreportSnapshot,
     fetchEreportAccess,
     fetchEreportOrg,
     fetchEreportOrgs,
+    fetchOrgReport,
+    fetchReportHistorySnapshot,
+    fetchSharedReports,
     importOrgReport,
+    listReportHistory,
+    restoreReportHistory,
     updateEreportOrgs,
     workspaceHref,
+    type EreportHistoryCard,
+    type EreportSharedCard,
     type OrgCard,
     type RecentReportCard,
     type ReportCard,
@@ -316,7 +343,7 @@ import Layout from "../../layouts/Layout.astro";
   import { requireService, setHidden } from "../../lib/productGate";
   import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
-  const HUB_VIEWS = ["dashboard", "orgs", "register", "new-report", "recent", "manage", "manage-reports"];
+  const HUB_VIEWS = ["dashboard", "orgs", "register", "new-report", "recent", "manage", "manage-reports", "history"];
 
   onBoundPageReady("[data-ereport-hub]", (root) => {
     const copy = sessionCopy();
@@ -325,6 +352,9 @@ import Layout from "../../layouts/Layout.astro";
     let orgs: OrgCard[] = [];
     let recent: RecentReportCard[] = [];
     let allReports: RecentReportCard[] = [];
+    let sharedReports: EreportSharedCard[] = [];
+    let historyOrgId = "";
+    let historyReportId = "";
     let activeOrgId = "";
     let reports: ReportCard[] = [];
     let importOrgId = "";
@@ -383,6 +413,7 @@ import Layout from "../../layouts/Layout.astro";
         allReports,
       });
       if (view === "manage-reports") void refreshManageReports();
+      if (view === "history") void refreshHubHistory();
     };
 
     const fillSelect = (selector: string, placeholder: string) => {
@@ -500,8 +531,82 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const paintSharedCards = () => {
+      const grid = root.querySelector("[data-dashboard-shared-cards]");
+      const empty = root.querySelector("[data-dashboard-shared-empty]");
+      if (!(grid instanceof HTMLElement)) return;
+      grid.replaceChildren();
+      if (empty instanceof HTMLElement) empty.hidden = sharedReports.length > 0;
+      for (const report of sharedReports) {
+        const card = document.createElement("a");
+        card.className = "product-dash__card ereport-hub__recent-card";
+        card.href = workspaceHref(report.orgId, report.reportId, report.ownerSafe || "", { shared: true });
+        card.dataset.route = "";
+        card.title = report.tema;
+        const title = document.createElement("span");
+        title.className = "product-dash__card-title";
+        title.textContent = report.tema || report.reportId;
+        const meta = document.createElement("span");
+        meta.className = "product-dash__card-desc";
+        meta.textContent = `Shared by ${report.ownerEmail || report.ownerSafe || "owner"} · ${formatReportDate(report.updatedAt)}`;
+        card.append(title, meta);
+        grid.append(card);
+      }
+    };
+
+    const refreshShared = async () => {
+      const res = await fetchSharedReports();
+      sharedReports = res.status === 200 ? res.data.items || [] : [];
+      paintSharedCards();
+    };
+
+    const refreshHubHistory = async () => {
+      const list = root.querySelector("[data-hub-history-list]");
+      const err = root.querySelector("[data-hub-history-error]");
+      const nameEl = root.querySelector("[data-history-report-name]");
+      if (!(list instanceof HTMLElement) || !historyOrgId || !historyReportId) return;
+      if (nameEl instanceof HTMLElement) {
+        nameEl.textContent = `${historyOrgId} / ${historyReportId}`;
+      }
+      if (err instanceof HTMLElement) err.hidden = true;
+      list.replaceChildren();
+      const res = await listReportHistory(historyOrgId, historyReportId);
+      if (res.status !== 200) {
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = res.data.message || "Could not load history.";
+        }
+        return;
+      }
+      const items = (res.data.items || []) as EreportHistoryCard[];
+      if (!items.length) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No snapshots yet.";
+        list.append(empty);
+        return;
+      }
+      for (const item of items) {
+        const li = document.createElement("li");
+        li.textContent = `${item.tema || "Snapshot"} · ${item.source} · ${item.createdAt}`;
+        const restore = document.createElement("button");
+        restore.type = "button";
+        restore.className = "btn";
+        restore.textContent = "Restore";
+        restore.dataset.hubHistoryRestore = item.id;
+        const download = document.createElement("button");
+        download.type = "button";
+        download.className = "btn";
+        download.textContent = "Download .ereport";
+        download.dataset.hubHistoryDownload = item.id;
+        li.append(restore, download);
+        list.append(li);
+      }
+    };
+
     const paintRecent = () => {
       paintDashboardRecents();
+      paintSharedCards();
       const list = root.querySelector("[data-recent-list]");
       if (!(list instanceof HTMLElement)) return;
       list.replaceChildren();
@@ -602,6 +707,13 @@ import Layout from "../../layouts/Layout.astro";
         const meta = document.createElement("span");
         meta.className = "hint";
         meta.textContent = `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)}`;
+        const hist = document.createElement("button");
+        hist.type = "button";
+        hist.className = "btn";
+        hist.textContent = "History";
+        hist.dataset.historyOrg = report.orgId;
+        hist.dataset.historyReport = report.id;
+        hist.dataset.reportName = report.tema || report.id;
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn btn--red";
@@ -609,7 +721,7 @@ import Layout from "../../layouts/Layout.astro";
         del.dataset.deleteReport = report.id;
         del.dataset.deleteReportOrg = report.orgId;
         del.dataset.reportName = report.tema || report.id;
-        li.append(a, meta, del);
+        li.append(a, meta, hist, del);
         list.append(li);
       }
     };
@@ -718,6 +830,7 @@ import Layout from "../../layouts/Layout.astro";
       paintRecent();
       paintManage();
       paintCounts();
+      void refreshShared();
       setAgentRoutePayload({
         kind: "ereport_hub",
         view: new URLSearchParams(window.location.search).get("view") || "dashboard",
@@ -805,7 +918,72 @@ import Layout from "../../layouts/Layout.astro";
 
       if (node.closest("[data-hub-back]")) {
         resetOrgPanels();
+        const historyView = root.querySelector('[data-view="history"]');
+        if (historyView instanceof HTMLElement && !historyView.hidden) {
+          setView("manage-reports");
+          return;
+        }
         setView("dashboard");
+        return;
+      }
+      const historyOpen = node.closest("[data-history-org]");
+      if (historyOpen instanceof HTMLElement && historyOpen.dataset.historyOrg && historyOpen.dataset.historyReport) {
+        historyOrgId = historyOpen.dataset.historyOrg;
+        historyReportId = historyOpen.dataset.historyReport;
+        const nameEl = root.querySelector("[data-history-report-name]");
+        if (nameEl instanceof HTMLElement) {
+          nameEl.textContent = historyOpen.dataset.reportName || historyReportId;
+        }
+        setView("history");
+        return;
+      }
+      if (node.closest("[data-history-save-now]")) {
+        if (!historyOrgId || !historyReportId) return;
+        void (async () => {
+          const current = await fetchOrgReport(historyOrgId, historyReportId);
+          if (current.status !== 200 || !current.data.payload) {
+            setHubError(current.data.message || "Could not read report for snapshot.");
+            return;
+          }
+          const snap = await createReportHistory(historyOrgId, historyReportId, {
+            payload: current.data.payload,
+            tema: current.data.meta?.tema,
+            label: "manual",
+          });
+          if (snap.status >= 300) {
+            setHubError(snap.data.message || "Could not save snapshot.");
+            return;
+          }
+          setBanner(root, "Snapshot saved.", "ok");
+          void refreshHubHistory();
+        })();
+        return;
+      }
+      if (node.closest("[data-history-refresh]")) {
+        void refreshHubHistory();
+        return;
+      }
+      const hubRestore = node.closest("[data-hub-history-restore]");
+      if (hubRestore instanceof HTMLElement && hubRestore.dataset.hubHistoryRestore && historyOrgId && historyReportId) {
+        void restoreReportHistory(historyOrgId, historyReportId, hubRestore.dataset.hubHistoryRestore).then((res) => {
+          if (res.status !== 200) {
+            setHubError(res.data.message || "Could not restore.");
+            return;
+          }
+          setBanner(root, "Snapshot restored.", "ok");
+        });
+        return;
+      }
+      const hubDownload = node.closest("[data-hub-history-download]");
+      if (hubDownload instanceof HTMLElement && hubDownload.dataset.hubHistoryDownload && historyOrgId && historyReportId) {
+        void fetchReportHistorySnapshot(historyOrgId, historyReportId, hubDownload.dataset.hubHistoryDownload).then((res) => {
+          const snap = res.data.snapshot as { payload?: Record<string, unknown>; tema?: string; id?: string } | undefined;
+          if (res.status !== 200 || !snap?.payload) {
+            setHubError(res.data.message || "Could not download.");
+            return;
+          }
+          downloadEreportSnapshot(`${snap.tema || "snapshot"}-${snap.id || "history"}`, snap.payload);
+        });
         return;
       }
       if (node.closest("[data-org-panel-back]")) {

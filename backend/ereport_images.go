@@ -18,7 +18,7 @@ func (a *App) ereportUploadImageHandler(w http.ResponseWriter, r *http.Request) 
 	if !ok {
 		return
 	}
-	a.saveEreportImage(w, r, user.ID, meta.OrgID, meta.ID)
+	a.saveEreportImage(w, r, user.ID, meta.OrgID, meta.ID, "")
 }
 
 func (a *App) ereportInviteUploadImageHandler(w http.ResponseWriter, r *http.Request) {
@@ -42,10 +42,10 @@ func (a *App) ereportInviteUploadImageHandler(w http.ResponseWriter, r *http.Req
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	a.saveEreportImage(w, r, inv.OwnerUserID, inv.OrgID, reportID)
+	a.saveEreportImage(w, r, inv.OwnerUserID, inv.OrgID, reportID, "/api/ereport/invite-session/reports/"+reportID+"/images/")
 }
 
-func (a *App) saveEreportImage(w http.ResponseWriter, r *http.Request, ownerUserID, orgID, reportID string) {
+func (a *App) saveEreportImage(w http.ResponseWriter, r *http.Request, ownerUserID, orgID, reportID, urlPrefix string) {
 	if a.ereport.countImages(ownerUserID, orgID, reportID) >= maxImagesPerReport {
 		a.writeSafeError(w, r, http.StatusBadRequest, "payload_too_large")
 		return
@@ -85,9 +85,12 @@ func (a *App) saveEreportImage(w http.ResponseWriter, r *http.Request, ownerUser
 	if name == "." || name == "" {
 		name = id + kind.ext
 	}
-	url := "/api/ereport/orgs/" + orgID + "/reports/" + reportID + "/images/" + id
-	if a.currentUser(r) == nil {
-		url = "/api/ereport/invite-session/reports/" + reportID + "/images/" + id
+	url := urlPrefix + id
+	if strings.TrimSpace(urlPrefix) == "" {
+		url = "/api/ereport/orgs/" + orgID + "/reports/" + reportID + "/images/" + id
+		if a.currentUser(r) == nil {
+			url = "/api/ereport/invite-session/reports/" + reportID + "/images/" + id
+		}
 	}
 	a.auditEvent(r, "ereport_image_upload", "ok", ownerUserID)
 	writeJSON(w, http.StatusCreated, map[string]any{

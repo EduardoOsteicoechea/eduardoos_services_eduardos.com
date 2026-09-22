@@ -101,8 +101,8 @@ func (a *App) ereportCreateReportInviteHandler(w http.ResponseWriter, r *http.Re
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	// Report shares are view-only via link + hash; emails are notifications only.
-	a.writeInvite(w, r, user, meta.OrgID, meta.ID, inviteScopeReport, "", time.Duration(hours)*time.Hour, message, emails, false)
+	// Report shares are editable via link + hash; emails also grant account shares when registered.
+	a.writeInvite(w, r, user, meta.OrgID, meta.ID, inviteScopeReport, "", time.Duration(hours)*time.Hour, message, emails, true)
 }
 
 func parseInviteEmails(list []string, legacy string) []string {
@@ -166,16 +166,24 @@ func (a *App) writeInvite(
 	if len(recipients) == 0 && email != "" {
 		recipients = []string{email}
 	}
+	if scope == inviteScopeReport && len(recipients) > 0 {
+		meta, _, metaErr := a.ereport.loadReport(user.ID, orgID, reportID)
+		if metaErr == nil {
+			for _, to := range recipients {
+				a.upsertAccountShare(user, orgID, reportID, id, to, canEdit, meta)
+			}
+		}
+	}
 	for _, to := range recipients {
 		subject := "eReport invite"
 		var body string
-		if scope == inviteScopeReport && !canEdit {
+		if scope == inviteScopeReport {
 			subject = "eReport shared with you"
 			msg := message
 			if msg == "" {
-				msg = "You have been invited to view an eReport."
+				msg = "You have been invited to edit an eReport."
 			}
-			body = fmt.Sprintf("%s\n\nOpen this link to view the report (no sign-in required):\n%s\n\nAccess expires at %s (UTC).\n", msg, link, inv.ExpiresAt)
+			body = fmt.Sprintf("%s\n\nOpen this link to edit the report (no sign-in required):\n%s\n\nIf you have an Eduardo OS account with an eReport subscription, the report also appears under Shared with me.\n\nAccess expires at %s (UTC).\n", msg, link, inv.ExpiresAt)
 		} else {
 			body = fmt.Sprintf("You have been invited to collaborate on an eReport.\n\nOpen this link and enter the verification code sent to this mailbox:\n%s\n\nAccess expires at %s (UTC).\n", link, inv.ExpiresAt)
 		}
@@ -239,7 +247,7 @@ func (a *App) ereportInviteViewReportHandler(w http.ResponseWriter, r *http.Requ
 	writeJSON(w, http.StatusOK, map[string]any{
 		"meta":    meta,
 		"payload": rewritten,
-		"canEdit": false,
+		"canEdit": inv.CanEdit,
 		"isOwner": false,
 	})
 }
@@ -422,12 +430,48 @@ func (a *App) ereportInviteVerifyHandler(w http.ResponseWriter, r *http.Request)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
+	out, ok := a.establishInviteSession(w, r, &inv)
+	if !ok {
+		return
+	}
+	a.auditEvent(r, "ereport_invite_verify", "ok", "")
+	writeJSON(w, http.StatusOK, out)
+}
+
+func rewriteInviteSessionImageURLs(v any, reportID string) any {
+	switch t := v.(type) {
+	case map[string]any:
+		out := make(map[string]any, len(t))
+		for k, val := range t {
+			if k == "url" {
+				if s, ok := val.(string); ok {
+					if id := extractEreportImageID(s); id != "" {
+						out[k] = "/api/ereport/invite-session/reports/" + reportID + "/images/" + id
+						continue
+					}
+				}
+			}
+			out[k] = rewriteInviteSessionImageURLs(val, reportID)
+		}
+		return out
+	case []any:
+		out := make([]any, len(t))
+		for i, item := range t {
+			out[i] = rewriteInviteSessionImageURLs(item, reportID)
+		}
+		return out
+	default:
+		return v
+	}
+}
+
+func (a *App) establishInviteSession(w http.ResponseWriter, r *http.Request, inv *ereportInvite) (map[string]any, bool) {
 	sessionSecret := randomID(24)
 	inv.SessionHash = a.hashOpaque("ereport-invite-session:"+inv.ID, sessionSecret)
 	inv.ConsumedOTPAt = time.Now().UTC().Format(time.RFC3339)
-	if err := a.ereport.saveInvite(inv); err != nil {
+	if err := a.ereport.saveInvite(*inv); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-		return
+		return nil, false
 	}
 	exp, _ := time.Parse(time.RFC3339, inv.ExpiresAt)
 	maxAge := int(time.Until(exp).Seconds())
@@ -435,7 +479,6 @@ func (a *App) ereportInviteVerifyHandler(w http.ResponseWriter, r *http.Request)
 		maxAge = 60
 	}
 	a.setCookie(w, a.inviteCookieName(), inv.ID+"."+sessionSecret, maxAge)
-	a.auditEvent(r, "ereport_invite_verify", "ok", "")
 	out := map[string]any{
 		"ok":      true,
 		"invite":  inv.public(),
@@ -444,7 +487,55 @@ func (a *App) ereportInviteVerifyHandler(w http.ResponseWriter, r *http.Request)
 	if inv.Scope == inviteScopeOrg {
 		lib, _ := a.ereport.loadOrgLibrary(inv.OwnerUserID, inv.OrgID)
 		out["reports"] = lib.Reports
+	} else if inv.ReportID != "" {
+		meta, payload, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, inv.ReportID)
+		if err == nil {
+			rewritten, _ := rewriteInviteSessionImageURLs(payload, inv.ReportID).(map[string]any)
+			if rewritten == nil {
+				rewritten = payload
+			}
+			out["meta"] = meta
+			out["payload"] = rewritten
+		}
 	}
+	return out, true
+}
+
+func (a *App) ereportInviteClaimHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	inv, ok := a.loadInvitePosted(w, r)
+	if !ok {
+		return
+	}
+	if inviteExpired(inv, time.Now().UTC()) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if inviteNeedsOTP(inv) {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	var body struct {
+		T string `json:"t"`
+	}
+	if !a.decodeEreportJSON(w, r, &body) {
+		return
+	}
+	secret := strings.TrimSpace(body.T)
+	if secret == "" {
+		secret = strings.TrimSpace(r.URL.Query().Get("t"))
+	}
+	if !a.verifyInviteSecret(inv, secret) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	out, ok := a.establishInviteSession(w, r, &inv)
+	if !ok {
+		return
+	}
+	a.auditEvent(r, "ereport_invite_claim", "ok", "")
 	writeJSON(w, http.StatusOK, out)
 }
 
@@ -472,8 +563,12 @@ func (a *App) ereportInviteSessionHandler(w http.ResponseWriter, r *http.Request
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 			return
 		}
+		rewritten, _ := rewriteInviteSessionImageURLs(payload, inv.ReportID).(map[string]any)
+		if rewritten == nil {
+			rewritten = payload
+		}
 		out["meta"] = meta
-		out["payload"] = payload
+		out["payload"] = rewritten
 	}
 	writeJSON(w, http.StatusOK, out)
 }
@@ -493,9 +588,13 @@ func (a *App) ereportInviteGetReportHandler(w http.ResponseWriter, r *http.Reque
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	rewritten, _ := rewriteInviteSessionImageURLs(payload, reportID).(map[string]any)
+	if rewritten == nil {
+		rewritten = payload
+	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"meta":    meta,
-		"payload": payload,
+		"payload": rewritten,
 		"canEdit": inv.CanEdit,
 		"isOwner": false,
 	})
@@ -534,13 +633,16 @@ func (a *App) ereportInvitePutReportHandler(w http.ResponseWriter, r *http.Reque
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if err := assertInviteNoDeletes(storedPayload, body.Payload); err != nil {
-		if ae := asAPIWriteErr(err); ae != nil && ae.Code == "forbidden" {
-			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+	// Org invite sessions stay additive; report link shares may fully edit.
+	if inv.Scope != inviteScopeReport {
+		if err := assertInviteNoDeletes(storedPayload, body.Payload); err != nil {
+			if ae := asAPIWriteErr(err); ae != nil && ae.Code == "forbidden" {
+				a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+				return
+			}
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
-		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-		return
 	}
 	if body.Tema != nil {
 		tema := strings.TrimSpace(*body.Tema)

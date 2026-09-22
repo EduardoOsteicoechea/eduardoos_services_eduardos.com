@@ -520,6 +520,45 @@ func (a *App) ereportDeleteReportHandler(w http.ResponseWriter, r *http.Request)
 	writeJSON(w, http.StatusOK, map[string]bool{"deleted": true})
 }
 
+func (a *App) ereportCreateHistoryHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEreportOwnerWrite(w, r)
+	if user == nil {
+		return
+	}
+	meta, current, ok := a.ownerLoadReport(w, r, user)
+	if !ok {
+		return
+	}
+	var body struct {
+		Tema    *string        `json:"tema"`
+		Payload map[string]any `json:"payload"`
+		Label   string         `json:"label"`
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, a.cfg.EreportMaxPayloadBytes)
+	_ = json.NewDecoder(r.Body).Decode(&body)
+	payload := current
+	if body.Payload != nil {
+		payload = body.Payload
+	}
+	tema := meta.Tema
+	if body.Tema != nil && strings.TrimSpace(*body.Tema) != "" {
+		tema = strings.TrimSpace(*body.Tema)
+	} else if n, ok := payload["reportName"].(string); ok && strings.TrimSpace(n) != "" {
+		tema = strings.TrimSpace(n)
+	}
+	source := "manual"
+	if label := strings.TrimSpace(body.Label); label != "" {
+		source = label
+	}
+	id, err := a.ereport.saveSnapshot(user.ID, meta.OrgID, meta.ID, tema, source, "", payload)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "ereport_history_save", "ok", user.ID)
+	writeJSON(w, http.StatusCreated, map[string]any{"id": id, "tema": tema, "source": source})
+}
+
 func (a *App) ereportListHistoryHandler(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEreportUser(w, r)
 	if user == nil {
