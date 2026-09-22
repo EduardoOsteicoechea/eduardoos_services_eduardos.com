@@ -68,9 +68,9 @@
   --z-modal: 40;
   /* Half-gap on each nav/DHS row so section backgrounds meet at the midpoint. */
   --sidebar-row-margin: calc(var(--rail-gap) * 0.5);
-  /* Toolbar band (tray has no padding): pad + control + pad + border + flex gap to nav. */
+  /* Toolbar band (tray has no padding): pad + control + pad + border. No gap under toolbar. */
   --sidebar-toolbar-band: calc(
-    var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width) + var(--rail-gap)
+    var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width)
   );
   --font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
@@ -149,6 +149,10 @@ body {
   overflow-x: hidden;
   background: var(--color-bg);
   color: var(--color-text);
+}
+
+html {
+  font-size: 14px;
 }
 
 body {
@@ -521,6 +525,11 @@ a {
 #main-menu {
   z-index: calc(var(--z-sidebar) + 1);
   overflow: visible;
+  gap: 0;
+}
+
+#main-menu nav > .sidebar-nav-section:first-child > :first-child {
+  margin-top: 0;
 }
 
 /* When menu is open, docked trays clear the shared toolbar band so rows align. */
@@ -1798,7 +1807,7 @@ section.diag .panel:not(form) {
 @media (min-width: 48rem) and (max-width: 63.999rem) {
   /* Root scale on tablet. */
   html {
-    font-size: 20px;
+    font-size: 14px;
   }
 
   :root {
@@ -1829,7 +1838,7 @@ section.diag .panel:not(form) {
 @media (max-width: 47.999rem) {
   /* Root scale on phone. */
   html {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   :root {
