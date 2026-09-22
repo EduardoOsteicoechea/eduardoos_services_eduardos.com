@@ -13,29 +13,14 @@ import Layout from "../../layouts/Layout.astro";
     </button>
   </Fragment>
 
-  <section class="diag" data-admin-users>
+  <section class="product-dash admin-users" data-admin-users>
     <h1 class="page-title-sr">Registered users</h1>
 
     <p class="status" data-banner>Checking session…</p>
 
-    <div class="panel" data-table-wrap hidden>
+    <div class="admin-users__panel" data-table-wrap hidden>
       <p class="hint" data-count></p>
-      <div class="admin-users-scroll">
-        <table class="admin-users-table">
-          <thead>
-            <tr>
-              <th scope="col">Email</th>
-              <th scope="col">Username</th>
-              <th scope="col">Role</th>
-              <th scope="col">Status</th>
-              <th scope="col">Verified</th>
-              <th scope="col">Service access</th>
-              <th scope="col">Created</th>
-            </tr>
-          </thead>
-          <tbody data-users-body></tbody>
-        </table>
-      </div>
+      <ul class="admin-users__list" data-users-body></ul>
     </div>
   </section>
 </Layout>
@@ -43,6 +28,8 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { apiRequest, getAdminUsers, getMe } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
+
+  const SERVICES = ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"] as const;
 
   const root = document.querySelector("[data-admin-users]");
   if (root instanceof HTMLElement) {
@@ -85,6 +72,17 @@ import Layout from "../../layouts/Layout.astro";
       return date.toLocaleString();
     };
 
+    const metaItem = (label: string, value: string) => {
+      const item = document.createElement("div");
+      item.className = "admin-user-card__meta-item";
+      const dt = document.createElement("dt");
+      dt.textContent = label;
+      const dd = document.createElement("dd");
+      dd.textContent = value;
+      item.append(dt, dd);
+      return item;
+    };
+
     const renderRows = (users: Array<{
       email: string;
       username: string;
@@ -100,44 +98,62 @@ import Layout from "../../layouts/Layout.astro";
       }
       body.replaceChildren();
       for (const user of users) {
-        const row = document.createElement("tr");
-        const cells = [
-          user.email,
-          user.username,
-          user.role,
-          user.status,
-          user.email_verified ? "yes" : "no",
-        ];
-        for (const text of cells) {
-          const cell = document.createElement("td");
-          cell.textContent = text;
-          row.appendChild(cell);
-        }
-        const access = document.createElement("td");
+        const card = document.createElement("li");
+        card.className = "admin-user-card";
+
+        const head = document.createElement("header");
+        head.className = "admin-user-card__head";
+        const email = document.createElement("p");
+        email.className = "admin-user-card__email";
+        email.textContent = user.email;
+        const username = document.createElement("p");
+        username.className = "admin-user-card__username";
+        username.textContent = user.username;
+        head.append(email, username);
+
+        const meta = document.createElement("dl");
+        meta.className = "admin-user-card__meta";
+        meta.append(
+          metaItem("Role", user.role),
+          metaItem("Status", user.status),
+          metaItem("Verified", user.email_verified ? "yes" : "no"),
+          metaItem("Created", formatDate(user.created_at)),
+        );
+
+        const access = document.createElement("div");
         access.className = "admin-users-services";
         const form = document.createElement("form");
         form.dataset.userServices = user.id;
+
+        const legend = document.createElement("p");
+        legend.className = "admin-users-services__legend";
+        legend.textContent = "Service access";
+
+        const chips = document.createElement("div");
+        chips.className = "admin-users-services__chips";
         const granted = new Set(user.admin_services ?? []);
-        for (const service of ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"]) {
+        for (const service of SERVICES) {
           const label = document.createElement("label");
+          label.className = "admin-users-services__chip";
           const input = document.createElement("input");
           input.type = "checkbox";
           input.name = "service";
           input.value = service;
           input.checked = granted.has(service);
-          label.append(input, ` ${service}`);
-          form.append(label);
+          const span = document.createElement("span");
+          span.textContent = service;
+          label.append(input, span);
+          chips.append(label);
         }
+
         const save = document.createElement("button");
         save.type = "submit";
-        save.textContent = "Save";
-        form.appendChild(save);
+        save.textContent = "Save access";
+
+        form.append(legend, chips, save);
         access.appendChild(form);
-        row.appendChild(access);
-        const created = document.createElement("td");
-        created.textContent = formatDate(user.created_at);
-        row.appendChild(created);
-        body.appendChild(row);
+        card.append(head, meta, access);
+        body.appendChild(card);
       }
       if (count instanceof HTMLElement) {
         count.textContent = `${users.length} registered user${users.length === 1 ? "" : "s"}.`;
