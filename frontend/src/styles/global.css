@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1rem;
@@ -1906,8 +1906,8 @@ section.diag .panel:not(form) {
     --span-button: 2;
     --main-inline: 1rem;
     /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2ÃÂÃÂ menu) */
-    --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
-    --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
+    --sidebar-width: 12.5rem;
+    --agent-sidebar-width: 25rem;
     --main-padding-top: var(--main-padding);
   }
 

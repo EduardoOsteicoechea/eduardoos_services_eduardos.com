@@ -103,7 +103,7 @@ import "../../styles/homescool-workspace.css";
 
   printBtn?.addEventListener("click", () => {
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
-    window.print();
+    printLetterSheets();
   });
 
   async function boot() {
@@ -210,6 +210,59 @@ import "../../styles/homescool-workspace.css";
     if (!(sheetsHost instanceof HTMLElement)) return null;
     if (!shadow) shadow = sheetsHost.attachShadow({ mode: "open" });
     return shadow;
+  }
+
+  /** Browsers do not consistently include an open shadow tree in print preview, so print a light-DOM clone. */
+  function printLetterSheets() {
+    if (!shadow) return;
+
+    document.getElementById("homescool-print-output")?.remove();
+    document.getElementById("homescool-print-output-style")?.remove();
+
+    const output = document.createElement("div");
+    output.id = "homescool-print-output";
+    output.setAttribute("aria-hidden", "true");
+    for (const node of shadow.childNodes) output.append(node.cloneNode(true));
+
+    const style = document.createElement("style");
+    style.id = "homescool-print-output-style";
+    style.textContent = [
+      "#homescool-print-output { display: none; }",
+      "@media print {",
+      "  body > :not(#homescool-print-output) { display: none !important; }",
+      "  #homescool-print-output {",
+      "    --page-width: 8.5in;",
+      "    --page-height: 11in;",
+      "    --page-padding-x: 1cm;",
+      "    --page-padding-y: 1cm;",
+      "    --ink: #1a1a2e;",
+      "    --muted: #5c5c7a;",
+      "    --accent: #2d5a8a;",
+      "    --rule: #c8c8d8;",
+      "    --box-border: #9a9ab8;",
+      '    --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;',
+      '    --font-display: Georgia, "Times New Roman", serif;',
+      "    display: flex !important;",
+      "    flex-direction: column;",
+      "    align-items: center;",
+      "    gap: 0;",
+      "    margin: 0;",
+      "    padding: 0;",
+      "    background: #fff;",
+      "    color: var(--ink);",
+      "  }",
+      "}",
+    ].join("\n");
+    document.head.append(style);
+    document.body.append(output);
+
+    const cleanup = () => {
+      output.remove();
+      style.remove();
+    };
+    window.addEventListener("afterprint", cleanup, { once: true });
+    window.setTimeout(cleanup, 60000);
+    window.print();
   }
 
   /** Read the shared skill sheet before displaying a material; a shadow root cannot inherit it from the document. */
