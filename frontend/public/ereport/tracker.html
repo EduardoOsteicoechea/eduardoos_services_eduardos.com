@@ -2910,19 +2910,19 @@ function buildPdfReportElement(data) {
   el.style.cssText = "width:56.25rem;padding:1.5rem;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
   const prevCriteria = state.validationCriteria;
   state.validationCriteria = Array.isArray(data.validationCriteria) ? data.validationCriteria : [];
-  let html = `<div style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
+  let html = `<div class="pdf-block" style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
       <h1 style="margin:0 0 0.375rem;font-size:1.375rem">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
       <p style="margin:0 0 4px;opacity:.9"><strong>Organization:</strong> ${escapeHtml(data.orgName || "—")}</p>
       <p style="margin:0;opacity:.9"><strong>Report Date:</strong> ${escapeHtml(data.reportDate || "—")}
       &nbsp;·&nbsp; <strong>Report Code:</strong> ${escapeHtml(data.reportNumber || "—")}</p>
     </div>`;
   data.sections.forEach(sec => {
-    html += `<h2 style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    html += `<h2 class="pdf-block" style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
     if (sec.productHistory) {
-      html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
+      html += `<p class="pdf-block" style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
     }
     if ((sec.items || []).length) {
-      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
+      html += `<h3 class="pdf-block" style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
       (sec.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
@@ -2933,7 +2933,7 @@ function buildPdfReportElement(data) {
         const checkLine = (it.checklist || []).length
           ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+        html += `<div class="pdf-block" style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
           <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
           <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
@@ -2944,9 +2944,9 @@ function buildPdfReportElement(data) {
       });
     }
     sec.groups.forEach(grp => {
-      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      html += `<h3 class="pdf-block" style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
       if (grp.productHistory) {
-        html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
+        html += `<p class="pdf-block" style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
       }
       (grp.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
@@ -2958,7 +2958,7 @@ function buildPdfReportElement(data) {
         const checkLine = (it.checklist || []).length
           ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+        html += `<div class="pdf-block" style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
           <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
           <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
@@ -2974,49 +2974,241 @@ function buildPdfReportElement(data) {
   return el;
 }
 
+/** Block top/bottom in canvas pixels — cuts should land between these ranges. */
+function collectPdfBlockRanges(report, scale) {
+  const root = report.getBoundingClientRect();
+  const ranges = [];
+  report.querySelectorAll(".pdf-block").forEach((node) => {
+    const r = node.getBoundingClientRect();
+    const top = Math.max(0, (r.top - root.top) * scale);
+    const bottom = Math.max(top + 1, (r.bottom - root.top) * scale);
+    ranges.push({ top, bottom });
+  });
+  ranges.sort((a, b) => a.top - b.top || a.bottom - b.bottom);
+  return ranges;
+}
+
+/** Prefer ending a page at the bottom of a card/header instead of mid-block. */
+function findPdfPageEnd(startY, maxEnd, canvasH, ranges) {
+  const hard = Math.min(maxEnd, canvasH);
+  if (hard >= canvasH) return canvasH;
+  const minAdvance = 24;
+  let inside = null;
+  for (let i = 0; i < ranges.length; i++) {
+    const b = ranges[i];
+    if (b.top < hard && b.bottom > hard) {
+      inside = b;
+      break;
+    }
+  }
+  if (inside) {
+    if (inside.top > startY + minAdvance) return Math.ceil(inside.top);
+    // Block taller than one page: allow a hard split.
+    return Math.floor(hard);
+  }
+  let best = 0;
+  for (let i = 0; i < ranges.length; i++) {
+    const b = ranges[i];
+    if (b.bottom > startY + minAdvance && b.bottom <= hard) {
+      best = Math.max(best, b.bottom);
+    }
+  }
+  if (best > startY + minAdvance) return Math.ceil(best);
+  return Math.floor(hard);
+}
+
+function appendCanvasPagesAvoidingBlockSplits(pdf, canvas, ranges) {
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+  const margin = 28;
+  const usableW = pageW - margin * 2;
+  const usableH = pageH - margin * 2;
+  const pxPerPt = canvas.width / usableW;
+  const pageContentPx = usableH * pxPerPt;
+  let y = 0;
+  let first = true;
+  while (y < canvas.height - 0.5) {
+    const end = findPdfPageEnd(y, y + pageContentPx, canvas.height, ranges);
+    const sliceH = Math.max(1, Math.ceil(end - y));
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.width = canvas.width;
+    pageCanvas.height = sliceH;
+    const ctx = pageCanvas.getContext("2d");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+    ctx.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+    const imgData = pageCanvas.toDataURL("image/jpeg", 0.92);
+    const drawH = sliceH / pxPerPt;
+    if (!first) pdf.addPage();
+    first = false;
+    pdf.addImage(imgData, "JPEG", margin, margin, usableW, drawH);
+    y += sliceH;
+  }
+}
+
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result || ""));
+    fr.onerror = () => reject(fr.error || new Error("No se pudo leer la imagen."));
+    fr.readAsDataURL(blob);
+  });
+}
+
+/** Fetch same-origin API images with cookies so html2canvas can paint them. */
+async function inlineImagesForPdf(root) {
+  const imgs = Array.from(root.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map(async (img) => {
+      const src = String(img.getAttribute("src") || "").trim();
+      if (!src || src.startsWith("data:")) return;
+      try {
+        const res = await fetch(src, { credentials: "include", cache: "force-cache" });
+        if (!res.ok) return;
+        const blob = await res.blob();
+        if (!blob || !blob.size) return;
+        img.src = await blobToDataURL(blob);
+      } catch (_) {
+        /* leave original src; text still exports */
+      }
+    }),
+  );
+  await Promise.all(
+    imgs.map((img) => {
+      if (typeof img.decode === "function") {
+        return img.decode().catch(() => undefined);
+      }
+      return Promise.resolve();
+    }),
+  );
+}
+
+async function embedImageRecord(im) {
+  if (!im || typeof im !== "object") return im;
+  if (im.dataUrl && String(im.dataUrl).startsWith("data:")) {
+    return { id: im.id, mime: im.mime, name: im.name, dataUrl: im.dataUrl };
+  }
+  const src = String(im.url || "").trim();
+  if (!src) return im;
+  if (src.startsWith("data:")) {
+    return { id: im.id, mime: im.mime, name: im.name, dataUrl: src };
+  }
+  try {
+    const res = await fetch(src, { credentials: "include", cache: "force-cache" });
+    if (!res.ok) return im;
+    const blob = await res.blob();
+    if (!blob || !blob.size) return im;
+    const dataUrl = await blobToDataURL(blob);
+    return { id: im.id, mime: im.mime || blob.type, name: im.name, dataUrl };
+  } catch (_) {
+    return im;
+  }
+}
+
+async function embedImagesInPayload(raw) {
+  const data = structuredClone(raw);
+  async function scrubItem(it) {
+    if (!it) return;
+    it.imagesIncidencia = await Promise.all((it.imagesIncidencia || []).map(embedImageRecord));
+    it.imagesSolucion = await Promise.all((it.imagesSolucion || []).map(embedImageRecord));
+    it.images = it.imagesSolucion;
+  }
+  for (const sec of data.sections || []) {
+    for (const it of sec.items || []) await scrubItem(it);
+    for (const grp of sec.groups || []) {
+      for (const it of grp.items || []) await scrubItem(it);
+    }
+  }
+  return data;
+}
+
 async function saveAll() {
   collectFromDom();
   updateStatus();
   const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_") || "sin-numero";
   const base = "reporte_qa_" + safeName;
-  const data = structuredClone(state);
+  let data = structuredClone(state);
+  if (!Array.isArray(data.sections)) data.sections = [];
+  try {
+    data = await embedImagesInPayload(data);
+  } catch (err) {
+    console.error(err);
+    toast("Algunas imágenes no se pudieron embeber; se exporta con las URLs disponibles.");
+  }
 
   downloadBlob(base + ".ereport", new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   downloadBlob(base + ".html", new Blob([buildSavedHtml(data)], { type: "text/html;charset=utf-8" }));
 
   try {
+    if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
+      throw new Error("PDF libraries missing");
+    }
     const host = document.createElement("div");
-    host.style.cssText = "position:fixed;left:-625rem;top:0;";
+    // Keep fully opaque but off-screen: opacity:0 often yields a blank canvas.
+    host.style.cssText =
+      "position:fixed;left:0;top:0;width:56.25rem;transform:translate(-120vw,-120vh);pointer-events:none;z-index:0;overflow:visible;background:#ffffff;";
     const report = buildPdfReportElement(data);
+    report.style.background = "#ffffff";
     host.appendChild(report);
     document.body.appendChild(host);
-    const canvas = await html2canvas(report, { scale: 1.5, useCORS: true, backgroundColor: "#ffffff" });
+    await inlineImagesForPdf(report);
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const pdfScale = 1.25;
+    const blockRanges = collectPdfBlockRanges(report, pdfScale);
+    const canvas = await html2canvas(report, {
+      scale: pdfScale,
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: "#ffffff",
+      logging: false,
+      imageTimeout: 20000,
+      foreignObjectRendering: false,
+      width: Math.max(report.scrollWidth || 0, report.offsetWidth || 0, 900),
+      height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
+      windowWidth: Math.max(report.scrollWidth || 0, 900),
+      windowHeight: Math.max(report.scrollHeight || 0, 200),
+      onclone: (_doc, cloned) => {
+        cloned.style.transform = "none";
+        cloned.style.opacity = "1";
+        cloned.style.visibility = "visible";
+        if (cloned.parentElement) {
+          cloned.parentElement.style.transform = "none";
+          cloned.parentElement.style.opacity = "1";
+          cloned.parentElement.style.left = "0";
+          cloned.parentElement.style.top = "0";
+        }
+      },
+    });
     document.body.removeChild(host);
-    const img = canvas.toDataURL("image/jpeg", 0.92);
+    if (!canvas || canvas.width < 8 || canvas.height < 8) {
+      throw new Error("PDF canvas empty");
+    }
+    // Detect near-blank canvases (all white / transparent).
+    try {
+      const probe = canvas.getContext("2d");
+      if (probe) {
+        const sample = probe.getImageData(0, 0, Math.min(canvas.width, 40), Math.min(canvas.height, 40)).data;
+        let ink = 0;
+        for (let i = 0; i < sample.length; i += 4) {
+          if (sample[i] < 250 || sample[i + 1] < 250 || sample[i + 2] < 250) ink++;
+        }
+        if (ink < 8) throw new Error("PDF canvas blank");
+      }
+    } catch (probeErr) {
+      if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
+    }
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
-    const pageW = pdf.internal.pageSize.getWidth();
-    const pageH = pdf.internal.pageSize.getHeight();
-    const margin = 28;
-    const usableW = pageW - margin * 2;
-    const imgH = canvas.height * (usableW / canvas.width);
-    let heightLeft = imgH;
-    let position = margin;
-    pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-    heightLeft -= (pageH - margin * 2);
-    while (heightLeft > 0) {
-      position = margin - (imgH - heightLeft);
-      pdf.addPage();
-      pdf.addImage(img, "JPEG", margin, position, usableW, imgH);
-      heightLeft -= (pageH - margin * 2);
-    }
+    appendCanvasPagesAvoidingBlockSplits(pdf, canvas, blockRanges);
     pdf.save(base + ".pdf");
   } catch (err) {
     console.error(err);
     toast(".ereport y HTML OK. PDF falló. Abrí impresión como respaldo.");
     const w = window.open("", "_blank");
     if (w) {
-      w.document.write("<html><head><title>PDF</title></head><body>" + buildPdfReportElement(data).innerHTML + "</body></html>");
+      w.document.write(
+        "<html><head><title>PDF</title></head><body>" + buildPdfReportElement(data).innerHTML + "</body></html>",
+      );
       w.document.close();
       w.focus();
       w.print();
