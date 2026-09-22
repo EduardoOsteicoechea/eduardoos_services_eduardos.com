@@ -209,7 +209,7 @@ const jsonLdString =
             </a>
             <a href="/documents/pamphlet" data-route data-service="pamphlet" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>
-              Pamphlet
+              EPAM
             </a>
             <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
@@ -294,41 +294,6 @@ const jsonLdString =
       <main>
         <slot />
       </main>
-
-      <footer class="site-footer">
-        <div class="site-footer__grid">
-          <div>
-            <p class="site-footer__title">Eduardo Osteicoechea</p>
-            <p>Licensed Building Architect and AEC AI technologist. BIM tools and full-stack platforms.</p>
-          </div>
-          <div>
-            <p class="site-footer__title">Explore</p>
-            <ul class="site-footer__list">
-              <li><a href="/" data-route>Home</a></li>
-              <li><a href="/articles" data-route>Articles</a></li>
-              <li><a href="/contact" data-route>Contact</a></li>
-              <li><a href="/api-docs" data-route>API docs</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="site-footer__title">Services</p>
-            <ul class="site-footer__list">
-              <li><a href="/payments/subscription" data-route>Subscriptions</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="site-footer__title">Account</p>
-            <ul class="site-footer__list">
-              <li><a href="/session" data-route>Sign in</a></li>
-              <li><a href="/session/register" data-route>Create account</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="site-footer__bottom">
-          <span>© {new Date().getFullYear()} Eduardo Osteicoechea</span>
-          <span>eduardoos.com</span>
-        </div>
-      </footer>
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
 <div class="agent-chat-log" data-agent-log>

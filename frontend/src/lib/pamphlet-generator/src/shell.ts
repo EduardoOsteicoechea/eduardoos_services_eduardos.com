@@ -64,9 +64,9 @@ function actionBtn(
 /** @param _menuIconSrc retained for call-site compatibility; unused (icons are inline). */
 export function renderShell(_menuIconSrc?: string): string {
   return `
-<section id="pamphlet-header-menu" class="header-dynamic-menu header-dynamic-menu--labeled" aria-label="Pamphlet tools">
+<section id="pamphlet-header-menu" class="header-dynamic-menu header-dynamic-menu--labeled" aria-label="EPAM tools">
   <div class="header-dynamic-menu__inner">
-    <div class="header-dynamic-menu__actions" role="toolbar" aria-label="Pamphlet actions">
+    <div class="header-dynamic-menu__actions" role="toolbar" aria-label="EPAM actions">
       ${actionBtn(
         "btn-dashboard",
         ICONS.dashboard,

@@ -8,29 +8,29 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout
-  title="Pamphlet"
-  description="Cloud pamphlet editor and print export."
+  title="EPAM"
+  description="Cloud EPAM editor, .epam documents, and print export."
   page="pamphlet"
   robots="noindex,nofollow"
 >
   <span slot="dhs" hidden></span>
 
-  <section id="pamphlet-dash" class="pamphlet-vanilla-dash" aria-label="Pamphlet">
+  <section id="pamphlet-dash" class="pamphlet-vanilla-dash" aria-label="EPAM">
     <section class="pamphlet-vanilla-dash__recents" data-dashboard-recents>
-      <h2 class="pamphlet-vanilla-dash__section-title">Recent pamphlets</h2>
+      <h2 class="pamphlet-vanilla-dash__section-title">Recent EPAMs</h2>
       <div class="pamphlet-vanilla-dash__recents-grid" data-dashboard-recent-cards></div>
       <p class="pamphlet-vanilla-dash__hint" data-dashboard-recents-empty hidden>
-        No recent pamphlets yet. Create one to get started.
+        No recent EPAMs yet. Create one to get started.
       </p>
     </section>
 
     <section class="pamphlet-vanilla-dash__options" aria-labelledby="pamphlet-options-title">
-      <h2 class="pamphlet-vanilla-dash__section-title" id="pamphlet-options-title">Pamphlet options</h2>
+      <h2 class="pamphlet-vanilla-dash__section-title" id="pamphlet-options-title">EPAM options</h2>
       <div class="pamphlet-vanilla-dash__grid">
         <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/new" data-pamphlet-nav="new">
           <span class="material-symbols-outlined" aria-hidden="true">note_add</span>
           <span class="pamphlet-vanilla-dash__card-title">New</span>
-          <span class="pamphlet-vanilla-dash__card-desc">Create a new pamphlet.</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Create a new EPAM.</span>
         </a>
         <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/open" data-pamphlet-nav="open">
           <span class="material-symbols-outlined" aria-hidden="true">folder_open</span>
@@ -40,7 +40,7 @@ import Layout from "../../layouts/Layout.astro";
         <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/recent" data-pamphlet-nav="recent">
           <span class="material-symbols-outlined" aria-hidden="true">history</span>
           <span class="pamphlet-vanilla-dash__card-title">Recent</span>
-          <span class="pamphlet-vanilla-dash__card-desc">Continue a recent pamphlet.</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Continue a recent EPAM.</span>
         </a>
         <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/manage" data-pamphlet-nav="manage">
           <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
