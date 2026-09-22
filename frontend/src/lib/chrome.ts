@@ -427,7 +427,6 @@ function syncEreportChrome(): void {
   }
   clearHeaderCollapsed();
   document.documentElement.style.fontSize = "";
-  setChromeHidden(document.querySelector(".agent-fab"), true);
   const storedScale = localStorage.getItem("site-text-scale");
   if (storedScale) {
     document.documentElement.style.setProperty("--site-text-scale", storedScale);

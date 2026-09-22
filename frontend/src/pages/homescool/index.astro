@@ -1,4 +1,5 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 ---
 
@@ -19,7 +20,6 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="product-dash" data-homescool>
-    <h1 class="page-title-sr">Homescool</h1>
     <p class="status" data-banner>Loading…</p>
     <div data-gate hidden class="product-gate">
       <p class="hint">Sign in with Homescool access to view study materials.</p>
@@ -33,6 +33,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
+  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import { fetchHomescoolMaterials } from "../../lib/homescool";
   import { showErrorModal } from "../../lib/error-modal";
 
@@ -97,5 +98,21 @@ import Layout from "../../layouts/Layout.astro";
       a.append(icon, title, desc);
       cyclesEl.append(a);
     }
+    setAgentRoutePayload({
+      kind: "homescool_dashboard",
+      cycles: [...byCycle.entries()].map(([cycle, meta]) => ({
+        cycle,
+        count: meta.count,
+        empty: meta.empty,
+      })),
+    });
   }
+
+  document.addEventListener(
+    "astro:before-swap",
+    () => {
+      clearAgentRoutePayload();
+    },
+    { once: true },
+  );
 </script>

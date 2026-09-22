@@ -30,7 +30,6 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="eoproject product-dash" data-eoproject-project>
-    <h1 class="page-title-sr" data-title>eoProject</h1>
     <p class="status" data-banner>Loading…</p>
 
     <div data-gate hidden class="product-gate">
@@ -144,13 +143,14 @@ import Layout from "../../layouts/Layout.astro";
     type EoprojectStageBundle,
   } from "../../lib/eoproject";
   import type { UploadProgress } from "../../lib/api";
+  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import { apiFail, requireService, setHidden } from "../../lib/productGate";
 
   const root = document.querySelector("[data-eoproject-project]");
   const banner = root?.querySelector("[data-banner]");
   const gate = root?.querySelector("[data-gate]");
   const authed = root?.querySelector("[data-authed]");
-  const titleEl = root?.querySelector("[data-title]");
+  const titleEl = document.querySelector("[data-page-title], [data-title]");
   const descEl = root?.querySelector("[data-desc]");
   const stagesEl = root?.querySelector("[data-stages]");
   const emptyStages = root?.querySelector("[data-empty-stages]");
@@ -857,6 +857,18 @@ import Layout from "../../layouts/Layout.astro";
       return;
     }
     dashboard = res.dashboard;
+    setAgentRoutePayload({
+      kind: "eoproject_dashboard",
+      projectId,
+      project: dashboard.project,
+      stages: dashboard.stages.map((bundle) => ({
+        id: bundle.stage.id,
+        name: bundle.stage.name,
+        sortOrder: bundle.stage.sortOrder,
+        photoCount: bundle.photos?.length ?? 0,
+        ifcCount: bundle.ifcVersions?.length ?? 0,
+      })),
+    });
     if (titleEl instanceof HTMLElement) titleEl.textContent = dashboard.project.name;
     if (descEl instanceof HTMLElement) {
       descEl.textContent =
@@ -965,4 +977,12 @@ import Layout from "../../layouts/Layout.astro";
       await reload();
     }
   }
+
+  document.addEventListener(
+    "astro:before-swap",
+    () => {
+      clearAgentRoutePayload();
+    },
+    { once: true },
+  );
 </script>

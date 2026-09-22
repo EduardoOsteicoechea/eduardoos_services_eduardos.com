@@ -92,10 +92,6 @@ html[data-page^="ereport"] .ereport-hub__error {
   color: var(--site-body-fg);
 }
 
-html[data-page^="ereport"] .agent-fab {
-  display: none;
-}
-
 html[data-page^="ereport"] .ereport-guest-auth {
   display: flex;
   flex: 0 0 auto;

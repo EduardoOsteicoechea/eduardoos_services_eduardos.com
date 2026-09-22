@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import "./ProductDashboard.css";
@@ -61,6 +62,19 @@ export function DashboardGrid({
   cards: DashboardCardItem[];
   onSelect: (id: string) => void;
 }) {
+  useEffect(() => {
+    setAgentRoutePayload({
+      kind: "dashboard",
+      cards: cards.map((c) => ({
+        id: c.id,
+        title: c.title,
+        description: c.description || "",
+        icon: c.icon,
+      })),
+    });
+    return () => clearAgentRoutePayload();
+  }, [cards]);
+
   return (
     <div className="product-dash__grid">
       {cards.map((c) => (
@@ -157,21 +171,14 @@ export function ProductHeaderMenu({
 }
 
 export function ProductHubShell({
-  title,
+  title: _title,
   children,
 }: {
-  /** Prefer omitting: menu + document title already name the hub. */
+  /** Prefer omitting: Layout `.page-title` already names the hub. */
   title?: string;
   children: ReactNode;
 }) {
-  return (
-    <div className="product-dash">
-      {title ? (
-        <h1 className="product-dash__title page-title-sr">{title}</h1>
-      ) : null}
-      {children}
-    </div>
-  );
+  return <div className="product-dash">{children}</div>;
 }
 
 /** Sectioned dashboard block — each product defines its own sections/cards. */

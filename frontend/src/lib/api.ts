@@ -65,18 +65,134 @@ export type ChatPageContext = {
   page_context: string;
 };
 
-/** Visible main-column text for the current route (bounded; sent as agent context). */
+type AgentRoutePayloadStore = {
+  path: string;
+  data: unknown;
+};
+
+declare global {
+  interface Window {
+    __eduardoosAgentRoutePayload?: AgentRoutePayloadStore;
+  }
+}
+
+const MAX_CHAT_PAGE_CONTEXT = 12000;
+
+/** Publish structured route data (eReport payload, hub lists, …) for the AI agent prompt. */
+export function setAgentRoutePayload(data: unknown): void {
+  if (typeof window === "undefined" || typeof location === "undefined") {
+    return;
+  }
+  const path = location.pathname.replace(/\/+$/, "") || "/";
+  window.__eduardoosAgentRoutePayload = { path, data };
+}
+
+/** Drop any previously published route payload (call on page dispose / leave). */
+export function clearAgentRoutePayload(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  delete window.__eduardoosAgentRoutePayload;
+}
+
+function redactAgentPayload(value: unknown, depth = 0): unknown {
+  if (depth > 10) {
+    return "[truncated]";
+  }
+  if (typeof value === "string") {
+    if (value.startsWith("data:") || value.length > 1500) {
+      return `[omitted ${value.length} chars]`;
+    }
+    return value;
+  }
+  if (typeof value === "number" || typeof value === "boolean" || value == null) {
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.slice(0, 120).map((item) => redactAgentPayload(item, depth + 1));
+  }
+  if (typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
+      const lower = key.toLowerCase();
+      if (lower.includes("base64") || lower === "csrf" || lower.includes("password") || lower.includes("token")) {
+        out[key] = "[omitted]";
+        continue;
+      }
+      out[key] = redactAgentPayload(nested, depth + 1);
+    }
+    return out;
+  }
+  return String(value);
+}
+
+function serializeAgentPayload(data: unknown): string {
+  try {
+    return JSON.stringify(redactAgentPayload(data)) || "";
+  } catch {
+    return "";
+  }
+}
+
+/** Card/section snapshot from product hub dashboards currently in the DOM. */
+function collectProductDashSnapshot(): string {
+  if (typeof document === "undefined") {
+    return "";
+  }
+  const root = document.querySelector(".product-dash");
+  if (!(root instanceof HTMLElement)) {
+    return "";
+  }
+  const sections = Array.from(root.querySelectorAll(".product-dash__section-title"))
+    .map((node) => (node.textContent || "").trim())
+    .filter(Boolean)
+    .slice(0, 40);
+  const cards = Array.from(root.querySelectorAll(".product-dash__card"))
+    .map((card) => ({
+      title: (card.querySelector(".product-dash__card-title")?.textContent || "").trim(),
+      description: (card.querySelector(".product-dash__card-desc")?.textContent || "").trim(),
+    }))
+    .filter((card) => card.title)
+    .slice(0, 80);
+  if (!sections.length && !cards.length) {
+    return "";
+  }
+  return serializeAgentPayload({ kind: "dashboard", sections, cards });
+}
+
+function boundPageContext(parts: string[]): string {
+  let page_context = parts.filter(Boolean).join("\n\n").trim();
+  if (page_context.length > MAX_CHAT_PAGE_CONTEXT) {
+    page_context = page_context.slice(0, MAX_CHAT_PAGE_CONTEXT);
+  }
+  return page_context;
+}
+
+/** Visible main-column text + optional route/dashboard payload for the agent prompt. */
 export function collectChatPageContext(): ChatPageContext {
   const path = typeof location !== "undefined" ? location.pathname.replace(/\/+$/, "") || "/" : "/";
   const main = typeof document !== "undefined" ? document.querySelector("main") : null;
-  let page_context = "";
+  const parts: string[] = [];
   if (main instanceof HTMLElement) {
-    page_context = (main.innerText || "").replace(/\s+/g, " ").trim();
-    if (page_context.length > 12000) {
-      page_context = page_context.slice(0, 12000);
+    const text = (main.innerText || "").replace(/\s+/g, " ").trim();
+    if (text) {
+      parts.push(text);
     }
   }
-  return { path, page_context };
+  if (typeof window !== "undefined") {
+    const stored = window.__eduardoosAgentRoutePayload;
+    if (stored && stored.path === path && stored.data != null) {
+      const serialized = serializeAgentPayload(stored.data);
+      if (serialized) {
+        parts.push(`route_payload:\n${serialized}`);
+      }
+    }
+  }
+  const dash = collectProductDashSnapshot();
+  if (dash) {
+    parts.push(`dashboard:\n${dash}`);
+  }
+  return { path, page_context: boundPageContext(parts) };
 }
 
 

@@ -145,6 +145,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import {
     createReportInvite,
     fetchEreportOrgs,
@@ -187,12 +188,28 @@ import Layout from "../../layouts/Layout.astro";
     let saveTarget: "cloud" | "local" = "cloud";
     const iframe = root.querySelector("[data-tracker]");
     let payload: EreportPayload | null = null;
+
     let tema = "";
     let host: TrackerHost | null = null;
     let disposed = false;
     const pendingCmds: TrackerCommand[] = [];
     const invited = new Set<string>();
     const disposers: Array<() => void> = [];
+
+    const publishAgentPayload = (next: EreportPayload | null) => {
+      if (!next) {
+        clearAgentRoutePayload();
+        return;
+      }
+      setAgentRoutePayload({
+        kind: "ereport_report",
+        orgId,
+        reportId,
+        tema,
+        saveTarget,
+        payload: next,
+      });
+    };
 
     const onDoc = <K extends keyof DocumentEventMap>(
       type: K,
@@ -227,6 +244,7 @@ import Layout from "../../layouts/Layout.astro";
       if (disposed) return;
       disposed = true;
       closeModals();
+      clearAgentRoutePayload();
       clearLocalEreportFile();
       host?.destroy();
       host = null;
@@ -252,6 +270,7 @@ import Layout from "../../layouts/Layout.astro";
     const persistCloud = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
       if (disposed || !orgId || !reportId) return false;
       payload = next;
+      publishAgentPayload(next);
       const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       tema = nextTema;
       const res = await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
@@ -283,6 +302,7 @@ import Layout from "../../layouts/Layout.astro";
     const persistLocal = async (next: EreportPayload) => {
       if (disposed || !hasLocalEreportFile()) return false;
       payload = next;
+      publishAgentPayload(next);
       tema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       try {
         await saveLocalEreportFile(next);
@@ -304,6 +324,7 @@ import Layout from "../../layouts/Layout.astro";
     const attachHost = (nextPayload: EreportPayload) => {
       if (disposed || !(iframe instanceof HTMLIFrameElement)) return;
       if (saveTarget === "cloud" && (!orgId || !reportId)) return;
+      publishAgentPayload(nextPayload);
       const uploadUrl = orgId && reportId ? ownerImageUploadPath(orgId, reportId) : "";
       const pushConfig = () => {
         void refreshCsrf().then(() => {
@@ -610,6 +631,7 @@ import Layout from "../../layouts/Layout.astro";
           clearLocalEreportFile();
           payload = data as EreportPayload;
           tema = String(data.reportName || data.appTitle || tema || "Sin tema").trim() || tema;
+          publishAgentPayload(payload);
           host?.post(trackerLoadMessage(payload));
           void persistCloud(payload);
           setBanner(root, "Loaded local file into this cloud report (autosave → cloud).", "ok");

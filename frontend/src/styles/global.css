@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1rem;
@@ -493,6 +493,11 @@ a {
   flex-direction: column;
   gap: var(--rail-gap);
   overflow: hidden;
+}
+
+/* Main menu (toolbar + nav) stacks above DHS and agent trays when they dock beside it. */
+#main-menu {
+  z-index: calc(var(--z-sidebar) + 1);
 }
 
 .tray-backdrop {
@@ -1016,7 +1021,7 @@ h1 {
   margin: 0 0 var(--space-margin);
 }
 
-/* Visually hidden page title — private/app routes (menu + tab name the page). */
+/* Visually hidden page title ΓÇö private/app routes (menu + tab name the page). */
 .page-title-sr {
   position: absolute;
   width: 0.0625rem;
@@ -1567,8 +1572,8 @@ section.diag .panel:not(form) {
 
   /*
    * Top bar (all routes): end-aligned; order =
-   * [eReport guest auth when visible] → session avatar →
-   * cart (when present) → menu (flush end).
+   * [eReport guest auth when visible] ΓåÆ session avatar ΓåÆ
+   * cart (when present) ΓåÆ menu (flush end).
    */
   .header-cluster--menu,
   .header-cluster--tools {
@@ -1715,7 +1720,7 @@ section.diag .panel:not(form) {
     --activity-start-size: 0rem;
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    /* Columns 10–15: six-col form centered on the 24-col desktop grid */
+    /* Columns 10ΓÇô15: six-col form centered on the 24-col desktop grid */
     --span-form: 6;
     --span-sidebar: 7;
     --span-modal: 8;

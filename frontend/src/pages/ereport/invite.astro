@@ -14,7 +14,6 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="session-grid ereport-invite" data-ereport-invite>
-    <h1 class="page-title-sr">eReport invite</h1>
     <p class="status" data-banner>Checking invite…</p>
 
     <form class="panel" data-otp-form hidden>
@@ -41,6 +40,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import {
     fetchInvitePreview,
     fetchInviteReport,
@@ -99,6 +99,13 @@ import Layout from "../../layouts/Layout.astro";
     const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
       activeReportId = opts.reportId;
       payload = reportPayload;
+      setAgentRoutePayload({
+        kind: "ereport_report",
+        inviteId,
+        reportId: opts.reportId,
+        canEdit: opts.canEdit,
+        payload: reportPayload,
+      });
       if (root instanceof HTMLElement) root.hidden = true;
       if (editor instanceof HTMLElement) editor.hidden = false;
       if (!(iframe instanceof HTMLIFrameElement)) return;
@@ -118,6 +125,13 @@ import Layout from "../../layouts/Layout.astro";
           onCloudSave: (next) => {
             if (!opts.canEdit) return;
             payload = next;
+            setAgentRoutePayload({
+              kind: "ereport_report",
+              inviteId,
+              reportId: opts.reportId,
+              canEdit: opts.canEdit,
+              payload: next,
+            });
             void saveInviteReport(opts.reportId, {
               payload: next,
               tema: String(next.reportName || next.appTitle || "").trim(),
@@ -281,6 +295,7 @@ import Layout from "../../layouts/Layout.astro";
     document.addEventListener(
       "astro:before-swap",
       () => {
+        clearAgentRoutePayload();
         window.removeEventListener("ereport-ui-scale", onScale);
         window.removeEventListener("ereport-theme", onTheme);
       },

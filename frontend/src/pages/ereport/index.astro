@@ -44,7 +44,6 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="product-dash ereport-hub" data-ereport-hub>
-    <h1 class="page-title-sr">eReport</h1>
     <p class="status" data-banner>Loading session…</p>
     <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open your eReport hub.
@@ -273,6 +272,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
   import {
     createEreportOrg,
     createOrgInvite,
@@ -348,6 +348,16 @@ import Layout from "../../layouts/Layout.astro";
       else url.searchParams.set("view", view);
       window.history.replaceState({}, "", url);
       setHubError("");
+      setAgentRoutePayload({
+        kind: "ereport_hub",
+        view,
+        canCreate,
+        ownerSafe,
+        activeOrgId,
+        orgs,
+        recent,
+        reports,
+      });
     };
 
     const fillSelect = (selector: string, placeholder: string) => {
@@ -579,6 +589,16 @@ import Layout from "../../layouts/Layout.astro";
       paintReports();
       paintCounts();
       resetOrgPanels();
+      setAgentRoutePayload({
+        kind: "ereport_hub",
+        view: new URLSearchParams(window.location.search).get("view") || "dashboard",
+        canCreate,
+        ownerSafe,
+        activeOrgId,
+        orgs,
+        recent,
+        reports,
+      });
     };
 
     const reload = async () => {
@@ -605,6 +625,16 @@ import Layout from "../../layouts/Layout.astro";
       paintRecent();
       paintManage();
       paintCounts();
+      setAgentRoutePayload({
+        kind: "ereport_hub",
+        view: new URLSearchParams(window.location.search).get("view") || "dashboard",
+        canCreate,
+        ownerSafe,
+        activeOrgId,
+        orgs,
+        recent,
+        reports,
+      });
       if (activeOrgId && orgs.some((o) => o.id === activeOrgId)) await openOrg(activeOrgId);
     };
 
@@ -952,5 +982,13 @@ import Layout from "../../layouts/Layout.astro";
         link.hidden = false;
       }
     });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        clearAgentRoutePayload();
+      },
+      { once: true },
+    );
   });
 </script>

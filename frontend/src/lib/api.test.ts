@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  clearAgentRoutePayload,
   clearSessionHint,
+  collectChatPageContext,
   currentCsrf,
   getCsrf,
   getMe,
@@ -12,6 +14,7 @@ import {
   profileAvatarURL,
   refreshSession,
   resetCsrfMemory,
+  setAgentRoutePayload,
   uploadAvatar,
 } from "./api";
 
@@ -257,5 +260,43 @@ describe("api csrf and errors", () => {
     );
     expect(profileAvatarURL("/api/profile/avatar?v=9")).toBe("/api/profile/avatar?v=9");
     expect(profileAvatarURL("/media/avatars/x.jpg")).toBeNull();
+  });
+});
+
+describe("agent route payload context", () => {
+  afterEach(() => {
+    clearAgentRoutePayload();
+    document.body.innerHTML = "";
+  });
+
+  it("includes published route payload and dashboard cards in page_context", () => {
+    document.body.innerHTML = `
+      <main>
+        <section class="product-dash">
+          <h2 class="product-dash__section-title">Options</h2>
+          <button class="product-dash__card" type="button">
+            <span class="product-dash__card-title">Orgs</span>
+            <span class="product-dash__card-desc">2 visible</span>
+          </button>
+        </section>
+      </main>
+    `;
+    setAgentRoutePayload({ kind: "ereport_report", payload: { reportName: "Demo", sections: [] } });
+    const ctx = collectChatPageContext();
+    expect(ctx.path).toBeTruthy();
+    expect(ctx.page_context).toContain("route_payload:");
+    expect(ctx.page_context).toContain("Demo");
+    expect(ctx.page_context).toContain("dashboard:");
+    expect(ctx.page_context).toContain("Orgs");
+  });
+
+  it("redacts data URLs inside route payload", () => {
+    setAgentRoutePayload({
+      kind: "ereport_report",
+      payload: { reportName: "X", preview: "data:image/png;base64,AAAA" },
+    });
+    const ctx = collectChatPageContext();
+    expect(ctx.page_context).toContain("[omitted");
+    expect(ctx.page_context).not.toContain("AAAA");
   });
 });
