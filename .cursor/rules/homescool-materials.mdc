@@ -9,8 +9,8 @@ alwaysApply: false
 ## Product UI (`/homescool`)
 
 - **Left tree** (togglable via DHS first action `Tree`): `ciclo → semana → día → materia → <title>`.
-- **Main stage** (right): selected material’s `.page` sections only.
-- **DHS Print**: `window.print()` — print CSS hides shell/tree; each `.page` is one PDF page.
+- **Main stage** (right): material HTML in a **same-origin iframe** (`/api/homescool/materials/:id/html`). Do **not** inject `.page` into the shell DOM — site `global.css` also defines `.page` and breaks quiz/sheet layout.
+- **DHS Print**: call `iframe.contentWindow.StudyPrint.print()` (falls back to `iframe.contentWindow.print()`). Each study `.page` is one PDF page.
 - Sheet geometry is **not** rem chrome: US Letter **portrait** (`8.5in × 11in`) or **landscape** (`.page--landscape` / `body.sheets-landscape`). Padding **1cm** (`--page-padding-x/y` in study CSS).
 
 ## Authoring CSS / components (reuse)

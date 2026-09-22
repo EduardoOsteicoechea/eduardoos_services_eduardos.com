@@ -1,4 +1,4 @@
-/* Homescool workspace chrome (rem tokens). Sheet geometry lives in study CSS (in/cm). */
+/* Homescool workspace chrome (rem tokens). Sheets render inside an iframe with study CSS. */
 
 .homescool-workspace {
   grid-column: 1 / span var(--span-full);
@@ -85,12 +85,6 @@
   color: var(--color-bg);
 }
 
-.homescool-tree__chevron {
-  font-size: var(--font-size-sm);
-  line-height: 1;
-  flex: 0 0 auto;
-}
-
 .homescool-workspace__main {
   flex: 1 1 auto;
   min-width: 0;
@@ -107,30 +101,28 @@
 
 .homescool-workspace__stage {
   flex: 1 1 auto;
-  min-height: 20rem;
-  overflow: auto;
-  padding: var(--space-padding);
+  min-height: 28rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-bg);
 }
 
 .homescool-workspace__stage-empty {
-  margin: 0;
+  margin: var(--space-padding);
   font-size: var(--font-size-sm);
   color: var(--color-muted);
 }
 
-.homescool-sheet-root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-padding);
-}
-
-/* Screen preview: sheets from study CSS; scale gently on narrow main */
-.homescool-sheet-root .page {
-  margin-bottom: 0;
+.homescool-sheet-frame {
+  flex: 1 1 auto;
+  width: auto;
+  min-height: 28rem;
+  border: 0;
+  background: #d8d8e4;
 }
 
 @media print {
@@ -166,13 +158,10 @@
     box-shadow: none !important;
   }
 
-  .homescool-sheet-root {
-    gap: 0;
-    align-items: stretch;
-  }
-
-  .homescool-sheet-root .page {
-    box-shadow: none !important;
-    margin: 0 !important;
+  .homescool-sheet-frame {
+    display: block !important;
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
   }
 }

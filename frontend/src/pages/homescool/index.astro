@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import "../../styles/homescool-workspace.css";
 ---
 
-<Layout title="Homescool" description="Homescool study materials workspace." page="homescool" robots="noindex,nofollow">
+<Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
     <button
       class="dhs-action"
@@ -47,13 +47,16 @@ import "../../styles/homescool-workspace.css";
       <p class="homescool-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
         <p class="homescool-workspace__stage-empty" data-homescool-empty>Select a material from the tree.</p>
-        <div class="homescool-sheet-root" data-homescool-sheets hidden></div>
+        <iframe
+          class="homescool-sheet-frame"
+          data-homescool-frame
+          title="Study material"
+          hidden
+        ></iframe>
       </div>
     </div>
   </section>
 </Layout>
-
-<link rel="stylesheet" href="/api/homescool/web-assets/styles.css" data-homescool-sheet-css />
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
@@ -61,17 +64,22 @@ import "../../styles/homescool-workspace.css";
   import { buildHomescoolTree, type HomescoolTreeLeaf, type HomescoolTreeNode } from "../../lib/homescool-tree";
   import { showErrorModal } from "../../lib/error-modal";
 
+  type StudyPrintApi = {
+    print?: () => void;
+    printOrientation?: (orientation: "portrait" | "landscape") => void;
+  };
+
   const gate = document.querySelector("[data-homescool-gate]");
   const workspace = document.querySelector("[data-homescool-workspace]");
   const banner = document.querySelector("[data-homescool-banner]");
   const treeHost = document.querySelector("[data-homescool-tree-host]");
   const empty = document.querySelector("[data-homescool-empty]");
-  const sheets = document.querySelector("[data-homescool-sheets]");
+  const frame = document.querySelector("[data-homescool-frame]");
   const treeToggle = document.querySelector("[data-homescool-tree-toggle]");
   const printBtn = document.querySelector("[data-homescool-print]");
 
-  let activeId = "";
   let materialsById = new Map<string, HomescoolMaterial>();
+  let frameReady = false;
 
   const teacher = await requireService("homescool", { requireSubscription: true });
   const ok = teacher.sessionOk && teacher.access.allowed;
@@ -99,7 +107,15 @@ import "../../styles/homescool-workspace.css";
 
   printBtn?.addEventListener("click", () => {
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled) return;
-    window.print();
+    printActiveMaterial();
+  });
+
+  frame?.addEventListener("load", () => {
+    if (!(frame instanceof HTMLIFrameElement)) return;
+    if (!frame.src || frame.src === "about:blank") return;
+    prepareFrameDocument(frame);
+    frameReady = true;
+    if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
   });
 
   async function boot() {
@@ -174,12 +190,12 @@ import "../../styles/homescool-workspace.css";
   }
 
   async function openMaterial(id: string) {
-    activeId = id;
     treeHost?.querySelectorAll(".homescool-tree__leaf").forEach((el) => {
       if (el instanceof HTMLElement) {
         el.setAttribute("aria-current", el.dataset.materialId === id ? "true" : "false");
       }
     });
+    frameReady = false;
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     if (banner instanceof HTMLElement) banner.textContent = "Loading material…";
     const res = await fetchHomescoolMaterial(id);
@@ -192,42 +208,52 @@ import "../../styles/homescool-workspace.css";
       if (banner instanceof HTMLElement) banner.textContent = res.error || "Not found.";
       return;
     }
+    if (!(frame instanceof HTMLIFrameElement) || !(empty instanceof HTMLElement)) return;
+    // Full document in iframe — isolates study `.page` / quiz CSS from site chrome.
+    setHidden(empty, true);
+    setHidden(frame, false);
+    frame.src = res.htmlUrl;
+    const m = res.material;
+    if (banner instanceof HTMLElement) {
+      banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
+    }
+    document.title = `${m.title} · Homescool`;
+  }
+
+  function prepareFrameDocument(iframe: HTMLIFrameElement) {
     try {
-      const htmlRes = await fetch(res.htmlUrl, { credentials: "include" });
-      if (!htmlRes.ok) throw new Error(`HTML ${htmlRes.status}`);
-      const raw = await htmlRes.text();
-      mountSheets(raw);
-      const m = res.material;
-      if (banner instanceof HTMLElement) {
-        banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
-      }
-      if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
-      document.title = `${m.title} · Homescool`;
+      const doc = iframe.contentDocument;
+      if (!doc?.head) return;
+      if (doc.getElementById("homescool-embed-chrome")) return;
+      const style = doc.createElement("style");
+      style.id = "homescool-embed-chrome";
+      style.textContent = [
+        ".print-fab, .print-menu { display: none !important; }",
+        "body { background: #d8d8e4; }",
+      ].join("\n");
+      doc.head.appendChild(style);
     } catch {
-      showErrorModal({ message: "Could not load material HTML." });
-      if (banner instanceof HTMLElement) banner.textContent = "Could not load material HTML.";
+      /* cross-origin should not happen (same-origin API) */
     }
   }
 
-  function mountSheets(rawHtml: string) {
-    if (!(sheets instanceof HTMLElement) || !(empty instanceof HTMLElement)) return;
-    const doc = new DOMParser().parseFromString(rawHtml, "text/html");
-    const pages = doc.body.querySelectorAll(".page");
-    sheets.replaceChildren();
-    if (!pages.length) {
-      // Fallback: whole body content wrapped as one portrait page
-      const page = document.createElement("section");
-      page.className = "page";
-      page.append(...Array.from(doc.body.childNodes).map((n) => document.importNode(n, true)));
-      sheets.append(page);
-    } else {
-      pages.forEach((page) => {
-        sheets.append(document.importNode(page, true));
-      });
+  function printActiveMaterial() {
+    if (!(frame instanceof HTMLIFrameElement) || !frameReady) {
+      showErrorModal({ message: "Open a material before printing." });
+      return;
     }
-    // Drop scripts from injected content (print bar etc. — DHS Print is the authority).
-    sheets.querySelectorAll("script").forEach((s) => s.remove());
-    setHidden(empty, true);
-    setHidden(sheets, false);
+    try {
+      const win = frame.contentWindow;
+      if (!win) throw new Error("no frame window");
+      const api = (win as Window & { StudyPrint?: StudyPrintApi }).StudyPrint;
+      if (api?.print) {
+        api.print();
+        return;
+      }
+      win.focus();
+      win.print();
+    } catch {
+      showErrorModal({ message: "Could not print this material." });
+    }
   }
 </script>
