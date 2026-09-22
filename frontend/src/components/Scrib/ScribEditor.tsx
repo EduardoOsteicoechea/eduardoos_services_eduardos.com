@@ -1,7 +1,7 @@
 /**
- * Scrib sheet editor — portrait US Letter (215.9×279.4 mm) with ruled background
- * and six SVG layers. Zoom is the safe default; stylus-only drawing and erasing
- * update one authoritative snapshot and save serially after each completed action.
+ * Scrib sheet editor — portrait US Letter (215.9×279.4 mm) with vector ruled SVG
+ * background and six SVG layers. Zoom is the safe default; stylus-only drawing and
+ * erasing update one authoritative snapshot and save serially after each completed action.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -10,11 +10,11 @@ import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import ScribHeaderMenu, { type ScribToolMode } from "./ScribHeaderMenu";
 import ScribInstitutesModal from "./ScribInstitutesModal";
+import ScribSheetBackground from "./ScribSheetBackground";
 import {
   fetchScribSheet,
   resolveScribSheetFromLocation,
   saveScribSheet,
-  SCRIB_BG_SRC,
   SCRIB_LAYER_IDS,
   SCRIB_LAYER_LABELS,
   SCRIB_PAGE_HEIGHT_MM,
@@ -565,12 +565,7 @@ export default function ScribEditor() {
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
             >
-              <img
-                className="scrib-page__bg"
-                src={SCRIB_BG_SRC}
-                alt=""
-                draggable={false}
-              />
+              <ScribSheetBackground />
               {sheet.layers.map((layer, index) => (
                 <svg
                   key={layer.id}

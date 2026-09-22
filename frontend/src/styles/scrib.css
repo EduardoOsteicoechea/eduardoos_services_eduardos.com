@@ -322,11 +322,10 @@ html:fullscreen .scrib-viewport {
 .scrib-page__bg {
   position: absolute;
   inset: 0;
-  /* stretch via inset */
-  object-fit: fill;
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  overflow: visible;
 }
 
 html[data-theme="dark"] .scrib-page,

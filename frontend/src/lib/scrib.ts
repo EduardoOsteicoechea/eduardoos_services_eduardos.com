@@ -7,7 +7,6 @@ import { mustLog } from "./dev-log";
 
 export const SCRIB_PAGE_WIDTH_MM = 215.9;
 export const SCRIB_PAGE_HEIGHT_MM = 279.4;
-export const SCRIB_BG_SRC = "/documento_generado_columnas_v3.jpg";
 
 export const SCRIB_LAYER_IDS = [
   "chapter",

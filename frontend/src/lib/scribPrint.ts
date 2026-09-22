@@ -5,11 +5,11 @@
 import { mustLog } from "./dev-log";
 import {
   postScribPrintPdf,
-  SCRIB_BG_SRC,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
   type ScribSheet,
 } from "./scrib";
+import { buildScribSheetBackgroundSvgMarkup } from "./scribSheetBackground";
 
 const PRINT_PX_PER_MM = 150 / 25.4;
 
@@ -21,6 +21,21 @@ function loadImage(src: string): Promise<HTMLImageElement> {
     img.onerror = () => reject(new Error(`Failed to load ${src}`));
     img.src = src;
   });
+}
+
+function svgMarkupToImage(
+  markup: string,
+  widthPx: number,
+  heightPx: number,
+): Promise<HTMLImageElement> {
+  const sized = markup.replace(
+    /width="[^"]*"\s+height="[^"]*"/,
+    `width="${widthPx}" height="${heightPx}"`,
+  );
+  const url = URL.createObjectURL(
+    new Blob([sized], { type: "image/svg+xml;charset=utf-8" }),
+  );
+  return loadImage(url).finally(() => URL.revokeObjectURL(url));
 }
 
 function svgLayerToImage(
@@ -70,7 +85,11 @@ export async function captureScribSheetLightGrayscale(
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, widthPx, heightPx);
 
-  const bg = await loadImage(SCRIB_BG_SRC);
+  const bg = await svgMarkupToImage(
+    buildScribSheetBackgroundSvgMarkup(),
+    widthPx,
+    heightPx,
+  );
   ctx.drawImage(bg, 0, 0, widthPx, heightPx);
 
   const svgs = Array.from(sheetEl.querySelectorAll("svg.scrib-layer"));
