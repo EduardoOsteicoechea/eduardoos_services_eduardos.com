@@ -991,7 +991,10 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .modal-card img { align-self: stretch; width: auto; min-width: 0; max-height: 35rem; object-fit: contain; background: #111; border-radius: var(--radius); }
 .modal-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; gap: 0.5rem; }
 
-@media (max-width: 68rem) {
+/* Phone + tablet landscape: stack columns. Desktop-wide stays two-up.
+   Tablet landscape was using the wide grid and WebKit often failed to paint
+   issue text / PDF glyphs in that mode; phone portrait (stacked) worked. */
+@media (max-width: 90rem) {
   .item-row { grid-template-columns: 1fr; }
   .qa-pair { grid-template-columns: 1fr; }
   .qa-half + .qa-half { border-left: none; border-top: none; }
@@ -1033,6 +1036,10 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   .inplace-nombre .inplace-view {
     overflow-wrap: anywhere;
     word-break: normal;
+  }
+  .inplace-view {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 .material-icons {
@@ -3153,21 +3160,27 @@ function preparePdfCloneForCapture(cloned) {
 }
 
 function mountPdfCaptureHost(report) {
-  // Tablets/WebKit often drop text when the capture node is transformed off-screen.
-  // Keep it on-screen under a veil so glyphs paint, then remove after capture.
-  const host = document.createElement("div");
-  host.setAttribute("data-pdf-capture-host", "1");
-  host.style.cssText =
-    "position:fixed;left:0;top:0;width:56.25rem;max-width:100vw;z-index:2147482990;overflow:visible;background:#ffffff;pointer-events:none;";
-  report.style.background = "#ffffff";
-  host.appendChild(report);
+  // Tablets (esp. landscape/WebKit) drop text when the capture node is obscured
+  // or transformed off-screen. Keep the report ON TOP of the veil so glyphs paint.
   const veil = document.createElement("div");
   veil.setAttribute("data-pdf-capture-veil", "1");
   veil.style.cssText =
-    "position:fixed;inset:0;z-index:2147483000;background:#ffffff;display:flex;align-items:center;justify-content:center;font:600 1rem Arial,Helvetica,sans-serif;color:#111111;";
-  veil.textContent = "Generando PDF…";
-  document.body.appendChild(host);
+    "position:fixed;inset:0;z-index:2147482990;background:#ffffff;pointer-events:none;";
+  const host = document.createElement("div");
+  host.setAttribute("data-pdf-capture-host", "1");
+  host.style.cssText =
+    "position:fixed;left:0;top:0;width:56.25rem;max-width:100%;z-index:2147483000;overflow:visible;background:#ffffff;pointer-events:none;box-sizing:border-box;";
+  const status = document.createElement("div");
+  status.style.cssText =
+    "position:sticky;top:0;z-index:1;padding:0.75rem 1rem;background:#111111;color:#ffffff;font:600 0.95rem Arial,Helvetica,sans-serif;";
+  status.textContent = "Generando PDF…";
+  report.style.background = "#ffffff";
+  report.style.color = "#000000";
+  report.style.maxWidth = "100%";
+  host.appendChild(status);
+  host.appendChild(report);
   document.body.appendChild(veil);
+  document.body.appendChild(host);
   return {
     host,
     veil,

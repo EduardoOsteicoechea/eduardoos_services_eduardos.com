@@ -118,11 +118,18 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("function preparePdfCloneForCapture(");
     expect(tracker).toContain('credentials: "include"');
     expect(tracker).toContain("Generando PDF");
+    expect(tracker).toContain("data-pdf-capture-host");
+    expect(tracker).toContain("z-index:2147483000");
     expect(tracker).not.toContain("translate(-120vw,-120vh)");
     expect(tracker).not.toContain("opacity:0;pointer-events:none;z-index:-1");
     expect(tracker).toContain("PDF canvas empty");
     expect(tracker).toContain("PDF canvas blank");
     expect(tracker).toContain("Arial,Helvetica,sans-serif");
+  });
+
+  it("stacks tracker columns through tablet landscape widths", () => {
+    expect(tracker).toContain("@media (max-width: 90rem)");
+    expect(tracker).toContain(".qa-pair { grid-template-columns: 1fr; }");
   });
 
   it("slices PDF pages between pdf-block cards instead of mid-card", () => {
