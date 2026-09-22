@@ -530,7 +530,6 @@ export default function EocodeStudio() {
   if (access === "loading") {
     return (
       <section className="eocode-gate">
-        <h1>eocode</h1>
         <p className="lede">Cargando el estudio de programacion...</p>
       </section>
     );
@@ -539,7 +538,6 @@ export default function EocodeStudio() {
   if (access === "signin") {
     return (
       <section className="eocode-gate">
-        <h1>eocode</h1>
         <p className="lede">Inicia sesion para usar el estudio de programacion.</p>
         <a className="btn btn--primary" href="/session?next=%2Feocode">
           Iniciar sesion
@@ -551,7 +549,6 @@ export default function EocodeStudio() {
   if (access === "denied") {
     return (
       <section className="eocode-gate">
-        <h1>eocode</h1>
         <p className="lede">
           eocode es un estudio privado. Pidele a un administrador que te conceda acceso.
         </p>
@@ -565,7 +562,6 @@ export default function EocodeStudio() {
   if (access === "error") {
     return (
       <section className="eocode-gate">
-        <h1>eocode</h1>
         <p className="lede">No se pudo cargar el estudio. Intenta recargar la pagina.</p>
       </section>
     );

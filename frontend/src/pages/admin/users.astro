@@ -14,7 +14,6 @@ import Layout from "../../layouts/Layout.astro";
   </Fragment>
 
   <section class="product-dash admin-users" data-admin-users>
-    <h1 class="page-title-sr">Registered users</h1>
 
     <p class="status" data-banner>Checking session…</p>
 
@@ -29,7 +28,7 @@ import Layout from "../../layouts/Layout.astro";
   import { apiRequest, getAdminUsers, getMe } from "../../lib/api";
   import { showErrorModal } from "../../lib/error-modal";
 
-  const SERVICES = ["pamphlet", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"] as const;
+  const SERVICES = ["epam", "homescool", "scrib", "ereport", "evoice", "eoproject", "api", "eocode"] as const;
 
   const root = document.querySelector("[data-admin-users]");
   if (root instanceof HTMLElement) {

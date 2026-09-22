@@ -144,7 +144,6 @@ export default function EvoiceInvitePage() {
   return (
     <ServiceGate serviceId="evoice" serviceLabel="eVoice" requireSubscription>
       <div className="evoice evoice__invite">
-        <h1 className="page-title-sr">eVoice playlist invite</h1>
         {error ? <p className="evoice__empty">{error}</p> : null}
         {expired || !valid ? (
           <p className="evoice__empty">This invite is expired or invalid.</p>

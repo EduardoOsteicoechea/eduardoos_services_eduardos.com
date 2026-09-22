@@ -28,14 +28,13 @@ const description =
   "Eduardo Osteicoechea — licensed Building Architect and AEC AI technologist. BIM tools, full-stack platforms, and careful craft at eduardoos.com.";
 ---
 
-<Layout title="Architect. BIM engineer. Software builder." description={description} jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))}>
+<Layout title="Architect. BIM engineer. Software builder." description={description} jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))} pageTitleId="who">
   <div class="page">
     <header class="hero">
       <p class="eyebrow">
         <span class="material-symbols-outlined" aria-hidden="true">architecture</span>
         Licensed Building Architect · AEC AI Technologist
       </p>
-      <h1 class="hero__title" id="who">Architect. BIM engineer. Software builder.</h1>
       <p class="hero__lede">{profileWhoAnswer}</p>
       <div class="hero__actions">
         <a class="btn btn--primary btn--lg" href="/contact" data-route>

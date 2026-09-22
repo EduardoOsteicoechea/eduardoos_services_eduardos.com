@@ -1,4 +1,5 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
 
 export function getStaticPaths() {
@@ -17,7 +18,6 @@ const cycle = Number.parseInt(Astro.params.cycle ?? "0", 10);
   </Fragment>
 
   <section class="product-dash" data-homescool-cycle data-cycle={String(cycle)}>
-    <h1 class="page-title-sr">Ciclo {cycle}</h1>
     <p class="status" data-banner>Loading…</p>
     <ul class="product-list" data-list hidden></ul>
   </section>

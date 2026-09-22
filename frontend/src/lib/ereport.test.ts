@@ -67,8 +67,11 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("data-dashboard-recent-cards");
     expect(hubSrc).toContain("ereport-hub__options");
     expect(hubSrc).toContain("eReport options");
-    expect(hubSrc).toContain('<h1 class="page-title-sr">eReport</h1>');
+    expect(hubSrc).not.toContain("page-title-sr");
     expect(hubSrc).not.toContain('"Signed in."');
+    const layoutSrc = readFileSync(join(here, "../layouts/Layout.astro"), "utf8");
+    expect(layoutSrc).toContain('class="page-title"');
+    expect(layoutSrc).toContain("data-page-title");
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--font-base: 1rem");
     expect(css).toContain("--p3: 1rem");

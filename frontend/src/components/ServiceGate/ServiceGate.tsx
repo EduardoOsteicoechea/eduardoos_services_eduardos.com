@@ -94,7 +94,6 @@ export default function ServiceGate({
   if (state === "signin") {
     return (
       <section className="service-gate">
-        <h1 className="service-gate__title">{serviceLabel}</h1>
         <p className="service-gate__lead">Sign in to use this service.</p>
         <div className="service-gate__actions">
           <a
@@ -111,7 +110,6 @@ export default function ServiceGate({
   if (state === "denied") {
     return (
       <section className="service-gate">
-        <h1 className="service-gate__title">{serviceLabel}</h1>
         <p className="service-gate__lead">
           This service requires an active subscription. Subscribe or ask an admin
           to grant access.

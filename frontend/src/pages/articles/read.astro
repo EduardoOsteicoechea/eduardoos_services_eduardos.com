@@ -14,7 +14,6 @@ import Layout from "../../layouts/Layout.astro";
 
   <article class="article-page" data-article lang="es" itemscope itemtype="https://schema.org/Article">
     <header class="article-page__header">
-      <h1 data-article-title itemprop="headline">Article</h1>
       <div class="article-page__byline" data-article-byline hidden></div>
       <p class="status" data-article-status>Loading article…</p>
     </header>
@@ -158,7 +157,7 @@ import Layout from "../../layouts/Layout.astro";
   }
 
   async function loadArticle() {
-    const titleEl = document.querySelector("[data-article-title]");
+    const titleEl = document.querySelector("[data-page-title]");
     const status = document.querySelector("[data-article-status]");
     const content = document.querySelector("[data-article-content]");
     const footer = document.querySelector("[data-article-footer]");
@@ -170,7 +169,10 @@ import Layout from "../../layouts/Layout.astro";
     content.replaceChildren();
     footer.replaceChildren();
     footer.hidden = true;
-    if (titleEl instanceof HTMLElement) titleEl.textContent = "Article";
+    if (titleEl instanceof HTMLElement) {
+      titleEl.textContent = "Article";
+      titleEl.setAttribute("itemprop", "headline");
+    }
     if (!id) {
       status.textContent = "Article id is missing.";
       return;
@@ -204,7 +206,10 @@ import Layout from "../../layouts/Layout.astro";
       return;
     }
     const title = (result.data.title || "").trim() || "Article";
-    if (titleEl instanceof HTMLElement) titleEl.textContent = title;
+    if (titleEl instanceof HTMLElement) {
+      titleEl.textContent = title;
+      titleEl.setAttribute("itemprop", "headline");
+    }
     if (bylineHost instanceof HTMLElement) renderByline(bylineHost, result.data.byline);
     status.hidden = true;
     renderBlocks(content, result.data.blocks);

@@ -3,6 +3,10 @@
   --space-padding: 1rem;
   --main-padding: 1rem;
   --main-padding-top: var(--main-padding);
+  /* Page H1 band: global top padding + menu button + bottom margin */
+  --page-title-height: calc(
+    var(--space-padding) + var(--menu-button-size) + var(--space-margin)
+  );
   --main-inline: 1rem;
   --page-gutter: 1rem;
   --page-col-count: 24;
@@ -969,10 +973,18 @@ main {
   grid-template-columns: repeat(var(--page-col-count), minmax(0, 1fr));
   column-gap: var(--page-gutter);
   row-gap: var(--rail-gap);
-  padding-top: var(--main-padding-top);
+  /* .page-title owns the top offset (aligns H1 with the menu button). */
+  padding-top: 0;
   padding-bottom: var(--main-padding);
   padding-left: var(--main-inline);
   padding-right: var(--main-inline);
+}
+
+/* Workspaces have no .page-title band — restore chrome clearance. */
+html[data-page="ereport-workspace"] main,
+html[data-page="homescool-workspace"] main,
+html[data-page="scrib-sheet"] main {
+  padding-top: var(--main-padding-top);
 }
 
 main > * {
@@ -1021,7 +1033,40 @@ h1 {
   margin: 0 0 var(--space-margin);
 }
 
-/* Visually hidden page title ΓÇö private/app routes (menu + tab name the page). */
+/*
+ * Dedicated page H1 band — height matches the activity bar:
+ * 1rem padding + menu-button-size + 1rem margin. First line aligns with the menu button.
+ */
+.page-title {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: var(--space-padding) var(--menu-button-size) var(--space-margin);
+  height: var(--page-title-height);
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.page-title h1 {
+  grid-row: 2;
+  box-sizing: border-box;
+  margin: 0;
+  padding-top: calc((var(--menu-button-size) - (var(--font-size-xl) * 1.2)) / 2);
+  align-self: start;
+  min-width: 0;
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+/* Phone: keep the title clear of the menu button (padding + button + 1rem gap). */
+@media (max-width: 47.999rem) {
+  .page-title {
+    padding-right: calc(var(--menu-button-size) + 1rem);
+  }
+}
+
+/* Legacy a11y clip — prefer .page-title; keep for any remaining callers. */
 .page-title-sr {
   position: absolute;
   width: 0.0625rem;
@@ -1572,8 +1617,8 @@ section.diag .panel:not(form) {
 
   /*
    * Top bar (all routes): end-aligned; order =
-   * [eReport guest auth when visible] ΓåÆ session avatar ΓåÆ
-   * cart (when present) ΓåÆ menu (flush end).
+   * [eReport guest auth when visible] → session avatar →
+   * cart (when present) → menu (flush end).
    */
   .header-cluster--menu,
   .header-cluster--tools {
@@ -1618,7 +1663,7 @@ section.diag .panel:not(form) {
   }
 
   main {
-    padding-top: var(--main-padding);
+    padding-top: 0;
     padding-bottom: var(--main-padding);
   }
 
@@ -1720,7 +1765,7 @@ section.diag .panel:not(form) {
     --activity-start-size: 0rem;
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    /* Columns 10ΓÇô15: six-col form centered on the 24-col desktop grid */
+    /* Columns 10–15: six-col form centered on the 24-col desktop grid */
     --span-form: 6;
     --span-sidebar: 7;
     --span-modal: 8;
@@ -1824,7 +1869,7 @@ section.diag .panel:not(form) {
   }
 
   main {
-    padding-top: var(--main-padding-top);
+    padding-top: 0;
     padding-left: var(--main-inline);
     padding-right: var(--main-inline);
   }
