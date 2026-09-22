@@ -594,7 +594,7 @@
 .eoproject__video-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--space-padding);
   align-items: center;
   margin: 0.5rem 0;
 }

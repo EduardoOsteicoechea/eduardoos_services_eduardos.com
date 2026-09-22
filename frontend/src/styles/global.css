@@ -2480,7 +2480,7 @@ a:hover {
   gap: var(--space-padding);
   align-items: center;
   justify-content: space-between;
-  padding: calc(var(--space-padding) * 1.25);
+  padding: var(--space-padding);
   background: linear-gradient(135deg, var(--accent-softer), var(--color-surface) 62%);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -2545,31 +2545,7 @@ a:hover {
   color: var(--color-accent);
 }
 
-/* ---------- Site footer ---------- */
-
-.site-footer {
-  margin-top: calc(var(--space-margin) * 2);
-  padding-block: var(--space-padding);
-  color: var(--color-muted);
-  font-size: var(--font-size-sm);
-  border-top: var(--border-width) solid var(--color-border);
-}
-
-.site-footer__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: var(--space-padding);
-}
-
-.site-footer__title {
-  margin: 0 0 var(--rail-gap);
-  font-family: var(--font-family-ui, var(--font-family));
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text);
-}
+/* ---------- Compact link list (home contact card) ---------- */
 
 .site-footer__list {
   display: flex;
@@ -2578,21 +2554,6 @@ a:hover {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.site-footer a:hover {
-  color: var(--color-link);
-}
-
-.site-footer__bottom {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rail-gap);
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-padding);
-  padding-top: var(--rail-gap);
-  border-top: var(--border-width) solid var(--color-border);
 }
 
 /* ---------- Existing component polish ---------- */
@@ -2692,23 +2653,4 @@ a:hover {
 html.page-pamphlet,
 body.page-pamphlet {
   --font-family: var(--font-family-ui, var(--font-family));
-}
-
-/* ---------- Shared site footer placement ---------- */
-
-.site-footer {
-  padding-inline: var(--main-inline);
-}
-
-@media (min-width: 64rem) {
-  .site-footer {
-    padding-left: var(--main-inline);
-  }
-}
-
-html[data-page="ereport-workspace"] .site-footer,
-html[data-page="ereport-invite"] .site-footer,
-html[data-page="scrib-sheet"] .site-footer,
-html.page-pamphlet .site-footer {
-  display: none;
 }

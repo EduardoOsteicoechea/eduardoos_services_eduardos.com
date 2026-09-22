@@ -63,8 +63,8 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-vanilla-dash {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--space-padding) * 2.5);
-    /* Align with .site-footer: shell main already supplies footer-matching inset */
+    gap: var(--space-padding);
+    /* Shell main already supplies --main-inline / --main-padding. */
     padding: 0;
     color: var(--color-text);
   }
@@ -110,7 +110,7 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-vanilla-dash__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-    gap: var(--rail-gap);
+    gap: var(--space-padding);
   }
 
   @media (max-width: 63.999rem) {
@@ -128,7 +128,7 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-vanilla-dash__card {
     display: flex;
     flex-direction: column;
-    gap: var(--rail-gap);
+    gap: var(--space-padding);
     padding: var(--space-padding);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);

@@ -97,7 +97,7 @@
   position: relative;
   overflow: hidden;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: var(--space-padding);
   min-height: calc(var(--control-height) * 3.5);
   padding: var(--space-padding);
   background: var(--eo-surface-2);
@@ -169,7 +169,7 @@
 }
 
 .subscription-page__grid{
-  gap: 0.75rem;
+  gap: var(--space-padding);
 }
 
 .subscription-page__service{
@@ -348,7 +348,7 @@
 }
 
 .institutes-reader__body{
-  gap: 1.125rem;
+  gap: var(--space-padding);
   padding: var(--space-padding);
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
@@ -462,8 +462,8 @@ main > .diag{
 
 .session-grid{
   grid-column: 1 / span var(--span-form);
-  gap: 1rem;
-  padding: 1.75rem;
+  gap: var(--space-padding);
+  padding: var(--space-padding);
   background: var(--eo-surface-2);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -499,19 +499,19 @@ main > .diag{
   flex-direction: column;
   grid-column: 1 / span var(--span-full);
   box-sizing: border-box;
-  /* Mobile: full main column + 1rem side padding (no % widths). */
+  /* main already supplies --main-inline / --main-padding (1rem). */
   max-width: none;
   margin-inline: 0;
-  padding-inline: 1rem;
-  gap: 1.5rem;
+  padding-inline: 0;
+  gap: var(--space-padding);
   justify-self: start;
 }
 
 .article-page__header{
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 0 0 1.25rem;
+  gap: var(--space-padding);
+  padding: 0 0 var(--space-padding);
   background: transparent;
   border: 0;
   border-bottom: var(--border-width) solid var(--color-border);
@@ -584,8 +584,8 @@ main > .diag{
 }
 
 .article-page__footer{
-  gap: 1rem;
-  padding-top: 1.25rem;
+  gap: var(--space-padding);
+  padding-top: var(--space-padding);
   background: transparent;
   border: 0;
   border-top: var(--border-width) solid var(--color-border);
@@ -609,13 +609,13 @@ main > .diag{
 }
 
 .articles-page__tree{
-  gap: 1.5rem;
+  gap: var(--space-padding);
 }
 
 .articles-series{
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-padding);
   padding: 0;
   background: transparent;
   border: 0;
@@ -668,7 +668,7 @@ main > .diag{
 .articles-chapter{
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-padding);
   margin: 0;
   padding: 0;
   background: transparent;

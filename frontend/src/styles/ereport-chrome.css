@@ -519,7 +519,7 @@ html[data-page^="ereport"] .ereport-hub__error {
 html[data-page="ereport"] .ereport-hub.product-dash {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--space-padding) * 2.5);
+  gap: var(--space-padding);
   padding: 0 0 var(--space-padding);
   color: var(--color-text);
   background: transparent;
@@ -554,7 +554,7 @@ html[data-page="ereport"] .ereport-hub [data-org-panel-view]:not([hidden]) {
 }
 
 html[data-page="ereport"] .ereport-hub [data-view="dashboard"]:not([hidden]) {
-  gap: calc(var(--space-padding) * 2.5);
+  gap: var(--space-padding);
 }
 
 html[data-page="ereport"] .ereport-hub__recents,
@@ -577,7 +577,7 @@ html[data-page="ereport"] .ereport-hub__recents-grid {
 html[data-page="ereport"] .ereport-hub .product-dash__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: var(--rail-gap);
+  gap: var(--space-padding);
 }
 
 html[data-page="ereport"] .ereport-hub .product-dash__card {
@@ -586,7 +586,7 @@ html[data-page="ereport"] .ereport-hub .product-dash__card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--rail-gap);
+  gap: var(--space-padding);
   min-height: calc(var(--control-height) * 4);
   height: auto;
   padding: var(--space-padding);

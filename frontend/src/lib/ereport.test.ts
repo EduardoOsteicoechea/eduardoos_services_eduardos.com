@@ -78,8 +78,7 @@ describe("eReport public invite routing", () => {
     expect(css).toContain("ereport-hub__options");
     expect(css).toMatch(/@media \(max-width: 47\.999rem\)[\s\S]*\.btn \{[\s\S]*max-height: none/);
     const globalCss = readFileSync(join(here, "../styles/global.css"), "utf8");
-    expect(globalCss).toMatch(/html\[data-page="ereport-workspace"\] \.site-footer/);
-    expect(globalCss).toMatch(/html\[data-page="scrib-sheet"\] \.site-footer/);
+    expect(globalCss).not.toMatch(/\.site-footer\s*\{/);
     expect(globalCss).not.toMatch(/html\[data-page\^="ereport"\] \.site-footer/);
     expect(globalCss).not.toContain('html[data-page="ereport-workspace"] .ereport-workspace > h1');
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
