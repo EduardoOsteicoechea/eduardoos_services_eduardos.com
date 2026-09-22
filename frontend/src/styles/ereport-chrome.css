@@ -26,9 +26,9 @@ html[data-page^="ereport"] {
   --site-input-bg: #252a33;
   --glassed_background: color-mix(in srgb, var(--bg) 86%, transparent);
   --site-focus-ring: color-mix(in srgb, var(--site-accent) 45%, transparent);
-  --br: 3.44px;
-  --bmh: 36px;
-  --bmw: 36px;
+  --br: 0.215rem;
+  --bmh: 2.25rem;
+  --bmw: 2.25rem;
   --p1: 0.5rem;
   --p2: 0.75rem;
   --p3: 1rem;
@@ -50,7 +50,7 @@ html[data-page^="ereport"] {
   --font-base: 1rem;
   --font-lg: 1.125rem;
   /* Workspace / invite text scale (font +/-). Chrome keeps site --color-*. */
-  font-size: calc(16px * var(--site-text-scale));
+  font-size: calc(1rem * var(--site-text-scale));
   color-scheme: dark;
 }
 
@@ -241,7 +241,8 @@ html[data-page^="ereport"] .ereport-hub__form > :not(button):not(.ereport-hub__r
 
 html[data-page^="ereport"] .ereport-hub__form > button {
   grid-column: 1;
-  width: 100%;
+  justify-self: stretch;
+  width: auto;
   height: var(--bmh);
   min-height: var(--bmh);
 }
@@ -258,14 +259,16 @@ html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row {
 html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > .btn--primary,
 html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > button:first-child {
   grid-column: 1;
-  width: 100%;
+  justify-self: stretch;
+  width: auto;
   height: var(--bmh);
   min-height: var(--bmh);
 }
 
 html[data-page^="ereport"] .ereport-hub__form > .ereport-hub__row > button:not(:first-child) {
   grid-column: 1;
-  width: 100%;
+  justify-self: stretch;
+  width: auto;
   height: var(--bmh);
   min-height: var(--bmh);
 }
@@ -303,7 +306,8 @@ html[data-page^="ereport"] .ereport-modal label textarea {
 }
 
 html[data-page^="ereport"] .ereport-modal .ereport-ids-panel {
-  width: min(100%, 36rem);
+  width: 36rem;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
 }
 
 html[data-page^="ereport"] .ereport-ids-form {
@@ -380,7 +384,7 @@ html[data-page^="ereport"] .ereport-modal input {
   font-size: var(--font-base);
   color: var(--site-body-fg);
   background: var(--site-input-bg);
-  border: 1px solid var(--site-input-border);
+  border: 0.0625rem solid var(--site-input-border);
   border-radius: var(--br);
 }
 
@@ -389,8 +393,9 @@ html[data-page^="ereport"] .ereport-modal {
 }
 
 html[data-page^="ereport"] .ereport-modal .panel {
-  width: min(100%, 26rem);
-  max-height: min(88dvh, 36rem);
+  width: 26rem;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  max-height: 36rem;
   margin: 0;
   padding: 1.1rem 1.15rem 1rem;
   overflow: auto;
@@ -417,7 +422,7 @@ html[data-page^="ereport"] .ereport-modal input {
   padding: 0 var(--p2);
   color: var(--site-body-fg);
   background: var(--site-input-bg);
-  border: 1px solid var(--site-input-border);
+  border: 0.0625rem solid var(--site-input-border);
   border-radius: var(--br);
 }
 
@@ -444,7 +449,7 @@ html[data-page^="ereport"] .ereport-hub__error {
   html[data-page^="ereport"] .product-dash__section-title,
   html[data-page^="ereport"] [data-org-detail-name] {
     min-width: 0;
-    max-width: 100%;
+    max-width: none;
     overflow-wrap: break-word;
     word-break: break-word;
   }
@@ -463,8 +468,9 @@ html[data-page^="ereport"] .ereport-hub__error {
   html[data-page^="ereport"] .ereport-modal form > button,
   html[data-page^="ereport"] .ereport-modal form > .ereport-modal-actions > button {
     grid-column: 1;
-    width: 100%;
-    max-width: 100%;
+    justify-self: stretch;
+    width: auto;
+    max-width: none;
   }
 
   html[data-page^="ereport"] .btn {
@@ -492,8 +498,10 @@ html[data-page^="ereport"] .ereport-hub__error {
   html[data-page^="ereport"] .product-dash input,
   html[data-page^="ereport"] .product-dash select,
   html[data-page^="ereport"] .ereport-modal input {
-    width: 100%;
-    max-width: 100%;
+    align-self: stretch;
+    width: auto;
+    max-width: none;
+    min-width: 0;
     box-sizing: border-box;
   }
 

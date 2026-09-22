@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -28,15 +28,15 @@
   --sidebar-w: 24.5rem;
   --topbar-h: 0rem;
   --base: 1rem;
-  --sticky-sec-h: 3.5rem;
+  --sticky-sec-h: 2.75rem;
   --sticky-sub-h: 2.75rem;
-  --radius: 3px;
+  --radius: 0.1875rem;
   --section-head-bg: #dcdcdc;
-  /* Spec 063: match site root (16px × scale); rem children keep proportions. */
+  /* Spec 063: root rem × --site-text-scale; rem children keep proportions. */
   --site-text-scale: 1;
 }
 html {
-  font-size: calc(16px * var(--site-text-scale, 1));
+  font-size: calc(1rem * var(--site-text-scale, 1));
   scroll-behavior: smooth;
   height: 100%;
   color-scheme: light;
@@ -88,7 +88,7 @@ body.sidebar-collapsed { --sidebar-w: 0rem; }
   min-width: 0;
   min-height: 0;
   overflow: auto;
-  padding: 1.25rem;
+  padding: 1.25rem 0;
   max-width: none;
   margin: 0;
 }
@@ -116,7 +116,7 @@ body.sidebar-collapsed .sidebar {
   border-bottom: 0.125rem solid color-mix(in srgb, var(--ink) 25%, transparent);
   font-size: 1.365rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.04rem;
   text-transform: uppercase;
 }
 .sidebar-body {
@@ -171,7 +171,7 @@ body.sidebar-collapsed .sidebar {
 }
 .nav-dot {
   width: 1.071rem; height: 1.071rem; padding: 0;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   background: var(--neutral);
   border: 0.0625rem solid color-mix(in srgb, var(--ink) 55%, transparent);
   cursor: pointer; flex: 0 0 auto;
@@ -206,7 +206,7 @@ body.sidebar-collapsed .sidebar {
 }
 
 .nav-tip {
-  position: fixed; z-index: 80; max-width: min(28rem, calc(100vw - 5rem));
+  position: fixed; z-index: 80; max-width: 28rem;
   background: var(--bg); color: var(--ink);
   padding: 0.5rem 0.65rem; border-radius: var(--radius); font-size: 1.3125rem; line-height: 1.35;
   border: 0.0625rem solid var(--line);
@@ -275,7 +275,7 @@ label.field input, label.field textarea, .nombre-input,
   border: 0.0625rem solid var(--line); border-radius: var(--radius);
   padding: 0.5rem 0.65rem; background: var(--card);
 }
-.inplace input, .inplace textarea { width: 100%; }
+.inplace input, .inplace textarea { align-self: stretch; width: auto; min-width: 0; box-sizing: border-box; }
 /* Native date/datetime icons follow color-scheme; force contrast in dark mode. */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -315,20 +315,21 @@ button.has-label { gap: 0.35rem; }
   position: sticky;
   top: var(--topbar-h);
   z-index: 35;
-  display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-  margin: 0; padding: 0.85rem 1rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: nowrap;
+  margin: 0; padding: 0.7rem 0.85rem;
   background: var(--section-head-bg);
   color: var(--ink);
   border: 0.125rem solid var(--ink);
   border-radius: var(--radius);
-  box-shadow: 0 0.15rem 0.45rem rgba(0,0,0,.18);
+  box-shadow: 0 0.12rem 0.4rem rgba(0,0,0,.12);
 }
 .section-title-main {
-  display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1;
+  display: flex; align-items: center; gap: 0.45rem; min-width: 0; flex: 1;
 }
-.section-block > .section-title h2 {
-  margin: 0; font-size: 1.35rem; font-weight: 750; letter-spacing: -0.02em;
-  color: var(--ink); line-height: 1.15;
+.section-block > .section-title h2,
+.section-title .inplace-title .inplace-view {
+  margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: 0;
+  color: var(--ink); line-height: 1.2;
 }
 .collapse-toggle {
   flex: 0 0 auto;
@@ -388,12 +389,14 @@ button.has-label { gap: 0.35rem; }
   --tree-pad: 1.75rem;
   top: calc(0.65rem + 0.75rem); /* item-card pad + half toggle */
 }
-.section-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-.section-actions .hint { color: var(--muted); font-size: 0.8rem; }
+.section-actions { display: flex; gap: 0.35rem; align-items: center; flex-wrap: nowrap; flex: 0 0 auto; }
+.section-actions .hint { color: var(--muted); font-size: 0.75rem; white-space: nowrap; }
+.section-actions button { width: 1.9rem; height: 1.9rem; padding: 0; }
 .section-open { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
-.section-open-label { color: var(--muted); font-size: 0.8rem; }
+.section-open-label { display: none; }
 .app-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 0; }
 .app-actions .ghost { display: inline-flex; align-items: center; gap: 0.35rem; }
+.empty-report { margin: 1rem 0 0; }
 .section-actions button.danger {
   background: transparent; color: var(--danger); border-color: var(--line);
   width: 2rem; height: 2rem; padding: 0;
@@ -466,16 +469,16 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   min-height: 0;
   padding: 0.2rem 0.4rem;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.2;
 }
 .item-top .inplace-nombre input.nombre-input {
   padding: 0.2rem 0.4rem;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.2;
 }
 .item-top .lbl-inline {
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); flex: 0 0 auto;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04rem; color: var(--muted); flex: 0 0 auto;
 }
 .item-top button {
   width: 1.25rem; height: 1.25rem; padding: 0;
@@ -485,54 +488,270 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .item-top button .btn-ico,
 .item-top button .material-icons {
   font-size: 0.9rem;
-  width: 1em; height: 1em;
+  width: 1rem; height: 1rem;
   line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
 }
 
+.concept-btn {
+  flex: 0 0 auto;
+  width: 1.9rem; height: 1.9rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--ink);
+  border: 0.0625rem solid var(--line); border-radius: var(--radius);
+  cursor: pointer;
+}
+.concept-btn:hover { background: color-mix(in srgb, var(--ink) 10%, transparent); color: var(--warning); }
+.concept-btn .material-icons { font-size: 1.05rem; }
+.section-title-main .concept-btn,
+.group-head-main .concept-btn { width: 1.5rem; height: 1.5rem; }
+.section-title-main .concept-btn .material-icons,
+.group-head-main .concept-btn .material-icons { font-size: 0.95rem; }
+
+.item-status-badge {
+  flex: 0 0 auto;
+  width: 1.25rem; height: 1.25rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius);
+  border: 0.0625rem solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  line-height: 1;
+}
+.item-status-badge .material-icons { font-size: 0.9rem; }
+.item-status-badge.is-aprobado { background: var(--success); border-color: var(--success); color: #fff; }
+.item-status-badge.is-reprobado { background: var(--danger); border-color: var(--danger); color: #fff; }
+.item-status-badge.is-none { background: var(--warning); border-color: var(--warning); color: #000; }
+
+.item-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.item-body-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: stretch;
+  align-self: stretch;
+  flex: 1;
+  min-height: 0;
+}
+.item-side-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+  padding: 0;
+  align-self: stretch;
+}
+.item-side-tab {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 0.55rem 0.3rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  line-height: 1.1;
+}
+.item-side-tab.is-active {
+  color: var(--ink);
+  background: var(--card);
+  border-color: var(--ink);
+  box-shadow: inset 0.15rem 0 0 var(--warning);
+}
+.item-tab-panel {
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.item-tab-panel[hidden] { display: none !important; }
+.item-tab-panel[data-panel="issue"] > .item-row {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-self: stretch;
+}
+.item-tab-panel[data-panel="checklist"] > .checklist-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.checklist-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 5.5rem;
+}
+.checklist-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.checklist-toggle {
+  flex: 0 0 auto;
+  width: 1.5rem; height: 1.5rem; padding: 0;
+  border-radius: 50%;
+  border: 0.125rem solid var(--line);
+  background: transparent;
+  color: transparent;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.checklist-toggle.is-checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+.checklist-toggle .material-icons { font-size: 0.95rem; }
+.checklist-label {
+  flex: 1;
+  min-width: 0;
+  height: var(--control-height, 2rem);
+  padding: 0.125rem 0.375rem;
+  border: 0.0625rem solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+}
+.checklist-label:focus {
+  outline: none;
+  border-color: var(--line);
+  background: var(--surface);
+}
+.checklist-row .danger {
+  flex: 0 0 auto;
+  width: 1.35rem; height: 1.35rem; padding: 0;
+}
+.checklist-add {
+  align-self: flex-start;
+  width: 2rem; height: 2rem; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #1565c0; color: #fff; border: 0.0625rem solid #1565c0;
+  border-radius: var(--radius); cursor: pointer;
+}
+.checklist-add:hover { filter: brightness(1.08); }
+.checklist-add .material-icons { font-size: 1.15rem; }
+.checklist-empty {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.history-modal-body { display: flex; flex-direction: column; gap: 0.6rem; }
+.history-modal-body textarea {
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  min-height: 10rem;
+  resize: vertical;
+  padding: 0.55rem 0.65rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.history-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
 .item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
   padding: 0;
   align-items: stretch;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
 }
 .qa-pair {
   min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border: none;
   border-radius: var(--radius);
   background: transparent;
   gap: 0.65rem;
+  align-items: stretch;
 }
 .qa-half {
   min-width: 0;
+  min-height: 0;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 0;
 }
 .qa-half + .qa-half { border-left: none; }
-.col { display: flex; flex-direction: column; gap: 0.3rem; min-height: 100%; }
-.col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-self: stretch;
+}
+.col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04rem; color: var(--muted); }
+.col.is-drop-target {
+  outline: 0.125rem dashed var(--accent);
+  outline-offset: -0.125rem;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
 .col-head {
   display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap;
 }
 .col-head .lbl { flex: 0 0 auto; }
 .meta-bar {
   display: grid;
-  grid-template-columns: 20% minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem;
-  align-items: start;
-  width: 100%;
+  align-items: stretch;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  margin-top: auto;
+  flex: 0 0 auto;
 }
-.meta-bar-time { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
-.meta-bar-imgs { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
-.moment-input {
-  width: 100%;
+.meta-bar-time,
+.meta-bar-imgs {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+.col > .thumbs {
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+.moment-input,
+.img-pick {
+  box-sizing: border-box;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   max-width: none;
+  height: 2rem;
+  min-height: 2rem;
   font: inherit;
   font-size: 0.72rem;
   padding: 0.2rem 0.3rem;
@@ -541,24 +760,60 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   background: var(--card);
   color: var(--ink);
 }
-.inplace { position: relative; min-width: 0; }
-.col > .inplace { flex: 1; display: flex; flex-direction: column; }
-.inplace.is-editing { display: flex; flex-direction: column; }
+.img-pick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.img-pick .material-icons {
+  font-size: 1.1rem;
+  width: 1rem; height: 1rem;
+  line-height: 1;
+}
+.img-pick:hover,
+.img-pick:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+.img-input {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.inplace { position: relative; min-width: 0; min-height: 0; }
+.col > .inplace { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+.inplace.is-editing { display: flex; flex-direction: column; min-height: 0; }
 .inplace-view {
-  flex: 1;
+  flex: 1 1 auto;
   white-space: pre-wrap;
   word-break: break-word;
   cursor: text;
   border: 0.0625rem solid transparent;
   border-radius: var(--radius);
   padding: 0.5rem;
-  min-height: 5.5rem;
+  min-height: 3.5rem;
   color: var(--ink);
   background: transparent;
 }
-.inplace-title .inplace-view {
+.inplace-title .inplace-view,
+.inplace-section-title .inplace-view {
   min-height: 0;
   padding: 0.15rem 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .inplace-view:hover, .inplace-view:focus-visible {
   border-color: var(--line);
@@ -568,7 +823,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .inplace-view .ph { color: var(--muted); font-weight: 400; }
 .inplace.is-editing .inplace-view { display: none; }
 .inplace textarea {
-  flex: 1; min-height: 5.5rem; resize: vertical; width: 100%;
+  flex: 1 1 auto; min-height: 3.5rem; resize: vertical; align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
 }
 .col-status {
   width: auto;
@@ -637,23 +892,62 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .btn-status .material-icons,
 .btn-status .btn-ico {
   font-size: 1.15rem;
-  width: 1em; height: 1em;
+  width: 1rem; height: 1rem;
   line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
 }
 .btn-status.aprobado { background: var(--success); border-color: var(--success); color: #fff; opacity: 1; }
 .btn-status.reprobado { background: var(--danger); border-color: var(--danger); color: #fff; opacity: 1; }
 .btn-status.no_aplica { background: #757575; border-color: #757575; color: #fff; opacity: 1; }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr)); gap: 0.3rem; margin-top: 0.25rem; }
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+  gap: 0.3rem;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  min-width: 0;
+}
+.thumbs:empty { display: none; }
 .thumb-wrap {
   position: relative;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 .thumbs img, .thumb-wrap img {
-  width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
+  align-self: stretch; width: auto; height: auto; min-width: 0; min-height: 0; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
   border: 0.0625rem solid var(--line); cursor: zoom-in; background: var(--surface);
   display: block;
+}
+.thumb-load-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.3125rem;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: left center;
+  background: var(--warning);
+  transform: scaleX(0.15);
+  animation: thumb-load-indeterminate 0.9s ease-in-out infinite alternate;
+}
+.thumb-wrap.is-pending .thumb-load-bar {
+  display: block;
+}
+.thumb-wrap.is-ready .thumb-load-bar {
+  display: block;
+  background: var(--success);
+  animation: none;
+  transform: scaleX(1);
+  transition: transform 0.2s ease-out, background 0.2s ease-out;
+}
+.thumb-wrap:not(.is-pending):not(.is-ready) .thumb-load-bar {
+  display: none;
+}
+@keyframes thumb-load-indeterminate {
+  from { transform: scaleX(0.18); opacity: 0.7; }
+  to { transform: scaleX(0.92); opacity: 1; }
 }
 .thumb-del {
   position: absolute; top: 0.1rem; right: 0.1rem;
@@ -664,7 +958,6 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   display: inline-flex; align-items: center; justify-content: center;
 }
 .thumb-del:hover { filter: brightness(1.1); }
-.img-input { font-size: 0.75rem; width: 100%; }
 
 .footer-bar {
   margin-top: 1.5rem; padding: 1rem 1.1rem;
@@ -692,14 +985,14 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 .modal.open { display: flex; }
 .modal-card {
-  background: var(--card); border-radius: var(--radius); max-width: min(57.5rem, 96vw);
-  width: 100%; padding: 0.85rem; box-shadow: var(--shadow);
+  background: var(--card); border-radius: var(--radius); max-width: 57.5rem;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box; padding: 0.85rem; box-shadow: var(--shadow);
 }
-.modal-card img { width: 100%; max-height: 70vh; object-fit: contain; background: #111; border-radius: var(--radius); }
+.modal-card img { align-self: stretch; width: auto; min-width: 0; max-height: 35rem; object-fit: contain; background: #111; border-radius: var(--radius); }
 .modal-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; gap: 0.5rem; }
 
 @media (max-width: 68rem) {
-  .item-row { grid-template-columns: 1fr auto; }
+  .item-row { grid-template-columns: 1fr; }
   .qa-pair { grid-template-columns: 1fr; }
   .qa-half + .qa-half { border-left: none; border-top: none; }
   .meta-bar { grid-template-columns: 1fr; }
@@ -707,10 +1000,39 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
     position: fixed; right: 0; top: var(--topbar-h); z-index: 42;
-    width: min(28rem, 80vw);
+    /* Half of phone content-basis (30rem) — rem-legal stand-in for 50% screen */
+    width: 15rem;
   }
   body.sidebar-collapsed .sidebar {
-    transform: translateX(105%); width: min(28rem, 80vw); opacity: 1; pointer-events: none;
+    transform: translateX(105%); width: 15rem; opacity: 1; pointer-events: none;
+  }
+  .main-col { padding: 0.75rem 0; }
+  .section-body,
+  .group-body {
+    --tree-toggle-center: 1rem;
+    --tree-pad: 1rem;
+    margin-left: var(--tree-toggle-center);
+    padding: 0.75rem 0.75rem 0.75rem var(--tree-pad);
+  }
+  .section-block > .section-title,
+  .group-head,
+  .item-top {
+    flex-wrap: wrap;
+  }
+  .section-title-main,
+  .group-head-main {
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+  .section-actions,
+  .group-actions {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+  .inplace-title .inplace-view,
+  .inplace-nombre .inplace-view {
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 }
 .material-icons {
@@ -734,8 +1056,8 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   margin-bottom: 0.85rem;
 }
 .modal-head h2 { margin: 0; font-size: 1.1rem; color: var(--ink); }
-.modal-card.modal-card-sm { max-width: min(36rem, 96vw); }
-.modal-card.modal-card-md { max-width: min(42rem, 96vw); }
+.modal-card.modal-card-sm { max-width: 36rem; }
+.modal-card.modal-card-md { max-width: 42rem; }
 .modal-actions {
   display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end;
   margin-top: 1rem; align-items: center;
@@ -807,10 +1129,11 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     </div>
     <div class="howto-modal-body">
       <ol>
-        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> add per-issue review rows. Add a <strong>main section</strong> or a <strong>section open issue</strong> from the section header.</li>
+        <li>Completá <strong>Organization</strong>, <strong>Report name</strong>, <strong>Report Date</strong>. <strong>Report Code</strong> is automatic. Optional <strong>Validation criteria</strong> label the report. Use the <strong>concept</strong> (lightbulb) button on a section or subsection to edit <strong>product history</strong>. Each issue has <strong>Issue / action</strong> and a <strong>Checklist</strong> tab — status is approved / warning / reject from checklist completion.</li>
         <li>Usá los iconos del menú superior del sitio para tamaño de fuente, cargar <strong>.ereport</strong>, limpiar, ver progreso o <strong>guardar todo</strong>. El tema claro/oscuro sigue el interruptor del menú global del sitio.</li>
         <li>El sidebar derecho navega por cada incidencia (tooltip: subartículo + nombre).</li>
         <li>Al guardar se exportan <strong>.ereport + HTML + PDF</strong>. Las imágenes van en base64 dentro del .ereport.</li>
+        <li>En Windows: captura con <strong>PrtSc</strong> / <strong>Win+Shift+S</strong> y pega con <strong>Ctrl+V</strong> sobre la incidencia o solución (preview base64 al instante + barra inferior al terminar la carga).</li>
       </ol>
     </div>
   </div>
@@ -850,9 +1173,26 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     </div>
   </div>
 </div>
+
+<div class="modal" id="history-modal" role="dialog" aria-modal="true" aria-labelledby="history-title">
+  <div class="modal-card modal-card-sm">
+    <div class="modal-head">
+      <h2 id="history-title">Product history</h2>
+      <button type="button" class="icon-btn" id="history-close" title="Cerrar" aria-label="Cerrar"><span class="material-icons">close</span></button>
+    </div>
+    <div class="history-modal-body">
+      <label for="history-text" class="hint">Concept / product history for this section</label>
+      <textarea id="history-text" rows="10" placeholder="Describe the product history / concept for this section…"></textarea>
+      <div class="history-modal-actions">
+        <button type="button" class="secondary" id="history-cancel">Cancel</button>
+        <button type="button" id="history-save">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
-<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "groups": [{"id": "group-1", "title": "General", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}]}]}</script>
+<script type="application/json" id="embedded-json">{"reportDate": "", "reportNumber": "", "reportName": "", "orgName": "", "appTitle": "Issue Tracker", "validationCriteria": [], "theme": "dark", "sections": [{"id": "section-a", "title": "1. Product / platform", "kind": "funcionalidades", "productHistory": "", "groups": [{"id": "group-1", "title": "General", "productHistory": "", "items": [{"id": "group-1-item-1", "nombre": "", "incidencia": "", "fechaIncidencia": "", "status": "", "criteriaStatus": {}, "checklist": [{"id": "ux-test", "label": "UX Test", "checked": false}], "solucion": "", "fechaSolucion": "", "imagesIncidencia": [], "imagesSolucion": [], "images": []}]}], "items": []}]}</script>
 <script src="/vendor/html2canvas.min.js"></script>
 <script src="/vendor/jspdf.umd.min.js"></script>
 <script>
@@ -954,7 +1294,16 @@ function fromDateTimeLocalValue(raw) {
   return s;
 }
 
-function normalizeItem(it) {
+function normalizeChecklist(list) {
+  if (!Array.isArray(list)) return [];
+  return list.map((c) => ({
+    id: (c && c.id) || uid("check"),
+    label: String((c && (c.label != null ? c.label : c.text)) || "").trim() || "UX Test",
+    checked: !!(c && c.checked)
+  }));
+}
+
+function normalizeItem(it, opts) {
   const sol = it.imagesSolucion != null ? it.imagesSolucion : (it.images || []);
   const criteriaStatus = {};
   if (it.criteriaStatus && typeof it.criteriaStatus === "object" && !Array.isArray(it.criteriaStatus)) {
@@ -963,19 +1312,34 @@ function normalizeItem(it) {
       criteriaStatus[k] = (v === "aprobado" || v === "reprobado" || v === "no_aplica") ? v : "";
     });
   }
-  return {
+  let checklist = normalizeChecklist(it.checklist);
+  const priorStatus = it.status || "";
+  const isNew = !!(opts && opts.newIssue);
+  if (checklist.length === 0) {
+    if (isNew) {
+      /* New issues start rejected until UX checks are completed. */
+      checklist = [{ id: uid("check"), label: "UX Test", checked: false }];
+    } else if (priorStatus !== "no_aplica") {
+      /* Legacy / missing UX tests → treat as fulfilled so existing reports keep green status. */
+      checklist = [{ id: "ux-cumplidas", label: "UX cumplidas", checked: true }];
+    }
+  }
+  const item = {
     id: it.id || uid("item"),
     nombre: it.nombre || "",
     incidencia: it.incidencia || it.queja || "",
     fechaIncidencia: it.fechaIncidencia || "",
-    status: it.status || "",
+    status: priorStatus,
     criteriaStatus,
+    checklist,
     solucion: it.solucion || "",
     fechaSolucion: it.fechaSolucion || "",
     imagesIncidencia: it.imagesIncidencia || it.imagesQueja || [],
     imagesSolucion: sol,
     images: sol
   };
+  item.status = effectiveStatus(item);
+  return item;
 }
 function normalizeState(data) {
   if (!data || typeof data !== "object") data = {};
@@ -1002,8 +1366,12 @@ function normalizeState(data) {
   }
   (data.sections || []).forEach(sec => {
     if (!Array.isArray(sec.groups)) sec.groups = [];
+    if (sec.productHistory == null) sec.productHistory = "";
+    else sec.productHistory = String(sec.productHistory);
     sec.items = (sec.items || []).map(normalizeItem);
     sec.groups.forEach(grp => {
+      if (grp.productHistory == null) grp.productHistory = "";
+      else grp.productHistory = String(grp.productHistory);
       grp.items = (grp.items || []).map(normalizeItem);
     });
   });
@@ -1094,17 +1462,24 @@ function refreshReportCode(opts) {
 }
 
 function effectiveStatus(item) {
-  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
-  if (!labels.length) return item.status || "";
-  const map = item.criteriaStatus || {};
-  const values = labels.map((label) => map[label] || "");
-  if (values.some((v) => !v)) return item.status || "";
-  if (values.every((v) => v === "no_aplica")) return "no_aplica";
-  if (values.some((v) => v === "reprobado")) return "reprobado";
-  const hasApproved = values.some((v) => v === "aprobado");
-  const onlyApprovedOrDisabled = values.every((v) => v === "aprobado" || v === "no_aplica");
-  if (hasApproved && onlyApprovedOrDisabled) return "aprobado";
-  return item.status || "";
+  const list = Array.isArray(item.checklist) ? item.checklist : [];
+  if (!list.length) return "reprobado";
+  const checked = list.filter((c) => !!c.checked).length;
+  if (checked === 0) return "reprobado";
+  if (checked === list.length) return "aprobado";
+  return ""; /* warning / partial */
+}
+
+function statusBadgeIcon(status) {
+  if (status === "aprobado") return "check";
+  if (status === "reprobado") return "close";
+  return "warning";
+}
+
+function statusBadgeTitle(status) {
+  if (status === "aprobado") return "Approved — all checklist items checked";
+  if (status === "reprobado") return "Reject — no checklist items checked";
+  return "Warning — checklist incomplete";
 }
 
 function renderCriteriaEditor() {
@@ -1128,11 +1503,13 @@ function renderCriteriaEditor() {
       const i = Number(btn.dataset.idx);
       const removed = state.validationCriteria[i];
       state.validationCriteria.splice(i, 1);
+      const dropCriterion = (it) => {
+        if (it && it.criteriaStatus && removed in it.criteriaStatus) delete it.criteriaStatus[removed];
+      };
       (state.sections || []).forEach((sec) => {
+        (sec.items || []).forEach(dropCriterion);
         (sec.groups || []).forEach((grp) => {
-          (grp.items || []).forEach((it) => {
-            if (it.criteriaStatus && removed in it.criteriaStatus) delete it.criteriaStatus[removed];
-          });
+          (grp.items || []).forEach(dropCriterion);
         });
       });
       renderCriteriaEditor();
@@ -1329,15 +1706,112 @@ function collectFromDom() {
     item.solucion = readInplace(card.querySelector(".inplace-solucion"));
     item.fechaSolucion = fromDateTimeLocalValue(card.querySelector(".fecha-solucion")?.value);
     if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
+    if (!Array.isArray(item.checklist)) item.checklist = [];
+    card.querySelectorAll(".checklist-row").forEach((row) => {
+      const cid = row.dataset.checkId;
+      const entry = item.checklist.find((c) => c.id === cid);
+      if (!entry) return;
+      const labelEl = row.querySelector(".checklist-label");
+      if (labelEl) entry.label = String(labelEl.value || "").trim() || "UX Test";
+      entry.checked = row.querySelector(".checklist-toggle")?.classList.contains("is-checked") || false;
+    });
+    item.status = effectiveStatus(item);
   });
 }
 
-function setStatus(sid, gid, iid, status) {
+let historyCtx = null;
+const itemTabById = new Map();
+
+function openProductHistory(kind, sid, gid) {
+  collectFromDom();
+  historyCtx = { kind, sid, gid: gid || "" };
+  let text = "";
+  let title = "Product history";
+  if (kind === "section") {
+    const sec = (state.sections || []).find((s) => s.id === sid);
+    if (!sec) return;
+    text = sec.productHistory || "";
+    title = "Product history — " + (sec.title || "Section");
+  } else {
+    const sec = (state.sections || []).find((s) => s.id === sid);
+    const grp = sec && (sec.groups || []).find((g) => g.id === gid);
+    if (!grp) return;
+    text = grp.productHistory || "";
+    title = "Product history — " + (grp.title || "Section item");
+  }
+  const modal = document.getElementById("history-modal");
+  const titleEl = document.getElementById("history-title");
+  const area = document.getElementById("history-text");
+  if (titleEl) titleEl.textContent = title;
+  if (area) area.value = text;
+  modal.classList.add("open");
+  area?.focus();
+}
+
+function closeProductHistory() {
+  historyCtx = null;
+  document.getElementById("history-modal")?.classList.remove("open");
+}
+
+function saveProductHistory() {
+  if (!historyCtx) return;
+  const area = document.getElementById("history-text");
+  const text = area ? String(area.value || "") : "";
+  if (historyCtx.kind === "section") {
+    const sec = (state.sections || []).find((s) => s.id === historyCtx.sid);
+    if (sec) sec.productHistory = text;
+  } else {
+    const sec = (state.sections || []).find((s) => s.id === historyCtx.sid);
+    const grp = sec && (sec.groups || []).find((g) => g.id === historyCtx.gid);
+    if (grp) grp.productHistory = text;
+  }
+  closeProductHistory();
+  toast("Product history saved.");
+  updateStatus();
+}
+
+function setItemTab(iid, tab) {
+  itemTabById.set(iid, tab === "checklist" ? "checklist" : "issue");
+  collectFromDom();
+  render();
+}
+
+function addChecklistItem(sid, gid, iid) {
   collectFromDom();
   const found = locateItem(sid, gid, iid);
   if (!found) return;
-  found.item.status = found.item.status === status ? "" : status;
+  if (!Array.isArray(found.item.checklist)) found.item.checklist = [];
+  found.item.checklist.push({ id: uid("check"), label: "UX Test", checked: false });
+  itemTabById.set(iid, "checklist");
+  found.item.status = effectiveStatus(found.item);
   render();
+}
+
+function toggleChecklistItem(sid, gid, iid, cid) {
+  collectFromDom();
+  const found = locateItem(sid, gid, iid);
+  if (!found || !Array.isArray(found.item.checklist)) return;
+  const entry = found.item.checklist.find((c) => c.id === cid);
+  if (!entry) return;
+  entry.checked = !entry.checked;
+  found.item.status = effectiveStatus(found.item);
+  itemTabById.set(iid, "checklist");
+  render();
+}
+
+function removeChecklistItem(sid, gid, iid, cid) {
+  collectFromDom();
+  const found = locateItem(sid, gid, iid);
+  if (!found || !Array.isArray(found.item.checklist)) return;
+  found.item.checklist = found.item.checklist.filter((c) => c.id !== cid);
+  found.item.status = effectiveStatus(found.item);
+  itemTabById.set(iid, "checklist");
+  render();
+}
+
+function setStatus(sid, gid, iid, status) {
+  /* Status is derived from checklist; kept for host/legacy no-ops. */
+  void sid; void gid; void iid; void status;
 }
 
 function setCriteriaStatus(sid, gid, iid, label, status) {
@@ -1356,7 +1830,7 @@ function addItem(sid, gid) {
     return;
   }
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  grp.items.push(normalizeItem({ id: uid(gid) }));
+  grp.items.push(normalizeItem({ id: uid(gid) }, { newIssue: true }));
   render();
 }
 
@@ -1368,6 +1842,7 @@ function addSection() {
     id,
     title: n + ". New section",
     kind: "funcionalidades",
+    productHistory: "",
     items: [],
     groups: []
   });
@@ -1381,10 +1856,103 @@ function addSectionItem(sid) {
   const sec = state.sections.find(s => s.id === sid);
   if (!sec) return;
   const list = ensureSectionItems(sec);
-  list.push(normalizeItem({ id: uid("open") }));
+  list.push(normalizeItem({ id: uid("open") }, { newIssue: true }));
   collapseState.sections.delete(sid);
   syncCollapseToState();
   render();
+}
+
+function addGroup(sid) {
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  if (!Array.isArray(sec.groups)) sec.groups = [];
+  const id = uid("group");
+  const n = sec.groups.length + 1;
+  sec.groups.push({
+    id,
+    title: (sec.kind === "subarticulos" ? "Nuevo subartículo " : "Nueva subsección ") + n,
+    productHistory: "",
+    items: [normalizeItem({ id: uid(id) }, { newIssue: true })]
+  });
+  collapseState.sections.delete(sid);
+  collapseState.groups.delete(id);
+  syncCollapseToState();
+  render();
+  scrollToBlock("grp-" + id);
+}
+
+function removeGroup(sid, gid) {
+  const sec = state.sections.find(s => s.id === sid);
+  const grp = sec && (sec.groups || []).find(g => g.id === gid);
+  if (!grp) return;
+  if (!confirm('¿Eliminar la subsección "' + (grp.title || gid) + '" y todas sus incidencias?')) return;
+  collectFromDom();
+  sec.groups = sec.groups.filter(g => g.id !== gid);
+  collapseState.groups.delete(gid);
+  (grp.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  syncCollapseToState();
+  render();
+}
+
+function removeSection(sid) {
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  if (!confirm('¿Eliminar la sección "' + (sec.title || sid) + '" con todas sus subsecciones e incidencias?')) return;
+  collectFromDom();
+  state.sections = state.sections.filter(s => s.id !== sid);
+  collapseState.sections.delete(sid);
+  (sec.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  (sec.groups || []).forEach(g => {
+    collapseState.groups.delete(g.id);
+    (g.items || []).forEach(it => { if (it && it.id) collapseState.items.delete(it.id); });
+  });
+  syncCollapseToState();
+  render();
+}
+
+function toggleSectionKind(sid) {
+  collectFromDom();
+  const sec = state.sections.find(s => s.id === sid);
+  if (!sec) return;
+  sec.kind = sec.kind === "subarticulos" ? "funcionalidades" : "subarticulos";
+  render();
+}
+
+/** Host commands act on the section nearest the top of the viewport. */
+function currentSectionId() {
+  const blocks = [...document.querySelectorAll(".section-block")];
+  if (!blocks.length) return null;
+  const visible = blocks.find(b => b.getBoundingClientRect().bottom > 0);
+  return (visible || blocks[blocks.length - 1]).dataset.section;
+}
+
+function scrollToBlock(domId) {
+  const el = document.getElementById(domId);
+  if (el && typeof el.scrollIntoView === "function") el.scrollIntoView({ block: "start" });
+}
+
+function setAllCollapsed(collapsed) {
+  collectFromDom();
+  if (collapsed) {
+    (state.sections || []).forEach(sec => {
+      collapseState.sections.add(sec.id);
+      (sec.groups || []).forEach(g => collapseState.groups.add(g.id));
+    });
+  } else {
+    collapseState.sections.clear();
+    collapseState.groups.clear();
+    collapseState.items.clear();
+  }
+  syncCollapseToState();
+  render();
+}
+
+function focusCriteria() {
+  const panel = document.getElementById("meta-panel");
+  if (panel && typeof panel.scrollIntoView === "function") panel.scrollIntoView({ block: "start" });
+  const input = document.getElementById("criteria-add-input");
+  if (input && typeof input.focus === "function") input.focus();
 }
 
 function removeItem(sid, gid, iid) {
@@ -1394,7 +1962,7 @@ function removeItem(sid, gid, iid) {
   if (gid === SECTION_ITEMS) {
     found.sec.items = found.list.filter(i => i.id !== iid);
   } else if (found.list.length <= 1) {
-    found.list[0] = normalizeItem({ id: uid(gid) });
+    found.list[0] = normalizeItem({ id: uid(gid) }, { newIssue: true });
   } else {
     found.grp.items = found.list.filter(i => i.id !== iid);
   }
@@ -1405,7 +1973,7 @@ function clearGroup(sid, gid) {
   if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
   collectFromDom();
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  grp.items = [normalizeItem({ id: uid(gid) })];
+  grp.items = [normalizeItem({ id: uid(gid) }, { newIssue: true })];
   render();
 }
 
@@ -1415,22 +1983,101 @@ function clearSection(sid) {
   const sec = state.sections.find(s => s.id === sid);
   sec.items = [];
   sec.groups.forEach(grp => {
-    grp.items = [normalizeItem({ id: uid(grp.id) })];
+    grp.items = [normalizeItem({ id: uid(grp.id) }, { newIssue: true })];
   });
   render();
 }
 
 function imageSrc(im) {
-  return (im && (im.url || im.dataUrl)) || "";
+  // Prefer in-memory base64 preview so thumbs stay visible while / after upload.
+  return (im && (im.dataUrl || im.url)) || "";
 }
 
 var imageUpload = { url: "", csrf: "" };
+var pasteImageCtx = { sid: "", gid: "", iid: "", which: "incidencia" };
+var pasteReadyTimers = Object.create(null);
+
+function rememberPasteImageTarget(card, which) {
+  if (!(card instanceof HTMLElement)) return;
+  const sid = card.dataset.section || "";
+  const gid = card.dataset.group || "";
+  const iid = card.dataset.item || "";
+  if (!sid || !gid || !iid) return;
+  pasteImageCtx = {
+    sid,
+    gid,
+    iid,
+    which: which === "solucion" ? "solucion" : "incidencia"
+  };
+}
+
+function resolvePasteImageTarget() {
+  if (pasteImageCtx.sid && pasteImageCtx.gid && pasteImageCtx.iid) {
+    const found = locateItem(pasteImageCtx.sid, pasteImageCtx.gid, pasteImageCtx.iid);
+    if (found && found.item) return { ...pasteImageCtx };
+  }
+  const active = document.activeElement;
+  const card = active instanceof Element ? active.closest(".item-card") : null;
+  if (card instanceof HTMLElement) {
+    const which = active.closest(".col-sol") ? "solucion" : "incidencia";
+    rememberPasteImageTarget(card, which);
+    return { ...pasteImageCtx };
+  }
+  const first = document.querySelector(".item-card");
+  if (first instanceof HTMLElement) {
+    rememberPasteImageTarget(first, "incidencia");
+    return { ...pasteImageCtx };
+  }
+  return null;
+}
+
+function fileToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result || ""));
+    fr.onerror = () => reject(fr.error || new Error("No se pudo leer la imagen."));
+    fr.readAsDataURL(blob);
+  });
+}
+
+function clipboardImageFiles(clipboardData) {
+  const out = [];
+  if (!clipboardData) return out;
+  const files = clipboardData.files ? Array.from(clipboardData.files) : [];
+  files.forEach((file) => {
+    if (file && /^image\//i.test(file.type || "")) out.push(file);
+  });
+  if (out.length) return out;
+  const items = clipboardData.items ? Array.from(clipboardData.items) : [];
+  items.forEach((item) => {
+    if (!item || !/^image\//i.test(item.type || "")) return;
+    const file = item.getAsFile && item.getAsFile();
+    if (file) out.push(file);
+  });
+  return out;
+}
+
+async function ensureImageUploadConfig() {
+  if (imageUpload.url) return true;
+  if (!(window.parent && window.parent !== window)) return false;
+  window.parent.postMessage({ source: "ereport-tracker", type: "need-config" }, "*");
+  const deadline = Date.now() + 2500;
+  while (!imageUpload.url && Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  return !!imageUpload.url;
+}
 
 async function uploadImageFile(file) {
-  if (!imageUpload.url) {
+  if (!(await ensureImageUploadConfig())) {
     if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ source: "ereport-tracker", type: "error", message: "Image upload is not configured." }, "*");
+      window.parent.postMessage({
+        source: "ereport-tracker",
+        type: "error",
+        message: "Image upload is not configured."
+      }, "*");
     }
+    toast("No se pudo subir la imagen: falta la configuración de carga.");
     return null;
   }
   const body = new FormData();
@@ -1448,24 +2095,129 @@ async function uploadImageFile(file) {
   return { id: data.id, mime: data.mime, name: data.name || file.name, url: data.url };
 }
 
-function onImagesSelected(sid, gid, iid, which, fileList) {
-  const files = Array.from(fileList || []);
+function clearPasteReadyTimer(tempId) {
+  if (pasteReadyTimers[tempId]) {
+    clearTimeout(pasteReadyTimers[tempId]);
+    delete pasteReadyTimers[tempId];
+  }
+}
+
+function markImageReadyThenPersist(item, key, tempId, ref) {
+  const list = item[key] || [];
+  const idx = list.findIndex((im) => im && im.id === tempId);
+  if (idx < 0) {
+    if (ref) {
+      list.push(ref);
+      if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    }
+    render();
+    updateStatus();
+    return;
+  }
+  if (!ref) {
+    clearPasteReadyTimer(tempId);
+    list.splice(idx, 1);
+    if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    render();
+    return;
+  }
+  const prev = list[idx] || {};
+  const ready = Object.assign({}, ref, {
+    justLoaded: true,
+    // Keep base64 preview so the thumb does not go blank if the API URL is slow/fails.
+    dataUrl: prev.dataUrl || ref.dataUrl || ""
+  });
+  if (!ready.dataUrl) delete ready.dataUrl;
+  list[idx] = ready;
+  if (key === "imagesSolucion") item.images = item.imagesSolucion;
+  render();
+  clearPasteReadyTimer(tempId);
+  pasteReadyTimers[tempId] = setTimeout(() => {
+    delete pasteReadyTimers[tempId];
+    const still = (item[key] || []).find((im) => im && im.id === ref.id);
+    if (still && still.justLoaded) {
+      delete still.justLoaded;
+      render();
+    }
+    updateStatus();
+  }, 450);
+}
+
+async function ingestImageFiles(sid, gid, iid, which, fileList) {
+  const files = Array.from(fileList || []).filter((f) => {
+    if (!f) return false;
+    if (/^image\//i.test(f.type || "")) return true;
+    return /\.(png|jpe?g|webp|gif)$/i.test(f.name || "");
+  });
   if (!files.length) return;
   collectFromDom();
   const found = locateItem(sid, gid, iid);
   const item = found && found.item;
   if (!item) return;
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
-  let pending = files.length;
-  files.forEach(file => {
-    uploadImageFile(file).then(ref => {
-      if (ref) {
-        item[key].push(ref);
-        if (key === "imagesSolucion") item.images = item.imagesSolucion;
-      }
-      pending -= 1;
-      if (pending === 0) render();
+  if (!Array.isArray(item[key])) item[key] = [];
+  const cardSel = `.item-card[data-item="${String(iid).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"]`;
+  rememberPasteImageTarget(document.querySelector(cardSel), which);
+
+  for (const file of files) {
+    const tempId = "pending-" + uid("img");
+    let dataUrl = "";
+    try {
+      dataUrl = await fileToDataUrl(file);
+    } catch (_) {
+      toast("No se pudo convertir la captura a base64.");
+      continue;
+    }
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const name = file.name && file.name !== "image.png" ? file.name : `captura-${stamp}.png`;
+    item[key].push({
+      id: tempId,
+      name,
+      mime: file.type || "image/png",
+      dataUrl,
+      pending: true
     });
+    if (key === "imagesSolucion") item.images = item.imagesSolucion;
+    render();
+    const uploadFile = file.name ? file : new File([file], name, { type: file.type || "image/png" });
+    const ref = await uploadImageFile(uploadFile);
+    markImageReadyThenPersist(item, key, tempId, ref);
+  }
+}
+
+function onImagesSelected(sid, gid, iid, which, fileList) {
+  void ingestImageFiles(sid, gid, iid, which, fileList);
+}
+
+function bindColumnImageDrop(col, sid, gid, iid, which) {
+  if (!(col instanceof HTMLElement)) return;
+  const hasFiles = (dt) => {
+    if (!dt) return false;
+    const types = dt.types ? Array.from(dt.types) : [];
+    return types.includes("Files");
+  };
+  col.addEventListener("dragenter", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    col.classList.add("is-drop-target");
+  });
+  col.addEventListener("dragover", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+    col.classList.add("is-drop-target");
+  });
+  col.addEventListener("dragleave", (e) => {
+    const related = e.relatedTarget;
+    if (related instanceof Node && col.contains(related)) return;
+    col.classList.remove("is-drop-target");
+  });
+  col.addEventListener("drop", (e) => {
+    if (!hasFiles(e.dataTransfer)) return;
+    e.preventDefault();
+    col.classList.remove("is-drop-target");
+    const files = e.dataTransfer && e.dataTransfer.files;
+    if (files && files.length) void ingestImageFiles(sid, gid, iid, which, files);
   });
 }
 
@@ -1477,6 +2229,8 @@ function removeImage(sid, gid, iid, which, idx) {
   const key = which === "incidencia" ? "imagesIncidencia" : "imagesSolucion";
   const list = item[key] || [];
   if (idx < 0 || idx >= list.length) return;
+  const removed = list[idx];
+  if (removed && removed.id) clearPasteReadyTimer(removed.id);
   list.splice(idx, 1);
   if (key === "imagesSolucion") item.images = item.imagesSolucion;
   render();
@@ -1498,12 +2252,34 @@ function stepModal(delta) {
 }
 
 function renderThumbs(images, cls, which) {
-  return (images || []).map((im, idx) => `
-    <div class="thumb-wrap">
-      <img src="${imageSrc(im)}" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" class="thumb ${cls}" />
+  return (images || []).map((im, idx) => {
+    const wrapClass = im && im.pending ? " is-pending" : im && im.justLoaded ? " is-ready" : "";
+    // Leave src empty in HTML; bindThumbSources sets it via the DOM property so large
+    // data: URLs are not parsed through innerHTML (which yields broken thumbs).
+    return `
+    <div class="thumb-wrap${wrapClass}">
+      <img src="" alt="${escapeAttr(im.name || "img")}" data-idx="${idx}" data-which="${which}" class="thumb ${cls}" />
+      <span class="thumb-load-bar" aria-hidden="true"></span>
       <button type="button" class="thumb-del" data-act="del-img" data-which="${which}" data-idx="${idx}" title="Eliminar imagen" aria-label="Eliminar imagen">${mi("close")}</button>
     </div>
-  `).join("");
+  `;
+  }).join("");
+}
+
+function bindThumbSources(card, item) {
+  if (!(card instanceof HTMLElement) || !item) return;
+  card.querySelectorAll("img.thumb-q").forEach((img) => {
+    const im = (item.imagesIncidencia || [])[Number(img.dataset.idx)];
+    const src = imageSrc(im);
+    if (src) img.src = src;
+    else img.removeAttribute("src");
+  });
+  card.querySelectorAll("img.thumb-s").forEach((img) => {
+    const im = (item.imagesSolucion || [])[Number(img.dataset.idx)];
+    const src = imageSrc(im);
+    if (src) img.src = src;
+    else img.removeAttribute("src");
+  });
 }
 
 function statusToneClass(status) {
@@ -1533,69 +2309,89 @@ function renderStatusTrio(active, btnClass, dataActAttr) {
   `).join("");
 }
 
+function renderChecklist(item) {
+  const list = Array.isArray(item.checklist) ? item.checklist : [];
+  const rows = list.map((c) => `
+    <div class="checklist-row" data-check-id="${escapeAttr(c.id)}">
+      <button type="button" class="checklist-toggle${c.checked ? " is-checked" : ""}" data-act="toggle-check" title="${c.checked ? "Uncheck" : "Check"}" aria-pressed="${c.checked ? "true" : "false"}" aria-label="${c.checked ? "Uncheck" : "Check"} ${escapeAttr(c.label)}">
+        ${mi("check")}
+      </button>
+      <input type="text" class="checklist-label" value="${escapeAttr(c.label)}" maxlength="120" aria-label="Checklist item label" />
+      <button type="button" class="danger" data-act="del-check" title="Remove checklist item" aria-label="Remove checklist item">${mi("delete")}</button>
+    </div>
+  `).join("");
+  return `
+    <div class="checklist-panel" aria-label="Issue checklist">
+      ${rows || `<p class="checklist-empty">Add UX checks to approve this issue.</p>`}
+      <button type="button" class="checklist-add" data-act="add-check" title="Add checklist item" aria-label="Add checklist item">${mi("add")}</button>
+    </div>
+  `;
+}
+
 function renderItem(sec, grp, item) {
   const eff = effectiveStatus(item);
   const tone = statusToneClass(eff);
   const collapsed = isCollapsed("items", item.id);
-  const labels = Array.isArray(state.validationCriteria) ? state.validationCriteria : [];
-  const critMap = item.criteriaStatus || {};
-  const criteriaBlock = labels.length ? `
-        <div class="status-criteria" aria-label="Validation criteria">
-          ${labels.map((label) => `
-            <div class="status-criteria-row" data-crit-label="${escapeAttr(label)}">
-              <span class="status-criteria-label" title="${escapeAttr(label)}">${escapeHtml(label)}</span>
-              <div class="status-box">
-                ${renderStatusTrio(critMap[label] || "", "btn-status-crit", "data-crit-act")}
-              </div>
-            </div>
-          `).join("")}
-        </div>` : "";
+  const tab = itemTabById.get(item.id) === "checklist" ? "checklist" : "issue";
+  const badgeClass = statusToneClass(eff).trim() || "is-none";
   return `
-  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${item.id}" data-section="${sec.id}" data-group="${grp.id}" data-item="${item.id}">
+  <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${escapeAttr(item.id)}" data-section="${escapeAttr(sec.id)}" data-group="${escapeAttr(grp.id)}" data-item="${escapeAttr(item.id)}" data-tab="${tab}">
     <div class="item-top">
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
+      <span class="item-status-badge ${badgeClass}" title="${escapeAttr(statusBadgeTitle(eff))}" aria-label="${escapeAttr(statusBadgeTitle(eff))}">${mi(statusBadgeIcon(eff))}</span>
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
       <button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>
     </div>
     <div class="item-body">
-    <div class="item-row">
-      <div class="qa-pair">
-        <div class="qa-half">
-          <div class="col col-incidencia">
-            ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
-            <div class="meta-bar">
-              <div class="meta-bar-time">
-                <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
-              </div>
-              <div class="meta-bar-imgs">
-                <input type="file" accept="image/*" multiple class="img-input img-incidencia" title="Imágenes incidencia" />
+    <div class="item-body-layout">
+      <div class="item-side-tabs" role="tablist" aria-label="Issue views">
+        <button type="button" class="item-side-tab${tab === "issue" ? " is-active" : ""}" role="tab" aria-selected="${tab === "issue" ? "true" : "false"}" data-act="item-tab" data-tab="issue" title="Issue / action">Issue / action</button>
+        <button type="button" class="item-side-tab${tab === "checklist" ? " is-active" : ""}" role="tab" aria-selected="${tab === "checklist" ? "true" : "false"}" data-act="item-tab" data-tab="checklist" title="Checklist">Checklist</button>
+      </div>
+      <div class="item-tab-panel" data-panel="issue" ${tab === "issue" ? "" : "hidden"}>
+        <div class="item-row">
+          <div class="qa-pair">
+            <div class="qa-half">
+              <div class="col col-incidencia">
+                ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
                 <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
+                <div class="meta-bar">
+                  <div class="meta-bar-time">
+                    <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
+                  </div>
+                  <div class="meta-bar-imgs">
+                    <input type="file" accept="image/*" multiple class="img-input img-incidencia" tabindex="-1" aria-hidden="true" title="Imágenes incidencia" />
+                    <button type="button" class="img-pick" data-act="pick-img" data-which="incidencia" title="Añadir imagen a la incidencia" aria-label="Añadir imagen a la incidencia">
+                      <span class="material-icons" aria-hidden="true">image</span>
+                      Añadir imagen
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="qa-half">
-          <div class="col col-sol">
-            ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
-            <div class="meta-bar">
-              <div class="meta-bar-time">
-                <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
-              </div>
-              <div class="meta-bar-imgs">
-                <input type="file" accept="image/*" multiple class="img-input img-sol" title="Imágenes solución" />
+            <div class="qa-half">
+              <div class="col col-sol">
+                ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
                 <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
+                <div class="meta-bar">
+                  <div class="meta-bar-time">
+                    <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
+                  </div>
+                  <div class="meta-bar-imgs">
+                    <input type="file" accept="image/*" multiple class="img-input img-sol" tabindex="-1" aria-hidden="true" title="Imágenes solución" />
+                    <button type="button" class="img-pick" data-act="pick-img" data-which="solucion" title="Añadir imagen a la solución" aria-label="Añadir imagen a la solución">
+                      <span class="material-icons" aria-hidden="true">image</span>
+                      Añadir imagen
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col col-status">
-        <div class="status-stack">
-          ${criteriaBlock}
-          <div class="status-box status-box-main">
-            ${renderStatusTrio(item.status || "", "btn-status-main", "data-act")}
-          </div>
-        </div>
+      <div class="item-tab-panel" data-panel="checklist" ${tab === "checklist" ? "" : "hidden"}>
+        ${renderChecklist(item)}
       </div>
     </div>
   </div>
@@ -1646,7 +2442,7 @@ function renderNavRail() {
   const rail = document.getElementById("nav-rail");
   if (!rail) return;
   rail.innerHTML = state.sections.map(sec => `
-    <div class="nav-sec" data-section="${sec.id}" title="${escapeAttr(sec.title)}">
+    <div class="nav-sec" data-section="${escapeAttr(sec.id)}" title="${escapeAttr(sec.title)}">
       <div class="nav-sec-label">${escapeHtml(shortNavLabel(sec))} · ${escapeHtml(sec.title)}</div>
       <div class="nav-dots">
       ${[
@@ -1698,8 +2494,18 @@ function renderNavRail() {
   updateActiveNav();
 }
 
+function mainScrollEl() {
+  return document.querySelector(".main-col");
+}
+
+/** Activation line: 15% down from the visible top of the scrolling column. */
 function scrollSpyTopOffset() {
-  return 58;
+  const scroller = mainScrollEl();
+  if (scroller) {
+    const rect = scroller.getBoundingClientRect();
+    return rect.top + scroller.clientHeight * 0.15;
+  }
+  return (window.innerHeight || 0) * 0.15;
 }
 
 function updateActiveNav() {
@@ -1737,13 +2543,19 @@ function updateActiveNav() {
 }
 
 let scrollSpyRaf = 0;
-window.addEventListener("scroll", () => {
+function onScrollSpyScroll() {
   if (scrollSpyRaf) return;
   scrollSpyRaf = requestAnimationFrame(() => {
     scrollSpyRaf = 0;
     updateActiveNav();
   });
-}, { passive: true });
+}
+/* Scroll lives on .main-col (overflow:auto), not the window — listen there. */
+const mainScroller = mainScrollEl();
+if (mainScroller) {
+  mainScroller.addEventListener("scroll", onScrollSpyScroll, { passive: true });
+}
+window.addEventListener("scroll", onScrollSpyScroll, { passive: true });
 window.addEventListener("resize", () => {
   updateActiveNav();
   syncStickyOffsets();
@@ -1772,39 +2584,50 @@ function render() {
   root.innerHTML = state.sections.map(sec => {
     const secCollapsed = isCollapsed("sections", sec.id);
     return `
-    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${sec.id}" data-section="${sec.id}">
+    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${escapeAttr(sec.id)}" data-section="${escapeAttr(sec.id)}">
       <div class="section-title">
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
+          <button type="button" class="concept-btn" data-act="product-history" data-kind="section" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
           ${renderInplace("input", "inplace-section-title", sec.title || "", "Main section name")}
         </div>
         <div class="section-actions">
           <span class="hint">${sec.kind === "funcionalidades" ? "Por funcionalidad" : "Por subartículo"}</span>
-          <button type="button" class="ghost" data-act="add-section-item" title="Add open issue">
+          <button type="button" class="ghost" data-act="toggle-kind" title="Cambiar tipo (funcionalidad / subartículo)" aria-label="Cambiar tipo de sección">
+            ${mi("swap_horiz")}
+          </button>
+          <button type="button" class="ghost" data-act="add-group" title="Agregar subsección" aria-label="Agregar subsección">
+            ${mi("playlist_add")}
+          </button>
+          <button type="button" class="ghost" data-act="add-section-item" title="Add open issue" aria-label="Agregar open issue">
             ${mi("add")}
           </button>
-          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección">
+          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección" aria-label="Vaciar sección">
             ${mi("delete")}
+          </button>
+          <button type="button" class="danger" data-act="del-section" title="Eliminar sección" aria-label="Eliminar sección">
+            ${mi("delete_forever")}
           </button>
         </div>
       </div>
       <div class="section-body">
       <div class="section-open">
-        <div class="section-open-label">Open issues</div>
         ${(sec.items || []).map(it => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: sec.items }, it)).join("")}
       </div>
       ${sec.groups.map(grp => {
         const grpCollapsed = isCollapsed("groups", grp.id);
         return `
-        <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${grp.id}" data-group="${grp.id}">
+        <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${escapeAttr(grp.id)}" data-group="${escapeAttr(grp.id)}">
           <div class="group-head">
             <div class="group-head-main">
               <button type="button" class="collapse-toggle" data-collapse="groups" data-id="${escapeAttr(grp.id)}" title="Colapsar/expandir subartículo" aria-expanded="${grpCollapsed ? "false" : "true"}">${collapseChevron(grpCollapsed)}</button>
+              <button type="button" class="concept-btn" data-act="product-history" data-kind="group" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
               ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
             </div>
             <div class="group-actions">
-              <button type="button" class="ghost" data-act="add-item" title="Agregar fila">${mi("add")}</button>
-              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo">${mi("delete")}</button>
+              <button type="button" class="ghost" data-act="add-item" title="Agregar fila" aria-label="Agregar incidencia">${mi("add")}</button>
+              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo" aria-label="Vaciar subsección">${mi("delete")}</button>
+              <button type="button" class="danger" data-act="del-group" title="Eliminar subsección" aria-label="Eliminar subsección">${mi("delete_forever")}</button>
             </div>
           </div>
           <div class="group-body">
@@ -1817,9 +2640,13 @@ function render() {
     </section>
   `;
   }).join("") + `
+    ${state.sections.length ? "" : `<p class="hint empty-report">Este reporte todavía no tiene secciones principales.</p>`}
     <div class="app-actions">
+      <button type="button" class="ghost" data-act="add-section" title="Agregar sección principal">
+        ${mi("library_add")}<span>Agregar sección principal</span>
+      </button>
     </div>
-  `;}
+  `;
 
   root.querySelectorAll("[data-collapse]").forEach(btn => {
     btn.onclick = (e) => {
@@ -1830,38 +2657,62 @@ function render() {
 
   root.querySelectorAll(".item-card").forEach(card => {
     const sid = card.dataset.section, gid = card.dataset.group, iid = card.dataset.item;
-    card.querySelectorAll(".btn-status-main").forEach(btn => {
-      btn.onclick = () => setStatus(sid, gid, iid, btn.dataset.act);
+    card.querySelectorAll('[data-act="item-tab"]').forEach(btn => {
+      btn.onclick = () => setItemTab(iid, btn.dataset.tab);
     });
-    card.querySelectorAll(".status-criteria-row").forEach(row => {
-      const label = row.dataset.critLabel;
-      row.querySelectorAll(".btn-status-crit").forEach(btn => {
-        btn.onclick = () => setCriteriaStatus(sid, gid, iid, label, btn.dataset.critAct);
-      });
+    card.querySelectorAll('[data-act="add-check"]').forEach(btn => {
+      btn.onclick = () => addChecklistItem(sid, gid, iid);
+    });
+    card.querySelectorAll(".checklist-row").forEach(row => {
+      const cid = row.dataset.checkId;
+      const toggle = row.querySelector('[data-act="toggle-check"]');
+      if (toggle) toggle.onclick = () => toggleChecklistItem(sid, gid, iid, cid);
+      const del = row.querySelector('[data-act="del-check"]');
+      if (del) del.onclick = () => removeChecklistItem(sid, gid, iid, cid);
+      const labelEl = row.querySelector(".checklist-label");
+      if (labelEl) {
+        labelEl.onchange = () => updateStatus();
+        labelEl.onblur = () => updateStatus();
+      }
     });
     card.querySelector('[data-act="remove"]').onclick = () => removeItem(sid, gid, iid);
-    card.querySelector(".img-incidencia").onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
-    card.querySelector(".img-sol").onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
+    const imgInc = card.querySelector(".img-incidencia");
+    const imgSol = card.querySelector(".img-sol");
+    if (imgInc) imgInc.onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
+    if (imgSol) imgSol.onchange = (e) => onImagesSelected(sid, gid, iid, "solucion", e.target.files);
+    card.querySelectorAll('[data-act="pick-img"]').forEach((btn) => {
+      btn.onclick = () => {
+        const which = btn.dataset.which === "solucion" ? "solucion" : "incidencia";
+        const input = which === "solucion" ? imgSol : imgInc;
+        if (input instanceof HTMLInputElement) input.click();
+      };
+    });
+    bindColumnImageDrop(card.querySelector(".col-incidencia"), sid, gid, iid, "incidencia");
+    bindColumnImageDrop(card.querySelector(".col-sol"), sid, gid, iid, "solucion");
     card.querySelectorAll(".thumb-del").forEach(btn => {
       btn.onclick = (e) => {
         e.stopPropagation();
         removeImage(sid, gid, iid, btn.dataset.which, Number(btn.dataset.idx));
       };
     });
+    const item = locateItem(sid, gid, iid)?.item;
+    bindThumbSources(card, item);
     card.querySelectorAll(".thumb-q").forEach(img => {
       img.onclick = () => {
-        const item = locateItem(sid, gid, iid)?.item;
-        if (item) openModal(item.imagesIncidencia, Number(img.dataset.idx));
+        const cur = locateItem(sid, gid, iid)?.item;
+        if (cur) openModal(cur.imagesIncidencia, Number(img.dataset.idx));
       };
     });
     card.querySelectorAll(".thumb-s").forEach(img => {
       img.onclick = () => {
-        const item = locateItem(sid, gid, iid)?.item;
-        if (item) openModal(item.imagesSolucion, Number(img.dataset.idx));
+        const cur = locateItem(sid, gid, iid)?.item;
+        if (cur) openModal(cur.imagesSolucion, Number(img.dataset.idx));
       };
     });
-    card.querySelector(".fecha-incidencia").onchange = () => updateStatus();
-    card.querySelector(".fecha-solucion").onchange = () => updateStatus();
+    const fechaInc = card.querySelector(".fecha-incidencia");
+    const fechaSol = card.querySelector(".fecha-solucion");
+    if (fechaInc) fechaInc.onchange = () => updateStatus();
+    if (fechaSol) fechaSol.onchange = () => updateStatus();
     const nomEl = card.querySelector(".inplace-nombre");
     const incEl = card.querySelector(".inplace-incidencia");
     const solEl = card.querySelector(".inplace-solucion");
@@ -1874,6 +2725,20 @@ function render() {
     }
     if (incEl) { incEl._value = itemValue(sid, gid, iid, "incidencia"); bindInplace(incEl, "Descripción de la incidencia", () => updateStatus()); }
     if (solEl) { solEl._value = itemValue(sid, gid, iid, "solucion"); bindInplace(solEl, "Qué se hizo / cómo se resolvió", () => updateStatus()); }
+  });
+
+  root.querySelectorAll('[data-act="product-history"]').forEach(btn => {
+    btn.onclick = () => {
+      const kind = btn.dataset.kind;
+      if (kind === "section") {
+        const sec = btn.closest(".section-block");
+        if (sec) openProductHistory("section", sec.dataset.section);
+        return;
+      }
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      if (block && sec) openProductHistory("group", sec.dataset.section, block.dataset.group);
+    };
   });
 
   root.querySelectorAll(".group-block").forEach(block => {
@@ -1911,6 +2776,22 @@ function render() {
   root.querySelectorAll('[data-act="add-section-item"]').forEach(btn => {
     btn.onclick = () => addSectionItem(btn.closest(".section-block").dataset.section);
   });
+  root.querySelectorAll('[data-act="add-group"]').forEach(btn => {
+    btn.onclick = () => addGroup(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="del-group"]').forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      removeGroup(sec.dataset.section, block.dataset.group);
+    };
+  });
+  root.querySelectorAll('[data-act="del-section"]').forEach(btn => {
+    btn.onclick = () => removeSection(btn.closest(".section-block").dataset.section);
+  });
+  root.querySelectorAll('[data-act="toggle-kind"]').forEach(btn => {
+    btn.onclick = () => toggleSectionKind(btn.closest(".section-block").dataset.section);
+  });
   root.querySelectorAll('[data-act="add-section"]').forEach(btn => {
     btn.onclick = () => addSection();
   });
@@ -1936,20 +2817,20 @@ function escapeHtml(s) {
 function escapeAttr(s) { return escapeHtml(s).replace(/\n/g, " "); }
 
 function itemComplete(it) {
-  const eff = effectiveStatus(it);
-  return !!(it.incidencia && it.incidencia.trim()) && !!(it.solucion && it.solucion.trim()) &&
-    (eff === "aprobado" || eff === "reprobado" || eff === "no_aplica");
+  const list = Array.isArray(it.checklist) ? it.checklist : [];
+  return !!(it.incidencia && it.incidencia.trim()) && !!(it.solucion && it.solucion.trim()) && list.length > 0;
 }
 function itemStarted(it) {
   const hasCrit = it.criteriaStatus && Object.keys(it.criteriaStatus).some((k) => !!it.criteriaStatus[k]);
+  const hasCheck = Array.isArray(it.checklist) && it.checklist.length > 0;
   return !!(it.nombre && it.nombre.trim()) || !!(it.incidencia && it.incidencia.trim()) ||
-    !!(it.solucion && it.solucion.trim()) || !!it.status || hasCrit ||
+    !!(it.solucion && it.solucion.trim()) || !!it.status || hasCrit || hasCheck ||
     (it.imagesIncidencia && it.imagesIncidencia.length) || (it.imagesSolucion && it.imagesSolucion.length);
 }
 
 function updateStatus() {
   collectFromDom();
-  let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, na = 0;
+  let total = 0, filled = 0, missing = 0, approved = 0, rejected = 0, warning = 0;
   const missingList = [];
   const countItem = (it, idx, labelPrefix) => {
         total += 1;
@@ -1957,8 +2838,8 @@ function updateStatus() {
         if (itemComplete(it)) {
           filled += 1;
           if (eff === "aprobado") approved += 1;
-          if (eff === "reprobado") rejected += 1;
-          if (eff === "no_aplica") na += 1;
+          else if (eff === "reprobado") rejected += 1;
+          else warning += 1;
         } else {
           missing += 1;
           const label = (it.nombre && it.nombre.trim()) || `${labelPrefix} ${idx + 1}`;
@@ -1975,7 +2856,7 @@ function updateStatus() {
   document.getElementById("fill-status").innerHTML = `
     <li>Meta reporte: ${metaOk ? "completa" : "falta fecha y/o código"}</li>
     <li>Filas completas: <strong>${filled}</strong> / ${total}</li>
-    <li>Aprobadas: ${approved} · Reprobadas: ${rejected} · No aplica: ${na}</li>
+    <li>Aprobadas: ${approved} · Warning: ${warning} · Reprobadas: ${rejected}</li>
     <li>Pendientes: ${missing}${missingList.length ? " — " + missingList.slice(0, 8).join("; ") + (missingList.length > 8 ? "…" : "") : ""}</li>
   `;
   const safeName = (state.reportNumber || "sin-numero").replace(/[^\w.\-]+/g, "_");
@@ -2005,67 +2886,72 @@ function buildSavedHtml(data) {
 
 function imgGrid(images) {
   if (!images || !images.length) return "";
-  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">`;
+  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.5rem">`;
   images.forEach(im => {
-    html += `<img src="${imageSrc(im)}" style="width:100%;height:140px;object-fit:cover;border-radius:3px;border:1px solid #ccc" />`;
+    html += `<img src="${imageSrc(im)}" style="width:100%;height:8.75rem;object-fit:cover;border-radius:0.1875rem;border:0.0625rem solid #ccc" />`;
   });
   return html + `</div>`;
 }
 
 function buildPdfReportElement(data) {
   const el = document.createElement("div");
-  el.style.cssText = "width:900px;padding:24px;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
+  el.style.cssText = "width:56.25rem;padding:1.5rem;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
   const prevCriteria = state.validationCriteria;
   state.validationCriteria = Array.isArray(data.validationCriteria) ? data.validationCriteria : [];
-  let html = `<div style="background:#000000;color:#ffffff;padding:16px 18px;border-radius:3px;border-bottom:4px solid #f9a825">
-      <h1 style="margin:0 0 6px;font-size:22px">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
+  let html = `<div style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
+      <h1 style="margin:0 0 0.375rem;font-size:1.375rem">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
       <p style="margin:0 0 4px;opacity:.9"><strong>Organization:</strong> ${escapeHtml(data.orgName || "—")}</p>
       <p style="margin:0;opacity:.9"><strong>Report Date:</strong> ${escapeHtml(data.reportDate || "—")}
       &nbsp;·&nbsp; <strong>Report Code:</strong> ${escapeHtml(data.reportNumber || "—")}</p>
     </div>`;
   data.sections.forEach(sec => {
-    html += `<h2 style="margin:22px 0 8px;border-bottom:3px solid #000000;padding-bottom:4px;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    html += `<h2 style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    if (sec.productHistory) {
+      html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
+    }
     if ((sec.items || []).length) {
-      html += `<h3 style="margin:14px 0 6px;color:#000000">Open issues</h3>`;
+      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
       (sec.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
-        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
-        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : "WARNING";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : "#f9a825";
         const name = (it.nombre && it.nombre.trim()) || `Open issue ${idx + 1}`;
-        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
-        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
-          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
-          <p style="margin:8px 0 4px"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+        const cardBg = !eff ? "#fff8e1" : "#fff";
+        const checkLine = (it.checklist || []).length
+          ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
+          : "";
+        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+          <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+          ${checkLine}
+          <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
-          <p style="margin:8px 0 4px"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesSolucion)}
         </div>`;
       });
     }
     sec.groups.forEach(grp => {
-      html += `<h3 style="margin:14px 0 6px;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      if (grp.productHistory) {
+        html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
+      }
       (grp.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
-        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : eff === "no_aplica" ? "NO APLICA" : "SIN DEFINIR";
-        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : eff === "no_aplica" ? "#757575" : "#f9a825";
+        const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : "WARNING";
+        const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : "#f9a825";
         const name = (it.nombre && it.nombre.trim()) || `Fila ${idx + 1}`;
-        const cardBg = eff === "no_aplica" ? "#ececec" : (!eff ? "#fff8e1" : "#fff");
-        const critLabels = state.validationCriteria || [];
-        const critLine = critLabels.length
-          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${critLabels.map((lab) => {
-              const v = (it.criteriaStatus && it.criteriaStatus[lab]) || "";
-              const labSt = v === "aprobado" ? "OK" : v === "reprobado" ? "FAIL" : v === "no_aplica" ? "N/A" : "—";
-              return `${escapeHtml(lab)}:${labSt}`;
-            }).join(" · ")}</div>`
+        const cardBg = !eff ? "#fff8e1" : "#fff";
+        const checkLine = (it.checklist || []).length
+          ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg};opacity:${eff === "no_aplica" ? "0.75" : "1"}">
-          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
-          ${critLine}
-          <p style="margin:8px 0 4px"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+          <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+          ${checkLine}
+          <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
-          <p style="margin:8px 0 4px"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesSolucion)}
         </div>`;
       });
@@ -2088,7 +2974,7 @@ async function saveAll() {
 
   try {
     const host = document.createElement("div");
-    host.style.cssText = "position:fixed;left:-10000px;top:0;";
+    host.style.cssText = "position:fixed;left:-625rem;top:0;";
     const report = buildPdfReportElement(data);
     host.appendChild(report);
     document.body.appendChild(host);
@@ -2171,7 +3057,7 @@ function emptyLikeEmbedded() {
   (data.sections || []).forEach(sec => {
     sec.items = [];
     (sec.groups || []).forEach(grp => {
-      grp.items = [normalizeItem({ id: uid(grp.id || "item") })];
+      grp.items = [normalizeItem({ id: uid(grp.id || "item") }, { newIssue: true })];
     });
   });
   return normalizeState(data);
@@ -2288,6 +3174,19 @@ function runHostCommand(command) {
     case "progress": openProgressModal("info"); break;
     case "save-export": openProgressModal("save"); break;
     case "add-section": addSection(); break;
+    case "add-group": {
+      const sid = currentSectionId();
+      if (sid) addGroup(sid); else toast("Agrega primero una sección principal");
+      break;
+    }
+    case "add-open-issue": {
+      const sid = currentSectionId();
+      if (sid) addSectionItem(sid); else toast("Agrega primero una sección principal");
+      break;
+    }
+    case "criteria": focusCriteria(); break;
+    case "collapse-all": setAllCollapsed(true); break;
+    case "expand-all": setAllCollapsed(false); break;
     default: break;
   }
 }
@@ -2296,19 +3195,67 @@ document.getElementById("howto-close").onclick = () => closeModal("howto-modal")
 document.getElementById("howto-modal").addEventListener("click", (e) => {
   if (e.target.id === "howto-modal") closeModal("howto-modal");
 });
+document.getElementById("history-close").onclick = () => closeProductHistory();
+document.getElementById("history-cancel").onclick = () => closeProductHistory();
+document.getElementById("history-save").onclick = () => saveProductHistory();
+document.getElementById("history-modal").addEventListener("click", (e) => {
+  if (e.target.id === "history-modal") closeProductHistory();
+});
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
+  if (document.getElementById("history-modal")?.classList.contains("open")) {
+    closeProductHistory();
+    return;
+  }
   ["howto-modal", "progress-modal", "img-modal"].forEach((id) => {
     const modal = document.getElementById(id);
     if (modal && modal.classList.contains("open")) closeModal(id);
   });
 });
+
+document.addEventListener("focusin", (e) => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  const card = t.closest(".item-card");
+  if (!(card instanceof HTMLElement)) return;
+  const which = t.closest(".col-sol") ? "solucion" : t.closest(".col-incidencia") ? "incidencia" : pasteImageCtx.which;
+  rememberPasteImageTarget(card, which);
+});
+
+document.addEventListener("pointerdown", (e) => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  const card = t.closest(".item-card");
+  if (!(card instanceof HTMLElement)) return;
+  const which = t.closest(".col-sol") ? "solucion" : t.closest(".col-incidencia") ? "incidencia" : pasteImageCtx.which;
+  rememberPasteImageTarget(card, which);
+}, true);
+
+document.addEventListener("paste", (e) => {
+  const images = clipboardImageFiles(e.clipboardData);
+  if (!images.length) return;
+  const target = resolvePasteImageTarget();
+  if (!target) {
+    toast("Seleccioná una incidencia para pegar la captura.");
+    return;
+  }
+  e.preventDefault();
+  void ingestImageFiles(target.sid, target.gid, target.iid, target.which, images);
+});
 document.getElementById("progress-close").onclick = () => closeProgressModal();
 document.getElementById("progress-modal").addEventListener("click", (e) => {
   if (e.target.id === "progress-modal") closeProgressModal();
 });
-document.getElementById("scroll-top").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-document.getElementById("scroll-bottom").onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+document.getElementById("scroll-top").onclick = () => {
+  const scroller = mainScrollEl();
+  if (scroller) scroller.scrollTo({ top: 0, behavior: "smooth" });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
+};
+document.getElementById("scroll-bottom").onclick = () => {
+  const scroller = mainScrollEl();
+  if (scroller) scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
+  else window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+};
 document.getElementById("modal-close").onclick = () => closeModal("img-modal");
 document.getElementById("modal-prev").onclick = () => stepModal(-1);
 document.getElementById("modal-next").onclick = () => stepModal(1);
@@ -2332,6 +3279,33 @@ updateStatus();
     }
   }
 
+  function sanitizeImagesForSave(list) {
+    return (list || [])
+      .filter(function (im) { return im && !im.pending; })
+      .map(function (im) {
+        var out = { id: im.id, mime: im.mime, name: im.name, url: im.url };
+        if (!out.url && im.dataUrl) out.dataUrl = im.dataUrl;
+        return out;
+      });
+  }
+
+  function sanitizePayloadForSave(raw) {
+    var payload = structuredClone(raw);
+    function scrubItem(it) {
+      if (!it) return;
+      it.imagesIncidencia = sanitizeImagesForSave(it.imagesIncidencia);
+      it.imagesSolucion = sanitizeImagesForSave(it.imagesSolucion);
+      it.images = it.imagesSolucion;
+    }
+    (payload.sections || []).forEach(function (sec) {
+      (sec.items || []).forEach(scrubItem);
+      (sec.groups || []).forEach(function (grp) {
+        (grp.items || []).forEach(scrubItem);
+      });
+    });
+    return payload;
+  }
+
   function scheduleCloudSave() {
     if (!autoSaveEnabled) return;
     if (!window.parent || window.parent === window) return;
@@ -2339,7 +3313,7 @@ updateStatus();
     cloudSaveTimer = setTimeout(function () {
       try {
         collectFromDom();
-        emit("cloud-save", { payload: structuredClone(state) });
+        emit("cloud-save", { payload: sanitizePayloadForSave(state) });
       } catch (e) {
         emit("error", { message: String(e && e.message ? e.message : e) });
       }
@@ -2356,7 +3330,7 @@ updateStatus();
   var origSaveAll = saveAll;
   saveAll = async function () {
     try { collectFromDom(); } catch (e) {}
-    emit("cloud-save", { payload: structuredClone(state) });
+    emit("cloud-save", { payload: sanitizePayloadForSave(state) });
     return origSaveAll.apply(this, arguments);
   };
 

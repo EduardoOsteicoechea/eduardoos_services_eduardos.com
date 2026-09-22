@@ -242,7 +242,9 @@ describe("eReport workspace chrome", () => {
     expect(compartir).toBeGreaterThan(descargar);
     expect(ids).toBeGreaterThan(compartir);
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
-    expect(css).toContain("--br: 3.44px");
+    expect(css).toContain("--br: 0.215rem");
+    expect(css).toContain("--bmh: 2.25rem");
+    expect(css).toContain("--bmw: 2.25rem");
     expect(css).toContain("#f2f3f6");
     expect(css).toContain("Kumbh Sans");
   });

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -30,13 +30,13 @@
   --base: 1rem;
   --sticky-sec-h: 2.75rem;
   --sticky-sub-h: 2.75rem;
-  --radius: 3px;
+  --radius: 0.1875rem;
   --section-head-bg: #dcdcdc;
-  /* Spec 063: match site root (16px × scale); rem children keep proportions. */
+  /* Spec 063: root rem × --site-text-scale; rem children keep proportions. */
   --site-text-scale: 1;
 }
 html {
-  font-size: calc(16px * var(--site-text-scale, 1));
+  font-size: calc(1rem * var(--site-text-scale, 1));
   scroll-behavior: smooth;
   height: 100%;
   color-scheme: light;
@@ -116,7 +116,7 @@ body.sidebar-collapsed .sidebar {
   border-bottom: 0.125rem solid color-mix(in srgb, var(--ink) 25%, transparent);
   font-size: 1.365rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.04rem;
   text-transform: uppercase;
 }
 .sidebar-body {
@@ -171,7 +171,7 @@ body.sidebar-collapsed .sidebar {
 }
 .nav-dot {
   width: 1.071rem; height: 1.071rem; padding: 0;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   background: var(--neutral);
   border: 0.0625rem solid color-mix(in srgb, var(--ink) 55%, transparent);
   cursor: pointer; flex: 0 0 auto;
@@ -206,7 +206,7 @@ body.sidebar-collapsed .sidebar {
 }
 
 .nav-tip {
-  position: fixed; z-index: 80; max-width: min(28rem, calc(100vw - 5rem));
+  position: fixed; z-index: 80; max-width: 28rem;
   background: var(--bg); color: var(--ink);
   padding: 0.5rem 0.65rem; border-radius: var(--radius); font-size: 1.3125rem; line-height: 1.35;
   border: 0.0625rem solid var(--line);
@@ -275,7 +275,7 @@ label.field input, label.field textarea, .nombre-input,
   border: 0.0625rem solid var(--line); border-radius: var(--radius);
   padding: 0.5rem 0.65rem; background: var(--card);
 }
-.inplace input, .inplace textarea { width: 100%; }
+.inplace input, .inplace textarea { align-self: stretch; width: auto; min-width: 0; box-sizing: border-box; }
 /* Native date/datetime icons follow color-scheme; force contrast in dark mode. */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -469,16 +469,16 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   min-height: 0;
   padding: 0.2rem 0.4rem;
   font: inherit;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.2;
 }
 .item-top .inplace-nombre input.nombre-input {
   padding: 0.2rem 0.4rem;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.2;
 }
 .item-top .lbl-inline {
-  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); flex: 0 0 auto;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04rem; color: var(--muted); flex: 0 0 auto;
 }
 .item-top button {
   width: 1.25rem; height: 1.25rem; padding: 0;
@@ -488,7 +488,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .item-top button .btn-ico,
 .item-top button .material-icons {
   font-size: 0.9rem;
-  width: 1em; height: 1em;
+  width: 1rem; height: 1rem;
   line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -533,7 +533,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.5rem;
   align-items: stretch;
-  width: 100%;
+  align-self: stretch;
   flex: 1;
   min-height: 0;
 }
@@ -553,7 +553,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   min-height: 0;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.04rem;
   text-transform: uppercase;
   color: var(--muted);
   background: color-mix(in srgb, var(--surface) 70%, transparent);
@@ -571,7 +571,8 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .item-tab-panel {
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  align-self: stretch;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
@@ -579,7 +580,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .item-tab-panel[data-panel="issue"] > .item-row {
   flex: 1 1 auto;
   min-height: 0;
-  height: 100%;
+  align-self: stretch;
 }
 .item-tab-panel[data-panel="checklist"] > .checklist-panel {
   flex: 1 1 auto;
@@ -655,7 +656,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 
 .history-modal-body { display: flex; flex-direction: column; gap: 0.6rem; }
 .history-modal-body textarea {
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   min-height: 10rem;
   resize: vertical;
   padding: 0.55rem 0.65rem;
@@ -679,12 +680,13 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   gap: 0.65rem;
   padding: 0;
   align-items: stretch;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
 }
 .qa-pair {
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  align-self: stretch;
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border: none;
@@ -696,7 +698,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .qa-half {
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -709,9 +711,9 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   gap: 0.3rem;
   flex: 1 1 auto;
   min-height: 0;
-  height: 100%;
+  align-self: stretch;
 }
-.col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.col .lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04rem; color: var(--muted); }
 .col.is-drop-target {
   outline: 0.125rem dashed var(--accent);
   outline-offset: -0.125rem;
@@ -726,7 +728,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.5rem;
   align-items: stretch;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   margin-top: auto;
   flex: 0 0 auto;
 }
@@ -738,7 +740,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   justify-content: stretch;
 }
 .col > .thumbs {
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   margin-top: 0;
   margin-bottom: 0;
   flex: 0 0 auto;
@@ -746,7 +748,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .moment-input,
 .img-pick {
   box-sizing: border-box;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   max-width: none;
   height: 2rem;
   min-height: 2rem;
@@ -768,8 +770,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 .img-pick .material-icons {
   font-size: 1.1rem;
-  width: 1em;
-  height: 1em;
+  width: 1rem; height: 1rem;
   line-height: 1;
 }
 .img-pick:hover,
@@ -822,7 +823,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .inplace-view .ph { color: var(--muted); font-weight: 400; }
 .inplace.is-editing .inplace-view { display: none; }
 .inplace textarea {
-  flex: 1 1 auto; min-height: 3.5rem; resize: vertical; width: 100%;
+  flex: 1 1 auto; min-height: 3.5rem; resize: vertical; align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
 }
 .col-status {
   width: auto;
@@ -891,7 +892,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .btn-status .material-icons,
 .btn-status .btn-ico {
   font-size: 1.15rem;
-  width: 1em; height: 1em;
+  width: 1rem; height: 1rem;
   line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -902,19 +903,19 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
   gap: 0.3rem;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   min-width: 0;
 }
 .thumbs:empty { display: none; }
 .thumb-wrap {
   position: relative;
-  width: 100%;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: var(--radius);
 }
 .thumbs img, .thumb-wrap img {
-  width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
+  align-self: stretch; width: auto; height: auto; min-width: 0; min-height: 0; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
   border: 0.0625rem solid var(--line); cursor: zoom-in; background: var(--surface);
   display: block;
 }
@@ -984,10 +985,10 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 .modal.open { display: flex; }
 .modal-card {
-  background: var(--card); border-radius: var(--radius); max-width: min(57.5rem, 96vw);
-  width: 100%; padding: 0.85rem; box-shadow: var(--shadow);
+  background: var(--card); border-radius: var(--radius); max-width: 57.5rem;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box; padding: 0.85rem; box-shadow: var(--shadow);
 }
-.modal-card img { width: 100%; max-height: 70vh; object-fit: contain; background: #111; border-radius: var(--radius); }
+.modal-card img { align-self: stretch; width: auto; min-width: 0; max-height: 35rem; object-fit: contain; background: #111; border-radius: var(--radius); }
 .modal-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; gap: 0.5rem; }
 
 @media (max-width: 68rem) {
@@ -1055,8 +1056,8 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   margin-bottom: 0.85rem;
 }
 .modal-head h2 { margin: 0; font-size: 1.1rem; color: var(--ink); }
-.modal-card.modal-card-sm { max-width: min(36rem, 96vw); }
-.modal-card.modal-card-md { max-width: min(42rem, 96vw); }
+.modal-card.modal-card-sm { max-width: 36rem; }
+.modal-card.modal-card-md { max-width: 42rem; }
 .modal-actions {
   display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end;
   margin-top: 1rem; align-items: center;
@@ -2885,31 +2886,31 @@ function buildSavedHtml(data) {
 
 function imgGrid(images) {
   if (!images || !images.length) return "";
-  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">`;
+  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.5rem">`;
   images.forEach(im => {
-    html += `<img src="${imageSrc(im)}" style="width:100%;height:140px;object-fit:cover;border-radius:3px;border:1px solid #ccc" />`;
+    html += `<img src="${imageSrc(im)}" style="width:100%;height:8.75rem;object-fit:cover;border-radius:0.1875rem;border:0.0625rem solid #ccc" />`;
   });
   return html + `</div>`;
 }
 
 function buildPdfReportElement(data) {
   const el = document.createElement("div");
-  el.style.cssText = "width:900px;padding:24px;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
+  el.style.cssText = "width:56.25rem;padding:1.5rem;background:#ffffff;color:#000000;font-family:Segoe UI,sans-serif;";
   const prevCriteria = state.validationCriteria;
   state.validationCriteria = Array.isArray(data.validationCriteria) ? data.validationCriteria : [];
-  let html = `<div style="background:#000000;color:#ffffff;padding:16px 18px;border-radius:3px;border-bottom:4px solid #f9a825">
-      <h1 style="margin:0 0 6px;font-size:22px">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
+  let html = `<div style="background:#000000;color:#ffffff;padding:1rem 1.125rem;border-radius:0.1875rem;border-bottom:0.25rem solid #f9a825">
+      <h1 style="margin:0 0 0.375rem;font-size:1.375rem">${escapeHtml(data.reportName || data.appTitle || "Issue Tracker")}</h1>
       <p style="margin:0 0 4px;opacity:.9"><strong>Organization:</strong> ${escapeHtml(data.orgName || "—")}</p>
       <p style="margin:0;opacity:.9"><strong>Report Date:</strong> ${escapeHtml(data.reportDate || "—")}
       &nbsp;·&nbsp; <strong>Report Code:</strong> ${escapeHtml(data.reportNumber || "—")}</p>
     </div>`;
   data.sections.forEach(sec => {
-    html += `<h2 style="margin:22px 0 8px;border-bottom:3px solid #000000;padding-bottom:4px;color:#000000">${escapeHtml(sec.title)}</h2>`;
+    html += `<h2 style="margin:1.375rem 0 0.5rem;border-bottom:0.1875rem solid #000000;padding-bottom:0.25rem;color:#000000">${escapeHtml(sec.title)}</h2>`;
     if (sec.productHistory) {
-      html += `<p style="margin:0 0 8px;font-size:12px;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
+      html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(sec.productHistory).replace(/\n/g,"<br>")}</p>`;
     }
     if ((sec.items || []).length) {
-      html += `<h3 style="margin:14px 0 6px;color:#000000">Open issues</h3>`;
+      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">Open issues</h3>`;
       (sec.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
         const eff = effectiveStatus(it);
@@ -2918,22 +2919,22 @@ function buildPdfReportElement(data) {
         const name = (it.nombre && it.nombre.trim()) || `Open issue ${idx + 1}`;
         const cardBg = !eff ? "#fff8e1" : "#fff";
         const checkLine = (it.checklist || []).length
-          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
+          ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
-          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+          <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
-          <p style="margin:8px 0 4px"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong><br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
-          <p style="margin:8px 0 4px"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Solución</strong><br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesSolucion)}
         </div>`;
       });
     }
     sec.groups.forEach(grp => {
-      html += `<h3 style="margin:14px 0 6px;color:#000000">${escapeHtml(grp.title)}</h3>`;
+      html += `<h3 style="margin:0.875rem 0 0.375rem;color:#000000">${escapeHtml(grp.title)}</h3>`;
       if (grp.productHistory) {
-        html += `<p style="margin:0 0 8px;font-size:12px;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
+        html += `<p style="margin:0 0 8px;font-size:0.75rem;color:#5c6368"><strong>Product history:</strong> ${escapeHtml(grp.productHistory).replace(/\n/g,"<br>")}</p>`;
       }
       (grp.items || []).forEach((it, idx) => {
         if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
@@ -2943,14 +2944,14 @@ function buildPdfReportElement(data) {
         const name = (it.nombre && it.nombre.trim()) || `Fila ${idx + 1}`;
         const cardBg = !eff ? "#fff8e1" : "#fff";
         const checkLine = (it.checklist || []).length
-          ? `<div style="font-size:11px;color:#5c6368;margin-top:4px">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
+          ? `<div style="font-size:0.6875rem;color:#5c6368;margin-top:0.25rem">${(it.checklist || []).map((c) => `${c.checked ? "✓" : "○"} ${escapeHtml(c.label || "UX Test")}`).join(" · ")}</div>`
           : "";
-        html += `<div style="border:1px solid #d7dee2;border-radius:3px;padding:12px;margin:8px 0;background:${cardBg}">
-          <div style="font-size:12px;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
+        html += `<div style="border:0.0625rem solid #d7dee2;border-radius:0.1875rem;padding:0.75rem;margin:0.5rem 0;background:${cardBg}">
+          <div style="font-size:0.75rem;color:${stColor};font-weight:700">${escapeHtml(name)} · ${st}</div>
           ${checkLine}
-          <p style="margin:8px 0 4px"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Incidencia</strong>${it.fechaIncidencia ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaIncidencia.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.incidencia || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesIncidencia)}
-          <p style="margin:8px 0 4px"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
+          <p style="margin:0.5rem 0 0.25rem"><strong>Solución</strong>${it.fechaSolucion ? ` <span style="color:#5c6368;font-weight:400">(${escapeHtml(it.fechaSolucion.replace("T"," "))})</span>` : ""}<br>${escapeHtml(it.solucion || "—").replace(/\n/g,"<br>")}</p>
           ${imgGrid(it.imagesSolucion)}
         </div>`;
       });
@@ -2973,7 +2974,7 @@ async function saveAll() {
 
   try {
     const host = document.createElement("div");
-    host.style.cssText = "position:fixed;left:-10000px;top:0;";
+    host.style.cssText = "position:fixed;left:-625rem;top:0;";
     const report = buildPdfReportElement(data);
     host.appendChild(report);
     document.body.appendChild(host);
