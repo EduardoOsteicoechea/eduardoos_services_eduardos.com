@@ -35,11 +35,17 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       Recent
     </button>
-    <button class="dhs-action" type="button" data-hub-view="manage" title="eReport" aria-label="Manage">
+    <button class="dhs-action" type="button" data-hub-view="manage" title="eReport" aria-label="Manage orgs">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
       </span>
-      Manage
+      Manage orgs
+    </button>
+    <button class="dhs-action" type="button" data-hub-view="manage-reports" title="eReport" aria-label="Manage reports">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+      </span>
+      Manage reports
     </button>
   </Fragment>
 
@@ -98,6 +104,11 @@ import Layout from "../../layouts/Layout.astro";
               <span class="material-symbols-outlined" aria-hidden="true">folder_managed</span>
               <span class="product-dash__card-title">Manage orgs</span>
               <span class="product-dash__card-desc">Order, hide, delete</span>
+            </button>
+            <button class="product-dash__card" type="button" data-hub-view="manage-reports">
+              <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+              <span class="product-dash__card-title">Manage reports</span>
+              <span class="product-dash__card-desc" data-count-manage-reports>Delete reports</span>
             </button>
           </div>
         </section>
@@ -267,6 +278,13 @@ import Layout from "../../layouts/Layout.astro";
         </form>
         <ul class="ereport-list" data-manage-list></ul>
       </div>
+
+      <div data-view="manage-reports">
+        <button class="btn" type="button" data-hub-back>Back to dashboard</button>
+        <h2 class="product-dash__section-title">Manage reports</h2>
+        <p class="hint">Open a report or delete it permanently. Deletion cannot be undone.</p>
+        <ul class="ereport-list" data-manage-reports-list></ul>
+      </div>
     </div>
   </section>
 </Layout>
@@ -294,7 +312,7 @@ import Layout from "../../layouts/Layout.astro";
   import { requireService, setHidden } from "../../lib/productGate";
   import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
-  const HUB_VIEWS = ["dashboard", "orgs", "register", "new-report", "recent", "manage"];
+  const HUB_VIEWS = ["dashboard", "orgs", "register", "new-report", "recent", "manage", "manage-reports"];
 
   onBoundPageReady("[data-ereport-hub]", (root) => {
     const copy = sessionCopy();
@@ -302,6 +320,7 @@ import Layout from "../../layouts/Layout.astro";
     let ownerSafe = "";
     let orgs: OrgCard[] = [];
     let recent: RecentReportCard[] = [];
+    let allReports: RecentReportCard[] = [];
     let activeOrgId = "";
     let reports: ReportCard[] = [];
     let importOrgId = "";
@@ -357,7 +376,9 @@ import Layout from "../../layouts/Layout.astro";
         orgs,
         recent,
         reports,
+        allReports,
       });
+      if (view === "manage-reports") void refreshManageReports();
     };
 
     const fillSelect = (selector: string, placeholder: string) => {
@@ -387,6 +408,11 @@ import Layout from "../../layouts/Layout.astro";
       if (recentCount instanceof HTMLElement) recentCount.textContent = `${recent.length} recent`;
       const reportCount = root.querySelector("[data-count-reports]");
       if (reportCount instanceof HTMLElement) reportCount.textContent = `${reports.length} report(s)`;
+      const manageReportsCount = root.querySelector("[data-count-manage-reports]");
+      if (manageReportsCount instanceof HTMLElement) {
+        manageReportsCount.textContent =
+          allReports.length > 0 ? `${allReports.length} report(s)` : "Delete reports";
+      }
       const noOrgs = root.querySelector("[data-no-orgs]");
       if (noOrgs instanceof HTMLElement) noOrgs.hidden = visibleOrgs > 0;
     };
@@ -536,6 +562,68 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const loadAllReports = async () => {
+      const visible = orgs.filter((o) => !o.hidden);
+      const batches = await Promise.all(
+        visible.map(async (org) => {
+          const res = await fetchEreportOrg(org.id);
+          if (res.status !== 200) return [] as RecentReportCard[];
+          return (res.data.reports || []).map((report) => ({
+            ...report,
+            orgId: org.id,
+            orgName: org.name,
+          }));
+        }),
+      );
+      allReports = batches.flat().sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
+    };
+
+    const paintManageReports = () => {
+      const list = root.querySelector("[data-manage-reports-list]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      if (allReports.length === 0) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No reports yet.";
+        list.append(empty);
+        return;
+      }
+      for (const report of allReports) {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = workspaceHref(report.orgId, report.id, ownerSafe);
+        a.dataset.route = "";
+        a.textContent = report.tema || report.id;
+        const meta = document.createElement("span");
+        meta.className = "hint";
+        meta.textContent = `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)}`;
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn btn--red";
+        del.textContent = "Delete";
+        del.dataset.deleteReport = report.id;
+        del.dataset.deleteReportOrg = report.orgId;
+        del.dataset.reportName = report.tema || report.id;
+        li.append(a, meta, del);
+        list.append(li);
+      }
+    };
+
+    const refreshManageReports = async () => {
+      const list = root.querySelector("[data-manage-reports-list]");
+      if (list instanceof HTMLElement) {
+        list.replaceChildren();
+        const loading = document.createElement("li");
+        loading.className = "hint";
+        loading.textContent = "Loading reports…";
+        list.append(loading);
+      }
+      await loadAllReports();
+      paintManageReports();
+      paintCounts();
+    };
+
     const paintReports = () => {
       const list = root.querySelector("[data-report-list]");
       if (!(list instanceof HTMLElement)) return;
@@ -564,6 +652,7 @@ import Layout from "../../layouts/Layout.astro";
         del.className = "btn btn--red";
         del.textContent = "Delete";
         del.dataset.deleteReport = report.id;
+        del.dataset.deleteReportOrg = activeOrgId;
         del.dataset.reportName = report.tema || report.id;
         li.append(a, invite, del);
         list.append(li);
@@ -765,12 +854,19 @@ import Layout from "../../layouts/Layout.astro";
       }
 
       const delReport = node.closest("[data-delete-report]");
-      if (delReport instanceof HTMLElement && delReport.dataset.deleteReport && activeOrgId) {
+      if (delReport instanceof HTMLElement && delReport.dataset.deleteReport) {
+        const orgId = delReport.dataset.deleteReportOrg || activeOrgId;
+        if (!orgId) return;
         if (!window.confirm(`Delete report “${delReport.dataset.reportName || ""}”? This cannot be undone.`)) return;
-        const res = await deleteOrgReport(activeOrgId, delReport.dataset.deleteReport);
+        const res = await deleteOrgReport(orgId, delReport.dataset.deleteReport);
         const message = fail(res.status, res.data, "Report deleted.");
         setBanner(root, message.text, message.kind);
-        if (res.status === 200) await openOrg(activeOrgId);
+        if (res.status === 200) {
+          await reload();
+          if (orgId === activeOrgId) await openOrg(activeOrgId);
+          const currentView = new URLSearchParams(window.location.search).get("view");
+          if (currentView === "manage-reports") await refreshManageReports();
+        }
         return;
       }
 

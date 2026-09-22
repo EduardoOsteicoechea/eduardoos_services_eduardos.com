@@ -52,10 +52,15 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain('data-view="orgs"');
     expect(hubSrc).toContain('data-view="new-report"');
     expect(hubSrc).toContain('data-view="manage"');
+    expect(hubSrc).toContain('data-view="manage-reports"');
     expect(hubSrc).toContain("data-register-form");
     expect(hubSrc).toContain("data-recent-list");
+    expect(hubSrc).toContain("data-manage-reports-list");
     expect(hubSrc).toContain("data-hub-back");
     expect(hubSrc).toContain('searchParams.delete("view")');
+    expect(hubSrc).toContain('data-hub-view="manage-reports"');
+    expect(hubSrc).toContain("deleteOrgReport");
+    expect(hubSrc).toContain("deleteReportOrg");
   });
 
   it("builds the hub from 073 dashboard cards and the .btn system", () => {
