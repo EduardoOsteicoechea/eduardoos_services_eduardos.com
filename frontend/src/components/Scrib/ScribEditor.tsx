@@ -13,8 +13,11 @@ import ScribInstitutesModal from "./ScribInstitutesModal";
 import ScribSheetBackground from "./ScribSheetBackground";
 import {
   fetchScribSheet,
+  isScribDrawableLayer,
   resolveScribSheetFromLocation,
   saveScribSheet,
+  SCRIB_BACKGROUND_LAYER_ID,
+  SCRIB_DRAW_LAYER_IDS,
   SCRIB_LAYER_IDS,
   SCRIB_LAYER_LABELS,
   SCRIB_PAGE_HEIGHT_MM,
@@ -50,10 +53,15 @@ function ensureLayers(sheet: ScribSheet): ScribSheet {
     return {
       id,
       opacity: existing?.opacity ?? 1,
-      paths: existing?.paths ?? [],
+      // Background is ruled SVG only — never keep stroke paths on it.
+      paths: id === SCRIB_BACKGROUND_LAYER_ID ? [] : (existing?.paths ?? []),
     };
   });
-  return { ...sheet, layers };
+  let activeLayerId = sheet.activeLayerId;
+  if (!isScribDrawableLayer(activeLayerId)) {
+    activeLayerId = SCRIB_DRAW_LAYER_IDS[0] ?? "chapter";
+  }
+  return { ...sheet, layers, activeLayerId };
 }
 
 /** Sample points from an SVG path `d` built as M/L segments. */
@@ -567,11 +575,17 @@ export default function ScribEditor() {
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
             >
-              <ScribSheetBackground scale={scale} />
-              {sheet.layers.map((layer, index) => (
+              <ScribSheetBackground
+                scale={scale}
+                opacity={
+                  sheet.layers.find((l) => l.id === SCRIB_BACKGROUND_LAYER_ID)?.opacity ?? 1
+                }
+              />
+              {sheet.layers.filter((l) => isScribDrawableLayer(l.id)).map((layer, index) => (
                 <svg
                   key={layer.id}
                   className="scrib-layer"
+                  data-layer-id={layer.id}
                   viewBox={`0 0 ${SCRIB_PAGE_WIDTH_MM} ${SCRIB_PAGE_HEIGHT_MM}`}
                   width={`${SCRIB_PAGE_WIDTH_MM * scale}mm`}
                   height={`${SCRIB_PAGE_HEIGHT_MM * scale}mm`}
@@ -669,22 +683,27 @@ export default function ScribEditor() {
               {sheet.layers.map((layer) => {
                 const id = layer.id as ScribLayerId;
                 const label = SCRIB_LAYER_LABELS[id] ?? layer.id;
+                const drawable = isScribDrawableLayer(layer.id);
                 return (
                   <li key={layer.id} className="scrib-layer-card">
-                    <label className="scrib-layer-card__active">
-                      <input
-                        type="radio"
-                        name="scrib-active-layer"
-                        checked={sheet.activeLayerId === layer.id}
-                        onChange={() =>
-                          {
+                    {drawable ? (
+                      <label className="scrib-layer-card__active">
+                        <input
+                          type="radio"
+                          name="scrib-active-layer"
+                          checked={sheet.activeLayerId === layer.id}
+                          onChange={() => {
                             const current = sheetSnapshotRef.current;
                             if (current) commitSheet({ ...current, activeLayerId: layer.id });
-                          }
-                        }
-                      />
-                      <span>{label}</span>
-                    </label>
+                          }}
+                        />
+                        <span>{label}</span>
+                      </label>
+                    ) : (
+                      <div className="scrib-layer-card__active">
+                        <span>{label}</span>
+                      </div>
+                    )}
                     <label className="scrib-layer-card__opacity">
                       Opacidad
                       <input

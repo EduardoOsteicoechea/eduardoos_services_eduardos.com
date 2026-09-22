@@ -48,11 +48,14 @@ func TestScribLibraryBookSheetRoundTrip(t *testing.T) {
 	if err := json.Unmarshal(rec.Body.Bytes(), &sheet); err != nil {
 		t.Fatal(err)
 	}
-	if sheet.ID == "" || len(sheet.Layers) != 6 || sheet.ActiveLayerID != "chapter" {
+	if sheet.ID == "" || len(sheet.Layers) != 7 || sheet.ActiveLayerID != "chapter" {
 		t.Fatalf("unexpected sheet %#v", sheet)
 	}
+	if sheet.Layers[0].ID != scribBackgroundLayerID {
+		t.Fatalf("first layer want background got %s", sheet.Layers[0].ID)
+	}
 
-	sheet.Layers[0].Paths = append(sheet.Layers[0].Paths, scribStrokePath{D: "M 10 10 L 20 20", StrokeWidth: 0.4})
+	sheet.Layers[1].Paths = append(sheet.Layers[1].Paths, scribStrokePath{D: "M 10 10 L 20 20", StrokeWidth: 0.4})
 	body, _ := json.Marshal(sheet)
 	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPut, "/api/scrib/books/"+book.ID+"/sheets/"+sheet.ID, string(body))
 	if rec.Code != http.StatusOK {
@@ -67,8 +70,8 @@ func TestScribLibraryBookSheetRoundTrip(t *testing.T) {
 	if err := json.Unmarshal(rec.Body.Bytes(), &loaded); err != nil {
 		t.Fatal(err)
 	}
-	if len(loaded.Layers[0].Paths) != 1 {
-		t.Fatalf("expected 1 path, got %#v", loaded.Layers[0].Paths)
+	if len(loaded.Layers[1].Paths) != 1 {
+		t.Fatalf("expected 1 path on chapter, got %#v", loaded.Layers)
 	}
 
 	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPut, "/api/scrib/books/"+book.ID, `{"name":"Marcos"}`)
@@ -216,10 +219,16 @@ func TestLatinInstitutesPack(t *testing.T) {
 
 func TestEmptyScribLayers(t *testing.T) {
 	layers := scribEmptyLayers()
-	if len(layers) != 6 {
+	if len(layers) != 7 {
 		t.Fatalf("len=%d", len(layers))
+	}
+	if layers[0].ID != scribBackgroundLayerID {
+		t.Fatalf("first layer want background got %s", layers[0].ID)
 	}
 	if !scribIsLayerID("translation2") || scribIsLayerID("other") {
 		t.Fatal("layer id validation")
+	}
+	if scribIsDrawableLayerID(scribBackgroundLayerID) || !scribIsDrawableLayerID("chapter") {
+		t.Fatal("drawable layer validation")
 	}
 }

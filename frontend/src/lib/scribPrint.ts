@@ -1,58 +1,96 @@
 /**
- * Capture Scrib sheet as light grayscale JPEG → server PDF download.
+ * Capture Scrib sheet as light grayscale JPEG → server PDF (portrait US Letter).
+ * Rasterizes ruled geometry + stroke paths on a canvas (no SVG-as-image — CSS vars
+ * and blob SVG loads were producing blank pages).
  */
 
 import { mustLog } from "./dev-log";
 import {
+  isScribDrawableLayer,
   postScribPrintPdf,
+  SCRIB_BACKGROUND_LAYER_ID,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
   type ScribSheet,
+  type StrokePath,
 } from "./scrib";
-import { buildScribSheetBackgroundSvgMarkup } from "./scribSheetBackground";
+import {
+  buildScribSheetBackgroundGeometry,
+  SCRIB_SHEET_BG_DEFAULTS,
+} from "./scribSheetBackground";
 
-const PRINT_PX_PER_MM = 150 / 25.4;
+/** 300 DPI — print-quality US Letter raster. */
+const PRINT_DPI = 300;
+const PRINT_PX_PER_MM = PRINT_DPI / 25.4;
+const PRINT_INK = "#141820";
 
-function loadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.decoding = "async";
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`Failed to load ${src}`));
-    img.src = src;
-  });
+function pathPoints(d: string): { x: number; y: number }[] {
+  const pts: { x: number; y: number }[] = [];
+  const re = /[ML]\s*([-\d.]+)\s+([-\d.]+)/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(d))) {
+    pts.push({ x: Number(m[1]), y: Number(m[2]) });
+  }
+  return pts;
 }
 
-function svgMarkupToImage(
-  markup: string,
-  widthPx: number,
-  heightPx: number,
-): Promise<HTMLImageElement> {
-  const sized = markup.replace(
-    /width="[^"]*"\s+height="[^"]*"/,
-    `width="${widthPx}" height="${heightPx}"`,
-  );
-  const url = URL.createObjectURL(
-    new Blob([sized], { type: "image/svg+xml;charset=utf-8" }),
-  );
-  return loadImage(url).finally(() => URL.revokeObjectURL(url));
+function drawRuledBackground(
+  ctx: CanvasRenderingContext2D,
+  pxPerMm: number,
+  opacity: number,
+): void {
+  if (opacity <= 0) return;
+  const g = buildScribSheetBackgroundGeometry();
+  const sw = Math.max(1, g.strokeWidthMm * pxPerMm);
+  ctx.save();
+  ctx.globalAlpha = Math.min(1, Math.max(0, opacity));
+  ctx.lineCap = "butt";
+  ctx.lineJoin = "miter";
+  ctx.lineWidth = sw;
+
+  for (const r of g.rects) {
+    ctx.strokeStyle = r.stroke || SCRIB_SHEET_BG_DEFAULTS.colorSuave;
+    ctx.strokeRect(
+      r.x * pxPerMm,
+      r.y * pxPerMm,
+      r.width * pxPerMm,
+      r.height * pxPerMm,
+    );
+  }
+  for (const l of g.lines) {
+    ctx.strokeStyle = l.stroke || SCRIB_SHEET_BG_DEFAULTS.colorSuave;
+    ctx.beginPath();
+    ctx.moveTo(l.x1 * pxPerMm, l.y1 * pxPerMm);
+    ctx.lineTo(l.x2 * pxPerMm, l.y2 * pxPerMm);
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 
-function svgLayerToImage(
-  svg: SVGSVGElement,
-  widthPx: number,
-  heightPx: number,
-): Promise<HTMLImageElement> {
-  const clone = svg.cloneNode(true) as SVGSVGElement;
-  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  clone.setAttribute("width", String(widthPx));
-  clone.setAttribute("height", String(heightPx));
-  clone.querySelectorAll("path").forEach((p) => {
-    p.setAttribute("stroke", "#141820");
-  });
-  const xml = new XMLSerializer().serializeToString(clone);
-  const url = URL.createObjectURL(new Blob([xml], { type: "image/svg+xml;charset=utf-8" }));
-  return loadImage(url).finally(() => URL.revokeObjectURL(url));
+function drawStrokePaths(
+  ctx: CanvasRenderingContext2D,
+  paths: StrokePath[],
+  pxPerMm: number,
+  opacity: number,
+): void {
+  if (opacity <= 0 || paths.length === 0) return;
+  ctx.save();
+  ctx.globalAlpha = Math.min(1, Math.max(0, opacity));
+  ctx.strokeStyle = PRINT_INK;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  for (const path of paths) {
+    const pts = pathPoints(path.d);
+    if (pts.length < 2) continue;
+    ctx.lineWidth = Math.max(0.5, path.strokeWidth * pxPerMm);
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x * pxPerMm, pts[0].y * pxPerMm);
+    for (let i = 1; i < pts.length; i++) {
+      ctx.lineTo(pts[i].x * pxPerMm, pts[i].y * pxPerMm);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 
 function canvasToGrayscale(canvas: HTMLCanvasElement): void {
@@ -70,8 +108,9 @@ function canvasToGrayscale(canvas: HTMLCanvasElement): void {
   ctx.putImageData(data, 0, 0);
 }
 
+/** Build a portrait US Letter raster (300 DPI) from sheet model + opacity. */
 export async function captureScribSheetLightGrayscale(
-  sheetEl: HTMLElement,
+  _sheetEl: HTMLElement,
   sheet: ScribSheet,
 ): Promise<Blob> {
   const widthPx = Math.round(SCRIB_PAGE_WIDTH_MM * PRINT_PX_PER_MM);
@@ -85,29 +124,21 @@ export async function captureScribSheetLightGrayscale(
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, widthPx, heightPx);
 
-  const bg = await svgMarkupToImage(
-    buildScribSheetBackgroundSvgMarkup(),
-    widthPx,
-    heightPx,
-  );
-  ctx.drawImage(bg, 0, 0, widthPx, heightPx);
+  const bgLayer = sheet.layers.find((l) => l.id === SCRIB_BACKGROUND_LAYER_ID);
+  drawRuledBackground(ctx, PRINT_PX_PER_MM, bgLayer?.opacity ?? 1);
 
-  const svgs = Array.from(sheetEl.querySelectorAll("svg.scrib-layer"));
-  for (let i = 0; i < svgs.length; i++) {
-    const svg = svgs[i] as SVGSVGElement;
-    const layer = sheet.layers[i];
-    const opacity = layer?.opacity ?? 1;
-    if (opacity <= 0) continue;
-    const layerImg = await svgLayerToImage(svg, widthPx, heightPx);
-    ctx.save();
-    ctx.globalAlpha = opacity;
-    ctx.drawImage(layerImg, 0, 0, widthPx, heightPx);
-    ctx.restore();
+  for (const layer of sheet.layers) {
+    if (!isScribDrawableLayer(layer.id)) continue;
+    drawStrokePaths(ctx, layer.paths ?? [], PRINT_PX_PER_MM, layer.opacity ?? 1);
   }
 
   canvasToGrayscale(canvas);
   const blob = await new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("JPEG encode failed"))), "image/jpeg", 0.92);
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("JPEG encode failed"))),
+      "image/jpeg",
+      0.92,
+    );
   });
   return blob;
 }

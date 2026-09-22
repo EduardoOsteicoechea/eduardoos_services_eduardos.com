@@ -42,13 +42,24 @@ func BuildScribPrintPDF(imageBytes []byte) ([]byte, error) {
 	// Draw image full-bleed: PDF y grows up; scale to page box.
 	content := fmt.Sprintf("q\n%.2f 0 0 %.2f 0 0 cm\n/Im0 Do\nQ\n", pageW, pageH)
 	objs = append(objs, buildStreamObject(4, content))
-	objs = append(objs, buildJPEGXObject(5, pdfImage{
-		jpeg:   jpegBytes,
-		width:  w,
-		height: h,
-	}))
+	// Client JPEG is DeviceGray (from image.Gray). Declaring DeviceRGB made viewers
+	// show a blank page — keep ColorSpace in sync with the encoded stream.
+	objs = append(objs, buildGrayJPEGXObject(5, w, h, jpegBytes))
 
 	return assemblePDF(objs), nil
+}
+
+func buildGrayJPEGXObject(objNum, width, height int, jpegBytes []byte) []byte {
+	var buf bytes.Buffer
+	fmt.Fprintf(&buf, "%d 0 obj\n", objNum)
+	fmt.Fprintf(&buf,
+		"<< /Type /XObject /Subtype /Image /Width %d /Height %d /ColorSpace /DeviceGray /BitsPerComponent 8 /Filter /DCTDecode /Length %d >>\n",
+		width, height, len(jpegBytes),
+	)
+	buf.WriteString("stream\n")
+	buf.Write(jpegBytes)
+	buf.WriteString("\nendstream\nendobj\n")
+	return buf.Bytes()
 }
 
 func normalizePrintJPEG(raw []byte) (jpegBytes []byte, w, h int, err error) {

@@ -31,6 +31,9 @@ func TestBuildScribPrintPDF(t *testing.T) {
 	if !strings.Contains(s, "/Subtype /Image") || !strings.Contains(s, "/DCTDecode") {
 		t.Fatal("expected JPEG XObject")
 	}
+	if !strings.Contains(s, "/ColorSpace /DeviceGray") {
+		t.Fatal("expected DeviceGray ColorSpace for grayscale JPEG")
+	}
 	// Portrait letter MediaBox ~ 612 x 792 pt
 	wantW := MmToPoints(ScribPageWidthMm)
 	wantH := MmToPoints(ScribPageHeightMm)

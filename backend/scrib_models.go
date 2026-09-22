@@ -3,7 +3,17 @@ package main
 import "time"
 
 var scribLayerIDs = []string{
-	"chapter", "verse", "word", "original", "translation1", "translation2",
+	"background", "chapter", "verse", "word", "original", "translation1", "translation2",
+}
+
+const scribBackgroundLayerID = "background"
+const scribDefaultActiveLayerID = "chapter"
+
+func scribIsDrawableLayerID(id string) bool {
+	if id == "" || id == scribBackgroundLayerID {
+		return false
+	}
+	return scribIsLayerID(id)
 }
 
 type scribStrokePath struct {
@@ -90,7 +100,7 @@ func scribNewEmptySheet(bookID, sheetID, name, now string) scribSheet {
 		ID:            sheetID,
 		BookID:        bookID,
 		Name:          name,
-		ActiveLayerID: "chapter",
+		ActiveLayerID: scribDefaultActiveLayerID,
 		StrokeWidthMm: 0.35,
 		Layers:        scribEmptyLayers(),
 		UpdatedAt:     now,

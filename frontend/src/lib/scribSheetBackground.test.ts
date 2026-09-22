@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  SCRIB_BACKGROUND_LAYER_ID,
+  SCRIB_DRAW_LAYER_IDS,
+  SCRIB_LAYER_IDS,
+  isScribDrawableLayer,
+} from "./scrib";
+import {
   buildScribSheetBackgroundGeometry,
   buildScribSheetBackgroundSvgMarkup,
   SCRIB_SHEET_BG_DEFAULTS,
@@ -32,5 +38,14 @@ describe("scribSheetBackground", () => {
   it("scales column count", () => {
     const g = buildScribSheetBackgroundGeometry({ columnas: 1 });
     expect(g.rects).toHaveLength(1);
+  });
+});
+
+describe("scrib background layer", () => {
+  it("lists background first and keeps it non-drawable", () => {
+    expect(SCRIB_LAYER_IDS[0]).toBe(SCRIB_BACKGROUND_LAYER_ID);
+    expect(isScribDrawableLayer(SCRIB_BACKGROUND_LAYER_ID)).toBe(false);
+    expect(SCRIB_DRAW_LAYER_IDS).not.toContain(SCRIB_BACKGROUND_LAYER_ID);
+    expect(SCRIB_DRAW_LAYER_IDS).toHaveLength(6);
   });
 });

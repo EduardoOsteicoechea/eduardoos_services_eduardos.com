@@ -278,8 +278,8 @@ func (a *App) scribPutSheetHandler(w http.ResponseWriter, r *http.Request) {
 	if sheet.Name == "" {
 		sheet.Name = "Hoja"
 	}
-	if !scribIsLayerID(sheet.ActiveLayerID) {
-		sheet.ActiveLayerID = "chapter"
+	if !scribIsDrawableLayerID(sheet.ActiveLayerID) {
+		sheet.ActiveLayerID = scribDefaultActiveLayerID
 	}
 	if sheet.StrokeWidthMm <= 0 {
 		sheet.StrokeWidthMm = 0.35

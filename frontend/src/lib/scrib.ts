@@ -8,7 +8,11 @@ import { mustLog } from "./dev-log";
 export const SCRIB_PAGE_WIDTH_MM = 215.9;
 export const SCRIB_PAGE_HEIGHT_MM = 279.4;
 
+/** Ruled SVG sheet — first layer; opacity only (not drawable). */
+export const SCRIB_BACKGROUND_LAYER_ID = "background" as const;
+
 export const SCRIB_LAYER_IDS = [
+  SCRIB_BACKGROUND_LAYER_ID,
   "chapter",
   "verse",
   "word",
@@ -19,7 +23,12 @@ export const SCRIB_LAYER_IDS = [
 
 export type ScribLayerId = (typeof SCRIB_LAYER_IDS)[number];
 
+export const SCRIB_DRAW_LAYER_IDS = SCRIB_LAYER_IDS.filter(
+  (id) => id !== SCRIB_BACKGROUND_LAYER_ID,
+);
+
 export const SCRIB_LAYER_LABELS: Record<ScribLayerId, string> = {
+  background: "Fondo (líneas)",
   chapter: "Número de capítulo",
   verse: "Número de versículo",
   word: "Número de palabra",
@@ -27,6 +36,10 @@ export const SCRIB_LAYER_LABELS: Record<ScribLayerId, string> = {
   translation1: "Traducción 1",
   translation2: "Traducción 2",
 };
+
+export function isScribDrawableLayer(id: string): boolean {
+  return (SCRIB_DRAW_LAYER_IDS as readonly string[]).includes(id);
+}
 
 export type StrokePath = {
   d: string;

@@ -1,5 +1,5 @@
 /**
- * Crisp vector ruled background for Scrib (replaces raster JPG).
+ * Crisp vector ruled background for Scrib.
  * Display size follows zoom via width/height; viewBox stays in mm so lines stay sharp.
  */
 
@@ -13,6 +13,8 @@ import {
 type Props = {
   /** Display zoom factor (1 = physical US Letter CSS mm size). */
   scale: number;
+  /** Opacity from the background layer (ruled lines only). */
+  opacity?: number;
 };
 
 function ruleStroke(hex: string): string {
@@ -21,7 +23,7 @@ function ruleStroke(hex: string): string {
     : "var(--scrib-rule-soft)";
 }
 
-export default function ScribSheetBackground({ scale }: Props) {
+export default function ScribSheetBackground({ scale, opacity = 1 }: Props) {
   const geometry = useMemo(() => buildScribSheetBackgroundGeometry(), []);
   const w = `${SCRIB_PAGE_WIDTH_MM * scale}mm`;
   const h = `${SCRIB_PAGE_HEIGHT_MM * scale}mm`;
@@ -33,6 +35,7 @@ export default function ScribSheetBackground({ scale }: Props) {
       width={w}
       height={h}
       shapeRendering="geometricPrecision"
+      style={{ opacity: Math.min(1, Math.max(0, opacity)) }}
       aria-hidden
     >
       {geometry.rects.map((r, i) => (
