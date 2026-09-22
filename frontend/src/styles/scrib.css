@@ -1,9 +1,13 @@
 /**
- * Scrib — dashboard books + US Letter editor confined to main (not the viewport chrome).
+ * Scrib — dashboard books + US Letter sheet workspace (canvas, no site footer).
  * Hub padding comes from .product-dash (spec 054); do not double-pad.
  */
 
-/* Sheet editor fills main only; activity rails / trays stay outside. */
+/* Sheet editor fills main like eReport workspace; activity rails / trays stay outside. */
+html[data-page="scrib-sheet"] {
+  height: 100%;
+}
+
 html[data-page="scrib-sheet"] body {
   height: 100%;
 }
@@ -21,14 +25,21 @@ html[data-page="scrib-sheet"] main {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
-  /* Keep rail/top-bar offsets from global.css; no extra page scroll for the sheet. */
+  gap: 0;
+  /* Keep top/inline chrome offsets from global.css; no footer gutter. */
+  padding-bottom: 0;
   overflow: hidden;
 }
 
 html[data-page="scrib-sheet"] main > .status,
-html[data-page="scrib-sheet"] main > .product-gate {
+html[data-page="scrib-sheet"] main > .product-gate,
+html[data-page="scrib-sheet"] main > .page-title-sr {
   flex: 0 0 auto;
+}
+
+html[data-page="scrib-sheet"] main > .scrib-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 html.scrib-fullscreen--header-hidden .app-header,
@@ -273,8 +284,8 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   background: var(--color-surface);
   touch-action: none;
   user-select: none;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
+  border: 0;
+  border-radius: 0;
 }
 
 html.scrib-fullscreen--header-hidden .scrib-viewport,
@@ -308,13 +319,16 @@ html:fullscreen .scrib-viewport {
 
 .scrib-stage {
   transform-origin: center center;
-  will-change: transform;
 }
 
 .scrib-page {
   position: relative;
   box-sizing: border-box;
-  background: #fff;
+  --scrib-paper: #ffffff;
+  --scrib-rule-soft: #eeeeee;
+  --scrib-rule-strong: #dddddd;
+  --scrib-ink: #141820;
+  background: var(--scrib-paper);
   box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.18);
   touch-action: none;
 }
@@ -330,15 +344,11 @@ html:fullscreen .scrib-viewport {
 
 html[data-theme="dark"] .scrib-page,
 html.dark .scrib-page {
-  background: var(--color-bg);
-}
-
-html[data-theme="dark"] .scrib-page__bg,
-html.dark .scrib-page__bg,
-html[data-theme="dark"] .scrib-layer,
-html.dark .scrib-layer {
-  /* Dark mode inverts the ruled page and every independent drawing layer together. */
-  filter: invert(1) hue-rotate(180deg);
+  --scrib-paper: #1a1a1a;
+  --scrib-rule-soft: #2e2e2e;
+  --scrib-rule-strong: #3d3d3d;
+  --scrib-ink: #e8e8e8;
+  background: var(--scrib-paper);
 }
 
 .scrib-layer {
@@ -750,6 +760,10 @@ html.dark .scrib-layer {
     height: 279.4mm !important;
     margin: 0 !important;
     box-shadow: none !important;
+    --scrib-paper: #ffffff !important;
+    --scrib-rule-soft: #eeeeee !important;
+    --scrib-rule-strong: #dddddd !important;
+    --scrib-ink: #141820 !important;
     background: #fff !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -757,7 +771,6 @@ html.dark .scrib-layer {
 
   .scrib-page__bg,
   .scrib-layer {
-    /* Print as ink on paper — never apply screen dark-mode invert. */
     filter: none !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

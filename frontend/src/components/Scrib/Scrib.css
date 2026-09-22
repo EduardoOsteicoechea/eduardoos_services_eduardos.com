@@ -232,10 +232,11 @@ body:has(.scrib-viewport) {
 
 .scrib-viewport {
   box-sizing: border-box;
-  position: fixed;
-  inset: var(--header_height, 60px) 0 0 0;
-  width: 100%;
-  height: calc(100dvh - var(--header_height, 60px));
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: auto;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -243,14 +244,8 @@ body:has(.scrib-viewport) {
   background: var(--site-body-bg);
   touch-action: none;
   user-select: none;
-}
-
-@media (min-width: 901px) {
-  .scrib-viewport {
-    inset: 0 0 0 var(--header_width, 4.5rem);
-    width: calc(100% - var(--header_width, 4.5rem));
-    height: 100dvh;
-  }
+  border: 0;
+  border-radius: 0;
 }
 
 .scrib-viewport--zoom {
@@ -275,13 +270,16 @@ body:has(.scrib-viewport) {
 
 .scrib-stage {
   transform-origin: center center;
-  will-change: transform;
 }
 
 .scrib-page {
   position: relative;
   box-sizing: border-box;
-  background: #fff;
+  --scrib-paper: #ffffff;
+  --scrib-rule-soft: #eeeeee;
+  --scrib-rule-strong: #dddddd;
+  --scrib-ink: #141820;
+  background: var(--scrib-paper);
   box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.18);
   touch-action: none;
 }
@@ -297,15 +295,11 @@ body:has(.scrib-viewport) {
 
 html[data-theme="dark"] .scrib-page,
 html.dark .scrib-page {
-  background: var(--site-body-bg);
-}
-
-html[data-theme="dark"] .scrib-page__bg,
-html.dark .scrib-page__bg,
-html[data-theme="dark"] .scrib-layer,
-html.dark .scrib-layer {
-  /* Dark mode inverts the ruled page and every independent drawing layer together. */
-  filter: invert(1) hue-rotate(180deg);
+  --scrib-paper: #1a1a1a;
+  --scrib-rule-soft: #2e2e2e;
+  --scrib-rule-strong: #3d3d3d;
+  --scrib-ink: #e8e8e8;
+  background: var(--scrib-paper);
 }
 
 .scrib-layer {
@@ -727,6 +721,10 @@ html.scrib-fullscreen--header-hidden .scrib-viewport {
     height: 279.4mm !important;
     margin: 0 !important;
     box-shadow: none !important;
+    --scrib-paper: #ffffff !important;
+    --scrib-rule-soft: #eeeeee !important;
+    --scrib-rule-strong: #dddddd !important;
+    --scrib-ink: #141820 !important;
     background: #fff !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -734,7 +732,6 @@ html.scrib-fullscreen--header-hidden .scrib-viewport {
 
   .scrib-page__bg,
   .scrib-layer {
-    /* Print as ink on paper — never apply screen dark-mode invert. */
     filter: none !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

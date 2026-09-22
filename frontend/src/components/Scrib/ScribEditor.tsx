@@ -33,7 +33,6 @@ const STROKE_MAX = 2.5;
 const STROKE_STEP = 0.05;
 const ZOOM_MIN = 0.25;
 const ZOOM_MAX = 4;
-const INK = "#141820";
 
 type UndoEntry = {
   layerId: string;
@@ -187,11 +186,14 @@ export default function ScribEditor() {
     const fit = () => {
       const vp = viewportRef.current;
       if (!vp) return;
+      // CSS mm → px (1in = 96px). Zoom sizes the page in mm; do not use transform:scale
+      // (that rasterizes SVG and makes ruled lines blurry).
+      const mmToPx = 96 / 25.4;
       const pad = 16;
       const availW = Math.max(120, vp.clientWidth - pad * 2);
       const availH = Math.max(120, vp.clientHeight - pad * 2);
-      const sx = availW / SCRIB_PAGE_WIDTH_MM;
-      const sy = availH / SCRIB_PAGE_HEIGHT_MM;
+      const sx = availW / (SCRIB_PAGE_WIDTH_MM * mmToPx);
+      const sy = availH / (SCRIB_PAGE_HEIGHT_MM * mmToPx);
       const next = Math.min(sx, sy, 1.5);
       setScale(Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, next)));
       setPan({ x: 0, y: 0 });
@@ -550,29 +552,30 @@ export default function ScribEditor() {
           <div
             className="scrib-stage"
             style={{
-              transform: `translate(${pan.x}px, ${pan.y}px) scale(${scale})`,
+              transform: `translate(${pan.x}px, ${pan.y}px)`,
             }}
           >
             <div
               ref={sheetRef}
               className="scrib-page"
               style={{
-                width: `${SCRIB_PAGE_WIDTH_MM}mm`,
-                height: `${SCRIB_PAGE_HEIGHT_MM}mm`,
+                width: `${SCRIB_PAGE_WIDTH_MM * scale}mm`,
+                height: `${SCRIB_PAGE_HEIGHT_MM * scale}mm`,
               }}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
             >
-              <ScribSheetBackground />
+              <ScribSheetBackground scale={scale} />
               {sheet.layers.map((layer, index) => (
                 <svg
                   key={layer.id}
                   className="scrib-layer"
                   viewBox={`0 0 ${SCRIB_PAGE_WIDTH_MM} ${SCRIB_PAGE_HEIGHT_MM}`}
-                  width={`${SCRIB_PAGE_WIDTH_MM}mm`}
-                  height={`${SCRIB_PAGE_HEIGHT_MM}mm`}
+                  width={`${SCRIB_PAGE_WIDTH_MM * scale}mm`}
+                  height={`${SCRIB_PAGE_HEIGHT_MM * scale}mm`}
+                  shapeRendering="geometricPrecision"
                   style={{
                     zIndex: index + 1,
                     opacity: layer.opacity,
@@ -584,7 +587,7 @@ export default function ScribEditor() {
                       key={`${layer.id}-${i}`}
                       d={path.d}
                       fill="none"
-                      stroke={INK}
+                      stroke="var(--scrib-ink)"
                       strokeWidth={path.strokeWidth}
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -594,7 +597,7 @@ export default function ScribEditor() {
                     <path
                       d={draftPath}
                       fill="none"
-                      stroke={INK}
+                      stroke="var(--scrib-ink)"
                       strokeWidth={sheet.strokeWidthMm}
                       strokeLinecap="round"
                       strokeLinejoin="round"

@@ -1,20 +1,38 @@
 /**
  * Crisp vector ruled background for Scrib (replaces raster JPG).
+ * Display size follows zoom via width/height; viewBox stays in mm so lines stay sharp.
  */
 
 import { useMemo } from "react";
 import { SCRIB_PAGE_HEIGHT_MM, SCRIB_PAGE_WIDTH_MM } from "../../lib/scrib";
-import { buildScribSheetBackgroundGeometry } from "../../lib/scribSheetBackground";
+import {
+  buildScribSheetBackgroundGeometry,
+  SCRIB_SHEET_BG_DEFAULTS,
+} from "../../lib/scribSheetBackground";
 
-export default function ScribSheetBackground() {
+type Props = {
+  /** Display zoom factor (1 = physical US Letter CSS mm size). */
+  scale: number;
+};
+
+function ruleStroke(hex: string): string {
+  return hex === SCRIB_SHEET_BG_DEFAULTS.colorOscuro
+    ? "var(--scrib-rule-strong)"
+    : "var(--scrib-rule-soft)";
+}
+
+export default function ScribSheetBackground({ scale }: Props) {
   const geometry = useMemo(() => buildScribSheetBackgroundGeometry(), []);
+  const w = `${SCRIB_PAGE_WIDTH_MM * scale}mm`;
+  const h = `${SCRIB_PAGE_HEIGHT_MM * scale}mm`;
 
   return (
     <svg
       className="scrib-page__bg"
       viewBox={`0 0 ${geometry.pageWidthMm} ${geometry.pageHeightMm}`}
-      width={`${SCRIB_PAGE_WIDTH_MM}mm`}
-      height={`${SCRIB_PAGE_HEIGHT_MM}mm`}
+      width={w}
+      height={h}
+      shapeRendering="geometricPrecision"
       aria-hidden
     >
       {geometry.rects.map((r, i) => (
@@ -25,7 +43,7 @@ export default function ScribSheetBackground() {
           width={r.width}
           height={r.height}
           fill="none"
-          stroke={r.stroke}
+          stroke={ruleStroke(r.stroke)}
           strokeWidth={geometry.strokeWidthMm}
         />
       ))}
@@ -36,7 +54,7 @@ export default function ScribSheetBackground() {
           y1={l.y1}
           x2={l.x2}
           y2={l.y2}
-          stroke={l.stroke}
+          stroke={ruleStroke(l.stroke)}
           strokeWidth={geometry.strokeWidthMm}
         />
       ))}

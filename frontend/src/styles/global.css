@@ -1,7 +1,7 @@
 :root {
   --space-margin: 1rem;
   --space-padding: 1rem;
-  --main-padding: 1.5rem;
+  --main-padding: 1rem;
   --main-padding-top: var(--main-padding);
   --main-inline: 1rem;
   --page-gutter: 1rem;
@@ -1110,7 +1110,7 @@ h2 {
 
 
 .session-grid {
-  gap: 1.5rem;
+  gap: var(--space-padding);
 }
 
 .session-account-block {
@@ -2122,7 +2122,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
-  padding-block: calc(var(--space-padding) * 1.25);
+  padding-block: var(--space-padding);
 }
 
 .section__head {
@@ -2197,7 +2197,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
-  padding-block: var(--space-padding) calc(var(--space-padding) * 1.5);
+  padding-block: var(--space-padding);
   margin-bottom: var(--space-margin);
   border-bottom: var(--border-width) solid var(--color-border);
   isolation: isolate;
@@ -2708,6 +2708,7 @@ body.page-pamphlet {
 
 html[data-page="ereport-workspace"] .site-footer,
 html[data-page="ereport-invite"] .site-footer,
+html[data-page="scrib-sheet"] .site-footer,
 html.page-pamphlet .site-footer {
   display: none;
 }
