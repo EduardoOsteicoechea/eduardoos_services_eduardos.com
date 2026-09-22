@@ -15,10 +15,11 @@ import (
 )
 
 const (
-	colHomescoolLinks     = "homescool_links"
-	colHomescoolTasks     = "homescool_tasks"
-	colHomescoolTemplates = "homescool_task_templates"
-	colHomescoolCatalogs  = "homescool_catalogs"
+	colHomescoolLinks      = "homescool_links"
+	colHomescoolTasks      = "homescool_tasks"
+	colHomescoolTemplates  = "homescool_task_templates"
+	colHomescoolCatalogs   = "homescool_catalogs"
+	colHomescoolMaterials  = "homescool_materials"
 )
 
 var errHomescoolDuplicate = errors.New("student already registered")
@@ -48,6 +49,14 @@ type HomescoolStore interface {
 
 	CreateCatalogEntry(ctx context.Context, entry HomescoolCatalogEntry) (HomescoolCatalogEntry, error)
 	ListCatalogEntries(ctx context.Context, teacherUserID, kind string) ([]HomescoolCatalogEntry, error)
+
+	UpsertMaterial(ctx context.Context, m HomescoolMaterial, html []byte) (HomescoolMaterial, error)
+	GetMaterial(ctx context.Context, ownerUserID, id string) (HomescoolMaterial, bool, error)
+	GetMaterialByLogicKey(ctx context.Context, ownerUserID string, cycle, week, day int, subject, slug string) (HomescoolMaterial, bool, error)
+	ListMaterials(ctx context.Context, ownerUserIDs []string, cycle int) ([]HomescoolMaterial, error)
+	ReadMaterialHTML(ctx context.Context, m HomescoolMaterial) ([]byte, error)
+	EnsureWebAssets(ctx context.Context, sourceDir string) error
+	MediaRoot() string
 }
 
 func openHomescoolStore(store DataStore, mediaRoot string) HomescoolStore {
@@ -64,6 +73,7 @@ type memoryHomescoolStore struct {
 	templates map[string]HomescoolTaskTemplate
 	tasks     map[string]HomescoolAssignedTask
 	catalogs  map[string]HomescoolCatalogEntry
+	materials map[string]HomescoolMaterial
 }
 
 func newMemoryHomescoolStore(mediaRoot string) *memoryHomescoolStore {
@@ -73,6 +83,7 @@ func newMemoryHomescoolStore(mediaRoot string) *memoryHomescoolStore {
 		templates: map[string]HomescoolTaskTemplate{},
 		tasks:     map[string]HomescoolAssignedTask{},
 		catalogs:  map[string]HomescoolCatalogEntry{},
+		materials: map[string]HomescoolMaterial{},
 	}
 }
 

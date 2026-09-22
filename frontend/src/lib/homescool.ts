@@ -159,3 +159,72 @@ export async function uploadTeacherFolderFile(
   }
   return { ok: true, requestId };
 }
+
+export type HomescoolMaterial = {
+  id: string;
+  ownerUserId: string;
+  cycle: number;
+  week: number;
+  subject: string;
+  day: number;
+  sessionDate?: string;
+  title: string;
+  slug: string;
+  htmlPath?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type HomescoolCycleSummary = {
+  cycle: number;
+  count: number;
+  empty: boolean;
+};
+
+export async function fetchHomescoolMaterials(cycle?: number): Promise<{
+  cycles: HomescoolCycleSummary[];
+  materials: HomescoolMaterial[];
+  error?: string;
+  requestId?: string;
+}> {
+  const q = cycle ? `?cycle=${encodeURIComponent(String(cycle))}` : "";
+  const { status, data, requestId } = await apiRequest<{
+    cycles?: HomescoolCycleSummary[];
+    materials?: HomescoolMaterial[];
+  }>(`/homescool/materials${q}`);
+  if (mustLog) console.log("[homescool] materials", { status, requestId, cycle });
+  if (status < 200 || status >= 300) {
+    return fail(status, data, requestId, {
+      cycles: [] as HomescoolCycleSummary[],
+      materials: [] as HomescoolMaterial[],
+    });
+  }
+  return {
+    cycles: data.cycles ?? [],
+    materials: data.materials ?? [],
+    requestId,
+  };
+}
+
+export async function fetchHomescoolMaterial(id: string): Promise<{
+  material: HomescoolMaterial | null;
+  viewUrl?: string;
+  htmlUrl?: string;
+  error?: string;
+  requestId?: string;
+}> {
+  const { status, data, requestId } = await apiRequest<{
+    material?: HomescoolMaterial;
+    viewUrl?: string;
+    htmlUrl?: string;
+  }>(`/homescool/materials/${encodeURIComponent(id)}`);
+  if (status < 200 || status >= 300) {
+    return { material: null, error: data.message || "Could not load material.", requestId };
+  }
+  return {
+    material: data.material ?? null,
+    viewUrl: data.viewUrl,
+    htmlUrl: data.htmlUrl,
+    requestId,
+  };
+}

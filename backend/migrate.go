@@ -203,6 +203,15 @@ func safeSchemaMigrations() []schemaMigration {
 			},
 		},
 		{
+			ID:          "007_homescool_materials",
+			Description: "Create Homescool study materials collection",
+			Collections: []string{colHomescoolMaterials},
+			Indexes: []indexSpec{
+				{Collection: colHomescoolMaterials, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "cycle", Value: 1}, {Key: "week", Value: 1}, {Key: "subject", Value: 1}, {Key: "day", Value: 1}, {Key: "slug", Value: 1}}, Unique: true},
+				{Collection: colHomescoolMaterials, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "cycle", Value: 1}}},
+			},
+		},
+		{
 			ID:          "010_eoproject",
 			Description: "Create eoproject projects, stages, photos, IFC, and shares collections",
 			Collections: []string{colEoprojectProjects, colEoprojectStages, colEoprojectPhotos, colEoprojectIFC, colEoprojectShares},

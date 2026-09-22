@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout
   title="API documentation"
-  description="Eduardoos external API catalog for API-key clients. Same-origin /api/ docs; eReport storage is on the VPS filesystem."
+  description="Eduardoos external API catalog for API-key clients. Same-origin /api/ docs; eReport and Homescool materials."
 >
   <div class="page" data-api-docs>
     <header class="hero">
@@ -12,8 +12,9 @@ import Layout from "../layouts/Layout.astro";
       <h1 class="hero__title">API documentation</h1>
       <p class="hero__lede">
         Public catalog for API-key clients. Signed-in site users keep cookie and
-        CSRF authentication. eReport bytes live on the VPS filesystem, not S3, and
-        not in MongoDB.
+        CSRF authentication. eReport bytes live on the VPS filesystem. Homescool
+        study materials use Mongo metadata plus media/homescool/. Sidecars:
+        .ereport (eReport) and .eoschool (Homescool).
       </p>
     </header>
 

@@ -177,6 +177,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		"kimi_model", cfg.KimiModel,
 	)
 	app.bootstrapAdmin()
+	app.maybeSeedHomescoolMaterials()
 	return app
 }
 
@@ -286,6 +287,10 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports", a.withAPIKey(productEreport, a.ereportV1OrgReportsHandler))
 	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1GetReportHandler))
 	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}", a.withAPIKey(productEreport, a.ereportV1PostReportHandler))
+	mux.HandleFunc("GET /api/v1/homescool/access", a.withAPIKey(productHomescool, a.homescoolV1AccessHandler))
+	mux.HandleFunc("GET /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1ListMaterialsHandler))
+	mux.HandleFunc("GET /api/v1/homescool/materials/{materialId}", a.withAPIKey(productHomescool, a.homescoolV1GetMaterialHandler))
+	mux.HandleFunc("POST /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1PostMaterialHandler))
 
 	mux.HandleFunc("GET /api/latin/calvins-institutes", a.latinCalvinsInstitutesHandler)
 	mux.HandleFunc("GET /api/latin/calvins-institutes/paragraphs", a.latinCalvinsParagraphsHandler)
@@ -335,6 +340,10 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/homescool/learning/{teacherSlug}/tasks", a.listLearningTasksHandler)
 	mux.HandleFunc("GET /api/homescool/learning/{teacherSlug}/tasks/{taskId}", a.getLearningTaskHandler)
 	mux.HandleFunc("POST /api/homescool/learning/{teacherSlug}/tasks/{taskId}/submit", a.submitLearningTaskHandler)
+	mux.HandleFunc("GET /api/homescool/materials", a.listHomescoolMaterialsHandler)
+	mux.HandleFunc("GET /api/homescool/materials/{materialId}", a.getHomescoolMaterialHandler)
+	mux.HandleFunc("GET /api/homescool/materials/{materialId}/html", a.getHomescoolMaterialHTMLHandler)
+	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)

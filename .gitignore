@@ -45,6 +45,10 @@ coverage.html
 *.key
 !*.pub
 
+# Connector sidecars (install via clone; never commit nested clones or secrets)
+.eoschool/
+.ereport/
+
 # OS
 .DS_Store
 Thumbs.db

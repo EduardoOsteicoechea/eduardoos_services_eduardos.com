@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los 4 Súper Tejidos — Ciclo 3</title>
+  <link rel="stylesheet" href="../../../../web_assets/styles.css">
+  <script src="../../../../web_assets/print.js" defer></script>
+  <style>
+    .page--class-tissues .sheet-header {
+      margin-bottom: 8pt;
+      padding-bottom: 5pt;
+    }
+    .page--class-tissues .sheet-header h1 {
+      font-size: 14.5pt;
+    }
+    .page--class-tissues .lesson-section {
+      margin-bottom: 6pt;
+    }
+    .page--class-tissues .section-title {
+      font-size: 10pt;
+      padding: 4pt 8pt;
+    }
+    .page--class-tissues .section-body {
+      padding: 6pt 8pt;
+    }
+    .tissue-intro {
+      margin: 0 0 4pt;
+      font-size: 9.5pt;
+      line-height: 1.35;
+    }
+    .tissue-intro:last-child {
+      margin-bottom: 0;
+    }
+    .tissue-block {
+      border: 1.2pt solid var(--box-border);
+      border-radius: 4pt;
+      overflow: hidden;
+      margin-bottom: 6pt;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .tissue-block:last-child {
+      margin-bottom: 0;
+    }
+    .tissue-block__head {
+      display: flex;
+      align-items: center;
+      gap: 6pt;
+      padding: 5pt 8pt;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 11pt;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .tissue-block__badge {
+      flex-shrink: 0;
+      width: 16pt;
+      height: 16pt;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9pt;
+      font-family: var(--font-body);
+    }
+    .tissue-block__row {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0;
+      background: #fff;
+    }
+    .tissue-block__text {
+      padding: 6pt 8pt 7pt;
+      font-size: 8.5pt;
+      line-height: 1.32;
+      border-right: 0.8pt solid var(--rule);
+    }
+    .tissue-block__text p {
+      margin: 0 0 4pt;
+    }
+    .tissue-block__text p:last-child {
+      margin-bottom: 0;
+    }
+    .tissue-block__text strong {
+      color: var(--ink);
+    }
+    .tissue-block__viz {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3pt;
+      padding: 5pt;
+      background: #f8f9fc;
+      align-content: center;
+    }
+    .tissue-fig {
+      margin: 0;
+      text-align: center;
+    }
+    .tissue-fig svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 3pt;
+      border: 0.7pt solid var(--rule);
+      background: #fff;
+    }
+    .tissue-fig figcaption {
+      font-size: 6.5pt;
+      color: var(--muted);
+      margin-top: 1.5pt;
+      line-height: 1.1;
+      font-weight: 600;
+    }
+    .tissue-block--epi { border-color: #c45c6a; }
+    .tissue-block--con { border-color: #3d7a9e; }
+    .tissue-block--mus { border-color: #b5453a; }
+    .tissue-block--ner { border-color: #4a5f9e; }
+    .tissue-block--epi .tissue-block__head { background: #c45c6a; }
+    .tissue-block--con .tissue-block__head { background: #3d7a9e; }
+    .tissue-block--mus .tissue-block__head { background: #b5453a; }
+    .tissue-block--ner .tissue-block__head { background: #4a5f9e; }
+    .tissue-analogy {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5pt;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tissue-analogy li {
+      border: 1pt solid var(--rule);
+      border-radius: 3pt;
+      padding: 5pt 6pt;
+      text-align: center;
+      font-size: 8pt;
+      line-height: 1.25;
+      background: #f7f8fc;
+    }
+    .tissue-analogy strong {
+      display: block;
+      font-size: 8.5pt;
+      color: var(--accent);
+      margin-bottom: 2pt;
+    }
+  </style>
+</head>
+<body>
+  <!-- HOJA 1: Intro + Epitelial + Conectivo -->
+  <section class="page page--class-tissues">
+    <header class="sheet-header">
+      <h1>¡Los Ladrillos de tu Cuerpo: Los 4 Súper Tejidos!</h1>
+      <p class="meta">Ciclo 3 · Ciencias · Clase 1 · Explicación (hoja 1 de 2)</p>
+      <div class="student-line">
+        <span>Nombre:</span>
+        <span>Fecha:</span>
+      </div>
+    </header>
+
+    <div class="lesson">
+      <div class="lesson-section">
+        <h2 class="section-title">Introducción — ¡Hola, futuro científico!</h2>
+        <div class="section-body">
+          <p class="tissue-intro">Imagina que tu cuerpo es como una <strong>casa gigante</strong>. Para construir una casa necesitas diferentes materiales: ladrillos para las paredes, cables para la luz y tuberías para el agua. En tu cuerpo, estos materiales de construcción se llaman <strong>tejidos</strong>.</p>
+          <p class="tissue-intro">Un tejido no es más que un <strong>equipo de millones de células amigas</strong> que se juntan para hacer un trabajo especial. ¡Vamos a conocer a los 4 grandes equipos que te mantienen vivo, fuerte y en movimiento!</p>
+          <p class="tissue-intro">En cada tarjeta verás: a la izquierda la <em>explicación</em>, y a la derecha dos dibujos — <strong>al microscopio</strong> (cómo se ven las células) y <strong>en tu cuerpo</strong> (dónde están).</p>
+        </div>
+      </div>
+
+      <article class="tissue-block tissue-block--epi">
+        <div class="tissue-block__head">
+          <span class="tissue-block__badge">1</span>
+          <span>Tejido Epitelial: «El Escudo Protector»</span>
+        </div>
+        <div class="tissue-block__row">
+          <div class="tissue-block__text">
+            <p>Piensa en el tejido epitelial como la <strong>armadura de un caballero</strong> o la pintura de una casa. Su trabajo principal es <strong>cubrir y proteger</strong>.</p>
+            <p><strong>¿Qué hace?</strong> Mantiene a los bichos y bacterias malas fuera de tu cuerpo y evita que te seques como una pasa.</p>
+            <p><strong>¿Dónde está?</strong> ¡Tu piel es puro tejido epitelial! También recubre el interior de tu boca, tu estómago y tus pulmones. Son células que están súper apretadas, como si estuvieran abrazadas muy fuerte para que nada se escape.</p>
+          </div>
+          <div class="tissue-block__viz">
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Células epiteliales juntas">
+                <rect width="400" height="400" rx="24" fill="#FFF5F7"/>
+                <rect x="40" y="280" width="320" height="28" rx="8" fill="#E8A0B0"/>
+                <text x="200" y="300" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#7A3A4A" font-weight="700">membrana base</text>
+                <g>
+                  <rect x="48" y="120" width="58" height="150" rx="10" fill="#F2B8C4" stroke="#C45C6A" stroke-width="3"/>
+                  <circle cx="77" cy="175" r="14" fill="#C45C6A"/>
+                  <rect x="112" y="110" width="58" height="160" rx="10" fill="#E89AAB" stroke="#C45C6A" stroke-width="3"/>
+                  <circle cx="141" cy="170" r="14" fill="#A84858"/>
+                  <rect x="176" y="115" width="58" height="155" rx="10" fill="#F2B8C4" stroke="#C45C6A" stroke-width="3"/>
+                  <circle cx="205" cy="168" r="14" fill="#C45C6A"/>
+                  <rect x="240" y="108" width="58" height="162" rx="10" fill="#E89AAB" stroke="#C45C6A" stroke-width="3"/>
+                  <circle cx="269" cy="172" r="14" fill="#A84858"/>
+                  <rect x="304" y="118" width="48" height="152" rx="10" fill="#F2B8C4" stroke="#C45C6A" stroke-width="3"/>
+                  <circle cx="328" cy="178" r="12" fill="#C45C6A"/>
+                </g>
+                <text x="200" y="60" text-anchor="middle" font-family="Segoe UI, Arial" font-size="22" fill="#C45C6A" font-weight="700">¡Súper apretadas!</text>
+                <text x="200" y="355" text-anchor="middle" font-family="Segoe UI, Arial" font-size="16" fill="#7A3A4A">Nada se escapa</text>
+              </svg>
+              <figcaption>Al microscopio</figcaption>
+            </figure>
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Piel como escudo">
+                <rect width="400" height="400" rx="24" fill="#FFF5F7"/>
+                <path d="M200 70 C155 70 130 110 130 150 L115 230 L125 320 L160 360 L200 370 L240 360 L275 320 L285 230 L270 150 C270 110 245 70 200 70 Z" fill="#FF8FA3" opacity="0.45"/>
+                <path d="M200 85 C165 85 145 115 145 150 L132 225 L140 305 L165 340 L200 350 L235 340 L260 305 L268 225 L255 150 C255 115 235 85 200 85 Z" fill="#F0D0C8" stroke="#C45C6A" stroke-width="4"/>
+                <circle cx="200" cy="115" r="32" fill="#F5C4B8" stroke="#C45C6A" stroke-width="3"/>
+                <path d="M145 165 L110 220 L125 230 L155 185 Z" fill="#F0D0C8" stroke="#C45C6A" stroke-width="3"/>
+                <path d="M255 165 L290 220 L275 230 L245 185 Z" fill="#F0D0C8" stroke="#C45C6A" stroke-width="3"/>
+                <text x="200" y="48" text-anchor="middle" font-family="Segoe UI, Arial" font-size="20" fill="#C45C6A" font-weight="700">Tu piel = escudo</text>
+                <rect x="95" y="355" width="210" height="28" rx="10" fill="#C45C6A"/>
+                <text x="200" y="375" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" fill="#fff" font-weight="700">Barrera protectora</text>
+              </svg>
+              <figcaption>En tu cuerpo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="tissue-block tissue-block--con">
+        <div class="tissue-block__head">
+          <span class="tissue-block__badge">2</span>
+          <span>Tejido Conectivo: «El Pegamento y el Andamio»</span>
+        </div>
+        <div class="tissue-block__row">
+          <div class="tissue-block__text">
+            <p>Si tu cuerpo no tuviera tejido conectivo, ¡te desparramarías en el piso como un <strong>charco de gelatina</strong>! Su trabajo es <strong>sostener, unir y proteger</strong> las otras partes de tu cuerpo.</p>
+            <p><strong>¿Qué hace?</strong> Funciona como un pegamento súper fuerte y como las vigas que sostienen un edificio.</p>
+            <p><strong>¿Dónde está?</strong> Tus huesos son tejido conectivo duro. Tu sangre es tejido conectivo líquido (¡sí, la sangre es un tejido!). También la grasa que te da energía y los cartílagos (lo que hace que tus orejas y tu nariz sean flexibles).</p>
+          </div>
+          <div class="tissue-block__viz">
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Matriz con fibras">
+                <rect width="400" height="400" rx="24" fill="#F0F7FC"/>
+                <path d="M40 120 Q100 90 160 130 T280 110 T360 150" fill="none" stroke="#7EB8D8" stroke-width="6" stroke-linecap="round"/>
+                <path d="M50 200 Q120 170 190 210 T330 190 T380 230" fill="none" stroke="#A8D4EA" stroke-width="5" stroke-linecap="round"/>
+                <path d="M30 280 Q110 250 180 290 T310 270 T390 310" fill="none" stroke="#7EB8D8" stroke-width="6" stroke-linecap="round"/>
+                <path d="M60 160 Q140 200 220 150 T360 180" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+                <path d="M40 250 Q130 220 210 260 T370 240" fill="none" stroke="#F4A261" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+                <circle cx="120" cy="160" r="28" fill="#FFE8D6" stroke="#E07A3D" stroke-width="3"/>
+                <circle cx="120" cy="160" r="10" fill="#E07A3D"/>
+                <circle cx="240" cy="230" r="28" fill="#FFE8D6" stroke="#E07A3D" stroke-width="3"/>
+                <circle cx="240" cy="230" r="10" fill="#E07A3D"/>
+                <circle cx="310" cy="140" r="24" fill="#FFFFFF" stroke="#3D7A9E" stroke-width="3"/>
+                <circle cx="310" cy="140" r="9" fill="#3D7A9E"/>
+                <text x="200" y="55" text-anchor="middle" font-family="Segoe UI, Arial" font-size="20" fill="#3D7A9E" font-weight="700">Fibras + células</text>
+                <text x="200" y="360" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" fill="#3D7A9E">Matriz = pegamento</text>
+              </svg>
+              <figcaption>Al microscopio</figcaption>
+            </figure>
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Hueso y rodilla">
+                <rect width="400" height="400" rx="24" fill="#F0F7FC"/>
+                <path d="M200 80 C165 80 150 115 150 145 L140 220 L148 300 L170 340 L200 350 L230 340 L252 300 L260 220 L250 145 C250 115 235 80 200 80 Z" fill="#D9E8F2" stroke="#8AAFC4" stroke-width="3"/>
+                <circle cx="200" cy="110" r="28" fill="#C5D8E6" stroke="#8AAFC4" stroke-width="3"/>
+                <rect x="188" y="200" width="24" height="95" rx="10" fill="#FFB347" stroke="#E07A3D" stroke-width="3"/>
+                <ellipse cx="200" cy="198" rx="18" ry="12" fill="#FFD08A" stroke="#E07A3D" stroke-width="2"/>
+                <circle cx="200" cy="300" r="22" fill="#FFE066" stroke="#E07A3D" stroke-width="3"/>
+                <circle cx="200" cy="300" r="8" fill="#E07A3D"/>
+                <path d="M145 165 L115 215 L128 225 L160 180 Z" fill="#D9E8F2" stroke="#8AAFC4" stroke-width="3"/>
+                <path d="M255 165 L285 215 L272 225 L240 180 Z" fill="#D9E8F2" stroke="#8AAFC4" stroke-width="3"/>
+                <text x="200" y="48" text-anchor="middle" font-family="Segoe UI, Arial" font-size="18" fill="#3D7A9E" font-weight="700">Hueso + articulación</text>
+                <text x="95" y="305" font-family="Segoe UI, Arial" font-size="13" fill="#E07A3D" font-weight="700">rodilla</text>
+                <text x="255" y="250" font-family="Segoe UI, Arial" font-size="13" fill="#E07A3D" font-weight="700">fémur</text>
+                <text x="200" y="380" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#3D7A9E">¡También sangre y grasa!</text>
+              </svg>
+              <figcaption>En tu cuerpo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Ciencias · Los 4 Súper Tejidos · Hoja 1 de 3</footer>
+  </section>
+
+  <!-- HOJA 2: Muscular + Nervioso + conclusión -->
+  <section class="page page--class-tissues">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Los 4 Súper Tejidos — Motor y Red</h1>
+      <p class="meta">Ciclo 3 · Ciencias · Clase 1 · Explicación (hoja 2 de 2)</p>
+    </header>
+
+    <div class="lesson">
+      <article class="tissue-block tissue-block--mus">
+        <div class="tissue-block__head">
+          <span class="tissue-block__badge">3</span>
+          <span>Tejido Muscular: «El Súper Motor»</span>
+        </div>
+        <div class="tissue-block__row">
+          <div class="tissue-block__text">
+            <p>¿Te gusta correr, saltar, jugar videojuegos o incluso respirar? Todo eso es gracias al tejido muscular. Su trabajo es <strong>crear movimiento</strong>.</p>
+            <p><strong>¿Qué hace?</strong> Las células musculares son como pequeñas <strong>ligas de goma</strong>. Pueden estirarse y encogerse (contraerse) con mucha fuerza.</p>
+            <p><strong>¿Dónde está?</strong> Hay tres tipos: los músculos que controlas (como tus bíceps cuando levantas algo), el músculo de tu corazón (que late sin que tú lo pienses) y los músculos de tu estómago que amasan la comida.</p>
+          </div>
+          <div class="tissue-block__viz">
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Fibras musculares">
+                <rect width="400" height="400" rx="24" fill="#FFF3F1"/>
+                <g>
+                  <rect x="55" y="90" width="70" height="240" rx="28" fill="#C94C42" stroke="#8B2E28" stroke-width="3"/>
+                  <path d="M60 130 H120 M60 155 H120 M60 180 H120 M60 205 H120 M60 230 H120 M60 255 H120 M60 280 H120" stroke="#8B2E28" stroke-width="2.5" opacity="0.7"/>
+                  <rect x="145" y="85" width="70" height="250" rx="28" fill="#B5453A" stroke="#8B2E28" stroke-width="3"/>
+                  <path d="M150 125 H210 M150 150 H210 M150 175 H210 M150 200 H210 M150 225 H210 M150 250 H210 M150 275 H210" stroke="#6E221C" stroke-width="2.5" opacity="0.75"/>
+                  <rect x="235" y="95" width="70" height="230" rx="28" fill="#D45A4E" stroke="#8B2E28" stroke-width="3"/>
+                  <path d="M240 135 H300 M240 160 H300 M240 185 H300 M240 210 H300 M240 235 H300 M240 260 H300 M240 285 H300" stroke="#8B2E28" stroke-width="2.5" opacity="0.7"/>
+                  <rect x="325" y="100" width="40" height="220" rx="20" fill="#C94C42" stroke="#8B2E28" stroke-width="3"/>
+                  <path d="M328 140 H362 M328 165 H362 M328 190 H362 M328 215 H362 M328 240 H362 M328 265 H362" stroke="#8B2E28" stroke-width="2" opacity="0.7"/>
+                </g>
+                <text x="200" y="55" text-anchor="middle" font-family="Segoe UI, Arial" font-size="20" fill="#B5453A" font-weight="700">Fibras = ligas</text>
+                <text x="200" y="365" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" fill="#8B2E28">Se estiran y contraen</text>
+              </svg>
+              <figcaption>Al microscopio</figcaption>
+            </figure>
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Bíceps y corazón">
+                <rect width="400" height="400" rx="24" fill="#FFF3F1"/>
+                <path d="M200 85 C165 85 150 120 150 150 L140 225 L148 305 L170 345 L200 355 L230 345 L252 305 L260 225 L250 150 C250 120 235 85 200 85 Z" fill="#E8C4BC" stroke="#A87870" stroke-width="3"/>
+                <circle cx="200" cy="115" r="28" fill="#F0D0C8" stroke="#A87870" stroke-width="3"/>
+                <path d="M200 175 C200 175 170 155 155 175 C140 195 200 235 200 235 C200 235 260 195 245 175 C230 155 200 175 200 175 Z" fill="#E63946" stroke="#9B2226" stroke-width="3"/>
+                <path d="M148 175 L95 155 L80 190 L95 210 L140 200 Z" fill="#E63946" stroke="#9B2226" stroke-width="3"/>
+                <ellipse cx="100" cy="175" rx="22" ry="28" fill="#FF6B6B" stroke="#9B2226" stroke-width="3"/>
+                <path d="M252 175 L305 215 L290 235 L245 200 Z" fill="#E8C4BC" stroke="#A87870" stroke-width="3"/>
+                <text x="200" y="50" text-anchor="middle" font-family="Segoe UI, Arial" font-size="18" fill="#B5453A" font-weight="700">Bíceps + corazón</text>
+                <text x="55" y="140" font-family="Segoe UI, Arial" font-size="13" fill="#9B2226" font-weight="700">fuerza</text>
+                <text x="230" y="165" font-family="Segoe UI, Arial" font-size="12" fill="#9B2226" font-weight="700">late solo</text>
+                <text x="200" y="385" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#8B2E28">¡Movimiento!</text>
+              </svg>
+              <figcaption>En tu cuerpo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="tissue-block tissue-block--ner">
+        <div class="tissue-block__head">
+          <span class="tissue-block__badge">4</span>
+          <span>Tejido Nervioso: «La Red de Internet»</span>
+        </div>
+        <div class="tissue-block__row">
+          <div class="tissue-block__text">
+            <p>Este es el tejido más rápido y eléctrico de todos. Es el <strong>centro de mando</strong> y el sistema de mensajería de tu cuerpo.</p>
+            <p><strong>¿Qué hace?</strong> Envía mensajes eléctricos a la velocidad del rayo. Te permite sentir calor, frío, dolor, resolver problemas de matemáticas y recordar tu película favorita.</p>
+            <p><strong>¿Dónde está?</strong> Forma tu cerebro, tu médula espinal (la autopista que baja por tu espalda) y los miles de nervios que llegan hasta la punta de tus dedos. Sus células parecen estrellas con colas largas y se llaman <strong>neuronas</strong>.</p>
+          </div>
+          <div class="tissue-block__viz">
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Neurona">
+                <rect width="400" height="400" rx="24" fill="#F2F4FF"/>
+                <path d="M140 120 L100 70 M140 130 L70 110 M150 145 L80 170" stroke="#5B6FCF" stroke-width="5" stroke-linecap="round"/>
+                <path d="M180 105 L170 55 M195 100 L220 50 M210 115 L260 70" stroke="#5B6FCF" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="100" cy="70" r="8" fill="#FFE066"/>
+                <circle cx="70" cy="110" r="8" fill="#FFE066"/>
+                <circle cx="80" cy="170" r="8" fill="#FFE066"/>
+                <circle cx="170" cy="55" r="8" fill="#FFE066"/>
+                <circle cx="220" cy="50" r="8" fill="#FFE066"/>
+                <circle cx="260" cy="70" r="8" fill="#FFE066"/>
+                <circle cx="175" cy="150" r="48" fill="#6C7FE0" stroke="#3D4F9E" stroke-width="4"/>
+                <circle cx="175" cy="150" r="18" fill="#FFE066" stroke="#E0B000" stroke-width="2"/>
+                <path d="M215 175 Q280 220 310 300" fill="none" stroke="#4A5F9E" stroke-width="10" stroke-linecap="round"/>
+                <path d="M310 300 L290 340 M310 300 L335 345 M310 300 L355 320" stroke="#4A5F9E" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="290" cy="340" r="7" fill="#FFE066"/>
+                <circle cx="335" cy="345" r="7" fill="#FFE066"/>
+                <circle cx="355" cy="320" r="7" fill="#FFE066"/>
+                <text x="200" y="40" text-anchor="middle" font-family="Segoe UI, Arial" font-size="22" fill="#4A5F9E" font-weight="700">Neurona</text>
+                <text x="95" y="250" font-family="Segoe UI, Arial" font-size="14" fill="#4A5F9E" font-weight="700">cuerpo</text>
+                <text x="250" y="250" font-family="Segoe UI, Arial" font-size="14" fill="#4A5F9E" font-weight="700">axón →</text>
+                <text x="200" y="385" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" fill="#4A5F9E">Mensajes eléctricos</text>
+              </svg>
+              <figcaption>Al microscopio</figcaption>
+            </figure>
+            <figure class="tissue-fig">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Cerebro y médula">
+                <rect width="400" height="400" rx="24" fill="#F2F4FF"/>
+                <path d="M200 90 C165 90 150 125 150 155 L140 230 L148 310 L170 348 L200 358 L230 348 L252 310 L260 230 L250 155 C250 125 235 90 200 90 Z" fill="#D8DCE8" stroke="#9AA3B8" stroke-width="3"/>
+                <ellipse cx="200" cy="118" rx="38" ry="32" fill="#6C7FE0" stroke="#3D4F9E" stroke-width="3"/>
+                <path d="M175 110 Q185 100 195 112 Q205 100 215 112 Q225 102 230 115" fill="none" stroke="#A8B4F0" stroke-width="3"/>
+                <rect x="192" y="150" width="16" height="160" rx="6" fill="#FFE066" stroke="#E0B000" stroke-width="2"/>
+                <path d="M192 175 L120 200 L95 230" fill="none" stroke="#5B6FCF" stroke-width="4" stroke-linecap="round"/>
+                <path d="M208 175 L280 200 L305 230" fill="none" stroke="#5B6FCF" stroke-width="4" stroke-linecap="round"/>
+                <path d="M192 220 L130 250" fill="none" stroke="#5B6FCF" stroke-width="3" stroke-linecap="round"/>
+                <path d="M208 220 L270 250" fill="none" stroke="#5B6FCF" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="95" cy="230" r="6" fill="#FFE066"/>
+                <circle cx="305" cy="230" r="6" fill="#FFE066"/>
+                <text x="200" y="48" text-anchor="middle" font-family="Segoe UI, Arial" font-size="17" fill="#4A5F9E" font-weight="700">Cerebro + médula</text>
+                <text x="55" y="175" font-family="Segoe UI, Arial" font-size="12" fill="#4A5F9E" font-weight="700">nervios</text>
+                <text x="300" y="175" font-family="Segoe UI, Arial" font-size="12" fill="#4A5F9E" font-weight="700">nervios</text>
+                <text x="200" y="385" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#4A5F9E">Red de internet del cuerpo</text>
+              </svg>
+              <figcaption>En tu cuerpo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Recuerda con una analogía</h2>
+        <div class="section-body">
+          <ul class="tissue-analogy">
+            <li><strong>Epitelial</strong>Escudo / pintura de la casa</li>
+            <li><strong>Conectivo</strong>Pegamento y andamio</li>
+            <li><strong>Muscular</strong>Súper motor</li>
+            <li><strong>Nervioso</strong>Red de internet</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson-section lesson-section--tip">
+        <p class="tip"><strong>Conclusión:</strong> ¡Y ahí los tienes! El escudo, el andamio, el motor y la computadora. Estos 4 equipos trabajan juntos cada segundo de cada día para hacer que tú seas… ¡TÚ!</p>
+      </div>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Ciencias · Los 4 Súper Tejidos · Hoja 2 de 3</footer>
+  </section>
+
+  <!-- HOJA 3: Preguntas -->
+  <section class="page page--quiz">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Práctica — Misión: Identifica el tejido</h1>
+      <p class="meta">Ciclo 3 · Ciencias · Clase 1 · Selección simple</p>
+    </header>
+
+    <div class="quiz-section">
+      <h2 class="section-title">Preguntas</h2>
+      <ol class="quiz quiz--grid3">
+        <li class="question"><p><span class="q-num">1.</span> Un tejido es…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Un órgano grande</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Células con el mismo trabajo</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Un hueso hueco</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Una vitamina</span></div></div></li>
+        <li class="question"><p><span class="q-num">2.</span> El escudo / armadura del cuerpo es el tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Muscular</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Solo cartílago</span></div></div></li>
+        <li class="question"><p><span class="q-num">3.</span> ¡Sorpresa! La sangre es un tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Muscular</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Conectivo (líquido)</span></div></div></li>
+        <li class="question"><p><span class="q-num">4.</span> Las células musculares se comportan como…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Ligas que se contraen</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Espejos</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Esponjas</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Piedras quietas</span></div></div></li>
+        <li class="question"><p><span class="q-num">5.</span> Las neuronas forman el tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Conectivo</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Muscular</span></div></div></li>
+        <li class="question"><p><span class="q-num">6.</span> Orejas y nariz flexibles gracias al…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Cartílago (conectivo)</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Epitelial del pulmón</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Músculo del corazón</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Médula espinal</span></div></div></li>
+        <li class="question"><p><span class="q-num">7.</span> El corazón (late solo) es tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Muscular</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Conectivo óseo</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Una neurona</span></div></div></li>
+        <li class="question"><p><span class="q-num">8.</span> Si el cuerpo es una casa, el nervioso es…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">La pintura</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Las vigas</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">La red de internet</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">El motor</span></div></div></li>
+        <li class="question"><p><span class="q-num">9.</span> Células súper apretadas «en abrazo»:</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Muscular</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Conectivo líquido</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Epitelial</span></div></div></li>
+        <li class="question"><p><span class="q-num">10.</span> La médula espinal es tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Conectivo graso</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Muscular</span></div></div></li>
+        <li class="question"><p><span class="q-num">11.</span> Tus huesos son tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Conectivo duro</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Nervioso</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Muscular</span></div></div></li>
+        <li class="question"><p><span class="q-num">12.</span> El «súper motor» del cuerpo es el tejido…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Epitelial</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Conectivo</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Muscular</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Nervioso</span></div></div></li>
+      </ol>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Ciencias · Los 4 Súper Tejidos · Hoja 3 de 3 · Clave: 1B 2C 3D 4A 5C 6A 7B 8C 9D 10C 11B 12C</footer>
+  </section>
+</body>
+</html>

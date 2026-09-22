@@ -1,0 +1,1130 @@
+/* ===================================================================
+   Materiales de estudio — US Letter portrait (8.5 × 11 in)
+   Impresión pixel-perfect desde el navegador
+   =================================================================== */
+
+@page {
+  size: letter portrait;
+  margin: 0;
+}
+
+:root {
+  --page-width: 8.5in;
+  --page-height: 11in;
+  --page-padding-x: 1cm;
+  --page-padding-y: 1cm;
+  --ink: #1a1a2e;
+  --muted: #5c5c7a;
+  --accent: #2d5a8a;
+  --rule: #c8c8d8;
+  --box-border: #9a9ab8;
+  --bubble-size: 14px;
+  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 10.5pt;
+  line-height: 1.35;
+  color: var(--ink);
+  background: #d8d8e4;
+}
+
+/* ── Hoja US Letter ─────────────────────────────────────────────── */
+
+.page {
+  width: var(--page-width);
+  height: var(--page-height);
+  padding: var(--page-padding-y) var(--page-padding-x);
+  margin: 0 auto 20px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
+  position: relative;
+}
+
+.page:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+/* ── Encabezado de hoja ─────────────────────────────────────────── */
+
+.sheet-header {
+  border-bottom: 2pt solid var(--accent);
+  padding-bottom: 8pt;
+  margin-bottom: 14pt;
+}
+
+.sheet-header h1 {
+  font-family: var(--font-display);
+  font-size: 17pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 4pt;
+  line-height: 1.2;
+}
+
+.sheet-header .meta {
+  font-size: 9pt;
+  color: var(--muted);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.sheet-header .student-line {
+  display: flex;
+  gap: 24pt;
+  margin-top: 10pt;
+  font-size: 9.5pt;
+}
+
+.sheet-header .student-line span {
+  flex: 1;
+  border-bottom: 1pt solid var(--rule);
+  padding-bottom: 2pt;
+}
+
+.sheet-header--compact {
+  padding-bottom: 6pt;
+  margin-bottom: 10pt;
+}
+
+.sheet-header--compact h1 {
+  font-size: 14pt;
+}
+
+/* ── Hoja de práctica (grid 3 columnas + recuadros) ──────────────── */
+
+.page--quiz {
+  --bubble-size: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page--class {
+  display: flex;
+  flex-direction: column;
+}
+
+.page--class .sheet-footer,
+.page--quiz .sheet-footer {
+  position: static;
+  margin-top: auto;
+}
+
+.class-block {
+  flex-shrink: 0;
+  margin-bottom: 8pt;
+}
+
+.class-block .lesson-section {
+  margin-bottom: 6pt;
+}
+
+.class-block .lesson-text {
+  font-size: 9pt;
+  line-height: 1.35;
+}
+
+.class-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4pt 10pt;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 8.5pt;
+}
+
+.class-facts li {
+  border: 0.8pt solid var(--rule);
+  border-radius: 3pt;
+  padding: 4pt 6pt;
+}
+
+.class-facts strong {
+  color: var(--accent);
+  display: block;
+  font-size: 8pt;
+  margin-bottom: 1pt;
+}
+
+.class-facts--dense {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2pt 5pt;
+  font-size: 7.25pt;
+}
+
+.class-facts--dense li {
+  padding: 2pt 4pt;
+}
+
+.class-facts--dense strong {
+  display: inline;
+  font-size: inherit;
+  margin-bottom: 0;
+}
+
+.quiz-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-section > .section-title {
+  margin-bottom: 6pt;
+  border-radius: 3pt;
+}
+
+.quiz--grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5pt 6pt;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  align-content: start;
+}
+
+.quiz--grid3 .question {
+  margin: 0;
+  padding: 4pt 5pt;
+  border: 1pt solid var(--box-border);
+  border-radius: 3pt;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 3pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.quiz--grid3 .question > p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 7.75pt;
+  line-height: 1.2;
+}
+
+.quiz--grid3 .q-num {
+  color: var(--accent);
+  margin-right: 2pt;
+}
+
+.quiz--grid3 .options {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5pt;
+  padding: 0;
+  grid-template-columns: none;
+}
+
+.quiz--grid3 .option {
+  display: grid;
+  grid-template-columns: 16pt 1fr;
+  align-items: stretch;
+  gap: 0;
+  font-size: 7.25pt;
+  font-weight: 400;
+  line-height: 1.15;
+  min-height: 14pt;
+}
+
+.quiz--grid3 .opt-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1pt solid var(--ink);
+  border-right: none;
+  border-radius: 2pt 0 0 2pt;
+  background: #eef2f8;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 7pt;
+}
+
+.quiz--grid3 .opt-text {
+  display: flex;
+  align-items: center;
+  border: 1pt solid var(--box-border);
+  border-radius: 0 2pt 2pt 0;
+  padding: 2pt 4pt;
+  background: #fff;
+}
+
+.quiz--grid3 .option--write .opt-text {
+  min-height: 18pt;
+}
+
+.page--quiz .sheet-header--compact {
+  padding-bottom: 4pt;
+  margin-bottom: 6pt;
+  border-bottom-width: 1.5pt;
+  flex-shrink: 0;
+}
+
+.page--quiz .sheet-header--compact h1 {
+  font-size: 12pt;
+  margin-bottom: 2pt;
+}
+
+.page--quiz .sheet-header--compact .meta {
+  font-size: 8pt;
+}
+
+.page--quiz .sheet-header--compact .student-line {
+  margin-top: 6pt;
+  font-size: 8.5pt;
+}
+
+.page--quiz .sheet-footer {
+  padding-top: 3pt;
+  font-size: 7.5pt;
+}
+
+/* ── Checklist (revisión de pasos completados) ───────────────────── */
+
+.page--checklist {
+  display: flex;
+  flex-direction: column;
+}
+
+.page--checklist .sheet-footer {
+  position: static;
+  margin-top: auto;
+  padding-top: 3pt;
+  font-size: 7.5pt;
+}
+
+.checklist-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.checklist-section > .section-title {
+  margin-bottom: 5pt;
+  border-radius: 3pt;
+}
+
+.checklist-group {
+  margin-bottom: 6pt;
+}
+
+.checklist-group:last-child {
+  margin-bottom: 0;
+}
+
+.checklist-group__title {
+  margin: 0 0 3pt;
+  padding: 0 0 2pt;
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 0.5pt dashed var(--rule);
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checklist--grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3pt 5pt;
+}
+
+.checklist--grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3pt 4pt;
+}
+
+.checklist__item {
+  display: grid;
+  grid-template-columns: 14pt minmax(0, 1fr);
+  align-items: stretch;
+  margin: 0;
+  min-width: 0;
+  border: 1pt solid var(--box-border);
+  border-radius: 2pt;
+  background: #fafbfc;
+  overflow: hidden;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.checklist__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-right: 1pt solid var(--ink);
+  border-radius: 0;
+  background: #fff;
+  min-height: 14pt;
+}
+
+.checklist__text {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  border: none;
+  border-radius: 0;
+  padding: 2pt 4pt;
+  font-size: 7.1pt;
+  line-height: 1.18;
+  background: #fafbfc;
+  min-height: 14pt;
+}
+
+.checklist--compact .checklist__item {
+  grid-template-columns: 12pt 1fr;
+}
+
+.checklist--compact .checklist__box {
+  min-height: 12pt;
+}
+
+.checklist--compact .checklist__text {
+  font-size: 6.6pt;
+  min-height: 12pt;
+  padding: 1.5pt 3pt;
+}
+
+/* ── Lección / explicación ────────────────────────────────────────── */
+
+.lesson {
+  padding-bottom: 22pt;
+}
+
+.lesson-section {
+  border: 1.2pt solid var(--box-border);
+  border-radius: 4pt;
+  margin-bottom: 8pt;
+  overflow: hidden;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.lesson-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0;
+  padding: 6pt 9pt;
+  border-bottom: 1pt solid var(--box-border);
+  background: #eef2f8;
+}
+
+.section-body {
+  padding: 7pt 9pt;
+}
+
+.lesson-text {
+  margin: 0 0 6pt;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+.lesson-text:last-child {
+  margin-bottom: 0;
+}
+
+.prep-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 6pt;
+  font-size: 9.5pt;
+}
+
+.prep-list:last-child {
+  margin-bottom: 0;
+}
+
+.prep-list li {
+  display: grid;
+  grid-template-columns: 88pt 1fr;
+  gap: 6pt;
+  padding: 5pt 7pt;
+  margin-bottom: 4pt;
+  border: 0.8pt solid var(--rule);
+  border-radius: 3pt;
+  align-items: baseline;
+}
+
+.prep-list li:last-child {
+  margin-bottom: 0;
+}
+
+.prep-word {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.prep-meaning {
+  color: var(--ink);
+}
+
+.prep-example {
+  grid-column: 1 / -1;
+  font-size: 8.5pt;
+  color: var(--muted);
+  font-style: italic;
+  padding-left: 88pt;
+  margin-top: -2pt;
+}
+
+.prep-group {
+  font-size: 9pt;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 4pt;
+  padding-bottom: 3pt;
+  border-bottom: 0.5pt dashed var(--rule);
+}
+
+.prep-group:not(:first-child) {
+  margin-top: 6pt;
+}
+
+.tip {
+  margin: 0;
+  padding: 7pt 9pt;
+  background: #f0f4fa;
+  border: none;
+  font-size: 9.5pt;
+  line-height: 1.35;
+}
+
+.lesson-section--tip {
+  border-color: var(--accent);
+  background: #f0f4fa;
+}
+
+/* ── Cuestionario ───────────────────────────────────────────────── */
+
+.quiz {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question {
+  margin-bottom: 7pt;
+  padding: 7pt 9pt;
+  border: 1.2pt solid var(--box-border);
+  border-radius: 4pt;
+  background: #fafbfc;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.question:last-child {
+  margin-bottom: 0;
+}
+
+.question > p {
+  margin: 0 0 5pt;
+  font-weight: 600;
+  font-size: 10.5pt;
+}
+
+.q-num {
+  color: var(--accent);
+  margin-right: 4pt;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3pt 12pt;
+  padding-left: 16pt;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 6pt;
+  font-size: 10pt;
+  font-weight: 400;
+}
+
+.bubble {
+  flex-shrink: 0;
+  width: var(--bubble-size);
+  height: var(--bubble-size);
+  border: 1.2pt solid var(--ink);
+  border-radius: 50%;
+}
+
+/* opción de respuesta en una sola columna (textos largos) */
+.options--single {
+  grid-template-columns: 1fr;
+}
+
+/* ── Pie de hoja ────────────────────────────────────────────────── */
+
+.sheet-footer {
+  position: absolute;
+  bottom: var(--page-padding-y);
+  left: var(--page-padding-x);
+  right: var(--page-padding-x);
+  font-size: 8pt;
+  color: var(--muted);
+  border-top: 0.5pt solid var(--rule);
+  padding-top: 4pt;
+  text-align: center;
+}
+
+/* ── Botón imprimir (icono fijo, esquina superior derecha) ───────── */
+
+.print-fab {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(26, 26, 46, 0.92);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.print-fab:hover {
+  background: var(--accent);
+}
+
+.print-fab:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.print-menu {
+  position: fixed;
+  top: 58px;
+  right: 12px;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 11.5rem;
+  padding: 6px;
+  border-radius: 8px;
+  background: rgba(26, 26, 46, 0.96);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+}
+
+.print-menu__item {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  font: 600 11pt/1.2 var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.print-menu__item:hover,
+.print-menu__item:focus-visible {
+  background: var(--accent);
+  outline: none;
+}
+
+/* Documento solo con hojas landscape */
+body.sheets-landscape {
+  --page-width: 11in;
+  --page-height: 8.5in;
+}
+
+/* ── Impresión ────────────────────────────────────────────────────── */
+
+/* ── Hoja landscape (mapa) ──────────────────────────────────────── */
+
+.page--landscape {
+  --page-width: 11in;
+  --page-height: 8.5in;
+  --page-padding-x: 1cm;
+  --page-padding-y: 1cm;
+}
+
+.page--map {
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--page-height) - var(--page-padding-y) * 2);
+  gap: 5pt;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.page--map .map-top__header {
+  flex-shrink: 0;
+}
+
+.page--map .map-top__tasks {
+  flex-shrink: 0;
+}
+
+.page--map .map-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.map-top__header {
+  border-bottom: 1.5pt solid var(--accent);
+  padding-bottom: 2pt;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.map-top__header h1 {
+  font-family: var(--font-display);
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 2pt;
+  line-height: 1.15;
+}
+
+.map-top__header .meta {
+  font-size: 7.5pt;
+  color: var(--muted);
+  margin: 0;
+}
+
+.map-top__tasks {
+  border: 1pt solid var(--box-border);
+  border-radius: 3pt;
+  background: #f7f9fc;
+  padding: 4pt 7pt;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2pt;
+}
+
+.map-top__tasks .map-instructions {
+  margin: 0;
+  font-size: 7.5pt;
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+.map-top__tasks .map-instructions strong {
+  color: var(--ink);
+}
+
+.map-top__tasks .map-legend {
+  margin: 0;
+  gap: 4pt 10pt;
+  font-size: 7pt;
+}
+
+.map-top__tasks .map-task-list {
+  font-size: 7.5pt;
+}
+
+.map-top__tasks .map-task-list li {
+  margin-bottom: 1pt;
+}
+
+.map-body {
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.map-reference {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1pt solid var(--box-border);
+  border-radius: 3pt;
+  background: #fff;
+  overflow: hidden;
+}
+
+.map-reference__label {
+  flex-shrink: 0;
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  padding: 2pt 4pt;
+  border-bottom: 0.5pt solid var(--box-border);
+  background: #f7f9fc;
+  margin: 0;
+}
+
+.map-reference__img {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  display: block;
+}
+
+.map-body__grid {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  container-type: size;
+}
+
+.page--map .map-grid {
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.page--map .map-grid__board {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.page--map .sheet-footer {
+  flex-shrink: 0;
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 2pt 0 0;
+  border-top: 0.5pt solid var(--rule);
+  font-size: 7.5pt;
+}
+
+.map-instructions {
+  margin: 0 0 5pt;
+  font-size: 8.5pt;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+.map-instructions strong {
+  color: var(--ink);
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8pt 16pt;
+  margin: 0 0 6pt;
+  font-size: 8pt;
+  color: var(--muted);
+}
+
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4pt;
+}
+
+.map-legend .swatch {
+  width: 10pt;
+  height: 10pt;
+  border: 1pt solid var(--ink);
+  border-radius: 1pt;
+  flex-shrink: 0;
+}
+
+.map-legend .swatch--estado {
+  background: #fff;
+}
+
+.map-legend .swatch--ciudad {
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 2pt,
+    #d8d8e4 2pt,
+    #d8d8e4 3pt
+  );
+}
+
+/* ── Cuadrícula modular del mapa ────────────────────────────────── */
+
+.map-grid {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablero unificado: letras/números + módulos en la misma cuadrícula */
+.map-grid__board {
+  --map-cols: 16;
+  --map-rows: 16;
+  --total-cols: 18;
+  --total-rows: 18;
+  --grid-line: rgba(45, 90, 138, 0.65);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--total-cols), 1fr);
+  grid-template-rows: repeat(var(--total-rows), 1fr);
+  width: min(100%, 100cqh);
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+  max-height: 100%;
+  border: 1.6pt solid var(--ink);
+  background: #fff;
+  overflow: hidden;
+  container-type: size;
+}
+
+.map-grid__map-layer {
+  position: absolute;
+  z-index: 0;
+  top: calc(100% / var(--total-rows));
+  left: calc(100% / var(--total-cols));
+  width: calc(100% * var(--map-cols) / var(--total-cols));
+  height: calc(100% * var(--map-rows) / var(--total-rows));
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.map-grid__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+.map-grid__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.map-grid__reference {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.map-grid__reference--fit-height {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.map-grid__cell {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-right: 0.65pt solid var(--grid-line);
+  border-bottom: 0.65pt solid var(--grid-line);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  user-select: none;
+}
+
+.map-grid__cell--edge-right {
+  border-right: none;
+}
+
+.map-grid__cell--edge-bottom {
+  border-bottom: none;
+}
+
+.map-grid__cell--corner {
+  background: #f3f5f9;
+  font-size: 0;
+}
+
+.map-grid__cell--col,
+.map-grid__cell--row {
+  background: #f7f9fc;
+  font-size: clamp(4pt, 1.55cqw, 7.5pt);
+}
+
+.map-grid__cell--mod {
+  background: transparent;
+  font-size: 0;
+}
+
+.map-task-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 9pt;
+}
+
+.map-task-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 6pt;
+  margin-bottom: 3pt;
+}
+
+.map-task-list li:last-child {
+  margin-bottom: 0;
+}
+
+.map-task-list .task-box {
+  flex-shrink: 0;
+  width: 8pt;
+  height: 8pt;
+  border: 1pt solid var(--ink);
+  border-radius: 1pt;
+  margin-top: 1pt;
+}
+
+.coord-ref {
+  font-family: "Consolas", "Courier New", monospace;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+
+/* ── Tabla de coordenadas (capitales / módulos) ─────────────────── */
+
+.coord-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 8.25pt;
+  line-height: 1.2;
+}
+
+.coord-table th,
+.coord-table td {
+  border: 0.8pt solid var(--rule);
+  padding: 3pt 5pt;
+  vertical-align: middle;
+}
+
+.coord-table thead th {
+  background: #eef2f8;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 8pt;
+  text-align: left;
+}
+
+.coord-table .coord-table__num {
+  width: 18pt;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.coord-table .coord-table__capital {
+  width: auto;
+}
+
+.coord-table .coord-table__write {
+  width: 52pt;
+  text-align: center;
+}
+
+.coord-table .coord-write-line {
+  display: block;
+  min-height: 11pt;
+  border-bottom: 1pt solid var(--ink);
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: #fff;
+  }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+  }
+
+  /* Filtros usados por print.js (orientación mixta / impresión separada) */
+  body.print-filter-portrait .page--landscape {
+    display: none !important;
+  }
+
+  body.print-filter-landscape .page:not(.page--landscape) {
+    display: none !important;
+  }
+
+  .page--landscape,
+  body.sheets-landscape .page {
+    page: landscape-page;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+@page landscape-page {
+  size: letter landscape;
+  margin: 0;
+}

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cristóbal Colón — Ciclo 3</title>
+  <link rel="stylesheet" href="../../../../web_assets/styles.css">
+  <script src="../../../../web_assets/print.js" defer></script>
+  <style>
+    .page--colon {
+      --sea: #1e4d6b;
+      --gold: #c4a035;
+      --sand: #f4efe4;
+      --ink-soft: #3a3344;
+    }
+    .page--colon .sheet-header {
+      margin-bottom: 7pt;
+      padding-bottom: 5pt;
+      border-bottom-color: var(--sea);
+    }
+    .page--colon .sheet-header h1 {
+      font-size: 15pt;
+      color: var(--sea);
+    }
+    .colon-lead {
+      margin: 0 0 6pt;
+      font-size: 8.6pt;
+      line-height: 1.32;
+    }
+    .colon-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 6pt;
+      margin-bottom: 6pt;
+      align-items: stretch;
+    }
+    .colon-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4pt;
+    }
+    .colon-card {
+      border: 1pt solid var(--box-border);
+      border-radius: 3pt;
+      padding: 5pt 6pt;
+      background: #fff;
+    }
+    .colon-card h3 {
+      margin: 0 0 3pt;
+      font-size: 8pt;
+      color: var(--sea);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .colon-card p {
+      margin: 0;
+      font-size: 7.6pt;
+      line-height: 1.28;
+    }
+    .colon-map {
+      border: 1.2pt solid var(--sea);
+      border-radius: 4pt;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .colon-map__stage {
+      position: relative;
+      flex: 1;
+      min-height: 2.2in;
+      background: #000;
+    }
+    .colon-map__stage img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 48%;
+    }
+    .colon-map figcaption {
+      margin: 0;
+      padding: 3pt 6pt;
+      font-size: 7pt;
+      font-weight: 700;
+      color: #fff;
+      background: var(--sea);
+      text-align: center;
+    }
+    .colon-ships {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4pt;
+      margin-bottom: 6pt;
+    }
+    .colon-ship {
+      border: 1pt solid var(--box-border);
+      border-radius: 3pt;
+      padding: 4pt 6pt 5pt;
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 42pt 1fr;
+      gap: 5pt;
+      align-items: center;
+    }
+    .colon-ship svg {
+      width: 42pt;
+      height: 32pt;
+      display: block;
+    }
+    .colon-ship strong {
+      display: block;
+      font-size: 8.5pt;
+      color: var(--sea);
+    }
+    .colon-ship span {
+      font-size: 7.2pt;
+      line-height: 1.2;
+      color: var(--ink-soft);
+    }
+    .colon-time {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 3pt;
+      margin: 0 0 6pt;
+      padding: 0;
+      list-style: none;
+    }
+    .colon-time li {
+      border-top: 3pt solid var(--gold);
+      background: #fff;
+      border-right: 1pt solid var(--rule);
+      border-bottom: 1pt solid var(--rule);
+      border-left: 1pt solid var(--rule);
+      border-radius: 0 0 3pt 3pt;
+      padding: 4pt 5pt;
+    }
+    .colon-time strong {
+      display: block;
+      font-size: 7.5pt;
+      color: var(--sea);
+      margin-bottom: 1pt;
+    }
+    .colon-time span {
+      font-size: 7pt;
+      line-height: 1.2;
+    }
+    .colon-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5pt;
+      margin-bottom: 6pt;
+    }
+    .colon-box {
+      border-radius: 3pt;
+      padding: 5pt 7pt;
+      font-size: 7.6pt;
+      line-height: 1.28;
+    }
+    .colon-box h3 {
+      margin: 0 0 3pt;
+      font-size: 8.5pt;
+    }
+    .colon-box p { margin: 0; }
+    .colon-box--think {
+      background: #eef4f8;
+      border: 1pt solid #8aa8bc;
+    }
+    .colon-box--think h3 { color: var(--sea); }
+    .colon-box--found {
+      background: #f7efe0;
+      border: 1pt solid #c4a035;
+    }
+    .colon-box--found h3 { color: #7a5a10; }
+    .colon-note {
+      margin: 0;
+      padding: 5pt 7pt;
+      font-size: 7.7pt;
+      line-height: 1.3;
+      background: #f4f0ea;
+      border: 1pt solid #c4b8a0;
+      border-radius: 3pt;
+    }
+    .page--quiz-20 .quiz--grid3 {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3.5pt 4pt;
+    }
+    .page--quiz-20 .quiz--grid3 .question {
+      padding: 3pt 4pt;
+      gap: 2pt;
+    }
+    .page--quiz-20 .quiz--grid3 .question > p {
+      font-size: 7pt;
+    }
+    .page--quiz-20 .quiz--grid3 .option {
+      min-height: 11.5pt;
+      font-size: 6.5pt;
+    }
+    .page--quiz-20 .quiz--grid3 .opt-key {
+      font-size: 6.5pt;
+    }
+    .page--quiz-20 .quiz-section > .section-title {
+      margin-bottom: 4pt;
+      font-size: 9.5pt;
+      padding: 3pt 7pt;
+    }
+  </style>
+</head>
+<body>
+  <section class="page page--colon">
+    <header class="sheet-header">
+      <h1>Cristóbal Colón — El cruce del Atlántico (1492)</h1>
+      <p class="meta">Ciclo 3 · Historia · Clase 1 · Explicación</p>
+      <div class="student-line">
+        <span>Nombre:</span>
+        <span>Fecha:</span>
+      </div>
+    </header>
+
+    <p class="colon-lead"><strong>Cristóbal Colón</strong> (en italiano, Cristoforo Colombo) nació hacia <strong>1451 en Génova</strong>, una ciudad portuaria del Mediterráneo (hoy Italia). Fue navegante y cartógrafo. En el siglo XV, Europa comerciaba con Asia —especias, seda, oro— por rutas largas hacia el este. Colón propuso algo distinto: <strong>llegar a las Indias (Asia) navegando hacia el oeste</strong>, atravesando el océano Atlántico. La Tierra ya se sabía esférica; el error de Colón fue calcularla <strong>más pequeña de lo que es</strong>, así que no esperaba un continente en medio.</p>
+
+    <div class="colon-grid">
+      <div class="colon-facts">
+        <article class="colon-card">
+          <h3>Quién era</h3>
+          <p>Marino formado en el Mediterráneo y el Atlántico portugués. Vivió en Lisboa y más tarde en España. Estudió mapas, relatos de viajes y la distancia estimada hasta Cipango (Japón) y Catay (China).</p>
+        </article>
+        <article class="colon-card">
+          <h3>El plan</h3>
+          <p>Pedir barcos para cruzar el Atlántico y abrir una ruta comercial a Asia. Primero lo presentó a <strong>Portugal</strong>, que lo rechazó: sus expertos juzgaron que el océano era más ancho de lo que Colón decía.</p>
+        </article>
+        <article class="colon-card">
+          <h3>Quién lo financió</h3>
+          <p>Los <strong>Reyes Católicos</strong>, Isabel I de Castilla y Fernando II de Aragón. En abril de <strong>1492</strong> firmaron las <strong>Capitulaciones de Santa Fe</strong>: Colón sería almirante, virrey y gobernador de las tierras que hallara, y recibiría parte de las riquezas.</p>
+        </article>
+        <article class="colon-card">
+          <h3>Las naves</h3>
+          <p>Tres barcos salieron de <strong>Palos de la Frontera</strong> (Huelva) el <strong>3 de agosto de 1492</strong>: la <strong>Niña</strong>, la <strong>Pinta</strong> y la <strong>Santa María</strong> (la mayor, naos y carabelas de vela). Hicieron escala en las <strong>islas Canarias</strong> y luego cruzaron el Atlántico.</p>
+        </article>
+      </div>
+      <figure class="colon-map">
+        <div class="colon-map__stage">
+          <img src="de-espana-a-las-americas.png" alt="Globo terrestre: el Atlántico entre España y las Américas">
+        </div>
+        <figcaption>El océano que cruzó: España → Atlántico → las Américas (1492)</figcaption>
+      </figure>
+    </div>
+
+    <div class="colon-ships">
+      <div class="colon-ship">
+        <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 40 C18 48 62 48 72 40 L68 36 H12 Z" fill="#6b4423"/>
+          <path d="M28 36 V12 L44 20 L28 22 Z" fill="#f4efe4" stroke="#1e4d6b" stroke-width="1.2"/>
+          <path d="M48 36 V16 L62 22 L48 24 Z" fill="#e8dcc4" stroke="#1e4d6b" stroke-width="1"/>
+          <rect x="26" y="10" width="3" height="26" fill="#3a2a18"/>
+          <rect x="47" y="14" width="2.5" height="22" fill="#3a2a18"/>
+        </svg>
+        <div>
+          <strong>La Niña</strong>
+          <span>Carabela rápida. Capitán: Vicente Yáñez Pinzón.</span>
+        </div>
+      </div>
+      <div class="colon-ship">
+        <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 40 C18 48 62 48 72 40 L68 36 H12 Z" fill="#5a3818"/>
+          <path d="M28 36 V10 L46 19 L28 21 Z" fill="#f7e6a0" stroke="#1e4d6b" stroke-width="1.2"/>
+          <path d="M50 36 V18 L64 24 L50 26 Z" fill="#f0d878" stroke="#1e4d6b" stroke-width="1"/>
+          <rect x="26" y="8" width="3" height="28" fill="#3a2a18"/>
+          <rect x="49" y="16" width="2.5" height="20" fill="#3a2a18"/>
+        </svg>
+        <div>
+          <strong>La Pinta</strong>
+          <span>Carabela. Capitán: Martín Alonso Pinzón. Avistó tierra primero.</span>
+        </div>
+      </div>
+      <div class="colon-ship">
+        <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 41 C18 50 64 50 74 41 L70 36 H10 Z" fill="#4a2e12"/>
+          <path d="M24 36 V8 L44 18 L24 20 Z" fill="#eee6d4" stroke="#1e4d6b" stroke-width="1.2"/>
+          <path d="M40 36 V12 L58 22 L40 23 Z" fill="#ddd2b8" stroke="#1e4d6b" stroke-width="1"/>
+          <path d="M56 36 V20 L68 26 L56 27 Z" fill="#d4c6a8" stroke="#1e4d6b" stroke-width="1"/>
+          <rect x="22" y="6" width="3.2" height="30" fill="#3a2a18"/>
+        </svg>
+        <div>
+          <strong>La Santa María</strong>
+          <span>Nao capitana. Naufragó el 25 de diciembre de 1492 en La Española.</span>
+        </div>
+      </div>
+    </div>
+
+    <ul class="colon-time">
+      <li><strong>12 oct. 1492</strong><span>Llegan a <em>Guanahaní</em> (Bahamas). Colón la llama San Salvador. Habitan los <strong>taínos</strong>.</span></li>
+      <li><strong>1492–93</strong><span>Explora Cuba y La Española. Funda el fuerte <strong>La Navidad</strong> con restos de la Santa María. Vuelve a España en 1493.</span></li>
+      <li><strong>2.º viaje 1493</strong><span>17 naves. Coloniza La Española (La Isabela). El fuerte La Navidad ya estaba destruido.</span></li>
+      <li><strong>3.º y 4.º</strong><span>1498: llega a <strong>tierra firme</strong> (golfo de Paria, costa de Venezuela). 1502–04: recorre Centroamérica.</span></li>
+      <li><strong>1506</strong><span>Muere en <strong>Valladolid</strong> el 20 de mayo. Hizo <strong>cuatro</strong> viajes. Siguió creyendo que había tocado Asia.</span></li>
+    </ul>
+
+    <div class="colon-split">
+      <div class="colon-box colon-box--think">
+        <h3>Lo que Colón creía</h3>
+        <p>Que las islas del Caribe eran las Indias orientales, cerca de Asia. Por eso llamó «indios» a sus habitantes y buscó oro, especias y una ruta hacia Cipango y el Gran Khan.</p>
+      </div>
+      <div class="colon-box colon-box--found">
+        <h3>Lo que había en realidad</h3>
+        <p>Un continente ya habitado por muchos pueblos (taínos, y más tarde otros en tierra firme). No era Asia. El nombre <strong>América</strong> vendrá después, por el navegante <strong>Américo Vespucio</strong>, que describió esas tierras como un mundo distinto.</p>
+      </div>
+    </div>
+
+    <p class="colon-note"><strong>Consecuencias:</strong> el viaje de 1492 abrió un contacto permanente entre Europa y América. Trajo mapas nuevos, plantas, animales y metales de un lado a otro, y también conquista, enfermedades (viruela y otras) y un descenso enorme de la población indígena. Colón no «encontró una tierra vacía»: llegó a un mundo que ya tenía sociedades, lenguas e historia propias.</p>
+
+    <footer class="sheet-footer">Ciclo 3 · Historia · Cristóbal Colón · Hoja 1 de 2</footer>
+  </section>
+
+  <section class="page page--quiz page--class page--quiz-20">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Práctica — Cristóbal Colón</h1>
+      <p class="meta">Ciclo 3 · Historia · Clase 1 · Selección simple (20 preguntas)</p>
+    </header>
+
+    <div class="quiz-section">
+      <h2 class="section-title">Preguntas</h2>
+      <ol class="quiz quiz--grid3">
+        <li class="question"><p><span class="q-num">1.</span> ¿Dónde nació Colón?</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Palos</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Génova</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Lisboa</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Valladolid</span></div></div></li>
+        <li class="question"><p><span class="q-num">2.</span> Año aproximado de su nacimiento:</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">1400</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">1492</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">1451</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">1506</span></div></div></li>
+        <li class="question"><p><span class="q-num">3.</span> Colón era sobre todo…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Navegante</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Rey de Castilla</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Sacerdote</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Faraón</span></div></div></li>
+        <li class="question"><p><span class="q-num">4.</span> Su plan era llegar a Asia…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Por el Ártico</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">A pie por África</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Por el este, como siempre</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Navegando hacia el oeste</span></div></div></li>
+        <li class="question"><p><span class="q-num">5.</span> ¿Quién financió el primer viaje?</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">El rey de Portugal</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Isabel y Fernando</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">El papa solo</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Inglaterra</span></div></div></li>
+        <li class="question"><p><span class="q-num">6.</span> Portugal, al principio…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Rechazó el plan</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Pagó las 3 naves</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Fue el destino</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Nació Colón allí</span></div></div></li>
+        <li class="question"><p><span class="q-num">7.</span> Las Capitulaciones de Santa Fe se firmaron en…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">1506</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">1451</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Abril de 1492</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Octubre de 1493</span></div></div></li>
+        <li class="question"><p><span class="q-num">8.</span> Las tres naves de 1492 fueron…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Mayflower, Victoria, Pinta</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Niña, Victoria, Trinidad</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Pinta, Beagle, Niña</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Niña, Pinta y Santa María</span></div></div></li>
+        <li class="question"><p><span class="q-num">9.</span> El primer viaje salió de…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Génova</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Palos de la Frontera</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">La Habana</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Valladolid</span></div></div></li>
+        <li class="question"><p><span class="q-num">10.</span> Fecha de salida (1492):</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">3 de agosto</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">12 de octubre</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">25 de diciembre</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">20 de mayo</span></div></div></li>
+        <li class="question"><p><span class="q-num">11.</span> ¿Cuándo avistaron tierra?</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">3 de agosto de 1492</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">20 de mayo de 1506</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">12 de octubre de 1492</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Abril de 1492</span></div></div></li>
+        <li class="question"><p><span class="q-num">12.</span> La primera isla se llamaba…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Cuba</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">La Isabela</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Canarias</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Guanahaní (San Salvador)</span></div></div></li>
+        <li class="question"><p><span class="q-num">13.</span> Colón creía haber llegado a…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Australia</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Las Indias (Asia)</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">El Polo Norte</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">África del Sur</span></div></div></li>
+        <li class="question"><p><span class="q-num">14.</span> El pueblo que habitaba Guanahaní:</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Taínos</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Romanos</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Vikingos</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Egipcios</span></div></div></li>
+        <li class="question"><p><span class="q-num">15.</span> Con restos de la Santa María fundó…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Palos</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Génova</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">El fuerte La Navidad</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Lisboa</span></div></div></li>
+        <li class="question"><p><span class="q-num">16.</span> ¿Cuántos viajes hizo Colón a América?</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Uno</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Cuatro</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Diez</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Ninguno</span></div></div></li>
+        <li class="question"><p><span class="q-num">17.</span> Colón murió en 1506 en…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Guanahaní</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Génova</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Palos</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Valladolid</span></div></div></li>
+        <li class="question"><p><span class="q-num">18.</span> Hasta el final de su vida, Colón…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Creyó que había tocado Asia</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Nombró el continente América</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Negó que la Tierra fuera redonda</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Vivió en Cuba como rey</span></div></div></li>
+        <li class="question"><p><span class="q-num">19.</span> Al llegar, América…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Estaba vacía</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Era solo un desierto</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Ya tenía pueblos e historia</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Era una colonia inglesa</span></div></div></li>
+        <li class="question"><p><span class="q-num">20.</span> El nombre América viene de…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Isabel de Castilla</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Américo Vespucio</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Martín Pinzón</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">El fuerte La Navidad</span></div></div></li>
+      </ol>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Historia · Cristóbal Colón · Hoja 2 de 2 · Clave: 1B 2C 3A 4D 5B 6A 7C 8D 9B 10A 11C 12D 13B 14A 15C 16B 17D 18A 19C 20B</footer>
+  </section>
+</body>
+</html>
