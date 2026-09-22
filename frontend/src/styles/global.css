@@ -1095,18 +1095,24 @@ main {
   padding-right: var(--main-inline);
 }
 
-/* Workspaces have no .page-title band — restore chrome clearance. */
+/* Workspaces: no main gutters (full-bleed). Homescool keeps .page-title; padding-top stays 0. */
 html[data-page="ereport-workspace"] main,
+html[data-page="ereport-invite"] main,
 html[data-page="homescool-workspace"] main,
 html[data-page="latin-institutes"] main,
 html[data-page="scrib-sheet"] main {
-  padding-top: var(--main-padding-top);
+  padding: 0;
 }
 
-html[data-page="homescool-workspace"] main,
-html[data-page="latin-institutes"] main {
-  padding-inline: 0;
-  padding-bottom: 0;
+html[data-page="homescool-workspace"],
+html[data-page="latin-institutes"] {
+  --product-tree-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) * 0.35);
+}
+
+/* Offset H1 when the product tree sidebar is open. */
+html[data-page="homescool-workspace"] main:has(.product-workspace--tree-open) > .page-title,
+html[data-page="latin-institutes"] main:has(.product-workspace--tree-open) > .page-title {
+  margin-left: var(--product-tree-width);
 }
 
 main > * {
@@ -2020,6 +2026,105 @@ section.diag .panel:not(form) {
   
 }
 
+.boot-veil {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) + 10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--space-padding);
+  gap: var(--rail-gap);
+  background: var(--color-bg);
+  color: var(--color-accent);
+}
+
+.boot-veil[hidden] {
+  display: none !important;
+}
+
+.boot-veil__panel {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 0.25rem 0.75rem color-mix(in srgb, var(--color-text) 14%, transparent);
+}
+
+.boot-veil__ring {
+  position: absolute;
+  inset: 0.55rem;
+  border: 0.125rem solid transparent;
+  border-top-color: var(--color-accent);
+  border-right-color: var(--color-accent);
+  border-radius: 50%;
+  animation: boot-veil-spin 0.95s linear infinite;
+}
+
+.boot-veil__ring--inner {
+  inset: 1.15rem;
+  border-width: 0.094rem;
+  animation-duration: 1.4s;
+  animation-direction: reverse;
+  opacity: 0.55;
+}
+
+.boot-veil__core {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: boot-veil-pulse 1.15s ease-in-out infinite;
+}
+
+.boot-veil__label {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes boot-veil-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes boot-veil-pulse {
+  0%,
+  100% {
+    transform: scale(0.65);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-veil__ring,
+  .boot-veil__ring--inner,
+  .boot-veil__core {
+    animation: none;
+  }
+}
+
 .error-modal {
   position: fixed;
   z-index: var(--z-modal);
@@ -2172,20 +2277,6 @@ html[data-page="ereport-invite"] main {
 html[data-page="ereport-workspace"] main > *,
 html[data-page="ereport-invite"] main > * {
   grid-column: 1 / -1;
-}
-
-@media (max-width: 63.999rem) {
-  html[data-page="ereport-workspace"] main,
-  html[data-page="ereport-invite"] main {
-    padding: var(--main-padding) var(--space-padding) 0 var(--space-padding);
-  }
-}
-
-@media (min-width: 64rem) {
-  html[data-page="ereport-workspace"] main,
-  html[data-page="ereport-invite"] main {
-    padding: var(--main-padding) var(--space-padding) 0 var(--space-padding);
-  }
 }
 
 .ereport-workspace {
