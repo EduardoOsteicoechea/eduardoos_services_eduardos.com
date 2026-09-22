@@ -14,7 +14,7 @@ import (
 
 func TestPamphletCRUDAndPDF(t *testing.T) {
 	app := newTestApp(false)
-	_ = app.grantEntitlement("member-1", productPamphlet)
+	_ = app.grantEntitlement("member-1", productEpam)
 
 	createBody := `{
 		"epamId":"epam-test-1",
@@ -182,7 +182,7 @@ func TestEpamImportCLIStoresDocumentForRequestedOwner(t *testing.T) {
 
 func TestEpamPublishCLIExplicitlyPublishesOwnerDocuments(t *testing.T) {
 	app := newTestApp(false)
-	_ = app.grantEntitlement("member-1", productPamphlet)
+	_ = app.grantEntitlement("member-1", productEpam)
 	if _, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
 		UserID: "member-1", EpamID: "public-epam", Title: "Public EPAM",
 		Body: map[string]any{"id": "public-epam", "type": "pamphlet_single_sheet", "header": map[string]any{"title": "Public EPAM"}},

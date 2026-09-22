@@ -29,7 +29,7 @@ func (a *App) requirePamphletUser(w http.ResponseWriter, r *http.Request) *User 
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return nil
 	}
-	ok, unavailable := a.hasProductEntitlement(r, user, productPamphlet)
+	ok, unavailable := a.hasProductEntitlement(r, user, productEpam)
 	if unavailable {
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return nil

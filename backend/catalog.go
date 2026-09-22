@@ -15,7 +15,7 @@ type serviceInfo struct {
 }
 
 var serviceCatalog = []serviceInfo{
-	{ID: "pamphlet", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1},
+	{ID: "epam", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1},
 	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1},
 	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1},
 	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1},
@@ -36,8 +36,29 @@ func init() {
 }
 
 func knownService(id string) bool {
-	_, ok := serviceByID[strings.ToLower(strings.TrimSpace(id))]
+	_, ok := serviceByID[normalizeProductID(id)]
 	return ok
+}
+
+// normalizeProductID maps legacy pamphlet → epam for catalog, entitlements, and gates.
+func normalizeProductID(id string) string {
+	id = strings.ToLower(strings.TrimSpace(id))
+	if id == "pamphlet" {
+		return productEpam
+	}
+	return id
+}
+
+// productIDAliases returns ids that count as the same entitlement (epam ↔ pamphlet).
+func productIDAliases(id string) []string {
+	n := normalizeProductID(id)
+	if n == productEpam {
+		return []string{productEpam, "pamphlet"}
+	}
+	if n == "" {
+		return nil
+	}
+	return []string{n}
 }
 
 // payableService reports whether a service is sold via subscriptions. Some
@@ -48,14 +69,14 @@ func payableService(id string) bool {
 }
 
 func serviceLabel(id string) string {
-	if s, ok := serviceByID[strings.ToLower(strings.TrimSpace(id))]; ok {
+	if s, ok := serviceByID[normalizeProductID(id)]; ok {
 		return s.Label
 	}
 	return id
 }
 
 func monthlyPriceUSD(id string) float64 {
-	if s, ok := serviceByID[strings.ToLower(strings.TrimSpace(id))]; ok {
+	if s, ok := serviceByID[normalizeProductID(id)]; ok {
 		return s.MonthlyUSD
 	}
 	return 0
@@ -77,10 +98,15 @@ func formatAmountUSD(total float64) string {
 }
 
 func entitlementActiveProduct(ents []*Entitlement, product string, now time.Time) bool {
-	product = strings.ToLower(strings.TrimSpace(product))
+	aliases := productIDAliases(product)
 	for _, e := range ents {
-		if e != nil && e.Product == product && e.isLive(now) {
-			return true
+		if e == nil || !e.isLive(now) {
+			continue
+		}
+		for _, want := range aliases {
+			if e.Product == want {
+				return true
+			}
 		}
 	}
 	return false

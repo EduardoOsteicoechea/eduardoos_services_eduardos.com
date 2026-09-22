@@ -315,7 +315,7 @@ func normalizeServiceIDs(raw []string) []string {
 	out := make([]string, 0, len(raw))
 	seen := map[string]bool{}
 	for _, id := range raw {
-		id = strings.ToLower(strings.TrimSpace(id))
+		id = normalizeProductID(id)
 		if id == "" || !knownService(id) || seen[id] {
 			continue
 		}
@@ -340,9 +340,9 @@ func (a *App) grantProducts(ctx context.Context, userID string, products []strin
 		}
 		exp := until
 		if err := a.store.UpsertEntitlement(ctx, &Entitlement{
-			ID:        userID + ":" + product,
+			ID:        userID + ":" + normalizeProductID(product),
 			UserID:    userID,
-			Product:   product,
+			Product:   normalizeProductID(product),
 			Active:    true,
 			ExpiresAt: &exp,
 			CreatedAt: now,

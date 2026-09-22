@@ -94,17 +94,25 @@ func (a *App) hasProductEntitlement(r *http.Request, user *User, product string)
 		return false, true
 	}
 	now := time.Now().UTC()
+	aliases := productIDAliases(product)
 	for _, ent := range ents {
-		if ent.Product == product && ent.isLive(now) {
-			return true, false
+		if !ent.isLive(now) {
+			continue
+		}
+		for _, want := range aliases {
+			if ent.Product == want {
+				return true, false
+			}
 		}
 	}
 	// Administrator-granted access (managed from /admin/users) unlocks every
 	// route/API that uses this guard.
-	if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, product); unavailable {
-		return false, true
-	} else if granted {
-		return true, false
+	for _, want := range aliases {
+		if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, want); unavailable {
+			return false, true
+		} else if granted {
+			return true, false
+		}
 	}
 	return false, false
 }
@@ -201,7 +209,7 @@ func (a *App) grantEntitlement(userID, product string) error {
 	return a.store.UpsertEntitlement(context.Background(), &Entitlement{
 		ID:        randomID(12),
 		UserID:    userID,
-		Product:   product,
+		Product:   normalizeProductID(product),
 		Active:    true,
 		CreatedAt: now,
 	})

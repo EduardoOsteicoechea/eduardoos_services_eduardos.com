@@ -30,10 +30,13 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		id, _ := row["id"].(string)
 		ids[id] = true
 	}
-	for _, want := range []string{"pamphlet", "homescool", "scrib", "ereport", "evoice", "api"} {
+	for _, want := range []string{"epam", "homescool", "scrib", "ereport", "evoice", "api"} {
 		if !ids[want] {
 			t.Fatalf("missing catalog id %s in %#v", want, ids)
 		}
+	}
+	if ids["pamphlet"] {
+		t.Fatal("legacy pamphlet id must not appear in public catalog; use epam")
 	}
 	if ids["playlist"] || ids["church-management"] {
 		t.Fatal("playlist and church-management must be omitted")

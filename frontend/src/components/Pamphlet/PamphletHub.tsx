@@ -46,7 +46,7 @@ const PAMPHLET_CARDS = [
 
 export default function PamphletHub() {
   return (
-    <ServiceGate serviceId="pamphlet" serviceLabel="EPAM">
+    <ServiceGate serviceId="epam" serviceLabel="EPAM">
       <PamphletHubInner />
     </ServiceGate>
   );

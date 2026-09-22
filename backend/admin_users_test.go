@@ -14,8 +14,8 @@ func TestPreferenceServiceIDsHandlesBSONArray(t *testing.T) {
 	if len(got) != 2 || got[0] != "evoice" || got[1] != "scrib" {
 		t.Fatalf("expected [evoice scrib], got %v", got)
 	}
-	if ids := preferenceServiceIDs([]string{"pamphlet"}); len(ids) != 1 || ids[0] != "pamphlet" {
-		t.Fatalf("string slice: %v", ids)
+	if ids := preferenceServiceIDs([]string{"pamphlet"}); len(ids) != 1 || ids[0] != "epam" {
+		t.Fatalf("string slice (legacy pamphlet→epam): %v", ids)
 	}
 	if ids := preferenceServiceIDs(nil); len(ids) != 0 {
 		t.Fatalf("nil: %v", ids)
