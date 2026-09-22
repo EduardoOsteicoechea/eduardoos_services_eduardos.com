@@ -1,15 +1,11 @@
-/* Homescool workspace — full-bleed; US Letter sections stacked with 1rem gap. */
+/* Homescool workspace — site chrome styles; Letter print pages in shadow host. */
 
 html[data-page="homescool-workspace"] .page-title {
   display: none;
 }
 
-html[data-page="homescool-workspace"] main {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  /* Fill below the fixed activity header. */
-  height: calc(100% - var(--mobile-header-height, var(--header-size)));
+html[data-page="homescool-workspace"] {
+  height: 100%;
 }
 
 html[data-page="homescool-workspace"] body,
@@ -18,20 +14,37 @@ html[data-page="homescool-workspace"] .shell {
   min-height: 100%;
 }
 
-html[data-page="homescool-workspace"] {
+/* Clear the fixed menu / activity bar — do not cover the menu button. */
+html[data-page="homescool-workspace"] main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   height: 100%;
+  padding: 0;
+  padding-top: var(--mobile-header-height, var(--header-size));
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+html[data-page="homescool-workspace"] .product-tree-sidebar {
+  top: var(--mobile-header-height, var(--header-size));
+  z-index: calc(var(--z-activity) - 1);
+  background: var(--color-surface);
+  border-right-color: var(--color-border);
+  color: var(--color-text);
 }
 
 .homescool-workspace {
   flex: 1 1 auto;
   min-height: 0;
-  height: auto;
+  background: var(--color-bg);
 }
 
 .homescool-workspace .product-workspace__main {
   min-height: 0;
-  height: auto;
   flex: 1 1 auto;
+  background: var(--color-bg);
 }
 
 .homescool-workspace .product-workspace__status {
@@ -56,7 +69,8 @@ html[data-page="homescool-workspace"] {
   margin: 0;
   border: 0;
   border-radius: 0;
-  background: #d8d8e4;
+  /* Gap between sheets shows through the transparent host → site bg. */
+  background: var(--color-bg);
 }
 
 .homescool-workspace__stage-empty {
@@ -65,13 +79,11 @@ html[data-page="homescool-workspace"] {
   color: var(--color-muted);
 }
 
-.homescool-sheet-frame {
+.homescool-sheet-host {
   flex: 0 0 auto;
   width: auto;
   min-height: 0;
-  height: auto;
-  border: 0;
-  background: #d8d8e4;
+  background: transparent;
 }
 
 @media print {
@@ -84,16 +96,25 @@ html[data-page="homescool-workspace"] {
   .product-tree-sidebar,
   .homescool-workspace .product-workspace__status,
   .page-title,
+  .page-title-sr,
   .error-modal-overlay,
-  [data-homescool-gate] {
+  [data-homescool-gate],
+  .homescool-workspace__stage-empty {
     display: none !important;
+  }
+
+  html[data-page="homescool-workspace"] main {
+    padding: 0 !important;
+    height: auto !important;
+    background: transparent !important;
   }
 
   .shell,
   main,
   .product-workspace,
   .product-workspace__main,
-  .homescool-workspace__stage {
+  .homescool-workspace__stage,
+  .homescool-sheet-host {
     display: block !important;
     position: static !important;
     inset: auto !important;
@@ -106,12 +127,5 @@ html[data-page="homescool-workspace"] {
     border: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-  }
-
-  .homescool-sheet-frame {
-    display: block !important;
-    width: auto !important;
-    min-height: 0 !important;
-    height: auto !important;
   }
 }

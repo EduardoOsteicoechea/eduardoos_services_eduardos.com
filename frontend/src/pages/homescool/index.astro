@@ -47,12 +47,7 @@ import "../../styles/homescool-workspace.css";
       <p class="product-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
         <p class="homescool-workspace__stage-empty" data-homescool-empty>Select a material from the tree.</p>
-        <iframe
-          class="homescool-sheet-frame"
-          data-homescool-frame
-          title="Study material"
-          hidden
-        ></iframe>
+        <div class="homescool-sheet-host" data-homescool-sheets hidden></div>
       </div>
     </div>
   </section>
@@ -65,23 +60,21 @@ import "../../styles/homescool-workspace.css";
   import { productTreeChevron, productTreeLabel, productTreeLeafIcon } from "../../lib/product-tree";
   import { showErrorModal } from "../../lib/error-modal";
 
-  type StudyPrintApi = {
-    print?: () => void;
-    printOrientation?: (orientation: "portrait" | "landscape") => void;
-  };
+  const STUDY_CSS = "/api/homescool/web-assets/styles.css";
+  const STUDY_MAP_JS = "/api/homescool/web-assets/map-grid.js";
 
   const gate = document.querySelector("[data-homescool-gate]");
   const workspace = document.querySelector("[data-homescool-workspace]");
   const banner = document.querySelector("[data-homescool-banner]");
   const treeHost = document.querySelector("[data-homescool-tree-host]");
   const empty = document.querySelector("[data-homescool-empty]");
-  const frame = document.querySelector("[data-homescool-frame]");
+  const sheetsHost = document.querySelector("[data-homescool-sheets]");
   const treeToggle = document.querySelector("[data-homescool-tree-toggle]");
   const printBtn = document.querySelector("[data-homescool-print]");
 
   let materialsById = new Map<string, HomescoolMaterial>();
-  let frameReady = false;
-  let frameResizeObserver: ResizeObserver | null = null;
+  let sheetsReady = false;
+  let shadow: ShadowRoot | null = null;
 
   const teacher = await requireService("homescool", { requireSubscription: true });
   const ok = teacher.sessionOk && teacher.access.allowed;
@@ -108,17 +101,8 @@ import "../../styles/homescool-workspace.css";
   });
 
   printBtn?.addEventListener("click", () => {
-    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled) return;
-    printActiveMaterial();
-  });
-
-  frame?.addEventListener("load", () => {
-    if (!(frame instanceof HTMLIFrameElement)) return;
-    if (!frame.src || frame.src === "about:blank") return;
-    prepareFrameDocument(frame);
-    sizeFrameToContent(frame);
-    frameReady = true;
-    if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
+    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
+    window.print();
   });
 
   async function boot() {
@@ -136,16 +120,13 @@ import "../../styles/homescool-workspace.css";
       return;
     }
     materialsById = new Map(res.materials.map((m) => [m.id, m]));
-    const tree = buildHomescoolTree(res.materials);
-    renderTree(tree);
+    renderTree(buildHomescoolTree(res.materials));
     const count = res.materials.length;
     if (banner instanceof HTMLElement) {
       banner.textContent = count ? `${count} material(es) · pick one in the tree` : "No materials yet.";
     }
     const deep = new URLSearchParams(window.location.search).get("material");
-    if (deep && materialsById.has(deep)) {
-      void openMaterial(deep);
-    }
+    if (deep && materialsById.has(deep)) void openMaterial(deep);
   }
 
   function renderTree(nodes: HomescoolTreeNode[]) {
@@ -167,11 +148,8 @@ import "../../styles/homescool-workspace.css";
     details.append(summary);
     const ul = document.createElement("ul");
     for (const child of node.children) {
-      if (child.kind === "material") {
-        ul.append(renderLeaf(child));
-      } else {
-        ul.append(renderNode(child, false));
-      }
+      if (child.kind === "material") ul.append(renderLeaf(child));
+      else ul.append(renderNode(child, false));
     }
     details.append(ul);
     li.append(details);
@@ -185,9 +163,7 @@ import "../../styles/homescool-workspace.css";
     btn.className = "product-tree__leaf";
     btn.dataset.materialId = leaf.id;
     btn.append(productTreeLeafIcon("description"), productTreeLabel(leaf.title));
-    btn.addEventListener("click", () => {
-      void openMaterial(leaf.id);
-    });
+    btn.addEventListener("click", () => void openMaterial(leaf.id));
     li.append(btn);
     return li;
   }
@@ -198,7 +174,7 @@ import "../../styles/homescool-workspace.css";
         el.setAttribute("aria-current", el.dataset.materialId === id ? "true" : "false");
       }
     });
-    frameReady = false;
+    sheetsReady = false;
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     if (banner instanceof HTMLElement) banner.textContent = "Loading material…";
     const res = await fetchHomescoolMaterial(id);
@@ -211,145 +187,143 @@ import "../../styles/homescool-workspace.css";
       if (banner instanceof HTMLElement) banner.textContent = res.error || "Not found.";
       return;
     }
-    if (!(frame instanceof HTMLIFrameElement) || !(empty instanceof HTMLElement)) return;
-    // Full document in iframe — isolates study `.page` / quiz CSS from site chrome.
-    setHidden(empty, true);
-    setHidden(frame, false);
-    frame.src = res.htmlUrl;
-    const m = res.material;
-    if (banner instanceof HTMLElement) {
-      banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
-    }
-    document.title = `${m.title} · Homescool`;
-  }
-
-  function prepareFrameDocument(iframe: HTMLIFrameElement) {
     try {
-      const doc = iframe.contentDocument;
-      if (!doc?.head || !doc.body) return;
-      // Match site rem so the 1rem gap between sheets matches chrome tokens.
-      const parentFs = getComputedStyle(document.documentElement).fontSize;
-      doc.documentElement.style.fontSize = parentFs;
-      normalizeLetterSections(doc);
-      let style = doc.getElementById("homescool-embed-chrome");
-      if (!style) {
-        style = doc.createElement("style");
-        style.id = "homescool-embed-chrome";
-        doc.head.appendChild(style);
+      const htmlRes = await fetch(res.htmlUrl, { credentials: "include" });
+      if (!htmlRes.ok) throw new Error(`HTML ${htmlRes.status}`);
+      const raw = await htmlRes.text();
+      mountLetterSheets(raw);
+      const m = res.material;
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
       }
-      style.textContent = [
-        ".print-fab, .print-menu { display: none !important; }",
-        "html, body { height: auto !important; min-height: 0 !important; overflow: visible !important; }",
-        "body {",
-        "  display: flex !important;",
-        "  flex-direction: column !important;",
-        "  align-items: center !important;",
-        "  gap: 1rem !important;",
-        "  margin: 0 !important;",
-        "  padding: 1rem 0 !important;",
-        "  background: #d8d8e4 !important;",
-        "}",
-        "/* Each section = one US Letter sheet (portrait or landscape). */",
-        ".page {",
-        "  margin: 0 !important;",
-        "  flex: 0 0 auto !important;",
-        "  box-sizing: border-box !important;",
-        "}",
-        ".page,",
-        ".page.page--portrait {",
-        "  width: 8.5in !important;",
-        "  height: 11in !important;",
-        "  min-width: 8.5in !important;",
-        "  min-height: 11in !important;",
-        "  max-width: 8.5in !important;",
-        "  max-height: 11in !important;",
-        "}",
-        ".page.page--landscape {",
-        "  width: 11in !important;",
-        "  height: 8.5in !important;",
-        "  min-width: 11in !important;",
-        "  min-height: 8.5in !important;",
-        "  max-width: 11in !important;",
-        "  max-height: 8.5in !important;",
-        "}",
-        "@media print {",
-        "  body { gap: 0 !important; padding: 0 !important; background: #fff !important; }",
-        "  .page { box-shadow: none !important; }",
-        "}",
-      ].join("\n");
+      document.title = `${m.title} · Homescool`;
+      sheetsReady = true;
+      if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
     } catch {
-      /* cross-origin should not happen (same-origin API) */
+      showErrorModal({ message: "Could not load material HTML." });
+      if (banner instanceof HTMLElement) banner.textContent = "Could not load material HTML.";
     }
   }
 
-  /** Keep only US Letter `.page` sections; tag portrait vs landscape. */
-  function normalizeLetterSections(doc: Document) {
-    const pages = Array.from(doc.body.querySelectorAll<HTMLElement>(":scope > .page, .page"));
+  function ensureShadow(): ShadowRoot | null {
+    if (!(sheetsHost instanceof HTMLElement)) return null;
+    if (!shadow) shadow = sheetsHost.attachShadow({ mode: "open" });
+    return shadow;
+  }
+
+  /** Mount each study `.page` as a logical print page inside a shadow root (isolates study CSS from site `.page`). */
+  function mountLetterSheets(rawHtml: string) {
+    const root = ensureShadow();
+    if (!root || !(empty instanceof HTMLElement) || !(sheetsHost instanceof HTMLElement)) return;
+
+    const doc = new DOMParser().parseFromString(rawHtml, "text/html");
+    const pages = extractPages(doc);
+
+    root.replaceChildren();
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = STUDY_CSS;
+
+    const chrome = document.createElement("style");
+    chrome.textContent = [
+      ":host {",
+      "  display: flex;",
+      "  flex-direction: column;",
+      "  align-items: center;",
+      "  gap: 1rem;",
+      "  padding: 1rem 0;",
+      "  box-sizing: border-box;",
+      "  background: transparent;",
+      "}",
+      "/* Logical print pages — study sheet chrome stays inside. */",
+      ".homescool-print-page {",
+      "  margin: 0;",
+      "  padding: 0;",
+      "  flex: 0 0 auto;",
+      "  box-sizing: border-box;",
+      "  background: #fff;",
+      "  box-shadow: 0 0.125rem 0.75rem color-mix(in srgb, var(--color-text, #000) 12%, transparent);",
+      "}",
+      ".homescool-print-page--portrait {",
+      "  width: 8.5in;",
+      "  height: 11in;",
+      "}",
+      ".homescool-print-page--landscape {",
+      "  width: 11in;",
+      "  height: 8.5in;",
+      "}",
+      ".homescool-print-page > .page {",
+      "  margin: 0 !important;",
+      "  width: 100% !important;",
+      "  height: 100% !important;",
+      "  min-width: 0 !important;",
+      "  min-height: 0 !important;",
+      "  max-width: none !important;",
+      "  max-height: none !important;",
+      "  box-shadow: none !important;",
+      "}",
+      "@media print {",
+      "  :host { gap: 0; padding: 0; }",
+      "  .homescool-print-page {",
+      "    box-shadow: none !important;",
+      "    page-break-after: always;",
+      "    break-after: page;",
+      "  }",
+      "  .homescool-print-page:last-child {",
+      "    page-break-after: auto;",
+      "    break-after: auto;",
+      "  }",
+      "  .homescool-print-page--portrait { page: letter-portrait; }",
+      "  .homescool-print-page--landscape { page: letter-landscape; }",
+      "  @page letter-portrait { size: letter portrait; margin: 0; }",
+      "  @page letter-landscape { size: letter landscape; margin: 0; }",
+      "}",
+    ].join("\n");
+
+    root.append(link, chrome);
+
+    const needsMap = pages.some((p) => p.classList.contains("page--map"));
+    for (const page of pages) {
+      page.querySelectorAll("script").forEach((s) => s.remove());
+      const wrap = document.createElement("div");
+      const landscape = page.classList.contains("page--landscape");
+      wrap.className = landscape
+        ? "homescool-print-page homescool-print-page--landscape"
+        : "homescool-print-page homescool-print-page--portrait";
+      wrap.setAttribute("data-print-page", landscape ? "landscape" : "portrait");
+      wrap.appendChild(document.importNode(page, true));
+      root.append(wrap);
+    }
+
+    if (needsMap) {
+      const mapScript = document.createElement("script");
+      mapScript.src = STUDY_MAP_JS;
+      mapScript.defer = true;
+      root.append(mapScript);
+    }
+
+    setHidden(empty, true);
+    setHidden(sheetsHost, false);
+  }
+
+  function extractPages(doc: Document): HTMLElement[] {
+    const found = Array.from(doc.body.querySelectorAll<HTMLElement>(".page"));
     const unique: HTMLElement[] = [];
     const seen = new Set<HTMLElement>();
-    for (const page of pages) {
+    for (const page of found) {
       if (seen.has(page)) continue;
-      // Prefer top-level pages; skip nested (should not exist).
       if (page.parentElement?.closest(".page")) continue;
       seen.add(page);
+      page.classList.add("page");
+      if (page.classList.contains("page--landscape")) page.classList.remove("page--portrait");
+      else page.classList.add("page--portrait");
       unique.push(page);
     }
-    if (!unique.length) {
-      const wrap = doc.createElement("section");
-      wrap.className = "page page--portrait";
-      while (doc.body.firstChild) wrap.appendChild(doc.body.firstChild);
-      doc.body.appendChild(wrap);
-      return;
-    }
-    for (const page of unique) {
-      page.classList.add("page");
-      if (page.classList.contains("page--landscape")) {
-        page.classList.remove("page--portrait");
-      } else {
-        page.classList.add("page--portrait");
-      }
-    }
-    doc.body.replaceChildren(...unique);
-  }
-
-  function sizeFrameToContent(iframe: HTMLIFrameElement) {
-    try {
-      const doc = iframe.contentDocument;
-      if (!doc?.body) return;
-      frameResizeObserver?.disconnect();
-      const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-      const apply = () => {
-        const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight, 1);
-        iframe.style.height = `${h / rootFs}rem`;
-      };
-      apply();
-      frameResizeObserver = new ResizeObserver(() => apply());
-      frameResizeObserver.observe(doc.body);
-      // Fonts / images may expand layout after first paint.
-      window.setTimeout(apply, 250);
-      window.setTimeout(apply, 1000);
-    } catch {
-      /* ignore */
-    }
-  }
-
-  function printActiveMaterial() {
-    if (!(frame instanceof HTMLIFrameElement) || !frameReady) {
-      showErrorModal({ message: "Open a material before printing." });
-      return;
-    }
-    try {
-      const win = frame.contentWindow;
-      if (!win) throw new Error("no frame window");
-      const api = (win as Window & { StudyPrint?: StudyPrintApi }).StudyPrint;
-      if (api?.print) {
-        api.print();
-        return;
-      }
-      win.focus();
-      win.print();
-    } catch {
-      showErrorModal({ message: "Could not print this material." });
-    }
+    if (unique.length) return unique;
+    const wrap = doc.createElement("section");
+    wrap.className = "page page--portrait";
+    while (doc.body.firstChild) wrap.appendChild(doc.body.firstChild);
+    return [wrap];
   }
 </script>

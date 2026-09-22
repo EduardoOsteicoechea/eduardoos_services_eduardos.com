@@ -13,10 +13,10 @@
 
 .product-tree-sidebar {
   position: fixed;
-  top: 0;
+  top: var(--mobile-header-height, var(--header-size));
   bottom: 0;
   left: 0;
-  z-index: var(--z-sidebar);
+  z-index: calc(var(--z-activity) - 1);
   width: var(--product-tree-width);
   margin: 0;
   padding: 0;
@@ -29,6 +29,7 @@
   flex-direction: column;
   gap: 0;
   font-size: var(--font-size-xs);
+  color: var(--color-text);
 }
 
 .product-workspace:not(.product-workspace--tree-open) .product-tree-sidebar {
