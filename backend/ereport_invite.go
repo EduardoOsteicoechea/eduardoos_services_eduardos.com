@@ -518,7 +518,7 @@ func (a *App) ereportInvitePutReportHandler(w http.ResponseWriter, r *http.Reque
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
-	meta, _, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, reportID)
+	meta, storedPayload, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, reportID)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
@@ -531,6 +531,14 @@ func (a *App) ereportInvitePutReportHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	if body.Payload == nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if err := assertInviteNoDeletes(storedPayload, body.Payload); err != nil {
+		if ae := asAPIWriteErr(err); ae != nil && ae.Code == "forbidden" {
+			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+			return
+		}
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}

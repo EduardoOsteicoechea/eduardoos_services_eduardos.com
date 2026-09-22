@@ -71,8 +71,18 @@ export function siteIsDark(root: HTMLElement = document.documentElement): boolea
   return root.getAttribute("data-theme") === "dark";
 }
 
-export function trackerConfigMessage(uploadUrl: string, csrf: string): Record<string, unknown> {
-  return { target: "ereport-tracker", type: "config", uploadUrl, csrf };
+export function trackerConfigMessage(
+  uploadUrl: string,
+  csrf: string,
+  opts?: { canDelete?: boolean },
+): Record<string, unknown> {
+  return {
+    target: "ereport-tracker",
+    type: "config",
+    uploadUrl,
+    csrf,
+    canDelete: opts?.canDelete !== false,
+  };
 }
 
 export function trackerLoadMessage(payload: Record<string, unknown>): Record<string, unknown> {
@@ -135,12 +145,15 @@ export function startTrackerHost(
     payload: Record<string, unknown> | null;
     handlers: TrackerHostHandlers;
     autoSaveMs?: number;
+    /** Owners default true; invite guests must pass false. */
+    canDelete?: boolean;
   },
 ): TrackerHost {
   let timer = 0;
   let ready = false;
   let destroyed = false;
   const queued: Record<string, unknown>[] = [];
+  const canDelete = opts.canDelete !== false;
   const delay = opts.autoSaveMs ?? 100;
   let collectWaiter: {
     resolve: (payload: Record<string, unknown>) => void;
@@ -179,10 +192,11 @@ export function startTrackerHost(
           // Site theme first so a payload's theme field cannot paint over the host chrome.
           send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
           send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
+          // Permissions before load so the first render hides guest delete controls.
+          send(trackerConfigMessage(opts.uploadUrl, opts.csrf, { canDelete }));
           if (opts.payload) {
             send(trackerLoadMessage(opts.payload));
           }
-          send(trackerConfigMessage(opts.uploadUrl, opts.csrf));
           const waiting = queued.splice(0);
           for (const msg of waiting) {
             send(msg);

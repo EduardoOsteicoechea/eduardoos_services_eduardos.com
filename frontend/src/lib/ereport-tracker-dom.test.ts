@@ -89,6 +89,31 @@ describe("tracker canvas authoring", () => {
     click(w.document.querySelector(`[data-section="${sid}"] [data-act="del-section"]`));
     expect(all(w, ".section-block").length).toBe(1);
   });
+
+  it("hides delete controls when the host sets canDelete false", async () => {
+    const w = await boot();
+    expect(all(w, '[data-act="del-section"]').length).toBeGreaterThan(0);
+    expect(all(w, '[data-act="remove"]').length).toBeGreaterThan(0);
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "config",
+        uploadUrl: "",
+        csrf: "",
+        canDelete: false,
+      },
+      "*",
+    );
+    await tick(40);
+    expect(all(w, '[data-act="del-section"]').length).toBe(0);
+    expect(all(w, '[data-act="clear-section"]').length).toBe(0);
+    expect(all(w, '[data-act="del-group"]').length).toBe(0);
+    expect(all(w, '[data-act="clear-group"]').length).toBe(0);
+    expect(all(w, '[data-act="remove"]').length).toBe(0);
+    expect(all(w, '.app-actions [data-act="add-section"]').length).toBe(1);
+    expect(all(w, '[data-act="add-section-item"]').length).toBeGreaterThan(0);
+    expect(all(w, '[data-act="add-item"]').length).toBeGreaterThan(0);
+  });
 });
 
 describe("tracker validation criteria", () => {

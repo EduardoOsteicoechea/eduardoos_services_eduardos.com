@@ -14,6 +14,9 @@ describe("vendored tracker assets", () => {
   });
 
   it("can add a main section and a section-level open issue", () => {
+    expect(tracker).toContain("function allowDelete(");
+    expect(tracker).toContain("permissions.canDelete");
+    expect(tracker).toContain("canDelete");
     expect(tracker).toContain('data-act="add-section"');
     expect(tracker).toContain("function addSection(");
     expect(tracker).toContain("function addSectionItem(");

@@ -134,6 +134,14 @@ describe("tracker host bridge", () => {
       type: "config",
       uploadUrl: "/api/ereport/orgs/o/reports/r/images",
       csrf: "csrf",
+      canDelete: true,
+    });
+    expect(trackerConfigMessage("/api/x", "c", { canDelete: false })).toEqual({
+      target: "ereport-tracker",
+      type: "config",
+      uploadUrl: "/api/x",
+      csrf: "c",
+      canDelete: false,
     });
     expect(usesFilesystemImageRef({ id: "img-1", url: "/api/ereport/orgs/o/reports/r/images/img-1" })).toBe(true);
     expect(usesFilesystemImageRef({ dataUrl: "data:image/png;base64,aaa" })).toBe(false);
@@ -277,6 +285,8 @@ describe("eReport workspace chrome", () => {
     expect(inviteSrc).not.toContain("clear-all");
     expect(inviteSrc).not.toContain("data-site-scale");
     expect(inviteSrc).not.toContain('data-tracker-cmd="upload"');
+    expect(inviteSrc).toContain("canDelete");
+    expect(inviteSrc).toContain("const canDelete = false");
     expect(inviteSrc).toContain('data-tracker-cmd="save-export"');
     expect(inviteSrc).toContain("fetchInviteSharedReport");
     expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');

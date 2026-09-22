@@ -1200,11 +1200,17 @@ const EMBEDDED_DATA = JSON.parse(document.getElementById("embedded-json").textCo
 
 let state = normalizeState(structuredClone(EMBEDDED_DATA));
 let modalCtx = { images: [], index: 0 };
+/** Invite guests set canDelete=false via host config; owners keep delete. */
+const permissions = { canDelete: true };
 const collapseState = {
   sections: new Set(),
   groups: new Set(),
   items: new Set()
 };
+
+function allowDelete() {
+  return permissions.canDelete !== false;
+}
 
 function syncCollapseToState() {
   state.collapse = {
@@ -1883,6 +1889,7 @@ function addGroup(sid) {
 }
 
 function removeGroup(sid, gid) {
+  if (!allowDelete()) return;
   const sec = state.sections.find(s => s.id === sid);
   const grp = sec && (sec.groups || []).find(g => g.id === gid);
   if (!grp) return;
@@ -1896,6 +1903,7 @@ function removeGroup(sid, gid) {
 }
 
 function removeSection(sid) {
+  if (!allowDelete()) return;
   const sec = state.sections.find(s => s.id === sid);
   if (!sec) return;
   if (!confirm('¿Eliminar la sección "' + (sec.title || sid) + '" con todas sus subsecciones e incidencias?')) return;
@@ -1956,6 +1964,7 @@ function focusCriteria() {
 }
 
 function removeItem(sid, gid, iid) {
+  if (!allowDelete()) return;
   collectFromDom();
   const found = locateItem(sid, gid, iid);
   if (!found) return;
@@ -1970,6 +1979,7 @@ function removeItem(sid, gid, iid) {
 }
 
 function clearGroup(sid, gid) {
+  if (!allowDelete()) return;
   if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
   collectFromDom();
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
@@ -1978,6 +1988,7 @@ function clearGroup(sid, gid) {
 }
 
 function clearSection(sid) {
+  if (!allowDelete()) return;
   if (!confirm("¿Vaciar todas las incidencias de esta sección?")) return;
   collectFromDom();
   const sec = state.sections.find(s => s.id === sid);
@@ -2340,7 +2351,7 @@ function renderItem(sec, grp, item) {
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
       <span class="item-status-badge ${badgeClass}" title="${escapeAttr(statusBadgeTitle(eff))}" aria-label="${escapeAttr(statusBadgeTitle(eff))}">${mi(statusBadgeIcon(eff))}</span>
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
-      <button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>
+      ${allowDelete() ? `<button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>` : ""}
     </div>
     <div class="item-body">
     <div class="item-body-layout">
@@ -2602,12 +2613,12 @@ function render() {
           <button type="button" class="ghost" data-act="add-section-item" title="Add open issue" aria-label="Agregar open issue">
             ${mi("add")}
           </button>
-          <button type="button" class="danger" data-act="clear-section" title="Vaciar sección" aria-label="Vaciar sección">
+          ${allowDelete() ? `<button type="button" class="danger" data-act="clear-section" title="Vaciar sección" aria-label="Vaciar sección">
             ${mi("delete")}
           </button>
           <button type="button" class="danger" data-act="del-section" title="Eliminar sección" aria-label="Eliminar sección">
             ${mi("delete_forever")}
-          </button>
+          </button>` : ""}
         </div>
       </div>
       <div class="section-body">
@@ -2626,8 +2637,8 @@ function render() {
             </div>
             <div class="group-actions">
               <button type="button" class="ghost" data-act="add-item" title="Agregar fila" aria-label="Agregar incidencia">${mi("add")}</button>
-              <button type="button" class="danger" data-act="clear-group" title="Vaciar grupo" aria-label="Vaciar subsección">${mi("delete")}</button>
-              <button type="button" class="danger" data-act="del-group" title="Eliminar subsección" aria-label="Eliminar subsección">${mi("delete_forever")}</button>
+              ${allowDelete() ? `<button type="button" class="danger" data-act="clear-group" title="Vaciar grupo" aria-label="Vaciar subsección">${mi("delete")}</button>
+              <button type="button" class="danger" data-act="del-group" title="Eliminar subsección" aria-label="Eliminar subsección">${mi("delete_forever")}</button>` : ""}
             </div>
           </div>
           <div class="group-body">
@@ -2675,7 +2686,8 @@ function render() {
         labelEl.onblur = () => updateStatus();
       }
     });
-    card.querySelector('[data-act="remove"]').onclick = () => removeItem(sid, gid, iid);
+    const removeBtn = card.querySelector('[data-act="remove"]');
+    if (removeBtn) removeBtn.onclick = () => removeItem(sid, gid, iid);
     const imgInc = card.querySelector(".img-incidencia");
     const imgSol = card.querySelector(".img-sol");
     if (imgInc) imgInc.onchange = (e) => onImagesSelected(sid, gid, iid, "incidencia", e.target.files);
@@ -3369,6 +3381,13 @@ updateStatus();
     if (d.type === "config") {
       imageUpload.url = String(d.uploadUrl || "");
       imageUpload.csrf = String(d.csrf || "");
+      var nextCanDelete = d.canDelete !== false;
+      if (permissions.canDelete !== nextCanDelete) {
+        permissions.canDelete = nextCanDelete;
+        try { render(); } catch (e) {}
+      } else {
+        permissions.canDelete = nextCanDelete;
+      }
     }
     if (d.type === "command" && d.command) {
       try {

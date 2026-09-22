@@ -99,6 +99,7 @@ import Layout from "../../layouts/Layout.astro";
     const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
       activeReportId = opts.reportId;
       payload = reportPayload;
+      const canDelete = false;
       setAgentRoutePayload({
         kind: "ereport_report",
         inviteId,
@@ -112,7 +113,7 @@ import Layout from "../../layouts/Layout.astro";
       const pushConfig = () => {
         void refreshCsrf().then(() => {
           if (!host) return;
-          host.post(trackerConfigMessage(opts.uploadUrl, rememberedCsrf()));
+          host.post(trackerConfigMessage(opts.uploadUrl, rememberedCsrf(), { canDelete }));
         });
       };
       host?.destroy();
@@ -121,6 +122,7 @@ import Layout from "../../layouts/Layout.astro";
         uploadUrl: opts.uploadUrl,
         csrf: rememberedCsrf(),
         payload,
+        canDelete,
         handlers: {
           onCloudSave: (next) => {
             if (!opts.canEdit) return;

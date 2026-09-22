@@ -361,6 +361,63 @@ func countEreportItems(payload map[string]any) int {
 	return n
 }
 
+// collectEreportStructureIDs returns every section / group / issue id present in a payload.
+func collectEreportStructureIDs(payload map[string]any) (sections, groups, items map[string]struct{}) {
+	sections = map[string]struct{}{}
+	groups = map[string]struct{}{}
+	items = map[string]struct{}{}
+	for _, sec := range asMapSlice(payload["sections"]) {
+		if id := strings.TrimSpace(asString(sec["id"])); id != "" {
+			sections[id] = struct{}{}
+		}
+		for _, it := range asMapSlice(sec["items"]) {
+			if id := strings.TrimSpace(asString(it["id"])); id != "" {
+				items[id] = struct{}{}
+			}
+		}
+		for _, g := range asMapSlice(sec["groups"]) {
+			if id := strings.TrimSpace(asString(g["id"])); id != "" {
+				groups[id] = struct{}{}
+			}
+			for _, it := range asMapSlice(g["items"]) {
+				if id := strings.TrimSpace(asString(it["id"])); id != "" {
+					items[id] = struct{}{}
+				}
+			}
+		}
+	}
+	return sections, groups, items
+}
+
+// assertInviteNoDeletes rejects invite-session saves that drop existing sections,
+// groups (subsections), or issues. Guests may add and edit, but not delete.
+func assertInviteNoDeletes(stored, incoming map[string]any) error {
+	if stored == nil {
+		return nil
+	}
+	if incoming == nil {
+		return apiWriteErr("invalid_request", "payload required")
+	}
+	prevSec, prevGrp, prevItem := collectEreportStructureIDs(stored)
+	nextSec, nextGrp, nextItem := collectEreportStructureIDs(incoming)
+	for id := range prevSec {
+		if _, ok := nextSec[id]; !ok {
+			return apiWriteErr("forbidden", "guests cannot delete sections")
+		}
+	}
+	for id := range prevGrp {
+		if _, ok := nextGrp[id]; !ok {
+			return apiWriteErr("forbidden", "guests cannot delete sections")
+		}
+	}
+	for id := range prevItem {
+		if _, ok := nextItem[id]; !ok {
+			return apiWriteErr("forbidden", "guests cannot delete issues")
+		}
+	}
+	return nil
+}
+
 const legacyUXCumplidasLabel = "UX cumplidas"
 
 // healEreportChecklistLegacy seeds a checked "UX cumplidas" row on any item that

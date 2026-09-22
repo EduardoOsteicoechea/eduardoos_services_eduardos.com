@@ -391,7 +391,14 @@ func TestEreportOrgInviteOTPAndTrackerSession(t *testing.T) {
 		t.Fatalf("invite get report: %d %s", got.Code, got.Body.String())
 	}
 
-	putBody, _ := json.Marshal(map[string]any{"payload": emptyEreportPayload()})
+	// Guest may edit/add while preserving existing structure ids.
+	edited := emptyEreportPayload()
+	edited["reportName"] = "Guest edit"
+	secs := edited["sections"].([]any)
+	sec0 := secs[0].(map[string]any)
+	sec0["title"] = "1. Product / platform (guest)"
+	sec0["items"] = []any{emptyEreportItem("guest-open-1")}
+	putBody, _ := json.Marshal(map[string]any{"payload": edited})
 	putReq := httptest.NewRequest(http.MethodPut, "/api/ereport/invite-session/reports/"+reportID, bytes.NewReader(putBody))
 	putReq.Header.Set("Content-Type", "application/json")
 	putReq.Header.Set("Origin", app.cfg.AllowedOrigins[0])
@@ -402,6 +409,22 @@ func TestEreportOrgInviteOTPAndTrackerSession(t *testing.T) {
 	app.Handler().ServeHTTP(putRec, putReq)
 	if putRec.Code != http.StatusOK {
 		t.Fatalf("invite put: %d %s", putRec.Code, putRec.Body.String())
+	}
+
+	// Guest must not delete existing sections or issues.
+	wiped := emptyEreportPayload()
+	wiped["sections"] = []any{}
+	wipeBody, _ := json.Marshal(map[string]any{"payload": wiped})
+	wipeReq := httptest.NewRequest(http.MethodPut, "/api/ereport/invite-session/reports/"+reportID, bytes.NewReader(wipeBody))
+	wipeReq.Header.Set("Content-Type", "application/json")
+	wipeReq.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	wipeReq.Header.Set("X-CSRF-Token", csrfBody["csrf"])
+	copyCookies(wipeReq, seed)
+	copyCookies(wipeReq, verifyRec)
+	wipeRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(wipeRec, wipeReq)
+	if wipeRec.Code != http.StatusForbidden {
+		t.Fatalf("invite wipe want 403 got %d %s", wipeRec.Code, wipeRec.Body.String())
 	}
 }
 
@@ -943,6 +966,38 @@ func TestEreportSourceHasNoS3Runtime(t *testing.T) {
 		if strings.Contains(lower, "github.com/aws/") || strings.Contains(lower, "s3_bucket") || strings.Contains(lower, "aws-sdk") {
 			t.Fatalf("%s must not depend on S3", name)
 		}
+	}
+}
+
+func TestAssertInviteNoDeletes(t *testing.T) {
+	stored := emptyEreportPayload()
+	ok := deepCloneMap(stored)
+	ok["reportName"] = "edited"
+	secs := asMapSlice(ok["sections"])
+	secs[0]["items"] = []any{emptyEreportItem("new-open")}
+	ok["sections"] = toAnySlice(secs)
+	if err := assertInviteNoDeletes(stored, ok); err != nil {
+		t.Fatalf("edit/add should be allowed: %v", err)
+	}
+
+	droppedSection := deepCloneMap(stored)
+	droppedSection["sections"] = []any{}
+	if err := assertInviteNoDeletes(stored, droppedSection); err == nil {
+		t.Fatal("want forbid section delete")
+	} else if api := asAPIWriteErr(err); api.Code != "forbidden" {
+		t.Fatalf("want forbidden, got %v", err)
+	}
+
+	droppedItem := deepCloneMap(stored)
+	dSecs := asMapSlice(droppedItem["sections"])
+	dGrps := asMapSlice(dSecs[0]["groups"])
+	dGrps[0]["items"] = []any{emptyEreportItem("replacement")}
+	dSecs[0]["groups"] = toAnySlice(dGrps)
+	droppedItem["sections"] = toAnySlice(dSecs)
+	if err := assertInviteNoDeletes(stored, droppedItem); err == nil {
+		t.Fatal("want forbid issue delete")
+	} else if api := asAPIWriteErr(err); api.Code != "forbidden" {
+		t.Fatalf("want forbidden, got %v", err)
 	}
 }
 
