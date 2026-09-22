@@ -111,14 +111,18 @@ describe("vendored tracker assets", () => {
     expect(tracker).not.toMatch(/function scrollSpyTopOffset\(\)\s*\{\s*return 58;\s*\}/);
   });
 
-  it("embeds API images into exports and captures PDF off-screen without opacity:0", () => {
+  it("embeds API images into exports and captures PDF on-screen under a veil for tablet text", () => {
     expect(tracker).toContain("function embedImagesInPayload(");
     expect(tracker).toContain("function inlineImagesForPdf(");
+    expect(tracker).toContain("function mountPdfCaptureHost(");
+    expect(tracker).toContain("function preparePdfCloneForCapture(");
     expect(tracker).toContain('credentials: "include"');
-    expect(tracker).toContain("translate(-120vw,-120vh)");
+    expect(tracker).toContain("Generando PDF");
+    expect(tracker).not.toContain("translate(-120vw,-120vh)");
     expect(tracker).not.toContain("opacity:0;pointer-events:none;z-index:-1");
     expect(tracker).toContain("PDF canvas empty");
     expect(tracker).toContain("PDF canvas blank");
+    expect(tracker).toContain("Arial,Helvetica,sans-serif");
   });
 
   it("slices PDF pages between pdf-block cards instead of mid-card", () => {
