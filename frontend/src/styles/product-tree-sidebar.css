@@ -1,6 +1,7 @@
 /* Shared product tree sidebars (Homescool, Calvin Institutes). Rem chrome only. */
 
 .product-workspace {
+  --product-tree-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) * 0.35);
   grid-column: 1 / span var(--span-full);
   display: flex;
   flex-direction: row;
@@ -16,7 +17,7 @@
   bottom: 0;
   left: 0;
   z-index: var(--z-sidebar);
-  width: var(--sidebar-width);
+  width: var(--product-tree-width);
   margin: 0;
   padding: 0;
   border: 0;
@@ -27,6 +28,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  font-size: var(--font-size-xs);
 }
 
 .product-workspace:not(.product-workspace--tree-open) .product-tree-sidebar {
@@ -34,7 +36,7 @@
 }
 
 .product-workspace--tree-open .product-workspace__main {
-  margin-left: var(--sidebar-width);
+  margin-left: var(--product-tree-width);
   padding-inline: var(--main-inline);
   padding-bottom: var(--space-padding);
 }
@@ -58,6 +60,8 @@
   color: var(--color-muted);
 }
 
+/* ── Tree with chevrons + dashed guides ─────────────────────────── */
+
 .product-tree {
   list-style: none;
   margin: 0;
@@ -70,17 +74,38 @@
 .product-tree ul {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 var(--space-padding);
+  padding: 0 0 0 0.75rem;
+  margin-left: 0.625rem;
+  border-left: var(--border-width) dashed var(--color-border);
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+.product-tree li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.product-tree li::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: calc(var(--control-height) * 0.5);
+  width: 0.625rem;
+  border-top: var(--border-width) dashed var(--color-border);
+}
+
+.product-tree > li::before {
+  display: none;
 }
 
 .product-tree__toggle,
 .product-tree__leaf {
   display: flex;
   align-items: center;
-  gap: var(--rail-gap);
+  gap: 0.25rem;
   width: auto;
   min-height: var(--control-height);
   margin: 0;
@@ -90,9 +115,38 @@
   background: transparent;
   color: var(--color-text);
   font: inherit;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
+  line-height: 1.25;
   text-align: start;
   cursor: pointer;
+}
+
+.product-tree__chevron {
+  flex: 0 0 auto;
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--color-muted);
+  transition: transform 0.12s ease;
+}
+
+.product-tree details[open] > .product-tree__toggle > .product-tree__chevron {
+  transform: rotate(90deg);
+  color: var(--color-accent);
+}
+
+.product-tree__leaf-icon {
+  flex: 0 0 auto;
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  color: var(--color-muted);
+}
+
+.product-tree__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-tree__toggle:hover,
@@ -104,8 +158,17 @@
   outline-offset: -0.0625rem;
 }
 
+.product-tree__toggle:hover .product-tree__chevron,
+.product-tree__leaf:hover .product-tree__leaf-icon {
+  color: var(--color-accent);
+}
+
 .product-tree__leaf[aria-current="true"] {
   background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.product-tree__leaf[aria-current="true"] .product-tree__leaf-icon {
   color: var(--color-bg);
 }
 

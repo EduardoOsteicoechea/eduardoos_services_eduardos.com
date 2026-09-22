@@ -62,6 +62,7 @@ import "../../styles/homescool-workspace.css";
   import { requireService, setHidden } from "../../lib/productGate";
   import { fetchHomescoolMaterial, fetchHomescoolMaterials, type HomescoolMaterial } from "../../lib/homescool";
   import { buildHomescoolTree, type HomescoolTreeLeaf, type HomescoolTreeNode } from "../../lib/homescool-tree";
+  import { productTreeChevron, productTreeLabel, productTreeLeafIcon } from "../../lib/product-tree";
   import { showErrorModal } from "../../lib/error-modal";
 
   type StudyPrintApi = {
@@ -80,6 +81,7 @@ import "../../styles/homescool-workspace.css";
 
   let materialsById = new Map<string, HomescoolMaterial>();
   let frameReady = false;
+  let frameResizeObserver: ResizeObserver | null = null;
 
   const teacher = await requireService("homescool", { requireSubscription: true });
   const ok = teacher.sessionOk && teacher.access.allowed;
@@ -114,6 +116,7 @@ import "../../styles/homescool-workspace.css";
     if (!(frame instanceof HTMLIFrameElement)) return;
     if (!frame.src || frame.src === "about:blank") return;
     prepareFrameDocument(frame);
+    sizeFrameToContent(frame);
     frameReady = true;
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
   });
@@ -160,7 +163,7 @@ import "../../styles/homescool-workspace.css";
     details.open = openDefault && node.children.length > 0;
     const summary = document.createElement("summary");
     summary.className = "product-tree__toggle";
-    summary.textContent = node.label;
+    summary.append(productTreeChevron(), productTreeLabel(node.label));
     details.append(summary);
     const ul = document.createElement("ul");
     for (const child of node.children) {
@@ -180,8 +183,8 @@ import "../../styles/homescool-workspace.css";
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "product-tree__leaf";
-    btn.textContent = leaf.title;
     btn.dataset.materialId = leaf.id;
+    btn.append(productTreeLeafIcon("description"), productTreeLabel(leaf.title));
     btn.addEventListener("click", () => {
       void openMaterial(leaf.id);
     });
@@ -224,16 +227,41 @@ import "../../styles/homescool-workspace.css";
     try {
       const doc = iframe.contentDocument;
       if (!doc?.head) return;
-      if (doc.getElementById("homescool-embed-chrome")) return;
-      const style = doc.createElement("style");
-      style.id = "homescool-embed-chrome";
+      let style = doc.getElementById("homescool-embed-chrome");
+      if (!style) {
+        style = doc.createElement("style");
+        style.id = "homescool-embed-chrome";
+        doc.head.appendChild(style);
+      }
       style.textContent = [
         ".print-fab, .print-menu { display: none !important; }",
-        "body { background: #d8d8e4; }",
+        "html, body { height: auto !important; min-height: 0 !important; overflow: visible !important; }",
+        "body { background: #d8d8e4; margin: 0; padding: 0.5rem 0; }",
+        ".page { margin-left: auto; margin-right: auto; }",
       ].join("\n");
-      doc.head.appendChild(style);
     } catch {
       /* cross-origin should not happen (same-origin API) */
+    }
+  }
+
+  function sizeFrameToContent(iframe: HTMLIFrameElement) {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc?.body) return;
+      frameResizeObserver?.disconnect();
+      const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const apply = () => {
+        const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight, 1);
+        iframe.style.height = `${h / rootFs}rem`;
+      };
+      apply();
+      frameResizeObserver = new ResizeObserver(() => apply());
+      frameResizeObserver.observe(doc.body);
+      // Fonts / images may expand layout after first paint.
+      window.setTimeout(apply, 250);
+      window.setTimeout(apply, 1000);
+    } catch {
+      /* ignore */
     }
   }
 

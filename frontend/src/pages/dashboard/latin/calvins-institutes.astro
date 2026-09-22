@@ -60,6 +60,7 @@ import "../../../styles/institutes-workspace.css";
     type ParagraphIndexChapter,
     type ParagraphUnit,
   } from "../../../lib/calvinsInstitutes";
+  import { productTreeChevron, productTreeLabel, productTreeLeafIcon } from "../../../lib/product-tree";
   import { mustLog } from "../../../lib/dev-log";
   import { showErrorModal } from "../../../lib/error-modal";
   import { PREF_INSTITUTES_SIDEBAR, getPreference, putPreference } from "../../../lib/preferences";
@@ -151,7 +152,7 @@ import "../../../styles/institutes-workspace.css";
     statusBtn.type = "button";
     statusBtn.className = "product-tree__leaf";
     statusBtn.disabled = true;
-    statusBtn.textContent = "Loading…";
+    statusBtn.append(productTreeLeafIcon("hourglass_empty"), productTreeLabel("Loading…"));
     status.appendChild(statusBtn);
     ul.appendChild(status);
     try {
@@ -162,9 +163,9 @@ import "../../../styles/institutes-workspace.css";
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "product-tree__leaf";
-        btn.textContent = `¶${p.order}`;
         btn.dataset.leafKey = `${chapterKey(entry.book, entry.chapter)}::${p.order}`;
         btn.title = p.text.slice(0, 80);
+        btn.append(productTreeLeafIcon("notes"), productTreeLabel(`¶${p.order}`));
         btn.addEventListener("click", () => {
           void openParagraph(entry, p.order);
         });
@@ -177,7 +178,7 @@ import "../../../styles/institutes-workspace.css";
         emptyBtn.type = "button";
         emptyBtn.className = "product-tree__leaf";
         emptyBtn.disabled = true;
-        emptyBtn.textContent = "No paragraphs";
+        emptyBtn.append(productTreeLeafIcon("block"), productTreeLabel("No paragraphs"));
         empty.appendChild(emptyBtn);
         ul.appendChild(empty);
       }
@@ -202,7 +203,7 @@ import "../../../styles/institutes-workspace.css";
       bookDetails.open = group.book === "I";
       const bookSummary = document.createElement("summary");
       bookSummary.className = "product-tree__toggle";
-      bookSummary.textContent = `Liber ${group.book}`;
+      bookSummary.append(productTreeChevron(), productTreeLabel(`Liber ${group.book}`));
       bookDetails.appendChild(bookSummary);
       const chapterUl = document.createElement("ul");
 
@@ -211,8 +212,8 @@ import "../../../styles/institutes-workspace.css";
         const chapterDetails = document.createElement("details");
         const chapterSummary = document.createElement("summary");
         chapterSummary.className = "product-tree__toggle";
-        chapterSummary.textContent = chapterNavLabel(entry);
         chapterSummary.title = entry.heading || chapterNavLabel(entry);
+        chapterSummary.append(productTreeChevron(), productTreeLabel(chapterNavLabel(entry)));
         chapterDetails.appendChild(chapterSummary);
         const paraUl = document.createElement("ul");
         chapterDetails.addEventListener("toggle", () => {
