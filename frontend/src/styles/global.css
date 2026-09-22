@@ -1,4 +1,4 @@
-﻿ï»¿:root {
+﻿:root {
   --space-margin: 1rem;
   --space-padding: 1rem;
   --main-padding: 1rem;
@@ -1161,7 +1161,7 @@ h1 {
 }
 
 /*
- * Dedicated page H1 band Â height matches the activity bar:
+ * Dedicated page H1 band ÃÂÃÂ height matches the activity bar:
  * 1rem padding + menu-button-size + 1rem margin. First line aligns with the menu button.
  */
 .page-title {
@@ -1193,7 +1193,7 @@ h1 {
   }
 }
 
-/* Legacy a11y clip Â prefer .page-title; keep for any remaining callers. */
+/* Legacy a11y clip ÃÂÃÂ prefer .page-title; keep for any remaining callers. */
 .page-title-sr {
   position: absolute;
   width: 0.0625rem;
@@ -1896,7 +1896,7 @@ section.diag .panel:not(form) {
     --activity-start-size: 0rem;
     --activity-end-size: 0rem;
     --page-col-count: 24;
-    /* Columns 10Â15: six-col form centered on the 24-col desktop grid */
+    /* Columns 10ÃÂÃÂ15: six-col form centered on the 24-col desktop grid */
     --span-form: 6;
     --span-sidebar: 7;
     --span-modal: 8;
@@ -1905,7 +1905,7 @@ section.diag .panel:not(form) {
     --span-full: 24;
     --span-button: 2;
     --main-inline: 1rem;
-    /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2Ã menu) */
+    /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2ÃÂÃÂ menu) */
     --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
     --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
     --main-padding-top: var(--main-padding);
