@@ -1,6 +1,6 @@
 /**
  * Scrib — dashboard books + US Letter sheet workspace (canvas, no site footer).
- * Hub padding comes from .product-dash (spec 054); do not double-pad.
+ * Hub gutters come from main (--main-inline); .product-dash stays padding: 0.
  */
 
 /* Sheet editor fills main like eReport workspace; activity rails / trays stay outside. */

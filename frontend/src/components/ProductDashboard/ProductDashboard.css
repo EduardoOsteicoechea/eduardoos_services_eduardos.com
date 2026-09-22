@@ -6,7 +6,8 @@
 .product-dash {
   box-sizing: border-box;
   width: auto;
-  padding: var(--space-padding);
+  /* Gutters come from main (--main-inline / --main-padding); do not double-pad. */
+  padding: 0;
   color: var(--color-text);
 }
 
