@@ -1,0 +1,52 @@
+---
+description: Page chrome layout — H1 band + 1rem gutters (eduardoos.com)
+alwaysApply: true
+---
+
+# Page chrome layout (eduardoos.com)
+
+Applies to **eduardoos.com** only. Workspaces are excluded.
+
+## Gutters
+
+- **Non-workspace routes:** `main` horizontal padding is `--main-inline: 1rem` at every breakpoint. `padding-top: 0` when `.page-title` is present.
+- **Workspaces** (`ereport-workspace`, `ereport-invite`, `homescool-workspace`, `latin-institutes`, `scrib-sheet`): `main { padding: 0 }` — full-bleed. Do not reintroduce the global 1rem gutter on these pages.
+- Homescool / Institutes may still show `.page-title`; when the product tree is open, offset the title with `main:has(.product-workspace--tree-open) > .page-title { margin-left: var(--product-tree-width) }`.
+
+## H1 band (`.page-title`)
+
+`Layout` emits the first child of `main` as:
+
+```html
+<header class="page-title">
+  <h1 id="page-title" data-page-title data-title>…</h1>
+</header>
+```
+
+- **Height** = `--page-title-height` = `1rem` (`--space-padding`) + `--menu-button-size` + `1rem` (`--space-margin`).
+- First line of the H1 sits in the menu-button row (aligned with the activity menu control).
+- **Phone:** `.page-title` uses `padding-right: calc(var(--menu-button-size) + 1rem)` so the title clears the menu button.
+- **Homescool** uses the visible H1 band (`showPageTitle={true}`).
+- Full-bleed editors (eReport workspace iframe, Scrib sheet canvas) may omit the band when the route is a pure canvas; prefer the band when the route has a product name.
+- Do **not** also put a page H1 in the route body. Opt out only with `showPageTitle={false}` when the route truly has no title band.
+
+## Cards
+
+Dashboard / hub cards use **`.product-dash__card`** (and `__grid`, `__card-title`, `__card-desc`, `__card-head`), including Scrib sheet cards:
+
+- `padding: var(--space-padding)` (`1rem`)
+- `border-radius: var(--border-radius)` (brand layers may restyle surface color, not gutter width)
+- `gap: var(--space-padding)` / `var(--rail-gap)` as in `product-suite.css`
+
+Do not invent one-off card chrome with raw lateral padding larger than `1rem` on product hubs.
+
+## Workspaces (exceptions)
+
+Full-bleed editors keep their own layout: eReport workspace / invite editor canvas, Scrib sheet, Homescool student workspace. No `.page-title` band; no forced hub card grid.
+
+## Do not
+
+- Duplicate the Layout H1 inside product shells.
+- Set `--main-inline` above `1rem` on desktop.
+- Center hubs with `max-width` + `margin-inline: auto`.
+- Use `px` or `%` lengths for gutters or the title band.

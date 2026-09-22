@@ -58,6 +58,12 @@ body {
   position: relative;
 }
 
+/* Explicit orientation (portrait is the default Letter size above). */
+.page--portrait {
+  width: var(--page-width);
+  height: var(--page-height);
+}
+
 .page:last-child {
   page-break-after: auto;
   break-after: auto;

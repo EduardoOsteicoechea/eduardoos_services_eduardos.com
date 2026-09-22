@@ -5,7 +5,7 @@ import "../../styles/product-tree-sidebar.css";
 import "../../styles/homescool-workspace.css";
 ---
 
-<Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
+<Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={true} pageHeading="Homescool">
   <Fragment slot="dhs">
     <button
       class="dhs-action"
@@ -31,8 +31,6 @@ import "../../styles/homescool-workspace.css";
       Print
     </button>
   </Fragment>
-
-  <h1 class="page-title-sr">Homescool</h1>
 
   <div data-homescool-gate hidden class="product-gate">
     <p class="hint">Sign in with Homescool access to view study materials.</p>
@@ -226,7 +224,8 @@ import "../../styles/homescool-workspace.css";
   function prepareFrameDocument(iframe: HTMLIFrameElement) {
     try {
       const doc = iframe.contentDocument;
-      if (!doc?.head) return;
+      if (!doc?.head || !doc.body) return;
+      normalizeLetterSections(doc);
       let style = doc.getElementById("homescool-embed-chrome");
       if (!style) {
         style = doc.createElement("style");
@@ -242,6 +241,36 @@ import "../../styles/homescool-workspace.css";
     } catch {
       /* cross-origin should not happen (same-origin API) */
     }
+  }
+
+  /** Keep only US Letter `.page` sections; tag portrait vs landscape. */
+  function normalizeLetterSections(doc: Document) {
+    const pages = Array.from(doc.body.querySelectorAll<HTMLElement>(":scope > .page, .page"));
+    const unique: HTMLElement[] = [];
+    const seen = new Set<HTMLElement>();
+    for (const page of pages) {
+      if (seen.has(page)) continue;
+      // Prefer top-level pages; skip nested (should not exist).
+      if (page.parentElement?.closest(".page")) continue;
+      seen.add(page);
+      unique.push(page);
+    }
+    if (!unique.length) {
+      const wrap = doc.createElement("section");
+      wrap.className = "page page--portrait";
+      while (doc.body.firstChild) wrap.appendChild(doc.body.firstChild);
+      doc.body.appendChild(wrap);
+      return;
+    }
+    for (const page of unique) {
+      page.classList.add("page");
+      if (page.classList.contains("page--landscape")) {
+        page.classList.remove("page--portrait");
+      } else {
+        page.classList.add("page--portrait");
+      }
+    }
+    doc.body.replaceChildren(...unique);
   }
 
   function sizeFrameToContent(iframe: HTMLIFrameElement) {

@@ -11,7 +11,8 @@ alwaysApply: false
 - **Left tree** (togglable via DHS first action `Tree`): `ciclo → semana → día → materia → <title>`. Shared chrome: `.product-tree-sidebar` — **no padding**, fixed `top/bottom: 0` (full viewport height), width `--sidebar-width`. Same pattern as Calvin Institutes.
 - **Main stage** (right): material HTML in a **same-origin iframe** (`/api/homescool/materials/:id/html`). Do **not** inject `.page` into the shell DOM — site `global.css` also defines `.page` and breaks quiz/sheet layout.
 - **DHS Print**: call `iframe.contentWindow.StudyPrint.print()` (falls back to `iframe.contentWindow.print()`). Each study `.page` is one PDF page.
-- Sheet geometry is **not** rem chrome: US Letter **portrait** (`8.5in × 11in`) or **landscape** (`.page--landscape` / `body.sheets-landscape`). Padding **1cm** (`--page-padding-x/y` in study CSS).
+- Sheet geometry is **not** rem chrome: every material body is **only** `<section class="page page--portrait">` or `<section class="page page--landscape">` (plus activity modifiers like `page--quiz`). Padding **1cm**. The Homescool viewer normalizes loaded HTML to these sections before display.
+- **Workspaces** use `main { padding: 0 }` (no 1rem gutter). Homescool shows the Layout `.page-title` H1 band.
 
 ## Authoring CSS / components (reuse)
 

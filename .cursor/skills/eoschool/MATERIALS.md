@@ -10,9 +10,9 @@ Todo material eoschool / Homescool sigue este formato. No inventar otros tamaño
 
 ## Página
 
-- **Tamaño:** US Letter **portrait** (8.5 in × 11 in) o **landscape** (`.page.page--landscape` / `body.sheets-landscape`).
+- **Tamaño:** US Letter — cada hoja es `<section class="page page--portrait">` o `<section class="page page--landscape">` (más modificadores de actividad).
 - **Padding de hoja:** 1 cm (`--page-padding-x/y` en `styles.css`).
-- **Sesión:** una o varias hojas; cada hoja es `<section class="page">`.
+- **Sesión:** una o varias hojas; el body solo contiene secciones `.page`.
 - **Salida:** HTML que referencia `web_assets/styles.css` y `web_assets/print.js` con ruta relativa `../../../../web_assets/…` (el servidor la reescribe al desplegar).
 
 ## Estructura HTML mínima

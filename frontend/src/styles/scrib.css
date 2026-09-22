@@ -26,8 +26,8 @@ html[data-page="scrib-sheet"] main {
   display: flex;
   flex-direction: column;
   gap: 0;
-  /* Keep top/inline chrome offsets from global.css; no footer gutter. */
-  padding-bottom: 0;
+  padding: 0;
+}
   overflow: hidden;
 }
 

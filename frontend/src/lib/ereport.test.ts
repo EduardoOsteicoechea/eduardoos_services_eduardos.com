@@ -37,10 +37,10 @@ describe("eReport public invite routing", () => {
   it("bleeds the workspace to the header with no extra main padding", () => {
     const css = readFileSync(join(here, "../styles/global.css"), "utf8");
     expect(css).toMatch(
-      /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: 0;/,
+      /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main,\s*html\[data-page="homescool-workspace"\] main[\s\S]*?\{[\s\S]*?padding: 0;/,
     );
     expect(css).toMatch(/html\[data-page="ereport-workspace"\] \.ereport-workspace \{\s*position: relative;\s*gap: 0;/);
-    expect(css).toMatch(
+    expect(css).not.toMatch(
       /html\[data-page="ereport-workspace"\] main,\s*html\[data-page="ereport-invite"\] main \{[\s\S]*?padding: var\(--main-padding\) var\(--space-padding\) 0 var\(--space-padding\);/,
     );
   });

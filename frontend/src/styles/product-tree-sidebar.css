@@ -37,13 +37,11 @@
 
 .product-workspace--tree-open .product-workspace__main {
   margin-left: var(--product-tree-width);
-  padding-inline: var(--main-inline);
-  padding-bottom: var(--space-padding);
+  padding: 0;
 }
 
 .product-workspace:not(.product-workspace--tree-open) .product-workspace__main {
-  padding-inline: var(--main-inline);
-  padding-bottom: var(--space-padding);
+  padding: 0;
 }
 
 .product-workspace__main {

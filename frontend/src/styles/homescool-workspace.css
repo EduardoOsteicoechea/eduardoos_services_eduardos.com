@@ -1,4 +1,8 @@
-/* Homescool workspace — sheets in iframe; tree uses shared product-tree-sidebar. */
+/* Homescool workspace — full-bleed stage; sheets in iframe as US Letter sections. */
+
+.homescool-workspace {
+  min-height: calc(100% - var(--page-title-height, 0rem));
+}
 
 .homescool-workspace__stage {
   flex: 1 1 auto;
@@ -6,14 +10,15 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: var(--space-padding);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-bg);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #d8d8e4;
 }
 
 .homescool-workspace__stage-empty {
-  margin: 0;
+  margin: var(--space-padding);
   font-size: var(--font-size-sm);
   color: var(--color-muted);
 }
@@ -25,7 +30,11 @@
   height: auto;
   border: 0;
   background: #d8d8e4;
-  /* Height set in rem from content so all .page sheets stack and the stage scrolls. */
+}
+
+.product-workspace__status {
+  margin: 0;
+  padding: var(--control-padding-block) var(--space-padding);
 }
 
 @media print {
@@ -37,6 +46,7 @@
   #agent-sidebar,
   .product-tree-sidebar,
   .product-workspace__status,
+  .page-title,
   .error-modal-overlay,
   [data-homescool-gate] {
     display: none !important;
