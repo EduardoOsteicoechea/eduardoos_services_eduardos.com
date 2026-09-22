@@ -65,9 +65,15 @@
   --z-activity: 20;
   --z-collapse: 30;
   --z-modal: 40;
-  --font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-family-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  --font-family-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Half-gap on each nav/DHS row so section backgrounds meet at the midpoint. */
+  --sidebar-row-margin: calc(var(--rail-gap) * 0.5);
+  /* Toolbar band below tray top padding: control + pad + border + flex gap to nav. */
+  --sidebar-toolbar-band: calc(
+    var(--rail-button-size) + var(--rail-gap) + var(--border-width) + var(--rail-gap)
+  );
+  --font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-family-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-family-ui: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --color-bg: #0b0b0c;
   --color-surface: #141416;
   --color-text: #f4f4f5;
@@ -302,17 +308,14 @@ a {
 }
 
 .sidebar-nav-label {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  color: var(--color-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05rem;
+  display: none;
 }
 
 .sidebar-nav-section--services,
-.sidebar-nav-section--admin {
-  border-top: var(--border-width) solid var(--color-border);
-  padding-top: var(--rail-gap);
+.sidebar-nav-section--admin,
+.sidebar-nav-section--session {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .sidebar-left[hidden],
@@ -325,14 +328,19 @@ a {
 
 #dynamic-header {
   overflow-y: auto;
+  gap: 0;
 }
 
-/* Route actions: icon left, label right, title tooltip */
+/* Route actions: same row geometry as main-menu nav links */
 .dhs-action {
   display: flex;
   align-items: center;
   gap: var(--rail-gap);
-  padding: calc(var(--rail-gap) * 0.25) 0;
+  box-sizing: border-box;
+  min-height: var(--rail-button-size);
+  margin-block: var(--sidebar-row-margin);
+  padding-block: 0;
+  padding-inline: 0;
   font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 400;
@@ -412,11 +420,14 @@ a {
   align-items: center;
   gap: var(--rail-gap);
   justify-content: flex-start;
+  box-sizing: border-box;
   width: auto;
   min-width: 0;
+  min-height: var(--rail-button-size);
   height: auto;
-  min-height: 0;
-  padding: calc(var(--rail-gap) * 0.25) 0;
+  margin-block: var(--sidebar-row-margin);
+  padding-block: 0;
+  padding-inline: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -478,7 +489,12 @@ a {
 #dynamic-header .scrib-stroke-widget {
   font-size: var(--font-size-sm);
   color: var(--color-muted);
-  padding: calc(var(--rail-gap) * 0.25) 0;
+  box-sizing: border-box;
+  min-height: var(--rail-button-size);
+  margin-block: var(--sidebar-row-margin);
+  padding-block: 0;
+  display: flex;
+  align-items: center;
 }
 
 .material-symbols-outlined {
@@ -499,9 +515,16 @@ a {
   overflow: hidden;
 }
 
-/* Main menu (toolbar + nav) stacks above DHS and agent trays when they dock beside it. */
+/* Main menu stacks above DHS/agent; overflow visible so the toolbar can span beside it. */
 #main-menu {
   z-index: calc(var(--z-sidebar) + 1);
+  overflow: visible;
+}
+
+/* When menu is open, docked trays clear the shared toolbar band so rows align. */
+#main-menu:not([hidden]) ~ #dynamic-header:not([hidden]),
+#main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
+  padding-top: calc(var(--space-padding) + var(--sidebar-toolbar-band));
 }
 
 .tray-backdrop {
@@ -522,9 +545,45 @@ a {
 .sidebar-toolbar {
   display: flex;
   gap: var(--rail-gap);
-  margin: 0 0 var(--rail-gap);
+  position: relative;
+  z-index: calc(var(--z-sidebar) + 2);
+  flex-shrink: 0;
+  margin: 0;
   padding: 0 0 var(--rail-gap);
   border-bottom: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+}
+
+/* Paint the toolbar band across docked DHS / agent columns (controls stay left). */
+#main-menu .sidebar-toolbar::after {
+  content: none;
+}
+
+#main-menu:has(~ #dynamic-header:not([hidden])):not(:has(~ #agent-sidebar:not([hidden]))) .sidebar-toolbar::after,
+#main-menu:has(~ #agent-sidebar:not([hidden])):not(:has(~ #dynamic-header:not([hidden]))) .sidebar-toolbar::after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--space-padding));
+  bottom: 0;
+  left: 100%;
+  width: calc(var(--space-padding) + var(--sidebar-width));
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+#main-menu:has(~ #dynamic-header:not([hidden])):has(~ #agent-sidebar:not([hidden])) .sidebar-toolbar::after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--space-padding));
+  bottom: 0;
+  left: 100%;
+  width: calc(var(--space-padding) + var(--sidebar-width) * 2);
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
 .sidebar-toolbar .icon-btn {
@@ -583,22 +642,37 @@ a {
 
 .sidebar-left nav {
   flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--rail-gap) * 1.5);
+  gap: 0;
 }
 
 .sidebar-nav-section {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--rail-gap) * 1.5);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Alternate section bands (no heading labels). Odd = tinted. */
+.sidebar-nav-section--site,
+.sidebar-nav-section--subscriptions,
+.sidebar-nav-section--session,
+.sidebar-nav-section--routes:nth-child(odd) {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+
+.sidebar-nav-section--services,
+.sidebar-nav-section--admin {
+  background: transparent;
 }
 
 .sidebar-nav-section--session {
   margin-top: 0;
-  padding-top: var(--rail-gap);
-  border-top: var(--border-width) solid var(--color-border);
 }
 
 .sidebar-left nav a,
@@ -606,7 +680,11 @@ a {
   display: flex;
   align-items: center;
   gap: var(--rail-gap);
-  padding: calc(var(--rail-gap) * 0.25) 0;
+  box-sizing: border-box;
+  min-height: var(--rail-button-size);
+  margin-block: var(--sidebar-row-margin);
+  padding-block: 0;
+  padding-inline: 0;
   font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 400;
@@ -1697,7 +1775,7 @@ section.diag .panel:not(form) {
   main > .session-grid,
   main > section.diag,
   main > form {
-    grid-column: 5 / span var(--span-form);
+    grid-column: 1 / span var(--span-form);
   }
 
   .session-grid form,
@@ -1780,7 +1858,7 @@ section.diag .panel:not(form) {
   main > .session-grid,
   main > section.diag,
   main > form {
-    grid-column: 10 / span var(--span-form);
+    grid-column: 1 / span var(--span-form);
   }
 
   .session-grid form,

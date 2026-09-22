@@ -134,6 +134,7 @@ const jsonLdString =
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title>{documentTitle}</title>
     {jsonLdString ? <script type="application/ld+json" set:html={jsonLdString} /> : null}
@@ -192,7 +193,6 @@ const jsonLdString =
         </header>
         <nav aria-label="Primary">
           <div class="sidebar-nav-section sidebar-nav-section--site">
-            <p class="sidebar-nav-label">Eduardoos</p>
             <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">home</span>
               Home
@@ -203,7 +203,6 @@ const jsonLdString =
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
-            <p class="sidebar-nav-label">Services</p>
             <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">article</span>
               Articles
@@ -252,14 +251,12 @@ const jsonLdString =
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--subscriptions">
-            <p class="sidebar-nav-label">Subscriptions</p>
             <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">payments</span>
               Subscriptions
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--admin" data-admin-only hidden>
-            <p class="sidebar-nav-label">Admin</p>
             <a href="/admin/users" data-route aria-current={path === "/admin/users" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">group</span>
               Users
