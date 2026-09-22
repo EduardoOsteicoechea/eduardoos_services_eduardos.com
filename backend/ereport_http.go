@@ -429,6 +429,13 @@ func (a *App) ereportGetReportHandler(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
+	// Heal payloads that were previously saved with invite-session/shared image URLs.
+	if ereportPayloadHasTransientImageURLs(payload) {
+		payload = canonicalizeEreportPayload(payload, meta.OrgID, meta.ID)
+		_ = a.ereport.saveReport(user.ID, meta, payload)
+	} else {
+		payload = canonicalizeEreportPayload(payload, meta.OrgID, meta.ID)
+	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"meta":     meta,
 		"payload":  payload,
@@ -464,7 +471,7 @@ func (a *App) ereportPutReportHandler(w http.ResponseWriter, r *http.Request) {
 		meta.Tema = tema
 	}
 	if body.Payload != nil {
-		payload = body.Payload
+		payload = canonicalizeEreportPayload(body.Payload, meta.OrgID, meta.ID)
 		if n, ok := payload["reportNumber"].(string); ok {
 			meta.ReportNumber = n
 		}

@@ -312,6 +312,75 @@ func extractEreportImageID(raw string) string {
 	return ""
 }
 
+// ownerEreportImageURL is the durable URL stored on disk. Invite/shared session
+// URLs are display-only and must never be persisted (they break the owner view).
+func ownerEreportImageURL(orgID, reportID, imageID string) string {
+	return "/api/ereport/orgs/" + orgID + "/reports/" + reportID + "/images/" + imageID
+}
+
+func canonicalizeEreportImageURLs(v any, orgID, reportID string) any {
+	switch t := v.(type) {
+	case map[string]any:
+		out := make(map[string]any, len(t))
+		for k, val := range t {
+			if k == "url" {
+				if s, ok := val.(string); ok {
+					if id := extractEreportImageID(s); id != "" {
+						out[k] = ownerEreportImageURL(orgID, reportID, id)
+						continue
+					}
+				}
+			}
+			out[k] = canonicalizeEreportImageURLs(val, orgID, reportID)
+		}
+		return out
+	case []any:
+		out := make([]any, len(t))
+		for i, item := range t {
+			out[i] = canonicalizeEreportImageURLs(item, orgID, reportID)
+		}
+		return out
+	default:
+		return v
+	}
+}
+
+func canonicalizeEreportPayload(payload map[string]any, orgID, reportID string) map[string]any {
+	if payload == nil {
+		return nil
+	}
+	out, _ := canonicalizeEreportImageURLs(payload, orgID, reportID).(map[string]any)
+	if out == nil {
+		return payload
+	}
+	return out
+}
+
+func ereportPayloadHasTransientImageURLs(v any) bool {
+	switch t := v.(type) {
+	case map[string]any:
+		for k, val := range t {
+			if k == "url" {
+				if s, ok := val.(string); ok {
+					if strings.Contains(s, "/invite-session/") || strings.Contains(s, "/ereport/shared/") || strings.Contains(s, "/ereport/invites/") {
+						return true
+					}
+				}
+			}
+			if ereportPayloadHasTransientImageURLs(val) {
+				return true
+			}
+		}
+	case []any:
+		for _, item := range t {
+			if ereportPayloadHasTransientImageURLs(item) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (a *App) loadInviteWithSecret(w http.ResponseWriter, r *http.Request) (ereportInvite, bool) {
 	inv, _, ok := a.loadInviteWithSecretValue(w, r)
 	return inv, ok
@@ -658,13 +727,19 @@ func (a *App) ereportInvitePutReportHandler(w http.ResponseWriter, r *http.Reque
 		meta.ReportDate = d
 	}
 	meta.UpdatedAt = nowRFC3339()
-	if err := a.ereport.saveReport(inv.OwnerUserID, meta, body.Payload); err != nil {
+	// Persist owner URLs only — invite-session/shared display URLs break the owner view.
+	payload := canonicalizeEreportPayload(body.Payload, meta.OrgID, reportID)
+	if err := a.ereport.saveReport(inv.OwnerUserID, meta, payload); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	a.touchLibrary(inv.OwnerUserID, meta)
 	a.auditEvent(r, "ereport_invite_save", "ok", "")
-	writeJSON(w, http.StatusOK, map[string]any{"meta": meta, "payload": body.Payload})
+	rewritten, _ := rewriteInviteSessionImageURLs(payload, reportID).(map[string]any)
+	if rewritten == nil {
+		rewritten = payload
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"meta": meta, "payload": rewritten})
 }
 
 func (a *App) issueBoundOTP(purpose, emailNorm, bindID string) (string, error) {

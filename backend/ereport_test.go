@@ -449,6 +449,46 @@ func TestEreportOrgInviteOTPAndTrackerSession(t *testing.T) {
 	}
 }
 
+func TestCanonicalizeEreportImageURLs(t *testing.T) {
+	orgID := "orgabcd12"
+	reportID := "repabcd12"
+	payload := map[string]any{
+		"sections": []any{
+			map[string]any{
+				"items": []any{
+					map[string]any{
+						"imagesIncidencia": []any{
+							map[string]any{
+								"id":  "imgabcd12",
+								"url": "/api/ereport/invite-session/reports/" + reportID + "/images/imgabcd12",
+							},
+							map[string]any{
+								"id":  "imgabcd34",
+								"url": "/api/ereport/shared/orgs/" + orgID + "/reports/" + reportID + "/images/imgabcd34",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	if !ereportPayloadHasTransientImageURLs(payload) {
+		t.Fatal("expected transient urls")
+	}
+	fixed := canonicalizeEreportPayload(payload, orgID, reportID)
+	if ereportPayloadHasTransientImageURLs(fixed) {
+		t.Fatalf("still transient: %#v", fixed)
+	}
+	want1 := ownerEreportImageURL(orgID, reportID, "imgabcd12")
+	want2 := ownerEreportImageURL(orgID, reportID, "imgabcd34")
+	sec := fixed["sections"].([]any)[0].(map[string]any)
+	item := sec["items"].([]any)[0].(map[string]any)
+	imgs := item["imagesIncidencia"].([]any)
+	if imgs[0].(map[string]any)["url"] != want1 || imgs[1].(map[string]any)["url"] != want2 {
+		t.Fatalf("canonical urls: %#v", imgs)
+	}
+}
+
 func TestEreportInviteExpired(t *testing.T) {
 	app := newTestApp(false)
 	inv := ereportInvite{

@@ -378,13 +378,18 @@ func (a *App) ereportPutSharedReportHandler(w http.ResponseWriter, r *http.Reque
 		meta.ReportDate = d
 	}
 	meta.UpdatedAt = nowRFC3339()
-	if err := a.ereport.saveReport(share.OwnerUserID, meta, body.Payload); err != nil {
+	payload := canonicalizeEreportPayload(body.Payload, meta.OrgID, reportID)
+	if err := a.ereport.saveReport(share.OwnerUserID, meta, payload); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	a.touchLibrary(share.OwnerUserID, meta)
 	a.auditEvent(r, "ereport_shared_save", "ok", user.ID)
-	writeJSON(w, http.StatusOK, map[string]any{"meta": meta, "payload": body.Payload})
+	rewritten, _ := rewriteSharedImageURLs(payload, orgID, reportID).(map[string]any)
+	if rewritten == nil {
+		rewritten = payload
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"meta": meta, "payload": rewritten})
 }
 
 func (a *App) ereportSharedUploadImageHandler(w http.ResponseWriter, r *http.Request) {
