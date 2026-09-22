@@ -531,6 +531,42 @@ html[data-page="ereport"] .ereport-hub.product-dash {
   box-shadow: none;
 }
 
+/* Keep raw dashboard markup off-screen until session, access and data settle. */
+html[data-page="ereport"] .ereport-hub:not([data-ereport-ready]) > :not([data-ereport-loading]) {
+  visibility: hidden;
+}
+
+html[data-page="ereport"] .ereport-hub__loading {
+  flex: 1;
+  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+html[data-page="ereport"] .ereport-hub__loading[hidden] {
+  display: none;
+}
+
+html[data-page="ereport"] .ereport-hub__loading-ring {
+  width: var(--button-size);
+  height: var(--button-size);
+  border: var(--border-width) solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: ereport-hub-loading-spin 0.95s linear infinite;
+}
+
+@keyframes ereport-hub-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 html[data-page="ereport"] .ereport-hub > h1 {
   margin: 0;
   font-size: var(--font-size-xl);

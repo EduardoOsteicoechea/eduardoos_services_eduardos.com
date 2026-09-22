@@ -49,7 +49,11 @@ import Layout from "../../layouts/Layout.astro";
     </button>
   </Fragment>
 
-  <section class="product-dash ereport-hub" data-ereport-hub>
+  <section class="product-dash ereport-hub" data-ereport-hub aria-busy="true">
+    <div class="ereport-hub__loading" data-ereport-loading role="status" aria-live="polite">
+      <span class="ereport-hub__loading-ring" aria-hidden="true"></span>
+      Loading eReport…
+    </div>
     <p class="status" data-banner>Loading session…</p>
     <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open your eReport hub.
@@ -756,27 +760,35 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
-    void requireAuth(root, copy).then(async (me) => {
-      if (!me) return;
-      const gate = root.querySelector("[data-subscription-gate]");
-      const panel = root.querySelector("[data-authed-panel]");
-      const access = await requireService("ereport");
-      if (!access.access.allowed) {
-        setHidden(gate, false);
-        setHidden(panel, true);
-        setBanner(root, "eReport subscription required.", "err");
-        return;
-      }
-      setHidden(gate, true);
-      setHidden(panel, false);
-      setBanner(root, "");
+    void (async () => {
       try {
-        await reload();
-      } catch {
-        setBanner(root, copy.loadError, "err");
+        const me = await requireAuth(root, copy);
+        if (!me) return;
+        const gate = root.querySelector("[data-subscription-gate]");
+        const panel = root.querySelector("[data-authed-panel]");
+        const access = await requireService("ereport");
+        if (!access.access.allowed) {
+          setHidden(gate, false);
+          setHidden(panel, true);
+          setBanner(root, "eReport subscription required.", "err");
+          return;
+        }
+        setHidden(gate, true);
+        setHidden(panel, false);
+        setBanner(root, "");
+        try {
+          await reload();
+        } catch {
+          setBanner(root, copy.loadError, "err");
+        }
+        setView(new URLSearchParams(window.location.search).get("view") || "dashboard");
+      } finally {
+        root.dataset.ereportReady = "true";
+        root.setAttribute("aria-busy", "false");
+        const loading = root.querySelector("[data-ereport-loading]");
+        if (loading instanceof HTMLElement) loading.hidden = true;
       }
-      setView(new URLSearchParams(window.location.search).get("view") || "dashboard");
-    });
+    })();
 
     document.addEventListener("click", (event) => {
       const node = event.target;
