@@ -1,5 +1,4 @@
 ---
-import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
 
 export function getStaticPaths() {
@@ -9,59 +8,11 @@ export function getStaticPaths() {
 const cycle = Number.parseInt(Astro.params.cycle ?? "0", 10);
 ---
 
-<Layout title={`Homescool · Ciclo ${cycle}`} description="Homescool cycle materials." page="homescool-cycle" robots="noindex,nofollow">
-  <Fragment slot="dhs">
-    <a class="dhs-action" href="/homescool" data-route title="Hub" aria-label="Hub">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">home</span></span>
-      Hub
-    </a>
-  </Fragment>
-
-  <section class="product-dash" data-homescool-cycle data-cycle={String(cycle)}>
-    <p class="status" data-banner>Loading…</p>
-    <ul class="product-list" data-list hidden></ul>
-  </section>
+<Layout title={`Homescool · Ciclo ${cycle}`} description="Opens in Homescool workspace." page="homescool-cycle" robots="noindex,nofollow">
+  <h1 class="page-title-sr">Ciclo {cycle}</h1>
+  <p class="status">Opening workspace…</p>
 </Layout>
 
 <script>
-  import { requireService, setHidden } from "../../../lib/productGate";
-  import { fetchHomescoolMaterials } from "../../../lib/homescool";
-  import { showErrorModal } from "../../../lib/error-modal";
-
-  const root = document.querySelector("[data-homescool-cycle]");
-  const banner = root?.querySelector("[data-banner]");
-  const list = root?.querySelector("[data-list]");
-  const cycle = Number.parseInt(root?.getAttribute("data-cycle") || "0", 10);
-
-  const teacher = await requireService("homescool", { requireSubscription: true });
-  const ok = teacher.sessionOk && teacher.access.allowed;
-  if (!ok) {
-    if (banner instanceof HTMLElement) banner.textContent = "Sign in with Homescool access required.";
-  } else {
-    const res = await fetchHomescoolMaterials(cycle);
-    if (res.error) {
-      showErrorModal({ message: res.error, requestId: res.requestId, details: res.requestId ? `request_id=${res.requestId}` : "" });
-      if (banner instanceof HTMLElement) banner.textContent = res.error;
-    } else if (!res.materials.length) {
-      if (banner instanceof HTMLElement) banner.textContent = `Ciclo ${cycle} — sin materiales aún.`;
-    } else {
-      if (banner instanceof HTMLElement) banner.textContent = `Ciclo ${cycle} · ${res.materials.length} material(es)`;
-      setHidden(list, false);
-      if (list instanceof HTMLElement) {
-        list.replaceChildren();
-        const sorted = [...res.materials].sort((a, b) =>
-          a.week - b.week || a.subject.localeCompare(b.subject) || a.day - b.day || a.title.localeCompare(b.title),
-        );
-        for (const m of sorted) {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.href = `/homescool/material?id=${encodeURIComponent(m.id)}`;
-          a.setAttribute("data-route", "");
-          a.textContent = `S${m.week} · ${m.subject} · día ${m.day} — ${m.title}`;
-          li.append(a);
-          list.append(li);
-        }
-      }
-    }
-  }
+  window.location.replace("/homescool");
 </script>

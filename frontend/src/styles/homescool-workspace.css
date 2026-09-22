@@ -1,0 +1,178 @@
+/* Homescool workspace chrome (rem tokens). Sheet geometry lives in study CSS (in/cm). */
+
+.homescool-workspace {
+  grid-column: 1 / span var(--span-full);
+  display: flex;
+  flex-direction: row;
+  gap: var(--rail-gap);
+  align-items: stretch;
+  min-height: calc(40rem);
+  min-width: 0;
+}
+
+.homescool-workspace__tree {
+  flex: 0 0 16rem;
+  max-width: 16rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  overflow: auto;
+}
+
+.homescool-workspace:not(.homescool-workspace--tree-open) .homescool-workspace__tree {
+  display: none;
+}
+
+.homescool-workspace__tree-title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+  color: var(--color-text);
+}
+
+.homescool-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.homescool-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.homescool-tree__toggle,
+.homescool-tree__leaf {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  width: auto;
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  text-align: start;
+  cursor: pointer;
+}
+
+.homescool-tree__toggle:hover,
+.homescool-tree__leaf:hover,
+.homescool-tree__toggle:focus-visible,
+.homescool-tree__leaf:focus-visible {
+  color: var(--color-accent);
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: 0.0625rem;
+}
+
+.homescool-tree__leaf[aria-current="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.homescool-tree__chevron {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.homescool-workspace__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.homescool-workspace__status {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.homescool-workspace__stage {
+  flex: 1 1 auto;
+  min-height: 20rem;
+  overflow: auto;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+.homescool-workspace__stage-empty {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.homescool-sheet-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-padding);
+}
+
+/* Screen preview: sheets from study CSS; scale gently on narrow main */
+.homescool-sheet-root .page {
+  margin-bottom: 0;
+}
+
+@media print {
+  .app-header,
+  .sidebar-left,
+  .sidebar-right,
+  #main-menu,
+  #dynamic-header,
+  #agent-sidebar,
+  .homescool-workspace__tree,
+  .homescool-workspace__status,
+  .error-modal-overlay,
+  [data-homescool-gate] {
+    display: none !important;
+  }
+
+  .shell,
+  main,
+  .homescool-workspace,
+  .homescool-workspace__main,
+  .homescool-workspace__stage {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .homescool-sheet-root {
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .homescool-sheet-root .page {
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+}

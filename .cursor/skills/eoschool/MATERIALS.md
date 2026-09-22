@@ -1,10 +1,17 @@
-# Materiales de estudio — US Letter portrait
+# Materiales de estudio — US Letter
 
 Todo material eoschool / Homescool sigue este formato. No inventar otros tamaños ni sistemas de quiz.
 
+## Workspace UI (`/homescool`)
+
+- Árbol izquierdo (DHS **Tree**): `ciclo → semana → día → materia → <título>`.
+- Panel derecho: secciones `.page` del material (preview).
+- DHS **Print**: PDF de todas las `.page` (el chrome se oculta en `@media print`).
+
 ## Página
 
-- **Tamaño:** US Letter portrait (8.5 in × 11 in).
+- **Tamaño:** US Letter **portrait** (8.5 in × 11 in) o **landscape** (`.page.page--landscape` / `body.sheets-landscape`).
+- **Padding de hoja:** 1 cm (`--page-padding-x/y` en `styles.css`).
 - **Sesión:** una o varias hojas; cada hoja es `<section class="page">`.
 - **Salida:** HTML que referencia `web_assets/styles.css` y `web_assets/print.js` con ruta relativa `../../../../web_assets/…` (el servidor la reescribe al desplegar).
 
@@ -15,8 +22,8 @@ Ver [TEMPLATES.md](TEMPLATES.md).
 ## Impresión
 
 - No usar `vw` / `vh` / `%` del body para layout de hoja.
-- Usar `in`, `pt` y clases de `styles.css`; `@page { size: letter portrait; margin: 0; }`.
-- Cada `.page` tiene dimensiones fijas; `print.js` monta «Imprimir hoja».
+- Usar `in`, `pt`, `cm` y clases de `styles.css`; `@page { size: letter; margin: 0; }`.
+- Cada `.page` = una página PDF. En la app, imprimir vía DHS Print (no depender del print bar inyectado).
 
 ## Convención de paths / naming
 

@@ -1,0 +1,48 @@
+---
+description: Homescool / eoschool study material formats, UI workspace, and reusable sheet components
+globs: eduardoos.com/frontend/src/pages/homescool/**/*,eduardoos.com/frontend/src/styles/homescool-workspace.css,eduardoos.com/frontend/src/lib/homescool*.ts,eduardoos.com/backend/homescool_materials*,eduardoos-eoschool-connector/**/*,eoschool/skill/eoschool/**/*,elias/web_assets/**/*,elias/ciclo*/**/*
+alwaysApply: false
+---
+
+# Homescool materials (study sheets)
+
+## Product UI (`/homescool`)
+
+- **Left tree** (togglable via DHS first action `Tree`): `ciclo → semana → día → materia → <title>`.
+- **Main stage** (right): selected material’s `.page` sections only.
+- **DHS Print**: `window.print()` — print CSS hides shell/tree; each `.page` is one PDF page.
+- Sheet geometry is **not** rem chrome: US Letter **portrait** (`8.5in × 11in`) or **landscape** (`.page--landscape` / `body.sheets-landscape`). Padding **1cm** (`--page-padding-x/y` in study CSS).
+
+## Authoring CSS / components (reuse)
+
+Canonical stylesheet: `elias/web_assets/styles.css` (served as Homescool `web_assets`). Skill copy: `.eoschool/skill/eoschool/MATERIALS.md` / `TEMPLATES.md`.
+
+| Pattern | Classes | Notes |
+| --- | --- | --- |
+| Portrait page | `.page` | One print page; `page-break-after: always` |
+| Landscape page | `.page.page--landscape` | Letter landscape |
+| Quiz page | `.page.page--quiz` | Body: `.quiz-section` + `.quiz.quiz--grid3` |
+| Class / lesson page | `.page.page--class` | `.lesson` / `.lesson-section` / `.lesson-text` |
+| Checklist page | `.page.page--checklist` | `.checklist-section` + `.checklist` (+ `--grid2` / `--grid3`) |
+| Map / board page | `.page.page--map` | `.map-grid`, `.map-grid__board`, `.map-body`; JS `map-grid.js` when needed |
+| Header | `.sheet-header` (+ `--compact`), `.meta`, `.student-line` | Title + cycle line |
+| Footer | `.sheet-footer` | Page chrome footer |
+| Quiz item | `.question`, `.q-num`, `.options`, `.option`, `.opt-key`, `.opt-text` | Never bubble-only options; prefer 12 Q in 3×4 |
+| Checklist item | `.checklist__item`, `.checklist__box`, `.checklist__text` | Optional `.checklist-group` |
+| Tip block | `.lesson-section--tip` | Callout inside lesson |
+
+When adding a new activity pattern (matching, map grid variant, etc.):
+
+1. Add reusable classes to study `styles.css` (not one-off page CSS).
+2. Document the row in this table **and** in `MATERIALS.md`.
+3. Keep chrome (`homescool-workspace.css`) rem-only; sheets keep `in`/`pt`/`cm`.
+
+## API / agent
+
+- Docs-first: `GET /api/v1/docs` then `POST /api/v1/homescool/materials` with API key (`api` + `homescool`).
+- HTML must use relative `../../../../web_assets/…`; server rewrites to `/api/homescool/web-assets/…`.
+
+## Rem chrome vs sheet units
+
+- Workspace chrome (tree, stage frame, DHS): rem tokens only (`homescool-workspace.css`).
+- Inside `.page`: `in` / `pt` / `cm` allowed for print-faithful US Letter (study CSS exception).

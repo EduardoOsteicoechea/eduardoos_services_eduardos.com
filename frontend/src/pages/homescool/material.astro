@@ -2,63 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="Homescool material" description="Homescool study sheet viewer." page="homescool-material" robots="noindex,nofollow">
-  <Fragment slot="dhs">
-    <a class="dhs-action" href="/homescool" data-route title="Hub" aria-label="Hub">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">home</span></span>
-      Hub
-    </a>
-  </Fragment>
-
-  <section class="product-dash" data-homescool-material>
-    <p class="status" data-banner>Loading…</p>
-    <p class="hint" data-meta hidden></p>
-    <iframe class="homescool-material-frame" data-frame title="Study material" hidden></iframe>
-  </section>
+<Layout title="Homescool material" description="Opens in Homescool workspace." page="homescool-material" robots="noindex,nofollow">
+  <h1 class="page-title-sr">Material</h1>
+  <p class="status">Opening workspace…</p>
 </Layout>
 
-<style is:global>
-  .homescool-material-frame {
-    width: 48rem;
-    min-height: 40rem;
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius);
-    background: var(--color-surface);
-  }
-</style>
-
 <script>
-  import { requireService, setHidden } from "../../lib/productGate";
-  import { fetchHomescoolMaterial } from "../../lib/homescool";
-  import { showErrorModal } from "../../lib/error-modal";
-
-  const root = document.querySelector("[data-homescool-material]");
-  const banner = root?.querySelector("[data-banner]");
-  const meta = root?.querySelector("[data-meta]");
-  const frame = root?.querySelector("[data-frame]");
   const id = new URLSearchParams(window.location.search).get("id") || "";
-
-  const teacher = await requireService("homescool", { requireSubscription: true });
-  const ok = teacher.sessionOk && teacher.access.allowed;
-
-  if (!id || !ok) {
-    if (banner instanceof HTMLElement) banner.textContent = !id ? "Missing material." : "Access required.";
-  } else {
-    const res = await fetchHomescoolMaterial(id);
-    if (res.error || !res.material) {
-      showErrorModal({ message: res.error || "Not found.", requestId: res.requestId, details: res.requestId ? `request_id=${res.requestId}` : "" });
-      if (banner instanceof HTMLElement) banner.textContent = res.error || "Not found.";
-    } else {
-      const m = res.material;
-      if (banner instanceof HTMLElement) banner.textContent = m.title;
-      if (meta instanceof HTMLElement) {
-        meta.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · ${m.subject} · Día ${m.day}` + (m.sessionDate ? ` · ${m.sessionDate}` : "");
-        setHidden(meta, false);
-      }
-      if (frame instanceof HTMLIFrameElement && res.htmlUrl) {
-        frame.src = res.htmlUrl;
-        setHidden(frame, false);
-      }
-    }
-  }
+  const target = id ? `/homescool?material=${encodeURIComponent(id)}` : "/homescool";
+  window.location.replace(target);
 </script>

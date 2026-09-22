@@ -1,118 +1,233 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/homescool-workspace.css";
 ---
 
-<Layout title="Homescool" description="Homescool study materials by cycle." page="homescool" robots="noindex,nofollow">
+<Layout title="Homescool" description="Homescool study materials workspace." page="homescool" robots="noindex,nofollow">
   <Fragment slot="dhs">
-    <a class="dhs-action" href="/homescool/ciclo/3" data-route title="Ciclo 3" aria-label="Ciclo 3">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">menu_book</span></span>
-      Ciclo 3
-    </a>
-    <a class="dhs-action" href="/homescool/learning" data-route title="Learning" aria-label="Learning">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
-      Learning
-    </a>
-    <a class="dhs-action" href="/homescool/students" data-route title="Students" aria-label="Students">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">group</span></span>
-      Students
-    </a>
+    <button
+      class="dhs-action"
+      type="button"
+      data-homescool-tree-toggle
+      title="Toggle materials tree"
+      aria-label="Toggle materials tree"
+      aria-pressed="true"
+      aria-controls="homescool-tree"
+    >
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">account_tree</span></span>
+      Tree
+    </button>
+    <button
+      class="dhs-action"
+      type="button"
+      data-homescool-print
+      title="Print current material as PDF"
+      aria-label="Print current material as PDF"
+      disabled
+    >
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
+      Print
+    </button>
   </Fragment>
 
-  <section class="product-dash" data-homescool>
-    <p class="status" data-banner>Loading…</p>
-    <div data-gate hidden class="product-gate">
-      <p class="hint">Sign in with Homescool access to view study materials.</p>
-      <p class="hint"><a href="/session" data-route>Sign in</a> · <a href="/payments/subscription" data-route>Subscribe</a></p>
-    </div>
-    <div data-authed hidden>
-      <div class="product-dash__grid" data-cycles></div>
+  <h1 class="page-title-sr">Homescool</h1>
+
+  <div data-homescool-gate hidden class="product-gate">
+    <p class="hint">Sign in with Homescool access to view study materials.</p>
+    <p class="hint"><a href="/session" data-route>Sign in</a> · <a href="/payments/subscription" data-route>Subscribe</a></p>
+  </div>
+
+  <section class="homescool-workspace homescool-workspace--tree-open" data-homescool-workspace hidden>
+    <aside id="homescool-tree" class="homescool-workspace__tree" aria-label="Materials tree">
+      <p class="homescool-workspace__tree-title">Materials</p>
+      <div data-homescool-tree-host></div>
+    </aside>
+    <div class="homescool-workspace__main">
+      <p class="homescool-workspace__status" data-homescool-banner>Loading…</p>
+      <div class="homescool-workspace__stage" data-homescool-stage>
+        <p class="homescool-workspace__stage-empty" data-homescool-empty>Select a material from the tree.</p>
+        <div class="homescool-sheet-root" data-homescool-sheets hidden></div>
+      </div>
     </div>
   </section>
 </Layout>
 
+<link rel="stylesheet" href="/api/homescool/web-assets/styles.css" data-homescool-sheet-css />
+
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
-  import { fetchHomescoolMaterials } from "../../lib/homescool";
+  import { fetchHomescoolMaterial, fetchHomescoolMaterials, type HomescoolMaterial } from "../../lib/homescool";
+  import { buildHomescoolTree, type HomescoolTreeLeaf, type HomescoolTreeNode } from "../../lib/homescool-tree";
   import { showErrorModal } from "../../lib/error-modal";
 
-  const root = document.querySelector("[data-homescool]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const cyclesEl = root?.querySelector("[data-cycles]");
+  const gate = document.querySelector("[data-homescool-gate]");
+  const workspace = document.querySelector("[data-homescool-workspace]");
+  const banner = document.querySelector("[data-homescool-banner]");
+  const treeHost = document.querySelector("[data-homescool-tree-host]");
+  const empty = document.querySelector("[data-homescool-empty]");
+  const sheets = document.querySelector("[data-homescool-sheets]");
+  const treeToggle = document.querySelector("[data-homescool-tree-toggle]");
+  const printBtn = document.querySelector("[data-homescool-print]");
 
-  const result = await requireService("homescool", { requireSubscription: false });
-  const linkedOk = result.access.allowed || result.access.reason === "linked_student";
-  if (!result.sessionOk || !linkedOk) {
-    const teacher = await requireService("homescool", { requireSubscription: true });
-    if (!teacher.sessionOk || !teacher.access.allowed) {
+  let activeId = "";
+  let materialsById = new Map<string, HomescoolMaterial>();
+
+  const teacher = await requireService("homescool", { requireSubscription: true });
+  const ok = teacher.sessionOk && teacher.access.allowed;
+  if (!ok) {
+    const guest = await requireService("homescool", { requireSubscription: false });
+    if (!guest.sessionOk || !guest.access.allowed) {
       if (banner instanceof HTMLElement) {
-        banner.textContent = teacher.sessionOk ? "Homescool access required." : "Sign in required.";
+        banner.textContent = guest.sessionOk ? "Homescool access required." : "Sign in required.";
       }
       setHidden(gate, false);
-      setHidden(authed, true);
+      setHidden(workspace, true);
     } else {
-      await renderDash();
+      await boot();
     }
   } else {
-    await renderDash();
+    await boot();
   }
 
-  async function renderDash() {
-    if (banner instanceof HTMLElement) banner.textContent = "Materials by cycle";
+  treeToggle?.addEventListener("click", () => {
+    if (!(workspace instanceof HTMLElement) || !(treeToggle instanceof HTMLButtonElement)) return;
+    const open = !workspace.classList.contains("homescool-workspace--tree-open");
+    workspace.classList.toggle("homescool-workspace--tree-open", open);
+    treeToggle.setAttribute("aria-pressed", open ? "true" : "false");
+  });
+
+  printBtn?.addEventListener("click", () => {
+    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled) return;
+    window.print();
+  });
+
+  async function boot() {
     setHidden(gate, true);
-    setHidden(authed, false);
+    setHidden(workspace, false);
+    if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
     const res = await fetchHomescoolMaterials();
     if (res.error) {
-      showErrorModal({ message: res.error, requestId: res.requestId, details: res.requestId ? `request_id=${res.requestId}` : "" });
+      showErrorModal({
+        message: res.error,
+        requestId: res.requestId,
+        details: res.requestId ? `request_id=${res.requestId}` : "",
+      });
       if (banner instanceof HTMLElement) banner.textContent = res.error;
       return;
     }
-    const byCycle = new Map<number, { count: number; empty: boolean }>();
-    for (const c of res.cycles.length ? res.cycles : [1, 2, 3].map((n) => ({ cycle: n, count: 0, empty: true }))) {
-      byCycle.set(c.cycle, { count: c.count, empty: c.empty });
+    materialsById = new Map(res.materials.map((m) => [m.id, m]));
+    const tree = buildHomescoolTree(res.materials);
+    renderTree(tree);
+    const count = res.materials.length;
+    if (banner instanceof HTMLElement) {
+      banner.textContent = count ? `${count} material(es) · pick one in the tree` : "No materials yet.";
     }
-    for (let n = 1; n <= 3; n++) {
-      if (!byCycle.has(n)) byCycle.set(n, { count: 0, empty: true });
+    const deep = new URLSearchParams(window.location.search).get("material");
+    if (deep && materialsById.has(deep)) {
+      void openMaterial(deep);
     }
-    if (!(cyclesEl instanceof HTMLElement)) return;
-    cyclesEl.replaceChildren();
-    for (let n = 1; n <= 3; n++) {
-      const meta = byCycle.get(n)!;
-      const a = document.createElement("a");
-      a.className = "product-dash__card";
-      a.href = `/homescool/ciclo/${n}`;
-      a.setAttribute("data-route", "");
-      const icon = document.createElement("span");
-      icon.className = "material-symbols-outlined";
-      icon.setAttribute("aria-hidden", "true");
-      icon.textContent = meta.empty ? "folder_off" : "menu_book";
-      const title = document.createElement("span");
-      title.className = "product-dash__card-title";
-      title.textContent = `Ciclo ${n}`;
-      const desc = document.createElement("span");
-      desc.className = "product-dash__card-desc";
-      desc.textContent = meta.empty ? "Sin materiales aún" : `${meta.count} material(es)`;
-      a.append(icon, title, desc);
-      cyclesEl.append(a);
-    }
-    setAgentRoutePayload({
-      kind: "homescool_dashboard",
-      cycles: [...byCycle.entries()].map(([cycle, meta]) => ({
-        cycle,
-        count: meta.count,
-        empty: meta.empty,
-      })),
-    });
   }
 
-  document.addEventListener(
-    "astro:before-swap",
-    () => {
-      clearAgentRoutePayload();
-    },
-    { once: true },
-  );
+  function renderTree(nodes: HomescoolTreeNode[]) {
+    if (!(treeHost instanceof HTMLElement)) return;
+    treeHost.replaceChildren();
+    const root = document.createElement("ul");
+    root.className = "homescool-tree";
+    for (const node of nodes) root.append(renderNode(node, node.kind === "cycle"));
+    treeHost.append(root);
+  }
+
+  function renderNode(node: HomescoolTreeNode, openDefault: boolean): HTMLLIElement {
+    const li = document.createElement("li");
+    const details = document.createElement("details");
+    details.open = openDefault && node.children.length > 0;
+    const summary = document.createElement("summary");
+    summary.className = "homescool-tree__toggle";
+    summary.textContent = node.label;
+    details.append(summary);
+    const ul = document.createElement("ul");
+    for (const child of node.children) {
+      if (child.kind === "material") {
+        ul.append(renderLeaf(child));
+      } else {
+        ul.append(renderNode(child, false));
+      }
+    }
+    details.append(ul);
+    li.append(details);
+    return li;
+  }
+
+  function renderLeaf(leaf: HomescoolTreeLeaf): HTMLLIElement {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "homescool-tree__leaf";
+    btn.textContent = leaf.title;
+    btn.dataset.materialId = leaf.id;
+    btn.addEventListener("click", () => {
+      void openMaterial(leaf.id);
+    });
+    li.append(btn);
+    return li;
+  }
+
+  async function openMaterial(id: string) {
+    activeId = id;
+    treeHost?.querySelectorAll(".homescool-tree__leaf").forEach((el) => {
+      if (el instanceof HTMLElement) {
+        el.setAttribute("aria-current", el.dataset.materialId === id ? "true" : "false");
+      }
+    });
+    if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
+    if (banner instanceof HTMLElement) banner.textContent = "Loading material…";
+    const res = await fetchHomescoolMaterial(id);
+    if (res.error || !res.material || !res.htmlUrl) {
+      showErrorModal({
+        message: res.error || "Could not load material.",
+        requestId: res.requestId,
+        details: res.requestId ? `request_id=${res.requestId}` : "",
+      });
+      if (banner instanceof HTMLElement) banner.textContent = res.error || "Not found.";
+      return;
+    }
+    try {
+      const htmlRes = await fetch(res.htmlUrl, { credentials: "include" });
+      if (!htmlRes.ok) throw new Error(`HTML ${htmlRes.status}`);
+      const raw = await htmlRes.text();
+      mountSheets(raw);
+      const m = res.material;
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
+      }
+      if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
+      document.title = `${m.title} · Homescool`;
+    } catch {
+      showErrorModal({ message: "Could not load material HTML." });
+      if (banner instanceof HTMLElement) banner.textContent = "Could not load material HTML.";
+    }
+  }
+
+  function mountSheets(rawHtml: string) {
+    if (!(sheets instanceof HTMLElement) || !(empty instanceof HTMLElement)) return;
+    const doc = new DOMParser().parseFromString(rawHtml, "text/html");
+    const pages = doc.body.querySelectorAll(".page");
+    sheets.replaceChildren();
+    if (!pages.length) {
+      // Fallback: whole body content wrapped as one portrait page
+      const page = document.createElement("section");
+      page.className = "page";
+      page.append(...Array.from(doc.body.childNodes).map((n) => document.importNode(n, true)));
+      sheets.append(page);
+    } else {
+      pages.forEach((page) => {
+        sheets.append(document.importNode(page, true));
+      });
+    }
+    // Drop scripts from injected content (print bar etc. — DHS Print is the authority).
+    sheets.querySelectorAll("script").forEach((s) => s.remove());
+    setHidden(empty, true);
+    setHidden(sheets, false);
+  }
 </script>
