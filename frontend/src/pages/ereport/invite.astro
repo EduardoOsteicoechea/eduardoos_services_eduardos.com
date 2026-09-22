@@ -122,6 +122,8 @@ import Layout from "../../layouts/Layout.astro";
               payload: next,
               tema: String(next.reportName || next.appTitle || "").trim(),
             }).then((saved) => {
+              // Background autosave: no user action. Timeouts (status 0) stay quiet.
+              if (saved.status === 0) return;
               if (saved.status >= 300) {
                 showErrorModal({
                   message: saved.data.message || "Could not save.",

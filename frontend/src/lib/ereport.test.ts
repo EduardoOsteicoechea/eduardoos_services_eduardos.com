@@ -210,7 +210,7 @@ describe("tracker host bridge", () => {
 });
 
 describe("eReport workspace chrome", () => {
-  it("orders HDS as Tablero -> Abrir -> Descargar -> Compartir -> IDs -> Sidebar and drops clear-all", () => {
+  it("orders HDS as Sidebar -> Tablero -> Abrir -> Descargar -> Compartir -> IDs and drops clear-all", () => {
     const workspaceSrc = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
     expect(workspaceSrc).not.toContain("clear-all");
     expect(workspaceSrc).not.toContain("Limpiar todo");
@@ -226,18 +226,18 @@ describe("eReport workspace chrome", () => {
     expect(workspaceSrc).toContain('data-open-modal="share"');
     expect(workspaceSrc).toContain('data-open-modal="ids"');
     expect(workspaceSrc).toContain('data-tracker-cmd="toggle-sidebar"');
+    const sidebar = workspaceSrc.indexOf('data-tracker-cmd="toggle-sidebar"');
     const tablero = workspaceSrc.indexOf("Volver al Tablero");
     const abrir = workspaceSrc.indexOf('data-open-modal="open"');
     const descargar = workspaceSrc.indexOf('data-tracker-cmd="save-export"');
     const compartir = workspaceSrc.indexOf('data-open-modal="share"');
     const ids = workspaceSrc.indexOf('data-open-modal="ids"');
-    const sidebar = workspaceSrc.indexOf('data-tracker-cmd="toggle-sidebar"');
-    expect(tablero).toBeGreaterThan(-1);
+    expect(sidebar).toBeGreaterThan(-1);
+    expect(tablero).toBeGreaterThan(sidebar);
     expect(abrir).toBeGreaterThan(tablero);
     expect(descargar).toBeGreaterThan(abrir);
     expect(compartir).toBeGreaterThan(descargar);
     expect(ids).toBeGreaterThan(compartir);
-    expect(sidebar).toBeGreaterThan(ids);
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--br: 3.44px");
     expect(css).toContain("#f2f3f6");

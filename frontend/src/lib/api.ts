@@ -407,7 +407,7 @@ export async function apiSend<T>(
         status: 0,
         data: {
           error: "internal_error",
-          message: "The request took too long. Try again with a shorter description, or wait and retry.",
+          message: "The request took too long. Please try again.",
         } as T & APIErrorBody,
         requestId: "",
       };
@@ -874,12 +874,21 @@ export async function patchJSON<T = MeResponse>(path: string, body: Record<strin
   });
 }
 
-export async function putJSON<T = MeResponse>(path: string, body: Record<string, unknown>): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
-  return apiSend<T>(path, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+export async function putJSON<T = MeResponse>(
+  path: string,
+  body: Record<string, unknown>,
+  opts?: { timeoutMs?: number; signal?: AbortSignal },
+): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {
+  return apiSend<T>(
+    path,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: opts?.signal,
+    },
+    { timeoutMs: opts?.timeoutMs },
+  );
 }
 
 export async function deleteJSON<T = MeResponse>(path: string): Promise<{ status: number; data: T & APIErrorBody; requestId: string }> {

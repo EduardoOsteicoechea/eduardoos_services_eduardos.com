@@ -123,7 +123,8 @@ export function fetchOrgReport(orgId: string, reportId: string) {
 }
 
 export function saveOrgReport(orgId: string, reportId: string, body: { tema?: string; payload?: EreportPayload }) {
-  return putJSON<{ meta?: EreportMeta }>(`/ereport/orgs/${orgId}/reports/${reportId}`, body);
+  // Large payloads (images as data URLs) often exceed the default 12s API timeout.
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/orgs/${orgId}/reports/${reportId}`, body, { timeoutMs: 120000 });
 }
 
 export function deleteOrgReport(orgId: string, reportId: string) {
@@ -200,7 +201,7 @@ export function fetchInviteReport(reportId: string) {
 }
 
 export function saveInviteReport(reportId: string, body: { tema?: string; payload?: EreportPayload }) {
-  return putJSON<{ meta?: EreportMeta }>(`/ereport/invite-session/reports/${reportId}`, body);
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/invite-session/reports/${reportId}`, body, { timeoutMs: 120000 });
 }
 
 export function ownerImageUploadPath(orgId: string, reportId: string): string {

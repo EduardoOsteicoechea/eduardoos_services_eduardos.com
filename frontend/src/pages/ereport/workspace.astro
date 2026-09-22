@@ -5,6 +5,12 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="eReport workspace" page="ereport-workspace">
   <Fragment slot="dhs">
+    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar u ocultar la sidebar del reporte" aria-label="Toggle sidebar del reporte">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
+      </span>
+      Sidebar
+    </button>
     <a class="dhs-action" href="/ereport" data-route title="eReport workspace" aria-label="Volver al Tablero">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
@@ -34,12 +40,6 @@ import Layout from "../../layouts/Layout.astro";
         <span class="material-symbols-outlined" aria-hidden="true">tag</span>
       </span>
       IDs
-    </button>
-    <button class="dhs-action" type="button" data-tracker-cmd="toggle-sidebar" title="Mostrar u ocultar la sidebar del reporte" aria-label="Toggle sidebar del reporte">
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">view_sidebar</span>
-      </span>
-      Sidebar
     </button>
   </Fragment>
 
@@ -174,7 +174,7 @@ import Layout from "../../layouts/Layout.astro";
     type TrackerCommand,
     type TrackerHost,
   } from "../../lib/ereport-workspace";
-  import { onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
+  import { genericMessage, onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
 
   onBoundPageReady("[data-ereport-workspace]", (root) => {
     const copy = sessionCopy();
@@ -260,13 +260,23 @@ import Layout from "../../layouts/Layout.astro";
       if (res.status < 300 && orgName) {
         await updateEreportOrgs([{ id: orgId, name: orgName }]);
       }
+      // Background autosave must never open the global error modal: the user did not
+      // start an action. Timeouts (status 0) stay fully quiet; other failures use banner only.
+      if (opts.silent) {
+        const message = genericMessage(copy, res.status, res.data, "Autosaved.");
+        if (message.kind === "err") {
+          if (res.status !== 0) setBanner(root, message.text, "err");
+          return false;
+        }
+        setBanner(root, "Autosaved.", "ok");
+        return true;
+      }
       const message = reportFailure(copy, res.status, res.data, "Autosaved.");
       if (message.kind === "err") {
         setBanner(root, message.text, message.kind);
         return false;
       }
-      if (!opts.silent) setBanner(root, "Autosaved.", "ok");
-      else setBanner(root, "Autosaved.", "ok");
+      setBanner(root, "Autosaved.", "ok");
       return true;
     };
 
