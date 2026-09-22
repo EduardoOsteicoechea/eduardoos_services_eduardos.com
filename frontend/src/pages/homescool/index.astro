@@ -1,6 +1,7 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/product-tree-sidebar.css";
 import "../../styles/homescool-workspace.css";
 ---
 
@@ -38,13 +39,12 @@ import "../../styles/homescool-workspace.css";
     <p class="hint"><a href="/session" data-route>Sign in</a> · <a href="/payments/subscription" data-route>Subscribe</a></p>
   </div>
 
-  <section class="homescool-workspace homescool-workspace--tree-open" data-homescool-workspace hidden>
-    <aside id="homescool-tree" class="homescool-workspace__tree" aria-label="Materials tree">
-      <p class="homescool-workspace__tree-title">Materials</p>
+  <section class="product-workspace product-workspace--tree-open homescool-workspace" data-homescool-workspace hidden>
+    <aside id="homescool-tree" class="product-tree-sidebar" aria-label="Materials tree">
       <div data-homescool-tree-host></div>
     </aside>
-    <div class="homescool-workspace__main">
-      <p class="homescool-workspace__status" data-homescool-banner>Loading…</p>
+    <div class="product-workspace__main">
+      <p class="product-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
         <p class="homescool-workspace__stage-empty" data-homescool-empty>Select a material from the tree.</p>
         <iframe
@@ -100,8 +100,8 @@ import "../../styles/homescool-workspace.css";
 
   treeToggle?.addEventListener("click", () => {
     if (!(workspace instanceof HTMLElement) || !(treeToggle instanceof HTMLButtonElement)) return;
-    const open = !workspace.classList.contains("homescool-workspace--tree-open");
-    workspace.classList.toggle("homescool-workspace--tree-open", open);
+    const open = !workspace.classList.contains("product-workspace--tree-open");
+    workspace.classList.toggle("product-workspace--tree-open", open);
     treeToggle.setAttribute("aria-pressed", open ? "true" : "false");
   });
 
@@ -149,7 +149,7 @@ import "../../styles/homescool-workspace.css";
     if (!(treeHost instanceof HTMLElement)) return;
     treeHost.replaceChildren();
     const root = document.createElement("ul");
-    root.className = "homescool-tree";
+    root.className = "product-tree";
     for (const node of nodes) root.append(renderNode(node, node.kind === "cycle"));
     treeHost.append(root);
   }
@@ -159,7 +159,7 @@ import "../../styles/homescool-workspace.css";
     const details = document.createElement("details");
     details.open = openDefault && node.children.length > 0;
     const summary = document.createElement("summary");
-    summary.className = "homescool-tree__toggle";
+    summary.className = "product-tree__toggle";
     summary.textContent = node.label;
     details.append(summary);
     const ul = document.createElement("ul");
@@ -179,7 +179,7 @@ import "../../styles/homescool-workspace.css";
     const li = document.createElement("li");
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "homescool-tree__leaf";
+    btn.className = "product-tree__leaf";
     btn.textContent = leaf.title;
     btn.dataset.materialId = leaf.id;
     btn.addEventListener("click", () => {
@@ -190,7 +190,7 @@ import "../../styles/homescool-workspace.css";
   }
 
   async function openMaterial(id: string) {
-    treeHost?.querySelectorAll(".homescool-tree__leaf").forEach((el) => {
+    treeHost?.querySelectorAll(".product-tree__leaf").forEach((el) => {
       if (el instanceof HTMLElement) {
         el.setAttribute("aria-current", el.dataset.materialId === id ? "true" : "false");
       }

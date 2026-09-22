@@ -55,6 +55,7 @@ const isEreport = htmlPage.startsWith("ereport");
 const isWorkspace =
   htmlPage === "ereport-workspace" ||
   htmlPage === "homescool-workspace" ||
+  htmlPage === "latin-institutes" ||
   htmlPage === "scrib-sheet" ||
   /(?:^|-)workspace(?:-|$)/.test(htmlPage) ||
   path.includes("/workspace");

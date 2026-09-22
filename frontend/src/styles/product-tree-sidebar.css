@@ -1,0 +1,118 @@
+/* Shared product tree sidebars (Homescool, Calvin Institutes). Rem chrome only. */
+
+.product-workspace {
+  grid-column: 1 / span var(--span-full);
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  align-items: stretch;
+  min-width: 0;
+  min-height: calc(40rem);
+}
+
+.product-tree-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-sidebar);
+  width: var(--sidebar-width);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  background: var(--color-surface);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.product-workspace:not(.product-workspace--tree-open) .product-tree-sidebar {
+  display: none;
+}
+
+.product-workspace--tree-open .product-workspace__main {
+  margin-left: var(--sidebar-width);
+  padding-inline: var(--main-inline);
+  padding-bottom: var(--space-padding);
+}
+
+.product-workspace:not(.product-workspace--tree-open) .product-workspace__main {
+  padding-inline: var(--main-inline);
+  padding-bottom: var(--space-padding);
+}
+
+.product-workspace__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.product-workspace__status {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.product-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.product-tree ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.product-tree__toggle,
+.product-tree__leaf {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  width: auto;
+  min-height: var(--control-height);
+  margin: 0;
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  text-align: start;
+  cursor: pointer;
+}
+
+.product-tree__toggle:hover,
+.product-tree__leaf:hover,
+.product-tree__toggle:focus-visible,
+.product-tree__leaf:focus-visible {
+  color: var(--color-accent);
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: -0.0625rem;
+}
+
+.product-tree__leaf[aria-current="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.product-tree details > summary {
+  list-style: none;
+}
+
+.product-tree details > summary::-webkit-details-marker {
+  display: none;
+}

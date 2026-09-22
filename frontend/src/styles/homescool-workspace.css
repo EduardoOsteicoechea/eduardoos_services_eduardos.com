@@ -1,103 +1,4 @@
-/* Homescool workspace chrome (rem tokens). Sheets render inside an iframe with study CSS. */
-
-.homescool-workspace {
-  grid-column: 1 / span var(--span-full);
-  display: flex;
-  flex-direction: row;
-  gap: var(--rail-gap);
-  align-items: stretch;
-  min-height: calc(40rem);
-  min-width: 0;
-}
-
-.homescool-workspace__tree {
-  flex: 0 0 16rem;
-  max-width: 16rem;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
-  padding: var(--space-padding);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
-  overflow: auto;
-}
-
-.homescool-workspace:not(.homescool-workspace--tree-open) .homescool-workspace__tree {
-  display: none;
-}
-
-.homescool-workspace__tree-title {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  font-weight: 650;
-  color: var(--color-text);
-}
-
-.homescool-tree {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.homescool-tree ul {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0 var(--space-padding);
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.homescool-tree__toggle,
-.homescool-tree__leaf {
-  display: flex;
-  align-items: center;
-  gap: var(--rail-gap);
-  width: auto;
-  min-height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  border: 0;
-  border-radius: var(--border-radius);
-  background: transparent;
-  color: var(--color-text);
-  font: inherit;
-  font-size: var(--font-size-sm);
-  text-align: start;
-  cursor: pointer;
-}
-
-.homescool-tree__toggle:hover,
-.homescool-tree__leaf:hover,
-.homescool-tree__toggle:focus-visible,
-.homescool-tree__leaf:focus-visible {
-  color: var(--color-accent);
-  outline: var(--border-width) solid var(--color-accent);
-  outline-offset: 0.0625rem;
-}
-
-.homescool-tree__leaf[aria-current="true"] {
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
-.homescool-workspace__main {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
-}
-
-.homescool-workspace__status {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--color-muted);
-}
+/* Homescool workspace — sheets in iframe; tree uses shared product-tree-sidebar. */
 
 .homescool-workspace__stage {
   flex: 1 1 auto;
@@ -132,8 +33,8 @@
   #main-menu,
   #dynamic-header,
   #agent-sidebar,
-  .homescool-workspace__tree,
-  .homescool-workspace__status,
+  .product-tree-sidebar,
+  .product-workspace__status,
   .error-modal-overlay,
   [data-homescool-gate] {
     display: none !important;
@@ -141,8 +42,8 @@
 
   .shell,
   main,
-  .homescool-workspace,
-  .homescool-workspace__main,
+  .product-workspace,
+  .product-workspace__main,
   .homescool-workspace__stage {
     display: block !important;
     position: static !important;

@@ -1,5 +1,8 @@
 ---
+import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
+import "../../../styles/product-tree-sidebar.css";
+import "../../../styles/institutes-workspace.css";
 ---
 
 <Layout
@@ -7,13 +10,22 @@ import Layout from "../../../layouts/Layout.astro";
   description="John Calvin, Institutio Christianae Religionis (1559), Latin text."
   page="latin-institutes"
   robots="noindex,nofollow"
+  showPageTitle={false}
 >
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-toggle-nav title="Toggle contents" aria-label="Toggle contents">
+    <button
+      class="dhs-action"
+      type="button"
+      data-institutes-tree-toggle
+      title="Toggle chapter tree"
+      aria-label="Toggle chapter tree"
+      aria-pressed="true"
+      aria-controls="institutes-tree"
+    >
       <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">toc</span>
+        <span class="material-symbols-outlined" aria-hidden="true">account_tree</span>
       </span>
-      Contents
+      Tree
     </button>
     <a class="dhs-action" href="/scrib" data-route title="Scrib" aria-label="Scrib">
       <span class="icon-btn" aria-hidden="true">
@@ -23,48 +35,202 @@ import Layout from "../../../layouts/Layout.astro";
     </a>
   </Fragment>
 
-  <section class="product-dash institutes-reader" data-institutes>
-    <p class="status" data-banner>Loading index…</p>
-    <nav class="institutes-reader__nav" data-nav aria-label="Chapters"></nav>
-    <article class="institutes-reader__body" data-body>
-      <h2 data-heading>Select a chapter</h2>
-      <div data-paragraphs></div>
-    </article>
+  <h1 class="page-title-sr">Calvin’s Institutes</h1>
+
+  <section class="product-workspace product-workspace--tree-open institutes-workspace" data-institutes>
+    <aside id="institutes-tree" class="product-tree-sidebar" aria-label="Chapters and paragraphs">
+      <div data-institutes-tree-host></div>
+    </aside>
+    <div class="product-workspace__main">
+      <p class="product-workspace__status" data-banner>Loading index…</p>
+      <article class="institutes-workspace__body" data-body>
+        <h2 data-heading>Select a paragraph</h2>
+        <div data-paragraphs></div>
+      </article>
+    </div>
   </section>
 </Layout>
 
 <script>
-  import { fetchParagraphChapter, fetchParagraphsIndex } from "../../../lib/calvinsInstitutes";
+  import {
+    chapterNavLabel,
+    fetchParagraphChapter,
+    fetchParagraphsIndex,
+    groupChaptersByLiber,
+    type ParagraphIndexChapter,
+    type ParagraphUnit,
+  } from "../../../lib/calvinsInstitutes";
   import { mustLog } from "../../../lib/dev-log";
   import { showErrorModal } from "../../../lib/error-modal";
   import { PREF_INSTITUTES_SIDEBAR, getPreference, putPreference } from "../../../lib/preferences";
   import { requireSession } from "../../../lib/productGate";
   import { go } from "../../../lib/router";
 
+  type NavPref = { book?: string; chapter?: string; paragraphOrder?: number };
+
   const root = document.querySelector("[data-institutes]");
   if (!(root instanceof HTMLElement)) throw new Error("institutes root missing");
   const banner = root.querySelector("[data-banner]");
-  const nav = root.querySelector("[data-nav]");
+  const treeHost = root.querySelector("[data-institutes-tree-host]");
   const heading = root.querySelector("[data-heading]");
-  const paragraphs = root.querySelector("[data-paragraphs]");
+  const paragraphsHost = root.querySelector("[data-paragraphs]");
+  const treeToggle = document.querySelector("[data-institutes-tree-toggle]");
 
-  async function openChapter(book: string, chapter: string, label: string) {
-    if (mustLog) console.log("[institutes] open", { book, chapter });
+  const chapterCache = new Map<string, ParagraphUnit[]>();
+  let activeKey = "";
+
+  treeToggle?.addEventListener("click", () => {
+    if (!(treeToggle instanceof HTMLButtonElement)) return;
+    const open = !root.classList.contains("product-workspace--tree-open");
+    root.classList.toggle("product-workspace--tree-open", open);
+    treeToggle.setAttribute("aria-pressed", open ? "true" : "false");
+  });
+
+  function chapterKey(book: string, chapter: string): string {
+    return `${book}::${chapter}`;
+  }
+
+  async function loadChapterParagraphs(entry: ParagraphIndexChapter): Promise<ParagraphUnit[]> {
+    const key = chapterKey(entry.book, entry.chapter);
+    const cached = chapterCache.get(key);
+    if (cached) return cached;
+    const data = await fetchParagraphChapter(entry.book, entry.chapter);
+    const list = [...(data.paragraphs || [])].sort((a, b) => a.order - b.order);
+    chapterCache.set(key, list);
+    return list;
+  }
+
+  async function openParagraph(entry: ParagraphIndexChapter, paraOrder: number) {
+    if (mustLog) console.log("[institutes] open", { book: entry.book, chapter: entry.chapter, paraOrder });
     try {
-      const data = await fetchParagraphChapter(book, chapter);
-      if (heading) heading.textContent = data.heading || label || `${book} · ${chapter}`;
-      if (paragraphs instanceof HTMLElement) {
-        paragraphs.replaceChildren();
-        for (const p of data.paragraphs || []) {
-          const el = document.createElement("p");
-          el.textContent = p.text;
-          paragraphs.appendChild(el);
-        }
+      const list = await loadChapterParagraphs(entry);
+      if (heading) {
+        heading.textContent = entry.heading || `${entry.book} · ${chapterNavLabel(entry)}`;
       }
-      void putPreference(PREF_INSTITUTES_SIDEBAR, { book, chapter });
+      if (!(paragraphsHost instanceof HTMLElement)) return;
+      paragraphsHost.replaceChildren();
+      for (const p of list) {
+        const wrap = document.createElement("p");
+        wrap.className = "institutes-workspace__para";
+        wrap.dataset.order = String(p.order);
+        wrap.dataset.active = p.order === paraOrder ? "true" : "false";
+        const label = document.createElement("span");
+        label.className = "institutes-workspace__para-label";
+        label.textContent = `¶${p.order}`;
+        wrap.appendChild(label);
+        wrap.appendChild(document.createTextNode(p.text));
+        paragraphsHost.appendChild(wrap);
+      }
+      const active = paragraphsHost.querySelector(`[data-order="${paraOrder}"]`);
+      if (active instanceof HTMLElement) active.scrollIntoView({ block: "start", behavior: "smooth" });
+
+      activeKey = `${chapterKey(entry.book, entry.chapter)}::${paraOrder}`;
+      treeHost?.querySelectorAll(".product-tree__leaf").forEach((el) => {
+        if (el instanceof HTMLElement) {
+          el.setAttribute("aria-current", el.dataset.leafKey === activeKey ? "true" : "false");
+        }
+      });
+      void putPreference(PREF_INSTITUTES_SIDEBAR, {
+        book: entry.book,
+        chapter: entry.chapter,
+        paragraphOrder: paraOrder,
+      } satisfies NavPref);
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Liber ${entry.book} · Cap. ${chapterNavLabel(entry)} · ¶${paraOrder}`;
+      }
     } catch (err) {
       showErrorModal({ message: err instanceof Error ? err.message : "Could not load chapter." });
     }
+  }
+
+  async function ensureChapterLeaves(details: HTMLDetailsElement, entry: ParagraphIndexChapter, ul: HTMLUListElement) {
+    if (ul.dataset.loaded === "1") return;
+    ul.dataset.loaded = "1";
+    const status = document.createElement("li");
+    const statusBtn = document.createElement("button");
+    statusBtn.type = "button";
+    statusBtn.className = "product-tree__leaf";
+    statusBtn.disabled = true;
+    statusBtn.textContent = "Loading…";
+    status.appendChild(statusBtn);
+    ul.appendChild(status);
+    try {
+      const list = await loadChapterParagraphs(entry);
+      ul.replaceChildren();
+      for (const p of list) {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "product-tree__leaf";
+        btn.textContent = `¶${p.order}`;
+        btn.dataset.leafKey = `${chapterKey(entry.book, entry.chapter)}::${p.order}`;
+        btn.title = p.text.slice(0, 80);
+        btn.addEventListener("click", () => {
+          void openParagraph(entry, p.order);
+        });
+        li.appendChild(btn);
+        ul.appendChild(li);
+      }
+      if (!list.length) {
+        const empty = document.createElement("li");
+        const emptyBtn = document.createElement("button");
+        emptyBtn.type = "button";
+        emptyBtn.className = "product-tree__leaf";
+        emptyBtn.disabled = true;
+        emptyBtn.textContent = "No paragraphs";
+        empty.appendChild(emptyBtn);
+        ul.appendChild(empty);
+      }
+    } catch (err) {
+      ul.replaceChildren();
+      details.open = false;
+      ul.dataset.loaded = "0";
+      showErrorModal({ message: err instanceof Error ? err.message : "Could not load paragraphs." });
+    }
+  }
+
+  function renderTree(chapters: ParagraphIndexChapter[]) {
+    if (!(treeHost instanceof HTMLElement)) return;
+    treeHost.replaceChildren();
+    const rootUl = document.createElement("ul");
+    rootUl.className = "product-tree";
+    const groups = groupChaptersByLiber(chapters);
+
+    for (const group of groups) {
+      const bookLi = document.createElement("li");
+      const bookDetails = document.createElement("details");
+      bookDetails.open = group.book === "I";
+      const bookSummary = document.createElement("summary");
+      bookSummary.className = "product-tree__toggle";
+      bookSummary.textContent = `Liber ${group.book}`;
+      bookDetails.appendChild(bookSummary);
+      const chapterUl = document.createElement("ul");
+
+      for (const entry of group.entries) {
+        const chapterLi = document.createElement("li");
+        const chapterDetails = document.createElement("details");
+        const chapterSummary = document.createElement("summary");
+        chapterSummary.className = "product-tree__toggle";
+        chapterSummary.textContent = chapterNavLabel(entry);
+        chapterSummary.title = entry.heading || chapterNavLabel(entry);
+        chapterDetails.appendChild(chapterSummary);
+        const paraUl = document.createElement("ul");
+        chapterDetails.addEventListener("toggle", () => {
+          if (chapterDetails.open) {
+            void ensureChapterLeaves(chapterDetails, entry, paraUl);
+          }
+        });
+        chapterDetails.appendChild(paraUl);
+        chapterLi.appendChild(chapterDetails);
+        chapterUl.appendChild(chapterLi);
+      }
+
+      bookDetails.appendChild(chapterUl);
+      bookLi.appendChild(bookDetails);
+      rootUl.appendChild(bookLi);
+    }
+
+    treeHost.appendChild(rootUl);
   }
 
   void (async () => {
@@ -77,48 +243,38 @@ import Layout from "../../../layouts/Layout.astro";
 
     try {
       const index = await fetchParagraphsIndex();
-      if (banner instanceof HTMLElement) banner.textContent = "Paragraph pack ready.";
-      if (!(nav instanceof HTMLElement)) throw new Error("nav missing");
-      nav.replaceChildren();
-
-      const books = index.books?.length
-        ? index.books
-        : (index.chapters || []).reduce<Array<{ book: string; chapters: string[] }>>((acc, row) => {
-            let entry = acc.find((b) => b.book === row.book);
-            if (!entry) {
-              entry = { book: row.book, chapters: [] };
-              acc.push(entry);
-            }
-            if (!entry.chapters.includes(row.chapter)) entry.chapters.push(row.chapter);
-            return acc;
-          }, []);
-
-      for (const book of books) {
-        const h = document.createElement("strong");
-        h.textContent = book.book;
-        nav.appendChild(h);
-        for (const chapter of book.chapters) {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "btn";
-          btn.textContent = chapter;
-          btn.addEventListener("click", () => void openChapter(book.book, chapter, `${book.book} ${chapter}`));
-          nav.appendChild(btn);
+      const chapters: ParagraphIndexChapter[] = [...(index.chapters ?? [])];
+      if (!chapters.length && index.books?.length) {
+        for (const book of index.books) {
+          for (const chapter of book.chapters) {
+            chapters.push({
+              id: `${book.book}-${chapter}`,
+              order: chapters.length + 1,
+              book: book.book,
+              chapter,
+              heading: `${book.book} ${chapter}`,
+            });
+          }
         }
       }
+      renderTree(chapters);
+      if (banner instanceof HTMLElement) {
+        banner.textContent = chapters.length
+          ? `${chapters.length} chapter(s) · pick a paragraph in the tree`
+          : "Index empty.";
+      }
 
-      const pref = await getPreference<{ book?: string; chapter?: string }>(PREF_INSTITUTES_SIDEBAR);
-      if (pref.value?.book && pref.value?.chapter) {
-        void openChapter(pref.value.book, pref.value.chapter, `${pref.value.book} ${pref.value.chapter}`);
+      const pref = await getPreference<NavPref>(PREF_INSTITUTES_SIDEBAR);
+      const book = pref.value?.book;
+      const chapter = pref.value?.chapter;
+      const paraOrder = pref.value?.paragraphOrder ?? 1;
+      if (book && chapter) {
+        const entry = chapters.find((c) => c.book === book && c.chapter === chapter);
+        if (entry) void openParagraph(entry, paraOrder);
       }
     } catch (err) {
       if (banner instanceof HTMLElement) banner.textContent = "Index unavailable.";
       showErrorModal({ message: err instanceof Error ? err.message : "Could not load Institutes index." });
     }
   })();
-
-  document.querySelector("[data-toggle-nav]")?.addEventListener("click", () => {
-    if (!(nav instanceof HTMLElement)) return;
-    nav.hidden = !nav.hidden;
-  });
 </script>

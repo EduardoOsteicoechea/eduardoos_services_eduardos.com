@@ -30,8 +30,9 @@
   --collapsed-header-height: 0rem;
   --collapsed-footer-height: 0rem;
   --content-basis: 64rem;
-  /* Menu / DHS / AI tray: ~200px at default 16px root; phone overrides below */
+  /* Menu / DHS tray width; agent is double. Breakpoints override with viewport fractions. */
   --sidebar-width: 12.5rem;
+  --agent-sidebar-width: calc(var(--sidebar-width) * 2);
   --modal-width: calc(
     (var(--span-modal) / var(--page-col-count)) *
       (
@@ -560,8 +561,7 @@ a {
   content: none;
 }
 
-#main-menu:has(~ #dynamic-header:not([hidden])):not(:has(~ #agent-sidebar:not([hidden]))) .sidebar-toolbar::after,
-#main-menu:has(~ #agent-sidebar:not([hidden])):not(:has(~ #dynamic-header:not([hidden]))) .sidebar-toolbar::after {
+#main-menu:has(~ #dynamic-header:not([hidden])):not(:has(~ #agent-sidebar:not([hidden]))) .sidebar-toolbar::after {
   content: "";
   position: absolute;
   top: 0;
@@ -574,13 +574,26 @@ a {
   pointer-events: none;
 }
 
+#main-menu:has(~ #agent-sidebar:not([hidden])):not(:has(~ #dynamic-header:not([hidden]))) .sidebar-toolbar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: var(--agent-sidebar-width);
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
 #main-menu:has(~ #dynamic-header:not([hidden])):has(~ #agent-sidebar:not([hidden])) .sidebar-toolbar::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
-  width: calc(var(--sidebar-width) * 2);
+  width: calc(var(--sidebar-width) + var(--agent-sidebar-width));
   background: var(--color-surface);
   border-bottom: var(--border-width) solid var(--color-border);
   box-sizing: border-box;
@@ -1076,8 +1089,15 @@ main {
 /* Workspaces have no .page-title band — restore chrome clearance. */
 html[data-page="ereport-workspace"] main,
 html[data-page="homescool-workspace"] main,
+html[data-page="latin-institutes"] main,
 html[data-page="scrib-sheet"] main {
   padding-top: var(--main-padding-top);
+}
+
+html[data-page="homescool-workspace"] main,
+html[data-page="latin-institutes"] main {
+  padding-inline: 0;
+  padding-bottom: 0;
 }
 
 main > * {
@@ -1785,6 +1805,9 @@ section.diag .panel:not(form) {
     /* Half of the 16-col tablet grid - session/diag use usable width */
     --span-form: 8;
     --span-button: 4;
+    /* Menu 25% / DHS 25% / chat 50% of viewport */
+    --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
+    --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
   }
 
   main > .session-grid,
@@ -1819,24 +1842,25 @@ section.diag .panel:not(form) {
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
-    --tray-half-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
-    --tray-agent-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.75);
-    --sidebar-width: var(--tray-half-width);
-    --agent-sidebar-width: var(--tray-agent-width);
+    /* Menu/DHS 33% each; chat 66% docks beside menu (DHS closes). */
+    --tray-third-width: calc(var(--shell-viewport-width, var(--content-basis)) / 3);
+    --tray-two-thirds-width: calc(var(--shell-viewport-width, var(--content-basis)) * 2 / 3);
+    --sidebar-width: var(--tray-third-width);
+    --agent-sidebar-width: var(--tray-two-thirds-width);
   }
 
   #main-menu:not([hidden]) {
-    width: var(--tray-half-width);
+    width: var(--tray-third-width);
   }
 
   #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
-    width: var(--tray-half-width);
-    left: var(--tray-half-width);
+    width: var(--tray-third-width);
+    left: var(--tray-third-width);
   }
 
-  html[data-tray-open="agent-sidebar"] #agent-sidebar:not([hidden]) {
-    width: var(--tray-agent-width);
-    left: 0;
+  #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
+    width: var(--tray-two-thirds-width);
+    left: var(--tray-third-width);
   }
 
   .session-grid form > button,
@@ -1867,6 +1891,9 @@ section.diag .panel:not(form) {
     --span-full: 24;
     --span-button: 2;
     --main-inline: 1rem;
+    /* Menu 25% / DHS 25% / chat 50% of viewport (chat = 2× menu) */
+    --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
+    --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
     --main-padding-top: var(--main-padding);
   }
 

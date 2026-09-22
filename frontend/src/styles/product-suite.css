@@ -289,47 +289,6 @@
   stroke-linejoin: round;
 }
 
-.institutes-reader {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-padding);
-  grid-column: 1 / span var(--span-full);
-}
-
-@media (min-width: 64rem) {
-  .institutes-reader {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  }
-}
-
-.institutes-reader__nav {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-padding);
-  max-height: 30rem;
-  overflow: auto;
-  padding: var(--space-padding);
-  background: var(--color-surface);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-}
-
-.institutes-reader__nav button {
-  text-align: left;
-}
-
-.institutes-reader__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-padding);
-}
-
-.institutes-reader__body p {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-}
-
 .home-profile {
   display: flex;
   flex-direction: column;
