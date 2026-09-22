@@ -75,6 +75,7 @@ import "../../styles/homescool-workspace.css";
   let materialsById = new Map<string, HomescoolMaterial>();
   let sheetsReady = false;
   let shadow: ShadowRoot | null = null;
+  let studyCssPromise: Promise<string> | null = null;
 
   const teacher = await requireService("homescool", { requireSubscription: true });
   const ok = teacher.sessionOk && teacher.access.allowed;
@@ -191,7 +192,7 @@ import "../../styles/homescool-workspace.css";
       const htmlRes = await fetch(res.htmlUrl, { credentials: "include" });
       if (!htmlRes.ok) throw new Error(`HTML ${htmlRes.status}`);
       const raw = await htmlRes.text();
-      mountLetterSheets(raw);
+      await mountLetterSheets(raw);
       const m = res.material;
       if (banner instanceof HTMLElement) {
         banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
@@ -211,19 +212,33 @@ import "../../styles/homescool-workspace.css";
     return shadow;
   }
 
+  /** Read the shared skill sheet before displaying a material; a shadow root cannot inherit it from the document. */
+  function loadStudyCss(): Promise<string> {
+    if (!studyCssPromise) {
+      studyCssPromise = fetch(STUDY_CSS, { credentials: "include" }).then(async (response) => {
+        if (!response.ok) throw new Error(`CSS ${response.status}`);
+        return response.text();
+      });
+    }
+    return studyCssPromise;
+  }
+
   /** Mount each study `.page` as a logical print page inside a shadow root (isolates study CSS from site `.page`). */
-  function mountLetterSheets(rawHtml: string) {
+  async function mountLetterSheets(rawHtml: string) {
     const root = ensureShadow();
     if (!root || !(empty instanceof HTMLElement) || !(sheetsHost instanceof HTMLElement)) return;
 
     const doc = new DOMParser().parseFromString(rawHtml, "text/html");
     const pages = extractPages(doc);
+    const studyCss = await loadStudyCss();
 
     root.replaceChildren();
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = STUDY_CSS;
+    const skill = document.createElement("style");
+    skill.textContent = studyCss;
+
+    const material = document.createElement("style");
+    material.textContent = Array.from(doc.head.querySelectorAll("style"), (style) => style.textContent || "").join("\n");
 
     const chrome = document.createElement("style");
     chrome.textContent = [
@@ -302,7 +317,7 @@ import "../../styles/homescool-workspace.css";
       "}",
     ].join("\n");
 
-    root.append(link, chrome);
+    root.append(skill, material, chrome);
 
     const needsMap = pages.some((p) => p.classList.contains("page--map"));
     for (const page of pages) {
