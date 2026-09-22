@@ -67,9 +67,9 @@
   --z-modal: 40;
   /* Half-gap on each nav/DHS row so section backgrounds meet at the midpoint. */
   --sidebar-row-margin: calc(var(--rail-gap) * 0.5);
-  /* Toolbar band below tray top padding: control + pad + border + flex gap to nav. */
+  /* Toolbar band (tray has no padding): pad + control + pad + border + flex gap to nav. */
   --sidebar-toolbar-band: calc(
-    var(--rail-button-size) + var(--rail-gap) + var(--border-width) + var(--rail-gap)
+    var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width) + var(--rail-gap)
   );
   --font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
@@ -340,7 +340,7 @@ a {
   min-height: var(--rail-button-size);
   margin-block: var(--sidebar-row-margin);
   padding-block: 0;
-  padding-inline: 0;
+  padding-inline: var(--space-padding);
   font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 400;
@@ -427,7 +427,7 @@ a {
   height: auto;
   margin-block: var(--sidebar-row-margin);
   padding-block: 0;
-  padding-inline: 0;
+  padding-inline: var(--space-padding);
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -493,6 +493,7 @@ a {
   min-height: var(--rail-button-size);
   margin-block: var(--sidebar-row-margin);
   padding-block: 0;
+  padding-inline: var(--space-padding);
   display: flex;
   align-items: center;
 }
@@ -508,7 +509,7 @@ a {
   width: var(--sidebar-width);
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
-  padding: var(--space-padding);
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
@@ -524,7 +525,7 @@ a {
 /* When menu is open, docked trays clear the shared toolbar band so rows align. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]),
 #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
-  padding-top: calc(var(--space-padding) + var(--sidebar-toolbar-band));
+  padding-top: var(--sidebar-toolbar-band);
 }
 
 .tray-backdrop {
@@ -549,7 +550,7 @@ a {
   z-index: calc(var(--z-sidebar) + 2);
   flex-shrink: 0;
   margin: 0;
-  padding: 0 0 var(--rail-gap);
+  padding: var(--space-padding);
   border-bottom: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
 }
@@ -563,10 +564,10 @@ a {
 #main-menu:has(~ #agent-sidebar:not([hidden])):not(:has(~ #dynamic-header:not([hidden]))) .sidebar-toolbar::after {
   content: "";
   position: absolute;
-  top: calc(-1 * var(--space-padding));
+  top: 0;
   bottom: 0;
   left: 100%;
-  width: calc(var(--space-padding) + var(--sidebar-width));
+  width: var(--sidebar-width);
   background: var(--color-surface);
   border-bottom: var(--border-width) solid var(--color-border);
   box-sizing: border-box;
@@ -576,10 +577,10 @@ a {
 #main-menu:has(~ #dynamic-header:not([hidden])):has(~ #agent-sidebar:not([hidden])) .sidebar-toolbar::after {
   content: "";
   position: absolute;
-  top: calc(-1 * var(--space-padding));
+  top: 0;
   bottom: 0;
   left: 100%;
-  width: calc(var(--space-padding) + var(--sidebar-width) * 2);
+  width: calc(var(--sidebar-width) * 2);
   background: var(--color-surface);
   border-bottom: var(--border-width) solid var(--color-border);
   box-sizing: border-box;
@@ -656,6 +657,7 @@ a {
   gap: 0;
   margin: 0;
   padding: 0;
+  border-radius: 0;
 }
 
 /* Alternate section bands (no heading labels). Odd = tinted. */
@@ -684,7 +686,7 @@ a {
   min-height: var(--rail-button-size);
   margin-block: var(--sidebar-row-margin);
   padding-block: 0;
-  padding-inline: 0;
+  padding-inline: var(--space-padding);
   font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 400;
@@ -748,7 +750,7 @@ a {
   align-items: stretch;
   gap: var(--space-padding);
   min-height: 0;
-  padding-right: var(--rail-gap);
+  padding-inline: var(--space-padding);
 }
 
 .agent-chat-msg {
@@ -906,6 +908,8 @@ a {
   flex-shrink: 0;
   gap: var(--rail-gap);
   margin-top: var(--space-padding);
+  padding-inline: var(--space-padding);
+  padding-bottom: var(--space-padding);
 }
 
 .agent-chat-composer {
