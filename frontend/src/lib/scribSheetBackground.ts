@@ -15,6 +15,8 @@ export type ScribSheetBgOptions = {
   colorOscuro?: string;
   altoDeLineaMm?: number;
   espacioEntreLineasMm?: number;
+  /** Top/bottom band inside each writing row (mm). Middle = alto − 2×this. */
+  bandaExtremaMm?: number;
   pageWidthMm?: number;
   pageHeightMm?: number;
 };
@@ -43,7 +45,8 @@ export type ScribSheetBgGeometry = {
   lines: ScribSheetBgLine[];
 };
 
-/** Defaults match formatted_sheet_generator `generar_documentos_columnas`. */
+/** Defaults match formatted_sheet_generator `generar_documentos_columnas`,
+ * with asymmetric row bands: 1.1 + 1.8 + 1.1 mm inside each 4 mm writing row. */
 export const SCRIB_SHEET_BG_DEFAULTS = {
   margenLateralMm: 20,
   margenVerticalMm: 10,
@@ -54,6 +57,8 @@ export const SCRIB_SHEET_BG_DEFAULTS = {
   colorOscuro: "#dddddd",
   altoDeLineaMm: 4,
   espacioEntreLineasMm: 3,
+  /** Top and bottom bands inside each writing row (middle = alto − 2×this). */
+  bandaExtremaMm: 1.1,
 } as const;
 
 /**
@@ -75,6 +80,10 @@ export function buildScribSheetBackgroundGeometry(
   const altoDeLineaMm = options.altoDeLineaMm ?? SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
   const espacioEntreLineasMm =
     options.espacioEntreLineasMm ?? SCRIB_SHEET_BG_DEFAULTS.espacioEntreLineasMm;
+  const bandaExtremaMm = Math.min(
+    options.bandaExtremaMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm,
+    altoDeLineaMm / 2,
+  );
 
   const usableW = pageWidthMm - 2 * margenLateralMm;
   const usableH = pageHeightMm - 2 * margenVerticalMm;
@@ -119,9 +128,9 @@ export function buildScribSheetBackgroundGeometry(
 
       hLine(xStart, xEnd, yActual, colorOscuro);
 
-      const seccionLinea = altoDeLineaMm / 3;
-      hLine(xStart, xEnd, yActual - (altoDeLineaMm - seccionLinea), colorSuave);
-      hLine(xStart, xEnd, yActual - seccionLinea, colorSuave);
+      // Writing row: top bandaExtrema | middle | bottom bandaExtrema (default 1.1 | 1.8 | 1.1).
+      hLine(xStart, xEnd, yActual - (altoDeLineaMm - bandaExtremaMm), colorSuave);
+      hLine(xStart, xEnd, yActual - bandaExtremaMm, colorSuave);
 
       yActual += espacioEntreLineasMm;
       if (yActual >= yEnd) break;

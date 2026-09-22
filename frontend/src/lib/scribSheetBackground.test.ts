@@ -35,9 +35,25 @@ describe("scribSheetBackground", () => {
     expect(svg).not.toContain(".jpg");
   });
 
-  it("scales column count", () => {
-    const g = buildScribSheetBackgroundGeometry({ columnas: 1 });
-    expect(g.rects).toHaveLength(1);
+  it("subdivides each 4 mm writing row as 1.1 + 1.8 + 1.1", () => {
+    const g = buildScribSheetBackgroundGeometry();
+    const ml = SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const mv = SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm;
+    const alto = SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
+    const edge = SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm;
+    const bottomOfFirstRow = mv + alto;
+    const softYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorSuave &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1)
+      .sort((a, b) => a - b);
+    expect(softYs).toContain(bottomOfFirstRow - (alto - edge)); // 1.1 from top
+    expect(softYs).toContain(bottomOfFirstRow - edge); // 1.1 from bottom
+    expect(edge + (alto - 2 * edge) + edge).toBe(alto);
   });
 });
 
