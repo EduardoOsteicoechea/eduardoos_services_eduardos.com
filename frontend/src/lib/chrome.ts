@@ -121,11 +121,11 @@ function togglePanel(id: string): void {
   }
   const willOpen = node.hidden;
 
-  // Phone: agent fills 75% and hides menu/DHS. Tablet/desktop: dock after DHS or menu.
+  // Phone: keep menu, close DHS, dock chat at 66%. Tablet/desktop: dock after DHS or menu.
   if (id === "agent-sidebar") {
     if (willOpen) {
       if (isPhoneTray()) {
-        setPanelHidden("main-menu", true);
+        setPanelHidden("main-menu", false);
         setPanelHidden("dynamic-header", true);
       } else {
         setPanelHidden("main-menu", false);
@@ -134,6 +134,9 @@ function togglePanel(id: string): void {
       setPanelHidden("agent-sidebar", false);
     } else {
       setPanelHidden("agent-sidebar", true);
+      if (isPhoneTray() && panelOpen("main-menu")) {
+        syncDynamicHeaderWithMenu();
+      }
     }
     syncExpanded();
     return;
