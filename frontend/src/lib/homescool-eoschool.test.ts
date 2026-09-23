@@ -254,5 +254,9 @@ describe("renderEoschoolPages pagination", () => {
     expect(meta).toMatch(/Días/i);
     expect(quizPage?.querySelector(".homescool-letter__sub")).toBeNull();
     expect(quizPage?.querySelector(".homescool-letter__heading + .homescool-letter__sub")).toBeNull();
+    // Number badge sits beside the prompt, not over it.
+    const q = quizPage?.querySelector(".homescool-letter__q");
+    expect(q?.querySelector(".homescool-letter__q-num")?.textContent).toBe("1");
+    expect(q?.querySelector(".homescool-letter__q-main .homescool-letter__body")?.textContent).toMatch(/Q\?/);
   });
 });

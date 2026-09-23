@@ -853,7 +853,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.35rem;
-  counter-reset: hc-q;
   flex: 1 1 auto;
   align-content: start;
 }
@@ -878,9 +877,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter-page--quiz .homescool-letter__q {
-  padding: 0.28rem 0.28rem 0.28rem 0.28rem;
-  padding-top: 1.35rem;
-  gap: 0.12rem;
+  padding: 0.28rem;
+  gap: 0.28rem;
+}
+
+.homescool-letter-page--quiz .homescool-letter__q-num {
+  width: 1.05rem;
+  height: 1.05rem;
+  font-size: 0.6rem;
 }
 
 .homescool-letter-page--quiz .homescool-letter__q .homescool-letter__body {
@@ -900,27 +904,17 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.52rem;
 }
 
-.homescool-letter-page--quiz .homescool-letter__q::before {
-  width: 1.05rem;
-  height: 1.05rem;
-  font-size: 0.6rem;
-  left: 0.25rem;
-  top: 0.25rem;
-}
-
 .homescool-letter__q {
   margin: 0;
-  padding: 0.35rem 0.35rem 0.35rem 0.35rem;
+  padding: 0.35rem;
   border-radius: 0.3rem;
   border: 0.08rem solid var(--hc-blue);
   background: transparent;
-  counter-increment: hc-q;
-  position: relative;
-  padding-top: 1.55rem;
   min-height: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.35rem;
 }
 
 .homescool-letter__q:nth-child(4n + 1) {
@@ -939,47 +933,57 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   border-color: var(--hc-orange);
 }
 
-.homescool-letter__q::before {
-  content: counter(hc-q);
-  position: absolute;
-  left: 0.3rem;
-  top: 0.3rem;
+.homescool-letter__q-num {
+  flex: 0 0 auto;
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
   background: transparent;
-  border: 0.06rem solid currentColor;
+  border: 0.06rem solid var(--hc-blue);
   color: var(--hc-blue);
   font-size: 0.65rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
+  margin-top: 0.05rem;
 }
 
-.homescool-letter__q:nth-child(4n + 1)::before {
+.homescool-letter__q:nth-child(4n + 1) .homescool-letter__q-num {
   color: var(--hc-blue);
   border-color: var(--hc-blue);
 }
 
-.homescool-letter__q:nth-child(4n + 2)::before {
+.homescool-letter__q:nth-child(4n + 2) .homescool-letter__q-num {
   color: var(--hc-navy);
   border-color: var(--hc-navy);
 }
 
-.homescool-letter__q:nth-child(4n + 3)::before {
+.homescool-letter__q:nth-child(4n + 3) .homescool-letter__q-num {
   color: var(--hc-olive);
   border-color: var(--hc-olive);
 }
 
-.homescool-letter__q:nth-child(4n + 4)::before {
+.homescool-letter__q:nth-child(4n + 4) .homescool-letter__q-num {
   color: var(--hc-orange);
   border-color: var(--hc-orange);
 }
 
+.homescool-letter__q-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
 .homescool-letter__q .homescool-letter__body {
+  margin: 0;
   font-size: 0.68rem;
   line-height: 1.3;
+  font-weight: 600;
+  min-width: 0;
 }
 
 .homescool-letter__choices-list {

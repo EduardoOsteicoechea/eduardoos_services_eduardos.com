@@ -642,10 +642,13 @@ function buildQuizList(
   const list = el("ol", "homescool-letter__quiz") as HTMLOListElement;
   list.start = startIndex;
   const letters = ["A", "B", "C", "D", "E", "F"];
-  for (const q of questions) {
+  questions.forEach((q, i) => {
     const li = document.createElement("li");
     li.className = "homescool-letter__q";
-    li.append(el("p", "homescool-letter__body", q.prompt));
+    const num = el("span", "homescool-letter__q-num", String(startIndex + i));
+    num.setAttribute("aria-hidden", "true");
+    const main = el("div", "homescool-letter__q-main");
+    main.append(el("p", "homescool-letter__body", q.prompt));
     const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
     if (choices.length) {
       const ul = el("ul", "homescool-letter__choices-list");
@@ -658,10 +661,11 @@ function buildQuizList(
         opt.append(markEl, textEl);
         ul.append(opt);
       });
-      li.append(ul);
+      main.append(ul);
     }
+    li.append(num, main);
     list.append(li);
-  }
+  });
   wrap.append(list);
   return wrap;
 }
