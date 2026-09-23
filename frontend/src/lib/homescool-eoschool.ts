@@ -4,6 +4,7 @@
 
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
 import { mustLog } from "./dev-log";
+import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables";
 
 export const HOMESCOOL_SUBJECTS = [
   "mat",
@@ -30,18 +31,27 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     console.log("[homescool-eoschool] render.start", {
       subject: doc.subject,
       day: doc.day,
+      week: doc.week,
       kind: doc.lesson?.kind,
       points: doc.lesson?.points?.length,
       quiz: doc.quiz?.questionCount,
+      matTables: isMatTablesLayout(doc),
     });
   }
+
+  if (isMatTablesLayout(doc)) {
+    const pages = renderMatTablesPages(doc);
+    if (mustLog) console.log("[homescool-eoschool] render.done", { pages: pages.length, layout: "mat-tables" });
+    return pages;
+  }
+
   const pages: HTMLElement[] = [];
   pages.push(buildLessonPage(doc));
   const qs = doc.quiz?.questions ?? [];
   for (let i = 0; i < qs.length; i += QUESTIONS_PER_PAGE) {
     pages.push(buildQuizPage(doc, qs.slice(i, i + QUESTIONS_PER_PAGE), i + 1, qs.length));
   }
-  if (mustLog) console.log("[homescool-eoschool] render.done", { pages: pages.length });
+  if (mustLog) console.log("[homescool-eoschool] render.done", { pages: pages.length, layout: "default" });
   return pages;
 }
 

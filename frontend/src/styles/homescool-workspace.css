@@ -98,6 +98,11 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: var(--space-padding);
 }
 
+.homescool-dhs__section {
+  padding-bottom: var(--rail-gap);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
 .homescool-dhs__row,
 .homescool-dhs__grid {
   display: flex;
@@ -139,6 +144,39 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: var(--color-text);
   color: var(--color-bg);
   border-color: var(--color-text);
+}
+
+/* Primary action — filled button, not a ghost dhs-action row */
+.homescool-dhs__print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  min-height: var(--control-height);
+  margin-top: var(--rail-gap);
+  padding: var(--control-padding-block) var(--space-padding);
+  border: var(--border-width) solid var(--color-button-bg);
+  border-radius: var(--border-radius);
+  background: var(--color-button-bg);
+  color: var(--color-button-fg);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.homescool-dhs__print .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.homescool-dhs__print:hover:not(:disabled),
+.homescool-dhs__print:focus-visible:not(:disabled) {
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--border-width);
+}
+
+.homescool-dhs__print:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 /* US Letter portrait pages (print-faithful; in/cm allowed inside sheets) */
@@ -189,6 +227,162 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__q {
   margin: 0;
+}
+
+/* Mat week-2 letter: header 8% / task 10% / 3 equal rows / footer 8% */
+.homescool-letter-page--mat {
+  height: 11in;
+  min-height: 11in;
+  padding: 1cm;
+  gap: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.homescool-mat__header {
+  flex: 0 0 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  border-bottom: 0.04rem solid #c8c8d8;
+  min-height: 0;
+}
+
+.homescool-mat__heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.homescool-mat__meta {
+  font-size: 0.55rem;
+  color: #5c5c5c;
+}
+
+.homescool-mat__task {
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  font-size: 0.58rem;
+  line-height: 1.3;
+  border-bottom: 0.04rem solid #c8c8d8;
+  min-height: 0;
+  padding-block: 0.1rem;
+}
+
+.homescool-mat__levels {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.homescool-mat__row {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 0.7fr repeat(4, 1fr) 0.55fr;
+  gap: 0.2rem;
+  border-bottom: 0.04rem solid #c8c8d8;
+  padding-block: 0.15rem;
+}
+
+.homescool-mat__level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.homescool-mat__level-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04rem;
+}
+
+.homescool-mat__table {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.homescool-mat__table-title {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.1rem;
+}
+
+.homescool-mat__products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  font-size: 0.48rem;
+  line-height: 1.15;
+}
+
+.homescool-mat__product {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1rem;
+  white-space: nowrap;
+}
+
+.homescool-mat__blank {
+  display: inline-block;
+  min-width: 0.9rem;
+  border-bottom: 0.04rem solid #1a1a1a;
+  height: 0.45rem;
+}
+
+.homescool-mat__done-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homescool-mat__done {
+  width: 0.9rem;
+  height: 0.9rem;
+  padding: 0;
+  border: 0.06rem solid #1a1a1a;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.homescool-mat__done[aria-pressed="true"] {
+  background: #1a1a1a;
+}
+
+.homescool-mat__footer {
+  flex: 0 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.55rem;
+  color: #5c5c5c;
+  min-height: 0;
+  border-top: 0.04rem solid #c8c8d8;
+}
+
+@media print {
+  .homescool-mat__done {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 @media print {

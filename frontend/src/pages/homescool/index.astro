@@ -7,23 +7,23 @@ import "../../styles/homescool-workspace.css";
 <Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
     <div class="homescool-dhs" data-homescool-dhs>
-      <div class="homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-label="Ciclo" data-homescool-cycles>
+      <div class="homescool-dhs__section homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-label="Ciclo" data-homescool-cycles>
         <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="true">c1</button>
         <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
         <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="false">c3</button>
       </div>
-      <div class="homescool-dhs__grid homescool-dhs__grid--weeks" aria-label="Semana" data-homescool-weeks></div>
-      <div class="homescool-dhs__grid homescool-dhs__grid--days" aria-label="Día" data-homescool-days></div>
-      <div class="homescool-dhs__grid homescool-dhs__grid--subjects" aria-label="Materia" data-homescool-subjects></div>
+      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--weeks" aria-label="Semana" data-homescool-weeks></div>
+      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--days" aria-label="Día" data-homescool-days></div>
+      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--subjects" aria-label="Materia" data-homescool-subjects></div>
       <button
-        class="dhs-action"
+        class="homescool-dhs__print"
         type="button"
         data-homescool-print
         title="Print current material as PDF"
         aria-label="Print current material as PDF"
         disabled
       >
-        <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
+        <span class="material-symbols-outlined" aria-hidden="true">print</span>
         Print
       </button>
     </div>
