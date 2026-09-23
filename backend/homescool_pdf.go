@@ -54,7 +54,7 @@ func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 		lessonLines = append(lessonLines, "Resumen", s)
 	}
 
-	const questionsPerPage = 8
+	const questionsPerPage = 16
 	inline := inlineQuizPrintCapacity(doc)
 	if inline > len(doc.Quiz.Questions) {
 		inline = len(doc.Quiz.Questions)

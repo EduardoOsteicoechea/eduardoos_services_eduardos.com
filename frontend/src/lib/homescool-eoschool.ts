@@ -23,8 +23,8 @@ export const HOMESCOOL_SUBJECTS = [
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
 
-/** Full quiz-only letter page: 4×2 cards. */
-const QUIZ_PAGE_CAPACITY = 8;
+/** Full quiz-only letter page: 4 columns × 4 rows fills US Letter under the hero. */
+const QUIZ_PAGE_CAPACITY = 16;
 
 /**
  * How many MCQs can ride on the lesson sheet when the lesson is short

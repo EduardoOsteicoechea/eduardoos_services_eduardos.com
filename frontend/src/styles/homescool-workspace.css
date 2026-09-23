@@ -729,6 +729,55 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   align-content: start;
 }
 
+.homescool-letter-page--quiz {
+  height: 11in;
+  min-height: 11in;
+  overflow: hidden;
+}
+
+.homescool-letter-page--quiz .homescool-letter__quiz-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.homescool-letter-page--quiz .homescool-letter__quiz {
+  flex: 1 1 auto;
+  align-content: stretch;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 0.28rem;
+}
+
+.homescool-letter-page--quiz .homescool-letter__q {
+  padding: 0.28rem 0.28rem 0.28rem 0.28rem;
+  padding-top: 1.35rem;
+  gap: 0.12rem;
+}
+
+.homescool-letter-page--quiz .homescool-letter__q .homescool-letter__body {
+  font-size: 0.62rem;
+  line-height: 1.25;
+}
+
+.homescool-letter-page--quiz .homescool-letter__choice {
+  font-size: 0.58rem;
+  padding: 0.08rem 0.18rem;
+  gap: 0.2rem;
+}
+
+.homescool-letter-page--quiz .homescool-letter__choice-mark {
+  width: 0.85rem;
+  height: 0.85rem;
+  font-size: 0.52rem;
+}
+
+.homescool-letter-page--quiz .homescool-letter__q::before {
+  width: 1.05rem;
+  height: 1.05rem;
+  font-size: 0.6rem;
+  left: 0.25rem;
+  top: 0.25rem;
+}
+
 .homescool-letter__q {
   margin: 0;
   padding: 0.35rem 0.35rem 0.35rem 0.35rem;
@@ -1019,7 +1068,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: 0;
   border: 0.1rem solid var(--mat-coral);
   border-radius: 50%;
-  background: #ffffff;
+  background: transparent;
   cursor: pointer;
 }
 
