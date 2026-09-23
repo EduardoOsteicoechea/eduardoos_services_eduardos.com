@@ -402,27 +402,53 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 /*
- * Material Symbols: ligatures break if text-transform:uppercase inherits from
- * labels/kickers — then the raw name (auto_stories, lightbulb…) paints over titles.
+ * Letter marks are CSS geometry only — never Material Symbols ligature text.
+ * PDF capture (modern-screenshot) often misses the icon font and paints names
+ * like "quiz" / "auto_stories" over headings.
  */
-.homescool-letter__icon.material-symbols-outlined {
-  font-family: "Material Symbols Outlined", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1rem;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  display: inline-block;
+.homescool-letter__icon {
   flex: 0 0 auto;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 0.07rem solid currentColor;
+  border-radius: 0.1rem;
+  background: transparent;
+  color: inherit;
+  font-size: 0;
+  line-height: 0;
   overflow: hidden;
-  font-feature-settings: "liga";
-  -webkit-font-feature-settings: "liga";
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-  -webkit-font-smoothing: antialiased;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+.homescool-letter__icon[data-icon="warning"],
+.homescool-letter__icon[data-icon="quiz"] {
+  border-radius: 50%;
+}
+
+.homescool-letter__icon[data-icon="arrow_back"],
+.homescool-letter__icon[data-icon="arrow_forward"] {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 0;
+  border-width: 0;
+  border-style: solid;
+  background: transparent;
+  position: relative;
+}
+
+.homescool-letter__icon[data-icon="arrow_back"] {
+  border-width: 0 0 0.08rem 0.08rem;
+  transform: rotate(45deg);
+  margin: 0.15rem 0.1rem 0 0.15rem;
+}
+
+.homescool-letter__icon[data-icon="arrow_forward"] {
+  border-width: 0.08rem 0.08rem 0 0;
+  transform: rotate(45deg);
+  margin: 0.15rem 0.15rem 0 0.1rem;
 }
 
 .homescool-letter__kicker .homescool-letter__icon,
@@ -430,17 +456,20 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter__ribbon-hint .homescool-letter__icon,
 .homescool-letter__quiz-label .homescool-letter__icon,
 .homescool-letter__summary-label .homescool-letter__icon {
-  font-size: 0.9rem;
+  width: 0.55rem;
+  height: 0.55rem;
 }
 
 .homescool-letter__heading .homescool-letter__icon,
 .homescool-letter__point-title .homescool-letter__icon,
 .homescool-letter__ribbon-title .homescool-letter__icon {
-  font-size: 1.1rem;
+  width: 0.7rem;
+  height: 0.7rem;
 }
 
 .homescool-letter__ribbon-badge .homescool-letter__icon {
-  font-size: 0.85rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 
 .homescool-letter__meta {
@@ -743,7 +772,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__col .homescool-letter__icon {
-  font-size: 0.95rem;
   color: var(--hc-rail);
   opacity: 0.85;
 }

@@ -144,7 +144,7 @@ describe("renderEoschoolPages pagination", () => {
     expect(pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"))).toHaveLength(1);
   });
 
-  it("isolates icon ligatures from uppercase label text", () => {
+  it("uses CSS marks instead of Material Symbols ligature text on every letter heading", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -158,14 +158,27 @@ describe("renderEoschoolPages pagination", () => {
         ],
         summary: "S.",
       },
+      quiz: {
+        questionCount: 1,
+        questions: [
+          { id: "q1", originDay: 1, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
+        ],
+      },
     });
-    const [page] = renderEoschoolPages(doc);
-    const icon = page.querySelector(".homescool-letter__heading .homescool-letter__icon");
-    expect(icon?.textContent).toBe("auto_stories");
-    expect((icon as HTMLElement).style.textTransform).toBe("none");
-
-    const labelText = page.querySelector(".homescool-letter__box-label-text");
-    expect(labelText?.textContent).toMatch(/Idea central|Consejo|Error/i);
-    expect(labelText?.previousElementSibling?.classList.contains("homescool-letter__icon")).toBe(true);
+    const pages = renderEoschoolPages(doc);
+    const icons = pages.flatMap((p) => Array.from(p.querySelectorAll(".homescool-letter__icon")));
+    expect(icons.length).toBeGreaterThan(0);
+    for (const icon of icons) {
+      expect(icon.classList.contains("material-symbols-outlined")).toBe(false);
+      expect(icon.textContent ?? "").toBe("");
+      expect(icon.getAttribute("data-icon")).toBeTruthy();
+    }
+    const quizPage = pages.find((p) => p.classList.contains("homescool-letter-page--quiz"));
+    expect(quizPage?.querySelector(".homescool-letter__quiz-label .homescool-letter__icon")?.getAttribute("data-icon")).toBe(
+      "quiz",
+    );
+    expect(quizPage?.querySelector(".homescool-letter__heading .homescool-letter__icon")?.getAttribute("data-icon")).toBe(
+      "auto_stories",
+    );
   });
 });

@@ -270,14 +270,14 @@ function buildDeepenRibbon(doc: EoschoolDocument): HTMLElement {
   const heading = doc.lesson?.points?.[0]?.heading?.trim() || `Punto ${focus}`;
   const ribbon = el("div", "homescool-letter__ribbon");
   const badge = el("span", "homescool-letter__ribbon-badge");
-  badge.append(msIcon("center_focus_strong"), el("span", "homescool-letter__kicker-text", `Punto ${focus}`));
+  badge.append(letterIcon("center_focus_strong"), el("span", "homescool-letter__kicker-text", `Punto ${focus}`));
   ribbon.append(badge);
   const title = el("span", "homescool-letter__ribbon-title");
-  title.append(msIcon("school"), el("span", "homescool-letter__title-text", heading));
+  title.append(letterIcon("school"), el("span", "homescool-letter__title-text", heading));
   ribbon.append(title);
   const hint = el("span", "homescool-letter__ribbon-hint");
   hint.append(
-    msIcon("filter_1"),
+    letterIcon("filter_1"),
     el("span", "homescool-letter__title-text", "Clase de profundización · un solo foco"),
   );
   ribbon.append(hint);
@@ -325,7 +325,7 @@ function buildLessonStack(
     if (p.heading) {
       const title = el("h3", "homescool-letter__point-title");
       title.append(
-        msIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"),
+        letterIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"),
         el("span", "homescool-letter__title-text", p.heading),
       );
       copy.append(title);
@@ -449,9 +449,9 @@ function renderParaBlock(p: RichPara): HTMLElement {
     box.append(boxLabel(meta.icon, meta.label));
     const cols = el("div", "homescool-letter__cols");
     const a = el("div", "homescool-letter__col homescool-letter__col--a");
-    a.append(msIcon("arrow_back"), el("p", "homescool-letter__body", p.left));
+    a.append(letterIcon("arrow_back"), el("p", "homescool-letter__body", p.left));
     const b = el("div", "homescool-letter__col homescool-letter__col--b");
-    b.append(msIcon("arrow_forward"), el("p", "homescool-letter__body", p.right));
+    b.append(letterIcon("arrow_forward"), el("p", "homescool-letter__body", p.right));
     cols.append(a, b);
     box.append(cols);
     if (p.left.length + p.right.length + 40 < p.text.length) {
@@ -472,18 +472,20 @@ function boxLabel(icon: string, text: string, soft = false): HTMLElement {
     "span",
     soft ? "homescool-letter__box-label homescool-letter__box-label--soft" : "homescool-letter__box-label",
   );
-  // Keep ligature name off uppercase inheritance — Material Symbols needs lowercase.
-  label.append(msIcon(icon), el("span", "homescool-letter__box-label-text", text));
+  label.append(letterIcon(icon), el("span", "homescool-letter__box-label-text", text));
   return label;
 }
 
-function msIcon(name: string): HTMLElement {
+/**
+ * Letter-sheet marks — CSS geometry only (no Material Symbols ligature text).
+ * Web-font icons paint as raw names (quiz, auto_stories…) in PDF capture when
+ * the icon font is missing or uppercase inheritance breaks ligatures.
+ */
+function letterIcon(name: string): HTMLElement {
   const icon = document.createElement("span");
-  icon.className = "material-symbols-outlined homescool-letter__icon";
+  icon.className = "homescool-letter__icon";
   icon.setAttribute("aria-hidden", "true");
-  // Explicit attribute so print/PDF capture cannot inherit text-transform:uppercase.
-  icon.style.textTransform = "none";
-  icon.textContent = name;
+  icon.setAttribute("data-icon", name);
   return icon;
 }
 
@@ -491,7 +493,7 @@ function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
   if (!doc.lesson?.summary) return;
   const sum = el("section", "homescool-letter__summary");
   const label = el("h3", "homescool-letter__summary-label");
-  label.append(msIcon("summarize"), el("span", "homescool-letter__box-label-text", "Resumen"));
+  label.append(letterIcon("summarize"), el("span", "homescool-letter__box-label-text", "Resumen"));
   sum.append(label);
   sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
   page.append(sum);
@@ -506,7 +508,7 @@ function buildQuizList(
   const wrap = el("section", "homescool-letter__quiz-wrap");
   const quizLabel = el("h3", "homescool-letter__quiz-label");
   quizLabel.append(
-    msIcon("quiz"),
+    letterIcon("quiz"),
     el(
       "span",
       "homescool-letter__box-label-text",
@@ -554,7 +556,7 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
   const kickIcon =
     HERO_ICONS[kicker] ??
     (kicker.startsWith("Cuestionario") ? "quiz" : "school");
-  kick.append(msIcon(kickIcon), el("span", "homescool-letter__kicker-text", kicker));
+  kick.append(letterIcon(kickIcon), el("span", "homescool-letter__kicker-text", kicker));
   top.append(kick);
   top.append(
     el(
@@ -565,7 +567,7 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
   );
   head.append(top);
   const title = el("h2", "homescool-letter__heading");
-  title.append(msIcon("auto_stories"), el("span", "homescool-letter__title-text", doc.title));
+  title.append(letterIcon("auto_stories"), el("span", "homescool-letter__title-text", doc.title));
   head.append(title);
   if (sub) head.append(el("p", "homescool-letter__sub", sub));
   return head;
