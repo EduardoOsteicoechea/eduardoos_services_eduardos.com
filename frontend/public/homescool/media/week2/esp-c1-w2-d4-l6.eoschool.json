@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Elegir el tiempo adecuado",
-        "body": "Practica la decisión simple vs compuesto. Para cada idea, elige y justifica: (1) acción acabada ayer → pretérito; (2) experiencia hasta hoy → antepresente; (3) hábito pasado → imperfecto; (4) hipótesis presente → condicional; (5) «ya hecho» antes de otro pasado → pluscuamperfecto. Reescribe cinco oraciones cortas cambiando solo el tiempo y explica qué matices cambian. El objetivo no es memorizar etiquetas, sino oír la diferencia de aspecto y de ancla temporal."
+        "body": "Practica la decisión simple vs compuesto. (1) acción acabada ayer → pretérito; (2) experiencia hasta hoy → antepresente; (3) hábito pasado → imperfecto; (4) hipótesis presente → condicional; (5) «ya hecho» antes de otro pasado → pluscuamperfecto.\n\nReescribe cinco oraciones cortas cambiando solo el tiempo y explica qué matices cambian. El objetivo no es memorizar etiquetas, sino oír la diferencia de aspecto y de ancla temporal.\n\nAutoevalúa: ¿puedes justificar cada elección en una frase? Si no, vuelve al contraste terminé / he terminado / había terminado."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 28,
+    "questionCount": 32,
     "questions": [
       {
         "id": "d1-q1",
@@ -106,6 +106,19 @@
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuántos tiempos simples listamos?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuántos tiempos compuestos listamos?",
         "choices": [
           "3",
           "4",
@@ -206,6 +219,19 @@
         "answer": "Simples"
       },
       {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Pretérito de «cantar» (yo):",
+        "choices": [
+          "canto",
+          "cantaba",
+          "canté",
+          "cantaré"
+        ],
+        "answer": "canté"
+      },
+      {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
@@ -297,6 +323,19 @@
         "answer": "Compuestos"
       },
       {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "En los compuestos, el participio…",
+        "choices": [
+          "cambia con la persona",
+          "es invariable en persona",
+          "es siempre gerundio",
+          "se omite"
+        ],
+        "answer": "es invariable en persona"
+      },
+      {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
@@ -386,6 +425,19 @@
           "optativo"
         ],
         "answer": "indicativo"
+      },
+      {
+        "id": "d4-q8",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "Acción ya hecha antes de otro pasado →",
+        "choices": [
+          "presente",
+          "futuro",
+          "pluscuamperfecto",
+          "imperativo"
+        ],
+        "answer": "pluscuamperfecto"
       }
     ]
   },

@@ -27,8 +27,8 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 	for i := range doc.Lesson.Points {
 		doc.Lesson.Points[i] = EoschoolPoint{ID: "p", Heading: "h", Body: "b"}
 	}
-	doc.Quiz.QuestionCount = 35
-	doc.Quiz.Questions = make([]EoschoolQuestion, 35)
+	doc.Quiz.QuestionCount = 40
+	doc.Quiz.Questions = make([]EoschoolQuestion, 40)
 	for i := range doc.Quiz.Questions {
 		doc.Quiz.Questions[i] = EoschoolQuestion{
 			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
@@ -41,7 +41,7 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 }
 
 func sampleEoschoolDay1() EoschoolDocument {
-	qs := make([]EoschoolQuestion, 7)
+	qs := make([]EoschoolQuestion, 8)
 	for i := range qs {
 		qs[i] = EoschoolQuestion{
 			ID:        "q",
@@ -71,6 +71,6 @@ func sampleEoschoolDay1() EoschoolDocument {
 			},
 			Summary: "Memorizar productos 1×1 a 12×12.",
 		},
-		Quiz: EoschoolQuiz{QuestionCount: 7, Questions: qs},
+		Quiz: EoschoolQuiz{QuestionCount: 8, Questions: qs},
 	}
 }

@@ -44,11 +44,11 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 
 | Day | Lesson | Quiz size |
 | --- | --- | --- |
-| 1 | **Intro:** exactly **3 points** + **summary** | **7** (new set; all `originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 | **14** (sets days 1–2) |
-| 3 | **Deepen** point 2 | **21** (sets days 1–3) |
-| 4 | **Deepen** point 3 | **28** (sets days 1–4) |
-| 5 | **Review:** five overview blocks (see below) | **35** (sets 1–5; **randomize** order from the accumulated pool) |
+| 1 | **Intro:** exactly **3 points** + **summary** | **8** (new set; all `originDay: 1`) |
+| 2 | **Deepen** point 1 of day 1 | **16** (sets days 1–2) |
+| 3 | **Deepen** point 2 | **24** (sets days 1–3) |
+| 4 | **Deepen** point 3 | **32** (sets days 1–4) |
+| 5 | **Review:** five overview blocks (see below) | **40** (sets 1–5; **randomize** order from the accumulated pool) |
 
 ### Day 5 lesson blocks (fixed order)
 
@@ -60,7 +60,7 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 
 ### Quiz accumulation rule
 
-Each day adds **7 new** questions. The quiz served that day includes **all** questions from days `1…day` (so day *n* has `7 × n` items; day 5 has 35). Day 5 must shuffle presentation order.
+Each day adds **8 new** questions. The quiz served that day includes **all** questions from days `1…day` (so day *n* has `8 × n` items; day 5 has 40). Day 5 must shuffle presentation order.
 
 Every question is **selección simple** (`type: "mcq"`) with at least **2** choices (prefer 4: A–D). No `short` / free-response items in v1 packs.
 
@@ -95,7 +95,7 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
     "summary": "…"
   },
   "quiz": {
-    "questionCount": 7,
+    "questionCount": 8,
     "questions": [
       {
         "id": "d1-q1",
@@ -116,9 +116,9 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
 - `format` must be `"eoschool"`; `version` must be `1`.
 - `cycle` ∈ 1..3; `week` ∈ 1..24; `day` ∈ 1..5; `level` must be `6` (v1); `subject` ∈ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
 - Logical key: `owner + cycle + week + day + level + subject` (no free slug).
-- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 7`, every question `originDay == 1`.
-- `day` ∈ 2..4 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 7 * day`, each `originDay` ∈ 1..day.
-- `day == 5` → `kind == "review"`, exactly **5** point blocks in the overview order above, `questionCount == 35`, each `originDay` ∈ 1..5.
+- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`.
+- `day` ∈ 2..4 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 8 * day`, each `originDay` ∈ 1..day.
+- `day == 5` → `kind == "review"`, exactly **5** point blocks in the overview order above, `questionCount == 40`, each `originDay` ∈ 1..5.
 - Question `type`: **`mcq` only** (selección simple). Each question needs `choices` (≥2, prefer 4) and `answer`.
 
 ## API (docs-first)

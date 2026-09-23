@@ -14,25 +14,25 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Ocho pares de memoria",
-        "body": "Lista de memoria al menos ocho pares estado–capital de la lista clave (incluye DC–Caracas, Zulia, Carabobo, Miranda, Lara, Aragua, Tachira, Bolivar). Comprueba y corrige. Inventa una ronda oral: un companero dice el estado y tu la capital (y al reves). Marca en rojo los dos pares mas debiles y repitelos diez veces. Meta: automaticidad en los pares de alta frecuencia."
+        "heading": "Memorizar capitales clave",
+        "body": "Haz tarjetas con los doce pares prioritarios de la lección. Practica ida (estado→capital) y vuelta (capital→estado).\n\nMarca errores frecuentes: Miranda/Los Teques, Nueva Esparta/La Asunción, Falcón/Coro.\n\nCierra con una serie oral de un minuto sin mirar."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 21,
+    "questionCount": 24,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Cuantas entidades federales contamos?",
+        "prompt": "Total de entidades federales en la lección:",
         "choices": [
-          "20",
-          "23",
+          "22",
           "24",
-          "30"
+          "26",
+          "18"
         ],
         "answer": "24"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "Capital del Distrito Capital:",
         "choices": [
-          "Maracaibo",
           "Caracas",
+          "Maracaibo",
           "Valencia",
-          "Merida"
+          "Barquisimeto"
         ],
         "answer": "Caracas"
       },
@@ -56,9 +56,9 @@
         "prompt": "Capital de Zulia:",
         "choices": [
           "Maracaibo",
-          "Valencia",
-          "Barquisimeto",
-          "Merida"
+          "Cabimas",
+          "Ciudad Ojeda",
+          "Machiques"
         ],
         "answer": "Maracaibo"
       },
@@ -69,9 +69,9 @@
         "prompt": "Capital de Carabobo:",
         "choices": [
           "Valencia",
-          "Maracay",
           "Puerto Cabello",
-          "San Carlos"
+          "Guacara",
+          "Mariara"
         ],
         "answer": "Valencia"
       },
@@ -79,131 +79,157 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Merida:",
+        "prompt": "Capital de Miranda:",
         "choices": [
-          "San Cristobal",
-          "Merida",
-          "Trujillo",
-          "Barinas"
+          "Los Teques",
+          "Petare",
+          "Guarenas",
+          "Charallave"
         ],
-        "answer": "Merida"
+        "answer": "Los Teques"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Tema de la semana:",
+        "prompt": "23 estados + DC =",
         "choices": [
-          "rios de Europa",
-          "estados y capitales de Venezuela",
-          "solo el clima",
-          "solo banderas"
+          "23",
+          "24",
+          "25",
+          "12"
         ],
-        "answer": "estados y capitales de Venezuela"
+        "answer": "24"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Miranda:",
+        "prompt": "Tema:",
         "choices": [
-          "Los Teques",
-          "Guatire",
-          "Caracas",
-          "La Guaira"
+          "estados y capitales de Venezuela",
+          "solo ríos",
+          "solo climas",
+          "solo Europa"
         ],
-        "answer": "Los Teques"
+        "answer": "estados y capitales de Venezuela"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Capital de Lara:",
+        "choices": [
+          "Barquisimeto",
+          "Carora",
+          "El Tocuyo",
+          "Quíbor"
+        ],
+        "answer": "Barquisimeto"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "23 estados + que entidad?",
+        "prompt": "Capital de Aragua:",
         "choices": [
-          "Distrito Capital",
-          "solo una isla",
-          "una provincia espanola",
-          "un departamento"
+          "Maracay",
+          "La Victoria",
+          "Cagua",
+          "Turmero"
         ],
-        "answer": "Distrito Capital"
+        "answer": "Maracay"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Punto de hoy:",
+        "prompt": "Capital de Táchira:",
         "choices": [
-          "Mapa politico",
-          "solo el clima",
-          "solo rios",
-          "solo relieve"
+          "San Cristóbal",
+          "Táriba",
+          "Rubio",
+          "San Antonio"
         ],
-        "answer": "Mapa politico"
+        "answer": "San Cristóbal"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Lara:",
+        "prompt": "Capital de Bolívar:",
         "choices": [
-          "Barquisimeto",
-          "Acarigua",
-          "El Tocuyo",
-          "Carora"
+          "Ciudad Bolívar",
+          "Puerto Ordaz",
+          "Upata",
+          "El Callao"
         ],
-        "answer": "Barquisimeto"
+        "answer": "Ciudad Bolívar"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Aragua:",
+        "prompt": "Hoy profundizas:",
         "choices": [
-          "Valencia",
-          "Maracay",
-          "La Victoria",
-          "Cagua"
+          "por qué decimos 24 / mapa de entidades",
+          "solo un municipio",
+          "solo Europa",
+          "solo Asia"
         ],
-        "answer": "Maracay"
+        "answer": "por qué decimos 24 / mapa de entidades"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Tachira:",
+        "prompt": "Capital de Mérida:",
         "choices": [
-          "Merida",
-          "San Cristobal",
-          "San Antonio",
-          "La Grita"
+          "Mérida",
+          "El Vigía",
+          "Ejido",
+          "Tovar"
         ],
-        "answer": "San Cristobal"
+        "answer": "Mérida"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Bolivar:",
+        "prompt": "Caracas es capital del DC y…",
         "choices": [
-          "Ciudad Guayana",
-          "Ciudad Bolivar",
-          "Upata",
-          "Caicara"
+          "de la República",
+          "solo de Zulia",
+          "solo de Miranda",
+          "solo de Falcón"
         ],
-        "answer": "Ciudad Bolivar"
+        "answer": "de la República"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Anzoategui:",
+        "prompt": "Capital de Anzoátegui:",
         "choices": [
           "Barcelona",
           "Puerto La Cruz",
-          "Lecheria",
+          "Lechería",
           "El Tigre"
         ],
         "answer": "Barcelona"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Porlamar es capital de Nueva Esparta?",
+        "choices": [
+          "Sí",
+          "No (es La Asunción)",
+          "Sí, y también de Sucre",
+          "Sí, y de Monagas"
+        ],
+        "answer": "No (es La Asunción)"
       },
       {
         "id": "d3-q1",
@@ -211,18 +237,18 @@
         "type": "mcq",
         "prompt": "Capital de Sucre:",
         "choices": [
-          "Cumana",
-          "Carupano",
-          "Guiria",
-          "Rio Caribe"
+          "Cumaná",
+          "Carúpano",
+          "Güiria",
+          "Río Caribe"
         ],
-        "answer": "Cumana"
+        "answer": "Cumaná"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Capital de Falcon:",
+        "prompt": "Capital de Falcón:",
         "choices": [
           "Punto Fijo",
           "Coro",
@@ -240,7 +266,7 @@
           "Valera",
           "Trujillo",
           "Boconó",
-          "Motatan"
+          "Motatán"
         ],
         "answer": "Trujillo"
       },
@@ -252,7 +278,7 @@
         "choices": [
           "Capitales clave",
           "solo el Orinoco",
-          "solo el Avila",
+          "solo el Ávila",
           "solo el clima"
         ],
         "answer": "Capitales clave"
@@ -263,12 +289,12 @@
         "type": "mcq",
         "prompt": "Capital de Nueva Esparta:",
         "choices": [
-          "La Asuncion",
+          "La Asunción",
           "Porlamar",
           "Pampatar",
           "Juan Griego"
         ],
-        "answer": "La Asuncion"
+        "answer": "La Asunción"
       },
       {
         "id": "d3-q6",
@@ -295,6 +321,19 @@
           "Nirgua"
         ],
         "answer": "San Felipe"
+      },
+      {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Capital de Monagas:",
+        "choices": [
+          "Maturín",
+          "Punta de Mata",
+          "Caripito",
+          "Temblador"
+        ],
+        "answer": "Maturín"
       }
     ]
   },

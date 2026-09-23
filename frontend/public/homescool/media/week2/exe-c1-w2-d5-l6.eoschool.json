@@ -7,7 +7,7 @@
   "level": 6,
   "subject": "exe",
   "locale": "es",
-  "title": "Exegesis: Romanos 1:1–7",
+  "title": "Exégesis: Romanos 1:1–7",
   "lesson": {
     "kind": "review",
     "focusPoint": null,
@@ -15,39 +15,65 @@
       {
         "id": "p1",
         "heading": "Overview",
-        "body": "El portico de Romanos presenta autor, mensaje y audiencia en 1:1–7."
+        "body": "El pórtico de Romanos presenta autor, mensaje y audiencia en 1:1–7.\n\nNo es relleno: ya es teología del evangelio."
       },
       {
         "id": "p2",
         "heading": "Overview v. 1",
-        "body": "Pablo: siervo y apostol, apartado para el evangelio de Dios."
+        "body": "Pablo: siervo y apóstol, apartado para el evangelio de Dios.\n\nQuién habla y con qué mandato."
       },
       {
         "id": "p3",
         "heading": "Overview vv. 2–4",
-        "body": "Evangelio de Cristo: promesa, linaje davidico, resurreccion y senorio."
+        "body": "Evangelio de Cristo: promesa, linaje davídico, resurrección y señorío.\n\nHilo: promesa → Hijo → Señor."
       },
       {
         "id": "p4",
         "heading": "Overview vv. 5–7",
-        "body": "Roma, naciones, llamados santos; gracia y paz."
+        "body": "Roma, naciones, llamados santos; gracia y paz.\n\nAudiencia y tono del saludo."
       },
       {
         "id": "p5",
-        "heading": "Sintesis v. 1",
-        "body": "Sin el remitente claro, el resto del saludo flota. Empieza por quien escribe y con que mandato."
+        "heading": "Síntesis v. 1",
+        "body": "Sin el remitente claro, el resto del saludo flota. Empieza por quién escribe y con qué mandato.\n\nLuego Cristo (vv. 2–4) y Roma (vv. 5–7)."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 35,
+    "questionCount": 40,
     "questions": [
+      {
+        "id": "d2-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Hoy profundizas:",
+        "choices": [
+          "v. 1 (remitente)",
+          "solo vv. 5–7",
+          "solo Génesis",
+          "solo arte"
+        ],
+        "answer": "v. 1 (remitente)"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El evangelio del saludo anuncia sobre todo a:",
+        "choices": [
+          "Cristo / el Hijo",
+          "solo a César",
+          "solo a David sin Cristo",
+          "solo a Abraham sin cumplimiento"
+        ],
+        "answer": "Cristo / el Hijo"
+      },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "«Apostol» implica:",
+        "prompt": "«Apóstol» implica:",
         "choices": [
           "enviado con autoridad",
           "turista",
@@ -57,56 +83,17 @@
         "answer": "enviado con autoridad"
       },
       {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Antes de la doctrina larga, Pablo fija:",
-        "choices": [
-          "quien habla y con que mandato",
-          "solo el clima de Roma",
-          "solo el precio del pan",
-          "solo el color de la toga"
-        ],
-        "answer": "quien habla y con que mandato"
-      },
-      {
-        "id": "d1-q6",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Deseo final del saludo:",
-        "choices": [
-          "gracia y paz",
-          "oro y plata",
-          "guerra y fama",
-          "solo silencio"
-        ],
-        "answer": "gracia y paz"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "El saludo anuncia a Cristo como:",
-        "choices": [
-          "centro del evangelio",
-          "nota al pie",
-          "enemigo del evangelio",
-          "tema opcional"
-        ],
-        "answer": "centro del evangelio"
-      },
-      {
-        "id": "d5-q4",
+        "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Tema:",
+        "prompt": "Resurrección destaca en:",
         "choices": [
-          "exegesis Romanos 1:1-7",
-          "solo capitales",
-          "solo Kush",
-          "solo gota"
+          "vv. 2–4",
+          "solo v. 7 sin Cristo",
+          "solo materiales",
+          "solo et"
         ],
-        "answer": "exegesis Romanos 1:1-7"
+        "answer": "vv. 2–4"
       },
       {
         "id": "d4-q2",
@@ -114,77 +101,38 @@
         "type": "mcq",
         "prompt": "Hoy profundizas:",
         "choices": [
-          "vv. 5-7 (destinatarios y gracia)",
-          "solo vv. 2-4",
+          "vv. 5–7 (destinatarios y gracia)",
+          "solo vv. 2–4",
           "solo v. 1",
           "solo Brookes"
         ],
-        "answer": "vv. 5-7 (destinatarios y gracia)"
+        "answer": "vv. 5–7 (destinatarios y gracia)"
       },
       {
-        "id": "d5-q2",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Pasaje completo:",
-        "choices": [
-          "Romanos 1:1-7",
-          "Romanos 16 solo",
-          "Hechos 27 solo",
-          "Juan 1 solo"
-        ],
-        "answer": "Romanos 1:1-7"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Segun la carne, el Hijo es:",
-        "choices": [
-          "descendiente de David",
-          "descendiente de Cesar",
-          "descendiente de Colón",
-          "sin linaje"
-        ],
-        "answer": "descendiente de David"
-      },
-      {
-        "id": "d4-q6",
+        "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Resumen del portico:",
+        "prompt": "Destinatarios:",
         "choices": [
-          "autor, mensaje, audiencia",
-          "solo clima",
-          "solo mapas",
-          "solo tablas"
+          "amados de Dios en Roma / llamados santos",
+          "solo el Senado pagano sin iglesia",
+          "solo Atenas",
+          "solo Jericó"
         ],
-        "answer": "autor, mensaje, audiencia"
+        "answer": "amados de Dios en Roma / llamados santos"
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Deseo del saludo:",
+        "prompt": "«Llamados a ser santos» describe a:",
         "choices": [
-          "gracia y paz",
-          "oro y conquista",
-          "fama y poder",
-          "silencio y olvido"
+          "los destinatarios en Roma",
+          "solo a Pablo en solitario",
+          "solo a David",
+          "solo a Abraham en Génesis 12 sin carta"
         ],
-        "answer": "gracia y paz"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "El evangelio fue prometido:",
-        "choices": [
-          "en las Escrituras / profetas",
-          "solo en Roma ayer",
-          "solo por Cesar",
-          "solo en Shang"
-        ],
-        "answer": "en las Escrituras / profetas"
+        "answer": "los destinatarios en Roma"
       },
       {
         "id": "d2-q4",
@@ -200,173 +148,17 @@
         "answer": "el evangelio de Dios"
       },
       {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "El saludo ya es:",
-        "choices": [
-          "teologia / presentacion del mensajero",
-          "solo chisme",
-          "solo poesia vacia",
-          "solo lista de compras"
-        ],
-        "answer": "teologia / presentacion del mensajero"
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "«Llamados a ser santos» describe a:",
-        "choices": [
-          "los destinatarios en Roma",
-          "solo a Pablo en solitario",
-          "solo a David",
-          "solo a Abraham en Genesis 12 sin carta"
-        ],
-        "answer": "los destinatarios en Roma"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "v. 1 (remitente)",
-          "solo vv. 5-7",
-          "solo Genesis",
-          "solo arte"
-        ],
-        "answer": "v. 1 (remitente)"
-      },
-      {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Jesucristo es llamado:",
-        "choices": [
-          "Senor",
-          "solo piloto",
-          "solo consul",
-          "solo fariseo"
-        ],
-        "answer": "Senor"
-      },
-      {
-        "id": "d5-q3",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Siervo y apostol estan en:",
-        "choices": [
-          "v. 1",
-          "solo v. 7",
-          "solo Genesis",
-          "solo el experiment"
-        ],
-        "answer": "v. 1"
-      },
-      {
-        "id": "d1-q7",
+        "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Tema:",
+        "prompt": "Dos títulos de Pablo en v. 1:",
         "choices": [
-          "Romanos 1:1-7",
-          "solo tablas",
-          "solo Kush",
-          "solo gota"
+          "siervo y apóstol",
+          "rey y faraón",
+          "cónsul y senador",
+          "capitán y piloto"
         ],
-        "answer": "Romanos 1:1-7"
-      },
-      {
-        "id": "d4-q5",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Gracia y paz vienen de:",
-        "choices": [
-          "Dios Padre y el Senor Jesucristo",
-          "solo el Cesar",
-          "solo el Senado",
-          "solo la fortuna"
-        ],
-        "answer": "Dios Padre y el Senor Jesucristo"
-      },
-      {
-        "id": "d1-q1",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Quien escribe?",
-        "choices": [
-          "Pablo",
-          "Pedro solo",
-          "Moises",
-          "Colón"
-        ],
-        "answer": "Pablo"
-      },
-      {
-        "id": "d5-q6",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "La sintesis final vuelve a:",
-        "choices": [
-          "el remitente (v. 1)",
-          "borrar a Pablo",
-          "negar el evangelio",
-          "olvidar Roma"
-        ],
-        "answer": "el remitente (v. 1)"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "El evangelio del v. 1 es:",
-        "choices": [
-          "de Dios (no invento personal)",
-          "solo rumor",
-          "solo filosofia griega",
-          "solo edicto imperial"
-        ],
-        "answer": "de Dios (no invento personal)"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hilo de vv. 2-4:",
-        "choices": [
-          "promesa → Hijo → Senor",
-          "gota → alambre → periodico",
-          "et → ut → non",
-          "8 → 9 → 10 solo"
-        ],
-        "answer": "promesa → Hijo → Senor"
-      },
-      {
-        "id": "d1-q3",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Pasaje:",
-        "choices": [
-          "Romanos 1:1-7",
-          "Genesis 1 solo",
-          "Mateo 5 solo",
-          "Salmo 23 solo"
-        ],
-        "answer": "Romanos 1:1-7"
-      },
-      {
-        "id": "d5-q5",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Resurreccion destaca en:",
-        "choices": [
-          "vv. 2-4",
-          "solo v. 7 sin Cristo",
-          "solo materiales",
-          "solo et"
-        ],
-        "answer": "vv. 2-4"
+        "answer": "siervo y apóstol"
       },
       {
         "id": "d5-q1",
@@ -382,30 +174,95 @@
         "answer": "remitente, evangelio/Cristo, destinatarios"
       },
       {
-        "id": "d4-q1",
-        "originDay": 4,
+        "id": "d3-q6",
+        "originDay": 3,
         "type": "mcq",
-        "prompt": "Destinatarios:",
+        "prompt": "Jesucristo es llamado:",
         "choices": [
-          "amados de Dios en Roma / llamados santos",
-          "solo el Senado pagano sin iglesia",
-          "solo Atenas",
-          "solo Jerico"
+          "Señor",
+          "solo piloto",
+          "solo cónsul",
+          "solo fariseo"
         ],
-        "answer": "amados de Dios en Roma / llamados santos"
+        "answer": "Señor"
       },
       {
-        "id": "d1-q4",
-        "originDay": 1,
+        "id": "d4-q5",
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "El evangelio del saludo anuncia sobre todo a:",
+        "prompt": "Gracia y paz vienen de:",
         "choices": [
-          "Cristo / el Hijo",
-          "solo a Cesar",
-          "solo a David sin Cristo",
-          "solo a Abraham sin cumplimiento"
+          "Dios Padre y el Señor Jesucristo",
+          "solo el César",
+          "solo el Senado",
+          "solo la fortuna"
         ],
-        "answer": "Cristo / el Hijo"
+        "answer": "Dios Padre y el Señor Jesucristo"
+      },
+      {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Resurrección destaca en:",
+        "choices": [
+          "vv. 2–4",
+          "solo v. 7 sin Cristo",
+          "solo materiales",
+          "solo et"
+        ],
+        "answer": "vv. 2–4"
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Según la carne, el Hijo es:",
+        "choices": [
+          "descendiente de David",
+          "descendiente de César",
+          "descendiente de Colón",
+          "sin linaje"
+        ],
+        "answer": "descendiente de David"
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "El saludo ya es:",
+        "choices": [
+          "teología / presentación del mensajero",
+          "solo chisme",
+          "solo poesía vacía",
+          "solo lista de compras"
+        ],
+        "answer": "teología / presentación del mensajero"
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "Siervo y apóstol están en:",
+        "choices": [
+          "v. 1",
+          "solo v. 7",
+          "solo Génesis",
+          "solo el experiment"
+        ],
+        "answer": "v. 1"
+      },
+      {
+        "id": "d5-q4",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "Tema:",
+        "choices": [
+          "exégesis Romanos 1:1–7",
+          "solo capitales",
+          "solo Kush",
+          "solo gota"
+        ],
+        "answer": "exégesis Romanos 1:1–7"
       },
       {
         "id": "d4-q3",
@@ -416,48 +273,87 @@
           "obediencia de la fe entre las naciones",
           "solo comercio",
           "solo guerra",
-          "solo geometria"
+          "solo geometría"
         ],
         "answer": "obediencia de la fe entre las naciones"
       },
       {
-        "id": "d1-q5",
-        "originDay": 1,
+        "id": "d2-q6",
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Dos titulos de Pablo en v. 1:",
+        "prompt": "Antes de la doctrina larga, Pablo fija:",
         "choices": [
-          "siervo y apostol",
-          "rey y faraon",
-          "consul y senador",
-          "capitan y piloto"
+          "quién habla y con qué mandato",
+          "solo el clima de Roma",
+          "solo el precio del pan",
+          "solo el color de la toga"
         ],
-        "answer": "siervo y apostol"
+        "answer": "quién habla y con qué mandato"
       },
       {
-        "id": "d5-q7",
-        "originDay": 5,
+        "id": "d3-q7",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "El saludo anuncia a Cristo como:",
+        "choices": [
+          "centro del evangelio",
+          "nota al pie",
+          "enemigo del evangelio",
+          "tema opcional"
+        ],
+        "answer": "centro del evangelio"
+      },
+      {
+        "id": "d3-q5",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Hilo de vv. 2–4:",
+        "choices": [
+          "promesa → Hijo → Señor",
+          "gota → alambre → periódico",
+          "et → ut → non",
+          "8 → 9 → 10 solo"
+        ],
+        "answer": "promesa → Hijo → Señor"
+      },
+      {
+        "id": "d4-q8",
+        "originDay": 4,
         "type": "mcq",
         "prompt": "Gracia y paz cierran:",
         "choices": [
-          "vv. 5-7",
+          "vv. 5–7",
           "solo v. 1 sin audiencia",
-          "solo Genesis 3",
+          "solo Génesis 3",
           "solo el alambre"
         ],
-        "answer": "vv. 5-7"
+        "answer": "vv. 5–7"
       },
       {
-        "id": "d3-q2",
-        "originDay": 3,
+        "id": "d5-q6",
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Hoy profundizas:",
+        "prompt": "La síntesis final vuelve a:",
         "choices": [
-          "vv. 2-4 (evangelio y Cristo)",
-          "solo v. 1",
-          "solo vv. 5-7",
-          "solo materiales"
+          "el remitente (v. 1)",
+          "borrar a Pablo",
+          "negar el evangelio",
+          "olvidar Roma"
         ],
-        "answer": "vv. 2-4 (evangelio y Cristo)"
+        "answer": "el remitente (v. 1)"
+      },
+      {
+        "id": "d4-q6",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "Resumen del pórtico:",
+        "choices": [
+          "autor, mensaje, audiencia",
+          "solo clima",
+          "solo mapas",
+          "solo tablas"
+        ],
+        "answer": "autor, mensaje, audiencia"
       },
       {
         "id": "d3-q4",
@@ -465,25 +361,129 @@
         "type": "mcq",
         "prompt": "Declarado Hijo con poder por:",
         "choices": [
-          "la resurreccion",
+          "la resurrección",
           "solo un decreto romano",
-          "solo una eleccion",
+          "solo una elección",
           "solo un concilio moderno"
         ],
-        "answer": "la resurreccion"
+        "answer": "la resurrección"
       },
       {
-        "id": "d1-q2",
+        "id": "d3-q1",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "El evangelio fue prometido:",
+        "choices": [
+          "en las Escrituras / profetas",
+          "solo en Roma ayer",
+          "solo por César",
+          "solo en Shang"
+        ],
+        "answer": "en las Escrituras / profetas"
+      },
+      {
+        "id": "d5-q8",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "El pórtico presenta:",
+        "choices": [
+          "autor, mensaje y audiencia",
+          "solo el clima",
+          "solo el alambre",
+          "solo Brookes"
+        ],
+        "answer": "autor, mensaje y audiencia"
+      },
+      {
+        "id": "d5-q2",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "Pasaje completo:",
+        "choices": [
+          "Romanos 1:1–7",
+          "Romanos 16 solo",
+          "Hechos 27 solo",
+          "Juan 1 solo"
+        ],
+        "answer": "Romanos 1:1–7"
+      },
+      {
+        "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "A quienes saluda?",
+        "prompt": "Pasaje:",
         "choices": [
-          "los de Roma / amados en Roma",
-          "solo a Cesar personalmente",
-          "solo a Atenas",
-          "solo a Babilonia"
+          "Romanos 1:1–7",
+          "Génesis 1 solo",
+          "Mateo 5 solo",
+          "Salmo 23 solo"
         ],
-        "answer": "los de Roma / amados en Roma"
+        "answer": "Romanos 1:1–7"
+      },
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Quién escribe?",
+        "choices": [
+          "Pablo",
+          "Pedro solo",
+          "Moisés",
+          "Colón"
+        ],
+        "answer": "Pablo"
+      },
+      {
+        "id": "d5-q7",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "Gracia y paz cierran:",
+        "choices": [
+          "vv. 5–7",
+          "solo v. 1 sin audiencia",
+          "solo Génesis 3",
+          "solo el alambre"
+        ],
+        "answer": "vv. 5–7"
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "Deseo del saludo:",
+        "choices": [
+          "gracia y paz",
+          "oro y conquista",
+          "fama y poder",
+          "silencio y olvido"
+        ],
+        "answer": "gracia y paz"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Deseo final del saludo:",
+        "choices": [
+          "gracia y paz",
+          "oro y plata",
+          "guerra y fama",
+          "solo silencio"
+        ],
+        "answer": "gracia y paz"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tema:",
+        "choices": [
+          "Romanos 1:1–7",
+          "solo tablas",
+          "solo Kush",
+          "solo gota"
+        ],
+        "answer": "Romanos 1:1–7"
       },
       {
         "id": "d2-q1",
@@ -497,6 +497,71 @@
           "ser piloto"
         ],
         "answer": "pertenencia/obediencia a Cristo"
+      },
+      {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "El evangelio del v. 1 es:",
+        "choices": [
+          "de Dios (no invento personal)",
+          "solo rumor",
+          "solo filosofía griega",
+          "solo edicto imperial"
+        ],
+        "answer": "de Dios (no invento personal)"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Siervo y apóstol están en:",
+        "choices": [
+          "v. 1",
+          "solo v. 7",
+          "solo Génesis",
+          "solo el experiment"
+        ],
+        "answer": "v. 1"
+      },
+      {
+        "id": "d3-q2",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Hoy profundizas:",
+        "choices": [
+          "vv. 2–4 (evangelio y Cristo)",
+          "solo v. 1",
+          "solo vv. 5–7",
+          "solo materiales"
+        ],
+        "answer": "vv. 2–4 (evangelio y Cristo)"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿A quiénes saluda?",
+        "choices": [
+          "los de Roma / amados en Roma",
+          "solo a César personalmente",
+          "solo a Atenas",
+          "solo a Babilonia"
+        ],
+        "answer": "los de Roma / amados en Roma"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Orden del pórtico:",
+        "choices": [
+          "remitente, evangelio/Cristo, destinatarios",
+          "solo destinatarios",
+          "solo firmas",
+          "solo mapas"
+        ],
+        "answer": "remitente, evangelio/Cristo, destinatarios"
       }
     ]
   },

@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Compuestos con haber",
-        "body": "Hoy construyes los cinco compuestos. Escribe he / había / hube / habré / habría + el mismo participio (comido, escrito, dicho — ojo a irregulares). Marca en cada forma cuál es el auxiliar y cuál el participio. Inventa una línea temporal: «Cuando llegué, ella ya había salido» (pluscuamperfecto) frente a «He salido tres veces esta semana» (antepresente). Recuerda: el antepretérito (hube + participio) es raro en habla cotidiana, pero debes reconocerlo en textos."
+        "body": "Hoy construyes los cinco compuestos. Escribe he / había / hube / habré / habría + el mismo participio (comido, escrito, dicho — ojo a irregulares).\n\nInventa una línea temporal: «Cuando llegué, ella ya había salido» frente a «He salido tres veces esta semana». Marca en cada forma cuál es el auxiliar y cuál el participio.\n\nRecuerda: el antepretérito (hube + participio) es raro en habla cotidiana, pero debes reconocerlo en textos. Cierra listando los cinco nombres de los compuestos."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 21,
+    "questionCount": 24,
     "questions": [
       {
         "id": "d1-q1",
@@ -106,6 +106,19 @@
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuántos tiempos simples listamos?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuántos tiempos compuestos listamos?",
         "choices": [
           "3",
           "4",
@@ -206,6 +219,19 @@
         "answer": "Simples"
       },
       {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Pretérito de «cantar» (yo):",
+        "choices": [
+          "canto",
+          "cantaba",
+          "canté",
+          "cantaré"
+        ],
+        "answer": "canté"
+      },
+      {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
@@ -295,6 +321,19 @@
           "Acentuación"
         ],
         "answer": "Compuestos"
+      },
+      {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "En los compuestos, el participio…",
+        "choices": [
+          "cambia con la persona",
+          "es invariable en persona",
+          "es siempre gerundio",
+          "se omite"
+        ],
+        "answer": "es invariable en persona"
       }
     ]
   },

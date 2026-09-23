@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Simple tenses in context",
-        "body": "Deepen only the simple set. Pick one regular verb and conjugate first-person singular in present, imperfect/past progressive, simple past, future, and conditional. Write five minimal sentences, one per tense, changing the time frame (today / as a child / yesterday / tomorrow / if I could). Notice how imperfect does not «close» the action while simple past does. Contrast past endings with progressive/used-to forms so you do not mix them when writing."
+        "body": "Deepen only the simple set. Pick one regular verb and conjugate first-person singular in present, imperfect/past progressive, simple past, future, and conditional.\n\nWrite five minimal sentences, one per tense, changing the time frame (today / as a child / yesterday / tomorrow / if I could). Notice how imperfect does not close the action while simple past does.\n\nContrast past endings with progressive/used-to forms so you do not mix them when writing. Goal: five correct sentences without looking at a chart."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 14,
+    "questionCount": 16,
     "questions": [
       {
         "id": "d1-q1",
@@ -79,7 +79,7 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Another name for antepresente / present perfect idea:",
+        "prompt": "Another name for present perfect idea:",
         "choices": [
           "present perfect",
           "imperfect",
@@ -106,6 +106,19 @@
         "originDay": 1,
         "type": "mcq",
         "prompt": "How many simple tenses did we list?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "How many compound tenses did we list?",
         "choices": [
           "3",
           "4",
@@ -204,6 +217,19 @@
           "Only vocabulary"
         ],
         "answer": "Simple tenses"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Simple past of «sing» (I):",
+        "choices": [
+          "sing",
+          "was singing",
+          "sang",
+          "will sing"
+        ],
+        "answer": "sang"
       }
     ]
   },

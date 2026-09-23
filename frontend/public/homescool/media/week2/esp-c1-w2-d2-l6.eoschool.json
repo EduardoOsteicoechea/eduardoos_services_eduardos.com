@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Simples en contexto",
-        "body": "Profundiza solo los tiempos simples. Elige un verbo regular (por ejemplo cantar o vivir) y conjúgalo en 1.ª persona singular en presente, imperfecto, pretérito, futuro y condicional. Luego escribe cinco oraciones mínimas, una por tiempo, cambiando el marco temporal (hoy / cuando era niño / ayer / mañana / si pudiera). Observa cómo el imperfecto no «cierra» la acción y el pretérito sí. Recita las desinencias del pretérito (-é/-aste/-ó…) frente a las del imperfecto (-aba/-ía) para no confundirlas al escribir."
+        "body": "Profundiza solo los tiempos simples. Elige un verbo regular (cantar o vivir) y conjúgalo en 1.ª persona singular en presente, imperfecto, pretérito, futuro y condicional.\n\nEscribe cinco oraciones mínimas, una por tiempo, cambiando el marco temporal (hoy / cuando era niño / ayer / mañana / si pudiera). Observa cómo el imperfecto no «cierra» la acción y el pretérito sí.\n\nRecita las desinencias del pretérito (-é/-aste/-ó…) frente a las del imperfecto (-aba/-ía) para no confundirlas al escribir. Meta: cinco oraciones correctas sin mirar la tabla."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 14,
+    "questionCount": 16,
     "questions": [
       {
         "id": "d1-q1",
@@ -106,6 +106,19 @@
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuántos tiempos simples listamos?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuántos tiempos compuestos listamos?",
         "choices": [
           "3",
           "4",
@@ -204,6 +217,19 @@
           "Ortografía"
         ],
         "answer": "Simples"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Pretérito de «cantar» (yo):",
+        "choices": [
+          "canto",
+          "cantaba",
+          "canté",
+          "cantaré"
+        ],
+        "answer": "canté"
       }
     ]
   },

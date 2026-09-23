@@ -23,7 +23,8 @@ export const HOMESCOOL_SUBJECTS = [
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
 
-const QUESTIONS_PER_PAGE = 7;
+/** 8 new MCQs per day; letter quiz pages show 8 cards (4×2 grid). */
+const QUESTIONS_PER_PAGE = 8;
 
 /** Build letter-portrait DOM pages for lesson + quiz. */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {

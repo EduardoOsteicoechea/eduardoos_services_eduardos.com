@@ -14,48 +14,48 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Proposito del experimento",
-        "body": "El experimento de la gota de agua busca mostrar como una superficie curva de agua actua como lente convexa y agranda lo que hay detras — un modelo sencillo de la lente del ojo. No es magia: es refraccion. Al mirar letras de periodico a traves de la gota sostenida en un lazo de alambre, deberias verlas mayores. Si salen mas pequenas o borrosas, la gota no esta bien formada y hay que repetir. El proposito guia todo: simular y entender una lente convexa como en el ojo."
+        "heading": "Propósito del experimento",
+        "body": "El experimento de la gota de agua busca mostrar cómo una superficie curva de agua actúa como lente convexa y agranda lo que hay detrás: un modelo sencillo de la lente del ojo. No es magia: es refracción.\n\nPor qué importa el propósito: si no puedes decir para qué haces el montaje, solo «juegas con agua». El propósito guía materiales, pasos y conclusión. Al mirar letras de periódico a través de la gota sostenida en un lazo de alambre, deberías verlas mayores.\n\nEjemplo. Propósito en una oración: «Mostrar una lente convexa con una gota y relacionarla con el ojo». Añade por qué usamos periódico: letras pequeñas fáciles de juzgar si crecen o no.\n\nConsejo: distingue propósito (para qué) de procedimiento (cómo). Escríbelos en dos líneas separadas antes de tocar el alambre. Si las letras salen más pequeñas o borrosas, la gota no está bien formada y hay que repetir.\n\nError común: empezar por los materiales sin saber el propósito. Otro: declarar éxito sin haber visto aumento claro."
       },
       {
         "id": "p2",
         "heading": "Materiales y procedimiento",
-        "body": "Materiales: alambre calibre 20 de unos 6 pulgadas / 15 cm; lapiz; tazon; agua del grifo; periodico. Procedimiento: (1) Enrolla un extremo del alambre en el lapiz para formar un lazo pequeno y redondo; (2) deja un mango recto; (3) sumerge el lazo en el tazon con agua hasta que quede una gota en el anillo; (4) sostiene la gota sobre el periodico y mira las letras; (5) si se ven mas pequenas, vuelve a sumergir hasta lograr una gota convexa limpia. Anota cada paso en orden."
+        "body": "Materiales: alambre calibre 20 de unos 6 pulgadas / 15 cm; lápiz; tazón; agua del grifo; periódico. Procedimiento: (1) Enrolla un extremo del alambre en el lápiz para formar un lazo pequeño y redondo; (2) deja un mango recto; (3) sumerge el lazo en el tazón con agua hasta que quede una gota en el anillo; (4) sostiene la gota sobre el periódico y mira las letras; (5) si se ven más pequeñas, vuelve a sumergir hasta lograr una gota convexa limpia.\n\nPor qué importa el orden: un lazo ovalado deforma la gota; una gota mal formada no actúa como lupa. Anotar cada paso evita saltarse la comprobación.\n\nEjemplo de control. Si el aumento falla, no culpes al periódico primero: rehace la gota. Practica formar el lazo redondo antes de declarar el montaje listo.\n\nConsejo: recita materiales y los cinco pasos sin mirar. Haz un checklist escrito. Ensayo: sumergir, mirar, rehacer.\n\nError común: lazo demasiado grande o irregular. Otro: mirar sin gota estable (película rota)."
       },
       {
         "id": "p3",
-        "heading": "Resultados y por que",
-        "body": "Resultado esperado: las letras se ven agrandadas. Por que: la gota tiene forma convexa (mas gruesa al centro), como una lupa y como la lente del ojo; desvia la luz de modo que la imagen aparente crece. Si la pelicula de agua queda plana o mal formada, el efecto falla. Conecta: gota convexa ≈ lente del ojo ≈ aumento. Escribe una conclusion de tres lineas: que viste, que tipo de lente es, por que importa para entender la vision."
+        "heading": "Resultados y por qué",
+        "body": "Resultado esperado: las letras se ven agrandadas. Por qué: la gota tiene forma convexa (más gruesa al centro), como una lupa y como la lente del ojo; desvía la luz (refracción) de modo que la imagen aparente crece.\n\nPor qué importa explicar el porqué: ver el efecto sin razón es trucos; con razón es ciencia escolar. Si la película de agua queda plana o mal formada, el efecto falla.\n\nConecta: gota convexa ≈ lente del ojo ≈ aumento. Si se ve más pequeño, la gota no actúa bien como lupa: rehaz. Escribe una conclusión de tres líneas: qué viste, qué tipo de lente es, por qué importa para entender la visión.\n\nConsejo: dibuja un esquema simple gota + rayos + letras. Redacta: «La gota es una lente convexa; por eso agranda, como la lente del ojo.»\n\nError común: llamar cóncava a la gota que agranda. Otro: decir que el agua «empuja» las letras en vez de hablar de refracción/lente."
       }
     ],
-    "summary": "Explicar proposito, materiales, pasos, resultado y razon del experimento de la gota-lente (lente convexa / modelo del ojo)."
+    "summary": "Explicar propósito, materiales, pasos, resultado y razón del experimento de la gota-lente (lente convexa / modelo del ojo)."
   },
   "quiz": {
-    "questionCount": 7,
+    "questionCount": 8,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Que simula la gota?",
+        "prompt": "Propósito principal:",
         "choices": [
-          "la lente del ojo",
-          "un iman",
-          "un motor",
-          "un termometro"
+          "mostrar lente convexa / modelo del ojo",
+          "hervir el agua",
+          "hacer un imán",
+          "medir el viento"
         ],
-        "answer": "la lente del ojo"
+        "answer": "mostrar lente convexa / modelo del ojo"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Calibre del alambre (aprox.):",
+        "prompt": "Calibre del alambre:",
         "choices": [
           "20",
-          "2",
-          "200",
-          "0"
+          "2000",
+          "0",
+          "sin número"
         ],
         "answer": "20"
       },
@@ -63,53 +63,53 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Que tipo de lente forma la gota?",
+        "prompt": "Resultado esperado:",
         "choices": [
-          "convexa",
-          "solo plana perfecta",
-          "concava siempre",
-          "no es lente"
+          "letras agrandadas",
+          "letras invisibles siempre",
+          "fuego",
+          "música"
         ],
-        "answer": "convexa"
+        "answer": "letras agrandadas"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Si las letras se ven mas pequenas, que haces?",
+        "prompt": "Tipo de lente de la gota bien formada:",
         "choices": [
-          "volver a sumergir / rehaces la gota",
-          "romper el periodico",
-          "apagar la luz y ya",
-          "cambiar de asignatura"
+          "convexa",
+          "cóncava obligatoria",
+          "plana perfecta",
+          "no óptica"
         ],
-        "answer": "volver a sumergir / rehaces la gota"
+        "answer": "convexa"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Material para ver letras:",
+        "prompt": "Fenómeno óptico de base:",
         "choices": [
-          "periodico",
-          "solo un imán",
-          "solo arena",
-          "solo sal"
+          "refracción",
+          "solo gravidez",
+          "solo magnetismo",
+          "solo eco"
         ],
-        "answer": "periodico"
+        "answer": "refracción"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Por que se agrandan?",
+        "prompt": "Modelo biológico citado:",
         "choices": [
-          "lente convexa / refraccion",
-          "magia",
-          "el alambre es un telescopio",
-          "el tazon canta"
+          "ojo",
+          "solo el hígado",
+          "solo el pie",
+          "solo el cabello"
         ],
-        "answer": "lente convexa / refraccion"
+        "answer": "ojo"
       },
       {
         "id": "d1-q7",
@@ -118,11 +118,24 @@
         "prompt": "Tema:",
         "choices": [
           "lente de una gota de agua",
-          "solo historia",
-          "solo latin",
-          "solo capitales"
+          "solo geografía",
+          "solo arte Brookes",
+          "solo Romanos"
         ],
         "answer": "lente de una gota de agua"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Longitud del alambre:",
+        "choices": [
+          "6 in / 15 cm",
+          "15 km",
+          "6 m de acero",
+          "sin medida"
+        ],
+        "answer": "6 in / 15 cm"
       }
     ]
   },

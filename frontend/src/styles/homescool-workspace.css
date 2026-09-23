@@ -302,7 +302,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   width: 8.5in;
   min-height: 11in;
   padding: 0.55rem;
-  background: var(--hc-sand);
+  background: #ffffff;
   color: var(--hc-ink);
   border: var(--border-width) solid var(--hc-line);
   display: flex;
@@ -444,6 +444,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   margin: 0;
   line-height: 1.4;
   color: var(--hc-ink);
+  white-space: pre-line;
 }
 
 .homescool-letter__summary {
@@ -470,70 +471,97 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.35rem;
   counter-reset: hc-q;
+  flex: 1 1 auto;
+  align-content: start;
 }
 
 .homescool-letter__q {
   margin: 0;
-  padding: 0.4rem 0.45rem 0.4rem 0.45rem;
+  padding: 0.35rem 0.35rem 0.35rem 0.35rem;
   border-radius: 0.3rem;
   border: 0.06rem solid var(--hc-line);
   background: var(--hc-cream);
   counter-increment: hc-q;
   position: relative;
-  padding-left: 2.1rem;
+  padding-top: 1.55rem;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.homescool-letter__q:nth-child(4n + 1) {
+  background: var(--hc-mint);
+}
+
+.homescool-letter__q:nth-child(4n + 2) {
+  background: var(--hc-sky);
+}
+
+.homescool-letter__q:nth-child(4n + 3) {
+  background: var(--hc-lilac);
+}
+
+.homescool-letter__q:nth-child(4n + 4) {
+  background: var(--hc-peach);
 }
 
 .homescool-letter__q::before {
   content: counter(hc-q);
   position: absolute;
-  left: 0.4rem;
-  top: 0.4rem;
-  width: 1.3rem;
-  height: 1.3rem;
+  left: 0.3rem;
+  top: 0.3rem;
+  width: 1.15rem;
+  height: 1.15rem;
   border-radius: 50%;
   background: var(--hc-coral);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.homescool-letter__q .homescool-letter__body {
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
 .homescool-letter__choices-list {
-  margin: 0.25rem 0 0;
+  margin: 0.1rem 0 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.18rem;
+  gap: 0.12rem;
 }
 
 .homescool-letter__choice {
   margin: 0;
-  font-size: 0.74rem;
-  line-height: 1.3;
+  font-size: 0.62rem;
+  line-height: 1.25;
   display: flex;
   align-items: flex-start;
-  gap: 0.35rem;
-  padding: 0.18rem 0.3rem;
-  border-radius: 0.2rem;
+  gap: 0.25rem;
+  padding: 0.12rem 0.22rem;
+  border-radius: 0.18rem;
   background: #ffffff;
   border: 0.05rem solid var(--hc-line);
 }
 
 .homescool-letter__choice-mark {
   flex: 0 0 auto;
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 0.95rem;
+  height: 0.95rem;
   border-radius: 50%;
   background: var(--hc-rail);
   color: #f8fafc;
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -567,7 +595,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--mat-sand);
+  background: #ffffff;
   color: var(--mat-ink);
   border: var(--border-width) solid var(--mat-line);
 }
@@ -878,6 +906,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   .homescool-letter-page--mat {
     height: 11in !important;
     min-height: 11in !important;
-    background: #f7f3ee !important;
+    background: #ffffff !important;
   }
 }

@@ -92,7 +92,7 @@ func eoschoolSubjectOK(subject string) bool {
 }
 
 func eoschoolExpectedQuizCount(day int) int {
-	return 7 * day
+	return 8 * day
 }
 
 func validateEoschoolDocument(doc *EoschoolDocument) error {

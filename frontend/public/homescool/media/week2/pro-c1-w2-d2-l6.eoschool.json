@@ -14,38 +14,38 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Fijar el proposito",
-        "body": "Escribe el proposito en una oracion clara: mostrar una lente convexa con una gota y relacionarla con el ojo. Anade por que usamos periodico (letras pequenas fáciles de juzgar). Distingue proposito (para que) de procedimiento (como). Si no puedes decir el proposito, no empieces el montaje."
+        "heading": "Fijar el propósito",
+        "body": "Escribe el propósito en una oración clara: mostrar una lente convexa con una gota y relacionarla con el ojo.\n\nAñade por qué usamos periódico (letras pequeñas fáciles de juzgar). Distingue propósito (para qué) de procedimiento (cómo).\n\nSi no puedes decir el propósito, no empieces el montaje."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 14,
+    "questionCount": 16,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Que simula la gota?",
+        "prompt": "Propósito principal:",
         "choices": [
-          "la lente del ojo",
-          "un iman",
-          "un motor",
-          "un termometro"
+          "mostrar lente convexa / modelo del ojo",
+          "hervir el agua",
+          "hacer un imán",
+          "medir el viento"
         ],
-        "answer": "la lente del ojo"
+        "answer": "mostrar lente convexa / modelo del ojo"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Calibre del alambre (aprox.):",
+        "prompt": "Calibre del alambre:",
         "choices": [
           "20",
-          "2",
-          "200",
-          "0"
+          "2000",
+          "0",
+          "sin número"
         ],
         "answer": "20"
       },
@@ -53,53 +53,53 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Que tipo de lente forma la gota?",
+        "prompt": "Resultado esperado:",
         "choices": [
-          "convexa",
-          "solo plana perfecta",
-          "concava siempre",
-          "no es lente"
+          "letras agrandadas",
+          "letras invisibles siempre",
+          "fuego",
+          "música"
         ],
-        "answer": "convexa"
+        "answer": "letras agrandadas"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Si las letras se ven mas pequenas, que haces?",
+        "prompt": "Tipo de lente de la gota bien formada:",
         "choices": [
-          "volver a sumergir / rehaces la gota",
-          "romper el periodico",
-          "apagar la luz y ya",
-          "cambiar de asignatura"
+          "convexa",
+          "cóncava obligatoria",
+          "plana perfecta",
+          "no óptica"
         ],
-        "answer": "volver a sumergir / rehaces la gota"
+        "answer": "convexa"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Material para ver letras:",
+        "prompt": "Fenómeno óptico de base:",
         "choices": [
-          "periodico",
-          "solo un imán",
-          "solo arena",
-          "solo sal"
+          "refracción",
+          "solo gravidez",
+          "solo magnetismo",
+          "solo eco"
         ],
-        "answer": "periodico"
+        "answer": "refracción"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Por que se agrandan?",
+        "prompt": "Modelo biológico citado:",
         "choices": [
-          "lente convexa / refraccion",
-          "magia",
-          "el alambre es un telescopio",
-          "el tazon canta"
+          "ojo",
+          "solo el hígado",
+          "solo el pie",
+          "solo el cabello"
         ],
-        "answer": "lente convexa / refraccion"
+        "answer": "ojo"
       },
       {
         "id": "d1-q7",
@@ -108,102 +108,128 @@
         "prompt": "Tema:",
         "choices": [
           "lente de una gota de agua",
-          "solo historia",
-          "solo latin",
-          "solo capitales"
+          "solo geografía",
+          "solo arte Brookes",
+          "solo Romanos"
         ],
         "answer": "lente de una gota de agua"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Longitud del alambre:",
+        "choices": [
+          "6 in / 15 cm",
+          "15 km",
+          "6 m de acero",
+          "sin medida"
+        ],
+        "answer": "6 in / 15 cm"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "El proposito principal es:",
+        "prompt": "Hoy profundizas:",
         "choices": [
-          "mostrar lente convexa / ojo",
-          "cocinar",
-          "medir el viento",
-          "traducir latin"
+          "el propósito",
+          "solo comprar alambre sin más",
+          "solo cortar papel",
+          "solo pintar"
         ],
-        "answer": "mostrar lente convexa / ojo"
+        "answer": "el propósito"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Hoy profundizas:",
+        "prompt": "Propósito ≠",
         "choices": [
-          "el proposito",
-          "solo pintar",
-          "solo cantar",
-          "solo sumar"
+          "procedimiento",
+          "para qué del experimento",
+          "idea de lente",
+          "modelo del ojo"
         ],
-        "answer": "el proposito"
+        "answer": "procedimiento"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Longitud del alambre en la leccion:",
+        "prompt": "Usamos periódico porque:",
         "choices": [
-          "6 in / 15 cm",
-          "1 km",
-          "1 mm solo",
-          "sin alambre"
+          "letras pequeñas fáciles de juzgar",
+          "está mojado siempre",
+          "brilla como el sol",
+          "es un imán"
         ],
-        "answer": "6 in / 15 cm"
+        "answer": "letras pequeñas fáciles de juzgar"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Las letras del periodico sirven para:",
+        "prompt": "Si no puedes decir el propósito:",
         "choices": [
-          "juzgar si hay aumento",
-          "comer",
-          "escribir poemas obligatorios",
-          "medir temperatura"
+          "no empieces el montaje",
+          "inventas fuego",
+          "saltas al resultado falso",
+          "cambias de materia"
         ],
-        "answer": "juzgar si hay aumento"
+        "answer": "no empieces el montaje"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Proposito responde a:",
+        "prompt": "La gota actúa como:",
         "choices": [
-          "para que",
-          "solo el color del tazon",
-          "solo la marca del lapiz",
-          "solo el dia de la semana"
+          "lente convexa",
+          "batería",
+          "motor",
+          "altavoz"
         ],
-        "answer": "para que"
+        "answer": "lente convexa"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "No es el proposito:",
+        "prompt": "Si las letras salen borrosas/pequeñas:",
         "choices": [
-          "simular una lente",
-          "inventar un celular",
-          "entender aumento",
-          "relacionar con el ojo"
+          "repite / reforma la gota",
+          "siempre es éxito",
+          "el agua es tinta",
+          "el alambre es imán"
         ],
-        "answer": "inventar un celular"
+        "answer": "repite / reforma la gota"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Si no puedes decir el proposito:",
+        "prompt": "El propósito guía:",
         "choices": [
-          "no empieces el montaje",
-          "rompas el alambre",
-          "mojes el periodico entero",
-          "olvides el tazon"
+          "materiales, pasos y conclusión",
+          "solo la firma",
+          "solo el color",
+          "solo el marco"
         ],
-        "answer": "no empieces el montaje"
+        "answer": "materiales, pasos y conclusión"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "No es magia: es:",
+        "choices": [
+          "refracción",
+          "telepatía",
+          "eco solo",
+          "magnetismo puro"
+        ],
+        "answer": "refracción"
       }
     ]
   },

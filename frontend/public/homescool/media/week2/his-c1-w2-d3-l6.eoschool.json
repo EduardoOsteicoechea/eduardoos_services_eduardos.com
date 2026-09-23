@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Intercambio y malentendidos",
-        "body": "Describe un intercambio típico del primer contacto: qué se ofrece, qué se pide, qué se malinterpreta. Distingue hospitalidad de consentimiento político. Explica un ejemplo de malentendido (lengua, regalo, «posesión» de tierra). Redacta un párrafo en primera persona imaginaria desde un habitante costero y otro desde un marino de la flota: dos miradas al mismo gesto. El objetivo es ver asimetría sin convertir la escena en caricatura."
+        "body": "Describe un intercambio típico del primer contacto: qué se ofrece, qué se pide, qué se malinterpreta. Distingue hospitalidad de consentimiento político.\n\nExplica un ejemplo de malentendido (lengua, regalo, «posesión» de tierra). Redacta un párrafo desde un habitante costero y otro desde un marino de la flota.\n\nEl objetivo es ver asimetría sin convertir la escena en caricatura. Cierra con una frase sobre desequilibrio de poder."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 21,
+    "questionCount": 24,
     "questions": [
       {
         "id": "d1-q1",
@@ -115,6 +115,19 @@
         "answer": "presión colonial sobre pueblos originarios"
       },
       {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El relato completo empieza por:",
+        "choices": [
+          "solo la flota",
+          "nombrar a los pueblos que habitaban",
+          "solo el siglo XX",
+          "solo el latín"
+        ],
+        "answer": "nombrar a los pueblos que habitaban"
+      },
+      {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
@@ -206,6 +219,19 @@
         "answer": "nombrar a los pueblos"
       },
       {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "La navegación de cabotaje indica:",
+        "choices": [
+          "vida solo en desiertos",
+          "uso de costas y rutas locales",
+          "solo vuelos",
+          "solo ferrocarriles"
+        ],
+        "answer": "uso de costas y rutas locales"
+      },
+      {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
@@ -295,6 +321,19 @@
           "estudiar solo vinos"
         ],
         "answer": "entender asimetría sin caricatura"
+      },
+      {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "El encuentro no fue solo…",
+        "choices": [
+          "un proceso complejo",
+          "un acto único siempre pacífico",
+          "intercambio y tensión",
+          "lectura mutua"
+        ],
+        "answer": "un acto único siempre pacífico"
       }
     ]
   },

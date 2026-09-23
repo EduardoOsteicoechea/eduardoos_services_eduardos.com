@@ -15,13 +15,13 @@
       {
         "id": "p1",
         "heading": "Repaso 1–4 en profundidad",
-        "body": "Hoy profundizas solo las tablas 1 a 4. Escribe de memoria la del 3 y la del 4 completas (×1 a ×12). Luego marca en rojo los tres productos que más te cuestan y vuelve a recitarlos en desorden. Comprueba con sumas: 3×7 = 7+7+7. Si fallas 4×8, recuerda que es el doble de 2×8=16 → 32. Termina diciendo en voz alta una fila mezclada (4×5, 3×9, 2×11, 1×12) sin mirar."
+        "body": "Hoy profundizas solo las tablas 1 a 4. Escribe de memoria la del 3 y la del 4 completas (×1 a ×12) sin mirar. Luego marca en rojo los tres productos que más te cuestan de cada una.\n\nComprueba con sumas repetidas: 3×7 = 7+7+7 = 21. Si fallas 4×8, recuerda el doble del doble: 2×8=16 → 32. Haz lo mismo con 4×9: 2×9=18 → 36.\n\nTermina diciendo en voz alta una fila mezclada sin mirar: 4×5, 3×9, 2×11, 1×12, 4×7, 3×6. Si dudaste de alguno, escríbelo tres veces y vuélvelo a recitar. Meta del día: cero dudosos en 1–4."
       }
     ],
     "summary": ""
   },
   "quiz": {
-    "questionCount": 14,
+    "questionCount": 16,
     "questions": [
       {
         "id": "d1-q1",
@@ -105,7 +105,7 @@
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué factores cubre el punto 1 de la semana?",
+        "prompt": "¿Qué factores cubre el punto 1?",
         "choices": [
           "1 a 4",
           "5 a 8",
@@ -113,6 +113,19 @@
           "solo el 10"
         ],
         "answer": "1 a 4"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 4×8?",
+        "choices": [
+          "28",
+          "32",
+          "36",
+          "24"
+        ],
+        "answer": "32"
       },
       {
         "id": "d2-q1",
@@ -202,6 +215,19 @@
           "24",
           "27",
           "18"
+        ],
+        "answer": "24"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "4×6 usando el doble del doble de 2×6=12 da…",
+        "choices": [
+          "18",
+          "24",
+          "20",
+          "36"
         ],
         "answer": "24"
       }

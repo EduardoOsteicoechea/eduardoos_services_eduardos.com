@@ -58,7 +58,7 @@ python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --f
       "summary": "…"
     },
     "quiz": {
-      "questionCount": 7,
+      "questionCount": 8,
       "questions": []
     },
     "media": []
