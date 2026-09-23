@@ -330,8 +330,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter-page--quiz .homescool-letter__hero {
-  background: var(--hc-coral);
-  border-color: var(--hc-coral);
+  background: var(--hc-rail);
+  border-color: var(--hc-rail);
+  color: var(--hc-on-dark);
 }
 
 .homescool-letter__hero-top {
@@ -849,8 +850,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   margin: 0;
   padding: 0.35rem 0.35rem 0.35rem 0.35rem;
   border-radius: 0.3rem;
-  border: 0.06rem solid var(--hc-line);
-  background: var(--hc-cream);
+  border: 0.08rem solid var(--hc-blue);
+  background: transparent;
   counter-increment: hc-q;
   position: relative;
   padding-top: 1.55rem;
@@ -861,19 +862,19 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__q:nth-child(4n + 1) {
-  background: var(--hc-mint);
+  border-color: var(--hc-blue);
 }
 
 .homescool-letter__q:nth-child(4n + 2) {
-  background: var(--hc-sky);
+  border-color: var(--hc-navy);
 }
 
 .homescool-letter__q:nth-child(4n + 3) {
-  background: var(--hc-lilac);
+  border-color: var(--hc-olive);
 }
 
 .homescool-letter__q:nth-child(4n + 4) {
-  background: var(--hc-peach);
+  border-color: var(--hc-orange);
 }
 
 .homescool-letter__q::before {
@@ -884,13 +885,34 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
-  background: var(--hc-coral);
-  color: var(--hc-on-dark);
+  background: transparent;
+  border: 0.06rem solid currentColor;
+  color: var(--hc-blue);
   font-size: 0.65rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.homescool-letter__q:nth-child(4n + 1)::before {
+  color: var(--hc-blue);
+  border-color: var(--hc-blue);
+}
+
+.homescool-letter__q:nth-child(4n + 2)::before {
+  color: var(--hc-navy);
+  border-color: var(--hc-navy);
+}
+
+.homescool-letter__q:nth-child(4n + 3)::before {
+  color: var(--hc-olive);
+  border-color: var(--hc-olive);
+}
+
+.homescool-letter__q:nth-child(4n + 4)::before {
+  color: var(--hc-orange);
+  border-color: var(--hc-orange);
 }
 
 .homescool-letter__q .homescool-letter__body {
@@ -916,7 +938,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.25rem;
   padding: 0.12rem 0.22rem;
   border-radius: 0.18rem;
-  background: #ffffff;
+  background: transparent;
   border: 0.05rem solid var(--hc-line);
 }
 
@@ -925,8 +947,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   width: 0.95rem;
   height: 0.95rem;
   border-radius: 50%;
-  background: var(--hc-rail);
-  color: var(--hc-on-dark);
+  background: transparent;
+  border: 0.06rem solid var(--hc-rail);
+  color: var(--hc-rail);
   font-size: 0.58rem;
   font-weight: 700;
   display: inline-flex;
