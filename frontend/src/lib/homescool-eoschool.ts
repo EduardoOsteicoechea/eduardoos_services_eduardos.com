@@ -5,6 +5,7 @@
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
 import { mustLog } from "./dev-log";
 import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables";
+import { calculateLetterPages } from "./homescool-letter-layout";
 
 export const HOMESCOOL_SUBJECTS = [
   "mat",
@@ -94,6 +95,17 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
 
 type LessonPoint = EoschoolDocument["lesson"]["points"][number];
 
+type LessonSegment = {
+  point: LessonPoint;
+  pointIndex: number;
+  paragraphs: string[];
+  continuation: boolean;
+};
+
+type LessonPageBlock =
+  | { type: "point"; segment: LessonSegment }
+  | { type: "summary" };
+
 export type LessonBatch = {
   /** Inclusive start index into lesson.points. */
   start: number;
@@ -155,9 +167,31 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     return [page];
   }
 
-  const hasSummary = Boolean(doc.lesson?.summary?.trim());
-  const batches = packLessonBatches(points.length, hasSummary, (start, end, withSummary) =>
-    lessonSliceFits(doc, points, start, end, withSummary, kicker, kind),
+  const blocks: LessonPageBlock[] = [];
+  points.forEach((point, pointIndex) => {
+    const full: LessonSegment = {
+      point,
+      pointIndex,
+      paragraphs: splitLessonParagraphs(point.body),
+      continuation: false,
+    };
+    // A point that cannot occupy an otherwise blank Letter page becomes
+    // continuation blocks, so section 3 can never be clipped at the footer.
+    if (lessonBlocksFit(doc, [full], false, kicker, kind)) {
+      blocks.push({ type: "point", segment: full });
+      return;
+    }
+    for (const [partIndex, paragraphs] of splitLessonSegment(full).entries()) {
+      blocks.push({
+        type: "point",
+        segment: { ...full, paragraphs, continuation: partIndex > 0 },
+      });
+    }
+  });
+  if (doc.lesson?.summary?.trim()) blocks.push({ type: "summary" });
+
+  const batches = calculateLetterPages(blocks, (candidate) =>
+    lessonBlocksFit(doc, candidate, false, kicker, kind),
   );
 
   if (!batches.length) {
@@ -169,12 +203,84 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   return batches.map((batch) => {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
-    if (batch.end > batch.start) {
-      page.append(buildLessonStack(doc, points.slice(batch.start, batch.end), batch.start));
-    }
-    if (batch.withSummary) appendSummary(doc, page);
+    const segments = batch
+      .filter((block): block is Extract<LessonPageBlock, { type: "point" }> => block.type === "point")
+      .map((block) => block.segment);
+    if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
+    if (batch.some((block) => block.type === "summary")) appendSummary(doc, page);
     return page;
   });
+}
+
+function splitLessonParagraphs(body: string): string[] {
+  return String(body || "")
+    .split(/\n\s*\n/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+/** Split an oversize section into progressively measurable continuation chunks. */
+function splitLessonSegment(segment: LessonSegment): string[][] {
+  const paragraphs = segment.paragraphs;
+  if (paragraphs.length <= 1) return [paragraphs];
+  return paragraphs.map((paragraph) => [paragraph]);
+}
+
+function lessonBlocksFit(
+  doc: EoschoolDocument,
+  blocks: readonly LessonPageBlock[] | readonly LessonSegment[],
+  _withSummary: boolean,
+  kicker: string,
+  kind: string,
+): boolean {
+  const segments = lessonSegmentsFromBlocks(blocks);
+  const withSummary = blocks.some((block) => "type" in block && block.type === "summary");
+  if (typeof document === "undefined" || !document.body) {
+    return estimateLessonSliceFits(
+      segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
+      withSummary,
+      doc.lesson?.summary,
+    );
+  }
+
+  const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
+  page.setAttribute("data-homescool-measure", "1");
+  page.style.position = "absolute";
+  page.style.left = "-10000px";
+  page.style.top = "0";
+  page.style.visibility = "hidden";
+  page.style.pointerEvents = "none";
+  page.append(lessonHeader(doc, kicker));
+
+  if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
+  if (withSummary) appendSummary(doc, page);
+
+  document.body.append(page);
+  void page.offsetHeight;
+  const fits =
+    page.clientHeight >= 8
+      ? page.scrollHeight <= page.clientHeight - 2
+      : estimateLessonSliceFits(
+          segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
+          withSummary,
+          doc.lesson?.summary,
+        );
+  page.remove();
+  return fits;
+}
+
+function lessonSegmentsFromBlocks(
+  blocks: readonly LessonPageBlock[] | readonly LessonSegment[],
+): LessonSegment[] {
+  const segments: LessonSegment[] = [];
+  for (const block of blocks) {
+    if ("paragraphs" in block) {
+      segments.push(block);
+    } else if (block.type === "point") {
+      segments.push(block.segment);
+    }
+  }
+  return segments;
 }
 
 /** True when the slice fits on one Letter sheet (layout measure, else estimate). */
@@ -321,6 +427,29 @@ function buildLessonStack(
     block.append(badge, copy);
     stack.append(block);
   });
+  return stack;
+}
+
+/** Render the blocks selected by the letter-layout calculation engine. */
+function buildLessonSegmentStack(doc: EoschoolDocument, segments: readonly LessonSegment[]): HTMLElement {
+  const stack = el("div", "homescool-letter__stack");
+  const kind = doc.lesson?.kind ?? "intro";
+  for (const segment of segments) {
+    const tone = (segment.pointIndex % 3) + 1;
+    const block = el("section", `homescool-letter__point homescool-letter__point--${tone}`);
+    const badge = el("span", "homescool-letter__point-badge", String(segment.pointIndex + 1));
+    const copy = el("div", "homescool-letter__point-copy");
+    if (segment.point.heading) {
+      const heading = segment.continuation
+        ? `${segment.point.heading} · continuación`
+        : segment.point.heading;
+      copy.append(el("h3", "homescool-letter__point-title", heading));
+    }
+    const body = segment.paragraphs.join("\n\n");
+    if (body) copy.append(buildRichBody(body, { mode: kind === "review" ? "review" : "intro" }));
+    block.append(badge, copy);
+    stack.append(block);
+  }
   return stack;
 }
 

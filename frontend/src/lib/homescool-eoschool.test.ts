@@ -8,6 +8,7 @@ import {
   packLessonBatches,
   renderEoschoolPages,
 } from "./homescool-eoschool";
+import { calculateLetterPages } from "./homescool-letter-layout";
 
 describe("classifyLessonParas", () => {
   it("marks lead, cards, practice and error for deepen bodies", () => {
@@ -51,6 +52,20 @@ describe("packLessonBatches", () => {
       { start: 0, end: 2, withSummary: false },
       { start: 2, end: 2, withSummary: true },
     ]);
+  });
+});
+
+describe("calculateLetterPages", () => {
+  it("does not overflow and only creates another page when required", () => {
+    const pages = calculateLetterPages(["a", "bb", "ccc", "d"], (candidate) =>
+      candidate.join("").length <= 3,
+    );
+    expect(pages).toEqual([["a", "bb"], ["ccc"], ["d"]]);
+  });
+
+  it("makes progress when a block requires a continuation split", () => {
+    const pages = calculateLetterPages(["oversize"], () => false);
+    expect(pages).toEqual([["oversize"]]);
   });
 });
 
