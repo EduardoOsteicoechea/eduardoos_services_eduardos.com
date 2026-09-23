@@ -133,24 +133,78 @@ import "../../styles/homescool-workspace.css";
   printBtn?.addEventListener("click", () => {
     log("print.click", { sheetsReady, disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null });
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
-    // Close chrome trays so print only paints letter sheets.
-    document.getElementById("main-menu")?.setAttribute("hidden", "");
-    document.getElementById("dynamic-header")?.setAttribute("hidden", "");
-    document.getElementById("agent-sidebar")?.setAttribute("hidden", "");
-    document.documentElement.classList.add("homescool-printing");
-    window.addEventListener(
-      "afterprint",
-      () => {
-        document.documentElement.classList.remove("homescool-printing");
-        // Restore fixed curriculum rail after print.
-        document.getElementById("dynamic-header")?.removeAttribute("hidden");
-        log("print.after");
-      },
-      { once: true },
-    );
-    log("print.start");
-    window.print();
+    printLetterSheets();
   });
+
+  /**
+   * Clone letter pages onto body for print. Chrome often drops content that lives
+   * inside height:100% / overflow:auto workspace chrome when using window.print().
+   */
+  function printLetterSheets() {
+    if (!(sheetsHost instanceof HTMLElement)) return;
+    const pages = sheetsHost.querySelectorAll(".homescool-letter-page");
+    log("print.prepare", { pages: pages.length });
+    if (!pages.length) return;
+
+    document.getElementById("homescool-print-output")?.remove();
+    document.getElementById("homescool-print-output-style")?.remove();
+
+    const output = document.createElement("div");
+    output.id = "homescool-print-output";
+    output.setAttribute("aria-hidden", "true");
+    for (const page of pages) {
+      output.append(page.cloneNode(true));
+    }
+
+    const style = document.createElement("style");
+    style.id = "homescool-print-output-style";
+    style.textContent = [
+      "#homescool-print-output { display: none; }",
+      "@media print {",
+      "  html, body { height: auto !important; min-height: 0 !important; overflow: visible !important; background: #ffffff !important; }",
+      "  body > :not(#homescool-print-output) { display: none !important; }",
+      "  #homescool-print-output {",
+      "    display: block !important;",
+      "    margin: 0;",
+      "    padding: 0;",
+      "    background: #ffffff;",
+      "  }",
+      "  #homescool-print-output .homescool-letter-page {",
+      "    box-sizing: border-box;",
+      "    width: 8.5in !important;",
+      "    min-height: 11in !important;",
+      "    height: 11in !important;",
+      "    margin: 0 !important;",
+      "    border: 0 !important;",
+      "    box-shadow: none !important;",
+      "    page-break-after: always;",
+      "    break-after: page;",
+      "    print-color-adjust: exact;",
+      "    -webkit-print-color-adjust: exact;",
+      "  }",
+      "  #homescool-print-output .homescool-letter-page:last-child {",
+      "    page-break-after: auto;",
+      "    break-after: auto;",
+      "  }",
+      "}",
+    ].join("\n");
+
+    document.head.append(style);
+    document.body.append(output);
+    document.documentElement.classList.add("homescool-printing");
+
+    const cleanup = () => {
+      output.remove();
+      style.remove();
+      document.documentElement.classList.remove("homescool-printing");
+      log("print.after");
+    };
+    window.addEventListener("afterprint", cleanup, { once: true });
+    window.setTimeout(cleanup, 60_000);
+
+    log("print.start", { pages: pages.length });
+    window.print();
+  }
 
   async function boot() {
     log("boot.enter");
