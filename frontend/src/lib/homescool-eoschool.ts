@@ -129,9 +129,15 @@ function buildDeepenRibbon(doc: EoschoolDocument): HTMLElement {
   const focus = doc.lesson?.focusPoint ?? 1;
   const heading = doc.lesson?.points?.[0]?.heading?.trim() || `Punto ${focus}`;
   const ribbon = el("div", "homescool-letter__ribbon");
-  ribbon.append(el("span", "homescool-letter__ribbon-badge", `Punto ${focus}`));
-  ribbon.append(el("span", "homescool-letter__ribbon-title", heading));
-  ribbon.append(el("span", "homescool-letter__ribbon-hint", "Clase de profundización · un solo foco"));
+  const badge = el("span", "homescool-letter__ribbon-badge");
+  badge.append(msIcon("center_focus_strong"), document.createTextNode(`Punto ${focus}`));
+  ribbon.append(badge);
+  const title = el("span", "homescool-letter__ribbon-title");
+  title.append(msIcon("school"), document.createTextNode(heading));
+  ribbon.append(title);
+  const hint = el("span", "homescool-letter__ribbon-hint");
+  hint.append(msIcon("filter_1"), document.createTextNode("Clase de profundización · un solo foco"));
+  ribbon.append(hint);
   return ribbon;
 }
 
@@ -168,7 +174,11 @@ function buildLessonStack(doc: EoschoolDocument): HTMLElement {
     const block = el("section", `homescool-letter__point homescool-letter__point--${(index % 3) + 1}`);
     const badge = el("span", "homescool-letter__point-badge", String(index + 1));
     const copy = el("div", "homescool-letter__point-copy");
-    if (p.heading) copy.append(el("h3", "homescool-letter__point-title", p.heading));
+    if (p.heading) {
+      const title = el("h3", "homescool-letter__point-title");
+      title.append(msIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"), document.createTextNode(p.heading));
+      copy.append(title);
+    }
     if (p.body) copy.append(buildRichBody(p.body, { mode: kind === "review" ? "review" : "intro" }));
     block.append(badge, copy);
     stack.append(block);
@@ -180,6 +190,25 @@ type RichMode = "deepen" | "intro" | "review";
 type ParaKind = "lead" | "card" | "practice" | "error" | "tip" | "goal" | "contrast";
 
 type RichPara = { kind: ParaKind; text: string; left?: string; right?: string };
+
+const POINT_ICONS = ["auto_stories", "science", "history_edu", "public", "palette"] as const;
+
+const BOX_META: Record<ParaKind, { label: string; icon: string }> = {
+  lead: { label: "Idea central", icon: "lightbulb" },
+  card: { label: "Explora", icon: "menu_book" },
+  practice: { label: "Práctica", icon: "edit_note" },
+  error: { label: "Error a corregir", icon: "warning" },
+  tip: { label: "Consejo", icon: "tips_and_updates" },
+  goal: { label: "Meta", icon: "flag" },
+  contrast: { label: "Contraste", icon: "compare_arrows" },
+};
+
+const HERO_ICONS: Record<string, string> = {
+  Clase: "school",
+  Profundización: "center_focus_strong",
+  Repaso: "restart_alt",
+  "Clase + cuestionario": "menu_book",
+};
 
 /** Split lesson bodies into typed blocks (boxes / cols) instead of one flat paragraph. */
 export function classifyLessonParas(body: string): RichPara[] {
@@ -263,53 +292,53 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
 }
 
 function renderParaBlock(p: RichPara): HTMLElement {
+  const meta = BOX_META[p.kind];
   if (p.kind === "contrast" && p.left && p.right) {
     const box = el("div", "homescool-letter__box homescool-letter__box--contrast");
-    box.append(el("span", "homescool-letter__box-label", "Contraste"));
+    box.append(boxLabel(meta.icon, meta.label));
     const cols = el("div", "homescool-letter__cols");
     const a = el("div", "homescool-letter__col homescool-letter__col--a");
-    a.append(el("p", "homescool-letter__body", p.left));
+    a.append(msIcon("arrow_back"), el("p", "homescool-letter__body", p.left));
     const b = el("div", "homescool-letter__col homescool-letter__col--b");
-    b.append(el("p", "homescool-letter__body", p.right));
+    b.append(msIcon("arrow_forward"), el("p", "homescool-letter__body", p.right));
     cols.append(a, b);
     box.append(cols);
-            // Keep leftover context only when the split was a short extract.
-            if (p.left.length + p.right.length + 40 < p.text.length) {
-              box.append(el("p", "homescool-letter__body homescool-letter__body--muted", p.text));
-            }
-            return box;
+    if (p.left.length + p.right.length + 40 < p.text.length) {
+      box.append(el("p", "homescool-letter__body homescool-letter__body--muted", p.text));
+    }
+    return box;
   }
 
-  const label =
-    p.kind === "lead"
-      ? "Idea central"
-      : p.kind === "practice"
-        ? "Práctica"
-        : p.kind === "error"
-          ? "Error a corregir"
-          : p.kind === "tip"
-            ? "Consejo"
-            : p.kind === "goal"
-              ? "Meta"
-              : "Explora";
-
-  const box = el(
-    "div",
-    `homescool-letter__box homescool-letter__box--${p.kind}`,
-  );
-  if (p.kind !== "lead" && p.kind !== "card") {
-    box.append(el("span", "homescool-letter__box-label", label));
-  } else if (p.kind === "card") {
-    box.append(el("span", "homescool-letter__box-label homescool-letter__box-label--soft", label));
-  }
+  const box = el("div", `homescool-letter__box homescool-letter__box--${p.kind}`);
+  const soft = p.kind === "card";
+  box.append(boxLabel(meta.icon, meta.label, soft));
   box.append(el("p", "homescool-letter__body", p.text));
   return box;
+}
+
+function boxLabel(icon: string, text: string, soft = false): HTMLElement {
+  const label = el(
+    "span",
+    soft ? "homescool-letter__box-label homescool-letter__box-label--soft" : "homescool-letter__box-label",
+  );
+  label.append(msIcon(icon), document.createTextNode(text));
+  return label;
+}
+
+function msIcon(name: string): HTMLElement {
+  const icon = document.createElement("span");
+  icon.className = "material-symbols-outlined homescool-letter__icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = name;
+  return icon;
 }
 
 function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
   if (!doc.lesson?.summary) return;
   const sum = el("section", "homescool-letter__summary");
-  sum.append(el("h3", "homescool-letter__summary-label", "Resumen"));
+  const label = el("h3", "homescool-letter__summary-label");
+  label.append(msIcon("summarize"), document.createTextNode("Resumen"));
+  sum.append(label);
   sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
   page.append(sum);
 }
@@ -321,13 +350,14 @@ function buildQuizList(
   day: number,
 ): HTMLElement {
   const wrap = el("section", "homescool-letter__quiz-wrap");
-  wrap.append(
-    el(
-      "h3",
-      "homescool-letter__quiz-label",
+  const quizLabel = el("h3", "homescool-letter__quiz-label");
+  quizLabel.append(
+    msIcon("quiz"),
+    document.createTextNode(
       `Cuestionario · ${total} (días 1–${day}) · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
+  wrap.append(quizLabel);
   const list = el("ol", "homescool-letter__quiz") as HTMLOListElement;
   list.start = startIndex;
   const letters = ["A", "B", "C", "D", "E", "F"];
@@ -364,7 +394,12 @@ function letterPage(...extra: string[]): HTMLElement {
 function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
   const head = el("header", "homescool-letter__hero");
   const top = el("div", "homescool-letter__hero-top");
-  top.append(el("span", "homescool-letter__kicker", kicker));
+  const kick = el("span", "homescool-letter__kicker");
+  const kickIcon =
+    HERO_ICONS[kicker] ??
+    (kicker.startsWith("Cuestionario") ? "quiz" : "school");
+  kick.append(msIcon(kickIcon), document.createTextNode(kicker));
+  top.append(kick);
   top.append(
     el(
       "span",
@@ -373,7 +408,9 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
     ),
   );
   head.append(top);
-  head.append(el("h2", "homescool-letter__heading", doc.title));
+  const title = el("h2", "homescool-letter__heading");
+  title.append(msIcon("auto_stories"), document.createTextNode(doc.title));
+  head.append(title);
   if (sub) head.append(el("p", "homescool-letter__sub", sub));
   return head;
 }
