@@ -335,7 +335,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
   box-sizing: border-box;
   width: 8.5in;
+  height: 11in;
   min-height: 11in;
+  max-height: 11in;
   /* METHOD_V1: 1 cm page margin (viewer + PDF capture must match). */
   padding: 1cm;
   background: #ffffff;
@@ -344,6 +346,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  overflow: hidden;
   page-break-after: always;
   break-after: page;
 }
@@ -377,11 +380,15 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.06rem;
-  text-transform: uppercase;
   opacity: 0.92;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.homescool-letter__kicker-text {
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
 }
 
 .homescool-letter__heading {
@@ -394,11 +401,28 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.35rem;
 }
 
-.homescool-letter__icon {
+/*
+ * Material Symbols: ligatures break if text-transform:uppercase inherits from
+ * labels/kickers — then the raw name (auto_stories, lightbulb…) paints over titles.
+ */
+.homescool-letter__icon.material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1rem;
   line-height: 1;
-  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  display: inline-block;
   flex: 0 0 auto;
+  overflow: hidden;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  -webkit-font-smoothing: antialiased;
 }
 
 .homescool-letter__kicker .homescool-letter__icon,
@@ -537,10 +561,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.04rem;
-  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
+}
+
+.homescool-letter__ribbon-badge .homescool-letter__kicker-text {
+  text-transform: uppercase;
 }
 
 .homescool-letter__ribbon-title {
@@ -676,11 +703,15 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.05rem;
-  text-transform: uppercase;
   color: var(--hc-rail);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.homescool-letter__box-label-text {
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
 .homescool-letter__box--practice .homescool-letter__box-label {
@@ -786,11 +817,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.05rem;
-  text-transform: uppercase;
   color: var(--hc-coral);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.homescool-letter__summary-label .homescool-letter__box-label-text {
+  text-transform: uppercase;
 }
 
 .homescool-letter__quiz-wrap {
@@ -806,11 +840,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.04rem;
-  text-transform: uppercase;
   color: var(--hc-coral);
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.homescool-letter__quiz-label .homescool-letter__box-label-text {
+  text-transform: uppercase;
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__stack {

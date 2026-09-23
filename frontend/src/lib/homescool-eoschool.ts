@@ -74,7 +74,7 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   if (inlineCount > 0) {
     pages.push(buildLessonWithQuizPage(doc, qs.slice(0, inlineCount), 1, qs.length));
   } else {
-    pages.push(buildLessonPage(doc));
+    pages.push(...buildLessonPages(doc));
   }
 
   for (let i = inlineCount; i < qs.length; i += QUIZ_PAGE_CAPACITY) {
@@ -92,17 +92,32 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   return pages;
 }
 
-function buildLessonPage(doc: EoschoolDocument): HTMLElement {
+/**
+ * Lesson sheets: one Letter page per point when there are 2+ points so dense
+ * intro/review bodies do not clip under the fixed 11in capture height.
+ * Deepen (single focus) stays on one page.
+ */
+function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   const kind = doc.lesson?.kind ?? "intro";
-  const page = letterPage(
-    "homescool-letter-page--lesson",
-    `homescool-letter-page--${kind}`,
-  );
-  page.append(lessonHeader(doc, kind === "deepen" ? "Profundización" : kind === "review" ? "Repaso" : "Clase"));
-  if (kind === "deepen") page.append(buildDeepenRibbon(doc));
-  page.append(buildLessonStack(doc));
-  appendSummary(doc, page);
-  return page;
+  const points = doc.lesson?.points ?? [];
+  const kicker = kind === "deepen" ? "Profundización" : kind === "review" ? "Repaso" : "Clase";
+
+  if (kind === "deepen" || points.length <= 1) {
+    const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
+    page.append(lessonHeader(doc, kicker));
+    if (kind === "deepen") page.append(buildDeepenRibbon(doc));
+    page.append(buildLessonStack(doc, points));
+    appendSummary(doc, page);
+    return [page];
+  }
+
+  return points.map((p, index) => {
+    const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
+    page.append(lessonHeader(doc, kicker));
+    page.append(buildLessonStack(doc, [p], index));
+    if (index === points.length - 1) appendSummary(doc, page);
+    return page;
+  });
 }
 
 function buildLessonWithQuizPage(
@@ -119,7 +134,7 @@ function buildLessonWithQuizPage(
   );
   page.append(lessonHeader(doc, "Clase + cuestionario"));
   if (kind === "deepen") page.append(buildDeepenRibbon(doc));
-  page.append(buildLessonStack(doc));
+  page.append(buildLessonStack(doc, doc.lesson?.points ?? []));
   appendSummary(doc, page);
   page.append(buildQuizList(questions, startIndex, total, doc.day));
   return page;
@@ -130,13 +145,16 @@ function buildDeepenRibbon(doc: EoschoolDocument): HTMLElement {
   const heading = doc.lesson?.points?.[0]?.heading?.trim() || `Punto ${focus}`;
   const ribbon = el("div", "homescool-letter__ribbon");
   const badge = el("span", "homescool-letter__ribbon-badge");
-  badge.append(msIcon("center_focus_strong"), document.createTextNode(`Punto ${focus}`));
+  badge.append(msIcon("center_focus_strong"), el("span", "homescool-letter__kicker-text", `Punto ${focus}`));
   ribbon.append(badge);
   const title = el("span", "homescool-letter__ribbon-title");
-  title.append(msIcon("school"), document.createTextNode(heading));
+  title.append(msIcon("school"), el("span", "homescool-letter__title-text", heading));
   ribbon.append(title);
   const hint = el("span", "homescool-letter__ribbon-hint");
-  hint.append(msIcon("filter_1"), document.createTextNode("Clase de profundización · un solo foco"));
+  hint.append(
+    msIcon("filter_1"),
+    el("span", "homescool-letter__title-text", "Clase de profundización · un solo foco"),
+  );
   ribbon.append(hint);
   return ribbon;
 }
@@ -159,8 +177,12 @@ function buildQuizPage(
   return page;
 }
 
-function buildLessonStack(doc: EoschoolDocument): HTMLElement {
-  const points = doc.lesson?.points ?? [];
+function buildLessonStack(
+  doc: EoschoolDocument,
+  points: NonNullable<EoschoolDocument["lesson"]>["points"],
+  /** Global point index (1-based badge / icon cycle) when slicing across pages. */
+  startIndex = 0,
+): HTMLElement {
   const kind = doc.lesson?.kind ?? "intro";
   const stack = el("div", "homescool-letter__stack");
   if (kind === "deepen" && points.length === 1) {
@@ -170,13 +192,17 @@ function buildLessonStack(doc: EoschoolDocument): HTMLElement {
     stack.append(panel);
     return stack;
   }
-  points.forEach((p, index) => {
+  points.forEach((p, i) => {
+    const index = startIndex + i;
     const block = el("section", `homescool-letter__point homescool-letter__point--${(index % 3) + 1}`);
     const badge = el("span", "homescool-letter__point-badge", String(index + 1));
     const copy = el("div", "homescool-letter__point-copy");
     if (p.heading) {
       const title = el("h3", "homescool-letter__point-title");
-      title.append(msIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"), document.createTextNode(p.heading));
+      title.append(
+        msIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"),
+        el("span", "homescool-letter__title-text", p.heading),
+      );
       copy.append(title);
     }
     if (p.body) copy.append(buildRichBody(p.body, { mode: kind === "review" ? "review" : "intro" }));
@@ -321,7 +347,8 @@ function boxLabel(icon: string, text: string, soft = false): HTMLElement {
     "span",
     soft ? "homescool-letter__box-label homescool-letter__box-label--soft" : "homescool-letter__box-label",
   );
-  label.append(msIcon(icon), document.createTextNode(text));
+  // Keep ligature name off uppercase inheritance — Material Symbols needs lowercase.
+  label.append(msIcon(icon), el("span", "homescool-letter__box-label-text", text));
   return label;
 }
 
@@ -329,6 +356,8 @@ function msIcon(name: string): HTMLElement {
   const icon = document.createElement("span");
   icon.className = "material-symbols-outlined homescool-letter__icon";
   icon.setAttribute("aria-hidden", "true");
+  // Explicit attribute so print/PDF capture cannot inherit text-transform:uppercase.
+  icon.style.textTransform = "none";
   icon.textContent = name;
   return icon;
 }
@@ -337,7 +366,7 @@ function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
   if (!doc.lesson?.summary) return;
   const sum = el("section", "homescool-letter__summary");
   const label = el("h3", "homescool-letter__summary-label");
-  label.append(msIcon("summarize"), document.createTextNode("Resumen"));
+  label.append(msIcon("summarize"), el("span", "homescool-letter__box-label-text", "Resumen"));
   sum.append(label);
   sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
   page.append(sum);
@@ -353,7 +382,9 @@ function buildQuizList(
   const quizLabel = el("h3", "homescool-letter__quiz-label");
   quizLabel.append(
     msIcon("quiz"),
-    document.createTextNode(
+    el(
+      "span",
+      "homescool-letter__box-label-text",
       `Cuestionario · ${total} (días 1–${day}) · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
@@ -398,7 +429,7 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
   const kickIcon =
     HERO_ICONS[kicker] ??
     (kicker.startsWith("Cuestionario") ? "quiz" : "school");
-  kick.append(msIcon(kickIcon), document.createTextNode(kicker));
+  kick.append(msIcon(kickIcon), el("span", "homescool-letter__kicker-text", kicker));
   top.append(kick);
   top.append(
     el(
@@ -409,7 +440,7 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
   );
   head.append(top);
   const title = el("h2", "homescool-letter__heading");
-  title.append(msIcon("auto_stories"), document.createTextNode(doc.title));
+  title.append(msIcon("auto_stories"), el("span", "homescool-letter__title-text", doc.title));
   head.append(title);
   if (sub) head.append(el("p", "homescool-letter__sub", sub));
   return head;
