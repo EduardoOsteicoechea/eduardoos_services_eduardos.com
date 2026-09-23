@@ -14,21 +14,21 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Mapa político",
-        "body": "Venezuela tiene 24 entidades: 23 estados + Distrito Capital."
+        "heading": "Mapa politico: 24 entidades",
+        "body": "Venezuela se organiza en 24 entidades federales: 23 estados mas el Distrito Capital. Cada entidad tiene capital propia; la capital de la Republica y del DC es Caracas. Memorizar el mapa politico empieza por el conteo (24) y por no confundir estado con capital: a veces comparten nombre (Merida/Merida; Trujillo/Trujillo) y a veces no (Zulia/Maracaibo; Miranda/Los Teques). Hoy dibuja el esquema: 23 + DC = 24."
       },
       {
         "id": "p2",
         "heading": "Capitales clave",
-        "body": "Memoriza capitales de los estados más grandes y del DC."
+        "body": "Prioriza pares de alta frecuencia: Distrito Capital–Caracas; Zulia–Maracaibo; Carabobo–Valencia; Miranda–Los Teques; Lara–Barquisimeto; Aragua–Maracay; Tachira–San Cristobal; Bolivar–Ciudad Bolivar; Anzoategui–Barcelona; Sucre–Cumana; Falcon–Coro; Nueva Esparta–La Asuncion. Repite en voz alta estado luego capital. Cuando dudes, pregunta primero «cual es la capital» y no «como se llama el estado»."
       },
       {
         "id": "p3",
         "heading": "Repaso por regiones",
-        "body": "Agrupa estados por región para recordar mejor."
+        "body": "Agrupar ayuda a memorizar. Oriente: Anzoategui (Barcelona), Sucre (Cumana), Monagas (Maturin), Nueva Esparta (La Asuncion), Delta Amacuro (Tucupita). Centro-norte: Aragua (Maracay), Carabobo (Valencia), Miranda (Los Teques), La Guaira/Vargas (La Guaira), DC (Caracas). Occidente/Andes: Zulia (Maracaibo), Lara (Barquisimeto), Falcon (Coro), Yaracuy (San Felipe), Portuguesa (Guanare), Tachira (San Cristobal), Merida (Merida), Trujillo (Trujillo), Barinas (Barinas). Llanos/Guayana: Guarico (San Juan de los Morros), Apure (San Fernando de Apure), Cojedes (San Carlos), Bolivar (Ciudad Bolivar), Amazonas (Puerto Ayacucho)."
       }
     ],
-    "summary": "Asociar cada estado (y el DC) con su capital."
+    "summary": "Asociar cada uno de los 23 estados y el Distrito Capital con su capital, usando conteo (24) y agrupacion regional."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,12 +37,12 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuántas entidades federales contamos?",
+        "prompt": "Cuantas entidades federales contamos?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "24"
+          "20",
+          "23",
+          "24",
+          "30"
         ],
         "answer": "24"
       },
@@ -50,12 +50,12 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Venezuela (DC)",
+        "prompt": "Capital del Distrito Capital:",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "Caracas"
+          "Maracaibo",
+          "Caracas",
+          "Valencia",
+          "Merida"
         ],
         "answer": "Caracas"
       },
@@ -63,12 +63,12 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Zulia capital?",
+        "prompt": "Capital de Zulia:",
         "choices": [
           "Maracaibo",
           "Valencia",
           "Barquisimeto",
-          "Mérida"
+          "Merida"
         ],
         "answer": "Maracaibo"
       },
@@ -76,7 +76,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Carabobo capital?",
+        "prompt": "Capital de Carabobo:",
         "choices": [
           "Valencia",
           "Maracay",
@@ -89,33 +89,33 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Mérida",
+        "prompt": "Capital de Merida:",
         "choices": [
-          "No aplica",
-          "Mérida",
-          "Todas",
-          "Ninguna"
+          "San Cristobal",
+          "Merida",
+          "Trujillo",
+          "Barinas"
         ],
-        "answer": "Mérida"
+        "answer": "Merida"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Tema",
+        "prompt": "Tema de la semana:",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "estados y capitales",
-          "No aplica"
+          "rios de Europa",
+          "estados y capitales de Venezuela",
+          "solo el clima",
+          "solo banderas"
         ],
-        "answer": "estados y capitales"
+        "answer": "estados y capitales de Venezuela"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Miranda capital?",
+        "prompt": "Capital de Miranda:",
         "choices": [
           "Los Teques",
           "Guatire",

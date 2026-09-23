@@ -7,28 +7,28 @@
   "level": 6,
   "subject": "art",
   "locale": "es",
-  "title": "Imágenes espejo y cinco elementos de la forma",
+  "title": "Imagenes espejo (Mona Brookes)",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "Atención",
-        "body": "Observar medias imágenes simétricas (columna, florero, cara)."
+        "heading": "Atencion: medias imagenes",
+        "body": "Segun Drawing with Children de Mona Brookes (pp. 67-69), la secuencia empieza por Atencion: observar medias imagenes simetricas. Usa recursos visibles: una columna griega a medio dibujar, un florero/vaso y un rostro a mitad. En la pizarra o papel, muestra solo una mitad y pide mirar bordes, huecos y direcciones antes de nombrar. No dibujes aun: entrena el ojo. Pregunta: que ves en el borde del corte? Que se repite si imaginamos el otro lado? La atencion precede a la tecnica."
       },
       {
         "id": "p2",
-        "heading": "Nombrar",
-        "body": "Imagen espejo y línea de simetría (Drawing with Children)."
+        "heading": "Nombrar: espejo y simetria",
+        "body": "En Nombrar, introduce el vocabulario: imagen espejo (igual pero invertida como en un espejo) y linea de simetria (eje donde las mitades coinciden al doblar). Senala la linea vertical en columna, vaso y cara. Relaciona con los cinco elementos de la forma del metodo Brookes (punto, linea, circulo, angulo/curva en U, angulo recto/diagonal — segun la presentacion de clase). Nombrar fija conceptos antes de Expresar. Sin palabras claras, el alumno copia sin entender."
       },
       {
         "id": "p3",
-        "heading": "Expresar",
-        "body": "Completar con los cinco elementos de la forma; doblar y dibujar."
+        "heading": "Expresar: completar y doblar",
+        "body": "En Expresar, el alumno completa la media imagen con lapiz, usando los cinco elementos de la forma. Luego dobla el papel por la linea de simetria para comprobar coincidencias (o confronta con la mitad modelo). Materiales: pizarra para demo, papel, lapices; modelos de columna griega, vaso y cara. El exito no es «bonito» primero, sino observar, nombrar y construir simetria con elementos simples (Brookes pp. 67-69)."
       }
     ],
-    "summary": "Ver, nombrar y dibujar simetría con los elementos básicos de la forma."
+    "summary": "Aplicar la secuencia Atencion / Nombrar / Expresar de Mona Brookes: medias imagenes, linea de simetria e imagen espejo, completar con los cinco elementos de la forma."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,12 +37,12 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué es una imagen espejo?",
+        "prompt": "Una imagen espejo es:",
         "choices": [
           "igual pero invertida",
-          "otra",
-          "ninguna",
-          "todas"
+          "siempre mas pequena",
+          "solo un color",
+          "un sonido"
         ],
         "answer": "igual pero invertida"
       },
@@ -50,51 +50,51 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué es una línea de simetría?",
+        "prompt": "Una linea de simetria es:",
         "choices": [
-          "línea donde coinciden las mitades",
-          "otra",
-          "ninguna",
-          "todas"
+          "donde coinciden las mitades",
+          "solo un margen",
+          "una goma",
+          "un pincel"
         ],
-        "answer": "línea donde coinciden las mitades"
+        "answer": "donde coinciden las mitades"
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Nombra un ejemplo de imagen a medio dibujar",
+        "prompt": "Ejemplo de media imagen en la leccion:",
         "choices": [
-          "columna florero o cara",
-          "otra",
-          "ninguna",
-          "todas"
+          "columna, vaso o cara",
+          "solo un motor",
+          "solo un mapa",
+          "solo una ecuacion"
         ],
-        "answer": "columna florero o cara"
+        "answer": "columna, vaso o cara"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Libro de referencia",
+        "prompt": "Libro de referencia:",
         "choices": [
-          "Drawing with Children",
-          "otra",
-          "ninguna",
-          "todas"
+          "Drawing with Children (Mona Brookes)",
+          "solo un atlas",
+          "solo un diccionario latino",
+          "solo un himnario"
         ],
-        "answer": "Drawing with Children"
+        "answer": "Drawing with Children (Mona Brookes)"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué haces en Expresar?",
+        "prompt": "En Expresar haces:",
         "choices": [
           "completar la imagen",
-          "otra",
-          "ninguna",
-          "todas"
+          "solo cerrar los ojos",
+          "solo contar",
+          "solo cantar"
         ],
         "answer": "completar la imagen"
       },
@@ -102,12 +102,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Cuántos elementos de la forma menciona el método?",
+        "prompt": "Elementos de la forma en el metodo (cantidad):",
         "choices": [
           "cinco",
-          "otra",
-          "ninguna",
-          "todas"
+          "dos",
+          "veinte",
+          "cero"
         ],
         "answer": "cinco"
       },
@@ -115,14 +115,14 @@
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Tema",
+        "prompt": "Tema:",
         "choices": [
-          "imágenes espejo",
-          "otra",
-          "ninguna",
-          "todas"
+          "imagenes espejo / simetria Brookes",
+          "solo quimica",
+          "solo verbos",
+          "solo Colón"
         ],
-        "answer": "imágenes espejo"
+        "answer": "imagenes espejo / simetria Brookes"
       }
     ]
   },

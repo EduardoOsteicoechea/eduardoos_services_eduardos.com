@@ -15,20 +15,20 @@
       {
         "id": "p1",
         "heading": "Tablas 1 a 4",
-        "body": "Memoriza productos 1×1 a 4×12. Ancla ×1, ×2 y ×10; luego ×3 y ×4."
+        "body": "Las tablas del 1 al 4 son la base de toda la multiplicación. La del 1 deja el número igual (1×n = n). La del 2 es el doble: suma el número consigo mismo. La del 3 suma tres veces el factor; la del 4 es el doble del doble. Memoriza primero 1×1 a 4×12 en orden y luego saltando. Cuando un producto se te resiste, reconstruye con sumas repetidas y vuelve a decirlo en voz alta hasta que sea automático."
       },
       {
         "id": "p2",
         "heading": "Tablas 5 a 8",
-        "body": "Practica 5×n a 8×n. La del 5 termina en 0 o 5; úsala para comprobar."
+        "body": "Del 5 al 8 los productos crecen y necesitas anclas. Todo múltiplo de 5 termina en 0 o 5: úsalo para comprobar. La del 6 es el doble de la del 3; la del 8 es el doble de la del 4. La del 7 no tiene truco fácil: hay que practicarla con series (7×1…7×12) y marcar los errores frecuentes (7×8=56, 7×9=63). Escribe cada tabla completa y tacha lo que ya tienes firme; repite solo lo débil."
       },
       {
         "id": "p3",
         "heading": "Tablas 9 a 12",
-        "body": "Cierra con 9×n a 12×n. Truco del 9 (dígitos suman 9); 11 es simétrica hasta 9."
+        "body": "Cierra el mapa con 9 a 12. En la del 9, los dígitos del producto suelen sumar 9 (9×4=36 → 3+6=9). La del 10 añade un cero. La del 11 es simétrica hasta 9×11 (11×3=33, 11×4=44). La del 12 combina 10×n + 2×n. Domina 9×9=81, 11×11=121 y 12×12=144: son mojones que ordenan el resto."
       }
     ],
-    "summary": "Recordar de memoria todos los productos de 1×1 a 12×12."
+    "summary": "Meta de la semana: recordar de memoria todos los productos de 1×1 a 12×12, usando patrones (×1, ×2, ×5, ×9, ×10, ×11) para comprobar y acelerar."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,7 +37,7 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿3×4?",
+        "prompt": "¿Cuánto es 3×4?",
         "choices": [
           "7",
           "12",
@@ -50,7 +50,7 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿5×6?",
+        "prompt": "¿Cuánto es 5×6?",
         "choices": [
           "25",
           "30",
@@ -63,7 +63,7 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿7×8?",
+        "prompt": "¿Cuánto es 7×8?",
         "choices": [
           "54",
           "56",
@@ -76,7 +76,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿9×9?",
+        "prompt": "¿Cuánto es 9×9?",
         "choices": [
           "72",
           "81",
@@ -89,7 +89,7 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿11×3?",
+        "prompt": "¿Cuánto es 11×3?",
         "choices": [
           "33",
           "14",
@@ -102,12 +102,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Producto de 12×12",
+        "prompt": "¿Cuánto es 12×12?",
         "choices": [
-          "Ninguna",
-          "Todas",
+          "124",
+          "132",
           "144",
-          "No aplica"
+          "120"
         ],
         "answer": "144"
       },
@@ -115,12 +115,12 @@
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Rango del punto 1 (factores)",
+        "prompt": "¿Qué factores cubre el punto 1 de la semana?",
         "choices": [
           "1 a 4",
-          "Ninguna",
-          "No aplica",
-          "Todas"
+          "5 a 8",
+          "9 a 12",
+          "solo el 10"
         ],
         "answer": "1 a 4"
       }

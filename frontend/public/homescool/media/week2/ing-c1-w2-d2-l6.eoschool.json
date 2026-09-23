@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Simple in context",
-        "body": "Conjugate one regular verb in all five simple tenses."
+        "heading": "Simple tenses in context",
+        "body": "Deepen only the simple set. Pick one regular verb and conjugate first-person singular in present, imperfect/past progressive, simple past, future, and conditional. Write five minimal sentences, one per tense, changing the time frame (today / as a child / yesterday / tomorrow / if I could). Notice how imperfect does not «close» the action while simple past does. Contrast past endings with progressive/used-to forms so you do not mix them when writing."
       }
     ],
     "summary": ""
@@ -27,27 +27,27 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Name tres tiempos simples",
+        "prompt": "Which is a simple indicative tense?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "presente imperfecto pretérito"
+          "present perfect",
+          "pluperfect",
+          "preterite",
+          "have + participle"
         ],
-        "answer": "presente imperfecto pretérito"
+        "answer": "preterite"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Name tres tiempos compuestos",
+        "prompt": "Which is a compound tense?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "antepresente pluscuamperfecto antefuturo"
+          "present",
+          "imperfect",
+          "pluperfect",
+          "simple future"
         ],
-        "answer": "antepresente pluscuamperfecto antefuturo"
+        "answer": "pluperfect"
       },
       {
         "id": "d1-q3",
@@ -56,9 +56,9 @@
         "prompt": "Is the simple conditional…?",
         "choices": [
           "simple",
-          "compuesto",
-          "subjuntivo",
-          "imperativo"
+          "compound",
+          "subjunctive",
+          "imperative"
         ],
         "answer": "simple"
       },
@@ -66,40 +66,40 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Which auxiliary do compounds use?",
+        "prompt": "Which auxiliary do English perfects use?",
         "choices": [
-          "ser",
-          "haber",
-          "estar",
-          "ir"
+          "be",
+          "have",
+          "do",
+          "will only"
         ],
-        "answer": "haber"
+        "answer": "have"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Another name for present perfect",
+        "prompt": "Another name for antepresente / present perfect idea:",
         "choices": [
-          "No aplica",
-          "pretérito perfecto compuesto",
-          "Todas",
-          "Ninguna"
+          "present perfect",
+          "imperfect",
+          "simple future",
+          "gerund"
         ],
-        "answer": "pretérito perfecto compuesto"
+        "answer": "present perfect"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Mood you are studying",
+        "prompt": "Which mood are you studying?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "indicativo",
-          "No aplica"
+          "subjunctive",
+          "indicative",
+          "imperative",
+          "infinitive"
         ],
-        "answer": "indicativo"
+        "answer": "indicative"
       },
       {
         "id": "d1-q7",
@@ -118,92 +118,92 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Present of indicar (yo)",
+        "prompt": "Present of «indicate» (I):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "indico"
+          "indicated",
+          "indicate",
+          "was indicating",
+          "will indicate"
         ],
-        "answer": "indico"
+        "answer": "indicate"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Imperfect of cantar (ella)",
+        "prompt": "Imperfect / past progressive of «sing» (she):",
         "choices": [
-          "Todas",
-          "cantaba",
-          "Ninguna",
-          "No aplica"
+          "sang",
+          "was singing",
+          "will sing",
+          "has sung"
         ],
-        "answer": "cantaba"
+        "answer": "was singing"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Preterite of vivir (nosotros)",
+        "prompt": "Preterite of «live» (we):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "vivimos"
+          "were living",
+          "lived",
+          "will live",
+          "have lived"
         ],
-        "answer": "vivimos"
+        "answer": "lived"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Future of salir (tú)",
+        "prompt": "Future of «leave» (you):",
         "choices": [
-          "No aplica",
-          "Ninguna",
-          "Todas",
-          "saldrás"
+          "leave",
+          "left",
+          "will leave",
+          "have left"
         ],
-        "answer": "saldrás"
+        "answer": "will leave"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Conditional of poder (yo)",
+        "prompt": "Conditional of «can/be able» (I):",
         "choices": [
-          "Todas",
-          "No aplica",
-          "Ninguna",
-          "podría"
+          "could (past)",
+          "was able",
+          "will be able",
+          "would be able"
         ],
-        "answer": "podría"
+        "answer": "would be able"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Imperfect usually expresses…?",
+        "prompt": "Imperfect usually expresses…",
         "choices": [
-          "acción acabada",
-          "hábito/pasado en curso",
-          "orden",
-          "deseo"
+          "a finished punctual action",
+          "habit or ongoing past",
+          "a command",
+          "a subjunctive wish"
         ],
-        "answer": "hábito/pasado en curso"
+        "answer": "habit or ongoing past"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Point you deepen today",
+        "prompt": "Today you deepen…",
         "choices": [
-          "Ninguna",
-          "Simples",
-          "Todas",
-          "No aplica"
+          "Simple tenses",
+          "Compound tenses",
+          "Only spelling",
+          "Only vocabulary"
         ],
-        "answer": "Simples"
+        "answer": "Simple tenses"
       }
     ]
   },

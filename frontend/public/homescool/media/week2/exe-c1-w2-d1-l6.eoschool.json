@@ -7,28 +7,28 @@
   "level": 6,
   "subject": "exe",
   "locale": "es",
-  "title": "Exégesis: Romanos 1:1–7",
+  "title": "Exegesis: Romanos 1:1–7",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "Saludo y remitente",
-        "body": "Pablo, siervo y apóstol (vv. 1)."
+        "heading": "Saludo y remitente (v. 1)",
+        "body": "Romanos abre con un saludo denso. El v. 1 presenta al remitente: Pablo, siervo (esclavo) de Cristo Jesus — subordinacion voluntaria — y apóstol — enviado con autoridad — apartado para el evangelio de Dios. Antes de la doctrina larga de la carta, Pablo fija quien habla y con que mandato. En clase: explica «siervo» y «apostol» sin vaciarlos; no son adornos. El saludo ya es teologia: el mensajero pertenece a Cristo y anuncia un evangelio que no invento."
       },
       {
         "id": "p2",
-        "heading": "Evangelio y Cristo",
-        "body": "Promesa, Hijo, resurrección (vv. 2–4)."
+        "heading": "Evangelio y Cristo (vv. 2–4)",
+        "body": "Los vv. 2–4 desarrollan el contenido: el evangelio fue prometido por los profetas en las Escrituras; concierne al Hijo, descendiente de David segun la carne, y declarado Hijo de Dios con poder por la resurreccion de entre los muertos, segun el Espiritu de santidad: Jesucristo nuestro Senor. Lista tres afirmaciones: promesa escritural, linaje davidico, resurreccion/poder. El saludo no es cortesia vacia: anuncia a Cristo como centro del evangelio."
       },
       {
         "id": "p3",
-        "heading": "Destinatarios y gracia",
-        "body": "A los de Roma; gracia y paz (vv. 5–7)."
+        "heading": "Destinatarios y gracia (vv. 5–7)",
+        "body": "Los vv. 5–7 miran a la audiencia: por Cristo recibimos gracia y apostolado para la obediencia de la fe entre las naciones; entre ellas estan tambien vosotros, llamados de Jesucristo. Destinatarios: a todos los amados de Dios en Roma, llamados a ser santos. Deseo: gracia y paz de Dios nuestro Padre y del Senor Jesucristo. Identifica a quien escribe, que anuncia y a quienes saluda — y el tono de gracia/paz que enmarca la carta."
       }
     ],
-    "summary": "Exponer el saludo de Romanos 1:1–7: quién escribe, qué anuncia y a quiénes."
+    "summary": "Exponer Romanos 1:1–7: remitente (siervo/apostol), evangelio de Cristo (vv. 2–4) y destinatarios en Roma con deseo de gracia y paz (vv. 5–7)."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,12 +37,12 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Quién escribe?",
+        "prompt": "Quien escribe?",
         "choices": [
           "Pablo",
-          "otra",
-          "ninguna",
-          "todas"
+          "Pedro solo",
+          "Moises",
+          "Colón"
         ],
         "answer": "Pablo"
       },
@@ -50,25 +50,25 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿A quiénes saluda?",
+        "prompt": "A quienes saluda?",
         "choices": [
-          "los de Roma",
-          "otra",
-          "ninguna",
-          "todas"
+          "los de Roma / amados en Roma",
+          "solo a Cesar personalmente",
+          "solo a Atenas",
+          "solo a Babilonia"
         ],
-        "answer": "los de Roma"
+        "answer": "los de Roma / amados en Roma"
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Pasaje",
+        "prompt": "Pasaje:",
         "choices": [
           "Romanos 1:1-7",
-          "otra",
-          "ninguna",
-          "todas"
+          "Genesis 1 solo",
+          "Mateo 5 solo",
+          "Salmo 23 solo"
         ],
         "answer": "Romanos 1:1-7"
       },
@@ -76,38 +76,38 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué anuncia el evangelio según el saludo?",
+        "prompt": "El evangelio del saludo anuncia sobre todo a:",
         "choices": [
-          "a Cristo / el Hijo",
-          "otra",
-          "ninguna",
-          "todas"
+          "Cristo / el Hijo",
+          "solo a Cesar",
+          "solo a David sin Cristo",
+          "solo a Abraham sin cumplimiento"
         ],
-        "answer": "a Cristo / el Hijo"
+        "answer": "Cristo / el Hijo"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Dos títulos de Pablo en v.1",
+        "prompt": "Dos titulos de Pablo en v. 1:",
         "choices": [
-          "siervo y apóstol",
-          "otra",
-          "ninguna",
-          "todas"
+          "siervo y apostol",
+          "rey y faraon",
+          "consul y senador",
+          "capitan y piloto"
         ],
-        "answer": "siervo y apóstol"
+        "answer": "siervo y apostol"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Deseo final del saludo",
+        "prompt": "Deseo final del saludo:",
         "choices": [
           "gracia y paz",
-          "otra",
-          "ninguna",
-          "todas"
+          "oro y plata",
+          "guerra y fama",
+          "solo silencio"
         ],
         "answer": "gracia y paz"
       },
@@ -115,12 +115,12 @@
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Tema",
+        "prompt": "Tema:",
         "choices": [
           "Romanos 1:1-7",
-          "otra",
-          "ninguna",
-          "todas"
+          "solo tablas",
+          "solo Kush",
+          "solo gota"
         ],
         "answer": "Romanos 1:1-7"
       }

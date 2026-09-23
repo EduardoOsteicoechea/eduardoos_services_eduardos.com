@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Simples en contexto",
-        "body": "Conjuga un verbo regular en los cinco tiempos simples con la misma raíz."
+        "body": "Profundiza solo los tiempos simples. Elige un verbo regular (por ejemplo cantar o vivir) y conjúgalo en 1.ª persona singular en presente, imperfecto, pretérito, futuro y condicional. Luego escribe cinco oraciones mínimas, una por tiempo, cambiando el marco temporal (hoy / cuando era niño / ayer / mañana / si pudiera). Observa cómo el imperfecto no «cierra» la acción y el pretérito sí. Recita las desinencias del pretérito (-é/-aste/-ó…) frente a las del imperfecto (-aba/-ía) para no confundirlas al escribir."
       }
     ],
     "summary": ""
@@ -27,27 +27,27 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos simples",
+        "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "presente imperfecto pretérito"
+          "antepresente",
+          "pluscuamperfecto",
+          "pretérito",
+          "haber + participio"
         ],
-        "answer": "presente imperfecto pretérito"
+        "answer": "pretérito"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos compuestos",
+        "prompt": "¿Cuál es un tiempo compuesto?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "antepresente pluscuamperfecto antefuturo"
+          "presente",
+          "imperfecto",
+          "pluscuamperfecto",
+          "futuro simple"
         ],
-        "answer": "antepresente pluscuamperfecto antefuturo"
+        "answer": "pluscuamperfecto"
       },
       {
         "id": "d1-q3",
@@ -66,7 +66,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué auxiliar usan los compuestos?",
+        "prompt": "¿Qué auxiliar usan los compuestos del indicativo?",
         "choices": [
           "ser",
           "haber",
@@ -79,12 +79,12 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del antepresente",
+        "prompt": "Otro nombre del antepresente:",
         "choices": [
-          "No aplica",
           "pretérito perfecto compuesto",
-          "Todas",
-          "Ninguna"
+          "imperfecto",
+          "futuro simple",
+          "gerundio"
         ],
         "answer": "pretérito perfecto compuesto"
       },
@@ -92,12 +92,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Modo que estudias",
+        "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "Ninguna",
-          "Todas",
+          "subjuntivo",
           "indicativo",
-          "No aplica"
+          "imperativo",
+          "infinitivo"
         ],
         "answer": "indicativo"
       },
@@ -118,12 +118,12 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Presente de indicar (yo)",
+        "prompt": "Presente de «indicar» (yo):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "indico"
+          "indiqué",
+          "indico",
+          "indicaba",
+          "indicaré"
         ],
         "answer": "indico"
       },
@@ -131,12 +131,12 @@
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Imperfecto de cantar (ella)",
+        "prompt": "Imperfecto de «cantar» (ella):",
         "choices": [
-          "Todas",
+          "cantó",
           "cantaba",
-          "Ninguna",
-          "No aplica"
+          "cantará",
+          "ha cantado"
         ],
         "answer": "cantaba"
       },
@@ -144,12 +144,12 @@
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Pretérito de vivir (nosotros)",
+        "prompt": "Pretérito de «vivir» (nosotros):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "vivimos"
+          "vivíamos",
+          "vivimos",
+          "viviremos",
+          "hemos vivido"
         ],
         "answer": "vivimos"
       },
@@ -157,12 +157,12 @@
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Futuro de salir (tú)",
+        "prompt": "Futuro de «salir» (tú):",
         "choices": [
-          "No aplica",
-          "Ninguna",
-          "Todas",
-          "saldrás"
+          "sales",
+          "salías",
+          "saldrás",
+          "has salido"
         ],
         "answer": "saldrás"
       },
@@ -170,11 +170,11 @@
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Condicional de poder (yo)",
+        "prompt": "Condicional de «poder» (yo):",
         "choices": [
-          "Todas",
-          "No aplica",
-          "Ninguna",
+          "pude",
+          "podía",
+          "podré",
           "podría"
         ],
         "answer": "podría"
@@ -183,25 +183,25 @@
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿El imperfecto expresa…?",
+        "prompt": "¿El imperfecto suele expresar…?",
         "choices": [
-          "acción acabada",
-          "hábito/pasado en curso",
+          "acción acabada puntual",
+          "hábito o pasado en curso",
           "orden",
-          "deseo"
+          "deseo subjuntivo"
         ],
-        "answer": "hábito/pasado en curso"
+        "answer": "hábito o pasado en curso"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Punto que profundizas",
+        "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "Ninguna",
           "Simples",
-          "Todas",
-          "No aplica"
+          "Compuestos",
+          "Solo subjuntivo",
+          "Ortografía"
         ],
         "answer": "Simples"
       }

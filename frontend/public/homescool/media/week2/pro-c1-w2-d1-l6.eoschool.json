@@ -14,21 +14,21 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Propósito",
-        "body": "Una gota simula la lente del ojo (convexa)."
+        "heading": "Proposito del experimento",
+        "body": "El experimento de la gota de agua busca mostrar como una superficie curva de agua actua como lente convexa y agranda lo que hay detras — un modelo sencillo de la lente del ojo. No es magia: es refraccion. Al mirar letras de periodico a traves de la gota sostenida en un lazo de alambre, deberias verlas mayores. Si salen mas pequenas o borrosas, la gota no esta bien formada y hay que repetir. El proposito guia todo: simular y entender una lente convexa como en el ojo."
       },
       {
         "id": "p2",
-        "heading": "Materiales y pasos",
-        "body": "Alambre, lápiz, tazón, agua, periódico; lazo y gota."
+        "heading": "Materiales y procedimiento",
+        "body": "Materiales: alambre calibre 20 de unos 6 pulgadas / 15 cm; lapiz; tazon; agua del grifo; periodico. Procedimiento: (1) Enrolla un extremo del alambre en el lapiz para formar un lazo pequeno y redondo; (2) deja un mango recto; (3) sumerge el lazo en el tazon con agua hasta que quede una gota en el anillo; (4) sostiene la gota sobre el periodico y mira las letras; (5) si se ven mas pequenas, vuelve a sumergir hasta lograr una gota convexa limpia. Anota cada paso en orden."
       },
       {
         "id": "p3",
-        "heading": "Resultado y por qué",
-        "body": "Letras agrandadas; lente convexa como en el ojo."
+        "heading": "Resultados y por que",
+        "body": "Resultado esperado: las letras se ven agrandadas. Por que: la gota tiene forma convexa (mas gruesa al centro), como una lupa y como la lente del ojo; desvia la luz de modo que la imagen aparente crece. Si la pelicula de agua queda plana o mal formada, el efecto falla. Conecta: gota convexa ≈ lente del ojo ≈ aumento. Escribe una conclusion de tres lineas: que viste, que tipo de lente es, por que importa para entender la vision."
       }
     ],
-    "summary": "Explicar el experimento de la gota-lente y por qué agranda."
+    "summary": "Explicar proposito, materiales, pasos, resultado y razon del experimento de la gota-lente (lente convexa / modelo del ojo)."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,25 +37,25 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué simula la gota?",
+        "prompt": "Que simula la gota?",
         "choices": [
-          "lente del ojo",
-          "otra",
-          "ninguna",
-          "todas"
+          "la lente del ojo",
+          "un iman",
+          "un motor",
+          "un termometro"
         ],
-        "answer": "lente del ojo"
+        "answer": "la lente del ojo"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Calibre del alambre (aprox.)",
+        "prompt": "Calibre del alambre (aprox.):",
         "choices": [
           "20",
-          "otra",
-          "ninguna",
-          "todas"
+          "2",
+          "200",
+          "0"
         ],
         "answer": "20"
       },
@@ -63,12 +63,12 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué tipo de lente forma la gota?",
+        "prompt": "Que tipo de lente forma la gota?",
         "choices": [
           "convexa",
-          "otra",
-          "ninguna",
-          "todas"
+          "solo plana perfecta",
+          "concava siempre",
+          "no es lente"
         ],
         "answer": "convexa"
       },
@@ -76,53 +76,53 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Si las letras se ven más pequeñas, ¿qué haces?",
+        "prompt": "Si las letras se ven mas pequenas, que haces?",
         "choices": [
-          "volver a sumergir",
-          "otra",
-          "ninguna",
-          "todas"
+          "volver a sumergir / rehaces la gota",
+          "romper el periodico",
+          "apagar la luz y ya",
+          "cambiar de asignatura"
         ],
-        "answer": "volver a sumergir"
+        "answer": "volver a sumergir / rehaces la gota"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Material para ver letras",
+        "prompt": "Material para ver letras:",
         "choices": [
-          "periódico",
-          "otra",
-          "ninguna",
-          "todas"
+          "periodico",
+          "solo un imán",
+          "solo arena",
+          "solo sal"
         ],
-        "answer": "periódico"
+        "answer": "periodico"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Por qué se agrandan?",
+        "prompt": "Por que se agrandan?",
         "choices": [
-          "lente convexa",
-          "otra",
-          "ninguna",
-          "todas"
+          "lente convexa / refraccion",
+          "magia",
+          "el alambre es un telescopio",
+          "el tazon canta"
         ],
-        "answer": "lente convexa"
+        "answer": "lente convexa / refraccion"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Tema",
+        "prompt": "Tema:",
         "choices": [
-          "gota de agua",
-          "otra",
-          "ninguna",
-          "todas"
+          "lente de una gota de agua",
+          "solo historia",
+          "solo latin",
+          "solo capitales"
         ],
-        "answer": "gota de agua"
+        "answer": "lente de una gota de agua"
       }
     ]
   },

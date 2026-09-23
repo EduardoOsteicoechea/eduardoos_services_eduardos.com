@@ -7,28 +7,28 @@
   "level": 6,
   "subject": "cie",
   "locale": "es",
-  "title": "Esqueleto: cráneo, vértebras, costillas, esternón",
+  "title": "Esqueleto: craneo, vertebras, costillas, esternon",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "Cráneo",
-        "body": "Protege el cerebro; huesos craneales y facial."
+        "heading": "Craneo",
+        "body": "El craneo forma la caja osea de la cabeza. Los huesos craneales protegen el encefalo (cerebro y estructuras asociadas) frente a golpes; los huesos de la cara dan forma al rostro y alojan orbitas, fosas nasales y la mandibula. Suturas unen muchos huesos craneales en el adulto. Cuando estudies el craneo, pregunta siempre: que protege (encefalo) y que forma (estructura de cabeza y cara). Es el extremo superior del esqueleto axial."
       },
       {
         "id": "p2",
-        "heading": "Columna",
-        "body": "Vértebras en serie; sostén y canal medular."
+        "heading": "Vertebras y columna",
+        "body": "Las vertebras se apilan en serie y forman la columna vertebral: sostienen el tronco en vertical, permiten cierto movimiento y protegen la medula espinal en el canal vertebral. Se agrupan en regiones (cervical, toracica, lumbar, mas sacro y coccix fusionados). Cada vertebra tipica tiene cuerpo y arco; entre vertebras hay discos. Sin la columna, el craneo no tendria soporte flexible ni la medula estaria resguardada."
       },
       {
         "id": "p3",
-        "heading": "Tórax",
-        "body": "Costillas + esternón: caja torácica."
+        "heading": "Costillas y esternon (torax)",
+        "body": "Las costillas son huesos arqueados que, junto con el esternon (hueso plano al frente del pecho) y las vertebras toracicas, forman la caja toracica. Esa caja protege corazon y pulmones y participa en la mecanica respiratoria. El esternon articula con las costillas verdaderas mediante cartilagos. Resume: costillas + esternon + vertebras toracicas = proteccion del torax y forma de la caja toracica."
       }
     ],
-    "summary": "Nombrar qué huesos forman estas partes del esqueleto axial."
+    "summary": "Nombrar craneo, vertebras, costillas y esternon: que forman y que protegen en el esqueleto axial."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,38 +37,38 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué protege el cráneo?",
+        "prompt": "Que protege el craneo?",
         "choices": [
-          "el cerebro",
-          "otra",
-          "ninguna",
-          "todas"
+          "el higado",
+          "el encefalo/cerebro",
+          "solo los pies",
+          "solo la piel"
         ],
-        "answer": "el cerebro"
+        "answer": "el encefalo/cerebro"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué forma la columna?",
+        "prompt": "Que forma la columna?",
         "choices": [
-          "vértebras",
-          "otra",
-          "ninguna",
-          "todas"
+          "solo costillas",
+          "vertebras en serie",
+          "solo el esternon",
+          "solo la mandibula"
         ],
-        "answer": "vértebras"
+        "answer": "vertebras en serie"
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿Qué huesos con el esternón cierran el tórax?",
+        "prompt": "Que huesos, con el esternon, cierran el torax?",
         "choices": [
           "costillas",
-          "otra",
-          "ninguna",
-          "todas"
+          "falanges",
+          "solo el femur",
+          "solo el radio"
         ],
         "answer": "costillas"
       },
@@ -76,53 +76,53 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Nombra las cuatro piezas del tema",
+        "prompt": "Las cuatro piezas del tema:",
         "choices": [
-          "cráneo vértebras costillas esternón",
-          "otra",
-          "ninguna",
-          "todas"
+          "craneo, vertebras, costillas, esternon",
+          "solo musculos",
+          "solo piel",
+          "solo sangre"
         ],
-        "answer": "cráneo vértebras costillas esternón"
+        "answer": "craneo, vertebras, costillas, esternon"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] ¿El esternón está al frente o atrás?",
+        "prompt": "El esternon esta:",
         "choices": [
-          "al frente",
-          "otra",
-          "ninguna",
-          "todas"
+          "al frente del pecho",
+          "detras de la cabeza",
+          "en el pie",
+          "en la muneca"
         ],
-        "answer": "al frente"
+        "answer": "al frente del pecho"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Función general de las costillas",
+        "prompt": "Funcion general de las costillas:",
         "choices": [
-          "proteger órganos",
-          "otra",
-          "ninguna",
-          "todas"
+          "proteger organos del torax",
+          "oir sonidos",
+          "bombear sangre",
+          "digestion"
         ],
-        "answer": "proteger órganos"
+        "answer": "proteger organos del torax"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "[d1] Tema de la semana",
+        "prompt": "Tema de la semana:",
         "choices": [
-          "esqueleto axial",
-          "otra",
-          "ninguna",
-          "todas"
+          "esqueleto axial (craneo a torax)",
+          "solo plantas",
+          "solo planetas",
+          "solo verbos"
         ],
-        "answer": "esqueleto axial"
+        "answer": "esqueleto axial (craneo a torax)"
       }
     ]
   },

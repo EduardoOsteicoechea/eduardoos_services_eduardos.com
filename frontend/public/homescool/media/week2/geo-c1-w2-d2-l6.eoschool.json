@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Conteo",
-        "body": "Explica por qué decimos 24 entidades."
+        "heading": "Por que decimos 24",
+        "body": "Explica con precision: 23 estados + Distrito Capital = 24 entidades. Caracas es capital del pais y del DC. Escribe la formula y recita tres pares que no comparten nombre (Zulia/Maracaibo, Miranda/Los Teques, Bolivar/Ciudad Bolivar) y dos que si (Merida, Trujillo). Sin el mapa mental de 24, las capitales flotan. Hoy el foco es el conteo y la estructura, no toda la lista de memoria."
       }
     ],
     "summary": ""
@@ -27,12 +27,12 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuántas entidades federales contamos?",
+        "prompt": "Cuantas entidades federales contamos?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "24"
+          "20",
+          "23",
+          "24",
+          "30"
         ],
         "answer": "24"
       },
@@ -40,12 +40,12 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Venezuela (DC)",
+        "prompt": "Capital del Distrito Capital:",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "Caracas"
+          "Maracaibo",
+          "Caracas",
+          "Valencia",
+          "Merida"
         ],
         "answer": "Caracas"
       },
@@ -53,12 +53,12 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Zulia capital?",
+        "prompt": "Capital de Zulia:",
         "choices": [
           "Maracaibo",
           "Valencia",
           "Barquisimeto",
-          "Mérida"
+          "Merida"
         ],
         "answer": "Maracaibo"
       },
@@ -66,7 +66,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Carabobo capital?",
+        "prompt": "Capital de Carabobo:",
         "choices": [
           "Valencia",
           "Maracay",
@@ -79,33 +79,33 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Capital de Mérida",
+        "prompt": "Capital de Merida:",
         "choices": [
-          "No aplica",
-          "Mérida",
-          "Todas",
-          "Ninguna"
+          "San Cristobal",
+          "Merida",
+          "Trujillo",
+          "Barinas"
         ],
-        "answer": "Mérida"
+        "answer": "Merida"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Tema",
+        "prompt": "Tema de la semana:",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "estados y capitales",
-          "No aplica"
+          "rios de Europa",
+          "estados y capitales de Venezuela",
+          "solo el clima",
+          "solo banderas"
         ],
-        "answer": "estados y capitales"
+        "answer": "estados y capitales de Venezuela"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Miranda capital?",
+        "prompt": "Capital de Miranda:",
         "choices": [
           "Los Teques",
           "Guatire",
@@ -118,12 +118,12 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "23 estados + ¿qué?",
+        "prompt": "23 estados + que entidad?",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "Distrito Capital"
+          "Distrito Capital",
+          "solo una isla",
+          "una provincia espanola",
+          "un departamento"
         ],
         "answer": "Distrito Capital"
       },
@@ -131,20 +131,20 @@
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Punto de hoy",
+        "prompt": "Punto de hoy:",
         "choices": [
-          "Todas",
-          "Mapa político",
-          "Ninguna",
-          "No aplica"
+          "Mapa politico",
+          "solo el clima",
+          "solo rios",
+          "solo relieve"
         ],
-        "answer": "Mapa político"
+        "answer": "Mapa politico"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Lara capital?",
+        "prompt": "Capital de Lara:",
         "choices": [
           "Barquisimeto",
           "Acarigua",
@@ -157,12 +157,12 @@
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Aragua",
+        "prompt": "Capital de Aragua:",
         "choices": [
-          "No aplica",
-          "Ninguna",
-          "Todas",
-          "Maracay"
+          "Valencia",
+          "Maracay",
+          "La Victoria",
+          "Cagua"
         ],
         "answer": "Maracay"
       },
@@ -170,37 +170,37 @@
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Táchira",
+        "prompt": "Capital de Tachira:",
         "choices": [
-          "Todas",
-          "No aplica",
-          "Ninguna",
-          "San Cristóbal"
+          "Merida",
+          "San Cristobal",
+          "San Antonio",
+          "La Grita"
         ],
-        "answer": "San Cristóbal"
+        "answer": "San Cristobal"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Capital de Bolívar",
+        "prompt": "Capital de Bolivar:",
         "choices": [
-          "Ciudad Bolívar",
-          "Ninguna",
-          "No aplica",
-          "Todas"
+          "Ciudad Guayana",
+          "Ciudad Bolivar",
+          "Upata",
+          "Caicara"
         ],
-        "answer": "Ciudad Bolívar"
+        "answer": "Ciudad Bolivar"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Anzoátegui capital?",
+        "prompt": "Capital de Anzoategui:",
         "choices": [
           "Barcelona",
           "Puerto La Cruz",
-          "Lechería",
+          "Lecheria",
           "El Tigre"
         ],
         "answer": "Barcelona"

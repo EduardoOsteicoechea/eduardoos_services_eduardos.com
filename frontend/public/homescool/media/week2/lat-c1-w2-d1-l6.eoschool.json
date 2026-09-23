@@ -15,20 +15,20 @@
       {
         "id": "p1",
         "heading": "et — y",
-        "body": "Conjunción copulativa; une palabras o cláusulas."
+        "body": "Et es la conjunción copulativa más frecuente del latín: une palabras, sintagmas o cláusulas del mismo nivel (Marcus et Lucia; veni et vidi). No es un adverbio: no modifica al verbo, sino que enlaza elementos. En listas puede repetirse (et… et… = tanto… como…). Traduce siempre como «y» salvo que el contexto pida un matiz enfático. Practica: puer et puella; laborat et cantat. Sin et, las coordinaciones latinas se rompen o fuerzan una yuxtaposición seca."
       },
       {
         "id": "p2",
         "heading": "ut — para que",
-        "body": "Introduce finalidad o resultado (según contexto)."
+        "body": "Ut introduce con frecuencia cláusulas de finalidad («para que») o de resultado («de modo que»), según el verbo y el modo de la subordinada. En la lectura escolar de esta semana, retén el valor final: ut + verbo ≈ «para que…». Ejemplo de idea: venit ut videat — viene para que vea / para ver. No confundas ut con et (enlace) ni con non (negación). Cuando veas ut, pregunta: ¿para qué se hace la acción principal?"
       },
       {
         "id": "p3",
         "heading": "non — no",
-        "body": "Negación adverbial delante de lo negado."
+        "body": "Non es el adverbio de negación estándar: se coloca delante de lo negado (non venit — no viene; non est verum — no es verdad). No une cláusulas como et ni introduce finalidad como ut. En compuestos y correlaciones aparecerán formas relacionadas (nōnne, ne… quidem), pero aquí domina el non simple. Regla práctica: identifica el predicado y antepón non para negarlo sin cambiar el resto de la estructura."
       }
     ],
-    "summary": "Reconocer y traducir et, ut y non en oraciones cortas."
+    "summary": "Reconocer, traducir y usar et (y), ut (para que) y non (no) en oraciones latinas cortas."
   },
   "quiz": {
     "questionCount": 7,
@@ -76,12 +76,12 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Traduce: puer et puella",
+        "prompt": "«puer et puella» traduce:",
         "choices": [
+          "el niño o la niña",
           "el niño y la niña",
-          "Todas",
-          "No aplica",
-          "Ninguna"
+          "no hay niño",
+          "para que haya niña"
         ],
         "answer": "el niño y la niña"
       },
@@ -89,12 +89,12 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Función de et",
+        "prompt": "Función de et:",
         "choices": [
-          "No aplica",
           "conjunción copulativa",
-          "Todas",
-          "Ninguna"
+          "adverbio de negación",
+          "verbo",
+          "preposición de lugar"
         ],
         "answer": "conjunción copulativa"
       },
@@ -102,12 +102,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Función de non",
+        "prompt": "Función de non:",
         "choices": [
-          "Ninguna",
-          "Todas",
+          "unión copulativa",
           "negación",
-          "No aplica"
+          "finalidad",
+          "artículo"
         ],
         "answer": "negación"
       },
@@ -115,14 +115,14 @@
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Tema",
+        "prompt": "Tema de la semana:",
         "choices": [
-          "et ut non",
-          "Ninguna",
-          "No aplica",
-          "Todas"
+          "et, ut, non",
+          "solo declinaciones",
+          "solo números",
+          "solo geografía"
         ],
-        "answer": "et ut non"
+        "answer": "et, ut, non"
       }
     ]
   },

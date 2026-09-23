@@ -15,20 +15,20 @@
       {
         "id": "p1",
         "heading": "Simple tenses",
-        "body": "Present, imperfect, preterite, future, and simple conditional."
+        "body": "In the indicative mood, five simple tenses locate the action without a perfect auxiliary. The present names habits or what is happening now (I sing). The imperfect (or past progressive / used-to sense) paints background, habit, or ongoing past (I was singing / I used to sing). The preterite (simple past) marks a finished past event (I sang). The future places what has not yet happened (I will sing). The simple conditional expresses hypothesis, politeness, or a possible result (I would sing). Conjugate one regular verb through all five to see stem and endings clearly."
       },
       {
         "id": "p2",
         "heading": "Compound tenses",
-        "body": "Present perfect, pluperfect, anterior preterite, future perfect, conditional perfect."
+        "body": "The five compound (perfect) tenses use an auxiliary + past participle. Present perfect (I have sung) links past action to present relevance. Pluperfect (I had sung) is a past before another past. Anterior preterite (I had sung — literary / rare) marks completion just before another past event. Future perfect (I will have sung) projects completion by a future point. Conditional perfect (I would have sung) marks what would have happened in a past hypothesis. The participle stays fixed; only the auxiliary changes."
       },
       {
         "id": "p3",
-        "heading": "Usage",
-        "body": "When to choose simple vs compound: relative time and perfect aspect."
+        "heading": "Usage: simple vs compound",
+        "body": "Choose simple or compound by relative time and aspect. A closed past moment («Yesterday I finished») usually takes simple past. A result that still matters («I have already finished») takes present perfect. Imperfect/progressive paints the scene; simple past moves the plot. Pluperfect and conditional perfect place an action as «already done» relative to another anchor. Ask: finished point, background, or result still in force?"
       }
     ],
-    "summary": "Master the ten indicative tenses (five simple + five compound)."
+    "summary": "Master the ten indicative tenses: five simple (present, imperfect, preterite, future, conditional) and five compound with auxiliary + participle, knowing when to choose each."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,27 +37,27 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Name tres tiempos simples",
+        "prompt": "Which is a simple indicative tense?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "presente imperfecto pretérito"
+          "present perfect",
+          "pluperfect",
+          "preterite",
+          "have + participle"
         ],
-        "answer": "presente imperfecto pretérito"
+        "answer": "preterite"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Name tres tiempos compuestos",
+        "prompt": "Which is a compound tense?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "antepresente pluscuamperfecto antefuturo"
+          "present",
+          "imperfect",
+          "pluperfect",
+          "simple future"
         ],
-        "answer": "antepresente pluscuamperfecto antefuturo"
+        "answer": "pluperfect"
       },
       {
         "id": "d1-q3",
@@ -66,9 +66,9 @@
         "prompt": "Is the simple conditional…?",
         "choices": [
           "simple",
-          "compuesto",
-          "subjuntivo",
-          "imperativo"
+          "compound",
+          "subjunctive",
+          "imperative"
         ],
         "answer": "simple"
       },
@@ -76,40 +76,40 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Which auxiliary do compounds use?",
+        "prompt": "Which auxiliary do English perfects use?",
         "choices": [
-          "ser",
-          "haber",
-          "estar",
-          "ir"
+          "be",
+          "have",
+          "do",
+          "will only"
         ],
-        "answer": "haber"
+        "answer": "have"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Another name for present perfect",
+        "prompt": "Another name for antepresente / present perfect idea:",
         "choices": [
-          "No aplica",
-          "pretérito perfecto compuesto",
-          "Todas",
-          "Ninguna"
+          "present perfect",
+          "imperfect",
+          "simple future",
+          "gerund"
         ],
-        "answer": "pretérito perfecto compuesto"
+        "answer": "present perfect"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Mood you are studying",
+        "prompt": "Which mood are you studying?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "indicativo",
-          "No aplica"
+          "subjunctive",
+          "indicative",
+          "imperative",
+          "infinitive"
         ],
-        "answer": "indicativo"
+        "answer": "indicative"
       },
       {
         "id": "d1-q7",

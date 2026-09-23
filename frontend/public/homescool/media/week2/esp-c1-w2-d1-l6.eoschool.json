@@ -14,21 +14,21 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Simples",
-        "body": "Presente, imperfecto, pretérito, futuro y condicional simple."
+        "heading": "Tiempos simples",
+        "body": "En el modo indicativo, los cinco tiempos simples sitúan la acción sin auxiliar «haber». El presente nombra lo habitual o lo que ocurre ahora (canto). El imperfecto describe trasfondo, hábito o acción en curso en el pasado (cantaba). El pretérito (o indefinido) marca acción acabada en un punto del pasado (canté). El futuro sitúa lo que aún no ocurre (cantaré). El condicional simple expresa hipótesis, cortesía o consecuencia posible (cantaría). Conjuga un verbo regular en -ar/-er/-ir en los cinco para ver la raíz y las desinencias propias de cada tiempo."
       },
       {
         "id": "p2",
-        "heading": "Compuestos",
-        "body": "Antepresente, pluscuamperfecto, antepretérito, antefuturo y condicional perfecto."
+        "heading": "Tiempos compuestos",
+        "body": "Los cinco compuestos se forman con el auxiliar haber + participio pasado. El antepresente (pretérito perfecto compuesto: he cantado) une pasado con relevancia presente. El pluscuamperfecto (había cantado) es un pasado anterior a otro pasado. El antepretérito (hube cantado) es literario: acción acabada justo antes de otra. El antefuturo (habré cantado) proyecta una acción ya concluida en un futuro. El condicional perfecto (habría cantado) marca lo que habría ocurrido en una hipótesis pasada. El participio es invariable en persona; solo cambia el auxiliar."
       },
       {
         "id": "p3",
-        "heading": "Uso",
-        "body": "Cuándo elegir simple vs compuesto: tiempo relativo y aspecto perfecto."
+        "heading": "Uso: simple frente a compuesto",
+        "body": "Elegir simple o compuesto depende del tiempo relativo y del aspecto. Si la acción está cerrada en un momento concreto del pasado («Ayer terminé»), suele bastar el pretérito simple. Si importa el resultado hasta ahora («Ya he terminado»), usas antepresente. El imperfecto pinta el escenario; el pretérito avanza la trama. Los compuestos con había / habría sitúan una acción «ya hecha» respecto de otro ancla temporal. Pregúntate: ¿punto acabado, trasfondo, o resultado que sigue vigente?"
       }
     ],
-    "summary": "Dominar los diez tiempos del indicativo (cinco simples + cinco compuestos)."
+    "summary": "Dominar los diez tiempos del indicativo: cinco simples (presente, imperfecto, pretérito, futuro, condicional) y cinco compuestos con haber + participio, sabiendo cuándo elegir cada uno."
   },
   "quiz": {
     "questionCount": 7,
@@ -37,27 +37,27 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos simples",
+        "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "presente imperfecto pretérito"
+          "antepresente",
+          "pluscuamperfecto",
+          "pretérito",
+          "haber + participio"
         ],
-        "answer": "presente imperfecto pretérito"
+        "answer": "pretérito"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos compuestos",
+        "prompt": "¿Cuál es un tiempo compuesto?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "antepresente pluscuamperfecto antefuturo"
+          "presente",
+          "imperfecto",
+          "pluscuamperfecto",
+          "futuro simple"
         ],
-        "answer": "antepresente pluscuamperfecto antefuturo"
+        "answer": "pluscuamperfecto"
       },
       {
         "id": "d1-q3",
@@ -76,7 +76,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué auxiliar usan los compuestos?",
+        "prompt": "¿Qué auxiliar usan los compuestos del indicativo?",
         "choices": [
           "ser",
           "haber",
@@ -89,12 +89,12 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del antepresente",
+        "prompt": "Otro nombre del antepresente:",
         "choices": [
-          "No aplica",
           "pretérito perfecto compuesto",
-          "Todas",
-          "Ninguna"
+          "imperfecto",
+          "futuro simple",
+          "gerundio"
         ],
         "answer": "pretérito perfecto compuesto"
       },
@@ -102,12 +102,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Modo que estudias",
+        "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "Ninguna",
-          "Todas",
+          "subjuntivo",
           "indicativo",
-          "No aplica"
+          "imperativo",
+          "infinitivo"
         ],
         "answer": "indicativo"
       },

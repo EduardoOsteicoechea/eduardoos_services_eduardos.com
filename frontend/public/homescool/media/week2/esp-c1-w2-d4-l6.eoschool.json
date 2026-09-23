@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Elegir el tiempo",
-        "body": "Decide simple vs compuesto en cinco oraciones cortas y justifica."
+        "heading": "Elegir el tiempo adecuado",
+        "body": "Practica la decisión simple vs compuesto. Para cada idea, elige y justifica: (1) acción acabada ayer → pretérito; (2) experiencia hasta hoy → antepresente; (3) hábito pasado → imperfecto; (4) hipótesis presente → condicional; (5) «ya hecho» antes de otro pasado → pluscuamperfecto. Reescribe cinco oraciones cortas cambiando solo el tiempo y explica qué matices cambian. El objetivo no es memorizar etiquetas, sino oír la diferencia de aspecto y de ancla temporal."
       }
     ],
     "summary": ""
@@ -27,27 +27,27 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos simples",
+        "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "presente imperfecto pretérito"
+          "antepresente",
+          "pluscuamperfecto",
+          "pretérito",
+          "haber + participio"
         ],
-        "answer": "presente imperfecto pretérito"
+        "answer": "pretérito"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Nombra tres tiempos compuestos",
+        "prompt": "¿Cuál es un tiempo compuesto?",
         "choices": [
-          "Ninguna",
-          "Todas",
-          "No aplica",
-          "antepresente pluscuamperfecto antefuturo"
+          "presente",
+          "imperfecto",
+          "pluscuamperfecto",
+          "futuro simple"
         ],
-        "answer": "antepresente pluscuamperfecto antefuturo"
+        "answer": "pluscuamperfecto"
       },
       {
         "id": "d1-q3",
@@ -66,7 +66,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué auxiliar usan los compuestos?",
+        "prompt": "¿Qué auxiliar usan los compuestos del indicativo?",
         "choices": [
           "ser",
           "haber",
@@ -79,12 +79,12 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del antepresente",
+        "prompt": "Otro nombre del antepresente:",
         "choices": [
-          "No aplica",
           "pretérito perfecto compuesto",
-          "Todas",
-          "Ninguna"
+          "imperfecto",
+          "futuro simple",
+          "gerundio"
         ],
         "answer": "pretérito perfecto compuesto"
       },
@@ -92,12 +92,12 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Modo que estudias",
+        "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "Ninguna",
-          "Todas",
+          "subjuntivo",
           "indicativo",
-          "No aplica"
+          "imperativo",
+          "infinitivo"
         ],
         "answer": "indicativo"
       },
@@ -118,12 +118,12 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Presente de indicar (yo)",
+        "prompt": "Presente de «indicar» (yo):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "indico"
+          "indiqué",
+          "indico",
+          "indicaba",
+          "indicaré"
         ],
         "answer": "indico"
       },
@@ -131,12 +131,12 @@
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Imperfecto de cantar (ella)",
+        "prompt": "Imperfecto de «cantar» (ella):",
         "choices": [
-          "Todas",
+          "cantó",
           "cantaba",
-          "Ninguna",
-          "No aplica"
+          "cantará",
+          "ha cantado"
         ],
         "answer": "cantaba"
       },
@@ -144,12 +144,12 @@
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Pretérito de vivir (nosotros)",
+        "prompt": "Pretérito de «vivir» (nosotros):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "vivimos"
+          "vivíamos",
+          "vivimos",
+          "viviremos",
+          "hemos vivido"
         ],
         "answer": "vivimos"
       },
@@ -157,12 +157,12 @@
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Futuro de salir (tú)",
+        "prompt": "Futuro de «salir» (tú):",
         "choices": [
-          "No aplica",
-          "Ninguna",
-          "Todas",
-          "saldrás"
+          "sales",
+          "salías",
+          "saldrás",
+          "has salido"
         ],
         "answer": "saldrás"
       },
@@ -170,11 +170,11 @@
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Condicional de poder (yo)",
+        "prompt": "Condicional de «poder» (yo):",
         "choices": [
-          "Todas",
-          "No aplica",
-          "Ninguna",
+          "pude",
+          "podía",
+          "podré",
           "podría"
         ],
         "answer": "podría"
@@ -183,25 +183,25 @@
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿El imperfecto expresa…?",
+        "prompt": "¿El imperfecto suele expresar…?",
         "choices": [
-          "acción acabada",
-          "hábito/pasado en curso",
+          "acción acabada puntual",
+          "hábito o pasado en curso",
           "orden",
-          "deseo"
+          "deseo subjuntivo"
         ],
-        "answer": "hábito/pasado en curso"
+        "answer": "hábito o pasado en curso"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Punto que profundizas",
+        "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "Ninguna",
           "Simples",
-          "Todas",
-          "No aplica"
+          "Compuestos",
+          "Solo subjuntivo",
+          "Ortografía"
         ],
         "answer": "Simples"
       },
@@ -209,12 +209,12 @@
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Antepresente de comer (yo)",
+        "prompt": "Antepresente de «comer» (yo):",
         "choices": [
-          "No aplica",
-          "Todas",
-          "Ninguna",
-          "he comido"
+          "comí",
+          "comía",
+          "he comido",
+          "habré comido"
         ],
         "answer": "he comido"
       },
@@ -222,12 +222,12 @@
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Pluscuamperfecto de ver (ella)",
+        "prompt": "Pluscuamperfecto de «ver» (ella):",
         "choices": [
-          "Todas",
-          "Ninguna",
-          "No aplica",
-          "había visto"
+          "vio",
+          "veía",
+          "había visto",
+          "verá"
         ],
         "answer": "había visto"
       },
@@ -235,12 +235,12 @@
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Antefuturo de llegar (nosotros)",
+        "prompt": "Antefuturo de «llegar» (nosotros):",
         "choices": [
+          "llegamos",
+          "llegaremos",
           "habremos llegado",
-          "No aplica",
-          "Todas",
-          "Ninguna"
+          "habíamos llegado"
         ],
         "answer": "habremos llegado"
       },
@@ -248,12 +248,12 @@
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Condicional perfecto de decir (yo)",
+        "prompt": "Condicional perfecto de «decir» (yo):",
         "choices": [
+          "diría",
+          "dije",
           "habría dicho",
-          "No aplica",
-          "Todas",
-          "Ninguna"
+          "he dicho"
         ],
         "answer": "habría dicho"
       },
@@ -261,12 +261,12 @@
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Antepretérito: auxiliar en pretérito",
+        "prompt": "Antepretérito: auxiliar en pretérito…",
         "choices": [
-          "No aplica",
-          "Ninguna",
-          "Todas",
-          "hube"
+          "he",
+          "había",
+          "hube",
+          "habré"
         ],
         "answer": "hube"
       },
@@ -274,7 +274,7 @@
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Participio de escribir?",
+        "prompt": "Participio de «escribir»:",
         "choices": [
           "escribido",
           "escrito",
@@ -287,12 +287,12 @@
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Punto que profundizas",
+        "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "No aplica",
+          "Simples",
           "Compuestos",
-          "Todas",
-          "Ninguna"
+          "Solo presente",
+          "Acentuación"
         ],
         "answer": "Compuestos"
       },
@@ -300,7 +300,7 @@
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Acción acabada ayer → suele usarse",
+        "prompt": "Acción acabada ayer → suele usarse:",
         "choices": [
           "imperfecto",
           "pretérito",
@@ -326,25 +326,25 @@
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Simple o compuesto?: «Ya he terminado»",
+        "prompt": "«Ya he terminado» es forma…",
         "choices": [
-          "compuesto",
-          "No aplica",
-          "Ninguna",
-          "Todas"
+          "simple",
+          "compuesta",
+          "imperativa",
+          "subjuntiva"
         ],
-        "answer": "compuesto"
+        "answer": "compuesta"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Simple o compuesto?: «Terminé ayer»",
+        "prompt": "«Terminé ayer» es forma…",
         "choices": [
           "simple",
-          "Todas",
-          "No aplica",
-          "Ninguna"
+          "compuesta",
+          "condicional perfecta",
+          "pluscuamperfecta"
         ],
         "answer": "simple"
       },
@@ -352,7 +352,7 @@
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Había + participio es",
+        "prompt": "Había + participio es:",
         "choices": [
           "pluscuamperfecto",
           "presente",
@@ -365,12 +365,12 @@
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Punto que profundizas",
+        "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "Todas",
-          "No aplica",
-          "Ninguna",
-          "Uso"
+          "Simples",
+          "Compuestos",
+          "Uso",
+          "Solo ortografía"
         ],
         "answer": "Uso"
       },
@@ -378,12 +378,12 @@
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Modo",
+        "prompt": "El modo de estas formas es:",
         "choices": [
-          "Todas",
+          "subjuntivo",
           "indicativo",
-          "No aplica",
-          "Ninguna"
+          "imperativo",
+          "optativo"
         ],
         "answer": "indicativo"
       }

@@ -87,10 +87,22 @@ function isEreportPage(): boolean {
 function closeAllPanels(except?: string): void {
   for (const id of ALL_PANELS) {
     if (id !== except) {
+      // Homescool curriculum rail stays docked while browsing sheets.
+      if (id === "dynamic-header" && isHomescoolFixedDhs()) {
+        setPanelHidden("dynamic-header", false);
+        continue;
+      }
       setPanelHidden(id, true);
     }
   }
   syncExpanded();
+}
+
+function isHomescoolFixedDhs(): boolean {
+  return (
+    document.documentElement.getAttribute("data-page") === "homescool-workspace" &&
+    Boolean(document.querySelector("[data-homescool-dhs], .homescool-dhs"))
+  );
 }
 
 function dynamicHeaderHasActions(): boolean {
@@ -110,8 +122,12 @@ function dynamicHeaderHasActions(): boolean {
   return host instanceof HTMLElement && host.childElementCount > 0;
 }
 
-/** Keep DHS tray in sync with the global menu: show only when menu is open and route has actions. */
+/** Keep DHS tray in sync with the global menu — except Homescool fixed rail. */
 function syncDynamicHeaderWithMenu(): void {
+  if (isHomescoolFixedDhs()) {
+    setPanelHidden("dynamic-header", false);
+    return;
+  }
   if (!panelOpen("main-menu")) {
     setPanelHidden("dynamic-header", true);
     return;
