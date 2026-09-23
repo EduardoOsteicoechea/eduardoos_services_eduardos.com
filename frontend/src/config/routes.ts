@@ -4,6 +4,13 @@ export const DOCUMENT_ROUTES = {
   pamphletPreview: "/api/documents/pamphlet/preview",
 } as const;
 
+/** Homescool curriculum PDF preview (eoschool JSON → PDF). */
+export const HOMESCOOL_ROUTES = {
+  curriculum: "/homescool/curriculum.json",
+  /** Path for apiRequest (without /api prefix). */
+  preview: "/homescool/preview",
+} as const;
+
 export const EPAM_ROUTES = {
   list: "/api/epams",
   save: "/api/epams",

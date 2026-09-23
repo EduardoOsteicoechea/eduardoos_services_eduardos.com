@@ -59,9 +59,9 @@ import "../../styles/homescool-workspace.css";
         </div>
         <div class="homescool-workspace__overlay homescool-workspace__overlay--loading" data-homescool-loading hidden>
           <span class="homescool-workspace__spinner" aria-hidden="true"></span>
-          <p class="homescool-workspace__loading-msg">Cargando material…</p>
+          <p class="homescool-workspace__loading-msg">Generando vista previa PDF…</p>
         </div>
-        <div class="homescool-sheet-host" data-homescool-sheets hidden></div>
+        <div class="homescool-sheet-host" data-homescool-sheets hidden aria-label="Vista previa PDF de la clase"></div>
       </div>
     </div>
   </section>
@@ -69,15 +69,20 @@ import "../../styles/homescool-workspace.css";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import {
-    fetchHomescoolMaterial,
-    fetchHomescoolMaterials,
-    type EoschoolDocument,
-    type HomescoolMaterial,
-  } from "../../lib/homescool";
-  import { downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
-  import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
+  import { HOMESCOOL_SUBJECTS } from "../../lib/homescool-eoschool";
+  import {
+    findCurriculumClass,
+    loadHomescoolCurriculum,
+    toEoschoolDocument,
+    type HomescoolCurriculum,
+    type HomescoolCurriculumClass,
+  } from "../../lib/homescool-curriculum";
+  import {
+    downloadPdfBytes,
+    fetchHomescoolPdfPreview,
+    renderHomescoolPdfPreview,
+  } from "../../lib/homescool-pdf-preview";
   import { mustLog } from "../../lib/dev-log";
 
   const LEVEL = 6;
@@ -98,10 +103,11 @@ import "../../styles/homescool-workspace.css";
   const subjectsHost = document.querySelector("[data-homescool-subjects]");
   const cyclesHost = document.querySelector("[data-homescool-cycles]");
 
-  let materials: HomescoolMaterial[] = [];
+  let curriculum: HomescoolCurriculum | null = null;
   let sheetsReady = false;
-  let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
+  let currentPdfBytes: Uint8Array | null = null;
+  let previewSeq = 0;
   /** Default to week 2 until packs for other weeks exist; boot() snaps to first available cell. */
   let selection = { cycle: 1, week: 2, day: 1, subject: "mat" };
 
@@ -137,36 +143,22 @@ import "../../styles/homescool-workspace.css";
     void downloadCurrentPdf();
   });
 
-  async function downloadCurrentPdf() {
+  function downloadCurrentPdf() {
     log("pdf.click", {
       sheetsReady,
-      materialId: currentMaterialId,
+      hasBytes: Boolean(currentPdfBytes),
       disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null,
     });
     if (
       !(printBtn instanceof HTMLButtonElement) ||
       printBtn.disabled ||
       !sheetsReady ||
-      !currentMaterialId ||
-      !(sheetsHost instanceof HTMLElement)
+      !currentPdfBytes
     ) {
       return;
     }
-    printBtn.disabled = true;
-    printBtn.setAttribute("aria-busy", "true");
-    const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
-    printBtn.removeAttribute("aria-busy");
-    printBtn.disabled = false;
-    if (!result.ok) {
-      showErrorModal({
-        message: result.error || "Could not download PDF.",
-        requestId: result.requestId,
-        details: result.requestId ? `request_id=${result.requestId}` : "",
-      });
-      log("pdf.fail", { error: result.error, requestId: result.requestId });
-      return;
-    }
-    log("pdf.ok", { materialId: currentMaterialId, requestId: result.requestId });
+    downloadPdfBytes(currentPdfBytes, currentPdfName);
+    log("pdf.ok", { pdfName: currentPdfName, bytes: currentPdfBytes.length });
   }
 
   async function boot() {
@@ -177,23 +169,25 @@ import "../../styles/homescool-workspace.css";
     buildDayGrid();
     buildSubjectGrid();
     bindCycles();
-    if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
-    const res = await fetchHomescoolMaterials();
-    log("boot.materials", { error: res.error, count: res.materials.length, requestId: res.requestId });
-    if (res.error) {
+    if (banner instanceof HTMLElement) banner.textContent = "Loading curriculum…";
+    const res = await loadHomescoolCurriculum();
+    log("boot.curriculum", {
+      error: res.error,
+      count: res.curriculum?.classCount ?? res.curriculum?.classes.length ?? 0,
+    });
+    if (res.error || !res.curriculum) {
       showErrorModal({
-        message: res.error,
-        requestId: res.requestId,
-        details: res.requestId ? `request_id=${res.requestId}` : "",
+        message: res.error || "Could not load curriculum.",
+        details: "Expected /homescool/curriculum.json",
       });
-      if (banner instanceof HTMLElement) banner.textContent = res.error;
+      if (banner instanceof HTMLElement) banner.textContent = res.error || "Curriculum missing.";
       return;
     }
-    materials = res.materials;
-    const deep = new URLSearchParams(window.location.search).get("material");
-    log("boot.deep_link", { material: deep });
+    curriculum = res.curriculum;
+    const deep = new URLSearchParams(window.location.search).get("class");
+    log("boot.deep_link", { class: deep });
     if (deep) {
-      const m = materials.find((row) => row.id === deep && row.format === "eoschool");
+      const m = curriculum.classes.find((row) => row.key === deep);
       if (m) {
         selection = {
           cycle: m.cycle,
@@ -201,11 +195,11 @@ import "../../styles/homescool-workspace.css";
           day: m.day,
           subject: m.subject,
         };
-        log("boot.deep_applied", { ...selection });
+        log("boot.deep_applied", { ...selection, key: m.key });
       } else {
-        log("boot.deep_miss", { id: deep });
+        log("boot.deep_miss", { key: deep });
       }
-    } else if (!findMaterial()) {
+    } else if (!findClass()) {
       const first = pickFirstAvailable();
       if (first) {
         selection = {
@@ -214,19 +208,19 @@ import "../../styles/homescool-workspace.css";
           day: first.day,
           subject: first.subject,
         };
-        log("boot.snap_to_available", { ...selection, id: first.id });
+        log("boot.snap_to_available", { ...selection, key: first.key });
       }
     }
     syncChipStates();
     await openSelection();
   }
 
-  function eoschoolRows(): HomescoolMaterial[] {
-    return materials.filter((m) => m.format === "eoschool" && (m.level ?? LEVEL) === LEVEL);
+  function classRows(): HomescoolCurriculumClass[] {
+    return (curriculum?.classes ?? []).filter((m) => (m.level ?? LEVEL) === LEVEL);
   }
 
-  function pickFirstAvailable(): HomescoolMaterial | undefined {
-    const rows = eoschoolRows().slice().sort((a, b) => {
+  function pickFirstAvailable(): HomescoolCurriculumClass | undefined {
+    const rows = classRows().slice().sort((a, b) => {
       if (a.cycle !== b.cycle) return a.cycle - b.cycle;
       if (a.week !== b.week) return a.week - b.week;
       if (a.day !== b.day) return a.day - b.day;
@@ -241,7 +235,7 @@ import "../../styles/homescool-workspace.css";
     day?: number;
     subject?: string;
   }): boolean {
-    return eoschoolRows().some(
+    return classRows().some(
       (m) =>
         (partial.cycle == null || m.cycle === partial.cycle) &&
         (partial.week == null || m.week === partial.week) &&
@@ -361,27 +355,21 @@ import "../../styles/homescool-workspace.css";
     });
   }
 
-  function findMaterial(): HomescoolMaterial | undefined {
-    const match = materials.find(
-      (m) =>
-        m.format === "eoschool" &&
-        m.cycle === selection.cycle &&
-        m.week === selection.week &&
-        m.day === selection.day &&
-        (m.level ?? LEVEL) === LEVEL &&
-        m.subject === selection.subject,
-    );
-    log("findMaterial", { ...selection, level: LEVEL, found: Boolean(match), id: match?.id });
+  function findClass(): HomescoolCurriculumClass | undefined {
+    if (!curriculum) return undefined;
+    const match = findCurriculumClass(curriculum, selection, LEVEL);
+    log("findClass", { ...selection, level: LEVEL, found: Boolean(match), key: match?.key });
     return match;
   }
 
   async function openSelection() {
-    log("openSelection.enter", { ...selection });
+    const seq = ++previewSeq;
+    log("openSelection.enter", { ...selection, seq });
     sheetsReady = false;
-    currentMaterialId = "";
+    currentPdfBytes = null;
     currentPdfName = "homescool.pdf";
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
-    const match = findMaterial();
+    const match = findClass();
     if (!match) {
       const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
       setStageMode("empty");
@@ -394,46 +382,39 @@ import "../../styles/homescool-workspace.css";
       return;
     }
     setStageMode("loading");
-    if (banner instanceof HTMLElement) banner.textContent = "Cargando material…";
-    const res = await fetchHomescoolMaterial(match.id);
-    log("openSelection.meta", {
-      error: res.error,
-      requestId: res.requestId,
-      documentUrl: res.documentUrl,
-      pdfUrl: res.pdfUrl,
-      format: res.material?.format,
-    });
-    if (res.error || !res.material) {
-      setStageMode("empty");
-      if (emptyMsg instanceof HTMLElement) {
-        emptyMsg.textContent = "No se pudo cargar el material. Intenta de nuevo.";
-      }
-      showErrorModal({
-        message: res.error || "Could not load material.",
-        requestId: res.requestId,
-        details: res.requestId ? `request_id=${res.requestId}` : "",
-      });
+    if (banner instanceof HTMLElement) banner.textContent = "Generando vista previa PDF…";
+    const doc = toEoschoolDocument(match);
+    const preview = await fetchHomescoolPdfPreview(doc);
+    if (seq !== previewSeq) {
+      log("openSelection.stale", { seq, previewSeq });
       return;
     }
-    const docUrl = res.documentUrl || `/api/homescool/materials/${match.id}/document`;
-    try {
-      log("openSelection.fetch_document", { docUrl });
-      const docRes = await fetch(docUrl, { credentials: "include" });
-      log("openSelection.document_status", { status: docRes.status, contentType: docRes.headers.get("content-type") });
-      if (!docRes.ok) throw new Error(`document ${docRes.status}`);
-      const ctype = docRes.headers.get("content-type") || "";
-      if (!ctype.includes("json")) {
-        throw new Error("Expected eoschool JSON");
+    if (!preview.ok || !preview.pdfBytes || !preview.data) {
+      setStageMode("empty");
+      if (emptyMsg instanceof HTMLElement) {
+        emptyMsg.textContent = "No se pudo generar el PDF de vista previa.";
       }
-      const doc = (await docRes.json()) as EoschoolDocument;
-      log("openSelection.document_parsed", {
-        day: doc.day,
-        kind: doc.lesson?.kind,
-        points: doc.lesson?.points?.length,
-        quiz: doc.quiz?.questionCount,
+      showErrorModal({
+        message: preview.error || "Could not build PDF preview.",
+        requestId: preview.requestId,
+        details: preview.requestId ? `request_id=${preview.requestId}` : "",
       });
-      mountEoschool(doc);
-      currentMaterialId = match.id;
+      if (banner instanceof HTMLElement) banner.textContent = "Preview failed.";
+      return;
+    }
+    if (!(sheetsHost instanceof HTMLElement)) return;
+    try {
+      const pages = await renderHomescoolPdfPreview(sheetsHost, preview.pdfBytes, {
+        pageWidthMm: preview.data.page_width_mm,
+        pageHeightMm: preview.data.page_height_mm,
+        seq,
+        isStale: () => seq !== previewSeq,
+      });
+      if (seq !== previewSeq || pages === 0) {
+        log("openSelection.render_stale", { seq, pages });
+        return;
+      }
+      currentPdfBytes = preview.pdfBytes;
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
       if (banner instanceof HTMLElement) {
@@ -442,26 +423,16 @@ import "../../styles/homescool-workspace.css";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
-      log("openSelection.ready", { materialId: currentMaterialId, pdfName: currentPdfName });
+      setStageMode("sheets");
+      log("openSelection.ready", { key: match.key, pages, pdfName: currentPdfName });
     } catch (err) {
-      log("openSelection.fail", { err: String(err) });
+      log("openSelection.render_fail", { err: String(err) });
       setStageMode("empty");
       if (emptyMsg instanceof HTMLElement) {
-        emptyMsg.textContent = "No se pudo cargar el documento.";
+        emptyMsg.textContent = "No se pudo mostrar el PDF.";
       }
-      showErrorModal({ message: "Could not load eoschool document." });
-      if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
+      showErrorModal({ message: "Could not render PDF preview." });
+      if (banner instanceof HTMLElement) banner.textContent = "Could not render preview.";
     }
-  }
-
-  function mountEoschool(doc: EoschoolDocument) {
-    if (!(sheetsHost instanceof HTMLElement)) return;
-    sheetsHost.replaceChildren();
-    const pages = renderEoschoolPages(doc);
-    log("mountEoschool", { pages: pages.length });
-    for (const page of pages) {
-      sheetsHost.append(page);
-    }
-    setStageMode("sheets");
   }
 </script>

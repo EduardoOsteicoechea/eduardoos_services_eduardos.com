@@ -127,7 +127,7 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
 2. `GET /api/v1/homescool/access`
 3. `POST /api/v1/homescool/materials` with `confirmOverwrite: true` and `material` = full `.eoschool` object (not raw HTML).
 
-Cookie UI: `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, `GET /api/homescool/materials/{id}/document`, `GET /api/homescool/materials/{id}/pdf`.
+Cookie UI: curriculum SoT `GET /homescool/curriculum.json` (all classes for agent review); preview `POST /api/homescool/preview` with one eoschool body → PDF base64; also `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, `GET /api/homescool/materials/{id}/document`, `GET /api/homescool/materials/{id}/pdf`.
 
 ## First content pack — level 6, **week 2**
 
@@ -146,4 +146,4 @@ Cookie UI: `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, 
 | `teb` | Overview of redemptive-history stages from Genesis to the new earth |
 | `exe` | Romans 1:1–7 |
 
-Agents author **5 documents per subject** (days 1–5) for this pack. Live files: `frontend/public/homescool/media/week2/`.
+Agents author **5 documents per subject** (days 1–5) for this pack. Live cell files: `frontend/public/homescool/media/week2/`. Consolidated review file: `frontend/public/homescool/curriculum.json` (rebuild with `node scripts/build-homescool-curriculum.mjs`).
