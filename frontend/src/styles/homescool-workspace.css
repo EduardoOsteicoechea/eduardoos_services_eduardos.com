@@ -283,7 +283,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   cursor: not-allowed;
 }
 
-/* US Letter portrait pages — class sheets (brand palette) */
+/* US Letter portrait pages — ink-saving brand borders (no fill colors) */
 .homescool-letter-page {
   --hc-orange: #ec7004;
   --hc-cream: #fff1a8;
@@ -293,11 +293,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
   --hc-ink: var(--hc-navy);
   --hc-ink-soft: var(--hc-olive);
-  --hc-sand: color-mix(in srgb, var(--hc-cream) 72%, #ffffff);
-  --hc-peach: color-mix(in srgb, var(--hc-orange) 22%, var(--hc-cream));
-  --hc-mint: color-mix(in srgb, var(--hc-blue) 16%, #ffffff);
-  --hc-sky: color-mix(in srgb, var(--hc-blue) 28%, #ffffff);
-  --hc-lilac: color-mix(in srgb, var(--hc-olive) 22%, var(--hc-cream));
   --hc-line: color-mix(in srgb, var(--hc-olive) 42%, #ffffff);
   --hc-rail: var(--hc-navy);
   --hc-coral: var(--hc-orange);
@@ -324,15 +319,15 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.25rem;
   padding: 0.45rem 0.55rem;
   border-radius: 0.35rem;
-  background: var(--hc-rail);
-  color: var(--hc-on-dark);
-  border: 0.06rem solid var(--hc-rail);
+  background: transparent;
+  color: var(--hc-ink);
+  border: 0.08rem solid var(--hc-rail);
 }
 
 .homescool-letter-page--quiz .homescool-letter__hero {
-  background: var(--hc-rail);
+  background: transparent;
   border-color: var(--hc-rail);
-  color: var(--hc-on-dark);
+  color: var(--hc-ink);
 }
 
 .homescool-letter__hero-top {
@@ -415,23 +410,23 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   align-items: flex-start;
   padding: 0.4rem 0.45rem;
   border-radius: 0.3rem;
-  border: 0.06rem solid var(--hc-line);
-  background: var(--hc-cream);
+  border: 0.08rem solid var(--hc-blue);
+  background: transparent;
 }
 
 .homescool-letter__point--1 {
-  background: var(--hc-mint);
-  border-color: color-mix(in srgb, var(--hc-teal) 35%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-blue);
 }
 
 .homescool-letter__point--2 {
-  background: var(--hc-sky);
-  border-color: color-mix(in srgb, var(--hc-rail) 35%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-navy);
 }
 
 .homescool-letter__point--3 {
-  background: var(--hc-lilac);
-  border-color: color-mix(in srgb, var(--hc-olive) 35%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-olive);
 }
 
 .homescool-letter__point-badge {
@@ -442,23 +437,30 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--hc-rail);
-  color: var(--hc-on-dark);
+  background: transparent;
+  border: 0.06rem solid var(--hc-navy);
+  color: var(--hc-navy);
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
 }
 
 .homescool-letter__point--1 .homescool-letter__point-badge {
-  background: var(--hc-teal);
+  background: transparent;
+  border-color: var(--hc-blue);
+  color: var(--hc-blue);
 }
 
 .homescool-letter__point--2 .homescool-letter__point-badge {
-  background: var(--hc-rail);
+  background: transparent;
+  border-color: var(--hc-navy);
+  color: var(--hc-navy);
 }
 
 .homescool-letter__point--3 .homescool-letter__point-badge {
-  background: var(--hc-olive);
+  background: transparent;
+  border-color: var(--hc-olive);
+  color: var(--hc-olive);
 }
 
 .homescool-letter__point-copy {
@@ -486,16 +488,17 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.35rem;
   padding: 0.35rem 0.45rem;
   border-radius: 0.3rem;
-  border: 0.06rem solid color-mix(in srgb, var(--hc-teal) 40%, var(--hc-line));
-  background: linear-gradient(90deg, var(--hc-mint), var(--hc-sky));
+  border: 0.08rem solid var(--hc-blue);
+  background: transparent;
 }
 
 .homescool-letter__ribbon-badge {
   flex: 0 0 auto;
   padding: 0.15rem 0.45rem;
   border-radius: 999rem;
-  background: var(--hc-teal);
-  color: var(--hc-on-dark);
+  background: transparent;
+  border: 0.06rem solid var(--hc-blue);
+  color: var(--hc-blue);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.04rem;
@@ -530,8 +533,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   min-height: 0;
   padding: 0.4rem;
   border-radius: 0.35rem;
-  border: 0.06rem solid color-mix(in srgb, var(--hc-teal) 30%, var(--hc-line));
-  background: var(--hc-cream);
+  border: 0.08rem solid var(--hc-blue);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -573,14 +576,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.18rem;
   padding: 0.35rem 0.4rem;
   border-radius: 0.28rem;
-  border: 0.06rem solid var(--hc-line);
-  background: #ffffff;
+  border: 0.08rem solid var(--hc-line);
+  background: transparent;
   min-width: 0;
 }
 
 .homescool-letter__box--lead {
-  background: linear-gradient(135deg, var(--hc-sky), var(--hc-mint));
-  border-color: color-mix(in srgb, var(--hc-rail) 35%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-navy);
   padding: 0.45rem 0.5rem;
 }
 
@@ -592,40 +595,45 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__box--card,
 .homescool-letter__card-tone--1 {
-  background: var(--hc-mint);
+  background: transparent;
+  border-color: var(--hc-blue);
 }
 
 .homescool-letter__card-tone--2 {
-  background: var(--hc-sky);
+  background: transparent;
+  border-color: var(--hc-navy);
 }
 
 .homescool-letter__card-tone--3 {
-  background: var(--hc-lilac);
+  background: transparent;
+  border-color: var(--hc-olive);
 }
 
 .homescool-letter__card-tone--4 {
-  background: var(--hc-peach);
+  background: transparent;
+  border-color: var(--hc-orange);
 }
 
 .homescool-letter__box--practice {
-  background: var(--hc-sky);
-  border-color: color-mix(in srgb, var(--hc-rail) 45%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-blue);
 }
 
 .homescool-letter__box--error {
-  background: var(--hc-peach);
-  border-color: color-mix(in srgb, var(--hc-coral) 50%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-orange);
 }
 
 .homescool-letter__box--tip,
 .homescool-letter__box--goal {
-  background: var(--hc-lilac);
-  border-color: color-mix(in srgb, var(--hc-olive) 40%, var(--hc-line));
+  background: transparent;
+  border-color: var(--hc-olive);
 }
 
 .homescool-letter__box--contrast {
-  background: #ffffff;
+  background: transparent;
   border-style: dashed;
+  border-color: var(--hc-navy);
 }
 
 .homescool-letter__box-label {
@@ -675,11 +683,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__col--a {
-  background: var(--hc-mint);
+  background: transparent;
+  border-color: var(--hc-blue);
 }
 
 .homescool-letter__col--b {
-  background: var(--hc-peach);
+  background: transparent;
+  border-color: var(--hc-orange);
 }
 
 .homescool-letter__body,
@@ -730,7 +740,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: 0.4rem 0.5rem;
   border-radius: 0.3rem;
   border: 0.08rem solid var(--hc-coral);
-  background: var(--hc-peach);
+  background: transparent;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;

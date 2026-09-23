@@ -1,6 +1,6 @@
 ---
 description: Homescool / eoschool study material formats, UI workspace, and reusable sheet components
-globs: eduardoos.com/frontend/src/pages/homescool/**/*,eduardoos.com/frontend/src/styles/homescool-workspace.css,eduardoos.com/frontend/src/lib/homescool*.ts,eduardoos.com/backend/homescool_materials*,eduardoos-eoschool-connector/**/*,eoschool/skill/eoschool/**/*,elias/web_assets/**/*,elias/ciclo*/**/*
+globs: frontend/src/pages/homescool/**/*,frontend/src/styles/homescool-workspace.css,frontend/src/lib/homescool*.ts,backend/homescool_materials*,.eoschool/**/*
 alwaysApply: false
 ---
 
@@ -9,6 +9,16 @@ alwaysApply: false
 **METHOD_V1 is authoritative** for new content: [`.cursor/rules/eoschool-method-v1.mdc`](eoschool-method-v1.mdc) and `skills/eoschool/METHOD_V1.md`.
 
 New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (1 cm margin); backend PDF matches.
+
+## Letter sheet print style (mandatory)
+
+Ink-saving style for **class and quiz** US Letter sheets in `frontend/src/styles/homescool-workspace.css` (`.homescool-letter-page*`):
+
+- **Brand palette only** (hex): `#ec7004` orange · `#fff1a8` cream · `#84754f` olive · `#5092b3` blue · `#143050` navy.
+- **No filled color backgrounds** on heroes, points, boxes, ribbons, summary, columns, or quiz cards — use `background: transparent` (page ground stays white).
+- **Color via borders and text** only (and outline badges/marks). Cycle accents: blue / navy / olive / orange.
+- Do **not** reintroduce pastel fills, gradients, or solid color blocks for print sheets — they waste ink and break the product look.
+- Tokens on `.homescool-letter-page`: `--hc-orange`, `--hc-cream`, `--hc-olive`, `--hc-blue`, `--hc-navy` (aliases `--hc-ink`, `--hc-rail`, `--hc-coral`, `--hc-teal`).
 
 ## Legacy HTML notes
 
