@@ -70,12 +70,12 @@ import "../../styles/homescool-workspace.css";
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
   import {
-    downloadHomescoolMaterialPdf,
     fetchHomescoolMaterial,
     fetchHomescoolMaterials,
     type EoschoolDocument,
     type HomescoolMaterial,
   } from "../../lib/homescool";
+  import { downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
   import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
   import { mustLog } from "../../lib/dev-log";
@@ -143,12 +143,18 @@ import "../../styles/homescool-workspace.css";
       materialId: currentMaterialId,
       disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null,
     });
-    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady || !currentMaterialId) {
+    if (
+      !(printBtn instanceof HTMLButtonElement) ||
+      printBtn.disabled ||
+      !sheetsReady ||
+      !currentMaterialId ||
+      !(sheetsHost instanceof HTMLElement)
+    ) {
       return;
     }
     printBtn.disabled = true;
     printBtn.setAttribute("aria-busy", "true");
-    const result = await downloadHomescoolMaterialPdf(currentMaterialId, currentPdfName);
+    const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
     printBtn.removeAttribute("aria-busy");
     printBtn.disabled = false;
     if (!result.ok) {
