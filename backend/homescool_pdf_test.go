@@ -44,3 +44,23 @@ func TestIsMatTablesLayout(t *testing.T) {
 		t.Fatal("week1 should not use mat tables")
 	}
 }
+
+func TestInlineQuizPrintCapacityDeepen(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Day = 2
+	doc.Lesson.Kind = eoschoolKindDeepen
+	fp := 1
+	doc.Lesson.FocusPoint = &fp
+	doc.Lesson.Summary = ""
+	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Deep", Body: "Short deepen body."}}
+	if got := inlineQuizPrintCapacity(doc); got != 8 {
+		t.Fatalf("deepen inline=%d want 8", got)
+	}
+	pages := buildLessonQuizPrintPages(doc)
+	if len(pages) < 1 {
+		t.Fatal("expected pages")
+	}
+	if !strings.Contains(pages[0].Heading, "cuestionario") {
+		t.Fatalf("first page should merge quiz, got %q", pages[0].Heading)
+	}
+}

@@ -23,8 +23,27 @@ export const HOMESCOOL_SUBJECTS = [
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
 
-/** 8 new MCQs per day; letter quiz pages show 8 cards (4×2 grid). */
-const QUESTIONS_PER_PAGE = 8;
+/** Full quiz-only letter page: 4×2 cards. */
+const QUIZ_PAGE_CAPACITY = 8;
+
+/**
+ * How many MCQs can ride on the lesson sheet when the lesson is short
+ * (deepen / light review). Keeps accumulated questions on the first sheet
+ * instead of forcing a blank new quiz page.
+ */
+function inlineQuizCapacity(doc: EoschoolDocument): number {
+  const kind = doc.lesson?.kind;
+  if (kind === "deepen") return QUIZ_PAGE_CAPACITY;
+  if (kind === "review") {
+    const points = doc.lesson?.points ?? [];
+    const chars = points.reduce((n, p) => n + (p.body?.length ?? 0) + (p.heading?.length ?? 0), 0);
+    // Short review overviews → leave room for one row; long → quiz on its own pages.
+    if (chars < 1800) return 4;
+    return 0;
+  }
+  // Intro day-1 fills the letter sheet with 3 points + summary.
+  return 0;
+}
 
 /** Build letter-portrait DOM pages for lesson + quiz. */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
@@ -46,39 +65,51 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     return pages;
   }
 
-  const pages: HTMLElement[] = [];
-  pages.push(buildLessonPage(doc));
   const qs = doc.quiz?.questions ?? [];
-  for (let i = 0; i < qs.length; i += QUESTIONS_PER_PAGE) {
-    pages.push(buildQuizPage(doc, qs.slice(i, i + QUESTIONS_PER_PAGE), i + 1, qs.length));
+  const inlineCap = inlineQuizCapacity(doc);
+  const inlineCount = Math.min(inlineCap, qs.length);
+  const pages: HTMLElement[] = [];
+
+  if (inlineCount > 0) {
+    pages.push(buildLessonWithQuizPage(doc, qs.slice(0, inlineCount), 1, qs.length));
+  } else {
+    pages.push(buildLessonPage(doc));
   }
-  if (mustLog) console.log("[homescool-eoschool] render.done", { pages: pages.length, layout: "default" });
+
+  for (let i = inlineCount; i < qs.length; i += QUIZ_PAGE_CAPACITY) {
+    pages.push(buildQuizPage(doc, qs.slice(i, i + QUIZ_PAGE_CAPACITY), i + 1, qs.length));
+  }
+
+  if (mustLog) {
+    console.log("[homescool-eoschool] render.done", {
+      pages: pages.length,
+      layout: "default",
+      inlineQuiz: inlineCount,
+      quizTotal: qs.length,
+    });
+  }
   return pages;
 }
 
 function buildLessonPage(doc: EoschoolDocument): HTMLElement {
   const page = letterPage("homescool-letter-page--lesson");
   page.append(lessonHeader(doc, "Clase"));
+  page.append(buildLessonStack(doc));
+  appendSummary(doc, page);
+  return page;
+}
 
-  const points = doc.lesson?.points ?? [];
-  const stack = el("div", "homescool-letter__stack");
-  points.forEach((p, index) => {
-    const block = el("section", `homescool-letter__point homescool-letter__point--${(index % 3) + 1}`);
-    const badge = el("span", "homescool-letter__point-badge", String(index + 1));
-    const copy = el("div", "homescool-letter__point-copy");
-    if (p.heading) copy.append(el("h3", "homescool-letter__point-title", p.heading));
-    if (p.body) copy.append(el("p", "homescool-letter__body", p.body));
-    block.append(badge, copy);
-    stack.append(block);
-  });
-  page.append(stack);
-
-  if (doc.lesson?.summary) {
-    const sum = el("section", "homescool-letter__summary");
-    sum.append(el("h3", "homescool-letter__summary-label", "Resumen"));
-    sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
-    page.append(sum);
-  }
+function buildLessonWithQuizPage(
+  doc: EoschoolDocument,
+  questions: EoschoolQuestion[],
+  startIndex: number,
+  total: number,
+): HTMLElement {
+  const page = letterPage("homescool-letter-page--lesson", "homescool-letter-page--with-quiz");
+  page.append(lessonHeader(doc, "Clase + cuestionario"));
+  page.append(buildLessonStack(doc));
+  appendSummary(doc, page);
+  page.append(buildQuizList(questions, startIndex, total, doc.day));
   return page;
 }
 
@@ -96,7 +127,48 @@ function buildQuizPage(
       `${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
-  const list = el("ol", "homescool-letter__quiz");
+  page.append(buildQuizList(questions, startIndex, total, doc.day));
+  return page;
+}
+
+function buildLessonStack(doc: EoschoolDocument): HTMLElement {
+  const points = doc.lesson?.points ?? [];
+  const stack = el("div", "homescool-letter__stack");
+  points.forEach((p, index) => {
+    const block = el("section", `homescool-letter__point homescool-letter__point--${(index % 3) + 1}`);
+    const badge = el("span", "homescool-letter__point-badge", String(index + 1));
+    const copy = el("div", "homescool-letter__point-copy");
+    if (p.heading) copy.append(el("h3", "homescool-letter__point-title", p.heading));
+    if (p.body) copy.append(el("p", "homescool-letter__body", p.body));
+    block.append(badge, copy);
+    stack.append(block);
+  });
+  return stack;
+}
+
+function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
+  if (!doc.lesson?.summary) return;
+  const sum = el("section", "homescool-letter__summary");
+  sum.append(el("h3", "homescool-letter__summary-label", "Resumen"));
+  sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
+  page.append(sum);
+}
+
+function buildQuizList(
+  questions: EoschoolQuestion[],
+  startIndex: number,
+  total: number,
+  day: number,
+): HTMLElement {
+  const wrap = el("section", "homescool-letter__quiz-wrap");
+  wrap.append(
+    el(
+      "h3",
+      "homescool-letter__quiz-label",
+      `Cuestionario · ${total} (días 1–${day}) · ${startIndex}–${startIndex + questions.length - 1}`,
+    ),
+  );
+  const list = el("ol", "homescool-letter__quiz") as HTMLOListElement;
   list.start = startIndex;
   const letters = ["A", "B", "C", "D", "E", "F"];
   for (const q of questions) {
@@ -119,8 +191,8 @@ function buildQuizPage(
     }
     list.append(li);
   }
-  page.append(list);
-  return page;
+  wrap.append(list);
+  return wrap;
 }
 
 function letterPage(...extra: string[]): HTMLElement {

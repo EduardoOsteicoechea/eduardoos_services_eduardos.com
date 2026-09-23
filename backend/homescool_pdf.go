@@ -47,42 +47,85 @@ func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 	if s := strings.TrimSpace(doc.Lesson.Summary); s != "" {
 		lessonLines = append(lessonLines, "Resumen", s)
 	}
-	pages = append(pages, pdf.EoschoolPrintPage{
-		Heading: "Clase · " + doc.Lesson.Kind,
-		Lines:   lessonLines,
-	})
 
 	const questionsPerPage = 8
-	for i := 0; i < len(doc.Quiz.Questions); i += questionsPerPage {
+	inline := inlineQuizPrintCapacity(doc)
+	if inline > len(doc.Quiz.Questions) {
+		inline = len(doc.Quiz.Questions)
+	}
+
+	if inline > 0 {
+		lines := append([]string{}, lessonLines...)
+		lines = append(lines, "")
+		lines = append(lines, fmt.Sprintf("Cuestionario — %d preguntas (días 1–%d) · 1–%d",
+			doc.Quiz.QuestionCount, doc.Day, inline))
+		lines = append(lines, "")
+		lines = append(lines, formatQuizLines(doc.Quiz.Questions[:inline], 1)...)
+		pages = append(pages, pdf.EoschoolPrintPage{
+			Heading: "Clase + cuestionario · " + doc.Lesson.Kind,
+			Lines:   lines,
+		})
+	} else {
+		pages = append(pages, pdf.EoschoolPrintPage{
+			Heading: "Clase · " + doc.Lesson.Kind,
+			Lines:   lessonLines,
+		})
+	}
+
+	for i := inline; i < len(doc.Quiz.Questions); i += questionsPerPage {
 		end := i + questionsPerPage
 		if end > len(doc.Quiz.Questions) {
 			end = len(doc.Quiz.Questions)
 		}
-		lines := make([]string, 0, (end-i)*3)
-		for j, q := range doc.Quiz.Questions[i:end] {
-			n := i + j + 1
-			lines = append(lines, fmt.Sprintf("%d. %s", n, strings.TrimSpace(q.Prompt)))
-			if len(q.Choices) > 0 {
-				letters := []string{"A", "B", "C", "D", "E", "F"}
-				parts := make([]string, 0, len(q.Choices))
-				for ci, c := range q.Choices {
-					mark := letters[ci]
-					if ci >= len(letters) {
-						mark = fmt.Sprintf("%d", ci+1)
-					}
-					parts = append(parts, fmt.Sprintf("%s) %s", mark, strings.TrimSpace(c)))
-				}
-				lines = append(lines, "   "+strings.Join(parts, "   "))
-			}
-			lines = append(lines, "")
-		}
 		pages = append(pages, pdf.EoschoolPrintPage{
 			Heading: fmt.Sprintf("Cuestionario — %d preguntas (días 1–%d) · %d–%d",
 				doc.Quiz.QuestionCount, doc.Day, i+1, end),
-			Lines: lines,
+			Lines: formatQuizLines(doc.Quiz.Questions[i:end], i+1),
 		})
 	}
 	return pages
+}
+
+// inlineQuizPrintCapacity: short deepen/review sheets absorb the first quiz cards
+// so accumulated questions do not force an empty new page.
+func inlineQuizPrintCapacity(doc EoschoolDocument) int {
+	switch doc.Lesson.Kind {
+	case eoschoolKindDeepen:
+		return 8
+	case eoschoolKindReview:
+		chars := 0
+		for _, p := range doc.Lesson.Points {
+			chars += len(p.Heading) + len(p.Body)
+		}
+		if chars < 1800 {
+			return 4
+		}
+		return 0
+	default:
+		return 0
+	}
+}
+
+func formatQuizLines(questions []EoschoolQuestion, startIndex int) []string {
+	lines := make([]string, 0, len(questions)*3)
+	for j, q := range questions {
+		n := startIndex + j
+		lines = append(lines, fmt.Sprintf("%d. %s", n, strings.TrimSpace(q.Prompt)))
+		if len(q.Choices) > 0 {
+			letters := []string{"A", "B", "C", "D", "E", "F"}
+			parts := make([]string, 0, len(q.Choices))
+			for ci, c := range q.Choices {
+				mark := letters[ci]
+				if ci >= len(letters) {
+					mark = fmt.Sprintf("%d", ci+1)
+				}
+				parts = append(parts, fmt.Sprintf("%s) %s", mark, strings.TrimSpace(c)))
+			}
+			lines = append(lines, "   "+strings.Join(parts, "   "))
+		}
+		lines = append(lines, "")
+	}
+	return lines
 }
 
 type matLevel struct {

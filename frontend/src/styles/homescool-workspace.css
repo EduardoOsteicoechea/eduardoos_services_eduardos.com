@@ -467,6 +467,40 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   color: var(--hc-coral);
 }
 
+.homescool-letter__quiz-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.homescool-letter__quiz-label {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+  color: var(--hc-coral);
+}
+
+.homescool-letter-page--with-quiz .homescool-letter__stack {
+  flex: 0 1 auto;
+}
+
+.homescool-letter-page--with-quiz .homescool-letter__summary {
+  margin-top: 0;
+}
+
+.homescool-letter-page--with-quiz .homescool-letter__body {
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+
+.homescool-letter-page--with-quiz .homescool-letter__point {
+  padding: 0.28rem 0.35rem;
+}
+
 .homescool-letter__quiz {
   margin: 0;
   padding: 0;
