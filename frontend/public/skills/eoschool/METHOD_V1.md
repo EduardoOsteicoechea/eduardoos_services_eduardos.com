@@ -45,9 +45,9 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 | Day | Lesson | Quiz size |
 | --- | --- | --- |
 | 1 | **Intro:** exactly **3 points** + **summary** | **8** (new set; all `originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 | **16** (sets days 1–2) |
-| 3 | **Deepen** point 2 | **24** (sets days 1–3) |
-| 4 | **Deepen** point 3 | **32** (sets days 1–4) |
+| 2 | **Deepen** point 1 of day 1 (full teachable class on that point — do **not** paste day-1 text) | **16** (sets days 1–2) |
+| 3 | **Deepen** point 2 (same rule) | **24** (sets days 1–3) |
+| 4 | **Deepen** point 3 (same rule) | **32** (sets days 1–4) |
 | 5 | **Review:** five overview blocks (see below) | **40** (sets 1–5; **randomize** order from the accumulated pool) |
 
 ### Day 5 lesson blocks (fixed order)

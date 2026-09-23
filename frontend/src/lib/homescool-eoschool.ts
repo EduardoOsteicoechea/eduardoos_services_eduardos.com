@@ -33,7 +33,8 @@ const QUIZ_PAGE_CAPACITY = 8;
  */
 function inlineQuizCapacity(doc: EoschoolDocument): number {
   const kind = doc.lesson?.kind;
-  if (kind === "deepen") return QUIZ_PAGE_CAPACITY;
+  // Deepen = full letter lesson on the focus point; quiz always on following pages.
+  if (kind === "deepen") return 0;
   if (kind === "review") {
     const points = doc.lesson?.points ?? [];
     const chars = points.reduce((n, p) => n + (p.body?.length ?? 0) + (p.heading?.length ?? 0), 0);
