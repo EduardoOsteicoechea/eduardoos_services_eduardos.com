@@ -108,8 +108,8 @@ import "../../styles/homescool-workspace.css";
   let currentPdfName = "homescool.pdf";
   let currentPdfBytes: Uint8Array | null = null;
   let previewSeq = 0;
-  /** Default to week 2 until packs for other weeks exist; boot() snaps to first available cell. */
-  let selection = { cycle: 1, week: 2, day: 1, subject: "mat" };
+  /** Default to cycle 3, week 2 until packs for other weeks exist; boot() snaps to the first available cell. */
+  let selection = { cycle: 3, week: 2, day: 1, subject: "mat" };
 
   function setStageMode(mode: "empty" | "loading" | "sheets") {
     setHidden(empty, mode !== "empty");

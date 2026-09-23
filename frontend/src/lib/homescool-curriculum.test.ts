@@ -21,7 +21,7 @@ describe("homescool curriculum", () => {
     expect(data.classCount).toBe(data.classes.length);
     const keys = new Set(data.classes.map((c) => c.key));
     expect(keys.size).toBe(data.classes.length);
-    expect(keys.has("c1-w2-d1-l6-mat")).toBe(true);
+    expect(keys.has("c3-w2-d1-l6-mat")).toBe(true);
   });
 
   it("finds a class and strips metadata for PDF preview body", () => {
@@ -30,8 +30,8 @@ describe("homescool curriculum", () => {
       "utf8",
     );
     const data = JSON.parse(raw) as HomescoolCurriculum;
-    const row = findCurriculumClass(data, { cycle: 1, week: 2, day: 1, subject: "mat" });
-    expect(row?.key).toBe(curriculumCellKey(1, 2, 1, 6, "mat"));
+    const row = findCurriculumClass(data, { cycle: 3, week: 2, day: 1, subject: "mat" });
+    expect(row?.key).toBe(curriculumCellKey(3, 2, 1, 6, "mat"));
     const doc = toEoschoolDocument(row!);
     expect(doc.format).toBe("eoschool");
     expect((doc as { key?: string }).key).toBeUndefined();

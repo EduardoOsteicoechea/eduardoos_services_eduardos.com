@@ -1,0 +1,143 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "cie",
+  "locale": "es",
+  "title": "Esqueleto: cráneo, vértebras, costillas, esternón",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Cráneo",
+        "body": "El cráneo forma la caja ósea de la cabeza. Los huesos craneales protegen el encéfalo (cerebro y estructuras asociadas) frente a golpes; los huesos de la cara dan forma al rostro y alojan órbitas, fosas nasales y la mandíbula. Suturas unen muchos huesos craneales en el adulto.\n\nPor qué importa: es el extremo superior del esqueleto axial. Si no sabes qué protege el cráneo, no entiendes por qué un golpe en la cabeza es tan grave. También distingue región craneal (caja del cerebro) y facial (cara).\n\nEjemplo de estudio. Pregunta siempre: ¿qué protege? (encéfalo) y ¿qué forma? (estructura de cabeza y cara). La mandíbula es el hueso móvil de la masticación; muchos otros huesos craneales están unidos por suturas.\n\nConsejo: dibuja un esquema simple de perfil y señala «protege cerebro» vs «forma la cara». Escribe tres oraciones de clase que un compañero pueda usar como resumen. Hoy solo cráneo: no mezcles aún costillas.\n\nError común: decir que el cráneo protege el corazón (eso es la caja torácica). Otro: olvidar que la mandíbula se mueve y el resto de la bóveda no «abra» igual."
+      },
+      {
+        "id": "p2",
+        "heading": "Vértebras y columna",
+        "body": "Las vértebras se apilan en serie y forman la columna vertebral: sostienen el tronco en vertical, permiten cierto movimiento y protegen la médula espinal en el canal vertebral. Se agrupan en regiones (cervical, torácica, lumbar, más sacro y cóccix fusionados).\n\nPor qué importa: sin la columna, el cráneo no tendría soporte flexible ni la médula estaría resguardada. La columna es el eje del esqueleto axial entre cabeza y pelvis.\n\nEjemplo. Cada vértebra típica tiene cuerpo y arco; entre vértebras hay discos. Cervical ≈ cuello; torácica ≈ pecho (se articula con costillas); lumbar ≈ espalda baja. Sacro y cóccix están fusionados en el adulto.\n\nConsejo: memoriza el orden de regiones de arriba abajo. Señala en tu propio cuerpo cuello / pecho / lumbar. Escribe una frase por región.\n\nError común: pensar que todas las vértebras son iguales o que la médula «está en el cráneo». Otro: confundir lumbar con cervical."
+      },
+      {
+        "id": "p3",
+        "heading": "Costillas y esternón (tórax)",
+        "body": "Las costillas son huesos arqueados que, junto con el esternón (hueso plano al frente del pecho) y las vértebras torácicas, forman la caja torácica. Esa caja protege corazón y pulmones y participa en la mecánica respiratoria.\n\nPor qué importa: el tórax no es solo «huesos del pecho»: es protección + forma + movimiento respiratorio. El esternón articula con las costillas verdaderas mediante cartílagos.\n\nResumen útil: costillas + esternón + vértebras torácicas = caja torácica. Si falta una pieza en tu explicación, la caja queda incompleta.\n\nConsejo: dibuja un óvalo (caja), marca atrás (vértebras), adelante (esternón) y arcs (costillas). Escribe qué órganos protege.\n\nError común: decir que el esternón está en la espalda. Otro: confundir protección del tórax con protección del encéfalo."
+      }
+    ],
+    "summary": "Nombrar cráneo, vértebras, costillas y esternón: qué forman y qué protegen en el esqueleto axial."
+  },
+  "quiz": {
+    "questionCount": 8,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El cráneo protege sobre todo:",
+        "choices": [
+          "el encéfalo/cerebro",
+          "solo el hígado",
+          "solo el pie",
+          "solo la piel"
+        ],
+        "answer": "el encéfalo/cerebro"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Las vértebras forman:",
+        "choices": [
+          "la columna vertebral",
+          "solo la mano",
+          "solo el cráneo",
+          "solo las uñas"
+        ],
+        "answer": "la columna vertebral"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "La caja torácica protege:",
+        "choices": [
+          "corazón y pulmones",
+          "solo el cerebro",
+          "solo los dientes",
+          "solo las uñas"
+        ],
+        "answer": "corazón y pulmones"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El esternón está:",
+        "choices": [
+          "al frente del pecho",
+          "en la planta del pie",
+          "solo en la oreja",
+          "solo en la rodilla"
+        ],
+        "answer": "al frente del pecho"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tema:",
+        "choices": [
+          "esqueleto: cráneo, vértebras, costillas, esternón",
+          "solo botánica",
+          "solo astronomía",
+          "solo música"
+        ],
+        "answer": "esqueleto: cráneo, vértebras, costillas, esternón"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "La médula espinal se asocia a:",
+        "choices": [
+          "la columna vertebral",
+          "solo el talón",
+          "solo el cabello",
+          "solo la lengua"
+        ],
+        "answer": "la columna vertebral"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Costillas + esternón + vértebras torácicas =",
+        "choices": [
+          "caja torácica",
+          "solo la mano",
+          "solo el cráneo",
+          "solo la pelvis"
+        ],
+        "answer": "caja torácica"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Las costillas son huesos:",
+        "choices": [
+          "arqueados",
+          "cúbicos del tarso",
+          "solo dientes",
+          "solo uñas"
+        ],
+        "answer": "arqueados"
+      }
+    ]
+  },
+  "media": []
+}

@@ -258,6 +258,10 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   cursor: pointer;
 }
 
+.homescool-dhs__chip[data-has-material] {
+  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+}
+
 .homescool-dhs__chip[aria-pressed="true"] {
   background: var(--color-text);
   color: var(--color-bg);
