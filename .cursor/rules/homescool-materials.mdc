@@ -12,13 +12,14 @@ New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navig
 
 ## Letter sheet print style (mandatory)
 
-Ink-saving style for **class and quiz** US Letter sheets in `frontend/src/styles/homescool-workspace.css` (`.homescool-letter-page*`):
+Ink-saving style for **class, quiz, and math (mat)** US Letter sheets in `frontend/src/styles/homescool-workspace.css` (`.homescool-letter-page*`, `.homescool-mat__*`):
 
 - **Brand palette only** (hex): `#ec7004` orange · `#fff1a8` cream · `#84754f` olive · `#5092b3` blue · `#143050` navy.
-- **No filled color backgrounds** on heroes, points, boxes, ribbons, summary, columns, or quiz cards — use `background: transparent` (page ground stays white).
+- **No filled color backgrounds** on heroes, points, boxes, ribbons, summary, columns, quiz cards, mat header/task/rows/tables/levels — use `background: transparent` (page ground stays white).
 - **Color via borders and text** only (and outline badges/marks). Cycle accents: blue / navy / olive / orange.
 - Do **not** reintroduce pastel fills, gradients, or solid color blocks for print sheets — they waste ink and break the product look.
 - Tokens on `.homescool-letter-page`: `--hc-orange`, `--hc-cream`, `--hc-olive`, `--hc-blue`, `--hc-navy` (aliases `--hc-ink`, `--hc-rail`, `--hc-coral`, `--hc-teal`).
+- Tokens on `.homescool-letter-page--mat`: `--mat-orange`, `--mat-cream`, `--mat-olive`, `--mat-blue`, `--mat-navy` (aliases `--mat-ink`, `--mat-rail`, `--mat-coral`).
 
 ## Legacy HTML notes
 

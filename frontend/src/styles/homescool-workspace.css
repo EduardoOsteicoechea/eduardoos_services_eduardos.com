@@ -972,20 +972,19 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   min-width: 0;
 }
 
-/* Mat week-2 letter: header 8% / task 10% / 3 equal rows / footer 8%.
-   Pastel grounds (sand/peach/mint/sky/lilac) + accents (dusty-blue rail, coral done). */
+/* Mat letter sheets — same ink-saving brand borders as class/quiz (no fill colors). */
 .homescool-letter-page--mat {
-  --mat-ink: #1f2430;
-  --mat-sand: #f7f3ee;
-  --mat-peach: #ffe8d6;
-  --mat-mint: #e5f6ef;
-  --mat-sky: #e7f0fb;
-  --mat-lilac: #f2eaf8;
-  --mat-cream: #fffaf3;
-  --mat-line: #d5cfc6;
-  --mat-rail: #5f7a9a;
-  --mat-coral: #e07a5f;
-  --mat-ink-soft: #4a5568;
+  --mat-orange: #ec7004;
+  --mat-cream: #fff1a8;
+  --mat-olive: #84754f;
+  --mat-blue: #5092b3;
+  --mat-navy: #143050;
+
+  --mat-ink: var(--mat-navy);
+  --mat-ink-soft: var(--mat-olive);
+  --mat-line: color-mix(in srgb, var(--mat-olive) 42%, #ffffff);
+  --mat-rail: var(--mat-navy);
+  --mat-coral: var(--mat-orange);
 
   height: 11in;
   min-height: 11in;
@@ -1007,10 +1006,10 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0.15rem;
   min-height: 0;
   padding: 0.3rem 0.45rem;
-  border: 0.06rem solid var(--mat-rail);
+  border: 0.08rem solid var(--mat-rail);
   border-radius: 0.3rem;
-  background: var(--mat-rail);
-  color: #f8fafc;
+  background: transparent;
+  color: var(--mat-ink);
 }
 
 .homescool-mat__heading {
@@ -1022,7 +1021,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-mat__meta {
   font-size: 0.7rem;
-  color: #dbe4f0;
+  color: var(--mat-ink-soft);
 }
 
 .homescool-mat__task {
@@ -1033,9 +1032,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   line-height: 1.35;
   min-height: 0;
   padding: 0.3rem 0.45rem;
-  border: 0.06rem solid #f0c9a8;
+  border: 0.08rem solid var(--mat-orange);
   border-radius: 0.3rem;
-  background: var(--mat-peach);
+  background: transparent;
   color: var(--mat-ink);
 }
 
@@ -1055,21 +1054,21 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   grid-template-columns: 1cm repeat(4, minmax(0, 1fr)) 1cm;
   gap: 0.25rem;
   padding: 0.25rem;
-  border: 0.06rem solid var(--mat-line);
+  border: 0.08rem solid var(--mat-blue);
   border-radius: 0.3rem;
-  background: var(--mat-cream);
+  background: transparent;
 }
 
 .homescool-mat__row:nth-child(1) {
-  background: var(--mat-mint);
+  border-color: var(--mat-blue);
 }
 
 .homescool-mat__row:nth-child(2) {
-  background: var(--mat-sky);
+  border-color: var(--mat-navy);
 }
 
 .homescool-mat__row:nth-child(3) {
-  background: var(--mat-lilac);
+  border-color: var(--mat-olive);
 }
 
 .homescool-mat__level {
@@ -1080,8 +1079,24 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   min-width: 1cm;
   max-width: 1cm;
   border-radius: 0.25rem;
-  background: var(--mat-rail);
-  color: #f8fafc;
+  background: transparent;
+  border: 0.06rem solid var(--mat-rail);
+  color: var(--mat-rail);
+}
+
+.homescool-mat__row:nth-child(1) .homescool-mat__level {
+  border-color: var(--mat-blue);
+  color: var(--mat-blue);
+}
+
+.homescool-mat__row:nth-child(2) .homescool-mat__level {
+  border-color: var(--mat-navy);
+  color: var(--mat-navy);
+}
+
+.homescool-mat__row:nth-child(3) .homescool-mat__level {
+  border-color: var(--mat-olive);
+  color: var(--mat-olive);
 }
 
 .homescool-mat__level-text {
@@ -1098,9 +1113,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  border: 0.05rem solid var(--mat-line);
+  border: 0.06rem solid var(--mat-line);
   border-radius: 0.25rem;
-  background: #ffffff;
+  background: transparent;
   padding: 0.15rem;
 }
 
@@ -1111,7 +1126,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   margin-bottom: 0.12rem;
   padding: 0.08rem;
   border-radius: 0.2rem;
-  background: var(--mat-peach);
+  background: transparent;
+  border: 0.05rem solid var(--mat-orange);
   color: var(--mat-ink);
 }
 
@@ -1140,10 +1156,11 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   white-space: nowrap;
   padding: 0.02rem 0.04rem;
   border-radius: 0.12rem;
+  background: transparent;
 }
 
 .homescool-mat__product:nth-child(odd) {
-  background: rgba(95, 122, 154, 0.08);
+  background: transparent;
 }
 
 .homescool-mat__blank {
@@ -1173,8 +1190,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-mat__done[aria-pressed="true"] {
-  background: var(--mat-coral);
+  background: transparent;
   border-color: var(--mat-coral);
+  box-shadow: inset 0 0 0 0.12rem var(--mat-coral);
 }
 
 .homescool-mat__footer {
@@ -1186,9 +1204,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   color: var(--mat-ink-soft);
   min-height: 0;
   padding: 0.25rem 0.45rem;
-  border: 0.06rem solid var(--mat-line);
+  border: 0.08rem solid var(--mat-line);
   border-radius: 0.3rem;
-  background: #ffffff;
+  background: transparent;
 }
 
 @media print {
@@ -1210,7 +1228,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 /* Print uses #homescool-print-output clones (see index.astro printLetterSheets).
-   Keep color-adjust here so pastel mat panels survive Save as PDF. */
+   Keep color-adjust here so brand borders survive Save as PDF. */
 @media print {
   html.homescool-printing,
   html.homescool-printing body {
