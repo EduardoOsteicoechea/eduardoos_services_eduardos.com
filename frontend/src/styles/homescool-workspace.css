@@ -74,8 +74,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-workspace__stage-empty {
   margin: var(--space-padding);
+  padding: var(--space-padding);
   font-size: var(--font-size-sm);
-  color: var(--color-muted);
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  max-width: 28rem;
 }
 
 .homescool-sheet-host {
@@ -144,6 +149,15 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: var(--color-text);
   color: var(--color-bg);
   border-color: var(--color-text);
+}
+
+/* Weeks/days/subjects without uploaded .eoschool packs stay muted */
+.homescool-dhs__chip:not([data-has-material]) {
+  opacity: 0.35;
+}
+
+.homescool-dhs__chip[aria-pressed="true"]:not([data-has-material]) {
+  opacity: 0.55;
 }
 
 /* Primary action — filled button, not a ghost dhs-action row */

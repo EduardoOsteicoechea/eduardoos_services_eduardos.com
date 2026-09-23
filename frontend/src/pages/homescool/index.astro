@@ -77,7 +77,8 @@ import "../../styles/homescool-workspace.css";
 
   let materials: HomescoolMaterial[] = [];
   let sheetsReady = false;
-  let selection = { cycle: 1, week: 1, day: 1, subject: "mat" };
+  /** Default to week 2 until packs for other weeks exist; boot() snaps to first available cell. */
+  let selection = { cycle: 1, week: 2, day: 1, subject: "mat" };
 
   log("boot.start", { level: LEVEL });
   const teacher = await requireService("homescool", { requireSubscription: true });
@@ -127,7 +128,6 @@ import "../../styles/homescool-workspace.css";
       return;
     }
     materials = res.materials;
-    syncChipStates();
     const deep = new URLSearchParams(window.location.search).get("material");
     log("boot.deep_link", { material: deep });
     if (deep) {
@@ -140,12 +140,52 @@ import "../../styles/homescool-workspace.css";
           subject: m.subject,
         };
         log("boot.deep_applied", { ...selection });
-        syncChipStates();
       } else {
         log("boot.deep_miss", { id: deep });
       }
+    } else if (!findMaterial()) {
+      const first = pickFirstAvailable();
+      if (first) {
+        selection = {
+          cycle: first.cycle,
+          week: first.week,
+          day: first.day,
+          subject: first.subject,
+        };
+        log("boot.snap_to_available", { ...selection, id: first.id });
+      }
     }
+    syncChipStates();
     await openSelection();
+  }
+
+  function eoschoolRows(): HomescoolMaterial[] {
+    return materials.filter((m) => m.format === "eoschool" && (m.level ?? LEVEL) === LEVEL);
+  }
+
+  function pickFirstAvailable(): HomescoolMaterial | undefined {
+    const rows = eoschoolRows().slice().sort((a, b) => {
+      if (a.cycle !== b.cycle) return a.cycle - b.cycle;
+      if (a.week !== b.week) return a.week - b.week;
+      if (a.day !== b.day) return a.day - b.day;
+      return a.subject.localeCompare(b.subject);
+    });
+    return rows[0];
+  }
+
+  function hasMaterial(partial: {
+    cycle?: number;
+    week?: number;
+    day?: number;
+    subject?: string;
+  }): boolean {
+    return eoschoolRows().some(
+      (m) =>
+        (partial.cycle == null || m.cycle === partial.cycle) &&
+        (partial.week == null || m.week === partial.week) &&
+        (partial.day == null || m.day === partial.day) &&
+        (partial.subject == null || m.subject === partial.subject),
+    );
   }
 
   function buildWeekGrid() {
@@ -224,19 +264,38 @@ import "../../styles/homescool-workspace.css";
   function syncChipStates() {
     cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.setAttribute("aria-pressed", Number(el.dataset.cycle) === selection.cycle ? "true" : "false");
+      const cycle = Number(el.dataset.cycle);
+      el.setAttribute("aria-pressed", cycle === selection.cycle ? "true" : "false");
+      el.toggleAttribute("data-has-material", hasMaterial({ cycle }));
     });
     weeksHost?.querySelectorAll("[data-week]").forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.setAttribute("aria-pressed", Number(el.dataset.week) === selection.week ? "true" : "false");
+      const week = Number(el.dataset.week);
+      el.setAttribute("aria-pressed", week === selection.week ? "true" : "false");
+      el.toggleAttribute("data-has-material", hasMaterial({ cycle: selection.cycle, week }));
     });
     daysHost?.querySelectorAll("[data-day]").forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.setAttribute("aria-pressed", Number(el.dataset.day) === selection.day ? "true" : "false");
+      const day = Number(el.dataset.day);
+      el.setAttribute("aria-pressed", day === selection.day ? "true" : "false");
+      el.toggleAttribute(
+        "data-has-material",
+        hasMaterial({ cycle: selection.cycle, week: selection.week, day }),
+      );
     });
     subjectsHost?.querySelectorAll("[data-subject]").forEach((el) => {
       if (!(el instanceof HTMLElement)) return;
-      el.setAttribute("aria-pressed", el.dataset.subject === selection.subject ? "true" : "false");
+      const subject = el.dataset.subject || "";
+      el.setAttribute("aria-pressed", subject === selection.subject ? "true" : "false");
+      el.toggleAttribute(
+        "data-has-material",
+        hasMaterial({
+          cycle: selection.cycle,
+          week: selection.week,
+          day: selection.day,
+          subject,
+        }),
+      );
     });
   }
 
@@ -260,12 +319,12 @@ import "../../styles/homescool-workspace.css";
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     const match = findMaterial();
     if (!match) {
+      const msg = `Sin material para c${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}. Elige una semana con contenido (p. ej. s2).`;
       setHidden(empty, false);
       setHidden(sheetsHost, true);
       if (sheetsHost instanceof HTMLElement) sheetsHost.replaceChildren();
-      if (banner instanceof HTMLElement) {
-        banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
-      }
+      if (empty instanceof HTMLElement) empty.textContent = msg;
+      if (banner instanceof HTMLElement) banner.textContent = msg;
       log("openSelection.empty");
       return;
     }
