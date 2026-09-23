@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { postChatStream } from "./api";
+import { armAntibotNow } from "./antibot";
 import { resetAgentChat, setAgentChatBusy, startAgentChat } from "./chat";
 import { showErrorModal } from "./error-modal";
 import { enqueueVoiceAudio, stopVoicePlayback, voiceReplyEnabled } from "./voice";
@@ -47,6 +48,12 @@ function mountTray(): void {
   `;
 }
 
+function armSend(): HTMLButtonElement {
+  const send = document.querySelector("[data-agent-send]") as HTMLButtonElement;
+  armAntibotNow(send);
+  return send;
+}
+
 describe("agent chat tray", () => {
   afterEach(() => {
     resetAgentChat();
@@ -72,7 +79,7 @@ describe("agent chat tray", () => {
       };
     });
     startAgentChat();
-    const send = document.querySelector("[data-agent-send]") as HTMLButtonElement;
+    const send = armSend();
     const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
     expect(send.disabled).toBe(true);
     input.value = "hello";
@@ -98,6 +105,7 @@ describe("agent chat tray", () => {
       data: { ok: false, error: "provider_unavailable", message: "The assistant could not reply.", request_id: "rid-chat-2" },
     });
     startAgentChat();
+    armSend();
     const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
     input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true }));
     expect(vi.mocked(postChatStream)).not.toHaveBeenCalled();
@@ -138,6 +146,7 @@ describe("agent chat tray", () => {
       return { status: 200, requestId: "rid-voice", data: { ok: true, text: "hi" } };
     });
     startAgentChat();
+    armSend();
     const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
     input.value = "hello";
     input.dispatchEvent(new Event("input"));
@@ -154,8 +163,8 @@ describe("agent chat tray", () => {
   it("disables Send while the voice agent is busy", () => {
     mountTray();
     startAgentChat();
+    const send = armSend();
     const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
-    const send = document.querySelector("[data-agent-send]") as HTMLButtonElement;
     input.value = "hola";
     input.dispatchEvent(new Event("input"));
     expect(send.disabled).toBe(false);
@@ -173,6 +182,7 @@ describe("agent chat tray", () => {
       data: { ok: true, text: "hola", request_id: "rid-hist" },
     });
     startAgentChat();
+    armSend();
     const input = document.querySelector("[data-agent-input]") as HTMLTextAreaElement;
     input.value = "primera pregunta";
     input.dispatchEvent(new Event("input"));

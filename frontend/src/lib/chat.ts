@@ -1,4 +1,12 @@
 import { postChatStream, type ChatTurn } from "./api";
+import {
+  attachAntibot,
+  consumeAntibot,
+  isAntibotArmed,
+  restartAntibot,
+  setAntibotActive,
+  type AntibotHandle,
+} from "./antibot";
 import { showErrorModal } from "./error-modal";
 import { renderMarkdown } from "./markdown";
 import { enqueueVoiceAudio, stopVoicePlayback, voiceLang, voiceReplyEnabled } from "./voice";
@@ -47,6 +55,7 @@ let selected = new Set<number>();
 let openMenu = -1;
 let sidebarWidthRem = SIDEBAR_DEFAULT_REM;
 let agentBusy = false;
+let chatAntibot: AntibotHandle | null = null;
 
 // Restore the previous conversation and saved chats across reloads.
 loadPersistedChats();
@@ -163,8 +172,33 @@ function hasComposerContent(input: HTMLTextAreaElement): boolean {
 }
 
 function syncSend(input: HTMLTextAreaElement, send: HTMLButtonElement | null): void {
-  if (send) {
-    send.disabled = agentBusy || !hasComposerContent(input);
+  if (!send) {
+    return;
+  }
+  const needsAntibot = send.hasAttribute("data-antibot-action");
+  send.disabled =
+    agentBusy || !hasComposerContent(input) || (needsAntibot && !isAntibotArmed(send));
+}
+
+function ensureChatAntibot(input: HTMLTextAreaElement, send: HTMLButtonElement | null): void {
+  if (!(send instanceof HTMLButtonElement)) {
+    return;
+  }
+  if (!chatAntibot) {
+    chatAntibot = attachAntibot(send, {
+      restartOnConsume: false,
+      insertBefore: send.closest(".agent-chat-compose-row") ?? send,
+      syncEnable: () => syncSend(input, send),
+    });
+    if (turns.length > 0) {
+      setAntibotActive(send, false);
+    }
+    return;
+  }
+  if (turns.length === 0 && !send.hasAttribute("data-antibot-action")) {
+    setAntibotActive(send, true);
+  } else if (turns.length > 0 && send.hasAttribute("data-antibot-action")) {
+    setAntibotActive(send, false);
   }
 }
 
@@ -518,9 +552,16 @@ async function submitChat(input: HTMLTextAreaElement, send: HTMLButtonElement | 
   if (agentBusy) {
     return;
   }
+  const startingChat = turns.length === 0;
+  if (startingChat && send && !isAntibotArmed(send)) {
+    return;
+  }
   const text = input.value.trim();
   if ((!text && !pendingImages.length) || text.length > MAX_MESSAGE) {
     return;
+  }
+  if (startingChat) {
+    consumeAntibot(send);
   }
   const message = text || copy.imageOnly;
   const history = apiHistory();
@@ -626,6 +667,7 @@ export function startAgentChat(): void {
   bindResize();
   paintChat();
   growInput(input);
+  ensureChatAntibot(input, sendBtn);
   syncSend(input, sendBtn);
   if (form.dataset.bound === "true") {
     return;
@@ -689,6 +731,11 @@ export function startAgentChat(): void {
     pendingImages = [];
     paintChat();
     growInput(input);
+    if (sendBtn) {
+      restartAntibot(sendBtn);
+    } else {
+      ensureChatAntibot(input, sendBtn);
+    }
     syncSend(input, sendBtn);
   });
   document.querySelector("[data-agent-history-toggle]")?.addEventListener("click", () => {
