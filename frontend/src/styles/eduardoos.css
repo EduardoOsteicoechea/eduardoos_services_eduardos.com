@@ -37,6 +37,46 @@
   min-width: 0;
 }
 
+/* Home portrait backdrop — decorative only; does not affect layout flow.
+   Native art is 896×1200; height is 1080px (67.5rem at root 16px). */
+html[data-page="home"] main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  height: 67.5rem;
+  width: 50.4rem;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: auto 67.5rem;
+  background-position: right center;
+}
+
+html[data-theme="light"][data-page="home"] main::before {
+  background-image: url("/Gemini_Generated_Image_2ejeqk2ejeqk2eje.jpg");
+}
+
+html[data-theme="dark"][data-page="home"] main::before {
+  background-image: url("/Gemini_Generated_Image_ordbe0ordbe0ordb.jpg");
+}
+
+html[data-page="home"] main > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 47.999rem) {
+  html[data-page="home"] main::before {
+    /* Only the left half of the portrait is visible on phone. */
+    width: 25.2rem;
+    background-position: left center;
+  }
+}
+
 .hero{
   background-image: radial-gradient(var(--eo-grid) 0.0625rem, transparent 0.0625rem);
   background-size: 1.25rem 1.25rem;
