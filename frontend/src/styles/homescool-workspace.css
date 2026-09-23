@@ -262,6 +262,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   align-items: center;
   justify-content: center;
   gap: var(--rail-gap);
+  width: calc(var(--homescool-dhs-width, 13rem) - 2rem);
+  box-sizing: border-box;
   min-height: var(--control-height);
   margin: 0;
   padding: var(--control-padding-block) var(--space-padding);
