@@ -12,6 +12,25 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 		doc.Cycle, doc.Week, doc.Day, doc.Level, doc.Subject)
 
 	var pages []pdf.EoschoolPrintPage
+	if isMatTablesLayout(doc) {
+		pages = append(pages, buildMatTablesPrintPages(doc)...)
+	} else {
+		pages = append(pages, buildLessonQuizPrintPages(doc)...)
+	}
+
+	return pdf.BuildEoschoolPDF(pdf.EoschoolPrintDoc{
+		Title: doc.Title,
+		Meta:  meta,
+		Pages: pages,
+	})
+}
+
+func isMatTablesLayout(doc EoschoolDocument) bool {
+	return strings.EqualFold(strings.TrimSpace(doc.Subject), "mat") && doc.Week == 2
+}
+
+func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
+	pages := make([]pdf.EoschoolPrintPage, 0, 1+len(doc.Quiz.Questions)/8+1)
 
 	lessonLines := make([]string, 0, len(doc.Lesson.Points)*2+2)
 	for _, p := range doc.Lesson.Points {
@@ -33,7 +52,7 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 		Lines:   lessonLines,
 	})
 
-	const questionsPerPage = 7
+	const questionsPerPage = 8
 	for i := 0; i < len(doc.Quiz.Questions); i += questionsPerPage {
 		end := i + questionsPerPage
 		if end > len(doc.Quiz.Questions) {
@@ -63,10 +82,102 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 			Lines: lines,
 		})
 	}
+	return pages
+}
 
-	return pdf.BuildEoschoolPDF(pdf.EoschoolPrintDoc{
-		Title: doc.Title,
-		Meta:  meta,
-		Pages: pages,
-	})
+type matLevel struct {
+	label  string
+	tables []int
+}
+
+var matLevels = []matLevel{
+	{label: "nivel 1", tables: []int{1, 2, 3, 4}},
+	{label: "nivel 2", tables: []int{5, 6, 7, 8}},
+	{label: "nivel 3", tables: []int{9, 10, 11, 12}},
+}
+
+func matPracticeDensity(day int) int {
+	switch {
+	case day <= 1:
+		return 3
+	case day == 2:
+		return 6
+	case day == 3:
+		return 9
+	default:
+		return 12
+	}
+}
+
+func buildMatTablesPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
+	density := matPracticeDensity(doc.Day)
+	task := "Leer o cantar en voz alta: una vez el nivel 1 (tablas del 1 al 4); dos veces el nivel 2 (tablas del 5 al 8); tres veces el nivel 3 (tablas del 9 al 12)."
+	if doc.Day > 1 {
+		task = fmt.Sprintf("%s Día %d: en la hoja 2 practica %d productos por tabla (espacios en blanco).", task, doc.Day, density)
+	}
+
+	readLines := []string{task, "", "Hoja 1 · leer/cantar", ""}
+	readLines = append(readLines, matModeLines(doc, "read", 12)...)
+
+	practiceLines := []string{task, "", fmt.Sprintf("Hoja 2 · practicar (%d productos por tabla)", density), ""}
+	practiceLines = append(practiceLines, matModeLines(doc, "practice", density)...)
+
+	return []pdf.EoschoolPrintPage{
+		{Heading: "Tablas · leer/cantar", Lines: readLines},
+		{Heading: "Tablas · practicar", Lines: practiceLines},
+	}
+}
+
+func matModeLines(doc EoschoolDocument, mode string, density int) []string {
+	lines := make([]string, 0, 80)
+	for _, level := range matLevels {
+		lines = append(lines, level.label)
+		for _, factor := range level.tables {
+			mults := pickMatMultipliers(doc.Day, factor, mode, density)
+			parts := make([]string, 0, len(mults))
+			for _, m := range mults {
+				if mode == "read" {
+					parts = append(parts, fmt.Sprintf("%dx%d=%d", factor, m, factor*m))
+				} else {
+					parts = append(parts, fmt.Sprintf("%dx%d=____", factor, m))
+				}
+			}
+			lines = append(lines, fmt.Sprintf("  x%d: %s", factor, strings.Join(parts, "  ")))
+		}
+		lines = append(lines, "")
+	}
+	return lines
+}
+
+func pickMatMultipliers(day, factor int, mode string, density int) []int {
+	all := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+	if mode == "read" {
+		return all
+	}
+	seed := day*1009 + factor*17 + 42
+	shuffled := seededShuffleInts(all, seed)
+	if density > len(shuffled) {
+		density = len(shuffled)
+	}
+	picked := append([]int(nil), shuffled[:density]...)
+	// Ascending for scanability (same as frontend).
+	for i := 0; i < len(picked); i++ {
+		for j := i + 1; j < len(picked); j++ {
+			if picked[j] < picked[i] {
+				picked[i], picked[j] = picked[j], picked[i]
+			}
+		}
+	}
+	return picked
+}
+
+func seededShuffleInts(items []int, seed int) []int {
+	arr := append([]int(nil), items...)
+	s := uint32(seed)
+	for i := len(arr) - 1; i > 0; i-- {
+		s = s*1664525 + 1013904223
+		j := int(s % uint32(i+1))
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	return arr
 }

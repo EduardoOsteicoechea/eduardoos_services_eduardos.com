@@ -278,3 +278,48 @@ export async function fetchHomescoolMaterial(id: string): Promise<{
     requestId,
   };
 }
+
+/** GET cookie-auth PDF and trigger a browser download. */
+export async function downloadHomescoolMaterialPdf(
+  materialId: string,
+  fileName = "homescool.pdf",
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const id = materialId.trim();
+  if (!id) return { ok: false, error: "Missing material id." };
+  const url = `/api/homescool/materials/${encodeURIComponent(id)}/pdf`;
+  if (mustLog) console.log("[homescool] pdf.download.start", { id, fileName });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+      headers: { Accept: "application/pdf, application/json" },
+    });
+    const requestId = res.headers.get("X-Request-ID") || "";
+    if (!res.ok) {
+      let message = `PDF download failed (${res.status})`;
+      try {
+        const body = (await res.json()) as { message?: string };
+        if (body.message) message = body.message;
+      } catch {
+        /* ignore */
+      }
+      if (mustLog) console.log("[homescool] pdf.download.fail", { status: res.status, requestId, message });
+      return { ok: false, error: message, requestId };
+    }
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = fileName.endsWith(".pdf") ? fileName : `${fileName}.pdf`;
+    a.rel = "noopener";
+    document.body.append(a);
+    a.click();
+    a.remove();
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000);
+    if (mustLog) console.log("[homescool] pdf.download.ok", { id, bytes: blob.size, requestId });
+    return { ok: true, requestId };
+  } catch (err) {
+    if (mustLog) console.log("[homescool] pdf.download.error", { err: String(err) });
+    return { ok: false, error: "Could not download PDF." };
+  }
+}

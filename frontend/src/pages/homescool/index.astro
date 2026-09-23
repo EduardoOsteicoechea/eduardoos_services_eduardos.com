@@ -31,12 +31,12 @@ import "../../styles/homescool-workspace.css";
         class="homescool-dhs__print"
         type="button"
         data-homescool-print
-        title="Print current material as PDF"
-        aria-label="Print current material as PDF"
+        title="Descargar PDF del material"
+        aria-label="Descargar PDF del material"
         disabled
       >
-        <span class="material-symbols-outlined" aria-hidden="true">print</span>
-        Print
+        <span class="material-symbols-outlined" aria-hidden="true">download</span>
+        PDF
       </button>
     </div>
   </Fragment>
@@ -70,6 +70,7 @@ import "../../styles/homescool-workspace.css";
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
   import {
+    downloadHomescoolMaterialPdf,
     fetchHomescoolMaterial,
     fetchHomescoolMaterials,
     type EoschoolDocument,
@@ -99,6 +100,8 @@ import "../../styles/homescool-workspace.css";
 
   let materials: HomescoolMaterial[] = [];
   let sheetsReady = false;
+  let currentMaterialId = "";
+  let currentPdfName = "homescool.pdf";
   /** Default to week 2 until packs for other weeks exist; boot() snaps to first available cell. */
   let selection = { cycle: 1, week: 2, day: 1, subject: "mat" };
 
@@ -131,79 +134,33 @@ import "../../styles/homescool-workspace.css";
   }
 
   printBtn?.addEventListener("click", () => {
-    log("print.click", { sheetsReady, disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null });
-    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
-    printLetterSheets();
+    void downloadCurrentPdf();
   });
 
-  /**
-   * Clone letter pages onto body for print. Chrome often drops content that lives
-   * inside height:100% / overflow:auto workspace chrome when using window.print().
-   */
-  function printLetterSheets() {
-    if (!(sheetsHost instanceof HTMLElement)) return;
-    const pages = sheetsHost.querySelectorAll(".homescool-letter-page");
-    log("print.prepare", { pages: pages.length });
-    if (!pages.length) return;
-
-    document.getElementById("homescool-print-output")?.remove();
-    document.getElementById("homescool-print-output-style")?.remove();
-
-    const output = document.createElement("div");
-    output.id = "homescool-print-output";
-    output.setAttribute("aria-hidden", "true");
-    for (const page of pages) {
-      output.append(page.cloneNode(true));
+  async function downloadCurrentPdf() {
+    log("pdf.click", {
+      sheetsReady,
+      materialId: currentMaterialId,
+      disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null,
+    });
+    if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady || !currentMaterialId) {
+      return;
     }
-
-    const style = document.createElement("style");
-    style.id = "homescool-print-output-style";
-    style.textContent = [
-      "#homescool-print-output { display: none; }",
-      "@media print {",
-      "  html, body { height: auto !important; min-height: 0 !important; overflow: visible !important; background: #ffffff !important; }",
-      "  body > :not(#homescool-print-output) { display: none !important; }",
-      "  #homescool-print-output {",
-      "    display: block !important;",
-      "    margin: 0;",
-      "    padding: 0;",
-      "    background: #ffffff;",
-      "  }",
-      "  #homescool-print-output .homescool-letter-page {",
-      "    box-sizing: border-box;",
-      "    width: 8.5in !important;",
-      "    min-height: 11in !important;",
-      "    height: 11in !important;",
-      "    margin: 0 !important;",
-      "    border: 0 !important;",
-      "    box-shadow: none !important;",
-      "    page-break-after: always;",
-      "    break-after: page;",
-      "    print-color-adjust: exact;",
-      "    -webkit-print-color-adjust: exact;",
-      "  }",
-      "  #homescool-print-output .homescool-letter-page:last-child {",
-      "    page-break-after: auto;",
-      "    break-after: auto;",
-      "  }",
-      "}",
-    ].join("\n");
-
-    document.head.append(style);
-    document.body.append(output);
-    document.documentElement.classList.add("homescool-printing");
-
-    const cleanup = () => {
-      output.remove();
-      style.remove();
-      document.documentElement.classList.remove("homescool-printing");
-      log("print.after");
-    };
-    window.addEventListener("afterprint", cleanup, { once: true });
-    window.setTimeout(cleanup, 60_000);
-
-    log("print.start", { pages: pages.length });
-    window.print();
+    printBtn.disabled = true;
+    printBtn.setAttribute("aria-busy", "true");
+    const result = await downloadHomescoolMaterialPdf(currentMaterialId, currentPdfName);
+    printBtn.removeAttribute("aria-busy");
+    printBtn.disabled = false;
+    if (!result.ok) {
+      showErrorModal({
+        message: result.error || "Could not download PDF.",
+        requestId: result.requestId,
+        details: result.requestId ? `request_id=${result.requestId}` : "",
+      });
+      log("pdf.fail", { error: result.error, requestId: result.requestId });
+      return;
+    }
+    log("pdf.ok", { materialId: currentMaterialId, requestId: result.requestId });
   }
 
   async function boot() {
@@ -415,6 +372,8 @@ import "../../styles/homescool-workspace.css";
   async function openSelection() {
     log("openSelection.enter", { ...selection });
     sheetsReady = false;
+    currentMaterialId = "";
+    currentPdfName = "homescool.pdf";
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     const match = findMaterial();
     if (!match) {
@@ -435,6 +394,7 @@ import "../../styles/homescool-workspace.css";
       error: res.error,
       requestId: res.requestId,
       documentUrl: res.documentUrl,
+      pdfUrl: res.pdfUrl,
       format: res.material?.format,
     });
     if (res.error || !res.material) {
@@ -467,13 +427,16 @@ import "../../styles/homescool-workspace.css";
         quiz: doc.quiz?.questionCount,
       });
       mountEoschool(doc);
+      currentMaterialId = match.id;
+      const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
+      currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
       if (banner instanceof HTMLElement) {
         banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title}`;
       }
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
-      log("openSelection.ready");
+      log("openSelection.ready", { materialId: currentMaterialId, pdfName: currentPdfName });
     } catch (err) {
       log("openSelection.fail", { err: String(err) });
       setStageMode("empty");

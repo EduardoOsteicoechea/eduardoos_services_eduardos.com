@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -220,9 +221,15 @@ func (a *App) getHomescoolMaterialPDFHandler(w http.ResponseWriter, r *http.Requ
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	a.mustLogf(r, "homescool.materials.pdf.ok", "pdf_bytes", len(pdfBytes))
+	a.mustLogf(r, "homescool.materials.pdf.ok", "pdf_bytes", len(pdfBytes), "pages_hint", doc.Subject)
+	name := strings.TrimSpace(doc.Title)
+	if name == "" {
+		name = "homescool"
+	}
+	name = fmt.Sprintf("%s-c%dw%dd%d.pdf", name, doc.Cycle, doc.Week, doc.Day)
 	w.Header().Set("Content-Type", "application/pdf")
-	w.Header().Set("Content-Disposition", `inline; filename="eoschool.pdf"`)
+	w.Header().Set("Content-Disposition", contentDispositionAttachment(name))
+	w.Header().Set("Access-Control-Expose-Headers", "Content-Disposition")
 	_, _ = w.Write(pdfBytes)
 }
 
