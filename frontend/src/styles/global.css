@@ -1953,25 +1953,49 @@ section.diag .panel:not(form) {
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
-    /* Menu/DHS 33% each; chat 66% docks beside menu (DHS closes). */
-    --tray-third-width: calc(var(--shell-viewport-width, var(--content-basis)) / 3);
-    --tray-two-thirds-width: calc(var(--shell-viewport-width, var(--content-basis)) * 2 / 3);
-    --sidebar-width: var(--tray-third-width);
-    --agent-sidebar-width: var(--tray-two-thirds-width);
+    /* Phone: menu/DHS 50% each; AI docks at 50% beside menu. Compact toolbar fits. */
+    --tray-half-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
+    --sidebar-width: var(--tray-half-width);
+    --agent-sidebar-width: var(--tray-half-width);
+    --sidebar-toolbar-band: calc(
+      var(--rail-gap) + 1.5rem + var(--rail-gap) + var(--border-width)
+    );
   }
 
   #main-menu:not([hidden]) {
-    width: var(--tray-third-width);
+    width: var(--tray-half-width);
   }
 
   #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
-    width: var(--tray-third-width);
-    left: var(--tray-third-width);
+    width: var(--tray-half-width);
+    left: var(--tray-half-width);
   }
 
   #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
-    width: var(--tray-two-thirds-width);
-    left: var(--tray-third-width);
+    width: var(--tray-half-width);
+    left: var(--tray-half-width);
+  }
+
+  .sidebar-toolbar {
+    gap: 0.25rem;
+    padding: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .sidebar-toolbar .icon-btn,
+  .sidebar-toolbar .agent-fab,
+  .sidebar-toolbar .header-session {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .sidebar-toolbar .icon-btn .material-symbols-outlined {
+    font-size: 1rem;
+  }
+
+  .sidebar-toolbar .agent-fab-label {
+    font-size: 0.625rem;
   }
 
   .session-grid form > button,
