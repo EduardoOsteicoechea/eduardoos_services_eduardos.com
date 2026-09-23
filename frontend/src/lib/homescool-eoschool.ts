@@ -92,32 +92,157 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   return pages;
 }
 
+type LessonPoint = EoschoolDocument["lesson"]["points"][number];
+
+export type LessonBatch = {
+  /** Inclusive start index into lesson.points. */
+  start: number;
+  /** Exclusive end index. */
+  end: number;
+  withSummary: boolean;
+};
+
 /**
- * Lesson sheets: one Letter page per point when there are 2+ points so dense
- * intro/review bodies do not clip under the fixed 11in capture height.
- * Deepen (single focus) stays on one page.
+ * Greedy pack: keep adding the next section while `fits` says it still belongs
+ * on the current Letter page; only then open a new page.
+ */
+export function packLessonBatches(
+  pointCount: number,
+  hasSummary: boolean,
+  fits: (start: number, end: number, withSummary: boolean) => boolean,
+): LessonBatch[] {
+  if (pointCount <= 0) {
+    return hasSummary ? [{ start: 0, end: 0, withSummary: true }] : [];
+  }
+
+  const batches: LessonBatch[] = [];
+  let i = 0;
+  while (i < pointCount) {
+    let end = i + 1;
+    while (end < pointCount && fits(i, end + 1, false)) {
+      end += 1;
+    }
+    batches.push({ start: i, end, withSummary: false });
+    i = end;
+  }
+
+  if (!hasSummary) return batches;
+
+  const last = batches[batches.length - 1];
+  if (fits(last.start, last.end, true)) {
+    last.withSummary = true;
+  } else {
+    batches.push({ start: last.end, end: last.end, withSummary: true });
+  }
+  return batches;
+}
+
+/**
+ * Lesson sheets: pack as many points as fit on each US Letter page (measure when
+ * CSS layout is available; char/block estimate otherwise). Deepen stays one page.
  */
 function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   const kind = doc.lesson?.kind ?? "intro";
   const points = doc.lesson?.points ?? [];
   const kicker = kind === "deepen" ? "Profundización" : kind === "review" ? "Repaso" : "Clase";
 
-  if (kind === "deepen" || points.length <= 1) {
+  if (kind === "deepen") {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
-    if (kind === "deepen") page.append(buildDeepenRibbon(doc));
+    page.append(buildDeepenRibbon(doc));
     page.append(buildLessonStack(doc, points));
     appendSummary(doc, page);
     return [page];
   }
 
-  return points.map((p, index) => {
+  const hasSummary = Boolean(doc.lesson?.summary?.trim());
+  const batches = packLessonBatches(points.length, hasSummary, (start, end, withSummary) =>
+    lessonSliceFits(doc, points, start, end, withSummary, kicker, kind),
+  );
+
+  if (!batches.length) {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
-    page.append(buildLessonStack(doc, [p], index));
-    if (index === points.length - 1) appendSummary(doc, page);
+    return [page];
+  }
+
+  return batches.map((batch) => {
+    const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
+    page.append(lessonHeader(doc, kicker));
+    if (batch.end > batch.start) {
+      page.append(buildLessonStack(doc, points.slice(batch.start, batch.end), batch.start));
+    }
+    if (batch.withSummary) appendSummary(doc, page);
     return page;
   });
+}
+
+/** True when the slice fits on one Letter sheet (layout measure, else estimate). */
+function lessonSliceFits(
+  doc: EoschoolDocument,
+  points: LessonPoint[],
+  start: number,
+  end: number,
+  withSummary: boolean,
+  kicker: string,
+  kind: string,
+): boolean {
+  const slice = points.slice(start, end);
+  // A single section always gets its own page even if it overflows alone.
+  if (slice.length <= 1 && !withSummary) return true;
+  if (slice.length === 0 && withSummary) {
+    return estimateLessonSliceFits([], true, doc.lesson?.summary);
+  }
+
+  if (typeof document === "undefined" || !document.body) {
+    return estimateLessonSliceFits(slice, withSummary, doc.lesson?.summary);
+  }
+
+  const probe = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
+  probe.setAttribute("data-homescool-measure", "1");
+  probe.style.position = "absolute";
+  probe.style.left = "-10000px";
+  probe.style.top = "0";
+  probe.style.visibility = "hidden";
+  probe.style.pointerEvents = "none";
+  probe.append(lessonHeader(doc, kicker));
+  if (slice.length) probe.append(buildLessonStack(doc, slice, start));
+  if (withSummary) appendSummary(doc, probe);
+  document.body.append(probe);
+  // Force layout against Letter geometry from CSS.
+  void probe.offsetHeight;
+  const client = probe.clientHeight;
+  const scroll = probe.scrollHeight;
+  probe.remove();
+
+  if (client < 8) {
+    return estimateLessonSliceFits(slice, withSummary, doc.lesson?.summary);
+  }
+  return scroll <= client + 1;
+}
+
+/**
+ * jsdom / no-CSS fallback: rough content units vs Letter budget.
+ * Tuned so a dense METHOD_V1 point (~5 boxes) is ~one page; short points pack together.
+ */
+function estimateLessonSliceFits(
+  points: LessonPoint[],
+  withSummary: boolean,
+  summary?: string,
+): boolean {
+  let score = 14; // hero
+  for (const p of points) {
+    score += 10; // point chrome / badge
+    score += Math.ceil((p.heading?.length ?? 0) / 48);
+    for (const para of classifyLessonParas(p.body || "")) {
+      score += 7 + Math.ceil(para.text.length / 95);
+      if (para.kind === "contrast") score += 4;
+    }
+  }
+  if (withSummary && summary?.trim()) {
+    score += 10 + Math.ceil(summary.trim().length / 95);
+  }
+  return score <= 105;
 }
 
 function buildLessonWithQuizPage(

@@ -3,7 +3,11 @@
  */
 import { describe, expect, it } from "vitest";
 import type { EoschoolDocument } from "./homescool";
-import { classifyLessonParas, renderEoschoolPages } from "./homescool-eoschool";
+import {
+  classifyLessonParas,
+  packLessonBatches,
+  renderEoschoolPages,
+} from "./homescool-eoschool";
 
 describe("classifyLessonParas", () => {
   it("marks lead, cards, practice and error for deepen bodies", () => {
@@ -27,6 +31,29 @@ describe("classifyLessonParas", () => {
   });
 });
 
+describe("packLessonBatches", () => {
+  it("keeps following sections on the same page while they fit", () => {
+    const batches = packLessonBatches(3, true, (start, end, withSummary) => {
+      // Capacity: 2 sections, or 1 section + summary — not 3, not 2+summary.
+      const n = end - start;
+      if (withSummary) return n <= 1;
+      return n <= 2;
+    });
+    expect(batches).toEqual([
+      { start: 0, end: 2, withSummary: false },
+      { start: 2, end: 3, withSummary: true },
+    ]);
+  });
+
+  it("puts summary on its own page when it no longer fits with the last sections", () => {
+    const batches = packLessonBatches(2, true, (_s, _e, withSummary) => !withSummary);
+    expect(batches).toEqual([
+      { start: 0, end: 2, withSummary: false },
+      { start: 2, end: 2, withSummary: true },
+    ]);
+  });
+});
+
 function baseDoc(over: Partial<EoschoolDocument> & { lesson: EoschoolDocument["lesson"] }): EoschoolDocument {
   return {
     format: "eoschool",
@@ -44,7 +71,7 @@ function baseDoc(over: Partial<EoschoolDocument> & { lesson: EoschoolDocument["l
 }
 
 describe("renderEoschoolPages pagination", () => {
-  it("splits intro lessons with 3 points into 3 letter pages (+ quiz)", () => {
+  it("packs short intro sections onto one letter page when they fit", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -66,14 +93,42 @@ describe("renderEoschoolPages pagination", () => {
     });
 
     const pages = renderEoschoolPages(doc);
-    expect(pages).toHaveLength(4); // 3 lesson + 1 quiz
-    expect(pages.every((p) => p.classList.contains("homescool-letter-page"))).toBe(true);
-    expect(pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"))).toHaveLength(3);
+    const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
+    expect(lessonPages).toHaveLength(1);
+    expect(lessonPages[0].querySelectorAll(".homescool-letter__point")).toHaveLength(3);
+    expect(lessonPages[0].querySelector(".homescool-letter__summary")).toBeTruthy();
     expect(pages.filter((p) => p.classList.contains("homescool-letter-page--quiz"))).toHaveLength(1);
+  });
 
-    const lastLesson = pages[2];
-    expect(lastLesson.querySelector(".homescool-letter__summary")).toBeTruthy();
-    expect(pages[0].querySelector(".homescool-letter__summary")).toBeNull();
+  it("opens a new page only when the next dense section no longer fits", () => {
+    const dense = [
+      "Idea central densa sobre el tema con bastante texto para llenar.",
+      "Explora más detalles del punto con ejemplos y matices importantes.",
+      "Contraste clave: opción A frente a opción B en el mismo marco.",
+      "Consejo: repasa con calma y escribe tres oraciones propias.",
+      "Error común: confundir las dos formas y mezclar desinencias.",
+    ].join("\n\n");
+
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          { id: "p1", heading: "Uno", body: dense },
+          { id: "p2", heading: "Dos", body: dense },
+          { id: "p3", heading: "Tres", body: dense },
+        ],
+        summary: "Resumen final del día.",
+      },
+    });
+
+    const pages = renderEoschoolPages(doc);
+    const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
+    // Three dense METHOD_V1 points do not share a single Letter sheet.
+    expect(lessonPages.length).toBeGreaterThan(1);
+    expect(lessonPages.length).toBeLessThan(4); // still packs when possible, not forced 1/page
+    const pointCounts = lessonPages.map((p) => p.querySelectorAll(".homescool-letter__point").length);
+    expect(pointCounts.reduce((a, b) => a + b, 0)).toBe(3);
   });
 
   it("keeps deepen on a single lesson page", () => {
