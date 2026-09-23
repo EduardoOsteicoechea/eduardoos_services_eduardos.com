@@ -32,7 +32,13 @@ func isMatTablesLayout(doc EoschoolDocument) bool {
 func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 	pages := make([]pdf.EoschoolPrintPage, 0, 1+len(doc.Quiz.Questions)/8+1)
 
-	lessonLines := make([]string, 0, len(doc.Lesson.Points)*2+2)
+	lessonLines := make([]string, 0, len(doc.Lesson.Points)*4+4)
+	if doc.Lesson.Kind == eoschoolKindDeepen && doc.Lesson.FocusPoint != nil {
+		lessonLines = append(lessonLines,
+			fmt.Sprintf("Profundización · punto %d", *doc.Lesson.FocusPoint),
+			"",
+		)
+	}
 	for _, p := range doc.Lesson.Points {
 		h := strings.TrimSpace(p.Heading)
 		b := strings.TrimSpace(p.Body)
@@ -40,7 +46,7 @@ func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 			lessonLines = append(lessonLines, h)
 		}
 		if b != "" {
-			lessonLines = append(lessonLines, b)
+			lessonLines = append(lessonLines, formatRichLessonLines(b)...)
 		}
 		lessonLines = append(lessonLines, "")
 	}
@@ -86,12 +92,57 @@ func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 	return pages
 }
 
+// formatRichLessonLines splits a lesson body into labeled sections for the PDF
+// (mirrors the FE box/card layout in plain text).
+func formatRichLessonLines(body string) []string {
+	parts := strings.Split(body, "\n\n")
+	out := make([]string, 0, len(parts)*2)
+	for i, raw := range parts {
+		p := strings.TrimSpace(raw)
+		if p == "" {
+			continue
+		}
+		label := ""
+		switch {
+		case i == 0:
+			label = "▸ Idea central"
+		case hasLessonPrefix(p, "Error a corregir", "Error to fix", "Error común", "Error:"):
+			label = "▸ Error a corregir"
+		case hasLessonPrefix(p, "Práctica", "Ejercicio", "Practice", "Class practice", "Método", "Method:"):
+			label = "▸ Práctica"
+		case hasLessonPrefix(p, "Consejo", "Tip", "Detalle útil", "Señal", "Nota", "Atención:"):
+			label = "▸ Consejo"
+		case hasLessonPrefix(p, "Meta", "Goal", "Criterio de éxito"):
+			label = "▸ Meta"
+		case strings.Contains(strings.ToLower(p), "frente a") ||
+			strings.Contains(strings.ToLower(p), " vs ") ||
+			strings.Contains(p, "↔"):
+			label = "▸ Contraste"
+		default:
+			label = "▸ Explora"
+		}
+		out = append(out, label, p, "")
+	}
+	return out
+}
+
+func hasLessonPrefix(text string, prefixes ...string) bool {
+	lower := strings.ToLower(strings.TrimSpace(text))
+	for _, p := range prefixes {
+		if strings.HasPrefix(lower, strings.ToLower(p)) {
+			return true
+		}
+	}
+	return false
+}
+
 // inlineQuizPrintCapacity: short deepen/review sheets absorb the first quiz cards
 // so accumulated questions do not force an empty new page.
 func inlineQuizPrintCapacity(doc EoschoolDocument) int {
 	switch doc.Lesson.Kind {
 	case eoschoolKindDeepen:
-		return 8
+		// Full letter deepen class; quiz on following pages (matches FE).
+		return 0
 	case eoschoolKindReview:
 		chars := 0
 		for _, p := range doc.Lesson.Points {

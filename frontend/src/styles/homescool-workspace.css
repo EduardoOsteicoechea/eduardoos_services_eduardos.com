@@ -438,6 +438,188 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   color: var(--hc-ink);
 }
 
+.homescool-letter__ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: 0.3rem;
+  border: 0.06rem solid color-mix(in srgb, var(--hc-teal) 40%, var(--hc-line));
+  background: linear-gradient(90deg, var(--hc-mint), var(--hc-sky));
+}
+
+.homescool-letter__ribbon-badge {
+  flex: 0 0 auto;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999rem;
+  background: var(--hc-teal);
+  color: #f8fafc;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+}
+
+.homescool-letter__ribbon-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--hc-ink);
+}
+
+.homescool-letter__ribbon-hint {
+  flex: 0 1 auto;
+  font-size: 0.62rem;
+  color: var(--hc-ink-soft);
+}
+
+.homescool-letter__deepen-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0.4rem;
+  border-radius: 0.35rem;
+  border: 0.06rem solid color-mix(in srgb, var(--hc-teal) 30%, var(--hc-line));
+  background: var(--hc-cream);
+  overflow: hidden;
+}
+
+.homescool-letter__rich {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.homescool-letter__rich--intro,
+.homescool-letter__rich--review {
+  gap: 0.28rem;
+}
+
+.homescool-letter__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+  align-items: stretch;
+}
+
+.homescool-letter__specials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.homescool-letter__specials-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+  align-items: stretch;
+}
+
+.homescool-letter__box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  padding: 0.35rem 0.4rem;
+  border-radius: 0.28rem;
+  border: 0.06rem solid var(--hc-line);
+  background: #ffffff;
+  min-width: 0;
+}
+
+.homescool-letter__box--lead {
+  background: linear-gradient(135deg, var(--hc-sky), var(--hc-mint));
+  border-color: color-mix(in srgb, var(--hc-rail) 35%, var(--hc-line));
+  padding: 0.45rem 0.5rem;
+}
+
+.homescool-letter__box--lead .homescool-letter__body {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.homescool-letter__box--card,
+.homescool-letter__card-tone--1 {
+  background: var(--hc-mint);
+}
+
+.homescool-letter__card-tone--2 {
+  background: var(--hc-sky);
+}
+
+.homescool-letter__card-tone--3 {
+  background: var(--hc-lilac);
+}
+
+.homescool-letter__card-tone--4 {
+  background: var(--hc-peach);
+}
+
+.homescool-letter__box--practice {
+  background: var(--hc-sky);
+  border-color: color-mix(in srgb, var(--hc-rail) 45%, var(--hc-line));
+}
+
+.homescool-letter__box--error {
+  background: var(--hc-peach);
+  border-color: color-mix(in srgb, var(--hc-coral) 50%, var(--hc-line));
+}
+
+.homescool-letter__box--tip,
+.homescool-letter__box--goal {
+  background: var(--hc-lilac);
+  border-color: color-mix(in srgb, #8b6f9e 40%, var(--hc-line));
+}
+
+.homescool-letter__box--contrast {
+  background: #ffffff;
+  border-style: dashed;
+}
+
+.homescool-letter__box-label {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  color: var(--hc-rail);
+}
+
+.homescool-letter__box--practice .homescool-letter__box-label {
+  color: var(--hc-rail);
+}
+
+.homescool-letter__box--error .homescool-letter__box-label {
+  color: var(--hc-coral);
+}
+
+.homescool-letter__box-label--soft {
+  opacity: 0.75;
+}
+
+.homescool-letter__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.homescool-letter__col {
+  padding: 0.3rem 0.35rem;
+  border-radius: 0.22rem;
+  border: 0.05rem solid var(--hc-line);
+  min-width: 0;
+}
+
+.homescool-letter__col--a {
+  background: var(--hc-mint);
+}
+
+.homescool-letter__col--b {
+  background: var(--hc-peach);
+}
+
 .homescool-letter__body,
 .homescool-letter__choices {
   font-size: 0.78rem;
@@ -445,6 +627,40 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   line-height: 1.4;
   color: var(--hc-ink);
   white-space: pre-line;
+}
+
+.homescool-letter__box .homescool-letter__body {
+  white-space: normal;
+}
+
+.homescool-letter__body--muted {
+  font-size: 0.7rem;
+  color: var(--hc-ink-soft);
+}
+
+.homescool-letter-page--deepen .homescool-letter__stack {
+  flex: 1 1 auto;
+}
+
+.homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.homescool-letter-page--intro .homescool-letter__cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.homescool-letter-page--intro .homescool-letter__rich--intro .homescool-letter__box--lead .homescool-letter__body,
+.homescool-letter-page--review .homescool-letter__rich--review .homescool-letter__box--lead .homescool-letter__body {
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.homescool-letter-page--intro .homescool-letter__box .homescool-letter__body,
+.homescool-letter-page--review .homescool-letter__box .homescool-letter__body {
+  font-size: 0.7rem;
+  line-height: 1.3;
 }
 
 .homescool-letter__summary {
@@ -864,7 +1080,12 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   .homescool-letter__q,
   .homescool-letter__choice,
   .homescool-letter__point-badge,
-  .homescool-letter__choice-mark {
+  .homescool-letter__choice-mark,
+  .homescool-letter__box,
+  .homescool-letter__ribbon,
+  .homescool-letter__col,
+  .homescool-letter__deepen-panel,
+  .homescool-letter__ribbon-badge {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
