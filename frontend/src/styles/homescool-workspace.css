@@ -182,6 +182,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   flex-direction: column;
   gap: var(--space-padding);
   padding: var(--space-padding);
+  /* Room so scrolled chips clear the fixed PDF button. */
+  padding-bottom: calc(var(--space-padding) + var(--control-height) + var(--space-padding));
 }
 
 .homescool-dhs__section {
@@ -250,14 +252,18 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   opacity: 0.55;
 }
 
-/* Primary action — filled button, not a ghost dhs-action row */
+/* Fixed over the curriculum sidebar — viewport left/bottom 1rem */
 .homescool-dhs__print {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: calc(var(--z-sidebar) + 1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--rail-gap);
   min-height: var(--control-height);
-  margin-top: var(--rail-gap);
+  margin: 0;
   padding: var(--control-padding-block) var(--space-padding);
   border: var(--border-width) solid var(--color-button-bg);
   border-radius: var(--border-radius);
