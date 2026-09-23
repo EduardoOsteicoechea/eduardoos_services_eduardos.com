@@ -46,9 +46,14 @@
       {
         "id": "d2-q3",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Pretérito de vivir (nosotros)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "vivimos"
+        ],
         "answer": "vivimos"
       },
       {
@@ -67,17 +72,27 @@
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Modo que estudias",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "indicativo",
+          "No aplica"
+        ],
         "answer": "indicativo"
       },
       {
         "id": "d3-q7",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Compuestos",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Compuestos"
       },
       {
@@ -109,73 +124,118 @@
       {
         "id": "d5-q2",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombre de un tiempo simple",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "presente",
+          "Ninguna",
+          "No aplica"
+        ],
         "answer": "presente"
       },
       {
         "id": "d3-q3",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Antefuturo de llegar (nosotros)",
-        "choices": [],
+        "choices": [
+          "habremos llegado",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "habremos llegado"
       },
       {
         "id": "d4-q6",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "Uso"
+        ],
         "answer": "Uso"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Simple o compuesto?: «Terminé ayer»",
-        "choices": [],
+        "choices": [
+          "simple",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "simple"
       },
       {
         "id": "d3-q1",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Antepresente de comer (yo)",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "he comido"
+        ],
         "answer": "he comido"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Futuro de salir (tú)",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "saldrás"
+        ],
         "answer": "saldrás"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Condicional de poder (yo)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "podría"
+        ],
         "answer": "podría"
       },
       {
         "id": "d4-q7",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Modo",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "indicativo",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "indicativo"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Imperfecto de cantar (ella)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "cantaba",
+          "Ninguna",
+          "No aplica"
+        ],
         "answer": "cantaba"
       },
       {
@@ -194,9 +254,14 @@
       {
         "id": "d5-q3",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombre de un tiempo compuesto",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "pluscuamperfecto"
+        ],
         "answer": "pluscuamperfecto"
       },
       {
@@ -228,33 +293,53 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombra tres tiempos simples",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "presente imperfecto pretérito"
+        ],
         "answer": "presente imperfecto pretérito"
       },
       {
         "id": "d5-q6",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Último overview",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "síntesis del punto 1",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "síntesis del punto 1"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Simples",
+          "Todas",
+          "No aplica"
+        ],
         "answer": "Simples"
       },
       {
         "id": "d3-q5",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Antepretérito: auxiliar en pretérito",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "hube"
+        ],
         "answer": "hube"
       },
       {
@@ -273,17 +358,27 @@
       {
         "id": "d5-q5",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Tema de la semana",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "tiempos verbales del indicativo",
+          "Ninguna",
+          "Todas"
+        ],
         "answer": "tiempos verbales del indicativo"
       },
       {
         "id": "d5-q1",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Cuántos tiempos del indicativo listamos?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "10",
+          "Todas"
+        ],
         "answer": "10"
       },
       {
@@ -315,17 +410,27 @@
       {
         "id": "d4-q3",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Simple o compuesto?: «Ya he terminado»",
-        "choices": [],
+        "choices": [
+          "compuesto",
+          "No aplica",
+          "Ninguna",
+          "Todas"
+        ],
         "answer": "compuesto"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Otro nombre del antepresente",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "pretérito perfecto compuesto",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "pretérito perfecto compuesto"
       },
       {
@@ -344,33 +449,53 @@
       {
         "id": "d3-q2",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Pluscuamperfecto de ver (ella)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "había visto"
+        ],
         "answer": "había visto"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Condicional perfecto de decir (yo)",
-        "choices": [],
+        "choices": [
+          "habría dicho",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "habría dicho"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombra tres tiempos compuestos",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "antepresente pluscuamperfecto antefuturo"
+        ],
         "answer": "antepresente pluscuamperfecto antefuturo"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Presente de indicar (yo)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "indico"
+        ],
         "answer": "indico"
       }
     ]

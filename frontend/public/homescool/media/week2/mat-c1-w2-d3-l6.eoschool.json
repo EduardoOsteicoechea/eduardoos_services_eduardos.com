@@ -91,17 +91,27 @@
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Producto de 12×12",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "144",
+          "No aplica"
+        ],
         "answer": "144"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Rango del punto 1 (factores)",
-        "choices": [],
+        "choices": [
+          "1 a 4",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "1 a 4"
       },
       {
@@ -146,9 +156,14 @@
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿1×cualquier número?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "el mismo número"
+        ],
         "answer": "el mismo número"
       },
       {
@@ -167,9 +182,14 @@
       {
         "id": "d2-q6",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombre del punto que profundizas hoy",
-        "choices": [],
+        "choices": [
+          "Tablas 1 a 4",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "Tablas 1 a 4"
       },
       {
@@ -227,9 +247,14 @@
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿En qué terminan los múltiplos de 5?",
-        "choices": [],
+        "choices": [
+          "0 o 5",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "0 o 5"
       },
       {
@@ -248,9 +273,14 @@
       {
         "id": "d3-q6",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas hoy",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "Tablas 5 a 8",
+          "Todas"
+        ],
         "answer": "Tablas 5 a 8"
       },
       {

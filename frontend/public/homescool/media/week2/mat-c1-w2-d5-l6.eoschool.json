@@ -59,17 +59,27 @@
       {
         "id": "d2-q6",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Nombre del punto que profundizas hoy",
-        "choices": [],
+        "choices": [
+          "Tablas 1 a 4",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "Tablas 1 a 4"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Producto de 12×12",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "144",
+          "No aplica"
+        ],
         "answer": "144"
       },
       {
@@ -88,9 +98,14 @@
       {
         "id": "d5-q4",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Qué ancla usas para el 5?",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "Todas",
+          "terminan en 0 o 5"
+        ],
         "answer": "terminan en 0 o 5"
       },
       {
@@ -135,17 +150,27 @@
       {
         "id": "d4-q6",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas hoy",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "Tablas 9 a 12"
+        ],
         "answer": "Tablas 9 a 12"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Truco clásico de la tabla del 9",
-        "choices": [],
+        "choices": [
+          "los dígitos suman 9",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "los dígitos suman 9"
       },
       {
@@ -164,9 +189,14 @@
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿1×cualquier número?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "el mismo número"
+        ],
         "answer": "el mismo número"
       },
       {
@@ -211,9 +241,14 @@
       {
         "id": "d3-q6",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto que profundizas hoy",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "Tablas 5 a 8",
+          "Todas"
+        ],
         "answer": "Tablas 5 a 8"
       },
       {
@@ -232,9 +267,14 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Rango del punto 1 (factores)",
-        "choices": [],
+        "choices": [
+          "1 a 4",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "1 a 4"
       },
       {
@@ -266,9 +306,14 @@
       {
         "id": "d5-q6",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Último overview del día 5 (síntesis)",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "punto 1 refraseado",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "punto 1 refraseado"
       },
       {
@@ -326,9 +371,14 @@
       {
         "id": "d5-q1",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Meta de la semana en una frase",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "memorizar 1×1 a 12×12",
+          "Todas"
+        ],
         "answer": "memorizar 1×1 a 12×12"
       },
       {
@@ -412,9 +462,14 @@
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿En qué terminan los múltiplos de 5?",
-        "choices": [],
+        "choices": [
+          "0 o 5",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "0 o 5"
       },
       {

@@ -26,9 +26,14 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Había pueblos antes de Colón en Venezuela?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -47,9 +52,14 @@
       {
         "id": "d1-q3",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿El contacto fue solo pacífico?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -68,9 +78,14 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Región aproximada del contacto costero",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -89,17 +104,27 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Modo de la lección: ¿memorizar nombres?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] ¿Había pueblos antes de Colón en Venezuela?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -118,9 +143,14 @@
       {
         "id": "d2-q3",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] ¿El contacto fue solo pacífico?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -139,9 +169,14 @@
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Región aproximada del contacto costero",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       },
       {
@@ -160,9 +195,14 @@
       {
         "id": "d2-q7",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Modo de la lección: ¿memorizar nombres?",
-        "choices": [],
+        "choices": [
+          "(respuesta en clase)",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "(respuesta en clase)"
       }
     ]

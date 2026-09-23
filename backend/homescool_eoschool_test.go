@@ -31,7 +31,8 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 	doc.Quiz.Questions = make([]EoschoolQuestion, 35)
 	for i := range doc.Quiz.Questions {
 		doc.Quiz.Questions[i] = EoschoolQuestion{
-			ID: "q", OriginDay: (i % 5) + 1, Type: "short", Prompt: "p?",
+			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
 		}
 	}
 	if err := validateEoschoolDocument(&doc); err != nil {

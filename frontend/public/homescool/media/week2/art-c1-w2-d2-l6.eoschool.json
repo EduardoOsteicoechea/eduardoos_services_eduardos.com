@@ -26,9 +26,14 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Qué es una imagen espejo?",
-        "choices": [],
+        "choices": [
+          "igual pero invertida",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "igual pero invertida"
       },
       {
@@ -47,9 +52,14 @@
       {
         "id": "d1-q3",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Nombra un ejemplo de imagen a medio dibujar",
-        "choices": [],
+        "choices": [
+          "columna florero o cara",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "columna florero o cara"
       },
       {
@@ -68,9 +78,14 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Qué haces en Expresar?",
-        "choices": [],
+        "choices": [
+          "completar la imagen",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "completar la imagen"
       },
       {
@@ -89,17 +104,27 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Tema",
-        "choices": [],
+        "choices": [
+          "imágenes espejo",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "imágenes espejo"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] ¿Qué es una imagen espejo?",
-        "choices": [],
+        "choices": [
+          "igual pero invertida",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "igual pero invertida"
       },
       {
@@ -118,9 +143,14 @@
       {
         "id": "d2-q3",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Nombra un ejemplo de imagen a medio dibujar",
-        "choices": [],
+        "choices": [
+          "columna florero o cara",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "columna florero o cara"
       },
       {
@@ -139,9 +169,14 @@
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] ¿Qué haces en Expresar?",
-        "choices": [],
+        "choices": [
+          "completar la imagen",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "completar la imagen"
       },
       {
@@ -160,9 +195,14 @@
       {
         "id": "d2-q7",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Tema",
-        "choices": [],
+        "choices": [
+          "imágenes espejo",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "imágenes espejo"
       }
     ]

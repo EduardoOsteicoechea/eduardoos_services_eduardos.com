@@ -36,9 +36,14 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Dónde empieza el panorama?",
-        "choices": [],
+        "choices": [
+          "Génesis",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "Génesis"
       },
       {
@@ -57,9 +62,14 @@
       {
         "id": "d1-q3",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Nombra una etapa intermedia",
-        "choices": [],
+        "choices": [
+          "Israel o Cristo",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "Israel o Cristo"
       },
       {
@@ -78,9 +88,14 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Libro de inicio",
-        "choices": [],
+        "choices": [
+          "Génesis",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "Génesis"
       },
       {
@@ -99,9 +114,14 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Tema",
-        "choices": [],
+        "choices": [
+          "historia de redención",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "historia de redención"
       }
     ]

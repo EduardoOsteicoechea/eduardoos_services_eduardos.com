@@ -26,17 +26,27 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Cuántas entidades federales contamos?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "24"
+        ],
         "answer": "24"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Venezuela (DC)",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "Caracas"
+        ],
         "answer": "Caracas"
       },
       {
@@ -68,17 +78,27 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Mérida",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Mérida",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Mérida"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Tema",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "estados y capitales",
+          "No aplica"
+        ],
         "answer": "estados y capitales"
       },
       {
@@ -97,17 +117,27 @@
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "23 estados + ¿qué?",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "Distrito Capital"
+        ],
         "answer": "Distrito Capital"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Mapa político",
+          "Ninguna",
+          "No aplica"
+        ],
         "answer": "Mapa político"
       },
       {
@@ -126,25 +156,40 @@
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Aragua",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "Maracay"
+        ],
         "answer": "Maracay"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Táchira",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "San Cristóbal"
+        ],
         "answer": "San Cristóbal"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Bolívar",
-        "choices": [],
+        "choices": [
+          "Ciudad Bolívar",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "Ciudad Bolívar"
       },
       {
@@ -163,33 +208,53 @@
       {
         "id": "d3-q1",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Sucre",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "Cumaná"
+        ],
         "answer": "Cumaná"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Falcón",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "Coro"
+        ],
         "answer": "Coro"
       },
       {
         "id": "d3-q3",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Trujillo",
-        "choices": [],
+        "choices": [
+          "Trujillo",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Trujillo"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "Capitales clave",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Capitales clave"
       },
       {
@@ -208,57 +273,92 @@
       {
         "id": "d3-q6",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Portuguesa",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "Guanare",
+          "Todas"
+        ],
         "answer": "Guanare"
       },
       {
         "id": "d3-q7",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Yaracuy",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "San Felipe",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "San Felipe"
       },
       {
         "id": "d4-q1",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Una región occidental (ejemplo)",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "Andes o Zulia"
+        ],
         "answer": "Andes o Zulia"
       },
       {
         "id": "d4-q2",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "Repaso por regiones",
+          "Ninguna",
+          "Todas",
+          "No aplica"
+        ],
         "answer": "Repaso por regiones"
       },
       {
         "id": "d4-q3",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Amazonas",
-        "choices": [],
+        "choices": [
+          "Puerto Ayacucho",
+          "No aplica",
+          "Ninguna",
+          "Todas"
+        ],
         "answer": "Puerto Ayacucho"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Delta Amacuro",
-        "choices": [],
+        "choices": [
+          "Tucupita",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "Tucupita"
       },
       {
         "id": "d4-q5",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Apure",
-        "choices": [],
+        "choices": [
+          "San Fernando de Apure",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "San Fernando de Apure"
       },
       {
@@ -277,9 +377,14 @@
       {
         "id": "d4-q7",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Guárico",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "San Juan de los Morros",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "San Juan de los Morros"
       }
     ]

@@ -26,17 +26,27 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Name tres tiempos simples",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "presente imperfecto pretérito"
+        ],
         "answer": "presente imperfecto pretérito"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Name tres tiempos compuestos",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "antepresente pluscuamperfecto antefuturo"
+        ],
         "answer": "antepresente pluscuamperfecto antefuturo"
       },
       {
@@ -68,17 +78,27 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Another name for present perfect",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "pretérito perfecto compuesto",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "pretérito perfecto compuesto"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Mood you are studying",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "indicativo",
+          "No aplica"
+        ],
         "answer": "indicativo"
       },
       {
@@ -97,41 +117,66 @@
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Present of indicar (yo)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "indico"
+        ],
         "answer": "indico"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Imperfect of cantar (ella)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "cantaba",
+          "Ninguna",
+          "No aplica"
+        ],
         "answer": "cantaba"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Preterite of vivir (nosotros)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "vivimos"
+        ],
         "answer": "vivimos"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Future of salir (tú)",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "saldrás"
+        ],
         "answer": "saldrás"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Conditional of poder (yo)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "podría"
+        ],
         "answer": "podría"
       },
       {
@@ -150,49 +195,79 @@
       {
         "id": "d2-q7",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Point you deepen today",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Simples",
+          "Todas",
+          "No aplica"
+        ],
         "answer": "Simples"
       },
       {
         "id": "d3-q1",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Present perfect of comer (yo)",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "he comido"
+        ],
         "answer": "he comido"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Pluperfect of ver (ella)",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "había visto"
+        ],
         "answer": "había visto"
       },
       {
         "id": "d3-q3",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Future perfect of llegar (nosotros)",
-        "choices": [],
+        "choices": [
+          "habremos llegado",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "habremos llegado"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Conditional perfect of decir (yo)",
-        "choices": [],
+        "choices": [
+          "habría dicho",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "habría dicho"
       },
       {
         "id": "d3-q5",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Anterior preterite: auxiliary in preterite",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "hube"
+        ],
         "answer": "hube"
       },
       {
@@ -211,9 +286,14 @@
       {
         "id": "d3-q7",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Point you deepen today",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Compuestos",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Compuestos"
       },
       {
@@ -245,17 +325,27 @@
       {
         "id": "d4-q3",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Simple or compound?: «Ya he terminado»",
-        "choices": [],
+        "choices": [
+          "compuesto",
+          "No aplica",
+          "Ninguna",
+          "Todas"
+        ],
         "answer": "compuesto"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Simple or compound?: «Terminé ayer»",
-        "choices": [],
+        "choices": [
+          "simple",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "simple"
       },
       {
@@ -274,17 +364,27 @@
       {
         "id": "d4-q6",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Point you deepen today",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "Uso"
+        ],
         "answer": "Uso"
       },
       {
         "id": "d4-q7",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Modo",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "indicativo",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "indicativo"
       }
     ]

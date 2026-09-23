@@ -44,13 +44,23 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 			n := i + j + 1
 			lines = append(lines, fmt.Sprintf("%d. %s", n, strings.TrimSpace(q.Prompt)))
 			if len(q.Choices) > 0 {
-				lines = append(lines, "   "+strings.Join(q.Choices, "  ·  "))
+				letters := []string{"A", "B", "C", "D", "E", "F"}
+				parts := make([]string, 0, len(q.Choices))
+				for ci, c := range q.Choices {
+					mark := letters[ci]
+					if ci >= len(letters) {
+						mark = fmt.Sprintf("%d", ci+1)
+					}
+					parts = append(parts, fmt.Sprintf("%s) %s", mark, strings.TrimSpace(c)))
+				}
+				lines = append(lines, "   "+strings.Join(parts, "   "))
 			}
 			lines = append(lines, "")
 		}
 		pages = append(pages, pdf.EoschoolPrintPage{
-			Heading: fmt.Sprintf("Cuestionario (%d–%d de %d)", i+1, end, doc.Quiz.QuestionCount),
-			Lines:   lines,
+			Heading: fmt.Sprintf("Cuestionario — %d preguntas (días 1–%d) · %d–%d",
+				doc.Quiz.QuestionCount, doc.Day, i+1, end),
+			Lines: lines,
 		})
 	}
 

@@ -59,17 +59,27 @@
       {
         "id": "d2-q6",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Traduce et",
-        "choices": [],
+        "choices": [
+          "y",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "y"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Función de non",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "negación",
+          "No aplica"
+        ],
         "answer": "negación"
       },
       {
@@ -88,17 +98,27 @@
       {
         "id": "d5-q4",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Tema de la semana",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "Todas",
+          "et ut non"
+        ],
         "answer": "et ut non"
       },
       {
         "id": "d4-q2",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "non — no",
+          "Ninguna",
+          "Todas",
+          "No aplica"
+        ],
         "answer": "non — no"
       },
       {
@@ -130,41 +150,66 @@
       {
         "id": "d4-q6",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿non = et?",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "no"
+        ],
         "answer": "no"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Coloca non: ___ venit",
-        "choices": [],
+        "choices": [
+          "non",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "non"
       },
       {
         "id": "d3-q1",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "ut final en español",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "para que"
+        ],
         "answer": "para que"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Escribe et",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "et"
+        ],
         "answer": "et"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "No aplica",
+          "Ninguna",
+          "et — y"
+        ],
         "answer": "et — y"
       },
       {
@@ -183,17 +228,27 @@
       {
         "id": "d2-q2",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿et es adverbio o conjunción?",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "conjunción",
+          "Ninguna",
+          "No aplica"
+        ],
         "answer": "conjunción"
       },
       {
         "id": "d3-q6",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Cláusula: ut + verbo (idea)",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "No aplica",
+          "para que…",
+          "Todas"
+        ],
         "answer": "para que…"
       },
       {
@@ -212,17 +267,27 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Tema",
-        "choices": [],
+        "choices": [
+          "et ut non",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "et ut non"
       },
       {
         "id": "d4-q5",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Escribe non",
-        "choices": [],
+        "choices": [
+          "non",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "non"
       },
       {
@@ -241,9 +306,14 @@
       {
         "id": "d5-q6",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Niega con non",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "non",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "non"
       },
       {
@@ -262,9 +332,14 @@
       {
         "id": "d3-q5",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿ut = non?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Ninguna",
+          "Todas",
+          "no"
+        ],
         "answer": "no"
       },
       {
@@ -283,9 +358,14 @@
       {
         "id": "d5-q5",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Une con et",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "et",
+          "Ninguna",
+          "Todas"
+        ],
         "answer": "et"
       },
       {
@@ -304,17 +384,27 @@
       {
         "id": "d4-q1",
         "originDay": 4,
-        "type": "short",
+        "type": "mcq",
         "prompt": "non en español",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "no"
+        ],
         "answer": "no"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Traduce: puer et puella",
-        "choices": [],
+        "choices": [
+          "el niño y la niña",
+          "Todas",
+          "No aplica",
+          "Ninguna"
+        ],
         "answer": "el niño y la niña"
       },
       {
@@ -333,33 +423,53 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Función de et",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "conjunción copulativa",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "conjunción copulativa"
       },
       {
         "id": "d5-q7",
         "originDay": 5,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Finalidad con ut",
-        "choices": [],
+        "choices": [
+          "ut",
+          "Ninguna",
+          "Todas",
+          "No aplica"
+        ],
         "answer": "ut"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Punto de hoy",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "ut — para que"
+        ],
         "answer": "ut — para que"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Escribe ut",
-        "choices": [],
+        "choices": [
+          "ut",
+          "No aplica",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "ut"
       },
       {
@@ -378,9 +488,14 @@
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Une con et: marcus ___ lucia",
-        "choices": [],
+        "choices": [
+          "Todas",
+          "Ninguna",
+          "No aplica",
+          "et"
+        ],
         "answer": "et"
       }
     ]

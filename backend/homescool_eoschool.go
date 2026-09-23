@@ -192,11 +192,13 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 			return fmt.Errorf("quiz.questions[%d].originDay must be 1–%d", i, doc.Day)
 		}
 		typ := strings.TrimSpace(strings.ToLower(q.Type))
-		switch typ {
-		case "mcq", "short", "match", "order":
-			doc.Quiz.Questions[i].Type = typ
-		default:
-			return fmt.Errorf("quiz.questions[%d].type invalid", i)
+		// METHOD_V1: every item is single-selection (mcq) so day n can show 7×n accumulated items.
+		if typ != "mcq" {
+			return fmt.Errorf("quiz.questions[%d].type must be mcq (selección simple)", i)
+		}
+		doc.Quiz.Questions[i].Type = typ
+		if len(q.Choices) < 2 {
+			return fmt.Errorf("quiz.questions[%d].choices must have at least 2 options", i)
 		}
 		if strings.TrimSpace(q.ID) == "" {
 			doc.Quiz.Questions[i].ID = fmt.Sprintf("d%d-q%d", q.OriginDay, i+1)

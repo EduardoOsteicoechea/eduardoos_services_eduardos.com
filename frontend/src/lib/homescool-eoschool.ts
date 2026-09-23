@@ -86,18 +86,27 @@ function buildQuizPage(
     el(
       "h2",
       "homescool-letter__heading",
-      `Cuestionario (${startIndex}–${startIndex + questions.length - 1} de ${total})`,
+      `Cuestionario — ${total} preguntas (días 1–${doc.day}) · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
   const list = el("ol", "homescool-letter__quiz");
   list.start = startIndex;
+  const letters = ["A", "B", "C", "D", "E", "F"];
   for (const q of questions) {
     const li = document.createElement("li");
     li.className = "homescool-letter__q";
     li.append(el("p", "homescool-letter__body", q.prompt));
-    if (q.choices?.length) {
-      const choices = el("p", "homescool-letter__choices", q.choices.join("  ·  "));
-      li.append(choices);
+    const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
+    if (choices.length) {
+      const ul = el("ul", "homescool-letter__choices-list");
+      choices.forEach((c, idx) => {
+        const opt = document.createElement("li");
+        opt.className = "homescool-letter__choice";
+        const mark = letters[idx] ?? String(idx + 1);
+        opt.textContent = `${mark}) ${c}`;
+        ul.append(opt);
+      });
+      li.append(ul);
     }
     list.append(li);
   }

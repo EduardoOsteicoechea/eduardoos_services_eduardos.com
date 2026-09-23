@@ -62,6 +62,8 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 
 Each day adds **7 new** questions. The quiz served that day includes **all** questions from days `1…day` (so day *n* has `7 × n` items; day 5 has 35). Day 5 must shuffle presentation order.
 
+Every question is **selección simple** (`type: "mcq"`) with at least **2** choices (prefer 4: A–D). No `short` / free-response items in v1 packs.
+
 ## Presentation / print (always)
 
 - Frontend stage = **N** stacked **US Letter portrait** pages (`8.5in × 11in`).
@@ -117,7 +119,7 @@ Each day adds **7 new** questions. The quiz served that day includes **all** que
 - `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 7`, every question `originDay == 1`.
 - `day` ∈ 2..4 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 7 * day`, each `originDay` ∈ 1..day.
 - `day == 5` → `kind == "review"`, exactly **5** point blocks in the overview order above, `questionCount == 35`, each `originDay` ∈ 1..5.
-- Question `type`: `mcq` | `short` | `match` | `order`.
+- Question `type`: **`mcq` only** (selección simple). Each question needs `choices` (≥2, prefer 4) and `answer`.
 
 ## API (docs-first)
 

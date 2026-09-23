@@ -101,17 +101,27 @@
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Producto de 12×12",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "144",
+          "No aplica"
+        ],
         "answer": "144"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Rango del punto 1 (factores)",
-        "choices": [],
+        "choices": [
+          "1 a 4",
+          "Ninguna",
+          "No aplica",
+          "Todas"
+        ],
         "answer": "1 a 4"
       }
     ]

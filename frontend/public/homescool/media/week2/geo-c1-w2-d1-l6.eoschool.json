@@ -36,17 +36,27 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "¿Cuántas entidades federales contamos?",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Todas",
+          "Ninguna",
+          "24"
+        ],
         "answer": "24"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Venezuela (DC)",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "No aplica",
+          "Caracas"
+        ],
         "answer": "Caracas"
       },
       {
@@ -78,17 +88,27 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Capital de Mérida",
-        "choices": [],
+        "choices": [
+          "No aplica",
+          "Mérida",
+          "Todas",
+          "Ninguna"
+        ],
         "answer": "Mérida"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "Tema",
-        "choices": [],
+        "choices": [
+          "Ninguna",
+          "Todas",
+          "estados y capitales",
+          "No aplica"
+        ],
         "answer": "estados y capitales"
       },
       {

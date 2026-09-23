@@ -26,9 +26,14 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Qué número tiene las siete maravillas en nuestra lista?",
-        "choices": [],
+        "choices": [
+          "8",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "8"
       },
       {
@@ -47,9 +52,14 @@
       {
         "id": "d1-q3",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Nombra un pueblo del punto 10",
-        "choices": [],
+        "choices": [
+          "hititas o cananeos",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "hititas o cananeos"
       },
       {
@@ -68,9 +78,14 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Asirios: ¿número?",
-        "choices": [],
+        "choices": [
+          "12",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "12"
       },
       {
@@ -89,17 +104,27 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Dinastía Shang: ¿número?",
-        "choices": [],
+        "choices": [
+          "14",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "14"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] ¿Qué número tiene las siete maravillas en nuestra lista?",
-        "choices": [],
+        "choices": [
+          "8",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "8"
       },
       {
@@ -118,9 +143,14 @@
       {
         "id": "d2-q3",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Nombra un pueblo del punto 10",
-        "choices": [],
+        "choices": [
+          "hititas o cananeos",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "hititas o cananeos"
       },
       {
@@ -139,9 +169,14 @@
       {
         "id": "d2-q5",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Asirios: ¿número?",
-        "choices": [],
+        "choices": [
+          "12",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "12"
       },
       {
@@ -160,9 +195,14 @@
       {
         "id": "d2-q7",
         "originDay": 2,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d2] Dinastía Shang: ¿número?",
-        "choices": [],
+        "choices": [
+          "14",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "14"
       }
     ]

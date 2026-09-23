@@ -36,9 +36,14 @@
       {
         "id": "d1-q1",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Qué protege el cráneo?",
-        "choices": [],
+        "choices": [
+          "el cerebro",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "el cerebro"
       },
       {
@@ -57,9 +62,14 @@
       {
         "id": "d1-q3",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿Qué huesos con el esternón cierran el tórax?",
-        "choices": [],
+        "choices": [
+          "costillas",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "costillas"
       },
       {
@@ -78,9 +88,14 @@
       {
         "id": "d1-q5",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] ¿El esternón está al frente o atrás?",
-        "choices": [],
+        "choices": [
+          "al frente",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "al frente"
       },
       {
@@ -99,9 +114,14 @@
       {
         "id": "d1-q7",
         "originDay": 1,
-        "type": "short",
+        "type": "mcq",
         "prompt": "[d1] Tema de la semana",
-        "choices": [],
+        "choices": [
+          "esqueleto axial",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
         "answer": "esqueleto axial"
       }
     ]
