@@ -16,7 +16,12 @@ import Layout from "../../layouts/Layout.astro";
       </label>
       <label>
         Password
-        <input type="password" name="password" autocomplete="new-password" required minlength="8" maxlength="128" />
+        <span class="password-field">
+          <input type="password" name="password" autocomplete="new-password" required minlength="8" maxlength="128" data-password-input />
+          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+          </button>
+        </span>
       </label>
       <p class="hint">Usernames are 3–32 characters: lowercase letters, digits, underscore. Passwords are 8–128 characters.</p>
       <button type="submit">Register</button>
@@ -29,6 +34,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { attachFormAntibot, consumeAntibot, isAntibotArmed } from "../../lib/antibot";
   import { postJSON, type MeResponse } from "../../lib/api";
   import { go } from "../../lib/router";
   import { reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
@@ -36,10 +42,17 @@ import Layout from "../../layouts/Layout.astro";
   onSessionPageReady((root) => {
     const copy = sessionCopy();
     void requireGuest(root, copy);
+    const registerForm = root.querySelector("[data-register]");
+    if (registerForm instanceof HTMLFormElement) {
+      attachFormAntibot(registerForm);
+    }
     root.querySelector("[data-register]")?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement)) return;
+      const actionBtn = form.querySelector<HTMLButtonElement>("button[type='submit']");
+      if (!isAntibotArmed(actionBtn)) return;
+      consumeAntibot(actionBtn);
       setBusy(form, true);
       const data = new FormData(form);
       const result = await postJSON<MeResponse>("/auth/register", {

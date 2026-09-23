@@ -12,7 +12,12 @@ import Layout from "../../layouts/Layout.astro";
       </label>
       <label>
         Password
-        <input type="password" name="password" autocomplete="current-password" required minlength="8" maxlength="128" />
+        <span class="password-field">
+          <input type="password" name="password" autocomplete="current-password" required minlength="8" maxlength="128" data-password-input />
+          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+          </button>
+        </span>
       </label>
       <p class="hint">Passwords are 8–128 characters.</p>
       <button type="submit" data-session-login>Sign in</button>
@@ -26,9 +31,14 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { attachFormAntibot } from "../../lib/antibot";
   import { onSessionPageReady, requireGuest, sessionCopy } from "../../lib/session-ui";
 
   onSessionPageReady((root) => {
     void requireGuest(root, sessionCopy());
+    const form = root.querySelector("[data-login]");
+    if (form instanceof HTMLFormElement) {
+      attachFormAntibot(form);
+    }
   });
 </script>

@@ -941,6 +941,10 @@ a {
   min-width: 0;
 }
 
+.agent-chat-composer .antibot {
+  padding-inline: 0;
+}
+
 .agent-chat-compose-row {
   display: flex;
   align-items: stretch;
@@ -1469,6 +1473,50 @@ section.diag .panel:not(form) {
   grid-column: 3;
 }
 
+.password-field {
+  display: flex;
+  align-items: stretch;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
+.session-grid .password-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  margin-top: 0;
+}
+
+.session-grid .password-field__toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height);
+  min-width: var(--control-height);
+  max-width: var(--control-height);
+  height: var(--control-height);
+  min-height: var(--control-height);
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.session-grid .password-field__toggle:hover,
+.session-grid .password-field__toggle:focus-visible {
+  color: var(--color-accent);
+}
+
+.session-grid .password-field__toggle .material-symbols-outlined {
+  font-size: var(--icon-size);
+  width: var(--icon-size);
+  height: var(--icon-size);
+  line-height: 1;
+}
+
 .diag input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
 .diag select,
 .diag textarea,
@@ -1547,6 +1595,55 @@ section.diag .panel:not(form) {
   color: var(--color-muted);
   font-size: var(--font-size-xs);
   margin: 0;
+}
+
+.antibot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  margin: 0;
+  min-width: 0;
+}
+
+.antibot-bar {
+  display: flex;
+  height: 0.5rem;
+  background: var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.antibot-bar-fill {
+  flex: 1;
+  min-width: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: var(--color-accent);
+  border-radius: var(--border-radius);
+}
+
+.antibot-status {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+}
+
+.antibot-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--rail-gap);
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.antibot-check input {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin: 0;
+  accent-color: var(--color-accent);
 }
 
 .session-grid .session-links {

@@ -1,4 +1,5 @@
 import { deleteAvatar, getCsrf, getMe, loginPayload, markSessionHint, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
+import { syncAntibotAction, consumeAntibot, isAntibotArmed } from "./antibot";
 import { sessionLog, sessionLogCookies, sessionLogStorage } from "./dev-log";
 
 declare global {
@@ -115,9 +116,18 @@ export function setBanner(root: ParentNode, text: string, kind = ""): void {
 export function setBusy(form: HTMLFormElement, busy: boolean): void {
   form.setAttribute("aria-busy", busy ? "true" : "false");
   form.querySelectorAll("button").forEach((node) => {
-    if (node instanceof HTMLButtonElement) {
-      node.disabled = busy;
+    if (!(node instanceof HTMLButtonElement)) {
+      return;
     }
+    if (busy) {
+      node.disabled = true;
+      return;
+    }
+    if (node.hasAttribute("data-antibot-action")) {
+      syncAntibotAction(node);
+      return;
+    }
+    node.disabled = false;
   });
 }
 
@@ -384,8 +394,36 @@ export function onBoundPageReady(selector: string, init: (root: HTMLElement) => 
   start();
 }
 
+export function attachPasswordToggles(root: ParentNode = document): void {
+  const spanish = document.documentElement.lang.startsWith("es");
+  const showLabel = spanish ? "Mostrar contraseña" : "Show password";
+  const hideLabel = spanish ? "Ocultar contraseña" : "Hide password";
+
+  root.querySelectorAll<HTMLButtonElement>("[data-password-toggle]").forEach((btn) => {
+    if (btn.dataset.passwordToggleBound === "1") return;
+    btn.dataset.passwordToggleBound = "1";
+    btn.addEventListener("click", () => {
+      const field = btn.closest(".password-field");
+      const input = field?.querySelector<HTMLInputElement>("[data-password-input]");
+      if (!(input instanceof HTMLInputElement)) return;
+      const revealing = input.type === "password";
+      input.type = revealing ? "text" : "password";
+      btn.setAttribute("aria-pressed", revealing ? "true" : "false");
+      btn.setAttribute("aria-label", revealing ? hideLabel : showLabel);
+      btn.setAttribute("title", revealing ? hideLabel : showLabel);
+      const icon = btn.querySelector(".material-symbols-outlined");
+      if (icon) {
+        icon.textContent = revealing ? "visibility_off" : "visibility";
+      }
+    });
+  });
+}
+
 export function onSessionPageReady(init: (root: HTMLElement) => void): void {
-  onBoundPageReady("[data-session]", init);
+  onBoundPageReady("[data-session]", (root) => {
+    attachPasswordToggles(root);
+    init(root);
+  });
 }
 
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
@@ -552,6 +590,12 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     return;
   }
   const copy = sessionCopy();
+  const actionBtn =
+    form.querySelector<HTMLButtonElement>("button[data-session-login], button[type='submit']") ??
+    form.querySelector<HTMLButtonElement>("button");
+  if (actionBtn && !isAntibotArmed(actionBtn)) {
+    return;
+  }
   if (!form.reportValidity()) {
     return;
   }
@@ -566,6 +610,7 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     return;
   }
   form.dataset.loginBusy = "true";
+  consumeAntibot(actionBtn);
   setBusy(form, true);
   try {
     sessionLog("session.login.start", { identifier: body.identifier });
