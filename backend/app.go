@@ -174,6 +174,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	)
 	app.bootstrapAdmin()
 	app.maybeSeedHomescoolMaterials()
+	app.maybeSeedHomescoolCurriculum()
 	return app
 }
 

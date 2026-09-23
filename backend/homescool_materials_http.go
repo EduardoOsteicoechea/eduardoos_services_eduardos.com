@@ -10,19 +10,39 @@ import (
 	"strings"
 )
 
+func homescoolCurriculumOwnerID() string {
+	return strings.TrimSpace(firstNonEmpty(
+		os.Getenv("HOMESCOOL_CURRICULUM_OWNER_ID"),
+		os.Getenv("HOMESCOOL_SEED_OWNER_ID"),
+	))
+}
+
+func appendHomescoolCurriculumOwner(ids []string) []string {
+	owner := homescoolCurriculumOwnerID()
+	if owner == "" {
+		return ids
+	}
+	for _, id := range ids {
+		if id == owner {
+			return ids
+		}
+	}
+	return append(ids, owner)
+}
+
 func (a *App) homescoolMaterialOwnerIDs(r *http.Request, user *User) ([]string, bool /*canWrite*/, bool /*ok*/) {
 	if user == nil {
 		return nil, false, false
 	}
 	if user.Role == roleAdmin {
-		return []string{user.ID}, true, true
+		return appendHomescoolCurriculumOwner([]string{user.ID}), true, true
 	}
 	ok, unavailable := a.hasProductEntitlement(r, user, productHomescool)
 	if unavailable {
 		return nil, false, false
 	}
 	if ok {
-		return []string{user.ID}, true, true
+		return appendHomescoolCurriculumOwner([]string{user.ID}), true, true
 	}
 	links, err := a.homescool.ListLinksByStudent(r.Context(), user.ID)
 	if err != nil || len(links) == 0 {
@@ -37,7 +57,7 @@ func (a *App) homescoolMaterialOwnerIDs(r *http.Request, user *User) ([]string, 
 		seen[l.TeacherUserID] = struct{}{}
 		ids = append(ids, l.TeacherUserID)
 	}
-	return ids, false, true
+	return appendHomescoolCurriculumOwner(ids), false, true
 }
 
 func (a *App) requireHomescoolMaterialsAccess(w http.ResponseWriter, r *http.Request) (*User, []string, bool) {

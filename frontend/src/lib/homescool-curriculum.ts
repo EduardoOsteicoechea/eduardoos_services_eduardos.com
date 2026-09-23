@@ -1,5 +1,6 @@
 /**
- * Homescool curriculum SoT — dedicated JSON for agent review and PDF preview.
+ * Homescool curriculum SoT backup — FE JSON for agent review.
+ * Runtime load prefers Mongo materials; this file remains the reviewable mirror.
  */
 import { HOMESCOOL_ROUTES } from "../config/routes";
 import { mustLog } from "./dev-log";
@@ -19,7 +20,7 @@ export type HomescoolCurriculum = {
   classes: HomescoolCurriculumClass[];
 };
 
-/** Strip curriculum metadata so the backend receives a pure eoschool document. */
+/** Strip curriculum metadata so the API / renderer receive a pure eoschool document. */
 export function toEoschoolDocument(row: HomescoolCurriculumClass): EoschoolDocument {
   return {
     format: row.format,
@@ -72,7 +73,7 @@ export async function loadHomescoolCurriculum(
     const res = await fetch(url, { credentials: "same-origin" });
     if (!res.ok) {
       if (mustLog) console.log("[homescool-curriculum] load.fail", { status: res.status });
-      return { curriculum: null, error: `Could not load curriculum (${res.status}).` };
+      return { curriculum: null, error: `Could not load curriculum backup (${res.status}).` };
     }
     const data = (await res.json()) as HomescoolCurriculum;
     if (data.format !== "homescool-curriculum" || !Array.isArray(data.classes)) {
@@ -87,6 +88,6 @@ export async function loadHomescoolCurriculum(
     return { curriculum: data };
   } catch (err) {
     if (mustLog) console.log("[homescool-curriculum] load.error", { err: String(err) });
-    return { curriculum: null, error: "Could not load curriculum." };
+    return { curriculum: null, error: "Could not load curriculum backup." };
   }
 }

@@ -156,9 +156,9 @@ No eliminar consejos ni errores comunes; **reordenar o acortar** la plantilla.
 ## Checklist post-edición
 
 1. Editar JSON en `frontend/public/homescool/media/week2/`.
-2. `node scripts/build-homescool-curriculum.mjs`
+2. `node scripts/build-homescool-curriculum.mjs` — escribe `curriculum.json` (FE backup) y, si hay `EDUARDOOS_API_KEY` + `EDUARDOOS_BASE_URL`, upsert a Mongo (runtime).
 3. `cd frontend && npm test` (incluye curriculum test si se añade W2-08).
-4. Spot-check PDF preview de 1 celda por materia si hay cambios grandes de layout (opcional).
+4. Spot-check hojas tipadas en `/homescool` (DOM + CSS) y PDF raster de 1 celda si cambió layout.
 5. No commitear secretos; no tocar otros sitios del workspace.
 
 ## Lo que ya está bien (no tocar sin motivo)

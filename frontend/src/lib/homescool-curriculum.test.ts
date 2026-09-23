@@ -24,7 +24,7 @@ describe("homescool curriculum", () => {
     expect(keys.has("c3-w2-d1-l6-mat")).toBe(true);
   });
 
-  it("finds a class and strips metadata for PDF preview body", () => {
+  it("finds a class and strips metadata for renderer / API body", () => {
     const raw = readFileSync(
       join(process.cwd(), "public/homescool/curriculum.json"),
       "utf8",

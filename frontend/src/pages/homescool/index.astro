@@ -59,9 +59,9 @@ import "../../styles/homescool-workspace.css";
         </div>
         <div class="homescool-workspace__overlay homescool-workspace__overlay--loading" data-homescool-loading hidden>
           <span class="homescool-workspace__spinner" aria-hidden="true"></span>
-          <p class="homescool-workspace__loading-msg">Generando vista previa PDF…</p>
+          <p class="homescool-workspace__loading-msg">Cargando material…</p>
         </div>
-        <div class="homescool-sheet-host" data-homescool-sheets hidden aria-label="Vista previa PDF de la clase"></div>
+        <div class="homescool-sheet-host" data-homescool-sheets hidden aria-label="Hojas de la clase"></div>
       </div>
     </div>
   </section>
@@ -69,8 +69,12 @@ import "../../styles/homescool-workspace.css";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import { showErrorModal } from "../../lib/error-modal";
-  import { HOMESCOOL_SUBJECTS } from "../../lib/homescool-eoschool";
+  import {
+    fetchHomescoolMaterial,
+    fetchHomescoolMaterials,
+    type EoschoolDocument,
+    type HomescoolMaterial,
+  } from "../../lib/homescool";
   import {
     findCurriculumClass,
     loadHomescoolCurriculum,
@@ -78,16 +82,29 @@ import "../../styles/homescool-workspace.css";
     type HomescoolCurriculum,
     type HomescoolCurriculumClass,
   } from "../../lib/homescool-curriculum";
-  import {
-    downloadPdfBytes,
-    fetchHomescoolPdfPreview,
-    renderHomescoolPdfPreview,
-  } from "../../lib/homescool-pdf-preview";
+  import { downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
   import { mustLog } from "../../lib/dev-log";
 
   const LEVEL = 6;
   const log = (step: string, detail: Record<string, unknown> = {}) => {
     if (mustLog) console.log("[homescool-workspace]", step, detail);
+  };
+
+  type CellSource = "mongo" | "fe-backup";
+
+  type WorkspaceCell = {
+    key: string;
+    cycle: number;
+    week: number;
+    day: number;
+    subject: string;
+    level: number;
+    title: string;
+    source: CellSource;
+    materialId?: string;
+    curriculum?: HomescoolCurriculumClass;
   };
 
   const gate = document.querySelector("[data-homescool-gate]");
@@ -103,11 +120,12 @@ import "../../styles/homescool-workspace.css";
   const subjectsHost = document.querySelector("[data-homescool-subjects]");
   const cyclesHost = document.querySelector("[data-homescool-cycles]");
 
-  let curriculum: HomescoolCurriculum | null = null;
+  let cells: WorkspaceCell[] = [];
+  let curriculumBackup: HomescoolCurriculum | null = null;
   let sheetsReady = false;
+  let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
-  let currentPdfBytes: Uint8Array | null = null;
-  let previewSeq = 0;
+  let openSeq = 0;
   /** Default to cycle 3, week 2 until packs for other weeks exist; boot() snaps to the first available cell. */
   let selection = { cycle: 3, week: 2, day: 1, subject: "mat" };
 
@@ -116,6 +134,10 @@ import "../../styles/homescool-workspace.css";
     setHidden(loading, mode !== "loading");
     setHidden(sheetsHost, mode !== "sheets");
     log("stage.mode", { mode });
+  }
+
+  function cellKey(cycle: number, week: number, day: number, subject: string, level = LEVEL): string {
+    return `c${cycle}-w${week}-d${day}-l${level}-${subject}`;
   }
 
   log("boot.start", { level: LEVEL });
@@ -143,22 +165,42 @@ import "../../styles/homescool-workspace.css";
     void downloadCurrentPdf();
   });
 
-  function downloadCurrentPdf() {
+  async function downloadCurrentPdf() {
     log("pdf.click", {
       sheetsReady,
-      hasBytes: Boolean(currentPdfBytes),
+      materialId: currentMaterialId,
       disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null,
     });
     if (
       !(printBtn instanceof HTMLButtonElement) ||
       printBtn.disabled ||
       !sheetsReady ||
-      !currentPdfBytes
+      !(sheetsHost instanceof HTMLElement)
     ) {
       return;
     }
-    downloadPdfBytes(currentPdfBytes, currentPdfName);
-    log("pdf.ok", { pdfName: currentPdfName, bytes: currentPdfBytes.length });
+    if (!currentMaterialId) {
+      showErrorModal({
+        message: "This class is only in the FE backup. Sync to Mongo to download a styled PDF.",
+        details: "Run scripts/build-homescool-curriculum.mjs with EDUARDOOS_API_KEY set.",
+      });
+      return;
+    }
+    printBtn.disabled = true;
+    printBtn.setAttribute("aria-busy", "true");
+    const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
+    printBtn.removeAttribute("aria-busy");
+    printBtn.disabled = false;
+    if (!result.ok) {
+      showErrorModal({
+        message: result.error || "Could not download PDF.",
+        requestId: result.requestId,
+        details: result.requestId ? `request_id=${result.requestId}` : "",
+      });
+      log("pdf.fail", { error: result.error, requestId: result.requestId });
+      return;
+    }
+    log("pdf.ok", { materialId: currentMaterialId, requestId: result.requestId });
   }
 
   async function boot() {
@@ -169,25 +211,48 @@ import "../../styles/homescool-workspace.css";
     buildDayGrid();
     buildSubjectGrid();
     bindCycles();
-    if (banner instanceof HTMLElement) banner.textContent = "Loading curriculum…";
-    const res = await loadHomescoolCurriculum();
-    log("boot.curriculum", {
-      error: res.error,
-      count: res.curriculum?.classCount ?? res.curriculum?.classes.length ?? 0,
+    if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
+
+    const [mongoRes, feRes] = await Promise.all([
+      fetchHomescoolMaterials(),
+      loadHomescoolCurriculum(),
+    ]);
+    log("boot.mongo", {
+      error: mongoRes.error,
+      count: mongoRes.materials.length,
+      requestId: mongoRes.requestId,
     });
-    if (res.error || !res.curriculum) {
+    log("boot.fe_backup", {
+      error: feRes.error,
+      count: feRes.curriculum?.classCount ?? feRes.curriculum?.classes.length ?? 0,
+    });
+
+    if (mongoRes.error && !feRes.curriculum) {
       showErrorModal({
-        message: res.error || "Could not load curriculum.",
-        details: "Expected /homescool/curriculum.json",
+        message: mongoRes.error,
+        requestId: mongoRes.requestId,
+        details: mongoRes.requestId ? `request_id=${mongoRes.requestId}` : "",
       });
-      if (banner instanceof HTMLElement) banner.textContent = res.error || "Curriculum missing.";
+      if (banner instanceof HTMLElement) banner.textContent = mongoRes.error;
       return;
     }
-    curriculum = res.curriculum;
-    const deep = new URLSearchParams(window.location.search).get("class");
-    log("boot.deep_link", { class: deep });
+
+    curriculumBackup = feRes.curriculum;
+    cells = mergeCells(mongoRes.materials ?? [], feRes.curriculum);
+    log("boot.merged", {
+      cells: cells.length,
+      mongo: cells.filter((c) => c.source === "mongo").length,
+      feBackup: cells.filter((c) => c.source === "fe-backup").length,
+    });
+
+    const deep =
+      new URLSearchParams(window.location.search).get("material") ||
+      new URLSearchParams(window.location.search).get("class");
+    log("boot.deep_link", { deep });
     if (deep) {
-      const m = curriculum.classes.find((row) => row.key === deep);
+      const m =
+        cells.find((row) => row.materialId === deep) ||
+        cells.find((row) => row.key === deep);
       if (m) {
         selection = {
           cycle: m.cycle,
@@ -197,9 +262,9 @@ import "../../styles/homescool-workspace.css";
         };
         log("boot.deep_applied", { ...selection, key: m.key });
       } else {
-        log("boot.deep_miss", { key: deep });
+        log("boot.deep_miss", { deep });
       }
-    } else if (!findClass()) {
+    } else if (!findCell()) {
       const first = pickFirstAvailable();
       if (first) {
         selection = {
@@ -215,12 +280,61 @@ import "../../styles/homescool-workspace.css";
     await openSelection();
   }
 
-  function classRows(): HomescoolCurriculumClass[] {
-    return (curriculum?.classes ?? []).filter((m) => (m.level ?? LEVEL) === LEVEL);
+  function mergeCells(
+    materials: HomescoolMaterial[],
+    curriculum: HomescoolCurriculum | null | undefined,
+  ): WorkspaceCell[] {
+    const byKey = new Map<string, WorkspaceCell>();
+
+    for (const m of materials) {
+      if (m.format !== "eoschool") continue;
+      const level = m.level ?? LEVEL;
+      if (level !== LEVEL) continue;
+      const key = cellKey(m.cycle, m.week, m.day, m.subject, level);
+      byKey.set(key, {
+        key,
+        cycle: m.cycle,
+        week: m.week,
+        day: m.day,
+        subject: m.subject,
+        level,
+        title: m.title,
+        source: "mongo",
+        materialId: m.id,
+      });
+    }
+
+    for (const row of curriculum?.classes ?? []) {
+      const level = row.level ?? LEVEL;
+      if (level !== LEVEL) continue;
+      const key = row.key || cellKey(row.cycle, row.week, row.day, row.subject, level);
+      if (byKey.has(key)) {
+        const existing = byKey.get(key)!;
+        existing.curriculum = row;
+        continue;
+      }
+      byKey.set(key, {
+        key,
+        cycle: row.cycle,
+        week: row.week,
+        day: row.day,
+        subject: row.subject,
+        level,
+        title: row.title,
+        source: "fe-backup",
+        curriculum: row,
+      });
+    }
+
+    return Array.from(byKey.values());
   }
 
-  function pickFirstAvailable(): HomescoolCurriculumClass | undefined {
-    const rows = classRows().slice().sort((a, b) => {
+  function levelCells(): WorkspaceCell[] {
+    return cells.filter((m) => m.level === LEVEL);
+  }
+
+  function pickFirstAvailable(): WorkspaceCell | undefined {
+    const rows = levelCells().slice().sort((a, b) => {
       if (a.cycle !== b.cycle) return a.cycle - b.cycle;
       if (a.week !== b.week) return a.week - b.week;
       if (a.day !== b.day) return a.day - b.day;
@@ -235,7 +349,7 @@ import "../../styles/homescool-workspace.css";
     day?: number;
     subject?: string;
   }): boolean {
-    return classRows().some(
+    return levelCells().some(
       (m) =>
         (partial.cycle == null || m.cycle === partial.cycle) &&
         (partial.week == null || m.week === partial.week) &&
@@ -355,21 +469,21 @@ import "../../styles/homescool-workspace.css";
     });
   }
 
-  function findClass(): HomescoolCurriculumClass | undefined {
-    if (!curriculum) return undefined;
-    const match = findCurriculumClass(curriculum, selection, LEVEL);
-    log("findClass", { ...selection, level: LEVEL, found: Boolean(match), key: match?.key });
+  function findCell(): WorkspaceCell | undefined {
+    const key = cellKey(selection.cycle, selection.week, selection.day, selection.subject);
+    const match = levelCells().find((c) => c.key === key);
+    log("findCell", { ...selection, level: LEVEL, found: Boolean(match), key: match?.key, source: match?.source });
     return match;
   }
 
   async function openSelection() {
-    const seq = ++previewSeq;
+    const seq = ++openSeq;
     log("openSelection.enter", { ...selection, seq });
     sheetsReady = false;
-    currentPdfBytes = null;
+    currentMaterialId = "";
     currentPdfName = "homescool.pdf";
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
-    const match = findClass();
+    const match = findCell();
     if (!match) {
       const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
       setStageMode("empty");
@@ -382,57 +496,101 @@ import "../../styles/homescool-workspace.css";
       return;
     }
     setStageMode("loading");
-    if (banner instanceof HTMLElement) banner.textContent = "Generando vista previa PDF…";
-    const doc = toEoschoolDocument(match);
-    const preview = await fetchHomescoolPdfPreview(doc);
-    if (seq !== previewSeq) {
-      log("openSelection.stale", { seq, previewSeq });
-      return;
-    }
-    if (!preview.ok || !preview.pdfBytes || !preview.data) {
-      setStageMode("empty");
-      if (emptyMsg instanceof HTMLElement) {
-        emptyMsg.textContent = "No se pudo generar el PDF de vista previa.";
-      }
-      showErrorModal({
-        message: preview.error || "Could not build PDF preview.",
-        requestId: preview.requestId,
-        details: preview.requestId ? `request_id=${preview.requestId}` : "",
-      });
-      if (banner instanceof HTMLElement) banner.textContent = "Preview failed.";
-      return;
-    }
-    if (!(sheetsHost instanceof HTMLElement)) return;
+    if (banner instanceof HTMLElement) banner.textContent = "Cargando material…";
+
     try {
-      const pages = await renderHomescoolPdfPreview(sheetsHost, preview.pdfBytes, {
-        pageWidthMm: preview.data.page_width_mm,
-        pageHeightMm: preview.data.page_height_mm,
-        seq,
-        isStale: () => seq !== previewSeq,
-      });
-      if (seq !== previewSeq || pages === 0) {
-        log("openSelection.render_stale", { seq, pages });
-        return;
+      let doc: EoschoolDocument;
+      if (match.source === "mongo" && match.materialId) {
+        const res = await fetchHomescoolMaterial(match.materialId);
+        if (seq !== openSeq) return;
+        log("openSelection.meta", {
+          error: res.error,
+          requestId: res.requestId,
+          documentUrl: res.documentUrl,
+          format: res.material?.format,
+        });
+        if (res.error || !res.material) {
+          // Fall back to FE backup for the same cell if Mongo fetch fails.
+          const backup =
+            match.curriculum ||
+            (curriculumBackup
+              ? findCurriculumClass(curriculumBackup, selection, LEVEL)
+              : undefined);
+          if (!backup) {
+            setStageMode("empty");
+            if (emptyMsg instanceof HTMLElement) {
+              emptyMsg.textContent = "No se pudo cargar el material. Intenta de nuevo.";
+            }
+            showErrorModal({
+              message: res.error || "Could not load material.",
+              requestId: res.requestId,
+              details: res.requestId ? `request_id=${res.requestId}` : "",
+            });
+            return;
+          }
+          doc = toEoschoolDocument(backup);
+          currentMaterialId = "";
+          log("openSelection.fe_fallback_after_mongo_fail", { key: match.key });
+        } else {
+          const docUrl = res.documentUrl || `/api/homescool/materials/${match.materialId}/document`;
+          log("openSelection.fetch_document", { docUrl });
+          const docRes = await fetch(docUrl, { credentials: "include" });
+          if (seq !== openSeq) return;
+          if (!docRes.ok) throw new Error(`document ${docRes.status}`);
+          const ctype = docRes.headers.get("content-type") || "";
+          if (!ctype.includes("json")) throw new Error("Expected eoschool JSON");
+          doc = (await docRes.json()) as EoschoolDocument;
+          currentMaterialId = match.materialId;
+        }
+      } else {
+        const backup =
+          match.curriculum ||
+          (curriculumBackup ? findCurriculumClass(curriculumBackup, selection, LEVEL) : undefined);
+        if (!backup) throw new Error("missing fe backup");
+        doc = toEoschoolDocument(backup);
+        currentMaterialId = "";
+        log("openSelection.fe_backup", { key: match.key });
       }
-      currentPdfBytes = preview.pdfBytes;
+
+      if (seq !== openSeq) return;
+      mountEoschool(doc);
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
+      const sourceHint = currentMaterialId ? "Mongo" : "FE backup";
       if (banner instanceof HTMLElement) {
-        banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title}`;
+        banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title} · ${sourceHint}`;
       }
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
-      if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
-      setStageMode("sheets");
-      log("openSelection.ready", { key: match.key, pages, pdfName: currentPdfName });
+      if (printBtn instanceof HTMLButtonElement) {
+        printBtn.disabled = !currentMaterialId;
+      }
+      log("openSelection.ready", {
+        key: match.key,
+        materialId: currentMaterialId,
+        source: match.source,
+        pdfName: currentPdfName,
+      });
     } catch (err) {
-      log("openSelection.render_fail", { err: String(err) });
+      if (seq !== openSeq) return;
+      log("openSelection.fail", { err: String(err) });
       setStageMode("empty");
       if (emptyMsg instanceof HTMLElement) {
-        emptyMsg.textContent = "No se pudo mostrar el PDF.";
+        emptyMsg.textContent = "No se pudo cargar el documento.";
       }
-      showErrorModal({ message: "Could not render PDF preview." });
-      if (banner instanceof HTMLElement) banner.textContent = "Could not render preview.";
+      showErrorModal({ message: "Could not load eoschool document." });
+      if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
     }
+  }
+
+  function mountEoschool(doc: EoschoolDocument) {
+    if (!(sheetsHost instanceof HTMLElement)) return;
+    sheetsHost.replaceChildren();
+    const pages = renderEoschoolPages(doc);
+    log("mountEoschool", { pages: pages.length });
+    for (const page of pages) {
+      sheetsHost.append(page);
+    }
+    setStageMode("sheets");
   }
 </script>
