@@ -303,7 +303,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   box-sizing: border-box;
   width: 8.5in;
   min-height: 11in;
-  padding: 0.55rem;
+  /* METHOD_V1: 1 cm page margin (viewer + PDF capture must match). */
+  padding: 1cm;
   background: #ffffff;
   color: var(--hc-ink);
   border: var(--border-width) solid var(--hc-line);
@@ -990,7 +991,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
   height: 11in;
   min-height: 11in;
-  padding: 0.45rem;
+  /* Inherit 1 cm METHOD_V1 margin from .homescool-letter-page; do not shrink it. */
+  padding: 1cm;
   gap: 0.3rem;
   overflow: hidden;
   display: flex;
