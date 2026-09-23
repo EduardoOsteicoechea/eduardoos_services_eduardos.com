@@ -283,20 +283,26 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   cursor: not-allowed;
 }
 
-/* US Letter portrait pages — pastel study sheets (non-mat) */
+/* US Letter portrait pages — class sheets (brand palette) */
 .homescool-letter-page {
-  --hc-ink: #1f2430;
-  --hc-ink-soft: #4a5568;
-  --hc-sand: #f7f3ee;
-  --hc-cream: #fffaf3;
-  --hc-peach: #ffe8d6;
-  --hc-mint: #e5f6ef;
-  --hc-sky: #e7f0fb;
-  --hc-lilac: #f2eaf8;
-  --hc-line: #d5cfc6;
-  --hc-rail: #5f7a9a;
-  --hc-coral: #e07a5f;
-  --hc-teal: #2a9d8f;
+  --hc-orange: #ec7004;
+  --hc-cream: #fff1a8;
+  --hc-olive: #84754f;
+  --hc-blue: #5092b3;
+  --hc-navy: #143050;
+
+  --hc-ink: var(--hc-navy);
+  --hc-ink-soft: var(--hc-olive);
+  --hc-sand: color-mix(in srgb, var(--hc-cream) 72%, #ffffff);
+  --hc-peach: color-mix(in srgb, var(--hc-orange) 22%, var(--hc-cream));
+  --hc-mint: color-mix(in srgb, var(--hc-blue) 16%, #ffffff);
+  --hc-sky: color-mix(in srgb, var(--hc-blue) 28%, #ffffff);
+  --hc-lilac: color-mix(in srgb, var(--hc-olive) 22%, var(--hc-cream));
+  --hc-line: color-mix(in srgb, var(--hc-olive) 42%, #ffffff);
+  --hc-rail: var(--hc-navy);
+  --hc-coral: var(--hc-orange);
+  --hc-teal: var(--hc-blue);
+  --hc-on-dark: var(--hc-cream);
 
   box-sizing: border-box;
   width: 8.5in;
@@ -319,7 +325,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: 0.45rem 0.55rem;
   border-radius: 0.35rem;
   background: var(--hc-rail);
-  color: #f8fafc;
+  color: var(--hc-on-dark);
   border: 0.06rem solid var(--hc-rail);
 }
 
@@ -424,7 +430,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__point--3 {
   background: var(--hc-lilac);
-  border-color: color-mix(in srgb, #8b6f9e 35%, var(--hc-line));
+  border-color: color-mix(in srgb, var(--hc-olive) 35%, var(--hc-line));
 }
 
 .homescool-letter__point-badge {
@@ -436,7 +442,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   justify-content: center;
   border-radius: 50%;
   background: var(--hc-rail);
-  color: #f8fafc;
+  color: var(--hc-on-dark);
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
@@ -451,7 +457,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__point--3 .homescool-letter__point-badge {
-  background: #8b6f9e;
+  background: var(--hc-olive);
 }
 
 .homescool-letter__point-copy {
@@ -488,7 +494,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: 0.15rem 0.45rem;
   border-radius: 999rem;
   background: var(--hc-teal);
-  color: #f8fafc;
+  color: var(--hc-on-dark);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.04rem;
@@ -613,7 +619,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter__box--tip,
 .homescool-letter__box--goal {
   background: var(--hc-lilac);
-  border-color: color-mix(in srgb, #8b6f9e 40%, var(--hc-line));
+  border-color: color-mix(in srgb, var(--hc-olive) 40%, var(--hc-line));
 }
 
 .homescool-letter__box--contrast {
@@ -879,7 +885,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   height: 1.15rem;
   border-radius: 50%;
   background: var(--hc-coral);
-  color: #fff;
+  color: var(--hc-on-dark);
   font-size: 0.65rem;
   font-weight: 700;
   display: flex;
@@ -920,7 +926,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   height: 0.95rem;
   border-radius: 50%;
   background: var(--hc-rail);
-  color: #f8fafc;
+  color: var(--hc-on-dark);
   font-size: 0.58rem;
   font-weight: 700;
   display: inline-flex;
