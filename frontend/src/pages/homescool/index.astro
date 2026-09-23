@@ -40,7 +40,15 @@ import "../../styles/homescool-workspace.css";
     <div class="product-workspace__main">
       <p class="product-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
-        <p class="homescool-workspace__stage-empty" data-homescool-empty>Select cycle, week, day, and subject.</p>
+        <div class="homescool-workspace__overlay" data-homescool-empty hidden>
+          <p class="homescool-workspace__empty-msg" data-homescool-empty-msg>
+            No se ha cargado material para esta selección.
+          </p>
+        </div>
+        <div class="homescool-workspace__overlay homescool-workspace__overlay--loading" data-homescool-loading hidden>
+          <span class="homescool-workspace__spinner" aria-hidden="true"></span>
+          <p class="homescool-workspace__loading-msg">Cargando material…</p>
+        </div>
         <div class="homescool-sheet-host" data-homescool-sheets hidden></div>
       </div>
     </div>
@@ -68,6 +76,8 @@ import "../../styles/homescool-workspace.css";
   const workspace = document.querySelector("[data-homescool-workspace]");
   const banner = document.querySelector("[data-homescool-banner]");
   const empty = document.querySelector("[data-homescool-empty]");
+  const emptyMsg = document.querySelector("[data-homescool-empty-msg]");
+  const loading = document.querySelector("[data-homescool-loading]");
   const sheetsHost = document.querySelector("[data-homescool-sheets]");
   const printBtn = document.querySelector("[data-homescool-print]");
   const weeksHost = document.querySelector("[data-homescool-weeks]");
@@ -79,6 +89,13 @@ import "../../styles/homescool-workspace.css";
   let sheetsReady = false;
   /** Default to week 2 until packs for other weeks exist; boot() snaps to first available cell. */
   let selection = { cycle: 1, week: 2, day: 1, subject: "mat" };
+
+  function setStageMode(mode: "empty" | "loading" | "sheets") {
+    setHidden(empty, mode !== "empty");
+    setHidden(loading, mode !== "loading");
+    setHidden(sheetsHost, mode !== "sheets");
+    log("stage.mode", { mode });
+  }
 
   log("boot.start", { level: LEVEL });
   const teacher = await requireService("homescool", { requireSubscription: true });
@@ -104,6 +121,20 @@ import "../../styles/homescool-workspace.css";
   printBtn?.addEventListener("click", () => {
     log("print.click", { sheetsReady, disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null });
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
+    // Close chrome trays so print only paints letter sheets.
+    document.getElementById("main-menu")?.setAttribute("hidden", "");
+    document.getElementById("dynamic-header")?.setAttribute("hidden", "");
+    document.getElementById("agent-sidebar")?.setAttribute("hidden", "");
+    document.documentElement.classList.add("homescool-printing");
+    window.addEventListener(
+      "afterprint",
+      () => {
+        document.documentElement.classList.remove("homescool-printing");
+        log("print.after");
+      },
+      { once: true },
+    );
+    log("print.start");
     window.print();
   });
 
@@ -319,16 +350,18 @@ import "../../styles/homescool-workspace.css";
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     const match = findMaterial();
     if (!match) {
-      const msg = `Sin material para c${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}. Elige una semana con contenido (p. ej. s2).`;
-      setHidden(empty, false);
-      setHidden(sheetsHost, true);
+      const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
+      setStageMode("empty");
       if (sheetsHost instanceof HTMLElement) sheetsHost.replaceChildren();
-      if (empty instanceof HTMLElement) empty.textContent = msg;
-      if (banner instanceof HTMLElement) banner.textContent = msg;
+      if (emptyMsg instanceof HTMLElement) emptyMsg.textContent = msg;
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject}`;
+      }
       log("openSelection.empty");
       return;
     }
-    if (banner instanceof HTMLElement) banner.textContent = "Loading…";
+    setStageMode("loading");
+    if (banner instanceof HTMLElement) banner.textContent = "Cargando material…";
     const res = await fetchHomescoolMaterial(match.id);
     log("openSelection.meta", {
       error: res.error,
@@ -337,6 +370,10 @@ import "../../styles/homescool-workspace.css";
       format: res.material?.format,
     });
     if (res.error || !res.material) {
+      setStageMode("empty");
+      if (emptyMsg instanceof HTMLElement) {
+        emptyMsg.textContent = "No se pudo cargar el material. Intenta de nuevo.";
+      }
       showErrorModal({
         message: res.error || "Could not load material.",
         requestId: res.requestId,
@@ -371,6 +408,10 @@ import "../../styles/homescool-workspace.css";
       log("openSelection.ready");
     } catch (err) {
       log("openSelection.fail", { err: String(err) });
+      setStageMode("empty");
+      if (emptyMsg instanceof HTMLElement) {
+        emptyMsg.textContent = "No se pudo cargar el documento.";
+      }
       showErrorModal({ message: "Could not load eoschool document." });
       if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
     }
@@ -378,13 +419,12 @@ import "../../styles/homescool-workspace.css";
 
   function mountEoschool(doc: EoschoolDocument) {
     if (!(sheetsHost instanceof HTMLElement)) return;
-    setHidden(empty, true);
-    setHidden(sheetsHost, false);
     sheetsHost.replaceChildren();
     const pages = renderEoschoolPages(doc);
     log("mountEoschool", { pages: pages.length });
     for (const page of pages) {
       sheetsHost.append(page);
     }
+    setStageMode("sheets");
   }
 </script>
