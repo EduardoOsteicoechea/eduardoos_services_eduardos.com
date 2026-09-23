@@ -88,6 +88,7 @@ import "../../styles/homescool-workspace.css";
   import { mustLog } from "../../lib/dev-log";
 
   const LEVEL = 6;
+  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "mat" };
   const log = (step: string, detail: Record<string, unknown> = {}) => {
     if (mustLog) console.log("[homescool-workspace]", step, detail);
   };
@@ -107,18 +108,7 @@ import "../../styles/homescool-workspace.css";
     curriculum?: HomescoolCurriculumClass;
   };
 
-  const gate = document.querySelector("[data-homescool-gate]");
-  const workspace = document.querySelector("[data-homescool-workspace]");
-  const banner = document.querySelector("[data-homescool-banner]");
-  const empty = document.querySelector("[data-homescool-empty]");
-  const emptyMsg = document.querySelector("[data-homescool-empty-msg]");
-  const loading = document.querySelector("[data-homescool-loading]");
-  const sheetsHost = document.querySelector("[data-homescool-sheets]");
-  const printBtn = document.querySelector("[data-homescool-print]");
-  const weeksHost = document.querySelector("[data-homescool-weeks]");
-  const daysHost = document.querySelector("[data-homescool-days]");
-  const subjectsHost = document.querySelector("[data-homescool-subjects]");
-  const cyclesHost = document.querySelector("[data-homescool-cycles]");
+  type Selection = { cycle: number; week: number; day: number; subject: string };
 
   let cells: WorkspaceCell[] = [];
   let curriculumBackup: HomescoolCurriculum | null = null;
@@ -126,13 +116,18 @@ import "../../styles/homescool-workspace.css";
   let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
   let openSeq = 0;
-  /** Default to cycle 3, week 2 until packs for other weeks exist; boot() snaps to the first available cell. */
-  let selection = { cycle: 3, week: 2, day: 1, subject: "mat" };
+  let bootSeq = 0;
+  let selection: Selection = { ...DEFAULT_SELECTION };
+  let printBound = false;
+
+  function qs<T extends Element>(sel: string): T | null {
+    return document.querySelector(sel) as T | null;
+  }
 
   function setStageMode(mode: "empty" | "loading" | "sheets") {
-    setHidden(empty, mode !== "empty");
-    setHidden(loading, mode !== "loading");
-    setHidden(sheetsHost, mode !== "sheets");
+    setHidden(qs("[data-homescool-empty]"), mode !== "empty");
+    setHidden(qs("[data-homescool-loading]"), mode !== "loading");
+    setHidden(qs("[data-homescool-sheets]"), mode !== "sheets");
     log("stage.mode", { mode });
   }
 
@@ -140,32 +135,287 @@ import "../../styles/homescool-workspace.css";
     return `c${cycle}-w${week}-d${day}-l${level}-${subject}`;
   }
 
-  log("boot.start", { level: LEVEL });
-  const teacher = await requireService("homescool", { requireSubscription: true });
-  log("gate.teacher", { sessionOk: teacher.sessionOk, allowed: teacher.access.allowed });
-  const ok = teacher.sessionOk && teacher.access.allowed;
-  if (!ok) {
-    const guest = await requireService("homescool", { requireSubscription: false });
-    log("gate.guest", { sessionOk: guest.sessionOk, allowed: guest.access.allowed });
-    if (!guest.sessionOk || !guest.access.allowed) {
-      if (banner instanceof HTMLElement) {
-        banner.textContent = guest.sessionOk ? "Homescool access required." : "Sign in required.";
-      }
-      setHidden(gate, false);
-      setHidden(workspace, true);
-      log("gate.blocked");
-    } else {
-      await boot();
-    }
-  } else {
-    await boot();
+  function levelCells(): WorkspaceCell[] {
+    return cells.filter((m) => m.level === LEVEL);
   }
 
-  printBtn?.addEventListener("click", () => {
-    void downloadCurrentPdf();
-  });
+  function hasMaterial(partial: {
+    cycle?: number;
+    week?: number;
+    day?: number;
+    subject?: string;
+  }): boolean {
+    return levelCells().some(
+      (m) =>
+        (partial.cycle == null || m.cycle === partial.cycle) &&
+        (partial.week == null || m.week === partial.week) &&
+        (partial.day == null || m.day === partial.day) &&
+        (partial.subject == null || m.subject === partial.subject),
+    );
+  }
+
+  function pickFirstAvailable(preferred?: Partial<Selection>): WorkspaceCell | undefined {
+    const rows = levelCells()
+      .slice()
+      .filter((m) => {
+        if (preferred?.cycle != null && m.cycle !== preferred.cycle) return false;
+        if (preferred?.week != null && m.week !== preferred.week) return false;
+        if (preferred?.day != null && m.day !== preferred.day) return false;
+        if (preferred?.subject != null && m.subject !== preferred.subject) return false;
+        return true;
+      })
+      .sort((a, b) => {
+        if (a.cycle !== b.cycle) return a.cycle - b.cycle;
+        if (a.week !== b.week) return a.week - b.week;
+        if (a.day !== b.day) return a.day - b.day;
+        return a.subject.localeCompare(b.subject);
+      });
+    return rows[0];
+  }
+
+  function applyCellToSelection(cell: WorkspaceCell) {
+    selection = {
+      cycle: cell.cycle,
+      week: cell.week,
+      day: cell.day,
+      subject: cell.subject,
+    };
+  }
+
+  function findCell(): WorkspaceCell | undefined {
+    const key = cellKey(selection.cycle, selection.week, selection.day, selection.subject);
+    return levelCells().find((c) => c.key === key);
+  }
+
+  /** Keep selection on a published cell; never leave the UI on an empty ciclo/semana. */
+  function ensurePublishedSelection(reason: string): boolean {
+    if (findCell()) return true;
+    const near =
+      pickFirstAvailable({ cycle: selection.cycle, week: selection.week }) ||
+      pickFirstAvailable({ cycle: selection.cycle }) ||
+      pickFirstAvailable();
+    if (!near) {
+      log("ensurePublished.empty", { reason, ...selection });
+      return false;
+    }
+    applyCellToSelection(near);
+    log("ensurePublished.snap", { reason, ...selection, key: near.key });
+    return true;
+  }
+
+  function mergeCells(
+    materials: HomescoolMaterial[],
+    curriculum: HomescoolCurriculum | null | undefined,
+  ): WorkspaceCell[] {
+    const byKey = new Map<string, WorkspaceCell>();
+    // Curriculum JSON is the published allowlist. Without it, show nothing from Mongo.
+    if (!curriculum?.classes?.length) return [];
+
+    const publishedKeys = new Set(
+      curriculum.classes
+        .filter((row) => (row.level ?? LEVEL) === LEVEL)
+        .map((row) => row.key || cellKey(row.cycle, row.week, row.day, row.subject, row.level ?? LEVEL)),
+    );
+
+    for (const m of materials) {
+      if (m.format !== "eoschool") continue;
+      const level = m.level ?? LEVEL;
+      if (level !== LEVEL) continue;
+      const key = cellKey(m.cycle, m.week, m.day, m.subject, level);
+      if (!publishedKeys.has(key)) continue;
+      byKey.set(key, {
+        key,
+        cycle: m.cycle,
+        week: m.week,
+        day: m.day,
+        subject: m.subject,
+        level,
+        title: m.title,
+        source: "mongo",
+        materialId: m.id,
+      });
+    }
+
+    for (const row of curriculum.classes) {
+      const level = row.level ?? LEVEL;
+      if (level !== LEVEL) continue;
+      const key = row.key || cellKey(row.cycle, row.week, row.day, row.subject, level);
+      if (byKey.has(key)) {
+        byKey.get(key)!.curriculum = row;
+        continue;
+      }
+      byKey.set(key, {
+        key,
+        cycle: row.cycle,
+        week: row.week,
+        day: row.day,
+        subject: row.subject,
+        level,
+        title: row.title,
+        source: "fe-backup",
+        curriculum: row,
+      });
+    }
+
+    return Array.from(byKey.values());
+  }
+
+  function syncChipStates() {
+    qs("[data-homescool-cycles]")?.querySelectorAll("[data-cycle]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      const cycle = Number(el.dataset.cycle);
+      el.setAttribute("aria-pressed", cycle === selection.cycle ? "true" : "false");
+      el.toggleAttribute("data-has-material", hasMaterial({ cycle }));
+    });
+    qs("[data-homescool-weeks]")?.querySelectorAll("[data-week]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      const week = Number(el.dataset.week);
+      el.setAttribute("aria-pressed", week === selection.week ? "true" : "false");
+      el.toggleAttribute("data-has-material", hasMaterial({ cycle: selection.cycle, week }));
+    });
+    qs("[data-homescool-days]")?.querySelectorAll("[data-day]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      const day = Number(el.dataset.day);
+      el.setAttribute("aria-pressed", day === selection.day ? "true" : "false");
+      el.toggleAttribute(
+        "data-has-material",
+        hasMaterial({ cycle: selection.cycle, week: selection.week, day }),
+      );
+    });
+    qs("[data-homescool-subjects]")?.querySelectorAll("[data-subject]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      const subject = el.dataset.subject || "";
+      el.setAttribute("aria-pressed", subject === selection.subject ? "true" : "false");
+      el.toggleAttribute(
+        "data-has-material",
+        hasMaterial({
+          cycle: selection.cycle,
+          week: selection.week,
+          day: selection.day,
+          subject,
+        }),
+      );
+    });
+  }
+
+  function buildWeekGrid() {
+    const weeksHost = qs<HTMLElement>("[data-homescool-weeks]");
+    if (!(weeksHost instanceof HTMLElement)) return;
+    weeksHost.replaceChildren();
+    for (let w = 1; w <= 24; w++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.week = String(w);
+      btn.textContent = `s${w}`;
+      btn.addEventListener("click", () => {
+        if (!hasMaterial({ cycle: selection.cycle, week: w })) {
+          log("select.week.blocked", { week: w, cycle: selection.cycle });
+          return;
+        }
+        selection.week = w;
+        ensurePublishedSelection("week-click");
+        log("select.week", { ...selection });
+        syncChipStates();
+        void openSelection();
+      });
+      weeksHost.append(btn);
+    }
+  }
+
+  function buildDayGrid() {
+    const daysHost = qs<HTMLElement>("[data-homescool-days]");
+    if (!(daysHost instanceof HTMLElement)) return;
+    daysHost.replaceChildren();
+    for (let d = 1; d <= 5; d++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.day = String(d);
+      btn.textContent = `d${d}`;
+      btn.addEventListener("click", () => {
+        if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) {
+          log("select.day.blocked", { day: d });
+          return;
+        }
+        selection.day = d;
+        ensurePublishedSelection("day-click");
+        log("select.day", { ...selection });
+        syncChipStates();
+        void openSelection();
+      });
+      daysHost.append(btn);
+    }
+  }
+
+  function buildSubjectGrid() {
+    const subjectsHost = qs<HTMLElement>("[data-homescool-subjects]");
+    if (!(subjectsHost instanceof HTMLElement)) return;
+    subjectsHost.replaceChildren();
+    for (const code of HOMESCOOL_SUBJECTS) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.subject = code;
+      btn.textContent = code;
+      btn.addEventListener("click", () => {
+        if (
+          !hasMaterial({
+            cycle: selection.cycle,
+            week: selection.week,
+            day: selection.day,
+            subject: code,
+          })
+        ) {
+          log("select.subject.blocked", { subject: code });
+          return;
+        }
+        selection.subject = code;
+        log("select.subject", { ...selection });
+        syncChipStates();
+        void openSelection();
+      });
+      subjectsHost.append(btn);
+    }
+  }
+
+  function bindCycles() {
+    const cyclesHost = qs("[data-homescool-cycles]");
+    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      // Drop stale listeners left from a prior ClientRouter visit.
+      const next = el.cloneNode(true) as HTMLElement;
+      el.replaceWith(next);
+      next.addEventListener("click", () => {
+        const c = Number(next.dataset.cycle);
+        if (!c) return;
+        if (!hasMaterial({ cycle: c })) {
+          log("select.cycle.blocked", { cycle: c });
+          return;
+        }
+        selection.cycle = c;
+        ensurePublishedSelection("cycle-click");
+        log("select.cycle", { ...selection });
+        syncChipStates();
+        void openSelection();
+      });
+    });
+  }
+
+  function bindPrintOnce() {
+    if (printBound) return;
+    printBound = true;
+    document.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof Element)) return;
+      if (!t.closest("[data-homescool-print]")) return;
+      void downloadCurrentPdf();
+    });
+  }
 
   async function downloadCurrentPdf() {
+    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
+    const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
     log("pdf.click", {
       sheetsReady,
       materialId: currentMaterialId,
@@ -204,19 +454,47 @@ import "../../styles/homescool-workspace.css";
   }
 
   async function boot() {
-    log("boot.enter");
+    const seq = ++bootSeq;
+    log("boot.enter", { seq });
+    selection = { ...DEFAULT_SELECTION };
+    const gate = qs("[data-homescool-gate]");
+    const workspace = qs("[data-homescool-workspace]");
+    const banner = qs<HTMLElement>("[data-homescool-banner]");
+
+    const teacher = await requireService("homescool", { requireSubscription: true });
+    if (seq !== bootSeq) return;
+    log("gate.teacher", { sessionOk: teacher.sessionOk, allowed: teacher.access.allowed });
+    let allowed = teacher.sessionOk && teacher.access.allowed;
+    if (!allowed) {
+      const guest = await requireService("homescool", { requireSubscription: false });
+      if (seq !== bootSeq) return;
+      log("gate.guest", { sessionOk: guest.sessionOk, allowed: guest.access.allowed });
+      allowed = Boolean(guest.sessionOk && guest.access.allowed);
+      if (!allowed) {
+        if (banner) {
+          banner.textContent = guest.sessionOk ? "Homescool access required." : "Sign in required.";
+        }
+        setHidden(gate, false);
+        setHidden(workspace, true);
+        log("gate.blocked");
+        return;
+      }
+    }
+
     setHidden(gate, true);
     setHidden(workspace, false);
+    bindPrintOnce();
     buildWeekGrid();
     buildDayGrid();
     buildSubjectGrid();
     bindCycles();
-    if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
+    if (banner) banner.textContent = "Loading materials…";
 
     const [mongoRes, feRes] = await Promise.all([
       fetchHomescoolMaterials(),
       loadHomescoolCurriculum(),
     ]);
+    if (seq !== bootSeq) return;
     log("boot.mongo", {
       error: mongoRes.error,
       count: mongoRes.materials.length,
@@ -227,13 +505,13 @@ import "../../styles/homescool-workspace.css";
       count: feRes.curriculum?.classCount ?? feRes.curriculum?.classes.length ?? 0,
     });
 
-    if (mongoRes.error && !feRes.curriculum) {
+    if (!feRes.curriculum) {
       showErrorModal({
-        message: mongoRes.error,
+        message: feRes.error || mongoRes.error || "Could not load curriculum.",
         requestId: mongoRes.requestId,
-        details: mongoRes.requestId ? `request_id=${mongoRes.requestId}` : "",
+        details: "Expected /homescool/curriculum.json as the published allowlist.",
       });
-      if (banner instanceof HTMLElement) banner.textContent = mongoRes.error;
+      if (banner) banner.textContent = feRes.error || "Curriculum missing.";
       return;
     }
 
@@ -254,271 +532,49 @@ import "../../styles/homescool-workspace.css";
         cells.find((row) => row.materialId === deep) ||
         cells.find((row) => row.key === deep);
       if (m) {
-        selection = {
-          cycle: m.cycle,
-          week: m.week,
-          day: m.day,
-          subject: m.subject,
-        };
+        applyCellToSelection(m);
         log("boot.deep_applied", { ...selection, key: m.key });
       } else {
         log("boot.deep_miss", { deep });
       }
-    } else if (!findCell()) {
-      const first = pickFirstAvailable();
-      if (first) {
-        selection = {
-          cycle: first.cycle,
-          week: first.week,
-          day: first.day,
-          subject: first.subject,
-        };
-        log("boot.snap_to_available", { ...selection, key: first.key });
-      }
     }
+    ensurePublishedSelection("boot");
     syncChipStates();
     await openSelection();
   }
 
-  function mergeCells(
-    materials: HomescoolMaterial[],
-    curriculum: HomescoolCurriculum | null | undefined,
-  ): WorkspaceCell[] {
-    const byKey = new Map<string, WorkspaceCell>();
-    const publishedKeys = curriculum
-      ? new Set(
-          curriculum.classes
-            .filter((row) => (row.level ?? LEVEL) === LEVEL)
-            .map((row) => row.key || cellKey(row.cycle, row.week, row.day, row.subject, row.level ?? LEVEL)),
-        )
-      : null;
-
-    for (const m of materials) {
-      if (m.format !== "eoschool") continue;
-      const level = m.level ?? LEVEL;
-      if (level !== LEVEL) continue;
-      const key = cellKey(m.cycle, m.week, m.day, m.subject, level);
-      if (publishedKeys && !publishedKeys.has(key)) continue;
-      byKey.set(key, {
-        key,
-        cycle: m.cycle,
-        week: m.week,
-        day: m.day,
-        subject: m.subject,
-        level,
-        title: m.title,
-        source: "mongo",
-        materialId: m.id,
-      });
-    }
-
-    for (const row of curriculum?.classes ?? []) {
-      const level = row.level ?? LEVEL;
-      if (level !== LEVEL) continue;
-      const key = row.key || cellKey(row.cycle, row.week, row.day, row.subject, level);
-      if (byKey.has(key)) {
-        const existing = byKey.get(key)!;
-        existing.curriculum = row;
-        continue;
-      }
-      byKey.set(key, {
-        key,
-        cycle: row.cycle,
-        week: row.week,
-        day: row.day,
-        subject: row.subject,
-        level,
-        title: row.title,
-        source: "fe-backup",
-        curriculum: row,
-      });
-    }
-
-    return Array.from(byKey.values());
-  }
-
-  function levelCells(): WorkspaceCell[] {
-    return cells.filter((m) => m.level === LEVEL);
-  }
-
-  function pickFirstAvailable(): WorkspaceCell | undefined {
-    const rows = levelCells().slice().sort((a, b) => {
-      if (a.cycle !== b.cycle) return a.cycle - b.cycle;
-      if (a.week !== b.week) return a.week - b.week;
-      if (a.day !== b.day) return a.day - b.day;
-      return a.subject.localeCompare(b.subject);
-    });
-    return rows[0];
-  }
-
-  function hasMaterial(partial: {
-    cycle?: number;
-    week?: number;
-    day?: number;
-    subject?: string;
-  }): boolean {
-    return levelCells().some(
-      (m) =>
-        (partial.cycle == null || m.cycle === partial.cycle) &&
-        (partial.week == null || m.week === partial.week) &&
-        (partial.day == null || m.day === partial.day) &&
-        (partial.subject == null || m.subject === partial.subject),
-    );
-  }
-
-  function buildWeekGrid() {
-    if (!(weeksHost instanceof HTMLElement)) return;
-    weeksHost.replaceChildren();
-    for (let w = 1; w <= 24; w++) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.week = String(w);
-      btn.textContent = `s${w}`;
-      btn.setAttribute("aria-pressed", w === selection.week ? "true" : "false");
-      btn.addEventListener("click", () => {
-        selection.week = w;
-        log("select.week", { week: w });
-        syncChipStates();
-        void openSelection();
-      });
-      weeksHost.append(btn);
-    }
-  }
-
-  function buildDayGrid() {
-    if (!(daysHost instanceof HTMLElement)) return;
-    daysHost.replaceChildren();
-    for (let d = 1; d <= 5; d++) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.day = String(d);
-      btn.textContent = `d${d}`;
-      btn.setAttribute("aria-pressed", d === selection.day ? "true" : "false");
-      btn.addEventListener("click", () => {
-        selection.day = d;
-        log("select.day", { day: d });
-        syncChipStates();
-        void openSelection();
-      });
-      daysHost.append(btn);
-    }
-  }
-
-  function buildSubjectGrid() {
-    if (!(subjectsHost instanceof HTMLElement)) return;
-    subjectsHost.replaceChildren();
-    for (const code of HOMESCOOL_SUBJECTS) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.subject = code;
-      btn.textContent = code;
-      btn.setAttribute("aria-pressed", code === selection.subject ? "true" : "false");
-      btn.addEventListener("click", () => {
-        selection.subject = code;
-        log("select.subject", { subject: code });
-        syncChipStates();
-        void openSelection();
-      });
-      subjectsHost.append(btn);
-    }
-  }
-
-  function bindCycles() {
-    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
-      el.addEventListener("click", () => {
-        const c = Number((el as HTMLElement).dataset.cycle);
-        if (!c) return;
-        selection.cycle = c;
-        log("select.cycle", { cycle: c });
-        syncChipStates();
-        void openSelection();
-      });
-    });
-  }
-
-  function syncChipStates() {
-    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const cycle = Number(el.dataset.cycle);
-      el.setAttribute("aria-pressed", cycle === selection.cycle ? "true" : "false");
-      el.toggleAttribute("data-has-material", hasMaterial({ cycle }));
-    });
-    weeksHost?.querySelectorAll("[data-week]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const week = Number(el.dataset.week);
-      el.setAttribute("aria-pressed", week === selection.week ? "true" : "false");
-      el.toggleAttribute("data-has-material", hasMaterial({ cycle: selection.cycle, week }));
-    });
-    daysHost?.querySelectorAll("[data-day]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const day = Number(el.dataset.day);
-      el.setAttribute("aria-pressed", day === selection.day ? "true" : "false");
-      el.toggleAttribute(
-        "data-has-material",
-        hasMaterial({ cycle: selection.cycle, week: selection.week, day }),
-      );
-    });
-    subjectsHost?.querySelectorAll("[data-subject]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const subject = el.dataset.subject || "";
-      el.setAttribute("aria-pressed", subject === selection.subject ? "true" : "false");
-      el.toggleAttribute(
-        "data-has-material",
-        hasMaterial({
-          cycle: selection.cycle,
-          week: selection.week,
-          day: selection.day,
-          subject,
-        }),
-      );
-    });
-  }
-
-  function findCell(): WorkspaceCell | undefined {
-    const key = cellKey(selection.cycle, selection.week, selection.day, selection.subject);
-    const match = levelCells().find((c) => c.key === key);
-    log("findCell", { ...selection, level: LEVEL, found: Boolean(match), key: match?.key, source: match?.source });
-    return match;
-  }
-
   async function openSelection() {
     const seq = ++openSeq;
+    const banner = qs<HTMLElement>("[data-homescool-banner]");
+    const emptyMsg = qs<HTMLElement>("[data-homescool-empty-msg]");
+    const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
+    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
     log("openSelection.enter", { ...selection, seq });
     sheetsReady = false;
     currentMaterialId = "";
     currentPdfName = "homescool.pdf";
-    if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
+    if (printBtn) printBtn.disabled = true;
     const match = findCell();
     if (!match) {
       const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
       setStageMode("empty");
-      if (sheetsHost instanceof HTMLElement) sheetsHost.replaceChildren();
-      if (emptyMsg instanceof HTMLElement) emptyMsg.textContent = msg;
-      if (banner instanceof HTMLElement) {
+      if (sheetsHost) sheetsHost.replaceChildren();
+      if (emptyMsg) emptyMsg.textContent = msg;
+      if (banner) {
         banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject}`;
       }
       log("openSelection.empty");
       return;
     }
     setStageMode("loading");
-    if (banner instanceof HTMLElement) banner.textContent = "Cargando material…";
+    if (banner) banner.textContent = "Cargando material…";
 
     try {
       let doc: EoschoolDocument;
       if (match.source === "mongo" && match.materialId) {
         const res = await fetchHomescoolMaterial(match.materialId);
         if (seq !== openSeq) return;
-        log("openSelection.meta", {
-          error: res.error,
-          requestId: res.requestId,
-          documentUrl: res.documentUrl,
-          format: res.material?.format,
-        });
         if (res.error || !res.material) {
-          // Fall back to FE backup for the same cell if Mongo fetch fails.
           const backup =
             match.curriculum ||
             (curriculumBackup
@@ -526,9 +582,7 @@ import "../../styles/homescool-workspace.css";
               : undefined);
           if (!backup) {
             setStageMode("empty");
-            if (emptyMsg instanceof HTMLElement) {
-              emptyMsg.textContent = "No se pudo cargar el material. Intenta de nuevo.";
-            }
+            if (emptyMsg) emptyMsg.textContent = "No se pudo cargar el material. Intenta de nuevo.";
             showErrorModal({
               message: res.error || "Could not load material.",
               requestId: res.requestId,
@@ -538,10 +592,8 @@ import "../../styles/homescool-workspace.css";
           }
           doc = toEoschoolDocument(backup);
           currentMaterialId = "";
-          log("openSelection.fe_fallback_after_mongo_fail", { key: match.key });
         } else {
           const docUrl = res.documentUrl || `/api/homescool/materials/${match.materialId}/document`;
-          log("openSelection.fetch_document", { docUrl });
           const docRes = await fetch(docUrl, { credentials: "include" });
           if (seq !== openSeq) return;
           if (!docRes.ok) throw new Error(`document ${docRes.status}`);
@@ -557,7 +609,6 @@ import "../../styles/homescool-workspace.css";
         if (!backup) throw new Error("missing fe backup");
         doc = toEoschoolDocument(backup);
         currentMaterialId = "";
-        log("openSelection.fe_backup", { key: match.key });
       }
 
       if (seq !== openSeq) return;
@@ -565,40 +616,42 @@ import "../../styles/homescool-workspace.css";
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
       const sourceHint = currentMaterialId ? "Mongo" : "FE backup";
-      if (banner instanceof HTMLElement) {
+      if (banner) {
         banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title} · ${sourceHint}`;
       }
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
-      if (printBtn instanceof HTMLButtonElement) {
-        printBtn.disabled = !currentMaterialId;
-      }
+      if (printBtn) printBtn.disabled = !currentMaterialId;
+      // Re-assert chips after async load (ClientRouter can leave stale aria-pressed).
+      syncChipStates();
       log("openSelection.ready", {
         key: match.key,
         materialId: currentMaterialId,
         source: match.source,
-        pdfName: currentPdfName,
+        selection,
       });
     } catch (err) {
       if (seq !== openSeq) return;
       log("openSelection.fail", { err: String(err) });
       setStageMode("empty");
-      if (emptyMsg instanceof HTMLElement) {
-        emptyMsg.textContent = "No se pudo cargar el documento.";
-      }
+      if (emptyMsg) emptyMsg.textContent = "No se pudo cargar el documento.";
       showErrorModal({ message: "Could not load eoschool document." });
-      if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
+      if (banner) banner.textContent = "Could not load document.";
     }
   }
 
   function mountEoschool(doc: EoschoolDocument) {
+    const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
     if (!(sheetsHost instanceof HTMLElement)) return;
     sheetsHost.replaceChildren();
     const pages = renderEoschoolPages(doc);
-    log("mountEoschool", { pages: pages.length });
-    for (const page of pages) {
-      sheetsHost.append(page);
-    }
+    for (const page of pages) sheetsHost.append(page);
     setStageMode("sheets");
   }
+
+  // ClientRouter: page modules run once; re-boot on every soft navigation to this page.
+  document.addEventListener("astro:page-load", () => {
+    if (document.documentElement.getAttribute("data-page") !== "homescool-workspace") return;
+    void boot();
+  });
 </script>
