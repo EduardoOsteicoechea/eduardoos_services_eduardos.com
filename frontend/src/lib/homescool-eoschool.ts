@@ -5,7 +5,6 @@
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
 import { mustLog } from "./dev-log";
 import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables";
-import { calculateLetterPages } from "./homescool-letter-layout";
 
 export const HOMESCOOL_SUBJECTS = [
   "mat",
@@ -95,14 +94,14 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
 
 type LessonPoint = EoschoolDocument["lesson"]["points"][number];
 
-type LessonSegment = {
+export type LessonSegment = {
   point: LessonPoint;
   pointIndex: number;
   paragraphs: string[];
   continuation: boolean;
 };
 
-type LessonPageBlock =
+export type LessonPageBlock =
   | { type: "point"; segment: LessonSegment }
   | { type: "summary" };
 
@@ -150,8 +149,9 @@ export function packLessonBatches(
 }
 
 /**
- * Lesson sheets: pack as many points as fit on each US Letter page (measure when
- * CSS layout is available; char/block estimate otherwise). Deepen stays one page.
+ * Lesson sheets: pack whole sections first; only split a section into
+ * continuation paragraphs when it alone overflows an empty Letter page (or when
+ * a prefix of its paragraphs still fits on the current page). Deepen stays one page.
  */
 function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   const kind = doc.lesson?.kind ?? "intro";
@@ -167,32 +167,21 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     return [page];
   }
 
-  const blocks: LessonPageBlock[] = [];
-  points.forEach((point, pointIndex) => {
-    const full: LessonSegment = {
+  const blocks: LessonPageBlock[] = points.map((point, pointIndex) => ({
+    type: "point",
+    segment: {
       point,
       pointIndex,
       paragraphs: splitLessonParagraphs(point.body),
       continuation: false,
-    };
-    // A point that cannot occupy an otherwise blank Letter page becomes
-    // continuation blocks, so section 3 can never be clipped at the footer.
-    if (lessonBlocksFit(doc, [full], false, kicker, kind)) {
-      blocks.push({ type: "point", segment: full });
-      return;
-    }
-    for (const [partIndex, paragraphs] of splitLessonSegment(full).entries()) {
-      blocks.push({
-        type: "point",
-        segment: { ...full, paragraphs, continuation: partIndex > 0 },
-      });
-    }
-  });
+    },
+  }));
   if (doc.lesson?.summary?.trim()) blocks.push({ type: "summary" });
 
-  const batches = calculateLetterPages(blocks, (candidate) =>
-    lessonBlocksFit(doc, candidate, false, kicker, kind),
-  );
+  const fits = (candidate: readonly LessonPageBlock[]) =>
+    lessonBlocksFit(doc, candidate, kicker, kind);
+
+  const batches = packLessonBlocksExpanding(blocks, fits);
 
   if (!batches.length) {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
@@ -212,6 +201,81 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   });
 }
 
+/**
+ * Greedy pack of whole blocks. When the next block does not fit with the current
+ * page, try packing a paragraph prefix of that section onto the current page
+ * before opening a new one. Only atomize a section when it overflows an empty page.
+ */
+export function packLessonBlocksExpanding(
+  blocks: readonly LessonPageBlock[],
+  fits: (candidate: readonly LessonPageBlock[]) => boolean,
+): LessonPageBlock[][] {
+  const pages: LessonPageBlock[][] = [];
+  const queue = [...blocks];
+  let current: LessonPageBlock[] = [];
+
+  const pointPart = (
+    source: Extract<LessonPageBlock, { type: "point" }>,
+    paragraphs: string[],
+    continuation: boolean,
+  ): LessonPageBlock => ({
+    type: "point",
+    segment: { ...source.segment, paragraphs, continuation },
+  });
+
+  while (queue.length) {
+    const next = queue.shift()!;
+    const candidate = [...current, next];
+    if (fits(candidate)) {
+      current = candidate;
+      continue;
+    }
+
+    if (current.length > 0 && next.type === "point" && next.segment.paragraphs.length > 1) {
+      const paras = next.segment.paragraphs;
+      let take = 0;
+      for (let n = 1; n <= paras.length; n++) {
+        if (fits([...current, pointPart(next, paras.slice(0, n), next.segment.continuation)])) {
+          take = n;
+        } else {
+          break;
+        }
+      }
+      if (take > 0) {
+        current.push(pointPart(next, paras.slice(0, take), next.segment.continuation));
+        pages.push(current);
+        current = [];
+        if (take < paras.length) {
+          queue.unshift(pointPart(next, paras.slice(take), true));
+        }
+        continue;
+      }
+    }
+
+    if (current.length > 0) {
+      pages.push(current);
+      current = [];
+      queue.unshift(next);
+      continue;
+    }
+
+    // Empty page: next alone does not fit — split into one-paragraph chunks.
+    if (next.type === "point" && next.segment.paragraphs.length > 1) {
+      const parts = splitLessonSegment(next.segment);
+      for (let i = parts.length - 1; i >= 0; i--) {
+        queue.unshift(pointPart(next, parts[i], i > 0 || next.segment.continuation));
+      }
+      continue;
+    }
+
+    // Cannot split further — emit alone so pagination still progresses.
+    pages.push([next]);
+  }
+
+  if (current.length) pages.push(current);
+  return pages;
+}
+
 function splitLessonParagraphs(body: string): string[] {
   return String(body || "")
     .split(/\n\s*\n/)
@@ -229,7 +293,6 @@ function splitLessonSegment(segment: LessonSegment): string[][] {
 function lessonBlocksFit(
   doc: EoschoolDocument,
   blocks: readonly LessonPageBlock[] | readonly LessonSegment[],
-  _withSummary: boolean,
   kicker: string,
   kind: string,
 ): boolean {
@@ -250,6 +313,12 @@ function lessonBlocksFit(
   page.style.top = "0";
   page.style.visibility = "hidden";
   page.style.pointerEvents = "none";
+  // Inline Letter geometry so measure works even if CSS is late / scoped.
+  page.style.width = "8.5in";
+  page.style.height = "11in";
+  page.style.maxHeight = "11in";
+  page.style.overflow = "hidden";
+  page.style.boxSizing = "border-box";
   page.append(lessonHeader(doc, kicker));
 
   if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
@@ -257,16 +326,18 @@ function lessonBlocksFit(
 
   document.body.append(page);
   void page.offsetHeight;
-  const fits =
-    page.clientHeight >= 8
-      ? page.scrollHeight <= page.clientHeight - 2
-      : estimateLessonSliceFits(
-          segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
-          withSummary,
-          doc.lesson?.summary,
-        );
+  const client = page.clientHeight;
+  const scroll = page.scrollHeight;
   page.remove();
-  return fits;
+  if (client < 8) {
+    return estimateLessonSliceFits(
+      segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
+      withSummary,
+      doc.lesson?.summary,
+    );
+  }
+  // 1px tolerance for subpixel rounding; avoid the old -2 which over-split.
+  return scroll <= client + 1;
 }
 
 function lessonSegmentsFromBlocks(
@@ -281,50 +352,6 @@ function lessonSegmentsFromBlocks(
     }
   }
   return segments;
-}
-
-/** True when the slice fits on one Letter sheet (layout measure, else estimate). */
-function lessonSliceFits(
-  doc: EoschoolDocument,
-  points: LessonPoint[],
-  start: number,
-  end: number,
-  withSummary: boolean,
-  kicker: string,
-  kind: string,
-): boolean {
-  const slice = points.slice(start, end);
-  // A single section always gets its own page even if it overflows alone.
-  if (slice.length <= 1 && !withSummary) return true;
-  if (slice.length === 0 && withSummary) {
-    return estimateLessonSliceFits([], true, doc.lesson?.summary);
-  }
-
-  if (typeof document === "undefined" || !document.body) {
-    return estimateLessonSliceFits(slice, withSummary, doc.lesson?.summary);
-  }
-
-  const probe = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
-  probe.setAttribute("data-homescool-measure", "1");
-  probe.style.position = "absolute";
-  probe.style.left = "-10000px";
-  probe.style.top = "0";
-  probe.style.visibility = "hidden";
-  probe.style.pointerEvents = "none";
-  probe.append(lessonHeader(doc, kicker));
-  if (slice.length) probe.append(buildLessonStack(doc, slice, start));
-  if (withSummary) appendSummary(doc, probe);
-  document.body.append(probe);
-  // Force layout against Letter geometry from CSS.
-  void probe.offsetHeight;
-  const client = probe.clientHeight;
-  const scroll = probe.scrollHeight;
-  probe.remove();
-
-  if (client < 8) {
-    return estimateLessonSliceFits(slice, withSummary, doc.lesson?.summary);
-  }
-  return scroll <= client + 1;
 }
 
 /**

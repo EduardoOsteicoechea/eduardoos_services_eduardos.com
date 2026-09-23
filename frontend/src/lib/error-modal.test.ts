@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { closeErrorModal, showErrorModal, startErrorModal } from "./error-modal";
+import {
+  closeErrorModal,
+  EREPORT_OPEN_LOCAL_EVENT,
+  showErrorModal,
+  startErrorModal,
+} from "./error-modal";
 
 function mountModal(): void {
   document.body.innerHTML = `
@@ -14,7 +19,8 @@ function mountModal(): void {
         <div class="error-modal-actions">
           <button type="button" data-error-copy-message>Copy message</button>
           <button type="button" data-error-copy-details>Copy details</button>
-          <button type="button" data-error-download-epam>Download .epam</button>
+          <button type="button" data-error-download-epam hidden>Download .epam</button>
+          <button type="button" data-error-load-ereport hidden>Load .ereport</button>
         </div>
         <div class="error-modal-box" data-error-debug hidden></div>
         <button type="button" data-error-copy-debug hidden>Copy debug</button>
@@ -29,6 +35,8 @@ function mountModal(): void {
 describe("error toast", () => {
   beforeEach(() => {
     document.documentElement.lang = "en";
+    document.documentElement.dataset.page = "";
+    window.history.replaceState({}, "", "/");
     mountModal();
   });
 
@@ -52,6 +60,29 @@ describe("error toast", () => {
     expect(document.querySelector("[data-error-copy-debug]")?.hidden).toBe(true);
   });
 
+  it("hides product file actions outside epam and ereport workspaces", () => {
+    showErrorModal({ message: "Boom", requestId: "req-none" });
+    expect(document.querySelector("[data-error-download-epam]")?.hidden).toBe(true);
+    expect(document.querySelector("[data-error-load-ereport]")?.hidden).toBe(true);
+  });
+
+  it("shows Download .epam only on pamphlet workspace", () => {
+    window.history.replaceState({}, "", "/documents/pamphlet/e");
+    showErrorModal({ message: "Boom", requestId: "req-epam" });
+    expect(document.querySelector("[data-error-download-epam]")?.hidden).toBe(false);
+    expect(document.querySelector("[data-error-load-ereport]")?.hidden).toBe(true);
+    expect(document.querySelector("[data-error-download-epam]")?.textContent).toBe("Download .epam");
+  });
+
+  it("shows Load .ereport only on ereport workspace", () => {
+    document.documentElement.dataset.page = "ereport-workspace";
+    window.history.replaceState({}, "", "/ereport/workspace");
+    showErrorModal({ message: "Boom", requestId: "req-ereport" });
+    expect(document.querySelector("[data-error-download-epam]")?.hidden).toBe(true);
+    expect(document.querySelector("[data-error-load-ereport]")?.hidden).toBe(false);
+    expect(document.querySelector("[data-error-load-ereport]")?.textContent).toBe("Load .ereport");
+  });
+
   it("shows debug details only when provided", () => {
     showErrorModal({ message: "Boom", requestId: "req-debug-1", debug: "redacted stack" });
     expect(document.querySelector("[data-error-debug]")?.hidden).toBe(false);
@@ -69,7 +100,8 @@ describe("error toast", () => {
     await vi.waitFor(() => expect(writeText).toHaveBeenCalledWith("request_id=abc12345"));
   });
 
-  it("downloads an .epam snapshot for local copy", () => {
+  it("downloads an .epam snapshot for local copy on pamphlet routes", () => {
+    window.history.replaceState({}, "", "/documents/pamphlet");
     const createObjectURL = vi.fn(() => "blob:error-epam");
     const revokeObjectURL = vi.fn();
     Object.defineProperty(URL, "createObjectURL", { configurable: true, value: createObjectURL });
@@ -104,11 +136,24 @@ describe("error toast", () => {
     expect(revokeObjectURL).toHaveBeenCalledWith("blob:error-epam");
   });
 
+  it("dispatches open-local when Load .ereport is clicked on ereport workspace", () => {
+    document.documentElement.dataset.page = "ereport-workspace";
+    window.history.replaceState({}, "", "/ereport/workspace");
+    const heard = vi.fn();
+    document.addEventListener(EREPORT_OPEN_LOCAL_EVENT, heard);
+    showErrorModal({ message: "Fail", requestId: "rid-er-1" });
+    document.querySelector("[data-error-load-ereport]")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(heard).toHaveBeenCalled();
+    expect(document.getElementById("error-modal")?.hidden).toBe(true);
+    document.removeEventListener(EREPORT_OPEN_LOCAL_EVENT, heard);
+  });
+
   it("closes on Escape and traps focus", () => {
     showErrorModal({ message: "Safe message", requestId: "abc12345" });
     document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
     expect(document.getElementById("error-modal")?.hidden).toBe(true);
 
+    window.history.replaceState({}, "", "/documents/pamphlet");
     showErrorModal({ message: "Again", requestId: "abc12345" });
     const close = document.querySelector("[data-error-close]");
     const last = document.querySelector("[data-error-download-epam]");
@@ -120,9 +165,12 @@ describe("error toast", () => {
 
   it("uses Spanish labels when html lang is es", () => {
     document.documentElement.lang = "es";
+    window.history.replaceState({}, "", "/documents/pamphlet");
+    document.documentElement.dataset.page = "ereport-workspace";
+    window.history.replaceState({}, "", "/ereport/workspace");
     showErrorModal({ message: "Fallo", requestId: "req-es-01" });
     expect(document.getElementById("error-modal-title")?.textContent).toBe("Algo salió mal");
     expect(document.querySelector("[data-error-copy-message]")?.textContent).toBe("Copiar mensaje");
-    expect(document.querySelector("[data-error-download-epam]")?.textContent).toBe("Descargar .epam");
+    expect(document.querySelector("[data-error-load-ereport]")?.textContent).toBe("Cargar .ereport");
   });
 });

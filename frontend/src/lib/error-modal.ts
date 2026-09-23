@@ -7,6 +7,7 @@ export type ErrorModalCopy = {
   copyDetails: string;
   copyDebug: string;
   downloadEpam: string;
+  loadEreport: string;
   copied: string;
 };
 
@@ -17,6 +18,7 @@ const en: ErrorModalCopy = {
   copyDetails: "Copy details",
   copyDebug: "Copy debug",
   downloadEpam: "Download .epam",
+  loadEreport: "Load .ereport",
   copied: "Copied",
 };
 
@@ -27,6 +29,7 @@ const es: ErrorModalCopy = {
   copyDetails: "Copiar detalles",
   copyDebug: "Copiar depuración",
   downloadEpam: "Descargar .epam",
+  loadEreport: "Cargar .ereport",
   copied: "Copiado",
 };
 
@@ -41,10 +44,40 @@ export type ErrorPayload = {
   debug?: string;
 };
 
+/** Custom event the eReport workspace listens for to open a local .ereport. */
+export const EREPORT_OPEN_LOCAL_EVENT = "ereport:open-local-file";
+
 let lastPayload: ErrorPayload | null = null;
 
 function textOf(el: Element | null): HTMLElement | null {
   return el instanceof HTMLElement ? el : null;
+}
+
+/** Pamphlet / EPAM editor routes (not the public articles reader). */
+export function isEpamWorkspacePath(pathname = window.location.pathname): boolean {
+  return pathname.replace(/\/$/, "").startsWith("/documents/pamphlet");
+}
+
+/** eReport workspace editor (not the hub). */
+export function isEreportWorkspacePath(pathname = window.location.pathname): boolean {
+  const path = pathname.replace(/\/$/, "");
+  const page = document.documentElement.dataset.page || "";
+  return page === "ereport-workspace" || path === "/ereport/workspace" || path.startsWith("/ereport/workspace/");
+}
+
+function syncProductActions(modal: HTMLElement, copy: ErrorModalCopy): void {
+  const downloadEpam = textOf(modal.querySelector("[data-error-download-epam]"));
+  const loadEreport = textOf(modal.querySelector("[data-error-load-ereport]"));
+  const showEpam = isEpamWorkspacePath();
+  const showEreport = isEreportWorkspacePath();
+  if (downloadEpam) {
+    downloadEpam.hidden = !showEpam;
+    downloadEpam.textContent = copy.downloadEpam;
+  }
+  if (loadEreport) {
+    loadEreport.hidden = !showEreport;
+    loadEreport.textContent = copy.loadEreport;
+  }
 }
 
 export function closeErrorModal(): void {
@@ -140,7 +173,6 @@ export function showErrorModal(payload: ErrorPayload): void {
   const copyMessage = textOf(modal.querySelector("[data-error-copy-message]"));
   const copyDetails = textOf(modal.querySelector("[data-error-copy-details]"));
   const copyDebug = textOf(modal.querySelector("[data-error-copy-debug]"));
-  const downloadEpam = textOf(modal.querySelector("[data-error-download-epam]"));
   const closeBtn = textOf(modal.querySelector("[data-error-close]"));
   if (message) {
     message.textContent = payload.message;
@@ -164,9 +196,7 @@ export function showErrorModal(payload: ErrorPayload): void {
   if (copyDetails) {
     copyDetails.textContent = copy.copyDetails;
   }
-  if (downloadEpam) {
-    downloadEpam.textContent = copy.downloadEpam;
-  }
+  syncProductActions(modal, copy);
   if (closeBtn) {
     closeBtn.setAttribute("aria-label", copy.close);
   }
@@ -206,6 +236,10 @@ export function startErrorModal(): void {
   const copyDetails = textOf(modal.querySelector("[data-error-copy-details]"));
   const copyDebug = textOf(modal.querySelector("[data-error-copy-debug]"));
   const downloadEpam = textOf(modal.querySelector("[data-error-download-epam]"));
+  const loadEreport = textOf(modal.querySelector("[data-error-load-ereport]"));
+  // Hide product actions until showErrorModal scopes them to the current route.
+  if (downloadEpam) downloadEpam.hidden = true;
+  if (loadEreport) loadEreport.hidden = true;
   modal.addEventListener("click", (event) => {
     const node = event.target instanceof Element ? event.target.closest("button") : null;
     if (!node) {
@@ -234,6 +268,7 @@ export function startErrorModal(): void {
       });
     }
     if (node.matches("[data-error-download-epam]")) {
+      if (!isEpamWorkspacePath()) return;
       if (lastPayload) {
         downloadErrorEpam(lastPayload);
       }
@@ -243,6 +278,11 @@ export function startErrorModal(): void {
           if (downloadEpam) downloadEpam.textContent = copy.downloadEpam;
         }, 1200);
       }
+    }
+    if (node.matches("[data-error-load-ereport]")) {
+      if (!isEreportWorkspacePath()) return;
+      closeErrorModal();
+      document.dispatchEvent(new CustomEvent(EREPORT_OPEN_LOCAL_EVENT));
     }
   });
   document.addEventListener("keydown", (event) => {

@@ -6,7 +6,9 @@ import type { EoschoolDocument } from "./homescool";
 import {
   classifyLessonParas,
   packLessonBatches,
+  packLessonBlocksExpanding,
   renderEoschoolPages,
+  type LessonPageBlock,
 } from "./homescool-eoschool";
 import { calculateLetterPages } from "./homescool-letter-layout";
 
@@ -66,6 +68,63 @@ describe("calculateLetterPages", () => {
   it("makes progress when a block requires a continuation split", () => {
     const pages = calculateLetterPages(["oversize"], () => false);
     expect(pages).toEqual([["oversize"]]);
+  });
+});
+
+describe("packLessonBlocksExpanding", () => {
+  const point = (id: string, paragraphs: string[], continuation = false): LessonPageBlock => ({
+    type: "point",
+    segment: {
+      point: { id, heading: id, body: paragraphs.join("\n\n") },
+      pointIndex: Number(id.replace(/\D/g, "") || 0),
+      paragraphs,
+      continuation,
+    },
+  });
+
+  it("packs whole sections before splitting", () => {
+    const blocks = [point("p1", ["a", "b"]), point("p2", ["c"]), { type: "summary" as const }];
+    // Capacity: two whole sections, or one section + summary — not three blocks of chrome.
+    const pages = packLessonBlocksExpanding(blocks, (candidate) => {
+      const points = candidate.filter((b) => b.type === "point").length;
+      const summary = candidate.some((b) => b.type === "summary");
+      if (summary) return points <= 1;
+      return points <= 2;
+    });
+    expect(pages).toEqual([
+      [blocks[0], blocks[1]],
+      [{ type: "summary" }],
+    ]);
+  });
+
+  it("only atomizes a section when it overflows an empty page", () => {
+    const oversized = point("p1", ["one", "two", "three"]);
+    const pages = packLessonBlocksExpanding([oversized], (candidate) => {
+      const segs = candidate.filter((b): b is Extract<LessonPageBlock, { type: "point" }> => b.type === "point");
+      return segs.every((s) => s.segment.paragraphs.length <= 1) && segs.length <= 1;
+    });
+    expect(pages).toHaveLength(3);
+    expect(pages.every((page) => page.length === 1)).toBe(true);
+    expect(
+      pages.map((page) => (page[0].type === "point" ? page[0].segment.paragraphs.join("") : "")),
+    ).toEqual(["one", "two", "three"]);
+  });
+
+  it("fills the current page with a paragraph prefix before continuing", () => {
+    const first = point("p1", ["short"]);
+    const second = point("p2", ["a", "b", "c"]);
+    const pages = packLessonBlocksExpanding([first, second], (candidate) => {
+      const paras = candidate
+        .filter((b): b is Extract<LessonPageBlock, { type: "point" }> => b.type === "point")
+        .reduce((n, b) => n + b.segment.paragraphs.length, 0);
+      return paras <= 2;
+    });
+    expect(pages).toHaveLength(2);
+    expect(pages[0]).toHaveLength(2);
+    expect(pages[0][0].type === "point" && pages[0][0].segment.paragraphs).toEqual(["short"]);
+    expect(pages[0][1].type === "point" && pages[0][1].segment.paragraphs).toEqual(["a"]);
+    expect(pages[1][0].type === "point" && pages[1][0].segment.continuation).toBe(true);
+    expect(pages[1][0].type === "point" && pages[1][0].segment.paragraphs).toEqual(["b", "c"]);
   });
 });
 
@@ -142,8 +201,10 @@ describe("renderEoschoolPages pagination", () => {
     // Three dense METHOD_V1 points do not share a single Letter sheet.
     expect(lessonPages.length).toBeGreaterThan(1);
     expect(lessonPages.length).toBeLessThan(4); // still packs when possible, not forced 1/page
-    const pointCounts = lessonPages.map((p) => p.querySelectorAll(".homescool-letter__point").length);
-    expect(pointCounts.reduce((a, b) => a + b, 0)).toBe(3);
+    const badges = lessonPages.flatMap((p) =>
+      [...p.querySelectorAll(".homescool-letter__point-badge")].map((b) => b.textContent?.trim()),
+    );
+    expect(new Set(badges)).toEqual(new Set(["1", "2", "3"]));
   });
 
   it("keeps deepen on a single lesson page", () => {

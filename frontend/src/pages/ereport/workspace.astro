@@ -212,6 +212,7 @@ import Layout from "../../layouts/Layout.astro";
     type TrackerHost,
   } from "../../lib/ereport-workspace";
   import { genericMessage, onBoundPageReady, reportFailure, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
+  import { EREPORT_OPEN_LOCAL_EVENT } from "../../lib/error-modal";
 
   onBoundPageReady("[data-ereport-workspace]", (root) => {
     const copy = sessionCopy();
@@ -631,6 +632,12 @@ import Layout from "../../layouts/Layout.astro";
         setBanner(root, msg || "Could not open local file.", "err");
       }
     };
+
+    const onErrorLoadEreport = () => {
+      void openFromDevice();
+    };
+    document.addEventListener(EREPORT_OPEN_LOCAL_EVENT, onErrorLoadEreport);
+    disposers.push(() => document.removeEventListener(EREPORT_OPEN_LOCAL_EVENT, onErrorLoadEreport));
 
     void requireAuth(root, copy).then(async (me) => {
       if (!me || disposed) return;
