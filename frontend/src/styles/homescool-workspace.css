@@ -35,18 +35,25 @@ html[data-page="homescool-workspace"] {
 
 html[data-page="homescool-workspace"] #dynamic-header {
   position: fixed;
-  left: 0;
-  top: var(--mobile-header-height);
+  left: 0 !important;
+  top: 0;
   bottom: 0;
   width: var(--homescool-dhs-width);
   max-width: var(--homescool-dhs-width);
   margin: 0;
-  transform: none;
+  padding-top: var(--space-padding);
+  transform: none !important;
   border-right: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
   overflow-x: hidden;
   overflow-y: auto;
   z-index: var(--z-sidebar);
+  box-shadow: none;
+}
+
+/* Docked rail — never inherit overlay-tray padding when main-menu is open */
+html[data-page="homescool-workspace"] #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
+  padding-top: var(--space-padding);
 }
 
 html[data-page="homescool-workspace"] #dynamic-header[hidden] {
@@ -55,6 +62,12 @@ html[data-page="homescool-workspace"] #dynamic-header[hidden] {
 
 html[data-page="homescool-workspace"] #header-dynamic-menu-host:empty {
   display: none;
+}
+
+/* Keep menu control at full chrome size above the rail */
+html[data-page="homescool-workspace"] .app-header .header-menu.icon-btn {
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
 }
 
 @media (max-width: 47.999rem) {
@@ -261,69 +274,266 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   cursor: not-allowed;
 }
 
-/* US Letter portrait pages (print-faithful; in/cm allowed inside sheets) */
+/* US Letter portrait pages — pastel study sheets (non-mat) */
 .homescool-letter-page {
+  --hc-ink: #1f2430;
+  --hc-ink-soft: #4a5568;
+  --hc-sand: #f7f3ee;
+  --hc-cream: #fffaf3;
+  --hc-peach: #ffe8d6;
+  --hc-mint: #e5f6ef;
+  --hc-sky: #e7f0fb;
+  --hc-lilac: #f2eaf8;
+  --hc-line: #d5cfc6;
+  --hc-rail: #5f7a9a;
+  --hc-coral: #e07a5f;
+  --hc-teal: #2a9d8f;
+
   box-sizing: border-box;
   width: 8.5in;
   min-height: 11in;
-  padding: 1cm;
-  background: #fff;
-  color: #1a1a1a;
-  border: var(--border-width) solid var(--color-border);
+  padding: 0.55rem;
+  background: var(--hc-sand);
+  color: var(--hc-ink);
+  border: var(--border-width) solid var(--hc-line);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
   page-break-after: always;
   break-after: page;
 }
 
-.homescool-letter__meta {
+.homescool-letter__hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.35rem;
+  background: var(--hc-rail);
+  color: #f8fafc;
+  border: 0.06rem solid var(--hc-rail);
+}
+
+.homescool-letter-page--quiz .homescool-letter__hero {
+  background: var(--hc-coral);
+  border-color: var(--hc-coral);
+}
+
+.homescool-letter__hero-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.homescool-letter__kicker {
   font-size: 0.7rem;
-  color: #5c5c5c;
+  font-weight: 700;
+  letter-spacing: 0.06rem;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.homescool-letter__meta {
+  font-size: 0.65rem;
+  opacity: 0.85;
+  margin: 0;
 }
 
 .homescool-letter__heading {
-  font-size: 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
   margin: 0;
+  line-height: 1.25;
+}
+
+.homescool-letter__sub {
+  margin: 0;
+  font-size: 0.72rem;
+  opacity: 0.9;
+}
+
+.homescool-letter__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.homescool-letter__point {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+  padding: 0.4rem 0.45rem;
+  border-radius: 0.3rem;
+  border: 0.06rem solid var(--hc-line);
+  background: var(--hc-cream);
+}
+
+.homescool-letter__point--1 {
+  background: var(--hc-mint);
+  border-color: color-mix(in srgb, var(--hc-teal) 35%, var(--hc-line));
+}
+
+.homescool-letter__point--2 {
+  background: var(--hc-sky);
+  border-color: color-mix(in srgb, var(--hc-rail) 35%, var(--hc-line));
+}
+
+.homescool-letter__point--3 {
+  background: var(--hc-lilac);
+  border-color: color-mix(in srgb, #8b6f9e 35%, var(--hc-line));
+}
+
+.homescool-letter__point-badge {
+  flex: 0 0 auto;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--hc-rail);
+  color: #f8fafc;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.homescool-letter__point--1 .homescool-letter__point-badge {
+  background: var(--hc-teal);
+}
+
+.homescool-letter__point--2 .homescool-letter__point-badge {
+  background: var(--hc-rail);
+}
+
+.homescool-letter__point--3 .homescool-letter__point-badge {
+  background: #8b6f9e;
+}
+
+.homescool-letter__point-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .homescool-letter__point-title {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 700;
   margin: 0;
+  color: var(--hc-ink);
 }
 
 .homescool-letter__body,
 .homescool-letter__choices {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   margin: 0;
-  line-height: 1.35;
+  line-height: 1.4;
+  color: var(--hc-ink);
+}
+
+.homescool-letter__summary {
+  margin-top: auto;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.3rem;
+  border: 0.08rem solid var(--hc-coral);
+  background: var(--hc-peach);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.homescool-letter__summary-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  color: var(--hc-coral);
 }
 
 .homescool-letter__quiz {
   margin: 0;
-  padding-left: 1.25rem;
+  padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  counter-reset: hc-q;
 }
 
 .homescool-letter__q {
   margin: 0;
+  padding: 0.4rem 0.45rem 0.4rem 0.45rem;
+  border-radius: 0.3rem;
+  border: 0.06rem solid var(--hc-line);
+  background: var(--hc-cream);
+  counter-increment: hc-q;
+  position: relative;
+  padding-left: 2.1rem;
+}
+
+.homescool-letter__q::before {
+  content: counter(hc-q);
+  position: absolute;
+  left: 0.4rem;
+  top: 0.4rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: var(--hc-coral);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .homescool-letter__choices-list {
-  margin: 0.2rem 0 0;
-  padding-left: 0;
+  margin: 0.25rem 0 0;
+  padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.18rem;
 }
 
 .homescool-letter__choice {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   line-height: 1.3;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.18rem 0.3rem;
+  border-radius: 0.2rem;
+  background: #ffffff;
+  border: 0.05rem solid var(--hc-line);
+}
+
+.homescool-letter__choice-mark {
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--hc-rail);
+  color: #f8fafc;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homescool-letter__choice-text {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 /* Mat week-2 letter: header 8% / task 10% / 3 equal rows / footer 8%.
@@ -627,12 +837,23 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
     border: 0 !important;
     width: 8.5in !important;
     min-height: 11in !important;
-    height: 11in !important;
+    height: auto !important;
     box-shadow: none !important;
-    background: #ffffff !important;
-    color: #1a1a1a !important;
     page-break-after: always;
     break-after: page;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .homescool-letter-page--lesson,
+  .homescool-letter-page--quiz,
+  .homescool-letter__hero,
+  .homescool-letter__point,
+  .homescool-letter__summary,
+  .homescool-letter__q,
+  .homescool-letter__choice,
+  .homescool-letter__point-badge,
+  .homescool-letter__choice-mark {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
@@ -643,6 +864,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   }
 
   .homescool-letter-page--mat {
+    height: 11in !important;
+    min-height: 11in !important;
     background: #f7f3ee !important;
   }
 }

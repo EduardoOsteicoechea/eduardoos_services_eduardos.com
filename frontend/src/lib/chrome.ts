@@ -51,7 +51,14 @@ function setPanelHidden(id: string, hidden: boolean): void {
 }
 
 function syncTrayOpenAttr(): void {
-  const openId = ALL_PANELS.find((id) => panelOpen(id));
+  // Fixed Homescool DHS is a docked rail, not an overlay tray — ignore it for
+  // data-tray-open / backdrop so the letter stage stays undimmed.
+  const openId = ALL_PANELS.find((id) => {
+    if (id === "dynamic-header" && isHomescoolFixedDhs()) {
+      return false;
+    }
+    return panelOpen(id);
+  });
   if (openId) {
     document.documentElement.dataset.trayOpen = openId;
   } else {

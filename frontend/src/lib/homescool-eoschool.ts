@@ -56,18 +56,25 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
 }
 
 function buildLessonPage(doc: EoschoolDocument): HTMLElement {
-  const page = letterPage();
-  page.append(metaHeader(doc), el("h2", "homescool-letter__heading", "Clase"));
+  const page = letterPage("homescool-letter-page--lesson");
+  page.append(lessonHeader(doc, "Clase"));
+
   const points = doc.lesson?.points ?? [];
-  for (const p of points) {
-    const block = el("section", "homescool-letter__point");
-    if (p.heading) block.append(el("h3", "homescool-letter__point-title", p.heading));
-    if (p.body) block.append(el("p", "homescool-letter__body", p.body));
-    page.append(block);
-  }
+  const stack = el("div", "homescool-letter__stack");
+  points.forEach((p, index) => {
+    const block = el("section", `homescool-letter__point homescool-letter__point--${(index % 3) + 1}`);
+    const badge = el("span", "homescool-letter__point-badge", String(index + 1));
+    const copy = el("div", "homescool-letter__point-copy");
+    if (p.heading) copy.append(el("h3", "homescool-letter__point-title", p.heading));
+    if (p.body) copy.append(el("p", "homescool-letter__body", p.body));
+    block.append(badge, copy);
+    stack.append(block);
+  });
+  page.append(stack);
+
   if (doc.lesson?.summary) {
     const sum = el("section", "homescool-letter__summary");
-    sum.append(el("h3", "homescool-letter__point-title", "Resumen"));
+    sum.append(el("h3", "homescool-letter__summary-label", "Resumen"));
     sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
     page.append(sum);
   }
@@ -80,13 +87,12 @@ function buildQuizPage(
   startIndex: number,
   total: number,
 ): HTMLElement {
-  const page = letterPage();
+  const page = letterPage("homescool-letter-page--quiz");
   page.append(
-    metaHeader(doc),
-    el(
-      "h2",
-      "homescool-letter__heading",
-      `Cuestionario — ${total} preguntas (días 1–${doc.day}) · ${startIndex}–${startIndex + questions.length - 1}`,
+    lessonHeader(
+      doc,
+      `Cuestionario · ${total} preguntas (días 1–${doc.day})`,
+      `${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
   const list = el("ol", "homescool-letter__quiz");
@@ -103,7 +109,9 @@ function buildQuizPage(
         const opt = document.createElement("li");
         opt.className = "homescool-letter__choice";
         const mark = letters[idx] ?? String(idx + 1);
-        opt.textContent = `${mark}) ${c}`;
+        const markEl = el("span", "homescool-letter__choice-mark", mark);
+        const textEl = el("span", "homescool-letter__choice-text", c);
+        opt.append(markEl, textEl);
         ul.append(opt);
       });
       li.append(ul);
@@ -114,18 +122,26 @@ function buildQuizPage(
   return page;
 }
 
-function letterPage(): HTMLElement {
+function letterPage(...extra: string[]): HTMLElement {
   const page = document.createElement("div");
-  page.className = "homescool-letter-page";
+  page.className = ["homescool-letter-page", ...extra].filter(Boolean).join(" ");
   return page;
 }
 
-function metaHeader(doc: EoschoolDocument): HTMLElement {
-  const head = el(
-    "header",
-    "homescool-letter__meta",
-    `${doc.title} · c${doc.cycle} s${doc.week} d${doc.day} · ${doc.subject} · nivel ${doc.level}`,
+function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
+  const head = el("header", "homescool-letter__hero");
+  const top = el("div", "homescool-letter__hero-top");
+  top.append(el("span", "homescool-letter__kicker", kicker));
+  top.append(
+    el(
+      "span",
+      "homescool-letter__meta",
+      `c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`,
+    ),
   );
+  head.append(top);
+  head.append(el("h2", "homescool-letter__heading", doc.title));
+  if (sub) head.append(el("p", "homescool-letter__sub", sub));
   return head;
 }
 

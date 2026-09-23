@@ -130,6 +130,8 @@ import "../../styles/homescool-workspace.css";
       "afterprint",
       () => {
         document.documentElement.classList.remove("homescool-printing");
+        // Restore fixed curriculum rail after print.
+        document.getElementById("dynamic-header")?.removeAttribute("hidden");
         log("print.after");
       },
       { once: true },
