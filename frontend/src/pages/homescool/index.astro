@@ -9,10 +9,8 @@ import "../../styles/homescool-workspace.css";
     <div class="homescool-dhs" data-homescool-dhs>
       <section class="homescool-dhs__section">
         <h2 class="homescool-dhs__heading" id="homescool-dhs-ciclo">Ciclo</h2>
-        <div class="homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-labelledby="homescool-dhs-ciclo" data-homescool-cycles>
-          <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="false">c1</button>
-          <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
-          <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="true">c3</button>
+        <div class="homescool-dhs__row homescool-dhs__row--tabs" role="group" aria-labelledby="homescool-dhs-ciclo" data-homescool-cycles>
+          <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="true" data-has-material>c3</button>
         </div>
       </section>
       <section class="homescool-dhs__section">
@@ -124,6 +122,22 @@ import "../../styles/homescool-workspace.css";
     return document.querySelector(sel) as T | null;
   }
 
+  function qsa<T extends Element>(sel: string): T[] {
+    return Array.from(document.querySelectorAll(sel)) as T[];
+  }
+
+  /** Prefer the live Homescool rail; fall back to first match (ClientRouter can leave duplicates). */
+  function dhsRoot(): HTMLElement | null {
+    const roots = qsa<HTMLElement>("[data-homescool-dhs]");
+    return roots[roots.length - 1] ?? null;
+  }
+
+  function dhsQs<T extends Element>(sel: string): T | null {
+    const root = dhsRoot();
+    if (root) return root.querySelector(sel) as T | null;
+    return qs<T>(sel);
+  }
+
   function setStageMode(mode: "empty" | "loading" | "sheets") {
     setHidden(qs("[data-homescool-empty]"), mode !== "empty");
     setHidden(qs("[data-homescool-loading]"), mode !== "loading");
@@ -187,10 +201,16 @@ import "../../styles/homescool-workspace.css";
     return levelCells().find((c) => c.key === key);
   }
 
-  /** Keep selection on a published cell; never leave the UI on an empty ciclo/semana. */
+  /** Keep selection on a published cell; never fall back to an unpublished ciclo/semana. */
   function ensurePublishedSelection(reason: string): boolean {
     if (findCell()) return true;
     const near =
+      pickFirstAvailable({ ...DEFAULT_SELECTION }) ||
+      pickFirstAvailable({
+        cycle: DEFAULT_SELECTION.cycle,
+        week: DEFAULT_SELECTION.week,
+      }) ||
+      pickFirstAvailable({ cycle: DEFAULT_SELECTION.cycle }) ||
       pickFirstAvailable({ cycle: selection.cycle, week: selection.week }) ||
       pickFirstAvailable({ cycle: selection.cycle }) ||
       pickFirstAvailable();
@@ -201,6 +221,37 @@ import "../../styles/homescool-workspace.css";
     applyCellToSelection(near);
     log("ensurePublished.snap", { reason, ...selection, key: near.key });
     return true;
+  }
+
+  function uniqueSorted(nums: number[]): number[] {
+    return [...new Set(nums)].sort((a, b) => a - b);
+  }
+
+  function publishedCycles(): number[] {
+    return uniqueSorted(levelCells().map((c) => c.cycle));
+  }
+
+  function publishedWeeks(cycle: number): number[] {
+    return uniqueSorted(levelCells().filter((c) => c.cycle === cycle).map((c) => c.week));
+  }
+
+  function publishedDays(cycle: number, week: number): number[] {
+    return uniqueSorted(
+      levelCells()
+        .filter((c) => c.cycle === cycle && c.week === week)
+        .map((c) => c.day),
+    );
+  }
+
+  function publishedSubjects(cycle: number, week: number, day: number): string[] {
+    const set = new Set(
+      levelCells()
+        .filter((c) => c.cycle === cycle && c.week === week && c.day === day)
+        .map((c) => c.subject),
+    );
+    const ordered = HOMESCOOL_SUBJECTS.filter((s) => set.has(s));
+    const extras = [...set].filter((s) => !ordered.includes(s)).sort();
+    return [...ordered, ...extras];
   }
 
   function mergeCells(
@@ -261,145 +312,138 @@ import "../../styles/homescool-workspace.css";
   }
 
   function syncChipStates() {
-    qs("[data-homescool-cycles]")?.querySelectorAll("[data-cycle]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const cycle = Number(el.dataset.cycle);
-      el.setAttribute("aria-pressed", cycle === selection.cycle ? "true" : "false");
-      el.toggleAttribute("data-has-material", hasMaterial({ cycle }));
-    });
-    qs("[data-homescool-weeks]")?.querySelectorAll("[data-week]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const week = Number(el.dataset.week);
-      el.setAttribute("aria-pressed", week === selection.week ? "true" : "false");
-      el.toggleAttribute("data-has-material", hasMaterial({ cycle: selection.cycle, week }));
-    });
-    qs("[data-homescool-days]")?.querySelectorAll("[data-day]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const day = Number(el.dataset.day);
-      el.setAttribute("aria-pressed", day === selection.day ? "true" : "false");
-      el.toggleAttribute(
-        "data-has-material",
-        hasMaterial({ cycle: selection.cycle, week: selection.week, day }),
-      );
-    });
-    qs("[data-homescool-subjects]")?.querySelectorAll("[data-subject]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      const subject = el.dataset.subject || "";
-      el.setAttribute("aria-pressed", subject === selection.subject ? "true" : "false");
-      el.toggleAttribute(
-        "data-has-material",
-        hasMaterial({
-          cycle: selection.cycle,
-          week: selection.week,
-          day: selection.day,
-          subject,
-        }),
-      );
-    });
-  }
-
-  function buildWeekGrid() {
-    const weeksHost = qs<HTMLElement>("[data-homescool-weeks]");
-    if (!(weeksHost instanceof HTMLElement)) return;
-    weeksHost.replaceChildren();
-    for (let w = 1; w <= 24; w++) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.week = String(w);
-      btn.textContent = `s${w}`;
-      btn.addEventListener("click", () => {
-        if (!hasMaterial({ cycle: selection.cycle, week: w })) {
-          log("select.week.blocked", { week: w, cycle: selection.cycle });
-          return;
-        }
-        selection.week = w;
-        ensurePublishedSelection("week-click");
-        log("select.week", { ...selection });
-        syncChipStates();
-        void openSelection();
+    // Update every DHS copy — ClientRouter can leave a stale rail in the DOM.
+    for (const root of qsa<HTMLElement>("[data-homescool-dhs]")) {
+      root.querySelectorAll("[data-cycle]").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        const cycle = Number(el.dataset.cycle);
+        el.setAttribute("aria-pressed", cycle === selection.cycle ? "true" : "false");
+        el.toggleAttribute("data-has-material", hasMaterial({ cycle }));
       });
-      weeksHost.append(btn);
-    }
-  }
-
-  function buildDayGrid() {
-    const daysHost = qs<HTMLElement>("[data-homescool-days]");
-    if (!(daysHost instanceof HTMLElement)) return;
-    daysHost.replaceChildren();
-    for (let d = 1; d <= 5; d++) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.day = String(d);
-      btn.textContent = `d${d}`;
-      btn.addEventListener("click", () => {
-        if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) {
-          log("select.day.blocked", { day: d });
-          return;
-        }
-        selection.day = d;
-        ensurePublishedSelection("day-click");
-        log("select.day", { ...selection });
-        syncChipStates();
-        void openSelection();
+      root.querySelectorAll("[data-week]").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        const week = Number(el.dataset.week);
+        el.setAttribute("aria-pressed", week === selection.week ? "true" : "false");
+        el.toggleAttribute("data-has-material", hasMaterial({ cycle: selection.cycle, week }));
       });
-      daysHost.append(btn);
-    }
-  }
-
-  function buildSubjectGrid() {
-    const subjectsHost = qs<HTMLElement>("[data-homescool-subjects]");
-    if (!(subjectsHost instanceof HTMLElement)) return;
-    subjectsHost.replaceChildren();
-    for (const code of HOMESCOOL_SUBJECTS) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "homescool-dhs__chip";
-      btn.dataset.subject = code;
-      btn.textContent = code;
-      btn.addEventListener("click", () => {
-        if (
-          !hasMaterial({
+      root.querySelectorAll("[data-day]").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        const day = Number(el.dataset.day);
+        el.setAttribute("aria-pressed", day === selection.day ? "true" : "false");
+        el.toggleAttribute(
+          "data-has-material",
+          hasMaterial({ cycle: selection.cycle, week: selection.week, day }),
+        );
+      });
+      root.querySelectorAll("[data-subject]").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        const subject = el.dataset.subject || "";
+        el.setAttribute("aria-pressed", subject === selection.subject ? "true" : "false");
+        el.toggleAttribute(
+          "data-has-material",
+          hasMaterial({
             cycle: selection.cycle,
             week: selection.week,
             day: selection.day,
-            subject: code,
-          })
-        ) {
-          log("select.subject.blocked", { subject: code });
-          return;
-        }
-        selection.subject = code;
-        log("select.subject", { ...selection });
-        syncChipStates();
-        void openSelection();
+            subject,
+          }),
+        );
       });
-      subjectsHost.append(btn);
     }
   }
 
-  function bindCycles() {
-    const cyclesHost = qs("[data-homescool-cycles]");
-    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
-      if (!(el instanceof HTMLElement)) return;
-      // Drop stale listeners left from a prior ClientRouter visit.
-      const next = el.cloneNode(true) as HTMLElement;
-      el.replaceWith(next);
-      next.addEventListener("click", () => {
-        const c = Number(next.dataset.cycle);
-        if (!c) return;
-        if (!hasMaterial({ cycle: c })) {
-          log("select.cycle.blocked", { cycle: c });
-          return;
-        }
-        selection.cycle = c;
-        ensurePublishedSelection("cycle-click");
-        log("select.cycle", { ...selection });
-        syncChipStates();
-        void openSelection();
-      });
-    });
+  function makeChip(label: string): HTMLButtonElement {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "homescool-dhs__chip";
+    btn.textContent = label;
+    return btn;
+  }
+
+  /** Rebuild cycle/week/day/subject chips from published cells only (no empty C1/S1 grid). */
+  function rebuildPublishedChips() {
+    const cyclesHost = dhsQs<HTMLElement>("[data-homescool-cycles]");
+    const weeksHost = dhsQs<HTMLElement>("[data-homescool-weeks]");
+    const daysHost = dhsQs<HTMLElement>("[data-homescool-days]");
+    const subjectsHost = dhsQs<HTMLElement>("[data-homescool-subjects]");
+
+    if (cyclesHost) {
+      cyclesHost.replaceChildren();
+      for (const c of publishedCycles()) {
+        const btn = makeChip(`c${c}`);
+        btn.dataset.cycle = String(c);
+        btn.addEventListener("click", () => {
+          if (!hasMaterial({ cycle: c })) return;
+          selection.cycle = c;
+          ensurePublishedSelection("cycle-click");
+          log("select.cycle", { ...selection });
+          rebuildPublishedChips();
+          void openSelection();
+        });
+        cyclesHost.append(btn);
+      }
+    }
+
+    if (weeksHost) {
+      weeksHost.replaceChildren();
+      for (const w of publishedWeeks(selection.cycle)) {
+        const btn = makeChip(`s${w}`);
+        btn.dataset.week = String(w);
+        btn.addEventListener("click", () => {
+          if (!hasMaterial({ cycle: selection.cycle, week: w })) return;
+          selection.week = w;
+          ensurePublishedSelection("week-click");
+          log("select.week", { ...selection });
+          rebuildPublishedChips();
+          void openSelection();
+        });
+        weeksHost.append(btn);
+      }
+    }
+
+    if (daysHost) {
+      daysHost.replaceChildren();
+      for (const d of publishedDays(selection.cycle, selection.week)) {
+        const btn = makeChip(`d${d}`);
+        btn.dataset.day = String(d);
+        btn.addEventListener("click", () => {
+          if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) return;
+          selection.day = d;
+          ensurePublishedSelection("day-click");
+          log("select.day", { ...selection });
+          rebuildPublishedChips();
+          void openSelection();
+        });
+        daysHost.append(btn);
+      }
+    }
+
+    if (subjectsHost) {
+      subjectsHost.replaceChildren();
+      for (const code of publishedSubjects(selection.cycle, selection.week, selection.day)) {
+        const btn = makeChip(code);
+        btn.dataset.subject = code;
+        btn.addEventListener("click", () => {
+          if (
+            !hasMaterial({
+              cycle: selection.cycle,
+              week: selection.week,
+              day: selection.day,
+              subject: code,
+            })
+          ) {
+            return;
+          }
+          selection.subject = code;
+          log("select.subject", { ...selection });
+          rebuildPublishedChips();
+          void openSelection();
+        });
+        subjectsHost.append(btn);
+      }
+    }
+
+    syncChipStates();
   }
 
   function bindPrintOnce() {
@@ -484,10 +528,6 @@ import "../../styles/homescool-workspace.css";
     setHidden(gate, true);
     setHidden(workspace, false);
     bindPrintOnce();
-    buildWeekGrid();
-    buildDayGrid();
-    buildSubjectGrid();
-    bindCycles();
     if (banner) banner.textContent = "Loading materials…";
 
     const [mongoRes, feRes] = await Promise.all([
@@ -521,6 +561,8 @@ import "../../styles/homescool-workspace.css";
       cells: cells.length,
       mongo: cells.filter((c) => c.source === "mongo").length,
       feBackup: cells.filter((c) => c.source === "fe-backup").length,
+      cycles: publishedCycles(),
+      weeks: publishedWeeks(DEFAULT_SELECTION.cycle),
     });
 
     const deep =
@@ -539,7 +581,7 @@ import "../../styles/homescool-workspace.css";
       }
     }
     ensurePublishedSelection("boot");
-    syncChipStates();
+    rebuildPublishedChips();
     await openSelection();
   }
 
@@ -612,6 +654,13 @@ import "../../styles/homescool-workspace.css";
       }
 
       if (seq !== openSeq) return;
+      // Anchor chips to the document we actually mounted (never drift to C1/S1).
+      selection = {
+        cycle: doc.cycle,
+        week: doc.week,
+        day: doc.day,
+        subject: doc.subject,
+      };
       mountEoschool(doc);
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
@@ -622,8 +671,7 @@ import "../../styles/homescool-workspace.css";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn) printBtn.disabled = !currentMaterialId;
-      // Re-assert chips after async load (ClientRouter can leave stale aria-pressed).
-      syncChipStates();
+      rebuildPublishedChips();
       log("openSelection.ready", {
         key: match.key,
         materialId: currentMaterialId,
