@@ -192,3 +192,74 @@ describe("main-menu session chrome", () => {
     });
   });
 });
+
+describe("menu toolbar span", () => {
+  beforeEach(() => {
+    // Avoid stacking document click listeners across chrome tests.
+    window.__chromeStarted = true;
+    document.documentElement.removeAttribute("data-page");
+    document.documentElement.removeAttribute("data-menu-toolbar");
+    document.body.innerHTML = `
+      <aside id="main-menu" class="sidebar-left" hidden>
+        <header class="sidebar-toolbar"></header>
+      </aside>
+      <aside id="dynamic-header" class="sidebar-right" hidden></aside>
+      <aside id="agent-sidebar" class="sidebar-right" hidden></aside>
+    `;
+    vi.mocked(getMe).mockResolvedValue({
+      status: 401,
+      requestId: "rid-toolbar",
+      data: { error: "unauthorized" },
+    });
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
+  });
+
+  afterEach(() => {
+    document.body.innerHTML = "";
+    document.documentElement.removeAttribute("data-page");
+    document.documentElement.removeAttribute("data-menu-toolbar");
+    window.__chromeStarted = false;
+    vi.clearAllMocks();
+  });
+
+  it("sets menu-only toolbar when there is no overlay DHS or chat", () => {
+    (document.getElementById("main-menu") as HTMLElement).hidden = false;
+    startChrome();
+    expect(document.documentElement.dataset.menuToolbar).toBe("menu");
+  });
+
+  it("widens for overlay DHS actions beside the menu", () => {
+    (document.getElementById("main-menu") as HTMLElement).hidden = false;
+    const dhs = document.getElementById("dynamic-header") as HTMLElement;
+    dhs.hidden = false;
+    dhs.innerHTML = `<button class="dhs-action" type="button">Tools</button>`;
+    startChrome();
+    expect(document.documentElement.dataset.menuToolbar).toBe("menu-dhs");
+  });
+
+  it("ignores Homescool fixed DHS when sizing the menu toolbar", () => {
+    document.documentElement.setAttribute("data-page", "homescool-workspace");
+    (document.getElementById("main-menu") as HTMLElement).hidden = false;
+    const dhs = document.getElementById("dynamic-header") as HTMLElement;
+    dhs.hidden = false;
+    dhs.innerHTML = `<div class="homescool-dhs" data-homescool-dhs></div>`;
+    startChrome();
+    expect(document.documentElement.dataset.menuToolbar).toBe("menu");
+  });
+
+  it("spans agent only when Homescool chat opens beside the menu", () => {
+    document.documentElement.setAttribute("data-page", "homescool-workspace");
+    (document.getElementById("main-menu") as HTMLElement).hidden = false;
+    const dhs = document.getElementById("dynamic-header") as HTMLElement;
+    dhs.hidden = false;
+    dhs.innerHTML = `<div class="homescool-dhs" data-homescool-dhs></div>`;
+    (document.getElementById("agent-sidebar") as HTMLElement).hidden = false;
+    startChrome();
+    expect(document.documentElement.dataset.menuToolbar).toBe("menu-agent");
+  });
+});

@@ -565,48 +565,37 @@ a {
   background: var(--color-surface);
 }
 
-/* Paint the toolbar band across docked DHS / agent columns (controls stay left). */
+/* Paint the toolbar band across docked DHS / agent columns (controls stay left).
+   Width follows data-menu-toolbar from chrome: menu | menu-dhs | menu-agent | menu-dhs-agent.
+   Homescool fixed rail is not a docked overlay, so it does not widen the band. */
 #main-menu .sidebar-toolbar::after {
   content: none;
 }
 
-#main-menu:has(~ #dynamic-header:not([hidden])):not(:has(~ #agent-sidebar:not([hidden]))) .sidebar-toolbar::after {
+html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after,
+html[data-menu-toolbar="menu-agent"] #main-menu .sidebar-toolbar::after,
+html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
+  background: var(--color-surface);
+  border-bottom: var(--border-width) solid var(--color-border);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after {
   width: var(--sidebar-width);
-  background: var(--color-surface);
-  border-bottom: var(--border-width) solid var(--color-border);
-  box-sizing: border-box;
-  pointer-events: none;
 }
 
-#main-menu:has(~ #agent-sidebar:not([hidden])):not(:has(~ #dynamic-header:not([hidden]))) .sidebar-toolbar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
+html[data-menu-toolbar="menu-agent"] #main-menu .sidebar-toolbar::after {
   width: var(--agent-sidebar-width);
-  background: var(--color-surface);
-  border-bottom: var(--border-width) solid var(--color-border);
-  box-sizing: border-box;
-  pointer-events: none;
 }
 
-#main-menu:has(~ #dynamic-header:not([hidden])):has(~ #agent-sidebar:not([hidden])) .sidebar-toolbar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
+html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   width: calc(var(--sidebar-width) + var(--agent-sidebar-width));
-  background: var(--color-surface);
-  border-bottom: var(--border-width) solid var(--color-border);
-  box-sizing: border-box;
-  pointer-events: none;
 }
 
 .sidebar-toolbar .icon-btn {

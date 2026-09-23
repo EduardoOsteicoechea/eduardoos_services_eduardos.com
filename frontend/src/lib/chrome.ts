@@ -70,6 +70,26 @@ function syncTrayOpenAttr(): void {
   }
 }
 
+/** Overlay columns that share the menu toolbar band (excludes Homescool fixed rail). */
+function syncMenuToolbarSpan(): void {
+  const root = document.documentElement;
+  if (!panelOpen("main-menu")) {
+    delete root.dataset.menuToolbar;
+    return;
+  }
+  const dhsDocked = panelOpen("dynamic-header") && !isHomescoolFixedDhs();
+  const agentDocked = panelOpen("agent-sidebar");
+  if (dhsDocked && agentDocked) {
+    root.dataset.menuToolbar = "menu-dhs-agent";
+  } else if (dhsDocked) {
+    root.dataset.menuToolbar = "menu-dhs";
+  } else if (agentDocked) {
+    root.dataset.menuToolbar = "menu-agent";
+  } else {
+    root.dataset.menuToolbar = "menu";
+  }
+}
+
 function syncExpanded(): void {
   const pairs: Array<[string, string]> = [
     [".header-menu", "main-menu"],
@@ -85,6 +105,7 @@ function syncExpanded(): void {
     });
   }
   syncTrayOpenAttr();
+  syncMenuToolbarSpan();
 }
 
 function isEreportPage(): boolean {
