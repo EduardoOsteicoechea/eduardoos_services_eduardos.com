@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "geo",
+  "locale": "es",
+  "title": "Estados y capitales de Venezuela",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Mapa político",
+        "body": "Venezuela tiene 24 entidades: 23 estados + Distrito Capital."
+      },
+      {
+        "id": "p2",
+        "heading": "Capitales clave",
+        "body": "Memoriza capitales de los estados más grandes y del DC."
+      },
+      {
+        "id": "p3",
+        "heading": "Repaso por regiones",
+        "body": "Agrupa estados por región para recordar mejor."
+      }
+    ],
+    "summary": "Asociar cada estado (y el DC) con su capital."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "¿Cuántas entidades federales contamos?",
+        "choices": [],
+        "answer": "24"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Capital de Venezuela (DC)",
+        "choices": [],
+        "answer": "Caracas"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Zulia capital?",
+        "choices": [
+          "Maracaibo",
+          "Valencia",
+          "Barquisimeto",
+          "Mérida"
+        ],
+        "answer": "Maracaibo"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Carabobo capital?",
+        "choices": [
+          "Valencia",
+          "Maracay",
+          "Puerto Cabello",
+          "San Carlos"
+        ],
+        "answer": "Valencia"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Capital de Mérida",
+        "choices": [],
+        "answer": "Mérida"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Tema",
+        "choices": [],
+        "answer": "estados y capitales"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Miranda capital?",
+        "choices": [
+          "Los Teques",
+          "Guatire",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Los Teques"
+      }
+    ]
+  },
+  "media": []
+}

@@ -1,0 +1,120 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "mat",
+  "locale": "es",
+  "title": "Tablas de multiplicar 1–12",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Tablas 1 a 4",
+        "body": "Memoriza productos 1×1 a 4×12. Ancla ×1, ×2 y ×10; luego ×3 y ×4."
+      },
+      {
+        "id": "p2",
+        "heading": "Tablas 5 a 8",
+        "body": "Practica 5×n a 8×n. La del 5 termina en 0 o 5; úsala para comprobar."
+      },
+      {
+        "id": "p3",
+        "heading": "Tablas 9 a 12",
+        "body": "Cierra con 9×n a 12×n. Truco del 9 (dígitos suman 9); 11 es simétrica hasta 9."
+      }
+    ],
+    "summary": "Recordar de memoria todos los productos de 1×1 a 12×12."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿3×4?",
+        "choices": [
+          "7",
+          "12",
+          "14",
+          "16"
+        ],
+        "answer": "12"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿5×6?",
+        "choices": [
+          "25",
+          "30",
+          "35",
+          "11"
+        ],
+        "answer": "30"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿7×8?",
+        "choices": [
+          "54",
+          "56",
+          "63",
+          "48"
+        ],
+        "answer": "56"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿9×9?",
+        "choices": [
+          "72",
+          "81",
+          "99",
+          "18"
+        ],
+        "answer": "81"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿11×3?",
+        "choices": [
+          "33",
+          "14",
+          "111",
+          "30"
+        ],
+        "answer": "33"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Producto de 12×12",
+        "choices": [],
+        "answer": "144"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Rango del punto 1 (factores)",
+        "choices": [],
+        "answer": "1 a 4"
+      }
+    ]
+  },
+  "media": []
+}

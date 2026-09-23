@@ -257,6 +257,15 @@ export async function fetchHomescoolMaterial(id: string): Promise<{
     pdfUrl?: string;
     htmlUrl?: string;
   }>(`/homescool/materials/${encodeURIComponent(id)}`);
+  if (mustLog) {
+    console.log("[homescool] material", {
+      status,
+      requestId,
+      id,
+      format: data.material?.format,
+      hasDocumentUrl: Boolean(data.documentUrl),
+    });
+  }
   if (status < 200 || status >= 300) {
     return { material: null, error: data.message || "Could not load material.", requestId };
   }

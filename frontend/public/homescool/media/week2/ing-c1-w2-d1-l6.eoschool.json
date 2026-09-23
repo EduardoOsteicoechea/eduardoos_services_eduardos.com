@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "ing",
+  "locale": "en",
+  "title": "Indicative verb tenses",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Simple tenses",
+        "body": "Present, imperfect, preterite, future, and simple conditional."
+      },
+      {
+        "id": "p2",
+        "heading": "Compound tenses",
+        "body": "Present perfect, pluperfect, anterior preterite, future perfect, conditional perfect."
+      },
+      {
+        "id": "p3",
+        "heading": "Usage",
+        "body": "When to choose simple vs compound: relative time and perfect aspect."
+      }
+    ],
+    "summary": "Master the ten indicative tenses (five simple + five compound)."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Name tres tiempos simples",
+        "choices": [],
+        "answer": "presente imperfecto pretérito"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Name tres tiempos compuestos",
+        "choices": [],
+        "answer": "antepresente pluscuamperfecto antefuturo"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Is the simple conditional…?",
+        "choices": [
+          "simple",
+          "compuesto",
+          "subjuntivo",
+          "imperativo"
+        ],
+        "answer": "simple"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Which auxiliary do compounds use?",
+        "choices": [
+          "ser",
+          "haber",
+          "estar",
+          "ir"
+        ],
+        "answer": "haber"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Another name for present perfect",
+        "choices": [],
+        "answer": "pretérito perfecto compuesto"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Mood you are studying",
+        "choices": [],
+        "answer": "indicativo"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "How many simple tenses did we list?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      }
+    ]
+  },
+  "media": []
+}

@@ -53,25 +53,31 @@ func (a *App) requireHomescoolMaterialsAccess(w http.ResponseWriter, r *http.Req
 }
 
 func (a *App) listHomescoolMaterialsHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.materials.list.enter")
 	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
 	if !ok {
+		a.mustLogf(r, "homescool.materials.list.denied")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.list.owners", "count", len(owners))
 	cycle := 0
 	if raw := strings.TrimSpace(r.URL.Query().Get("cycle")); raw != "" {
 		n, err := strconv.Atoi(raw)
 		if err != nil || n < 1 || n > 3 {
+			a.mustLogf(r, "homescool.materials.list.bad_cycle", "raw", raw)
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
 		cycle = n
 	}
+	a.mustLogf(r, "homescool.materials.list.query", "cycle", cycle)
 	rows, err := a.homescool.ListMaterials(r.Context(), owners, cycle)
 	if err != nil {
 		a.mustLogf(r, "homescool.materials.list.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.list.rows", "n", len(rows))
 	cycles := make([]HomescoolCycleSummary, 0, 3)
 	counts := map[int]int{1: 0, 2: 0, 3: 0}
 	for _, m := range rows {
@@ -85,12 +91,14 @@ func (a *App) listHomescoolMaterialsHandler(w http.ResponseWriter, r *http.Reque
 				counts[m.Cycle]++
 			}
 			rows = all
+			a.mustLogf(r, "homescool.materials.list.all_cycles", "n", len(rows))
 		}
 	}
 	for c := 1; c <= 3; c++ {
 		n := counts[c]
 		cycles = append(cycles, HomescoolCycleSummary{Cycle: c, Count: n, Empty: n == 0})
 	}
+	a.mustLogf(r, "homescool.materials.list.ok", "materials", len(rows))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"cycles":    cycles,
 		"materials": rows,
@@ -98,53 +106,66 @@ func (a *App) listHomescoolMaterialsHandler(w http.ResponseWriter, r *http.Reque
 }
 
 func (a *App) getHomescoolMaterialHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.materials.get.enter")
 	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
 	if !ok {
+		a.mustLogf(r, "homescool.materials.get.denied")
 		return
 	}
 	id := strings.TrimSpace(r.PathValue("materialId"))
+	a.mustLogf(r, "homescool.materials.get.id", "id", id)
 	if id == "" {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.get.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.mustLogf(r, "homescool.materials.get.miss", "found", found)
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.get.ok", "format", m.Format, "cycle", m.Cycle, "week", m.Week, "day", m.Day, "subject", m.Subject, "level", m.Level)
 	writeJSON(w, http.StatusOK, map[string]any{
-		"material":     m,
-		"viewUrl":      "/homescool/material?id=" + m.ID,
-		"documentUrl":  "/api/homescool/materials/" + m.ID + "/document",
-		"pdfUrl":       "/api/homescool/materials/" + m.ID + "/pdf",
-		"htmlUrl":      "/api/homescool/materials/" + m.ID + "/html",
+		"material":    m,
+		"viewUrl":     "/homescool/material?id=" + m.ID,
+		"documentUrl": "/api/homescool/materials/" + m.ID + "/document",
+		"pdfUrl":      "/api/homescool/materials/" + m.ID + "/pdf",
+		"htmlUrl":     "/api/homescool/materials/" + m.ID + "/html",
 	})
 }
 
 func (a *App) getHomescoolMaterialDocumentHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.materials.document.enter")
 	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
 	if !ok {
+		a.mustLogf(r, "homescool.materials.document.denied")
 		return
 	}
 	id := strings.TrimSpace(r.PathValue("materialId"))
+	a.mustLogf(r, "homescool.materials.document.id", "id", id)
 	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.document.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.mustLogf(r, "homescool.materials.document.miss")
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
 	raw, err := a.homescool.ReadMaterialDocument(r.Context(), m)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.document.read_err", "err", err.Error(), "path", m.DocumentPath)
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.document.ok", "format", m.Format, "bytes", len(raw))
 	if m.Format == eoschoolFormatName {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	} else {
@@ -155,40 +176,51 @@ func (a *App) getHomescoolMaterialDocumentHandler(w http.ResponseWriter, r *http
 }
 
 func (a *App) getHomescoolMaterialPDFHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.materials.pdf.enter")
 	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
 	if !ok {
+		a.mustLogf(r, "homescool.materials.pdf.denied")
 		return
 	}
 	id := strings.TrimSpace(r.PathValue("materialId"))
+	a.mustLogf(r, "homescool.materials.pdf.id", "id", id)
 	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.pdf.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.mustLogf(r, "homescool.materials.pdf.miss")
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
 	if m.Format != eoschoolFormatName {
+		a.mustLogf(r, "homescool.materials.pdf.not_eoschool", "format", m.Format)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	raw, err := a.homescool.ReadMaterialDocument(r.Context(), m)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.pdf.read_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.pdf.parse", "bytes", len(raw))
 	doc, err := parseEoschoolDocument(raw)
 	if err != nil {
+		a.mustLogf(r, "homescool.materials.pdf.parse_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.pdf.build", "day", doc.Day, "quiz", doc.Quiz.QuestionCount, "points", len(doc.Lesson.Points))
 	pdfBytes, err := buildEoschoolPDF(doc)
 	if err != nil {
 		a.mustLogf(r, "homescool.pdf.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.mustLogf(r, "homescool.materials.pdf.ok", "pdf_bytes", len(pdfBytes))
 	w.Header().Set("Content-Type", "application/pdf")
 	w.Header().Set("Content-Disposition", `inline; filename="eoschool.pdf"`)
 	_, _ = w.Write(pdfBytes)
@@ -260,6 +292,7 @@ func homescoolOwnerAllowed(owners []string, ownerUserID string) bool {
 
 func (a *App) homescoolV1AccessHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
+	a.mustLogf(r, "homescool.v1.access.ok", "user_id", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"allowed":     true,
 		"service":     productHomescool,
@@ -271,10 +304,12 @@ func (a *App) homescoolV1AccessHandler(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) homescoolV1ListMaterialsHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
+	a.mustLogf(r, "homescool.v1.list.enter", "user_id", user.ID)
 	cycle := 0
 	if raw := strings.TrimSpace(r.URL.Query().Get("cycle")); raw != "" {
 		n, err := strconv.Atoi(raw)
 		if err != nil || n < 1 || n > 3 {
+			a.mustLogf(r, "homescool.v1.list.bad_cycle", "raw", raw)
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
@@ -282,9 +317,11 @@ func (a *App) homescoolV1ListMaterialsHandler(w http.ResponseWriter, r *http.Req
 	}
 	rows, err := a.homescool.ListMaterials(r.Context(), []string{user.ID}, cycle)
 	if err != nil {
+		a.mustLogf(r, "homescool.v1.list.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.mustLogf(r, "homescool.v1.list.ok", "cycle", cycle, "n", len(rows))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ownerUserId": user.ID,
 		"materials":   rows,
@@ -294,15 +331,19 @@ func (a *App) homescoolV1ListMaterialsHandler(w http.ResponseWriter, r *http.Req
 func (a *App) homescoolV1GetMaterialHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
 	id := strings.TrimSpace(r.PathValue("materialId"))
+	a.mustLogf(r, "homescool.v1.get.enter", "user_id", user.ID, "id", id)
 	m, found, err := a.homescool.GetMaterial(r.Context(), user.ID, id)
 	if err != nil {
+		a.mustLogf(r, "homescool.v1.get.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if !found {
+		a.mustLogf(r, "homescool.v1.get.miss")
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	a.mustLogf(r, "homescool.v1.get.ok", "format", m.Format, "subject", m.Subject, "day", m.Day)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"material":    m,
 		"viewUrl":     a.homescoolMaterialViewURL(r, m.ID),
@@ -318,19 +359,24 @@ func (a *App) homescoolMaterialViewURL(r *http.Request, id string) string {
 
 func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
+	a.mustLogf(r, "homescool.v1.post.enter", "user_id", user.ID)
 	var body struct {
 		ConfirmOverwrite bool            `json:"confirmOverwrite"`
 		Material         json.RawMessage `json:"material"`
 	}
 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 2<<20)).Decode(&body); err != nil {
+		a.mustLogf(r, "homescool.v1.post.decode_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	a.mustLogf(r, "homescool.v1.post.decoded", "confirmOverwrite", body.ConfirmOverwrite, "material_bytes", len(body.Material))
 	if !body.ConfirmOverwrite {
+		a.mustLogf(r, "homescool.v1.post.no_confirm")
 		a.writeSafeError(w, r, http.StatusBadRequest, "replace_confirm_required")
 		return
 	}
 	if len(body.Material) == 0 {
+		a.mustLogf(r, "homescool.v1.post.empty_material")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -341,16 +387,23 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 		HTML   string `json:"html"`
 	}
 	_ = json.Unmarshal(body.Material, &probe)
+	a.mustLogf(r, "homescool.v1.post.probe", "format", probe.Format, "has_html", strings.TrimSpace(probe.HTML) != "")
 
 	if probe.Format == eoschoolFormatName || (probe.Format == "" && probe.HTML == "") {
+		a.mustLogf(r, "homescool.v1.post.branch", "branch", "eoschool")
 		doc, err := parseEoschoolDocument(body.Material)
 		if err != nil {
 			a.mustLogf(r, "homescool.v1.post.validate", "err", err.Error())
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
+		a.mustLogf(r, "homescool.v1.post.validated",
+			"cycle", doc.Cycle, "week", doc.Week, "day", doc.Day, "level", doc.Level,
+			"subject", doc.Subject, "kind", doc.Lesson.Kind, "points", len(doc.Lesson.Points),
+			"quiz", doc.Quiz.QuestionCount)
 		raw, err := marshalEoschoolDocument(doc)
 		if err != nil {
+			a.mustLogf(r, "homescool.v1.post.marshal_err", "err", err.Error())
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
@@ -365,12 +418,14 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 			Title:       doc.Title,
 			Slug:        doc.Subject,
 		}
+		a.mustLogf(r, "homescool.v1.post.upsert_begin", "title", m.Title)
 		saved, err := a.homescool.UpsertMaterial(r.Context(), m, raw)
 		if err != nil {
 			a.mustLogf(r, "homescool.v1.post.error", "err", err.Error())
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
+		a.mustLogf(r, "homescool.v1.post.ok", "id", saved.ID, "documentPath", saved.DocumentPath)
 		a.auditEvent(r, "homescool_material_upsert", "ok", user.ID)
 		writeJSON(w, http.StatusOK, map[string]any{
 			"material":    saved,
@@ -382,6 +437,7 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 	}
 
 	// Legacy HTML upsert (deprecated).
+	a.mustLogf(r, "homescool.v1.post.branch", "branch", "legacy_html")
 	var legacy struct {
 		Cycle       int    `json:"cycle"`
 		Week        int    `json:"week"`
@@ -393,6 +449,7 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 		HTML        string `json:"html"`
 	}
 	if err := json.Unmarshal(body.Material, &legacy); err != nil || strings.TrimSpace(legacy.HTML) == "" {
+		a.mustLogf(r, "homescool.v1.post.legacy_bad")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -413,6 +470,7 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	a.mustLogf(r, "homescool.v1.post.legacy_ok", "id", saved.ID)
 	a.auditEvent(r, "homescool_material_upsert", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"material": saved,

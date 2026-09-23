@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "esp",
+  "locale": "es",
+  "title": "Tiempos verbales del indicativo",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Simples",
+        "body": "Presente, imperfecto, pretérito, futuro y condicional simple."
+      },
+      {
+        "id": "p2",
+        "heading": "Compuestos",
+        "body": "Antepresente, pluscuamperfecto, antepretérito, antefuturo y condicional perfecto."
+      },
+      {
+        "id": "p3",
+        "heading": "Uso",
+        "body": "Cuándo elegir simple vs compuesto: tiempo relativo y aspecto perfecto."
+      }
+    ],
+    "summary": "Dominar los diez tiempos del indicativo (cinco simples + cinco compuestos)."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Nombra tres tiempos simples",
+        "choices": [],
+        "answer": "presente imperfecto pretérito"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Nombra tres tiempos compuestos",
+        "choices": [],
+        "answer": "antepresente pluscuamperfecto antefuturo"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿El condicional simple es…?",
+        "choices": [
+          "simple",
+          "compuesto",
+          "subjuntivo",
+          "imperativo"
+        ],
+        "answer": "simple"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué auxiliar usan los compuestos?",
+        "choices": [
+          "ser",
+          "haber",
+          "estar",
+          "ir"
+        ],
+        "answer": "haber"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Otro nombre del antepresente",
+        "choices": [],
+        "answer": "pretérito perfecto compuesto"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Modo que estudias",
+        "choices": [],
+        "answer": "indicativo"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuántos tiempos simples listamos?",
+        "choices": [
+          "3",
+          "4",
+          "5",
+          "10"
+        ],
+        "answer": "5"
+      }
+    ]
+  },
+  "media": []
+}

@@ -1,0 +1,191 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 2,
+  "level": 6,
+  "subject": "mat",
+  "locale": "es",
+  "title": "Tablas de multiplicar 1–12",
+  "lesson": {
+    "kind": "deepen",
+    "focusPoint": 1,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Repaso 1–4",
+        "body": "Escribe de memoria la tabla del 3 y del 4. Marca los productos que más te cuestan."
+      }
+    ],
+    "summary": ""
+  },
+  "quiz": {
+    "questionCount": 14,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿3×4?",
+        "choices": [
+          "7",
+          "12",
+          "14",
+          "16"
+        ],
+        "answer": "12"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿5×6?",
+        "choices": [
+          "25",
+          "30",
+          "35",
+          "11"
+        ],
+        "answer": "30"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿7×8?",
+        "choices": [
+          "54",
+          "56",
+          "63",
+          "48"
+        ],
+        "answer": "56"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿9×9?",
+        "choices": [
+          "72",
+          "81",
+          "99",
+          "18"
+        ],
+        "answer": "81"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿11×3?",
+        "choices": [
+          "33",
+          "14",
+          "111",
+          "30"
+        ],
+        "answer": "33"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Producto de 12×12",
+        "choices": [],
+        "answer": "144"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Rango del punto 1 (factores)",
+        "choices": [],
+        "answer": "1 a 4"
+      },
+      {
+        "id": "d2-q1",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿4×7?",
+        "choices": [
+          "24",
+          "28",
+          "32",
+          "21"
+        ],
+        "answer": "28"
+      },
+      {
+        "id": "d2-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿3×9?",
+        "choices": [
+          "27",
+          "24",
+          "36",
+          "18"
+        ],
+        "answer": "27"
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿2×12?",
+        "choices": [
+          "22",
+          "24",
+          "20",
+          "14"
+        ],
+        "answer": "24"
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "short",
+        "prompt": "¿1×cualquier número?",
+        "choices": [],
+        "answer": "el mismo número"
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿4×4?",
+        "choices": [
+          "12",
+          "16",
+          "8",
+          "20"
+        ],
+        "answer": "16"
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "short",
+        "prompt": "Nombre del punto que profundizas hoy",
+        "choices": [],
+        "answer": "Tablas 1 a 4"
+      },
+      {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿3×8?",
+        "choices": [
+          "21",
+          "24",
+          "27",
+          "18"
+        ],
+        "answer": "24"
+      }
+    ]
+  },
+  "media": []
+}

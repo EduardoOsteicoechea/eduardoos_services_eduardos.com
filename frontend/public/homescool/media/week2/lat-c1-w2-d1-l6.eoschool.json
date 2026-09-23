@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "lat",
+  "locale": "es",
+  "title": "Latín: et, ut, non",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "et — y",
+        "body": "Conjunción copulativa; une palabras o cláusulas."
+      },
+      {
+        "id": "p2",
+        "heading": "ut — para que",
+        "body": "Introduce finalidad o resultado (según contexto)."
+      },
+      {
+        "id": "p3",
+        "heading": "non — no",
+        "body": "Negación adverbial delante de lo negado."
+      }
+    ],
+    "summary": "Reconocer y traducir et, ut y non en oraciones cortas."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "et ≈",
+        "choices": [
+          "y",
+          "no",
+          "para que",
+          "pero"
+        ],
+        "answer": "y"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "ut (final) ≈",
+        "choices": [
+          "y",
+          "no",
+          "para que",
+          "después"
+        ],
+        "answer": "para que"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "non ≈",
+        "choices": [
+          "sí",
+          "no",
+          "y",
+          "porque"
+        ],
+        "answer": "no"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Traduce: puer et puella",
+        "choices": [],
+        "answer": "el niño y la niña"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Función de et",
+        "choices": [],
+        "answer": "conjunción copulativa"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Función de non",
+        "choices": [],
+        "answer": "negación"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "Tema",
+        "choices": [],
+        "answer": "et ut non"
+      }
+    ]
+  },
+  "media": []
+}

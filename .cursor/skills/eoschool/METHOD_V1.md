@@ -127,7 +127,7 @@ Each day adds **7 new** questions. The quiz served that day includes **all** que
 
 Cookie UI: `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, `GET /api/homescool/materials/{id}/document`, `GET /api/homescool/materials/{id}/pdf`.
 
-## First content pack — level 6, week 1
+## First content pack — level 6, **week 2**
 
 | Code | Theme |
 | --- | --- |
@@ -144,4 +144,4 @@ Cookie UI: `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, 
 | `teb` | Overview of redemptive-history stages from Genesis to the new earth |
 | `exe` | Romans 1:1–7 |
 
-Agents author **5 documents per subject** (days 1–5) for this pack before moving to other weeks.
+Agents author **5 documents per subject** (days 1–5) for this pack. Live files: `frontend/public/homescool/media/week2/`.

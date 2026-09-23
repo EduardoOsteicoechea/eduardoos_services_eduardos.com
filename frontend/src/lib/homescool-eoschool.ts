@@ -3,6 +3,7 @@
  */
 
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
+import { mustLog } from "./dev-log";
 
 export const HOMESCOOL_SUBJECTS = [
   "mat",
@@ -25,12 +26,22 @@ const QUESTIONS_PER_PAGE = 7;
 
 /** Build letter-portrait DOM pages for lesson + quiz. */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
+  if (mustLog) {
+    console.log("[homescool-eoschool] render.start", {
+      subject: doc.subject,
+      day: doc.day,
+      kind: doc.lesson?.kind,
+      points: doc.lesson?.points?.length,
+      quiz: doc.quiz?.questionCount,
+    });
+  }
   const pages: HTMLElement[] = [];
   pages.push(buildLessonPage(doc));
   const qs = doc.quiz?.questions ?? [];
   for (let i = 0; i < qs.length; i += QUESTIONS_PER_PAGE) {
     pages.push(buildQuizPage(doc, qs.slice(i, i + QUESTIONS_PER_PAGE), i + 1, qs.length));
   }
+  if (mustLog) console.log("[homescool-eoschool] render.done", { pages: pages.length });
   return pages;
 }
 

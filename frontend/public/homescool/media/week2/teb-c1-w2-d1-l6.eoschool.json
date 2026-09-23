@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "teb",
+  "locale": "es",
+  "title": "Historia de redención: Génesis a nueva tierra",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Comienzo",
+        "body": "Creación, caída y promesa en Génesis."
+      },
+      {
+        "id": "p2",
+        "heading": "Centro",
+        "body": "Israel, Cristo y el evangelio en la historia."
+      },
+      {
+        "id": "p3",
+        "heading": "Consumación",
+        "body": "Nueva creación / nueva tierra."
+      }
+    ],
+    "summary": "Recorrer el panorama de las etapas de la redención de Génesis a la nueva tierra."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] ¿Dónde empieza el panorama?",
+        "choices": [],
+        "answer": "Génesis"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] ¿Dónde termina?",
+        "choices": [
+          "nueva tierra",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "nueva tierra"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] Nombra una etapa intermedia",
+        "choices": [],
+        "answer": "Israel o Cristo"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] ¿Quién está en el centro?",
+        "choices": [
+          "Cristo",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "Cristo"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] Libro de inicio",
+        "choices": [],
+        "answer": "Génesis"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] Esperanza final",
+        "choices": [
+          "nueva creación",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "nueva creación"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] Tema",
+        "choices": [],
+        "answer": "historia de redención"
+      }
+    ]
+  },
+  "media": []
+}

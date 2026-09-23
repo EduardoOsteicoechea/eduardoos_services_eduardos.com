@@ -1,0 +1,110 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 1,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "pro",
+  "locale": "es",
+  "title": "Lente de una gota de agua",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Propósito",
+        "body": "Una gota simula la lente del ojo (convexa)."
+      },
+      {
+        "id": "p2",
+        "heading": "Materiales y pasos",
+        "body": "Alambre, lápiz, tazón, agua, periódico; lazo y gota."
+      },
+      {
+        "id": "p3",
+        "heading": "Resultado y por qué",
+        "body": "Letras agrandadas; lente convexa como en el ojo."
+      }
+    ],
+    "summary": "Explicar el experimento de la gota-lente y por qué agranda."
+  },
+  "quiz": {
+    "questionCount": 7,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] ¿Qué simula la gota?",
+        "choices": [],
+        "answer": "lente del ojo"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] Calibre del alambre (aprox.)",
+        "choices": [
+          "20",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "20"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] ¿Qué tipo de lente forma la gota?",
+        "choices": [],
+        "answer": "convexa"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] Si las letras se ven más pequeñas, ¿qué haces?",
+        "choices": [
+          "volver a sumergir",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "volver a sumergir"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] Material para ver letras",
+        "choices": [],
+        "answer": "periódico"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "[d1] ¿Por qué se agrandan?",
+        "choices": [
+          "lente convexa",
+          "otra",
+          "ninguna",
+          "todas"
+        ],
+        "answer": "lente convexa"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "short",
+        "prompt": "[d1] Tema",
+        "choices": [],
+        "answer": "gota de agua"
+      }
+    ]
+  },
+  "media": []
+}

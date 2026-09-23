@@ -57,8 +57,12 @@ import "../../styles/homescool-workspace.css";
   } from "../../lib/homescool";
   import { showErrorModal } from "../../lib/error-modal";
   import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
+  import { mustLog } from "../../lib/dev-log";
 
   const LEVEL = 6;
+  const log = (step: string, detail: Record<string, unknown> = {}) => {
+    if (mustLog) console.log("[homescool-workspace]", step, detail);
+  };
 
   const gate = document.querySelector("[data-homescool-gate]");
   const workspace = document.querySelector("[data-homescool-workspace]");
@@ -75,16 +79,20 @@ import "../../styles/homescool-workspace.css";
   let sheetsReady = false;
   let selection = { cycle: 1, week: 1, day: 1, subject: "mat" };
 
+  log("boot.start", { level: LEVEL });
   const teacher = await requireService("homescool", { requireSubscription: true });
+  log("gate.teacher", { sessionOk: teacher.sessionOk, allowed: teacher.access.allowed });
   const ok = teacher.sessionOk && teacher.access.allowed;
   if (!ok) {
     const guest = await requireService("homescool", { requireSubscription: false });
+    log("gate.guest", { sessionOk: guest.sessionOk, allowed: guest.access.allowed });
     if (!guest.sessionOk || !guest.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = guest.sessionOk ? "Homescool access required." : "Sign in required.";
       }
       setHidden(gate, false);
       setHidden(workspace, true);
+      log("gate.blocked");
     } else {
       await boot();
     }
@@ -93,11 +101,13 @@ import "../../styles/homescool-workspace.css";
   }
 
   printBtn?.addEventListener("click", () => {
+    log("print.click", { sheetsReady, disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null });
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
     window.print();
   });
 
   async function boot() {
+    log("boot.enter");
     setHidden(gate, true);
     setHidden(workspace, false);
     buildWeekGrid();
@@ -106,6 +116,7 @@ import "../../styles/homescool-workspace.css";
     bindCycles();
     if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
     const res = await fetchHomescoolMaterials();
+    log("boot.materials", { error: res.error, count: res.materials.length, requestId: res.requestId });
     if (res.error) {
       showErrorModal({
         message: res.error,
@@ -118,6 +129,7 @@ import "../../styles/homescool-workspace.css";
     materials = res.materials;
     syncChipStates();
     const deep = new URLSearchParams(window.location.search).get("material");
+    log("boot.deep_link", { material: deep });
     if (deep) {
       const m = materials.find((row) => row.id === deep && row.format === "eoschool");
       if (m) {
@@ -127,7 +139,10 @@ import "../../styles/homescool-workspace.css";
           day: m.day,
           subject: m.subject,
         };
+        log("boot.deep_applied", { ...selection });
         syncChipStates();
+      } else {
+        log("boot.deep_miss", { id: deep });
       }
     }
     await openSelection();
@@ -145,6 +160,7 @@ import "../../styles/homescool-workspace.css";
       btn.setAttribute("aria-pressed", w === selection.week ? "true" : "false");
       btn.addEventListener("click", () => {
         selection.week = w;
+        log("select.week", { week: w });
         syncChipStates();
         void openSelection();
       });
@@ -164,6 +180,7 @@ import "../../styles/homescool-workspace.css";
       btn.setAttribute("aria-pressed", d === selection.day ? "true" : "false");
       btn.addEventListener("click", () => {
         selection.day = d;
+        log("select.day", { day: d });
         syncChipStates();
         void openSelection();
       });
@@ -183,6 +200,7 @@ import "../../styles/homescool-workspace.css";
       btn.setAttribute("aria-pressed", code === selection.subject ? "true" : "false");
       btn.addEventListener("click", () => {
         selection.subject = code;
+        log("select.subject", { subject: code });
         syncChipStates();
         void openSelection();
       });
@@ -196,6 +214,7 @@ import "../../styles/homescool-workspace.css";
         const c = Number((el as HTMLElement).dataset.cycle);
         if (!c) return;
         selection.cycle = c;
+        log("select.cycle", { cycle: c });
         syncChipStates();
         void openSelection();
       });
@@ -222,7 +241,7 @@ import "../../styles/homescool-workspace.css";
   }
 
   function findMaterial(): HomescoolMaterial | undefined {
-    return materials.find(
+    const match = materials.find(
       (m) =>
         m.format === "eoschool" &&
         m.cycle === selection.cycle &&
@@ -231,9 +250,12 @@ import "../../styles/homescool-workspace.css";
         (m.level ?? LEVEL) === LEVEL &&
         m.subject === selection.subject,
     );
+    log("findMaterial", { ...selection, level: LEVEL, found: Boolean(match), id: match?.id });
+    return match;
   }
 
   async function openSelection() {
+    log("openSelection.enter", { ...selection });
     sheetsReady = false;
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
     const match = findMaterial();
@@ -244,10 +266,17 @@ import "../../styles/homescool-workspace.css";
       if (banner instanceof HTMLElement) {
         banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
       }
+      log("openSelection.empty");
       return;
     }
     if (banner instanceof HTMLElement) banner.textContent = "Loading…";
     const res = await fetchHomescoolMaterial(match.id);
+    log("openSelection.meta", {
+      error: res.error,
+      requestId: res.requestId,
+      documentUrl: res.documentUrl,
+      format: res.material?.format,
+    });
     if (res.error || !res.material) {
       showErrorModal({
         message: res.error || "Could not load material.",
@@ -258,13 +287,21 @@ import "../../styles/homescool-workspace.css";
     }
     const docUrl = res.documentUrl || `/api/homescool/materials/${match.id}/document`;
     try {
+      log("openSelection.fetch_document", { docUrl });
       const docRes = await fetch(docUrl, { credentials: "include" });
+      log("openSelection.document_status", { status: docRes.status, contentType: docRes.headers.get("content-type") });
       if (!docRes.ok) throw new Error(`document ${docRes.status}`);
       const ctype = docRes.headers.get("content-type") || "";
       if (!ctype.includes("json")) {
         throw new Error("Expected eoschool JSON");
       }
       const doc = (await docRes.json()) as EoschoolDocument;
+      log("openSelection.document_parsed", {
+        day: doc.day,
+        kind: doc.lesson?.kind,
+        points: doc.lesson?.points?.length,
+        quiz: doc.quiz?.questionCount,
+      });
       mountEoschool(doc);
       if (banner instanceof HTMLElement) {
         banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title}`;
@@ -272,7 +309,9 @@ import "../../styles/homescool-workspace.css";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
-    } catch {
+      log("openSelection.ready");
+    } catch (err) {
+      log("openSelection.fail", { err: String(err) });
       showErrorModal({ message: "Could not load eoschool document." });
       if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
     }
@@ -283,7 +322,9 @@ import "../../styles/homescool-workspace.css";
     setHidden(empty, true);
     setHidden(sheetsHost, false);
     sheetsHost.replaceChildren();
-    for (const page of renderEoschoolPages(doc)) {
+    const pages = renderEoschoolPages(doc);
+    log("mountEoschool", { pages: pages.length });
+    for (const page of pages) {
       sheetsHost.append(page);
     }
   }
