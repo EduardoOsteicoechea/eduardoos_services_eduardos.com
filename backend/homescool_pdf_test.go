@@ -53,14 +53,19 @@ func TestInlineQuizPrintCapacityDeepen(t *testing.T) {
 	doc.Lesson.FocusPoint = &fp
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Deep", Body: "Short deepen body."}}
-	if got := inlineQuizPrintCapacity(doc); got != 8 {
-		t.Fatalf("deepen inline=%d want 8", got)
+	doc.Quiz.QuestionCount = 16
+	doc.Quiz.Questions = append(append([]EoschoolQuestion{}, doc.Quiz.Questions...), doc.Quiz.Questions...)
+	if got := inlineQuizPrintCapacity(doc); got != 0 {
+		t.Fatalf("deepen inline=%d want 0", got)
 	}
 	pages := buildLessonQuizPrintPages(doc)
-	if len(pages) < 1 {
-		t.Fatal("expected pages")
+	if len(pages) < 2 {
+		t.Fatalf("expected lesson + quiz pages, got %d", len(pages))
 	}
-	if !strings.Contains(pages[0].Heading, "cuestionario") {
-		t.Fatalf("first page should merge quiz, got %q", pages[0].Heading)
+	if strings.Contains(strings.ToLower(pages[0].Heading), "cuestionario") {
+		t.Fatalf("first page should be lesson only, got %q", pages[0].Heading)
+	}
+	if !strings.Contains(strings.ToLower(pages[1].Heading), "cuestionario") {
+		t.Fatalf("second page should be quiz, got %q", pages[1].Heading)
 	}
 }
