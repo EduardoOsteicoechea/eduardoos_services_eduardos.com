@@ -7,14 +7,26 @@ import "../../styles/homescool-workspace.css";
 <Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
     <div class="homescool-dhs" data-homescool-dhs>
-      <div class="homescool-dhs__section homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-label="Ciclo" data-homescool-cycles>
-        <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="true">c1</button>
-        <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
-        <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="false">c3</button>
-      </div>
-      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--weeks" aria-label="Semana" data-homescool-weeks></div>
-      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--days" aria-label="Día" data-homescool-days></div>
-      <div class="homescool-dhs__section homescool-dhs__grid homescool-dhs__grid--subjects" aria-label="Materia" data-homescool-subjects></div>
+      <section class="homescool-dhs__section">
+        <h2 class="homescool-dhs__heading" id="homescool-dhs-ciclo">Ciclo</h2>
+        <div class="homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-labelledby="homescool-dhs-ciclo" data-homescool-cycles>
+          <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="true">c1</button>
+          <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
+          <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="false">c3</button>
+        </div>
+      </section>
+      <section class="homescool-dhs__section">
+        <h2 class="homescool-dhs__heading" id="homescool-dhs-semana">Semana</h2>
+        <div class="homescool-dhs__grid homescool-dhs__grid--weeks" role="group" aria-labelledby="homescool-dhs-semana" data-homescool-weeks></div>
+      </section>
+      <section class="homescool-dhs__section">
+        <h2 class="homescool-dhs__heading" id="homescool-dhs-dia">Día</h2>
+        <div class="homescool-dhs__grid homescool-dhs__grid--days" role="group" aria-labelledby="homescool-dhs-dia" data-homescool-days></div>
+      </section>
+      <section class="homescool-dhs__section">
+        <h2 class="homescool-dhs__heading" id="homescool-dhs-materia">Materia</h2>
+        <div class="homescool-dhs__grid homescool-dhs__grid--subjects" role="group" aria-labelledby="homescool-dhs-materia" data-homescool-subjects></div>
+      </section>
       <button
         class="homescool-dhs__print"
         type="button"

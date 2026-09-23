@@ -180,13 +180,22 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-dhs {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  gap: var(--space-padding);
   padding: var(--space-padding);
 }
 
 .homescool-dhs__section {
-  padding-bottom: var(--rail-gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding-bottom: var(--space-padding);
   border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.homescool-dhs__heading {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
 }
 
 .homescool-dhs__row,
