@@ -72,25 +72,48 @@ func (s *mongoHomescoolStore) EnsureWebAssets(ctx context.Context, sourceDir str
 	return mem.EnsureWebAssets(ctx, sourceDir)
 }
 
-func (s *memoryHomescoolStore) UpsertMaterial(_ context.Context, m HomescoolMaterial, html []byte) (HomescoolMaterial, error) {
+func (s *memoryHomescoolStore) UpsertMaterial(_ context.Context, m HomescoolMaterial, body []byte) (HomescoolMaterial, error) {
 	if err := homescoolValidateMaterialMeta(&m); err != nil {
 		return HomescoolMaterial{}, err
 	}
 	if m.OwnerUserID == "" {
 		return HomescoolMaterial{}, fmt.Errorf("owner required")
 	}
-	if len(html) == 0 {
-		return HomescoolMaterial{}, fmt.Errorf("html required")
+	if len(body) == 0 {
+		return HomescoolMaterial{}, fmt.Errorf("document body required")
 	}
-	html = []byte(homescoolRewriteWebAssetLinks(string(html)))
+	if m.Format == eoschoolFormatName {
+		doc, err := parseEoschoolDocument(body)
+		if err != nil {
+			return HomescoolMaterial{}, err
+		}
+		m.Cycle, m.Week, m.Day, m.Level = doc.Cycle, doc.Week, doc.Day, doc.Level
+		m.Subject, m.Title = doc.Subject, doc.Title
+		m.Slug = doc.Subject
+		body, err = marshalEoschoolDocument(doc)
+		if err != nil {
+			return HomescoolMaterial{}, err
+		}
+	} else {
+		body = []byte(homescoolRewriteWebAssetLinks(string(body)))
+	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	now := homescoolNow()
 	var existing *HomescoolMaterial
 	for id, cur := range s.materials {
-		if cur.OwnerUserID == m.OwnerUserID &&
-			cur.Cycle == m.Cycle && cur.Week == m.Week && cur.Day == m.Day &&
-			strings.EqualFold(cur.Subject, m.Subject) && strings.EqualFold(cur.Slug, m.Slug) {
+		match := false
+		if m.Format == eoschoolFormatName {
+			match = cur.OwnerUserID == m.OwnerUserID &&
+				cur.Cycle == m.Cycle && cur.Week == m.Week && cur.Day == m.Day &&
+				cur.Level == m.Level && cur.Subject == m.Subject &&
+				(cur.Format == eoschoolFormatName || cur.Format == "")
+		} else {
+			match = cur.OwnerUserID == m.OwnerUserID &&
+				cur.Cycle == m.Cycle && cur.Week == m.Week && cur.Day == m.Day &&
+				strings.EqualFold(cur.Subject, m.Subject) && strings.EqualFold(cur.Slug, m.Slug)
+		}
+		if match {
 			cp := cur
 			cp.ID = id
 			existing = &cp
@@ -108,27 +131,54 @@ func (s *memoryHomescoolStore) UpsertMaterial(_ context.Context, m HomescoolMate
 		m.CreatedAt = now
 	}
 	m.UpdatedAt = now
-	m.HTMLPath = homescoolMaterialRelativePath(m.OwnerUserID, m)
-	if err := homescoolWriteHTMLFile(s.mediaRoot, m.HTMLPath, html); err != nil {
+	rel := homescoolMaterialRelativePath(m.OwnerUserID, m)
+	if m.Format == eoschoolFormatName {
+		m.DocumentPath = rel
+		m.HTMLPath = ""
+	} else {
+		m.HTMLPath = rel
+	}
+	if err := homescoolWriteHTMLFile(s.mediaRoot, rel, body); err != nil {
 		return HomescoolMaterial{}, err
 	}
 	s.materials[m.ID] = m
 	return cloneHomescoolMaterial(m), nil
 }
 
-func (s *mongoHomescoolStore) UpsertMaterial(ctx context.Context, m HomescoolMaterial, html []byte) (HomescoolMaterial, error) {
+func (s *mongoHomescoolStore) UpsertMaterial(ctx context.Context, m HomescoolMaterial, body []byte) (HomescoolMaterial, error) {
 	if err := homescoolValidateMaterialMeta(&m); err != nil {
 		return HomescoolMaterial{}, err
 	}
 	if m.OwnerUserID == "" {
 		return HomescoolMaterial{}, fmt.Errorf("owner required")
 	}
-	if len(html) == 0 {
-		return HomescoolMaterial{}, fmt.Errorf("html required")
+	if len(body) == 0 {
+		return HomescoolMaterial{}, fmt.Errorf("document body required")
 	}
-	html = []byte(homescoolRewriteWebAssetLinks(string(html)))
+	if m.Format == eoschoolFormatName {
+		doc, err := parseEoschoolDocument(body)
+		if err != nil {
+			return HomescoolMaterial{}, err
+		}
+		m.Cycle, m.Week, m.Day, m.Level = doc.Cycle, doc.Week, doc.Day, doc.Level
+		m.Subject, m.Title = doc.Subject, doc.Title
+		m.Slug = doc.Subject
+		body, err = marshalEoschoolDocument(doc)
+		if err != nil {
+			return HomescoolMaterial{}, err
+		}
+	} else {
+		body = []byte(homescoolRewriteWebAssetLinks(string(body)))
+	}
 	now := homescoolNow()
-	existing, found, err := s.GetMaterialByLogicKey(ctx, m.OwnerUserID, m.Cycle, m.Week, m.Day, m.Subject, m.Slug)
+	var existing HomescoolMaterial
+	var found bool
+	var err error
+	if m.Format == eoschoolFormatName {
+		existing, found, err = s.GetMaterialByEoschoolKey(ctx, m.OwnerUserID, m.Cycle, m.Week, m.Day, m.Level, m.Subject)
+	} else {
+		existing, found, err = s.GetMaterialByLogicKey(ctx, m.OwnerUserID, m.Cycle, m.Week, m.Day, m.Subject, m.Slug)
+	}
 	if err != nil {
 		return HomescoolMaterial{}, err
 	}
@@ -143,8 +193,14 @@ func (s *mongoHomescoolStore) UpsertMaterial(ctx context.Context, m HomescoolMat
 		m.CreatedAt = now
 	}
 	m.UpdatedAt = now
-	m.HTMLPath = homescoolMaterialRelativePath(m.OwnerUserID, m)
-	if err := homescoolWriteHTMLFile(s.mediaRoot, m.HTMLPath, html); err != nil {
+	rel := homescoolMaterialRelativePath(m.OwnerUserID, m)
+	if m.Format == eoschoolFormatName {
+		m.DocumentPath = rel
+		m.HTMLPath = ""
+	} else {
+		m.HTMLPath = rel
+	}
+	if err := homescoolWriteHTMLFile(s.mediaRoot, rel, body); err != nil {
 		return HomescoolMaterial{}, err
 	}
 	_, err = s.materialsCol().ReplaceOne(ctx, bson.M{"_id": m.ID}, m, options.Replace().SetUpsert(true))
@@ -267,10 +323,60 @@ func (s *mongoHomescoolStore) ListMaterials(ctx context.Context, ownerUserIDs []
 	return out, cur.Err()
 }
 
+func (s *memoryHomescoolStore) GetMaterialByEoschoolKey(_ context.Context, ownerUserID string, cycle, week, day, level int, subject string) (HomescoolMaterial, bool, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	subject = eoschoolNormalizeSubject(subject)
+	for _, m := range s.materials {
+		if m.OwnerUserID == ownerUserID && m.Cycle == cycle && m.Week == week && m.Day == day &&
+			m.Level == level && m.Subject == subject &&
+			(m.Format == eoschoolFormatName || m.Format == "") {
+			return cloneHomescoolMaterial(m), true, nil
+		}
+	}
+	return HomescoolMaterial{}, false, nil
+}
+
+func (s *mongoHomescoolStore) GetMaterialByEoschoolKey(ctx context.Context, ownerUserID string, cycle, week, day, level int, subject string) (HomescoolMaterial, bool, error) {
+	var m HomescoolMaterial
+	err := s.materialsCol().FindOne(ctx, bson.M{
+		"owner_user_id": ownerUserID,
+		"cycle":         cycle,
+		"week":          week,
+		"day":           day,
+		"level":         level,
+		"subject":       eoschoolNormalizeSubject(subject),
+		"format":        eoschoolFormatName,
+	}).Decode(&m)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return HomescoolMaterial{}, false, nil
+	}
+	if err != nil {
+		return HomescoolMaterial{}, false, err
+	}
+	return cloneHomescoolMaterial(m), true, nil
+}
+
 func (s *memoryHomescoolStore) ReadMaterialHTML(_ context.Context, m HomescoolMaterial) ([]byte, error) {
 	return homescoolReadHTMLFile(s.mediaRoot, m.HTMLPath)
 }
 
 func (s *mongoHomescoolStore) ReadMaterialHTML(ctx context.Context, m HomescoolMaterial) ([]byte, error) {
 	return homescoolReadHTMLFile(s.mediaRoot, m.HTMLPath)
+}
+
+func (s *memoryHomescoolStore) ReadMaterialDocument(_ context.Context, m HomescoolMaterial) ([]byte, error) {
+	path := m.DocumentPath
+	if path == "" {
+		path = m.HTMLPath
+	}
+	return homescoolReadHTMLFile(s.mediaRoot, path)
+}
+
+func (s *mongoHomescoolStore) ReadMaterialDocument(ctx context.Context, m HomescoolMaterial) ([]byte, error) {
+	path := m.DocumentPath
+	if path == "" {
+		path = m.HTMLPath
+	}
+	return homescoolReadHTMLFile(s.mediaRoot, path)
 }

@@ -84,7 +84,22 @@ func TestHomescoolMaterialsV1DocsAndUpsert(t *testing.T) {
 	w = httptest.NewRecorder()
 	app.Handler().ServeHTTP(w, req)
 	if w.Code != http.StatusOK {
-		t.Fatalf("post %d %s", w.Code, w.Body.String())
+		t.Fatalf("post legacy html %d %s", w.Code, w.Body.String())
+	}
+
+	// METHOD_V1 eoschool JSON upsert
+	eosDoc := sampleEoschoolDay1()
+	eosBody, _ := json.Marshal(map[string]any{
+		"confirmOverwrite": true,
+		"material":         eosDoc,
+	})
+	req = httptest.NewRequest(http.MethodPost, "/api/v1/homescool/materials", strings.NewReader(string(eosBody)))
+	req.Header.Set("Authorization", "Bearer "+secret)
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	app.Handler().ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Fatalf("post eoschool %d %s", w.Code, w.Body.String())
 	}
 	postOut := decodeMap(t, w)
 	if postOut["viewUrl"] == nil {
@@ -92,6 +107,21 @@ func TestHomescoolMaterialsV1DocsAndUpsert(t *testing.T) {
 	}
 	mat := postOut["material"].(map[string]any)
 	id := mat["id"].(string)
+	if mat["format"] != eoschoolFormatName {
+		t.Fatalf("format want eoschool got %v", mat["format"])
+	}
+
+	docReq := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials/"+id+"/document", "")
+	if docReq.Code != http.StatusOK {
+		t.Fatalf("document %d %s", docReq.Code, docReq.Body.String())
+	}
+	pdfReq := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials/"+id+"/pdf", "")
+	if pdfReq.Code != http.StatusOK {
+		t.Fatalf("pdf %d %s", pdfReq.Code, pdfReq.Body.String())
+	}
+	if !strings.HasPrefix(pdfReq.Body.String(), "%PDF") {
+		t.Fatalf("pdf magic missing")
+	}
 
 	otherKeyRec := app.doJSON(t, "other@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"other"}`)
 	if otherKeyRec.Code != http.StatusCreated {
@@ -106,7 +136,7 @@ func TestHomescoolMaterialsV1DocsAndUpsert(t *testing.T) {
 		t.Fatalf("cross-user want 404 got %d %s", w.Code, w.Body.String())
 	}
 
-	list := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials?cycle=3", "")
+	list := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials?cycle=1", "")
 	if list.Code != http.StatusOK {
 		t.Fatalf("session list %d %s", list.Code, list.Body.String())
 	}

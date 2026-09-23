@@ -1,18 +1,19 @@
 ﻿---
 name: eoschool
 description: >-
-  Generate and deploy Eduardo OS Homescool US Letter study materials via the
-  public rate-limited API. Docs-first: GET /api/v1/docs, then create HTML using
-  ONLY eoschool MATERIALS/TEMPLATES, then POST with EDUARDOOS_API_KEY. Use when
-  the user mentions Homescool, eoschool, .eoschool, ciclo materials, or study sheets.
+  Generate and deploy Eduardo OS Homescool .eoschool JSON study materials via the
+  public rate-limited API. Docs-first: GET /api/v1/docs, follow METHOD_V1, then POST
+  with EDUARDOOS_API_KEY. Use when the user mentions Homescool, eoschool, .eoschool,
+  ciclo materials, or study sheets.
 disable-model-invocation: true
 ---
 
 # Eduardo OS eoschool skill
 
-**Install location:** project sidecar **`.eoschool/`** (this connector repo).  
+**Install location:** project sidecar **`.eoschool/`** (connector repo).  
 **Before first run:** read [CAVEATS.md](CAVEATS.md).  
-**Format rules:** [MATERIALS.md](MATERIALS.md) Â· [TEMPLATES.md](TEMPLATES.md)  
+**Method v1 (required):** [METHOD_V1.md](METHOD_V1.md)  
+**Legacy HTML patterns:** [MATERIALS.md](MATERIALS.md) · [TEMPLATES.md](TEMPLATES.md) — do **not** use for new level-6 content.  
 **Live API contract:** always `GET /api/v1/docs` first (see [reference.md](reference.md)).  
 **CLI:** `.eoschool/eoschool_client.py`
 
@@ -21,14 +22,14 @@ Docs: https://eduardoos.com/api-docs
 
 ## Hard rule
 
-Use **only** this skillâ€™s guidelines (`MATERIALS.md`, `TEMPLATES.md`, live `payloadSchema.homescool`). Do not invent alternate page sizes, quiz markup, or API paths from memory.
+Follow **METHOD_V1.md** and live `payloadSchema.homescool`. New materials are `.eoschool` JSON (not free-form HTML). Level **6** only for now. One document per `cycle + week + day + level + subject`.
 
-## Mode B (API â€” docs first)
+## Mode B (API — docs first)
 
 ```bash
 python .eoschool/eoschool_client.py docs
 python .eoschool/eoschool_client.py request GET /api/v1/homescool/access
-# Generate HTML locally per MATERIALS.md / TEMPLATES.md
+# Author .eoschool JSON per METHOD_V1.md
 python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --file .eoschool/material.body.json
 ```
 
@@ -38,16 +39,31 @@ python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --f
 {
   "confirmOverwrite": true,
   "material": {
-    "cycle": 3,
+    "format": "eoschool",
+    "version": 1,
+    "cycle": 1,
     "week": 1,
-    "subject": "idiomas",
     "day": 1,
-    "sessionDate": "2026-09-17",
-    "title": "Preposiciones en latÃ­n",
-    "html": "<!DOCTYPE html>â€¦"
+    "level": 6,
+    "subject": "mat",
+    "locale": "es",
+    "title": "Tablas de multiplicar 1–12",
+    "lesson": {
+      "kind": "intro",
+      "points": [
+        { "id": "p1", "heading": "…", "body": "…" },
+        { "id": "p2", "heading": "…", "body": "…" },
+        { "id": "p3", "heading": "…", "body": "…" }
+      ],
+      "summary": "…"
+    },
+    "quiz": {
+      "questionCount": 7,
+      "questions": []
+    },
+    "media": []
   }
 }
 ```
 
 End by printing `Ver material: <viewUrl>`.
-

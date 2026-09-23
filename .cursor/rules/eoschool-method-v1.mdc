@@ -1,0 +1,34 @@
+---
+description: eoschool teaching method v1 — Homescool .eoschool JSON, DHS nav, letter pages, level 6
+globs: eduardoos.com/frontend/src/pages/homescool/**/*,eduardoos.com/frontend/src/styles/homescool-workspace.css,eduardoos.com/frontend/src/lib/homescool*.ts,eduardoos.com/backend/homescool_*,eduardoos.com/.cursor/skills/eoschool/**/*,eduardoos.com/frontend/public/skills/eoschool/**/*,eduardoos.com/frontend/public/homescool/**/*
+alwaysApply: false
+---
+
+# eoschool method v1
+
+Full contract: [`.cursor/skills/eoschool/METHOD_V1.md`](../skills/eoschool/METHOD_V1.md) (mirror under `frontend/public/skills/eoschool/`).
+
+## Hierarchy
+
+`cycle (1–3) → week (1–24) → day (1–5) → level (1–15) → subject (12)`.
+
+v1 authors **level 6 only**. One `.eoschool` JSON per cell (lesson + quiz).
+
+Subjects: `mat`, `esp`, `ing`, `his`, `lat`, `LT`, `geo`, `cie`, `art`, `pro`, `teb`, `exe`.  
+`ing` shares the weekly theme with `esp` but is a separate document.
+
+## Pedagogy
+
+- Day 1: 3 points + summary; quiz 7.
+- Days 2–4: deepen points 1–3; quiz 14 / 21 / 28 (accumulate 7/day).
+- Day 5: five overview blocks; quiz 35 randomized from the week pool.
+
+## UI / print
+
+- DHS: cycle tabs → week grid → day grid → subject grid → Print.
+- Stage: always stacked US Letter **portrait** pages; margin **1 cm**; backend PDF must match.
+- Media v1: `frontend/public/homescool/media/`.
+
+## API
+
+Docs-first. POST body is the `.eoschool` object (`confirmOverwrite` required). Do not invent HTML-primary materials for new content.

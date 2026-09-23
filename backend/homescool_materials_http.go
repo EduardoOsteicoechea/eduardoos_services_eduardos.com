@@ -117,10 +117,81 @@ func (a *App) getHomescoolMaterialHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"material": m,
-		"viewUrl":  "/homescool/material?id=" + m.ID,
-		"htmlUrl":  "/api/homescool/materials/" + m.ID + "/html",
+		"material":     m,
+		"viewUrl":      "/homescool/material?id=" + m.ID,
+		"documentUrl":  "/api/homescool/materials/" + m.ID + "/document",
+		"pdfUrl":       "/api/homescool/materials/" + m.ID + "/pdf",
+		"htmlUrl":      "/api/homescool/materials/" + m.ID + "/html",
 	})
+}
+
+func (a *App) getHomescoolMaterialDocumentHandler(w http.ResponseWriter, r *http.Request) {
+	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
+	if !ok {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("materialId"))
+	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	raw, err := a.homescool.ReadMaterialDocument(r.Context(), m)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if m.Format == eoschoolFormatName {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	} else {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	}
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	_, _ = w.Write(raw)
+}
+
+func (a *App) getHomescoolMaterialPDFHandler(w http.ResponseWriter, r *http.Request) {
+	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
+	if !ok {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("materialId"))
+	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if m.Format != eoschoolFormatName {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	raw, err := a.homescool.ReadMaterialDocument(r.Context(), m)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	doc, err := parseEoschoolDocument(raw)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	pdfBytes, err := buildEoschoolPDF(doc)
+	if err != nil {
+		a.mustLogf(r, "homescool.pdf.error", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	w.Header().Set("Content-Type", "application/pdf")
+	w.Header().Set("Content-Disposition", `inline; filename="eoschool.pdf"`)
+	_, _ = w.Write(pdfBytes)
 }
 
 func (a *App) getHomescoolMaterialHTMLHandler(w http.ResponseWriter, r *http.Request) {
@@ -233,9 +304,11 @@ func (a *App) homescoolV1GetMaterialHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"material": m,
-		"viewUrl":  a.homescoolMaterialViewURL(r, m.ID),
-		"htmlUrl":  "/api/homescool/materials/" + m.ID + "/html",
+		"material":    m,
+		"viewUrl":     a.homescoolMaterialViewURL(r, m.ID),
+		"documentUrl": "/api/homescool/materials/" + m.ID + "/document",
+		"pdfUrl":      "/api/homescool/materials/" + m.ID + "/pdf",
+		"htmlUrl":     "/api/homescool/materials/" + m.ID + "/html",
 	})
 }
 
@@ -246,17 +319,8 @@ func (a *App) homescoolMaterialViewURL(r *http.Request, id string) string {
 func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
 	var body struct {
-		ConfirmOverwrite bool `json:"confirmOverwrite"`
-		Material         struct {
-			Cycle       int    `json:"cycle"`
-			Week        int    `json:"week"`
-			Subject     string `json:"subject"`
-			Day         int    `json:"day"`
-			SessionDate string `json:"sessionDate"`
-			Title       string `json:"title"`
-			Slug        string `json:"slug"`
-			HTML        string `json:"html"`
-		} `json:"material"`
+		ConfirmOverwrite bool            `json:"confirmOverwrite"`
+		Material         json.RawMessage `json:"material"`
 	}
 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 2<<20)).Decode(&body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -266,28 +330,84 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 		a.writeSafeError(w, r, http.StatusBadRequest, "replace_confirm_required")
 		return
 	}
-	if strings.TrimSpace(body.Material.HTML) == "" {
+	if len(body.Material) == 0 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+
+	// Prefer METHOD_V1 .eoschool JSON.
+	var probe struct {
+		Format string `json:"format"`
+		HTML   string `json:"html"`
+	}
+	_ = json.Unmarshal(body.Material, &probe)
+
+	if probe.Format == eoschoolFormatName || (probe.Format == "" && probe.HTML == "") {
+		doc, err := parseEoschoolDocument(body.Material)
+		if err != nil {
+			a.mustLogf(r, "homescool.v1.post.validate", "err", err.Error())
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		raw, err := marshalEoschoolDocument(doc)
+		if err != nil {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		m := HomescoolMaterial{
+			OwnerUserID: user.ID,
+			Format:      eoschoolFormatName,
+			Cycle:       doc.Cycle,
+			Week:        doc.Week,
+			Day:         doc.Day,
+			Level:       doc.Level,
+			Subject:     doc.Subject,
+			Title:       doc.Title,
+			Slug:        doc.Subject,
+		}
+		saved, err := a.homescool.UpsertMaterial(r.Context(), m, raw)
+		if err != nil {
+			a.mustLogf(r, "homescool.v1.post.error", "err", err.Error())
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		a.auditEvent(r, "homescool_material_upsert", "ok", user.ID)
+		writeJSON(w, http.StatusOK, map[string]any{
+			"material":    saved,
+			"viewUrl":     a.homescoolMaterialViewURL(r, saved.ID),
+			"documentUrl": "/api/homescool/materials/" + saved.ID + "/document",
+			"pdfUrl":      "/api/homescool/materials/" + saved.ID + "/pdf",
+		})
+		return
+	}
+
+	// Legacy HTML upsert (deprecated).
+	var legacy struct {
+		Cycle       int    `json:"cycle"`
+		Week        int    `json:"week"`
+		Subject     string `json:"subject"`
+		Day         int    `json:"day"`
+		SessionDate string `json:"sessionDate"`
+		Title       string `json:"title"`
+		Slug        string `json:"slug"`
+		HTML        string `json:"html"`
+	}
+	if err := json.Unmarshal(body.Material, &legacy); err != nil || strings.TrimSpace(legacy.HTML) == "" {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	m := HomescoolMaterial{
 		OwnerUserID: user.ID,
-		Cycle:       body.Material.Cycle,
-		Week:        body.Material.Week,
-		Subject:     body.Material.Subject,
-		Day:         body.Material.Day,
-		SessionDate: body.Material.SessionDate,
-		Title:       body.Material.Title,
-		Slug:        body.Material.Slug,
+		Format:      "html",
+		Cycle:       legacy.Cycle,
+		Week:        legacy.Week,
+		Subject:     legacy.Subject,
+		Day:         legacy.Day,
+		SessionDate: legacy.SessionDate,
+		Title:       legacy.Title,
+		Slug:        legacy.Slug,
 	}
-	existing, found, err := a.homescool.GetMaterialByLogicKey(r.Context(), user.ID, m.Cycle, m.Week, m.Day, m.Subject, homescoolSlugify(firstNonEmpty(m.Slug, m.Title)))
-	if err != nil {
-		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-		return
-	}
-	_ = found
-	_ = existing
-	saved, err := a.homescool.UpsertMaterial(r.Context(), m, []byte(body.Material.HTML))
+	saved, err := a.homescool.UpsertMaterial(r.Context(), m, []byte(legacy.HTML))
 	if err != nil {
 		a.mustLogf(r, "homescool.v1.post.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")

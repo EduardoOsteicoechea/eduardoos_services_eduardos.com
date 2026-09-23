@@ -167,12 +167,47 @@ export type HomescoolMaterial = {
   week: number;
   subject: string;
   day: number;
+  level?: number;
+  format?: string;
   sessionDate?: string;
   title: string;
-  slug: string;
+  slug?: string;
+  documentPath?: string;
   htmlPath?: string;
   createdAt?: string;
   updatedAt?: string;
+};
+
+export type EoschoolQuestion = {
+  id: string;
+  originDay: number;
+  type: string;
+  prompt: string;
+  choices?: string[];
+  answer?: string;
+};
+
+export type EoschoolDocument = {
+  format: string;
+  version: number;
+  cycle: number;
+  week: number;
+  day: number;
+  level: number;
+  subject: string;
+  locale?: string;
+  title: string;
+  lesson: {
+    kind: string;
+    focusPoint?: number | null;
+    points: { id?: string; heading: string; body: string }[];
+    summary?: string;
+  };
+  quiz: {
+    questionCount: number;
+    questions: EoschoolQuestion[];
+  };
+  media?: { id?: string; path: string; alt?: string }[];
 };
 
 export type HomescoolCycleSummary = {
@@ -209,6 +244,8 @@ export async function fetchHomescoolMaterials(cycle?: number): Promise<{
 export async function fetchHomescoolMaterial(id: string): Promise<{
   material: HomescoolMaterial | null;
   viewUrl?: string;
+  documentUrl?: string;
+  pdfUrl?: string;
   htmlUrl?: string;
   error?: string;
   requestId?: string;
@@ -216,6 +253,8 @@ export async function fetchHomescoolMaterial(id: string): Promise<{
   const { status, data, requestId } = await apiRequest<{
     material?: HomescoolMaterial;
     viewUrl?: string;
+    documentUrl?: string;
+    pdfUrl?: string;
     htmlUrl?: string;
   }>(`/homescool/materials/${encodeURIComponent(id)}`);
   if (status < 200 || status >= 300) {
@@ -224,6 +263,8 @@ export async function fetchHomescoolMaterial(id: string): Promise<{
   return {
     material: data.material ?? null,
     viewUrl: data.viewUrl,
+    documentUrl: data.documentUrl,
+    pdfUrl: data.pdfUrl,
     htmlUrl: data.htmlUrl,
     requestId,
   };

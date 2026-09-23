@@ -15,20 +15,23 @@ const (
 	homescoolMaterialsSubdir = "materials"
 )
 
-// HomescoolMaterial is one US Letter study sheet owned by a teacher.
+// HomescoolMaterial is one study document owned by a teacher (eoschool JSON or legacy HTML).
 type HomescoolMaterial struct {
-	ID          string `json:"id" bson:"_id"`
-	OwnerUserID string `json:"ownerUserId" bson:"owner_user_id"`
-	Cycle       int    `json:"cycle" bson:"cycle"`
-	Week        int    `json:"week" bson:"week"`
-	Subject     string `json:"subject" bson:"subject"`
-	Day         int    `json:"day" bson:"day"`
-	SessionDate string `json:"sessionDate" bson:"session_date"`
-	Title       string `json:"title" bson:"title"`
-	Slug        string `json:"slug" bson:"slug"`
-	HTMLPath    string `json:"htmlPath" bson:"html_path"`
-	CreatedAt   string `json:"createdAt" bson:"created_at"`
-	UpdatedAt   string `json:"updatedAt" bson:"updated_at"`
+	ID           string `json:"id" bson:"_id"`
+	OwnerUserID  string `json:"ownerUserId" bson:"owner_user_id"`
+	Cycle        int    `json:"cycle" bson:"cycle"`
+	Week         int    `json:"week" bson:"week"`
+	Subject      string `json:"subject" bson:"subject"`
+	Day          int    `json:"day" bson:"day"`
+	Level        int    `json:"level" bson:"level"`
+	Format       string `json:"format" bson:"format"`
+	SessionDate  string `json:"sessionDate,omitempty" bson:"session_date,omitempty"`
+	Title        string `json:"title" bson:"title"`
+	Slug         string `json:"slug,omitempty" bson:"slug,omitempty"`
+	DocumentPath string `json:"documentPath,omitempty" bson:"document_path,omitempty"`
+	HTMLPath     string `json:"htmlPath,omitempty" bson:"html_path,omitempty"`
+	CreatedAt    string `json:"createdAt" bson:"created_at"`
+	UpdatedAt    string `json:"updatedAt" bson:"updated_at"`
 }
 
 // HomescoolCycleSummary is the dashboard aggregate for one cycle.
@@ -71,6 +74,37 @@ func homescoolSlugify(title string) string {
 }
 
 func homescoolValidateMaterialMeta(m *HomescoolMaterial) error {
+	if m.Format == eoschoolFormatName {
+		if m.Level == 0 {
+			m.Level = eoschoolLevelV1
+		}
+		if m.Cycle < 1 || m.Cycle > 3 {
+			return fmt.Errorf("cycle must be 1, 2, or 3")
+		}
+		if m.Week < 1 || m.Week > 24 {
+			return fmt.Errorf("week must be 1–24")
+		}
+		if m.Day < 1 || m.Day > 5 {
+			return fmt.Errorf("day must be 1–5")
+		}
+		if m.Level != eoschoolLevelV1 {
+			return fmt.Errorf("level must be %d in method v1", eoschoolLevelV1)
+		}
+		m.Subject = eoschoolNormalizeSubject(m.Subject)
+		if !eoschoolSubjectOK(m.Subject) {
+			return fmt.Errorf("subject must be one of the 12 method v1 codes")
+		}
+		m.Title = strings.TrimSpace(m.Title)
+		if m.Title == "" {
+			return fmt.Errorf("title required")
+		}
+		m.Slug = m.Subject
+		return nil
+	}
+	// Legacy HTML materials.
+	if m.Format == "" {
+		m.Format = "html"
+	}
 	if m.Cycle < 1 || m.Cycle > 3 {
 		return fmt.Errorf("cycle must be 1, 2, or 3")
 	}
@@ -104,6 +138,19 @@ func homescoolValidateMaterialMeta(m *HomescoolMaterial) error {
 }
 
 func homescoolMaterialRelativePath(ownerUserID string, m HomescoolMaterial) string {
+	if m.Format == eoschoolFormatName {
+		return filepath.ToSlash(filepath.Join(
+			homescoolMaterialsRoot,
+			homescoolMaterialsSubdir,
+			ownerUserID,
+			fmt.Sprintf("ciclo%d", m.Cycle),
+			fmt.Sprintf("semana%d", m.Week),
+			fmt.Sprintf("nivel%d", m.Level),
+			m.Subject,
+			fmt.Sprintf("dia%d", m.Day),
+			"document.eoschool.json",
+		))
+	}
 	subj := strings.ReplaceAll(m.Subject, "/", string(filepath.Separator))
 	file := fmt.Sprintf("_ciclo%d_semana%d_dia%d_%s.html", m.Cycle, m.Week, m.Day, m.Slug)
 	if m.SessionDate != "" {

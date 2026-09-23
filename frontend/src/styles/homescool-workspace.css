@@ -83,6 +83,112 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   width: auto;
   min-height: 0;
   background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-padding);
+  padding: var(--space-padding);
+}
+
+/* DHS: cycle / week / day / subject selectors */
+.homescool-dhs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+}
+
+.homescool-dhs__row,
+.homescool-dhs__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.homescool-dhs__grid--weeks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--rail-gap);
+}
+
+.homescool-dhs__grid--days {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--rail-gap);
+}
+
+.homescool-dhs__grid--subjects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--rail-gap);
+}
+
+.homescool-dhs__chip {
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.homescool-dhs__chip[aria-pressed="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+/* US Letter portrait pages (print-faithful; in/cm allowed inside sheets) */
+.homescool-letter-page {
+  box-sizing: border-box;
+  width: 8.5in;
+  min-height: 11in;
+  padding: 1cm;
+  background: #fff;
+  color: #1a1a1a;
+  border: var(--border-width) solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  page-break-after: always;
+  break-after: page;
+}
+
+.homescool-letter__meta {
+  font-size: 0.7rem;
+  color: #5c5c5c;
+}
+
+.homescool-letter__heading {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.homescool-letter__point-title {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.homescool-letter__body,
+.homescool-letter__choices {
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.homescool-letter__quiz {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.homescool-letter__q {
+  margin: 0;
 }
 
 @media print {
@@ -98,7 +204,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   .page-title-sr,
   .error-modal-overlay,
   [data-homescool-gate],
-  .homescool-workspace__stage-empty {
+  .homescool-workspace__stage-empty,
+  .homescool-dhs {
     display: none !important;
   }
 
@@ -125,6 +232,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
     padding: 0 !important;
     border: 0 !important;
     background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .homescool-letter-page {
+    border: 0 !important;
+    width: 8.5in !important;
+    min-height: 11in !important;
     box-shadow: none !important;
   }
 }

@@ -4,47 +4,12 @@ globs: eduardoos.com/frontend/src/pages/homescool/**/*,eduardoos.com/frontend/sr
 alwaysApply: false
 ---
 
-# Homescool materials (study sheets)
+# Homescool materials
 
-## Product UI (`/homescool`)
+**METHOD_V1 is authoritative** for new content: [`.cursor/rules/eoschool-method-v1.mdc`](eoschool-method-v1.mdc) and `skills/eoschool/METHOD_V1.md`.
 
-- **Left tree** (togglable via DHS first action `Tree`): `ciclo → semana → día → materia → <title>`. Shared chrome: `.product-tree-sidebar` — **no padding**, fixed `top/bottom: 0` (full viewport height), width `--sidebar-width`. Same pattern as Calvin Institutes.
-- **Main stage** (right): material HTML in a **same-origin iframe** (`/api/homescool/materials/:id/html`). Do **not** inject `.page` into the shell DOM — site `global.css` also defines `.page` and breaks quiz/sheet layout.
-- **DHS Print**: call `iframe.contentWindow.StudyPrint.print()` (falls back to `iframe.contentWindow.print()`). Each study `.page` is one PDF page.
-- Sheet geometry is **not** rem chrome: every material body is **only** `<section class="page page--portrait">` or `<section class="page page--landscape">` (plus activity modifiers like `page--quiz`). Padding **1cm**. The Homescool viewer normalizes loaded HTML to these sections before display.
-- **Workspaces** use `main { padding: 0 }` except Homescool clears the activity bar with `padding-top: var(--mobile-header-height)` so the menu button stays clickable. Product tree sidebars start below that bar (`top: var(--mobile-header-height)`).
-- Homescool stage uses site `--color-bg` (gap between sheets shows site background). Each material page is a logical `.homescool-print-page` (portrait 8.5×11in / landscape 11×8.5in) wrapping study `.page` content in a **shadow root** (study CSS isolated from site `.page`). Print: each `.homescool-print-page` is one PDF page.
+New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (1 cm margin); backend PDF matches.
 
-## Authoring CSS / components (reuse)
+## Legacy HTML notes
 
-Canonical stylesheet: `elias/web_assets/styles.css` (served as Homescool `web_assets`). Skill copy: `.eoschool/skill/eoschool/MATERIALS.md` / `TEMPLATES.md`.
-
-| Pattern | Classes | Notes |
-| --- | --- | --- |
-| Portrait page | `.page` | One print page; `page-break-after: always` |
-| Landscape page | `.page.page--landscape` | Letter landscape |
-| Quiz page | `.page.page--quiz` | Body: `.quiz-section` + `.quiz.quiz--grid3` |
-| Class / lesson page | `.page.page--class` | `.lesson` / `.lesson-section` / `.lesson-text` |
-| Checklist page | `.page.page--checklist` | `.checklist-section` + `.checklist` (+ `--grid2` / `--grid3`) |
-| Map / board page | `.page.page--map` | `.map-grid`, `.map-grid__board`, `.map-body`; JS `map-grid.js` when needed |
-| Header | `.sheet-header` (+ `--compact`), `.meta`, `.student-line` | Title + cycle line |
-| Footer | `.sheet-footer` | Page chrome footer |
-| Quiz item | `.question`, `.q-num`, `.options`, `.option`, `.opt-key`, `.opt-text` | Never bubble-only options; prefer 12 Q in 3×4 |
-| Checklist item | `.checklist__item`, `.checklist__box`, `.checklist__text` | Optional `.checklist-group` |
-| Tip block | `.lesson-section--tip` | Callout inside lesson |
-
-When adding a new activity pattern (matching, map grid variant, etc.):
-
-1. Add reusable classes to study `styles.css` (not one-off page CSS).
-2. Document the row in this table **and** in `MATERIALS.md`.
-3. Keep chrome (`homescool-workspace.css`) rem-only; sheets keep `in`/`pt`/`cm`.
-
-## API / agent
-
-- Docs-first: `GET /api/v1/docs` then `POST /api/v1/homescool/materials` with API key (`api` + `homescool`).
-- HTML must use relative `../../../../web_assets/…`; server rewrites to `/api/homescool/web-assets/…`.
-
-## Rem chrome vs sheet units
-
-- Workspace chrome (tree, stage frame, DHS): rem tokens only (`homescool-workspace.css`).
-- Inside `.page`: `in` / `pt` / `cm` allowed for print-faithful US Letter (study CSS exception).
+Older HTML seed/sheets may still exist. Do not author new level-6 week content as HTML. Legacy class patterns (quiz grids, map pages) remain in MATERIALS/TEMPLATES for reference only.

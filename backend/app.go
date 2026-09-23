@@ -339,6 +339,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/homescool/materials", a.listHomescoolMaterialsHandler)
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}", a.getHomescoolMaterialHandler)
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}/html", a.getHomescoolMaterialHTMLHandler)
+	mux.HandleFunc("GET /api/homescool/materials/{materialId}/document", a.getHomescoolMaterialDocumentHandler)
+	mux.HandleFunc("GET /api/homescool/materials/{materialId}/pdf", a.getHomescoolMaterialPDFHandler)
 	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
 
 	a.registerEvoiceRoutes(mux)

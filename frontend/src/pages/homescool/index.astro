@@ -1,35 +1,32 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
-import "../../styles/product-tree-sidebar.css";
 import "../../styles/homescool-workspace.css";
 ---
 
 <Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
-    <button
-      class="dhs-action"
-      type="button"
-      data-homescool-tree-toggle
-      title="Toggle materials tree"
-      aria-label="Toggle materials tree"
-      aria-pressed="true"
-      aria-controls="homescool-tree"
-    >
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">account_tree</span></span>
-      Tree
-    </button>
-    <button
-      class="dhs-action"
-      type="button"
-      data-homescool-print
-      title="Print current material as PDF"
-      aria-label="Print current material as PDF"
-      disabled
-    >
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
-      Print
-    </button>
+    <div class="homescool-dhs" data-homescool-dhs>
+      <div class="homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-label="Ciclo" data-homescool-cycles>
+        <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="true">c1</button>
+        <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
+        <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="false">c3</button>
+      </div>
+      <div class="homescool-dhs__grid homescool-dhs__grid--weeks" aria-label="Semana" data-homescool-weeks></div>
+      <div class="homescool-dhs__grid homescool-dhs__grid--days" aria-label="Día" data-homescool-days></div>
+      <div class="homescool-dhs__grid homescool-dhs__grid--subjects" aria-label="Materia" data-homescool-subjects></div>
+      <button
+        class="dhs-action"
+        type="button"
+        data-homescool-print
+        title="Print current material as PDF"
+        aria-label="Print current material as PDF"
+        disabled
+      >
+        <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
+        Print
+      </button>
+    </div>
   </Fragment>
 
   <h1 class="page-title-sr">Homescool</h1>
@@ -39,14 +36,11 @@ import "../../styles/homescool-workspace.css";
     <p class="hint"><a href="/session" data-route>Sign in</a> · <a href="/payments/subscription" data-route>Subscribe</a></p>
   </div>
 
-  <section class="product-workspace product-workspace--tree-open homescool-workspace" data-homescool-workspace hidden>
-    <aside id="homescool-tree" class="product-tree-sidebar" aria-label="Materials tree">
-      <div data-homescool-tree-host></div>
-    </aside>
+  <section class="product-workspace homescool-workspace" data-homescool-workspace hidden>
     <div class="product-workspace__main">
       <p class="product-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
-        <p class="homescool-workspace__stage-empty" data-homescool-empty>Select a material from the tree.</p>
+        <p class="homescool-workspace__stage-empty" data-homescool-empty>Select cycle, week, day, and subject.</p>
         <div class="homescool-sheet-host" data-homescool-sheets hidden></div>
       </div>
     </div>
@@ -55,27 +49,31 @@ import "../../styles/homescool-workspace.css";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import { fetchHomescoolMaterial, fetchHomescoolMaterials, type HomescoolMaterial } from "../../lib/homescool";
-  import { buildHomescoolTree, type HomescoolTreeLeaf, type HomescoolTreeNode } from "../../lib/homescool-tree";
-  import { productTreeChevron, productTreeLabel, productTreeLeafIcon } from "../../lib/product-tree";
+  import {
+    fetchHomescoolMaterial,
+    fetchHomescoolMaterials,
+    type EoschoolDocument,
+    type HomescoolMaterial,
+  } from "../../lib/homescool";
   import { showErrorModal } from "../../lib/error-modal";
+  import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
 
-  const STUDY_CSS = "/homescool-materials.css";
-  const STUDY_MAP_JS = "/api/homescool/web-assets/map-grid.js";
+  const LEVEL = 6;
 
   const gate = document.querySelector("[data-homescool-gate]");
   const workspace = document.querySelector("[data-homescool-workspace]");
   const banner = document.querySelector("[data-homescool-banner]");
-  const treeHost = document.querySelector("[data-homescool-tree-host]");
   const empty = document.querySelector("[data-homescool-empty]");
   const sheetsHost = document.querySelector("[data-homescool-sheets]");
-  const treeToggle = document.querySelector("[data-homescool-tree-toggle]");
   const printBtn = document.querySelector("[data-homescool-print]");
+  const weeksHost = document.querySelector("[data-homescool-weeks]");
+  const daysHost = document.querySelector("[data-homescool-days]");
+  const subjectsHost = document.querySelector("[data-homescool-subjects]");
+  const cyclesHost = document.querySelector("[data-homescool-cycles]");
 
-  let materialsById = new Map<string, HomescoolMaterial>();
+  let materials: HomescoolMaterial[] = [];
   let sheetsReady = false;
-  let shadow: ShadowRoot | null = null;
-  let studyCssPromise: Promise<string> | null = null;
+  let selection = { cycle: 1, week: 1, day: 1, subject: "mat" };
 
   const teacher = await requireService("homescool", { requireSubscription: true });
   const ok = teacher.sessionOk && teacher.access.allowed;
@@ -94,21 +92,18 @@ import "../../styles/homescool-workspace.css";
     await boot();
   }
 
-  treeToggle?.addEventListener("click", () => {
-    if (!(workspace instanceof HTMLElement) || !(treeToggle instanceof HTMLButtonElement)) return;
-    const open = !workspace.classList.contains("product-workspace--tree-open");
-    workspace.classList.toggle("product-workspace--tree-open", open);
-    treeToggle.setAttribute("aria-pressed", open ? "true" : "false");
-  });
-
   printBtn?.addEventListener("click", () => {
     if (!(printBtn instanceof HTMLButtonElement) || printBtn.disabled || !sheetsReady) return;
-    printLetterSheets();
+    window.print();
   });
 
   async function boot() {
     setHidden(gate, true);
     setHidden(workspace, false);
+    buildWeekGrid();
+    buildDayGrid();
+    buildSubjectGrid();
+    bindCycles();
     if (banner instanceof HTMLElement) banner.textContent = "Loading materials…";
     const res = await fetchHomescoolMaterials();
     if (res.error) {
@@ -120,299 +115,176 @@ import "../../styles/homescool-workspace.css";
       if (banner instanceof HTMLElement) banner.textContent = res.error;
       return;
     }
-    materialsById = new Map(res.materials.map((m) => [m.id, m]));
-    renderTree(buildHomescoolTree(res.materials));
-    const count = res.materials.length;
-    if (banner instanceof HTMLElement) {
-      banner.textContent = count ? `${count} material(es) · pick one in the tree` : "No materials yet.";
-    }
+    materials = res.materials;
+    syncChipStates();
     const deep = new URLSearchParams(window.location.search).get("material");
-    if (deep && materialsById.has(deep)) void openMaterial(deep);
-  }
-
-  function renderTree(nodes: HomescoolTreeNode[]) {
-    if (!(treeHost instanceof HTMLElement)) return;
-    treeHost.replaceChildren();
-    const root = document.createElement("ul");
-    root.className = "product-tree";
-    for (const node of nodes) root.append(renderNode(node, node.kind === "cycle"));
-    treeHost.append(root);
-  }
-
-  function renderNode(node: HomescoolTreeNode, openDefault: boolean): HTMLLIElement {
-    const li = document.createElement("li");
-    const details = document.createElement("details");
-    details.open = openDefault && node.children.length > 0;
-    const summary = document.createElement("summary");
-    summary.className = "product-tree__toggle";
-    summary.append(productTreeChevron(), productTreeLabel(node.label));
-    details.append(summary);
-    const ul = document.createElement("ul");
-    for (const child of node.children) {
-      if (child.kind === "material") ul.append(renderLeaf(child));
-      else ul.append(renderNode(child, false));
-    }
-    details.append(ul);
-    li.append(details);
-    return li;
-  }
-
-  function renderLeaf(leaf: HomescoolTreeLeaf): HTMLLIElement {
-    const li = document.createElement("li");
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "product-tree__leaf";
-    btn.dataset.materialId = leaf.id;
-    btn.append(productTreeLeafIcon("description"), productTreeLabel(leaf.title));
-    btn.addEventListener("click", () => void openMaterial(leaf.id));
-    li.append(btn);
-    return li;
-  }
-
-  async function openMaterial(id: string) {
-    treeHost?.querySelectorAll(".product-tree__leaf").forEach((el) => {
-      if (el instanceof HTMLElement) {
-        el.setAttribute("aria-current", el.dataset.materialId === id ? "true" : "false");
+    if (deep) {
+      const m = materials.find((row) => row.id === deep && row.format === "eoschool");
+      if (m) {
+        selection = {
+          cycle: m.cycle,
+          week: m.week,
+          day: m.day,
+          subject: m.subject,
+        };
+        syncChipStates();
       }
+    }
+    await openSelection();
+  }
+
+  function buildWeekGrid() {
+    if (!(weeksHost instanceof HTMLElement)) return;
+    weeksHost.replaceChildren();
+    for (let w = 1; w <= 24; w++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.week = String(w);
+      btn.textContent = `s${w}`;
+      btn.setAttribute("aria-pressed", w === selection.week ? "true" : "false");
+      btn.addEventListener("click", () => {
+        selection.week = w;
+        syncChipStates();
+        void openSelection();
+      });
+      weeksHost.append(btn);
+    }
+  }
+
+  function buildDayGrid() {
+    if (!(daysHost instanceof HTMLElement)) return;
+    daysHost.replaceChildren();
+    for (let d = 1; d <= 5; d++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.day = String(d);
+      btn.textContent = `d${d}`;
+      btn.setAttribute("aria-pressed", d === selection.day ? "true" : "false");
+      btn.addEventListener("click", () => {
+        selection.day = d;
+        syncChipStates();
+        void openSelection();
+      });
+      daysHost.append(btn);
+    }
+  }
+
+  function buildSubjectGrid() {
+    if (!(subjectsHost instanceof HTMLElement)) return;
+    subjectsHost.replaceChildren();
+    for (const code of HOMESCOOL_SUBJECTS) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "homescool-dhs__chip";
+      btn.dataset.subject = code;
+      btn.textContent = code;
+      btn.setAttribute("aria-pressed", code === selection.subject ? "true" : "false");
+      btn.addEventListener("click", () => {
+        selection.subject = code;
+        syncChipStates();
+        void openSelection();
+      });
+      subjectsHost.append(btn);
+    }
+  }
+
+  function bindCycles() {
+    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const c = Number((el as HTMLElement).dataset.cycle);
+        if (!c) return;
+        selection.cycle = c;
+        syncChipStates();
+        void openSelection();
+      });
     });
+  }
+
+  function syncChipStates() {
+    cyclesHost?.querySelectorAll("[data-cycle]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      el.setAttribute("aria-pressed", Number(el.dataset.cycle) === selection.cycle ? "true" : "false");
+    });
+    weeksHost?.querySelectorAll("[data-week]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      el.setAttribute("aria-pressed", Number(el.dataset.week) === selection.week ? "true" : "false");
+    });
+    daysHost?.querySelectorAll("[data-day]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      el.setAttribute("aria-pressed", Number(el.dataset.day) === selection.day ? "true" : "false");
+    });
+    subjectsHost?.querySelectorAll("[data-subject]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      el.setAttribute("aria-pressed", el.dataset.subject === selection.subject ? "true" : "false");
+    });
+  }
+
+  function findMaterial(): HomescoolMaterial | undefined {
+    return materials.find(
+      (m) =>
+        m.format === "eoschool" &&
+        m.cycle === selection.cycle &&
+        m.week === selection.week &&
+        m.day === selection.day &&
+        (m.level ?? LEVEL) === LEVEL &&
+        m.subject === selection.subject,
+    );
+  }
+
+  async function openSelection() {
     sheetsReady = false;
     if (printBtn instanceof HTMLButtonElement) printBtn.disabled = true;
-    if (banner instanceof HTMLElement) banner.textContent = "Loading material…";
-    const res = await fetchHomescoolMaterial(id);
-    if (res.error || !res.material || !res.htmlUrl) {
+    const match = findMaterial();
+    if (!match) {
+      setHidden(empty, false);
+      setHidden(sheetsHost, true);
+      if (sheetsHost instanceof HTMLElement) sheetsHost.replaceChildren();
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
+      }
+      return;
+    }
+    if (banner instanceof HTMLElement) banner.textContent = "Loading…";
+    const res = await fetchHomescoolMaterial(match.id);
+    if (res.error || !res.material) {
       showErrorModal({
         message: res.error || "Could not load material.",
         requestId: res.requestId,
         details: res.requestId ? `request_id=${res.requestId}` : "",
       });
-      if (banner instanceof HTMLElement) banner.textContent = res.error || "Not found.";
       return;
     }
+    const docUrl = res.documentUrl || `/api/homescool/materials/${match.id}/document`;
     try {
-      const htmlRes = await fetch(res.htmlUrl, { credentials: "include" });
-      if (!htmlRes.ok) throw new Error(`HTML ${htmlRes.status}`);
-      const raw = await htmlRes.text();
-      await mountLetterSheets(raw);
-      const m = res.material;
-      if (banner instanceof HTMLElement) {
-        banner.textContent = `Ciclo ${m.cycle} · Semana ${m.week} · Día ${m.day} · ${m.subject} · ${m.title}`;
+      const docRes = await fetch(docUrl, { credentials: "include" });
+      if (!docRes.ok) throw new Error(`document ${docRes.status}`);
+      const ctype = docRes.headers.get("content-type") || "";
+      if (!ctype.includes("json")) {
+        throw new Error("Expected eoschool JSON");
       }
-      document.title = `${m.title} · Homescool`;
+      const doc = (await docRes.json()) as EoschoolDocument;
+      mountEoschool(doc);
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title}`;
+      }
+      document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn instanceof HTMLButtonElement) printBtn.disabled = false;
     } catch {
-      showErrorModal({ message: "Could not load material HTML." });
-      if (banner instanceof HTMLElement) banner.textContent = "Could not load material HTML.";
+      showErrorModal({ message: "Could not load eoschool document." });
+      if (banner instanceof HTMLElement) banner.textContent = "Could not load document.";
     }
   }
 
-  function ensureShadow(): ShadowRoot | null {
-    if (!(sheetsHost instanceof HTMLElement)) return null;
-    if (!shadow) shadow = sheetsHost.attachShadow({ mode: "open" });
-    return shadow;
-  }
-
-  /** Browsers do not consistently include an open shadow tree in print preview, so print a light-DOM clone. */
-  function printLetterSheets() {
-    if (!shadow) return;
-
-    document.getElementById("homescool-print-output")?.remove();
-    document.getElementById("homescool-print-output-style")?.remove();
-
-    const output = document.createElement("div");
-    output.id = "homescool-print-output";
-    output.setAttribute("aria-hidden", "true");
-    for (const node of shadow.childNodes) output.append(node.cloneNode(true));
-
-    const style = document.createElement("style");
-    style.id = "homescool-print-output-style";
-    style.textContent = [
-      "#homescool-print-output { display: none; }",
-      "@media print {",
-      "  body > :not(#homescool-print-output) { display: none !important; }",
-      "  #homescool-print-output {",
-      "    --page-width: 8.5in;",
-      "    --page-height: 11in;",
-      "    --page-padding-x: 1cm;",
-      "    --page-padding-y: 1cm;",
-      "    --ink: #1a1a2e;",
-      "    --muted: #5c5c7a;",
-      "    --accent: #2d5a8a;",
-      "    --rule: #c8c8d8;",
-      "    --box-border: #9a9ab8;",
-      '    --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;',
-      '    --font-display: Georgia, "Times New Roman", serif;',
-      "    display: flex !important;",
-      "    flex-direction: column;",
-      "    align-items: center;",
-      "    gap: 0;",
-      "    margin: 0;",
-      "    padding: 0;",
-      "    background: #fff;",
-      "    color: var(--ink);",
-      "  }",
-      "}",
-    ].join("\n");
-    document.head.append(style);
-    document.body.append(output);
-
-    const cleanup = () => {
-      output.remove();
-      style.remove();
-    };
-    window.addEventListener("afterprint", cleanup, { once: true });
-    window.setTimeout(cleanup, 60000);
-    window.print();
-  }
-
-  /** Read the shared skill sheet before displaying a material; a shadow root cannot inherit it from the document. */
-  function loadStudyCss(): Promise<string> {
-    if (!studyCssPromise) {
-      studyCssPromise = fetch(STUDY_CSS).then(async (response) => {
-        if (!response.ok) throw new Error(`CSS ${response.status}`);
-        return response.text();
-      });
-    }
-    return studyCssPromise;
-  }
-
-  /** Mount each study `.page` as a logical print page inside a shadow root (isolates study CSS from site `.page`). */
-  async function mountLetterSheets(rawHtml: string) {
-    const root = ensureShadow();
-    if (!root || !(empty instanceof HTMLElement) || !(sheetsHost instanceof HTMLElement)) return;
-
-    const doc = new DOMParser().parseFromString(rawHtml, "text/html");
-    const pages = extractPages(doc);
-    const studyCss = await loadStudyCss();
-
-    root.replaceChildren();
-
-    const skill = document.createElement("style");
-    skill.textContent = studyCss;
-
-    const material = document.createElement("style");
-    material.textContent = Array.from(doc.head.querySelectorAll("style"), (style) => style.textContent || "").join("\n");
-
-    const chrome = document.createElement("style");
-    chrome.textContent = [
-      ":host {",
-      "  /* `:root` / `body` rules in the skill do not match this shadow tree. */",
-      "  --page-width: 8.5in;",
-      "  --page-height: 11in;",
-      "  --page-padding-x: 1cm;",
-      "  --page-padding-y: 1cm;",
-      "  --ink: #1a1a2e;",
-      "  --muted: #5c5c7a;",
-      "  --accent: #2d5a8a;",
-      "  --rule: #c8c8d8;",
-      "  --box-border: #9a9ab8;",
-      "  --bubble-size: 14px;",
-      '  --font-body: "Segoe UI", "Helvetica Neue", Arial, sans-serif;',
-      '  --font-display: Georgia, "Times New Roman", serif;',
-      "  display: flex;",
-      "  flex-direction: column;",
-      "  align-items: center;",
-      "  gap: 1rem;",
-      "  padding: 1rem 0;",
-      "  box-sizing: border-box;",
-      "  background: transparent;",
-      "  color: var(--ink);",
-      "  font-family: var(--font-body);",
-      "  font-size: 10.5pt;",
-      "  line-height: 1.35;",
-      "}",
-      "/* Logical print pages — study sheet chrome stays inside. */",
-      ".homescool-print-page {",
-      "  margin: 0;",
-      "  padding: 0;",
-      "  flex: 0 0 auto;",
-      "  box-sizing: border-box;",
-      "  background: #fff;",
-      "  color: var(--ink);",
-      "  font-family: var(--font-body);",
-      "  font-size: 10.5pt;",
-      "  line-height: 1.35;",
-      "  box-shadow: 0 0.125rem 0.75rem color-mix(in srgb, var(--color-text, #000) 12%, transparent);",
-      "}",
-      ".homescool-print-page--portrait {",
-      "  width: 8.5in;",
-      "  height: 11in;",
-      "}",
-      ".homescool-print-page--landscape {",
-      "  width: 11in;",
-      "  height: 8.5in;",
-      "}",
-      ".homescool-print-page > .page {",
-      "  margin: 0 !important;",
-      "  width: 100% !important;",
-      "  height: 100% !important;",
-      "  min-width: 0 !important;",
-      "  min-height: 0 !important;",
-      "  max-width: none !important;",
-      "  max-height: none !important;",
-      "  box-shadow: none !important;",
-      "}",
-      "@media print {",
-      "  :host { gap: 0; padding: 0; }",
-      "  .homescool-print-page {",
-      "    box-shadow: none !important;",
-      "    page-break-after: always;",
-      "    break-after: page;",
-      "  }",
-      "  .homescool-print-page:last-child {",
-      "    page-break-after: auto;",
-      "    break-after: auto;",
-      "  }",
-      "  .homescool-print-page--portrait { page: letter-portrait; }",
-      "  .homescool-print-page--landscape { page: letter-landscape; }",
-      "  @page letter-portrait { size: letter portrait; margin: 0; }",
-      "  @page letter-landscape { size: letter landscape; margin: 0; }",
-      "}",
-    ].join("\n");
-
-    root.append(skill, material, chrome);
-
-    const needsMap = pages.some((p) => p.classList.contains("page--map"));
-    for (const page of pages) {
-      page.querySelectorAll("script").forEach((s) => s.remove());
-      const wrap = document.createElement("div");
-      const landscape = page.classList.contains("page--landscape");
-      wrap.className = landscape
-        ? "homescool-print-page homescool-print-page--landscape"
-        : "homescool-print-page homescool-print-page--portrait";
-      wrap.setAttribute("data-print-page", landscape ? "landscape" : "portrait");
-      wrap.appendChild(document.importNode(page, true));
-      root.append(wrap);
-    }
-
-    if (needsMap) {
-      const mapScript = document.createElement("script");
-      mapScript.src = STUDY_MAP_JS;
-      mapScript.defer = true;
-      root.append(mapScript);
-    }
-
+  function mountEoschool(doc: EoschoolDocument) {
+    if (!(sheetsHost instanceof HTMLElement)) return;
     setHidden(empty, true);
     setHidden(sheetsHost, false);
-  }
-
-  function extractPages(doc: Document): HTMLElement[] {
-    const found = Array.from(doc.body.querySelectorAll<HTMLElement>(".page"));
-    const unique: HTMLElement[] = [];
-    const seen = new Set<HTMLElement>();
-    for (const page of found) {
-      if (seen.has(page)) continue;
-      if (page.parentElement?.closest(".page")) continue;
-      seen.add(page);
-      page.classList.add("page");
-      if (page.classList.contains("page--landscape")) page.classList.remove("page--portrait");
-      else page.classList.add("page--portrait");
-      unique.push(page);
+    sheetsHost.replaceChildren();
+    for (const page of renderEoschoolPages(doc)) {
+      sheetsHost.append(page);
     }
-    if (unique.length) return unique;
-    const wrap = doc.createElement("section");
-    wrap.className = "page page--portrait";
-    while (doc.body.firstChild) wrap.appendChild(doc.body.firstChild);
-    return [wrap];
   }
 </script>
