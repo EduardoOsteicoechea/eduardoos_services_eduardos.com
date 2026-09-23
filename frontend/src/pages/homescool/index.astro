@@ -10,9 +10,9 @@ import "../../styles/homescool-workspace.css";
       <section class="homescool-dhs__section">
         <h2 class="homescool-dhs__heading" id="homescool-dhs-ciclo">Ciclo</h2>
         <div class="homescool-dhs__row homescool-dhs__row--tabs" role="tablist" aria-labelledby="homescool-dhs-ciclo" data-homescool-cycles>
-          <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="true">c1</button>
+          <button type="button" class="homescool-dhs__chip" data-cycle="1" aria-pressed="false">c1</button>
           <button type="button" class="homescool-dhs__chip" data-cycle="2" aria-pressed="false">c2</button>
-          <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="false">c3</button>
+          <button type="button" class="homescool-dhs__chip" data-cycle="3" aria-pressed="true">c3</button>
         </div>
       </section>
       <section class="homescool-dhs__section">
@@ -285,12 +285,20 @@ import "../../styles/homescool-workspace.css";
     curriculum: HomescoolCurriculum | null | undefined,
   ): WorkspaceCell[] {
     const byKey = new Map<string, WorkspaceCell>();
+    const publishedKeys = curriculum
+      ? new Set(
+          curriculum.classes
+            .filter((row) => (row.level ?? LEVEL) === LEVEL)
+            .map((row) => row.key || cellKey(row.cycle, row.week, row.day, row.subject, row.level ?? LEVEL)),
+        )
+      : null;
 
     for (const m of materials) {
       if (m.format !== "eoschool") continue;
       const level = m.level ?? LEVEL;
       if (level !== LEVEL) continue;
       const key = cellKey(m.cycle, m.week, m.day, m.subject, level);
+      if (publishedKeys && !publishedKeys.has(key)) continue;
       byKey.set(key, {
         key,
         cycle: m.cycle,
