@@ -269,18 +269,9 @@ function buildDeepenRibbon(doc: EoschoolDocument): HTMLElement {
   const focus = doc.lesson?.focusPoint ?? 1;
   const heading = doc.lesson?.points?.[0]?.heading?.trim() || `Punto ${focus}`;
   const ribbon = el("div", "homescool-letter__ribbon");
-  const badge = el("span", "homescool-letter__ribbon-badge");
-  badge.append(letterIcon("center_focus_strong"), el("span", "homescool-letter__kicker-text", `Punto ${focus}`));
-  ribbon.append(badge);
-  const title = el("span", "homescool-letter__ribbon-title");
-  title.append(letterIcon("school"), el("span", "homescool-letter__title-text", heading));
-  ribbon.append(title);
-  const hint = el("span", "homescool-letter__ribbon-hint");
-  hint.append(
-    letterIcon("filter_1"),
-    el("span", "homescool-letter__title-text", "Clase de profundización · un solo foco"),
-  );
-  ribbon.append(hint);
+  ribbon.append(el("span", "homescool-letter__ribbon-badge", `Punto ${focus}`));
+  ribbon.append(el("span", "homescool-letter__ribbon-title", heading));
+  ribbon.append(el("span", "homescool-letter__ribbon-hint", "Clase de profundización · un solo foco"));
   return ribbon;
 }
 
@@ -294,11 +285,12 @@ function buildQuizPage(
   page.append(
     lessonHeader(
       doc,
-      `Cuestionario · ${total} preguntas (días 1–${doc.day})`,
-      `${startIndex}–${startIndex + questions.length - 1}`,
+      `Cuestionario · ${total} preguntas`,
+      `Días 1–${doc.day} · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
-  page.append(buildQuizList(questions, startIndex, total, doc.day));
+  // Hero already names the quiz — no second orange label (it was wrapping/stacking on capture).
+  page.append(buildQuizList(questions, startIndex, total, doc.day, { showLabel: false }));
   return page;
 }
 
@@ -323,12 +315,7 @@ function buildLessonStack(
     const badge = el("span", "homescool-letter__point-badge", String(index + 1));
     const copy = el("div", "homescool-letter__point-copy");
     if (p.heading) {
-      const title = el("h3", "homescool-letter__point-title");
-      title.append(
-        letterIcon(POINT_ICONS[index % POINT_ICONS.length] ?? "menu_book"),
-        el("span", "homescool-letter__title-text", p.heading),
-      );
-      copy.append(title);
+      copy.append(el("h3", "homescool-letter__point-title", p.heading));
     }
     if (p.body) copy.append(buildRichBody(p.body, { mode: kind === "review" ? "review" : "intro" }));
     block.append(badge, copy);
@@ -342,23 +329,14 @@ type ParaKind = "lead" | "card" | "practice" | "error" | "tip" | "goal" | "contr
 
 type RichPara = { kind: ParaKind; text: string; left?: string; right?: string };
 
-const POINT_ICONS = ["auto_stories", "science", "history_edu", "public", "palette"] as const;
-
-const BOX_META: Record<ParaKind, { label: string; icon: string }> = {
-  lead: { label: "Idea central", icon: "lightbulb" },
-  card: { label: "Explora", icon: "menu_book" },
-  practice: { label: "Práctica", icon: "edit_note" },
-  error: { label: "Error a corregir", icon: "warning" },
-  tip: { label: "Consejo", icon: "tips_and_updates" },
-  goal: { label: "Meta", icon: "flag" },
-  contrast: { label: "Contraste", icon: "compare_arrows" },
-};
-
-const HERO_ICONS: Record<string, string> = {
-  Clase: "school",
-  Profundización: "center_focus_strong",
-  Repaso: "restart_alt",
-  "Clase + cuestionario": "menu_book",
+const BOX_META: Record<ParaKind, { label: string }> = {
+  lead: { label: "Idea central" },
+  card: { label: "Explora" },
+  practice: { label: "Práctica" },
+  error: { label: "Error a corregir" },
+  tip: { label: "Consejo" },
+  goal: { label: "Meta" },
+  contrast: { label: "Contraste" },
 };
 
 /** Split lesson bodies into typed blocks (boxes / cols) instead of one flat paragraph. */
@@ -446,12 +424,12 @@ function renderParaBlock(p: RichPara): HTMLElement {
   const meta = BOX_META[p.kind];
   if (p.kind === "contrast" && p.left && p.right) {
     const box = el("div", "homescool-letter__box homescool-letter__box--contrast");
-    box.append(boxLabel(meta.icon, meta.label));
+    box.append(boxLabel(meta.label));
     const cols = el("div", "homescool-letter__cols");
     const a = el("div", "homescool-letter__col homescool-letter__col--a");
-    a.append(letterIcon("arrow_back"), el("p", "homescool-letter__body", p.left));
+    a.append(el("p", "homescool-letter__body", p.left));
     const b = el("div", "homescool-letter__col homescool-letter__col--b");
-    b.append(letterIcon("arrow_forward"), el("p", "homescool-letter__body", p.right));
+    b.append(el("p", "homescool-letter__body", p.right));
     cols.append(a, b);
     box.append(cols);
     if (p.left.length + p.right.length + 40 < p.text.length) {
@@ -462,38 +440,25 @@ function renderParaBlock(p: RichPara): HTMLElement {
 
   const box = el("div", `homescool-letter__box homescool-letter__box--${p.kind}`);
   const soft = p.kind === "card";
-  box.append(boxLabel(meta.icon, meta.label, soft));
+  box.append(boxLabel(meta.label, soft));
   box.append(el("p", "homescool-letter__body", p.text));
   return box;
 }
 
-function boxLabel(icon: string, text: string, soft = false): HTMLElement {
+function boxLabel(text: string, soft = false): HTMLElement {
   const label = el(
     "span",
     soft ? "homescool-letter__box-label homescool-letter__box-label--soft" : "homescool-letter__box-label",
   );
-  label.append(letterIcon(icon), el("span", "homescool-letter__box-label-text", text));
+  label.append(el("span", "homescool-letter__box-label-text", text));
   return label;
-}
-
-/**
- * Letter-sheet marks — CSS geometry only (no Material Symbols ligature text).
- * Web-font icons paint as raw names (quiz, auto_stories…) in PDF capture when
- * the icon font is missing or uppercase inheritance breaks ligatures.
- */
-function letterIcon(name: string): HTMLElement {
-  const icon = document.createElement("span");
-  icon.className = "homescool-letter__icon";
-  icon.setAttribute("aria-hidden", "true");
-  icon.setAttribute("data-icon", name);
-  return icon;
 }
 
 function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
   if (!doc.lesson?.summary) return;
   const sum = el("section", "homescool-letter__summary");
   const label = el("h3", "homescool-letter__summary-label");
-  label.append(letterIcon("summarize"), el("span", "homescool-letter__box-label-text", "Resumen"));
+  label.append(el("span", "homescool-letter__box-label-text", "Resumen"));
   sum.append(label);
   sum.append(el("p", "homescool-letter__body", doc.lesson.summary));
   page.append(sum);
@@ -504,18 +469,20 @@ function buildQuizList(
   startIndex: number,
   total: number,
   day: number,
+  opts?: { showLabel?: boolean },
 ): HTMLElement {
   const wrap = el("section", "homescool-letter__quiz-wrap");
-  const quizLabel = el("h3", "homescool-letter__quiz-label");
-  quizLabel.append(
-    letterIcon("quiz"),
-    el(
-      "span",
-      "homescool-letter__box-label-text",
-      `Cuestionario · ${total} (días 1–${day}) · ${startIndex}–${startIndex + questions.length - 1}`,
-    ),
-  );
-  wrap.append(quizLabel);
+  if (opts?.showLabel !== false) {
+    const quizLabel = el("h3", "homescool-letter__quiz-label");
+    quizLabel.append(
+      el(
+        "span",
+        "homescool-letter__box-label-text",
+        `Cuestionario · ${startIndex}–${startIndex + questions.length - 1} de ${total}`,
+      ),
+    );
+    wrap.append(quizLabel);
+  }
   const list = el("ol", "homescool-letter__quiz") as HTMLOListElement;
   list.start = startIndex;
   const letters = ["A", "B", "C", "D", "E", "F"];
@@ -552,12 +519,8 @@ function letterPage(...extra: string[]): HTMLElement {
 function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
   const head = el("header", "homescool-letter__hero");
   const top = el("div", "homescool-letter__hero-top");
-  const kick = el("span", "homescool-letter__kicker");
-  const kickIcon =
-    HERO_ICONS[kicker] ??
-    (kicker.startsWith("Cuestionario") ? "quiz" : "school");
-  kick.append(letterIcon(kickIcon), el("span", "homescool-letter__kicker-text", kicker));
-  top.append(kick);
+  // No decorative marks in the hero — they collided with title glyphs in PDF capture.
+  top.append(el("span", "homescool-letter__kicker", kicker));
   top.append(
     el(
       "span",
@@ -566,9 +529,7 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
     ),
   );
   head.append(top);
-  const title = el("h2", "homescool-letter__heading");
-  title.append(letterIcon("auto_stories"), el("span", "homescool-letter__title-text", doc.title));
-  head.append(title);
+  head.append(el("h2", "homescool-letter__heading", doc.title));
   if (sub) head.append(el("p", "homescool-letter__sub", sub));
   return head;
 }

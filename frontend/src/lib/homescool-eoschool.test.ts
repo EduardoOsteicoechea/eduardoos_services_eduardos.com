@@ -144,7 +144,7 @@ describe("renderEoschoolPages pagination", () => {
     expect(pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"))).toHaveLength(1);
   });
 
-  it("uses CSS marks instead of Material Symbols ligature text on every letter heading", () => {
+  it("keeps quiz and lesson headings free of decorative icon marks", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -166,19 +166,12 @@ describe("renderEoschoolPages pagination", () => {
       },
     });
     const pages = renderEoschoolPages(doc);
-    const icons = pages.flatMap((p) => Array.from(p.querySelectorAll(".homescool-letter__icon")));
-    expect(icons.length).toBeGreaterThan(0);
-    for (const icon of icons) {
-      expect(icon.classList.contains("material-symbols-outlined")).toBe(false);
-      expect(icon.textContent ?? "").toBe("");
-      expect(icon.getAttribute("data-icon")).toBeTruthy();
-    }
+    expect(pages.every((p) => p.querySelectorAll(".homescool-letter__icon").length === 0)).toBe(true);
+    expect(pages.every((p) => p.querySelectorAll(".material-symbols-outlined").length === 0)).toBe(true);
+
     const quizPage = pages.find((p) => p.classList.contains("homescool-letter-page--quiz"));
-    expect(quizPage?.querySelector(".homescool-letter__quiz-label .homescool-letter__icon")?.getAttribute("data-icon")).toBe(
-      "quiz",
-    );
-    expect(quizPage?.querySelector(".homescool-letter__heading .homescool-letter__icon")?.getAttribute("data-icon")).toBe(
-      "auto_stories",
-    );
+    expect(quizPage?.querySelector(".homescool-letter__quiz-label")).toBeNull();
+    expect(quizPage?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
+    expect(quizPage?.querySelector(".homescool-letter__kicker")?.textContent).toMatch(/Cuestionario/i);
   });
 });

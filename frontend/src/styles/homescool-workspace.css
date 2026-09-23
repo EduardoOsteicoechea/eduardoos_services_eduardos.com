@@ -379,109 +379,36 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter__kicker {
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.06rem;
-  opacity: 0.92;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.homescool-letter__kicker-text {
+  letter-spacing: 0.04rem;
   text-transform: uppercase;
-  letter-spacing: 0.06rem;
+  opacity: 0.92;
+  margin: 0;
+  line-height: 1.3;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .homescool-letter__heading {
   font-size: 1.15rem;
   font-weight: 700;
   margin: 0;
-  line-height: 1.25;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-/*
- * Letter marks are CSS geometry only — never Material Symbols ligature text.
- * PDF capture (modern-screenshot) often misses the icon font and paints names
- * like "quiz" / "auto_stories" over headings.
- */
-.homescool-letter__icon {
-  flex: 0 0 auto;
-  display: inline-block;
-  box-sizing: border-box;
-  width: 0.65rem;
-  height: 0.65rem;
-  border: 0.07rem solid currentColor;
-  border-radius: 0.1rem;
-  background: transparent;
-  color: inherit;
-  font-size: 0;
-  line-height: 0;
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
-}
-
-.homescool-letter__icon[data-icon="warning"],
-.homescool-letter__icon[data-icon="quiz"] {
-  border-radius: 50%;
-}
-
-.homescool-letter__icon[data-icon="arrow_back"],
-.homescool-letter__icon[data-icon="arrow_forward"] {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 0;
-  border-width: 0;
-  border-style: solid;
-  background: transparent;
-  position: relative;
-}
-
-.homescool-letter__icon[data-icon="arrow_back"] {
-  border-width: 0 0 0.08rem 0.08rem;
-  transform: rotate(45deg);
-  margin: 0.15rem 0.1rem 0 0.15rem;
-}
-
-.homescool-letter__icon[data-icon="arrow_forward"] {
-  border-width: 0.08rem 0.08rem 0 0;
-  transform: rotate(45deg);
-  margin: 0.15rem 0.15rem 0 0.1rem;
-}
-
-.homescool-letter__kicker .homescool-letter__icon,
-.homescool-letter__box-label .homescool-letter__icon,
-.homescool-letter__ribbon-hint .homescool-letter__icon,
-.homescool-letter__quiz-label .homescool-letter__icon,
-.homescool-letter__summary-label .homescool-letter__icon {
-  width: 0.55rem;
-  height: 0.55rem;
-}
-
-.homescool-letter__heading .homescool-letter__icon,
-.homescool-letter__point-title .homescool-letter__icon,
-.homescool-letter__ribbon-title .homescool-letter__icon {
-  width: 0.7rem;
-  height: 0.7rem;
-}
-
-.homescool-letter__ribbon-badge .homescool-letter__icon {
-  width: 0.5rem;
-  height: 0.5rem;
+  line-height: 1.3;
+  min-width: 0;
 }
 
 .homescool-letter__meta {
   font-size: 0.65rem;
   opacity: 0.85;
   margin: 0;
+  line-height: 1.3;
+  flex: 0 0 auto;
 }
 
 .homescool-letter__sub {
   margin: 0;
   font-size: 0.72rem;
   opacity: 0.9;
+  line-height: 1.3;
 }
 
 .homescool-letter__stack {
@@ -564,9 +491,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-weight: 700;
   margin: 0;
   color: var(--hc-ink);
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  line-height: 1.3;
 }
 
 .homescool-letter__ribbon {
@@ -590,13 +515,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.04rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.homescool-letter__ribbon-badge .homescool-letter__kicker-text {
   text-transform: uppercase;
+  line-height: 1.3;
 }
 
 .homescool-letter__ribbon-title {
@@ -605,18 +525,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--hc-ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
+  line-height: 1.3;
 }
 
 .homescool-letter__ribbon-hint {
   flex: 0 1 auto;
   font-size: 0.62rem;
   color: var(--hc-ink-soft);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
+  line-height: 1.3;
 }
 
 .homescool-letter__deepen-panel {
@@ -733,14 +649,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-rail);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  line-height: 1.3;
+  display: block;
 }
 
 .homescool-letter__box-label-text {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
+  line-height: 1.3;
 }
 
 .homescool-letter__box--practice .homescool-letter__box-label {
@@ -769,11 +685,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-}
-
-.homescool-letter__col .homescool-letter__icon {
-  color: var(--hc-rail);
-  opacity: 0.85;
 }
 
 .homescool-letter__col--a {
@@ -846,9 +757,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-coral);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  line-height: 1.3;
+  display: block;
 }
 
 .homescool-letter__summary-label .homescool-letter__box-label-text {
@@ -858,7 +768,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter__quiz-wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
   flex: 1 1 auto;
   min-height: 0;
 }
@@ -869,13 +779,14 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-weight: 700;
   letter-spacing: 0.04rem;
   color: var(--hc-coral);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  line-height: 1.35;
+  display: block;
+  flex: 0 0 auto;
 }
 
 .homescool-letter__quiz-label .homescool-letter__box-label-text {
   text-transform: uppercase;
+  line-height: 1.35;
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__stack {
