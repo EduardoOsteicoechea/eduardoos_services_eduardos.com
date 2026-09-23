@@ -123,16 +123,16 @@ No eliminar consejos ni errores comunes; **reordenar o acortar** la plantilla.
 
 ---
 
-## W2-07 · Piloto semana 1 en curriculum.json (fuera del alcance)
+## W2-07 · Piloto semana 1 en curriculum.json (excluido)
 
-**Problema:** si `c1-w1-d1-l6-mat` sigue en el consolidado con 7 preguntas y tipos `short`, no cumple METHOD_V1 v1; no forma parte del pack ciclo 3 / semana 2.
+**Estado:** `c1-w1-d1-l6-mat` se excluye del consolidado. El material publicado comienza en ciclo 3 / semana 2.
 
 **Acción:**
 
-- O **eliminar** el piloto del consolidado (solo week2 en SoT),
-- O **actualizar** el piloto a 8 `mcq` y alinear con el contenido vigente si semana 1 ya no se usa.
+- Mantener el piloto fuera de `curriculum.json`.
+- Añadir las próximas semanas publicadas de ciclo 3 conforme se carguen.
 
-**Archivos:** `frontend/public/homescool/media/pilot/` (si existe), `curriculum.json`, script de build.
+**Archivos:** `frontend/public/homescool/media/pilot/`, `curriculum.json`, script de build.
 
 ---
 

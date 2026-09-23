@@ -18,7 +18,7 @@ const dest = path.join("frontend", "public", "homescool", "curriculum.json");
 function walk(dir, out) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, out);
+    if (e.isDirectory() && e.name !== "pilot") walk(p, out);
     else if (e.name.endsWith(".eoschool.json")) out.push(p);
   }
 }
