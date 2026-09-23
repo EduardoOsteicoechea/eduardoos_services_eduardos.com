@@ -98,7 +98,12 @@ function dynamicHeaderHasActions(): boolean {
   if (!(dhs instanceof HTMLElement)) {
     return false;
   }
-  if (dhs.querySelector(".dhs-action, .header-dynamic-menu__btn")) {
+  // Row actions, pamphlet tools, or Homescool cycle/week/day/subject chrome.
+  if (
+    dhs.querySelector(
+      ".dhs-action, .header-dynamic-menu__btn, [data-homescool-dhs], .homescool-dhs",
+    )
+  ) {
     return true;
   }
   const host = dhs.querySelector("#header-dynamic-menu-host, [data-hds-host]");
