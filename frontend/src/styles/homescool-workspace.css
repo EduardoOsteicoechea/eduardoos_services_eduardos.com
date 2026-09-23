@@ -293,7 +293,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
   --hc-ink: var(--hc-navy);
   --hc-ink-soft: var(--hc-olive);
-  --hc-line: color-mix(in srgb, var(--hc-olive) 42%, #ffffff);
+  /* Hex stand-in for color-mix(olive 42%, white) — keeps PDF capture libraries happy. */
+  --hc-line: #cbc5b5;
   --hc-rail: var(--hc-navy);
   --hc-coral: var(--hc-orange);
   --hc-teal: var(--hc-blue);
@@ -982,7 +983,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
   --mat-ink: var(--mat-navy);
   --mat-ink-soft: var(--mat-olive);
-  --mat-line: color-mix(in srgb, var(--mat-olive) 42%, #ffffff);
+  /* Hex stand-in for color-mix(olive 42%, white) — keeps PDF capture libraries happy. */
+  --mat-line: #cbc5b5;
   --mat-rail: var(--mat-navy);
   --mat-coral: var(--mat-orange);
 

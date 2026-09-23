@@ -1,9 +1,9 @@
 /**
  * Capture styled Homescool letter pages → JPEG rasters → backend PDF.
- * Keeps pastel FE chrome pixel-faithful (same approach as Scrib print, but color).
+ * Uses modern-screenshot (browser paint) so color-mix / color() from site CSS work.
  */
 
-import html2canvas from "html2canvas";
+import { domToJpeg } from "modern-screenshot";
 import { currentCsrf, getCsrf } from "./api";
 import { mustLog } from "./dev-log";
 
@@ -46,15 +46,13 @@ async function captureLetterPage(page: HTMLElement): Promise<string> {
     }
     // Let layout settle after geometry lock.
     await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
-    const canvas = await html2canvas(page, {
+    return await domToJpeg(page, {
       scale: CAPTURE_SCALE,
+      quality: JPEG_QUALITY,
       backgroundColor: "#ffffff",
-      logging: false,
-      useCORS: true,
-      allowTaint: false,
-      imageTimeout: 15_000,
+      // Fetch/inline styles as the browser paints them (supports color-mix).
+      fetch: { requestInit: { credentials: "include" } },
     });
-    return canvas.toDataURL("image/jpeg", JPEG_QUALITY);
   } finally {
     restore();
   }
