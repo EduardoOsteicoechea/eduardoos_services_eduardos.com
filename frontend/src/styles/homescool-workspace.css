@@ -372,15 +372,16 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter__hero {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.4rem;
-  padding: 0.55rem 0.65rem;
+  padding: 0.65rem 0.7rem;
   border-radius: 0.35rem;
   background: transparent;
   color: var(--hc-ink);
   border: 0.08rem solid var(--hc-rail);
   flex: 0 0 auto;
-  /* Room for kicker+meta row and a full title line without clipping. */
-  min-height: 4.25rem;
+  /* Same height for lesson and quiz: kicker row + title. */
+  min-height: 5rem;
   box-sizing: border-box;
 }
 
@@ -388,14 +389,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: transparent;
   border-color: var(--hc-rail);
   color: var(--hc-ink);
-  /* Kicker + right meta/sub stack + title need more vertical room. */
   min-height: 5rem;
 }
 
 .homescool-letter__hero-top {
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
 }
@@ -414,11 +414,12 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__hero-end {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.15rem;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.35rem;
   flex: 0 1 auto;
-  max-width: 48%;
+  max-width: 52%;
   text-align: right;
 }
 
@@ -439,8 +440,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   opacity: 0.85;
   margin: 0;
   line-height: 1.35;
-  flex: 0 0 auto;
-  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .homescool-letter__sub {
@@ -448,7 +449,6 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   font-size: 0.72rem;
   opacity: 0.9;
   line-height: 1.35;
-  white-space: nowrap;
 }
 
 .homescool-letter__stack {

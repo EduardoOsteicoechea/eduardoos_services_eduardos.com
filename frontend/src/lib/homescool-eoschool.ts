@@ -678,15 +678,12 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
   // No decorative marks in the hero — they collided with title glyphs in PDF capture.
   top.append(el("span", "homescool-letter__kicker", kicker));
   const end = el("div", "homescool-letter__hero-end");
-  end.append(
-    el(
-      "span",
-      "homescool-letter__meta",
-      `c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`,
-    ),
-  );
-  // Quiz range (and any other sub) sits on the kicker row, right-aligned — not under the title.
-  if (sub) end.append(el("span", "homescool-letter__sub", sub));
+  const metaParts = [
+    `c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`,
+  ];
+  // Keep quiz range on the same right-hand line as meta (same hero height as lesson).
+  if (sub) metaParts.push(sub);
+  end.append(el("span", "homescool-letter__meta", metaParts.join(" · ")));
   top.append(end);
   head.append(top);
   head.append(el("h2", "homescool-letter__heading", doc.title));
