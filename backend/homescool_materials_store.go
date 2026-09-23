@@ -38,6 +38,18 @@ func homescoolReadHTMLFile(mediaRoot, rel string) ([]byte, error) {
 	return os.ReadFile(abs)
 }
 
+func homescoolRemoveMaterialFile(mediaRoot, rel string) error {
+	rel = strings.TrimSpace(rel)
+	if rel == "" {
+		return nil
+	}
+	abs := filepath.Join(mediaRoot, filepath.FromSlash(rel))
+	if err := os.Remove(abs); err != nil && !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+	return nil
+}
+
 func (s *memoryHomescoolStore) EnsureWebAssets(_ context.Context, sourceDir string) error {
 	if strings.TrimSpace(sourceDir) == "" {
 		return nil
@@ -379,4 +391,51 @@ func (s *mongoHomescoolStore) ReadMaterialDocument(ctx context.Context, m Homesc
 		path = m.HTMLPath
 	}
 	return homescoolReadHTMLFile(s.mediaRoot, path)
+}
+
+func (s *memoryHomescoolStore) DeleteMaterial(_ context.Context, ownerUserID, id string) (bool, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	m, ok := s.materials[id]
+	if !ok || (ownerUserID != "" && m.OwnerUserID != ownerUserID) {
+		return false, nil
+	}
+	rel := m.DocumentPath
+	if rel == "" {
+		rel = m.HTMLPath
+	}
+	delete(s.materials, id)
+	if err := homescoolRemoveMaterialFile(s.mediaRoot, rel); err != nil {
+		return true, err
+	}
+	return true, nil
+}
+
+func (s *mongoHomescoolStore) DeleteMaterial(ctx context.Context, ownerUserID, id string) (bool, error) {
+	m, found, err := s.GetMaterial(ctx, ownerUserID, id)
+	if err != nil {
+		return false, err
+	}
+	if !found {
+		return false, nil
+	}
+	filter := bson.M{"_id": id}
+	if ownerUserID != "" {
+		filter["owner_user_id"] = ownerUserID
+	}
+	res, err := s.materialsCol().DeleteOne(ctx, filter)
+	if err != nil {
+		return false, err
+	}
+	if res.DeletedCount == 0 {
+		return false, nil
+	}
+	rel := m.DocumentPath
+	if rel == "" {
+		rel = m.HTMLPath
+	}
+	if err := homescoolRemoveMaterialFile(s.mediaRoot, rel); err != nil {
+		return true, err
+	}
+	return true, nil
 }

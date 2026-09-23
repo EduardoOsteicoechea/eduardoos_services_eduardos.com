@@ -42,6 +42,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			{"method": http.MethodGet, "path": "/api/v1/homescool/materials", "auth": "api_key", "summary": "Homescool — list owned study materials (optional ?cycle=1|2|3)."},
 			{"method": http.MethodGet, "path": "/api/v1/homescool/materials/{materialId}", "auth": "api_key", "summary": "Homescool — get one material meta + viewUrl."},
 			{"method": http.MethodPost, "path": "/api/v1/homescool/materials", "auth": "api_key", "summary": "Homescool — upsert .eoschool JSON (METHOD_V1; confirmOverwrite required).", "body": `{"confirmOverwrite":true,"material":{"format":"eoschool","version":1,"cycle":1,"week":1,"day":1,"level":6,"subject":"mat","title":"…","lesson":{…},"quiz":{…}}}`},
+			{"method": http.MethodDelete, "path": "/api/v1/homescool/materials/{materialId}", "auth": "api_key", "summary": "Homescool — delete one owned material (meta + document file)."},
 			{"method": http.MethodGet, "path": "/api/v1/epam/access", "auth": "api_key", "summary": "EPAM — check API access.", "requirements": "api + epam (or admin). Legacy pamphlet entitlement accepted."},
 			{"method": http.MethodGet, "path": "/api/v1/epam/epams", "auth": "api_key", "summary": "EPAM — list owned documents (meta + viewUrl + articleUrl)."},
 			{"method": http.MethodGet, "path": "/api/v1/epam/epams/{id}", "auth": "api_key", "summary": "EPAM — read meta + document + viewUrl + articleUrl."},

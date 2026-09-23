@@ -9,7 +9,8 @@ Prefer the live catalog over this snapshot.
 3. Optional `GET /api/v1/homescool/materials?cycle=3`
 4. Generate US Letter HTML locally (MATERIALS/TEMPLATES)
 5. `POST /api/v1/homescool/materials` with `confirmOverwrite: true`
-6. Print `viewUrl`
+6. Optional `DELETE /api/v1/homescool/materials/{materialId}` to remove an owned material
+7. Print `viewUrl`
 
 ## Auth
 

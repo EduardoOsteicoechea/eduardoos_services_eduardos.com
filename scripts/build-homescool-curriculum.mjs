@@ -1,8 +1,6 @@
 /**
- * Merge all .eoschool.json under frontend/public/homescool/media into
- * frontend/public/homescool/curriculum.json (agent-reviewable FE backup),
- * then optionally upsert every class into Mongo via the Homescool v1 API
- * (runtime SoT). Both stores update in the same run when credentials exist.
+ * Publish pack: only frontend/public/homescool/media/week2/*.eoschool.json
+ * → curriculum.json (FE backup) + optional Mongo upsert (runtime SoT).
  *
  * Sync env (optional):
  *   EDUARDOOS_API_KEY   — eos_live_… key with api + homescool
@@ -11,29 +9,35 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const root = path.join("frontend", "public", "homescool", "media");
+const week2Root = path.join("frontend", "public", "homescool", "media", "week2");
 const dest = path.join("frontend", "public", "homescool", "curriculum.json");
 
-/** @param {string} dir @param {string[]} out */
-function walk(dir, out) {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory() && e.name !== "pilot") walk(p, out);
-    else if (e.name.endsWith(".eoschool.json")) out.push(p);
-  }
-}
-
-const files = [];
-walk(root, files);
-files.sort((a, b) => a.localeCompare(b));
+const files = fs
+  .readdirSync(week2Root)
+  .filter((n) => n.endsWith(".eoschool.json"))
+  .map((n) => path.join(week2Root, n))
+  .sort((a, b) => a.localeCompare(b));
 
 const classes = [];
 for (const f of files) {
   const doc = JSON.parse(fs.readFileSync(f, "utf8"));
+  if (doc.cycle !== 3 || doc.week !== 2 || doc.level !== 6) {
+    throw new Error(
+      `refusing unpublished cell ${f}: cycle=${doc.cycle} week=${doc.week} level=${doc.level}`,
+    );
+  }
+  const base = path.basename(f);
+  if (!/-c3-w2-/.test(base)) {
+    throw new Error(`refusing filename without -c3-w2-: ${base}`);
+  }
   const rel = f.split(path.sep).join("/");
   const source = rel.replace(/^frontend\/public/, "");
   const key = `c${doc.cycle}-w${doc.week}-d${doc.day}-l${doc.level}-${doc.subject}`;
   classes.push({ key, source, ...doc });
+}
+
+if (classes.length !== 60) {
+  throw new Error(`expected 60 published classes, got ${classes.length}`);
 }
 
 const out = {
@@ -41,7 +45,7 @@ const out = {
   version: 1,
   level: 6,
   description:
-    "FE backup for agent review/validation. Runtime SoT is Mongo (homescool_materials). Rebuild + sync with this script so both stay aligned.",
+    "Published Homescool pack: ciclo 3 / semana 2 / nivel 6 only (60 cells). FE backup for review; Mongo is runtime SoT.",
   classCount: classes.length,
   classes,
 };

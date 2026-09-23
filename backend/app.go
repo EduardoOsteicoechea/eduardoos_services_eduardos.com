@@ -283,6 +283,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1ListMaterialsHandler))
 	mux.HandleFunc("GET /api/v1/homescool/materials/{materialId}", a.withAPIKey(productHomescool, a.homescoolV1GetMaterialHandler))
 	mux.HandleFunc("POST /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1PostMaterialHandler))
+	mux.HandleFunc("DELETE /api/v1/homescool/materials/{materialId}", a.withAPIKey(productHomescool, a.homescoolV1DeleteMaterialHandler))
 	mux.HandleFunc("GET /api/v1/epam/access", a.withAPIKey(productEpam, a.epamV1AccessHandler))
 	mux.HandleFunc("GET /api/v1/epam/epams", a.withAPIKey(productEpam, a.epamV1ListHandler))
 	mux.HandleFunc("GET /api/v1/epam/epams/{id}", a.withAPIKey(productEpam, a.epamV1GetHandler))

@@ -136,14 +136,45 @@ func TestHomescoolMaterialsV1DocsAndUpsert(t *testing.T) {
 		t.Fatalf("cross-user want 404 got %d %s", w.Code, w.Body.String())
 	}
 
-	list := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials?cycle=1", "")
+	req = httptest.NewRequest(http.MethodDelete, "/api/v1/homescool/materials/"+id, nil)
+	req.Header.Set("Authorization", "Bearer "+otherSecret)
+	w = httptest.NewRecorder()
+	app.Handler().ServeHTTP(w, req)
+	if w.Code != http.StatusNotFound {
+		t.Fatalf("cross-user delete want 404 got %d %s", w.Code, w.Body.String())
+	}
+
+	req = httptest.NewRequest(http.MethodDelete, "/api/v1/homescool/materials/"+id, nil)
+	req.Header.Set("Authorization", "Bearer "+secret)
+	w = httptest.NewRecorder()
+	app.Handler().ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Fatalf("delete %d %s", w.Code, w.Body.String())
+	}
+	delOut := decodeMap(t, w)
+	if delOut["deleted"] != true {
+		t.Fatalf("delete body %#v", delOut)
+	}
+
+	req = httptest.NewRequest(http.MethodGet, "/api/v1/homescool/materials/"+id, nil)
+	req.Header.Set("Authorization", "Bearer "+secret)
+	w = httptest.NewRecorder()
+	app.Handler().ServeHTTP(w, req)
+	if w.Code != http.StatusNotFound {
+		t.Fatalf("get after delete want 404 got %d %s", w.Code, w.Body.String())
+	}
+
+	list := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/homescool/materials?cycle=3", "")
 	if list.Code != http.StatusOK {
 		t.Fatalf("session list %d %s", list.Code, list.Body.String())
 	}
 	listed := decodeMap(t, list)
 	mats, _ := listed["materials"].([]any)
 	if len(mats) < 1 {
-		t.Fatal("expected materials in session list")
+		t.Fatal("expected legacy cycle-3 material still in session list")
+	}
+	if !strings.Contains(dw.Body.String(), "DELETE") {
+		t.Fatal("docs missing DELETE homescool materials route")
 	}
 }
 

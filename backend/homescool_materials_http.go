@@ -380,6 +380,49 @@ func (a *App) homescoolV1GetMaterialHandler(w http.ResponseWriter, r *http.Reque
 	})
 }
 
+func (a *App) homescoolV1DeleteMaterialHandler(w http.ResponseWriter, r *http.Request) {
+	user := apiUserFrom(r)
+	id := strings.TrimSpace(r.PathValue("materialId"))
+	a.mustLogf(r, "homescool.v1.delete.enter", "user_id", user.ID, "id", id)
+	if id == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	m, found, err := a.homescool.GetMaterial(r.Context(), user.ID, id)
+	if err != nil {
+		a.mustLogf(r, "homescool.v1.delete.error", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found {
+		a.mustLogf(r, "homescool.v1.delete.miss")
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	ok, err := a.homescool.DeleteMaterial(r.Context(), user.ID, id)
+	if err != nil {
+		a.mustLogf(r, "homescool.v1.delete.error", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !ok {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	a.mustLogf(r, "homescool.v1.delete.ok",
+		"id", id, "cycle", m.Cycle, "week", m.Week, "day", m.Day, "level", m.Level, "subject", m.Subject)
+	a.auditEvent(r, "homescool_material_delete", "ok", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"deleted": true,
+		"id":      id,
+		"cycle":   m.Cycle,
+		"week":    m.Week,
+		"day":     m.Day,
+		"level":   m.Level,
+		"subject": m.Subject,
+	})
+}
+
 func (a *App) homescoolMaterialViewURL(r *http.Request, id string) string {
 	return a.publicBase(r) + "/homescool/material?id=" + id
 }

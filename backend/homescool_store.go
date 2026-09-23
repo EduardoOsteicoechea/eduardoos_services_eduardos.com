@@ -55,6 +55,7 @@ type HomescoolStore interface {
 	GetMaterialByLogicKey(ctx context.Context, ownerUserID string, cycle, week, day int, subject, slug string) (HomescoolMaterial, bool, error)
 	GetMaterialByEoschoolKey(ctx context.Context, ownerUserID string, cycle, week, day, level int, subject string) (HomescoolMaterial, bool, error)
 	ListMaterials(ctx context.Context, ownerUserIDs []string, cycle int) ([]HomescoolMaterial, error)
+	DeleteMaterial(ctx context.Context, ownerUserID, id string) (bool, error)
 	ReadMaterialHTML(ctx context.Context, m HomescoolMaterial) ([]byte, error)
 	ReadMaterialDocument(ctx context.Context, m HomescoolMaterial) ([]byte, error)
 	EnsureWebAssets(ctx context.Context, sourceDir string) error
