@@ -297,6 +297,33 @@ describe("session forms", () => {
     expect(document.querySelector("[data-banner]")?.textContent).toBe("Profile saved.");
   });
 
+  it("changes a password from the profile page form", async () => {
+    vi.mocked(postJSON).mockResolvedValue({
+      status: 200,
+      requestId: "rid-password",
+      data: {},
+    });
+    document.body.innerHTML = `
+      <section data-session>
+        <p data-banner></p>
+        <form data-password-form>
+          <input name="current_password" value="current-password" required minlength="8" />
+          <input name="new_password" value="new-password" required minlength="8" />
+          <button type="submit">Update password</button>
+        </form>
+      </section>
+    `;
+    startProfileActions();
+    (document.querySelector("[data-password-form]") as HTMLFormElement).requestSubmit();
+    await vi.waitFor(() => {
+      expect(postJSON).toHaveBeenCalledWith("/auth/change-password", {
+        current_password: "current-password",
+        new_password: "new-password",
+      });
+    });
+    expect(document.querySelector("[data-banner]")?.textContent).toBe("Password changed.");
+  });
+
   it("signs in from the persistent layout click listener", async () => {
     vi.mocked(postJSON).mockResolvedValue({
       status: 200,

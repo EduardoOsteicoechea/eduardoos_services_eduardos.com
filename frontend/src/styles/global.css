@@ -685,7 +685,23 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
 }
 
 .sidebar-nav-section--session {
-  margin-top: 0;
+  margin-top: auto;
+}
+
+.sidebar-left nav .sidebar-nav-action {
+  margin: var(--space-padding);
+  padding-inline: var(--space-padding);
+  min-height: var(--control-height);
+  justify-content: center;
+  background: var(--color-button-bg);
+  color: var(--color-button-fg);
+  border-radius: var(--border-radius);
+}
+
+.sidebar-left nav .sidebar-nav-action:hover,
+.sidebar-left nav .sidebar-nav-action:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-button-fg);
 }
 
 .sidebar-left nav a,

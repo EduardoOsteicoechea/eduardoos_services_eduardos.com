@@ -27,9 +27,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
   const authedHidden = options.guestVisible === false ? "" : "hidden";
   document.body.innerHTML = `
     <aside id="main-menu">
-      <a href="/session" data-guest-only ${guestHidden}>Sign in</a>
-      <a href="/session/register" data-guest-only ${guestHidden}>Create account</a>
-      <a href="/session/profile" data-authed-only ${authedHidden}>Profile</a>
+      <a class="sidebar-nav-action" href="/session" data-guest-only ${guestHidden}>Sign in</a>
       <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
       <a href="/contact">Contact</a>
       <a href="/payments/subscription">Subscriptions</a>
@@ -77,7 +75,7 @@ describe("main-menu session chrome", () => {
     expect(img.hidden).toBe(true);
   });
 
-  it("hides guest session links and shows authed links after /api/auth/me", async () => {
+  it("replaces the guest sign-in action with logout after /api/auth/me", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-me",
@@ -87,6 +85,8 @@ describe("main-menu session chrome", () => {
     expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-admin-only]") as HTMLElement).hidden).toBe(false);
+    expect(document.querySelector('[href="/session/profile"]')).toBeNull();
+    expect(document.querySelector('[href="/session/change-password"]')).toBeNull();
   });
 
   it("shows every data-service link for admins", async () => {

@@ -470,34 +470,14 @@ const jsonLdString =
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">
-            <a href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">login</span>
-            Sign in
-          </a>
-          <a href="/session/register" data-route data-guest-only aria-current={path === "/session/register" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
-            Create account
-          </a>
-          <a href="/session/verify-email" data-route data-guest-only aria-current={path === "/session/verify-email" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">mark_email_read</span>
-            Verify email
-          </a>
-          <a href="/session/forgot-password" data-route data-guest-only aria-current={path === "/session/forgot-password" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">lock_reset</span>
-            Forgot password
-          </a>
-          <a href="/session/profile" data-route data-authed-only hidden aria-current={path === "/session/profile" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
-            Profile
-          </a>
-          <a href="/session/change-password" data-route data-authed-only hidden aria-current={path === "/session/change-password" ? "page" : undefined}>
-            <span class="material-symbols-outlined" aria-hidden="true">password</span>
-            Change password
-          </a>
-          <button type="button" data-logout data-authed-only hidden>
-            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-            Sign out
-          </button>
+            <a class="sidebar-nav-action" href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">login</span>
+              Sign in
+            </a>
+            <button type="button" data-logout data-authed-only hidden>
+              <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+              Sign out
+            </button>
           </div>
         </nav>
       </aside>

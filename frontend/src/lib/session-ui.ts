@@ -581,6 +581,29 @@ async function persistProfileForm(form: HTMLFormElement): Promise<void> {
   }
 }
 
+async function persistPasswordForm(form: HTMLFormElement): Promise<void> {
+  const root = form.closest("[data-session]");
+  if (!(root instanceof HTMLElement)) {
+    return;
+  }
+  if (!form.reportValidity()) {
+    return;
+  }
+  const copy = sessionCopy();
+  setBusy(form, true);
+  try {
+    const data = new FormData(form);
+    const result = await postJSON<MeResponse>("/auth/change-password", {
+      current_password: String(data.get("current_password") ?? ""),
+      new_password: String(data.get("new_password") ?? ""),
+    });
+    const message = reportFailure(copy, result.status, result.data, "Password changed.");
+    setBanner(root, message.text, message.kind);
+  } finally {
+    setBusy(form, false);
+  }
+}
+
 async function persistLoginForm(form: HTMLFormElement): Promise<void> {
   if (form.dataset.loginBusy === "true") {
     return;
@@ -680,7 +703,7 @@ export function startProfileActions(): void {
       const form = event.target;
       if (
         !(form instanceof HTMLFormElement) ||
-        !form.matches("[data-login], [data-profile-form], [data-avatar-form]")
+        !form.matches("[data-login], [data-profile-form], [data-avatar-form], [data-password-form]")
       ) {
         return;
       }
@@ -692,6 +715,10 @@ export function startProfileActions(): void {
       }
       if (form.matches("[data-profile-form]")) {
         void persistProfileForm(form);
+        return;
+      }
+      if (form.matches("[data-password-form]")) {
+        void persistPasswordForm(form);
         return;
       }
       void persistAvatarForm(form);

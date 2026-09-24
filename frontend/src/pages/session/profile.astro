@@ -51,7 +51,6 @@ import Layout from "../../layouts/Layout.astro";
         </form>
       </div>
       <div class="session-account-block session-links">
-        <a href="/session/change-password" data-route>Change password</a>
         <a href="/api-docs" data-route>API docs</a>
       </div>
       <div class="session-account-block session-links" data-admin-only hidden>
@@ -60,6 +59,29 @@ import Layout from "../../layouts/Layout.astro";
         <a href="/admin/api" data-route>API keys</a>
       </div>
     </div>
+    <form class="panel" data-authed-panel data-password-form hidden>
+      <h2>Change password</h2>
+      <label>
+        Current password
+        <span class="password-field">
+          <input type="password" name="current_password" autocomplete="current-password" required minlength="8" maxlength="128" data-password-input />
+          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+          </button>
+        </span>
+      </label>
+      <label>
+        New password
+        <span class="password-field">
+          <input type="password" name="new_password" autocomplete="new-password" required minlength="8" maxlength="128" data-password-input />
+          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+          </button>
+        </span>
+      </label>
+      <p class="hint">Passwords are 8–128 characters.</p>
+      <button type="submit">Update password</button>
+    </form>
   </section>
 </Layout>
 
