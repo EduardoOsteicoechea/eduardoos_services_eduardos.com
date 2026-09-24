@@ -176,7 +176,7 @@ Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/h
 
 | Code | Theme |
 | --- | --- |
-| `mat` | Multiplication tables **1–12** |
+| `mat` | Multiplication tables **1–12** (FE/PDF use the dedicated tables letter layout on weeks **1 and 2**) |
 | `esp` | Three conjugations: **-ar**, **-er**, **-ir** |
 | `ing` | **Same syllabus as `esp`**, in English (first / second / third conjugation patterns) |
 | `lat` | Prepositions: **in–en**, **apud–con**, **per–por**, **sine–sin**, **a–de**, **de–de** |

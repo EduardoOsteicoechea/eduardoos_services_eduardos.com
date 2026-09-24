@@ -1,6 +1,7 @@
 /**
- * Multiplication-tables letter layout (mat · week 2 METHOD_V1).
+ * Multiplication-tables letter layout (mat · weeks 1–2 METHOD_V1).
  * Page 1: full tables for read/sing. Page 2: thinned + blanks, density by day.
+ * Week 1 = memorizar 1–12; week 2 = práctica (misma hoja, más blancos).
  */
 
 import type { EoschoolDocument } from "./homescool";
@@ -21,7 +22,7 @@ export function matPracticeDensity(day: number): number {
 }
 
 export function isMatTablesLayout(doc: EoschoolDocument): boolean {
-  return doc.subject === "mat" && doc.week === 2;
+  return doc.subject === "mat" && (doc.week === 1 || doc.week === 2);
 }
 
 export function renderMatTablesPages(doc: EoschoolDocument): HTMLElement[] {

@@ -11,10 +11,10 @@ describe("homescool-mat-tables", () => {
     expect(matPracticeDensity(5)).toBe(12);
   });
 
-  it("detects mat week 2 layout", () => {
-    const doc = { subject: "mat", week: 2, day: 1 } as EoschoolDocument;
-    expect(isMatTablesLayout(doc)).toBe(true);
+  it("detects mat week 1–2 table layout", () => {
+    expect(isMatTablesLayout({ subject: "mat", week: 1, day: 1 } as EoschoolDocument)).toBe(true);
+    expect(isMatTablesLayout({ subject: "mat", week: 2, day: 1 } as EoschoolDocument)).toBe(true);
     expect(isMatTablesLayout({ subject: "esp", week: 2, day: 1 } as EoschoolDocument)).toBe(false);
-    expect(isMatTablesLayout({ subject: "mat", week: 1, day: 1 } as EoschoolDocument)).toBe(false);
+    expect(isMatTablesLayout({ subject: "mat", week: 3, day: 1 } as EoschoolDocument)).toBe(false);
   });
 });
