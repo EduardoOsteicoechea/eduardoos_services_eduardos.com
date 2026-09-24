@@ -671,16 +671,8 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   border-radius: 0;
 }
 
-/* Alternate section bands (no heading labels). Odd = tinted. */
-.sidebar-nav-section--site,
-.sidebar-nav-section--subscriptions,
-.sidebar-nav-section--session,
-.sidebar-nav-section--routes:nth-child(odd) {
-  background: color-mix(in srgb, var(--color-text) 8%, transparent);
-}
-
-.sidebar-nav-section--services,
-.sidebar-nav-section--admin {
+/* The tray owns the surface; navigation sections remain transparent. */
+.sidebar-nav-section {
   background: transparent;
 }
 
