@@ -93,6 +93,9 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 4. Overview of point 3  
 5. Overview of point 1 again, rephrased and more synthetic  
 
+**Locale of student-facing text:** headings, bodies, quiz prompts/choices must match `locale`.  
+For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checklist`, `vs`, `deepen`, `review`). Use Spanish (`Panorama…`, `lista…`, `o`, `frente a` only when you want a Contraste split). Grammar terms that are Spanish (`tiempo simple`, `Error común`) are fine.
+
 ### Quiz accumulation rule
 
 - Days 1–3: each day adds **8** new MCQ; serve all MCQ from days `1…day`.
