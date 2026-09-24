@@ -123,6 +123,8 @@ export default function ScribEditor() {
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
 
   const viewportRef = useRef<HTMLDivElement>(null);
+  /** Tracks mount of the viewport node (ServiceGate can delay children past sheet fetch). */
+  const [viewportEl, setViewportEl] = useState<HTMLDivElement | null>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const drawingRef = useRef(false);
   const activePointerIdRef = useRef<number | null>(null);
@@ -133,6 +135,12 @@ export default function ScribEditor() {
   const sheetSnapshotRef = useRef<ScribSheet | null>(null);
   const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
   const queuedSaveCountRef = useRef(0);
+  const fittedSheetIdRef = useRef<string | null>(null);
+
+  const setViewportNode = useCallback((node: HTMLDivElement | null) => {
+    viewportRef.current = node;
+    setViewportEl(node);
+  }, []);
 
   /**
    * React state is asynchronous, but strokes may finish back-to-back. Keep this
@@ -190,29 +198,26 @@ export default function ScribEditor() {
     };
   }, [ids?.bookId, ids?.sheetId]);
 
-  /** Fit sheet into viewport without scroll on first load. */
+  /** Fit sheet into viewport once both the sheet and the DOM node exist. */
   useEffect(() => {
-    if (!sheet || !viewportRef.current) return;
-    const fit = () => {
-      const vp = viewportRef.current;
-      if (!vp) return;
-      // CSS mm → px (1in = 96px). Zoom sizes the page in mm; do not use transform:scale
-      // (that rasterizes SVG and makes ruled lines blurry).
-      const mmToPx = 96 / 25.4;
-      const pad = 16;
-      const availW = Math.max(120, vp.clientWidth - pad * 2);
-      const availH = Math.max(120, vp.clientHeight - pad * 2);
-      const sx = availW / (SCRIB_PAGE_WIDTH_MM * mmToPx);
-      const sy = availH / (SCRIB_PAGE_HEIGHT_MM * mmToPx);
-      const next = Math.min(sx, sy, 1.5);
-      setScale(Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, next)));
-      setPan({ x: 0, y: 0 });
-    };
-    fit();
+    if (!sheet || !viewportEl) return;
+    if (fittedSheetIdRef.current === sheet.id) return;
+    if (viewportEl.clientWidth < 40 || viewportEl.clientHeight < 40) return;
+    // CSS mm → px (1in = 96px). Zoom sizes the page in mm; do not use transform:scale
+    // (that rasterizes SVG and makes ruled lines blurry).
+    const mmToPx = 96 / 25.4;
+    const pad = 16;
+    const availW = Math.max(120, viewportEl.clientWidth - pad * 2);
+    const availH = Math.max(120, viewportEl.clientHeight - pad * 2);
+    const sx = availW / (SCRIB_PAGE_WIDTH_MM * mmToPx);
+    const sy = availH / (SCRIB_PAGE_HEIGHT_MM * mmToPx);
+    const next = Math.min(sx, sy, 1.5);
+    fittedSheetIdRef.current = sheet.id;
+    setScale(Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, next)));
+    setPan({ x: 0, y: 0 });
     // The user controls scale and pan after the initial fit. In particular,
     // fullscreen changes dispatch resize events; never use those to reset zoom.
-    return undefined;
-  }, [sheet?.id]);
+  }, [sheet?.id, viewportEl]);
 
   /**
    * Sheet writes replace the complete S3 JSON object. Chain them so a slow first
@@ -250,18 +255,33 @@ export default function ScribEditor() {
     return e.pointerType === "pen";
   }
 
+  function onViewportPointerDown(e: React.PointerEvent) {
+    if (!sheet || mode !== "zoom") return;
+    panDragRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      panX: pan.x,
+      panY: pan.y,
+    };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  }
+
+  function onViewportPointerMove(e: React.PointerEvent) {
+    if (mode !== "zoom" || !panDragRef.current) return;
+    const dx = e.clientX - panDragRef.current.x;
+    const dy = e.clientY - panDragRef.current.y;
+    setPan({
+      x: panDragRef.current.panX + dx,
+      y: panDragRef.current.panY + dy,
+    });
+  }
+
+  function onViewportPointerUp() {
+    if (mode === "zoom") panDragRef.current = null;
+  }
+
   function onPointerDown(e: React.PointerEvent) {
-    if (!sheet) return;
-    if (mode === "zoom") {
-      panDragRef.current = {
-        x: e.clientX,
-        y: e.clientY,
-        panX: pan.x,
-        panY: pan.y,
-      };
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-      return;
-    }
+    if (!sheet || mode === "zoom") return;
     if (!acceptsStylus(e)) return;
     const pt = mmFromClient(e.clientX, e.clientY);
     if (!pt) return;
@@ -273,16 +293,7 @@ export default function ScribEditor() {
   }
 
   function onPointerMove(e: React.PointerEvent) {
-    if (mode === "zoom" && panDragRef.current) {
-      const dx = e.clientX - panDragRef.current.x;
-      const dy = e.clientY - panDragRef.current.y;
-      setPan({
-        x: panDragRef.current.panX + dx,
-        y: panDragRef.current.panY + dy,
-      });
-      return;
-    }
-    if (!drawingRef.current) return;
+    if (mode === "zoom" || !drawingRef.current) return;
     if (
       activePointerIdRef.current !== null &&
       e.pointerId !== activePointerIdRef.current
@@ -361,10 +372,12 @@ export default function ScribEditor() {
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, []);
 
-  /** Native non-passive wheel/touch so preventDefault is allowed (React listeners are passive). */
+  /**
+   * Native non-passive wheel/touch so preventDefault is allowed (React listeners are passive).
+   * Bind to viewportEl (not sheet?.id) so listeners attach after ServiceGate mounts children.
+   */
   useEffect(() => {
-    const el = viewportRef.current;
-    if (!el) return;
+    if (!viewportEl) return;
 
     const onWheelNative = (e: WheelEvent) => {
       if (modeRef.current !== "zoom") return;
@@ -400,25 +413,22 @@ export default function ScribEditor() {
       pinchRef.current = null;
     };
 
-    el.addEventListener("wheel", onWheelNative, { passive: false });
-    el.addEventListener("touchstart", onTouchStartNative, { passive: true });
-    el.addEventListener("touchmove", onTouchMoveNative, { passive: false });
-    el.addEventListener("touchend", onTouchEndNative);
-    el.addEventListener("touchcancel", onTouchEndNative);
+    viewportEl.addEventListener("wheel", onWheelNative, { passive: false });
+    viewportEl.addEventListener("touchstart", onTouchStartNative, { passive: true });
+    viewportEl.addEventListener("touchmove", onTouchMoveNative, { passive: false });
+    viewportEl.addEventListener("touchend", onTouchEndNative);
+    viewportEl.addEventListener("touchcancel", onTouchEndNative);
     return () => {
-      el.removeEventListener("wheel", onWheelNative);
-      el.removeEventListener("touchstart", onTouchStartNative);
-      el.removeEventListener("touchmove", onTouchMoveNative);
-      el.removeEventListener("touchend", onTouchEndNative);
-      el.removeEventListener("touchcancel", onTouchEndNative);
+      viewportEl.removeEventListener("wheel", onWheelNative);
+      viewportEl.removeEventListener("touchstart", onTouchStartNative);
+      viewportEl.removeEventListener("touchmove", onTouchMoveNative);
+      viewportEl.removeEventListener("touchend", onTouchEndNative);
+      viewportEl.removeEventListener("touchcancel", onTouchEndNative);
     };
-  }, [sheet?.id]);
+  }, [viewportEl]);
 
   function onPointerUp(e: React.PointerEvent) {
-    if (mode === "zoom") {
-      panDragRef.current = null;
-      return;
-    }
+    if (mode === "zoom") return;
     if (
       activePointerIdRef.current !== null &&
       e.pointerId !== activePointerIdRef.current
@@ -562,8 +572,12 @@ export default function ScribEditor() {
 
       {sheet ? (
         <div
-          ref={viewportRef}
+          ref={setViewportNode}
           className={`scrib-viewport${mode === "zoom" ? " scrib-viewport--zoom" : ""}`}
+          onPointerDown={onViewportPointerDown}
+          onPointerMove={onViewportPointerMove}
+          onPointerUp={onViewportPointerUp}
+          onPointerCancel={onViewportPointerUp}
         >
           <div
             className="scrib-stage"

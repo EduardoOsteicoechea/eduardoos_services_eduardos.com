@@ -37,7 +37,20 @@ html[data-page="scrib-sheet"] main > .page-title-sr {
   flex: 0 0 auto;
 }
 
-html[data-page="scrib-sheet"] main > .scrib-viewport {
+/* Astro wraps the React editor in <astro-island>; stretch that host so the
+   viewport can fill main. Descendants keep .scrib-viewport flex growth. */
+html[data-page="scrib-sheet"] main > astro-island {
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html[data-page="scrib-sheet"] main > astro-island > .scrib-viewport,
+html[data-page="scrib-sheet"] main > .scrib-viewport,
+html[data-page="scrib-sheet"] .scrib-viewport {
   flex: 1 1 auto;
   min-height: 0;
 }
