@@ -693,15 +693,15 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   padding-inline: var(--space-padding);
   min-height: var(--control-height);
   justify-content: center;
-  background: var(--color-button-bg);
-  color: var(--color-button-fg);
+  background: var(--color-text);
+  color: var(--color-bg);
   border-radius: var(--border-radius);
 }
 
 .sidebar-left nav .sidebar-nav-action:hover,
 .sidebar-left nav .sidebar-nav-action:focus-visible {
   background: var(--color-accent);
-  color: var(--color-button-fg);
+  color: var(--color-bg);
 }
 
 .sidebar-left nav a,
@@ -2066,6 +2066,17 @@ section.diag .panel:not(form) {
 
   .session-grid [data-profile-form] {
     grid-template-columns: 3fr 1rem 2fr;
+  }
+
+  /* Desktop main menu: larger labels and clearer separation from the toolbar. */
+  #main-menu .sidebar-toolbar {
+    margin-bottom: var(--rail-gap);
+  }
+
+  #main-menu .sidebar-left nav a,
+  #main-menu .sidebar-left nav button {
+    margin-block: calc(var(--rail-gap) * 0.75);
+    font-size: calc(var(--font-size-sm) * 1.25);
   }
 
   .app-header--start {
