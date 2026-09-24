@@ -113,10 +113,15 @@ for (const row of classes) {
         },
         body: JSON.stringify(body),
       });
-      if (res.status === 429) {
+      if (res.status === 429 || res.status === 502 || res.status === 503) {
         const retryAfter = Number(res.headers.get("Retry-After") || "2");
-        const waitMs = Math.max(2000, (Number.isFinite(retryAfter) ? retryAfter : 2) * 1000);
-        console.warn(`rate limited ${row.key}; wait ${waitMs}ms attempt=${attempt}`);
+        const waitMs = Math.max(
+          res.status === 429 ? 2000 : 3000,
+          (Number.isFinite(retryAfter) ? retryAfter : 2) * 1000,
+        );
+        console.warn(
+          `transient ${res.status} ${row.key}; wait ${waitMs}ms attempt=${attempt}`,
+        );
         await sleep(waitMs);
         continue;
       }
