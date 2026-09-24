@@ -68,6 +68,13 @@
   --z-modal: 40;
   /* Half-gap on each nav/DHS row so section backgrounds meet at the midpoint. */
   --sidebar-row-margin: calc(var(--rail-gap) * 0.5);
+  /* Shared tray row geometry: global menu + dynamic actions stay lockstep. */
+  --tray-nav-font-size: var(--font-size-sm);
+  --tray-nav-icon-size: var(--font-size-md);
+  --tray-nav-min-height: var(--rail-button-size);
+  --tray-nav-row-margin: var(--sidebar-row-margin);
+  --tray-nav-icon-slot: var(--rail-button-size);
+  --tray-body-pad-top: 0;
   /* Toolbar band (tray has no padding): pad + control + pad + border. No gap under toolbar. */
   --sidebar-toolbar-band: calc(
     var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width)
@@ -338,16 +345,17 @@ a {
 
 /* Route actions: same row geometry as main-menu nav links */
 .dhs-action {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--tray-nav-icon-slot) minmax(0, 1fr);
   align-items: center;
-  gap: var(--rail-gap);
+  column-gap: var(--rail-gap);
   box-sizing: border-box;
-  min-height: var(--rail-button-size);
-  margin-block: var(--sidebar-row-margin);
+  min-height: var(--tray-nav-min-height);
+  margin-block: var(--tray-nav-row-margin);
   padding-block: 0;
   padding-inline: var(--space-padding);
   font: inherit;
-  font-size: var(--font-size-sm);
+  font-size: var(--tray-nav-font-size);
   font-weight: 400;
   color: inherit;
   background: transparent;
@@ -364,14 +372,19 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
+  width: var(--tray-nav-icon-slot);
+  height: var(--tray-nav-icon-slot);
   border-radius: var(--header-button-radius);
   background: transparent;
   border: 0;
   color: var(--color-text);
   flex-shrink: 0;
   pointer-events: none;
+}
+
+.dhs-action .icon-btn .material-symbols-outlined,
+.dhs-action > .material-symbols-outlined {
+  font-size: var(--tray-nav-icon-size);
 }
 
 .dhs-action:hover,
@@ -421,16 +434,17 @@ a {
 }
 
 #dynamic-header .header-dynamic-menu__btn.dhs-action {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--tray-nav-icon-slot) minmax(0, 1fr);
   align-items: center;
-  gap: var(--rail-gap);
-  justify-content: flex-start;
+  column-gap: var(--rail-gap);
+  justify-content: stretch;
   box-sizing: border-box;
   width: auto;
   min-width: 0;
-  min-height: var(--rail-button-size);
+  min-height: var(--tray-nav-min-height);
   height: auto;
-  margin-block: var(--sidebar-row-margin);
+  margin-block: var(--tray-nav-row-margin);
   padding-block: 0;
   padding-inline: var(--space-padding);
   border: 0;
@@ -438,7 +452,7 @@ a {
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: var(--font-size-sm);
+  font-size: var(--tray-nav-font-size);
   font-weight: 400;
   text-align: left;
   cursor: pointer;
@@ -448,8 +462,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
+  width: var(--tray-nav-icon-slot);
+  height: var(--tray-nav-icon-slot);
   border-radius: var(--header-button-radius);
   background: transparent;
   border: 0;
@@ -486,17 +500,17 @@ a {
 
 #dynamic-header .header-dynamic-menu__btn.dhs-action svg,
 #dynamic-header .header-dynamic-menu__btn.dhs-action .header-dynamic-menu__icon--svg {
-  width: calc(var(--rail-button-size) * 0.51);
-  height: calc(var(--rail-button-size) * 0.51);
+  width: calc(var(--tray-nav-icon-size) * 0.9);
+  height: calc(var(--tray-nav-icon-size) * 0.9);
   flex-shrink: 0;
 }
 
 #dynamic-header .scrib-stroke-widget {
-  font-size: var(--font-size-sm);
+  font-size: var(--tray-nav-font-size);
   color: var(--color-muted);
   box-sizing: border-box;
-  min-height: var(--rail-button-size);
-  margin-block: var(--sidebar-row-margin);
+  min-height: var(--tray-nav-min-height);
+  margin-block: var(--tray-nav-row-margin);
   padding-block: 0;
   padding-inline: var(--space-padding);
   display: flex;
@@ -535,7 +549,11 @@ a {
 /* When menu is open, docked trays clear the shared toolbar band so rows align. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]),
 #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
-  padding-top: var(--sidebar-toolbar-band);
+  padding-top: calc(var(--sidebar-toolbar-band) + var(--tray-body-pad-top));
+}
+
+#main-menu nav {
+  padding-top: var(--tray-body-pad-top);
 }
 
 .tray-backdrop {
@@ -681,6 +699,9 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
 }
 
 .sidebar-left nav .sidebar-nav-action {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
   margin: var(--space-padding);
   padding-inline: var(--space-padding);
   min-height: var(--control-height);
@@ -696,18 +717,19 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   color: var(--color-bg);
 }
 
-.sidebar-left nav a,
-.sidebar-left nav button {
-  display: flex;
+.sidebar-left nav a:not(.sidebar-nav-action),
+.sidebar-left nav button:not(.sidebar-nav-action) {
+  display: grid;
+  grid-template-columns: var(--tray-nav-icon-slot) minmax(0, 1fr);
   align-items: center;
-  gap: var(--rail-gap);
+  column-gap: var(--rail-gap);
   box-sizing: border-box;
-  min-height: var(--rail-button-size);
-  margin-block: var(--sidebar-row-margin);
+  min-height: var(--tray-nav-min-height);
+  margin-block: var(--tray-nav-row-margin);
   padding-block: 0;
   padding-inline: var(--space-padding);
   font: inherit;
-  font-size: var(--font-size-sm);
+  font-size: var(--tray-nav-font-size);
   font-weight: 400;
   color: inherit;
   background: transparent;
@@ -719,9 +741,13 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   cursor: pointer;
 }
 
-.sidebar-left nav a .material-symbols-outlined,
-.sidebar-left nav button .material-symbols-outlined {
-  font-size: var(--font-size-md);
+.sidebar-left nav a:not(.sidebar-nav-action) > .material-symbols-outlined,
+.sidebar-left nav button:not(.sidebar-nav-action) > .material-symbols-outlined {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tray-nav-icon-slot);
+  font-size: var(--tray-nav-icon-size);
 }
 
 .sidebar-left nav a[hidden],
@@ -1999,21 +2025,14 @@ section.diag .panel:not(form) {
     font-size: 0.625rem;
   }
 
-  /* Mobile main menu: larger labels/icons and clearer row separation. */
-  #main-menu nav {
-    padding-top: var(--rail-gap);
-  }
-
-  #main-menu nav a:not(.sidebar-nav-action),
-  #main-menu nav button:not(.sidebar-nav-action) {
-    min-height: calc(var(--rail-button-size) * 1.25);
-    margin-block: calc(var(--rail-gap) * 0.75);
-    font-size: var(--font-size-md);
-  }
-
-  #main-menu nav a:not(.sidebar-nav-action) .material-symbols-outlined,
-  #main-menu nav button:not(.sidebar-nav-action) .material-symbols-outlined {
-    font-size: calc(var(--font-size-md) * 1.25);
+  /* Mobile tray rows: larger labels/icons; menu + DHS share the same tokens. */
+  :root {
+    --tray-nav-font-size: var(--font-size-md);
+    --tray-nav-icon-size: calc(var(--font-size-md) * 1.25);
+    --tray-nav-min-height: calc(var(--rail-button-size) * 1.25);
+    --tray-nav-row-margin: calc(var(--rail-gap) * 0.75);
+    --tray-nav-icon-slot: calc(var(--rail-button-size) * 1.25);
+    --tray-body-pad-top: var(--rail-gap);
   }
 
   .session-grid form > button,
@@ -2065,21 +2084,14 @@ section.diag .panel:not(form) {
     grid-template-columns: 3fr 1rem 2fr;
   }
 
-  /* Desktop main menu: larger labels and clearer separation from the toolbar. */
-  #main-menu .sidebar-toolbar {
-    margin-bottom: var(--rail-gap);
-  }
-
-  #main-menu nav a:not(.sidebar-nav-action),
-  #main-menu nav button:not(.sidebar-nav-action) {
-    min-height: calc(var(--rail-button-size) * 1.15);
-    margin-block: calc(var(--rail-gap) * 0.75);
-    font-size: calc(var(--font-size-sm) * 1.25);
-  }
-
-  #main-menu nav a:not(.sidebar-nav-action) .material-symbols-outlined,
-  #main-menu nav button:not(.sidebar-nav-action) .material-symbols-outlined {
-    font-size: calc(var(--font-size-md) * 1.15);
+  /* Desktop tray rows: match menu + DHS; pad under toolbar without breaking the band. */
+  :root {
+    --tray-nav-font-size: calc(var(--font-size-sm) * 1.25);
+    --tray-nav-icon-size: calc(var(--font-size-md) * 1.15);
+    --tray-nav-min-height: calc(var(--rail-button-size) * 1.15);
+    --tray-nav-row-margin: calc(var(--rail-gap) * 0.75);
+    --tray-nav-icon-slot: calc(var(--rail-button-size) * 1.15);
+    --tray-body-pad-top: var(--rail-gap);
   }
 
   .app-header--start {
