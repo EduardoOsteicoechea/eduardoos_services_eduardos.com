@@ -75,6 +75,18 @@ html[data-page="home"] main > * {
     width: 25.2rem;
     background-position: left center;
   }
+
+  .hero__lede {
+    inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
+  }
+
+  .hero__actions .btn {
+    background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  }
+
+  .hero__actions .btn--primary {
+    background: var(--color-button-bg);
+  }
 }
 
 .hero{
