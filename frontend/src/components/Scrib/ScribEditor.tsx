@@ -526,7 +526,6 @@ export default function ScribEditor() {
         }}
         onPrint={() => {
           setLayersOpen(false);
-          setInstitutesOpen(false);
           setDraftPath("");
           const el = sheetRef.current;
           const current = sheetSnapshotRef.current;
@@ -736,7 +735,6 @@ export default function ScribEditor() {
 
       <ScribInstitutesModal
         open={institutesOpen}
-        onClose={() => setInstitutesOpen(false)}
       />
     </ServiceGate>
   );

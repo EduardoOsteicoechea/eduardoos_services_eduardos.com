@@ -50,12 +50,11 @@ function writeStoredNav(nav: StoredNav): void {
   }
 }
 
-type ScribInstitutesModalProps = {
+type ScribInstitutesPanelProps = {
   open: boolean;
-  onClose: () => void;
 };
 
-export default function ScribInstitutesModal({ open, onClose }: ScribInstitutesModalProps) {
+export default function ScribInstitutesModal({ open }: ScribInstitutesPanelProps) {
   const stored = useMemo(() => readStoredNav(), []);
   const [loadingIndex, setLoadingIndex] = useState(false);
   const [loadingChapter, setLoadingChapter] = useState(false);
@@ -183,22 +182,13 @@ export default function ScribInstitutesModal({ open, onClose }: ScribInstitutesM
   if (!open) return null;
 
   return (
-    <div
+    <aside
       className="scrib-layers-modal scrib-institutes-modal"
-      role="dialog"
-      aria-modal="true"
       aria-label="Institutes Capita"
-      onPointerDown={(event) => {
-        if (event.target !== event.currentTarget) return;
-        onClose();
-      }}
     >
       <div className="scrib-layers-modal__panel scrib-institutes-modal__panel">
         <header className="scrib-layers-modal__head">
           <h2>Institutes</h2>
-          <button type="button" className="btn" onClick={onClose}>
-            Cerrar
-          </button>
         </header>
 
         <div className="scrib-institutes-modal__scroll">
@@ -315,6 +305,6 @@ export default function ScribInstitutesModal({ open, onClose }: ScribInstitutesM
           )}
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
