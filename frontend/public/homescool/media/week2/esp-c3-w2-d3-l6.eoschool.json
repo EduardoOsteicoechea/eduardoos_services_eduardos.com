@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Compuestos en profundidad",
-        "body": "Un tiempo compuesto usa dos piezas: el auxiliar haber (cambia con la persona) y el participio del verbo principal (suele terminar en -ado / -ido). El participio no cambia por yo/tú/él.\n\nEjemplos: he cantado, había comido, habré vivido. Piensa: auxiliar + forma «ya hecha».\n\nPráctica: escribe he / había / hube / habré / habría + el mismo participio (cantado o comido). Rodea el auxiliar y subraya el participio.\n\nError común: cambiar el participio por persona (hemos comidos). El participio no lleva -s aquí."
+        "heading": "Profundizar: dos palabras",
+        "body": "Hoy solo tiempos de DOS palabras. Pieza 1 = haber conjugado (he, has, ha, habíamos…). Es el ayudante. Pieza 2 = participio (-ado/-ido): la forma «ya hecha» del verbo principal.\n\nCambia solo el ayudante según la persona: yo he cantado, tú has cantado. El participio se queda igual: cantado.\n\nLista útil: he cantado (ya hecho, importa ahora); había cantado (ya hecho antes de otro pasado); habré cantado (estará hecho en un punto futuro); habría cantado (sería ya hecho, hipótesis).\n\nPráctica: con el participio comido, escribe he / habías / habremos / habría + comido. Marca ayudante y participio. Inventa una oración corta con he comido.\n\nError común: hemos comidos. El participio no lleva plural aquí → hemos comido."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "antepresente",
-          "pluscuamperfecto",
+          "he cantado (ya hecho, importa ahora)",
+          "había cantado (ya hecho antes de otro pasado)",
           "pretérito",
-          "haber + participio"
+          "haber + forma ya hecha (-ado/-ido)"
         ],
         "answer": "pretérito"
       },
@@ -44,10 +44,10 @@
         "choices": [
           "presente",
           "imperfecto",
-          "pluscuamperfecto",
+          "había cantado (ya hecho antes de otro pasado)",
           "futuro simple"
         ],
-        "answer": "pluscuamperfecto"
+        "answer": "había cantado (ya hecho antes de otro pasado)"
       },
       {
         "id": "d1-q3",
@@ -57,8 +57,8 @@
         "choices": [
           "simple",
           "compuesto",
-          "subjuntivo",
-          "imperativo"
+          "otro modo (deseos; no es de esta semana)",
+          "modo de mandatos (no es de esta semana)"
         ],
         "answer": "simple"
       },
@@ -66,7 +66,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué auxiliar usan los compuestos del indicativo?",
+        "prompt": "¿Qué palabra ayudante (haber) usan los compuestos del indicativo?",
         "choices": [
           "ser",
           "haber",
@@ -79,7 +79,7 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del antepresente:",
+        "prompt": "Otro nombre del he cantado (ya hecho, importa ahora):",
         "choices": [
           "pretérito perfecto compuesto",
           "imperfecto",
@@ -94,9 +94,9 @@
         "type": "mcq",
         "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "subjuntivo",
+          "otro modo (deseos; no es de esta semana)",
           "indicativo",
-          "imperativo",
+          "modo de mandatos (no es de esta semana)",
           "infinitivo"
         ],
         "answer": "indicativo"
@@ -201,7 +201,7 @@
           "acción acabada puntual",
           "hábito o pasado en curso",
           "orden",
-          "deseo subjuntivo"
+          "deseo otro modo (deseos; no es de esta semana)"
         ],
         "answer": "hábito o pasado en curso"
       },
@@ -213,7 +213,7 @@
         "choices": [
           "Simples",
           "Compuestos",
-          "Solo subjuntivo",
+          "Solo otro modo (deseos; no es de esta semana)",
           "Ortografía"
         ],
         "answer": "Simples"
@@ -287,7 +287,7 @@
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Antepretérito: auxiliar en pretérito…",
+        "prompt": "Antepretérito: palabra ayudante (haber) en pretérito…",
         "choices": [
           "he",
           "había",
@@ -326,7 +326,7 @@
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En los compuestos, el participio…",
+        "prompt": "En los compuestos, el forma ya hecha (-ado/-ido)…",
         "choices": [
           "cambia con la persona",
           "es invariable en persona",

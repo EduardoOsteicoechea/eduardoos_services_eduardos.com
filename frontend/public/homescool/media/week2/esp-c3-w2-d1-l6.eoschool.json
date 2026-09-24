@@ -14,21 +14,21 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Tiempos simples",
-        "body": "Los tiempos simples del indicativo nombran el tiempo sin haber: presente (canto), imperfecto (cantaba), pretérito (canté), futuro (cantaré) y condicional (cantaría).\n\nConjugar aquí sigue siendo raíz + desinencia, pero la desinencia cambia el tiempo. Modelo yo (cantar): canto / cantaba / canté / cantaré / cantaría.\n\nPráctica: conjuga un verbo -ar, uno -er y uno -ir en yo para los cinco tiempos simples. Di en voz alta qué tiempo expresa cada forma.\n\nError común: usar imperfecto para un hecho cerrado («Ayer iba» si quieres «Ayer fui»)."
+        "heading": "Tiempos de una sola palabra",
+        "body": "Un verbo es una palabra de acción (cantar, comer, vivir). Conjugar es cambiar esa palabra según quién habla (yo, tú, él…) y según cuándo ocurre la acción. Indicativo es el modo que usamos para contar hechos como reales (no como deseos).\n\nTiempo simple = el verbo va en UNA sola palabra. Hay cinco que memorizamos: presente = ahora o costumbre (yo canto); imperfecto = pasado que dura o se repite (yo cantaba); pretérito = pasado ya cerrado (yo canté); futuro = después (yo cantaré); condicional = sería / podría (yo cantaría).\n\nLa raíz es lo que queda al quitar -ar/-er/-ir (cantar → cant-). La desinencia es la terminación que se pega (yo -o, tú -as…). En estos tiempos, al cambiar la desinencia también cambia el «cuándo».\n\nModelo yo con cantar: canto / cantaba / canté / cantaré / cantaría. Di en voz alta qué «cuándo» es cada una.\n\nPráctica: escribe las cinco formas de yo con cantar y con comer. Al lado de cada una escribe: ahora / pasado que dura / pasado cerrado / después / sería.\n\nError común: usar cantaba cuando la acción ya terminó del todo. Si fue un hecho cerrado («Ayer…»), usa canté."
       },
       {
         "id": "p2",
-        "heading": "Tiempos compuestos",
-        "body": "Un tiempo compuesto usa dos piezas: el auxiliar haber (cambia con la persona) y el participio del verbo principal (suele terminar en -ado / -ido). El participio no cambia por yo/tú/él.\n\nEjemplos: he cantado, había comido, habré vivido. Piensa: auxiliar + forma «ya hecha».\n\nPráctica: escribe he / había / hube / habré / habría + el mismo participio (cantado o comido). Rodea el auxiliar y subraya el participio.\n\nError común: cambiar el participio por persona (hemos comidos). El participio no lleva -s aquí."
+        "heading": "Tiempos de dos palabras",
+        "body": "Tiempo compuesto = el verbo se forma con DOS palabras. Primera palabra: haber (he, has, ha, habíamos…). Haber aquí no significa «existe»; es una palabra ayudante que cambia con yo/tú/él. Segunda palabra: el participio. Participio = forma «ya hecha» del verbo, casi siempre termina en -ado o -ido (cantar → cantado; comer → comido; vivir → vivido).\n\nEjemplo: he cantado = he (ayudante) + cantado (participio). Significa: la acción de cantar ya ocurrió y aún importa ahora. había comido = la comida ya estaba hecha antes de otro momento pasado.\n\nEl participio NO cambia con la persona: yo he cantado, tú has cantado, él ha cantado (solo cambia he/has/ha).\n\nPráctica: escribe he / había / habré / habría + cantado. Rodea la palabra ayudante (haber) y subraya el participio. Di en voz alta: «dos piezas: ayudante + forma ya hecha».\n\nError común: escribir hemos comidos (poner -s al participio). Correcto: hemos comido."
       },
       {
         "id": "p3",
-        "heading": "Uso: simple frente a compuesto",
-        "body": "Un tiempo compuesto usa dos piezas: el auxiliar haber (cambia con la persona) y el participio del verbo principal (suele terminar en -ado / -ido). El participio no cambia por yo/tú/él.\n\nEjemplos: he cantado, había comido, habré vivido. Piensa: auxiliar + forma «ya hecha».\n\nPráctica: escribe he / había / hube / habré / habría + el mismo participio (cantado o comido). Rodea el auxiliar y subraya el participio.\n\nError común: cambiar el participio por persona (hemos comidos). El participio no lleva -s aquí."
+        "heading": "¿Una palabra o dos?",
+        "body": "Para elegir, pregunta: ¿la acción es un hecho en un momento claro (una palabra) o la veo como algo «ya hecho» con ayuda de haber (dos palabras)?\n\nEjemplos: «Ayer terminé el libro» = una palabra (pretérito: ayer ya cerró). «Ya he terminado el libro» = dos palabras (el resultado sigue valiendo ahora). «Leía cuando sonó el teléfono» = imperfecto (fondo) + pretérito (golpe cerrado).\n\nPráctica: escribe tres pares. En cada par, una oración de UNA palabra y otra de DOS con el mismo verbo. Explica en una línea por qué elegiste cada una.\n\nError común: decir «Ayer he ido» si en tu casa se dice «Ayer fui» para un ayer cerrado. Con «ayer» cerrado, suele ir mejor la forma de una sola palabra."
       }
     ],
-    "summary": "Dominar los diez tiempos del indicativo: cinco simples (presente, imperfecto, pretérito, futuro, condicional) y cinco compuestos con haber + participio, sabiendo cuándo elegir cada uno."
+    "summary": "Aprender a decir CUÁNDO ocurre una acción: formas de una sola palabra (canto, cantaba, canté…) y formas de dos palabras (he + cantado), sabiendo cuándo elegir cada una."
   },
   "quiz": {
     "questionCount": 8,
@@ -39,10 +39,10 @@
         "type": "mcq",
         "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "antepresente",
-          "pluscuamperfecto",
+          "he cantado (ya hecho, importa ahora)",
+          "había cantado (ya hecho antes de otro pasado)",
           "pretérito",
-          "haber + participio"
+          "haber + forma ya hecha (-ado/-ido)"
         ],
         "answer": "pretérito"
       },
@@ -54,10 +54,10 @@
         "choices": [
           "presente",
           "imperfecto",
-          "pluscuamperfecto",
+          "había cantado (ya hecho antes de otro pasado)",
           "futuro simple"
         ],
-        "answer": "pluscuamperfecto"
+        "answer": "había cantado (ya hecho antes de otro pasado)"
       },
       {
         "id": "d1-q3",
@@ -67,8 +67,8 @@
         "choices": [
           "simple",
           "compuesto",
-          "subjuntivo",
-          "imperativo"
+          "otro modo (deseos; no es de esta semana)",
+          "modo de mandatos (no es de esta semana)"
         ],
         "answer": "simple"
       },
@@ -76,7 +76,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué auxiliar usan los compuestos del indicativo?",
+        "prompt": "¿Qué palabra ayudante (haber) usan los compuestos del indicativo?",
         "choices": [
           "ser",
           "haber",
@@ -89,7 +89,7 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del antepresente:",
+        "prompt": "Otro nombre del he cantado (ya hecho, importa ahora):",
         "choices": [
           "pretérito perfecto compuesto",
           "imperfecto",
@@ -104,9 +104,9 @@
         "type": "mcq",
         "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "subjuntivo",
+          "otro modo (deseos; no es de esta semana)",
           "indicativo",
-          "imperativo",
+          "modo de mandatos (no es de esta semana)",
           "infinitivo"
         ],
         "answer": "indicativo"

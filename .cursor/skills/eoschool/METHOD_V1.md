@@ -27,7 +27,9 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 ### Self-teaching lesson bodies (mandatory)
 
 A child of ≈10 must be able to **read the sheet alone** and understand every term **before** any practice task.  
-**Forbidden:** deepen/review bodies that are only orders («Conjuga…», «Marca…», «Haz…») with no definitions.
+**Forbidden:** deepen/review bodies that are only orders («Conjuga…», «Marca…», «Haz…») with no definitions.  
+**Forbidden:** jargon without an immediate plain-language gloss (e.g. bare «participio», «auxiliar», «indicativo», «epitelial»).  
+Define on first use: *X = explicación sencilla + ejemplo*. Prefer kid words (*forma ya hecha*, *palabra ayudante*, *una palabra / dos palabras*) alongside the school term.
 
 Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:
 
@@ -39,7 +41,8 @@ Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:
 
 Deepen days re-teach the focus point fully (assume day 1 may be forgotten). Intro points define their own terms. Review overviews are mini-explanations, not slogans.
 
-Example (esp deepen -ar): define *conjugar*, *raíz*, *desinencia* in Idea central; show cantar → cant- + -o/-as/-a in Explora; then Práctica / Error común.
+Example (esp deepen -ar): define *conjugar*, *raíz*, *desinencia* in Idea central; show cantar → cant- + -o/-as/-a in Explora; then Práctica / Error común.  
+Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = palabra ayudante* (not «existe»).
 
 ### Subjects (12 short codes)
 
