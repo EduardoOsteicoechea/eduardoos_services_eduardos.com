@@ -514,7 +514,7 @@ html.dark .scrib-page {
   z-index: 80;
   display: block;
   padding: 0;
-  background: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
   align-items: stretch;
   justify-content: flex-start;
 }
@@ -534,6 +534,7 @@ html.dark .scrib-page {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  pointer-events: auto;
 }
 
 .scrib-institutes-modal__scroll {
