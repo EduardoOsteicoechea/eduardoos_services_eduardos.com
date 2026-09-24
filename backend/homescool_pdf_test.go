@@ -49,6 +49,20 @@ func TestIsMatTablesLayout(t *testing.T) {
 	}
 }
 
+func TestMatLevelsForWeek(t *testing.T) {
+	w1 := matLevelsForWeek(1)
+	w2 := matLevelsForWeek(2)
+	if len(w1) != 3 || len(w2) != 3 {
+		t.Fatalf("expected 3 levels")
+	}
+	if w1[0].tables[0] != 1 || w1[2].tables[3] != 12 {
+		t.Fatalf("week1 range want 1..12 got %#v", w1)
+	}
+	if w2[0].tables[0] != 5 || w2[2].tables[3] != 16 {
+		t.Fatalf("week2 range want 5..16 got %#v", w2)
+	}
+}
+
 func TestInlineQuizPrintCapacityDeepen(t *testing.T) {
 	doc := sampleEoschoolDay1()
 	doc.Day = 2

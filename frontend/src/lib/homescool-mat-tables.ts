@@ -1,17 +1,33 @@
 /**
  * Multiplication-tables letter layout (mat · weeks 1–2 METHOD_V1).
+ * Week 1: tables 1–12. Week 2: tables 5–16.
  * Page 1: full tables for read/sing. Page 2: thinned + blanks, density by day.
- * Week 1 = memorizar 1–12; week 2 = práctica (misma hoja, más blancos).
  */
 
 import type { EoschoolDocument } from "./homescool";
 import { mustLog } from "./dev-log";
 
-const LEVELS: { label: string; tables: number[] }[] = [
+type Level = { label: string; tables: number[] };
+
+const WEEK1_LEVELS: Level[] = [
   { label: "nivel 1", tables: [1, 2, 3, 4] },
   { label: "nivel 2", tables: [5, 6, 7, 8] },
   { label: "nivel 3", tables: [9, 10, 11, 12] },
 ];
+
+const WEEK2_LEVELS: Level[] = [
+  { label: "nivel 1", tables: [5, 6, 7, 8] },
+  { label: "nivel 2", tables: [9, 10, 11, 12] },
+  { label: "nivel 3", tables: [13, 14, 15, 16] },
+];
+
+export function matLevelsForWeek(week: number): Level[] {
+  return week === 2 ? WEEK2_LEVELS : WEEK1_LEVELS;
+}
+
+export function matTableRangeLabel(week: number): string {
+  return week === 2 ? "5–16" : "1–12";
+}
 
 /** How many of the 12 products (n×1…n×12) to show on practice page 2. */
 export function matPracticeDensity(day: number): number {
@@ -33,6 +49,7 @@ export function renderMatTablesPages(doc: EoschoolDocument): HTMLElement[] {
       week: doc.week,
       day: doc.day,
       density,
+      range: matTableRangeLabel(doc.week),
     });
   }
   const pages = [buildMatPage(doc, "read", 12), buildMatPage(doc, "practice", density)];
@@ -40,18 +57,22 @@ export function renderMatTablesPages(doc: EoschoolDocument): HTMLElement[] {
   return pages;
 }
 
-function taskCopy(day: number): string {
-  const base =
-    "Leer o cantar en voz alta: una vez el nivel 1 (tablas del 1 al 4); dos veces el nivel 2 (tablas del 5 al 8); tres veces el nivel 3 (tablas del 9 al 12).";
+function taskCopy(week: number, day: number): string {
+  const levels =
+    week === 2
+      ? "una vez el nivel 1 (tablas del 5 al 8); dos veces el nivel 2 (tablas del 9 al 12); tres veces el nivel 3 (tablas del 13 al 16)"
+      : "una vez el nivel 1 (tablas del 1 al 4); dos veces el nivel 2 (tablas del 5 al 8); tres veces el nivel 3 (tablas del 9 al 12)";
+  const base = `Leer o cantar en voz alta: ${levels}.`;
   if (day <= 1) return base;
   return `${base} Día ${day}: en la hoja 2 practica ${matPracticeDensity(day)} productos por tabla (espacios en blanco).`;
 }
 
 function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density: number): HTMLElement {
-  if (mustLog) console.log("[homescool-mat] page.build", { mode, density, day: doc.day });
+  if (mustLog) console.log("[homescool-mat] page.build", { mode, density, day: doc.day, week: doc.week });
   const page = document.createElement("div");
   page.className = "homescool-letter-page homescool-letter-page--mat";
   page.dataset.matMode = mode;
+  page.dataset.matWeek = String(doc.week);
 
   const header = document.createElement("header");
   header.className = "homescool-mat__header";
@@ -60,17 +81,17 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
   heading.textContent = doc.title;
   const meta = document.createElement("div");
   meta.className = "homescool-mat__meta";
-  meta.textContent = `c${doc.cycle} · s${doc.week} · d${doc.day} · nivel ${doc.level} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
+  meta.textContent = `c${doc.cycle} · s${doc.week} · d${doc.day} · nivel ${doc.level} · tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
   header.append(heading, meta);
 
   const task = document.createElement("section");
   task.className = "homescool-mat__task";
-  task.textContent = taskCopy(doc.day);
+  task.textContent = taskCopy(doc.week, doc.day);
 
   const body = document.createElement("div");
   body.className = "homescool-mat__levels";
 
-  for (const level of LEVELS) {
+  for (const level of matLevelsForWeek(doc.week)) {
     body.append(buildLevelRow(doc, level.label, level.tables, mode, density));
   }
 
@@ -80,7 +101,7 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
   footL.textContent = mode === "read" ? "Meta: memorizar al cantar" : "Meta: completar sin mirar la hoja 1";
   const footR = document.createElement("span");
   footR.textContent = mode === "practice" ? String(density) : "12";
-  footR.title = mode === "practice" ? `Productos por tabla hoy: ${density}` : "Productos completos por tabla";
+  footR.title = mode === "practice" ? `Productos por tabla hoy: ${density}` : "Productos completos por tabla (×1…×12)";
   footer.append(footL, footR);
 
   page.append(header, task, body, footer);
@@ -184,7 +205,6 @@ function pickMultipliers(day: number, factor: number, mode: "read" | "practice",
   const seed = day * 1009 + factor * 17 + 42;
   const shuffled = seededShuffle(all, seed);
   const picked = shuffled.slice(0, Math.min(density, 12));
-  // Keep ascending order on the page so kids can scan; selection was random.
   picked.sort((a, b) => a - b);
   return picked;
 }

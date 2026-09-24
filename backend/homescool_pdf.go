@@ -26,7 +26,7 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 }
 
 func isMatTablesLayout(doc EoschoolDocument) bool {
-	// Weeks 1–2 of ciclo 3 both teach/practice tables 1–12.
+	// Week 1: tables 1–12. Week 2: tables 5–16.
 	subj := strings.EqualFold(strings.TrimSpace(doc.Subject), "mat")
 	return subj && (doc.Week == 1 || doc.Week == 2)
 }
@@ -190,10 +190,19 @@ type matLevel struct {
 	tables []int
 }
 
-var matLevels = []matLevel{
-	{label: "nivel 1", tables: []int{1, 2, 3, 4}},
-	{label: "nivel 2", tables: []int{5, 6, 7, 8}},
-	{label: "nivel 3", tables: []int{9, 10, 11, 12}},
+func matLevelsForWeek(week int) []matLevel {
+	if week == 2 {
+		return []matLevel{
+			{label: "nivel 1", tables: []int{5, 6, 7, 8}},
+			{label: "nivel 2", tables: []int{9, 10, 11, 12}},
+			{label: "nivel 3", tables: []int{13, 14, 15, 16}},
+		}
+	}
+	return []matLevel{
+		{label: "nivel 1", tables: []int{1, 2, 3, 4}},
+		{label: "nivel 2", tables: []int{5, 6, 7, 8}},
+		{label: "nivel 3", tables: []int{9, 10, 11, 12}},
+	}
 }
 
 func matPracticeDensity(day int) int {
@@ -212,6 +221,9 @@ func matPracticeDensity(day int) int {
 func buildMatTablesPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 	density := matPracticeDensity(doc.Day)
 	task := "Leer o cantar en voz alta: una vez el nivel 1 (tablas del 1 al 4); dos veces el nivel 2 (tablas del 5 al 8); tres veces el nivel 3 (tablas del 9 al 12)."
+	if doc.Week == 2 {
+		task = "Leer o cantar en voz alta: una vez el nivel 1 (tablas del 5 al 8); dos veces el nivel 2 (tablas del 9 al 12); tres veces el nivel 3 (tablas del 13 al 16)."
+	}
 	if doc.Day > 1 {
 		task = fmt.Sprintf("%s Día %d: en la hoja 2 practica %d productos por tabla (espacios en blanco).", task, doc.Day, density)
 	}
@@ -230,7 +242,7 @@ func buildMatTablesPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
 
 func matModeLines(doc EoschoolDocument, mode string, density int) []string {
 	lines := make([]string, 0, 80)
-	for _, level := range matLevels {
+	for _, level := range matLevelsForWeek(doc.Week) {
 		lines = append(lines, level.label)
 		for _, factor := range level.tables {
 			mults := pickMatMultipliers(doc.Day, factor, mode, density)

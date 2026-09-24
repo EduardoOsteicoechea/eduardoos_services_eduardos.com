@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isMatTablesLayout, matPracticeDensity } from "./homescool-mat-tables";
+import { isMatTablesLayout, matLevelsForWeek, matPracticeDensity, matTableRangeLabel } from "./homescool-mat-tables";
 import type { EoschoolDocument } from "./homescool";
 
 describe("homescool-mat-tables", () => {
@@ -16,5 +16,12 @@ describe("homescool-mat-tables", () => {
     expect(isMatTablesLayout({ subject: "mat", week: 2, day: 1 } as EoschoolDocument)).toBe(true);
     expect(isMatTablesLayout({ subject: "esp", week: 2, day: 1 } as EoschoolDocument)).toBe(false);
     expect(isMatTablesLayout({ subject: "mat", week: 3, day: 1 } as EoschoolDocument)).toBe(false);
+  });
+
+  it("uses 1–12 on week 1 and 5–16 on week 2", () => {
+    expect(matTableRangeLabel(1)).toBe("1–12");
+    expect(matTableRangeLabel(2)).toBe("5–16");
+    expect(matLevelsForWeek(1).flatMap((l) => l.tables)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    expect(matLevelsForWeek(2).flatMap((l) => l.tables)).toEqual([5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
   });
 });

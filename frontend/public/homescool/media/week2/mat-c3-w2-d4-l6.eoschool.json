@@ -7,15 +7,15 @@
   "level": 6,
   "subject": "mat",
   "locale": "es",
-  "title": "Tablas 1–12: práctica y problemas",
+  "title": "Tablas 5–16",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 3,
     "points": [
       {
         "id": "p1",
-        "heading": "Repaso 9–12 en profundidad",
-        "body": "Hoy profundizas las tablas del 9 al 12. Estos factores grandes aparecen en problemas de tiempo, dinero y grupos; saberlos evita quedarte atascado en pasos largos.\n\nSigamos juntos. 9× table: 9×4 = 36, 9×12 = 108. 10×: añade un cero. 11× hasta 9 repite cifras (11×6 = 66). 12×: 12×5 = 60, 12×12 = 144.\n\nAhora mira esto con calma. contraste clave: 12×10 = 120 mientras que 12×12 = 144 — no confundas «×10» con «×12».\n\nPráctica: Ahora te toca a ti. Haz diez tarjetas (papel pequeño): anverso 9×7, reverso 63. Mezcla y ordénalas bien tres veces.\n\nError común: Antes de terminar, un aviso. Escribir 11×12 = 122; es 132 (11×10 + 11×2).\n\nMeta: Saber 12×12 y 9×9 = 81 sin pensar mucho."
+        "heading": "Tablas 13 a 16",
+        "body": "Cerramos el mapa con 13, 14, 15 y 16. Son tablas nuevas: cada una sigue siendo n×1…n×12. 15 ayuda con el truco del 5 (15=3×5); 14 es el doble de 7; 16 es potencias de 2.\n\nSigamos juntos. 13×4=52. 14×5=70. 15×6=90. 16×8=128. Si dudas, usa una tabla que ya sepas: 16×8 = (8×8)×2 = 64×2.\n\nNo es inventar que la tabla del 16 solo llega a ×10. En esta hoja practicamos hasta ×12, igual que las demás.\n\nPráctica: Escribe 13×3, 14×7, 15×8, 16×6 y 16×12. Di en voz alta cómo lo comprobaste.\n\nError común: Calcular 15×8 como 15+8. Multiplicar pide grupos: ocho grupos de quince = 120."
       }
     ],
     "summary": ""
@@ -27,445 +27,441 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 3×4?",
+        "prompt": "¿Cuánto es 7×7?",
         "choices": [
-          "7",
-          "12",
-          "14",
-          "16"
+          "45",
+          "59",
+          "49",
+          "55"
         ],
-        "answer": "12"
+        "answer": "49"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 5×6?",
+        "prompt": "¿Cuánto es 5×5?",
         "choices": [
+          "41",
           "25",
-          "30",
-          "35",
-          "11"
+          "15",
+          "19"
         ],
-        "answer": "30"
+        "answer": "25"
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 7×8?",
+        "prompt": "¿Cuánto es 6×10?",
         "choices": [
-          "54",
-          "56",
-          "63",
+          "72",
+          "68",
+          "60",
           "48"
         ],
-        "answer": "56"
+        "answer": "60"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 9×9?",
+        "prompt": "¿Cuánto es 7×4?",
         "choices": [
-          "72",
-          "81",
-          "99",
-          "18"
+          "32",
+          "28",
+          "16",
+          "30"
         ],
-        "answer": "81"
+        "answer": "28"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 11×3?",
+        "prompt": "¿Cuánto es 6×12?",
         "choices": [
-          "33",
-          "14",
-          "111",
-          "30"
+          "74",
+          "76",
+          "82",
+          "72"
         ],
-        "answer": "33"
+        "answer": "72"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 12×12?",
+        "prompt": "¿Cuánto es 8×6?",
         "choices": [
-          "124",
-          "132",
-          "144",
-          "120"
+          "42",
+          "60",
+          "48",
+          "56"
         ],
-        "answer": "144"
+        "answer": "48"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué factores cubre el punto 1?",
+        "prompt": "¿Cuánto es 8×8?",
         "choices": [
-          "1 a 4",
-          "5 a 8",
-          "9 a 12",
-          "solo el 10"
+          "68",
+          "64",
+          "52",
+          "72"
         ],
-        "answer": "1 a 4"
+        "answer": "64"
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 4×8?",
+        "prompt": "¿Cuánto es 6×11?",
         "choices": [
-          "28",
-          "32",
-          "36",
-          "24"
+          "66",
+          "82",
+          "64",
+          "72"
         ],
-        "answer": "32"
+        "answer": "66"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 4×7?",
+        "prompt": "¿Cuánto es 6×4?",
         "choices": [
+          "14",
+          "30",
           "24",
-          "28",
-          "32",
-          "21"
+          "28"
         ],
-        "answer": "28"
+        "answer": "24"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 3×9?",
+        "prompt": "¿Cuánto es 7×1?",
         "choices": [
-          "27",
-          "24",
-          "36",
-          "18"
+          "7",
+          "13",
+          "5",
+          "3"
         ],
-        "answer": "27"
+        "answer": "7"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 2×12?",
+        "prompt": "¿Cuánto es 11×6?",
         "choices": [
-          "22",
-          "24",
-          "20",
-          "14"
+          "66",
+          "68",
+          "60",
+          "82"
         ],
-        "answer": "24"
+        "answer": "66"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué resulta de 1× cualquier número?",
+        "prompt": "¿Cuánto es 9×12?",
         "choices": [
-          "cero",
-          "el mismo número",
-          "el doble",
-          "siempre 1"
+          "120",
+          "108",
+          "98",
+          "100"
         ],
-        "answer": "el mismo número"
+        "answer": "108"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 4×4?",
+        "prompt": "¿Cuánto es 9×11?",
         "choices": [
-          "12",
-          "16",
-          "8",
-          "20"
+          "99",
+          "87",
+          "111",
+          "89"
         ],
-        "answer": "16"
+        "answer": "99"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Hoy profundizas el bloque…",
+        "prompt": "¿Cuánto es 12×7?",
         "choices": [
-          "Tablas 1 a 4",
-          "Tablas 5 a 8",
-          "Tablas 9 a 12",
-          "Solo divisiones"
+          "80",
+          "74",
+          "84",
+          "76"
         ],
-        "answer": "Tablas 1 a 4"
+        "answer": "84"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 3×8?",
+        "prompt": "¿Cuánto es 6×8?",
         "choices": [
-          "21",
-          "24",
-          "27",
-          "18"
+          "46",
+          "48",
+          "36",
+          "54"
         ],
-        "answer": "24"
+        "answer": "48"
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "4×6 usando el doble del doble de 2×6=12 da…",
+        "prompt": "¿Cuánto es 11×1?",
         "choices": [
-          "18",
-          "24",
-          "20",
-          "36"
+          "9",
+          "23",
+          "15",
+          "11"
         ],
-        "answer": "24"
+        "answer": "11"
       },
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 6×7?",
+        "prompt": "¿Cuánto es 10×5?",
         "choices": [
-          "42",
-          "36",
-          "48",
-          "40"
+          "38",
+          "58",
+          "50",
+          "52"
         ],
-        "answer": "42"
+        "answer": "50"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 8×8?",
+        "prompt": "¿Cuánto es 10×6?",
         "choices": [
-          "56",
           "64",
-          "72",
-          "48"
+          "68",
+          "50",
+          "60"
         ],
-        "answer": "64"
+        "answer": "60"
       },
       {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 5×9?",
+        "prompt": "¿Cuánto es 14×11?",
         "choices": [
-          "40",
-          "45",
-          "50",
-          "35"
+          "170",
+          "156",
+          "142",
+          "154"
         ],
-        "answer": "45"
+        "answer": "154"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿En qué terminan los múltiplos de 5?",
+        "prompt": "¿Cuánto es 16×5?",
         "choices": [
-          "solo 0",
-          "solo 5",
-          "0 o 5",
-          "siempre 2"
+          "92",
+          "80",
+          "90",
+          "68"
         ],
-        "answer": "0 o 5"
+        "answer": "80"
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 7×7?",
+        "prompt": "¿Cuánto es 6×12?",
         "choices": [
-          "47",
-          "49",
-          "56",
-          "42"
+          "84",
+          "72",
+          "68",
+          "80"
         ],
-        "answer": "49"
+        "answer": "72"
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Hoy profundizas el bloque…",
+        "prompt": "¿Cuánto es 11×3?",
         "choices": [
-          "Tablas 1 a 4",
-          "Tablas 5 a 8",
-          "Tablas 9 a 12",
-          "Fracciones"
+          "49",
+          "41",
+          "35",
+          "33"
         ],
-        "answer": "Tablas 5 a 8"
+        "answer": "33"
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 8×6?",
+        "prompt": "¿Cuánto es 14×6?",
         "choices": [
-          "42",
-          "48",
-          "54",
-          "36"
+          "94",
+          "74",
+          "92",
+          "84"
         ],
-        "answer": "48"
+        "answer": "84"
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "6×9 = 2×(3×9). Si 3×9=27, entonces 6×9 es…",
+        "prompt": "¿Cuánto es 10×2?",
         "choices": [
-          "45",
-          "54",
-          "63",
-          "36"
+          "12",
+          "32",
+          "20",
+          "10"
         ],
-        "answer": "54"
+        "answer": "20"
       },
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuánto es 9×6?",
+        "prompt": "¿Cuánto es 15×7?",
         "choices": [
-          "54",
-          "56",
-          "63",
-          "45"
+          "121",
+          "107",
+          "105",
+          "113"
         ],
-        "answer": "54"
+        "answer": "105"
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuánto es 12×5?",
+        "prompt": "¿Cuánto es 6×12?",
         "choices": [
-          "50",
-          "60",
-          "55",
-          "65"
+          "64",
+          "72",
+          "70",
+          "68"
         ],
-        "answer": "60"
+        "answer": "72"
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuánto es 11×11?",
+        "prompt": "¿Cuánto es 8×4?",
         "choices": [
-          "111",
-          "121",
-          "122",
-          "110"
+          "22",
+          "34",
+          "32",
+          "26"
         ],
-        "answer": "121"
+        "answer": "32"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Truco clásico de la tabla del 9:",
+        "prompt": "¿Cuánto es 10×8?",
         "choices": [
-          "suman 10",
-          "los dígitos suman 9",
-          "siempre terminan en 9",
-          "es igual al 8"
+          "84",
+          "70",
+          "80",
+          "74"
         ],
-        "answer": "los dígitos suman 9"
+        "answer": "80"
       },
       {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuánto es 10×12?",
+        "prompt": "¿Cuánto es 15×9?",
         "choices": [
-          "110",
-          "120",
-          "100",
-          "22"
+          "141",
+          "145",
+          "135",
+          "143"
         ],
-        "answer": "120"
+        "answer": "135"
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Hoy profundizas el bloque…",
+        "prompt": "¿Cuánto es 8×2?",
         "choices": [
-          "Tablas 1 a 4",
-          "Tablas 5 a 8",
-          "Tablas 9 a 12",
-          "Potencias"
+          "16",
+          "20",
+          "10",
+          "24"
         ],
-        "answer": "Tablas 9 a 12"
+        "answer": "16"
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuánto es 9×8?",
+        "prompt": "¿Cuánto es 14×7?",
         "choices": [
-          "72",
-          "81",
-          "64",
-          "63"
+          "86",
+          "108",
+          "94",
+          "98"
         ],
-        "answer": "72"
+        "answer": "98"
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "12×7 = 10×7 + 2×7. Eso da…",
+        "prompt": "¿Cuánto es 8×2?",
         "choices": [
-          "74",
-          "84",
-          "94",
-          "77"
+          "22",
+          "16",
+          "6",
+          "4"
         ],
-        "answer": "84"
+        "answer": "16"
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe cinco productos de tablas que te cuesten y cómo los compruebas (suma o patrón).",
-        "answer": ""
+        "prompt": "Explica con tus palabras cómo calcular 14×5 usando una tabla que ya sepas."
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica el truco del 9 con un ejemplo (dígitos que suman 9).",
-        "answer": ""
+        "prompt": "¿Qué patrón ayuda en la tabla del 15? Da un ejemplo."
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Descompón 12×6 usando 10×6 + 2×6 y escribe el resultado.",
-        "answer": ""
+        "prompt": "Escribe tres productos difíciles de 13–16 y cómo los comprobarías."
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Inventa un problema corto de la vida real que use una multiplicación del bloque 9–12.",
-        "answer": ""
+        "prompt": "¿En qué se diferencia memorizar 5–8 de memorizar 13–16?"
       }
     ]
   },

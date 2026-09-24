@@ -176,7 +176,7 @@ Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/h
 
 | Code | Theme |
 | --- | --- |
-| `mat` | Multiplication tables **1–12** (FE/PDF use the dedicated tables letter layout on weeks **1 and 2**) |
+| `mat` | Multiplication tables **1–12** (dedicated tables letter layout) |
 | `esp` | Three conjugations: **-ar**, **-er**, **-ir** |
 | `ing` | **Same syllabus as `esp`**, in English (first / second / third conjugation patterns) |
 | `lat` | Prepositions: **in–en**, **apud–con**, **per–por**, **sine–sin**, **a–de**, **de–de** |
@@ -193,7 +193,7 @@ Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/h
 
 | Code | Theme |
 | --- | --- |
-| `mat` | Practice and word problems with tables **1–12** (no jump to 13–15) |
+| `mat` | Multiplication tables **5–16** (same letter layout; extends beyond 12) |
 | `esp` / `ing` | Indicative tenses (simple + compound) — keep, but language for 10-year-olds |
 | `his` | Columbus in Venezuela: whom he met and how they interacted |
 | `lat` | Conjunctions/adverbs: et–and, ut–so that, non–not |
