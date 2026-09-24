@@ -741,6 +741,10 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   color: var(--color-accent);
 }
 
+.sidebar-left nav .sidebar-nav-action[aria-current="page"] {
+  color: var(--color-bg);
+}
+
 .agent-fab {
   flex-shrink: 0;
 }
