@@ -69,13 +69,15 @@ html[data-page="home"] main > * {
   z-index: 1;
 }
 
-@media (max-width: 47.999rem) {
+/* Phone + tablet: left half of the portrait, flush to the right edge. */
+@media (max-width: 63.999rem) {
   html[data-page="home"] main::before {
-    /* Only the left half of the portrait is visible on phone. */
     width: 25.2rem;
     background-position: left center;
   }
+}
 
+@media (max-width: 47.999rem) {
   .hero__lede {
     inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
   }
