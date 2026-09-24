@@ -27,6 +27,8 @@ type ScribHeaderMenuProps = {
   onOpenLayers: () => void;
   onOpenInstitutes: () => void;
   institutesOpen?: boolean;
+  onOpenBible: () => void;
+  bibleOpen?: boolean;
   onUndo: () => void;
   onPrint: () => void;
 };
@@ -168,6 +170,19 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           >
             <ActionIcon name="menu_book" />
             <span className="header-dynamic-menu__label">Institutes</span>
+          </button>
+          <button
+            type="button"
+            className={actionClass(Boolean(props.bibleOpen))}
+            title={props.bibleOpen ? "Cerrar Bible" : "Bible — book, chapter, verse"}
+            aria-label={
+              props.bibleOpen ? "Cerrar panel de Bible" : "Abrir panel de Bible"
+            }
+            aria-pressed={Boolean(props.bibleOpen)}
+            onClick={props.onOpenBible}
+          >
+            <ActionIcon name="auto_stories" />
+            <span className="header-dynamic-menu__label">Bible</span>
           </button>
           <button
             type="button"

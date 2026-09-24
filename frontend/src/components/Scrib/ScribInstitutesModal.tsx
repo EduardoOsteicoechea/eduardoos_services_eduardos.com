@@ -182,128 +182,123 @@ export default function ScribInstitutesModal({ open }: ScribInstitutesPanelProps
   if (!open) return null;
 
   return (
-    <aside
-      className="scrib-layers-modal scrib-institutes-modal"
-      aria-label="Institutes Capita"
-    >
-      <div className="scrib-layers-modal__panel scrib-institutes-modal__panel">
-        <header className="scrib-layers-modal__head">
-          <h2>Institutes</h2>
-        </header>
+    <aside className="scrib-ref-panel" aria-label="Institutes Capita">
+      <header className="scrib-ref-panel__head">
+        <h2>Institutes</h2>
+      </header>
 
-        <div className="scrib-institutes-modal__scroll">
-          {error ? <p className="scrib-institutes-modal__error">{error}</p> : null}
+      <div className="scrib-ref-panel__scroll">
+        {error ? <p className="scrib-ref-panel__error">{error}</p> : null}
 
-          {loadingIndex ? (
-            <ViewLoading compact label="Loading Capita" />
-          ) : (
-            <>
-              <div className="scrib-institutes-modal__libers" role="tablist" aria-label="Libri">
-                {groups.map((g) => (
-                  <button
-                    key={g.book}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeBook === g.book}
-                    className={
-                      activeBook === g.book
-                        ? "scrib-institutes-modal__liber is-active"
-                        : "scrib-institutes-modal__liber"
-                    }
-                    onClick={() => {
-                      setActiveBook(g.book);
-                      setSelected(null);
-                      setPendingChapterId(null);
-                      setDoc(null);
-                      setSelectedParaOrder(null);
-                    }}
-                  >
-                    Liber {g.book}
-                  </button>
-                ))}
-              </div>
-
-              <section className="scrib-institutes-modal__step" aria-label="Chapter">
-                <div
-                  className="scrib-institutes-modal__chips scrib-institutes-modal__chips--chapters"
-                  role="listbox"
-                  aria-label="Caput number"
+        {loadingIndex ? (
+          <ViewLoading compact label="Loading Capita" />
+        ) : (
+          <>
+            <div className="scrib-ref-panel__tabs" role="tablist" aria-label="Libri">
+              {groups.map((g) => (
+                <button
+                  key={g.book}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeBook === g.book}
+                  className={
+                    activeBook === g.book
+                      ? "scrib-ref-panel__tab is-active"
+                      : "scrib-ref-panel__tab"
+                  }
+                  onClick={() => {
+                    setActiveBook(g.book);
+                    setSelected(null);
+                    setPendingChapterId(null);
+                    setDoc(null);
+                    setSelectedParaOrder(null);
+                  }}
                 >
-                  {bookEntries.map((entry) => {
-                    const label = chapterNavLabel(entry);
-                    return (
-                      <button
-                        key={entry.id}
-                        type="button"
-                        role="option"
-                        title={entry.heading}
-                        aria-selected={selected?.id === entry.id}
-                        className={
-                          selected?.id === entry.id
-                            ? "scrib-institutes-modal__chip is-active"
-                            : "scrib-institutes-modal__chip"
-                        }
-                        onClick={() => {
-                          setSelected(entry);
-                          setPendingChapterId(entry.id);
-                          setSelectedParaOrder(null);
-                        }}
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
-                {!selected ? (
-                  <p className="scrib-institutes-modal__status">Select a chapter.</p>
-                ) : null}
+                  Liber {g.book}
+                </button>
+              ))}
+            </div>
+
+            <section className="scrib-ref-panel__step" aria-label="Chapter">
+              <div
+                className="scrib-ref-panel__chips scrib-ref-panel__chips--chapters"
+                role="listbox"
+                aria-label="Caput number"
+              >
+                {bookEntries.map((entry) => {
+                  const label = chapterNavLabel(entry);
+                  return (
+                    <button
+                      key={entry.id}
+                      type="button"
+                      role="option"
+                      title={entry.heading}
+                      aria-selected={selected?.id === entry.id}
+                      className={
+                        selected?.id === entry.id
+                          ? "scrib-ref-panel__chip is-active"
+                          : "scrib-ref-panel__chip"
+                      }
+                      onClick={() => {
+                        setSelected(entry);
+                        setPendingChapterId(entry.id);
+                        setSelectedParaOrder(null);
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              {!selected ? (
+                <p className="scrib-ref-panel__status">Select a chapter.</p>
+              ) : null}
+            </section>
+
+            {selected ? (
+              <section className="scrib-ref-panel__step" aria-label="Paragraph">
+                {loadingChapter ? (
+                  <ViewLoading compact label="Loading paragraphs" />
+                ) : (
+                  <>
+                    <div
+                      className="scrib-ref-panel__chips scrib-ref-panel__chips--paras"
+                      role="listbox"
+                      aria-label="Paragraph number"
+                    >
+                      {paragraphs.map((p) => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          role="option"
+                          aria-selected={selectedParaOrder === p.order}
+                          className={
+                            selectedParaOrder === p.order
+                              ? "scrib-ref-panel__chip is-active"
+                              : "scrib-ref-panel__chip"
+                          }
+                          onClick={() => setSelectedParaOrder(p.order)}
+                        >
+                          {p.order}
+                        </button>
+                      ))}
+                    </div>
+                    {selectedParaOrder == null ? (
+                      <p className="scrib-ref-panel__status">Select a paragraph.</p>
+                    ) : null}
+                  </>
+                )}
               </section>
+            ) : null}
 
-              {selected ? (
-                <section className="scrib-institutes-modal__step" aria-label="Paragraph">
-                  {loadingChapter ? (
-                    <ViewLoading compact label="Loading paragraphs" />
-                  ) : (
-                    <>
-                      <div
-                        className="scrib-institutes-modal__chips scrib-institutes-modal__chips--paras"
-                        role="listbox"
-                        aria-label="Paragraph number"
-                      >
-                        {paragraphs.map((p) => (
-                          <button
-                            key={p.id}
-                            type="button"
-                            role="option"
-                            aria-selected={selectedParaOrder === p.order}
-                            className={
-                              selectedParaOrder === p.order
-                                ? "scrib-institutes-modal__chip is-active"
-                                : "scrib-institutes-modal__chip"
-                            }
-                            onClick={() => setSelectedParaOrder(p.order)}
-                          >
-                            {p.order}
-                          </button>
-                        ))}
-                      </div>
-                      {selectedParaOrder == null ? (
-                        <p className="scrib-institutes-modal__status">Select a paragraph.</p>
-                      ) : null}
-                    </>
-                  )}
-                </section>
-              ) : null}
-
-              {activeParagraph ? (
-                <section className="scrib-institutes-modal__text" aria-live="polite">
-                  <p className="scrib-institutes-modal__text-id">{activeParagraph.id}</p>
-                  <p className="scrib-institutes-modal__text-body">{activeParagraph.text}</p>
-                </section>
-              ) : null}
-            </>
-          )}
-        </div>
+            {activeParagraph ? (
+              <section className="scrib-ref-panel__text" aria-live="polite">
+                <p className="scrib-ref-panel__text-id">{activeParagraph.id}</p>
+                <p className="scrib-ref-panel__text-body">{activeParagraph.text}</p>
+              </section>
+            ) : null}
+          </>
+        )}
       </div>
     </aside>
   );

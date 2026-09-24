@@ -8,6 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { APP_ROUTES } from "../../config/routes";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
+import ScribBibleModal from "./ScribBibleModal";
 import ScribHeaderMenu, { type ScribToolMode } from "./ScribHeaderMenu";
 import ScribInstitutesModal from "./ScribInstitutesModal";
 import ScribSheetBackground from "./ScribSheetBackground";
@@ -113,6 +114,7 @@ export default function ScribEditor() {
   const [mode, setMode] = useState<ScribToolMode>("zoom");
   const [layersOpen, setLayersOpen] = useState(false);
   const [institutesOpen, setInstitutesOpen] = useState(false);
+  const [bibleOpen, setBibleOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -522,7 +524,14 @@ export default function ScribEditor() {
         institutesOpen={institutesOpen}
         onOpenInstitutes={() => {
           setLayersOpen(false);
+          setBibleOpen(false);
           setInstitutesOpen((v) => !v);
+        }}
+        bibleOpen={bibleOpen}
+        onOpenBible={() => {
+          setLayersOpen(false);
+          setInstitutesOpen(false);
+          setBibleOpen((v) => !v);
         }}
         onPrint={() => {
           setLayersOpen(false);
@@ -733,9 +742,8 @@ export default function ScribEditor() {
         </div>
       ) : null}
 
-      <ScribInstitutesModal
-        open={institutesOpen}
-      />
+      <ScribInstitutesModal open={institutesOpen} />
+      <ScribBibleModal open={bibleOpen} />
     </ServiceGate>
   );
 }
