@@ -31,6 +31,10 @@ A child of ≈10 must be able to **read the sheet alone** and understand every t
 **Forbidden:** jargon without an immediate plain-language gloss (e.g. bare «participio», «auxiliar», «indicativo», «epitelial»).  
 Define on first use: *X = explicación sencilla + ejemplo*. Prefer kid words (*forma ya hecha*, *palabra ayudante*, *una palabra / dos palabras*) alongside the school term.
 
+**Narrative voice (mandatory):** keep the FE boxes (Idea central → Explora → Práctica → Error), but write **guided prose** that continues from one box to the next («Hoy vamos…», «Sigamos juntos…», «Ahora te toca…»).  
+Forbidden: bullet-stack / checklist tone inside Idea central.  
+Avoid bare «frente a» / «vs» in mid paragraphs unless you *want* a Contraste two-column split.
+
 Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:
 
 1. **Idea central** (first paragraph): what the idea is + definitions of every technical word used that day.  
