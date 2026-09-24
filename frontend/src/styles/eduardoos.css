@@ -69,15 +69,21 @@ html[data-page="home"] main > * {
   z-index: 1;
 }
 
-/* Phone + tablet: left half of the portrait, flush to the right edge. */
-@media (max-width: 63.999rem) {
+/* Tablet: portrait center sits 3.125rem (50px) from the right edge. */
+@media (min-width: 48rem) and (max-width: 63.999rem) {
   html[data-page="home"] main::before {
-    width: 25.2rem;
-    background-position: left center;
+    right: 3.125rem;
+    transform: translateX(50%);
   }
 }
 
 @media (max-width: 47.999rem) {
+  html[data-page="home"] main::before {
+    /* Only the left half of the portrait is visible on phone. */
+    width: 25.2rem;
+    background-position: left center;
+  }
+
   .hero__lede {
     inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
   }
