@@ -400,13 +400,14 @@ a {
 .dhs-action[aria-pressed="true"],
 .dhs-action[data-active],
 .dhs-action[aria-current="page"] {
-  color: var(--color-accent);
+  color: var(--color-bg);
+  background: var(--color-text);
 }
 
 .dhs-action[aria-pressed="true"] .icon-btn,
 .dhs-action[data-active] .icon-btn,
 .dhs-action[aria-current="page"] .icon-btn {
-  color: var(--color-accent);
+  color: var(--color-bg);
 }
 
 .dhs-action[hidden] {
@@ -485,9 +486,29 @@ a {
 #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--active,
 #dynamic-header .header-dynamic-menu__btn.dhs-action[aria-pressed="true"],
 #dynamic-header .header-dynamic-menu__btn.dhs-action.is-active {
-  color: var(--color-accent);
-  background: transparent;
+  color: var(--color-bg);
+  background: var(--color-text);
   border: 0;
+}
+
+#dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--active .icon-btn,
+#dynamic-header .header-dynamic-menu__btn.dhs-action[aria-pressed="true"] .icon-btn,
+#dynamic-header .header-dynamic-menu__btn.dhs-action.is-active .icon-btn {
+  color: var(--color-bg);
+}
+
+#dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--active:hover:not(:disabled),
+#dynamic-header .header-dynamic-menu__btn.dhs-action[aria-pressed="true"]:hover:not(:disabled),
+#dynamic-header .header-dynamic-menu__btn.dhs-action.is-active:hover:not(:disabled) {
+  color: var(--color-bg);
+  background: var(--color-text);
+  opacity: 0.9;
+}
+
+#dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--active:hover:not(:disabled) .icon-btn,
+#dynamic-header .header-dynamic-menu__btn.dhs-action[aria-pressed="true"]:hover:not(:disabled) .icon-btn,
+#dynamic-header .header-dynamic-menu__btn.dhs-action.is-active:hover:not(:disabled) .icon-btn {
+  color: var(--color-bg);
 }
 
 #dynamic-header .header-dynamic-menu__btn.dhs-action .header-dynamic-menu__label {

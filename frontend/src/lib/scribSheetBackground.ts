@@ -50,7 +50,8 @@ export type ScribSheetBgGeometry = {
 /** Defaults match formatted_sheet_generator `generar_documentos_columnas`,
  * with asymmetric row bands: 1.1 + 1.8 + 1.1 mm inside each 4 mm writing row. */
 export const SCRIB_SHEET_BG_DEFAULTS = {
-  margenLateralMm: 20,
+  /** Half of `margenEntreColumnasMm` so side gutters match half the inter-column gap. */
+  margenLateralMm: 10,
   margenVerticalMm: 10,
   margenEntreColumnasMm: 20,
   columnas: 3,

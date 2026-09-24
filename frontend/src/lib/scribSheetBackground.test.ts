@@ -27,6 +27,22 @@ describe("scribSheetBackground", () => {
     expect(g.rects[0]?.y).toBe(SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm);
   });
 
+  it("keeps lateral margins at half the inter-column gap and widens columns", () => {
+    expect(SCRIB_SHEET_BG_DEFAULTS.margenLateralMm).toBe(
+      SCRIB_SHEET_BG_DEFAULTS.margenEntreColumnasMm / 2,
+    );
+    const g = buildScribSheetBackgroundGeometry();
+    const usableW =
+      SCRIB_PAGE_WIDTH_MM - 2 * SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const expectedColW =
+      (usableW -
+        (SCRIB_SHEET_BG_DEFAULTS.columnas - 1) *
+          SCRIB_SHEET_BG_DEFAULTS.margenEntreColumnasMm) /
+      SCRIB_SHEET_BG_DEFAULTS.columnas;
+    expect(g.rects[0]?.width).toBeCloseTo(expectedColW, 5);
+    expect(expectedColW).toBeGreaterThan(45);
+  });
+
   it("emits SVG markup with viewBox in millimetres", () => {
     const svg = buildScribSheetBackgroundSvgMarkup();
     expect(svg).toContain(`viewBox="0 0 ${SCRIB_PAGE_WIDTH_MM} ${SCRIB_PAGE_HEIGHT_MM}"`);
