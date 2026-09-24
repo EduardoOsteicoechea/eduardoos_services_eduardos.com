@@ -56,6 +56,16 @@ html[data-page="homescool-workspace"] #main-menu:not([hidden]) ~ #dynamic-header
   padding-top: var(--space-padding);
 }
 
+/*
+ * Fixed curriculum rail stays in #dynamic-header (always visible), but it is not
+ * an overlay tray beside the menu. Override the global menu+DHS→agent offset so
+ * chat docks flush to the menu (tablet/desktop) instead of leaving a gap.
+ */
+html[data-page="homescool-workspace"] #main-menu:not([hidden]) ~ #agent-sidebar,
+html[data-page="homescool-workspace"] #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) ~ #agent-sidebar {
+  left: var(--sidebar-width);
+}
+
 html[data-page="homescool-workspace"] #dynamic-header[hidden] {
   display: flex !important;
 }

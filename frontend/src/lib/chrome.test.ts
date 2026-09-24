@@ -1,8 +1,13 @@
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getMe } from "./api";
 import { applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
 import { go } from "./router";
+
+const here = dirname(fileURLToPath(import.meta.url));
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
@@ -261,5 +266,12 @@ describe("menu toolbar span", () => {
     (document.getElementById("agent-sidebar") as HTMLElement).hidden = false;
     startChrome();
     expect(document.documentElement.dataset.menuToolbar).toBe("menu-agent");
+  });
+
+  it("docks Homescool chat beside the menu, not past a phantom overlay DHS column", () => {
+    const css = readFileSync(join(here, "../styles/homescool-workspace.css"), "utf8");
+    expect(css).toMatch(
+      /html\[data-page="homescool-workspace"\] #main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) ~ #agent-sidebar \{\s*left: var\(--sidebar-width\);/,
+    );
   });
 });
