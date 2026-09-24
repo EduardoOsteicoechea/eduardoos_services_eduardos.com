@@ -1999,19 +1999,20 @@ section.diag .panel:not(form) {
     font-size: 0.625rem;
   }
 
-  /* Mobile main menu: improve scanability and give the first item breathing room. */
+  /* Mobile main menu: larger labels/icons and clearer row separation. */
   #main-menu nav {
     padding-top: var(--rail-gap);
   }
 
-  #main-menu nav a,
-  #main-menu nav button {
+  #main-menu nav a:not(.sidebar-nav-action),
+  #main-menu nav button:not(.sidebar-nav-action) {
+    min-height: calc(var(--rail-button-size) * 1.25);
     margin-block: calc(var(--rail-gap) * 0.75);
     font-size: var(--font-size-md);
   }
 
-  #main-menu nav a .material-symbols-outlined,
-  #main-menu nav button .material-symbols-outlined {
+  #main-menu nav a:not(.sidebar-nav-action) .material-symbols-outlined,
+  #main-menu nav button:not(.sidebar-nav-action) .material-symbols-outlined {
     font-size: calc(var(--font-size-md) * 1.25);
   }
 
@@ -2069,10 +2070,16 @@ section.diag .panel:not(form) {
     margin-bottom: var(--rail-gap);
   }
 
-  #main-menu nav a,
-  #main-menu nav button {
+  #main-menu nav a:not(.sidebar-nav-action),
+  #main-menu nav button:not(.sidebar-nav-action) {
+    min-height: calc(var(--rail-button-size) * 1.15);
     margin-block: calc(var(--rail-gap) * 0.75);
     font-size: calc(var(--font-size-sm) * 1.25);
+  }
+
+  #main-menu nav a:not(.sidebar-nav-action) .material-symbols-outlined,
+  #main-menu nav button:not(.sidebar-nav-action) .material-symbols-outlined {
+    font-size: calc(var(--font-size-md) * 1.15);
   }
 
   .app-header--start {
