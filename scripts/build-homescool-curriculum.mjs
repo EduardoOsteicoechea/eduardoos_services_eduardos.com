@@ -1,5 +1,5 @@
 /**
- * Publish pack: only frontend/public/homescool/media/week2/*.eoschool.json
+ * Publish pack: week1 + week2 cell JSON
  * → curriculum.json (FE backup) + optional Mongo upsert (runtime SoT).
  *
  * Sync env (optional):
@@ -9,26 +9,35 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const week2Root = path.join("frontend", "public", "homescool", "media", "week2");
+const mediaRoot = path.join("frontend", "public", "homescool", "media");
+const weekDirs = ["week1", "week2"];
 const dest = path.join("frontend", "public", "homescool", "curriculum.json");
 
-const files = fs
-  .readdirSync(week2Root)
-  .filter((n) => n.endsWith(".eoschool.json"))
-  .map((n) => path.join(week2Root, n))
-  .sort((a, b) => a.localeCompare(b));
+const files = [];
+for (const weekDir of weekDirs) {
+  const root = path.join(mediaRoot, weekDir);
+  if (!fs.existsSync(root)) {
+    throw new Error(`missing ${root}`);
+  }
+  for (const name of fs.readdirSync(root)) {
+    if (!name.endsWith(".eoschool.json")) continue;
+    files.push(path.join(root, name));
+  }
+}
+files.sort((a, b) => a.localeCompare(b));
 
 const classes = [];
 for (const f of files) {
   const doc = JSON.parse(fs.readFileSync(f, "utf8"));
-  if (doc.cycle !== 3 || doc.week !== 2 || doc.level !== 6) {
+  if (doc.cycle !== 3 || doc.level !== 6 || (doc.week !== 1 && doc.week !== 2)) {
     throw new Error(
       `refusing unpublished cell ${f}: cycle=${doc.cycle} week=${doc.week} level=${doc.level}`,
     );
   }
   const base = path.basename(f);
-  if (!/-c3-w2-/.test(base)) {
-    throw new Error(`refusing filename without -c3-w2-: ${base}`);
+  const weekTag = doc.week === 1 ? "-c3-w1-" : "-c3-w2-";
+  if (!base.includes(weekTag)) {
+    throw new Error(`refusing filename without ${weekTag}: ${base}`);
   }
   const rel = f.split(path.sep).join("/");
   const source = rel.replace(/^frontend\/public/, "");
@@ -36,8 +45,8 @@ for (const f of files) {
   classes.push({ key, source, ...doc });
 }
 
-if (classes.length !== 60) {
-  throw new Error(`expected 60 published classes, got ${classes.length}`);
+if (classes.length !== 120) {
+  throw new Error(`expected 120 published classes (60×2 weeks), got ${classes.length}`);
 }
 
 const out = {
@@ -45,7 +54,7 @@ const out = {
   version: 1,
   level: 6,
   description:
-    "Published Homescool pack: ciclo 3 / semana 2 / nivel 6 only (60 cells). FE backup for review; Mongo is runtime SoT.",
+    "Published Homescool pack: ciclo 3 / semanas 1–2 / nivel 6 (≈10 años). FE backup for review; Mongo is runtime SoT.",
   classCount: classes.length,
   classes,
 };
@@ -82,35 +91,57 @@ function toEoschoolBody(row) {
 
 let ok = 0;
 let fail = 0;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 for (const row of classes) {
   const body = {
     confirmOverwrite: true,
     material: toEoschoolBody(row),
   };
   const url = `${baseURL}/api/v1/homescool/materials`;
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const text = await res.text();
+  let attempt = 0;
+  let done = false;
+  while (!done && attempt < 6) {
+    attempt++;
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      if (res.status === 429) {
+        const retryAfter = Number(res.headers.get("Retry-After") || "2");
+        const waitMs = Math.max(2000, (Number.isFinite(retryAfter) ? retryAfter : 2) * 1000);
+        console.warn(`rate limited ${row.key}; wait ${waitMs}ms attempt=${attempt}`);
+        await sleep(waitMs);
+        continue;
+      }
+      if (!res.ok) {
+        const text = await res.text();
+        fail++;
+        console.error(`upsert fail ${row.key} status=${res.status} body=${text.slice(0, 200)}`);
+        done = true;
+        break;
+      }
+      ok++;
+      done = true;
+      if (ok % 10 === 0 || ok === classes.length) {
+        console.log(`mongo upsert progress ${ok}/${classes.length}`);
+      }
+      await sleep(1100); // stay under ~60/min
+    } catch (err) {
       fail++;
-      console.error(`upsert fail ${row.key} status=${res.status} body=${text.slice(0, 200)}`);
-      continue;
+      console.error(`upsert error ${row.key}`, err);
+      done = true;
     }
-    ok++;
-    if (ok % 10 === 0 || ok === classes.length) {
-      console.log(`mongo upsert progress ${ok}/${classes.length}`);
-    }
-  } catch (err) {
+  }
+  if (!done) {
     fail++;
-    console.error(`upsert error ${row.key}`, err);
+    console.error(`upsert give up ${row.key} after rate limits`);
   }
 }
 console.log(`mongo sync done upserted=${ok} failed=${fail}`);

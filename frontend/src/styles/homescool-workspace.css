@@ -917,6 +917,24 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   gap: 0;
 }
 
+.homescool-letter__q--write {
+  gap: 0.35rem;
+}
+
+.homescool-letter__write-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0.25rem 0 0.15rem;
+  padding-left: calc(var(--hc-q-num-size) + 0.35rem);
+}
+
+.homescool-letter__write-line {
+  height: 0;
+  border-bottom: 0.06rem solid var(--hc-navy);
+  min-height: 0.85rem;
+}
+
 .homescool-letter__q:nth-child(4n + 1) {
   border-color: var(--hc-blue);
 }

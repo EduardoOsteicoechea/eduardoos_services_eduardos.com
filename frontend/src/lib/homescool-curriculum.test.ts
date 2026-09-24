@@ -17,12 +17,15 @@ describe("homescool curriculum", () => {
     const data = JSON.parse(raw) as HomescoolCurriculum;
     expect(data.format).toBe("homescool-curriculum");
     expect(data.version).toBe(1);
-    expect(data.classes).toHaveLength(60);
+    expect(data.classes).toHaveLength(120);
     expect(data.classCount).toBe(data.classes.length);
     const keys = new Set(data.classes.map((c) => c.key));
     expect(keys.size).toBe(data.classes.length);
-    expect(data.classes.every((c) => c.cycle === 3 && c.week === 2)).toBe(true);
-    expect(data.classes.some((c) => c.source.includes("/pilot/"))).toBe(false);
+    expect(data.classes.every((c) => c.cycle === 3 && (c.week === 1 || c.week === 2))).toBe(true);
+    expect(data.classes.filter((c) => c.week === 1)).toHaveLength(60);
+    expect(data.classes.filter((c) => c.week === 2)).toHaveLength(60);
+    expect(data.classes.some((c) => c.source?.includes("/pilot/"))).toBe(false);
+    expect(keys.has("c3-w1-d1-l6-mat")).toBe(true);
     expect(keys.has("c3-w2-d1-l6-mat")).toBe(true);
   });
 

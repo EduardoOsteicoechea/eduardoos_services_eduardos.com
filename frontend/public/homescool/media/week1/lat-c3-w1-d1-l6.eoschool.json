@@ -1,0 +1,143 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "lat",
+  "locale": "es",
+  "title": "Latín: preposiciones básicas",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "in–en y apud–con",
+        "body": "In + acusativo suele indicar movimiento hacia (ad) o lugar en (cuando el contexto lo muestra); en español a menudo «en» o «a».\n\nApud significa «junto a, en casa de, con» — cercanía o compañía. Ejemplo de idea: apud amicos (con/junto a los amigos).\n\nMemoriza el par latín–español: in ↔ en/a; apud ↔ con/junto a.\n\nError común: traducir apud siempre como «en» sin matiz de compañía."
+      },
+      {
+        "id": "p2",
+        "heading": "per–por y sine–sin",
+        "body": "Per indica «por, a través de» (camino, medio, causa). Per viam = por el camino.\n\nSine significa «sin». Sine aqua = sin agua.\n\nPar: per ↔ por; sine ↔ sin. Son opuestos útiles: con camino vs sin algo.\n\nError común: confundir per (por) con pro (por, a favor de — otra preposición)."
+      },
+      {
+        "id": "p3",
+        "heading": "a–de y de–de",
+        "body": "A + acusativo marca dirección hacia («a»): Romam = a Roma. En español «a» o «hacia».\n\nDe + ablativo indica procedencia o posesión («de, desde»): de Roma, de Pablo.\n\nAmbos se traducen con «de» en español según contexto, pero a mira hacia adelante y de mira origen.\n\nError común: usar de cuando el latín pide a (movimiento hacia)."
+      }
+    ],
+    "summary": "Reconocer seis preposiciones latinas en pares con español: in, apud, per, sine, a, de."
+  },
+  "quiz": {
+    "questionCount": 8,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "In suele traducirse…",
+        "choices": [
+          "en / a",
+          "sin",
+          "contra",
+          "bajo"
+        ],
+        "answer": "en / a"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Apud suele traducirse…",
+        "choices": [
+          "con / junto a",
+          "sin",
+          "por",
+          "desde"
+        ],
+        "answer": "con / junto a"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Per suele traducirse…",
+        "choices": [
+          "por",
+          "sin",
+          "con",
+          "de"
+        ],
+        "answer": "por"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Sine significa…",
+        "choices": [
+          "sin",
+          "con",
+          "por",
+          "en"
+        ],
+        "answer": "sin"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "A + acusativo suele indicar…",
+        "choices": [
+          "hacia / a",
+          "sin",
+          "desde",
+          "contra"
+        ],
+        "answer": "hacia / a"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "De + ablativo suele indicar…",
+        "choices": [
+          "de / desde",
+          "hacia",
+          "con",
+          "por"
+        ],
+        "answer": "de / desde"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tema:",
+        "choices": [
+          "preposiciones latinas",
+          "tablas",
+          "tejidos",
+          "Colón solo"
+        ],
+        "answer": "preposiciones latinas"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tres pares de la semana:",
+        "choices": [
+          "in/apud, per/sine, a/de",
+          "solo et/ut",
+          "solo yo/tú",
+          "solo estados"
+        ],
+        "answer": "in/apud, per/sine, a/de"
+      }
+    ]
+  },
+  "media": []
+}

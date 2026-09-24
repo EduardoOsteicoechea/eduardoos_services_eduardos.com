@@ -27,12 +27,48 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 	for i := range doc.Lesson.Points {
 		doc.Lesson.Points[i] = EoschoolPoint{ID: "p", Heading: "h", Body: "b"}
 	}
-	doc.Quiz.QuestionCount = 40
-	doc.Quiz.Questions = make([]EoschoolQuestion, 40)
-	for i := range doc.Quiz.Questions {
+	doc.Quiz.QuestionCount = 52
+	doc.Quiz.Questions = make([]EoschoolQuestion, 52)
+	for i := 0; i < 40; i++ {
 		doc.Quiz.Questions[i] = EoschoolQuestion{
 			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
 			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[40+i] = EoschoolQuestion{
+			ID: "w4", OriginDay: 4, Type: "write", Prompt: "escribe?",
+		}
+	}
+	for i := 0; i < 8; i++ {
+		doc.Quiz.Questions[44+i] = EoschoolQuestion{
+			ID: "w5", OriginDay: 5, Type: "write", Prompt: "reflexiona?",
+		}
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Day = 4
+	doc.Lesson.Kind = eoschoolKindDeepen
+	fp := 3
+	doc.Lesson.FocusPoint = &fp
+	doc.Lesson.Summary = ""
+	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
+	doc.Quiz.QuestionCount = 36
+	doc.Quiz.Questions = make([]EoschoolQuestion, 36)
+	for i := 0; i < 32; i++ {
+		doc.Quiz.Questions[i] = EoschoolQuestion{
+			ID: "q", OriginDay: (i % 4) + 1, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[32+i] = EoschoolQuestion{
+			ID: "w", OriginDay: 4, Type: "write", Prompt: "escribe?",
 		}
 	}
 	if err := validateEoschoolDocument(&doc); err != nil {

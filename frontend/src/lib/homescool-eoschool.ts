@@ -644,25 +644,35 @@ function buildQuizList(
   const letters = ["A", "B", "C", "D", "E", "F"];
   questions.forEach((q, i) => {
     const li = document.createElement("li");
-    li.className = "homescool-letter__q";
+    const isWrite = String(q.type || "").toLowerCase() === "write";
+    li.className = isWrite ? "homescool-letter__q homescool-letter__q--write" : "homescool-letter__q";
     const head = el("div", "homescool-letter__q-head");
     const num = el("span", "homescool-letter__q-num", String(startIndex + i));
     num.setAttribute("aria-hidden", "true");
     head.append(num, el("p", "homescool-letter__body", q.prompt));
     li.append(head);
-    const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
-    if (choices.length) {
-      const ul = el("ul", "homescool-letter__choices-list");
-      choices.forEach((c, idx) => {
-        const opt = document.createElement("li");
-        opt.className = "homescool-letter__choice";
-        const mark = letters[idx] ?? String(idx + 1);
-        const markEl = el("span", "homescool-letter__choice-mark", mark);
-        const textEl = el("span", "homescool-letter__choice-text", c);
-        opt.append(markEl, textEl);
-        ul.append(opt);
-      });
-      li.append(ul);
+    if (isWrite) {
+      const lines = el("div", "homescool-letter__write-lines");
+      lines.setAttribute("aria-hidden", "true");
+      for (let n = 0; n < 4; n++) {
+        lines.append(el("div", "homescool-letter__write-line"));
+      }
+      li.append(lines);
+    } else {
+      const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
+      if (choices.length) {
+        const ul = el("ul", "homescool-letter__choices-list");
+        choices.forEach((c, idx) => {
+          const opt = document.createElement("li");
+          opt.className = "homescool-letter__choice";
+          const mark = letters[idx] ?? String(idx + 1);
+          const markEl = el("span", "homescool-letter__choice-mark", mark);
+          const textEl = el("span", "homescool-letter__choice-text", c);
+          opt.append(markEl, textEl);
+          ul.append(opt);
+        });
+        li.append(ul);
+      }
     }
     list.append(li);
   });

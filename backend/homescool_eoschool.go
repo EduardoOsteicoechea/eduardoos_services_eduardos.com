@@ -92,7 +92,16 @@ func eoschoolSubjectOK(subject string) bool {
 }
 
 func eoschoolExpectedQuizCount(day int) int {
-	return 8 * day
+	// Days 1–3: 8 MCQ per day accumulated.
+	// Day 4: 32 MCQ + 4 write. Day 5: 40 MCQ + 12 write.
+	switch day {
+	case 4:
+		return 36
+	case 5:
+		return 52
+	default:
+		return 8 * day
+	}
 }
 
 func validateEoschoolDocument(doc *EoschoolDocument) error {
@@ -184,6 +193,8 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		}
 	}
 
+	mcqN, writeN := 0, 0
+	writeFrom4, writeFrom5 := 0, 0
 	for i, q := range doc.Quiz.Questions {
 		if strings.TrimSpace(q.Prompt) == "" {
 			return fmt.Errorf("quiz.questions[%d].prompt required", i)
@@ -192,16 +203,40 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 			return fmt.Errorf("quiz.questions[%d].originDay must be 1–%d", i, doc.Day)
 		}
 		typ := strings.TrimSpace(strings.ToLower(q.Type))
-		// METHOD_V1: every item is single-selection (mcq) so day n can show 7×n accumulated items.
-		if typ != "mcq" {
-			return fmt.Errorf("quiz.questions[%d].type must be mcq (selección simple)", i)
-		}
 		doc.Quiz.Questions[i].Type = typ
-		if len(q.Choices) < 2 {
-			return fmt.Errorf("quiz.questions[%d].choices must have at least 2 options", i)
+		switch typ {
+		case "mcq":
+			mcqN++
+			if len(q.Choices) < 2 {
+				return fmt.Errorf("quiz.questions[%d].choices must have at least 2 options", i)
+			}
+		case "write":
+			writeN++
+			if q.OriginDay == 4 {
+				writeFrom4++
+			}
+			if q.OriginDay == 5 {
+				writeFrom5++
+			}
+		default:
+			return fmt.Errorf("quiz.questions[%d].type must be mcq or write", i)
 		}
 		if strings.TrimSpace(q.ID) == "" {
 			doc.Quiz.Questions[i].ID = fmt.Sprintf("d%d-q%d", q.OriginDay, i+1)
+		}
+	}
+	switch doc.Day {
+	case 1, 2, 3:
+		if writeN != 0 || mcqN != wantCount {
+			return fmt.Errorf("day %d requires %d mcq and 0 write", doc.Day, wantCount)
+		}
+	case 4:
+		if mcqN != 32 || writeN != 4 || writeFrom4 != 4 {
+			return fmt.Errorf("day 4 requires 32 mcq + 4 write (originDay 4)")
+		}
+	case 5:
+		if mcqN != 40 || writeN != 12 || writeFrom4 != 4 || writeFrom5 != 8 {
+			return fmt.Errorf("day 5 requires 40 mcq + 12 write (4 from day 4, 8 from day 5)")
 		}
 	}
 	return nil

@@ -1,5 +1,5 @@
 ---
-description: eoschool teaching method v1 — Homescool .eoschool JSON, DHS nav, letter pages, level 6
+description: eoschool teaching method v1 — Homescool .eoschool JSON, DHS nav, letter pages, level 6 ≈10yo
 globs: eduardoos.com/frontend/src/pages/homescool/**/*,eduardoos.com/frontend/src/styles/homescool-workspace.css,eduardoos.com/frontend/src/lib/homescool*.ts,eduardoos.com/backend/homescool_*,eduardoos.com/.cursor/skills/eoschool/**/*,eduardoos.com/frontend/public/skills/eoschool/**/*,eduardoos.com/frontend/public/homescool/**/*
 alwaysApply: false
 ---
@@ -12,16 +12,21 @@ Full contract: [`.cursor/skills/eoschool/METHOD_V1.md`](../skills/eoschool/METHO
 
 `cycle (1–3) → week (1–24) → day (1–5) → level (1–15) → subject (12)`.
 
-v1 authors **level 6 only**. One `.eoschool` JSON per cell (lesson + quiz).
+v1 authors **level 6 only** (≈ **10-year-old**). One `.eoschool` JSON per cell (lesson + quiz).
 
 Subjects: `mat`, `esp`, `ing`, `his`, `lat`, `LT`, `geo`, `cie`, `art`, `pro`, `teb`, `exe`.  
 `ing` shares the weekly theme with `esp` but is a separate document.
 
+## Dual storage
+
+Edit cell JSON under `frontend/public/homescool/media/weekN/`, then `node scripts/build-homescool-curriculum.mjs` → `curriculum.json` + optional Mongo upsert. Do not update only one store.
+
 ## Pedagogy
 
-- Day 1: 3 points + summary; quiz 7.
-- Days 2–4: deepen points 1–3; quiz 14 / 21 / 28 (accumulate 7/day).
-- Day 5: five overview blocks; quiz 35 randomized from the week pool.
+- Day 1: 3 points + summary; quiz **8** MCQ.
+- Days 2–3: deepen points 1–2; quiz **16** / **24** MCQ.
+- Day 4: deepen point 3; **32** MCQ + **4** `write`.
+- Day 5: five overview blocks; **40** MCQ (shuffled) + **12** `write` (accumulate from day 4).
 
 ## UI / print
 

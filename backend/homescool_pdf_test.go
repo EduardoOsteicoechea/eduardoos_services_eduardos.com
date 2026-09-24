@@ -40,8 +40,12 @@ func TestIsMatTablesLayout(t *testing.T) {
 		t.Fatal("expected mat week2")
 	}
 	doc.Week = 1
+	if !isMatTablesLayout(doc) {
+		t.Fatal("week1 should use mat tables")
+	}
+	doc.Week = 3
 	if isMatTablesLayout(doc) {
-		t.Fatal("week1 should not use mat tables")
+		t.Fatal("week3 should not use mat tables layout yet")
 	}
 }
 

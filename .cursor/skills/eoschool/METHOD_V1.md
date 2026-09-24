@@ -20,7 +20,8 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 
 ### Level (v1 scope)
 
-- Prepare **only level 6** (≈ 12-year-old).
+- Prepare **only level 6** (≈ **10-year-old**).
+- Write in clear, concrete language for that age (short sentences, worked examples, few jargon terms).
 - API rejects other levels until the method expands.
 
 ### Subjects (12 short codes)
@@ -40,15 +41,25 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 | `teb` | Teología bíblica |
 | `exe` | Exégesis |
 
+## Dual storage (edit both)
+
+| Layer | Role | Path / how |
+| --- | --- | --- |
+| **Cell JSON** | Authoring source of truth | `frontend/public/homescool/media/weekN/*-c3-wN-d*-l6.eoschool.json` |
+| **curriculum.json** | FE backup / agent review mirror | Rebuild: `node scripts/build-homescool-curriculum.mjs` |
+| **MongoDB** | Runtime SoT for `/homescool` UI | Upsert via same script (needs `EDUARDOOS_API_KEY` + `EDUARDOOS_BASE_URL`) or `POST /api/v1/homescool/materials` |
+
+Always edit the cell JSON (or the Python pack generators under `.eoschool/`), rebuild `curriculum.json`, then sync Mongo. Do not change only one of the two stores.
+
 ## Week pedagogy (every subject)
 
-| Day | Lesson | Quiz size |
+| Day | Lesson | Quiz |
 | --- | --- | --- |
-| 1 | **Intro:** exactly **3 points** + **summary** | **8** (new set; all `originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 (full teachable class on that point — do **not** paste day-1 text) | **16** (sets days 1–2) |
-| 3 | **Deepen** point 2 (same rule) | **24** (sets days 1–3) |
-| 4 | **Deepen** point 3 (same rule) | **32** (sets days 1–4) |
-| 5 | **Review:** five overview blocks (see below) | **40** (sets 1–5; **randomize** order from the accumulated pool) |
+| 1 | **Intro:** exactly **3 points** + **summary** | **8** MCQ (`originDay: 1`) |
+| 2 | **Deepen** point 1 of day 1 | **16** MCQ (days 1–2) |
+| 3 | **Deepen** point 2 | **24** MCQ (days 1–3) |
+| 4 | **Deepen** point 3 | **32** MCQ + **4** `write` (reflection) → **36** total |
+| 5 | **Review:** five overview blocks | **40** MCQ + **12** `write` (4 from day 4 + 8 new) → **52** total; **randomize** MCQ order |
 
 ### Day 5 lesson blocks (fixed order)
 
@@ -60,15 +71,17 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 
 ### Quiz accumulation rule
 
-Each day adds **8 new** questions. The quiz served that day includes **all** questions from days `1…day` (so day *n* has `8 × n` items; day 5 has 40). Day 5 must shuffle presentation order.
+- Days 1–3: each day adds **8** new MCQ; serve all MCQ from days `1…day`.
+- Day 4: same MCQ rule (**32**) **plus 4** writing/reflection prompts (`type: "write"`, `originDay: 4`).
+- Day 5: **40** MCQ (shuffled) **plus 12** `write` items (the 4 from day 4 + **8** new with `originDay: 5`).
 
-Every question is **selección simple** (`type: "mcq"`) with at least **2** choices (prefer 4: A–D). No `short` / free-response items in v1 packs.
+MCQ items are **selección simple** with at least **2** choices (prefer 4: A–D).  
+`write` items have a prompt (and optional teacher `answer` rubric hint); **no** `choices`.
 
 ## Presentation / print (always)
 
 - Frontend stage = **N** stacked **US Letter portrait** pages (`8.5in × 11in`).
 - Page margin **1 cm** (viewer and backend PDF must match).
-- Internal lesson layout will be refined later; v1 requires the pedagogical structure above inside letter pages.
 - Media for v1 lives under `frontend/public/homescool/media/` (URLs `/homescool/media/...`).
 
 ## `.eoschool` JSON contract
@@ -77,7 +90,7 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
 {
   "format": "eoschool",
   "version": 1,
-  "cycle": 1,
+  "cycle": 3,
   "week": 1,
   "day": 1,
   "level": 6,
@@ -116,10 +129,11 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
 - `format` must be `"eoschool"`; `version` must be `1`.
 - `cycle` ∈ 1..3; `week` ∈ 1..24; `day` ∈ 1..5; `level` must be `6` (v1); `subject` ∈ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
 - Logical key: `owner + cycle + week + day + level + subject` (no free slug).
-- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`.
-- `day` ∈ 2..4 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 8 * day`, each `originDay` ∈ 1..day.
-- `day == 5` → `kind == "review"`, exactly **5** point blocks in the overview order above, `questionCount == 40`, each `originDay` ∈ 1..5.
-- Question `type`: **`mcq` only** (selección simple). Each question needs `choices` (≥2, prefer 4) and `answer`.
+- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`, all `mcq`.
+- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 8 * day`, each `originDay` ∈ 1..day, all `mcq`.
+- `day == 4` → `kind == "deepen"`, `focusPoint == 3`, `questionCount == 36` (32 `mcq` + 4 `write` with `originDay == 4`).
+- `day == 5` → `kind == "review"`, exactly **5** point blocks, `questionCount == 52` (40 `mcq` + 12 `write`: 4 with `originDay == 4` and 8 with `originDay == 5`).
+- Question `type`: **`mcq`** or **`write`**. MCQ needs `choices` (≥2) and `answer`. Write needs `prompt` only.
 
 ## API (docs-first)
 
@@ -127,23 +141,42 @@ Every question is **selección simple** (`type: "mcq"`) with at least **2** choi
 2. `GET /api/v1/homescool/access`
 3. `POST /api/v1/homescool/materials` with `confirmOverwrite: true` and `material` = full `.eoschool` object (not raw HTML).
 
-Cookie UI: curriculum SoT `GET /homescool/curriculum.json` (all classes for agent review); preview `POST /api/homescool/preview` with one eoschool body → PDF base64; also `GET /api/homescool/materials`, `GET /api/homescool/materials/{id}`, `GET /api/homescool/materials/{id}/document`, `GET /api/homescool/materials/{id}/pdf`.
+Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/homescool/preview`; also materials GET routes.
 
-## First content pack — level 6, **week 2**
+## Content packs — level 6, ciclo 3
+
+### Week 1 themes
 
 | Code | Theme |
 | --- | --- |
-| `mat` | Multiplication tables 1–12 |
-| `esp` | Indicative verb tenses: simple (present, imperfect, preterite, future, conditional) and compound (present perfect, pluperfect, anterior preterite, future perfect, conditional perfect) |
-| `ing` | **Same syllabus as `esp`**, in English |
+| `mat` | Multiplication tables **1–12** |
+| `esp` | Three conjugations: **-ar**, **-er**, **-ir** |
+| `ing` | **Same syllabus as `esp`**, in English (first / second / third conjugation patterns) |
+| `lat` | Prepositions: **in–en**, **apud–con**, **per–por**, **sine–sin**, **a–de**, **de–de** |
+| `teb` | Overview of redemptive-history stages from Genesis to the new earth |
+| `exe` | Romans **1:1** |
+| `LT` | Timeline: (1) age of ancient empires; (2) creation and fall; (3) flood and Babel; (4) Mesopotamia / Sumer; (5) Egyptians; (6) Indus Valley, Minoans, Mycenaeans |
+| `his` | The three voyages of Christopher Columbus |
+| `geo` | Venezuelan states and capitals |
+| `cie` | Four body tissues: connective, epithelial, muscular, nervous |
+| `art` | Five elements of form (*Drawing with Children* / OiLS) |
+| `pro` | Scientific experiment — persistence of vision («Guiñando») |
+
+### Week 2 themes (same age band ≈ 10)
+
+| Code | Theme |
+| --- | --- |
+| `mat` | Practice and word problems with tables **1–12** (no jump to 13–15) |
+| `esp` / `ing` | Indicative tenses (simple + compound) — keep, but language for 10-year-olds |
 | `his` | Columbus in Venezuela: whom he met and how they interacted |
 | `lat` | Conjunctions/adverbs: et–and, ut–so that, non–not |
-| `LT` | Timeline: 8 seven wonders of the ancient world; 9 patriarchal Israel; 10 Hittites and Canaanites; 11 Kush; 12 Assyrians; 13 Babylonians; 14 Shang dynasty of China |
-| `geo` | 24 Venezuelan states and capitals |
+| `LT` | Timeline wonders / patriarchal Israel / Hittites–Canaanites / Kush / Assyrians / Babylonians / Shang |
+| `geo` | 24 Venezuelan states and capitals (spiral review) |
 | `cie` | Skeleton: skull, vertebrae, ribs, sternum |
-| `art` | Mirror images / five elements of form (*Drawing with Children*, Mona Brookes). Resources: half-drawn symmetric images (Greek column, vase, face); whiteboard; paper; pencils. Attention → Name (mirror image, line of symmetry) → Express (complete half drawings; fold and draw mirror). See book pp. 67–69. |
-| `pro` | Water-drop lens experiment: 6 in / 15 cm of 20-gauge wire, pencil, bowl, tap water, newspaper. Loop wire, dip, view print through drop (convex lens / eye). |
-| `teb` | Overview of redemptive-history stages from Genesis to the new earth |
-| `exe` | Romans 1:1–7 |
+| `art` | Mirror images / five elements of form |
+| `pro` | Water-drop lens experiment |
+| `teb` | **Panorama of key Genesis themes** (creation, fall, flood, promise, patriarchs) |
+| `exe` | Romans **1:2** |
 
-Agents author **5 documents per subject** (days 1–5) for this pack. Live cell files: `frontend/public/homescool/media/week2/`. Consolidated review file: `frontend/public/homescool/curriculum.json` (rebuild with `node scripts/build-homescool-curriculum.mjs`).
+Live cell files: `frontend/public/homescool/media/week1/` and `week2/`.  
+Rebuild: `node scripts/build-homescool-curriculum.mjs`.

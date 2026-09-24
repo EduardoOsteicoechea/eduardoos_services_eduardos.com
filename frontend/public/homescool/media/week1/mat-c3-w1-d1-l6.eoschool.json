@@ -1,0 +1,143 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "mat",
+  "locale": "es",
+  "title": "Tablas de multiplicar 1–12",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Tablas 1 a 4",
+        "body": "Multiplicar es juntar grupos iguales. Tres cajas con 4 lápices cada una son 3×4=12. No sumas 4+4+4 cada vez: usas la tabla.\n\nLa del 1 deja el número igual (1×n=n). La del 2 es el doble. La del 3 suma tres veces. La del 4 es el doble del doble.\n\nEjemplos: 2×7=14 · 3×5=15 · 4×6=24. Di en voz alta «tres por ocho es veinticuatro».\n\nError común: confundir 3×4 con 3+4. El signo × pide grupos, no solo sumar los dos números."
+      },
+      {
+        "id": "p2",
+        "heading": "Tablas 5 a 8",
+        "body": "Del 5 al 8 usas anclas. Todo múltiplo de 5 termina en 0 o en 5. Si no, revisa.\n\nLa del 6 es el doble de la del 3. La del 8 es el doble de la del 4. La del 7 se practica con series: 42, 49, 56, 63.\n\nEjemplos: 5×9=45 · 6×8=48 · 7×8=56 · 8×8=64.\n\nError común: decir 7×8=54. Correcto: 56."
+      },
+      {
+        "id": "p3",
+        "heading": "Tablas 9 a 12",
+        "body": "Cierra el mapa hasta 12×12=144. En la del 9, los dígitos suelen sumar 9 (9×4=36 → 3+6=9).\n\nLa del 10 añade un cero. La del 11 es simétrica hasta 9×11 (33, 44, 55…). La del 12 = 10×n + 2×n.\n\nMojones: 9×9=81 · 11×11=121 · 12×12=144.\n\nError común: 9×8=81. Correcto: 72."
+      }
+    ],
+    "summary": "Memorizar de 1×1 a 12×12 con patrones (×2, ×5, ×9, ×10, ×11) para comprobar."
+  },
+  "quiz": {
+    "questionCount": 8,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 3×4?",
+        "choices": [
+          "7",
+          "12",
+          "14",
+          "16"
+        ],
+        "answer": "12"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 5×6?",
+        "choices": [
+          "25",
+          "30",
+          "35",
+          "11"
+        ],
+        "answer": "30"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 7×8?",
+        "choices": [
+          "54",
+          "56",
+          "63",
+          "48"
+        ],
+        "answer": "56"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 9×9?",
+        "choices": [
+          "72",
+          "81",
+          "99",
+          "18"
+        ],
+        "answer": "81"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 11×3?",
+        "choices": [
+          "33",
+          "14",
+          "111",
+          "30"
+        ],
+        "answer": "33"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 12×12?",
+        "choices": [
+          "124",
+          "132",
+          "144",
+          "120"
+        ],
+        "answer": "144"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El punto 1 cubre las tablas…",
+        "choices": [
+          "1 a 4",
+          "5 a 8",
+          "9 a 12",
+          "solo el 10"
+        ],
+        "answer": "1 a 4"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 4×8?",
+        "choices": [
+          "28",
+          "32",
+          "36",
+          "24"
+        ],
+        "answer": "32"
+      }
+    ]
+  },
+  "media": []
+}

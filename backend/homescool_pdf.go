@@ -26,7 +26,9 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 }
 
 func isMatTablesLayout(doc EoschoolDocument) bool {
-	return strings.EqualFold(strings.TrimSpace(doc.Subject), "mat") && doc.Week == 2
+	// Weeks 1–2 of ciclo 3 both teach/practice tables 1–12.
+	subj := strings.EqualFold(strings.TrimSpace(doc.Subject), "mat")
+	return subj && (doc.Week == 1 || doc.Week == 2)
 }
 
 func buildLessonQuizPrintPages(doc EoschoolDocument) []pdf.EoschoolPrintPage {
@@ -162,7 +164,11 @@ func formatQuizLines(questions []EoschoolQuestion, startIndex int) []string {
 	for j, q := range questions {
 		n := startIndex + j
 		lines = append(lines, fmt.Sprintf("%d. %s", n, strings.TrimSpace(q.Prompt)))
-		if len(q.Choices) > 0 {
+		typ := strings.ToLower(strings.TrimSpace(q.Type))
+		if typ == "write" {
+			lines = append(lines, "   _______________________________________________")
+			lines = append(lines, "   _______________________________________________")
+		} else if len(q.Choices) > 0 {
 			letters := []string{"A", "B", "C", "D", "E", "F"}
 			parts := make([]string, 0, len(q.Choices))
 			for ci, c := range q.Choices {

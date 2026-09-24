@@ -1,0 +1,143 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "esp",
+  "locale": "es",
+  "title": "Tres conjugaciones: -ar, -er, -ir (presente)",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Verbos en -ar (cantar)",
+        "body": "Los verbos en -ar son la primera conjugación. Quitas -ar y añades desinencias: -o, -as, -a, -amos, -áis, -an.\n\nEn presente de indicativo: yo canto, tú cantas, él/ella canta. Cantar es el modelo que memorizas.\n\nEjemplos: hablar → hablo, hablas, habla; estudiar → estudio, estudias, estudia.\n\nError común: dejar la -ar en yo (yo cantar). Correcto: yo canto."
+      },
+      {
+        "id": "p2",
+        "heading": "Verbos en -er (comer)",
+        "body": "La segunda conjugación termina en -er. Desinencias: -o, -es, -e, -emos, -éis, -en.\n\nYo como, tú comes, él/ella come. Comer es tu modelo.\n\nEjemplos: beber → bebo, bebes, bebe; leer → leo, lees, lee.\n\nError común: usar desinencias de -ar (yo como no es yo como con -as)."
+      },
+      {
+        "id": "p3",
+        "heading": "Verbos en -ir (vivir)",
+        "body": "La tercera conjugación termina en -ir. Desinencias: -o, -es, -e, -imos, -ís, -en.\n\nYo vivo, tú vives, él/ella vive. Vivir es el modelo.\n\nEjemplos: escribir → escribo, escribes, escribe; abrir → abro, abres, abre.\n\nError común: confundir -imos (nosotros) con -emos de -er."
+      }
+    ],
+    "summary": "Reconocer las tres conjugaciones en presente (yo/tú/él) con cantar, comer y vivir."
+  },
+  "quiz": {
+    "questionCount": 8,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué conjugación es cantar?",
+        "choices": [
+          "-ar",
+          "-er",
+          "-ir",
+          "-or"
+        ],
+        "answer": "-ar"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Yo ___ (cantar)",
+        "choices": [
+          "canto",
+          "cantas",
+          "come",
+          "vivo"
+        ],
+        "answer": "canto"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tú ___ (comer)",
+        "choices": [
+          "como",
+          "comes",
+          "come",
+          "comas"
+        ],
+        "answer": "comes"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Él ___ (vivir)",
+        "choices": [
+          "vivo",
+          "vives",
+          "vive",
+          "vivas"
+        ],
+        "answer": "vive"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Comer es conjugación…",
+        "choices": [
+          "-ar",
+          "-er",
+          "-ir",
+          "-irregular solo"
+        ],
+        "answer": "-er"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Vivir es conjugación…",
+        "choices": [
+          "-ar",
+          "-er",
+          "-ir",
+          "-or"
+        ],
+        "answer": "-ir"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tú cantas usa terminación…",
+        "choices": [
+          "-as",
+          "-es",
+          "-e",
+          "-o"
+        ],
+        "answer": "-as"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tú comes usa terminación…",
+        "choices": [
+          "-as",
+          "-es",
+          "-e",
+          "-o"
+        ],
+        "answer": "-es"
+      }
+    ]
+  },
+  "media": []
+}

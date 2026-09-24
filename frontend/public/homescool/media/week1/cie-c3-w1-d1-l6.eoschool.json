@@ -1,0 +1,143 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "cie",
+  "locale": "es",
+  "title": "Cuatro tejidos del cuerpo",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Epitelial y conectivo",
+        "body": "Tejido epitelial: capas de células que cubren superficies (piel, interior de boca) o forman glándulas. Protege y separa.\n\nTejido conectivo: une y sostiene — huesos, cartílagos, sangre, grasa. Mucha matriz entre células.\n\nEpitelial = cubrir; conectivo = unir/sostener.\n\nError común: decir que la sangre no es tejido (sí: conectivo líquido)."
+      },
+      {
+        "id": "p2",
+        "heading": "Muscular",
+        "body": "Tejido muscular: células que se acortan para mover el cuerpo. Tres tipos: esquelético (voluntario), cardíaco (corazón), liso (intestinos, vasos).\n\nEsquelético mueve huesos; cardíaco bombea sangre; liso mueve órganos internos sin que pienses.\n\nError común: creer que solo el bíceps es músculo; el corazón también."
+      },
+      {
+        "id": "p3",
+        "heading": "Nervioso",
+        "body": "Tejido nervioso: neuronas y células de apoyo. Transmite señales eléctricas — cerebro, médula, nervios.\n\nCoordina respuesta rápida: ves peligro, el nervio avisa, el músculo reacciona.\n\nError común: confundir nervio (tejido) con hueso (conectivo)."
+      }
+    ],
+    "summary": "Nombrar epitelial, conectivo, muscular y nervioso con una función cada uno."
+  },
+  "quiz": {
+    "questionCount": 8,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Cubrir superficies:",
+        "choices": [
+          "epitelial",
+          "conectivo",
+          "muscular",
+          "nervioso"
+        ],
+        "answer": "epitelial"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Unir y sostener:",
+        "choices": [
+          "conectivo",
+          "epitelial",
+          "nervioso",
+          "solo aire"
+        ],
+        "answer": "conectivo"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Mover el cuerpo:",
+        "choices": [
+          "muscular",
+          "epitelial",
+          "conectivo",
+          "solo agua"
+        ],
+        "answer": "muscular"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Transmitir señales:",
+        "choices": [
+          "nervioso",
+          "conectivo",
+          "epitelial",
+          "solo grasa"
+        ],
+        "answer": "nervioso"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "La sangre es tejido…",
+        "choices": [
+          "conectivo",
+          "epitelial",
+          "nervioso",
+          "no es tejido"
+        ],
+        "answer": "conectivo"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Corazón late con músculo…",
+        "choices": [
+          "cardíaco",
+          "esquelético",
+          "epitelial",
+          "nervioso"
+        ],
+        "answer": "cardíaco"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Tema:",
+        "choices": [
+          "cuatro tejidos",
+          "solo Colón",
+          "solo tablas",
+          "solo latín"
+        ],
+        "answer": "cuatro tejidos"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Piel exterior es sobre todo…",
+        "choices": [
+          "epitelial",
+          "nervioso",
+          "solo hueso",
+          "solo aire"
+        ],
+        "answer": "epitelial"
+      }
+    ]
+  },
+  "media": []
+}
