@@ -1987,6 +1987,22 @@ section.diag .panel:not(form) {
     font-size: 0.625rem;
   }
 
+  /* Mobile main menu: improve scanability and give the first item breathing room. */
+  #main-menu nav {
+    padding-top: var(--rail-gap);
+  }
+
+  #main-menu .sidebar-left nav a,
+  #main-menu .sidebar-left nav button {
+    margin-block: calc(var(--rail-gap) * 0.75);
+    font-size: var(--font-size-md);
+  }
+
+  #main-menu .sidebar-left nav a .material-symbols-outlined,
+  #main-menu .sidebar-left nav button .material-symbols-outlined {
+    font-size: calc(var(--font-size-md) * 1.25);
+  }
+
   .session-grid form > button,
   .diag form > button {
     grid-column: 1;
