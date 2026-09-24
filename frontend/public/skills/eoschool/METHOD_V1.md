@@ -24,6 +24,23 @@ Per week × level: **12 subjects × 5 days = 60 quizzes**.
 - Write in clear, concrete language for that age (short sentences, worked examples, few jargon terms).
 - API rejects other levels until the method expands.
 
+### Self-teaching lesson bodies (mandatory)
+
+A child of ≈10 must be able to **read the sheet alone** and understand every term **before** any practice task.  
+**Forbidden:** deepen/review bodies that are only orders («Conjuga…», «Marca…», «Haz…») with no definitions.
+
+Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:
+
+1. **Idea central** (first paragraph): what the idea is + definitions of every technical word used that day.  
+2. **Explora** (1–3 paragraphs): worked examples step by step.  
+3. **`Práctica:`** … concrete tasks.  
+4. **`Error común:`** … one typical mistake.  
+5. Optional **`Consejo:`** / **`Meta:`**.
+
+Deepen days re-teach the focus point fully (assume day 1 may be forgotten). Intro points define their own terms. Review overviews are mini-explanations, not slogans.
+
+Example (esp deepen -ar): define *conjugar*, *raíz*, *desinencia* in Idea central; show cantar → cant- + -o/-as/-a in Explora; then Práctica / Error común.
+
 ### Subjects (12 short codes)
 
 | Code | Subject |
