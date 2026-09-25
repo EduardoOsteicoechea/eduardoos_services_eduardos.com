@@ -6,6 +6,7 @@
 
 import type { EoschoolDocument } from "./homescool";
 import { mustLog } from "./dev-log";
+import { subjectClassNumber } from "./homescool-subjects";
 
 type Level = { label: string; tables: number[] };
 
@@ -76,13 +77,24 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
 
   const header = document.createElement("header");
   header.className = "homescool-mat__header";
+  const classNo = subjectClassNumber(doc.subject);
+  if (classNo > 0) {
+    const num = document.createElement("span");
+    num.className = "homescool-letter__class-no homescool-mat__class-no";
+    num.textContent = String(classNo);
+    num.setAttribute("aria-label", `Clase número ${classNo}`);
+    header.append(num);
+  }
+  const main = document.createElement("div");
+  main.className = "homescool-mat__header-main";
   const heading = document.createElement("div");
   heading.className = "homescool-mat__heading";
   heading.textContent = doc.title;
   const meta = document.createElement("div");
   meta.className = "homescool-mat__meta";
   meta.textContent = `c${doc.cycle} · s${doc.week} · d${doc.day} · nivel ${doc.level} · tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
-  header.append(heading, meta);
+  main.append(heading, meta);
+  header.append(main);
 
   const task = document.createElement("section");
   task.className = "homescool-mat__task";

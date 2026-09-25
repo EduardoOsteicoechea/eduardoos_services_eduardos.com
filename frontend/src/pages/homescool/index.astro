@@ -142,7 +142,12 @@ import "../../styles/homescool-workspace.css";
   } from "../../lib/homescool-curriculum";
   import { captureHomescoolLetterPages, downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
-  import { HOMESCOOL_SUBJECTS, renderEoschoolPages, subjectClassNumber } from "../../lib/homescool-eoschool";
+  import {
+    HOMESCOOL_SUBJECTS,
+    renderEoschoolPages,
+    subjectClassNumber,
+    subjectDisplayName,
+  } from "../../lib/homescool-eoschool";
   import {
     hcLog,
     mountHomescoolDebugPanel,
@@ -268,6 +273,7 @@ import "../../styles/homescool-workspace.css";
   }
 
   function findCell(): WorkspaceCell | undefined {
+    if (selection.subject === "pro") selection.day = 1;
     const key = cellKey(selection.cycle, selection.week, selection.day, selection.subject);
     return levelCells().find((c) => c.key === key);
   }
@@ -470,39 +476,74 @@ import "../../styles/homescool-workspace.css";
 
     if (daysHost) {
       daysHost.replaceChildren();
-      for (const d of publishedDays(selection.cycle, selection.week)) {
-        const btn = makeChip(`d${d}`);
-        btn.dataset.day = String(d);
-        btn.addEventListener("click", () => {
-          if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) return;
-          selection.day = d;
-          ensurePublishedSelection("day-click");
-          log("select.day", { ...selection });
-          rebuildPublishedChips();
-          void openSelection();
-        });
-        daysHost.append(btn);
-      }
-    }
-
-    if (subjectsHost) {
-      subjectsHost.replaceChildren();
-      for (const code of publishedSubjects(selection.cycle, selection.week, selection.day)) {
-        const n = subjectClassNumber(code);
-        const btn = makeChip(n > 0 ? `${n}·${code}` : code);
-        btn.dataset.subject = code;
+      // Proyecto = one project/week: no d1–d5 chips; single "du" (día único) → day 1.
+      if (selection.subject === "pro") {
+        selection.day = 1;
+        const btn = makeChip("du");
+        btn.dataset.day = "1";
+        btn.title = "Día único";
+        btn.setAttribute("aria-label", "Día único");
         btn.addEventListener("click", () => {
           if (
             !hasMaterial({
               cycle: selection.cycle,
               week: selection.week,
-              day: selection.day,
+              day: 1,
+              subject: "pro",
+            })
+          ) {
+            return;
+          }
+          selection.day = 1;
+          ensurePublishedSelection("day-click-pro-du");
+          log("select.day", { ...selection, label: "du" });
+          rebuildPublishedChips();
+          void openSelection();
+        });
+        daysHost.append(btn);
+      } else {
+        for (const d of publishedDays(selection.cycle, selection.week)) {
+          const btn = makeChip(`d${d}`);
+          btn.dataset.day = String(d);
+          btn.title = `Día ${d}`;
+          btn.setAttribute("aria-label", `Día ${d}`);
+          btn.addEventListener("click", () => {
+            if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) return;
+            selection.day = d;
+            ensurePublishedSelection("day-click");
+            log("select.day", { ...selection });
+            rebuildPublishedChips();
+            void openSelection();
+          });
+          daysHost.append(btn);
+        }
+      }
+    }
+
+    if (subjectsHost) {
+      subjectsHost.replaceChildren();
+      const dayForSubjects = selection.subject === "pro" ? 1 : selection.day;
+      for (const code of publishedSubjects(selection.cycle, selection.week, dayForSubjects)) {
+        const n = subjectClassNumber(code);
+        const fullName = subjectDisplayName(code);
+        const btn = makeChip(n > 0 ? `${n}·${code}` : code);
+        btn.dataset.subject = code;
+        btn.title = fullName;
+        btn.setAttribute("aria-label", n > 0 ? `${n}. ${fullName}` : fullName);
+        btn.addEventListener("click", () => {
+          const dayNeeded = code === "pro" ? 1 : selection.day;
+          if (
+            !hasMaterial({
+              cycle: selection.cycle,
+              week: selection.week,
+              day: dayNeeded,
               subject: code,
             })
           ) {
             return;
           }
           selection.subject = code;
+          if (code === "pro") selection.day = 1;
           log("select.subject", { ...selection, classNo: n });
           rebuildPublishedChips();
           void openSelection();

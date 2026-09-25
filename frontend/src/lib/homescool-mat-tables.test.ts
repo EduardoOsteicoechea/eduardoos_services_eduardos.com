@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { isMatTablesLayout, matLevelsForWeek, matPracticeDensity, matTableRangeLabel } from "./homescool-mat-tables";
+import {
+  isMatTablesLayout,
+  matLevelsForWeek,
+  matPracticeDensity,
+  matTableRangeLabel,
+  renderMatTablesPages,
+} from "./homescool-mat-tables";
 import type { EoschoolDocument } from "./homescool";
+import { subjectClassNumber, subjectDisplayName } from "./homescool-subjects";
 
 describe("homescool-mat-tables", () => {
   it("maps day to practice density", () => {
@@ -23,5 +30,33 @@ describe("homescool-mat-tables", () => {
     expect(matTableRangeLabel(2)).toBe("5–16");
     expect(matLevelsForWeek(1).flatMap((l) => l.tables)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     expect(matLevelsForWeek(2).flatMap((l) => l.tables)).toEqual([5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+  });
+
+  it("puts class number 7 in the mat letter header", () => {
+    const doc = {
+      format: "eoschool",
+      version: 1,
+      cycle: 3,
+      week: 2,
+      day: 1,
+      level: 6,
+      subject: "mat",
+      locale: "es",
+      title: "Tablas de multiplicar",
+      lesson: { kind: "intro", points: [], summary: "" },
+      quiz: { questionCount: 0, questions: [] },
+    } as EoschoolDocument;
+    expect(subjectClassNumber("mat")).toBe(7);
+    const pages = renderMatTablesPages(doc);
+    const num = pages[0]?.querySelector(".homescool-mat__class-no");
+    expect(num?.textContent).toBe("7");
+  });
+});
+
+describe("homescool-subjects", () => {
+  it("exposes full Spanish labels for tooltips", () => {
+    expect(subjectDisplayName("mat")).toBe("Matemáticas");
+    expect(subjectDisplayName("pro")).toBe("Proyecto");
+    expect(subjectDisplayName("teb")).toBe("Teología bíblica");
   });
 });

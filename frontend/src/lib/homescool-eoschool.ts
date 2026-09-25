@@ -5,29 +5,21 @@
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
 import { hcLog } from "./homescool-debug";
 import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables";
+import {
+  HOMESCOOL_SUBJECTS,
+  HOMESCOOL_SUBJECT_LABELS,
+  subjectClassNumber,
+  subjectDisplayName,
+  type HomescoolSubject,
+} from "./homescool-subjects";
 
-/** Canonical menu / class order (cambios/1). Index + 1 = número grande en cabecera. */
-export const HOMESCOOL_SUBJECTS = [
-  "teb",
-  "exe",
-  "LT",
-  "his",
-  "geo",
-  "art",
-  "mat",
-  "esp",
-  "ing",
-  "lat",
-  "cie",
-  "pro",
-] as const;
-
-export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
-
-export function subjectClassNumber(subject: string): number {
-  const i = HOMESCOOL_SUBJECTS.indexOf(subject as HomescoolSubject);
-  return i >= 0 ? i + 1 : 0;
-}
+export {
+  HOMESCOOL_SUBJECTS,
+  HOMESCOOL_SUBJECT_LABELS,
+  subjectClassNumber,
+  subjectDisplayName,
+};
+export type { HomescoolSubject };
 
 /**
  * How many MCQs can ride on the lesson sheet when the lesson is short
@@ -367,6 +359,55 @@ function lessonBlocksFit(
   return scroll <= client + 1;
 }
 
+const QUIZ_FULL_PAGE_TYPES = new Set([
+  "crossword",
+  "wordsearch",
+  "draw_image",
+  "draw_box",
+  "grid_mark",
+]);
+
+function quizItemType(q: EoschoolQuestion): string {
+  return String(q.type || "mcq").toLowerCase().trim();
+}
+
+function isFullPageQuizType(type: string): boolean {
+  return QUIZ_FULL_PAGE_TYPES.has(type);
+}
+
+function packQuizFallback(questions: EoschoolQuestion[]): EoschoolQuestion[][] {
+  const out: EoschoolQuestion[][] = [];
+  let i = 0;
+  while (i < questions.length) {
+    const typ = quizItemType(questions[i]!);
+    if (isFullPageQuizType(typ)) {
+      out.push([questions[i]!]);
+      i += 1;
+      continue;
+    }
+    if (typ === "match") {
+      out.push([questions[i]!]);
+      i += 1;
+      continue;
+    }
+    const CAP = 20;
+    let take = 0;
+    while (i + take < questions.length && take < CAP) {
+      const t = quizItemType(questions[i + take]!);
+      if (isFullPageQuizType(t) || t === "match") break;
+      take += 1;
+    }
+    if (take === 0) {
+      out.push([questions[i]!]);
+      i += 1;
+    } else {
+      out.push(questions.slice(i, i + take));
+      i += take;
+    }
+  }
+  return out;
+}
+
 /** Pack quiz questions filling each Letter page before opening the next (cambio 9). */
 function packQuizQuestions(
   doc: EoschoolDocument,
@@ -376,18 +417,27 @@ function packQuizQuestions(
   if (!questions.length) return [];
 
   if (typeof document === "undefined" || !document.body) {
-    // Fallback: denser than old 16 when measuring is unavailable.
-    const CAP = 20;
-    const out: EoschoolQuestion[][] = [];
-    for (let i = 0; i < questions.length; i += CAP) out.push(questions.slice(i, i + CAP));
-    return out;
+    return packQuizFallback(questions);
   }
 
   const pages: EoschoolQuestion[][] = [];
   let i = 0;
   while (i < questions.length) {
+    const firstType = quizItemType(questions[i]!);
+    if (isFullPageQuizType(firstType)) {
+      pages.push([questions[i]!]);
+      i += 1;
+      continue;
+    }
+
     let take = 1;
     while (i + take < questions.length) {
+      const nextType = quizItemType(questions[i + take]!);
+      if (isFullPageQuizType(nextType)) break;
+      // Full-page activities never share a sheet with mcq/write/match.
+      // Match can share only with other match if DOM fits.
+      if (firstType !== "match" && nextType === "match") break;
+      if (firstType === "match" && nextType !== "match") break;
       const candidate = questions.slice(i, i + take + 1);
       const startIndex = absoluteStartOffset + i + 1;
       if (quizSliceFits(doc, candidate, startIndex, absoluteStartOffset + questions.length)) {
@@ -427,14 +477,15 @@ function quizSliceFits(
       `Días 1–${doc.day} · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
-  page.append(buildQuizList(questions, startIndex, total, doc.day, { showLabel: false }));
+  page.append(buildQuizList(doc, questions, startIndex, total, { showLabel: false }));
   document.body.append(page);
   void page.offsetHeight;
   const client = page.clientHeight;
   const scroll = page.scrollHeight;
   page.remove();
   if (client < 8) {
-    // Rough: 4 cols × rows of ~4.5rem under hero — allow up to 20.
+    if (questions.some((q) => isFullPageQuizType(quizItemType(q)))) return questions.length <= 1;
+    if (questions.some((q) => quizItemType(q) === "match")) return questions.length <= 1;
     return questions.length <= 20;
   }
   return scroll <= client + 1;
@@ -537,7 +588,7 @@ function buildLessonWithQuizPage(
   if (kind === "deepen") page.append(buildDeepenRibbon(doc));
   page.append(buildLessonStack(doc, doc.lesson?.points ?? []));
   appendSummary(doc, page);
-  page.append(buildQuizList(questions, startIndex, total, doc.day));
+  page.append(buildQuizList(doc, questions, startIndex, total));
   return page;
 }
 
@@ -565,7 +616,7 @@ function buildQuizPage(
       `Días 1–${doc.day} · ${startIndex}–${startIndex + questions.length - 1}`,
     ),
   );
-  page.append(buildQuizList(questions, startIndex, total, doc.day, { showLabel: false }));
+  page.append(buildQuizList(doc, questions, startIndex, total, { showLabel: false }));
   return page;
 }
 
@@ -780,10 +831,10 @@ function appendSummary(doc: EoschoolDocument, page: HTMLElement): void {
 }
 
 function buildQuizList(
+  doc: EoschoolDocument,
   questions: EoschoolQuestion[],
   startIndex: number,
   total: number,
-  day: number,
   opts?: { showLabel?: boolean },
 ): HTMLElement {
   const wrap = el("section", "homescool-letter__quiz-wrap");
@@ -798,44 +849,307 @@ function buildQuizList(
     );
     wrap.append(quizLabel);
   }
-  const list = el("ol", "homescool-letter__quiz") as HTMLOListElement;
+  const hasActivity = questions.some((q) => {
+    const t = quizItemType(q);
+    return t !== "mcq" && t !== "write";
+  });
+  const list = el(
+    "ol",
+    hasActivity ? "homescool-letter__quiz homescool-letter__quiz--activities" : "homescool-letter__quiz",
+  ) as HTMLOListElement;
   list.start = startIndex;
-  const letters = ["A", "B", "C", "D", "E", "F"];
   questions.forEach((q, i) => {
-    const li = document.createElement("li");
-    const isWrite = String(q.type || "").toLowerCase() === "write";
-    li.className = isWrite ? "homescool-letter__q homescool-letter__q--write" : "homescool-letter__q";
-    const head = el("div", "homescool-letter__q-head");
-    const num = el("span", "homescool-letter__q-num", String(startIndex + i));
-    num.setAttribute("aria-hidden", "true");
-    head.append(num, el("p", "homescool-letter__body", q.prompt));
-    li.append(head);
-    if (isWrite) {
-      const lines = el("div", "homescool-letter__write-lines");
-      lines.setAttribute("aria-hidden", "true");
-      for (let n = 0; n < 4; n++) {
-        lines.append(el("div", "homescool-letter__write-line"));
-      }
-      li.append(lines);
-    } else {
-      const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
-      if (choices.length) {
-        const ul = el("ul", "homescool-letter__choices-list");
-        choices.forEach((c, idx) => {
-          const opt = document.createElement("li");
-          opt.className = "homescool-letter__choice";
-          const mark = letters[idx] ?? String(idx + 1);
-          const markEl = el("span", "homescool-letter__choice-mark", mark);
-          const textEl = el("span", "homescool-letter__choice-text", c);
-          opt.append(markEl, textEl);
-          ul.append(opt);
-        });
-        li.append(ul);
-      }
-    }
-    list.append(li);
+    list.append(buildQuizItem(doc, q, startIndex + i));
   });
   wrap.append(list);
+  return wrap;
+}
+
+function buildQuizItem(doc: EoschoolDocument, q: EoschoolQuestion, index: number): HTMLElement {
+  const typ = quizItemType(q);
+  const li = document.createElement("li");
+  li.className = `homescool-letter__q homescool-letter__q--${typ}`;
+  const head = el("div", "homescool-letter__q-head");
+  const num = el("span", "homescool-letter__q-num", String(index));
+  num.setAttribute("aria-hidden", "true");
+  head.append(num, el("p", "homescool-letter__body", q.prompt));
+  li.append(head);
+
+  switch (typ) {
+    case "write":
+      li.append(buildWriteLines());
+      break;
+    case "crossword":
+      li.append(buildCrosswordActivity(q));
+      break;
+    case "wordsearch":
+      li.append(buildWordsearchActivity(q));
+      break;
+    case "match":
+      li.append(buildMatchActivity(q));
+      break;
+    case "draw_image":
+      li.append(buildDrawImageActivity(doc, q));
+      break;
+    case "draw_box":
+      li.append(buildDrawBoxActivity(q));
+      break;
+    case "grid_mark":
+      li.append(buildGridMarkActivity(q));
+      break;
+    default:
+      li.append(buildMcqChoices(q));
+      break;
+  }
+  return li;
+}
+
+function buildWriteLines(): HTMLElement {
+  const lines = el("div", "homescool-letter__write-lines");
+  lines.setAttribute("aria-hidden", "true");
+  for (let n = 0; n < 4; n++) {
+    lines.append(el("div", "homescool-letter__write-line"));
+  }
+  return lines;
+}
+
+function buildMcqChoices(q: EoschoolQuestion): HTMLElement {
+  const letters = ["A", "B", "C", "D", "E", "F"];
+  const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
+  const ul = el("ul", "homescool-letter__choices-list");
+  choices.forEach((c, idx) => {
+    const opt = document.createElement("li");
+    opt.className = "homescool-letter__choice";
+    const mark = letters[idx] ?? String(idx + 1);
+    opt.append(el("span", "homescool-letter__choice-mark", mark), el("span", "homescool-letter__choice-text", c));
+    ul.append(opt);
+  });
+  return ul;
+}
+
+function isCrosswordBlock(cell: string): boolean {
+  const t = String(cell ?? "").trim();
+  return t === "." || t === "#" || t.toLowerCase() === "block";
+}
+
+function buildCrosswordActivity(q: EoschoolQuestion): HTMLElement {
+  const cw = q.crossword;
+  const wrap = el("div", "homescool-letter__activity homescool-letter__crossword");
+  if (!cw?.grid?.length) return wrap;
+
+  const rows = cw.rows || cw.grid.length;
+  const cols = cw.cols || (cw.grid[0]?.length ?? 0);
+  const board = el("div", "homescool-letter__cw-board");
+  board.style.setProperty("--hc-cw-cols", String(cols));
+  board.style.setProperty("--hc-cw-rows", String(rows));
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const raw = String(cw.grid[r]?.[c] ?? "").trim();
+      const cell = el("div", "homescool-letter__cw-cell");
+      if (isCrosswordBlock(raw)) {
+        cell.classList.add("homescool-letter__cw-cell--block");
+      } else if (/^\d+$/.test(raw)) {
+        // Author put the clue number in the cell (student sheet).
+        cell.append(el("span", "homescool-letter__cw-num", raw));
+      }
+      // Answer letters are never printed on the student sheet.
+      board.append(cell);
+    }
+  }
+  wrap.append(board);
+
+  const clues = el("div", "homescool-letter__cw-clues");
+  const acrossCol = el("div", "homescool-letter__cw-clue-col");
+  acrossCol.append(el("h4", "homescool-letter__cw-clue-title", "Horizontales"));
+  const acrossOl = document.createElement("ol");
+  acrossOl.className = "homescool-letter__cw-clue-list";
+  for (const c of cw.cluesAcross ?? []) {
+    const item = document.createElement("li");
+    item.value = c.num;
+    item.textContent = c.clue;
+    acrossOl.append(item);
+  }
+  acrossCol.append(acrossOl);
+
+  const downCol = el("div", "homescool-letter__cw-clue-col");
+  downCol.append(el("h4", "homescool-letter__cw-clue-title", "Verticales"));
+  const downOl = document.createElement("ol");
+  downOl.className = "homescool-letter__cw-clue-list";
+  for (const c of cw.cluesDown ?? []) {
+    const item = document.createElement("li");
+    item.value = c.num;
+    item.textContent = c.clue;
+    downOl.append(item);
+  }
+  downCol.append(downOl);
+  clues.append(acrossCol, downCol);
+  wrap.append(clues);
+  return wrap;
+}
+
+function buildWordsearchActivity(q: EoschoolQuestion): HTMLElement {
+  const ws = q.wordsearch;
+  const wrap = el("div", "homescool-letter__activity homescool-letter__wordsearch");
+  if (!ws?.grid?.length) return wrap;
+
+  const rows = ws.grid.length;
+  const cols = ws.grid[0]?.length ?? 0;
+  const board = el("div", "homescool-letter__ws-board");
+  board.style.setProperty("--hc-ws-cols", String(cols));
+  board.style.setProperty("--hc-ws-rows", String(rows));
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const letter = String(ws.grid[r]?.[c] ?? "").trim().toUpperCase() || "·";
+      board.append(el("div", "homescool-letter__ws-cell", letter));
+    }
+  }
+  wrap.append(board);
+
+  const wordList = el("ul", "homescool-letter__ws-words");
+  for (const w of ws.words ?? []) {
+    const li = document.createElement("li");
+    li.textContent = w;
+    wordList.append(li);
+  }
+  wrap.append(wordList);
+  return wrap;
+}
+
+/** Stable shuffle seeded by question id (student sheet; answer stays author-only). */
+function stableShuffle<T>(items: T[], seed: string): T[] {
+  const out = items.slice();
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  for (let i = out.length - 1; i > 0; i--) {
+    h ^= h << 13;
+    h ^= h >>> 17;
+    h ^= h << 5;
+    const j = Math.abs(h) % (i + 1);
+    const tmp = out[i]!;
+    out[i] = out[j]!;
+    out[j] = tmp;
+  }
+  return out;
+}
+
+function buildMatchActivity(q: EoschoolQuestion): HTMLElement {
+  const m = q.match;
+  const wrap = el("div", "homescool-letter__activity homescool-letter__match");
+  if (!m?.left?.length || !m.right?.length) return wrap;
+
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const rightShuffled = stableShuffle(m.right, q.id || q.prompt || "match");
+
+  const cols = el("div", "homescool-letter__match-cols");
+  const leftCol = el("ol", "homescool-letter__match-left");
+  m.left.forEach((text, i) => {
+    const li = document.createElement("li");
+    const blank = el("span", "homescool-letter__match-blank", "____");
+    blank.setAttribute("aria-hidden", "true");
+    li.append(blank, document.createTextNode(` ${text}`));
+    leftCol.append(li);
+    void i;
+  });
+  const rightCol = el("ol", "homescool-letter__match-right");
+  rightShuffled.forEach((text, i) => {
+    const li = document.createElement("li");
+    const mark = el("span", "homescool-letter__match-mark", letters[i] ?? String(i + 1));
+    li.append(mark, document.createTextNode(` ${text}`));
+    rightCol.append(li);
+  });
+  cols.append(leftCol, rightCol);
+  wrap.append(cols);
+  wrap.append(
+    el(
+      "p",
+      "homescool-letter__match-hint",
+      "Escribe la letra de la derecha en la línea de cada ítem de la izquierda.",
+    ),
+  );
+  return wrap;
+}
+
+function resolveMediaPath(doc: EoschoolDocument, mediaId: string): { path: string; alt: string } | null {
+  const id = mediaId.trim();
+  if (!id) return null;
+  const hit = (doc.media ?? []).find((m) => String(m.id || "").trim() === id);
+  if (!hit?.path) return null;
+  return { path: hit.path, alt: hit.alt || "" };
+}
+
+function buildDrawImageActivity(doc: EoschoolDocument, q: EoschoolQuestion): HTMLElement {
+  const wrap = el("div", "homescool-letter__activity homescool-letter__draw-image");
+  const mediaId = q.drawImage?.mediaId ?? "";
+  const media = resolveMediaPath(doc, mediaId);
+  const frame = el("div", "homescool-letter__draw-frame homescool-letter__draw-frame--image");
+  if (media) {
+    const img = document.createElement("img");
+    img.className = "homescool-letter__draw-img";
+    img.src = media.path;
+    img.alt = media.alt || q.prompt;
+    frame.append(img);
+  } else {
+    frame.append(el("p", "homescool-letter__body", "[Imagen no disponible]"));
+  }
+  wrap.append(frame);
+  return wrap;
+}
+
+function buildDrawBoxActivity(q: EoschoolQuestion): HTMLElement {
+  const wrap = el("div", "homescool-letter__activity homescool-letter__draw-box");
+  const height = q.drawBox?.heightCm && q.drawBox.heightCm > 0 ? q.drawBox.heightCm : 8;
+  const frame = el("div", "homescool-letter__draw-frame homescool-letter__draw-frame--box");
+  frame.style.minHeight = `${height}cm`;
+  frame.setAttribute("aria-label", "Espacio para dibujar");
+  wrap.append(frame);
+  return wrap;
+}
+
+function colLabel(index: number): string {
+  let n = index;
+  let s = "";
+  do {
+    s = String.fromCharCode(65 + (n % 26)) + s;
+    n = Math.floor(n / 26) - 1;
+  } while (n >= 0);
+  return s;
+}
+
+function buildGridMarkActivity(q: EoschoolQuestion): HTMLElement {
+  const gm = q.gridMark;
+  const wrap = el("div", "homescool-letter__activity homescool-letter__grid-mark");
+  if (!gm) return wrap;
+  const cols = Math.max(2, Math.min(16, gm.cols || 8));
+  const rows = Math.max(2, Math.min(16, gm.rows || 8));
+
+  const board = el("div", "homescool-letter__gm-board");
+  board.style.setProperty("--hc-gm-cols", String(cols + 1));
+  board.style.setProperty("--hc-gm-rows", String(rows + 1));
+
+  board.append(el("div", "homescool-letter__gm-corner"));
+  for (let c = 0; c < cols; c++) {
+    board.append(el("div", "homescool-letter__gm-col-label", colLabel(c)));
+  }
+  for (let r = 0; r < rows; r++) {
+    board.append(el("div", "homescool-letter__gm-row-label", String(r + 1)));
+    for (let c = 0; c < cols; c++) {
+      const cell = el("div", "homescool-letter__gm-cell");
+      cell.setAttribute("aria-label", `${colLabel(c)}${r + 1}`);
+      board.append(cell);
+    }
+  }
+  wrap.append(board);
+  wrap.append(
+    el(
+      "p",
+      "homescool-letter__gm-hint",
+      "Marca con X o sombrea las casillas correctas (ej. A6, G4).",
+    ),
+  );
   return wrap;
 }
 
