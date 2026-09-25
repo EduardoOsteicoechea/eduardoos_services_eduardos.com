@@ -182,8 +182,7 @@ func (a *App) currentInvite(r *http.Request) *ereportInvite {
 	if inviteExpired(inv, time.Now().UTC()) {
 		return nil
 	}
-	want := a.hashOpaque("ereport-invite-session:"+inv.ID, parts[1])
-	if inv.SessionHash == "" || !hmacEqual(want, inv.SessionHash) {
+	if !a.inviteSessionMatches(inv, parts[0], parts[1]) {
 		return nil
 	}
 	cp := inv

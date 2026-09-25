@@ -14,6 +14,7 @@ var requestIDRe = regexp.MustCompile(`^[A-Za-z0-9._-]{8,64}$`)
 var safeMessages = map[string]string{
 	"invalid_request":                "Check the form and try again.",
 	"unauthorized":                   "Sign in to continue.",
+	"invite_session_expired":         "This invite session expired. Reload the invite link to continue.",
 	"invalid_credentials":            "Sign-in failed.",
 	"forbidden":                      "The request was rejected.",
 	"rate_limited":                   "Too many attempts. Try later.",

@@ -90,7 +90,8 @@ type ereportRecentCard struct {
 type ereportInvite struct {
 	ID            string   `json:"id"`
 	SecretHash    string   `json:"secretHash"`
-	SessionHash   string   `json:"sessionHash,omitempty"`
+	SessionHash   string   `json:"sessionHash,omitempty"`   // legacy single slot; mirrored to latest SessionHashes entry
+	SessionHashes []string `json:"sessionHashes,omitempty"` // concurrent invite browsers (shared links)
 	OTPRequests   int      `json:"otpRequests,omitempty"`
 	Scope         string   `json:"scope"`
 	OwnerUserID   string   `json:"ownerUserId"`

@@ -47,6 +47,7 @@ import Layout from "../../layouts/Layout.astro";
     </div>
   </section>
   <section class="ereport-workspace" data-invite-editor hidden>
+    <p class="status" data-invite-editor-banner hidden></p>
     <iframe class="ereport-iframe" title="Issue Tracker" data-tracker></iframe>
   </section>
 </Layout>
@@ -103,10 +104,16 @@ import Layout from "../../layouts/Layout.astro";
     };
 
     const setStatus = (text: string, kind = "") => {
-      if (banner instanceof HTMLElement) {
-        banner.textContent = text;
-        banner.className = `status ${kind}`.trim();
-      }
+      const paint = (el: Element | null) => {
+        if (!(el instanceof HTMLElement)) return;
+        el.textContent = text;
+        el.className = `status ${kind}`.trim();
+        if (el.hasAttribute("data-invite-editor-banner")) {
+          el.hidden = !text;
+        }
+      };
+      paint(banner);
+      paint(document.querySelector("[data-invite-editor-banner]"));
     };
 
     const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
@@ -152,17 +159,17 @@ import Layout from "../../layouts/Layout.astro";
               payload: next,
               tema: String(next.reportName || next.appTitle || "").trim(),
             }).then((saved) => {
+              // Background autosave: banner only — never the global "Sign in" modal.
               if (saved.status === 0) return;
               if (saved.status >= 300) {
-                showErrorModal({
-                  message: saved.data.message || "Could not save.",
-                  requestId: saved.data.request_id,
-                  details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
-                });
+                setStatus(
+                  saved.data.message || "Could not autosave. Try Save or reload the invite link.",
+                  "err",
+                );
               }
             });
           },
-          onError: (message) => showErrorModal({ message }),
+          onError: (message) => setStatus(message, "err"),
           onNeedConfig: () => {
             pushConfig();
           },
@@ -313,6 +320,7 @@ import Layout from "../../layouts/Layout.astro";
         }).then((saved) => {
           if (!saved || saved.status === 0) return;
           if (saved.status >= 300) {
+            setStatus(saved.data.message || "Could not save.", "err");
             showErrorModal({
               message: saved.data.message || "Could not save.",
               requestId: saved.data.request_id,

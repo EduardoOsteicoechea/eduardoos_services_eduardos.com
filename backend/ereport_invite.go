@@ -27,9 +27,73 @@ func (a *App) verifyInviteSecret(inv ereportInvite, secret string) bool {
 	return hmacEqual(want, inv.SecretHash)
 }
 
+const maxInviteSessions = 32
+
+func inviteActiveSessionHashes(inv ereportInvite) []string {
+	out := make([]string, 0, len(inv.SessionHashes)+1)
+	seen := map[string]struct{}{}
+	for _, h := range inv.SessionHashes {
+		h = strings.TrimSpace(h)
+		if h == "" {
+			continue
+		}
+		if _, ok := seen[h]; ok {
+			continue
+		}
+		seen[h] = struct{}{}
+		out = append(out, h)
+	}
+	if h := strings.TrimSpace(inv.SessionHash); h != "" {
+		if _, ok := seen[h]; !ok {
+			out = append(out, h)
+		}
+	}
+	return out
+}
+
+func inviteHasSession(inv ereportInvite) bool {
+	return len(inviteActiveSessionHashes(inv)) > 0
+}
+
 func inviteNeedsOTP(inv ereportInvite) bool {
 	// Report link shares are open to anyone with the hash; org invites still gate with OTP.
-	return strings.TrimSpace(inv.InvitedEmail) != "" && inv.SessionHash == ""
+	return strings.TrimSpace(inv.InvitedEmail) != "" && !inviteHasSession(inv)
+}
+
+func (a *App) inviteSessionMatches(inv ereportInvite, inviteID, sessionSecret string) bool {
+	if inviteID == "" || sessionSecret == "" || inv.ID != inviteID {
+		return false
+	}
+	want := a.hashOpaque("ereport-invite-session:"+inv.ID, sessionSecret)
+	for _, h := range inviteActiveSessionHashes(inv) {
+		if hmacEqual(want, h) {
+			return true
+		}
+	}
+	return false
+}
+
+func (a *App) inviteOutPayload(inv ereportInvite) map[string]any {
+	out := map[string]any{
+		"ok":      true,
+		"invite":  inv.public(),
+		"canEdit": inv.CanEdit,
+	}
+	if inv.Scope == inviteScopeOrg {
+		lib, _ := a.ereport.loadOrgLibrary(inv.OwnerUserID, inv.OrgID)
+		out["reports"] = lib.Reports
+	} else if inv.ReportID != "" {
+		meta, payload, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, inv.ReportID)
+		if err == nil {
+			rewritten, _ := rewriteInviteSessionImageURLs(payload, inv.ReportID).(map[string]any)
+			if rewritten == nil {
+				rewritten = payload
+			}
+			out["meta"] = meta
+			out["payload"] = rewritten
+		}
+	}
+	return out
 }
 
 func (a *App) ereportCreateOrgInviteHandler(w http.ResponseWriter, r *http.Request) {
@@ -536,8 +600,28 @@ func rewriteInviteSessionImageURLs(v any, reportID string) any {
 }
 
 func (a *App) establishInviteSession(w http.ResponseWriter, r *http.Request, inv *ereportInvite) (map[string]any, bool) {
+	// Reuse a still-valid invite cookie so reload/claim does not mint a duplicate slot.
+	if cookie, err := r.Cookie(a.inviteCookieName()); err == nil && cookie.Value != "" {
+		parts := strings.SplitN(cookie.Value, ".", 2)
+		if len(parts) == 2 && a.inviteSessionMatches(*inv, parts[0], parts[1]) {
+			exp, _ := time.Parse(time.RFC3339, inv.ExpiresAt)
+			maxAge := int(time.Until(exp).Seconds())
+			if maxAge < 1 {
+				maxAge = 60
+			}
+			a.setCookie(w, a.inviteCookieName(), inv.ID+"."+parts[1], maxAge)
+			return a.inviteOutPayload(*inv), true
+		}
+	}
+
 	sessionSecret := randomID(24)
-	inv.SessionHash = a.hashOpaque("ereport-invite-session:"+inv.ID, sessionSecret)
+	sessionHash := a.hashOpaque("ereport-invite-session:"+inv.ID, sessionSecret)
+	hashes := append(inviteActiveSessionHashes(*inv), sessionHash)
+	if len(hashes) > maxInviteSessions {
+		hashes = hashes[len(hashes)-maxInviteSessions:]
+	}
+	inv.SessionHashes = hashes
+	inv.SessionHash = sessionHash
 	inv.ConsumedOTPAt = time.Now().UTC().Format(time.RFC3339)
 	if err := a.ereport.saveInvite(*inv); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -549,26 +633,7 @@ func (a *App) establishInviteSession(w http.ResponseWriter, r *http.Request, inv
 		maxAge = 60
 	}
 	a.setCookie(w, a.inviteCookieName(), inv.ID+"."+sessionSecret, maxAge)
-	out := map[string]any{
-		"ok":      true,
-		"invite":  inv.public(),
-		"canEdit": inv.CanEdit,
-	}
-	if inv.Scope == inviteScopeOrg {
-		lib, _ := a.ereport.loadOrgLibrary(inv.OwnerUserID, inv.OrgID)
-		out["reports"] = lib.Reports
-	} else if inv.ReportID != "" {
-		meta, payload, err := a.ereport.loadReport(inv.OwnerUserID, inv.OrgID, inv.ReportID)
-		if err == nil {
-			rewritten, _ := rewriteInviteSessionImageURLs(payload, inv.ReportID).(map[string]any)
-			if rewritten == nil {
-				rewritten = payload
-			}
-			out["meta"] = meta
-			out["payload"] = rewritten
-		}
-	}
-	return out, true
+	return a.inviteOutPayload(*inv), true
 }
 
 func (a *App) ereportInviteClaimHandler(w http.ResponseWriter, r *http.Request) {
@@ -635,7 +700,7 @@ func (a *App) grantAccountShareForSessionUser(r *http.Request, inv *ereportInvit
 func (a *App) requireInviteSession(w http.ResponseWriter, r *http.Request) *ereportInvite {
 	inv := a.currentInvite(r)
 	if inv == nil {
-		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		a.writeSafeError(w, r, http.StatusUnauthorized, "invite_session_expired")
 		return nil
 	}
 	return inv

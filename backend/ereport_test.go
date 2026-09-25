@@ -342,6 +342,77 @@ func TestEreportReportShareLinkHashView(t *testing.T) {
 	}
 }
 
+func TestEreportInviteConcurrentSessionsStayValid(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Multi","firstReportName":"Shared"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	invRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/invites",
+		`{"emails":["a@example.com","b@example.com"],"durationHours":48,"message":"collab"}`)
+	if invRec.Code != http.StatusCreated {
+		t.Fatalf("invite: %d %s", invRec.Code, invRec.Body.String())
+	}
+	invBody := decodeMap(t, invRec)
+	hash := invBody["hash"].(string)
+	inviteID := invBody["invite"].(map[string]any)["id"].(string)
+
+	claimAs := func(label string) *httptest.ResponseRecorder {
+		seed := httptest.NewRecorder()
+		csrfReq := httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil)
+		app.Handler().ServeHTTP(seed, csrfReq)
+		var csrfBody map[string]string
+		_ = json.NewDecoder(seed.Body).Decode(&csrfBody)
+
+		claim := httptest.NewRequest(http.MethodPost, "/api/ereport/invites/"+inviteID+"/claim", strings.NewReader(`{"t":"`+hash+`"}`))
+		claim.Header.Set("Content-Type", "application/json")
+		claim.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+		claim.Header.Set("X-CSRF-Token", csrfBody["csrf"])
+		copyCookies(claim, seed)
+		claimRec := httptest.NewRecorder()
+		app.Handler().ServeHTTP(claimRec, claim)
+		if claimRec.Code != http.StatusOK {
+			t.Fatalf("%s claim: %d %s", label, claimRec.Code, claimRec.Body.String())
+		}
+		return claimRec
+	}
+
+	guestA := claimAs("A")
+	guestB := claimAs("B")
+
+	putWith := func(label string, jar *httptest.ResponseRecorder, tema string) {
+		seed := httptest.NewRecorder()
+		csrfReq := httptest.NewRequest(http.MethodGet, "/api/auth/csrf", nil)
+		copyCookies(csrfReq, jar)
+		app.Handler().ServeHTTP(seed, csrfReq)
+		var csrfBody map[string]string
+		_ = json.NewDecoder(seed.Body).Decode(&csrfBody)
+
+		payload := map[string]any{
+			"reportName": tema,
+			"sections":   []any{},
+		}
+		raw, _ := json.Marshal(map[string]any{"tema": tema, "payload": payload})
+		putReq := httptest.NewRequest(http.MethodPut, "/api/ereport/invite-session/reports/"+reportID, bytes.NewReader(raw))
+		putReq.Header.Set("Content-Type", "application/json")
+		putReq.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+		putReq.Header.Set("X-CSRF-Token", csrfBody["csrf"])
+		copyCookies(putReq, jar)
+		copyCookies(putReq, seed)
+		putRec := httptest.NewRecorder()
+		app.Handler().ServeHTTP(putRec, putReq)
+		if putRec.Code != http.StatusOK {
+			t.Fatalf("%s put after peer claim: %d %s", label, putRec.Code, putRec.Body.String())
+		}
+	}
+
+	putWith("A", guestA, "From A")
+	putWith("B", guestB, "From B")
+	putWith("A-again", guestA, "From A again")
+}
+
 func TestEreportOrgInviteOTPAndTrackerSession(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productEreport)

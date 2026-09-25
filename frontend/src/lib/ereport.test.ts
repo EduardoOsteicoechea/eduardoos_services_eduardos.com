@@ -301,6 +301,8 @@ describe("eReport workspace chrome", () => {
     expect(inviteSrc).toContain("data-invite-save");
     expect(inviteSrc).toContain("claimInviteSession");
     expect(inviteSrc).toContain("inviteImageUploadPath");
+    expect(inviteSrc).toContain("data-invite-editor-banner");
+    expect(inviteSrc).toContain("Background autosave: banner only");
     expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');
     expect(inviteSrc).toContain('window.addEventListener("ereport-theme"');
   });
