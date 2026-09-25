@@ -1188,13 +1188,20 @@ main {
   padding-right: var(--main-inline);
 }
 
-/* Workspaces: no main gutters (full-bleed). Homescool keeps .page-title; padding-top stays 0. */
+/* Workspaces: no main gutters (full-bleed). Homescool keeps left offset for DHS rail. */
 html[data-page="ereport-workspace"] main,
 html[data-page="ereport-invite"] main,
-html[data-page="homescool-workspace"] main,
 html[data-page="latin-institutes"] main,
 html[data-page="scrib-sheet"] main {
   padding: 0;
+}
+
+html[data-page="homescool-workspace"] main {
+  padding-top: var(--mobile-header-height);
+  padding-right: 0;
+  padding-bottom: 0;
+  /* Left inset = curriculum rail; shrinks when rail collapses (see homescool-workspace.css). */
+  padding-left: var(--homescool-dhs-width, 13rem);
 }
 
 html[data-page="homescool-workspace"],

@@ -14,18 +14,22 @@ html[data-page="homescool-workspace"] .shell {
   min-height: 100%;
 }
 
-/* Workspace canvas and tree are flush with the viewport; menu floats above them. */
+/* Workspace canvas: top clears site menu; left clears curriculum rail. */
 html[data-page="homescool-workspace"] main {
   display: flex;
   flex-direction: column;
   min-height: 0;
   height: 100%;
-  padding: 0;
-  /* Room for fixed Homescool DHS rail */
+  padding-top: var(--mobile-header-height);
+  padding-right: 0;
+  padding-bottom: 0;
   padding-left: var(--homescool-dhs-width, 13rem);
+  box-sizing: border-box;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);
+  /* Contain admin/banner/sheets to this padded column only. */
+  overflow-x: hidden;
 }
 
 /* Fixed curriculum rail (cycle / week / day / subject / Print) */
@@ -76,7 +80,13 @@ html[data-page="homescool-workspace"] #header-dynamic-menu-host:empty {
   display: none;
 }
 
-/* Keep menu control at full chrome size above the rail */
+/* Keep menu control at full chrome size — same as site-wide header (do not shrink). */
+html[data-page="homescool-workspace"] .app-header {
+  /* Full viewport chrome; rail is under content inset, not under the menu. */
+  left: 0;
+  right: 0;
+}
+
 html[data-page="homescool-workspace"] .app-header .header-menu.icon-btn {
   width: var(--menu-button-size);
   height: var(--menu-button-size);
@@ -112,6 +122,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   flex: 0 0 auto;
   margin: 0;
   padding: var(--space-padding);
+  /* Clear the fixed site menu button on the right. */
+  padding-right: calc(var(--menu-button-size) + var(--space-padding));
   border-bottom: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
@@ -465,7 +477,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .homescool-dhs__collapse {
   visibility: visible;
   pointer-events: auto;
-  left: 0;
+  left: 1rem;
   transform: translate(0, -50%);
 }
 
@@ -542,8 +554,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__class-no {
   flex: 0 0 auto;
   align-self: center;
-  min-width: 1.6cm;
-  font-size: 1.4cm;
+  min-width: 0.8cm;
+  font-size: 0.7cm;
   font-weight: 800;
   line-height: 1;
   color: var(--hc-navy);
@@ -576,8 +588,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__kicker {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   font-weight: 700;
   letter-spacing: 0.04rem;
   text-transform: uppercase;
@@ -599,7 +611,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__heading {
-  font-size: 7mm;
+  font-size: 0.35cm;
   font-weight: 700;
   margin: 0;
   line-height: 1.35;
@@ -610,8 +622,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__meta {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   opacity: 0.85;
   margin: 0;
   line-height: 1.35;
@@ -810,8 +822,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   font-weight: 600;
   line-height: 1.35;
 }
@@ -915,8 +927,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__body,
 .homescool-letter__choices {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   margin: 0;
   line-height: 1.35;
   color: var(--hc-ink);
@@ -928,8 +940,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__body--muted {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   color: var(--hc-ink-soft);
 }
 
@@ -938,8 +950,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.35;
 }
 
@@ -949,15 +961,15 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--intro .homescool-letter__rich--intro .homescool-letter__box--lead .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__rich--review .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   font-weight: 600;
 }
 
 .homescool-letter-page--intro .homescool-letter__box .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__box .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.3;
 }
 
@@ -1019,8 +1031,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.3;
 }
 
@@ -1065,19 +1077,19 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--quiz .homescool-letter__q-num {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
 }
 
 .homescool-letter-page--quiz .homescool-letter__q .homescool-letter__body {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.25;
 }
 
 .homescool-letter-page--quiz .homescool-letter__choice {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   padding: 0.08rem 0.18rem;
   gap: 0.2rem;
 }
@@ -1085,8 +1097,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter-page--quiz .homescool-letter__choice-mark {
   width: 0.85rem;
   height: 0.85rem;
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
 }
 
 .homescool-letter__q {
@@ -1188,8 +1200,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   margin: 0;
   /* First prompt line shares the vertical center of the number circle. */
   margin-top: calc((var(--hc-q-num-size) - 1lh) / 2);
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.3;
   font-weight: 600;
 }
@@ -1206,8 +1218,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__choice {
   margin: 0;
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.25;
   display: flex;
   align-items: flex-start;
@@ -1226,8 +1238,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: transparent;
   border: 0.06rem solid var(--hc-rail);
   color: var(--hc-rail);
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -1555,8 +1567,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__practice-hint {
   margin: 0;
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   line-height: 1.3;
   color: var(--hc-ink-soft);
   font-style: italic;
@@ -1583,8 +1595,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__support-link {
-  font-size: 0.6cm;
-  line-height: 0.6cm;
+  font-size: 0.3cm;
+  line-height: 0.3cm;
   color: var(--hc-blue);
   word-break: break-all;
 }
@@ -1597,6 +1609,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   align-items: center;
   gap: var(--rail-gap);
   padding: var(--space-padding);
+  padding-right: calc(var(--menu-button-size) + var(--space-padding));
   border-bottom: var(--border-width) solid var(--color-border);
 }
 
