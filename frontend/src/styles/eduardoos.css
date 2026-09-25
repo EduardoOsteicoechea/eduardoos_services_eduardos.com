@@ -97,6 +97,32 @@ html[data-page="home"] main > * {
   }
 }
 
+/* Desktop home: pure white canvas (readable even if the theme toggle is dark). */
+@media (min-width: 64rem) {
+  html[data-page="home"] {
+    --color-bg: #ffffff;
+    --color-surface: #ffffff;
+    --color-text: #17171a;
+    --color-muted: #5f5f68;
+    --color-accent: #17171a;
+    --color-border: #e3e1da;
+    --color-button-bg: #17171a;
+    --color-button-fg: #ffffff;
+    --color-link: #7c5c2e;
+    background: #ffffff;
+  }
+
+  html[data-page="home"] body,
+  html[data-page="home"] .shell,
+  html[data-page="home"] main {
+    background: #ffffff;
+  }
+
+  html[data-page="home"] main::before {
+    background-image: url("/Gemini_Generated_Image_2ejeqk2ejeqk2eje.jpg");
+  }
+}
+
 .hero{
   background-image: radial-gradient(var(--eo-grid) 0.0625rem, transparent 0.0625rem);
   background-size: 1.25rem 1.25rem;
