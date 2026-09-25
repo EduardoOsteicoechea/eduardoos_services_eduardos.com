@@ -12,44 +12,12 @@ type AstroHistoryState = {
   scrollY?: number;
 };
 
-function pathKey(url: URL | Location = window.location): string {
-  return `${url.pathname}${url.search}`;
-}
-
 function hasAstroHistoryState(state: unknown): state is AstroHistoryState {
   return (
     typeof state === "object" &&
     state !== null &&
     typeof (state as AstroHistoryState).index === "number"
   );
-}
-
-/**
- * ClientRouter only soft-navigates on popstate when history.state has an Astro `index`.
- * App code that calls replaceState(null, …) or replaceState({}, …) wipes that state;
- * iOS Chrome can also surface null state on back. URL updates, DOM does not — reload syncs.
- */
-function startHistorySync(): void {
-  let lastRenderedPath = pathKey();
-
-  const markRendered = () => {
-    lastRenderedPath = pathKey();
-  };
-
-  document.addEventListener("astro:after-swap", markRendered);
-  document.addEventListener("astro:page-load", markRendered);
-
-  window.addEventListener("popstate", () => {
-    const nextPath = pathKey();
-    // Hash-only changes keep the same path key — leave them to the browser.
-    if (nextPath === lastRenderedPath) {
-      return;
-    }
-    if (hasAstroHistoryState(history.state)) {
-      return;
-    }
-    window.location.reload();
-  });
 }
 
 /** Keep Astro's history index when rewriting the current URL in-place. */
@@ -86,6 +54,10 @@ function assignSameOrigin(href: string): void {
   window.location.assign(`${url.pathname}${url.search}${url.hash}`);
 }
 
+function samePathAndQuery(a: URL, b: URL): boolean {
+  return a.pathname === b.pathname && a.search === b.search;
+}
+
 /**
  * `/documents/pamphlet/e/{id}` is pretty only when Nginx rewrites it to e/index.html.
  * On VPS builds without that location, unknown paths fall through to the homepage HTML
@@ -111,15 +83,27 @@ export function startClientRouting(): void {
   window.__clientRoutingStarted = true;
 
   rewriteLegacyPamphletEditPath();
-  startHistorySync();
 
-  // ClientRouter intercepts all same-origin links — not only [data-route].
-  // Cancel soft transitions that touch pamphlet so we never swap home HTML onto /e/{id}.
   document.addEventListener("astro:before-preparation", (event) => {
-    const ev = event as Event & { from: URL; to: URL };
+    const ev = event as Event & {
+      from: URL;
+      to: URL;
+      navigationType: string;
+    };
+
+    // ClientRouter soft swaps involving pamphlet leave zombie DOM/URL pairs.
     if (needsFullDocumentNav(ev.to.pathname) || needsFullDocumentNav(ev.from.pathname)) {
       event.preventDefault();
       assignSameOrigin(ev.to.href);
+      return;
+    }
+
+    // Browser back/forward: soft VT routinely stalls (URL updates, content/veil stuck;
+    // a manual reload always shows the right page). Cancel and hard-load the URL
+    // popstate already applied. Hash-only traversals stay soft.
+    if (ev.navigationType === "traverse" && !samePathAndQuery(ev.from, ev.to)) {
+      event.preventDefault();
+      window.location.reload();
     }
   });
 
