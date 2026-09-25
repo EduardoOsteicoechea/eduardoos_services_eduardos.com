@@ -33,7 +33,7 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
   document.body.innerHTML = `
     <aside id="main-menu">
       <a class="sidebar-nav-action" href="/session" data-guest-only ${guestHidden}>Sign in</a>
-      <button type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
+      <button class="sidebar-nav-action" type="button" data-logout data-authed-only ${authedHidden}>Sign out</button>
       <a href="/contact">Contact</a>
       <a href="/payments/subscription">Subscriptions</a>
       <a href="/scrib" data-service="scrib" hidden>Scrib</a>

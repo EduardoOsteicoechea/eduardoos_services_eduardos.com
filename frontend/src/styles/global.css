@@ -754,9 +754,21 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   padding-inline: var(--space-padding);
   min-height: var(--control-height);
   justify-content: center;
+  font: inherit;
+  font-size: var(--tray-nav-font-size);
+  font-weight: 400;
   background: var(--color-text);
   color: var(--color-bg);
+  border: 0;
   border-radius: var(--border-radius);
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+.sidebar-left nav .sidebar-nav-action > .material-symbols-outlined {
+  font-size: var(--tray-nav-icon-size);
 }
 
 .sidebar-left nav .sidebar-nav-action:hover,
@@ -1994,6 +2006,12 @@ section.diag .panel:not(form) {
     /* Menu 25% / DHS 25% / chat 50% of viewport */
     --sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.25);
     --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
+    /* Global menu + DHS rows: 1.25× default tray type on tablet */
+    --tray-nav-font-size: calc(var(--font-size-sm) * 1.25);
+    --tray-nav-icon-size: calc(var(--font-size-md) * 1.25);
+    --tray-nav-min-height: calc(var(--rail-button-size) * 1.25);
+    --tray-nav-row-margin: calc(var(--rail-gap) * 0.75);
+    --tray-nav-icon-slot: calc(var(--rail-button-size) * 1.25);
   }
 
   main > .session-grid,
