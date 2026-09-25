@@ -134,8 +134,9 @@ export default function ScribEditor() {
   const panDragRef = useRef<{ x: number; y: number; panX: number; panY: number } | null>(null);
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
   const sheetSnapshotRef = useRef<ScribSheet | null>(null);
-  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
-  const queuedSaveCountRef = useRef(0);
+  /** Newest sheet waiting to be written; superseded intermediates are dropped. */
+  const pendingSaveRef = useRef<ScribSheet | null>(null);
+  const savePumpRunningRef = useRef(false);
   const fittedSheetIdRef = useRef<string | null>(null);
 
   const setViewportNode = useCallback((node: HTMLDivElement | null) => {
@@ -221,25 +222,41 @@ export default function ScribEditor() {
   }, [sheet?.id, viewportEl]);
 
   /**
-   * Sheet writes replace the complete S3 JSON object. Chain them so a slow first
-   * response cannot finish after a newer write and erase later strokes. Server
-   * responses are intentionally not copied into React state: the local snapshot
-   * can already contain actions queued after the response's request body.
+   * Sheet writes replace the complete document. Keep only the newest pending
+   * snapshot so rapid strokes do not enqueue N serial PUTs (that backlog was
+   * hitting the client timeout while the user kept writing). A slow response
+   * never overwrites a newer local snapshot: server bodies are not copied into
+   * React state.
    */
-  const persist = useCallback((next: ScribSheet) => {
-    queuedSaveCountRef.current += 1;
+  const flushPendingSave = useCallback(async () => {
+    if (savePumpRunningRef.current) return;
+    savePumpRunningRef.current = true;
     setSaving(true);
-    saveQueueRef.current = saveQueueRef.current
-      .catch(() => undefined)
-      .then(async () => {
-        const res = await saveScribSheet(next);
+    try {
+      while (pendingSaveRef.current) {
+        const toSave = pendingSaveRef.current;
+        pendingSaveRef.current = null;
+        const res = await saveScribSheet(toSave);
         if (res.error) setError(res.error);
-      })
-      .finally(() => {
-        queuedSaveCountRef.current -= 1;
-        setSaving(queuedSaveCountRef.current > 0);
-      });
+        else setError("");
+      }
+    } finally {
+      savePumpRunningRef.current = false;
+      if (pendingSaveRef.current) {
+        void flushPendingSave();
+      } else {
+        setSaving(false);
+      }
+    }
   }, []);
+
+  const persist = useCallback(
+    (next: ScribSheet) => {
+      pendingSaveRef.current = next;
+      void flushPendingSave();
+    },
+    [flushPendingSave],
+  );
 
   function mmFromClient(clientX: number, clientY: number): { x: number; y: number } | null {
     const el = sheetRef.current;

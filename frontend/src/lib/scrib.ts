@@ -165,12 +165,17 @@ export async function createScribSheet(
   return { sheet: data ?? null, requestId };
 }
 
+/** Full sheet JSON can be large after many strokes; default API timeout (12s) is too short. */
+const scribSheetTimeoutMs = 120_000;
+
 export async function fetchScribSheet(
   bookId: string,
   sheetId: string,
 ): Promise<{ sheet: ScribSheet | null; error?: string; requestId?: string }> {
   const { status, data, requestId } = await apiRequest<ScribSheet>(
     `/scrib/books/${encodeURIComponent(bookId)}/sheets/${encodeURIComponent(sheetId)}`,
+    {},
+    { timeoutMs: scribSheetTimeoutMs },
   );
   if (status < 200 || status >= 300) {
     return { sheet: null, error: errMsg(data, "Could not load sheet."), requestId };
@@ -204,6 +209,7 @@ export async function saveScribSheet(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(sheet),
     },
+    { timeoutMs: scribSheetTimeoutMs },
   );
   if (mustLog) console.log("[scrib] save sheet", { status, requestId, sheetId: sheet.id });
   if (status < 200 || status >= 300) {
