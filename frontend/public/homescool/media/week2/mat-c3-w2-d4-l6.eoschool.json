@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Tablas 13 a 16",
-        "body": "Cerramos el mapa con 13, 14, 15 y 16. Son tablas nuevas: cada una sigue siendo n×1…n×12. 15 ayuda con el truco del 5 (15=3×5); 14 es el doble de 7; 16 es potencias de 2.\n\nSigamos juntos. 13×4=52. 14×5=70. 15×6=90. 16×8=128. Si dudas, usa una tabla que ya sepas: 16×8 = (8×8)×2 = 64×2.\n\nNo es inventar que la tabla del 16 solo llega a ×10. En esta hoja practicamos hasta ×12, igual que las demás.\n\nPráctica: Escribe 13×3, 14×7, 15×8, 16×6 y 16×12. Di en voz alta cómo lo comprobaste.\n\nError común: Calcular 15×8 como 15+8. Multiplicar pide grupos: ocho grupos de quince = 120."
+        "body": "Cerramos el mapa con 13, 14, 15 y 16. Son tablas nuevas: cada una sigue siendo n×1…n×12. 15 ayuda con el truco del 5 (15=3×5); 14 es el doble de 7; 16 es potencias de 2.\n\nSigamos juntos. 13×4=52. 14×5=70. 15×6=90. 16×8=128. Si dudas, usa una tabla que ya sepas: 16×8 = (8×8)×2 = 64×2.\n\nNo es inventar que la tabla del 16 solo llega a ×10. En esta hoja practicamos hasta ×12, igual que las demás.\n\nPráctica: Escribe 13×3, 14×7, 15×8, 16×6 y 16×12. Di en voz alta cómo lo comprobaste.\n\nError común: No te quedes con esta confusión: : Calcular 15×8 como 15+8. Multiplicar pide grupos: ocho grupos de quince = 120."
       }
     ],
     "summary": ""
@@ -29,9 +29,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 7×7?",
         "choices": [
-          "45",
-          "59",
           "49",
+          "59",
+          "45",
           "55"
         ],
         "answer": "49"
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 5×5?",
         "choices": [
-          "41",
-          "25",
           "15",
-          "19"
+          "19",
+          "25",
+          "41"
         ],
         "answer": "25"
       },
@@ -56,9 +56,9 @@
         "prompt": "¿Cuánto es 6×10?",
         "choices": [
           "72",
-          "68",
+          "48",
           "60",
-          "48"
+          "68"
         ],
         "answer": "60"
       },
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 7×4?",
         "choices": [
-          "32",
           "28",
-          "16",
-          "30"
+          "30",
+          "32",
+          "16"
         ],
         "answer": "28"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 8×6?",
         "choices": [
-          "42",
           "60",
           "48",
-          "56"
+          "56",
+          "42"
         ],
         "answer": "48"
       },
@@ -108,9 +108,9 @@
         "prompt": "¿Cuánto es 8×8?",
         "choices": [
           "68",
-          "64",
           "52",
-          "72"
+          "72",
+          "64"
         ],
         "answer": "64"
       },
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 6×11?",
         "choices": [
-          "66",
           "82",
-          "64",
-          "72"
+          "66",
+          "72",
+          "64"
         ],
         "answer": "66"
       },
@@ -133,9 +133,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 6×4?",
         "choices": [
-          "14",
-          "30",
           "24",
+          "30",
+          "14",
           "28"
         ],
         "answer": "24"
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 7×1?",
         "choices": [
-          "7",
           "13",
+          "3",
           "5",
-          "3"
+          "7"
         ],
         "answer": "7"
       },
@@ -159,10 +159,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 11×6?",
         "choices": [
-          "66",
-          "68",
           "60",
-          "82"
+          "82",
+          "66",
+          "68"
         ],
         "answer": "66"
       },
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 9×12?",
         "choices": [
+          "100",
           "120",
           "108",
-          "98",
-          "100"
+          "98"
         ],
         "answer": "108"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 12×7?",
         "choices": [
-          "80",
           "74",
           "84",
-          "76"
+          "76",
+          "80"
         ],
         "answer": "84"
       },
@@ -212,9 +212,9 @@
         "prompt": "¿Cuánto es 6×8?",
         "choices": [
           "46",
-          "48",
+          "54",
           "36",
-          "54"
+          "48"
         ],
         "answer": "48"
       },
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 11×1?",
         "choices": [
-          "9",
           "23",
-          "15",
-          "11"
+          "11",
+          "9",
+          "15"
         ],
         "answer": "11"
       },
@@ -238,8 +238,8 @@
         "prompt": "¿Cuánto es 10×5?",
         "choices": [
           "38",
-          "58",
           "50",
+          "58",
           "52"
         ],
         "answer": "50"
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 10×6?",
         "choices": [
-          "64",
           "68",
+          "60",
           "50",
-          "60"
+          "64"
         ],
         "answer": "60"
       },
@@ -263,10 +263,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 14×11?",
         "choices": [
-          "170",
-          "156",
           "142",
-          "154"
+          "154",
+          "170",
+          "156"
         ],
         "answer": "154"
       },
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 16×5?",
         "choices": [
-          "92",
           "80",
-          "90",
-          "68"
+          "92",
+          "68",
+          "90"
         ],
         "answer": "80"
       },
@@ -289,9 +289,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 6×12?",
         "choices": [
-          "84",
-          "72",
           "68",
+          "72",
+          "84",
           "80"
         ],
         "answer": "72"
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 11×3?",
         "choices": [
-          "49",
-          "41",
           "35",
-          "33"
+          "33",
+          "41",
+          "49"
         ],
         "answer": "33"
       },
@@ -316,9 +316,9 @@
         "prompt": "¿Cuánto es 14×6?",
         "choices": [
           "94",
-          "74",
+          "84",
           "92",
-          "84"
+          "74"
         ],
         "answer": "84"
       },
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 10×2?",
         "choices": [
-          "12",
           "32",
-          "20",
-          "10"
+          "10",
+          "12",
+          "20"
         ],
         "answer": "20"
       },
@@ -354,10 +354,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 6×12?",
         "choices": [
-          "64",
           "72",
           "70",
-          "68"
+          "68",
+          "64"
         ],
         "answer": "72"
       },
@@ -368,9 +368,9 @@
         "prompt": "¿Cuánto es 8×4?",
         "choices": [
           "22",
-          "34",
           "32",
-          "26"
+          "26",
+          "34"
         ],
         "answer": "32"
       },
@@ -380,10 +380,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 10×8?",
         "choices": [
-          "84",
           "70",
-          "80",
-          "74"
+          "84",
+          "74",
+          "80"
         ],
         "answer": "80"
       },
@@ -393,9 +393,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 15×9?",
         "choices": [
-          "141",
-          "145",
           "135",
+          "145",
+          "141",
           "143"
         ],
         "answer": "135"
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 8×2?",
         "choices": [
-          "16",
           "20",
+          "24",
           "10",
-          "24"
+          "16"
         ],
         "answer": "16"
       },
@@ -419,10 +419,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 14×7?",
         "choices": [
-          "86",
-          "108",
           "94",
-          "98"
+          "98",
+          "86",
+          "108"
         ],
         "answer": "98"
       },
@@ -432,10 +432,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 8×2?",
         "choices": [
+          "4",
           "22",
           "16",
-          "6",
-          "4"
+          "6"
         ],
         "answer": "16"
       },

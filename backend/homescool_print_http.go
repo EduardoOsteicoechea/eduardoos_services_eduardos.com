@@ -10,9 +10,10 @@ import (
 )
 
 const (
-	maxHomescoolPrintPages      = 12
-	maxHomescoolPrintImageBytes = 8 << 20  // 8 MiB per page
-	maxHomescoolPrintBodyBytes  = 28 << 20 // 28 MiB request body
+	// Batch print (whole week / all subjects) can exceed a single class.
+	maxHomescoolPrintPages      = 250
+	maxHomescoolPrintImageBytes = 8 << 20   // 8 MiB per page
+	maxHomescoolPrintBodyBytes  = 220 << 20 // ~220 MiB request body
 )
 
 func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *http.Request) {

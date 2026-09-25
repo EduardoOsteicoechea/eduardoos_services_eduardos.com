@@ -381,9 +381,10 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__hero {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.4rem;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.45rem;
   padding: 0.65rem 0.7rem;
   border-radius: 0.35rem;
   background: transparent;
@@ -393,6 +394,27 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   /* Same height for lesson and quiz: kicker row + title. */
   min-height: 5rem;
   box-sizing: border-box;
+}
+
+.homescool-letter__class-no {
+  flex: 0 0 auto;
+  align-self: center;
+  min-width: 1.6cm;
+  font-size: 1.4cm;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--hc-navy);
+  text-align: center;
+  letter-spacing: -0.04rem;
+}
+
+.homescool-letter__hero-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .homescool-letter-page--quiz .homescool-letter__hero {
@@ -411,7 +433,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__kicker {
-  font-size: 0.7rem;
+  font-size: 6mm;
   font-weight: 700;
   letter-spacing: 0.04rem;
   text-transform: uppercase;
@@ -434,19 +456,18 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__heading {
-  font-size: 1.15rem;
+  font-size: 7mm;
   font-weight: 700;
   margin: 0;
   line-height: 1.35;
   min-width: 0;
-  /* Own block under the top row — never share paint space with meta. */
   position: relative;
   z-index: 0;
   clear: both;
 }
 
 .homescool-letter__meta {
-  font-size: 0.65rem;
+  font-size: 6mm;
   opacity: 0.85;
   margin: 0;
   line-height: 1.35;
@@ -645,7 +666,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.82rem;
+  font-size: 6mm;
   font-weight: 600;
   line-height: 1.35;
 }
@@ -749,9 +770,9 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__body,
 .homescool-letter__choices {
-  font-size: 0.78rem;
+  font-size: 6mm;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.35;
   color: var(--hc-ink);
   white-space: pre-line;
 }
@@ -761,7 +782,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter__body--muted {
-  font-size: 0.7rem;
+  font-size: 6mm;
   color: var(--hc-ink-soft);
 }
 
@@ -770,7 +791,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
-  font-size: 0.74rem;
+  font-size: 6mm;
   line-height: 1.35;
 }
 
@@ -780,13 +801,13 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter-page--intro .homescool-letter__rich--intro .homescool-letter__box--lead .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__rich--review .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.74rem;
+  font-size: 6mm;
   font-weight: 600;
 }
 
 .homescool-letter-page--intro .homescool-letter__box .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__box .homescool-letter__body {
-  font-size: 0.7rem;
+  font-size: 6mm;
   line-height: 1.3;
 }
 
@@ -848,7 +869,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__body {
-  font-size: 0.7rem;
+  font-size: 6mm;
   line-height: 1.3;
 }
 
@@ -861,7 +882,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
   flex: 1 1 auto;
   align-content: start;
@@ -893,16 +914,16 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-letter-page--quiz .homescool-letter__q-num {
-  font-size: 0.6rem;
+  font-size: 6mm;
 }
 
 .homescool-letter-page--quiz .homescool-letter__q .homescool-letter__body {
-  font-size: 0.62rem;
+  font-size: 6mm;
   line-height: 1.25;
 }
 
 .homescool-letter-page--quiz .homescool-letter__choice {
-  font-size: 0.58rem;
+  font-size: 6mm;
   padding: 0.08rem 0.18rem;
   gap: 0.2rem;
 }
@@ -910,7 +931,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-letter-page--quiz .homescool-letter__choice-mark {
   width: 0.85rem;
   height: 0.85rem;
-  font-size: 0.52rem;
+  font-size: 6mm;
 }
 
 .homescool-letter__q {
@@ -945,11 +966,11 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   min-height: 0.85rem;
 }
 
-.homescool-letter__q:nth-child(4n + 1) {
+.homescool-letter__q:nth-child(2n + 1) {
   border-color: var(--hc-blue);
 }
 
-.homescool-letter__q:nth-child(4n + 2) {
+.homescool-letter__q:nth-child(2n + 2) {
   border-color: var(--hc-navy);
 }
 
@@ -1012,7 +1033,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   margin: 0;
   /* First prompt line shares the vertical center of the number circle. */
   margin-top: calc((var(--hc-q-num-size) - 1lh) / 2);
-  font-size: 0.68rem;
+  font-size: 6mm;
   line-height: 1.3;
   font-weight: 600;
 }
@@ -1029,7 +1050,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 
 .homescool-letter__choice {
   margin: 0;
-  font-size: 0.62rem;
+  font-size: 6mm;
   line-height: 1.25;
   display: flex;
   align-items: flex-start;
@@ -1048,7 +1069,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: transparent;
   border: 0.06rem solid var(--hc-rail);
   color: var(--hc-rail);
-  font-size: 0.58rem;
+  font-size: 6mm;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -1346,4 +1367,280 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
+}
+
+/* Practice check (cambio 4) */
+.homescool-letter__practice-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.homescool-letter__practice-mark {
+  flex: 0 0 auto;
+  width: 0.75cm;
+  height: 0.75cm;
+  border-radius: 50%;
+  border: 0.08rem solid var(--hc-blue);
+  background: transparent;
+  margin-top: 0.1rem;
+}
+
+.homescool-letter__practice-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.homescool-letter__practice-hint {
+  margin: 0;
+  font-size: 6mm;
+  line-height: 1.3;
+  color: var(--hc-ink-soft);
+  font-style: italic;
+}
+
+/* Day-5 expo lined page (cambio 14) */
+.homescool-letter-page--expo {
+  gap: 0.35rem;
+}
+
+.homescool-letter__expo-lines {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 0;
+}
+
+.homescool-letter__expo-line {
+  flex: 0 0 0.75cm;
+  height: 0.75cm;
+  border-bottom: 0.06rem solid var(--hc-navy);
+  box-sizing: border-box;
+}
+
+.homescool-letter__support-link {
+  font-size: 6mm;
+  color: var(--hc-blue);
+  word-break: break-all;
+  line-height: 1.35;
+}
+
+/* Print tray (cambio 3) */
+.homescool-dhs__print-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--rail-gap);
+  position: relative;
+}
+
+.homescool-dhs__print {
+  flex: 1 1 auto;
+}
+
+.homescool-dhs__print-menu-btn {
+  flex: 0 0 auto;
+  width: var(--button-size);
+  height: var(--button-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.homescool-dhs__print-menu-btn .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.homescool-dhs__print-tray {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--rail-gap));
+  z-index: var(--z-sidebar);
+  min-width: 14rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  box-shadow: none;
+}
+
+.homescool-dhs__print-option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  gap: var(--rail-gap);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.homescool-dhs__print-option:hover,
+.homescool-dhs__print-option:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Admin support URL bar */
+.homescool-support-admin {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.homescool-support-admin[hidden] {
+  display: none !important;
+}
+
+.homescool-support-admin__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.homescool-support-admin__input {
+  flex: 1 1 12rem;
+  min-width: 8rem;
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.homescool-support-admin__save {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-button-bg);
+  color: var(--color-button-fg);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+/* Expert debug panel */
+.homescool-debug {
+  position: fixed;
+  right: var(--space-padding);
+  bottom: var(--space-padding);
+  z-index: calc(var(--z-modal) - 1);
+  width: 22rem;
+  max-width: calc(100vw - 2rem);
+  max-height: 18rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--rail-gap);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: none;
+}
+
+.homescool-debug--collapsed {
+  max-height: none;
+}
+
+.homescool-debug--collapsed .homescool-debug__list {
+  display: none;
+}
+
+.homescool-debug__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.homescool-debug__title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.homescool-debug__filter {
+  flex: 1 1 6rem;
+  min-width: 4rem;
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+}
+
+.homescool-debug__btn {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.homescool-debug__list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 14rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: var(--font-size-xs);
+}
+
+.homescool-debug__row {
+  border-left: 0.15rem solid var(--color-border);
+  padding-left: 0.35rem;
+}
+
+.homescool-debug__row--warn {
+  border-left-color: var(--color-accent);
+}
+
+.homescool-debug__row--error {
+  border-left-color: var(--color-err);
+}
+
+.homescool-debug__row-head {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.homescool-debug__row-body {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--color-muted);
+  font-family: ui-monospace, monospace;
+  font-size: var(--font-size-xs);
+  line-height: 1.3;
 }

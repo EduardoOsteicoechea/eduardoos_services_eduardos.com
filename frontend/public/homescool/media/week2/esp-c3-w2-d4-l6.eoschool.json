@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Profundizar: elegir una o dos palabras",
-        "body": "Hoy juntamos todo lo de la semana en una sola habilidad: elegir. No necesitas memorizar nombres difíciles; necesitas escuchar la oración y decidir si el verbo necesita una palabra o dos. Primero mira el tiempo que la frase señala; después elige el camino.\n\nUsaremos tres preguntas habladas. ¿Hay un momento cerrado, como «ayer a las cinco»? Casi siempre usamos una palabra: canté. ¿Importa el resultado hasta ahora, con pistas como «ya» o «esta semana»? A menudo usamos dos: he cantado. ¿Estás pintando un fondo o una costumbre pasada? Entonces vuelve cantaba. Haz las preguntas una detrás de otra hasta que la oración encaje.\n\nNo es cambiar el mundo ni encontrar una palabra «más elegante». El mismo verbo cuenta cuentos distintos: «Terminé ayer» cierra un hecho; «He terminado ya» deja vivo el resultado; «Leía cuando llamaron» pone un fondo y un hecho que llega. Las palabras de tiempo te ayudan a decidir.\n\nPráctica: Guía tú cinco oraciones. Para cada una, escribe una versión de una palabra y otra de dos; debajo justifica tu elección con una de las preguntas. Elige como si se lo explicaras a un compañero.\n\nError común: Mezclar imperfecto y pretérito sin preguntar si el hecho cerró. Antes de escribir, hazte la pregunta en voz baja."
+        "body": "Hoy juntamos todo lo de la semana en una sola habilidad: elegir. No necesitas memorizar nombres difíciles; necesitas escuchar la oración y decidir si el verbo necesita una palabra o dos. Primero mira el tiempo que la frase señala; después elige el camino.\n\nUsaremos tres preguntas habladas. ¿Hay un momento cerrado, como «ayer a las cinco»? Casi siempre usamos una palabra: canté. ¿Importa el resultado hasta ahora, con pistas como «ya» o «esta semana»? A menudo usamos dos: he cantado. ¿Estás pintando un fondo o una costumbre pasada? Entonces vuelve cantaba. Haz las preguntas una detrás de otra hasta que la oración encaje.\n\nNo es cambiar el mundo ni encontrar una palabra «más elegante». El mismo verbo cuenta cuentos distintos: «Terminé ayer» cierra un hecho; «He terminado ya» deja vivo el resultado; «Leía cuando llamaron» pone un fondo y un hecho que llega. Las palabras de tiempo te ayudan a decidir.\n\nPráctica: Guía tú cinco oraciones. Para cada una, escribe una versión de una palabra y otra de dos; debajo justifica tu elección con una de las preguntas. Elige como si se lo explicaras a un compañero.\n\nError a corregir: Vigila este tropiezo frecuente: : Mezclar imperfecto y pretérito sin preguntar si el hecho cerró. Antes de escribir, hazte la pregunta en voz baja."
       }
     ],
     "summary": ""
@@ -30,9 +30,9 @@
         "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
           "he cantado (ya hecho, importa ahora)",
-          "había cantado (ya hecho antes de otro pasado)",
           "pretérito",
-          "haber + forma ya hecha (-ado/-ido)"
+          "haber + forma ya hecha (-ado/-ido)",
+          "había cantado (ya hecho antes de otro pasado)"
         ],
         "answer": "pretérito"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "¿Cuál es un tiempo compuesto?",
         "choices": [
-          "presente",
           "imperfecto",
-          "había cantado (ya hecho antes de otro pasado)",
-          "futuro simple"
+          "futuro simple",
+          "presente",
+          "había cantado (ya hecho antes de otro pasado)"
         ],
         "answer": "había cantado (ya hecho antes de otro pasado)"
       },
@@ -56,8 +56,8 @@
         "prompt": "¿El condicional simple es…?",
         "choices": [
           "simple",
-          "compuesto",
           "otro modo (deseos; no es de esta semana)",
+          "compuesto",
           "modo de mandatos (no es de esta semana)"
         ],
         "answer": "simple"
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "¿Qué palabra ayudante (haber) usan los compuestos del indicativo?",
         "choices": [
-          "ser",
           "haber",
+          "ir",
           "estar",
-          "ir"
+          "ser"
         ],
         "answer": "haber"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Otro nombre del he cantado (ya hecho, importa ahora):",
         "choices": [
-          "pretérito perfecto compuesto",
-          "imperfecto",
           "futuro simple",
-          "gerundio"
+          "gerundio",
+          "pretérito perfecto compuesto",
+          "imperfecto"
         ],
         "answer": "pretérito perfecto compuesto"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
+          "infinitivo",
           "otro modo (deseos; no es de esta semana)",
           "indicativo",
-          "modo de mandatos (no es de esta semana)",
-          "infinitivo"
+          "modo de mandatos (no es de esta semana)"
         ],
         "answer": "indicativo"
       },
@@ -107,9 +107,9 @@
         "type": "mcq",
         "prompt": "¿Cuántos tiempos simples listamos?",
         "choices": [
-          "3",
-          "4",
           "5",
+          "4",
+          "3",
           "10"
         ],
         "answer": "5"
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "¿Cuántos tiempos compuestos listamos?",
         "choices": [
-          "3",
-          "4",
           "5",
-          "10"
+          "10",
+          "4",
+          "3"
         ],
         "answer": "5"
       },
@@ -134,9 +134,9 @@
         "prompt": "Presente de «indicar» (yo):",
         "choices": [
           "indiqué",
-          "indico",
+          "indicaré",
           "indicaba",
-          "indicaré"
+          "indico"
         ],
         "answer": "indico"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Imperfecto de «cantar» (ella):",
         "choices": [
-          "cantó",
           "cantaba",
-          "cantará",
-          "ha cantado"
+          "ha cantado",
+          "cantó",
+          "cantará"
         ],
         "answer": "cantaba"
       },
@@ -160,8 +160,8 @@
         "prompt": "Pretérito de «vivir» (nosotros):",
         "choices": [
           "vivíamos",
-          "vivimos",
           "viviremos",
+          "vivimos",
           "hemos vivido"
         ],
         "answer": "vivimos"
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Futuro de «salir» (tú):",
         "choices": [
-          "sales",
           "salías",
           "saldrás",
-          "has salido"
+          "has salido",
+          "sales"
         ],
         "answer": "saldrás"
       },
@@ -186,9 +186,9 @@
         "prompt": "Condicional de «poder» (yo):",
         "choices": [
           "pude",
-          "podía",
           "podré",
-          "podría"
+          "podría",
+          "podía"
         ],
         "answer": "podría"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "¿El imperfecto suele expresar…?",
         "choices": [
-          "acción acabada puntual",
           "hábito o pasado en curso",
-          "orden",
-          "deseo otro modo (deseos; no es de esta semana)"
+          "acción acabada puntual",
+          "deseo otro modo (deseos; no es de esta semana)",
+          "orden"
         ],
         "answer": "hábito o pasado en curso"
       },
@@ -211,9 +211,9 @@
         "type": "mcq",
         "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "Simples",
-          "Compuestos",
           "Solo otro modo (deseos; no es de esta semana)",
+          "Compuestos",
+          "Simples",
           "Ortografía"
         ],
         "answer": "Simples"
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Pretérito de «cantar» (yo):",
         "choices": [
-          "canto",
-          "cantaba",
           "canté",
-          "cantaré"
+          "cantaré",
+          "cantaba",
+          "canto"
         ],
         "answer": "canté"
       },
@@ -237,10 +237,10 @@
         "type": "mcq",
         "prompt": "¿Cómo dices «ya he comido» con yo?",
         "choices": [
-          "comí",
-          "comía",
           "he comido",
-          "habré comido"
+          "habré comido",
+          "comí",
+          "comía"
         ],
         "answer": "he comido"
       },
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "¿Cómo dices que ella ya vio algo antes de otro momento pasado?",
         "choices": [
+          "verá",
           "vio",
           "veía",
-          "había visto",
-          "verá"
+          "había visto"
         ],
         "answer": "había visto"
       },
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "¿Cómo dices «lo habría dicho» con yo?",
         "choices": [
-          "diría",
           "dije",
           "habría dicho",
-          "he dicho"
+          "he dicho",
+          "diría"
         ],
         "answer": "habría dicho"
       },
@@ -290,9 +290,9 @@
         "prompt": "En la forma poco usada «hube cantado», ¿cuál es la palabra ayudante?",
         "choices": [
           "he",
-          "había",
           "hube",
-          "habré"
+          "habré",
+          "había"
         ],
         "answer": "hube"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Participio de «escribir»:",
         "choices": [
-          "escribido",
           "escrito",
-          "escribió",
-          "escribiendo"
+          "escribiendo",
+          "escribido",
+          "escribió"
         ],
         "answer": "escrito"
       },
@@ -316,8 +316,8 @@
         "prompt": "Hoy profundizas el punto…",
         "choices": [
           "Simples",
-          "Compuestos",
           "Solo presente",
+          "Compuestos",
           "Acentuación"
         ],
         "answer": "Compuestos"
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "En los tiempos de dos palabras, la forma ya hecha (-ado/-ido)…",
         "choices": [
-          "cambia con la persona",
           "es invariable en persona",
+          "se omite",
           "es siempre gerundio",
-          "se omite"
+          "cambia con la persona"
         ],
         "answer": "es invariable en persona"
       },
@@ -341,10 +341,10 @@
         "type": "mcq",
         "prompt": "Acción acabada ayer → suele usarse:",
         "choices": [
-          "imperfecto",
-          "pretérito",
           "futuro",
-          "condicional"
+          "condicional",
+          "imperfecto",
+          "pretérito"
         ],
         "answer": "pretérito"
       },
@@ -354,10 +354,10 @@
         "type": "mcq",
         "prompt": "Experiencia hasta hoy →",
         "choices": [
+          "antepretérito",
           "he cantado (ya hecho, importa ahora)",
           "futuro",
-          "imperfecto",
-          "antepretérito"
+          "imperfecto"
         ],
         "answer": "he cantado (ya hecho, importa ahora)"
       },
@@ -367,9 +367,9 @@
         "type": "mcq",
         "prompt": "«Ya he terminado» es forma…",
         "choices": [
-          "simple",
-          "compuesta",
           "imperativa",
+          "compuesta",
+          "simple",
           "subjuntiva"
         ],
         "answer": "compuesta"
@@ -380,10 +380,10 @@
         "type": "mcq",
         "prompt": "«Terminé ayer» es forma…",
         "choices": [
-          "simple",
-          "compuesta",
           "condicional perfecta",
-          "pluscuamperfecta"
+          "pluscuamperfecta",
+          "compuesta",
+          "simple"
         ],
         "answer": "simple"
       },
@@ -394,9 +394,9 @@
         "prompt": "Había + forma ya hecha (-ado/-ido) es:",
         "choices": [
           "había cantado (ya hecho antes de otro pasado)",
-          "presente",
+          "condicional simple",
           "futuro",
-          "condicional simple"
+          "presente"
         ],
         "answer": "había cantado (ya hecho antes de otro pasado)"
       },
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas el punto…",
         "choices": [
-          "Simples",
           "Compuestos",
-          "Uso",
-          "Solo ortografía"
+          "Solo ortografía",
+          "Simples",
+          "Uso"
         ],
         "answer": "Uso"
       },
@@ -420,8 +420,8 @@
         "prompt": "El modo de estas formas es:",
         "choices": [
           "otro modo (deseos; no es de esta semana)",
-          "indicativo",
           "modo de mandatos (no es de esta semana)",
+          "indicativo",
           "optativo"
         ],
         "answer": "indicativo"
@@ -432,10 +432,10 @@
         "type": "mcq",
         "prompt": "Acción ya hecha antes de otro pasado →",
         "choices": [
-          "presente",
           "futuro",
           "había cantado (ya hecho antes de otro pasado)",
-          "modo de mandatos (no es de esta semana)"
+          "modo de mandatos (no es de esta semana)",
+          "presente"
         ],
         "answer": "había cantado (ya hecho antes de otro pasado)"
       },

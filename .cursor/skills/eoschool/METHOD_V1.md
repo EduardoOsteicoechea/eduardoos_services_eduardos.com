@@ -48,22 +48,22 @@ Deepen days re-teach the focus point fully (assume day 1 may be forgotten). Intr
 Example (esp deepen -ar): define *conjugar*, *raíz*, *desinencia* in Idea central; show cantar → cant- + -o/-as/-a in Explora; then Práctica / Error común.  
 Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = palabra ayudante* (not «existe»).
 
-### Subjects (12 short codes)
+### Subjects (12 short codes) — menu / class number order
 
-| Code | Subject |
-| --- | --- |
-| `mat` | Matemáticas |
-| `esp` | Español |
-| `ing` | Inglés (same weekly theme as `esp`, separate document, usually `locale: "en"`) |
-| `his` | Historia |
-| `lat` | Latín |
-| `LT` | Línea de tiempo |
-| `geo` | Geografía |
-| `cie` | Ciencias |
-| `art` | Bellas artes |
-| `pro` | Proyecto |
-| `teb` | Teología bíblica |
-| `exe` | Exégesis |
+| # | Code | Subject |
+| --- | --- | --- |
+| 1 | `teb` | Teología bíblica |
+| 2 | `exe` | Exégesis |
+| 3 | `LT` | Línea de tiempo |
+| 4 | `his` | Historia |
+| 5 | `geo` | Geografía |
+| 6 | `art` | Bellas artes |
+| 7 | `mat` | Matemáticas |
+| 8 | `esp` | Español |
+| 9 | `ing` | Inglés (same weekly theme as `esp`, separate document, usually `locale: "en"`) |
+| 10 | `lat` | Latín |
+| 11 | `cie` | Ciencias |
+| 12 | `pro` | Proyecto |
 
 ## Dual storage (edit both)
 

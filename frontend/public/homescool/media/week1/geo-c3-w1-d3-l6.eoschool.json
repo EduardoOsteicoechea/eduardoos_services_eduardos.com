@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Memorizar capitales clave",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Un estado es una parte política de Venezuela. La capital es su ciudad principal. Memorizar pares estado–capital es como aprender nombres y apellidos: van juntos.\n\nSigamos juntos. ejemplos: Miranda–Los Teques; Zulia–Maracaibo; Bolívar–Ciudad Bolívar; Distrito Capital–Caracas.\n\nAhora mira esto con calma. región o grupo de hoy («Memorizar capitales clave»): aprende los pares del bloque y comprueba en un mapa mental. Memoriza capitales clave con tarjetas y voz alta. Mezcla el mazo. Pregunta capital, no estado primero. Práctica: Veinte tarjetas repaso de pares clave. Error común: Miranda–Caracas.\n\nPráctica: Ahora te toca a ti. escribe cinco pares estado–capital del bloque. Tápate la capital y recuérdala; luego al revés.\n\nError común: Antes de terminar, un aviso. confundir una ciudad grande con la capital (por ejemplo pensar que Maracay es capital de Miranda)."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Un estado es una parte política de Venezuela. La capital es su ciudad principal. Memorizar pares estado–capital es como aprender nombres y apellidos: van juntos.\n\nSigamos juntos. ejemplos: Miranda–Los Teques; Zulia–Maracaibo; Bolívar–Ciudad Bolívar; Distrito Capital–Caracas.\n\nAhora mira esto con calma. región o grupo de hoy («Memorizar capitales clave»): aprende los pares del bloque y comprueba en un mapa mental. Memoriza capitales clave con tarjetas y voz alta. Mezcla el mazo. Pregunta capital, no estado primero. Práctica: Veinte tarjetas repaso de pares clave. Error común: Miranda–Caracas.\n\nPráctica: Ahora te toca a ti. escribe cinco pares estado–capital del bloque. Cubre la capital y recuérdala; luego al revés.\n\nError a corregir: Vigila este tropiezo frecuente: : Antes de terminar, un aviso. confundir una ciudad grande con la capital (por ejemplo pensar que Maracay es capital de Miranda)."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "Total de entidades federales en la lección:",
         "choices": [
-          "22",
           "24",
           "26",
-          "18"
+          "18",
+          "22"
         ],
         "answer": "24"
       },
@@ -43,9 +43,9 @@
         "prompt": "Capital del Distrito Capital:",
         "choices": [
           "Caracas",
-          "Maracaibo",
           "Valencia",
-          "Barquisimeto"
+          "Barquisimeto",
+          "Maracaibo"
         ],
         "answer": "Caracas"
       },
@@ -55,10 +55,10 @@
         "type": "mcq",
         "prompt": "Capital de Zulia:",
         "choices": [
-          "Maracaibo",
           "Cabimas",
-          "Ciudad Ojeda",
-          "Machiques"
+          "Maracaibo",
+          "Machiques",
+          "Ciudad Ojeda"
         ],
         "answer": "Maracaibo"
       },
@@ -68,9 +68,9 @@
         "type": "mcq",
         "prompt": "Capital de Carabobo:",
         "choices": [
-          "Valencia",
-          "Puerto Cabello",
           "Guacara",
+          "Puerto Cabello",
+          "Valencia",
           "Mariara"
         ],
         "answer": "Valencia"
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Capital de Miranda:",
         "choices": [
-          "Los Teques",
-          "Petare",
           "Guarenas",
-          "Charallave"
+          "Charallave",
+          "Petare",
+          "Los Teques"
         ],
         "answer": "Los Teques"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "23 estados + DC =",
         "choices": [
-          "23",
-          "24",
           "25",
-          "12"
+          "12",
+          "23",
+          "24"
         ],
         "answer": "24"
       },
@@ -107,10 +107,10 @@
         "type": "mcq",
         "prompt": "Tema:",
         "choices": [
+          "solo Europa",
           "estados y capitales de Venezuela",
           "solo ríos",
-          "solo climas",
-          "solo Europa"
+          "solo climas"
         ],
         "answer": "estados y capitales de Venezuela"
       },
@@ -133,10 +133,10 @@
         "type": "mcq",
         "prompt": "Capital de Aragua:",
         "choices": [
-          "Maracay",
           "La Victoria",
           "Cagua",
-          "Turmero"
+          "Turmero",
+          "Maracay"
         ],
         "answer": "Maracay"
       },
@@ -147,9 +147,9 @@
         "prompt": "Capital de Táchira:",
         "choices": [
           "San Cristóbal",
-          "Táriba",
           "Rubio",
-          "San Antonio"
+          "San Antonio",
+          "Táriba"
         ],
         "answer": "San Cristóbal"
       },
@@ -159,10 +159,10 @@
         "type": "mcq",
         "prompt": "Capital de Bolívar:",
         "choices": [
-          "Ciudad Bolívar",
           "Puerto Ordaz",
-          "Upata",
-          "El Callao"
+          "El Callao",
+          "Ciudad Bolívar",
+          "Upata"
         ],
         "answer": "Ciudad Bolívar"
       },
@@ -173,8 +173,8 @@
         "prompt": "Hoy profundizas:",
         "choices": [
           "por qué decimos 24 / mapa de entidades",
-          "solo un municipio",
           "solo Europa",
+          "solo un municipio",
           "solo Asia"
         ],
         "answer": "por qué decimos 24 / mapa de entidades"
@@ -185,10 +185,10 @@
         "type": "mcq",
         "prompt": "Capital de Mérida:",
         "choices": [
-          "Mérida",
           "El Vigía",
+          "Tovar",
           "Ejido",
-          "Tovar"
+          "Mérida"
         ],
         "answer": "Mérida"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "Caracas es capital del DC y…",
         "choices": [
-          "de la República",
-          "solo de Zulia",
           "solo de Miranda",
-          "solo de Falcón"
+          "solo de Falcón",
+          "de la República",
+          "solo de Zulia"
         ],
         "answer": "de la República"
       },
@@ -211,10 +211,10 @@
         "type": "mcq",
         "prompt": "Capital de Anzoátegui:",
         "choices": [
+          "El Tigre",
           "Barcelona",
           "Puerto La Cruz",
-          "Lechería",
-          "El Tigre"
+          "Lechería"
         ],
         "answer": "Barcelona"
       },
@@ -224,9 +224,9 @@
         "type": "mcq",
         "prompt": "¿Porlamar es capital de Nueva Esparta?",
         "choices": [
-          "Sí",
-          "No (es La Asunción)",
           "Sí, y también de Sucre",
+          "No (es La Asunción)",
+          "Sí",
           "Sí, y de Monagas"
         ],
         "answer": "No (es La Asunción)"
@@ -237,10 +237,10 @@
         "type": "mcq",
         "prompt": "Capital de Sucre:",
         "choices": [
-          "Cumaná",
-          "Carúpano",
           "Güiria",
-          "Río Caribe"
+          "Río Caribe",
+          "Carúpano",
+          "Cumaná"
         ],
         "answer": "Cumaná"
       },
@@ -251,9 +251,9 @@
         "prompt": "Capital de Falcón:",
         "choices": [
           "Punto Fijo",
-          "Coro",
+          "Dabajuro",
           "Churuguara",
-          "Dabajuro"
+          "Coro"
         ],
         "answer": "Coro"
       },
@@ -263,10 +263,10 @@
         "type": "mcq",
         "prompt": "Capital de Trujillo:",
         "choices": [
-          "Valera",
           "Trujillo",
-          "Boconó",
-          "Motatán"
+          "Motatán",
+          "Valera",
+          "Boconó"
         ],
         "answer": "Trujillo"
       },
@@ -277,8 +277,8 @@
         "prompt": "Punto de hoy:",
         "choices": [
           "Capitales clave",
-          "solo el Orinoco",
           "solo el Ávila",
+          "solo el Orinoco",
           "solo el clima"
         ],
         "answer": "Capitales clave"
@@ -289,10 +289,10 @@
         "type": "mcq",
         "prompt": "Capital de Nueva Esparta:",
         "choices": [
-          "La Asunción",
           "Porlamar",
           "Pampatar",
-          "Juan Griego"
+          "Juan Griego",
+          "La Asunción"
         ],
         "answer": "La Asunción"
       },
@@ -303,9 +303,9 @@
         "prompt": "Capital de Portuguesa:",
         "choices": [
           "Acarigua",
-          "Guanare",
           "Araure",
-          "Biscucuy"
+          "Biscucuy",
+          "Guanare"
         ],
         "answer": "Guanare"
       },
@@ -315,10 +315,10 @@
         "type": "mcq",
         "prompt": "Capital de Yaracuy:",
         "choices": [
-          "Yaritagua",
           "San Felipe",
-          "Chivacoa",
-          "Nirgua"
+          "Yaritagua",
+          "Nirgua",
+          "Chivacoa"
         ],
         "answer": "San Felipe"
       },
@@ -328,9 +328,9 @@
         "type": "mcq",
         "prompt": "Capital de Monagas:",
         "choices": [
-          "Maturín",
-          "Punta de Mata",
           "Caripito",
+          "Punta de Mata",
+          "Maturín",
           "Temblador"
         ],
         "answer": "Maturín"

@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Practicar 9–12",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Multiplicar es juntar grupos iguales. El producto es el resultado. Hoy profundizamos las tablas 5 a 8. Los múltiplos de 5 terminan en 0 o 5. 6 es el doble de 3; 8 es el doble de 4; el 7 se memoriza con práctica (42, 49, 56, 63).\n\nSigamos juntos. ejemplos: 5×9=45; 6×7=42 (doble de 3×7=21); 7×8=56; 8×8=64.\n\nPráctica: Ahora te toca a ti. escribe de memoria la serie del bloque 5 a 8 (al menos dos tablas completas ×1 a ×12). Luego resuelve cinco productos en desorden y di cómo los comprobaste.\n\nError común: Antes de terminar, un aviso. confundir multiplicar con sumar solo los dos factores (3×4 no es 7).\n\nConsejo: si dudas, reconstruye con sumas repetidas y vuelve a la forma ×."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Multiplicar es juntar grupos iguales. El producto es el resultado. Hoy profundizamos las tablas 5 a 8. Los múltiplos de 5 terminan en 0 o 5. 6 es el doble de 3; 8 es el doble de 4; el 7 se memoriza con práctica (42, 49, 56, 63).\n\nSigamos juntos. ejemplos: 5×9=45; 6×7=42 (doble de 3×7=21); 7×8=56; 8×8=64.\n\nPráctica: Ahora te toca a ti. escribe de memoria la serie del bloque 5 a 8 (al menos dos tablas completas ×1 a ×12). Luego resuelve cinco productos en desorden y di cómo los comprobaste.\n\nError a corregir: Vigila este tropiezo frecuente: : Antes de terminar, un aviso. confundir multiplicar con sumar solo los dos factores (3×4 no es 7).\n\nConsejo: si dudas, reconstruye con sumas repetidas y vuelve a la forma ×."
       }
     ],
     "summary": ""
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 5×6?",
         "choices": [
-          "25",
           "30",
           "35",
-          "11"
+          "11",
+          "25"
         ],
         "answer": "30"
       },
@@ -56,9 +56,9 @@
         "prompt": "¿Cuánto es 7×8?",
         "choices": [
           "54",
-          "56",
+          "48",
           "63",
-          "48"
+          "56"
         ],
         "answer": "56"
       },
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 9×9?",
         "choices": [
-          "72",
           "81",
-          "99",
-          "18"
+          "18",
+          "72",
+          "99"
         ],
         "answer": "81"
       },
@@ -82,8 +82,8 @@
         "prompt": "¿Cuánto es 11×3?",
         "choices": [
           "33",
-          "14",
           "111",
+          "14",
           "30"
         ],
         "answer": "33"
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 12×12?",
         "choices": [
-          "124",
           "132",
+          "120",
           "144",
-          "120"
+          "124"
         ],
         "answer": "144"
       },
@@ -107,10 +107,10 @@
         "type": "mcq",
         "prompt": "El punto 1 cubre las tablas…",
         "choices": [
-          "1 a 4",
-          "5 a 8",
           "9 a 12",
-          "solo el 10"
+          "solo el 10",
+          "1 a 4",
+          "5 a 8"
         ],
         "answer": "1 a 4"
       },
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 4×8?",
         "choices": [
-          "28",
           "32",
-          "36",
-          "24"
+          "28",
+          "24",
+          "36"
         ],
         "answer": "32"
       },
@@ -133,9 +133,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 4×7?",
         "choices": [
-          "24",
-          "28",
           "32",
+          "28",
+          "24",
           "21"
         ],
         "answer": "28"
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 3×9?",
         "choices": [
-          "27",
-          "24",
           "36",
-          "18"
+          "18",
+          "24",
+          "27"
         ],
         "answer": "27"
       },
@@ -160,9 +160,9 @@
         "prompt": "¿Cuánto es 2×12?",
         "choices": [
           "22",
-          "24",
+          "14",
           "20",
-          "14"
+          "24"
         ],
         "answer": "24"
       },
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "1× cualquier número da…",
         "choices": [
-          "cero",
           "el mismo número",
-          "el doble",
-          "siempre 1"
+          "siempre 1",
+          "cero",
+          "el doble"
         ],
         "answer": "el mismo número"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "Tablas 1 a 4",
           "Tablas 5 a 8",
           "Tablas 9 a 12",
-          "Divisiones"
+          "Divisiones",
+          "Tablas 1 a 4"
         ],
         "answer": "Tablas 1 a 4"
       },
@@ -212,9 +212,9 @@
         "prompt": "¿Cuánto es 3×8?",
         "choices": [
           "21",
-          "24",
           "27",
-          "18"
+          "18",
+          "24"
         ],
         "answer": "24"
       },
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "4×6 (doble del doble de 12) es…",
         "choices": [
-          "18",
           "24",
-          "20",
-          "36"
+          "18",
+          "36",
+          "20"
         ],
         "answer": "24"
       },
@@ -237,9 +237,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 6×7?",
         "choices": [
-          "42",
-          "36",
           "48",
+          "36",
+          "42",
           "40"
         ],
         "answer": "42"
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 8×8?",
         "choices": [
-          "56",
           "64",
+          "48",
           "72",
-          "48"
+          "56"
         ],
         "answer": "64"
       },
@@ -263,10 +263,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 5×9?",
         "choices": [
-          "40",
-          "45",
           "50",
-          "35"
+          "35",
+          "40",
+          "45"
         ],
         "answer": "45"
       },
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "Los múltiplos de 5 terminan en…",
         "choices": [
+          "siempre 2",
           "solo 0",
           "solo 5",
-          "0 o 5",
-          "siempre 2"
+          "0 o 5"
         ],
         "answer": "0 o 5"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "Tablas 1 a 4",
           "Tablas 5 a 8",
           "Tablas 9 a 12",
-          "Fracciones"
+          "Fracciones",
+          "Tablas 1 a 4"
         ],
         "answer": "Tablas 5 a 8"
       },
@@ -316,9 +316,9 @@
         "prompt": "¿Cuánto es 8×6?",
         "choices": [
           "42",
-          "48",
+          "36",
           "54",
-          "36"
+          "48"
         ],
         "answer": "48"
       },
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "Si 3×9=27, entonces 6×9 es…",
         "choices": [
-          "45",
           "54",
-          "63",
-          "36"
+          "36",
+          "45",
+          "63"
         ],
         "answer": "54"
       },
@@ -342,8 +342,8 @@
         "prompt": "¿Cuánto es 9×6?",
         "choices": [
           "54",
-          "56",
           "63",
+          "56",
           "45"
         ],
         "answer": "54"
@@ -354,10 +354,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 12×5?",
         "choices": [
-          "50",
           "60",
+          "65",
           "55",
-          "65"
+          "50"
         ],
         "answer": "60"
       },
@@ -367,10 +367,10 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 11×11?",
         "choices": [
-          "111",
-          "121",
           "122",
-          "110"
+          "110",
+          "111",
+          "121"
         ],
         "answer": "121"
       },
@@ -380,10 +380,10 @@
         "type": "mcq",
         "prompt": "Truco de la tabla del 9:",
         "choices": [
-          "suman 10",
           "los dígitos suman 9",
-          "siempre terminan en 9",
-          "igual al 8"
+          "suman 10",
+          "igual al 8",
+          "siempre terminan en 9"
         ],
         "answer": "los dígitos suman 9"
       },
@@ -393,9 +393,9 @@
         "type": "mcq",
         "prompt": "¿Cuánto es 10×12?",
         "choices": [
-          "110",
-          "120",
           "100",
+          "120",
+          "110",
           "22"
         ],
         "answer": "120"
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "Tablas 1 a 4",
-          "Tablas 5 a 8",
           "Tablas 9 a 12",
-          "Potencias"
+          "Potencias",
+          "Tablas 5 a 8",
+          "Tablas 1 a 4"
         ],
         "answer": "Tablas 9 a 12"
       },
@@ -420,9 +420,9 @@
         "prompt": "¿Cuánto es 9×8?",
         "choices": [
           "72",
-          "81",
+          "63",
           "64",
-          "63"
+          "81"
         ],
         "answer": "72"
       },
@@ -432,10 +432,10 @@
         "type": "mcq",
         "prompt": "12×7 = 10×7 + 2×7 da…",
         "choices": [
-          "74",
           "84",
-          "94",
-          "77"
+          "77",
+          "74",
+          "94"
         ],
         "answer": "84"
       },

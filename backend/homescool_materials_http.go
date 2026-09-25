@@ -196,6 +196,79 @@ func (a *App) getHomescoolMaterialDocumentHandler(w http.ResponseWriter, r *http
 	_, _ = w.Write(raw)
 }
 
+// PATCH /api/homescool/materials/{materialId}/support — admin-only supportUrl update.
+func (a *App) patchHomescoolMaterialSupportHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.materials.support.enter")
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.mustLogf(r, "homescool.materials.support.csrf_or_origin")
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	user, owners, ok := a.requireHomescoolMaterialsAccess(w, r)
+	if !ok {
+		a.mustLogf(r, "homescool.materials.support.denied")
+		return
+	}
+	if user == nil || user.Role != roleAdmin {
+		a.mustLogf(r, "homescool.materials.support.not_admin")
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("materialId"))
+	m, found, err := a.homescool.GetMaterial(r.Context(), "", id)
+	if err != nil {
+		a.mustLogf(r, "homescool.materials.support.error", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found || !homescoolOwnerAllowed(owners, m.OwnerUserID) {
+		a.mustLogf(r, "homescool.materials.support.miss")
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if m.Format != eoschoolFormatName {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body struct {
+		SupportURL string `json:"supportUrl"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 8<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	raw, err := a.homescool.ReadMaterialDocument(r.Context(), m)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	doc, err := parseEoschoolDocument(raw)
+	if err != nil {
+		a.mustLogf(r, "homescool.materials.support.parse_err", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	doc.SupportURL = strings.TrimSpace(body.SupportURL)
+	out, err := marshalEoschoolDocument(doc)
+	if err != nil {
+		a.mustLogf(r, "homescool.materials.support.validate_err", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	saved, err := a.homescool.UpsertMaterial(r.Context(), m, out)
+	if err != nil {
+		a.mustLogf(r, "homescool.materials.support.upsert_err", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.mustLogf(r, "homescool.materials.support.ok", "id", saved.ID, "has_url", doc.SupportURL != "")
+	a.auditEvent(r, "homescool_material_support", "ok", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"material":   saved,
+		"supportUrl": doc.SupportURL,
+	})
+}
+
 func (a *App) getHomescoolMaterialPDFHandler(w http.ResponseWriter, r *http.Request) {
 	a.mustLogf(r, "homescool.materials.pdf.enter")
 	_, owners, ok := a.requireHomescoolMaterialsAccess(w, r)

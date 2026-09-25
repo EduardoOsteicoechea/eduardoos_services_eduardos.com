@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Profundizar: una sola palabra",
-        "body": "Hoy nos quedamos solo con los tiempos de una palabra, sin haber. Verbo = acción; conjugar = cambiarlo según quién y cuándo; raíz = la parte que se conserva; desinencia = el final que cambia. Con estas cuatro ideas puedes construir una forma simple, es decir, una forma de una sola palabra.\n\nRepasemos los cinco relojes contando el mismo día: presente = ahora o costumbre; imperfecto = pasado que dura; pretérito = pasado cerrado; futuro = después; condicional = lo que sería. Mira el cuento: «Cuando era niño cantaba» deja una costumbre abierta; «Ayer canté» cierra el hecho.\n\nNo es escoger entre cantaba y canté por cómo suenan más bonitos. La historia decide: si estás pintando un fondo o una costumbre, usa cantaba; si cuentas un hecho que terminó, usa canté. Tampoco necesitas dos palabras para que un tiempo sea importante.\n\nPráctica: Escribe cinco oraciones con un mismo verbo y estos marcos: hoy, cuando era niño, ayer, mañana y si pudiera. En cada una nombra el tiempo y explica por qué encaja.\n\nError común: Decir «Ayer iba al cine» cuando quieres contar que fuiste y volviste. Si el viaje cerró, di «Ayer fui al cine».\n\nMeta: Poder decir sin mirar qué «cuándo» marca cada una de las cinco formas de yo."
+        "body": "Hoy nos quedamos solo con los tiempos de una palabra, sin haber. Verbo = acción; conjugar = cambiarlo según quién y cuándo; raíz = la parte que se conserva; desinencia = el final que cambia. Con estas cuatro ideas puedes construir una forma simple, es decir, una forma de una sola palabra.\n\nRepasemos los cinco relojes contando el mismo día: presente = ahora o costumbre; imperfecto = pasado que dura; pretérito = pasado cerrado; futuro = después; condicional = lo que sería. Mira el cuento: «Cuando era niño cantaba» deja una costumbre abierta; «Ayer canté» cierra el hecho.\n\nNo es escoger entre cantaba y canté por cómo suenan más bonitos. La historia decide: si estás pintando un fondo o una costumbre, usa cantaba; si cuentas un hecho que terminó, usa canté. Tampoco necesitas dos palabras para que un tiempo sea importante.\n\nPráctica: Escribe cinco oraciones con un mismo verbo y estos marcos: hoy, cuando era niño, ayer, mañana y si pudiera. En cada una nombra el tiempo y explica por qué encaja.\n\nError común: No te quedes con esta confusión: : Decir «Ayer iba al cine» cuando quieres contar que fuiste y volviste. Si el viaje cerró, di «Ayer fui al cine».\n\nMeta: Poder decir sin mirar qué «cuándo» marca cada una de las cinco formas de yo."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "¿Cuál es un tiempo simple del indicativo?",
         "choices": [
-          "he cantado (ya hecho, importa ahora)",
-          "había cantado (ya hecho antes de otro pasado)",
           "pretérito",
-          "haber + forma ya hecha (-ado/-ido)"
+          "haber + forma ya hecha (-ado/-ido)",
+          "he cantado (ya hecho, importa ahora)",
+          "había cantado (ya hecho antes de otro pasado)"
         ],
         "answer": "pretérito"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "¿Cuál es un tiempo compuesto?",
         "choices": [
+          "futuro simple",
           "presente",
           "imperfecto",
-          "había cantado (ya hecho antes de otro pasado)",
-          "futuro simple"
+          "había cantado (ya hecho antes de otro pasado)"
         ],
         "answer": "había cantado (ya hecho antes de otro pasado)"
       },
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "¿Qué palabra ayudante (haber) usan los compuestos del indicativo?",
         "choices": [
-          "ser",
-          "haber",
           "estar",
-          "ir"
+          "ir",
+          "haber",
+          "ser"
         ],
         "answer": "haber"
       },
@@ -82,9 +82,9 @@
         "prompt": "Otro nombre del he cantado (ya hecho, importa ahora):",
         "choices": [
           "pretérito perfecto compuesto",
-          "imperfecto",
+          "gerundio",
           "futuro simple",
-          "gerundio"
+          "imperfecto"
         ],
         "answer": "pretérito perfecto compuesto"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "¿Qué modo estudias esta semana?",
         "choices": [
-          "otro modo (deseos; no es de esta semana)",
           "indicativo",
-          "modo de mandatos (no es de esta semana)",
-          "infinitivo"
+          "infinitivo",
+          "otro modo (deseos; no es de esta semana)",
+          "modo de mandatos (no es de esta semana)"
         ],
         "answer": "indicativo"
       },
@@ -108,8 +108,8 @@
         "prompt": "¿Cuántos tiempos simples listamos?",
         "choices": [
           "3",
-          "4",
           "5",
+          "4",
           "10"
         ],
         "answer": "5"
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "¿Cuántos tiempos compuestos listamos?",
         "choices": [
-          "3",
           "4",
+          "10",
           "5",
-          "10"
+          "3"
         ],
         "answer": "5"
       },
@@ -134,9 +134,9 @@
         "prompt": "Presente de «indicar» (yo):",
         "choices": [
           "indiqué",
-          "indico",
           "indicaba",
-          "indicaré"
+          "indicaré",
+          "indico"
         ],
         "answer": "indico"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Imperfecto de «cantar» (ella):",
         "choices": [
-          "cantó",
           "cantaba",
-          "cantará",
-          "ha cantado"
+          "cantó",
+          "ha cantado",
+          "cantará"
         ],
         "answer": "cantaba"
       },
@@ -159,9 +159,9 @@
         "type": "mcq",
         "prompt": "Pretérito de «vivir» (nosotros):",
         "choices": [
-          "vivíamos",
-          "vivimos",
           "viviremos",
+          "vivimos",
+          "vivíamos",
           "hemos vivido"
         ],
         "answer": "vivimos"
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Futuro de «salir» (tú):",
         "choices": [
-          "sales",
-          "salías",
           "saldrás",
-          "has salido"
+          "has salido",
+          "salías",
+          "sales"
         ],
         "answer": "saldrás"
       },
@@ -186,9 +186,9 @@
         "prompt": "Condicional de «poder» (yo):",
         "choices": [
           "pude",
-          "podía",
+          "podría",
           "podré",
-          "podría"
+          "podía"
         ],
         "answer": "podría"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "¿El imperfecto suele expresar…?",
         "choices": [
+          "deseo otro modo (deseos; no es de esta semana)",
           "acción acabada puntual",
           "hábito o pasado en curso",
-          "orden",
-          "deseo otro modo (deseos; no es de esta semana)"
+          "orden"
         ],
         "answer": "hábito o pasado en curso"
       },
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Pretérito de «cantar» (yo):",
         "choices": [
-          "canto",
           "cantaba",
           "canté",
-          "cantaré"
+          "cantaré",
+          "canto"
         ],
         "answer": "canté"
       }

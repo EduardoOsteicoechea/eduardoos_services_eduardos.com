@@ -25,17 +25,38 @@ import "../../styles/homescool-workspace.css";
         <h2 class="homescool-dhs__heading" id="homescool-dhs-materia">Materia</h2>
         <div class="homescool-dhs__grid homescool-dhs__grid--subjects" role="group" aria-labelledby="homescool-dhs-materia" data-homescool-subjects></div>
       </section>
-      <button
-        class="homescool-dhs__print"
-        type="button"
-        data-homescool-print
-        title="Descargar PDF del material"
-        aria-label="Descargar PDF del material"
-        disabled
-      >
-        <span class="material-symbols-outlined" aria-hidden="true">download</span>
-        PDF
-      </button>
+      <div class="homescool-dhs__print-row" data-homescool-print-row>
+        <button
+          class="homescool-dhs__print"
+          type="button"
+          data-homescool-print
+          data-print-mode="current"
+          title="Descargar PDF de la clase actual"
+          aria-label="Descargar PDF de la clase actual"
+          disabled
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          PDF
+        </button>
+        <button
+          class="homescool-dhs__print-menu-btn icon-btn"
+          type="button"
+          data-homescool-print-menu
+          title="Opciones de impresión"
+          aria-label="Opciones de impresión"
+          aria-expanded="false"
+          aria-controls="homescool-print-tray"
+          disabled
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">more_vert</span>
+        </button>
+        <div class="homescool-dhs__print-tray" id="homescool-print-tray" data-homescool-print-tray hidden>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="current">Clase actual</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="subject-week">Clase actual, todos los días</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="day-all">Día actual, todas las materias</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="week-all">Todas las materias, toda la semana</button>
+        </div>
+      </div>
     </div>
   </Fragment>
 
@@ -48,6 +69,18 @@ import "../../styles/homescool-workspace.css";
 
   <section class="product-workspace homescool-workspace" data-homescool-workspace hidden>
     <div class="product-workspace__main">
+      <div class="homescool-support-admin" data-homescool-support-admin hidden>
+        <label class="homescool-support-admin__label" for="homescool-support-url">Link de apoyo (admin)</label>
+        <input
+          id="homescool-support-url"
+          class="homescool-support-admin__input"
+          type="url"
+          data-homescool-support-input
+          placeholder="https://…"
+          autocomplete="off"
+        />
+        <button type="button" class="homescool-support-admin__save" data-homescool-support-save>Guardar</button>
+      </div>
       <p class="product-workspace__status" data-homescool-banner>Loading…</p>
       <div class="homescool-workspace__stage" data-homescool-stage>
         <div class="homescool-workspace__overlay" data-homescool-empty hidden>
@@ -67,6 +100,7 @@ import "../../styles/homescool-workspace.css";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
+  import { currentCsrf, getCsrf, getMe } from "../../lib/api";
   import {
     fetchHomescoolMaterial,
     fetchHomescoolMaterials,
@@ -80,18 +114,19 @@ import "../../styles/homescool-workspace.css";
     type HomescoolCurriculum,
     type HomescoolCurriculumClass,
   } from "../../lib/homescool-curriculum";
-  import { downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
+  import { captureHomescoolLetterPages, downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
-  import { HOMESCOOL_SUBJECTS, renderEoschoolPages } from "../../lib/homescool-eoschool";
-  import { mustLog } from "../../lib/dev-log";
+  import { HOMESCOOL_SUBJECTS, renderEoschoolPages, subjectClassNumber } from "../../lib/homescool-eoschool";
+  import { hcLog, mountHomescoolDebugPanel } from "../../lib/homescool-debug";
 
   const LEVEL = 6;
-  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "mat" };
+  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "teb" };
   const log = (step: string, detail: Record<string, unknown> = {}) => {
-    if (mustLog) console.log("[homescool-workspace]", step, detail);
+    hcLog("workspace", step, detail);
   };
 
   type CellSource = "mongo" | "fe-backup";
+  type PrintMode = "current" | "subject-week" | "day-all" | "week-all";
 
   type WorkspaceCell = {
     key: string;
@@ -113,10 +148,13 @@ import "../../styles/homescool-workspace.css";
   let sheetsReady = false;
   let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
+  let currentDoc: EoschoolDocument | null = null;
+  let isAdmin = false;
   let openSeq = 0;
   let bootSeq = 0;
   let selection: Selection = { ...DEFAULT_SELECTION };
   let printBound = false;
+  let supportBound = false;
 
   function qs<T extends Element>(sel: string): T | null {
     return document.querySelector(sel) as T | null;
@@ -126,7 +164,6 @@ import "../../styles/homescool-workspace.css";
     return Array.from(document.querySelectorAll(sel)) as T[];
   }
 
-  /** Prefer the live Homescool rail; fall back to first match (ClientRouter can leave duplicates). */
   function dhsRoot(): HTMLElement | null {
     const roots = qsa<HTMLElement>("[data-homescool-dhs]");
     return roots[roots.length - 1] ?? null;
@@ -182,7 +219,7 @@ import "../../styles/homescool-workspace.css";
         if (a.cycle !== b.cycle) return a.cycle - b.cycle;
         if (a.week !== b.week) return a.week - b.week;
         if (a.day !== b.day) return a.day - b.day;
-        return a.subject.localeCompare(b.subject);
+        return subjectClassNumber(a.subject) - subjectClassNumber(b.subject);
       });
     return rows[0];
   }
@@ -201,7 +238,6 @@ import "../../styles/homescool-workspace.css";
     return levelCells().find((c) => c.key === key);
   }
 
-  /** Keep selection on a published cell; never fall back to an unpublished ciclo/semana. */
   function ensurePublishedSelection(reason: string): boolean {
     if (findCell()) return true;
     const near =
@@ -259,7 +295,6 @@ import "../../styles/homescool-workspace.css";
     curriculum: HomescoolCurriculum | null | undefined,
   ): WorkspaceCell[] {
     const byKey = new Map<string, WorkspaceCell>();
-    // Curriculum JSON is the published allowlist. Without it, show nothing from Mongo.
     if (!curriculum?.classes?.length) return [];
 
     const publishedKeys = new Set(
@@ -312,7 +347,6 @@ import "../../styles/homescool-workspace.css";
   }
 
   function syncChipStates() {
-    // Update every DHS copy — ClientRouter can leave a stale rail in the DOM.
     for (const root of qsa<HTMLElement>("[data-homescool-dhs]")) {
       root.querySelectorAll("[data-cycle]").forEach((el) => {
         if (!(el instanceof HTMLElement)) return;
@@ -360,7 +394,6 @@ import "../../styles/homescool-workspace.css";
     return btn;
   }
 
-  /** Rebuild cycle/week/day/subject chips from published cells only (no empty C1/S1 grid). */
   function rebuildPublishedChips() {
     const cyclesHost = dhsQs<HTMLElement>("[data-homescool-cycles]");
     const weeksHost = dhsQs<HTMLElement>("[data-homescool-weeks]");
@@ -421,7 +454,8 @@ import "../../styles/homescool-workspace.css";
     if (subjectsHost) {
       subjectsHost.replaceChildren();
       for (const code of publishedSubjects(selection.cycle, selection.week, selection.day)) {
-        const btn = makeChip(code);
+        const n = subjectClassNumber(code);
+        const btn = makeChip(n > 0 ? `${n}·${code}` : code);
         btn.dataset.subject = code;
         btn.addEventListener("click", () => {
           if (
@@ -435,7 +469,7 @@ import "../../styles/homescool-workspace.css";
             return;
           }
           selection.subject = code;
-          log("select.subject", { ...selection });
+          log("select.subject", { ...selection, classNo: n });
           rebuildPublishedChips();
           void openSelection();
         });
@@ -446,33 +480,174 @@ import "../../styles/homescool-workspace.css";
     syncChipStates();
   }
 
+  function setPrintTrayOpen(open: boolean) {
+    const tray = dhsQs<HTMLElement>("[data-homescool-print-tray]");
+    const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
+    if (tray) setHidden(tray, !open);
+    if (menuBtn) menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
   function bindPrintOnce() {
     if (printBound) return;
     printBound = true;
     document.addEventListener("click", (ev) => {
       const t = ev.target;
       if (!(t instanceof Element)) return;
-      if (!t.closest("[data-homescool-print]")) return;
-      void downloadCurrentPdf();
+
+      const menuBtn = t.closest("[data-homescool-print-menu]");
+      if (menuBtn) {
+        const tray = dhsQs<HTMLElement>("[data-homescool-print-tray]");
+        const open = tray ? tray.hasAttribute("hidden") : false;
+        setPrintTrayOpen(open);
+        log("print.tray.toggle", { open });
+        return;
+      }
+
+      const opt = t.closest("[data-print-mode]");
+      if (opt instanceof HTMLElement && opt.closest("[data-homescool-print-tray]")) {
+        const mode = (opt.dataset.printMode || "current") as PrintMode;
+        setPrintTrayOpen(false);
+        void downloadPrintMode(mode);
+        return;
+      }
+
+      if (t.closest("[data-homescool-print]") && !t.closest("[data-homescool-print-menu]")) {
+        void downloadPrintMode("current");
+        return;
+      }
+
+      if (!t.closest("[data-homescool-print-row]")) {
+        setPrintTrayOpen(false);
+      }
     });
   }
 
-  async function downloadCurrentPdf() {
-    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
-    const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
-    log("pdf.click", {
-      sheetsReady,
-      materialId: currentMaterialId,
-      disabled: printBtn instanceof HTMLButtonElement ? printBtn.disabled : null,
+  function bindSupportOnce() {
+    if (supportBound) return;
+    supportBound = true;
+    document.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof Element)) return;
+      if (!t.closest("[data-homescool-support-save]")) return;
+      void saveSupportUrl();
     });
-    if (
-      !(printBtn instanceof HTMLButtonElement) ||
-      printBtn.disabled ||
-      !sheetsReady ||
-      !(sheetsHost instanceof HTMLElement)
-    ) {
-      return;
+  }
+
+  function syncSupportAdminUi(doc: EoschoolDocument | null) {
+    const bar = qs<HTMLElement>("[data-homescool-support-admin]");
+    const input = qs<HTMLInputElement>("[data-homescool-support-input]");
+    if (!bar || !input) return;
+    const show = isAdmin && Boolean(currentMaterialId);
+    setHidden(bar, !show);
+    input.value = doc?.supportUrl?.trim() || "";
+    log("support.ui", { show, hasUrl: Boolean(input.value), materialId: currentMaterialId });
+  }
+
+  async function saveSupportUrl() {
+    const input = qs<HTMLInputElement>("[data-homescool-support-input]");
+    if (!input || !currentMaterialId || !isAdmin) return;
+    const supportUrl = input.value.trim();
+    log("support.save.start", { materialId: currentMaterialId, hasUrl: Boolean(supportUrl) });
+    await getCsrf();
+    const headers = new Headers({ Accept: "application/json", "Content-Type": "application/json" });
+    const csrf = currentCsrf();
+    if (csrf) headers.set("X-CSRF-Token", csrf);
+    try {
+      const res = await fetch(`/api/homescool/materials/${encodeURIComponent(currentMaterialId)}/support`, {
+        method: "PATCH",
+        credentials: "include",
+        headers,
+        body: JSON.stringify({ supportUrl }),
+      });
+      const requestId = res.headers.get("X-Request-ID") || "";
+      if (!res.ok) {
+        let message = `No se pudo guardar el link (${res.status})`;
+        try {
+          const body = (await res.json()) as { message?: string };
+          if (body.message) message = body.message;
+        } catch {
+          /* ignore */
+        }
+        showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "" });
+        hcLog("workspace", "support.save.fail", { status: res.status, requestId }, "error");
+        return;
+      }
+      log("support.save.ok", { requestId });
+      await openSelection();
+    } catch (err) {
+      hcLog("workspace", "support.save.error", { err: String(err) }, "error");
+      showErrorModal({ message: "No se pudo guardar el link de apoyo." });
     }
+  }
+
+  async function loadDocForCell(cell: WorkspaceCell): Promise<EoschoolDocument | null> {
+    if (cell.source === "mongo" && cell.materialId) {
+      const res = await fetchHomescoolMaterial(cell.materialId);
+      if (res.error || !res.material) {
+        const backup =
+          cell.curriculum ||
+          (curriculumBackup
+            ? findCurriculumClass(curriculumBackup, {
+                cycle: cell.cycle,
+                week: cell.week,
+                day: cell.day,
+                subject: cell.subject,
+              }, LEVEL)
+            : undefined);
+        return backup ? toEoschoolDocument(backup) : null;
+      }
+      const docUrl = res.documentUrl || `/api/homescool/materials/${cell.materialId}/document`;
+      const docRes = await fetch(docUrl, { credentials: "include" });
+      if (!docRes.ok) throw new Error(`document ${docRes.status}`);
+      const ctype = docRes.headers.get("content-type") || "";
+      if (!ctype.includes("json")) throw new Error("Expected eoschool JSON");
+      return (await docRes.json()) as EoschoolDocument;
+    }
+    const backup =
+      cell.curriculum ||
+      (curriculumBackup
+        ? findCurriculumClass(curriculumBackup, {
+            cycle: cell.cycle,
+            week: cell.week,
+            day: cell.day,
+            subject: cell.subject,
+          }, LEVEL)
+        : undefined);
+    return backup ? toEoschoolDocument(backup) : null;
+  }
+
+  function cellsForPrintMode(mode: PrintMode): WorkspaceCell[] {
+    const base = levelCells().filter(
+      (c) => c.cycle === selection.cycle && c.week === selection.week,
+    );
+    if (mode === "current") {
+      const one = findCell();
+      return one ? [one] : [];
+    }
+    if (mode === "subject-week") {
+      return base
+        .filter((c) => c.subject === selection.subject)
+        .sort((a, b) => a.day - b.day);
+    }
+    if (mode === "day-all") {
+      return base
+        .filter((c) => c.day === selection.day)
+        .sort((a, b) => subjectClassNumber(a.subject) - subjectClassNumber(b.subject));
+    }
+    // week-all
+    return base.sort((a, b) => {
+      const sa = subjectClassNumber(a.subject) - subjectClassNumber(b.subject);
+      if (sa !== 0) return sa;
+      return a.day - b.day;
+    });
+  }
+
+  async function downloadPrintMode(mode: PrintMode) {
+    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
+    const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
+    log("pdf.mode", { mode, sheetsReady, materialId: currentMaterialId });
+
+    if (!sheetsReady) return;
     if (!currentMaterialId) {
       showErrorModal({
         message: "This class is only in the FE backup. Sync to Mongo to download a styled PDF.",
@@ -480,21 +655,115 @@ import "../../styles/homescool-workspace.css";
       });
       return;
     }
-    printBtn.disabled = true;
-    printBtn.setAttribute("aria-busy", "true");
-    const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
-    printBtn.removeAttribute("aria-busy");
-    printBtn.disabled = false;
-    if (!result.ok) {
-      showErrorModal({
-        message: result.error || "Could not download PDF.",
-        requestId: result.requestId,
-        details: result.requestId ? `request_id=${result.requestId}` : "",
-      });
-      log("pdf.fail", { error: result.error, requestId: result.requestId });
+
+    const targets = cellsForPrintMode(mode);
+    if (!targets.length) {
+      showErrorModal({ message: "No hay materiales para esta opción de impresión." });
       return;
     }
-    log("pdf.ok", { materialId: currentMaterialId, requestId: result.requestId });
+
+    if (printBtn) {
+      printBtn.disabled = true;
+      printBtn.setAttribute("aria-busy", "true");
+    }
+    if (menuBtn) menuBtn.disabled = true;
+
+    try {
+      if (mode === "current") {
+        const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
+        if (!(sheetsHost instanceof HTMLElement)) return;
+        const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
+        if (!result.ok) {
+          showErrorModal({
+            message: result.error || "Could not download PDF.",
+            requestId: result.requestId,
+            details: result.requestId ? `request_id=${result.requestId}` : "",
+          });
+          hcLog("workspace", "pdf.fail", { error: result.error, requestId: result.requestId }, "error");
+          return;
+        }
+        log("pdf.ok", { mode, materialId: currentMaterialId, requestId: result.requestId });
+        return;
+      }
+
+      // Multi-doc: render offscreen, capture all pages, post via current material id.
+      const holder = document.createElement("div");
+      holder.style.position = "absolute";
+      holder.style.left = "-10000px";
+      holder.style.top = "0";
+      holder.style.visibility = "hidden";
+      document.body.append(holder);
+      const allPages: string[] = [];
+      try {
+        for (const cell of targets) {
+          const doc = await loadDocForCell(cell);
+          if (!doc) {
+            hcLog("workspace", "pdf.batch.skip", { key: cell.key }, "warn");
+            continue;
+          }
+          const pages = renderEoschoolPages(doc);
+          holder.replaceChildren(...pages);
+          const rasters = await captureHomescoolLetterPages(holder);
+          allPages.push(...rasters);
+          log("pdf.batch.cell", { key: cell.key, pages: rasters.length, total: allPages.length });
+        }
+      } finally {
+        holder.remove();
+      }
+
+      if (!allPages.length) {
+        showErrorModal({ message: "No se pudieron capturar páginas para el PDF." });
+        return;
+      }
+
+      await getCsrf();
+      const headers = new Headers({
+        Accept: "application/pdf, application/json",
+        "Content-Type": "application/json",
+      });
+      const csrf = currentCsrf();
+      if (csrf) headers.set("X-CSRF-Token", csrf);
+      const fileName = `homescool-c${selection.cycle}-w${selection.week}-${mode}.pdf`;
+      const res = await fetch(`/api/homescool/materials/${encodeURIComponent(currentMaterialId)}/print/pdf`, {
+        method: "POST",
+        credentials: "include",
+        headers,
+        body: JSON.stringify({ pages: allPages, fileName }),
+      });
+      const requestId = res.headers.get("X-Request-ID") || "";
+      if (!res.ok) {
+        let message = `PDF download failed (${res.status})`;
+        try {
+          const body = (await res.json()) as { message?: string };
+          if (body.message) message = body.message;
+        } catch {
+          /* ignore */
+        }
+        showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "" });
+        hcLog("workspace", "pdf.batch.fail", { status: res.status, requestId, pages: allPages.length }, "error");
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      a.rel = "noopener";
+      document.body.append(a);
+      a.click();
+      a.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      log("pdf.batch.ok", { mode, pages: allPages.length, requestId, bytes: blob.size });
+    } catch (err) {
+      hcLog("workspace", "pdf.error", { err: String(err), mode }, "error");
+      showErrorModal({ message: "Could not download PDF." });
+    } finally {
+      if (printBtn) {
+        printBtn.removeAttribute("aria-busy");
+        printBtn.disabled = !currentMaterialId;
+      }
+      if (menuBtn) menuBtn.disabled = !currentMaterialId;
+    }
   }
 
   async function boot() {
@@ -504,6 +773,14 @@ import "../../styles/homescool-workspace.css";
     const gate = qs("[data-homescool-gate]");
     const workspace = qs("[data-homescool-workspace]");
     const banner = qs<HTMLElement>("[data-homescool-banner]");
+
+    if (workspace instanceof HTMLElement) {
+      mountHomescoolDebugPanel(workspace);
+    }
+
+    const me = await getMe();
+    isAdmin = me.status === 200 && String(me.data.role || "").toLowerCase() === "admin";
+    log("boot.me", { status: me.status, isAdmin, requestId: me.requestId });
 
     const teacher = await requireService("homescool", { requireSubscription: true });
     if (seq !== bootSeq) return;
@@ -528,6 +805,7 @@ import "../../styles/homescool-workspace.css";
     setHidden(gate, true);
     setHidden(workspace, false);
     bindPrintOnce();
+    bindSupportOnce();
     if (banner) banner.textContent = "Loading materials…";
 
     const [mongoRes, feRes] = await Promise.all([
@@ -563,6 +841,7 @@ import "../../styles/homescool-workspace.css";
       feBackup: cells.filter((c) => c.source === "fe-backup").length,
       cycles: publishedCycles(),
       weeks: publishedWeeks(DEFAULT_SELECTION.cycle),
+      subjectOrder: [...HOMESCOOL_SUBJECTS],
     });
 
     const deep =
@@ -591,11 +870,14 @@ import "../../styles/homescool-workspace.css";
     const emptyMsg = qs<HTMLElement>("[data-homescool-empty-msg]");
     const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
     const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
-    log("openSelection.enter", { ...selection, seq });
+    const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
+    log("openSelection.enter", { ...selection, seq, classNo: subjectClassNumber(selection.subject) });
     sheetsReady = false;
     currentMaterialId = "";
     currentPdfName = "homescool.pdf";
+    currentDoc = null;
     if (printBtn) printBtn.disabled = true;
+    if (menuBtn) menuBtn.disabled = true;
     const match = findCell();
     if (!match) {
       const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
@@ -605,6 +887,7 @@ import "../../styles/homescool-workspace.css";
       if (banner) {
         banner.textContent = `Sin material · c${selection.cycle} s${selection.week} d${selection.day} · ${selection.subject}`;
       }
+      syncSupportAdminUi(null);
       log("openSelection.empty");
       return;
     }
@@ -654,37 +937,43 @@ import "../../styles/homescool-workspace.css";
       }
 
       if (seq !== openSeq) return;
-      // Anchor chips to the document we actually mounted (never drift to C1/S1).
       selection = {
         cycle: doc.cycle,
         week: doc.week,
         day: doc.day,
         subject: doc.subject,
       };
+      currentDoc = doc;
       mountEoschool(doc);
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
       const sourceHint = currentMaterialId ? "Mongo" : "FE backup";
       if (banner) {
-        banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · ${doc.subject} · ${doc.title} · ${sourceHint}`;
+        banner.textContent = `Ciclo ${doc.cycle} · Semana ${doc.week} · Día ${doc.day} · Nivel ${doc.level} · #${subjectClassNumber(doc.subject)} ${doc.subject} · ${doc.title} · ${sourceHint}`;
       }
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       if (printBtn) printBtn.disabled = !currentMaterialId;
+      if (menuBtn) menuBtn.disabled = !currentMaterialId;
+      syncSupportAdminUi(doc);
       rebuildPublishedChips();
       log("openSelection.ready", {
         key: match.key,
         materialId: currentMaterialId,
         source: match.source,
         selection,
+        classNo: subjectClassNumber(doc.subject),
+        supportUrl: Boolean(doc.supportUrl?.trim()),
+        pages: qs("[data-homescool-sheets]")?.querySelectorAll(".homescool-letter-page").length ?? 0,
       });
     } catch (err) {
       if (seq !== openSeq) return;
-      log("openSelection.fail", { err: String(err) });
+      hcLog("workspace", "openSelection.fail", { err: String(err) }, "error");
       setStageMode("empty");
       if (emptyMsg) emptyMsg.textContent = "No se pudo cargar el documento.";
       showErrorModal({ message: "Could not load eoschool document." });
       if (banner) banner.textContent = "Could not load document.";
+      syncSupportAdminUi(null);
     }
   }
 
@@ -693,11 +982,20 @@ import "../../styles/homescool-workspace.css";
     if (!(sheetsHost instanceof HTMLElement)) return;
     sheetsHost.replaceChildren();
     const pages = renderEoschoolPages(doc);
-    for (const page of pages) sheetsHost.append(page);
+    let emptyHero = 0;
+    for (const page of pages) {
+      if (page.children.length <= 1) emptyHero += 1;
+      sheetsHost.append(page);
+    }
+    log("mount.pages", {
+      count: pages.length,
+      emptyHeroSuspects: emptyHero,
+      day: doc.day,
+      subject: doc.subject,
+    });
     setStageMode("sheets");
   }
 
-  // ClientRouter: page modules run once; re-boot on every soft navigation to this page.
   document.addEventListener("astro:page-load", () => {
     if (document.documentElement.getAttribute("data-page") !== "homescool-workspace") return;
     void boot();

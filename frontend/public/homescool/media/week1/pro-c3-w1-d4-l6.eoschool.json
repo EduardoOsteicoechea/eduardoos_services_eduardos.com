@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Por qué",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Un experimento es una prueba ordenada para observar un fenómeno. Hoy: «Guiñando» — persistencia de la visión: el ojo guarda una imagen un instante y el cerebro puede fusionar dos dibujos.\n\nSigamos juntos. haces dos caras (ojo abierto / ojo cerrado), las giras rápido con un lápiz y parece que el ojo guiña.\n\nAhora mira esto con calma. foco («Por qué»): Profundizas por qué ocurre: ciencia de percepción visual. Conecta con películas (fotogramas). Práctica: Párrafo explicativo para niño de tu edad. Error común: Magia sin ciencia.\n\nPráctica: Ahora te toca a ti. lista materiales, numera los pasos y escribe qué viste + por qué ocurre (persistencia de la visión (el ojo guarda la imagen un instante)).\n\nError común: Antes de terminar, un aviso. girar sin haber pegado bien las caras. Si no coinciden, no se ve el efecto."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Un experimento es una prueba ordenada para observar un fenómeno. Hoy: «Guiñando» — persistencia de la visión: el ojo guarda una imagen un instante y el cerebro puede fusionar dos dibujos.\n\nSigamos juntos. haces dos caras (ojo abierto / ojo cerrado), las giras rápido con un lápiz y parece que el ojo guiña.\n\nAhora mira esto con calma. foco («Por qué»): Profundizas por qué ocurre: ciencia de percepción visual. Conecta con películas (fotogramas). Práctica: Párrafo explicativo para niño de tu edad. Error común: Magia sin ciencia.\n\nPráctica: Ahora te toca a ti. lista materiales, numera los pasos y escribe qué viste + por qué ocurre (persistencia de la visión (el ojo guarda la imagen un instante)).\n\nError a corregir: Corrige a tiempo esta idea: : Antes de terminar, un aviso. girar sin haber pegado bien las caras. Si no coinciden, no se ve el efecto."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "El experimento demuestra…",
         "choices": [
-          "persistencia de la visión",
-          "gravedad solo",
           "magnetismo",
-          "fotosíntesis"
+          "fotosíntesis",
+          "gravedad solo",
+          "persistencia de la visión"
         ],
         "answer": "persistencia de la visión"
       },
@@ -43,9 +43,9 @@
         "prompt": "Dibujos van en…",
         "choices": [
           "lados opuestos de la tira",
-          "el mismo lado",
+          "solo el agua",
           "solo el aire",
-          "solo el agua"
+          "el mismo lado"
         ],
         "answer": "lados opuestos de la tira"
       },
@@ -55,10 +55,10 @@
         "type": "mcq",
         "prompt": "Al girar rápido parecen…",
         "choices": [
-          "una imagen fusionada",
           "invisibles siempre",
-          "solo sonido",
-          "solo olor"
+          "solo olor",
+          "una imagen fusionada",
+          "solo sonido"
         ],
         "answer": "una imagen fusionada"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Materiales incluyen…",
         "choices": [
-          "cartulina y lápiz",
           "solo motor",
           "solo GPS",
-          "solo SMTP"
+          "solo SMTP",
+          "cartulina y lápiz"
         ],
         "answer": "cartulina y lápiz"
       },
@@ -95,9 +95,9 @@
         "prompt": "Ejemplo clásico:",
         "choices": [
           "pájaro y jaula",
-          "solo mapa DC",
           "solo Romanos",
-          "solo Kush"
+          "solo Kush",
+          "solo mapa DC"
         ],
         "answer": "pájaro y jaula"
       },
@@ -107,10 +107,10 @@
         "type": "mcq",
         "prompt": "Tijeras requieren…",
         "choices": [
-          "adulto/supervisión",
           "nunca cuidado",
-          "solo fuego",
-          "solo agua"
+          "adulto/supervisión",
+          "solo agua",
+          "solo fuego"
         ],
         "answer": "adulto/supervisión"
       },
@@ -120,9 +120,9 @@
         "type": "mcq",
         "prompt": "Error: dibujos desalineados…",
         "choices": [
-          "no fusionan bien",
-          "mejoran siempre",
           "crean imán",
+          "mejoran siempre",
+          "no fusionan bien",
           "apagan luz"
         ],
         "answer": "no fusionan bien"
@@ -133,10 +133,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "materiales y montaje",
           "solo por qué",
+          "solo geo",
           "solo Colón",
-          "solo geo"
+          "materiales y montaje"
         ],
         "answer": "materiales y montaje"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Dos dibujos deben estar…",
         "choices": [
-          "alineados en lados opuestos",
-          "en el mismo lado",
           "lejos del papel",
-          "bajo agua"
+          "bajo agua",
+          "alineados en lados opuestos",
+          "en el mismo lado"
         ],
         "answer": "alineados en lados opuestos"
       },
@@ -159,10 +159,10 @@
         "type": "mcq",
         "prompt": "Cuerdas o cinta en…",
         "choices": [
+          "solo fuego",
           "extremos de la tira",
           "solo centro",
-          "solo aire",
-          "solo fuego"
+          "solo aire"
         ],
         "answer": "extremos de la tira"
       },
@@ -185,10 +185,10 @@
         "type": "mcq",
         "prompt": "Cartulina sirve para…",
         "choices": [
-          "tira resistente",
           "solo beber",
           "solo comer",
-          "solo dormir"
+          "solo dormir",
+          "tira resistente"
         ],
         "answer": "tira resistente"
       },
@@ -199,9 +199,9 @@
         "prompt": "Plantilla ayuda a…",
         "choices": [
           "alinear dibujos",
-          "evitar girar",
+          "cambiar tema",
           "borrar ciencia",
-          "cambiar tema"
+          "evitar girar"
         ],
         "answer": "alinear dibujos"
       },
@@ -211,10 +211,10 @@
         "type": "mcq",
         "prompt": "Thaumatropo es…",
         "choices": [
-          "juguete óptico de giro",
           "mapa político",
-          "verbo -ar",
-          "tejido"
+          "tejido",
+          "juguete óptico de giro",
+          "verbo -ar"
         ],
         "answer": "juguete óptico de giro"
       },
@@ -225,8 +225,8 @@
         "prompt": "Sin dos lados opuestos no hay…",
         "choices": [
           "fusión óptica",
-          "persistencia",
           "giro",
+          "persistencia",
           "dibujo"
         ],
         "answer": "fusión óptica"
@@ -237,10 +237,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "procedimiento",
           "solo materiales",
+          "solo tablas",
           "solo latín",
-          "solo tablas"
+          "procedimiento"
         ],
         "answer": "procedimiento"
       },
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "Girar debe ser…",
         "choices": [
-          "rápido",
-          "siempre muy lento",
           "imposible",
-          "solo una vez al mes"
+          "solo una vez al mes",
+          "rápido",
+          "siempre muy lento"
         ],
         "answer": "rápido"
       },
@@ -263,10 +263,10 @@
         "type": "mcq",
         "prompt": "Paso final:",
         "choices": [
-          "observar fusión",
           "tirar la tira",
-          "quemar dibujos",
-          "olvidar pasos"
+          "observar fusión",
+          "olvidar pasos",
+          "quemar dibujos"
         ],
         "answer": "observar fusión"
       },
@@ -276,9 +276,9 @@
         "type": "mcq",
         "prompt": "Anotar cuándo funciona ayuda a…",
         "choices": [
-          "mejorar técnica",
-          "evitar ciencia",
           "borrar datos",
+          "evitar ciencia",
+          "mejorar técnica",
           "cambiar tema"
         ],
         "answer": "mejorar técnica"
@@ -289,10 +289,10 @@
         "type": "mcq",
         "prompt": "Girar lento a veces…",
         "choices": [
-          "no muestra efecto claro",
-          "siempre es mejor",
           "apaga sol",
-          "crea imán"
+          "crea imán",
+          "siempre es mejor",
+          "no muestra efecto claro"
         ],
         "answer": "no muestra efecto claro"
       },
@@ -303,9 +303,9 @@
         "prompt": "Procedimiento va después de…",
         "choices": [
           "materiales/montaje",
-          "solo conclusión",
+          "solo mapa",
           "solo examen",
-          "solo mapa"
+          "solo conclusión"
         ],
         "answer": "materiales/montaje"
       },
@@ -315,10 +315,10 @@
         "type": "mcq",
         "prompt": "Observación es paso…",
         "choices": [
-          "científico clave",
           "opcional inútil",
-          "solo arte",
-          "solo latín"
+          "solo latín",
+          "científico clave",
+          "solo arte"
         ],
         "answer": "científico clave"
       },
@@ -341,10 +341,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "por qué ocurre",
           "solo materiales",
           "solo recorte",
-          "solo firma"
+          "solo firma",
+          "por qué ocurre"
         ],
         "answer": "por qué ocurre"
       },
@@ -355,9 +355,9 @@
         "prompt": "Persistencia ocurre en…",
         "choices": [
           "retina y cerebro",
-          "solo cartulina",
           "solo lápiz",
-          "solo cinta"
+          "solo cinta",
+          "solo cartulina"
         ],
         "answer": "retina y cerebro"
       },
@@ -367,10 +367,10 @@
         "type": "mcq",
         "prompt": "Cine usa idea similar de…",
         "choices": [
-          "imágenes sucesivas rápidas",
           "solo una foto",
-          "solo silencio",
-          "solo olor"
+          "imágenes sucesivas rápidas",
+          "solo olor",
+          "solo silencio"
         ],
         "answer": "imágenes sucesivas rápidas"
       },
@@ -380,9 +380,9 @@
         "type": "mcq",
         "prompt": "No es magia es…",
         "choices": [
-          "percepción visual",
-          "telepatía",
           "magnetismo puro",
+          "telepatía",
+          "percepción visual",
           "solo eco"
         ],
         "answer": "percepción visual"
@@ -393,10 +393,10 @@
         "type": "mcq",
         "prompt": "Error: mezcla física en papel es…",
         "choices": [
-          "falso",
           "verdadero",
+          "teorema",
           "ley",
-          "teorema"
+          "falso"
         ],
         "answer": "falso"
       },
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "Flipbooks relacionados con…",
         "choices": [
-          "persistencia",
-          "solo Colón",
           "solo geo",
-          "solo ut"
+          "solo ut",
+          "persistencia",
+          "solo Colón"
         ],
         "answer": "persistencia"
       },
@@ -419,10 +419,10 @@
         "type": "mcq",
         "prompt": "Ojo «guarda» imagen…",
         "choices": [
+          "nunca",
           "un instante",
           "una hora",
-          "un año",
-          "nunca"
+          "un año"
         ],
         "answer": "un instante"
       },

@@ -10,6 +10,14 @@ alwaysApply: false
 
 New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (1 cm margin); backend PDF matches.
 
+## Letter pagination (mandatory — no empty pages)
+
+- Never emit a Letter page that is only the hero/header with no lesson, quiz, support, or expo content.
+- Pack lesson blocks and quiz items to **fill** the usable Letter area before opening a new page (DOM measure when available).
+- Day 5 appends a final expo page with writing lines every **0.75 cm**.
+- Minimum body font on Letter sheets: **6 mm**. Practice boxes include a **0.75 cm** outline check circle and a reverse-side hint.
+- Subject menu / class number order: `teb exe LT his geo art mat esp ing lat cie pro` (1–12).
+
 ## Letter sheet print style (mandatory)
 
 Ink-saving style for **class, quiz, and math (mat)** US Letter sheets in `frontend/src/styles/homescool-workspace.css` (`.homescool-letter-page*`, `.homescool-mat__*`):

@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Practice -ar",
-        "body": "Today we walk through this idea step by step. To conjugate means to change the verb for the person (I, you, he/she). The stem is what remains after you drop -ar. The ending is the new tip (present: I -o, you -as, he/she -a).\n\nLet's keep going together. example cantar: drop -ar → cant- (stem). cant- + -o = canto; + -as = cantas; + -a = canta.\n\nPráctica: Ahora te toca a ti. Conjugate cantar and hablar for I/you/he. Underline the stem and circle the ending. Write three short sentences.\n\nError común: Before we finish, one warning. Writing yo cantar. Correct: yo canto (stem cant- + ending -o)."
+        "body": "Today we walk through this idea step by step. To conjugate means to change the verb for the person (I, you, he/she). The stem is what remains after you drop -ar. The ending is the new tip (present: I -o, you -as, he/she -a).\n\nLet's keep going together. example cantar: drop -ar → cant- (stem). cant- + -o = canto; + -as = cantas; + -a = canta.\n\nPráctica: Ahora te toca a ti. Conjugate cantar and hablar for I/you/he. Underline the stem and circle the ending. Write three short sentences.\n\nError común: No te quedes con esta confusión: : Before we finish, one warning. Writing yo cantar. Correct: yo canto (stem cant- + ending -o)."
       }
     ],
     "summary": ""
@@ -30,9 +30,9 @@
         "prompt": "Cantar is which conjugation?",
         "choices": [
           "-ar",
-          "-er",
           "-ir",
-          "-or"
+          "-or",
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (cantar) = I sing",
         "choices": [
-          "canto",
           "cantas",
-          "come",
-          "vivo"
+          "canto",
+          "vivo",
+          "come"
         ],
         "answer": "canto"
       },
@@ -56,8 +56,8 @@
         "prompt": "Tú ___ (comer) = you eat",
         "choices": [
           "como",
-          "comes",
           "come",
+          "comes",
           "comas"
         ],
         "answer": "comes"
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir) = he lives",
         "choices": [
-          "vivo",
           "vives",
+          "vivas",
           "vive",
-          "vivas"
+          "vivo"
         ],
         "answer": "vive"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Comer is…",
         "choices": [
-          "-er",
-          "-ar",
           "-ir",
-          "irregular only"
+          "irregular only",
+          "-er",
+          "-ar"
         ],
         "answer": "-er"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "Vivir is…",
         "choices": [
+          "-or",
           "-ir",
           "-ar",
-          "-er",
-          "-or"
+          "-er"
         ],
         "answer": "-ir"
       },
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "Tú comes uses…",
         "choices": [
-          "-as",
-          "-es",
           "-e",
-          "-o"
+          "-o",
+          "-es",
+          "-as"
         ],
         "answer": "-es"
       },
@@ -134,9 +134,9 @@
         "prompt": "Today you deepen…",
         "choices": [
           "-ar",
-          "-er",
+          "preterite",
           "-ir",
-          "preterite"
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Yo hablo is…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "future"
+          "future",
+          "-ar",
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -160,8 +160,8 @@
         "prompt": "Stem of cantar + o =",
         "choices": [
           "canto",
-          "cantas",
           "canté",
+          "cantas",
           "cantaba"
         ],
         "answer": "canto"
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Tú ___ (estudiar)",
         "choices": [
-          "estudio",
           "estudias",
+          "estudiamos",
           "estudia",
-          "estudiamos"
+          "estudio"
         ],
         "answer": "estudias"
       },
@@ -186,9 +186,9 @@
         "prompt": "Él ___ (hablar)",
         "choices": [
           "hablo",
-          "hablas",
           "habla",
-          "hablamos"
+          "hablamos",
+          "hablas"
         ],
         "answer": "habla"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "First conjugation ends in…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "-an"
+          "-ar",
+          "-an",
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -211,9 +211,9 @@
         "type": "mcq",
         "prompt": "Wrong: yo cantar. Right:",
         "choices": [
-          "yo canto",
-          "yo cantas",
           "yo canta",
+          "yo cantas",
+          "yo canto",
           "yo cantan"
         ],
         "answer": "yo canto"
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Yo ending for -ar:",
         "choices": [
-          "-o",
-          "-as",
           "-a",
-          "-amos"
+          "-amos",
+          "-as",
+          "-o"
         ],
         "answer": "-o"
       }

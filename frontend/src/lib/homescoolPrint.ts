@@ -5,7 +5,7 @@
 
 import { domToJpeg } from "modern-screenshot";
 import { currentCsrf, getCsrf } from "./api";
-import { mustLog } from "./dev-log";
+import { hcLog } from "./homescool-debug";
 
 const CAPTURE_SCALE = 2;
 const JPEG_QUALITY = 0.92;
@@ -65,16 +65,16 @@ async function captureLetterPage(page: HTMLElement): Promise<string> {
 /** Rasterize every `.homescool-letter-page` under the sheet host (color JPEG data URLs). */
 export async function captureHomescoolLetterPages(host: HTMLElement): Promise<string[]> {
   const pages = Array.from(host.querySelectorAll<HTMLElement>(".homescool-letter-page"));
-  if (mustLog) console.log("[homescoolPrint] capture.start", { pages: pages.length });
+  hcLog("print", "capture.start", { pages: pages.length });
   if (!pages.length) {
     throw new Error("No letter pages to capture.");
   }
   const out: string[] = [];
   for (let i = 0; i < pages.length; i++) {
-    if (mustLog) console.log("[homescoolPrint] capture.page", { index: i + 1, of: pages.length });
+    hcLog("print", "capture.page", { index: i + 1, of: pages.length });
     out.push(await captureLetterPage(pages[i]));
   }
-  if (mustLog) console.log("[homescoolPrint] capture.done", { pages: out.length });
+  hcLog("print", "capture.done", { pages: out.length });
   return out;
 }
 
@@ -103,7 +103,7 @@ export async function downloadHomescoolStyledPdf(
   try {
     pages = await captureHomescoolLetterPages(host);
   } catch (err) {
-    if (mustLog) console.log("[homescoolPrint] capture.error", { err: String(err) });
+    hcLog("print", "capture.error", { err: String(err) }, "error");
     return { ok: false, error: err instanceof Error ? err.message : "Could not capture pages." };
   }
 
@@ -116,7 +116,7 @@ export async function downloadHomescoolStyledPdf(
   if (csrf) headers.set("X-CSRF-Token", csrf);
 
   const url = `/api/homescool/materials/${encodeURIComponent(id)}/print/pdf`;
-  if (mustLog) console.log("[homescoolPrint] post.start", { id, pages: pages.length, fileName });
+  hcLog("print", "post.start", { id, pages: pages.length, fileName });
 
   try {
     const res = await fetch(url, {
@@ -134,15 +134,15 @@ export async function downloadHomescoolStyledPdf(
       } catch {
         /* ignore */
       }
-      if (mustLog) console.log("[homescoolPrint] post.fail", { status: res.status, requestId, message });
+      hcLog("print", "post.fail", { status: res.status, requestId, message }, "error");
       return { ok: false, error: message, requestId };
     }
     const blob = await res.blob();
     triggerDownload(blob, fileName);
-    if (mustLog) console.log("[homescoolPrint] post.ok", { bytes: blob.size, requestId });
+    hcLog("print", "post.ok", { bytes: blob.size, requestId });
     return { ok: true, requestId };
   } catch (err) {
-    if (mustLog) console.log("[homescoolPrint] post.error", { err: String(err) });
+    hcLog("print", "post.error", { err: String(err) }, "error");
     return { ok: false, error: "Could not download PDF." };
   }
 }

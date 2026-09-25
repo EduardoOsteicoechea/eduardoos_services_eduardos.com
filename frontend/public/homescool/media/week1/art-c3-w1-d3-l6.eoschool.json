@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "L",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Los cinco elementos de la forma (OiLS) son piezas simples para construir cualquier dibujo: O = círculos (línea curva cerrada sin relleno); i = puntos (formas curvas rellenas); líneas rectas; L = líneas en ángulo; S = líneas curvas abiertas.\n\nSigamos juntos. denominar = decir el nombre del elemento mientras dibujas. Prestar atención = comparar formas. Expresar = dibujar y mejorar.\n\nAhora mira esto con calma. foco («L»): Profundizas L: rectas y ángulos definen estructura. Edificio = muchas L. simetría (los dos lados se parecen como en un espejo) con líneas guía. Práctica: Dibuja casa con solo L antes de curvas. Error común: L torcidas sin guía.\n\nPráctica: Ahora te toca a ti. dibuja un objeto sencillo (pez, flor, casa) usando solo OiLS. Etiqueta cada elemento que usaste.\n\nError común: Antes de terminar, un aviso. dibujar «de memoria» sin nombrar los elementos. Di en voz alta: círculo, punto, recta, ángulo, curva."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Los cinco elementos de la forma (OiLS) son piezas simples para construir cualquier dibujo: O = círculos (línea curva cerrada sin relleno); i = puntos (formas curvas rellenas); líneas rectas; L = líneas en ángulo; S = líneas curvas abiertas.\n\nSigamos juntos. denominar = decir el nombre del elemento mientras dibujas. Prestar atención = comparar formas. Expresar = dibujar y mejorar.\n\nAhora mira esto con calma. foco («L»): Profundizas L: rectas y ángulos definen estructura. Edificio = muchas L. simetría (los dos lados se parecen como en un espejo) con líneas guía. Práctica: Dibuja casa con solo L antes de curvas. Error común: L torcidas sin guía.\n\nPráctica: Ahora te toca a ti. dibuja un objeto sencillo (pez, flor, casa) usando solo OiLS. Etiqueta cada elemento que usaste.\n\nError común: Diferéncialo con claridad: : Antes de terminar, un aviso. dibujar «de memoria» sin nombrar los elementos. Di en voz alta: círculo, punto, recta, ángulo, curva."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "OiLS incluye…",
         "choices": [
-          "O, i, L, S",
-          "solo color",
           "solo sombra",
-          "solo marco"
+          "solo marco",
+          "solo color",
+          "O, i, L, S"
         ],
         "answer": "O, i, L, S"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "O representa…",
         "choices": [
-          "círculos / formas redondas",
-          "solo puntos",
           "solo curvas",
-          "solo ángulos"
+          "solo ángulos",
+          "círculos / formas redondas",
+          "solo puntos"
         ],
         "answer": "círculos / formas redondas"
       },
@@ -55,10 +55,10 @@
         "type": "mcq",
         "prompt": "i representa…",
         "choices": [
+          "solo borrador",
           "puntos / dots",
           "solo círculos grandes",
-          "solo líneas",
-          "solo borrador"
+          "solo líneas"
         ],
         "answer": "puntos / dots"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "S representa…",
         "choices": [
-          "líneas curvas",
           "solo rectas",
           "solo puntos",
-          "solo ángulos rectos"
+          "solo ángulos rectos",
+          "líneas curvas"
         ],
         "answer": "líneas curvas"
       },
@@ -95,9 +95,9 @@
         "prompt": "Autora de referencia:",
         "choices": [
           "Mona Brookes",
-          "Colón",
           "Pablo",
-          "Hammurabi"
+          "Hammurabi",
+          "Colón"
         ],
         "answer": "Mona Brookes"
       },
@@ -107,10 +107,10 @@
         "type": "mcq",
         "prompt": "Tema:",
         "choices": [
-          "OiLS / elementos de la forma",
           "solo Romanos",
-          "solo geo",
-          "solo tejidos"
+          "solo tejidos",
+          "OiLS / elementos de la forma",
+          "solo geo"
         ],
         "answer": "OiLS / elementos de la forma"
       },
@@ -121,8 +121,8 @@
         "prompt": "Descomponer formas ayuda a…",
         "choices": [
           "dibujar con método",
-          "evitar mirar",
           "solo copiar sin ver",
+          "evitar mirar",
           "solo firmar"
         ],
         "answer": "dibujar con método"
@@ -133,10 +133,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "O e i",
           "solo S",
+          "solo latín",
           "solo L",
-          "solo latín"
+          "O e i"
         ],
         "answer": "O e i"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Rueda usa sobre todo…",
         "choices": [
-          "O",
-          "solo i",
           "solo S",
-          "solo ángulo"
+          "solo ángulo",
+          "O",
+          "solo i"
         ],
         "answer": "O"
       },
@@ -159,10 +159,10 @@
         "type": "mcq",
         "prompt": "Ojo puede usar O e…",
         "choices": [
+          "solo aire",
           "i (puntos)",
           "solo fuego",
-          "solo agua",
-          "solo aire"
+          "solo agua"
         ],
         "answer": "i (puntos)"
       },
@@ -172,9 +172,9 @@
         "type": "mcq",
         "prompt": "Error: detalles antes de O e i es…",
         "choices": [
-          "mala idea",
-          "obligatorio",
           "latín",
+          "obligatorio",
+          "mala idea",
           "teorema"
         ],
         "answer": "mala idea"
@@ -185,10 +185,10 @@
         "type": "mcq",
         "prompt": "Círculos en fruta:",
         "choices": [
-          "O",
-          "L",
           "S",
-          "solo i"
+          "solo i",
+          "L",
+          "O"
         ],
         "answer": "O"
       },
@@ -199,9 +199,9 @@
         "prompt": "Dots en textura:",
         "choices": [
           "i",
-          "O grande",
+          "S",
           "L",
-          "S"
+          "O grande"
         ],
         "answer": "i"
       },
@@ -211,10 +211,10 @@
         "type": "mcq",
         "prompt": "Oi de OiLS son…",
         "choices": [
-          "O e i",
           "L y S",
-          "solo Brookes",
-          "solo Colón"
+          "solo Colón",
+          "O e i",
+          "solo Brookes"
         ],
         "answer": "O e i"
       },
@@ -225,8 +225,8 @@
         "prompt": "Práctica: buscar O e i en…",
         "choices": [
           "objeto real",
-          "solo número",
           "solo tabla",
+          "solo número",
           "solo mapa sin forma"
         ],
         "answer": "objeto real"
@@ -237,10 +237,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "L",
           "O",
           "i",
-          "S solo"
+          "S solo",
+          "L"
         ],
         "answer": "L"
       },
@@ -251,9 +251,9 @@
         "prompt": "Caja usa…",
         "choices": [
           "L (rectas/ángulo)",
-          "solo curvas",
           "solo puntos",
-          "solo círculos"
+          "solo círculos",
+          "solo curvas"
         ],
         "answer": "L (rectas/ángulo)"
       },
@@ -263,10 +263,10 @@
         "type": "mcq",
         "prompt": "Techos y esquinas:",
         "choices": [
-          "angle lines (L)",
           "solo O",
-          "solo i",
-          "solo S"
+          "angle lines (L)",
+          "solo S",
+          "solo i"
         ],
         "answer": "angle lines (L)"
       },
@@ -276,9 +276,9 @@
         "type": "mcq",
         "prompt": "Horizontal vs vertical son…",
         "choices": [
-          "L",
-          "S",
           "O",
+          "S",
+          "L",
           "i"
         ],
         "answer": "L"
@@ -289,10 +289,10 @@
         "type": "mcq",
         "prompt": "Diagonal es tipo de…",
         "choices": [
-          "L",
-          "S",
           "O",
-          "i"
+          "i",
+          "S",
+          "L"
         ],
         "answer": "L"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Dibujar casa con L usa…",
         "choices": [
-          "rectas y ángulo",
-          "solo curvas",
           "solo puntos",
-          "solo borrador"
+          "solo borrador",
+          "rectas y ángulo",
+          "solo curvas"
         ],
         "answer": "rectas y ángulo"
       },
@@ -315,10 +315,10 @@
         "type": "mcq",
         "prompt": "L en OiLS no es…",
         "choices": [
+          "Brookes",
           "solo curva",
           "recta/ángulo",
-          "elemento de forma",
-          "Brookes"
+          "elemento de forma"
         ],
         "answer": "solo curva"
       },

@@ -208,6 +208,8 @@ export type EoschoolDocument = {
     questions: EoschoolQuestion[];
   };
   media?: { id?: string; path: string; alt?: string }[];
+  /** Optional support video/website URL (admin-set; rendered as first section when present). */
+  supportUrl?: string;
 };
 
 export type HomescoolCycleSummary = {

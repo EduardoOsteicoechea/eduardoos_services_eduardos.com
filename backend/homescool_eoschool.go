@@ -16,9 +16,9 @@ const (
 	eoschoolKindReview  = "review"
 )
 
-// Canonical subject codes (METHOD_V1). LT is case-sensitive.
+// Canonical subject codes / menu order (METHOD_V1 + cambios/1). LT is case-sensitive.
 var eoschoolSubjects = []string{
-	"mat", "esp", "ing", "his", "lat", "LT", "geo", "cie", "art", "pro", "teb", "exe",
+	"teb", "exe", "LT", "his", "geo", "art", "mat", "esp", "ing", "lat", "cie", "pro",
 }
 
 var eoschoolSubjectSet = func() map[string]struct{} {
@@ -41,8 +41,9 @@ type EoschoolDocument struct {
 	Locale  string           `json:"locale,omitempty"`
 	Title   string           `json:"title"`
 	Lesson  EoschoolLesson   `json:"lesson"`
-	Quiz    EoschoolQuiz     `json:"quiz"`
-	Media   []EoschoolMedia  `json:"media,omitempty"`
+	Quiz       EoschoolQuiz    `json:"quiz"`
+	Media      []EoschoolMedia `json:"media,omitempty"`
+	SupportURL string          `json:"supportUrl,omitempty"`
 }
 
 type EoschoolLesson struct {
@@ -137,6 +138,16 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	doc.Locale = strings.TrimSpace(doc.Locale)
 	if doc.Locale == "" {
 		doc.Locale = "es"
+	}
+	doc.SupportURL = strings.TrimSpace(doc.SupportURL)
+	if doc.SupportURL != "" {
+		lower := strings.ToLower(doc.SupportURL)
+		if !strings.HasPrefix(lower, "https://") && !strings.HasPrefix(lower, "http://") {
+			return fmt.Errorf("supportUrl must be http(s)")
+		}
+		if len(doc.SupportURL) > 2000 {
+			return fmt.Errorf("supportUrl too long")
+		}
 	}
 
 	wantCount := eoschoolExpectedQuizCount(doc.Day)

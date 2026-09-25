@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Practice -ir",
-        "body": "Today we walk through this idea step by step. To conjugate means to change the verb for the person (I, you, he/she). The stem is what remains after you drop -ar. The ending is the new tip (present: I -o, you -as, he/she -a).\n\nLet's keep going together. example cantar: drop -ar → cant- (stem). cant- + -o = canto; + -as = cantas; + -a = canta.\n\nPráctica: Ahora te toca a ti. Conjugate cantar and hablar for I/you/he. Underline the stem and circle the ending. Write three short sentences.\n\nError común: Before we finish, one warning. Writing yo cantar. Correct: yo canto (stem cant- + ending -o)."
+        "body": "Today we walk through this idea step by step. To conjugate means to change the verb for the person (I, you, he/she). The stem is what remains after you drop -ar. The ending is the new tip (present: I -o, you -as, he/she -a).\n\nLet's keep going together. example cantar: drop -ar → cant- (stem). cant- + -o = canto; + -as = cantas; + -a = canta.\n\nPráctica: Ahora te toca a ti. Conjugate cantar and hablar for I/you/he. Underline the stem and circle the ending. Write three short sentences.\n\nError común: No te quedes con esta confusión: : Before we finish, one warning. Writing yo cantar. Correct: yo canto (stem cant- + ending -o)."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "Cantar is which conjugation?",
         "choices": [
-          "-ar",
-          "-er",
           "-ir",
-          "-or"
+          "-or",
+          "-ar",
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (cantar) = I sing",
         "choices": [
+          "vivo",
           "canto",
           "cantas",
-          "come",
-          "vivo"
+          "come"
         ],
         "answer": "canto"
       },
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir) = he lives",
         "choices": [
-          "vivo",
           "vives",
           "vive",
-          "vivas"
+          "vivas",
+          "vivo"
         ],
         "answer": "vive"
       },
@@ -82,9 +82,9 @@
         "prompt": "Comer is…",
         "choices": [
           "-er",
-          "-ar",
           "-ir",
-          "irregular only"
+          "irregular only",
+          "-ar"
         ],
         "answer": "-er"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "Vivir is…",
         "choices": [
-          "-ir",
           "-ar",
-          "-er",
-          "-or"
+          "-or",
+          "-ir",
+          "-er"
         ],
         "answer": "-ir"
       },
@@ -108,8 +108,8 @@
         "prompt": "Tú cantas uses…",
         "choices": [
           "-as",
-          "-es",
           "-e",
+          "-es",
           "-o"
         ],
         "answer": "-as"
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "Tú comes uses…",
         "choices": [
-          "-as",
           "-es",
+          "-o",
           "-e",
-          "-o"
+          "-as"
         ],
         "answer": "-es"
       },
@@ -133,10 +133,10 @@
         "type": "mcq",
         "prompt": "Today you deepen…",
         "choices": [
-          "-ar",
-          "-er",
           "-ir",
-          "preterite"
+          "preterite",
+          "-ar",
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Yo hablo is…",
         "choices": [
+          "future",
           "-ar",
           "-er",
-          "-ir",
-          "future"
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -159,9 +159,9 @@
         "type": "mcq",
         "prompt": "Stem of cantar + o =",
         "choices": [
-          "canto",
-          "cantas",
           "canté",
+          "cantas",
+          "canto",
           "cantaba"
         ],
         "answer": "canto"
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Tú ___ (estudiar)",
         "choices": [
-          "estudio",
-          "estudias",
           "estudia",
-          "estudiamos"
+          "estudiamos",
+          "estudias",
+          "estudio"
         ],
         "answer": "estudias"
       },
@@ -186,9 +186,9 @@
         "prompt": "Él ___ (hablar)",
         "choices": [
           "hablo",
-          "hablas",
+          "hablamos",
           "habla",
-          "hablamos"
+          "hablas"
         ],
         "answer": "habla"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "First conjugation ends in…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "-an"
+          "-an",
+          "-ar",
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -212,8 +212,8 @@
         "prompt": "Wrong: yo cantar. Right:",
         "choices": [
           "yo canto",
-          "yo cantas",
           "yo canta",
+          "yo cantas",
           "yo cantan"
         ],
         "answer": "yo canto"
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Yo ending for -ar:",
         "choices": [
-          "-o",
           "-as",
           "-a",
-          "-amos"
+          "-amos",
+          "-o"
         ],
         "answer": "-o"
       },
@@ -238,9 +238,9 @@
         "prompt": "Today you deepen…",
         "choices": [
           "-er",
-          "-ar",
           "-ir",
-          "conditional"
+          "conditional",
+          "-ar"
         ],
         "answer": "-er"
       },
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (beber)",
         "choices": [
-          "bebo",
           "bebes",
-          "bebe",
-          "bebemos"
+          "bebo",
+          "bebemos",
+          "bebe"
         ],
         "answer": "bebo"
       },
@@ -263,9 +263,9 @@
         "type": "mcq",
         "prompt": "Tú ___ (leer)",
         "choices": [
-          "leo",
-          "lees",
           "lee",
+          "lees",
+          "leo",
           "leemos"
         ],
         "answer": "lees"
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "Second conjugation:",
         "choices": [
-          "-er",
-          "-ar",
           "-ir",
-          "-or"
+          "-or",
+          "-ar",
+          "-er"
         ],
         "answer": "-er"
       },
@@ -289,10 +289,10 @@
         "type": "mcq",
         "prompt": "Nosotros comemos ends in…",
         "choices": [
-          "-emos",
-          "-amos",
           "-imos",
-          "-en"
+          "-en",
+          "-emos",
+          "-amos"
         ],
         "answer": "-emos"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Él ___ (comer)",
         "choices": [
+          "comemos",
           "como",
           "comes",
-          "come",
-          "comemos"
+          "come"
         ],
         "answer": "come"
       },
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "-er yo uses…",
         "choices": [
-          "-o",
           "-as",
           "-e",
-          "-emos"
+          "-emos",
+          "-o"
         ],
         "answer": "-o"
       },
@@ -342,9 +342,9 @@
         "prompt": "Today you deepen…",
         "choices": [
           "-ir",
-          "-ar",
           "-er",
-          "imperfect"
+          "imperfect",
+          "-ar"
         ],
         "answer": "-ir"
       },
@@ -354,10 +354,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (escribir)",
         "choices": [
-          "escribo",
           "escribes",
-          "escribe",
-          "escribimos"
+          "escribimos",
+          "escribo",
+          "escribe"
         ],
         "answer": "escribo"
       },
@@ -368,8 +368,8 @@
         "prompt": "Nosotros vivimos ends in…",
         "choices": [
           "-imos",
-          "-emos",
           "-amos",
+          "-emos",
           "-ís"
         ],
         "answer": "-imos"
@@ -380,10 +380,10 @@
         "type": "mcq",
         "prompt": "Third conjugation:",
         "choices": [
-          "-ir",
           "-ar",
+          "-or",
           "-er",
-          "-or"
+          "-ir"
         ],
         "answer": "-ir"
       },
@@ -393,10 +393,10 @@
         "type": "mcq",
         "prompt": "Tú ___ (abrir)",
         "choices": [
-          "abro",
-          "abres",
           "abre",
-          "abrimos"
+          "abrimos",
+          "abro",
+          "abres"
         ],
         "answer": "abres"
       },
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir)",
         "choices": [
+          "vivimos",
           "vivo",
           "vives",
-          "vive",
-          "vivimos"
+          "vive"
         ],
         "answer": "vive"
       },
@@ -419,9 +419,9 @@
         "type": "mcq",
         "prompt": "Mixing -emos and -imos is…",
         "choices": [
-          "-er vs -ir",
-          "-ar vs -er",
           "future",
+          "-ar vs -er",
+          "-er vs -ir",
           "subjunctive"
         ],
         "answer": "-er vs -ir"
@@ -432,10 +432,10 @@
         "type": "mcq",
         "prompt": "Tú ending for -ir:",
         "choices": [
-          "-es",
-          "-as",
           "-e",
-          "-is"
+          "-is",
+          "-as",
+          "-es"
         ],
         "answer": "-es"
       },
@@ -443,14 +443,14 @@
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe tres ideas clave de ing que recuerdes de la lección.",
+        "prompt": "In English: Escribe tres ideas clave de ing que recuerdes de la lección.",
         "answer": ""
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica con tus palabras el punto que profundizaste hoy en ing.",
+        "prompt": "In English: Explica con tus palabras el punto que profundizaste hoy en ing.",
         "answer": ""
       },
       {
@@ -464,7 +464,7 @@
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "¿Qué duda te queda de ing? ¿Cómo la resolverías?",
+        "prompt": "In English: ¿Qué duda te queda de ing? ¿Cómo la resolverías?",
         "answer": ""
       }
     ]

@@ -342,6 +342,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}", a.getHomescoolMaterialHandler)
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}/html", a.getHomescoolMaterialHTMLHandler)
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}/document", a.getHomescoolMaterialDocumentHandler)
+	mux.HandleFunc("PATCH /api/homescool/materials/{materialId}/support", a.patchHomescoolMaterialSupportHandler)
 	mux.HandleFunc("GET /api/homescool/materials/{materialId}/pdf", a.getHomescoolMaterialPDFHandler)
 	mux.HandleFunc("POST /api/homescool/materials/{materialId}/print/pdf", a.postHomescoolMaterialPrintPDFHandler)
 	mux.HandleFunc("POST /api/homescool/preview", a.postHomescoolPreviewHandler)

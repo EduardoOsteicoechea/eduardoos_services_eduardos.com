@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Practicar -er",
-        "body": "Hoy reenseñamos la familia -er desde el comienzo. Conjugar = cambiar un verbo para decir quién hace la acción. Comer, beber y leer son infinitivos, es decir, formas de diccionario. La raíz es lo que queda al quitar -er: com-, beb- o le-. La desinencia es el final que añadimos: -o para yo, -es para tú y -e para él.\n\nSigamos juntos con una bebida. Beb- + -o = bebo; beb- + -es = bebes; beb- + -e = bebe. Ahora usa el mismo mapa con comer: com- → como, comes, come. Cada palabra conserva su raíz para que sepamos cuál es la acción.\n\nNo es copiar los finales de -ar: «tú bebes» no lleva -as. Tampoco es «él comen», porque estamos hablando de una sola persona. El final -e de «él bebe» acompaña a él.\n\nPráctica: Conjuga beber y comer para yo, tú y él. Escribe después dos oraciones: una con «Tú comes…» y otra con «Él bebe…». Explica en una frase por qué ambas usan -es o -e.\n\nError común: Escribir «tú comas» por recordar cantar. Mira primero el infinitivo: como comer termina en -er, decimos «tú comes»."
+        "body": "Hoy reenseñamos la familia -er desde el comienzo. Conjugar = cambiar un verbo para decir quién hace la acción. Comer, beber y leer son infinitivos, es decir, formas de diccionario. La raíz es lo que queda al quitar -er: com-, beb- o le-. La desinencia es el final que añadimos: -o para yo, -es para tú y -e para él.\n\nSigamos juntos con una bebida. Beb- + -o = bebo; beb- + -es = bebes; beb- + -e = bebe. Ahora usa el mismo mapa con comer: com- → como, comes, come. Cada palabra conserva su raíz para que sepamos cuál es la acción.\n\nNo es copiar los finales de -ar: «tú bebes» no lleva -as. Tampoco es «él comen», porque estamos hablando de una sola persona. El final -e de «él bebe» acompaña a él.\n\nPráctica: Conjuga beber y comer para yo, tú y él. Escribe después dos oraciones: una con «Tú comes…» y otra con «Él bebe…». Explica en una frase por qué ambas usan -es o -e.\n\nError común: Diferéncialo con claridad: : Escribir «tú comas» por recordar cantar. Mira primero el infinitivo: como comer termina en -er, decimos «tú comes»."
       }
     ],
     "summary": ""
@@ -30,9 +30,9 @@
         "prompt": "¿Qué conjugación es cantar?",
         "choices": [
           "-ar",
-          "-er",
+          "-or",
           "-ir",
-          "-or"
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (cantar)",
         "choices": [
-          "canto",
           "cantas",
-          "come",
-          "vivo"
+          "vivo",
+          "canto",
+          "come"
         ],
         "answer": "canto"
       },
@@ -56,8 +56,8 @@
         "prompt": "Tú ___ (comer)",
         "choices": [
           "como",
-          "comes",
           "come",
+          "comes",
           "comas"
         ],
         "answer": "comes"
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir)",
         "choices": [
-          "vivo",
           "vives",
+          "vivas",
           "vive",
-          "vivas"
+          "vivo"
         ],
         "answer": "vive"
       },
@@ -82,9 +82,9 @@
         "prompt": "Comer es conjugación…",
         "choices": [
           "-ar",
-          "-er",
           "-ir",
-          "-irregular solo"
+          "-irregular solo",
+          "-er"
         ],
         "answer": "-er"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "Vivir es conjugación…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "-or"
+          "-ar",
+          "-or",
+          "-ir"
         ],
         "answer": "-ir"
       },
@@ -107,9 +107,9 @@
         "type": "mcq",
         "prompt": "Tú cantas usa terminación…",
         "choices": [
-          "-as",
-          "-es",
           "-e",
+          "-es",
+          "-as",
           "-o"
         ],
         "answer": "-as"
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "Tú comes usa terminación…",
         "choices": [
-          "-as",
-          "-es",
           "-e",
-          "-o"
+          "-o",
+          "-es",
+          "-as"
         ],
         "answer": "-es"
       },
@@ -134,9 +134,9 @@
         "prompt": "Hoy profundizas…",
         "choices": [
           "-ar",
-          "-er",
+          "pretérito",
           "-ir",
-          "pretérito"
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Yo hablo (hablar) es…",
         "choices": [
+          "futuro",
           "-ar",
           "-er",
-          "-ir",
-          "futuro"
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Tú ___ (estudiar)",
         "choices": [
-          "estudio",
           "estudias",
           "estudia",
-          "estudiamos"
+          "estudiamos",
+          "estudio"
         ],
         "answer": "estudias"
       },
@@ -186,9 +186,9 @@
         "prompt": "Él ___ (hablar)",
         "choices": [
           "hablo",
-          "hablas",
           "habla",
-          "hablamos"
+          "hablamos",
+          "hablas"
         ],
         "answer": "habla"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "Primera conjugación termina en…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "-an"
+          "-an",
+          "-ar",
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -212,8 +212,8 @@
         "prompt": "Error: yo cantar. Correcto:",
         "choices": [
           "yo canto",
-          "yo cantas",
           "yo canta",
+          "yo cantas",
           "yo cantan"
         ],
         "answer": "yo canto"
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Desinencia de yo en -ar:",
         "choices": [
-          "-o",
           "-as",
+          "-amos",
           "-a",
-          "-amos"
+          "-o"
         ],
         "answer": "-o"
       },
@@ -237,10 +237,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "-er",
-          "-ar",
           "-ir",
-          "condicional"
+          "condicional",
+          "-er",
+          "-ar"
         ],
         "answer": "-er"
       },
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (beber)",
         "choices": [
+          "bebemos",
           "bebo",
           "bebes",
-          "bebe",
-          "bebemos"
+          "bebe"
         ],
         "answer": "bebo"
       },
@@ -263,9 +263,9 @@
         "type": "mcq",
         "prompt": "Tú ___ (leer)",
         "choices": [
-          "leo",
-          "lees",
           "lee",
+          "lees",
+          "leo",
           "leemos"
         ],
         "answer": "lees"
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "Segunda conjugación:",
         "choices": [
-          "-er",
-          "-ar",
           "-ir",
-          "-or"
+          "-or",
+          "-ar",
+          "-er"
         ],
         "answer": "-er"
       },
@@ -290,9 +290,9 @@
         "prompt": "Nosotros comemos termina en…",
         "choices": [
           "-emos",
-          "-amos",
+          "-en",
           "-imos",
-          "-en"
+          "-amos"
         ],
         "answer": "-emos"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Él ___ (comer)",
         "choices": [
-          "como",
           "comes",
-          "come",
-          "comemos"
+          "comemos",
+          "como",
+          "come"
         ],
         "answer": "come"
       },
@@ -316,8 +316,8 @@
         "prompt": "Beber en tú:",
         "choices": [
           "bebes",
-          "bebo",
           "bebe",
+          "bebo",
           "bebemos"
         ],
         "answer": "bebes"
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "-er en yo usa…",
         "choices": [
-          "-o",
           "-as",
           "-e",
-          "-emos"
+          "-emos",
+          "-o"
         ],
         "answer": "-o"
       }

@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Por qué decimos 24 entidades",
-        "body": "Hoy profundizas por qué decimos 24 entidades. Profundizar = explicar la regla y contar, no solo repetir el número.\n\nSigamos juntos. cada estado tiene gobernador y legislatura; el Distrito Capital es área especial alrededor de Caracas.\n\nAhora mira esto con calma. territorios federales también cuentan en el total oficial.\n\nPráctica: Ahora te toca a ti. Dibuja un mapa esquemático y numera cuatro entidades donde las colocarías.\n\nError común: Antes de terminar, un aviso. Decir 23 olvidando DC o territorios."
+        "body": "Hoy profundizas por qué decimos 24 entidades. Profundizar = explicar la regla y contar, no solo repetir el número.\n\nSigamos juntos. cada estado tiene gobernador y legislatura; el Distrito Capital es área especial alrededor de Caracas.\n\nAhora mira esto con calma. territorios federales también cuentan en el total oficial.\n\nPráctica: Ahora te toca a ti. Dibuja un mapa esquemático y numera cuatro entidades donde las colocarías.\n\nError a corregir: Corrige a tiempo esta idea: : Antes de terminar, un aviso. Decir 23 olvidando DC o territorios."
       }
     ],
     "summary": ""
@@ -29,10 +29,10 @@
         "type": "mcq",
         "prompt": "Total de entidades federales en la lección:",
         "choices": [
-          "22",
           "24",
-          "26",
-          "18"
+          "22",
+          "18",
+          "26"
         ],
         "answer": "24"
       },
@@ -43,8 +43,8 @@
         "prompt": "Capital del Distrito Capital:",
         "choices": [
           "Caracas",
-          "Maracaibo",
           "Valencia",
+          "Maracaibo",
           "Barquisimeto"
         ],
         "answer": "Caracas"
@@ -55,10 +55,10 @@
         "type": "mcq",
         "prompt": "Capital de Zulia:",
         "choices": [
-          "Maracaibo",
           "Cabimas",
+          "Machiques",
           "Ciudad Ojeda",
-          "Machiques"
+          "Maracaibo"
         ],
         "answer": "Maracaibo"
       },
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "Capital de Carabobo:",
         "choices": [
-          "Valencia",
-          "Puerto Cabello",
           "Guacara",
-          "Mariara"
+          "Mariara",
+          "Valencia",
+          "Puerto Cabello"
         ],
         "answer": "Valencia"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Capital de Miranda:",
         "choices": [
+          "Charallave",
           "Los Teques",
           "Petare",
-          "Guarenas",
-          "Charallave"
+          "Guarenas"
         ],
         "answer": "Los Teques"
       },
@@ -107,10 +107,10 @@
         "type": "mcq",
         "prompt": "Tema:",
         "choices": [
-          "estados y capitales de Venezuela",
-          "solo ríos",
           "solo climas",
-          "solo Europa"
+          "solo Europa",
+          "solo ríos",
+          "estados y capitales de Venezuela"
         ],
         "answer": "estados y capitales de Venezuela"
       },
@@ -121,9 +121,9 @@
         "prompt": "Capital de Lara:",
         "choices": [
           "Barquisimeto",
-          "Carora",
+          "Quíbor",
           "El Tocuyo",
-          "Quíbor"
+          "Carora"
         ],
         "answer": "Barquisimeto"
       },
@@ -133,10 +133,10 @@
         "type": "mcq",
         "prompt": "Capital de Aragua:",
         "choices": [
-          "Maracay",
           "La Victoria",
-          "Cagua",
-          "Turmero"
+          "Turmero",
+          "Maracay",
+          "Cagua"
         ],
         "answer": "Maracay"
       },
@@ -147,8 +147,8 @@
         "prompt": "Capital de Táchira:",
         "choices": [
           "San Cristóbal",
-          "Táriba",
           "Rubio",
+          "Táriba",
           "San Antonio"
         ],
         "answer": "San Cristóbal"
@@ -159,10 +159,10 @@
         "type": "mcq",
         "prompt": "Capital de Bolívar:",
         "choices": [
-          "Ciudad Bolívar",
           "Puerto Ordaz",
+          "El Callao",
           "Upata",
-          "El Callao"
+          "Ciudad Bolívar"
         ],
         "answer": "Ciudad Bolívar"
       },
@@ -173,9 +173,9 @@
         "prompt": "Hoy profundizas:",
         "choices": [
           "por qué decimos 24 / mapa de entidades",
-          "solo un municipio",
           "solo Europa",
-          "solo Asia"
+          "solo Asia",
+          "solo un municipio"
         ],
         "answer": "por qué decimos 24 / mapa de entidades"
       },
@@ -185,10 +185,10 @@
         "type": "mcq",
         "prompt": "Capital de Mérida:",
         "choices": [
-          "Mérida",
           "El Vigía",
-          "Ejido",
-          "Tovar"
+          "Mérida",
+          "Tovar",
+          "Ejido"
         ],
         "answer": "Mérida"
       },
@@ -198,9 +198,9 @@
         "type": "mcq",
         "prompt": "Caracas es capital del DC y…",
         "choices": [
-          "de la República",
-          "solo de Zulia",
           "solo de Miranda",
+          "solo de Zulia",
+          "de la República",
           "solo de Falcón"
         ],
         "answer": "de la República"
@@ -211,10 +211,10 @@
         "type": "mcq",
         "prompt": "Capital de Anzoátegui:",
         "choices": [
-          "Barcelona",
-          "Puerto La Cruz",
           "Lechería",
-          "El Tigre"
+          "El Tigre",
+          "Puerto La Cruz",
+          "Barcelona"
         ],
         "answer": "Barcelona"
       },
@@ -225,9 +225,9 @@
         "prompt": "¿Porlamar es capital de Nueva Esparta?",
         "choices": [
           "Sí",
-          "No (es La Asunción)",
+          "Sí, y de Monagas",
           "Sí, y también de Sucre",
-          "Sí, y de Monagas"
+          "No (es La Asunción)"
         ],
         "answer": "No (es La Asunción)"
       }

@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Practicar -ir",
-        "body": "Hoy practicamos la tercera familia, -ir, empezando desde cero. Conjugar = cambiar el verbo según quién actúa. Vivir, abrir y escribir son infinitivos: formas de diccionario. Si quitamos -ir aparece la raíz: viv-, abr- o escrib-. La desinencia es el final que añadimos; en presente usamos -o para yo, -es para tú y -e para él.\n\nSigamos juntos con una puerta. Abr- + -o = abro; abr- + -es = abres; abr- + -e = abre. Luego hacemos lo mismo con vivir: viv- → vivo, vives, vive. Ya puedes ver el mismo recorrido aunque cambie la acción.\n\nNo es una familia -er solo porque tú también acaba en -es. La pista para elegir la familia está al principio, en el infinitivo: abrir acaba en -ir. Tampoco es «yo vive»: yo necesita -o, así que decimos yo vivo.\n\nPráctica: Conjuga escribir y vivir para yo, tú y él. Marca raíz y desinencia en cada forma; después escribe una oración con «Yo escribo…» y otra con «Él vive…».\n\nError común: Confundir nosotros vivimos con «nosotros vivemos». Para hoy trabajamos yo, tú y él; aun así, recuerda que -ir conserva su propia familia."
+        "body": "Hoy practicamos la tercera familia, -ir, empezando desde cero. Conjugar = cambiar el verbo según quién actúa. Vivir, abrir y escribir son infinitivos: formas de diccionario. Si quitamos -ir aparece la raíz: viv-, abr- o escrib-. La desinencia es el final que añadimos; en presente usamos -o para yo, -es para tú y -e para él.\n\nSigamos juntos con una puerta. Abr- + -o = abro; abr- + -es = abres; abr- + -e = abre. Luego hacemos lo mismo con vivir: viv- → vivo, vives, vive. Ya puedes ver el mismo recorrido aunque cambie la acción.\n\nNo es una familia -er solo porque tú también acaba en -es. La pista para elegir la familia está al principio, en el infinitivo: abrir acaba en -ir. Tampoco es «yo vive»: yo necesita -o, así que decimos yo vivo.\n\nPráctica: Conjuga escribir y vivir para yo, tú y él. Marca raíz y desinencia en cada forma; después escribe una oración con «Yo escribo…» y otra con «Él vive…».\n\nError común: Diferéncialo con claridad: : Confundir nosotros vivimos con «nosotros vivemos». Para hoy trabajamos yo, tú y él; aun así, recuerda que -ir conserva su propia familia."
       }
     ],
     "summary": ""
@@ -30,9 +30,9 @@
         "prompt": "¿Qué conjugación es cantar?",
         "choices": [
           "-ar",
-          "-er",
           "-ir",
-          "-or"
+          "-or",
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -42,10 +42,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (cantar)",
         "choices": [
-          "canto",
           "cantas",
-          "come",
-          "vivo"
+          "canto",
+          "vivo",
+          "come"
         ],
         "answer": "canto"
       },
@@ -55,9 +55,9 @@
         "type": "mcq",
         "prompt": "Tú ___ (comer)",
         "choices": [
-          "como",
-          "comes",
           "come",
+          "comes",
+          "como",
           "comas"
         ],
         "answer": "comes"
@@ -68,10 +68,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir)",
         "choices": [
-          "vivo",
-          "vives",
           "vive",
-          "vivas"
+          "vivas",
+          "vives",
+          "vivo"
         ],
         "answer": "vive"
       },
@@ -81,10 +81,10 @@
         "type": "mcq",
         "prompt": "Comer es conjugación…",
         "choices": [
-          "-ar",
-          "-er",
           "-ir",
-          "-irregular solo"
+          "-irregular solo",
+          "-ar",
+          "-er"
         ],
         "answer": "-er"
       },
@@ -94,10 +94,10 @@
         "type": "mcq",
         "prompt": "Vivir es conjugación…",
         "choices": [
+          "-or",
           "-ar",
           "-er",
-          "-ir",
-          "-or"
+          "-ir"
         ],
         "answer": "-ir"
       },
@@ -120,10 +120,10 @@
         "type": "mcq",
         "prompt": "Tú comes usa terminación…",
         "choices": [
-          "-as",
           "-es",
           "-e",
-          "-o"
+          "-o",
+          "-as"
         ],
         "answer": "-es"
       },
@@ -134,9 +134,9 @@
         "prompt": "Hoy profundizas…",
         "choices": [
           "-ar",
-          "-er",
           "-ir",
-          "pretérito"
+          "pretérito",
+          "-er"
         ],
         "answer": "-ar"
       },
@@ -146,10 +146,10 @@
         "type": "mcq",
         "prompt": "Yo hablo (hablar) es…",
         "choices": [
-          "-ar",
           "-er",
-          "-ir",
-          "futuro"
+          "futuro",
+          "-ar",
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -160,8 +160,8 @@
         "prompt": "Raíz de cantar + o da…",
         "choices": [
           "canto",
-          "cantas",
           "canté",
+          "cantas",
           "cantaba"
         ],
         "answer": "canto"
@@ -172,10 +172,10 @@
         "type": "mcq",
         "prompt": "Tú ___ (estudiar)",
         "choices": [
-          "estudio",
           "estudias",
+          "estudiamos",
           "estudia",
-          "estudiamos"
+          "estudio"
         ],
         "answer": "estudias"
       },
@@ -185,10 +185,10 @@
         "type": "mcq",
         "prompt": "Él ___ (hablar)",
         "choices": [
-          "hablo",
-          "hablas",
           "habla",
-          "hablamos"
+          "hablamos",
+          "hablo",
+          "hablas"
         ],
         "answer": "habla"
       },
@@ -198,10 +198,10 @@
         "type": "mcq",
         "prompt": "Primera conjugación termina en…",
         "choices": [
+          "-an",
           "-ar",
           "-er",
-          "-ir",
-          "-an"
+          "-ir"
         ],
         "answer": "-ar"
       },
@@ -211,9 +211,9 @@
         "type": "mcq",
         "prompt": "Error: yo cantar. Correcto:",
         "choices": [
-          "yo canto",
-          "yo cantas",
           "yo canta",
+          "yo cantas",
+          "yo canto",
           "yo cantan"
         ],
         "answer": "yo canto"
@@ -224,10 +224,10 @@
         "type": "mcq",
         "prompt": "Desinencia de yo en -ar:",
         "choices": [
-          "-o",
-          "-as",
           "-a",
-          "-amos"
+          "-amos",
+          "-as",
+          "-o"
         ],
         "answer": "-o"
       },
@@ -238,9 +238,9 @@
         "prompt": "Hoy profundizas…",
         "choices": [
           "-er",
-          "-ar",
+          "condicional",
           "-ir",
-          "condicional"
+          "-ar"
         ],
         "answer": "-er"
       },
@@ -250,10 +250,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (beber)",
         "choices": [
-          "bebo",
           "bebes",
-          "bebe",
-          "bebemos"
+          "bebemos",
+          "bebo",
+          "bebe"
         ],
         "answer": "bebo"
       },
@@ -264,8 +264,8 @@
         "prompt": "Tú ___ (leer)",
         "choices": [
           "leo",
-          "lees",
           "lee",
+          "lees",
           "leemos"
         ],
         "answer": "lees"
@@ -276,10 +276,10 @@
         "type": "mcq",
         "prompt": "Segunda conjugación:",
         "choices": [
-          "-er",
           "-ar",
           "-ir",
-          "-or"
+          "-or",
+          "-er"
         ],
         "answer": "-er"
       },
@@ -290,9 +290,9 @@
         "prompt": "Nosotros comemos termina en…",
         "choices": [
           "-emos",
-          "-amos",
           "-imos",
-          "-en"
+          "-en",
+          "-amos"
         ],
         "answer": "-emos"
       },
@@ -302,10 +302,10 @@
         "type": "mcq",
         "prompt": "Él ___ (comer)",
         "choices": [
-          "como",
           "comes",
-          "come",
-          "comemos"
+          "como",
+          "comemos",
+          "come"
         ],
         "answer": "come"
       },
@@ -315,9 +315,9 @@
         "type": "mcq",
         "prompt": "Beber en tú:",
         "choices": [
-          "bebes",
-          "bebo",
           "bebe",
+          "bebo",
+          "bebes",
           "bebemos"
         ],
         "answer": "bebes"
@@ -328,10 +328,10 @@
         "type": "mcq",
         "prompt": "-er en yo usa…",
         "choices": [
-          "-o",
-          "-as",
           "-e",
-          "-emos"
+          "-emos",
+          "-as",
+          "-o"
         ],
         "answer": "-o"
       },
@@ -341,10 +341,10 @@
         "type": "mcq",
         "prompt": "Hoy profundizas…",
         "choices": [
-          "-ir",
-          "-ar",
           "-er",
-          "imperfecto"
+          "imperfecto",
+          "-ir",
+          "-ar"
         ],
         "answer": "-ir"
       },
@@ -354,10 +354,10 @@
         "type": "mcq",
         "prompt": "Yo ___ (escribir)",
         "choices": [
+          "escribimos",
           "escribo",
           "escribes",
-          "escribe",
-          "escribimos"
+          "escribe"
         ],
         "answer": "escribo"
       },
@@ -380,10 +380,10 @@
         "type": "mcq",
         "prompt": "Tercera conjugación:",
         "choices": [
-          "-ir",
           "-ar",
           "-er",
-          "-or"
+          "-or",
+          "-ir"
         ],
         "answer": "-ir"
       },
@@ -394,9 +394,9 @@
         "prompt": "Tú ___ (abrir)",
         "choices": [
           "abro",
-          "abres",
           "abre",
-          "abrimos"
+          "abrimos",
+          "abres"
         ],
         "answer": "abres"
       },
@@ -406,10 +406,10 @@
         "type": "mcq",
         "prompt": "Él ___ (vivir)",
         "choices": [
-          "vivo",
           "vives",
-          "vive",
-          "vivimos"
+          "vivimos",
+          "vivo",
+          "vive"
         ],
         "answer": "vive"
       },
@@ -420,8 +420,8 @@
         "prompt": "Confundir -emos con -imos es error de…",
         "choices": [
           "-er o -ir",
-          "-ar o -er",
           "futuro",
+          "-ar o -er",
           "otro modo (deseos; no es de esta semana)"
         ],
         "answer": "-er o -ir"
@@ -432,10 +432,10 @@
         "type": "mcq",
         "prompt": "Desinencia tú en -ir:",
         "choices": [
-          "-es",
           "-as",
+          "-is",
           "-e",
-          "-is"
+          "-es"
         ],
         "answer": "-es"
       },
