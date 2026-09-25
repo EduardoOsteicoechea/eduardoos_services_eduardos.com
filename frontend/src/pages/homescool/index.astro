@@ -143,7 +143,8 @@ import "../../styles/homescool-workspace.css";
   import { captureHomescoolLetterPages, downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
   import {
-    HOMESCOOL_SUBJECTS,
+    HOMESCOOL_SUBJECTS_ACTIVE,
+    isHomescoolSubjectPaused,
     renderEoschoolPages,
     subjectClassNumber,
     subjectDisplayName,
@@ -156,7 +157,7 @@ import "../../styles/homescool-workspace.css";
   } from "../../lib/homescool-debug";
 
   const LEVEL = 6;
-  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "teb" };
+  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "LT" };
   const log = (step: string, detail: Record<string, unknown> = {}) => {
     hcLog("workspace", step, detail);
   };
@@ -226,7 +227,7 @@ import "../../styles/homescool-workspace.css";
   }
 
   function levelCells(): WorkspaceCell[] {
-    return cells.filter((m) => m.level === LEVEL);
+    return cells.filter((m) => m.level === LEVEL && !isHomescoolSubjectPaused(m.subject));
   }
 
   function hasMaterial(partial: {
@@ -325,8 +326,10 @@ import "../../styles/homescool-workspace.css";
         .filter((c) => c.cycle === cycle && c.week === week && c.day === day)
         .map((c) => c.subject),
     );
-    const ordered = HOMESCOOL_SUBJECTS.filter((s) => set.has(s));
-    const extras = [...set].filter((s) => !ordered.includes(s)).sort();
+    const ordered = HOMESCOOL_SUBJECTS_ACTIVE.filter((s) => set.has(s));
+    const extras = [...set]
+      .filter((s) => !ordered.includes(s as (typeof HOMESCOOL_SUBJECTS_ACTIVE)[number]) && !isHomescoolSubjectPaused(s))
+      .sort();
     return [...ordered, ...extras];
   }
 
@@ -345,6 +348,7 @@ import "../../styles/homescool-workspace.css";
 
     for (const m of materials) {
       if (m.format !== "eoschool") continue;
+      if (isHomescoolSubjectPaused(m.subject)) continue;
       const level = m.level ?? LEVEL;
       if (level !== LEVEL) continue;
       const key = cellKey(m.cycle, m.week, m.day, m.subject, level);
@@ -363,6 +367,7 @@ import "../../styles/homescool-workspace.css";
     }
 
     for (const row of curriculum.classes) {
+      if (isHomescoolSubjectPaused(row.subject)) continue;
       const level = row.level ?? LEVEL;
       if (level !== LEVEL) continue;
       const key = row.key || cellKey(row.cycle, row.week, row.day, row.subject, level);
@@ -978,7 +983,7 @@ import "../../styles/homescool-workspace.css";
       feBackup: cells.filter((c) => c.source === "fe-backup").length,
       cycles: publishedCycles(),
       weeks: publishedWeeks(DEFAULT_SELECTION.cycle),
-      subjectOrder: [...HOMESCOOL_SUBJECTS],
+      subjectOrder: [...HOMESCOOL_SUBJECTS_ACTIVE],
     });
 
     const deep =

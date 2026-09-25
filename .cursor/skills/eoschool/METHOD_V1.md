@@ -1,4 +1,4 @@
-﻿# eoschool teaching method v1
+# eoschool teaching method v1
 
 Canonical curriculum + `.eoschool` document contract for Homescool.
 Agents and `POST /api/v1/homescool/materials` **must** follow this file.
@@ -50,6 +50,8 @@ Example (esp deepen -ar): define *conjugar*, *raÃ­z*, *desinencia* in Idea cen
 Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = palabra ayudante* (not Â«existeÂ»).
 
 ### Subjects (12 short codes) â€” menu / class number order
+
+**PAUSED — do not author or upsert new materials for `teb` (Teologia biblica) or `exe` (Exegesis) until the user re-enables them.** They stay out of the Homescool menu; class numbers 1-2 remain reserved. Active menu subjects start at `LT` (#3).
 
 | # | Code | Subject |
 | --- | --- | --- |

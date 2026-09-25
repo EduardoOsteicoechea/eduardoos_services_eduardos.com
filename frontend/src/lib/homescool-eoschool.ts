@@ -8,6 +8,9 @@ import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables"
 import {
   HOMESCOOL_SUBJECTS,
   HOMESCOOL_SUBJECT_LABELS,
+  HOMESCOOL_SUBJECTS_ACTIVE,
+  HOMESCOOL_SUBJECTS_PAUSED,
+  isHomescoolSubjectPaused,
   subjectClassNumber,
   subjectDisplayName,
   type HomescoolSubject,
@@ -16,6 +19,9 @@ import {
 export {
   HOMESCOOL_SUBJECTS,
   HOMESCOOL_SUBJECT_LABELS,
+  HOMESCOOL_SUBJECTS_ACTIVE,
+  HOMESCOOL_SUBJECTS_PAUSED,
+  isHomescoolSubjectPaused,
   subjectClassNumber,
   subjectDisplayName,
 };

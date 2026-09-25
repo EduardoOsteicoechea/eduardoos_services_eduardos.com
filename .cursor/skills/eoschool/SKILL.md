@@ -24,6 +24,8 @@ Docs: https://eduardoos.com/api-docs
 
 Follow **METHOD_V1.md** and live `payloadSchema.homescool`. New materials are `.eoschool` JSON (not free-form HTML). Level **6** only for now. One document per `cycle + week + day + level + subject`.
 
+**Paused subjects (until the user re-enables them):** do **not** generate, rewrite, or upsert `teb` (Teología bíblica) or `exe` (Exégesis). They are hidden from the Homescool menu.
+
 ## Mode B (API — docs first)
 
 ```bash

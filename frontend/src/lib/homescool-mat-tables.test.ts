@@ -7,7 +7,7 @@ import {
   renderMatTablesPages,
 } from "./homescool-mat-tables";
 import type { EoschoolDocument } from "./homescool";
-import { subjectClassNumber, subjectDisplayName } from "./homescool-subjects";
+import { subjectClassNumber, subjectDisplayName, HOMESCOOL_SUBJECTS_ACTIVE, isHomescoolSubjectPaused } from "./homescool-subjects";
 
 describe("homescool-mat-tables", () => {
   it("maps day to practice density", () => {
@@ -58,5 +58,16 @@ describe("homescool-subjects", () => {
     expect(subjectDisplayName("mat")).toBe("Matemáticas");
     expect(subjectDisplayName("pro")).toBe("Proyecto");
     expect(subjectDisplayName("teb")).toBe("Teología bíblica");
+  });
+
+  it("pauses teb and exe from the active menu without renumbering", () => {
+    expect(isHomescoolSubjectPaused("teb")).toBe(true);
+    expect(isHomescoolSubjectPaused("exe")).toBe(true);
+    expect(isHomescoolSubjectPaused("mat")).toBe(false);
+    expect(HOMESCOOL_SUBJECTS_ACTIVE).not.toContain("teb");
+    expect(HOMESCOOL_SUBJECTS_ACTIVE).not.toContain("exe");
+    expect(HOMESCOOL_SUBJECTS_ACTIVE[0]).toBe("LT");
+    expect(subjectClassNumber("mat")).toBe(7);
+    expect(subjectClassNumber("LT")).toBe(3);
   });
 });
