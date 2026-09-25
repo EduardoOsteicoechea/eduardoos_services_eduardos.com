@@ -14,7 +14,7 @@ html[data-page="homescool-workspace"] .shell {
   min-height: 100%;
 }
 
-/* Workspace canvas: top clears site menu; left clears curriculum rail. */
+/* Workspace canvas: top clears site menu unless admin link row owns that band. */
 html[data-page="homescool-workspace"] main {
   display: flex;
   flex-direction: column;
@@ -30,6 +30,11 @@ html[data-page="homescool-workspace"] main {
   font-family: var(--font-family);
   /* Contain admin/banner/sheets to this padded column only. */
   overflow-x: hidden;
+}
+
+/* Admin link row sits in the menu-button band (replaces empty top padding). */
+html[data-page="homescool-workspace"] main:has([data-homescool-support-admin]:not([hidden])) {
+  padding-top: 0;
 }
 
 /* Fixed curriculum rail (cycle / week / day / subject / Print) */
@@ -118,26 +123,17 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: var(--color-bg);
 }
 
-.homescool-workspace .product-workspace__status {
-  flex: 0 0 auto;
-  margin: 0;
-  padding: var(--space-padding);
-  /* Clear the fixed site menu button on the right. */
-  padding-right: calc(var(--menu-button-size) + var(--space-padding));
-  border-bottom: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-size: var(--font-size-sm);
-  line-height: 1.35;
-}
-
 .homescool-workspace__stage {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: 0;
+  /* First letter sheet sits 2rem below the admin link row (or menu band). */
+  padding-top: 2rem;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
   margin: 0;
   border: 0;
   border-radius: 0;
@@ -196,7 +192,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   flex-direction: column;
   align-items: center;
   gap: var(--space-padding);
-  padding: var(--space-padding);
+  padding: 0 var(--space-padding) var(--space-padding);
 }
 
 /* PDF-first preview (backend BuildEoschoolPDF → pdf.js canvases) */
@@ -311,8 +307,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   opacity: 0.55;
 }
 
-/* Print row sticks to the bottom of the curriculum rail (not viewport-fixed). */
-.homescool-dhs__print-row {
+/* Print + debug footer sticks to the bottom of the curriculum rail. */
+.homescool-dhs__footer {
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
@@ -321,6 +317,46 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   padding-top: var(--space-padding);
   border-top: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
+  position: relative;
+  z-index: 1;
+}
+
+.homescool-dhs__debug-btn {
+  width: var(--control-height);
+  height: var(--control-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.homescool-dhs__debug-btn .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.homescool-dhs__debug-btn:hover,
+.homescool-dhs__debug-btn:focus-visible,
+.homescool-dhs__debug-btn[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.homescool-dhs__print-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
   position: relative;
   z-index: 1;
 }
@@ -1601,16 +1637,22 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   word-break: break-all;
 }
 
-/* Admin support URL bar */
+/* Admin support URL bar — sits in the site menu band (same row as hamburger). */
 .homescool-support-admin {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: var(--rail-gap);
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  min-height: var(--mobile-header-height);
+  height: var(--mobile-header-height);
   padding: var(--space-padding);
-  padding-right: calc(var(--menu-button-size) + var(--space-padding));
+  /* Clear the fixed site menu button on the right. */
+  padding-right: calc(var(--menu-button-size) + var(--space-padding) + var(--space-padding));
   border-bottom: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .homescool-support-admin[hidden] {
@@ -1618,23 +1660,26 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-support-admin__label {
+  flex: 0 0 auto;
   font-size: var(--font-size-xs);
   color: var(--color-muted);
+  white-space: nowrap;
 }
 
 .homescool-support-admin__input {
-  flex: 1 1 12rem;
-  min-width: 8rem;
+  flex: 1 1 auto;
+  min-width: 0;
   height: var(--control-height);
   padding: var(--control-padding-block) var(--control-padding-inline);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  background: var(--color-surface);
+  background: var(--color-bg);
   color: var(--color-text);
   font-size: var(--font-size-sm);
 }
 
 .homescool-support-admin__save {
+  flex: 0 0 auto;
   height: var(--control-height);
   padding: var(--control-padding-block) var(--control-padding-inline);
   border: var(--border-width) solid var(--color-border);
@@ -1645,7 +1690,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   cursor: pointer;
 }
 
-/* Expert debug panel */
+/* Expert debug panel — hidden until DHS ? toggle */
 .homescool-debug {
   position: fixed;
   right: var(--space-padding);
@@ -1663,6 +1708,10 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: var(--color-surface);
   color: var(--color-text);
   box-shadow: none;
+}
+
+.homescool-debug[hidden] {
+  display: none !important;
 }
 
 .homescool-debug--collapsed {

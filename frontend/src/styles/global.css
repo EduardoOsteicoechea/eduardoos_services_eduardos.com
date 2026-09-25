@@ -1204,6 +1204,10 @@ html[data-page="homescool-workspace"] main {
   padding-left: var(--homescool-dhs-width, 13rem);
 }
 
+html[data-page="homescool-workspace"] main:has([data-homescool-support-admin]:not([hidden])) {
+  padding-top: 0;
+}
+
 html[data-page="homescool-workspace"],
 html[data-page="latin-institutes"] {
   --product-tree-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) * 0.35);

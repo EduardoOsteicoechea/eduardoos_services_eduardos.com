@@ -1,6 +1,6 @@
 /**
  * Homescool expert debug log — ring buffer + on-page panel.
- * Always records; panel is shown on /homescool (toggle to collapse).
+ * Always records; panel stays hidden until the DHS ? toggle shows it.
  */
 
 export type HomescoolDebugLevel = "debug" | "info" | "warn" | "error";
@@ -128,14 +128,27 @@ function renderPanelList(): void {
   listEl.scrollTop = listEl.scrollHeight;
 }
 
-/** Mount (or remount) the expert debug panel into the Homescool workspace. */
+export function isHomescoolDebugPanelVisible(): boolean {
+  return Boolean(panelEl?.isConnected && !panelEl.hidden);
+}
+
+export function setHomescoolDebugPanelVisible(visible: boolean): void {
+  if (!panelEl) return;
+  panelEl.hidden = !visible;
+}
+
+/** Mount (or remount) the expert debug panel into the Homescool workspace. Starts hidden. */
 export function mountHomescoolDebugPanel(host: HTMLElement): void {
-  if (panelEl?.isConnected) return;
+  if (panelEl?.isConnected) {
+    setHomescoolDebugPanelVisible(false);
+    return;
+  }
 
   const panel = document.createElement("aside");
   panel.className = "homescool-debug";
   panel.setAttribute("data-homescool-debug", "");
   panel.setAttribute("aria-label", "Homescool expert debug log");
+  panel.hidden = true;
 
   const toolbar = document.createElement("header");
   toolbar.className = "homescool-debug__toolbar";
@@ -176,18 +189,20 @@ export function mountHomescoolDebugPanel(host: HTMLElement): void {
     }
   });
 
-  const toggleBtn = document.createElement("button");
-  toggleBtn.type = "button";
-  toggleBtn.className = "homescool-debug__btn";
-  toggleBtn.textContent = "Hide";
-  toggleBtn.setAttribute("aria-expanded", "true");
-  toggleBtn.addEventListener("click", () => {
-    const collapsed = panel.classList.toggle("homescool-debug--collapsed");
-    toggleBtn.textContent = collapsed ? "Show" : "Hide";
-    toggleBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  const hideBtn = document.createElement("button");
+  hideBtn.type = "button";
+  hideBtn.className = "homescool-debug__btn";
+  hideBtn.textContent = "Hide";
+  hideBtn.addEventListener("click", () => {
+    setHomescoolDebugPanelVisible(false);
+    for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-homescool-debug-toggle]")) {
+      btn.setAttribute("aria-pressed", "false");
+      btn.title = "Mostrar HC debug";
+      btn.setAttribute("aria-label", btn.title);
+    }
   });
 
-  toolbar.append(title, filter, clearBtn, copyBtn, toggleBtn);
+  toolbar.append(title, filter, clearBtn, copyBtn, hideBtn);
 
   const list = document.createElement("div");
   list.className = "homescool-debug__list";
@@ -198,5 +213,5 @@ export function mountHomescoolDebugPanel(host: HTMLElement): void {
   panelEl = panel;
   listEl = list;
   renderPanelList();
-  hcLog("debug-panel", "mounted", { max: MAX_ENTRIES });
+  hcLog("debug-panel", "mounted", { max: MAX_ENTRIES, visible: false });
 }
