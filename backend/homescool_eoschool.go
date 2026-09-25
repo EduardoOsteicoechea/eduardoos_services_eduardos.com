@@ -190,7 +190,12 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		if kind != eoschoolKindReview {
 			return fmt.Errorf("day 5 lesson.kind must be review")
 		}
-		if len(doc.Lesson.Points) != 5 {
+		// pro = one project/week: day 5 is wrap/expo (often 1 block), not five panoramas.
+		if strings.EqualFold(strings.TrimSpace(doc.Subject), "pro") {
+			if len(doc.Lesson.Points) < 1 {
+				return fmt.Errorf("pro day 5 requires at least one overview point")
+			}
+		} else if len(doc.Lesson.Points) != 5 {
 			return fmt.Errorf("day 5 requires exactly 5 overview points")
 		}
 	}

@@ -50,6 +50,40 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 	}
 }
 
+func TestValidateEoschoolDocumentProDay5AllowsOnePoint(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Subject = "pro"
+	doc.Day = 5
+	doc.Lesson.Kind = eoschoolKindReview
+	doc.Lesson.Summary = ""
+	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Presenta el proyecto", Body: "Continúa el mismo experimento."}}
+	doc.Quiz.QuestionCount = 52
+	doc.Quiz.Questions = make([]EoschoolQuestion, 52)
+	for i := 0; i < 40; i++ {
+		doc.Quiz.Questions[i] = EoschoolQuestion{
+			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[40+i] = EoschoolQuestion{
+			ID: "w4", OriginDay: 4, Type: "write", Prompt: "escribe?",
+		}
+	}
+	for i := 0; i < 8; i++ {
+		doc.Quiz.Questions[44+i] = EoschoolQuestion{
+			ID: "w5", OriginDay: 5, Type: "write", Prompt: "reflexiona?",
+		}
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+	doc.Subject = "mat"
+	if err := validateEoschoolDocument(&doc); err == nil {
+		t.Fatal("non-pro day 5 with 1 point should fail")
+	}
+}
+
 func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
 	doc := sampleEoschoolDay1()
 	doc.Day = 4
