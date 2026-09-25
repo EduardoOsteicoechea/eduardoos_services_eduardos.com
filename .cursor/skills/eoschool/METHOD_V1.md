@@ -80,20 +80,20 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 
 | Day | Lesson | Quiz |
 | --- | --- | --- |
-| 1 | **Intro:** exactly **3 points** + **summary** | **8** MCQ (`originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 | **16** MCQ (days 1â€“2) |
-| 3 | **Deepen** point 2 | **24** MCQ (days 1â€“3) |
-| 4 | **Deepen** point 3 | **32** MCQ + **4** `write` (reflection) â†’ **36** total |
-| 5 | **Review:** five overview blocks | **40** MCQ + **12** `write` (4 from day 4 + 8 new) â†’ **52** total; **randomize** MCQ order |
+| 1 | **Intro:** exactly **3 points** + **summary** | **8** items (`originDay: 1`) |
+| 2 | **Deepen** point 1 of day 1 | **16** items (days 1–2) |
+| 3 | **Deepen** point 2 | **24** items (days 1–3) |
+| 4 | **Deepen** point 3 | **36** items |
+| 5 | **Review:** five overview blocks | **52** items; prefer shuffle of prior MCQ |
 
-### Exception: `pro` (Proyecto) â€” one experiment per week
+### Exception: `pro` (Proyecto) — one experiment per week
 
 `pro` does **not** deepen three academic points across the week. There is **one** hands-on project per week:
 
 | Day | `pro` lesson |
 | --- | --- |
 | **1** | **Full explanation only here:** purpose, materials/procedure, why it works (3 points + summary). |
-| **2â€“4** | Short **continuation / lab time** (1 point): same project, no new experiment, no re-teach of the whole intro. Keep quiz accumulation. |
+| **2–4** | Short **continuation / lab time** (1 point): same project, no new experiment, no re-teach of the whole intro. Keep quiz accumulation. |
 | **5** | Brief wrap + **expo prep** (1 point). FE still adds the lined expo page. Do **not** emit five panorama re-hashes of the experiment. API: `pro` day 5 accepts **>= 1** overview point; other subjects still require **exactly 5**. |
 
 Student-facing rule: day 1 teaches; the rest of the week **works and presents** that same project.
@@ -107,16 +107,33 @@ Student-facing rule: day 1 teaches; the rest of the week **works and presents** 
 5. Overview of point 1 again, rephrased and more synthetic  
 
 **Locale of student-facing text:** headings, bodies, quiz prompts/choices must match `locale`.  
-For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checklist`, `vs`, `deepen`, `review`). Use Spanish (`Panoramaâ€¦`, `listaâ€¦`, `o`, `frente a` only when you want a Contraste split). Grammar terms that are Spanish (`tiempo simple`, `Error comÃºn`) are fine.
+For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checklist`, `vs`, `deepen`, `review`). Use Spanish (`Panorama…`, `lista…`, `o`, `frente a` only when you want a Contraste split). Grammar terms that are Spanish (`tiempo simple`, `Error común`) are fine.
 
 ### Quiz accumulation rule
 
-- Days 1â€“3: each day adds **8** new MCQ; serve all MCQ from days `1â€¦day`.
-- Day 4: same MCQ rule (**32**) **plus 4** writing/reflection prompts (`type: "write"`, `originDay: 4`).
-- Day 5: **40** MCQ (shuffled) **plus 12** `write` items (the 4 from day 4 + **8** new with `originDay: 5`).
+- Days 1–3: each day adds **8** new items; serve all items from days `1…day`. Totals: **8 / 16 / 24**.
+- Day 4: **36** items. Day 5: **52** items.
+- Any slot may be **`mcq`**, **`write`**, or an activity type below. Existing week1/week2 materials that are all-`mcq` (or mcq+write) remain valid.
+- Prefer mostly `mcq` on days 1–3; use activity types when pedagogy needs them (they still count **1** toward `questionCount`).
 
-MCQ items are **selecciÃ³n simple** with at least **2** choices (prefer 4: Aâ€“D).  
-`write` items have a prompt (and optional teacher `answer` rubric hint); **no** `choices`.
+### Question types
+
+| `type` | Layout | Payload |
+| --- | --- | --- |
+| `mcq` | Choices A–D | `choices` (≥2), `answer` |
+| `write` | Lined answer | `prompt` only (+ optional teacher `answer`) |
+| `crossword` | Full puzzle (usually 1 Letter page) | `crossword`: `rows`, `cols`, `grid`, `cluesAcross`, `cluesDown` |
+| `wordsearch` | Full puzzle (usually 1 Letter page) | `wordsearch`: `grid`, `words` |
+| `match` | Two columns | `match`: `left[]`, `right[]` (FE shuffles right for print) |
+| `draw_image` | Trace/draw on image | `drawImage.mediaId` must exist in `media[]` |
+| `draw_box` | Empty draw frame | optional `drawBox.heightCm` (default 8) |
+| `grid_mark` | Labeled grid (A1…) | `gridMark.cols`, `gridMark.rows`; teacher `answer` e.g. `"A6,G4"` |
+
+**Crossword / wordsearch:** **1 JSON item = 1 complete puzzle** (clues/words embedded). Do not split clues into separate questions.
+
+**Grid cells (crossword):** `"."` / `"#"` = black; `""` or a letter = playable (letters are author answers — **not** printed on the student sheet); a digit string places the clue number in that cell.
+
+**Packing (Letter):** `crossword`, `wordsearch`, `draw_image`, `draw_box`, `grid_mark` → max **1 per page** (alone). `match` measured; often 1/page. `mcq`/`write` fill the page as before.
 
 ## Presentation / print (always)
 
@@ -167,13 +184,86 @@ MCQ items are **selecciÃ³n simple** with at least **2** choices (prefer 4: Aâ
 ### Validation rules
 
 - `format` must be `"eoschool"`; `version` must be `1`.
-- `cycle` âˆˆ 1..3; `week` âˆˆ 1..24; `day` âˆˆ 1..5; `level` must be `6` (v1); `subject` âˆˆ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
+- `cycle` ∈ 1..3; `week` ∈ 1..24; `day` ∈ 1..5; `level` must be `6` (v1); `subject` ∈ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
 - Logical key: `owner + cycle + week + day + level + subject` (no free slug).
-- `day == 1` â†’ `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`, all `mcq`.
-- `day` âˆˆ 2..3 â†’ `kind == "deepen"`, `focusPoint == day - 1`, â‰¥1 point block, `questionCount == 8 * day`, each `originDay` âˆˆ 1..day, all `mcq`.
-- `day == 4` â†’ `kind == "deepen"`, `focusPoint == 3`, `questionCount == 36` (32 `mcq` + 4 `write` with `originDay == 4`).
-- `day == 5` â†’ `kind == "review"`, exactly **5** point blocks, `questionCount == 52` (40 `mcq` + 12 `write`: 4 with `originDay == 4` and 8 with `originDay == 5`).
-- Question `type`: **`mcq`** or **`write`**. MCQ needs `choices` (â‰¥2) and `answer`. Write needs `prompt` only.
+- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`.
+- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 8 * day`, each `originDay` ∈ 1..day.
+- `day == 4` → `kind == "deepen"`, `focusPoint == 3`, `questionCount == 36`.
+- `day == 5` → `kind == "review"`, exactly **5** point blocks (except `pro`: ≥1), `questionCount == 52`.
+- Question `type`: **`mcq`** | **`write`** | **`crossword`** | **`wordsearch`** | **`match`** | **`draw_image`** | **`draw_box`** | **`grid_mark`**. Payload required per type (see table above). Mixed types allowed; count must match the day total.
+
+### Activity type examples (one slot each)
+
+```json
+{
+  "id": "d1-q1",
+  "originDay": 1,
+  "type": "crossword",
+  "prompt": "Resuelve el crucigrama",
+  "crossword": {
+    "rows": 5,
+    "cols": 5,
+    "grid": [["1", "", "#", "", ""], ["", "#", "", "#", ""], ["2", "", "", "", ""], ["#", "", "#", "", "#"], ["", "", "3", "", ""]],
+    "cluesAcross": [{ "num": 1, "clue": "…" }, { "num": 2, "clue": "…" }],
+    "cluesDown": [{ "num": 3, "clue": "…" }]
+  }
+}
+```
+
+```json
+{
+  "id": "d1-q2",
+  "originDay": 1,
+  "type": "wordsearch",
+  "prompt": "Encuentra las palabras",
+  "wordsearch": {
+    "grid": [["A", "B", "C"], ["D", "E", "F"], ["G", "H", "I"]],
+    "words": ["ABC", "AEI"]
+  }
+}
+```
+
+```json
+{
+  "id": "d1-q3",
+  "originDay": 1,
+  "type": "match",
+  "prompt": "Empareja",
+  "match": { "left": ["uno", "dos", "tres"], "right": ["1", "2", "3"] },
+  "answer": "A=1,B=2,C=3"
+}
+```
+
+```json
+{
+  "id": "d1-q4",
+  "originDay": 1,
+  "type": "draw_image",
+  "prompt": "Traza las rutas sobre el mapa",
+  "drawImage": { "mediaId": "mapa1" }
+}
+```
+
+```json
+{
+  "id": "d1-q5",
+  "originDay": 1,
+  "type": "draw_box",
+  "prompt": "Dibuja el ciclo del agua",
+  "drawBox": { "heightCm": 8 }
+}
+```
+
+```json
+{
+  "id": "d1-q6",
+  "originDay": 1,
+  "type": "grid_mark",
+  "prompt": "Marca las casillas correctas",
+  "gridMark": { "cols": 8, "rows": 8 },
+  "answer": "A6,G4"
+}
+```
 
 ## API (docs-first)
 

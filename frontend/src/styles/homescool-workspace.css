@@ -1169,6 +1169,255 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   min-height: 0.85rem;
 }
 
+/* ── Activity quiz layouts (crossword, wordsearch, match, draw, grid) ── */
+
+.homescool-letter__quiz--activities {
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: auto;
+  align-content: start;
+}
+
+.homescool-letter__q--crossword,
+.homescool-letter__q--wordsearch,
+.homescool-letter__q--match,
+.homescool-letter__q--draw_image,
+.homescool-letter__q--draw_box,
+.homescool-letter__q--grid_mark {
+  gap: 0.35rem;
+}
+
+.homescool-letter__activity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  padding-left: calc(var(--hc-q-num-size) + 0.35rem);
+  min-width: 0;
+}
+
+.homescool-letter__cw-board {
+  display: grid;
+  grid-template-columns: repeat(var(--hc-cw-cols, 8), minmax(0, 1fr));
+  width: 100%;
+  max-width: 12cm;
+  margin-inline: auto;
+  border: 0.06rem solid var(--hc-navy);
+}
+
+.homescool-letter__ws-board {
+  display: grid;
+  grid-template-columns: repeat(var(--hc-ws-cols, 10), minmax(0, 1fr));
+  width: 100%;
+  max-width: 14cm;
+  margin-inline: auto;
+  border: 0.06rem solid var(--hc-navy);
+}
+
+.homescool-letter__cw-cell,
+.homescool-letter__ws-cell {
+  aspect-ratio: 1;
+  border: 0.04rem solid var(--hc-navy);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 0.55cm;
+  background: transparent;
+  font-size: 0.35cm;
+  line-height: 1;
+  color: var(--hc-ink, var(--hc-navy));
+}
+
+.homescool-letter__cw-cell--block {
+  background: var(--hc-navy);
+  border-color: var(--hc-navy);
+}
+
+.homescool-letter__cw-num {
+  position: absolute;
+  top: 0.05cm;
+  left: 0.06cm;
+  font-size: 0.22cm;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--hc-navy);
+}
+
+.homescool-letter__cw-clues {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.homescool-letter__cw-clue-title {
+  margin: 0 0 0.2rem;
+  font-size: 0.3cm;
+  font-weight: 700;
+  color: var(--hc-coral, var(--hc-orange));
+  text-transform: uppercase;
+  letter-spacing: 0.03rem;
+}
+
+.homescool-letter__cw-clue-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.3cm;
+  line-height: 1.35;
+  color: var(--hc-ink, var(--hc-navy));
+}
+
+.homescool-letter__ws-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.3cm;
+  line-height: 1.3;
+  color: var(--hc-ink, var(--hc-navy));
+}
+
+.homescool-letter__ws-words li {
+  border-bottom: 0.04rem solid var(--hc-olive);
+  padding-bottom: 0.05rem;
+}
+
+.homescool-letter__match-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.homescool-letter__match-left,
+.homescool-letter__match-right {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.3cm;
+  line-height: 1.35;
+  color: var(--hc-ink, var(--hc-navy));
+}
+
+.homescool-letter__match-left li,
+.homescool-letter__match-right li {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.homescool-letter__match-blank {
+  flex: 0 0 auto;
+  font-family: inherit;
+  letter-spacing: 0.05rem;
+  color: var(--hc-navy);
+}
+
+.homescool-letter__match-mark {
+  flex: 0 0 auto;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 0.06rem solid var(--hc-blue);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.28cm;
+  font-weight: 700;
+  color: var(--hc-navy);
+}
+
+.homescool-letter__match-hint,
+.homescool-letter__gm-hint {
+  margin: 0;
+  font-size: 0.28cm;
+  line-height: 1.3;
+  color: var(--hc-olive);
+}
+
+.homescool-letter__draw-frame {
+  border: 0.08rem solid var(--hc-navy);
+  border-radius: var(--border-radius, 0.25rem);
+  background: transparent;
+  min-height: 6cm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.homescool-letter__draw-frame--image {
+  min-height: 8cm;
+  padding: 0.25rem;
+}
+
+.homescool-letter__draw-frame--box {
+  min-height: 8cm;
+}
+
+.homescool-letter__draw-img {
+  max-width: 100%;
+  max-height: 14cm;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.homescool-letter__gm-board {
+  display: grid;
+  grid-template-columns: repeat(var(--hc-gm-cols, 9), minmax(0, 1fr));
+  width: 100%;
+  max-width: 12cm;
+  margin-inline: auto;
+  border: 0.06rem solid var(--hc-navy);
+}
+
+.homescool-letter__gm-corner,
+.homescool-letter__gm-col-label,
+.homescool-letter__gm-row-label,
+.homescool-letter__gm-cell {
+  box-sizing: border-box;
+  border: 0.04rem solid var(--hc-navy);
+  min-height: 0.55cm;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.28cm;
+  line-height: 1;
+  color: var(--hc-navy);
+  background: transparent;
+}
+
+.homescool-letter__gm-col-label,
+.homescool-letter__gm-row-label {
+  font-weight: 700;
+  aspect-ratio: auto;
+  min-height: 0.45cm;
+}
+
+.homescool-letter__gm-corner {
+  border-color: transparent;
+  aspect-ratio: auto;
+  min-height: 0.45cm;
+}
+
+.homescool-letter-page--quiz .homescool-letter__q--crossword,
+.homescool-letter-page--quiz .homescool-letter__q--wordsearch,
+.homescool-letter-page--quiz .homescool-letter__q--draw_image,
+.homescool-letter-page--quiz .homescool-letter__q--draw_box,
+.homescool-letter-page--quiz .homescool-letter__q--grid_mark,
+.homescool-letter-page--quiz .homescool-letter__q--match {
+  grid-column: 1 / -1;
+}
+
 .homescool-letter__q:nth-child(2n + 1) {
   border-color: var(--hc-blue);
 }

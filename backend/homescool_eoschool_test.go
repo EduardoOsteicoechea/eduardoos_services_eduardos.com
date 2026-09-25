@@ -9,12 +9,85 @@ func TestValidateEoschoolDocumentDay1(t *testing.T) {
 	}
 }
 
-func TestValidateEoschoolDocumentRejectsWrongQuizCount(t *testing.T) {
+func TestValidateEoschoolDocumentDay1MixedActivityTypes(t *testing.T) {
 	doc := sampleEoschoolDay1()
-	doc.Quiz.QuestionCount = 6
-	doc.Quiz.Questions = doc.Quiz.Questions[:6]
+	doc.Media = []EoschoolMedia{{ID: "img1", Path: "/homescool/media/sample.png", Alt: "mapa"}}
+	doc.Quiz.Questions[0] = EoschoolQuestion{
+		ID: "cw", OriginDay: 1, Type: "crossword", Prompt: "Resuelve el crucigrama",
+		Crossword: &EoschoolCrossword{
+			Rows: 3, Cols: 3,
+			Grid: [][]string{
+				{"", ".", ""},
+				{"", "", ""},
+				{".", "", "."},
+			},
+			CluesAcross: []EoschoolClue{{Num: 1, Clue: "Horizontal"}},
+			CluesDown:   []EoschoolClue{{Num: 2, Clue: "Vertical"}},
+		},
+	}
+	doc.Quiz.Questions[1] = EoschoolQuestion{
+		ID: "ws", OriginDay: 1, Type: "wordsearch", Prompt: "Encuentra las palabras",
+		Wordsearch: &EoschoolWordsearch{
+			Grid:  [][]string{{"A", "B"}, {"C", "D"}},
+			Words: []string{"AB", "CD"},
+		},
+	}
+	doc.Quiz.Questions[2] = EoschoolQuestion{
+		ID: "mt", OriginDay: 1, Type: "match", Prompt: "Empareja",
+		Match: &EoschoolMatch{
+			Left:  []string{"uno", "dos", "tres"},
+			Right: []string{"1", "2", "3"},
+		},
+	}
+	doc.Quiz.Questions[3] = EoschoolQuestion{
+		ID: "di", OriginDay: 1, Type: "draw_image", Prompt: "Traza sobre el mapa",
+		DrawImage: &EoschoolDrawImage{MediaID: "img1"},
+	}
+	doc.Quiz.Questions[4] = EoschoolQuestion{
+		ID: "db", OriginDay: 1, Type: "draw_box", Prompt: "Dibuja el ciclo",
+		DrawBox: &EoschoolDrawBox{HeightCm: 6},
+	}
+	doc.Quiz.Questions[5] = EoschoolQuestion{
+		ID: "gm", OriginDay: 1, Type: "grid_mark", Prompt: "Marca las celdas correctas",
+		GridMark: &EoschoolGridMark{Cols: 8, Rows: 8},
+		Answer:   "A6,G4",
+	}
+	doc.Quiz.Questions[6] = EoschoolQuestion{
+		ID: "wr", OriginDay: 1, Type: "write", Prompt: "Explica en dos oraciones",
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestValidateEoschoolDocumentRejectsIncompleteCrossword(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Quiz.Questions[0] = EoschoolQuestion{
+		ID: "cw", OriginDay: 1, Type: "crossword", Prompt: "Crucigrama",
+	}
 	if err := validateEoschoolDocument(&doc); err == nil {
-		t.Fatal("expected quiz count error")
+		t.Fatal("expected crossword payload error")
+	}
+}
+
+func TestValidateEoschoolDocumentRejectsDrawImageWithoutMedia(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Quiz.Questions[0] = EoschoolQuestion{
+		ID: "di", OriginDay: 1, Type: "draw_image", Prompt: "Dibuja",
+		DrawImage: &EoschoolDrawImage{MediaID: "missing"},
+	}
+	if err := validateEoschoolDocument(&doc); err == nil {
+		t.Fatal("expected missing mediaId error")
+	}
+}
+
+func TestValidateEoschoolDocumentDay1AllowsWrite(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Quiz.Questions[0] = EoschoolQuestion{
+		ID: "w", OriginDay: 1, Type: "write", Prompt: "Escribe tu idea",
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
 	}
 }
 

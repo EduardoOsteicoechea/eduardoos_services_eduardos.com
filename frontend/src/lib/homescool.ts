@@ -178,6 +178,42 @@ export type HomescoolMaterial = {
   updatedAt?: string;
 };
 
+export type EoschoolClue = {
+  num: number;
+  clue: string;
+};
+
+export type EoschoolCrossword = {
+  rows: number;
+  cols: number;
+  grid: string[][];
+  cluesAcross: EoschoolClue[];
+  cluesDown: EoschoolClue[];
+};
+
+export type EoschoolWordsearch = {
+  grid: string[][];
+  words: string[];
+};
+
+export type EoschoolMatch = {
+  left: string[];
+  right: string[];
+};
+
+export type EoschoolDrawImage = {
+  mediaId: string;
+};
+
+export type EoschoolDrawBox = {
+  heightCm?: number;
+};
+
+export type EoschoolGridMark = {
+  cols: number;
+  rows: number;
+};
+
 export type EoschoolQuestion = {
   id: string;
   originDay: number;
@@ -185,6 +221,12 @@ export type EoschoolQuestion = {
   prompt: string;
   choices?: string[];
   answer?: string;
+  crossword?: EoschoolCrossword;
+  wordsearch?: EoschoolWordsearch;
+  match?: EoschoolMatch;
+  drawImage?: EoschoolDrawImage;
+  drawBox?: EoschoolDrawBox;
+  gridMark?: EoschoolGridMark;
 };
 
 export type EoschoolDocument = {

@@ -165,20 +165,84 @@ func formatQuizLines(questions []EoschoolQuestion, startIndex int) []string {
 		n := startIndex + j
 		lines = append(lines, fmt.Sprintf("%d. %s", n, strings.TrimSpace(q.Prompt)))
 		typ := strings.ToLower(strings.TrimSpace(q.Type))
-		if typ == "write" {
+		switch typ {
+		case "write":
 			lines = append(lines, "   _______________________________________________")
 			lines = append(lines, "   _______________________________________________")
-		} else if len(q.Choices) > 0 {
-			letters := []string{"A", "B", "C", "D", "E", "F"}
-			parts := make([]string, 0, len(q.Choices))
-			for ci, c := range q.Choices {
-				mark := letters[ci]
-				if ci >= len(letters) {
-					mark = fmt.Sprintf("%d", ci+1)
+		case "crossword":
+			if q.Crossword != nil {
+				lines = append(lines, fmt.Sprintf("   [crucigrama %d×%d]", q.Crossword.Rows, q.Crossword.Cols))
+				for _, c := range q.Crossword.CluesAcross {
+					lines = append(lines, fmt.Sprintf("   → %d. %s", c.Num, strings.TrimSpace(c.Clue)))
 				}
-				parts = append(parts, fmt.Sprintf("%s) %s", mark, strings.TrimSpace(c)))
+				for _, c := range q.Crossword.CluesDown {
+					lines = append(lines, fmt.Sprintf("   ↓ %d. %s", c.Num, strings.TrimSpace(c.Clue)))
+				}
+			} else {
+				lines = append(lines, "   [crucigrama]")
 			}
-			lines = append(lines, "   "+strings.Join(parts, "   "))
+		case "wordsearch":
+			if q.Wordsearch != nil {
+				rows := len(q.Wordsearch.Grid)
+				cols := 0
+				if rows > 0 {
+					cols = len(q.Wordsearch.Grid[0])
+				}
+				lines = append(lines, fmt.Sprintf("   [sopa de letras %d×%d]", rows, cols))
+				if len(q.Wordsearch.Words) > 0 {
+					lines = append(lines, "   Palabras: "+strings.Join(q.Wordsearch.Words, ", "))
+				}
+			} else {
+				lines = append(lines, "   [sopa de letras]")
+			}
+		case "match":
+			if q.Match != nil {
+				lines = append(lines, "   [emparejar]")
+				for i := range q.Match.Left {
+					right := ""
+					if i < len(q.Match.Right) {
+						right = q.Match.Right[i]
+					}
+					lines = append(lines, fmt.Sprintf("   %d) %s  ↔  %s", i+1, strings.TrimSpace(q.Match.Left[i]), strings.TrimSpace(right)))
+				}
+			} else {
+				lines = append(lines, "   [emparejar]")
+			}
+		case "draw_image":
+			mid := ""
+			if q.DrawImage != nil {
+				mid = strings.TrimSpace(q.DrawImage.MediaID)
+			}
+			if mid != "" {
+				lines = append(lines, fmt.Sprintf("   [dibuja sobre imagen: %s]", mid))
+			} else {
+				lines = append(lines, "   [dibuja sobre imagen]")
+			}
+		case "draw_box":
+			h := 8.0
+			if q.DrawBox != nil && q.DrawBox.HeightCm > 0 {
+				h = q.DrawBox.HeightCm
+			}
+			lines = append(lines, fmt.Sprintf("   [dibuja en recuadro · %.1f cm]", h))
+		case "grid_mark":
+			if q.GridMark != nil {
+				lines = append(lines, fmt.Sprintf("   [retícula %d×%d — marca casillas]", q.GridMark.Cols, q.GridMark.Rows))
+			} else {
+				lines = append(lines, "   [retícula — marca casillas]")
+			}
+		default:
+			if len(q.Choices) > 0 {
+				letters := []string{"A", "B", "C", "D", "E", "F"}
+				parts := make([]string, 0, len(q.Choices))
+				for ci, c := range q.Choices {
+					mark := letters[ci]
+					if ci >= len(letters) {
+						mark = fmt.Sprintf("%d", ci+1)
+					}
+					parts = append(parts, fmt.Sprintf("%s) %s", mark, strings.TrimSpace(c)))
+				}
+				lines = append(lines, "   "+strings.Join(parts, "   "))
+			}
 		}
 		lines = append(lines, "")
 	}

@@ -65,12 +65,54 @@ type EoschoolQuiz struct {
 }
 
 type EoschoolQuestion struct {
-	ID        string   `json:"id"`
-	OriginDay int      `json:"originDay"`
-	Type      string   `json:"type"`
-	Prompt    string   `json:"prompt"`
-	Choices   []string `json:"choices,omitempty"`
-	Answer    string   `json:"answer,omitempty"`
+	ID         string              `json:"id"`
+	OriginDay  int                 `json:"originDay"`
+	Type       string              `json:"type"`
+	Prompt     string              `json:"prompt"`
+	Choices    []string            `json:"choices,omitempty"`
+	Answer     string              `json:"answer,omitempty"`
+	Crossword  *EoschoolCrossword  `json:"crossword,omitempty"`
+	Wordsearch *EoschoolWordsearch `json:"wordsearch,omitempty"`
+	Match      *EoschoolMatch      `json:"match,omitempty"`
+	DrawImage  *EoschoolDrawImage  `json:"drawImage,omitempty"`
+	DrawBox    *EoschoolDrawBox    `json:"drawBox,omitempty"`
+	GridMark   *EoschoolGridMark   `json:"gridMark,omitempty"`
+}
+
+type EoschoolClue struct {
+	Num  int    `json:"num"`
+	Clue string `json:"clue"`
+}
+
+type EoschoolCrossword struct {
+	Rows        int            `json:"rows"`
+	Cols        int            `json:"cols"`
+	Grid        [][]string     `json:"grid"`
+	CluesAcross []EoschoolClue `json:"cluesAcross"`
+	CluesDown   []EoschoolClue `json:"cluesDown"`
+}
+
+type EoschoolWordsearch struct {
+	Grid  [][]string `json:"grid"`
+	Words []string   `json:"words"`
+}
+
+type EoschoolMatch struct {
+	Left  []string `json:"left"`
+	Right []string `json:"right"`
+}
+
+type EoschoolDrawImage struct {
+	MediaID string `json:"mediaId"`
+}
+
+type EoschoolDrawBox struct {
+	HeightCm float64 `json:"heightCm,omitempty"`
+}
+
+type EoschoolGridMark struct {
+	Cols int `json:"cols"`
+	Rows int `json:"rows"`
 }
 
 type EoschoolMedia struct {
@@ -78,6 +120,15 @@ type EoschoolMedia struct {
 	Path string `json:"path"`
 	Alt  string `json:"alt,omitempty"`
 }
+
+const (
+	eoschoolMaxGridDim   = 20
+	eoschoolMaxWords     = 40
+	eoschoolMinMatch     = 3
+	eoschoolMaxMatch     = 12
+	eoschoolMinGridMark  = 2
+	eoschoolMaxGridMark  = 16
+)
 
 func eoschoolNormalizeSubject(raw string) string {
 	raw = strings.TrimSpace(raw)
@@ -93,8 +144,8 @@ func eoschoolSubjectOK(subject string) bool {
 }
 
 func eoschoolExpectedQuizCount(day int) int {
-	// Days 1–3: 8 MCQ per day accumulated.
-	// Day 4: 32 MCQ + 4 write. Day 5: 40 MCQ + 12 write.
+	// Days 1–3: 8 items/day accumulated. Day 4: 36. Day 5: 52.
+	// Item types may mix (mcq, write, crossword, …); count is fixed.
 	switch day {
 	case 4:
 		return 36
@@ -103,6 +154,139 @@ func eoschoolExpectedQuizCount(day int) int {
 	default:
 		return 8 * day
 	}
+}
+
+func eoschoolMediaIDSet(media []EoschoolMedia) map[string]struct{} {
+	out := make(map[string]struct{}, len(media))
+	for _, m := range media {
+		id := strings.TrimSpace(m.ID)
+		if id != "" {
+			out[id] = struct{}{}
+		}
+	}
+	return out
+}
+
+func validateEoschoolGrid(prefix string, grid [][]string, wantRows, wantCols int) error {
+	if wantRows < 1 || wantCols < 1 || wantRows > eoschoolMaxGridDim || wantCols > eoschoolMaxGridDim {
+		return fmt.Errorf("%s rows/cols must be 1–%d", prefix, eoschoolMaxGridDim)
+	}
+	if len(grid) != wantRows {
+		return fmt.Errorf("%s grid must have %d rows", prefix, wantRows)
+	}
+	for r, row := range grid {
+		if len(row) != wantCols {
+			return fmt.Errorf("%s grid[%d] must have %d cols", prefix, r, wantCols)
+		}
+	}
+	return nil
+}
+
+func validateEoschoolClues(prefix string, clues []EoschoolClue) error {
+	if len(clues) < 1 {
+		return fmt.Errorf("%s needs at least one clue", prefix)
+	}
+	for i, c := range clues {
+		if c.Num < 1 {
+			return fmt.Errorf("%s[%d].num must be ≥ 1", prefix, i)
+		}
+		if strings.TrimSpace(c.Clue) == "" {
+			return fmt.Errorf("%s[%d].clue required", prefix, i)
+		}
+	}
+	return nil
+}
+
+func validateEoschoolQuestionPayload(i int, q *EoschoolQuestion, mediaIDs map[string]struct{}) error {
+	prefix := fmt.Sprintf("quiz.questions[%d]", i)
+	switch q.Type {
+	case "mcq":
+		if len(q.Choices) < 2 {
+			return fmt.Errorf("%s.choices must have at least 2 options", prefix)
+		}
+	case "write":
+		// prompt only
+	case "crossword":
+		if q.Crossword == nil {
+			return fmt.Errorf("%s.crossword required", prefix)
+		}
+		cw := q.Crossword
+		if err := validateEoschoolGrid(prefix+".crossword", cw.Grid, cw.Rows, cw.Cols); err != nil {
+			return err
+		}
+		if err := validateEoschoolClues(prefix+".crossword.cluesAcross", cw.CluesAcross); err != nil {
+			return err
+		}
+		if err := validateEoschoolClues(prefix+".crossword.cluesDown", cw.CluesDown); err != nil {
+			return err
+		}
+	case "wordsearch":
+		if q.Wordsearch == nil {
+			return fmt.Errorf("%s.wordsearch required", prefix)
+		}
+		ws := q.Wordsearch
+		rows := len(ws.Grid)
+		if rows < 1 {
+			return fmt.Errorf("%s.wordsearch.grid required", prefix)
+		}
+		cols := len(ws.Grid[0])
+		if err := validateEoschoolGrid(prefix+".wordsearch", ws.Grid, rows, cols); err != nil {
+			return err
+		}
+		if len(ws.Words) < 1 || len(ws.Words) > eoschoolMaxWords {
+			return fmt.Errorf("%s.wordsearch.words must have 1–%d entries", prefix, eoschoolMaxWords)
+		}
+		for wi, w := range ws.Words {
+			if strings.TrimSpace(w) == "" {
+				return fmt.Errorf("%s.wordsearch.words[%d] required", prefix, wi)
+			}
+		}
+	case "match":
+		if q.Match == nil {
+			return fmt.Errorf("%s.match required", prefix)
+		}
+		m := q.Match
+		n := len(m.Left)
+		if n < eoschoolMinMatch || n > eoschoolMaxMatch {
+			return fmt.Errorf("%s.match.left must have %d–%d items", prefix, eoschoolMinMatch, eoschoolMaxMatch)
+		}
+		if len(m.Right) != n {
+			return fmt.Errorf("%s.match.right length must equal left", prefix)
+		}
+		for j := 0; j < n; j++ {
+			if strings.TrimSpace(m.Left[j]) == "" {
+				return fmt.Errorf("%s.match.left[%d] required", prefix, j)
+			}
+			if strings.TrimSpace(m.Right[j]) == "" {
+				return fmt.Errorf("%s.match.right[%d] required", prefix, j)
+			}
+		}
+	case "draw_image":
+		if q.DrawImage == nil || strings.TrimSpace(q.DrawImage.MediaID) == "" {
+			return fmt.Errorf("%s.drawImage.mediaId required", prefix)
+		}
+		mid := strings.TrimSpace(q.DrawImage.MediaID)
+		q.DrawImage.MediaID = mid
+		if _, ok := mediaIDs[mid]; !ok {
+			return fmt.Errorf("%s.drawImage.mediaId %q not found in media", prefix, mid)
+		}
+	case "draw_box":
+		if q.DrawBox != nil && q.DrawBox.HeightCm < 0 {
+			return fmt.Errorf("%s.drawBox.heightCm must be ≥ 0", prefix)
+		}
+	case "grid_mark":
+		if q.GridMark == nil {
+			return fmt.Errorf("%s.gridMark required", prefix)
+		}
+		gm := q.GridMark
+		if gm.Cols < eoschoolMinGridMark || gm.Cols > eoschoolMaxGridMark ||
+			gm.Rows < eoschoolMinGridMark || gm.Rows > eoschoolMaxGridMark {
+			return fmt.Errorf("%s.gridMark cols/rows must be %d–%d", prefix, eoschoolMinGridMark, eoschoolMaxGridMark)
+		}
+	default:
+		return fmt.Errorf("%s.type must be mcq, write, crossword, wordsearch, match, draw_image, draw_box, or grid_mark", prefix)
+	}
+	return nil
 }
 
 func validateEoschoolDocument(doc *EoschoolDocument) error {
@@ -209,50 +393,21 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		}
 	}
 
-	mcqN, writeN := 0, 0
-	writeFrom4, writeFrom5 := 0, 0
-	for i, q := range doc.Quiz.Questions {
+	mediaIDs := eoschoolMediaIDSet(doc.Media)
+	for i := range doc.Quiz.Questions {
+		q := &doc.Quiz.Questions[i]
 		if strings.TrimSpace(q.Prompt) == "" {
 			return fmt.Errorf("quiz.questions[%d].prompt required", i)
 		}
 		if q.OriginDay < 1 || q.OriginDay > doc.Day {
 			return fmt.Errorf("quiz.questions[%d].originDay must be 1–%d", i, doc.Day)
 		}
-		typ := strings.TrimSpace(strings.ToLower(q.Type))
-		doc.Quiz.Questions[i].Type = typ
-		switch typ {
-		case "mcq":
-			mcqN++
-			if len(q.Choices) < 2 {
-				return fmt.Errorf("quiz.questions[%d].choices must have at least 2 options", i)
-			}
-		case "write":
-			writeN++
-			if q.OriginDay == 4 {
-				writeFrom4++
-			}
-			if q.OriginDay == 5 {
-				writeFrom5++
-			}
-		default:
-			return fmt.Errorf("quiz.questions[%d].type must be mcq or write", i)
+		q.Type = strings.TrimSpace(strings.ToLower(q.Type))
+		if err := validateEoschoolQuestionPayload(i, q, mediaIDs); err != nil {
+			return err
 		}
 		if strings.TrimSpace(q.ID) == "" {
-			doc.Quiz.Questions[i].ID = fmt.Sprintf("d%d-q%d", q.OriginDay, i+1)
-		}
-	}
-	switch doc.Day {
-	case 1, 2, 3:
-		if writeN != 0 || mcqN != wantCount {
-			return fmt.Errorf("day %d requires %d mcq and 0 write", doc.Day, wantCount)
-		}
-	case 4:
-		if mcqN != 32 || writeN != 4 || writeFrom4 != 4 {
-			return fmt.Errorf("day 4 requires 32 mcq + 4 write (originDay 4)")
-		}
-	case 5:
-		if mcqN != 40 || writeN != 12 || writeFrom4 != 4 || writeFrom5 != 8 {
-			return fmt.Errorf("day 5 requires 40 mcq + 12 write (4 from day 4, 8 from day 5)")
+			q.ID = fmt.Sprintf("d%d-q%d", q.OriginDay, i+1)
 		}
 	}
 	return nil
