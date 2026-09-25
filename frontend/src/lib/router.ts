@@ -6,6 +6,71 @@ declare global {
   }
 }
 
+type AstroHistoryState = {
+  index: number;
+  scrollX?: number;
+  scrollY?: number;
+};
+
+function pathKey(url: URL | Location = window.location): string {
+  return `${url.pathname}${url.search}`;
+}
+
+function hasAstroHistoryState(state: unknown): state is AstroHistoryState {
+  return (
+    typeof state === "object" &&
+    state !== null &&
+    typeof (state as AstroHistoryState).index === "number"
+  );
+}
+
+/**
+ * ClientRouter only soft-navigates on popstate when history.state has an Astro `index`.
+ * App code that calls replaceState(null, …) or replaceState({}, …) wipes that state;
+ * iOS Chrome can also surface null state on back. URL updates, DOM does not — reload syncs.
+ */
+function startHistorySync(): void {
+  let lastRenderedPath = pathKey();
+
+  const markRendered = () => {
+    lastRenderedPath = pathKey();
+  };
+
+  document.addEventListener("astro:after-swap", markRendered);
+  document.addEventListener("astro:page-load", markRendered);
+
+  window.addEventListener("popstate", () => {
+    const nextPath = pathKey();
+    // Hash-only changes keep the same path key — leave them to the browser.
+    if (nextPath === lastRenderedPath) {
+      return;
+    }
+    if (hasAstroHistoryState(history.state)) {
+      return;
+    }
+    window.location.reload();
+  });
+}
+
+/** Keep Astro's history index when rewriting the current URL in-place. */
+export function replaceClientUrl(href: string): void {
+  const url = new URL(href, window.location.origin);
+  const next = `${url.pathname}${url.search}${url.hash}`;
+  if (hasAstroHistoryState(history.state)) {
+    history.replaceState({ ...history.state }, "", next);
+    return;
+  }
+  history.replaceState({ index: 0, scrollX: window.scrollX, scrollY: window.scrollY }, "", next);
+}
+
+/** Push a same-document URL while keeping ClientRouter popstate working. */
+export function pushClientUrl(href: string): void {
+  const url = new URL(href, window.location.origin);
+  const next = `${url.pathname}${url.search}${url.hash}`;
+  const index = hasAstroHistoryState(history.state) ? history.state.index + 1 : 1;
+  history.pushState({ index, scrollX: 0, scrollY: 0 }, "", next);
+}
+
 /** Heavy pamphlet editor: full document loads avoid VT zombies (async replaceState after soft-leave). */
 function needsFullDocumentNav(pathOrHref: string): boolean {
   try {
@@ -46,6 +111,7 @@ export function startClientRouting(): void {
   window.__clientRoutingStarted = true;
 
   rewriteLegacyPamphletEditPath();
+  startHistorySync();
 
   // ClientRouter intercepts all same-origin links — not only [data-route].
   // Cancel soft transitions that touch pamphlet so we never swap home HTML onto /e/{id}.

@@ -11,6 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
+import { replaceClientUrl } from "../../lib/router";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import "./ProductDashboard.css";
@@ -38,7 +39,7 @@ export function useProductView(defaultView: string): [string, (next: string) => 
       } else {
         url.searchParams.set("view", next);
       }
-      window.history.replaceState({}, "", url.toString());
+      replaceClientUrl(url.toString());
       setViewState(next || defaultView);
     },
     [defaultView],

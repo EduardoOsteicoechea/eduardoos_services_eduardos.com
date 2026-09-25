@@ -173,6 +173,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
+  import { replaceClientUrl } from "../../lib/router";
   import {
     createReportHistory,
     createReportInvite,
@@ -581,7 +582,7 @@ import Layout from "../../layouts/Layout.astro";
       fillIdsFields();
       const href = workspaceHref(orgId, reportId, ownerSafe);
       if (href && window.location.pathname + window.location.search !== href) {
-        window.history.replaceState({}, "", href);
+        replaceClientUrl(href);
       }
       setBanner(root, "Editing on the VPS filesystem.", "ok");
       attachHost(payload);

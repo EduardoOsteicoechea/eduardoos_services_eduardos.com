@@ -313,6 +313,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
+  import { replaceClientUrl } from "../../lib/router";
   import {
     createEreportOrg,
     createOrgInvite,
@@ -399,7 +400,7 @@ import Layout from "../../layouts/Layout.astro";
       const url = new URL(window.location.href);
       if (view === "dashboard") url.searchParams.delete("view");
       else url.searchParams.set("view", view);
-      window.history.replaceState({}, "", url);
+      replaceClientUrl(url.toString());
       setHubError("");
       setAgentRoutePayload({
         kind: "ereport_hub",

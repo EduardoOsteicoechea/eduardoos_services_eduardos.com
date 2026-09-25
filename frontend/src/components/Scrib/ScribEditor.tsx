@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { APP_ROUTES } from "../../config/routes";
+import { replaceClientUrl } from "../../lib/router";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import ScribBibleModal from "./ScribBibleModal";
@@ -162,7 +163,7 @@ export default function ScribEditor() {
         resolved.sheetId,
       );
       if (window.location.pathname !== pretty) {
-        window.history.replaceState(null, "", pretty);
+        replaceClientUrl(pretty);
       }
     }
   }, []);

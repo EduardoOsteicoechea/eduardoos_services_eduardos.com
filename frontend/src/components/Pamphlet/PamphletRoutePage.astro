@@ -174,6 +174,7 @@ import Layout from "../../layouts/Layout.astro";
   import { fetchEpams } from "../../lib/epams";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
+  import { pushClientUrl, replaceClientUrl } from "../../lib/router";
 
   const PAMPHLET_BASE = "/documents/pamphlet";
   const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers", "edit"]);
@@ -243,7 +244,7 @@ import Layout from "../../layouts/Layout.astro";
     if (!legacy) return;
     url.searchParams.delete("view");
     url.pathname = pamphletPath(legacy);
-    window.history.replaceState({}, "", url.toString());
+    replaceClientUrl(url.toString());
   }
 
   function readRoute(): { view: string; epamId: string } {
@@ -277,7 +278,7 @@ import Layout from "../../layouts/Layout.astro";
     const url = new URL(window.location.href);
     url.searchParams.delete("view");
     url.pathname = pamphletPath(view);
-    window.history.pushState({}, "", url.toString());
+    pushClientUrl(url.toString());
   }
 
   function destroyEditor(): void {
@@ -354,7 +355,7 @@ import Layout from "../../layouts/Layout.astro";
       url.searchParams.delete("view");
       url.pathname = `${PAMPHLET_BASE}/open`;
       url.hash = encodeURIComponent(epamId);
-      window.history.pushState({}, "", url.toString());
+      pushClientUrl(url.toString());
       showEditor("edit", epamId);
       return;
     }

@@ -7,6 +7,20 @@ import { renderShell } from "./shell";
 const HEADER_DYNAMIC_MENU_HOST_ID = "header-dynamic-menu-host";
 const PAMPHLET_BASE_PATH = "/documents/pamphlet";
 
+/** Preserve Astro ClientRouter history.index when rewriting the pamphlet URL. */
+function replacePamphletUrl(next: string): void {
+    const prev = window.history.state;
+    if (prev && typeof prev === "object" && typeof (prev as { index?: unknown }).index === "number") {
+        window.history.replaceState({ ...prev }, "", next);
+        return;
+    }
+    window.history.replaceState(
+        { index: 0, scrollX: window.scrollX, scrollY: window.scrollY },
+        "",
+        next,
+    );
+}
+
 declare global {
     interface Window {
         __eduardoosHeaderDynamicMenu?: HTMLElement | null;
@@ -761,7 +775,7 @@ function syncCloudEpamUrl(epamId: string): void {
     const next = `${PAMPHLET_BASE_PATH}/open#${encodeURIComponent(id)}`;
     const cur = `${window.location.pathname}${window.location.hash}`;
     if (cur === next) return;
-    window.history.replaceState({}, "", next);
+    replacePamphletUrl(next);
 }
 
 async function openCloudDocumentById(epamId: string): Promise<void> {

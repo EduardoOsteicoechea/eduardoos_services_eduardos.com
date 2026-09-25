@@ -293,8 +293,7 @@ const jsonLdString =
             requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
           });
 
-        const dismiss = (gen) => {
-          if (gen !== generation) return;
+        const hideVeil = () => {
           const el = veil();
           if (!el || el.hasAttribute("hidden")) return;
           el.setAttribute("hidden", "");
@@ -304,6 +303,11 @@ const jsonLdString =
             clearTimeout(maxTimer);
             maxTimer = 0;
           }
+        };
+
+        const dismiss = (gen) => {
+          if (gen !== generation) return;
+          hideVeil();
         };
 
         const armMax = (gen) => {
@@ -333,16 +337,24 @@ const jsonLdString =
         armMax(gen0);
         settleAndDismiss(gen0);
 
-        document.addEventListener("astro:before-preparation", () => {
+        document.addEventListener("astro:before-preparation", (event) => {
           const gen = ++generation;
           showVeil();
           armMax(gen);
+          // Cancelled prep (e.g. full pamphlet reload) never fires page-load.
+          queueMicrotask(() => {
+            if (event.defaultPrevented && gen === generation) hideVeil();
+          });
+        });
+
+        // Persisted veil can cover a successful swap if page-load is skipped/racy.
+        document.addEventListener("astro:after-swap", () => {
+          hideVeil();
         });
 
         document.addEventListener("astro:page-load", () => {
           settleAndDismiss(generation);
-        });
-      })();
+        });      })();
     </script>
     <div class="shell">
       <button type="button" class="tray-backdrop" data-tray-backdrop hidden aria-label="Close panel"></button>
