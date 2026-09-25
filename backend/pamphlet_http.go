@@ -60,24 +60,38 @@ func epamDocumentResponse(rec EpamRecord) map[string]any {
 }
 
 func applyEpamWrite(rec *EpamRecord, body epamWriteBody) {
-	if body.EpamID != "" {
+	preservedTitle := strings.TrimSpace(rec.Title)
+	// Only assign EpamID when creating (empty). Updates must keep the path id —
+	// otherwise a mismatched document.id / body.epamId upserts a new GUID record
+	// and the previous titled EPAM appears "lost".
+	if rec.EpamID == "" && body.EpamID != "" {
 		rec.EpamID = body.EpamID
 	}
 	if body.FileName != "" {
 		rec.FileName = body.FileName
 	}
+	docID := ""
+	if body.Document != nil {
+		if id, ok := body.Document["id"].(string); ok {
+			docID = strings.TrimSpace(id)
+		}
+	}
+	// body.Title is a fallback; never accept a bare document UUID as the display title.
+	if t := strings.TrimSpace(body.Title); t != "" && (docID == "" || t != docID) {
+		rec.Title = t
+	}
 	if body.Document != nil {
 		rec.Body = body.Document
-		if id, ok := body.Document["id"].(string); ok && id != "" && rec.EpamID == "" {
-			rec.EpamID = id
+		if docID != "" && rec.EpamID == "" {
+			rec.EpamID = docID
 		}
 		syncEpamMetaFromHeader(rec)
 	} else if body.Body != nil {
 		rec.Body = body.Body
 		syncEpamMetaFromHeader(rec)
 	}
-	if body.Title != "" {
-		rec.Title = body.Title
+	if strings.TrimSpace(rec.Title) == "" && preservedTitle != "" {
+		rec.Title = preservedTitle
 	}
 	if body.Series != "" {
 		rec.Series = strings.TrimSpace(body.Series)
@@ -87,6 +101,9 @@ func applyEpamWrite(rec *EpamRecord, body epamWriteBody) {
 	}
 	if body.Author != "" {
 		rec.Author = strings.TrimSpace(body.Author)
+	}
+	if strings.TrimSpace(rec.FileName) == "" && strings.TrimSpace(rec.Title) != "" {
+		rec.FileName = sanitizeEpamFileName(rec.Title)
 	}
 	if raw, err := json.Marshal(rec.Body); err == nil {
 		rec.ContentSizeBytes = int64(len(raw))
@@ -245,7 +262,9 @@ func (a *App) updateEpamHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	lockedID := existing.EpamID
 	applyEpamWrite(&existing, body)
+	existing.EpamID = lockedID
 	a.autoPublishEpamForArticles(user, &existing)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
 	if err != nil {

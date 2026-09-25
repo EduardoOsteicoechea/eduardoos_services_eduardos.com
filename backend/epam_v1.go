@@ -193,7 +193,9 @@ func (a *App) epamV1UpdateHandler(w http.ResponseWriter, r *http.Request) {
 		Author:        body.Author,
 		Document:      doc,
 	}
+	lockedID := existing.EpamID
 	applyEpamWrite(&existing, write)
+	existing.EpamID = lockedID
 	a.autoPublishEpamForArticles(user, &existing)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
 	if err != nil {

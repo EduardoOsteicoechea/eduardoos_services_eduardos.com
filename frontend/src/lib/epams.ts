@@ -46,6 +46,8 @@ export type SaveEpamOptions = {
   document: PamphletStructure;
   epamId?: string;
   fileName?: string;
+  /** Kept when header.title is empty so saves never rename the EPAM to a document UUID. */
+  fallbackTitle?: string;
 };
 
 export type EpamSeriesTreeItem = {
@@ -89,10 +91,12 @@ function asEpamDoc(rec: EpamRecord): EpamDoc {
   };
 }
 
-function titleFromDocument(doc: PamphletStructure): string {
+function titleFromDocument(doc: PamphletStructure, fallbackTitle?: string): string {
   const headerTitle = doc.header?.title?.trim();
   if (headerTitle) return headerTitle;
-  if (doc.id?.trim()) return doc.id.trim();
+  const fallback = fallbackTitle?.trim();
+  if (fallback) return fallback;
+  // Never fall back to doc.id — it is a UUID and would show as the list/series name.
   return "Untitled pamphlet";
 }
 
@@ -127,9 +131,9 @@ export async function fetchEpam(epamId: string): Promise<EpamDocumentResponse> {
 }
 
 export async function saveEpamToCloud(
-  { document, epamId, fileName }: SaveEpamOptions,
+  { document, epamId, fileName, fallbackTitle }: SaveEpamOptions,
 ): Promise<EpamDocumentResponse> {
-  const title = titleFromDocument(document);
+  const title = titleFromDocument(document, fallbackTitle);
   const body = epamId
     ? { title, document, epamId, fileName }
     : { title, document, fileName };

@@ -736,6 +736,8 @@ let suppressEditOpenSave = false;
 let pendingInsert: PendingInsert | null = null;
 /** When set, edits can persist to cloud without a local FileSystem handle. */
 let cloudEpamId: string | null = null;
+/** Display title from cloud meta — used if header.title is briefly empty on save. */
+let cloudEpamTitle: string | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
 let memorySession = false;
 /** Latest client snapshot waiting for background disk/cloud flush (coalesced). */
@@ -790,6 +792,10 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
     clearOpenFile();
     memorySession = false;
     cloudEpamId = loaded.meta.epamId;
+    cloudEpamTitle =
+        loaded.meta.title?.trim() ||
+        (typeof doc.header?.title === "string" ? doc.header.title.trim() : "") ||
+        null;
     setOpenFileName(loaded.meta.fileName);
     loadPamphlet(doc);
     rememberLastEpamId(loaded.meta.epamId);
@@ -1344,16 +1350,43 @@ function ensureDocumentId(data: PamphletStructure): PamphletStructure {
     return { ...data, id: crypto.randomUUID() };
 }
 
+/** Prefer in-memory link; recover from hub dataset / URL hash after remount races. */
+function resolveCloudEpamId(): string | null {
+    const live = cloudEpamId?.trim();
+    if (live) return live;
+    const fromHost = host.dataset.pamphletEpamId?.trim();
+    if (fromHost) return fromHost;
+    const fromWin = window.__eduardoosPamphletEpamId?.trim();
+    if (fromWin) return fromWin;
+    if (window.location.pathname.startsWith(PAMPHLET_BASE_PATH)) {
+        const hash = window.location.hash.replace(/^#/, "").trim();
+        if (hash) {
+            try {
+                return decodeURIComponent(hash);
+            } catch {
+                return hash;
+            }
+        }
+    }
+    return null;
+}
+
 async function persistCloud(data: PamphletStructure): Promise<PamphletStructure> {
     const withId = ensureDocumentId(data);
+    const linkedId = resolveCloudEpamId();
+    if (linkedId) cloudEpamId = linkedId;
+    const headerTitle = withId.header?.title?.trim();
     const saved = await saveEpamToCloud({
         // Only pass epamId for updates of an already-linked cloud doc.
         // New creates POST to /api/epams with the document id in the body.
-        epamId: cloudEpamId || undefined,
+        epamId: linkedId || undefined,
         fileName: getOpenFileName() || undefined,
+        fallbackTitle: cloudEpamTitle || undefined,
         document: withId,
     });
     cloudEpamId = saved.meta.epamId;
+    cloudEpamTitle =
+        saved.meta.title?.trim() || headerTitle || cloudEpamTitle || null;
     setOpenFileName(saved.meta.fileName);
     rememberLastEpamId(saved.meta.epamId);
     syncCloudEpamUrl(saved.meta.epamId);
@@ -1361,7 +1394,7 @@ async function persistCloud(data: PamphletStructure): Promise<PamphletStructure>
 }
 
 function canBackgroundPersist(): boolean {
-    return hasOpenFile() || cloudEpamId !== null;
+    return hasOpenFile() || resolveCloudEpamId() !== null;
 }
 
 function showSyncBanner(message: string): void {
@@ -1403,7 +1436,7 @@ async function flushPersist(): Promise<void> {
     try {
         if (hasOpenFile()) {
             await savePamphlet(toSave);
-        } else if (cloudEpamId) {
+        } else if (resolveCloudEpamId()) {
             await persistCloud(toSave);
         }
         if (!persistQueued) {
@@ -2502,6 +2535,7 @@ on(openCloudDeleteConfirm, "click", () => {
                 await recycleEpam(id);
                 if (cloudEpamId === id) {
                     cloudEpamId = null;
+                    cloudEpamTitle = null;
                     rememberLastEpamId(null);
                 }
             }
@@ -2548,6 +2582,7 @@ on(openSourceLocalBtn, "click", async () => {
         // Local files are not cloud-linked yet — keep cloudEpamId null so Guardar
         // can POST a new cloud copy instead of PUT-ing an unknown id.
         cloudEpamId = null;
+        cloudEpamTitle = null;
         rememberLastEpamId(null);
         loadPamphlet(data);
         setStatus(
@@ -3179,6 +3214,7 @@ on(createSaveLocalBtn, "click", async () => {
             pendingCreateMeta = null;
             memorySession = false;
             cloudEpamId = null;
+            cloudEpamTitle = null;
             closeCreateSaveModal();
             loadPamphlet(data);
             openItemTypeModal({ mode: "end", column: 1 });
@@ -3187,6 +3223,7 @@ on(createSaveLocalBtn, "click", async () => {
         // No FSA (typical on http://host:port): editable blank sheet in this tab only.
         clearOpenFile();
         cloudEpamId = null;
+        cloudEpamTitle = null;
         memorySession = true;
         const blank = createEmptyPamphlet(meta);
         setOpenFileName(
@@ -3216,6 +3253,7 @@ on(createSaveCloudBtn, "click", async () => {
         clearOpenFile();
         memorySession = false;
         cloudEpamId = null;
+        cloudEpamTitle = null;
         const blank = createEmptyPamphlet(meta);
         setOpenFileName(
             `${meta.series.trim().replace(/[^\w.-]+/g, "_") || "pamphlet"}_ch${meta.series_chapter.trim().replace(/[^\w.-]+/g, "_") || "1"}.epam`,

@@ -95,6 +95,60 @@ func TestPamphletCRUDAndPDF(t *testing.T) {
 	}
 }
 
+func TestEpamUpdateKeepsIDAndRejectsUUIDTitle(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEpam)
+
+	createBody := `{
+		"epamId":"stable-epam",
+		"title":"Buen titulo",
+		"document":{
+			"id":"doc-uuid-aaaa-bbbb-cccc-ddddeeeeffff",
+			"type":"pamphlet_single_sheet",
+			"header":{"title":"Buen titulo","series":"S","series_chapter":"1","author":"A","date":""},
+			"footer":{"action":"","message":"","label1":"","value1":"","label2":"","value2":"","label3":"","value3":"","label4":"","value4":""},
+			"column_1":[],"column_2":[],"column_3":[],"column_4":[],"column_5":[],"column_6":[],"column_7":[],"column_8":[]
+		}
+	}`
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/epams", createBody)
+	if created.Code != http.StatusCreated {
+		t.Fatalf("create: %d %s", created.Code, created.Body.String())
+	}
+
+	// Client mistakenly sends document UUID as epamId + title (legacy titleFromDocument fallback).
+	updateBody := `{
+		"epamId":"doc-uuid-aaaa-bbbb-cccc-ddddeeeeffff",
+		"title":"doc-uuid-aaaa-bbbb-cccc-ddddeeeeffff",
+		"document":{
+			"id":"doc-uuid-aaaa-bbbb-cccc-ddddeeeeffff",
+			"type":"pamphlet_single_sheet",
+			"header":{"title":"","series":"S","series_chapter":"1","author":"A","date":""},
+			"footer":{"action":"","message":"","label1":"","value1":"","label2":"","value2":"","label3":"","value3":"","label4":"","value4":""},
+			"column_1":[{"type":"paragraph","content":"edit","style_indexes":[[0,0]],"height_mm":0}],
+			"column_2":[],"column_3":[],"column_4":[],"column_5":[],"column_6":[],"column_7":[],"column_8":[]
+		}
+	}`
+	updated := app.doJSON(t, "member@eduardoos.com", http.MethodPut, "/api/epams/stable-epam", updateBody)
+	if updated.Code != http.StatusOK {
+		t.Fatalf("update: %d %s", updated.Code, updated.Body.String())
+	}
+	out := decodeMap(t, updated)
+	meta, _ := out["meta"].(map[string]any)
+	if meta["epamId"] != "stable-epam" {
+		t.Fatalf("epamId must stay path id, got %v", meta["epamId"])
+	}
+	if meta["title"] != "Buen titulo" {
+		t.Fatalf("title must stay header/original, got %v", meta["title"])
+	}
+
+	// Must not have upserted a second record under the document UUID.
+	list := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/epams", "")
+	items := decodeMap(t, list)["epams"].([]any)
+	if len(items) != 1 {
+		t.Fatalf("expected 1 epam after update, got %d (%v)", len(items), list.Body.String())
+	}
+}
+
 func TestPamphletRequiresEntitlement(t *testing.T) {
 	app := newTestApp(false)
 	rec := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/epams", "")
