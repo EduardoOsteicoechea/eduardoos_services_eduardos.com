@@ -74,7 +74,7 @@
   --tray-nav-min-height: var(--rail-button-size);
   --tray-nav-row-margin: var(--sidebar-row-margin);
   --tray-nav-icon-slot: var(--rail-button-size);
-  --tray-body-pad-top: 0;
+  --tray-body-pad-top: 0.75rem;
   /* Toolbar band (tray has no padding): pad + control + pad + border. No gap under toolbar. */
   --sidebar-toolbar-band: calc(
     var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width)
@@ -601,7 +601,8 @@ a {
 }
 
 #main-menu nav {
-  padding-top: var(--tray-body-pad-top);
+  /* Gap under header comes from .sidebar-toolbar margin-bottom (--tray-body-pad-top). */
+  padding-top: 0;
 }
 
 .tray-backdrop {
@@ -626,6 +627,7 @@ a {
   z-index: calc(var(--z-sidebar) + 2);
   flex-shrink: 0;
   margin: 0;
+  margin-bottom: var(--tray-body-pad-top);
   padding: var(--space-padding);
   border-bottom: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
@@ -2098,7 +2100,6 @@ section.diag .panel:not(form) {
     --tray-nav-min-height: calc(var(--rail-button-size) * 1.25);
     --tray-nav-row-margin: calc(var(--rail-gap) * 0.75);
     --tray-nav-icon-slot: calc(var(--rail-button-size) * 1.25);
-    --tray-body-pad-top: var(--rail-gap);
   }
 
   .session-grid form > button,
@@ -2157,7 +2158,6 @@ section.diag .panel:not(form) {
     --tray-nav-min-height: calc(var(--rail-button-size) * 1.15);
     --tray-nav-row-margin: calc(var(--rail-gap) * 0.75);
     --tray-nav-icon-slot: calc(var(--rail-button-size) * 1.15);
-    --tray-body-pad-top: var(--rail-gap);
   }
 
   .app-header--start {
