@@ -7,6 +7,7 @@ import "../../styles/homescool-workspace.css";
 <Layout title="Homescool" description="Homescool study materials workspace." page="homescool-workspace" robots="noindex,nofollow" showPageTitle={false}>
   <Fragment slot="dhs">
     <div class="homescool-dhs" data-homescool-dhs>
+      <div class="homescool-dhs__scroll">
       <section class="homescool-dhs__section">
         <h2 class="homescool-dhs__heading" id="homescool-dhs-ciclo">Ciclo</h2>
         <div class="homescool-dhs__row homescool-dhs__row--tabs" role="group" aria-labelledby="homescool-dhs-ciclo" data-homescool-cycles>
@@ -25,7 +26,15 @@ import "../../styles/homescool-workspace.css";
         <h2 class="homescool-dhs__heading" id="homescool-dhs-materia">Materia</h2>
         <div class="homescool-dhs__grid homescool-dhs__grid--subjects" role="group" aria-labelledby="homescool-dhs-materia" data-homescool-subjects></div>
       </section>
+      </div>
       <div class="homescool-dhs__print-row" data-homescool-print-row>
+        <div class="homescool-dhs__print-tray" id="homescool-print-tray" data-homescool-print-tray hidden>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="current">Clase actual</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="subject-week">Clase actual, todos los días</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="day-all">Día actual, todas las materias</button>
+          <button type="button" class="homescool-dhs__print-option" data-print-mode="week-all">Todas las materias, toda la semana</button>
+        </div>
+        <div class="homescool-dhs__print-actions">
         <button
           class="homescool-dhs__print"
           type="button"
@@ -39,7 +48,7 @@ import "../../styles/homescool-workspace.css";
           PDF
         </button>
         <button
-          class="homescool-dhs__print-menu-btn icon-btn"
+          class="homescool-dhs__print-menu-btn"
           type="button"
           data-homescool-print-menu
           title="Opciones de impresión"
@@ -50,13 +59,19 @@ import "../../styles/homescool-workspace.css";
         >
           <span class="material-symbols-outlined" aria-hidden="true">more_vert</span>
         </button>
-        <div class="homescool-dhs__print-tray" id="homescool-print-tray" data-homescool-print-tray hidden>
-          <button type="button" class="homescool-dhs__print-option" data-print-mode="current">Clase actual</button>
-          <button type="button" class="homescool-dhs__print-option" data-print-mode="subject-week">Clase actual, todos los días</button>
-          <button type="button" class="homescool-dhs__print-option" data-print-mode="day-all">Día actual, todas las materias</button>
-          <button type="button" class="homescool-dhs__print-option" data-print-mode="week-all">Todas las materias, toda la semana</button>
         </div>
       </div>
+      <button
+        class="homescool-dhs__collapse"
+        type="button"
+        data-homescool-dhs-collapse
+        title="Contraer menú de materias"
+        aria-label="Contraer menú de materias"
+        aria-expanded="true"
+        aria-controls="dynamic-header"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true" data-homescool-dhs-collapse-icon>chevron_left</span>
+      </button>
     </div>
   </Fragment>
 
@@ -155,6 +170,8 @@ import "../../styles/homescool-workspace.css";
   let selection: Selection = { ...DEFAULT_SELECTION };
   let printBound = false;
   let supportBound = false;
+  let collapseBound = false;
+  const DHS_COLLAPSE_KEY = "homescool-dhs-collapsed";
 
   function qs<T extends Element>(sel: string): T | null {
     return document.querySelector(sel) as T | null;
@@ -478,6 +495,43 @@ import "../../styles/homescool-workspace.css";
     }
 
     syncChipStates();
+  }
+
+  function setDhsCollapsed(collapsed: boolean) {
+    document.documentElement.setAttribute("data-homescool-dhs-collapsed", collapsed ? "true" : "false");
+    try {
+      localStorage.setItem(DHS_COLLAPSE_KEY, collapsed ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+    for (const btn of qsa<HTMLButtonElement>("[data-homescool-dhs-collapse]")) {
+      btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      btn.title = collapsed ? "Expandir menú de materias" : "Contraer menú de materias";
+      btn.setAttribute("aria-label", btn.title);
+      const icon = btn.querySelector("[data-homescool-dhs-collapse-icon]");
+      if (icon) icon.textContent = collapsed ? "chevron_right" : "chevron_left";
+    }
+    log("dhs.collapse", { collapsed });
+  }
+
+  function bindCollapseOnce() {
+    if (collapseBound) return;
+    collapseBound = true;
+    let collapsed = false;
+    try {
+      collapsed = localStorage.getItem(DHS_COLLAPSE_KEY) === "1";
+    } catch {
+      collapsed = false;
+    }
+    setDhsCollapsed(collapsed);
+    document.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof Element)) return;
+      if (!t.closest("[data-homescool-dhs-collapse]")) return;
+      const now =
+        document.documentElement.getAttribute("data-homescool-dhs-collapsed") === "true";
+      setDhsCollapsed(!now);
+    });
   }
 
   function setPrintTrayOpen(open: boolean) {
@@ -804,6 +858,7 @@ import "../../styles/homescool-workspace.css";
 
     setHidden(gate, true);
     setHidden(workspace, false);
+    bindCollapseOnce();
     bindPrintOnce();
     bindSupportOnce();
     if (banner) banner.textContent = "Loading materials…";
