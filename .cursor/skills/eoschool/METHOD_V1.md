@@ -33,6 +33,7 @@ Define on first use: *X = explicación sencilla + ejemplo*. Prefer kid words (*f
 
 **Narrative voice (mandatory):** keep the FE boxes (Idea central → Explora → Práctica → Error), but write **guided prose** that continues from one box to the next («Hoy vamos…», «Sigamos juntos…», «Ahora te toca…»).  
 Forbidden: bullet-stack / checklist tone inside Idea central.  
+Forbidden: telegraphic separators in student-facing prose (`|`, bare `Término = glosa`, `A → B → C` chains, `Línea: A | B`). Prefer full short sentences («La promesa es…», «Escribe una frase sobre la creación, otra sobre…»). Keep math equations and conjugation maps (`habl- → hablo`) when they teach a form.  
 Avoid bare «frente a» / «vs» in mid paragraphs unless you *want* a Contraste two-column split.
 
 Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:

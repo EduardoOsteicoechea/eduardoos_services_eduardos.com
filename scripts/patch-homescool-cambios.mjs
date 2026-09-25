@@ -21,10 +21,10 @@ const REFORMED_CITATIONS = [
 ];
 
 const ERROR_VARIANTS = [
-  (core) => `Error común: Antes de terminar, un aviso. ${core}`,
-  (core) => `Error a corregir: Vigila este tropiezo frecuente: ${core}`,
+  (core) => `Error común: ${core}`,
+  (core) => `Error común: Vigila este tropiezo: ${core}`,
   (core) => `Error común: No te quedes con esta confusión: ${core}`,
-  (core) => `Error a corregir: Corrige a tiempo esta idea: ${core}`,
+  (core) => `Error común: Corrige a tiempo esta idea: ${core}`,
   (core) => `Error común: Diferéncialo con claridad: ${core}`,
 ];
 
