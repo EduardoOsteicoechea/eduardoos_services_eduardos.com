@@ -16,6 +16,23 @@ const (
 	maxHomescoolPrintBodyBytes  = 220 << 20 // ~220 MiB request body
 )
 
+// POST /api/homescool/print/pdf — raster PDF for any signed-in Homescool user
+// (entitlement, admin, or linked student). Does not require a Mongo material id,
+// so FE-backup curriculum classes can still download.
+func (a *App) postHomescoolPrintPDFHandler(w http.ResponseWriter, r *http.Request) {
+	a.mustLogf(r, "homescool.print.enter")
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.mustLogf(r, "homescool.print.csrf_or_origin")
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if _, _, ok := a.requireHomescoolMaterialsAccess(w, r); !ok {
+		a.mustLogf(r, "homescool.print.denied")
+		return
+	}
+	a.writeHomescoolRasterPDF(w, r, "homescool.pdf", "session")
+}
+
 func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *http.Request) {
 	a.mustLogf(r, "homescool.materials.print.enter")
 	if !a.validOrigin(r) || !a.validCSRF(r) {
@@ -40,7 +57,14 @@ func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *htt
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	defaultName := strings.TrimSpace(m.Title)
+	if defaultName == "" {
+		defaultName = "homescool.pdf"
+	}
+	a.writeHomescoolRasterPDF(w, r, defaultName, id)
+}
 
+func (a *App) writeHomescoolRasterPDF(w http.ResponseWriter, r *http.Request, defaultName, logRef string) {
 	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, maxHomescoolPrintBodyBytes+1024))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -55,7 +79,7 @@ func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *htt
 		return
 	}
 	if len(req.Pages) == 0 || len(req.Pages) > maxHomescoolPrintPages {
-		a.mustLogf(r, "homescool.materials.print.bad_page_count", "n", len(req.Pages))
+		a.mustLogf(r, "homescool.print.bad_page_count", "n", len(req.Pages), "ref", logRef)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -64,7 +88,7 @@ func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *htt
 	for i, page := range req.Pages {
 		raw, decErr := decodeScribPrintImage(page)
 		if decErr != nil || len(raw) == 0 {
-			a.mustLogf(r, "homescool.materials.print.bad_image", "page", i+1, "err", errString(decErr))
+			a.mustLogf(r, "homescool.print.bad_image", "page", i+1, "err", errString(decErr), "ref", logRef)
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
@@ -75,17 +99,17 @@ func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *htt
 		images = append(images, raw)
 	}
 
-	a.mustLogf(r, "homescool.materials.print.build", "id", id, "pages", len(images))
+	a.mustLogf(r, "homescool.print.build", "ref", logRef, "pages", len(images))
 	out, err := pdf.BuildHomescoolRasterPDF(images)
 	if err != nil {
-		a.mustLogf(r, "homescool.materials.print.build_err", "err", err.Error())
+		a.mustLogf(r, "homescool.print.build_err", "err", err.Error(), "ref", logRef)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 
 	name := strings.TrimSpace(req.FileName)
 	if name == "" {
-		name = strings.TrimSpace(m.Title)
+		name = strings.TrimSpace(defaultName)
 	}
 	if name == "" {
 		name = "homescool.pdf"
@@ -95,7 +119,7 @@ func (a *App) postHomescoolMaterialPrintPDFHandler(w http.ResponseWriter, r *htt
 	}
 	name = sanitizeScribFileName(name)
 
-	a.mustLogf(r, "homescool.materials.print.ok", "id", id, "pdf_bytes", len(out), "pages", len(images))
+	a.mustLogf(r, "homescool.print.ok", "ref", logRef, "pdf_bytes", len(out), "pages", len(images))
 	w.Header().Set("Content-Type", "application/pdf")
 	w.Header().Set("Content-Disposition", contentDispositionAttachment(name))
 	w.Header().Set("Access-Control-Expose-Headers", "Content-Disposition")

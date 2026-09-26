@@ -90,22 +90,13 @@ function triggerDownload(blob: Blob, fileName: string): void {
   window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
 }
 
-/** Capture on-screen letter sheets and download a backend-assembled US Letter PDF. */
-export async function downloadHomescoolStyledPdf(
-  materialId: string,
-  host: HTMLElement,
+/** POST captured rasters to the session Homescool print endpoint. */
+export async function postHomescoolPrintPdf(
+  pages: string[],
   fileName = "homescool.pdf",
+  materialId?: string,
 ): Promise<{ ok: boolean; error?: string; requestId?: string }> {
-  const id = materialId.trim();
-  if (!id) return { ok: false, error: "Missing material id." };
-
-  let pages: string[];
-  try {
-    pages = await captureHomescoolLetterPages(host);
-  } catch (err) {
-    hcLog("print", "capture.error", { err: String(err) }, "error");
-    return { ok: false, error: err instanceof Error ? err.message : "Could not capture pages." };
-  }
+  if (!pages.length) return { ok: false, error: "No letter pages to capture." };
 
   await getCsrf();
   const headers = new Headers({
@@ -115,8 +106,11 @@ export async function downloadHomescoolStyledPdf(
   const csrf = currentCsrf();
   if (csrf) headers.set("X-CSRF-Token", csrf);
 
-  const url = `/api/homescool/materials/${encodeURIComponent(id)}/print/pdf`;
-  hcLog("print", "post.start", { id, pages: pages.length, fileName });
+  const id = (materialId || "").trim();
+  const url = id
+    ? `/api/homescool/materials/${encodeURIComponent(id)}/print/pdf`
+    : "/api/homescool/print/pdf";
+  hcLog("print", "post.start", { id: id || "session", pages: pages.length, fileName });
 
   try {
     const res = await fetch(url, {
@@ -145,4 +139,20 @@ export async function downloadHomescoolStyledPdf(
     hcLog("print", "post.error", { err: String(err) }, "error");
     return { ok: false, error: "Could not download PDF." };
   }
+}
+
+/** Capture on-screen letter sheets and download a backend-assembled US Letter PDF. */
+export async function downloadHomescoolStyledPdf(
+  host: HTMLElement,
+  fileName = "homescool.pdf",
+  materialId?: string,
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  let pages: string[];
+  try {
+    pages = await captureHomescoolLetterPages(host);
+  } catch (err) {
+    hcLog("print", "capture.error", { err: String(err) }, "error");
+    return { ok: false, error: err instanceof Error ? err.message : "Could not capture pages." };
+  }
+  return postHomescoolPrintPdf(pages, fileName, materialId);
 }

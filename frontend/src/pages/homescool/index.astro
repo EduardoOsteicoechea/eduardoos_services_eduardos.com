@@ -140,7 +140,11 @@ import "../../styles/homescool-workspace.css";
     type HomescoolCurriculum,
     type HomescoolCurriculumClass,
   } from "../../lib/homescool-curriculum";
-  import { captureHomescoolLetterPages, downloadHomescoolStyledPdf } from "../../lib/homescoolPrint";
+  import {
+    captureHomescoolLetterPages,
+    downloadHomescoolStyledPdf,
+    postHomescoolPrintPdf,
+  } from "../../lib/homescoolPrint";
   import { showErrorModal } from "../../lib/error-modal";
   import {
     HOMESCOOL_SUBJECTS_ACTIVE,
@@ -818,19 +822,19 @@ import "../../styles/homescool-workspace.css";
     });
   }
 
+  function setPrintEnabled(enabled: boolean) {
+    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
+    const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
+    if (printBtn) printBtn.disabled = !enabled;
+    if (menuBtn) menuBtn.disabled = !enabled;
+  }
+
   async function downloadPrintMode(mode: PrintMode) {
     const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
     const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
-    log("pdf.mode", { mode, sheetsReady, materialId: currentMaterialId });
+    log("pdf.mode", { mode, sheetsReady, materialId: currentMaterialId || "session" });
 
     if (!sheetsReady) return;
-    if (!currentMaterialId) {
-      showErrorModal({
-        message: "This class is only in the FE backup. Sync to Mongo to download a styled PDF.",
-        details: "Run scripts/build-homescool-curriculum.mjs with EDUARDOOS_API_KEY set.",
-      });
-      return;
-    }
 
     const targets = cellsForPrintMode(mode);
     if (!targets.length) {
@@ -848,7 +852,11 @@ import "../../styles/homescool-workspace.css";
       if (mode === "current") {
         const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
         if (!(sheetsHost instanceof HTMLElement)) return;
-        const result = await downloadHomescoolStyledPdf(currentMaterialId, sheetsHost, currentPdfName);
+        const result = await downloadHomescoolStyledPdf(
+          sheetsHost,
+          currentPdfName,
+          currentMaterialId || undefined,
+        );
         if (!result.ok) {
           showErrorModal({
             message: result.error || "Could not download PDF.",
@@ -858,11 +866,11 @@ import "../../styles/homescool-workspace.css";
           hcLog("workspace", "pdf.fail", { error: result.error, requestId: result.requestId }, "error");
           return;
         }
-        log("pdf.ok", { mode, materialId: currentMaterialId, requestId: result.requestId });
+        log("pdf.ok", { mode, materialId: currentMaterialId || "session", requestId: result.requestId });
         return;
       }
 
-      // Multi-doc: render offscreen, capture all pages, post via current material id.
+      // Multi-doc: render offscreen, capture all pages, post via session print endpoint.
       const holder = document.createElement("div");
       holder.style.position = "absolute";
       holder.style.left = "-10000px";
@@ -892,53 +900,32 @@ import "../../styles/homescool-workspace.css";
         return;
       }
 
-      await getCsrf();
-      const headers = new Headers({
-        Accept: "application/pdf, application/json",
-        "Content-Type": "application/json",
-      });
-      const csrf = currentCsrf();
-      if (csrf) headers.set("X-CSRF-Token", csrf);
       const fileName = `homescool-c${selection.cycle}-w${selection.week}-${mode}.pdf`;
-      const res = await fetch(`/api/homescool/materials/${encodeURIComponent(currentMaterialId)}/print/pdf`, {
-        method: "POST",
-        credentials: "include",
-        headers,
-        body: JSON.stringify({ pages: allPages, fileName }),
-      });
-      const requestId = res.headers.get("X-Request-ID") || "";
-      if (!res.ok) {
-        let message = `PDF download failed (${res.status})`;
-        try {
-          const body = (await res.json()) as { message?: string };
-          if (body.message) message = body.message;
-        } catch {
-          /* ignore */
-        }
-        showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "" });
-        hcLog("workspace", "pdf.batch.fail", { status: res.status, requestId, pages: allPages.length }, "error");
+      const result = await postHomescoolPrintPdf(
+        allPages,
+        fileName,
+        currentMaterialId || undefined,
+      );
+      if (!result.ok) {
+        showErrorModal({
+          message: result.error || "Could not download PDF.",
+          requestId: result.requestId,
+          details: result.requestId ? `request_id=${result.requestId}` : "",
+        });
+        hcLog("workspace", "pdf.batch.fail", {
+          error: result.error,
+          requestId: result.requestId,
+          pages: allPages.length,
+        }, "error");
         return;
       }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      a.rel = "noopener";
-      document.body.append(a);
-      a.click();
-      a.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
-      log("pdf.batch.ok", { mode, pages: allPages.length, requestId, bytes: blob.size });
+      log("pdf.batch.ok", { mode, pages: allPages.length, requestId: result.requestId });
     } catch (err) {
       hcLog("workspace", "pdf.error", { err: String(err), mode }, "error");
       showErrorModal({ message: "Could not download PDF." });
     } finally {
-      if (printBtn) {
-        printBtn.removeAttribute("aria-busy");
-        printBtn.disabled = !currentMaterialId;
-      }
-      if (menuBtn) menuBtn.disabled = !currentMaterialId;
+      if (printBtn) printBtn.removeAttribute("aria-busy");
+      setPrintEnabled(sheetsReady);
     }
   }
 
@@ -1053,15 +1040,12 @@ import "../../styles/homescool-workspace.css";
     const seq = ++openSeq;
     const emptyMsg = qs<HTMLElement>("[data-homescool-empty-msg]");
     const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
-    const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
-    const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
     log("openSelection.enter", { ...selection, seq, classNo: subjectClassNumber(selection.subject) });
     sheetsReady = false;
     currentMaterialId = "";
     currentPdfName = "homescool.pdf";
     currentDoc = null;
-    if (printBtn) printBtn.disabled = true;
-    if (menuBtn) menuBtn.disabled = true;
+    setPrintEnabled(false);
     const match = findCell();
     if (!match) {
       const msg = `No se ha cargado material\n\nc${selection.cycle} · s${selection.week} · d${selection.day} · ${selection.subject} · nivel ${LEVEL}`;
@@ -1131,8 +1115,7 @@ import "../../styles/homescool-workspace.css";
       const sourceHint = currentMaterialId ? "Mongo" : "FE backup";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
-      if (printBtn) printBtn.disabled = !currentMaterialId;
-      if (menuBtn) menuBtn.disabled = !currentMaterialId;
+      setPrintEnabled(true);
       syncSupportAdminUi(doc);
       rebuildPublishedChips();
       log("openSelection.ready", {
