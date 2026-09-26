@@ -365,6 +365,9 @@ function lessonBlocksFit(
   return scroll <= client + 1;
 }
 
+/** MCQ/write items on a dedicated quiz Letter sheet (4 columns × 9 rows). */
+const QUIZ_SHEET_MCQ_CAPACITY = 36;
+
 const QUIZ_FULL_PAGE_TYPES = new Set([
   "crossword",
   "wordsearch",
@@ -396,7 +399,7 @@ function packQuizFallback(questions: EoschoolQuestion[]): EoschoolQuestion[][] {
       i += 1;
       continue;
     }
-    const CAP = 20;
+    const CAP = QUIZ_SHEET_MCQ_CAPACITY;
     let take = 0;
     while (i + take < questions.length && take < CAP) {
       const t = quizItemType(questions[i + take]!);
@@ -492,7 +495,7 @@ function quizSliceFits(
   if (client < 8) {
     if (questions.some((q) => isFullPageQuizType(quizItemType(q)))) return questions.length <= 1;
     if (questions.some((q) => quizItemType(q) === "match")) return questions.length <= 1;
-    return questions.length <= 20;
+    return questions.length <= QUIZ_SHEET_MCQ_CAPACITY;
   }
   return scroll <= client + 1;
 }

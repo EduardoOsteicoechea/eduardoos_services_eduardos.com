@@ -1102,6 +1102,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter-page--quiz .homescool-letter__quiz {
   flex: 1 1 auto;
   align-content: stretch;
+  /* Dedicated quiz sheet: 4 cols × 9 rows = 36 MCQ/write items per Letter page. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-auto-rows: minmax(4.5rem, 1fr);
   gap: 0.28rem;
 }
