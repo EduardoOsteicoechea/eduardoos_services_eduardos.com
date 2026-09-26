@@ -77,7 +77,7 @@ describe("homescool-subjects", () => {
     expect(subjectClassNumber("mat")).toBe(5);
     expect(subjectClassNumber("LT")).toBe(7);
     expect(subjectClassNumber("geo")).toBe(8);
-    expect(subjectChipText("geo")).toBe("8 - geo");
-    expect(subjectChipText("LT")).toBe("7 - LinT");
+    expect(subjectChipText("geo")).toBe("geo");
+    expect(subjectChipText("LT")).toBe("LinT");
   });
 });

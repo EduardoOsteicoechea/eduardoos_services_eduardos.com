@@ -36,7 +36,7 @@ export const HOMESCOOL_SUBJECT_CLASS_NO: Record<HomescoolSubject, number> = {
   exe: 0,
 };
 
-/** Short labels on DHS subject chips (e.g. `3 - ing`). */
+/** Short labels on DHS subject chips (e.g. `ing`, `LinT`). */
 export const HOMESCOOL_SUBJECT_CHIP_LABELS: Record<HomescoolSubject, string> = {
   pro: "proy",
   esp: "esp",
@@ -105,9 +105,7 @@ export function subjectDisplayName(subject: string): string {
   return subject;
 }
 
-/** DHS chip text: `3 - ing` */
+/** DHS chip text (short label only; class number stays in tooltip / letter header). */
 export function subjectChipText(subject: string): string {
-  const n = subjectClassNumber(subject);
-  const label = subjectChipLabel(subject);
-  return n > 0 ? `${n} - ${label}` : label;
+  return subjectChipLabel(subject);
 }

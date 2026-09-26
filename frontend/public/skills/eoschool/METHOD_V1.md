@@ -66,7 +66,7 @@ Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = pa
 | 9 | `cie` | Ciencias |
 | 10 | `art` | Bellas artes |
 
-DHS chip labels use short text: `proy`, `esp`, `ing`, `lat`, `mat`, `hist`, `LinT`, `geo`, `cienc`, `art` — formatted `N - label` (e.g. `8 - geo`).
+DHS chip labels use short text only (no number on the button): `proy`, `esp`, `ing`, `lat`, `mat`, `hist`, `LinT`, `geo`, `cienc`, `art`. Class numbers 1–10 appear in tooltips and letter headers.
 
 ## Dual storage (edit both)
 
