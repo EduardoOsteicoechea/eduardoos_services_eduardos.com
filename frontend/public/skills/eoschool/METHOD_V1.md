@@ -49,24 +49,24 @@ Deepen days re-teach the focus point fully (assume day 1 may be forgotten). Intr
 Example (esp deepen -ar): define *conjugar*, *raÃ­z*, *desinencia* in Idea central; show cantar â†’ cant- + -o/-as/-a in Explora; then PrÃ¡ctica / Error comÃºn.  
 Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = palabra ayudante* (not Â«existeÂ»).
 
-### Subjects (12 short codes) â€” menu / class number order
+### Subjects — menu / class number order (active 1–10)
 
-**PAUSED — do not author or upsert new materials for `teb` (Teologia biblica) or `exe` (Exegesis) until the user re-enables them.** They stay out of the Homescool menu; class numbers 1-2 remain reserved. Active menu subjects start at `LT` (#3).
+**PAUSED — do not author or upsert new materials for `teb` (Teologia biblica) or `exe` (Exegesis) until the user re-enables them.** They stay out of the Homescool menu and have no class number in the UI.
 
 | # | Code | Subject |
 | --- | --- | --- |
-| 1 | `teb` | TeologÃ­a bÃ­blica |
-| 2 | `exe` | ExÃ©gesis |
-| 3 | `LT` | LÃ­nea de tiempo |
-| 4 | `his` | Historia |
-| 5 | `geo` | GeografÃ­a |
-| 6 | `art` | Bellas artes |
-| 7 | `mat` | MatemÃ¡ticas |
-| 8 | `esp` | EspaÃ±ol |
-| 9 | `ing` | InglÃ©s (same weekly theme as `esp`, separate document, usually `locale: "en"`) |
-| 10 | `lat` | LatÃ­n |
-| 11 | `cie` | Ciencias |
-| 12 | `pro` | Proyecto |
+| 1 | `pro` | Proyecto |
+| 2 | `esp` | Español |
+| 3 | `ing` | Inglés (same weekly theme as `esp`, separate document, usually `locale: "en"`) |
+| 4 | `lat` | Latín |
+| 5 | `mat` | Matemáticas |
+| 6 | `his` | Historia |
+| 7 | `LT` | Línea de tiempo |
+| 8 | `geo` | Geografía |
+| 9 | `cie` | Ciencias |
+| 10 | `art` | Bellas artes |
+
+DHS chip labels use short text: `proy`, `esp`, `ing`, `lat`, `mat`, `hist`, `LinT`, `geo`, `cienc`, `art` — formatted `N - label` (e.g. `8 - geo`).
 
 ## Dual storage (edit both)
 

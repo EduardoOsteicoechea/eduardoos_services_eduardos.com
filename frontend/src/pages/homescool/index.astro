@@ -146,6 +146,7 @@ import "../../styles/homescool-workspace.css";
     HOMESCOOL_SUBJECTS_ACTIVE,
     isHomescoolSubjectPaused,
     renderEoschoolPages,
+    subjectChipText,
     subjectClassNumber,
     subjectDisplayName,
   } from "../../lib/homescool-eoschool";
@@ -157,7 +158,7 @@ import "../../styles/homescool-workspace.css";
   } from "../../lib/homescool-debug";
 
   const LEVEL = 6;
-  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "LT" };
+  const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "pro" };
   const log = (step: string, detail: Record<string, unknown> = {}) => {
     hcLog("workspace", step, detail);
   };
@@ -564,7 +565,7 @@ import "../../styles/homescool-workspace.css";
       for (const code of publishedSubjects(selection.cycle, selection.week, dayForSubjects)) {
         const n = subjectClassNumber(code);
         const fullName = subjectDisplayName(code);
-        const btn = makeChip(n > 0 ? `${n}·${code}` : code);
+        const btn = makeChip(subjectChipText(code));
         btn.dataset.subject = code;
         btn.title = fullName;
         btn.setAttribute("aria-label", n > 0 ? `${n}. ${fullName}` : fullName);

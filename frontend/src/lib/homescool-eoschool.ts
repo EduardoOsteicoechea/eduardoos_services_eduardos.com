@@ -11,6 +11,8 @@ import {
   HOMESCOOL_SUBJECTS_ACTIVE,
   HOMESCOOL_SUBJECTS_PAUSED,
   isHomescoolSubjectPaused,
+  subjectChipLabel,
+  subjectChipText,
   subjectClassNumber,
   subjectDisplayName,
   type HomescoolSubject,
@@ -22,6 +24,8 @@ export {
   HOMESCOOL_SUBJECTS_ACTIVE,
   HOMESCOOL_SUBJECTS_PAUSED,
   isHomescoolSubjectPaused,
+  subjectChipLabel,
+  subjectChipText,
   subjectClassNumber,
   subjectDisplayName,
 };

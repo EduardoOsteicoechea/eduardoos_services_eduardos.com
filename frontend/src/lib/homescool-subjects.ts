@@ -1,39 +1,55 @@
 /**
- * Canonical Homescool subject order (cambios/1).
- * Class numbers stay fixed even when some subjects are paused from the menu.
+ * Canonical Homescool subject order and class numbers (active menu 1–10).
+ * `teb` and `exe` stay paused and are not numbered in the UI.
  */
 
 export const HOMESCOOL_SUBJECTS = [
-  "teb",
-  "exe",
-  "LT",
-  "his",
-  "geo",
-  "art",
-  "mat",
+  "pro",
   "esp",
   "ing",
   "lat",
+  "mat",
+  "his",
+  "LT",
+  "geo",
   "cie",
-  "pro",
+  "art",
+  "teb",
+  "exe",
 ] as const;
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
 
-/** Fixed class numbers (do not renumber when pausing subjects). */
+/** Class numbers on active menu chips and letter headers. */
 export const HOMESCOOL_SUBJECT_CLASS_NO: Record<HomescoolSubject, number> = {
-  teb: 1,
-  exe: 2,
-  LT: 3,
-  his: 4,
-  geo: 5,
-  art: 6,
-  mat: 7,
-  esp: 8,
-  ing: 9,
-  lat: 10,
-  cie: 11,
-  pro: 12,
+  pro: 1,
+  esp: 2,
+  ing: 3,
+  lat: 4,
+  mat: 5,
+  his: 6,
+  LT: 7,
+  geo: 8,
+  cie: 9,
+  art: 10,
+  teb: 0,
+  exe: 0,
+};
+
+/** Short labels on DHS subject chips (e.g. `3 - ing`). */
+export const HOMESCOOL_SUBJECT_CHIP_LABELS: Record<HomescoolSubject, string> = {
+  pro: "proy",
+  esp: "esp",
+  ing: "ing",
+  lat: "lat",
+  mat: "mat",
+  his: "hist",
+  LT: "LinT",
+  geo: "geo",
+  cie: "cienc",
+  art: "art",
+  teb: "teb",
+  exe: "exe",
 };
 
 /** Full Spanish names for DHS chips / tooltips. */
@@ -75,9 +91,23 @@ export function subjectClassNumber(subject: string): number {
   return 0;
 }
 
+export function subjectChipLabel(subject: string): string {
+  if (subject in HOMESCOOL_SUBJECT_CHIP_LABELS) {
+    return HOMESCOOL_SUBJECT_CHIP_LABELS[subject as HomescoolSubject];
+  }
+  return subject;
+}
+
 export function subjectDisplayName(subject: string): string {
   if (subject in HOMESCOOL_SUBJECT_LABELS) {
     return HOMESCOOL_SUBJECT_LABELS[subject as HomescoolSubject];
   }
   return subject;
+}
+
+/** DHS chip text: `3 - ing` */
+export function subjectChipText(subject: string): string {
+  const n = subjectClassNumber(subject);
+  const label = subjectChipLabel(subject);
+  return n > 0 ? `${n} - ${label}` : label;
 }
