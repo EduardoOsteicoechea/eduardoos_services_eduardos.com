@@ -195,6 +195,34 @@ import "../../styles/homescool-workspace.css";
   let collapseBound = false;
   let debugToggleBound = false;
   const DHS_COLLAPSE_KEY = "homescool-dhs-collapsed";
+  const SELECTION_STORAGE_KEY = "homescool-nav-selection";
+
+  function loadStoredSelection(): Selection | null {
+    try {
+      const raw = localStorage.getItem(SELECTION_STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as Partial<Selection>;
+      const cycle = Number(parsed.cycle);
+      const week = Number(parsed.week);
+      const day = Number(parsed.day);
+      const subject = typeof parsed.subject === "string" ? parsed.subject.trim() : "";
+      if (!Number.isFinite(cycle) || cycle < 1 || cycle > 3) return null;
+      if (!Number.isFinite(week) || week < 1 || week > 24) return null;
+      if (!Number.isFinite(day) || day < 1 || day > 5) return null;
+      if (!subject || isHomescoolSubjectPaused(subject)) return null;
+      return { cycle, week, day, subject };
+    } catch {
+      return null;
+    }
+  }
+
+  function persistSelection() {
+    try {
+      localStorage.setItem(SELECTION_STORAGE_KEY, JSON.stringify(selection));
+    } catch {
+      /* ignore */
+    }
+  }
 
   function qs<T extends Element>(sel: string): T | null {
     return document.querySelector(sel) as T | null;
@@ -271,6 +299,7 @@ import "../../styles/homescool-workspace.css";
       day: cell.day,
       subject: cell.subject,
     };
+    persistSelection();
   }
 
   function findCell(): WorkspaceCell | undefined {
@@ -454,6 +483,7 @@ import "../../styles/homescool-workspace.css";
           if (!hasMaterial({ cycle: c })) return;
           selection.cycle = c;
           ensurePublishedSelection("cycle-click");
+          persistSelection();
           log("select.cycle", { ...selection });
           rebuildPublishedChips();
           void openSelection();
@@ -471,6 +501,7 @@ import "../../styles/homescool-workspace.css";
           if (!hasMaterial({ cycle: selection.cycle, week: w })) return;
           selection.week = w;
           ensurePublishedSelection("week-click");
+          persistSelection();
           log("select.week", { ...selection });
           rebuildPublishedChips();
           void openSelection();
@@ -501,6 +532,7 @@ import "../../styles/homescool-workspace.css";
           }
           selection.day = 1;
           ensurePublishedSelection("day-click-pro-du");
+          persistSelection();
           log("select.day", { ...selection, label: "du" });
           rebuildPublishedChips();
           void openSelection();
@@ -516,6 +548,7 @@ import "../../styles/homescool-workspace.css";
             if (!hasMaterial({ cycle: selection.cycle, week: selection.week, day: d })) return;
             selection.day = d;
             ensurePublishedSelection("day-click");
+            persistSelection();
             log("select.day", { ...selection });
             rebuildPublishedChips();
             void openSelection();
@@ -549,6 +582,7 @@ import "../../styles/homescool-workspace.css";
           }
           selection.subject = code;
           if (code === "pro") selection.day = 1;
+          persistSelection();
           log("select.subject", { ...selection, classNo: n });
           rebuildPublishedChips();
           void openSelection();
@@ -910,7 +944,6 @@ import "../../styles/homescool-workspace.css";
   async function boot() {
     const seq = ++bootSeq;
     log("boot.enter", { seq });
-    selection = { ...DEFAULT_SELECTION };
     const gate = qs("[data-homescool-gate]");
     const workspace = qs("[data-homescool-workspace]");
 
@@ -977,6 +1010,15 @@ import "../../styles/homescool-workspace.css";
 
     curriculumBackup = feRes.curriculum;
     cells = mergeCells(mongoRes.materials ?? [], feRes.curriculum);
+
+    const storedSelection = loadStoredSelection();
+    if (storedSelection) {
+      selection = storedSelection;
+      log("boot.restored_selection", { ...selection });
+    } else {
+      selection = { ...DEFAULT_SELECTION };
+    }
+
     log("boot.merged", {
       cells: cells.length,
       mongo: cells.filter((c) => c.source === "mongo").length,
