@@ -7,18 +7,18 @@
   "level": 6,
   "subject": "esp",
   "locale": "es",
-  "title": "Tiempos verbales del indicativo",
+  "title": "Las cuatro estructuras de oración",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 3,
     "points": [
       {
         "id": "p1",
-        "heading": "Profundizar: elegir una o dos palabras",
-        "body": "Hoy reuniremos lo aprendido para elegir la forma verbal adecuada. Una forma simple usa una palabra, como «terminé»; una forma compuesta usa haber y participio, como «he terminado». Para escoger bien, primero escucha qué tiempo cuenta la oración.\n\nHaz tres preguntas. ¿El hecho quedó cerrado en un momento, como «ayer a las cinco»? Usa una forma como «canté». ¿La acción ya se realizó y su resultado importa ahora? Usa una forma como «he cantado». ¿Estás describiendo una costumbre o un fondo que duraba? Usa una forma como «cantaba». Por ejemplo, «Leía cuando llamaron» une un fondo que duraba con un hecho que apareció.\n\nEl mismo verbo puede contar historias diferentes. «Terminé ayer» cierra el hecho; «He terminado ya» conecta el final con el presente. Las pistas de tiempo te ayudan a explicar tu elección.\n\nPráctica: Escribe cinco oraciones y, para cada una, prueba una versión de una palabra y otra de dos. Elige la que mejor cuente tu idea y escribe debajo la pregunta que te ayudó a decidir.\n\nError común: Confundir imperfecto y pretérito sin mirar si la acción acabó. Antes de escribir, decide si presentas un fondo o un hecho cerrado."
+        "heading": "Profundizar: subordinada y compleja",
+        "body": "Hoy cerramos con las estructuras que dependen unas de otras. En la subordinada, una parte no basta sola: «porque estudié» necesita la principal. Palabras como «que», «cuando», «si», «aunque» (subordinantes) avisan.\n\nLa compleja combina mundos: puedes tener una coordinada dentro de una subordinada o varias subordinadas en cadena. Dibuja un esquema con cajas: caja grande = principal, cajas pegadas = subordinadas, ramas dobles = coordinación.\n\nMemorización final: las cuatro estructuras son simple, compuesta coordinada, compuesta subordinada, compleja. Repite y explica con un ejemplo propio de cada una.\n\nPráctica: Escribe una oración compleja de al menos diez palabras. Colorea la principal y subraya cada subordinada.\n\nError común: Llamar «compleja» a cualquier oración larga sin mirar si hay mezcla de coordinación y subordinación."
       }
     ],
-    "summary": "Para elegir un tiempo verbal, decide si cuentas un hecho cerrado, un resultado que importa ahora o un fondo o costumbre del pasado."
+    "summary": "Subordinada une principal y dependiente; compleja mezcla varias relaciones. Memoriza los cuatro nombres para clasificar cualquier oración."
   },
   "quiz": {
     "questionCount": 36,
@@ -27,445 +27,469 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es un tiempo simple del indicativo?",
+        "prompt": "¿Cuántas estructuras de oración memorizamos?",
         "choices": [
-          "he cantado (ya hecho, importa ahora)",
-          "pretérito",
-          "haber + forma ya hecha (-ado/-ido)",
-          "había cantado (ya hecho antes de otro pasado)"
+          "Dos",
+          "Cuatro",
+          "Nueve",
+          "Seis"
         ],
-        "answer": "pretérito"
+        "answer": "Cuatro"
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es un tiempo compuesto?",
+        "prompt": "«El gato duerme» es oración…",
         "choices": [
-          "imperfecto",
-          "futuro simple",
-          "presente",
-          "había cantado (ya hecho antes de otro pasado)"
+          "Simple",
+          "Compuesta coordinada",
+          "Compleja",
+          "Sin predicado"
         ],
-        "answer": "había cantado (ya hecho antes de otro pasado)"
+        "answer": "Simple"
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿El condicional simple es…?",
+        "prompt": "«Estudio y juego» es…",
         "choices": [
-          "simple",
-          "otro modo (deseos; no es de esta semana)",
-          "compuesto",
-          "modo de mandatos (no es de esta semana)"
+          "Simple",
+          "Compuesta coordinada",
+          "Solo interjección",
+          "Sin sujeto"
         ],
-        "answer": "simple"
+        "answer": "Compuesta coordinada"
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué palabra ayudante (haber) usan los compuestos del indicativo?",
+        "prompt": "«Llegué cuando llamaste» es…",
         "choices": [
-          "haber",
-          "ir",
-          "estar",
-          "ser"
+          "Simple",
+          "Compuesta subordinada",
+          "Solo sustantivo",
+          "Sin verbo"
         ],
-        "answer": "haber"
+        "answer": "Compuesta subordinada"
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Otro nombre del he cantado (ya hecho, importa ahora):",
+        "prompt": "Oración compleja…",
         "choices": [
-          "futuro simple",
-          "gerundio",
-          "pretérito perfecto compuesto",
-          "imperfecto"
+          "Mezcla coordinación y/o varias subordinadas",
+          "Siempre tiene una palabra",
+          "No lleva verbo",
+          "Es igual a simple"
         ],
-        "answer": "pretérito perfecto compuesto"
+        "answer": "Mezcla coordinación y/o varias subordinadas"
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué modo estudias esta semana?",
+        "prompt": "En la simple hay…",
         "choices": [
-          "infinitivo",
-          "otro modo (deseos; no es de esta semana)",
-          "indicativo",
-          "modo de mandatos (no es de esta semana)"
+          "Un verbo principal",
+          "Cinco verbos obligatorios",
+          "Solo interjecciones",
+          "Sin sujeto siempre"
         ],
-        "answer": "indicativo"
+        "answer": "Un verbo principal"
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuántos tiempos simples listamos?",
+        "prompt": "«Pero» en coordinada suele marcar…",
         "choices": [
-          "5",
-          "4",
-          "3",
-          "10"
+          "Contraste",
+          "Solo lugar",
+          "Solo plural",
+          "Solo género"
         ],
-        "answer": "5"
+        "answer": "Contraste"
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuántos tiempos compuestos listamos?",
+        "prompt": "Memorización: la primera estructura es…",
         "choices": [
-          "5",
-          "10",
-          "4",
-          "3"
+          "Compleja",
+          "Simple",
+          "Subordinada",
+          "Coordinada"
         ],
-        "answer": "5"
+        "answer": "Simple"
       },
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Presente de «indicar» (yo):",
+        "prompt": "¿Cuál es simple?",
         "choices": [
-          "indiqué",
-          "indicaré",
-          "indicaba",
-          "indico"
+          "Corro",
+          "Corro y salto",
+          "Corro cuando puedo",
+          "Corro, canto y bailo cuando llueve"
         ],
-        "answer": "indico"
+        "answer": "Corro"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Imperfecto de «cantar» (ella):",
+        "prompt": "«Leo o escribo» es…",
         "choices": [
-          "cantaba",
-          "ha cantado",
-          "cantó",
-          "cantará"
+          "Coordinada",
+          "Simple",
+          "Subordinada sola",
+          "Sin predicado"
         ],
-        "answer": "cantaba"
+        "answer": "Coordinada"
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Pretérito de «vivir» (nosotros):",
+        "prompt": "Coordina con «y»:",
         "choices": [
-          "vivíamos",
-          "viviremos",
-          "vivimos",
-          "hemos vivido"
+          "Dormí / porque cansado",
+          "Comí / y bebí",
+          "Si llueve / no salgo",
+          "Cuando llegué / cené"
         ],
-        "answer": "vivimos"
+        "answer": "Comí / y bebí"
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Futuro de «salir» (tú):",
+        "prompt": "Una subordinada depende de…",
         "choices": [
-          "salías",
-          "saldrás",
-          "has salido",
-          "sales"
+          "La oración principal",
+          "Solo un sustantivo",
+          "Un artículo",
+          "Una interjección"
         ],
-        "answer": "saldrás"
+        "answer": "La oración principal"
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Condicional de «poder» (yo):",
+        "prompt": "«Si estudias, aprendes» tiene subordinada con…",
         "choices": [
-          "pude",
-          "podré",
-          "podría",
-          "podía"
+          "Si",
+          "Solo punto",
+          "Solo coma sin sentido",
+          "Solo mayúscula"
         ],
-        "answer": "podría"
+        "answer": "Si"
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿El imperfecto suele expresar…?",
+        "prompt": "Memorización: segunda estructura…",
         "choices": [
-          "hábito o pasado en curso",
-          "acción acabada puntual",
-          "deseo otro modo (deseos; no es de esta semana)",
-          "orden"
+          "Simple",
+          "Compuesta coordinada",
+          "Compleja",
+          "Interjección"
         ],
-        "answer": "hábito o pasado en curso"
+        "answer": "Compuesta coordinada"
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Hoy profundizas el punto…",
+        "prompt": "¿Qué estructura une ideas del mismo nivel?",
         "choices": [
-          "Solo otro modo (deseos; no es de esta semana)",
-          "Compuestos",
-          "Simples",
-          "Ortografía"
+          "Subordinada",
+          "Coordinada",
+          "Solo simple",
+          "Solo nombre"
         ],
-        "answer": "Simples"
+        "answer": "Coordinada"
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Pretérito de «cantar» (yo):",
+        "prompt": "«Llueve y salgo» con dos acciones principales es…",
         "choices": [
-          "canté",
-          "cantaré",
-          "cantaba",
-          "canto"
+          "Compuesta coordinada",
+          "Solo simple",
+          "Solo interjección",
+          "Sin verbo"
         ],
-        "answer": "canté"
+        "answer": "Compuesta coordinada"
       },
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo dices «ya he comido» con yo?",
+        "prompt": "«Terminé cuando sonó la campana» es…",
         "choices": [
-          "he comido",
-          "habré comido",
-          "comí",
-          "comía"
+          "Subordinada",
+          "Solo simple",
+          "Solo interjección",
+          "Sin predicado"
         ],
-        "answer": "he comido"
+        "answer": "Subordinada"
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo dices que ella ya vio algo antes de otro momento pasado?",
+        "prompt": "La parte «cuando sonó la campana» sola…",
         "choices": [
-          "verá",
-          "vio",
-          "veía",
-          "había visto"
+          "Tiene sentido completo",
+          "Depende de la principal",
+          "Es solo sustantivo",
+          "Es artículo"
         ],
-        "answer": "había visto"
+        "answer": "Depende de la principal"
       },
       {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo dices que nosotros ya habremos llegado para un momento futuro?",
+        "prompt": "¿Cuál oración es compleja?",
         "choices": [
-          "llegamos",
-          "llegaremos",
-          "habremos llegado",
-          "habíamos llegado"
+          "Cuando llegué, cené y descansé",
+          "Duermo",
+          "¡Hola!",
+          "Mesa azul"
         ],
-        "answer": "habremos llegado"
+        "answer": "Cuando llegué, cené y descansé"
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo dices «lo habría dicho» con yo?",
+        "prompt": "Identifica simple: «Las olas rompen».",
         "choices": [
-          "dije",
-          "habría dicho",
-          "he dicho",
-          "diría"
+          "Simple",
+          "Coordinada",
+          "Subordinada",
+          "Compleja"
         ],
-        "answer": "habría dicho"
+        "answer": "Simple"
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En la forma poco usada «hube cantado», ¿cuál es la palabra ayudante?",
+        "prompt": "«Quiero ir, pero debo estudiar» es…",
         "choices": [
-          "he",
-          "hube",
-          "habré",
-          "había"
+          "Coordinada",
+          "Simple",
+          "Solo nombre",
+          "Solo adverbio"
         ],
-        "answer": "hube"
+        "answer": "Coordinada"
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Participio de «escribir»:",
+        "prompt": "Memorización: tercera estructura…",
         "choices": [
-          "escrito",
-          "escribiendo",
-          "escribido",
-          "escribió"
+          "Simple",
+          "Compuesta subordinada",
+          "Artículo",
+          "Verbo"
         ],
-        "answer": "escrito"
+        "answer": "Compuesta subordinada"
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Hoy profundizas el punto…",
+        "prompt": "«Que» puede introducir…",
         "choices": [
-          "Simples",
-          "Solo presente",
-          "Compuestos",
-          "Acentuación"
+          "Subordinada",
+          "Solo mayúscula",
+          "Solo punto",
+          "Solo número"
         ],
-        "answer": "Compuestos"
+        "answer": "Subordinada"
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En los tiempos de dos palabras, la forma ya hecha (-ado/-ido)…",
+        "prompt": "Cuarta estructura memorizada…",
         "choices": [
-          "es invariable en persona",
-          "se omite",
-          "es siempre gerundio",
-          "cambia con la persona"
+          "Compleja",
+          "Simple",
+          "Sustantivo",
+          "Adverbio"
         ],
-        "answer": "es invariable en persona"
+        "answer": "Compleja"
       },
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Acción acabada ayer → suele usarse:",
+        "prompt": "Cuenta verbos principales en «Ana canta y baila».",
         "choices": [
-          "futuro",
-          "condicional",
-          "imperfecto",
-          "pretérito"
+          "Uno",
+          "Dos",
+          "Cero",
+          "Cinco"
         ],
-        "answer": "pretérito"
+        "answer": "Dos"
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Experiencia hasta hoy →",
+        "prompt": "«Porque llovió, no salimos» es…",
         "choices": [
-          "antepretérito",
-          "he cantado (ya hecho, importa ahora)",
-          "futuro",
-          "imperfecto"
+          "Subordinada",
+          "Solo interjección",
+          "Sin sujeto",
+          "Solo artículo"
         ],
-        "answer": "he cantado (ya hecho, importa ahora)"
+        "answer": "Subordinada"
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "«Ya he terminado» es forma…",
+        "prompt": "Simple con adjetivos largos sigue siendo…",
         "choices": [
-          "imperativa",
-          "compuesta",
-          "simple",
-          "subjuntiva"
+          "Simple si hay un verbo principal",
+          "Siempre compleja",
+          "Siempre coordinada",
+          "Sin estructura"
         ],
-        "answer": "compuesta"
+        "answer": "Simple si hay un verbo principal"
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "«Terminé ayer» es forma…",
+        "prompt": "Coordinada usa conjunción…",
         "choices": [
-          "condicional perfecta",
-          "pluscuamperfecta",
-          "compuesta",
-          "simple"
+          "Coordinante (y, o, pero)",
+          "Solo punto",
+          "Solo mayúscula",
+          "Solo número"
         ],
-        "answer": "simple"
+        "answer": "Coordinante (y, o, pero)"
       },
       {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Había + forma ya hecha (-ado/-ido) es:",
+        "prompt": "Compleja puede incluir…",
         "choices": [
-          "había cantado (ya hecho antes de otro pasado)",
-          "condicional simple",
-          "futuro",
-          "presente"
+          "Varias relaciones entre oraciones",
+          "Solo una letra",
+          "Solo interjección",
+          "Nada"
         ],
-        "answer": "había cantado (ya hecho antes de otro pasado)"
+        "answer": "Varias relaciones entre oraciones"
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Hoy profundizas el punto…",
+        "prompt": "Memorización: orden correcto empieza por…",
         "choices": [
-          "Compuestos",
-          "Solo ortografía",
-          "Simples",
-          "Uso"
+          "Compleja, simple…",
+          "Simple, coordinada…",
+          "Verbo, sustantivo…",
+          "Solo interjección…"
         ],
-        "answer": "Uso"
+        "answer": "Simple, coordinada…"
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "El modo de estas formas es:",
+        "prompt": "«Cuando termine, celebraremos y descansaremos» sugiere…",
         "choices": [
-          "otro modo (deseos; no es de esta semana)",
-          "modo de mandatos (no es de esta semana)",
-          "indicativo",
-          "optativo"
+          "Compleja",
+          "Solo simple",
+          "Solo una palabra",
+          "Sin verbo"
         ],
-        "answer": "indicativo"
+        "answer": "Compleja"
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Acción ya hecha antes de otro pasado →",
+        "prompt": "Subordinada no se entiende…",
         "choices": [
-          "futuro",
-          "había cantado (ya hecho antes de otro pasado)",
-          "modo de mandatos (no es de esta semana)",
-          "presente"
+          "Sola, sin principal",
+          "Nunca",
+          "Solo de día",
+          "Solo en inglés"
         ],
-        "answer": "había cantado (ya hecho antes de otro pasado)"
+        "answer": "Sola, sin principal"
       },
       {
-        "id": "d4-w1",
+        "id": "d4-q9",
         "originDay": 4,
-        "type": "write",
-        "prompt": "Conjuga cantar en yo en presente, imperfecto y pretérito. Escribe las tres formas.",
-        "answer": ""
+        "type": "mcq",
+        "prompt": "Juego: etiqueta «CC» a…",
+        "choices": [
+          "Pan y queso son ricos",
+          "Duermo",
+          "¡Hola!",
+          "Solo «mesa»"
+        ],
+        "answer": "Pan y queso son ricos"
       },
       {
-        "id": "d4-w2",
+        "id": "d4-q10",
         "originDay": 4,
-        "type": "write",
-        "prompt": "Explica cuándo usarías imperfecto y cuándo pretérito (una frase cada uno).",
-        "answer": ""
+        "type": "mcq",
+        "prompt": "Juego: etiqueta «CS» a…",
+        "choices": [
+          "Llegué cuando pudiste",
+          "Corro",
+          "Mesa",
+          "Azul"
+        ],
+        "answer": "Llegué cuando pudiste"
       },
       {
-        "id": "d4-w3",
+        "id": "d4-q11",
         "originDay": 4,
-        "type": "write",
-        "prompt": "Escribe he + forma ya hecha (-ado/-ido) de comer y había + forma ya hecha (-ado/-ido) de comer. ¿Qué tiempo es cada uno?",
-        "answer": ""
+        "type": "mcq",
+        "prompt": "Lista de memorización tiene…",
+        "choices": [
+          "Cuatro estructuras",
+          "Dos",
+          "Nueve categorías",
+          "Doce meses"
+        ],
+        "answer": "Cuatro estructuras"
       },
       {
-        "id": "d4-w4",
+        "id": "d4-q12",
         "originDay": 4,
-        "type": "write",
-        "prompt": "Reescribe «Ayer terminé» y «Ya he terminado» y di qué matiz cambia.",
-        "answer": ""
+        "type": "mcq",
+        "prompt": "«O» en «estudio o leo» marca…",
+        "choices": [
+          "Alternativa coordinada",
+          "Solo emoción",
+          "Solo lugar",
+          "Solo tiempo verbal"
+        ],
+        "answer": "Alternativa coordinada"
       }
     ]
   },

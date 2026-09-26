@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinco elementos de la forma — Bellas artes</title>
+  <link rel="stylesheet" href="../../../../web_assets/styles.css">
+  <script src="../../../../web_assets/print.js" defer></script>
+  <style>
+    .page--oils {
+      --art: #6b3a5c;
+      --art-light: #f8f0f5;
+      --art-mid: #9e5a82;
+    }
+    .page--oils .sheet-header {
+      margin-bottom: 7pt;
+      padding-bottom: 5pt;
+      border-bottom-color: var(--art);
+    }
+    .page--oils .sheet-header h1 {
+      font-size: 14.5pt;
+      color: var(--art);
+    }
+    .page--oils .section-title {
+      color: var(--art);
+      background: var(--art-light);
+    }
+    .oils-intro {
+      margin: 0 0 5pt;
+      font-size: 9pt;
+      line-height: 1.35;
+    }
+    .oils-quote {
+      margin: 0 0 6pt;
+      padding: 5pt 7pt;
+      border-left: 3pt solid var(--art-mid);
+      background: var(--art-light);
+      font-size: 8pt;
+      line-height: 1.32;
+      font-style: italic;
+      color: #4a3344;
+    }
+    .oils-quote cite {
+      display: block;
+      margin-top: 3pt;
+      font-style: normal;
+      font-size: 7.5pt;
+      color: var(--muted);
+    }
+    .oils-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4pt;
+      margin-bottom: 6pt;
+    }
+    .oils-card {
+      border: 1pt solid var(--box-border);
+      border-radius: 4pt;
+      overflow: hidden;
+      background: #fff;
+      text-align: center;
+    }
+    .oils-card__letter {
+      padding: 3pt 4pt;
+      font-family: var(--font-display);
+      font-size: 14pt;
+      font-weight: 700;
+      color: #fff;
+      background: var(--art);
+      line-height: 1;
+    }
+    .oils-card__viz {
+      padding: 4pt;
+      background: #faf8fb;
+      min-height: 0.72in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .oils-card__viz svg {
+      width: 100%;
+      max-height: 0.65in;
+      display: block;
+    }
+    .oils-card__text {
+      padding: 4pt 5pt 5pt;
+      font-size: 6.8pt;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .oils-card__text strong {
+      display: block;
+      font-size: 7.2pt;
+      color: var(--art);
+      margin-bottom: 1pt;
+    }
+    .oils-habits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4pt;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .oils-habits li {
+      border: 1pt solid var(--rule);
+      border-radius: 3pt;
+      padding: 4pt 5pt;
+      font-size: 7.5pt;
+      line-height: 1.25;
+      background: #fff;
+      text-align: center;
+    }
+    .oils-habits strong {
+      display: block;
+      font-size: 8pt;
+      color: var(--art);
+      margin-bottom: 1pt;
+    }
+    .oils-steps {
+      margin: 0;
+      padding-left: 14pt;
+      font-size: 8.5pt;
+      line-height: 1.35;
+    }
+    .oils-steps li {
+      margin-bottom: 3pt;
+    }
+    .oils-steps li:last-child {
+      margin-bottom: 0;
+    }
+    .oils-fish {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4pt;
+      margin: 5pt 0 0;
+    }
+    .oils-fish__step {
+      border: 1pt solid var(--rule);
+      border-radius: 3pt;
+      padding: 3pt;
+      background: #fff;
+      text-align: center;
+    }
+    .oils-fish__step svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .oils-fish__step span {
+      display: block;
+      margin-top: 2pt;
+      font-size: 6.5pt;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .oils-talk {
+      margin: 0;
+      padding-left: 12pt;
+      font-size: 8pt;
+      line-height: 1.32;
+    }
+    .oils-talk li {
+      margin-bottom: 3pt;
+    }
+    .oils-talk li:last-child {
+      margin-bottom: 0;
+    }
+    .oils-resources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3pt 6pt;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 7.8pt;
+    }
+    .oils-resources li::before {
+      content: "• ";
+      color: var(--art-mid);
+      font-weight: 700;
+    }
+    .page--oils .lesson-section--tip {
+      border-color: var(--art-mid);
+      background: var(--art-light);
+    }
+    .page--oils .lesson-section--tip .tip {
+      background: transparent;
+      font-size: 8.5pt;
+    }
+    .page--oils-draw {
+      display: flex;
+      flex-direction: column;
+    }
+    .page--oils-draw .sheet-header {
+      margin-bottom: 6pt;
+      padding-bottom: 4pt;
+      border-bottom-color: var(--art);
+    }
+    .page--oils-draw .sheet-header h1 {
+      font-size: 13pt;
+      color: var(--art);
+    }
+    .oils-draw-intro {
+      margin: 0 0 5pt;
+      font-size: 8pt;
+      line-height: 1.3;
+      color: var(--muted);
+    }
+    .oils-draw-block {
+      margin-bottom: 5pt;
+    }
+    .oils-draw-block:last-of-type {
+      margin-bottom: 0;
+    }
+    .oils-draw-block__title {
+      margin: 0 0 3pt;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--art);
+      letter-spacing: 0.02em;
+    }
+    .oils-draw-block__hint {
+      margin: 0 0 3pt;
+      font-size: 7.2pt;
+      line-height: 1.25;
+      color: var(--muted);
+    }
+    .oils-draw-oils {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4pt;
+    }
+    .oils-draw-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5pt;
+    }
+    .oils-draw-challenge {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4pt;
+    }
+    .oils-draw-box {
+      border: 1.2pt solid var(--box-border);
+      border-radius: 3pt;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .oils-draw-box__label {
+      padding: 2.5pt 5pt;
+      font-size: 7pt;
+      font-weight: 700;
+      color: #fff;
+      background: var(--art);
+      line-height: 1.15;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .oils-draw-box__label span {
+      font-weight: 400;
+      opacity: 0.9;
+    }
+    .oils-draw-box__area {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M16 0H0V16' fill='none' stroke='%23b8b8cc' stroke-width='0.6'/%3E%3C/svg%3E");
+      background-size: 12pt 12pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .oils-draw-box--oils .oils-draw-box__area {
+      height: 0.58in;
+    }
+    .oils-draw-box--main .oils-draw-box__area {
+      height: 1.55in;
+    }
+    .oils-draw-box--challenge .oils-draw-box__area {
+      height: 0.92in;
+    }
+    .page--oils-draw .sheet-footer {
+      margin-top: auto;
+    }
+    @media print {
+      .page--oils-draw {
+        overflow: visible;
+      }
+      .oils-draw-box__area {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HOJA 1: Introducción + OiLS -->
+  <section class="page page--oils">
+    <header class="sheet-header">
+      <h1>Bellas artes: Dibujo — Cinco elementos de la forma</h1>
+      <p class="meta">Ciclo 3 · Bellas artes · Semana 1 · Explicación (hoja 1 de 4)</p>
+      <div class="student-line">
+        <span>Nombre:</span>
+        <span>Fecha:</span>
+      </div>
+    </header>
+
+    <div class="lesson">
+      <div class="lesson-section">
+        <h2 class="section-title">¿Por qué aprender a dibujar?</h2>
+        <div class="section-body">
+          <p class="oils-intro">Durante seis semanas practicaremos las habilidades básicas del dibujo. Los fundamentos que usan artistas reales sirven para todos — incluso desde los cuatro años — y pueden enseñarse antes que la escritura.</p>
+          <blockquote class="oils-quote">
+            «Un caballero, temblando al inicio de un taller, admitió su temor de no poder dibujar. Al final del día estaba radiante y dijo: si yo pude, cualquiera puede».
+            <cite>— Mona Brookes, <em>Drawing with Children</em></cite>
+          </blockquote>
+          <p class="oils-intro">En la educación clásica, dibujar transmite ideas como la escritura. Esta semana aprendemos las formas simples que componen todo dibujo: los <strong>cinco elementos de la forma</strong> (<em>OiLS</em>, «los óleos»).</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Denominar — Los cinco elementos OiLS</h2>
+        <div class="section-body">
+          <p class="oils-intro">Presentar los cinco elementos (pág. 60 de <em>Drawing with Children</em>). Dibujar cada forma en la pizarra y hablar sobre ellas.</p>
+          <div class="oils-grid">
+            <article class="oils-card">
+              <div class="oils-card__letter">O</div>
+              <div class="oils-card__viz">
+                <svg viewBox="0 0 80 60" aria-hidden="true"><circle cx="40" cy="30" r="22" fill="none" stroke="#6b3a5c" stroke-width="4"/></svg>
+              </div>
+              <p class="oils-card__text"><strong>Círculos</strong>Formas cerradas de solo líneas curvas que <em>no</em> están coloreadas.</p>
+            </article>
+            <article class="oils-card">
+              <div class="oils-card__letter">i ·</div>
+              <div class="oils-card__viz">
+                <svg viewBox="0 0 80 60" aria-hidden="true"><circle cx="40" cy="30" r="18" fill="#9e5a82" stroke="#6b3a5c" stroke-width="3"/></svg>
+              </div>
+              <p class="oils-card__text"><strong>Puntos</strong>Formas cerradas de líneas curvas que <em>sí</em> están coloreadas.</p>
+            </article>
+            <article class="oils-card">
+              <div class="oils-card__letter">i —</div>
+              <div class="oils-card__viz">
+                <svg viewBox="0 0 80 60" aria-hidden="true"><line x1="12" y1="45" x2="68" y2="15" stroke="#6b3a5c" stroke-width="4" stroke-linecap="round"/></svg>
+              </div>
+              <p class="oils-card__text"><strong>Líneas rectas</strong>Segmentos sin curva.</p>
+            </article>
+            <article class="oils-card">
+              <div class="oils-card__letter">L</div>
+              <div class="oils-card__viz">
+                <svg viewBox="0 0 80 60" aria-hidden="true"><polyline points="10,45 35,20 60,40 70,10" fill="none" stroke="#6b3a5c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <p class="oils-card__text"><strong>Líneas en ángulo</strong>Segmentos que se unen formando esquinas.</p>
+            </article>
+            <article class="oils-card">
+              <div class="oils-card__letter">S</div>
+              <div class="oils-card__viz">
+                <svg viewBox="0 0 80 60" aria-hidden="true"><path d="M12 42 Q40 8 68 18" fill="none" stroke="#6b3a5c" stroke-width="4" stroke-linecap="round"/></svg>
+              </div>
+              <p class="oils-card__text"><strong>Líneas curvas</strong>Curvas que <em>no</em> están cerradas.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Hábitos de esta clase</h2>
+        <div class="section-body">
+          <ul class="oils-habits">
+            <li><strong>Denominar</strong>Nombrar cada elemento OiLS al dibujarlo.</li>
+            <li><strong>Prestar atención</strong>Comparar similitudes y diferencias entre formas.</li>
+            <li><strong>Expresar</strong>Observar, volver a dibujar y mejorar.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Bellas artes · Cinco elementos de la forma · Hoja 1 de 4</footer>
+  </section>
+
+  <!-- HOJA 2: Actividades -->
+  <section class="page page--oils">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Práctica en clase — OiLS</h1>
+      <p class="meta">Ciclo 3 · Bellas artes · Semana 1 · Actividades (hoja 2 de 4)</p>
+    </header>
+
+    <div class="lesson">
+      <div class="lesson-section">
+        <h2 class="section-title">Actividad — Denominar</h2>
+        <div class="section-body">
+          <ol class="oils-steps">
+            <li>Dejar que los estudiantes practiquen los cinco elementos de la forma.</li>
+            <li>Dibujar en la pizarra un animal o una planta fáciles de hacer.</li>
+            <li>Pedir a los estudiantes que copien con lápiz en el papel el animal o la planta.</li>
+          </ol>
+          <p class="oils-intro" style="margin-top:5pt;margin-bottom:4pt;"><strong>Ejemplo:</strong> un pez hecho con círculo + triángulo (O + L), luego detalles con S e i.</p>
+          <div class="oils-fish">
+            <figure class="oils-fish__step">
+              <svg viewBox="0 0 100 80" aria-hidden="true">
+                <circle cx="42" cy="40" r="22" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+                <polygon points="64,28 88,40 64,52" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+              </svg>
+              <span>Paso 1 — O + L</span>
+            </figure>
+            <figure class="oils-fish__step">
+              <svg viewBox="0 0 100 80" aria-hidden="true">
+                <circle cx="42" cy="40" r="22" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+                <polygon points="64,28 88,40 64,52" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+                <circle cx="34" cy="34" r="4" fill="#6b3a5c"/>
+                <path d="M28 52 Q18 58 12 48" fill="none" stroke="#6b3a5c" stroke-width="2.5"/>
+              </svg>
+              <span>Paso 2 — ojo y aleta</span>
+            </figure>
+            <figure class="oils-fish__step">
+              <svg viewBox="0 0 100 80" aria-hidden="true">
+                <ellipse cx="42" cy="40" rx="24" ry="20" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+                <polygon points="64,28 90,40 64,52" fill="none" stroke="#6b3a5c" stroke-width="3"/>
+                <circle cx="34" cy="34" r="4" fill="#6b3a5c"/>
+                <path d="M28 52 Q16 60 8 46" fill="none" stroke="#6b3a5c" stroke-width="2.5"/>
+                <path d="M42 58 Q50 68 58 58" fill="none" stroke="#6b3a5c" stroke-width="2"/>
+              </svg>
+              <span>Paso 3 — más curvas S</span>
+            </figure>
+            <figure class="oils-fish__step">
+              <svg viewBox="0 0 100 80" aria-hidden="true">
+                <ellipse cx="42" cy="40" rx="24" ry="20" fill="#e8d4e0" stroke="#6b3a5c" stroke-width="3"/>
+                <polygon points="64,28 90,40 64,52" fill="#d4b8c8" stroke="#6b3a5c" stroke-width="3"/>
+                <circle cx="34" cy="34" r="4" fill="#3a2030"/>
+                <path d="M20 38 L64 38 M20 44 L60 44" stroke="#9e5a82" stroke-width="1.5"/>
+                <path d="M28 52 Q14 62 6 44" fill="none" stroke="#6b3a5c" stroke-width="2.5"/>
+              </svg>
+              <span>Paso 4 — detalles</span>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Prestar atención — Conversación</h2>
+        <div class="section-body">
+          <ul class="oils-talk">
+            <li>¿Cuáles son las <strong>similitudes</strong>? ¿En qué se asemejan círculos, puntos, líneas rectas, en ángulo y curvas?</li>
+            <li>¿Cuáles son las <strong>diferencias</strong>? ¿En qué se diferencian unos de otros?</li>
+            <li>¿Hasta qué punto son similares o diferentes los puntos de los círculos, de las líneas rectas, en ángulo y curvas?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Expresar</h2>
+        <div class="section-body">
+          <ol class="oils-steps">
+            <li>Dejar que los estudiantes observen lo que dibujaron.</li>
+            <li>Entregarles más papel y que vuelvan a dibujar.</li>
+            <li>Animar a observar detenidamente la imagen para encontrar los elementos básicos de la forma.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+        <h2 class="section-title">Recursos</h2>
+        <div class="section-body">
+          <ul class="oils-resources">
+            <li><em>Drawing with Children</em>, Mona Brookes (cinco elementos de la forma)</li>
+            <li>Imagen simple · Pizarra y marcadores · Papel · Lápices o colores</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson-section lesson-section--tip">
+        <p class="tip"><strong>Desafío:</strong> Usar OiLS para dibujar imágenes más difíciles: una rana en un tronco, un florero con flores, una rama con hojas o una canasta con frutas.</p>
+      </div>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Bellas artes · Cinco elementos de la forma · Hoja 2 de 4</footer>
+  </section>
+
+  <!-- HOJA 3: Recuadros para dibujar -->
+  <section class="page page--oils page--oils-draw">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Hoja de dibujo — OiLS</h1>
+      <p class="meta">Ciclo 3 · Bellas artes · Semana 1 · Práctica (hoja 3 de 4)</p>
+      <div class="student-line">
+        <span>Nombre:</span>
+        <span>Fecha:</span>
+      </div>
+    </header>
+
+    <p class="oils-draw-intro">Usa lápiz en cada recuadro. Nombra en voz alta los elementos OiLS que uses (O · i · — · L · S).</p>
+
+    <div class="oils-draw-block">
+      <h2 class="oils-draw-block__title">1. Practica los cinco elementos</h2>
+      <p class="oils-draw-block__hint">Dibuja varios ejemplos de cada forma en su recuadro.</p>
+      <div class="oils-draw-oils">
+        <div class="oils-draw-box oils-draw-box--oils">
+          <div class="oils-draw-box__label">O <span>— círculos</span></div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar círculos"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--oils">
+          <div class="oils-draw-box__label">i <span>— puntos</span></div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar puntos"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--oils">
+          <div class="oils-draw-box__label">— <span>— líneas rectas</span></div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar líneas rectas"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--oils">
+          <div class="oils-draw-box__label">L <span>— en ángulo</span></div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar líneas en ángulo"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--oils">
+          <div class="oils-draw-box__label">S <span>— curvas</span></div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar líneas curvas"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oils-draw-block">
+      <h2 class="oils-draw-block__title">2. Denominar — copia un animal o una planta</h2>
+      <p class="oils-draw-block__hint">Copia con lápiz el animal o la planta que mostró el maestro en la pizarra (por ejemplo, un pez con O + L).</p>
+      <div class="oils-draw-pair">
+        <div class="oils-draw-box oils-draw-box--main">
+          <div class="oils-draw-box__label">Animal o planta — primer intento</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para copiar animal o planta"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--main">
+          <div class="oils-draw-box__label">Expresar — segundo intento</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para volver a dibujar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oils-draw-block">
+      <h2 class="oils-draw-block__title">3. Desafío — dibujos con OiLS</h2>
+      <p class="oils-draw-block__hint">Observa la imagen, encuentra los elementos básicos y dibújalos en el recuadro. Puedes hacer uno o todos.</p>
+      <div class="oils-draw-challenge">
+        <div class="oils-draw-box oils-draw-box--challenge">
+          <div class="oils-draw-box__label">Rana en un tronco</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar rana en tronco"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--challenge">
+          <div class="oils-draw-box__label">Florero con flores</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar florero con flores"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--challenge">
+          <div class="oils-draw-box__label">Rama con hojas</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar rama con hojas"></div>
+        </div>
+        <div class="oils-draw-box oils-draw-box--challenge">
+          <div class="oils-draw-box__label">Canasta con frutas</div>
+          <div class="oils-draw-box__area" aria-label="Espacio para dibujar canasta con frutas"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Bellas artes · Cinco elementos de la forma · Hoja 3 de 4</footer>
+  </section>
+
+  <!-- HOJA 4: Cuestionario -->
+  <section class="page page--quiz page--oils">
+    <header class="sheet-header sheet-header--compact">
+      <h1>Práctica — Cinco elementos de la forma</h1>
+      <p class="meta">Ciclo 3 · Bellas artes · Semana 1 · Selección simple</p>
+    </header>
+
+    <div class="quiz-section">
+      <h2 class="section-title">Preguntas</h2>
+      <ol class="quiz quiz--grid3">
+        <li class="question"><p><span class="q-num">1.</span> OiLS es un acrónimo que significa…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Solo colores primarios</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Los cinco elementos de la forma</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Cinco tipos de pintura</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Óleos para mezclar colores</span></div></div></li>
+        <li class="question"><p><span class="q-num">2.</span> La <strong>O</strong> de OiLS representa…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Círculos sin colorear</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Puntos coloreados</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Líneas en ángulo</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Líneas curvas abiertas</span></div></div></li>
+        <li class="question"><p><span class="q-num">3.</span> Un <strong>punto</strong> (i) se diferencia del círculo (O) porque…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Es una línea recta</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Está coloreado</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">No es cerrado</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Tiene esquinas</span></div></div></li>
+        <li class="question"><p><span class="q-num">4.</span> Las <strong>líneas en ángulo</strong> son la letra…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">O</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">i</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">L</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">S</span></div></div></li>
+        <li class="question"><p><span class="q-num">5.</span> Las <strong>líneas curvas</strong> que no están cerradas son la letra…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">L</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">S</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">O</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">i</span></div></div></li>
+        <li class="question"><p><span class="q-num">6.</span> La <strong>i</strong> de OiLS también puede significar…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Líneas rectas</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Perspectiva</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Sombra</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Color cálido</span></div></div></li>
+        <li class="question"><p><span class="q-num">7.</span> En la actividad, primero los estudiantes deben…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Pintar con acuarela</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Practicar los cinco elementos</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Copiar un mapa</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Hacer un collage</span></div></div></li>
+        <li class="question"><p><span class="q-num">8.</span> Para copiar un animal, el maestro dibuja en la…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Pizarra</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Ventana</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Computadora sola</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Pared del patio</span></div></div></li>
+        <li class="question"><p><span class="q-num">9.</span> «Prestar atención» incluye preguntar por…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Solo el precio del lápiz</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Similitudes y diferencias</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">La fecha del examen</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">El tamaño del papel</span></div></div></li>
+        <li class="question"><p><span class="q-num">10.</span> En «Expresar», los estudiantes deben…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Tirar el primer dibujo</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Observar y volver a dibujar</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Solo colorear sin mirar</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Copiar letra por letra</span></div></div></li>
+        <li class="question"><p><span class="q-num">11.</span> El libro de referencia de esta unidad es de…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Mona Brookes</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Leonardo da Vinci</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Pablo Picasso</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Van Gogh</span></div></div></li>
+        <li class="question"><p><span class="q-num">12.</span> Un desafío avanzado con OiLS puede ser dibujar…</p><div class="options"><div class="option"><span class="opt-key">A</span><span class="opt-text">Solo un punto aislado</span></div><div class="option"><span class="opt-key">B</span><span class="opt-text">Una rana en un tronco</span></div><div class="option"><span class="opt-key">C</span><span class="opt-text">Una hoja en blanco</span></div><div class="option"><span class="opt-key">D</span><span class="opt-text">Una regla sin figura</span></div></div></li>
+      </ol>
+    </div>
+
+    <footer class="sheet-footer">Ciclo 3 · Bellas artes · Cinco elementos de la forma · Hoja 4 de 4 · Clave: 1B 2A 3B 4C 5B 6A 7B 8A 9B 10B 11A 12B</footer>
+  </section>
+</body>
+</html>
