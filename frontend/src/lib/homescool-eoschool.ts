@@ -65,6 +65,7 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   if (isMatTablesLayout(doc)) {
     const pages = renderMatTablesPages(doc);
     if (doc.day === 5) pages.push(buildExpoPage(doc));
+    enumerateLetterPageCodes(doc, pages);
     hcLog("eoschool", "render.done", { pages: pages.length, layout: "mat-tables" });
     return pages;
   }
@@ -120,6 +121,8 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
       "warn",
     );
   }
+
+  enumerateLetterPageCodes(doc, filtered);
 
   hcLog("eoschool", "render.done", {
     pages: filtered.length,
@@ -1184,6 +1187,29 @@ function isLessonKindKicker(kicker: string): boolean {
   return /^(Profundización|Repaso|Clase|Clase \+ cuestionario)$/i.test(kicker.trim());
 }
 
+/** Header code: ciclo - semana - día - material - página - nivel */
+export function formatLetterPageCode(doc: EoschoolDocument, page: number): string {
+  const pageNo = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+  return `c${doc.cycle} - s${doc.week} - d${doc.day} - ${doc.subject} - p${pageNo} - n${doc.level}`;
+}
+
+function applyLetterPageCode(meta: HTMLElement, doc: EoschoolDocument, page: number): void {
+  const code = formatLetterPageCode(doc, page);
+  const extra = (meta.dataset.metaExtra || "").trim();
+  meta.textContent = extra ? `${code} · ${extra}` : code;
+}
+
+/** Number every letter sheet in one class/day run: p1, p2, … */
+export function enumerateLetterPageCodes(doc: EoschoolDocument, pages: HTMLElement[]): void {
+  pages.forEach((page, index) => {
+    const meta =
+      page.querySelector<HTMLElement>(".homescool-letter__meta") ||
+      page.querySelector<HTMLElement>(".homescool-mat__meta");
+    if (!meta) return;
+    applyLetterPageCode(meta, doc, index + 1);
+  });
+}
+
 function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
   const head = el("header", "homescool-letter__hero");
   const classNo = subjectClassNumber(doc.subject);
@@ -1193,11 +1219,13 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
     head.append(num);
   }
   head.append(el("h2", "homescool-letter__heading", doc.title));
-  const metaParts: string[] = [];
-  if (kicker.trim() && !isLessonKindKicker(kicker)) metaParts.push(kicker.trim());
-  metaParts.push(`c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`);
-  if (sub) metaParts.push(sub);
-  head.append(el("span", "homescool-letter__meta", metaParts.join(" · ")));
+  const extras: string[] = [];
+  if (kicker.trim() && !isLessonKindKicker(kicker)) extras.push(kicker.trim());
+  if (sub?.trim()) extras.push(sub.trim());
+  const meta = el("span", "homescool-letter__meta");
+  if (extras.length) meta.dataset.metaExtra = extras.join(" · ");
+  applyLetterPageCode(meta, doc, 1);
+  head.append(meta);
   return head;
 }
 

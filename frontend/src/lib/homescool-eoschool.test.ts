@@ -241,6 +241,42 @@ describe("renderEoschoolPages pagination", () => {
     expect(new Set(badges)).toEqual(new Set(["1", "2", "3"]));
   });
 
+  it("enumerates ciclo-semana-día-materia-página-nivel in each sheet header", () => {
+    const dense = [
+      "Idea central densa sobre el tema con bastante texto para llenar.",
+      "Explora más detalles del punto con ejemplos y matices importantes.",
+      "Contraste clave: opción A frente a opción B en el mismo marco.",
+      "Consejo: repasa con calma y escribe tres oraciones propias.",
+      "Error común: confundir las dos formas y mezclar desinencias.",
+    ].join("\n\n");
+
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          { id: "p1", heading: "Uno", body: dense },
+          { id: "p2", heading: "Dos", body: dense },
+          { id: "p3", heading: "Tres", body: dense },
+        ],
+        summary: "Resumen.",
+      },
+      quiz: {
+        questionCount: 1,
+        questions: [
+          { id: "q1", originDay: 1, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
+        ],
+      },
+    });
+
+    const pages = renderEoschoolPages(doc);
+    expect(pages.length).toBeGreaterThan(1);
+    pages.forEach((page, index) => {
+      const meta = page.querySelector(".homescool-letter__meta")?.textContent || "";
+      expect(meta).toContain(`c3 - s2 - d1 - esp - p${index + 1} - n6`);
+    });
+  });
+
   it("keeps deepen on a single lesson page", () => {
     const doc = baseDoc({
       lesson: {
@@ -283,8 +319,9 @@ describe("renderEoschoolPages pagination", () => {
     expect(quizPage?.querySelector(".homescool-letter__quiz-label")).toBeNull();
     expect(quizPage?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
     expect(quizPage?.querySelector(".homescool-letter__kicker")).toBeNull();
-    // Single-line hero: number · tema · meta (Cuestionario + código + rango de días).
+    // Single-line hero: number · tema · código (ciclo-semana-día-materia-página-nivel) + extras.
     const meta = quizPage?.querySelector(".homescool-letter__meta")?.textContent || "";
+    expect(meta).toMatch(/c\d+ - s\d+ - d\d+ - esp - p\d+ - n\d+/);
     expect(meta).toMatch(/Cuestionario/i);
     expect(meta).toMatch(/Días/i);
     expect(quizPage?.querySelector(".homescool-letter__sub")).toBeNull();

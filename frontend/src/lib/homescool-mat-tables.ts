@@ -90,7 +90,8 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
   heading.textContent = doc.title;
   const meta = document.createElement("span");
   meta.className = "homescool-mat__meta";
-  meta.textContent = `c${doc.cycle} · s${doc.week} · d${doc.day} · nivel ${doc.level} · tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
+  meta.dataset.metaExtra = `tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
+  meta.textContent = `c${doc.cycle} - s${doc.week} - d${doc.day} - ${doc.subject} - p1 - n${doc.level} · ${meta.dataset.metaExtra}`;
   header.append(heading, meta);
 
   const task = document.createElement("section");
