@@ -98,7 +98,7 @@ Error común: Usar «caribe» solo como enemigo de cuentos. Es un nombre de pueb
       heading: "Wayúu y la memoria viva",
       body: `Hoy profundizamos en los Wayús y en cómo cerramos el tema de la semana. La península de La Guajira, al noroccidente, tiene desiertos, viento constante y costa al mar. Los Wayús —también escrito Wayúu— son conocidos por el pastoreo de cabras, la tejeduría del chinchorro y rutas comerciales que cruzan la frontera con Colombia.
 
-La memoria viva significa que tradiciones, idioma y parentesco siguen hoy. Estudiar Wayús conecta el pasado precolombino con comunidades presentes. Pregunta siempre: ¿qué continúa y qué cambió después del contacto europeo? Esa pregunta prepara semanas futuras de historia.
+La memoria viva significa que tradiciones, idioma y parentesco siguen hoy. Estudiar Wayús conecta el pasado precolombiano con comunidades presentes. Pregunta siempre: ¿qué continúa y qué cambió después del contacto europeo? Esa pregunta prepara semanas futuras de historia.
 
 Repasa los cuatro nombres con un juego: di la región cuando alguien en casa diga el pueblo. Timotocuicas → llanos; Caribes → litoral; Arawacos → selva y costa norte; Wayús → Guajira.
 
@@ -191,7 +191,7 @@ Error común: Repetir solo el título de la semana sin nombres ni regiones.`,
   ],
   d4Quiz: [
     ["Hoy profundizas en:", ["Wayús y síntesis", "solo Colón 1492", "solo tablas", "solo griego"], "Wayús y síntesis"],
-    ["La Guajira tiene clima:", ["ártico", "áido y ventoso", "solo polar", "sin viento"], "áido y ventoso"],
+    ["La Guajira tiene clima:", ["ártico", "árido y ventoso", "solo polar", "sin viento"], "árido y ventoso"],
     ["Artesanía wayúu citada:", ["chinchorro", "submarino", "cohete", "robot"], "chinchorro"],
     ["Memoria viva significa:", ["tradiciones que continúan hoy", "solo dinosaurios", "olvido total", "solo libros"], "tradiciones que continúan hoy"],
     ["Cuarto pueblo del texto:", ["Wayús", "Romanos", "Persas", "Aztecas de México solo"], "Wayús"],
