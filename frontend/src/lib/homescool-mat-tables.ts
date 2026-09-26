@@ -85,16 +85,13 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
     num.setAttribute("aria-label", `Clase número ${classNo}`);
     header.append(num);
   }
-  const main = document.createElement("div");
-  main.className = "homescool-mat__header-main";
-  const heading = document.createElement("div");
+  const heading = document.createElement("h2");
   heading.className = "homescool-mat__heading";
   heading.textContent = doc.title;
-  const meta = document.createElement("div");
+  const meta = document.createElement("span");
   meta.className = "homescool-mat__meta";
   meta.textContent = `c${doc.cycle} · s${doc.week} · d${doc.day} · nivel ${doc.level} · tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
-  main.append(heading, meta);
-  header.append(main);
+  header.append(heading, meta);
 
   const task = document.createElement("section");
   task.className = "homescool-mat__task";

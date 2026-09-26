@@ -573,98 +573,64 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__hero {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-start;
-  gap: 0.45rem;
-  padding: 0.65rem 0.7rem;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
   border-radius: 0.35rem;
   background: transparent;
   color: var(--hc-ink);
   border: 0.08rem solid var(--hc-rail);
   flex: 0 0 auto;
-  /* Same height for lesson and quiz: kicker row + title. */
-  min-height: 5rem;
+  min-height: 0;
   box-sizing: border-box;
 }
 
 .homescool-letter__class-no {
   flex: 0 0 auto;
-  align-self: center;
-  min-width: 0.8cm;
-  font-size: 0.7cm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.9cm;
+  height: 0.9cm;
+  padding: 0 0.12cm;
+  border: 0.08rem solid var(--hc-navy);
+  border-radius: 0.25rem;
+  font-size: 0.5cm;
   font-weight: 800;
   line-height: 1;
   color: var(--hc-navy);
   text-align: center;
   letter-spacing: -0.04rem;
-}
-
-.homescool-letter__hero-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.4rem;
-  min-width: 0;
-  flex: 1 1 auto;
+  box-sizing: border-box;
 }
 
 .homescool-letter-page--quiz .homescool-letter__hero {
   background: transparent;
   border-color: var(--hc-rail);
   color: var(--hc-ink);
-  min-height: 5rem;
-}
-
-.homescool-letter__hero-top {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.homescool-letter__kicker {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
-  font-weight: 700;
-  letter-spacing: 0.04rem;
-  text-transform: uppercase;
-  opacity: 0.92;
-  margin: 0;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-.homescool-letter__hero-end {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: 0.35rem;
-  flex: 0 1 auto;
-  max-width: 52%;
-  text-align: right;
 }
 
 .homescool-letter__heading {
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 0.35cm;
-  line-height: 0.35cm;
+  line-height: 0.4cm;
   font-weight: 700;
   margin: 0;
-  min-width: 0;
-  position: relative;
-  z-index: 0;
-  clear: both;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .homescool-letter__meta {
+  flex: 0 0 auto;
   font-size: 0.3cm;
   line-height: 0.3cm;
   opacity: 0.85;
   margin: 0;
-  line-height: 1.35;
-  flex: 0 1 auto;
-  min-width: 0;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .homescool-letter__sub {
@@ -1578,7 +1544,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   min-height: 0;
   padding: 0.3rem 0.45rem;
   border: 0.08rem solid var(--mat-rail);
@@ -1589,27 +1555,27 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-mat__class-no {
   color: var(--mat-navy);
-}
-
-.homescool-mat__header-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.15rem;
-  min-width: 0;
-  flex: 1 1 auto;
+  border-color: var(--mat-navy);
 }
 
 .homescool-mat__heading {
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 1.05rem;
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.01rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .homescool-mat__meta {
+  flex: 0 0 auto;
   font-size: 0.7rem;
   color: var(--mat-ink-soft);
+  white-space: nowrap;
+  text-align: right;
 }
 
 .homescool-mat__task {

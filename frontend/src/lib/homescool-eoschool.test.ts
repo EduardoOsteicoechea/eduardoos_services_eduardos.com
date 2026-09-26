@@ -282,9 +282,10 @@ describe("renderEoschoolPages pagination", () => {
     const quizPage = pages.find((p) => p.classList.contains("homescool-letter-page--quiz"));
     expect(quizPage?.querySelector(".homescool-letter__quiz-label")).toBeNull();
     expect(quizPage?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
-    expect(quizPage?.querySelector(".homescool-letter__kicker")?.textContent).toMatch(/Cuestionario/i);
-    // Quiz range lives in the right-hand meta line (same hero height as lesson).
-    const meta = quizPage?.querySelector(".homescool-letter__hero-end .homescool-letter__meta")?.textContent || "";
+    expect(quizPage?.querySelector(".homescool-letter__kicker")).toBeNull();
+    // Single-line hero: number · tema · meta (Cuestionario + código + rango de días).
+    const meta = quizPage?.querySelector(".homescool-letter__meta")?.textContent || "";
+    expect(meta).toMatch(/Cuestionario/i);
     expect(meta).toMatch(/Días/i);
     expect(quizPage?.querySelector(".homescool-letter__sub")).toBeNull();
     expect(quizPage?.querySelector(".homescool-letter__heading + .homescool-letter__sub")).toBeNull();

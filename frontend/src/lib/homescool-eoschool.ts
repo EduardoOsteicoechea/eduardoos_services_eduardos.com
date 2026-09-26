@@ -1175,6 +1175,11 @@ function letterPage(...extra: string[]): HTMLElement {
   return page;
 }
 
+/** Lesson-kind labels stay out of the single-line header; quiz/support/expo stay in meta. */
+function isLessonKindKicker(kicker: string): boolean {
+  return /^(Profundización|Repaso|Clase|Clase \+ cuestionario)$/i.test(kicker.trim());
+}
+
 function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
   const head = el("header", "homescool-letter__hero");
   const classNo = subjectClassNumber(doc.subject);
@@ -1183,19 +1188,12 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
     num.setAttribute("aria-label", `Clase número ${classNo}`);
     head.append(num);
   }
-  const main = el("div", "homescool-letter__hero-main");
-  const top = el("div", "homescool-letter__hero-top");
-  top.append(el("span", "homescool-letter__kicker", kicker));
-  const end = el("div", "homescool-letter__hero-end");
-  const metaParts = [
-    `c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`,
-  ];
+  head.append(el("h2", "homescool-letter__heading", doc.title));
+  const metaParts: string[] = [];
+  if (kicker.trim() && !isLessonKindKicker(kicker)) metaParts.push(kicker.trim());
+  metaParts.push(`c${doc.cycle} · s${doc.week} · d${doc.day} · ${doc.subject} · nivel ${doc.level}`);
   if (sub) metaParts.push(sub);
-  end.append(el("span", "homescool-letter__meta", metaParts.join(" · ")));
-  top.append(end);
-  main.append(top);
-  main.append(el("h2", "homescool-letter__heading", doc.title));
-  head.append(main);
+  head.append(el("span", "homescool-letter__meta", metaParts.join(" · ")));
   return head;
 }
 
