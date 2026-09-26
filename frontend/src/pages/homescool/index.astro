@@ -71,6 +71,18 @@ import "../../styles/homescool-workspace.css";
             <span class="material-symbols-outlined" aria-hidden="true">more_vert</span>
           </button>
           </div>
+          <div
+            class="homescool-dhs__print-progress"
+            data-homescool-print-progress
+            hidden
+            role="progressbar"
+            aria-label="Generando PDF"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-hidden="true"
+          >
+            <span class="homescool-dhs__print-progress-bar" data-homescool-print-progress-bar></span>
+          </div>
         </div>
       </div>
       <button
@@ -829,6 +841,32 @@ import "../../styles/homescool-workspace.css";
     if (menuBtn) menuBtn.disabled = !enabled;
   }
 
+  function setPrintProgress(state: { busy: boolean; ratio?: number }) {
+    const track = dhsQs<HTMLElement>("[data-homescool-print-progress]");
+    const bar = dhsQs<HTMLElement>("[data-homescool-print-progress-bar]");
+    if (!track || !bar) return;
+    if (!state.busy) {
+      track.hidden = true;
+      track.removeAttribute("data-busy");
+      track.setAttribute("aria-hidden", "true");
+      track.removeAttribute("aria-valuenow");
+      bar.style.transform = "";
+      return;
+    }
+    track.hidden = false;
+    track.setAttribute("aria-hidden", "false");
+    if (state.ratio == null) {
+      track.setAttribute("data-busy", "indeterminate");
+      track.removeAttribute("aria-valuenow");
+      bar.style.transform = "";
+      return;
+    }
+    const ratio = Math.max(0, Math.min(1, state.ratio));
+    track.setAttribute("data-busy", "determinate");
+    track.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+    bar.style.transform = `scaleX(${ratio})`;
+  }
+
   async function downloadPrintMode(mode: PrintMode) {
     const printBtn = qs<HTMLButtonElement>("[data-homescool-print]");
     const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
@@ -847,6 +885,7 @@ import "../../styles/homescool-workspace.css";
       printBtn.setAttribute("aria-busy", "true");
     }
     if (menuBtn) menuBtn.disabled = true;
+    setPrintProgress(mode === "current" ? { busy: true } : { busy: true, ratio: 0 });
 
     try {
       if (mode === "current") {
@@ -866,6 +905,7 @@ import "../../styles/homescool-workspace.css";
           hcLog("workspace", "pdf.fail", { error: result.error, requestId: result.requestId }, "error");
           return;
         }
+        setPrintProgress({ busy: true, ratio: 1 });
         log("pdf.ok", { mode, materialId: currentMaterialId || "session", requestId: result.requestId });
         return;
       }
@@ -879,16 +919,19 @@ import "../../styles/homescool-workspace.css";
       document.body.append(holder);
       const allPages: string[] = [];
       try {
-        for (const cell of targets) {
+        for (let i = 0; i < targets.length; i++) {
+          const cell = targets[i];
           const doc = await loadDocForCell(cell);
           if (!doc) {
             hcLog("workspace", "pdf.batch.skip", { key: cell.key }, "warn");
+            setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
             continue;
           }
           const pages = renderEoschoolPages(doc);
           holder.replaceChildren(...pages);
           const rasters = await captureHomescoolLetterPages(holder);
           allPages.push(...rasters);
+          setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
           log("pdf.batch.cell", { key: cell.key, pages: rasters.length, total: allPages.length });
         }
       } finally {
@@ -919,12 +962,14 @@ import "../../styles/homescool-workspace.css";
         }, "error");
         return;
       }
+      setPrintProgress({ busy: true, ratio: 1 });
       log("pdf.batch.ok", { mode, pages: allPages.length, requestId: result.requestId });
     } catch (err) {
       hcLog("workspace", "pdf.error", { err: String(err), mode }, "error");
       showErrorModal({ message: "Could not download PDF." });
     } finally {
       if (printBtn) printBtn.removeAttribute("aria-busy");
+      setPrintProgress({ busy: false });
       setPrintEnabled(sheetsReady);
     }
   }

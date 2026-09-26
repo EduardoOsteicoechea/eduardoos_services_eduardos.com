@@ -404,6 +404,57 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   cursor: not-allowed;
 }
 
+.homescool-dhs__print-progress {
+  display: flex;
+  align-items: stretch;
+  height: 0.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.homescool-dhs__print-progress[hidden] {
+  display: none !important;
+}
+
+.homescool-dhs__print-progress-bar {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 0.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.homescool-dhs__print-progress[data-busy="indeterminate"] .homescool-dhs__print-progress-bar {
+  animation: homescool-print-progress-pulse 1.1s ease-in-out infinite;
+}
+
+.homescool-dhs__print-progress[data-busy="determinate"] .homescool-dhs__print-progress-bar {
+  animation: none;
+  transition: transform 0.2s ease-out;
+}
+
+@keyframes homescool-print-progress-pulse {
+  0% {
+    transform: scaleX(0.12);
+  }
+  50% {
+    transform: scaleX(0.88);
+  }
+  100% {
+    transform: scaleX(0.12);
+  }
+}
+
 .homescool-dhs__print-menu-btn {
   flex: 0 0 auto;
   width: var(--control-height);
