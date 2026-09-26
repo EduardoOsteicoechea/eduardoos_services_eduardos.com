@@ -686,25 +686,16 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   gap: 0.4rem;
   align-items: flex-start;
-  padding: 0.4rem 0.45rem;
-  border-radius: 0.3rem;
-  border: 0.08rem solid var(--hc-blue);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   background: transparent;
 }
 
-.homescool-letter__point--1 {
-  background: transparent;
-  border-color: var(--hc-blue);
-}
-
-.homescool-letter__point--2 {
-  background: transparent;
-  border-color: var(--hc-navy);
-}
-
+.homescool-letter__point--1,
+.homescool-letter__point--2,
 .homescool-letter__point--3 {
   background: transparent;
-  border-color: var(--hc-olive);
 }
 
 .homescool-letter__point-badge {
@@ -818,6 +809,22 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__rich--intro,
 .homescool-letter__rich--review {
   gap: 0.28rem;
+}
+
+/* Idea central full width; Explora left, Práctica + Error right. */
+.homescool-letter__lesson-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+  align-items: stretch;
+}
+
+.homescool-letter__lesson-main,
+.homescool-letter__lesson-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
 }
 
 .homescool-letter__cards {
@@ -1073,7 +1080,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__point {
-  padding: 0.28rem 0.35rem;
+  padding: 0;
 }
 
 .homescool-letter__quiz {

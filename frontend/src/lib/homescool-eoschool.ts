@@ -746,26 +746,33 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
 
   for (const p of lead) root.append(renderParaBlock(p));
 
-  if (mid.length) {
-    const grid = el("div", "homescool-letter__cards");
+  const appendMidBlocks = (parent: HTMLElement) => {
     mid.forEach((p, i) => {
       const node = renderParaBlock(p);
       if (p.kind === "card") node.classList.add(`homescool-letter__card-tone--${(i % 4) + 1}`);
-      grid.append(node);
+      parent.append(node);
     });
-    root.append(grid);
-  }
+  };
 
-  if (specials.length) {
-    const strip = el("div", "homescool-letter__specials");
-    if (opts.mode === "deepen" && specials.length >= 2) {
-      const row = el("div", "homescool-letter__specials-row");
-      for (const p of specials) row.append(renderParaBlock(p));
-      strip.append(row);
-    } else {
-      for (const p of specials) strip.append(renderParaBlock(p));
+  if (mid.length && specials.length) {
+    const row = el("div", "homescool-letter__lesson-row");
+    const main = el("div", "homescool-letter__lesson-main");
+    appendMidBlocks(main);
+    const side = el("div", "homescool-letter__lesson-side");
+    for (const p of specials) side.append(renderParaBlock(p));
+    row.append(main, side);
+    root.append(row);
+  } else {
+    if (mid.length) {
+      const grid = el("div", "homescool-letter__cards");
+      appendMidBlocks(grid);
+      root.append(grid);
     }
-    root.append(strip);
+    if (specials.length) {
+      const strip = el("div", "homescool-letter__specials");
+      for (const p of specials) strip.append(renderParaBlock(p));
+      root.append(strip);
+    }
   }
 
   if (!paras.length && body.trim()) {

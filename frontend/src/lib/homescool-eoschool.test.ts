@@ -34,6 +34,40 @@ describe("classifyLessonParas", () => {
   });
 });
 
+describe("lesson rich layout", () => {
+  it("places Explora left and Práctica + Error right under Idea central", () => {
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          {
+            id: "p1",
+            heading: "Panorama",
+            body: [
+              "Idea central del punto.",
+              "Texto de exploración.",
+              "Práctica: haz el ejercicio.",
+              "Error a corregir: no confundir fechas.",
+            ].join("\n\n"),
+          },
+        ],
+        summary: "",
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const rich = pages[0].querySelector(".homescool-letter__rich");
+    const row = rich?.querySelector(".homescool-letter__lesson-row");
+    expect(row).toBeTruthy();
+    const main = row?.querySelector(".homescool-letter__lesson-main");
+    const side = row?.querySelector(".homescool-letter__lesson-side");
+    expect(main?.querySelector(".homescool-letter__box--card")).toBeTruthy();
+    expect(side?.querySelectorAll(".homescool-letter__box--practice, .homescool-letter__box--error")).toHaveLength(2);
+    expect(rich?.querySelector(".homescool-letter__box--lead")).toBeTruthy();
+    expect(pages[0].querySelector(".homescool-letter__point")?.className).not.toMatch(/border/);
+  });
+});
+
 describe("packLessonBatches", () => {
   it("keeps following sections on the same page while they fit", () => {
     const batches = packLessonBatches(3, true, (start, end, withSummary) => {
