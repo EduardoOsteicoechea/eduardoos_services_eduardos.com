@@ -170,6 +170,8 @@ type PamphletHeaderLayout struct {
 type PamphletFooterLayout struct {
 	Height             float64 `json:"height"`
 	Width              float64 `json:"width"`
+	// Gap between cols 7–8 and the footer band (--footer-body-gutter).
+	BodyGutter         float64 `json:"body_gutter"`
 	Pad                float64 `json:"pad"`
 	PadTop             float64 `json:"pad_top"`
 	PadBottom          float64 `json:"pad_bottom"`
@@ -260,6 +262,7 @@ type PamphletHit struct {
 }
 
 // PamphletLayout is the backend source of truth for sheet geometry and hit-testing.
+// Band fields come from computePamphletGeometry — FE must apply these, not invent mm.
 type PamphletLayout struct {
 	PageWidthMm  float64       `json:"page_width_mm"`
 	PageHeightMm float64       `json:"page_height_mm"`
@@ -269,6 +272,112 @@ type PamphletLayout struct {
 	LeadColumns []int `json:"lead_columns,omitempty"`
 	// SchemaVersion bumps when lead/column packing rules change (FE can detect stale caches).
 	SchemaVersion int `json:"schema_version,omitempty"`
+
+	MarginMm            float64 `json:"margin_mm,omitempty"`
+	ContentBandMm       float64 `json:"content_band_mm,omitempty"`
+	Page1BodyMm         float64 `json:"page1_body_mm,omitempty"`
+	Page1RightColMm     float64 `json:"page1_right_col_mm,omitempty"`
+	Page1LeftColMm      float64 `json:"page1_left_col_mm,omitempty"`
+	Page2ColMm          float64 `json:"page2_col_mm,omitempty"`
+	HeaderHMm           float64 `json:"header_h_mm,omitempty"`
+	HeaderBodyGutterMm  float64 `json:"header_body_gutter_mm,omitempty"`
+	FooterHMm           float64 `json:"footer_h_mm,omitempty"`
+	FooterBodyGutterMm  float64 `json:"footer_body_gutter_mm,omitempty"`
+	RightBodyTopMm      float64 `json:"right_body_top_mm,omitempty"`
+	LeftBodyTopMm       float64 `json:"left_body_top_mm,omitempty"`
+	FooterTopMm         float64 `json:"footer_top_mm,omitempty"`
+	RightBodyFloorMm    float64 `json:"right_body_floor_mm,omitempty"`
+	LeftBodyFloorMm     float64 `json:"left_body_floor_mm,omitempty"`
+	Page2FloorMm        float64 `json:"page2_floor_mm,omitempty"`
+}
+
+// PamphletGeometryMm is the canonical page-1 / page-2 band math (CSS top-left mm).
+// Must stay in lockstep with frontend pamphlet_geometry.ts.
+type PamphletGeometryMm struct {
+	PageWidth          float64
+	PageHeight         float64
+	Margin             float64
+	HeaderH            float64
+	HeaderBodyGutter   float64
+	FooterH            float64
+	FooterBodyGutter   float64
+	ContentBand        float64
+	Page1Body          float64
+	Page1RightCol      float64
+	Page1LeftCol       float64
+	Page2Col           float64
+	HeaderTop          float64
+	RightBodyTop       float64
+	LeftBodyTop        float64
+	FooterTop          float64
+	RightBodyFloor     float64
+	LeftBodyFloor      float64
+	Page2Floor         float64
+}
+
+// computePamphletGeometry derives all page bands from chrome heights + gutters.
+// Header height changes cols 1–2 only; footer height changes cols 7–8 only.
+func computePamphletGeometry(header PamphletHeaderLayout, footer PamphletFooterLayout) PamphletGeometryMm {
+	h := normalizeHeaderLayout(header)
+	f := normalizeFooterLayout(footer)
+	margin := PamphletMarginMm
+	contentBand := PamphletPageHeightMm - 2*margin
+	headerH := h.Height
+	headerGutter := h.BodyGutter
+	footerH := f.Height
+	footerGutter := f.BodyGutter
+	if footerGutter <= 0 {
+		footerGutter = PamphletFooterBodyGutterMm
+	}
+	page1Right := contentBand - headerH - headerGutter
+	page1Left := contentBand - footerGutter - footerH
+	page1Body := contentBand - headerH - headerGutter - footerGutter - footerH
+	rightTop := margin + headerH + headerGutter
+	leftTop := margin
+	footerTop := PamphletPageHeightMm - margin - footerH
+	return PamphletGeometryMm{
+		PageWidth:        PamphletPageWidthMm,
+		PageHeight:       PamphletPageHeightMm,
+		Margin:           margin,
+		HeaderH:          headerH,
+		HeaderBodyGutter: headerGutter,
+		FooterH:          footerH,
+		FooterBodyGutter: footerGutter,
+		ContentBand:      contentBand,
+		Page1Body:        page1Body,
+		Page1RightCol:    page1Right,
+		Page1LeftCol:     page1Left,
+		Page2Col:         contentBand,
+		HeaderTop:        margin,
+		RightBodyTop:     rightTop,
+		LeftBodyTop:      leftTop,
+		FooterTop:        footerTop,
+		RightBodyFloor:   rightTop + page1Right,
+		LeftBodyFloor:    leftTop + page1Left,
+		Page2Floor:       margin + contentBand,
+	}
+}
+
+func (g PamphletGeometryMm) applyToLayout(layout *PamphletLayout) {
+	if layout == nil {
+		return
+	}
+	layout.MarginMm = g.Margin
+	layout.ContentBandMm = g.ContentBand
+	layout.Page1BodyMm = g.Page1Body
+	layout.Page1RightColMm = g.Page1RightCol
+	layout.Page1LeftColMm = g.Page1LeftCol
+	layout.Page2ColMm = g.Page2Col
+	layout.HeaderHMm = g.HeaderH
+	layout.HeaderBodyGutterMm = g.HeaderBodyGutter
+	layout.FooterHMm = g.FooterH
+	layout.FooterBodyGutterMm = g.FooterBodyGutter
+	layout.RightBodyTopMm = g.RightBodyTop
+	layout.LeftBodyTopMm = g.LeftBodyTop
+	layout.FooterTopMm = g.FooterTop
+	layout.RightBodyFloorMm = g.RightBodyFloor
+	layout.LeftBodyFloorMm = g.LeftBodyFloor
+	layout.Page2FloorMm = g.Page2Floor
 }
 
 type layoutSink struct {
@@ -469,13 +578,15 @@ func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout, P
 		page1Num, page2Num,
 	))
 
+	geom := computePamphletGeometry(doc.HeaderLayout, doc.FooterLayout)
 	layout := PamphletLayout{
 		PageWidthMm:   PamphletPageWidthMm,
 		PageHeightMm:  PamphletPageHeightMm,
 		PageCount:     2,
 		Hits:          sink.hits,
-		SchemaVersion: 4,
+		SchemaVersion: 5,
 	}
+	geom.applyToLayout(&layout)
 	if isStructuredImagesType(doc.Type) {
 		layout.LeadColumns = []int{2, 4, 6, 8}
 	}
@@ -634,36 +745,36 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 	drawPamphletSheetBackground(&s, bgName)
 	headerLayout := normalizeHeaderLayout(doc.HeaderLayout)
 	footerLayout := normalizeFooterLayout(doc.FooterLayout)
-	headerH := headerLayout.Height
-	bodyGutter := headerLayout.BodyGutter
-	footerH := footerLayout.Height
-	leftColH := PamphletPage2BodyMm - PamphletFooterBodyGutterMm - footerH
-	rightColH := PamphletPage2BodyMm - headerH - bodyGutter
+	g := computePamphletGeometry(headerLayout, footerLayout)
+	leftColH := g.Page1LeftCol
+	rightColH := g.Page1RightCol
 
 	headerX := colX(6)
-	headerTop := PamphletPageHeightMm - PamphletMarginMm
+	// PDF Y is bottom-up: top of margin band.
+	headerTopPDF := PamphletPageHeightMm - PamphletMarginMm
 	// Same vertical tracks as CSS grid: margin → header → gutter → cols.
-	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTop, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
+	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTopPDF, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
 
-	leftTop := PamphletPageHeightMm - PamphletMarginMm
-	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7, 1, sink)
-	drawStructuredOrPlainColumn(&s, doc, doc.Column8, colX(4), leftTop, leftColH, images, 8, 1, sink)
+	leftTopPDF := PamphletPageHeightMm - PamphletMarginMm
+	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTopPDF, leftColH, images, 7, 1, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column8, colX(4), leftTopPDF, leftColH, images, 8, 1, sink)
 
 	// Col2 lead shares col1 top (after header→body gutter); body band shrinks by lead+gap.
-	rightTop := headerTop - headerH - bodyGutter
-	drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTop, rightColH, images, 1, 1, sink)
-	drawStructuredOrPlainColumn(&s, doc, doc.Column2, colX(8), rightTop, rightColH, images, 2, 1, sink)
+	rightTopPDF := headerTopPDF - g.HeaderH - g.HeaderBodyGutter
+	drawStructuredOrPlainColumn(&s, doc, doc.Column1, colX(6), rightTopPDF, rightColH, images, 1, 1, sink)
+	drawStructuredOrPlainColumn(&s, doc, doc.Column2, colX(8), rightTopPDF, rightColH, images, 2, 1, sink)
 
-	footerTop := PamphletMarginMm + footerH
-	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
+	footerTopPDF := PamphletMarginMm + g.FooterH
+	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTopPDF, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
 	return s.String()
 }
 
 func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink, bgName string) string {
 	var s strings.Builder
 	drawPamphletSheetBackground(&s, bgName)
+	g := computePamphletGeometry(doc.HeaderLayout, doc.FooterLayout)
 	top := PamphletPageHeightMm - PamphletMarginMm
-	h := PamphletPage2BodyMm
+	h := g.Page2Col
 	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3, 2, sink)
 	drawStructuredOrPlainColumn(&s, doc, doc.Column4, colX(4), top, h, images, 4, 2, sink)
 	drawStructuredOrPlainColumn(&s, doc, doc.Column5, colX(6), top, h, images, 5, 2, sink)
@@ -781,10 +892,15 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 	// Double rule under title (same strokes as footer Acción→Mensaje divider).
 	cursorTop := titleBoxBottom - layout.TitlePadBottom
 	dividerH := layout.DividerOuterStroke + layout.DividerGap + layout.DividerInnerStroke
+	// Keep gap spacing even when strokes are temporarily 0.
 	if dividerH > 0 {
-		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerOuterStroke)
+		if layout.DividerOuterStroke > 0 {
+			strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerOuterStroke)
+		}
 		cursorTop -= layout.DividerOuterStroke + layout.DividerGap
-		strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerInnerStroke)
+		if layout.DividerInnerStroke > 0 {
+			strokeHorizontalRuleMm(s, innerX, cursorTop, innerW, layout.DividerInnerStroke)
+		}
 		cursorTop -= layout.DividerInnerStroke
 	}
 
@@ -892,10 +1008,9 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 	}
 
 	// Double gray cross on meta (vertical + mid horizontal) — no outer frame.
-	if drewMeta && metaSectionTop > contentBottom {
-		// Top gray hairline + mid H/V cross (parity with footer meta / CSS).
-		strokeGrayMetaCrossMm(s, innerX, metaSectionTop, innerW, metaSectionTop-contentBottom, true)
-	}
+	// Temporary: hide internal meta rules (parity with CSS). Restore strokeGrayMetaCrossMm call.
+	_ = drewMeta
+	_ = metaSectionTop
 
 	if contentBottom < floor {
 		return floor
@@ -932,9 +1047,10 @@ func defaultHeaderLayout() PamphletHeaderLayout {
 		TitleLH:            pamphletTitleLH,
 		TitlePadBottom:     1,
 		TitleMetaGap:       PamphletHeaderTitleMetaGapMm,
-		DividerOuterStroke: 0.2,
+		// Temporary: hide title divider in PDF. Restore 0.2 / 0.45 / 0.1 with FE.
+		DividerOuterStroke: 0,
 		DividerGap:         0.45,
-		DividerInnerStroke: 0.1,
+		DividerInnerStroke: 0,
 		SubtitleSize:       2.469,
 		SubtitleLH:         1.25,
 		SubtitlePadX:       0,
@@ -1011,6 +1127,7 @@ func defaultFooterLayout() PamphletFooterLayout {
 	return PamphletFooterLayout{
 		Height:             PamphletFooterHMm,
 		Width:              PamphletColWidthMm*2 + PamphletGutterNarrow,
+		BodyGutter:         PamphletFooterBodyGutterMm,
 		Pad:                1.2,
 		PadTop:             1.2,
 		PadBottom:          0,
@@ -1020,10 +1137,11 @@ func defaultFooterLayout() PamphletFooterLayout {
 		InnerInset:         0.45,
 		InnerStroke:        0,
 		InnerRadius:        0.6,
-		ChromeGap:          0.6,
-		DividerOuterStroke: 0.2,
+		ChromeGap: 0.6,
+		// Temporary: hide Acción→Mensaje divider in PDF. Restore 0.2 / 0.45 / 0.1 with FE.
+		DividerOuterStroke: 0,
 		DividerGap:         0.45,
-		DividerInnerStroke: 0.1,
+		DividerInnerStroke: 0,
 		ActionSize:         3.175,
 		ActionLH:           1.25,
 		ActionPadX:         1.4,
@@ -1063,9 +1181,10 @@ func normalizeFooterLayout(l PamphletFooterLayout) PamphletFooterLayout {
 		return def
 	}
 	return PamphletFooterLayout{
-		Height: pick(l.Height, d.Height),
-		Width:  pick(l.Width, d.Width),
-		Pad:    pick(l.Pad, d.Pad),
+		Height:     pick(l.Height, d.Height),
+		Width:      pick(l.Width, d.Width),
+		BodyGutter: pick(l.BodyGutter, d.BodyGutter),
+		Pad:        pick(l.Pad, d.Pad),
 		PadTop: func() float64 {
 			if l.PadTop > 0 {
 				return l.PadTop
@@ -1570,14 +1689,11 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 			pair1DrawnH = rowH
 		}
 	}
-	if drawnH > 0 {
-		midFromTop := 0.0
-		drawMid := pairsDrawn >= 2
-		if drawMid {
-			midFromTop = pair1DrawnH + layout.MetaGap/2
-		}
-		strokeGrayMetaCrossAtMm(s, innerX, metaSectionTop, innerW, drawnH, midFromTop, true, drawMid)
-	}
+	// Temporary: hide footer meta top/mid/vertical rules. Restore strokeGrayMetaCrossAtMm.
+	_ = drawnH
+	_ = pairsDrawn
+	_ = pair1DrawnH
+	_ = metaSectionTop
 }
 
 // writeGrayWrappedFlushLeft paints pair2 values: first line beside the label,

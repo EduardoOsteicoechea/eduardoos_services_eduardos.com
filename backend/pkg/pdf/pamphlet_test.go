@@ -258,13 +258,14 @@ func TestHeaderFrameFromLayout(t *testing.T) {
 		Series: "Romanos",
 	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
-	// Temporary: outer/inner frames off (stroke 0). Title divider + gray meta top/mid/vertical remain.
-	strokeCount := strings.Count(out, "S\n")
-	if strokeCount < 5 {
-		t.Fatalf("expected ≥5 strokes (title divider+meta top/cross) in header stream, got %d in %q", strokeCount, out)
+	// Temporary: frames + internal divider/meta rules off — header still paints text.
+	if !strings.Contains(out, "Titulo") && !strings.Contains(toWinAnsi("Titulo"), "Titulo") {
+		if !strings.Contains(out, "Titu") {
+			t.Fatalf("header missing title ink: %q", out)
+		}
 	}
-	if !strings.Contains(out, "0.4 0.4 0.4 RG") {
-		t.Fatalf("expected gray meta cross stroke color, got %q", out)
+	if strings.Contains(out, "0.4 0.4 0.4 RG") {
+		t.Fatalf("temporary: header must not stroke gray meta cross, got %q", out)
 	}
 	if layout.PadTop != 2.2 || layout.PadBottom != 0.5 || layout.PadX != 2.2 || layout.Stroke != 0 || layout.InnerInset != 0.45 {
 		t.Fatalf("header frame mm mismatch: %+v", layout)
@@ -281,7 +282,7 @@ func TestHeaderFrameFromLayout(t *testing.T) {
 	if layout.TitlePadBottom != 1 {
 		t.Fatalf("header title_pad_bottom want 1, got %v", layout.TitlePadBottom)
 	}
-	if layout.DividerOuterStroke != 0.2 || layout.DividerGap != 0.45 || layout.DividerInnerStroke != 0.1 {
+	if layout.DividerOuterStroke != 0 || layout.DividerGap != 0.45 || layout.DividerInnerStroke != 0 {
 		t.Fatalf("header title divider mm mismatch: %+v", layout)
 	}
 }
@@ -348,16 +349,13 @@ func TestDrawFooterStructuredChrome(t *testing.T) {
 		Value4:  "Domingo 10am",
 	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
-	// Temporary: outer/inner frames off; Acción→Mensaje divider + meta cross still stroke.
-	if !strings.Contains(out, " S\n") && !strings.Contains(out, "S\n") {
-		t.Fatalf("footer missing stroke S op for divider/meta: %q", out)
-	}
+	// Temporary: frames + divider + meta rules off; labels/values still paint (gray text).
 	// Input cell borders (re) are editor-only — PDF print must not stroke them.
 	if strings.Contains(out, " re\n") {
 		t.Fatalf("footer must not stroke input cell borders in PDF: %q", out)
 	}
-	if !strings.Contains(out, "0.4 0.4 0.4 RG") {
-		t.Fatalf("footer missing gray meta cross stroke: %q", out)
+	if strings.Contains(out, "0.4 0.4 0.4 RG") {
+		t.Fatalf("temporary: footer must not stroke gray meta cross, got %q", out)
 	}
 	for _, want := range []string{"Creamos", "conocer", "WhatsApp", "Tel", "Direcci", "Actividades", "+58", "Caracas"} {
 		if !strings.Contains(out, want) && !strings.Contains(toWinAnsi(want), want) {
@@ -375,8 +373,9 @@ func TestDrawFooterStructuredChrome(t *testing.T) {
 func TestFooterLayoutActionMessageGapAndInnerInset(t *testing.T) {
 	d := defaultFooterLayout()
 	divH := d.DividerOuterStroke + d.DividerGap + d.DividerInnerStroke
-	if divH < 0.7 || divH > 0.8 {
-		t.Fatalf("divider block height want ~0.75mm, got %v", divH)
+	// Temporary: strokes 0 — gap spacing remains (~0.45mm).
+	if divH < 0.4 || divH > 0.5 {
+		t.Fatalf("divider block height want ~0.45mm (strokes off), got %v", divH)
 	}
 	if d.ChromeGap < 0.55 || d.ChromeGap > 0.65 {
 		t.Fatalf("chrome_gap want 0.6mm, got %v", d.ChromeGap)
@@ -465,9 +464,9 @@ func TestDrawFooterReservesMetaDespiteLongAction(t *testing.T) {
 			t.Fatalf("long-action footer missing meta %q: %q", want, out)
 		}
 	}
-	// Temporary: frames off; divider/meta strokes remain.
-	if !strings.Contains(out, " S\n") && !strings.Contains(out, "S\n") {
-		t.Fatalf("long-action footer missing divider/meta stroke: %q", out)
+	// Temporary: no chrome strokes — meta text must still appear.
+	if !strings.Contains(out, "Whats") && !strings.Contains(out, "camp") {
+		t.Fatalf("long-action footer missing meta ink: %q", out)
 	}
 }
 
@@ -525,16 +524,57 @@ func TestPamphletPageGeometrySums(t *testing.T) {
 	if sum < PamphletPageWidthMm-0.01 || sum > PamphletPageWidthMm+0.01 {
 		t.Fatalf("horizontal sum=%.2f want %.2f", sum, PamphletPageWidthMm)
 	}
-	// Right cols under header
-	right := PamphletPage2BodyMm - PamphletHeaderHMm - PamphletHeaderBodyGutterMm
-	if right != PamphletPage1RightColMm {
-		t.Fatalf("right col height=%.2f want %.2f", PamphletPage1RightColMm, right)
+	g := computePamphletGeometry(PamphletHeaderLayout{}, PamphletFooterLayout{})
+	if g.Page1RightCol != PamphletPage1RightColMm {
+		t.Fatalf("right col height=%.2f want %.2f", g.Page1RightCol, PamphletPage1RightColMm)
+	}
+	if g.Page1LeftCol != PamphletPage1LeftColMm {
+		t.Fatalf("left col height=%.2f want %.2f", g.Page1LeftCol, PamphletPage1LeftColMm)
 	}
 	// Page 1 vertical stack: margin + header + header-body gutter + body + footer gutter + footer + margin
-	vSum := PamphletMarginMm + PamphletHeaderHMm + PamphletHeaderBodyGutterMm +
-		PamphletPage1BodyMm + PamphletFooterBodyGutterMm + PamphletFooterHMm + PamphletMarginMm
+	vSum := g.Margin + g.HeaderH + g.HeaderBodyGutter +
+		g.Page1Body + g.FooterBodyGutter + g.FooterH + g.Margin
 	if vSum < PamphletPageHeightMm-0.01 || vSum > PamphletPageHeightMm+0.01 {
 		t.Fatalf("page1 vertical sum=%.2f want %.2f", vSum, PamphletPageHeightMm)
+	}
+}
+
+func TestComputePamphletGeometryHeaderFooterIndependent(t *testing.T) {
+	base := computePamphletGeometry(PamphletHeaderLayout{}, PamphletFooterLayout{})
+	tallerHeader := computePamphletGeometry(PamphletHeaderLayout{Height: PamphletHeaderHMm + 4}, PamphletFooterLayout{})
+	if tallerHeader.Page1RightCol != base.Page1RightCol-4 {
+		t.Fatalf("header+4: right=%.2f want %.2f", tallerHeader.Page1RightCol, base.Page1RightCol-4)
+	}
+	if tallerHeader.Page1LeftCol != base.Page1LeftCol {
+		t.Fatalf("header+4 must not change left col: got %.2f want %.2f", tallerHeader.Page1LeftCol, base.Page1LeftCol)
+	}
+	tallerFooter := computePamphletGeometry(PamphletHeaderLayout{}, PamphletFooterLayout{Height: PamphletFooterHMm + 3})
+	wantLeft := base.Page1LeftCol - 3
+	if diff := tallerFooter.Page1LeftCol - wantLeft; diff < -0.01 || diff > 0.01 {
+		t.Fatalf("footer+3: left=%.4f want %.4f", tallerFooter.Page1LeftCol, wantLeft)
+	}
+	if tallerFooter.Page1RightCol != base.Page1RightCol {
+		t.Fatalf("footer+3 must not change right col: got %.2f want %.2f", tallerFooter.Page1RightCol, base.Page1RightCol)
+	}
+}
+
+func TestBuildPamphletPDFLayoutExposesBands(t *testing.T) {
+	_, layout, _ := BuildPamphletPDFWithLayout(PamphletDocument{
+		Type:   "pamphlet_single_sheet",
+		Header: PamphletHeader{Title: "T"},
+		Footer: PamphletFooter{Action: "A"},
+	})
+	if layout.SchemaVersion != 5 {
+		t.Fatalf("schema_version=%d want 5", layout.SchemaVersion)
+	}
+	if layout.Page1RightColMm < 156.3 || layout.Page1RightColMm > 156.5 {
+		t.Fatalf("page1_right_col_mm=%.2f", layout.Page1RightColMm)
+	}
+	if layout.Page1LeftColMm < 160.0 || layout.Page1LeftColMm > 160.2 {
+		t.Fatalf("page1_left_col_mm=%.2f", layout.Page1LeftColMm)
+	}
+	if layout.RightBodyTopMm < 49.4 || layout.RightBodyTopMm > 49.6 {
+		t.Fatalf("right_body_top_mm=%.2f", layout.RightBodyTopMm)
 	}
 }
 
@@ -779,9 +819,7 @@ func TestBuildPamphletPDFBlueInkUses00368c(t *testing.T) {
 	if !strings.Contains(bs, "0.000 0.212 0.549 rg") {
 		t.Fatalf("blue ink missing fill operator for #00368c")
 	}
-	if !strings.Contains(bs, "0.000 0.212 0.549 RG") {
-		t.Fatalf("blue ink missing stroke operator for #00368c")
-	}
+	// Temporary: header/footer frame strokes are off — blue stroke may be absent.
 	// Header meta + footer contact grid must not stay gray in blue mode.
 	if strings.Contains(bs, "0.4 0.4 0.4") {
 		t.Fatalf("blue mode must remap gray meta (0.4) to #00368c")

@@ -437,9 +437,10 @@
   --header-inner-inset: 0.45mm;
   --header-inner-stroke: 0mm;
   --header-inner-radius: 0.6mm;
-  --header-divider-outer: 0.2mm;
+  /* Temporary: hide internal header divider rules. Restore 0.2mm / 0.45mm / 0.1mm. */
+  --header-divider-outer: 0mm;
   --header-divider-gap: 0.45mm;
-  --header-divider-inner: 0.1mm;
+  --header-divider-inner: 0mm;
   /* Title + divider + subtitle + title_meta_gap + meta + pad + frame. */
   --page-header-height: 34.5mm;
   /* Margin under header band before cols 1–2 (PDF uses the same). */
@@ -751,8 +752,8 @@
     flex: 0 0 auto;
     width: 100%;
     box-sizing: border-box;
-    border-top: var(--header-divider-outer) solid var(--pamphlet-rule);
-    border-bottom: var(--header-divider-inner) solid var(--pamphlet-rule);
+    border-top: none;
+    border-bottom: none;
     padding-top: var(--header-divider-gap);
     margin: 0;
     pointer-events: none;
@@ -825,8 +826,9 @@
     flex: 0 0 auto;
     width: 100%;
     box-sizing: border-box;
-    border-top: 0.2mm solid var(--pamphlet-rule); /* divider_outer_stroke */
-    border-bottom: 0.1mm solid var(--pamphlet-rule); /* divider_inner_stroke */
+    /* Temporary: hide Acción→Mensaje double rule. */
+    border-top: none;
+    border-bottom: none;
     padding-top: 0.45mm; /* divider_gap between the two strokes */
     margin: 0;
     pointer-events: none;
@@ -875,41 +877,18 @@
     color: var(--pamphlet-ink);
     box-sizing: border-box;
     padding-top: var(--header-meta-pad-top);
-    /* Top single rule under subtitle — same overlay language as footer meta. */
-    background-image: linear-gradient(var(--pamphlet-rule), var(--pamphlet-rule));
-    background-size: 100% 0.2mm;
-    background-position: top 0 left 0;
-    background-repeat: no-repeat;
+    /* Temporary: hide meta top rule + cross. */
+    background-image: none;
 }
 
 /*
   Single gray cross only (no outer frame) — vertical at column gap, horizontal at row gap.
   Overlay — does not invent extra band chrome beyond row-gap.
 */
-.pamphlet-header-meta-bar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    border-left: 0.2mm solid var(--pamphlet-rule);
-    transform: translateX(-50%);
-    pointer-events: none;
-    z-index: 1;
-}
-
+.pamphlet-header-meta-bar::before,
 .pamphlet-header-meta-bar::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    height: 0;
-    border-top: 0.2mm solid var(--pamphlet-rule);
-    transform: translateY(-50%);
-    pointer-events: none;
-    z-index: 1;
+    content: none;
+    display: none;
 }
 
 /* Rows kept for DOM grouping; each is a 2-col subgrid aligned to the bar. */
@@ -1066,27 +1045,16 @@
     overflow: hidden;
     color: var(--pamphlet-ink);
     box-sizing: border-box;
-    /* Top single rule — overlay, no height growth. */
-    background-image: linear-gradient(var(--pamphlet-rule), var(--pamphlet-rule));
-    background-size: 100% 0.2mm;
-    background-position: top 0 left 0;
-    background-repeat: no-repeat;
+    /* Temporary: hide meta top rule + cross. */
+    background-image: none;
 }
 
 /*
   Footer meta: vertical + mid-horizontal single gray cross (no outer frame).
 */
 .pamphlet-footer-meta-bar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    border-left: 0.2mm solid var(--pamphlet-rule);
-    transform: translateX(-50%);
-    pointer-events: none;
-    z-index: 1;
+    content: none;
+    display: none;
 }
 
 .pamphlet-footer-meta-bar::after {
@@ -1140,15 +1108,9 @@
 
 /* Horizontal cross between pair rows (into the 0.4mm meta_gap). */
 .pamphlet-footer-meta-row[data-meta-kind="pair1"]::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.3mm;
-    height: 0;
-    border-top: 0.2mm solid var(--pamphlet-rule);
-    pointer-events: none;
-    z-index: 1;
+    /* Temporary: hide mid meta rule. */
+    content: none;
+    display: none;
 }
 
 .pamphlet-footer-meta-cell {
@@ -2724,6 +2686,46 @@ html[data-theme="light"] .pamphlet-pdf-page__canvas {
   font-size: var(--font-size-sm, 0.875rem);
   font-weight: 650;
   padding-inline: var(--control-padding-inline, 0.375rem);
+}
+
+.pamphlet-app .chrome-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--rail-gap, 0.5rem);
+  margin-top: var(--space-padding, 1rem);
+}
+
+.pamphlet-app .chrome-modal-btn.icon-btn {
+  width: var(--button-size, 2.5rem);
+  height: var(--button-size, 2.5rem);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius, 0.25rem);
+  border: var(--border-width, 0.0625rem) solid var(--color-border, rgba(0, 0, 0, 0.2));
+  background: var(--color-surface, transparent);
+  color: var(--color-text, inherit);
+  cursor: pointer;
+}
+
+.pamphlet-app .chrome-modal-btn.icon-btn .material-symbols-outlined {
+  font-size: var(--icon-size, 1.5rem);
+  line-height: 1;
+}
+
+.pamphlet-app .chrome-modal-btn--save.icon-btn {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #ffffff;
+}
+
+.pamphlet-app .chrome-modal-btn--save.icon-btn:hover,
+.pamphlet-app .chrome-modal-btn--save.icon-btn:focus-visible {
+  background: #1b5e20;
+  border-color: #1b5e20;
+  color: #ffffff;
 }
 
 .pamphlet-pdf-hit:hover:not(.is-selected) {

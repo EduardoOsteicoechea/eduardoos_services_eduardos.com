@@ -286,9 +286,10 @@ export const PAMPHLET_HEADER_LAYOUT_MM: PamphletHeaderLayoutMm = {
     title_lh: 1.1,
     title_pad_bottom: 1, // under title text before divider
     title_meta_gap: 0.6, // subtitle → meta (−1mm)
-    divider_outer_stroke: 0.2,
+    /* Temporary: hide title divider in PDF. Restore 0.2 / 0.45 / 0.1. */
+    divider_outer_stroke: 0,
     divider_gap: 0.45,
-    divider_inner_stroke: 0.1,
+    divider_inner_stroke: 0,
     subtitle_size: 2.469, // matches footer message (~7pt)
     subtitle_lh: 1.25,
     subtitle_pad_x: 0, // flush left with title
@@ -312,6 +313,8 @@ export type PamphletFooterLayoutMm = {
     height: number;
     /** Band width: 2 cols + narrow gutter (same as header). */
     width: number;
+    /** Gap between cols 7–8 and the footer (--footer-body-gutter). */
+    body_gutter: number;
     /** Horizontal + legacy symmetric pad; prefer pad_top / pad_bottom for vertical. */
     pad: number;
     pad_top: number;
@@ -370,6 +373,7 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     // Net: prior 30 − pad_bottom 1.2 + label2 +1 → 29.8 (other chrome unchanged)
     height: 29.8,
     width: 119.7, // 57.85×2 + 4
+    body_gutter: 6, // --footer-body-gutter
     pad: 1.2, // horizontal + legacy
     pad_top: 1.2,
     pad_bottom: 0,
@@ -380,9 +384,10 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     inner_stroke: 0,
     inner_radius: 0.6,
     chrome_gap: 0.6,
-    divider_outer_stroke: 0.2,
+    /* Temporary: hide Acción→Mensaje divider in PDF. Restore 0.2 / 0.45 / 0.1. */
+    divider_outer_stroke: 0,
     divider_gap: 0.45,
-    divider_inner_stroke: 0.1,
+    divider_inner_stroke: 0,
     action_size: 3.175,
     action_lh: 1.25,
     action_pad_x: 1.4,
@@ -984,7 +989,11 @@ export function columnKey(column: number): ColumnKey {
     return COLUMN_KEYS[column - 1];
 }
 
-export function clampImageHeightMm(heightMm: number): number {
+export function clampImageHeightMm(heightMm: number, maxMm?: number): number {
     if (!Number.isFinite(heightMm)) return DEFAULT_IMAGE_HEIGHT_MM;
-    return Math.max(MIN_IMAGE_HEIGHT_MM, Math.round(heightMm));
+    let next = Math.max(MIN_IMAGE_HEIGHT_MM, Math.round(heightMm));
+    if (typeof maxMm === "number" && Number.isFinite(maxMm) && maxMm >= MIN_IMAGE_HEIGHT_MM) {
+        next = Math.min(next, Math.round(maxMm));
+    }
+    return next;
 }
