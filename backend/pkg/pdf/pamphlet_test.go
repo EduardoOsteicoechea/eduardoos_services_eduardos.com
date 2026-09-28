@@ -139,6 +139,9 @@ func TestFooterMessagePadBottomReduced(t *testing.T) {
 	if d.MetaLabel2PadTop != 1.0 {
 		t.Fatalf("meta_label2_pad_top want 1.0, got %v", d.MetaLabel2PadTop)
 	}
+	if d.MetaGap != 0.9 {
+		t.Fatalf("meta_gap want 0.9 (pair1→pair2 +0.5mm vs prior 0.4), got %v", d.MetaGap)
+	}
 	if d.PadTop != 0 || d.PadBottom != 0 || d.Pad != 0 {
 		t.Fatalf("footer pad want 0 (frames off), got pad=%v top=%v bottom=%v", d.Pad, d.PadTop, d.PadBottom)
 	}

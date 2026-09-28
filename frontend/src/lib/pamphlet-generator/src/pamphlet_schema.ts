@@ -402,7 +402,7 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     message_pad_bottom: 0, // −1mm vs prior symmetric 0.7 (clamped)
     message_pad_y: 0.7, // legacy fallback
     message_min_h: 3.5, // subtítulo row −1mm vs prior 4.5
-    meta_gap: 0.4,
+    meta_gap: 0.9, // pair1 → pair2 (+0.5mm vs prior 0.4)
     meta_col_gap: 2,
     meta_row_h: 5.5,
     meta_label1_row_h: 3.0, // WhatsApp/Teléfono (−1.5mm bottom vs original 4.5)

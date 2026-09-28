@@ -1065,7 +1065,7 @@
     position: relative; /* anchor meta top + cross dividers */
     display: flex;
     flex-direction: column;
-    gap: 0.4mm; /* meta_gap */
+    gap: 0.9mm; /* meta_gap — pair1 → pair2 (+0.5mm vs prior 0.4) */
     width: 100%;
     min-width: 0;
     flex: 0 0 auto; /* never shrink — same floor reservation as PDF meta rows */
@@ -1136,7 +1136,7 @@
     max-height: 6.5mm;
 }
 
-/* Horizontal cross between pair rows (into the 0.4mm meta_gap). */
+/* Horizontal cross between pair rows (into the meta_gap). */
 .pamphlet-footer-meta-row[data-meta-kind="pair1"]::after {
     /* Temporary: hide mid meta rule. */
     content: none;

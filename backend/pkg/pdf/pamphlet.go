@@ -1141,7 +1141,7 @@ func defaultFooterLayout() PamphletFooterLayout {
 		MessagePadBottom:   0,
 		MessagePadY:        0.7,
 		MessageMinH:        3.5,
-		MetaGap:            0.4,
+		MetaGap:            0.9, // pair1 → pair2 (+0.5mm vs prior 0.4)
 		MetaColGap:         2.0,
 		MetaRowH:           5.5,
 		MetaLabel1RowH:     3.0,
