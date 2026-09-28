@@ -1,7 +1,8 @@
 package pdf
 
-// Roboto Regular + Bold (Apache 2.0, Google) — same family the website loads
-// from Google Fonts. Embedded as TrueType so pamphlet PDFs match the sheet.
+// Raleway Regular + Bold (OFL 1.1) — same family eduardoos.com loads as
+// --font-family / Layout Google Fonts. Embedded as TrueType so pamphlet PDFs
+// match the sheet (pamphlet-geometry-sot typography contract).
 
 import (
 	_ "embed"
@@ -9,33 +10,33 @@ import (
 	"strings"
 )
 
-//go:embed fonts/Roboto-Regular.ttf
-var robotoRegularTTF []byte
+//go:embed fonts/Raleway-Regular.ttf
+var ralewayRegularTTF []byte
 
-//go:embed fonts/Roboto-Bold.ttf
-var robotoBoldTTF []byte
+//go:embed fonts/Raleway-Bold.ttf
+var ralewayBoldTTF []byte
 
 var (
-	robotoRegular *ttfFace
-	robotoBold    *ttfFace
+	ralewayRegular *ttfFace
+	ralewayBold    *ttfFace
 )
 
 func init() {
 	var err error
-	robotoRegular, err = parseTTF(robotoRegularTTF)
+	ralewayRegular, err = parseTTF(ralewayRegularTTF)
 	if err != nil {
-		panic("pdf: Roboto-Regular.ttf: " + err.Error())
+		panic("pdf: Raleway-Regular.ttf: " + err.Error())
 	}
-	robotoBold, err = parseTTF(robotoBoldTTF)
+	ralewayBold, err = parseTTF(ralewayBoldTTF)
 	if err != nil {
-		panic("pdf: Roboto-Bold.ttf: " + err.Error())
+		panic("pdf: Raleway-Bold.ttf: " + err.Error())
 	}
 }
 
 func glyphWidthEm(b byte, bold bool) float64 {
-	face := robotoRegular
+	face := ralewayRegular
 	if bold {
-		face = robotoBold
+		face = ralewayBold
 	}
 	w := face.widths[b]
 	if w <= 0 {
@@ -54,18 +55,18 @@ func stringWidthPt(s string, sizePt float64, bold bool) float64 {
 
 func pdfFontName(bold bool) string {
 	if bold {
-		return "Roboto-Bold"
+		return "Raleway-Bold"
 	}
-	return "Roboto-Regular"
+	return "Raleway-Regular"
 }
 
 func buildEmbeddedFontPair(b *pdfBuilder) (regularObj, boldObj int) {
-	regFile := b.add(buildFontFileObject(len(b.objects)+1, robotoRegularTTF))
-	boldFile := b.add(buildFontFileObject(len(b.objects)+1, robotoBoldTTF))
-	regDesc := b.addString(fontDescriptorObj(len(b.objects)+1, pdfFontName(false), robotoRegular, regFile))
-	boldDesc := b.addString(fontDescriptorObj(len(b.objects)+1, pdfFontName(true), robotoBold, boldFile))
-	regularObj = b.addString(trueTypeFontObj(len(b.objects)+1, pdfFontName(false), robotoRegular, regDesc))
-	boldObj = b.addString(trueTypeFontObj(len(b.objects)+1, pdfFontName(true), robotoBold, boldDesc))
+	regFile := b.add(buildFontFileObject(len(b.objects)+1, ralewayRegularTTF))
+	boldFile := b.add(buildFontFileObject(len(b.objects)+1, ralewayBoldTTF))
+	regDesc := b.addString(fontDescriptorObj(len(b.objects)+1, pdfFontName(false), ralewayRegular, regFile))
+	boldDesc := b.addString(fontDescriptorObj(len(b.objects)+1, pdfFontName(true), ralewayBold, boldFile))
+	regularObj = b.addString(trueTypeFontObj(len(b.objects)+1, pdfFontName(false), ralewayRegular, regDesc))
+	boldObj = b.addString(trueTypeFontObj(len(b.objects)+1, pdfFontName(true), ralewayBold, boldDesc))
 	return regularObj, boldObj
 }
 

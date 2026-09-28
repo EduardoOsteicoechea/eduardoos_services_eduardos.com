@@ -1,5 +1,5 @@
 // Package pdf builds PDF byte streams without third-party PDF libraries.
-// Pamphlet print uses the full Roboto + WinAnsi landscape renderer in pamphlet.go;
+// Pamphlet print uses the full Raleway + WinAnsi landscape renderer in pamphlet.go;
 // BuildSamplePDF remains a tiny Helvetica stub for smoke tests only.
 package pdf
 

@@ -8,7 +8,7 @@ package pdf
 //   page1 left  cols 7–8 (160.1mm tall) + footer; right header + cols 1–2
 //   page2       cols 3–6 full body height
 //
-// Text uses embedded Roboto / Roboto-Bold (website font) with WinAnsiEncoding.
+// Text uses embedded Raleway / Raleway-Bold (site --font-family) with WinAnsiEncoding.
 // Latin-1 glyphs are mapped to single WinAnsi bytes (never raw UTF-8 — that
 // caused Ã¡ / Â¿ mojibake). Those bytes are then PDF-octal-escaped in Tj
 // strings (\361 for ñ) so content streams stay ASCII-safe for pdf.js.
@@ -840,24 +840,9 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 		}
 	}
 
+	// Pads come from normalizeHeaderLayout (0 allowed while frames are off).
 	padTop := layout.PadTop
 	padBottom := layout.PadBottom
-	if padTop <= 0 && padBottom <= 0 {
-		// Legacy symmetric pad from older print clients.
-		if layout.Pad > 0 {
-			padTop = layout.Pad
-			padBottom = layout.Pad
-		} else {
-			padTop = 2.2
-			padBottom = 0
-		}
-	} else if padTop <= 0 {
-		if layout.Pad > 0 {
-			padTop = layout.Pad
-		} else {
-			padTop = 2.2
-		}
-	}
 	padX := layout.PadX
 	innerX := x + padX
 	innerTop := top - padTop
@@ -1031,12 +1016,13 @@ var pamphletFooterDefaultLabels = [4]string{"WhatsApp:", "Teléfono:", "Direcci�
 // defaultHeaderLayout mirrors frontend PAMPHLET_HEADER_LAYOUT_MM / style.css.
 func defaultHeaderLayout() PamphletHeaderLayout {
 	return PamphletHeaderLayout{
-		Height:             PamphletHeaderHMm,
-		BodyGutter:         PamphletHeaderBodyGutterMm,
-		Pad:                1.2,
-		PadTop:             2.2,
-		PadBottom:          0.5,
-		PadX:               2.2,
+		Height:     PamphletHeaderHMm,
+		BodyGutter: PamphletHeaderBodyGutterMm,
+		// Temporary: no chrome pad while frames are off. Restore 1.2 / 2.2 / 0.5 / 2.2.
+		Pad:       0,
+		PadTop:    0,
+		PadBottom: 0,
+		PadX:      0,
 		Radius:             1,
 		// Temporary: hide header frames in PDF. Restore 0.2 / 0.1 with FE PAMPHLET_HEADER_LAYOUT_MM.
 		Stroke:             0,
@@ -1128,10 +1114,11 @@ func defaultFooterLayout() PamphletFooterLayout {
 		Height:             PamphletFooterHMm,
 		Width:              PamphletColWidthMm*2 + PamphletGutterNarrow,
 		BodyGutter:         PamphletFooterBodyGutterMm,
-		Pad:                1.2,
-		PadTop:             1.2,
-		PadBottom:          0,
-		Radius:             1.0,
+		// Temporary: no chrome pad while frames are off. Restore pad 1.2 / pad_top 1.2.
+		Pad:       0,
+		PadTop:    0,
+		PadBottom: 0,
+		Radius:    1.0,
 		// Temporary: hide footer frames in PDF. Restore 0.2 / 0.1 with FE PAMPHLET_FOOTER_LAYOUT_MM.
 		Stroke:             0,
 		InnerInset:         0.45,
@@ -1457,16 +1444,10 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 		}
 	}
 
+	// Pads come from normalizeFooterLayout (0 allowed while frames are off).
 	padX := layout.Pad
-	if padX <= 0 {
-		padX = 1.2
-	}
 	padTop := layout.PadTop
 	padBottom := layout.PadBottom
-	if padTop <= 0 && padBottom <= 0 {
-		padTop = padX
-		padBottom = padX
-	}
 	innerX := x + padX
 	innerTop := top - padTop
 	innerW := width - 2*padX
@@ -2172,7 +2153,7 @@ func splitLongWord(word string, sizePt, maxWidthPt float64, bold bool) []string 
 }
 
 // toWinAnsi converts Unicode text to a single-byte WinAnsi string suitable for
-// Roboto + /WinAnsiEncoding. Writing UTF-8 multi-byte sequences into the PDF
+// Raleway + /WinAnsiEncoding. Writing UTF-8 multi-byte sequences into the PDF
 // string (via WriteRune) was the source of Ã¡ / Â¿ mojibake.
 func toWinAnsi(s string) string {
 	var b strings.Builder

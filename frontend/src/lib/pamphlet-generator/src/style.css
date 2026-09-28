@@ -243,7 +243,7 @@
 }
 
 .open-cloud-list__chapter-title {
-  font-family: Raleway, sans-serif;
+  font-family: var(--font-family, "Raleway", sans-serif);
   font-weight: 600;
   font-size: 0.78rem;
 }
@@ -427,10 +427,11 @@
   --header-meta-col-gap: 2.5mm;
   --header-meta-pad-top: 0.5mm; /* Serie/Capítulo */
   /* Header chrome (PAMPHLET_HEADER_LAYOUT_MM) — footer-style double frame + title divider. */
-  --header-pad: 1.2mm; /* legacy */
-  --header-pad-top: 2.2mm; /* +1mm vs prior 1.2 */
-  --header-pad-bottom: 0.5mm; /* −0.5mm vs prior 1.0 */
-  --header-pad-x: 2.2mm; /* −1mm vs prior 3.2 */
+  /* Temporary: no chrome pad while frames are off. Restore 1.2 / 2.2 / 0.5 / 2.2. */
+  --header-pad: 0mm; /* legacy */
+  --header-pad-top: 0mm;
+  --header-pad-bottom: 0mm;
+  --header-pad-x: 0mm;
   /* Temporary: hide header/footer frames (PDF uses PAMPHLET_*_LAYOUT_MM stroke:0). Restore 0.2mm / 0.1mm. */
   --header-stroke: 0mm;
   --header-radius: 1mm;
@@ -496,7 +497,7 @@
   padding: 0;
   box-sizing: border-box;
   border: none;
-  font-family: Roboto, Raleway, Montserrat, sans-serif;
+  font-family: var(--font-family, "Raleway", sans-serif);
 }
 
 /* position:relative only on sheet descendants — not chrome (fixed toolbar/sidebar) */
@@ -780,7 +781,7 @@
 }
 
 .pamphlet-header-subtitle p {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     font-size: var(--header-subtitle-size);
     font-weight: 400;
     line-height: var(--header-subtitle-lh);
@@ -812,7 +813,8 @@
     height: 100%;
     z-index: 5;
     box-sizing: border-box;
-    padding: 1.2mm 1.2mm 0; /* pad_top / pad_x / pad_bottom */
+    /* Temporary: no chrome pad while frames are off. Restore: 1.2mm 1.2mm 0 */
+    padding: 0;
     /* Temporary: hide footer frame borders (fields stay). Restore: 0.2mm solid var(--pamphlet-rule) */
     border: none;
     border-radius: 1mm; /* radius */
@@ -909,7 +911,7 @@
 
 .pamphlet-header-meta-label {
     flex: 0 0 auto;
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     font-size: var(--header-meta-size);
     line-height: var(--header-meta-lh);
     color: var(--pamphlet-ink);
@@ -992,7 +994,7 @@
 }
 
 .pamphlet-footer-action h1 {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     /* Base equals PDF action_size; desktop override below must beat sheet-wide h1. */
     font-size: 3.175mm;
     font-weight: 600;
@@ -1018,7 +1020,7 @@
 }
 
 .pamphlet-footer-message p {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     font-size: 2.469mm; /* 7pt — matches pamphletFooterBodyPt */
     line-height: 1.25;
     color: var(--pamphlet-ink);
@@ -1180,7 +1182,7 @@
 }
 
 .pamphlet-footer-meta-cell > .pamphlet-item p {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     font-size: 2.8mm;
     line-height: 1.25;
     overflow: hidden;
@@ -1274,7 +1276,7 @@
 }
 
 .pamphlet-header-meta-bar .pamphlet-header-item p {
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-family, "Raleway", sans-serif);
     font-size: var(--header-meta-size);
     line-height: var(--header-meta-lh);
     opacity: 1;
@@ -1561,7 +1563,7 @@
 /* Must beat `.pamphlet-app .pamphlet-item[data-item-type="paragraph"] p` (title/meta are paragraphs).
    Sizes = PAMPHLET_HEADER_LAYOUT_MM → PDF header_layout. */
 .pamphlet-app main.pamphlet-sheet .pamphlet-page-header .pamphlet-header-title p {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-family, "Raleway", sans-serif);
   font-size: var(--header-title-size);
   font-weight: 700;
   line-height: var(--header-title-lh);
@@ -1569,7 +1571,7 @@
 }
 
 .pamphlet-app main.pamphlet-sheet .pamphlet-page-header .pamphlet-header-subtitle p {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-family, "Raleway", sans-serif);
   font-size: var(--header-subtitle-size);
   font-weight: 400;
   line-height: var(--header-subtitle-lh);
@@ -1578,7 +1580,7 @@
 
 .pamphlet-app main.pamphlet-sheet .pamphlet-header-meta-bar .pamphlet-header-meta-label,
 .pamphlet-app main.pamphlet-sheet .pamphlet-header-meta-bar .pamphlet-header-item p {
-  font-family: Roboto, sans-serif;
+  font-family: var(--font-family, "Raleway", sans-serif);
   font-size: var(--header-meta-size);
   line-height: var(--header-meta-lh);
   color: var(--pamphlet-ink);
@@ -2069,7 +2071,8 @@ body.pamphlet-phone-dock-open .pamphlet-edit-dock__textarea,
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
-  padding: calc(6px * var(--mobile-inv-scale, 1));
+  /* Temporary: no chrome pad while frames are off. */
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: calc(6px * var(--mobile-inv-scale, 1));
@@ -2084,7 +2087,8 @@ body.pamphlet-phone-dock-open .pamphlet-edit-dock__textarea,
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
-  padding: calc(6px * var(--mobile-inv-scale, 1));
+  /* Temporary: no chrome pad while frames are off. */
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: calc(6px * var(--mobile-inv-scale, 1));

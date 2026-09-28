@@ -13,6 +13,14 @@ Agent rule: `.cursor/rules/pamphlet-geometry-sot.mdc` — **update rules/spec be
 3. After each preview, FE **applies band fields from `layout`** (`applyPamphletGeometry`)
    and draws selection / “+” overlays **only** from `layout.hits` (no invented column boxes).
 
+## Typography
+
+- **Raleway** Regular + Bold for sheet CSS and PDF embeds (same family as the site
+  `--font-family` / Layout load). Not Roboto.
+- PDF: `backend/pkg/pdf/fonts/Raleway-Regular.ttf` + `Raleway-Bold.ttf`.
+- FE sheet: `font-family: var(--font-family, "Raleway", sans-serif)` on pamphlet ink.
+- Changing typeface requires updating `pamphlet-geometry-sot.mdc` + this spec first.
+
 ## Symptom (fixed historically)
 
 Body text on page 1 painted **above** the column band (into the header / past the top of cols 1–2), and overflow did not reliably move to the next column.

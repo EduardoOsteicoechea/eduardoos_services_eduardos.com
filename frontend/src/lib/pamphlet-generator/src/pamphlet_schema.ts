@@ -272,10 +272,11 @@ export const PAMPHLET_HEADER_LAYOUT_MM: PamphletHeaderLayoutMm = {
     // pad + title + title_pad_bottom + divider + subtitle_min_h + title_meta_gap + meta + frame
     height: 34.5,
     body_gutter: 5, // --header-body-gutter
-    pad: 1.2, // legacy fallback
-    pad_top: 2.2, // was 1.2 + 1mm
-    pad_bottom: 0.5, // −0.5mm vs prior 1.0
-    pad_x: 2.2,
+    /* Temporary: no chrome pad while frames are off. Restore 1.2 / 2.2 / 0.5 / 2.2. */
+    pad: 0, // legacy fallback
+    pad_top: 0,
+    pad_bottom: 0,
+    pad_x: 0,
     radius: 1,
     /* Temporary: hide outer/inner header frames in PDF + desktop preview. Restore 0.2 / 0.1. */
     stroke: 0,
@@ -374,8 +375,9 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     height: 29.8,
     width: 119.7, // 57.85×2 + 4
     body_gutter: 6, // --footer-body-gutter
-    pad: 1.2, // horizontal + legacy
-    pad_top: 1.2,
+    /* Temporary: no chrome pad while frames are off. Restore pad 1.2 / pad_top 1.2. */
+    pad: 0, // horizontal + legacy
+    pad_top: 0,
     pad_bottom: 0,
     radius: 1,
     /* Temporary: hide outer/inner footer frames in PDF + desktop preview. Restore 0.2 / 0.1. */

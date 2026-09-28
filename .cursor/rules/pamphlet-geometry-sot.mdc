@@ -27,6 +27,16 @@ user asks to fix content “leaving the editable margin” of the sheet.
 Contract detail: `docs/specs/007-pamphlet-page1-column-geometry.md`.
 Workspace parent rule (multi-site): `eduardoos_services/.cursor/rules/pamphlet-geometry-sot.mdc`.
 
+## Typography (site lockstep)
+
+- Pamphlet sheet CSS **and** PDF embedded faces use **Raleway** (same family as
+  eduardoos.com `--font-family` / Layout Google Fonts load). Regular + Bold.
+- Do not use Roboto (or other families) for body/chrome ink on the sheet or in
+  the PDF builder. FE densify and PDF wrap must share this family so packing
+  and preview stay aligned.
+- Changing the pamphlet typeface is a **contract change**: update this rule and
+  spec 007 first, then CSS + `backend/pkg/pdf` embeds together.
+
 ## Formulas (page 1 asymmetric)
 
 - `contentBand = pageH − 2×margin`

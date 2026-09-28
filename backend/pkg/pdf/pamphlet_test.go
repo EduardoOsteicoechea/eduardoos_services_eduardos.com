@@ -14,28 +14,28 @@ import (
 	"testing"
 )
 
-func TestRobotoWidthsCoverSpanish(t *testing.T) {
-	if robotoRegular == nil || robotoBold == nil {
-		t.Fatal("Roboto faces not loaded")
+func TestRalewayWidthsCoverSpanish(t *testing.T) {
+	if ralewayRegular == nil || ralewayBold == nil {
+		t.Fatal("Raleway faces not loaded")
 	}
 	for _, b := range []byte{'A', 'a', 'n', 0xF1, 0xE1, 0xBF} { // n, ñ, á, ¿
-		if robotoRegular.widths[b] < 100 {
-			t.Fatalf("regular width[%d]=%d too small", b, robotoRegular.widths[b])
+		if ralewayRegular.widths[b] < 100 {
+			t.Fatalf("regular width[%d]=%d too small", b, ralewayRegular.widths[b])
 		}
-		if robotoBold.widths[b] < 100 {
-			t.Fatalf("bold width[%d]=%d too small", b, robotoBold.widths[b])
+		if ralewayBold.widths[b] < 100 {
+			t.Fatalf("bold width[%d]=%d too small", b, ralewayBold.widths[b])
 		}
 	}
 }
 
-func TestBuildPamphletPDFEmbedsRoboto(t *testing.T) {
+func TestBuildPamphletPDFEmbedsRaleway(t *testing.T) {
 	data := BuildPamphletPDF(PamphletDocument{
 		Type:   "pamphlet_single_sheet",
 		Header: PamphletHeader{Title: "Prueba"},
 	})
 	s := string(data)
-	if !strings.Contains(s, "/Subtype /TrueType") || !strings.Contains(s, "/Roboto-Regular") || !strings.Contains(s, "/Roboto-Bold") {
-		t.Fatalf("expected embedded Roboto TrueType fonts")
+	if !strings.Contains(s, "/Subtype /TrueType") || !strings.Contains(s, "/Raleway-Regular") || !strings.Contains(s, "/Raleway-Bold") {
+		t.Fatalf("expected embedded Raleway TrueType fonts")
 	}
 	if strings.Contains(s, "/BaseFont /Helvetica") {
 		t.Fatalf("pamphlet PDF should not use built-in Helvetica")
@@ -139,15 +139,15 @@ func TestFooterMessagePadBottomReduced(t *testing.T) {
 	if d.MetaLabel2PadTop != 1.0 {
 		t.Fatalf("meta_label2_pad_top want 1.0, got %v", d.MetaLabel2PadTop)
 	}
-	if d.PadTop != 1.2 || d.PadBottom != 0 {
-		t.Fatalf("footer pad want top 1.2 bottom 0, got top=%v bottom=%v", d.PadTop, d.PadBottom)
+	if d.PadTop != 0 || d.PadBottom != 0 || d.Pad != 0 {
+		t.Fatalf("footer pad want 0 (frames off), got pad=%v top=%v bottom=%v", d.Pad, d.PadTop, d.PadBottom)
 	}
 	if d.Height != 29.8 {
 		t.Fatalf("footer height want 29.8 (unchanged by label2 pad top), got %v", d.Height)
 	}
 	got := normalizeFooterLayout(PamphletFooterLayout{
 		Height:           29.8,
-		PadTop:           1.2,
+		PadTop:           0,
 		PadBottom:        0,
 		MessagePadTop:    0.4,
 		MessagePadBottom: 0,
@@ -156,7 +156,7 @@ func TestFooterMessagePadBottomReduced(t *testing.T) {
 	if got.MessagePadBottom != 0 || got.MessagePadTop != 0.4 {
 		t.Fatalf("normalize message pads: top=%v bottom=%v", got.MessagePadTop, got.MessagePadBottom)
 	}
-	if got.PadBottom != 0 || got.PadTop != 1.2 {
+	if got.PadBottom != 0 || got.PadTop != 0 {
 		t.Fatalf("normalize outer pads: top=%v bottom=%v", got.PadTop, got.PadBottom)
 	}
 }
@@ -267,7 +267,7 @@ func TestHeaderFrameFromLayout(t *testing.T) {
 	if strings.Contains(out, "0.4 0.4 0.4 RG") {
 		t.Fatalf("temporary: header must not stroke gray meta cross, got %q", out)
 	}
-	if layout.PadTop != 2.2 || layout.PadBottom != 0.5 || layout.PadX != 2.2 || layout.Stroke != 0 || layout.InnerInset != 0.45 {
+	if layout.PadTop != 0 || layout.PadBottom != 0 || layout.PadX != 0 || layout.Stroke != 0 || layout.InnerInset != 0.45 {
 		t.Fatalf("header frame mm mismatch: %+v", layout)
 	}
 	if layout.MetaPadTop != 0.5 {
