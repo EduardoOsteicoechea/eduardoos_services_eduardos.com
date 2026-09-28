@@ -203,6 +203,22 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const seriesTreeEl = requireElement<HTMLElement>("#series-tree");
     const seriesTreeHint = requireElement<HTMLElement>("#series-tree-hint");
     const seriesModalCancelBtn = requireElement<HTMLButtonElement>("#series-modal-cancel");
+    const chromeBtn = requireElement<HTMLButtonElement>("#btn-chrome");
+    const chromeModal = requireElement<HTMLDialogElement>("#chrome-modal");
+    const chromeForm = requireElement<HTMLFormElement>("#chrome-form");
+    const chromeModalCancelBtn = requireElement<HTMLButtonElement>("#chrome-modal-cancel");
+    const chromeHeaderTitle = requireElement<HTMLInputElement>("#chrome-header-title");
+    const chromeHeaderSubtitle = requireElement<HTMLInputElement>("#chrome-header-subtitle");
+    const chromeHeaderAuthor = requireElement<HTMLInputElement>("#chrome-header-author");
+    const chromeHeaderSeries = requireElement<HTMLInputElement>("#chrome-header-series");
+    const chromeHeaderChapter = requireElement<HTMLInputElement>("#chrome-header-chapter");
+    const chromeHeaderDate = requireElement<HTMLInputElement>("#chrome-header-date");
+    const chromeFooterAction = requireElement<HTMLInputElement>("#chrome-footer-action");
+    const chromeFooterMessage = requireElement<HTMLInputElement>("#chrome-footer-message");
+    const chromeFooterValue1 = requireElement<HTMLInputElement>("#chrome-footer-value1");
+    const chromeFooterValue2 = requireElement<HTMLInputElement>("#chrome-footer-value2");
+    const chromeFooterValue3 = requireElement<HTMLInputElement>("#chrome-footer-value3");
+    const chromeFooterValue4 = requireElement<HTMLInputElement>("#chrome-footer-value4");
     const footerBtn = requireElement<HTMLButtonElement>("#btn-footer");
     const footerModal = requireElement<HTMLDialogElement>("#footer-modal");
     const footerModalHint = requireElement<HTMLElement>("#footer-modal-hint");
@@ -265,7 +281,10 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     appRoot.setAttribute("data-view-mode", viewMode);
     appRoot.style.setProperty("--mobile-view-scale", "1");
     appRoot.style.setProperty("--mobile-inv-scale", "1");
-    appRoot.style.setProperty("--mm-visual-boost", viewMode === "tablet" ? "2" : "1");
+    appRoot.style.setProperty(
+        "--mm-visual-boost",
+        viewMode === "tablet" ? "2" : viewMode === "mobile" ? "1.5" : "1",
+    );
     appRoot.style.setProperty("--pamphlet-dock-vvh", "40rem");
     appRoot.style.setProperty("--pamphlet-dock-vvt", "0rem");
 
@@ -356,8 +375,11 @@ function syncMobileViewScale(): void {
         }
         return;
     }
-    // Tablet portrait cols preview: 2× visual size; phone stays 1× fit.
-    appRoot.style.setProperty("--mm-visual-boost", viewMode === "tablet" ? "2" : "1");
+    // Cols preview visual size on top of fit scale: tablet 2×, phone 1.5×.
+    appRoot.style.setProperty(
+        "--mm-visual-boost",
+        viewMode === "tablet" ? "2" : viewMode === "mobile" ? "1.5" : "1",
+    );
     const padPx = 16;
     const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
     const dockPx = viewMode === "tablet" ? 18 * rootFs : 0;
@@ -1284,23 +1306,98 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
     return items[Math.min(Math.max(bodyFlat, 0), items.length - 1)] ?? null;
 }
 
-function activateEditAtChrome(data: PamphletStructure, loc: LastEditedElement): void {
-    if (loc.column === HEADER_COLUMN) {
-        const field = HEADER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), HEADER_FIELD_KEYS.length - 1)];
-        const item = main.querySelector<HTMLElement>(
-            `:scope > .pamphlet-page-header .pamphlet-item[data-header-field="${field}"]`,
-        );
-        if (item) clickInner(item);
+function chromeFocusNameFromKind(kind: string): string | null {
+    const k = kind.trim();
+    if (k.startsWith("header_")) return k.slice("header_".length);
+    if (k.startsWith("footer_")) return k.slice("footer_".length);
+    if (HEADER_FIELD_KEYS.includes(k as HeaderFieldKey)) return k;
+    if (FOOTER_FIELD_KEYS.includes(k as FooterFieldKey)) return k;
+    return null;
+}
+
+function fillChromeModalForm(doc: PamphletStructure): void {
+    chromeHeaderTitle.value = doc.header.title ?? "";
+    chromeHeaderSubtitle.value = doc.header.subtitle ?? "";
+    chromeHeaderAuthor.value = doc.header.author ?? "";
+    chromeHeaderSeries.value = doc.header.series ?? "";
+    chromeHeaderChapter.value = doc.header.series_chapter ?? "";
+    chromeHeaderDate.value = doc.header.date ?? "";
+    chromeFooterAction.value = doc.footer.action ?? "";
+    chromeFooterMessage.value = doc.footer.message ?? "";
+    chromeFooterValue1.value = doc.footer.value1 ?? "";
+    chromeFooterValue2.value = doc.footer.value2 ?? "";
+    chromeFooterValue3.value = doc.footer.value3 ?? "";
+    chromeFooterValue4.value = doc.footer.value4 ?? "";
+}
+
+function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
+    return {
+        ...clonePamphlet(doc),
+        header: {
+            title: chromeHeaderTitle.value.trim(),
+            subtitle: chromeHeaderSubtitle.value.trim(),
+            author: chromeHeaderAuthor.value.trim(),
+            series: chromeHeaderSeries.value.trim(),
+            series_chapter: chromeHeaderChapter.value.trim(),
+            date: chromeHeaderDate.value.trim(),
+        },
+        footer: {
+            ...doc.footer,
+            ...footerFromForm({
+                action: chromeFooterAction.value,
+                message: chromeFooterMessage.value,
+                value1: chromeFooterValue1.value,
+                value2: chromeFooterValue2.value,
+                value3: chromeFooterValue3.value,
+                value4: chromeFooterValue4.value,
+            }),
+            // Keep existing captions (WhatsApp:/…) unless the profile form changed them.
+            label1: doc.footer.label1,
+            label2: doc.footer.label2,
+            label3: doc.footer.label3,
+            label4: doc.footer.label4,
+        },
+    };
+}
+
+function closeChromeModal(): void {
+    if (chromeModal.open) chromeModal.close();
+}
+
+function openChromeModal(focusName: string | null = null): void {
+    clearError();
+    if (!currentDoc || !hasEditableSession()) {
+        setError("Abre o crea un panfleto antes de editar cabecera y pie.");
         return;
     }
-
-    if (loc.column === FOOTER_COLUMN) {
-        const field = FOOTER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), FOOTER_FIELD_KEYS.length - 1)];
-        const item = main.querySelector<HTMLElement>(
-            `:scope > .pamphlet-page-footer .pamphlet-item[data-footer-field="${field}"]`,
-        );
-        if (item) clickInner(item);
-    }
+    fillChromeModalForm(currentDoc);
+    if (!chromeModal.open) chromeModal.showModal();
+    const focusId =
+        focusName === "title" ? "chrome-header-title"
+        : focusName === "subtitle" ? "chrome-header-subtitle"
+        : focusName === "author" ? "chrome-header-author"
+        : focusName === "series" ? "chrome-header-series"
+        : focusName === "series_chapter" ? "chrome-header-chapter"
+        : focusName === "date" ? "chrome-header-date"
+        : focusName === "action" ? "chrome-footer-action"
+        : focusName === "message" ? "chrome-footer-message"
+        : focusName === "value1" ? "chrome-footer-value1"
+        : focusName === "value2" ? "chrome-footer-value2"
+        : focusName === "value3" ? "chrome-footer-value3"
+        : focusName === "value4" ? "chrome-footer-value4"
+        : focusName === "label1" ? "chrome-footer-value1"
+        : focusName === "label2" ? "chrome-footer-value2"
+        : focusName === "label3" ? "chrome-footer-value3"
+        : focusName === "label4" ? "chrome-footer-value4"
+        : null;
+    requestAnimationFrame(() => {
+        const el =
+            (focusId
+                ? appRoot.querySelector<HTMLInputElement>(`#${focusId}`)
+                : null) ?? chromeHeaderTitle;
+        el.focus();
+        el.select();
+    });
 }
 
 function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
@@ -1308,7 +1405,14 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
         editDock.open(loc);
         return;
     }
-    activateEditAtChrome(data, loc);
+    // Header/footer: always the manage-style chrome modal (desktop + mobile).
+    const field =
+        loc.column === HEADER_COLUMN
+            ? HEADER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), HEADER_FIELD_KEYS.length - 1)]
+            : loc.column === FOOTER_COLUMN
+              ? FOOTER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), FOOTER_FIELD_KEYS.length - 1)]
+              : null;
+    openChromeModal(field ?? null);
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
@@ -1502,6 +1606,10 @@ function applyLocalDoc(
 pdfSot = new PamphletPdfSot({
     stage: pdfStage,
     onHitClick: (column, index, kind) => {
+        if (column === HEADER_COLUMN || column === FOOTER_COLUMN) {
+            openChromeModal(chromeFocusNameFromKind(kind));
+            return;
+        }
         editDock.open({ column, index }, kind);
     },
     onAddClick: (column) => {
@@ -2029,14 +2137,13 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         if (suppressEditOpenSave) return;
         const loc = locationFromContainer(detail.container);
         if (!loc) return;
-        // Chrome: keep in-memory header/footer — serializePamphlet(DOM) can wipe
-        // dock live edits that have not been painted back into every field.
+        // Chrome: edit via manage-style modal (not dock / not inline sheet trays).
         if (loc.column === HEADER_COLUMN || loc.column === FOOTER_COLUMN) {
-            if (!currentDoc) return;
-            currentDoc = ensureDocumentId(currentDoc);
-            currentHeader = { ...currentDoc.header };
-            editDock.open(loc);
-            clearError();
+            const field =
+                loc.column === HEADER_COLUMN
+                    ? HEADER_FIELD_KEYS[loc.index]
+                    : FOOTER_FIELD_KEYS[loc.index];
+            openChromeModal(field ?? null);
             return;
         }
         const next = snapshotFromDom(loc);
@@ -2917,6 +3024,28 @@ async function openFooterModal(): Promise<void> {
     footerFormName.focus();
     await refreshFooterProfiles();
 }
+
+on(chromeBtn, "click", () => {
+    openChromeModal(null);
+});
+
+on(chromeModalCancelBtn, "click", () => {
+    closeChromeModal();
+});
+
+on(chromeForm, "submit", (event: Event) => {
+    event.preventDefault();
+    if (!currentDoc || !hasEditableSession()) {
+        setError("Abre o crea un panfleto antes de editar cabecera y pie.");
+        return;
+    }
+    pushUndoSnapshot();
+    const next = readChromeModalForm(currentDoc);
+    currentHeader = { ...next.header };
+    commitChromeOnly(next);
+    closeChromeModal();
+    setStatus("Cabecera y pie actualizados", "success");
+});
 
 on(footerBtn, "click", () => {
     void openFooterModal();
