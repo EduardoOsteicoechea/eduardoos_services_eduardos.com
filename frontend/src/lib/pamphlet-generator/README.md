@@ -11,6 +11,17 @@ The stable Vite app at the repo root is **not** used by this package; this folde
 - Scoped styles under `.pamphlet-app` (won’t reset the whole Astro site)
 - Icons resolved via Vite `?url` imports (no need to copy SVGs into `public/`)
 
+## Column geometry (page 1)
+
+Authoritative mm table, packing rules, and regression checklist:
+
+[`docs/specs/007-pamphlet-page1-column-geometry.md`](../../../../docs/specs/007-pamphlet-page1-column-geometry.md)
+
+- Cols **1–2**: **156.4 mm** under header  
+- Cols **7–8**: **160.1 mm** above footer  
+- Reading order: **1→2→3→4→5→6→7→8**  
+- Ink clips inside `.pamphlet-column-ink`; “+” sits outside the ink box
+
 ## Install into the Astro repo
 
 1. Copy this folder to the host, e.g.:

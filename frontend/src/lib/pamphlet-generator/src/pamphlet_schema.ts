@@ -121,7 +121,10 @@ export const COLUMN_KEYS = [
     "column_8",
 ] as const;
 
-/** Body overflow / densify / PDF “+”: pg1 cols 1–2, pg2 cols 3–6, pg1 cols 7–8. */
+/**
+ * Body overflow / densify / PDF “+”: pg1 cols 1–2, pg2 cols 3–6, pg1 cols 7–8.
+ * Heights & packing: docs/specs/007-pamphlet-page1-column-geometry.md
+ */
 export const PAMPHLET_BODY_COLUMN_READING_ORDER: readonly number[] = [
     1, 2, 3, 4, 5, 6, 7, 8,
 ];

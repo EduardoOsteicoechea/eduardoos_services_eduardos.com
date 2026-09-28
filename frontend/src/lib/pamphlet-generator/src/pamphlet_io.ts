@@ -267,6 +267,24 @@ export function createItemSpacer(): HTMLElement {
     return spacer;
 }
 
+/** Ink host inside a body column — clipped; "+" stays outside (spec 007). */
+export function ensureColumnInk(columnEl: HTMLElement): HTMLElement {
+    let ink = columnEl.querySelector<HTMLElement>(":scope > .pamphlet-column-ink");
+    if (!ink) {
+        ink = document.createElement("div");
+        ink.className = "pamphlet-column-ink";
+        columnEl.insertBefore(ink, columnEl.firstChild);
+    }
+    return ink;
+}
+
+/** Body items in a column (ink wrapper or legacy direct children). */
+export function columnBodyItems(columnEl: HTMLElement): HTMLElement[] {
+    const ink = columnEl.querySelector<HTMLElement>(":scope > .pamphlet-column-ink");
+    const root = ink ?? columnEl;
+    return Array.from(root.querySelectorAll<HTMLElement>(":scope > .pamphlet-item"));
+}
+
 /** Append item; add a spacer only when another item will follow in the same column. */
 export function appendItemWithSpacer(
     parent: HTMLElement,
@@ -474,6 +492,7 @@ export function renderFromPamphlet(main: HTMLElement, data: PamphletStructure): 
         const col = document.createElement("div");
         col.className = `dumb-column pamphlet-column-${colNum}`;
         main.appendChild(col);
+        const ink = ensureColumnInk(col);
 
         let colItems = data[key] ?? [];
         if (structured && leadCols.has(key) && colItems[0]?.type === "image") {
@@ -482,7 +501,7 @@ export function renderFromPamphlet(main: HTMLElement, data: PamphletStructure): 
         }
         colItems.forEach((item, itemIndex) => {
             appendItemWithSpacer(
-                col,
+                ink,
                 createItemElement(item),
                 itemIndex < colItems.length - 1,
             );
@@ -634,7 +653,7 @@ export function getItemLocation(container: HTMLElement): LastEditedElement | nul
     if (!match) return null;
 
     const column = Number(match[1]);
-    const items = Array.from(columnEl.querySelectorAll<HTMLElement>(":scope > .pamphlet-item"));
+    const items = columnBodyItems(columnEl);
     let index = items.indexOf(container);
     if (index < 0) return null;
 
@@ -705,7 +724,7 @@ export function serializePamphlet(
             pamphlet[key] = [];
             continue;
         }
-        const items = Array.from(col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item"));
+        const items = columnBodyItems(col);
         const body = items.map(serializeItem);
         const leadEl = main.querySelector<HTMLElement>(
             `:scope > .pamphlet-lead-${i} > .pamphlet-item`,

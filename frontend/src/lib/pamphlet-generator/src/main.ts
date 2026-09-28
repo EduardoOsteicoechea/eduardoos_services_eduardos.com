@@ -79,9 +79,11 @@ import { getPreference, PREF_PAMPHLET_LAST_EPAM, putPreference } from "../../pre
 import { DOCUMENT_ROUTES } from "../../../config/routes";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 import {
+    columnBodyItems,
     createAddItemButton,
     createItemElement,
     createItemSpacer,
+    ensureColumnInk,
     getItemLocation,
     isChromeItem,
     isImageItem,
@@ -470,6 +472,7 @@ function syncDesktopViewScale(): void {
 
 function syncSheetScale(): void {
     syncTabletDockViewportHeight();
+    syncPhoneEditDockInset();
     syncMobileViewScale();
     syncDesktopViewScale();
 }
@@ -723,20 +726,20 @@ function collectColumnItemsByNumber(container: HTMLElement): Map<number, HTMLEle
             byColumn.set(colNum, []);
             continue;
         }
-        byColumn.set(
-            colNum,
-            Array.from(col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item")),
-        );
+        byColumn.set(colNum, columnBodyItems(col));
     }
     return byColumn;
 }
 
 function ensureEightBodyColumns(container: HTMLElement): void {
     for (let colNum = 1; colNum <= 8; colNum++) {
-        if (container.querySelector(`:scope > .pamphlet-column-${colNum}`)) continue;
-        const col = document.createElement("div");
-        col.className = `dumb-column pamphlet-column-${colNum}`;
-        container.appendChild(col);
+        let col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colNum}`);
+        if (!col) {
+            col = document.createElement("div");
+            col.className = `dumb-column pamphlet-column-${colNum}`;
+            container.appendChild(col);
+        }
+        ensureColumnInk(col);
     }
 }
 
@@ -1005,19 +1008,15 @@ function placeColumnAddButton(
     filledByColumn: Map<number, number>,
     lastFilledColumn: number,
 ): void {
-    const host =
-        container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${lastFilledColumn}`) ??
-        container.querySelector<HTMLElement>(":scope > .dumb-column");
-    if (!host) return;
-
-    const { newItemMm, buttonMm } = measureAddControlsMm(host);
+    // "+" is absolutely positioned below the ink box (does not consume column mm).
+    // Prefer the last filled column that still has room for a starter item; else last filled.
+    const { newItemMm } = measureAddControlsMm(container);
     let colIdx = lastFilledColumn;
-    // filledByColumn already stores content mm (no trailing item-gap).
     let filledContent = filledByColumn.get(colIdx) ?? 0;
 
     for (;;) {
         const max = maxHeightForColumn(colIdx);
-        if (filledContent + newItemMm + buttonMm <= max + PACK_FIT_EPSILON_MM) {
+        if (filledContent + newItemMm <= max + PACK_FIT_EPSILON_MM) {
             const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
             if (col) {
                 col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
@@ -1040,11 +1039,11 @@ function placeColumnAddButton(
 }
 
 /**
- * PDF soft-floor allowance (~one body line). FE packing used to overflow a column
- * a few mm early, leaving empty space at the bottom while the next item sat in the
- * following column — visible as "col 3 has a piece of col 2".
+ * Float / sub-pixel tolerance only. Never a soft floor — a previous 2.5mm epsilon
+ * packed past page-1 band tops (cols 1–2 under header / 7–8 above footer).
+ * Keep in sync with docs/specs/007-pamphlet-page1-column-geometry.md
  */
-const PACK_FIT_EPSILON_MM = 2.5;
+const PACK_FIT_EPSILON_MM = 0.05;
 
 /** Stable fingerprint of body columns for migration / densify persist checks. */
 function columnFingerprint(doc: PamphletStructure): string {
@@ -1097,6 +1096,7 @@ function reflowAndReport(container: HTMLElement) {
         const col = document.createElement("div");
         col.className = `dumb-column pamphlet-column-${colNum}`;
         container.appendChild(col);
+        ensureColumnInk(col);
     }
 
     let pendingItems: HTMLElement[] = [];
@@ -1105,6 +1105,7 @@ function reflowAndReport(container: HTMLElement) {
         const currentColumnDiv =
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${columnIndex}`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
+        const ink = ensureColumnInk(currentColumnDiv);
         const queue = [
             ...pendingItems,
             ...(itemsBySourceColumn.get(columnIndex) ?? []),
@@ -1135,30 +1136,31 @@ function reflowAndReport(container: HTMLElement) {
                 filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
 
             if (wouldOverflow) {
-                stripTrailingItemSpacer(currentColumnDiv);
+                stripTrailingItemSpacer(ink);
                 pendingItems.push(item, ...queue.slice(qi + 1));
                 break;
             }
 
-            currentColumnDiv.appendChild(item);
-            currentColumnDiv.appendChild(spacer);
+            ink.appendChild(item);
+            ink.appendChild(spacer);
             currentColumnFilledMm = filledContent + blockMm;
             currentColumnItemsCount++;
             trailingGapMm = spacerMm;
         }
 
         if (currentColumnItemsCount > 0) {
-            stripTrailingItemSpacer(currentColumnDiv);
+            stripTrailingItemSpacer(ink);
             const filledContent = Math.max(0, currentColumnFilledMm - trailingGapMm);
             filledByColumn.set(columnIndex, filledContent);
         }
     }
 
-    // Past col 8: clip remainder into column 8 (CSS / PDF).
+    // Past col 8: clip remainder into column 8 ink (CSS / PDF).
     if (pendingItems.length > 0) {
         const col8 =
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-8`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
+        const ink8 = ensureColumnInk(col8);
         let filledMm = filledByColumn.get(8) ?? 0;
         for (const item of pendingItems) {
             const staleSpacer = item.nextElementSibling;
@@ -1167,11 +1169,11 @@ function reflowAndReport(container: HTMLElement) {
             }
             const spacer = createItemSpacer();
             const measured = measureBlockInSandbox(item, spacer);
-            col8.appendChild(item);
-            col8.appendChild(spacer);
+            ink8.appendChild(item);
+            ink8.appendChild(spacer);
             filledMm += measured.blockMm;
         }
-        stripTrailingItemSpacer(col8);
+        stripTrailingItemSpacer(ink8);
         filledByColumn.set(8, filledMm);
     }
 
@@ -1274,7 +1276,7 @@ function findBodyItemContainer(loc: LastEditedElement): HTMLElement | null {
 
     const items = Array.from(
         main.querySelectorAll<HTMLElement>(
-            ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
+            ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-column-ink > .pamphlet-item, :scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
         ),
     );
     if (items.length === 0) return null;
@@ -1617,7 +1619,22 @@ editDock = setupEditDock(editDockRoot, {
     syncLiveBodyContent: (loc, content) => syncMobileLiveContent(loc, content),
     syncLiveChromeContent,
     commitChromeOnly,
+    requestLayoutSync: () => syncSheetScale(),
 });
+
+/** Phone edit dock: pin below the activity bar; follow visualViewport when the URL bar moves. */
+function syncPhoneEditDockInset(): void {
+    if (!mobileViewportMq.matches || !editDock.isOpen()) {
+        appRoot.style.removeProperty("--pamphlet-phone-dock-top");
+        return;
+    }
+    const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const headerEl = document.querySelector<HTMLElement>(".app-header--start");
+    const headerPx = headerEl?.getBoundingClientRect().height ?? 0;
+    const vvTop = window.visualViewport?.offsetTop ?? 0;
+    const topPx = Math.max(0, vvTop + headerPx);
+    appRoot.style.setProperty("--pamphlet-phone-dock-top", `${topPx / rootFs}rem`);
+}
 
 function highlightMobileEditItem(loc: LastEditedElement | null): void {
     main.querySelectorAll<HTMLElement>(".pamphlet-item.is-editing").forEach((el) => {
@@ -1627,9 +1644,6 @@ function highlightMobileEditItem(loc: LastEditedElement | null): void {
     const el = findBodyItemContainer(loc);
     if (el) {
         el.classList.add("is-editing");
-        if (isColsViewMode()) {
-            el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-        }
     }
 }
 
