@@ -412,6 +412,10 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">login</span>
               Sign in
             </a>
+            <button class="sidebar-nav-action" type="button" data-logout data-authed-only hidden aria-label="Log out">
+              <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+              Log out
+            </button>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--site">
             <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
@@ -442,7 +446,7 @@ const jsonLdString =
             </a>
             <a href="/documents/pamphlet" data-route data-service="epam" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>
-              EPAM
+              Epam
             </a>
             <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
@@ -486,12 +490,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">key</span>
               API keys
             </a>
-          </div>
-          <div class="sidebar-nav-section sidebar-nav-section--session">
-            <button class="sidebar-nav-action" type="button" data-logout data-authed-only hidden>
-              <span class="material-symbols-outlined" aria-hidden="true">logout</span>
-              Sign out
-            </button>
           </div>
         </nav>
       </aside>

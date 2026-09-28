@@ -325,8 +325,7 @@ a {
 
 .sidebar-nav-section--session-guest,
 .sidebar-nav-section--services,
-.sidebar-nav-section--admin,
-.sidebar-nav-section--session {
+.sidebar-nav-section--admin {
   border-top: 0;
   padding-top: 0;
 }
@@ -751,10 +750,6 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
 
 .sidebar-nav-section--session-guest {
   flex-shrink: 0;
-}
-
-.sidebar-nav-section--session {
-  margin-top: auto;
 }
 
 .sidebar-left nav .sidebar-nav-action {
