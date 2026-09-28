@@ -482,8 +482,20 @@ export function renderStructuredLeadSlots(main: HTMLElement, data: PamphletStruc
     }
 }
 
+/** Full-page paper art under ink (one layer per Letter landscape page in the stack). */
+export function ensureSheetBackground(main: HTMLElement): void {
+    if (main.querySelector(":scope > .pamphlet-sheet-bg--p1")) return;
+    for (const page of ["p1", "p2"] as const) {
+        const layer = document.createElement("div");
+        layer.className = `pamphlet-sheet-bg pamphlet-sheet-bg--${page}`;
+        layer.setAttribute("aria-hidden", "true");
+        main.prepend(layer);
+    }
+}
+
 export function renderFromPamphlet(main: HTMLElement, data: PamphletStructure): void {
     main.innerHTML = "";
+    ensureSheetBackground(main);
     const structured = data.type === "pamphlet_structured_images";
     const leadCols = new Set<ColumnKey>(STRUCTURED_LEAD_COLUMNS);
 

@@ -647,6 +647,23 @@ func TestBuildPamphletPDFEmbedsJPEG(t *testing.T) {
 	}
 }
 
+func TestBuildPamphletPDFEmbedsSheetBackground(t *testing.T) {
+	if _, ok := loadPamphletSheetBackground(); !ok {
+		t.Fatal("expected embedded panfletbg.png to decode")
+	}
+	data := BuildPamphletPDF(PamphletDocument{
+		Type:   "pamphlet_single_sheet",
+		Header: PamphletHeader{Title: "Con fondo"},
+	})
+	s := string(data)
+	if !strings.Contains(s, "/ImBg ") {
+		t.Fatalf("expected /ImBg XObject resource")
+	}
+	if strings.Count(s, "/ImBg Do") < 2 {
+		t.Fatalf("expected /ImBg painted on both pages, got %d", strings.Count(s, "/ImBg Do"))
+	}
+}
+
 func TestEmptyStructuredLeadHasNoImagenLabelOrBlackMatte(t *testing.T) {
 	data := BuildPamphletPDF(PamphletDocument{
 		Type: "pamphlet_structured_images",

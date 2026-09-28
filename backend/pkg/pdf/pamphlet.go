@@ -419,6 +419,14 @@ func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout, P
 	f1, f2 := buildEmbeddedFontPair(&b)
 
 	xObjDecl := strings.Builder{}
+	bgName := ""
+	if bg, ok := loadPamphletSheetBackground(); ok {
+		objNum := len(b.objects) + 1
+		bg.objNum = objNum
+		b.add(buildJPEGXObject(objNum, bg))
+		fmt.Fprintf(&xObjDecl, "/%s %d 0 R ", bg.name, objNum)
+		bgName = bg.name
+	}
 	for i := range images {
 		objNum := len(b.objects) + 1
 		images[i].objNum = objNum
@@ -432,8 +440,8 @@ func BuildPamphletPDFWithLayout(doc PamphletDocument) ([]byte, PamphletLayout, P
 	}
 
 	ink := resolvePamphletInk(doc.InkColor)
-	content1 := applyPamphletInk(buildPage1Content(doc, imgByContent, sink), ink)
-	content2 := applyPamphletInk(buildPage2Content(doc, imgByContent, sink), ink)
+	content1 := applyPamphletInk(buildPage1Content(doc, imgByContent, sink, bgName), ink)
+	content2 := applyPamphletInk(buildPage2Content(doc, imgByContent, sink, bgName), ink)
 
 	resources := fmt.Sprintf("/Font << /F1 %d 0 R /F2 %d 0 R >>", f1, f2)
 	if xObjDecl.Len() > 0 {
@@ -610,8 +618,20 @@ func colX(track int) float64 {
 	}
 }
 
-func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink) string {
+func drawPamphletSheetBackground(s *strings.Builder, name string) {
+	if strings.TrimSpace(name) == "" {
+		return
+	}
+	w := MmToPoints(PamphletPageWidthMm)
+	h := MmToPoints(PamphletPageHeightMm)
+	s.WriteString("q\n")
+	s.WriteString(fmt.Sprintf("%.2f 0 0 %.2f 0 0 cm /%s Do\n", w, h, name))
+	s.WriteString("Q\n")
+}
+
+func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink, bgName string) string {
 	var s strings.Builder
+	drawPamphletSheetBackground(&s, bgName)
 	headerLayout := normalizeHeaderLayout(doc.HeaderLayout)
 	footerLayout := normalizeFooterLayout(doc.FooterLayout)
 	headerH := headerLayout.Height
@@ -639,8 +659,9 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 	return s.String()
 }
 
-func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink) string {
+func buildPage2Content(doc PamphletDocument, images map[string]*pdfImage, sink *layoutSink, bgName string) string {
 	var s strings.Builder
+	drawPamphletSheetBackground(&s, bgName)
 	top := PamphletPageHeightMm - PamphletMarginMm
 	h := PamphletPage2BodyMm
 	drawStructuredOrPlainColumn(&s, doc, doc.Column3, colX(2), top, h, images, 3, 2, sink)

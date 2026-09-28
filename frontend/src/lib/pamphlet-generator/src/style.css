@@ -582,6 +582,29 @@
     color: var(--pamphlet-ink);
 }
 
+/* Paper art: one full Letter landscape layer per stacked page, under all ink. */
+.pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg {
+    position: absolute;
+    left: 0;
+    width: var(--letter-landscape-width);
+    height: var(--letter-landscape-height);
+    z-index: 0;
+    pointer-events: none;
+    background-color: transparent;
+    background-image: url("/panfletbg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: var(--letter-landscape-width) var(--letter-landscape-height);
+}
+
+.pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg--p1 {
+    top: 0;
+}
+
+.pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg--p2 {
+    top: var(--letter-landscape-height);
+}
+
 /* Desktop: scale the letter sheet to the workspace width (PDF-viewer fit-to-width).
    Layout mm math stays 279.4×215.9; only the on-screen transform changes.
    Origin top left keeps the sheet flush to the rail; scale fills to the right edge.
@@ -692,7 +715,7 @@
     height: 100%;
     z-index: 5;
     box-sizing: border-box;
-    background: var(--pamphlet-paper-bg);
+    background: transparent;
     border: var(--header-stroke) solid var(--pamphlet-rule);
     border-radius: var(--header-radius);
     padding: var(--header-pad-top) var(--header-pad-x) var(--header-pad-bottom);
@@ -712,6 +735,7 @@
 
 .pamphlet-page-header:has(.element_edit_tray) {
     overflow: visible;
+    background: var(--pamphlet-paper-bg);
 }
 
 /* Double horizontal rule under title — same language as `.pamphlet-footer-divider`. */
@@ -783,7 +807,7 @@
     padding: 1.2mm 1.2mm 0; /* pad_top / pad_x / pad_bottom */
     border: 0.2mm solid var(--pamphlet-rule); /* stroke */
     border-radius: 1mm; /* radius */
-    background: var(--pamphlet-paper-bg);
+    background: transparent;
     color: var(--pamphlet-ink);
 }
 
@@ -816,6 +840,7 @@
 .pamphlet-page-footer:has(.element_edit_tray) {
     overflow: visible;
     z-index: 20;
+    background: var(--pamphlet-paper-bg);
 }
 
 .pamphlet-page-header > .pamphlet-header-title {
