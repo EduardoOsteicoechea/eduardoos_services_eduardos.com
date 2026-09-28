@@ -1148,8 +1148,21 @@ function reflowAndReport(container: HTMLElement) {
         container.querySelectorAll<HTMLElement>(":scope > .pamphlet-lead-slot"),
     );
 
-    // Densify in reading order (1→2 under header, 3–6 page 2, 7–8 page 1 left).
+    // Flatten all body items in reading order, then pack greedily by column
+    // height. Source-column buckets alone leave underfilled columns stuck at
+    // whatever count was last persisted (e.g. the temporary 4-item probe).
     const itemsBySourceColumn = collectColumnItemsByNumber(container);
+    const allItems: HTMLElement[] = [];
+    for (const columnIndex of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        for (const item of itemsBySourceColumn.get(columnIndex) ?? []) {
+            const staleSpacer = item.nextElementSibling;
+            if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
+                staleSpacer.remove();
+            }
+            allItems.push(item);
+        }
+    }
+
     container.innerHTML = "";
     ensureSheetBackground(container);
 
@@ -1162,27 +1175,22 @@ function reflowAndReport(container: HTMLElement) {
         ensureColumnInk(col);
     }
 
-    let pendingItems: HTMLElement[] = [];
+    let itemCursor = 0;
 
     for (const columnIndex of PAMPHLET_BODY_COLUMN_READING_ORDER) {
         const currentColumnDiv =
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${columnIndex}`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
         const ink = ensureColumnInk(currentColumnDiv);
-        const queue = [
-            ...pendingItems,
-            ...(itemsBySourceColumn.get(columnIndex) ?? []),
-        ];
-        pendingItems = [];
 
-        for (let qi = 0; qi < queue.length; qi++) {
-            const item = queue[qi]!;
+        while (itemCursor < allItems.length) {
+            const item = allItems[itemCursor]!;
             const result = tryAppendItemToInk(ink, currentColumnDiv, item, columnIndex);
             if (!result.packed) {
                 stripTrailingItemSpacer(ink);
-                pendingItems.push(item, ...queue.slice(qi + 1));
                 break;
             }
+            itemCursor++;
         }
 
         stripTrailingItemSpacer(ink);
@@ -1192,16 +1200,17 @@ function reflowAndReport(container: HTMLElement) {
     }
 
     // Past col 8: pack only what still fits under the left-band floor (no margin overflow).
-    if (pendingItems.length > 0) {
+    if (itemCursor < allItems.length) {
         const col8 =
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-8`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
         const ink8 = ensureColumnInk(col8);
-        for (const item of pendingItems) {
-            const result = tryAppendItemToInk(ink8, col8, item, 8);
+        while (itemCursor < allItems.length) {
+            const result = tryAppendItemToInk(ink8, col8, allItems[itemCursor]!, 8);
             if (!result.packed) {
                 break;
             }
+            itemCursor++;
         }
         stripTrailingItemSpacer(ink8);
         if (ink8.querySelector(":scope > .pamphlet-item")) {
