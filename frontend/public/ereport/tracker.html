@@ -2516,6 +2516,62 @@ function mainScrollEl() {
   return document.querySelector(".main-col");
 }
 
+/** localStorage key scoped to the open report (parent workspace URL when available). */
+function scrollStorageKey() {
+  try {
+    const loc = window.parent && window.parent.location ? window.parent.location : window.location;
+    const params = new URLSearchParams(loc.search || "");
+    const org = (params.get("org") || "").trim();
+    const report = (params.get("report") || "").trim();
+    if (org && report) return "ereport-scroll:" + org + ":" + report;
+    const parts = String(loc.pathname || "").replace(/\/+$/, "").split("/").filter(Boolean);
+    if (parts[0] === "ereport" && parts[1] === "invite" && parts[2]) {
+      return "ereport-scroll:invite:" + parts[2];
+    }
+    if (
+      parts[0] === "ereport" &&
+      parts[1] &&
+      parts[1] !== "workspace" &&
+      parts[1] !== "invite" &&
+      parts[2]
+    ) {
+      return "ereport-scroll:pretty:" + parts[1] + ":" + parts[2];
+    }
+  } catch (e) {}
+  const rn = String((state && state.reportNumber) || "").trim();
+  if (rn) return "ereport-scroll:rn:" + rn;
+  return "ereport-scroll:default";
+}
+
+function readStoredScrollTop() {
+  try {
+    const raw = localStorage.getItem(scrollStorageKey());
+    const n = Number.parseFloat(raw || "");
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function saveMainScroll() {
+  const scroller = mainScrollEl();
+  if (!scroller) return;
+  try {
+    localStorage.setItem(scrollStorageKey(), String(scroller.scrollTop || 0));
+  } catch (e) {}
+}
+
+/** When set, next render() applies this scrollTop (e.g. restore after reload). */
+let pendingScrollTop = null;
+let scrollSaveTimer = 0;
+function scheduleSaveMainScroll() {
+  if (scrollSaveTimer) return;
+  scrollSaveTimer = window.setTimeout(() => {
+    scrollSaveTimer = 0;
+    saveMainScroll();
+  }, 100);
+}
+
 /** Activation line: 15% down from the visible top of the scrolling column. */
 function scrollSpyTopOffset() {
   const scroller = mainScrollEl();
@@ -2562,6 +2618,7 @@ function updateActiveNav() {
 
 let scrollSpyRaf = 0;
 function onScrollSpyScroll() {
+  scheduleSaveMainScroll();
   if (scrollSpyRaf) return;
   scrollSpyRaf = requestAnimationFrame(() => {
     scrollSpyRaf = 0;
@@ -2574,6 +2631,8 @@ if (mainScroller) {
   mainScroller.addEventListener("scroll", onScrollSpyScroll, { passive: true });
 }
 window.addEventListener("scroll", onScrollSpyScroll, { passive: true });
+window.addEventListener("pagehide", saveMainScroll);
+window.addEventListener("beforeunload", saveMainScroll);
 window.addEventListener("resize", () => {
   updateActiveNav();
   syncStickyOffsets();
@@ -2598,6 +2657,8 @@ function syncStickyOffsets() {
 }
 
 function render() {
+  const scrollerBefore = mainScrollEl();
+  const keepScrollTop = scrollerBefore ? scrollerBefore.scrollTop : 0;
   const root = document.getElementById("app");
   root.innerHTML = state.sections.map(sec => {
     const secCollapsed = isCollapsed("sections", sec.id);
@@ -2828,6 +2889,17 @@ function render() {
   renderNavRail();
   updateStatus();
   syncStickyOffsets();
+  const scroller = mainScrollEl();
+  if (scroller) {
+    const target = pendingScrollTop != null ? pendingScrollTop : keepScrollTop;
+    pendingScrollTop = null;
+    requestAnimationFrame(() => {
+      scroller.scrollTop = target;
+      updateActiveNav();
+    });
+  } else {
+    pendingScrollTop = null;
+  }
 }
 
 function escapeHtml(s) {
@@ -3526,6 +3598,7 @@ document.getElementById("img-modal").addEventListener("click", (e) => {
 });
 
 bindMeta();
+pendingScrollTop = readStoredScrollTop();
 render();
 updateStatus();
 </script>
@@ -3607,6 +3680,7 @@ updateStatus();
         if (state.collapse == null) seedCollapsedHierarchy();
         else applyCollapseFromState();
         bindMeta();
+        pendingScrollTop = readStoredScrollTop();
         render();
         autoSaveEnabled = true;
         emit("loaded", {});

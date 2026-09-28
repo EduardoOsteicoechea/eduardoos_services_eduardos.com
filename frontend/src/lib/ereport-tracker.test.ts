@@ -111,6 +111,15 @@ describe("vendored tracker assets", () => {
     expect(tracker).not.toMatch(/function scrollSpyTopOffset\(\)\s*\{\s*return 58;\s*\}/);
   });
 
+  it("persists main-column scroll position in localStorage across reload", () => {
+    expect(tracker).toContain("function scrollStorageKey(");
+    expect(tracker).toContain("function readStoredScrollTop(");
+    expect(tracker).toContain("function saveMainScroll(");
+    expect(tracker).toContain('localStorage.setItem(scrollStorageKey()');
+    expect(tracker).toContain("pendingScrollTop = readStoredScrollTop()");
+    expect(tracker).toContain('window.addEventListener("pagehide", saveMainScroll)');
+  });
+
   it("embeds API images into exports and captures PDF on-screen under a veil for tablet text", () => {
     expect(tracker).toContain("function embedImagesInPayload(");
     expect(tracker).toContain("function inlineImagesForPdf(");
