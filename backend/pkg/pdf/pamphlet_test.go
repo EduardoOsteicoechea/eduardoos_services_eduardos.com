@@ -105,7 +105,7 @@ func TestDrawHeaderSubtitleInStream(t *testing.T) {
 		Subtitle: "Metadata clave del documento",
 		Author:   "Eduardo",
 		Series:   "Serie",
-	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	if !strings.Contains(out, "Metadata clave") {
 		t.Fatalf("expected subtitle in header stream, got %q", out)
@@ -176,7 +176,7 @@ func TestDrawHeaderTitleMetaGapMm(t *testing.T) {
 		Series:        "Serie X",
 		SeriesChapter: "1",
 		Date:          "2026-08-14",
-	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	if !strings.Contains(out, "Titulo corto") {
 		t.Fatalf("missing title in stream: %q", out)
@@ -235,7 +235,7 @@ func TestLongTitleFillsHeaderBandLikeDesktop(t *testing.T) {
 		Series:        "Descubriendo el libro de Romanos",
 		SeriesChapter: "1",
 		Date:          "2026-08-10",
-	}, layout, 100, top, width)
+	}, layout, 100, top, width, 1, nil)
 	used := top - bottom
 	// Content sits inside pad + rule clearance; band is 25mm but ink uses less.
 	if used < 15.0 || used > layout.Height {
@@ -256,7 +256,7 @@ func TestHeaderFrameFromLayout(t *testing.T) {
 		Title:  "Titulo",
 		Author: "Eduardo",
 		Series: "Romanos",
-	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	// Outer + inner black frames + title divider + gray meta top + mid + vertical.
 	strokeCount := strings.Count(out, "S\n")
@@ -290,7 +290,7 @@ func TestHeaderLayoutFromFrontendDrivesTitleSize(t *testing.T) {
 	layout := defaultHeaderLayout()
 	layout.TitleSize = 8.0
 	var s strings.Builder
-	_ = drawHeader(&s, PamphletHeader{Title: "Titulo"}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow)
+	_ = drawHeader(&s, PamphletHeader{Title: "Titulo"}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	want := fmt.Sprintf("/F2 %.2f Tf", MmToPoints(8.0))
 	if !strings.Contains(s.String(), want) {
 		t.Fatalf("expected title Tf %q from header_layout.title_size=8mm, got %q", want, s.String())
@@ -346,7 +346,7 @@ func TestDrawFooterStructuredChrome(t *testing.T) {
 		Value3:  "Caracas",
 		Label4:  "Actividades",
 		Value4:  "Domingo 10am",
-	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	if !strings.Contains(out, " S\n") && !strings.Contains(out, "S\n") {
 		t.Fatalf("footer missing stroke S op for rounded frame: %q", out)
@@ -421,7 +421,7 @@ func TestDrawFooterShowsLabelsWhenValuesEmpty(t *testing.T) {
 		Label2:  "Teléfono",
 		Label3:  "Dirección",
 		Label4:  "Actividades",
-	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	for _, want := range []string{"WhatsApp", "Tel", "Direcci", "Actividades", "Acci", "Mensaje"} {
 		stem := want
@@ -452,7 +452,7 @@ func TestDrawFooterReservesMetaDespiteLongAction(t *testing.T) {
 		Value3:  "Avenidas las Américas, Sector el campito, Colegio de Ingenieros",
 		Label4:  "Actividades",
 		Value4:  "Reunión dominical los domingos a las 10:00 am",
-	}, layout, 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow)
+	}, layout, 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
 	if layout.Height != 29.8 {
 		t.Fatalf("footer height must stay 29.8, got %v", layout.Height)
@@ -550,21 +550,21 @@ func TestWriteWrappedKeepsLastLineAboveFloor(t *testing.T) {
 	}
 }
 
-func TestWriteWrappedPaintsOverflowVisibleLastLine(t *testing.T) {
+func TestWriteWrappedDoesNotPaintBelowColumnFloor(t *testing.T) {
 	floor := 10.0
 	offset := cssBaselineOffsetMm(pamphletBodySizeMm, pamphletBodyLH)
-	// Line box starts 1mm below the column floor (inside the page margin), matching desktop.
+	// Line box starts 1mm below the column floor — must not paint into the margin (spec 007).
 	cursorTop := floor - 1.0
 	y := cursorTop - offset
 	var s strings.Builder
 	used := writeWrapped(&s, "F1", pamphletBodySizePt, pamphletBodyLH, 10, y, PamphletColWidthMm, "para santificae", floor)
-	if used <= 0 || !strings.Contains(s.String(), "santificae") {
-		t.Fatalf("overflow-visible last line clipped: cursor=%.2f y=%.2f used=%v %q", cursorTop, y, used, s.String())
+	if used > 0 || strings.Contains(s.String(), "santificae") {
+		t.Fatalf("painted below floor: cursor=%.2f y=%.2f used=%v %q", cursorTop, y, used, s.String())
 	}
 }
 
-func TestDrawColumnKeepsParagraphInPageMargin(t *testing.T) {
-	// Heading sits on the column floor; CSS still shows the next paragraph in the margin.
+func TestDrawColumnDoesNotPaintIntoPageMargin(t *testing.T) {
+	// Heading fills the band; the following paragraph must not spill into the margin.
 	const top = 40.0
 	headLine := pamphletHeadingSizeMm * pamphletHeadingLH
 	height := headLine + 0.2
@@ -578,8 +578,8 @@ func TestDrawColumnKeepsParagraphInPageMargin(t *testing.T) {
 	if !strings.Contains(out, "afianzar") {
 		t.Fatalf("heading missing: %q", out)
 	}
-	if !strings.Contains(out, "Romanos") {
-		t.Fatalf("margin paragraph clipped: %q", out)
+	if strings.Contains(out, "Romanos") {
+		t.Fatalf("paragraph painted into page margin: %q", out)
 	}
 }
 
@@ -849,6 +849,21 @@ func TestBuildPamphletPDFWithLayoutHits(t *testing.T) {
 	}
 	if !seen["c1:0"] || !seen["c1:1"] || !seen["c2:0"] {
 		t.Fatalf("missing expected ids in %#v", seen)
+	}
+	if !seen["c0:0"] || !seen["c9:0"] {
+		t.Fatalf("missing chrome hit ids c0:0 / c9:0 in %#v", seen)
+	}
+	var hasHeader, hasFooter bool
+	for _, h := range layout.Hits {
+		if h.Column == pamphletHeaderHitColumn {
+			hasHeader = true
+		}
+		if h.Column == pamphletFooterHitColumn {
+			hasFooter = true
+		}
+	}
+	if !hasHeader || !hasFooter {
+		t.Fatalf("expected header column=%d and footer column=%d hits", pamphletHeaderHitColumn, pamphletFooterHitColumn)
 	}
 }
 

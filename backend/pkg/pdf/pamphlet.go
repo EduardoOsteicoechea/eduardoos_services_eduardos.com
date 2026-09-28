@@ -623,7 +623,7 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 	headerX := colX(6)
 	headerTop := PamphletPageHeightMm - PamphletMarginMm
 	// Same vertical tracks as CSS grid: margin → header → gutter → cols.
-	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
+	_ = drawHeader(&s, doc.Header, headerLayout, headerX, headerTop, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
 
 	leftTop := PamphletPageHeightMm - PamphletMarginMm
 	drawStructuredOrPlainColumn(&s, doc, doc.Column7, colX(2), leftTop, leftColH, images, 7, 1, sink)
@@ -635,7 +635,7 @@ func buildPage1Content(doc PamphletDocument, images map[string]*pdfImage, sink *
 	drawStructuredOrPlainColumn(&s, doc, doc.Column2, colX(8), rightTop, rightColH, images, 2, 1, sink)
 
 	footerTop := PamphletMarginMm + footerH
-	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow)
+	drawFooter(&s, normalizeFooter(doc.Footer), footerLayout, colX(2), footerTop, PamphletColWidthMm*2+PamphletGutterNarrow, 1, sink)
 	return s.String()
 }
 
@@ -656,9 +656,40 @@ func cssBaselineOffsetMm(sizeMm, lineHeight float64) float64 {
 	return sizeMm*(lineHeight-1.0)/2.0 + sizeMm*0.80
 }
 
+// Pamphlet chrome hit columns — must match FE HEADER_COLUMN / FOOTER_COLUMN.
+const (
+	pamphletHeaderHitColumn = 0
+	pamphletFooterHitColumn = 9
+)
+
+// Header field indexes — must match FE HEADER_FIELD_KEYS order.
+const (
+	headerHitTitle = iota
+	headerHitSubtitle
+	headerHitAuthor
+	headerHitSeries
+	headerHitSeriesChapter
+	headerHitDate
+)
+
+// Footer field indexes — must match FE FOOTER_FIELD_KEYS order.
+const (
+	footerHitAction = iota
+	footerHitMessage
+	footerHitLabel1
+	footerHitValue1
+	footerHitLabel2
+	footerHitValue2
+	footerHitLabel3
+	footerHitValue3
+	footerHitLabel4
+	footerHitValue4
+)
+
 // drawHeader paints footer-style double frame, title, title double-divider,
 // subtitle, then 2x2 gray meta. Type sizes and chrome come from header_layout (FE mm).
-func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayout, x, top, width float64) float64 {
+// When sink != nil, registers clickable hits for each header field (page 1).
+func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayout, x, top, width float64, page int, sink *layoutSink) float64 {
 	layout = normalizeHeaderLayout(layout)
 	heightMm := layout.Height
 	floor := top - heightMm
@@ -713,10 +744,14 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 		if nTitle < 1 {
 			nTitle = 1
 		}
-	} else if strings.TrimSpace(h.Title) == "" {
-		return floor
 	}
+	// Empty title still reserves one line so the field stays clickable in PDF-first UI.
 	titleBoxBottom := innerTop - float64(nTitle)*titleLineHMm
+	titleHitH := innerTop - titleBoxBottom
+	if titleHitH < titleLineHMm {
+		titleHitH = titleLineHMm
+	}
+	sink.add(page, pamphletHeaderHitColumn, headerHitTitle, "header_title", innerX, innerTop, innerW, titleHitH)
 
 	// Double rule under title (same strokes as footer Acción→Mensaje divider).
 	cursorTop := titleBoxBottom - layout.TitlePadBottom
@@ -755,6 +790,7 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 		subBoxH = cursorTop - textFloor
 	}
 	if subBoxH > 0 {
+		sink.add(page, pamphletHeaderHitColumn, headerHitSubtitle, "header_subtitle", innerX, cursorTop, innerW, subBoxH)
 		if strings.TrimSpace(h.Subtitle) != "" {
 			textTop := cursorTop - subPadTop
 			sy := textTop - cssBaselineOffsetMm(subSize, subLH)
@@ -794,27 +830,40 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 
 	contentBottom := titleBoxBottom
 	drewMeta := false
-	if (left1 != "" || right1 != "") && metaY > textFloor {
+	// Always reserve two meta rows for hits (empty fields stay editable).
+	row1Top := metaCursor
+	if metaY > textFloor {
 		if left1 != "" {
 			writeGrayText(s, "F1", metaSizePt, innerX, metaY, half, left1)
 		}
 		if right1 != "" {
 			writeGrayText(s, "F1", metaSizePt, rightX, metaY, half, right1)
 		}
-		contentBottom = metaCursor - metaLineHMm
-		drewMeta = true
+	}
+	if row1Top-metaLineHMm > textFloor-0.01 {
+		sink.add(page, pamphletHeaderHitColumn, headerHitSeries, "header_series", innerX, row1Top, half, metaLineHMm)
+		sink.add(page, pamphletHeaderHitColumn, headerHitSeriesChapter, "header_series_chapter", rightX, row1Top, half, metaLineHMm)
+		contentBottom = row1Top - metaLineHMm
+		drewMeta = left1 != "" || right1 != ""
 		metaCursor -= metaLineHMm + layout.MetaRowGap
 		metaY = metaCursor - cssBaselineOffsetMm(metaSizeMm, metaLH)
 	}
-	if (left2 != "" || right2 != "") && metaY > textFloor {
+	row2Top := metaCursor
+	if metaY > textFloor {
 		if left2 != "" {
 			writeGrayText(s, "F1", metaSizePt, innerX, metaY, half, left2)
 		}
 		if right2 != "" {
 			writeGrayText(s, "F1", metaSizePt, rightX, metaY, half, right2)
 		}
-		contentBottom = metaCursor - metaLineHMm
-		drewMeta = true
+	}
+	if row2Top-metaLineHMm > textFloor-0.01 {
+		sink.add(page, pamphletHeaderHitColumn, headerHitAuthor, "header_author", innerX, row2Top, half, metaLineHMm)
+		sink.add(page, pamphletHeaderHitColumn, headerHitDate, "header_date", rightX, row2Top, half, metaLineHMm)
+		contentBottom = row2Top - metaLineHMm
+		if left2 != "" || right2 != "" {
+			drewMeta = true
+		}
 	}
 
 	// Double gray cross on meta (vertical + mid horizontal) — no outer frame.
@@ -1236,7 +1285,8 @@ func footerMetaSectionHeightMm(f PamphletFooter, layout PamphletFooterLayout) fl
 // drawFooter paints fixed chrome using frontend footer_layout mm: outer frame,
 // Acción/Mensaje text, then a 2×2 meta pair grid (spec 034). Inner input cell
 // borders are desktop edit chrome only — never stroked in the PDF print.
-func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayout, x, top, width float64) {
+// When sink != nil, registers clickable hits for each footer field (page 1).
+func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayout, x, top, width float64, page int, sink *layoutSink) {
 	f = normalizeFooter(f)
 	layout = normalizeFooterLayout(layout)
 	heightMm := layout.Height
@@ -1301,6 +1351,7 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 		actionBoxH = cursorTop - upperFloor
 	}
 	if actionBoxH > 0 {
+		sink.add(page, pamphletFooterHitColumn, footerHitAction, "footer_action", innerX, cursorTop, innerW, actionBoxH)
 		if strings.TrimSpace(f.Action) != "" {
 			textTop := cursorTop - layout.ActionPadY
 			y := textTop - cssBaselineOffsetMm(layout.ActionSize, layout.ActionLH)
@@ -1345,6 +1396,7 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 		msgBoxH = cursorTop - upperFloor
 	}
 	if msgBoxH > 0 {
+		sink.add(page, pamphletFooterHitColumn, footerHitMessage, "footer_message", innerX, cursorTop, innerW, msgBoxH)
 		if strings.TrimSpace(f.Message) != "" {
 			textTop := cursorTop - msgPadTop
 			y := textTop - cssBaselineOffsetMm(layout.MessageSize, layout.MessageLH)
@@ -1457,6 +1509,31 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 				writeGrayText(s, "F1", metaPt, valueX, baseline, valueW, value)
 			}
 		}
+
+		// Hit indexes follow FE FOOTER_FIELD_KEYS (labelN/valueN interleaved).
+		labelLIdx, valueLIdx, labelRIdx, valueRIdx := footerHitLabel1, footerHitValue1, footerHitLabel2, footerHitValue2
+		if i == 1 {
+			labelLIdx, valueLIdx, labelRIdx, valueRIdx = footerHitLabel3, footerHitValue3, footerHitLabel4, footerHitValue4
+		}
+		labelH := pair.labelRowH
+		if labelH > rowH {
+			labelH = rowH
+		}
+		valueH := rowH - labelH
+		if valueH < 1.2 {
+			valueH = rowH * 0.45
+			if valueH < 1.2 {
+				valueH = 1.2
+			}
+			if valueH > rowH {
+				valueH = rowH
+			}
+			labelH = rowH - valueH
+		}
+		sink.add(page, pamphletFooterHitColumn, labelLIdx, fmt.Sprintf("footer_label%d", i*2+1), innerX, cursorTop, half, labelH)
+		sink.add(page, pamphletFooterHitColumn, labelRIdx, fmt.Sprintf("footer_label%d", i*2+2), rightX, cursorTop, half, labelH)
+		sink.add(page, pamphletFooterHitColumn, valueLIdx, fmt.Sprintf("footer_value%d", i*2+1), innerX, cursorTop-labelH, half, valueH)
+		sink.add(page, pamphletFooterHitColumn, valueRIdx, fmt.Sprintf("footer_value%d", i*2+2), rightX, cursorTop-labelH, half, valueH)
 
 		drawMetaPairCell(innerX, pair.labelL, pair.valueL)
 		drawMetaPairCell(rightX, pair.labelR, pair.valueR)
@@ -1697,9 +1774,8 @@ func drawColumn(s *strings.Builder, items []PamphletItem, x, top, width, heightM
 }
 
 // drawStackedItems walks items from the CSS box top (not the first baseline).
-// Desktop columns use overflow:visible and only --item-gap-height between
-// blocks — no extra heading margin. Tracking the item-top cursor keeps the
-// last heading+paragraph inside the band instead of eating them at the floor.
+// Spec 007: ink must stay inside the column band (no soft floor into the page
+// margin / footer). FE densify spills overflow to the next column.
 func drawStackedItems(
 	s *strings.Builder,
 	items []PamphletItem,
@@ -1714,9 +1790,8 @@ func drawStackedItems(
 	floor := top - heightMm
 	for i, item := range items {
 		idx := indexOffset + i
-		// CSS .dumb-column { overflow: visible } — the last sheet line may start
-		// just below the grid floor and still sit in the 10mm page margin.
-		if cursorTop < floor-pamphletBodySizeMm*pamphletBodyLH {
+		// Strict band floor — never paint into the 10mm margin or footer gutter.
+		if cursorTop <= floor+0.01 {
 			break
 		}
 		if item.Type == "image" {
@@ -1727,6 +1802,9 @@ func drawStackedItems(
 			lead := leadFirst && i == 0
 			if lead {
 				h = pamphletLeadHeightMm
+			}
+			if cursorTop-h < floor-0.01 {
+				break
 			}
 			drawImageOrPlaceholder(s, item, x, cursorTop, width, h, images)
 			if lead {
@@ -1873,12 +1951,11 @@ func writeWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm,
 	used := 0.0
 	y := yMm
 	for _, line := range lines {
-		// y is the alphabetic baseline. Desktop columns are overflow:visible, so
-		// paint a line whose line-box still intersects the band or starts at most
-		// one line into the page margin — that is the last sheet line the PDF
-		// was dropping ("para santificae" / "Mira cómo dice Romanos…").
+		// y is the alphabetic baseline. Spec 007: keep the full line box inside
+		// the column band (no soft overflow into the page margin / next sheet).
 		lineBoxTop := y + offset
-		if lineBoxTop < floorMm-lineH {
+		lineBoxBottom := lineBoxTop - lineH
+		if lineBoxBottom < floorMm-0.01 {
 			break
 		}
 		s.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",

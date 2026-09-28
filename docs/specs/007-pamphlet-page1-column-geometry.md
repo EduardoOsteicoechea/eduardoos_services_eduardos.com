@@ -50,10 +50,11 @@ Do **not** change these heights without updating all three of:
 
 ## Packing rules (pixel-perfect)
 
-1. **Strict fit** — `PACK_FIT_EPSILON_MM = 0.05` (float only). Never restore a soft floor like `2.5`; that packed past the band and looked like “columns stick out at the top”.
-2. **Spill forward only** — when an item does not fit, move it (and the rest of the queue) to the **next** column in reading order; do not pull later columns into column 1.
-3. **“+” outside ink** — `.pamphlet-add-item-button` is `position: absolute; top: 100%` on the column shell. It does **not** consume column mm.
-4. **Clip ink, not the shell** — items live in `.pamphlet-column-ink` with `overflow: clip`. The column shell stays `overflow: visible` so “+” is visible. **Never** set `overflow: visible` on the whole column merely because “+” is present (that regression painted body text into the header).
+1. **Strict fit (FE)** — `PACK_FIT_EPSILON_MM = 0.05` (float only). Never restore a soft floor like `2.5`; that packed past the band and looked like “columns stick out at the top”.
+2. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must **not** paint below the column floor into the 10mm page margin or the footer gutter. A previous “overflow:visible soft floor” (~one body line) made ink disappear “under the sheet” between page 1 and page 2. Truncated remainder is spilled by FE densify on the next reflow, not drawn in the margin.
+3. **Spill forward only** — when an item does not fit, move it (and the rest of the queue) to the **next** column in reading order; do not pull later columns into column 1.
+4. **“+” outside ink** — `.pamphlet-add-item-button` is `position: absolute; top: 100%` on the column shell. It does **not** consume column mm.
+5. **Clip ink, not the shell** — items live in `.pamphlet-column-ink` with `overflow: clip`. The column shell stays `overflow: visible` so “+” is visible. **Never** set `overflow: visible` on the whole column merely because “+” is present (that regression painted body text into the header).
 
 ## DOM shape
 
@@ -69,7 +70,9 @@ Helpers: `ensureColumnInk`, `columnBodyItems` in `pamphlet_io.ts`.
 ## Regression checklist
 
 - [ ] Cols 1–2 top edge aligns with bottom of header-body gutter (no ink in header).
-- [ ] Overflow from col 1 goes to col 2, then 3…8 — not upward.
+- [ ] Overflow from col 1 goes to col 2, then 3…8 — not upward / not into the page margin.
+- [ ] PDF preview: no body text between page-1 bottom margin and page-2 top (no ink “under the sheet”).
+- [ ] Cols 7–8 do not paint into the footer band.
 - [ ] “+” remains clickable below the last packed column without unlocking ink overflow.
 - [ ] Print / PDF band heights still 156.4 / 160.1 / 195.9 mm.
 - [ ] Opening an existing .epam reflows without leaving clipped text above the band.
