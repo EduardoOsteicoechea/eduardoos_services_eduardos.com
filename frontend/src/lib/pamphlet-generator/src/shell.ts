@@ -39,6 +39,9 @@ const ICONS = {
   footer: iconSvg(
     `<path d="M4 4h16v2H4V4zm0 14h16v2H4v-2zm2-8h4v2H6v-2zm6 0h6v2h-6v-2zM6 14h12v2H6v-2z" fill="currentColor"/>`,
   ),
+  chrome: iconSvg(
+    `<path d="M4 3h16v6H4V3zm0 12h16v6H4v-6zm2 2v2h12v-2H6zM6 5v2h12V5H6z" fill="currentColor"/>`,
+  ),
   copy: iconSvg(
     `<path d="M8 4h10v12h-2V6H8V4zm-4 4h10v12H4V8zm2 2v8h6v-8H6z" fill="currentColor"/>`,
   ),
@@ -132,6 +135,12 @@ export function renderShell(_menuIconSrc?: string): string {
         "Tipo",
         "Cambiar entre panfleto simple o con imágenes estructuradas",
         "hidden",
+      )}
+      ${actionBtn(
+        "btn-chrome",
+        ICONS.chrome,
+        "Cabecera",
+        "Editar cabecera y pie del panfleto abierto",
       )}
       ${actionBtn(
         "btn-footer",
@@ -262,6 +271,71 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="create-modal-actions">
       <button type="button" id="series-modal-cancel">Cancel</button>
       <button type="submit" id="series-modal-save">Save series</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="chrome-modal" class="create-modal chrome-modal">
+  <form id="chrome-form" class="create-modal-form manage-epam-chrome-form">
+    <h2>Cabecera y pie</h2>
+    <p class="create-modal-hint">Edita la cabecera y el pie del panfleto abierto. En móvil y escritorio se usa este mismo formulario.</p>
+    <fieldset>
+      <legend>Cabecera</legend>
+      <label>
+        Título
+        <input id="chrome-header-title" name="title" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Subtítulo
+        <input id="chrome-header-subtitle" name="subtitle" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Autor
+        <input id="chrome-header-author" name="author" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Serie
+        <input id="chrome-header-series" name="series" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Capítulo
+        <input id="chrome-header-chapter" name="series_chapter" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Fecha
+        <input id="chrome-header-date" name="date" type="text" autocomplete="off" />
+      </label>
+    </fieldset>
+    <fieldset>
+      <legend>Pie</legend>
+      <label>
+        Acción
+        <input id="chrome-footer-action" name="action" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Mensaje
+        <input id="chrome-footer-message" name="message" type="text" autocomplete="off" />
+      </label>
+      <label>
+        WhatsApp
+        <input id="chrome-footer-value1" name="value1" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Teléfono
+        <input id="chrome-footer-value2" name="value2" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Dirección
+        <input id="chrome-footer-value3" name="value3" type="text" autocomplete="off" />
+      </label>
+      <label>
+        Actividades
+        <input id="chrome-footer-value4" name="value4" type="text" autocomplete="off" />
+      </label>
+    </fieldset>
+    <div class="create-modal-actions">
+      <button type="button" id="chrome-modal-cancel">Cancelar</button>
+      <button type="submit" id="chrome-modal-save">Guardar</button>
     </div>
   </form>
 </dialog>
