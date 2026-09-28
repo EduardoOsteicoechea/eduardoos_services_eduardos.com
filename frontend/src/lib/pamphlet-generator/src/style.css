@@ -431,10 +431,11 @@
   --header-pad-top: 2.2mm; /* +1mm vs prior 1.2 */
   --header-pad-bottom: 0.5mm; /* −0.5mm vs prior 1.0 */
   --header-pad-x: 2.2mm; /* −1mm vs prior 3.2 */
-  --header-stroke: 0.2mm;
+  /* Temporary: hide header/footer frames (PDF uses PAMPHLET_*_LAYOUT_MM stroke:0). Restore 0.2mm / 0.1mm. */
+  --header-stroke: 0mm;
   --header-radius: 1mm;
   --header-inner-inset: 0.45mm;
-  --header-inner-stroke: 0.1mm;
+  --header-inner-stroke: 0mm;
   --header-inner-radius: 0.6mm;
   --header-divider-outer: 0.2mm;
   --header-divider-gap: 0.45mm;
@@ -2690,19 +2691,13 @@ html[data-theme="light"] .pamphlet-pdf-page__canvas {
   z-index: 1;
 }
 
-/* Cols (mobile/tablet): header/footer are display-only — edit via Cabecera modal. */
-.pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header,
-.pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
-.pamphlet-app[data-view-mode="tablet"] .pamphlet-page-header,
-.pamphlet-app[data-view-mode="tablet"] .pamphlet-page-footer {
-  pointer-events: none;
-}
-
-.pamphlet-app[data-view-mode="mobile"] .pamphlet-page-header .pamphlet-item,
-.pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer .pamphlet-item,
-.pamphlet-app[data-view-mode="tablet"] .pamphlet-page-header .pamphlet-item,
-.pamphlet-app[data-view-mode="tablet"] .pamphlet-page-footer .pamphlet-item {
-  cursor: default;
+/*
+ * Cols (mobile/tablet): hide header/footer chrome entirely — edit via DHS Cabecera.
+ * Desktop PDF preview still paints them (and can open the same modal from hits).
+ */
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-header,
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-footer {
+  display: none !important;
 }
 
 .pamphlet-app .create-modal.chrome-modal {
