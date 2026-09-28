@@ -582,7 +582,8 @@
     color: var(--pamphlet-ink);
 }
 
-/* Paper art: one full Letter landscape layer per stacked page, under all ink. */
+/* Paper art: one full Letter landscape layer per stacked page, under all ink.
+   Screen: desktop only (phone/tablet hide). Print + PDF always include it. */
 .pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg {
     position: absolute;
     left: 0;
@@ -591,7 +592,7 @@
     z-index: 0;
     pointer-events: none;
     background-color: transparent;
-    background-image: url("/panfletbg.png");
+    background-image: url("/pbg.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: var(--letter-landscape-width) var(--letter-landscape-height);
@@ -603,6 +604,10 @@
 
 .pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg--p2 {
     top: var(--letter-landscape-height);
+}
+
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) main.pamphlet-sheet > .pamphlet-sheet-bg {
+    display: none;
 }
 
 /* Desktop: scale the letter sheet to the workspace width (PDF-viewer fit-to-width).
@@ -2408,6 +2413,11 @@ body.pamphlet-phone-dock-open .pamphlet-edit-dock__textarea,
     margin: 0 !important;
   }
 
+  /* Phone/tablet hide sheet bg on screen; restore for browser print fallback. */
+  .pamphlet-app main.pamphlet-sheet > .pamphlet-sheet-bg {
+    display: block !important;
+  }
+
   .header-dynamic-menu-host,
   .header-dynamic-menu,
   .pamphlet-header-menu,
@@ -3069,16 +3079,21 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
   /* Document scroll is locked on html/body; sheet scrolls under the fixed dock */
   html.pamphlet-phone-dock-open {
     overflow: hidden;
+    height: 100%;
   }
 
   body.page-pamphlet.pamphlet-phone-dock-open {
     overflow: hidden;
+    height: 100%;
   }
 
   body.page-pamphlet.pamphlet-phone-dock-open .shell,
   body.page-pamphlet.pamphlet-phone-dock-open main:not(.pamphlet-sheet) {
     overflow: hidden;
+    height: 100%;
     max-height: 100%;
+    /* Dock covers the activity menu — drop the header offset while pinned */
+    padding-top: 0;
   }
 
   body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-layout-workspace,
@@ -3086,6 +3101,7 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     overflow-x: clip;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    height: 100%;
     max-height: 100%;
     padding-top: 12.5rem;
     box-sizing: border-box;

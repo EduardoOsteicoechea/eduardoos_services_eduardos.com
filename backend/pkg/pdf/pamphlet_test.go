@@ -649,7 +649,7 @@ func TestBuildPamphletPDFEmbedsJPEG(t *testing.T) {
 
 func TestBuildPamphletPDFEmbedsSheetBackground(t *testing.T) {
 	if _, ok := loadPamphletSheetBackground(); !ok {
-		t.Fatal("expected embedded panfletbg.png to decode")
+		t.Fatal("expected embedded pbg.png to decode")
 	}
 	data := BuildPamphletPDF(PamphletDocument{
 		Type:   "pamphlet_single_sheet",

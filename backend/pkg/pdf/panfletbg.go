@@ -8,8 +8,8 @@ import (
 	"sync"
 )
 
-//go:embed assets/panfletbg.png
-var panfletbgPNG []byte
+//go:embed assets/pbg.png
+var pamphletSheetBgPNG []byte
 
 const pamphletSheetBgName = "ImBg"
 
@@ -22,7 +22,7 @@ var (
 // loadPamphletSheetBackground JPEG-encodes the embedded page art once.
 func loadPamphletSheetBackground() (pdfImage, bool) {
 	sheetBgOnce.Do(func() {
-		img, _, err := image.Decode(bytes.NewReader(panfletbgPNG))
+		img, _, err := image.Decode(bytes.NewReader(pamphletSheetBgPNG))
 		if err != nil {
 			return
 		}
