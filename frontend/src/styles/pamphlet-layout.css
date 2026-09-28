@@ -245,6 +245,39 @@ body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:disabled {
   opacity: 0.45;
 }
 
+/* Primary tray CTA (print): below tools, inverted fg/bg */
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action {
+  margin-top: var(--rail-gap);
+  justify-content: center;
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--space-padding);
+  border: 0;
+  border-radius: var(--border-radius);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 650;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action .icon-btn {
+  color: var(--color-bg);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action:hover:not(:disabled),
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action:focus-visible {
+  background: var(--color-text);
+  color: var(--color-bg);
+  opacity: 0.92;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action:hover:not(:disabled) .icon-btn,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action:focus-visible .icon-btn {
+  color: var(--color-bg);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action:disabled {
+  opacity: 0.45;
+}
+
 .series-tree {
   display: flex;
   flex-direction: column;
