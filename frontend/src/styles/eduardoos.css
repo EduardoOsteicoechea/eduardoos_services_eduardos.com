@@ -544,9 +544,9 @@ main > .diag{
 
 /* ---------- Long-form article reading ---------- */
 
-/* Desktop reading column = 500px at root 16px; phone clamps to the shell. */
+/* Desktop reading column = 400px at root 16px; phone clamps to the shell. */
 :root {
-  --article-measure: 31.25rem;
+  --article-measure: 25rem;
 }
 
 /* Fill the shell so the article footer can sit on the viewport bottom. */
