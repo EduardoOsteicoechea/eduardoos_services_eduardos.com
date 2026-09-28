@@ -72,11 +72,17 @@ Do **not** change heights without updating:
 ## Packing rules (pixel-perfect)
 
 1. **Strict fit (FE)** — `PACK_FIT_EPSILON_MM = 0.05` (float only).
-2. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
-3. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
-4. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
-5. **“+” outside ink** — clamped to column floor from layout bands.
-6. **Clip ink, not the shell** — `.pamphlet-column-ink` uses `overflow: clip`.
+2. **Painted-ink authority (FE densify)** — after appending a candidate into the
+   destination `.pamphlet-column-ink`, compare `scrollHeight` (px→mm via column
+   width) to `maxHeightForColumn`. Sandbox pre-measure alone is not enough:
+   wrap/font paint can exceed sandbox estimates. If painted height exceeds the
+   floor, remove the candidate and spill forward. Do not use a hard item-count
+   cap as the packing rule.
+3. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
+4. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
+5. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
+6. **“+” outside ink** — clamped to column floor from layout bands.
+7. **Clip ink, not the shell** — `.pamphlet-column-ink` uses `overflow: clip`.
 
 ## Layout JSON bands (`schema_version` ≥ 5)
 

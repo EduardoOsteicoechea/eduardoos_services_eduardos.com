@@ -1026,15 +1026,9 @@ function placeColumnAddButton(
     let filledContent = filledByColumn.get(colIdx) ?? 0;
 
     for (;;) {
-        const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
-        const itemCount = col
-            ? col.querySelectorAll(":scope > .pamphlet-column-ink > .pamphlet-item, :scope > .pamphlet-item").length
-            : 0;
         const max = maxHeightForColumn(colIdx);
-        if (
-            itemCount < MAX_BODY_ITEMS_PER_COLUMN &&
-            filledContent + newItemMm <= max + PACK_FIT_EPSILON_MM
-        ) {
+        if (filledContent + newItemMm <= max + PACK_FIT_EPSILON_MM) {
+            const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
             if (col) {
                 col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
                 col.appendChild(createAddItemButton(colIdx));
@@ -1043,6 +1037,7 @@ function placeColumnAddButton(
         }
         const nextCol = nextBodyColumnInReadingOrder(colIdx);
         if (nextCol === null) {
+            const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
             if (col) {
                 col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
                 col.appendChild(createAddItemButton(colIdx));
@@ -1062,10 +1057,41 @@ function placeColumnAddButton(
 const PACK_FIT_EPSILON_MM = 0.05;
 
 /**
- * Temporary densify probe: hard-cap body items per column so overflow spills
- * earlier. Not geometry SoT — remove once wrap/measure lockstep is confirmed.
+ * Painted ink height in the destination column (spec 007).
+ * scrollHeight includes content clipped by overflow — that is the densify truth.
  */
-const MAX_BODY_ITEMS_PER_COLUMN = 4;
+function inkPaintedHeightMm(ink: HTMLElement, columnEl: HTMLElement): number {
+    void ink.offsetWidth;
+    return convertPixelsToMillimeters(ink.scrollHeight, columnEl);
+}
+
+/**
+ * Append item(+spacer) into destination ink; keep only if painted height fits.
+ * First item in an empty column is always kept (clip if oversized).
+ */
+function tryAppendItemToInk(
+    ink: HTMLElement,
+    columnEl: HTMLElement,
+    item: HTMLElement,
+    columnIndex: number,
+): { packed: boolean; paintedMm: number } {
+    const staleSpacer = item.nextElementSibling;
+    if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
+        staleSpacer.remove();
+    }
+    const hadItems = ink.querySelector(":scope > .pamphlet-item") !== null;
+    const spacer = createItemSpacer();
+    ink.appendChild(item);
+    ink.appendChild(spacer);
+    const paintedMm = inkPaintedHeightMm(ink, columnEl);
+    const maxMm = maxHeightForColumn(columnIndex);
+    if (hadItems && paintedMm > maxMm + PACK_FIT_EPSILON_MM) {
+        spacer.remove();
+        item.remove();
+        return { packed: false, paintedMm: inkPaintedHeightMm(ink, columnEl) };
+    }
+    return { packed: true, paintedMm };
+}
 
 /** Stable fingerprint of body columns for migration / densify persist checks. */
 function columnFingerprint(doc: PamphletStructure): string {
@@ -1143,48 +1169,20 @@ function reflowAndReport(container: HTMLElement) {
         ];
         pendingItems = [];
 
-        let currentColumnFilledMm = 0;
-        let currentColumnItemsCount = 0;
-        let trailingGapMm = 0;
-
         for (let qi = 0; qi < queue.length; qi++) {
             const item = queue[qi]!;
-            const staleSpacer = item.nextElementSibling;
-            if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
-                staleSpacer.remove();
-            }
-
-            const spacer = createItemSpacer();
-            const measured = measureBlockInSandbox(item, spacer);
-            const { itemMm, spacerMm, blockMm } = measured;
-            const currentMaxMm = maxHeightForColumn(columnIndex);
-            const filledContent =
-                currentColumnItemsCount > 0
-                    ? Math.max(0, currentColumnFilledMm - trailingGapMm)
-                    : 0;
-            const wouldOverflowHeight =
-                currentColumnItemsCount > 0 &&
-                filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
-            const wouldOverflowCount =
-                currentColumnItemsCount >= MAX_BODY_ITEMS_PER_COLUMN;
-
-            if (wouldOverflowHeight || wouldOverflowCount) {
+            const result = tryAppendItemToInk(ink, currentColumnDiv, item, columnIndex);
+            if (!result.packed) {
                 stripTrailingItemSpacer(ink);
                 pendingItems.push(item, ...queue.slice(qi + 1));
                 break;
             }
-
-            ink.appendChild(item);
-            ink.appendChild(spacer);
-            currentColumnFilledMm = filledContent + blockMm;
-            currentColumnItemsCount++;
-            trailingGapMm = spacerMm;
         }
 
-        if (currentColumnItemsCount > 0) {
-            stripTrailingItemSpacer(ink);
-            const filledContent = Math.max(0, currentColumnFilledMm - trailingGapMm);
-            filledByColumn.set(columnIndex, filledContent);
+        stripTrailingItemSpacer(ink);
+        const filledMm = inkPaintedHeightMm(ink, currentColumnDiv);
+        if (ink.querySelector(":scope > .pamphlet-item")) {
+            filledByColumn.set(columnIndex, filledMm);
         }
     }
 
@@ -1194,33 +1192,16 @@ function reflowAndReport(container: HTMLElement) {
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-8`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
         const ink8 = ensureColumnInk(col8);
-        let filledMm = filledByColumn.get(8) ?? 0;
-        const max8 = maxHeightForColumn(8);
-        let trailingGapMm = 0;
-        let itemCount = ink8.querySelectorAll(":scope > .pamphlet-item").length;
         for (const item of pendingItems) {
-            const staleSpacer = item.nextElementSibling;
-            if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
-                staleSpacer.remove();
-            }
-            const spacer = createItemSpacer();
-            const measured = measureBlockInSandbox(item, spacer);
-            const filledContent =
-                itemCount > 0 ? Math.max(0, filledMm - trailingGapMm) : 0;
-            if (itemCount >= MAX_BODY_ITEMS_PER_COLUMN) {
+            const result = tryAppendItemToInk(ink8, col8, item, 8);
+            if (!result.packed) {
                 break;
             }
-            if (itemCount > 0 && filledContent + measured.itemMm > max8 + PACK_FIT_EPSILON_MM) {
-                break;
-            }
-            ink8.appendChild(item);
-            ink8.appendChild(spacer);
-            filledMm = filledContent + measured.blockMm;
-            itemCount++;
-            trailingGapMm = measured.spacerMm;
         }
         stripTrailingItemSpacer(ink8);
-        filledByColumn.set(8, Math.max(0, filledMm - trailingGapMm));
+        if (ink8.querySelector(":scope > .pamphlet-item")) {
+            filledByColumn.set(8, inkPaintedHeightMm(ink8, col8));
+        }
     }
 
     ensureMeasureRoot().column.replaceChildren();

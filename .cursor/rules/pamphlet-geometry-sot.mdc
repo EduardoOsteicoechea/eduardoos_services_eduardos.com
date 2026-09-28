@@ -23,6 +23,8 @@ user asks to fix content “leaving the editable margin” of the sheet.
 - Selection / “+” overlays (`pdf_sot.ts`) are drawn **only** from
   `layout.hits` (+ band fields in `layout`). Do not invent column boxes or
   chrome hit strips in the client that disagree with the PDF.
+- **FE densify fit** uses painted `.pamphlet-column-ink` `scrollHeight` against
+  `maxHeightForColumn` (not sandbox estimates alone, not a hard item-count cap).
 
 Contract detail: `docs/specs/007-pamphlet-page1-column-geometry.md`.
 Workspace parent rule (multi-site): `eduardoos_services/.cursor/rules/pamphlet-geometry-sot.mdc`.
