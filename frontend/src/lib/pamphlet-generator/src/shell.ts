@@ -463,9 +463,7 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="item-type-options">
       <button type="button" data-item-type="paragraph">Paragraph</button>
       <button type="button" data-item-type="heading_1">Heading</button>
-      <!-- Temporarily hidden: image insert
       <button type="button" data-item-type="image">Image</button>
-      -->
     </div>
     <div class="create-modal-actions">
       <button type="button" id="item-type-cancel">Cancel</button>
