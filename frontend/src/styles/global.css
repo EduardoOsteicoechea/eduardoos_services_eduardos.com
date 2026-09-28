@@ -1559,6 +1559,10 @@ section.diag .panel:not(form) {
   margin-bottom: var(--space-margin);
 }
 
+.session-grid form[data-login] > [data-session-login] {
+  grid-column: 1 / -1;
+}
+
 .phone-field {
   display: grid;
   /* Region = 2 cols (col+gutter+col); number expands one col left into the rest */
