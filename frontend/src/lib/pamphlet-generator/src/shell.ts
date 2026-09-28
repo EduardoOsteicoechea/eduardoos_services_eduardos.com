@@ -303,7 +303,7 @@ export function renderShell(_menuIconSrc?: string): string {
 <dialog id="chrome-modal" class="create-modal chrome-modal">
   <form id="chrome-form" class="create-modal-form manage-epam-chrome-form">
     <h2>Cabecera y pie</h2>
-    <p class="create-modal-hint">Edita la cabecera y el pie del panfleto abierto. En móvil y escritorio se usa este mismo formulario.</p>
+    <p class="create-modal-hint">Los cambios se aplican al escribir. La fecha del encabezado es la última actualización (yyyy - mm - dd), no se edita aquí.</p>
     <fieldset>
       <legend>Cabecera</legend>
       <label>
@@ -325,10 +325,6 @@ export function renderShell(_menuIconSrc?: string): string {
       <label>
         Capítulo
         <input id="chrome-header-chapter" name="series_chapter" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Fecha
-        <input id="chrome-header-date" name="date" type="text" autocomplete="off" />
       </label>
     </fieldset>
     <fieldset>
@@ -388,8 +384,8 @@ export function renderShell(_menuIconSrc?: string): string {
         type="submit"
         id="chrome-modal-save"
         class="chrome-modal-btn chrome-modal-btn--save icon-btn"
-        aria-label="Guardar"
-        title="Guardar"
+        aria-label="Listo"
+        title="Listo"
       >
         <span class="material-symbols-outlined" aria-hidden="true">check</span>
       </button>

@@ -24,6 +24,7 @@ import {
 } from "./pamphletFooters";
 import {
   emptyFooter,
+  formatHeaderLastUpdateDate,
   type PamphletStructure,
 } from "./pamphlet-generator/src/pamphlet_schema";
 
@@ -52,7 +53,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const headerAuthor = requireEl<HTMLInputElement>(root, "[data-manage-header-author]");
   const headerSeries = requireEl<HTMLInputElement>(root, "[data-manage-header-series]");
   const headerChapter = requireEl<HTMLInputElement>(root, "[data-manage-header-chapter]");
-  const headerDate = requireEl<HTMLInputElement>(root, "[data-manage-header-date]");
+  const headerDateDisplay = requireEl<HTMLElement>(root, "[data-manage-header-date-display]");
   const footerAction = requireEl<HTMLInputElement>(root, "[data-manage-footer-action]");
   const footerMessage = requireEl<HTMLInputElement>(root, "[data-manage-footer-message]");
   const footerLabel1 = requireEl<HTMLInputElement>(root, "[data-manage-footer-label1]");
@@ -110,7 +111,8 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     headerAuthor.value = doc.header.author ?? "";
     headerSeries.value = doc.header.series ?? "";
     headerChapter.value = doc.header.series_chapter ?? "";
-    headerDate.value = doc.header.date ?? "";
+    const stamp = formatHeaderLastUpdateDate(managed?.meta.updatedAt ?? doc.header.date);
+    headerDateDisplay.textContent = `Fecha (última actualización): ${stamp}`;
     footerAction.value = doc.footer.action ?? "";
     footerMessage.value = doc.footer.message ?? "";
     footerLabel1.value = doc.footer.label1 ?? "";
@@ -132,7 +134,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
         author: headerAuthor.value.trim(),
         series: headerSeries.value.trim(),
         series_chapter: headerChapter.value.trim(),
-        date: headerDate.value.trim(),
+        date: formatHeaderLastUpdateDate(new Date()),
       },
       footer: footerFromForm({
         action: footerAction.value,

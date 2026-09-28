@@ -34,7 +34,29 @@ export interface PamphletHeader {
     author: string;
     series: string;
     series_chapter: string;
+    /** Last-update stamp, always `yyyy - mm - dd` (not a free-form field). */
     date: string;
+}
+
+/**
+ * Format a last-update instant as `yyyy - mm - dd`.
+ * Accepts ISO timestamps (`2026-09-28T…`) or bare `yyyy-mm-dd`; otherwise uses local today.
+ */
+export function formatHeaderLastUpdateDate(
+    updatedAt?: string | Date | null,
+): string {
+    if (updatedAt instanceof Date && !Number.isNaN(updatedAt.getTime())) {
+        const y = updatedAt.getFullYear();
+        const m = String(updatedAt.getMonth() + 1).padStart(2, "0");
+        const d = String(updatedAt.getDate()).padStart(2, "0");
+        return `${y} - ${m} - ${d}`;
+    }
+    const raw = typeof updatedAt === "string" ? updatedAt.trim() : "";
+    const match = raw.match(/^(\d{4})\s*-\s*(\d{2})\s*-\s*(\d{2})/);
+    if (match) {
+        return `${match[1]} - ${match[2]} - ${match[3]}`;
+    }
+    return formatHeaderLastUpdateDate(new Date());
 }
 
 /**
@@ -877,7 +899,7 @@ export function createEmptyPamphlet(meta: CreatePamphletMeta): PamphletStructure
             author: meta.author,
             series: meta.series,
             series_chapter: meta.series_chapter,
-            date: new Date().toISOString().slice(0, 10),
+            date: formatHeaderLastUpdateDate(),
         },
         footer: emptyFooter(),
         last_edited_element: { column: 1, index: 0 },

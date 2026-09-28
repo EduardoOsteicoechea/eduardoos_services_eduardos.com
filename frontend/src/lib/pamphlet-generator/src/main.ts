@@ -112,6 +112,7 @@ import {
     assertPamphletStructure,
     createEmptyPamphlet,
     emptyFooter,
+    formatHeaderLastUpdateDate,
     LEAD_IMAGE_GAP_MM,
     LEAD_IMAGE_HEIGHT_MM,
     ensureStructuredLeadImages,
@@ -241,7 +242,6 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeHeaderAuthor = requireElement<HTMLInputElement>("#chrome-header-author");
     const chromeHeaderSeries = requireElement<HTMLInputElement>("#chrome-header-series");
     const chromeHeaderChapter = requireElement<HTMLInputElement>("#chrome-header-chapter");
-    const chromeHeaderDate = requireElement<HTMLInputElement>("#chrome-header-date");
     const chromeFooterAction = requireElement<HTMLInputElement>("#chrome-footer-action");
     const chromeFooterMessage = requireElement<HTMLInputElement>("#chrome-footer-message");
     const chromeFooterLabel1 = requireElement<HTMLInputElement>("#chrome-footer-label1");
@@ -800,6 +800,10 @@ let suppressEditOpenSave = false;
 let pendingInsert: PendingInsert | null = null;
 /** When set, edits can persist to cloud without a local FileSystem handle. */
 let cloudEpamId: string | null = null;
+/** Server last-update ISO; drives header.date (`yyyy - mm - dd`). */
+let cloudUpdatedAt: string | null = null;
+let chromeLiveTimer: number | null = null;
+let chromeModalUndoPushed = false;
 /** Display title from cloud meta — used if header.title is briefly empty on save. */
 let cloudEpamTitle: string | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
@@ -856,12 +860,20 @@ async function openCloudDocumentById(epamId: string): Promise<void> {
     clearOpenFile();
     memorySession = false;
     cloudEpamId = loaded.meta.epamId;
+    cloudUpdatedAt = loaded.meta.updatedAt?.trim() || null;
     cloudEpamTitle =
         loaded.meta.title?.trim() ||
         (typeof doc.header?.title === "string" ? doc.header.title.trim() : "") ||
         null;
     setOpenFileName(loaded.meta.fileName);
-    loadPamphlet(doc);
+    const withDate: PamphletStructure = {
+        ...doc,
+        header: {
+            ...doc.header,
+            date: formatHeaderLastUpdateDate(cloudUpdatedAt),
+        },
+    };
+    loadPamphlet(withDate);
     rememberLastEpamId(loaded.meta.epamId);
     syncCloudEpamUrl(loaded.meta.epamId);
 }
@@ -1637,7 +1649,6 @@ function fillChromeModalForm(doc: PamphletStructure): void {
     chromeHeaderAuthor.value = coalesceChromeField(header.author, doc.header.author);
     chromeHeaderSeries.value = coalesceChromeField(header.series, doc.header.series);
     chromeHeaderChapter.value = coalesceChromeField(header.series_chapter, doc.header.series_chapter);
-    chromeHeaderDate.value = coalesceChromeField(header.date, doc.header.date);
     chromeFooterAction.value = coalesceChromeField(footer.action, doc.footer.action);
     chromeFooterMessage.value = coalesceChromeField(footer.message, doc.footer.message);
     chromeFooterLabel1.value = coalesceChromeField(footer.label1, doc.footer.label1);
@@ -1659,7 +1670,7 @@ function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
             author: chromeHeaderAuthor.value.trim(),
             series: chromeHeaderSeries.value.trim(),
             series_chapter: chromeHeaderChapter.value.trim(),
-            date: chromeHeaderDate.value.trim(),
+            date: formatHeaderLastUpdateDate(cloudUpdatedAt ?? new Date()),
         },
         footer: footerFromForm({
             action: chromeFooterAction.value,
@@ -1676,7 +1687,36 @@ function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
     };
 }
 
+function applyChromeModalLive(): void {
+    if (!currentDoc || !hasEditableSession() || !chromeModal.open) return;
+    if (!chromeModalUndoPushed) {
+        pushUndoSnapshot();
+        chromeModalUndoPushed = true;
+    }
+    const next = readChromeModalForm(currentDoc);
+    // Editing chrome counts as an update — stamp today's last-update date.
+    next.header.date = formatHeaderLastUpdateDate(new Date());
+    currentHeader = { ...next.header };
+    commitChromeOnly(next);
+}
+
+function scheduleChromeLiveSave(): void {
+    if (!currentDoc || !hasEditableSession() || !chromeModal.open) return;
+    if (chromeLiveTimer !== null) {
+        window.clearTimeout(chromeLiveTimer);
+    }
+    chromeLiveTimer = window.setTimeout(() => {
+        chromeLiveTimer = null;
+        applyChromeModalLive();
+    }, 250);
+}
+
 function closeChromeModal(): void {
+    if (chromeLiveTimer !== null) {
+        window.clearTimeout(chromeLiveTimer);
+        chromeLiveTimer = null;
+        applyChromeModalLive();
+    }
     if (chromeModal.open) chromeModal.close();
 }
 
@@ -1686,15 +1726,16 @@ function openChromeModal(focusName: string | null = null): void {
         setError("Abre o crea un panfleto antes de editar cabecera y pie.");
         return;
     }
+    chromeModalUndoPushed = false;
     fillChromeModalForm(currentDoc);
     if (!chromeModal.open) chromeModal.showModal();
+    // `date` is derived from last update — never focus a removed date input.
     const focusId =
         focusName === "title" ? "chrome-header-title"
         : focusName === "subtitle" ? "chrome-header-subtitle"
         : focusName === "author" ? "chrome-header-author"
         : focusName === "series" ? "chrome-header-series"
         : focusName === "series_chapter" ? "chrome-header-chapter"
-        : focusName === "date" ? "chrome-header-date"
         : focusName === "action" ? "chrome-footer-action"
         : focusName === "message" ? "chrome-footer-message"
         : focusName === "label1" ? "chrome-footer-label1"
@@ -1794,24 +1835,39 @@ function resolveCloudEpamId(): string | null {
 
 async function persistCloud(data: PamphletStructure): Promise<PamphletStructure> {
     const withId = ensureDocumentId(data);
+    const stamped: PamphletStructure = {
+        ...withId,
+        header: {
+            ...withId.header,
+            date: formatHeaderLastUpdateDate(new Date()),
+        },
+    };
     const linkedId = resolveCloudEpamId();
     if (linkedId) cloudEpamId = linkedId;
-    const headerTitle = withId.header?.title?.trim();
+    const headerTitle = stamped.header?.title?.trim();
     const saved = await saveEpamToCloud({
         // Only pass epamId for updates of an already-linked cloud doc.
         // New creates POST to /api/epams with the document id in the body.
         epamId: linkedId || undefined,
         fileName: getOpenFileName() || undefined,
         fallbackTitle: cloudEpamTitle || undefined,
-        document: withId,
+        document: stamped,
     });
     cloudEpamId = saved.meta.epamId;
+    cloudUpdatedAt = saved.meta.updatedAt?.trim() || cloudUpdatedAt;
     cloudEpamTitle =
         saved.meta.title?.trim() || headerTitle || cloudEpamTitle || null;
     setOpenFileName(saved.meta.fileName);
     rememberLastEpamId(saved.meta.epamId);
     syncCloudEpamUrl(saved.meta.epamId);
-    return saved.document;
+    const dated: PamphletStructure = {
+        ...saved.document,
+        header: {
+            ...saved.document.header,
+            date: formatHeaderLastUpdateDate(cloudUpdatedAt ?? stamped.header.date),
+        },
+    };
+    return dated;
 }
 
 function canBackgroundPersist(): boolean {
@@ -2586,7 +2642,14 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
 function loadPamphlet(data: PamphletStructure): void {
     undoSnapshot = null;
     editDock.close();
-    renderDocument(data, false);
+    const withDate: PamphletStructure = {
+        ...data,
+        header: {
+            ...data.header,
+            date: formatHeaderLastUpdateDate(cloudUpdatedAt ?? data.header?.date),
+        },
+    };
+    renderDocument(withDate, false);
     schedulePreviewRegen();
     setStatus(`Open: ${getOpenFileName()}`, "success");
     clearError();
@@ -2984,6 +3047,7 @@ on(openCloudDeleteConfirm, "click", () => {
                 await recycleEpam(id);
                 if (cloudEpamId === id) {
                     cloudEpamId = null;
+                    cloudUpdatedAt = null;
                     cloudEpamTitle = null;
                     rememberLastEpamId(null);
                 }
@@ -3031,6 +3095,7 @@ on(openSourceLocalBtn, "click", async () => {
         // Local files are not cloud-linked yet — keep cloudEpamId null so Guardar
         // can POST a new cloud copy instead of PUT-ing an unknown id.
         cloudEpamId = null;
+        cloudUpdatedAt = null;
         cloudEpamTitle = null;
         rememberLastEpamId(null);
         loadPamphlet(data);
@@ -3361,16 +3426,16 @@ on(chromeModalCancelBtn, "click", () => {
     closeChromeModal();
 });
 
+on(chromeForm, "input", () => {
+    scheduleChromeLiveSave();
+});
+
 on(chromeForm, "submit", (event: Event) => {
     event.preventDefault();
     if (!currentDoc || !hasEditableSession()) {
         setError("Abre o crea un panfleto antes de editar cabecera y pie.");
         return;
     }
-    pushUndoSnapshot();
-    const next = readChromeModalForm(currentDoc);
-    currentHeader = { ...next.header };
-    commitChromeOnly(next);
     closeChromeModal();
     setStatus("Cabecera y pie actualizados", "success");
 });
@@ -3726,6 +3791,7 @@ on(createSaveLocalBtn, "click", async () => {
             pendingCreateMeta = null;
             memorySession = false;
             cloudEpamId = null;
+            cloudUpdatedAt = null;
             cloudEpamTitle = null;
             closeCreateSaveModal();
             finishCreatedPamphlet(data);
@@ -3734,6 +3800,7 @@ on(createSaveLocalBtn, "click", async () => {
         // No FSA (typical on http://host:port): editable blank sheet in this tab only.
         clearOpenFile();
         cloudEpamId = null;
+        cloudUpdatedAt = null;
         cloudEpamTitle = null;
         memorySession = true;
         const blank = createEmptyPamphlet(meta);
@@ -3763,6 +3830,7 @@ on(createSaveCloudBtn, "click", async () => {
         clearOpenFile();
         memorySession = false;
         cloudEpamId = null;
+        cloudUpdatedAt = null;
         cloudEpamTitle = null;
         const blank = createEmptyPamphlet(meta);
         setOpenFileName(
