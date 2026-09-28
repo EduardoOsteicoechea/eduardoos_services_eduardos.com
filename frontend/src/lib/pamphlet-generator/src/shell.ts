@@ -48,6 +48,9 @@ const ICONS = {
   trash: iconSvg(
     `<path d="M6 7h12v2H6V7zm2 3h8l-1 9H9L8 10zm3-6h2l1 1h4v2H6V5h4l1-1z" fill="currentColor"/>`,
   ),
+  heights: iconSvg(
+    `<path d="M4 4h2v16H4V4zm14 0h2v16h-2V4zM9 7h6v2H9V7zm0 4h6v2H9v-2zm0 4h6v2H9v-2z" fill="currentColor"/>`,
+  ),
 };
 
 function actionBtn(
@@ -148,6 +151,12 @@ export function renderShell(_menuIconSrc?: string): string {
         "Exportar PDF en blanco y negro o azul #00368c",
         "disabled",
         "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--action",
+      )}
+      ${actionBtn(
+        "btn-geometry-debug",
+        ICONS.heights,
+        "Alturas",
+        "Debug de alturas: backend, FE mirror, hoja y columnas (copiar informe)",
       )}
     </div>
   </div>
@@ -255,6 +264,21 @@ export function renderShell(_menuIconSrc?: string): string {
   </div>
 </dialog>
 
+<dialog id="geometry-debug-modal" class="create-modal geometry-debug-modal">
+  <div class="create-modal-form geometry-debug-modal__form">
+    <h2>Debug de alturas</h2>
+    <p class="create-modal-hint">
+      Backend layout, FE geometry, hoja y columnas (vertical). Copia y pega el informe en el chat.
+    </p>
+    <pre id="geometry-debug-report" class="geometry-debug-modal__report" tabindex="0"></pre>
+    <div class="create-modal-actions">
+      <button type="button" id="geometry-debug-refresh">Actualizar</button>
+      <button type="button" id="geometry-debug-copy">Copiar todo</button>
+      <button type="button" id="geometry-debug-close">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="series-modal" class="create-modal series-modal">
   <form id="series-form" class="create-modal-form">
     <h2>Serie y capítulos</h2>
@@ -318,19 +342,35 @@ export function renderShell(_menuIconSrc?: string): string {
         <input id="chrome-footer-message" name="message" type="text" autocomplete="off" />
       </label>
       <label>
-        WhatsApp
+        Etiqueta 1
+        <input id="chrome-footer-label1" name="label1" type="text" autocomplete="off" placeholder="WhatsApp:" />
+      </label>
+      <label>
+        Contenido 1
         <input id="chrome-footer-value1" name="value1" type="text" autocomplete="off" />
       </label>
       <label>
-        Teléfono
+        Etiqueta 2
+        <input id="chrome-footer-label2" name="label2" type="text" autocomplete="off" placeholder="Teléfono:" />
+      </label>
+      <label>
+        Contenido 2
         <input id="chrome-footer-value2" name="value2" type="text" autocomplete="off" />
       </label>
       <label>
-        Dirección
+        Etiqueta 3
+        <input id="chrome-footer-label3" name="label3" type="text" autocomplete="off" placeholder="Dirección:" />
+      </label>
+      <label>
+        Contenido 3
         <input id="chrome-footer-value3" name="value3" type="text" autocomplete="off" />
       </label>
       <label>
-        Actividades
+        Etiqueta 4
+        <input id="chrome-footer-label4" name="label4" type="text" autocomplete="off" placeholder="Actividades:" />
+      </label>
+      <label>
+        Contenido 4
         <input id="chrome-footer-value4" name="value4" type="text" autocomplete="off" />
       </label>
     </fieldset>
@@ -377,19 +417,35 @@ export function renderShell(_menuIconSrc?: string): string {
         <input id="footer-form-message" name="message" type="text" autocomplete="off" />
       </label>
       <label>
-        WhatsApp
+        Etiqueta 1
+        <input id="footer-form-label1" name="label1" type="text" autocomplete="off" placeholder="WhatsApp:" />
+      </label>
+      <label>
+        Contenido 1
         <input id="footer-form-value1" name="value1" type="text" autocomplete="off" />
       </label>
       <label>
-        Teléfono
+        Etiqueta 2
+        <input id="footer-form-label2" name="label2" type="text" autocomplete="off" placeholder="Teléfono:" />
+      </label>
+      <label>
+        Contenido 2
         <input id="footer-form-value2" name="value2" type="text" autocomplete="off" />
       </label>
       <label>
-        Dirección
+        Etiqueta 3
+        <input id="footer-form-label3" name="label3" type="text" autocomplete="off" placeholder="Dirección:" />
+      </label>
+      <label>
+        Contenido 3
         <input id="footer-form-value3" name="value3" type="text" autocomplete="off" />
       </label>
       <label>
-        Actividades
+        Etiqueta 4
+        <input id="footer-form-label4" name="label4" type="text" autocomplete="off" placeholder="Actividades:" />
+      </label>
+      <label>
+        Contenido 4
         <input id="footer-form-value4" name="value4" type="text" autocomplete="off" />
       </label>
       <div class="create-modal-actions">

@@ -202,6 +202,12 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const printInkBlackBtn = requireElement<HTMLButtonElement>("#print-ink-black");
     const printInkBlueBtn = requireElement<HTMLButtonElement>("#print-ink-blue");
     const printInkCancelBtn = requireElement<HTMLButtonElement>("#print-ink-cancel");
+    const geometryDebugBtn = requireElement<HTMLButtonElement>("#btn-geometry-debug");
+    const geometryDebugModal = requireElement<HTMLDialogElement>("#geometry-debug-modal");
+    const geometryDebugReport = requireElement<HTMLElement>("#geometry-debug-report");
+    const geometryDebugRefreshBtn = requireElement<HTMLButtonElement>("#geometry-debug-refresh");
+    const geometryDebugCopyBtn = requireElement<HTMLButtonElement>("#geometry-debug-copy");
+    const geometryDebugCloseBtn = requireElement<HTMLButtonElement>("#geometry-debug-close");
     const openSourceModal = requireElement<HTMLDialogElement>("#open-source-modal");
     const openSourceLocalBtn = requireElement<HTMLButtonElement>("#open-source-local");
     const openSourceCloudBtn = requireElement<HTMLButtonElement>("#open-source-cloud");
@@ -238,9 +244,13 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeHeaderDate = requireElement<HTMLInputElement>("#chrome-header-date");
     const chromeFooterAction = requireElement<HTMLInputElement>("#chrome-footer-action");
     const chromeFooterMessage = requireElement<HTMLInputElement>("#chrome-footer-message");
+    const chromeFooterLabel1 = requireElement<HTMLInputElement>("#chrome-footer-label1");
     const chromeFooterValue1 = requireElement<HTMLInputElement>("#chrome-footer-value1");
+    const chromeFooterLabel2 = requireElement<HTMLInputElement>("#chrome-footer-label2");
     const chromeFooterValue2 = requireElement<HTMLInputElement>("#chrome-footer-value2");
+    const chromeFooterLabel3 = requireElement<HTMLInputElement>("#chrome-footer-label3");
     const chromeFooterValue3 = requireElement<HTMLInputElement>("#chrome-footer-value3");
+    const chromeFooterLabel4 = requireElement<HTMLInputElement>("#chrome-footer-label4");
     const chromeFooterValue4 = requireElement<HTMLInputElement>("#chrome-footer-value4");
     const footerBtn = requireElement<HTMLButtonElement>("#btn-footer");
     const footerModal = requireElement<HTMLDialogElement>("#footer-modal");
@@ -256,9 +266,13 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const syncUploadInput = requireElement<HTMLInputElement>("#pamphlet-sync-upload-input");
     const footerFormAction = requireElement<HTMLInputElement>("#footer-form-action");
     const footerFormMessage = requireElement<HTMLInputElement>("#footer-form-message");
+    const footerFormLabel1 = requireElement<HTMLInputElement>("#footer-form-label1");
     const footerFormValue1 = requireElement<HTMLInputElement>("#footer-form-value1");
+    const footerFormLabel2 = requireElement<HTMLInputElement>("#footer-form-label2");
     const footerFormValue2 = requireElement<HTMLInputElement>("#footer-form-value2");
+    const footerFormLabel3 = requireElement<HTMLInputElement>("#footer-form-label3");
     const footerFormValue3 = requireElement<HTMLInputElement>("#footer-form-value3");
+    const footerFormLabel4 = requireElement<HTMLInputElement>("#footer-form-label4");
     const footerFormValue4 = requireElement<HTMLInputElement>("#footer-form-value4");
     const footerFormReset = requireElement<HTMLButtonElement>("#footer-form-reset");
     const footerFormFromSheet = requireElement<HTMLButtonElement>("#footer-form-from-sheet");
@@ -1099,6 +1113,249 @@ function tryAppendItemToInk(
     return { packed: true, contentMm };
 }
 
+function fmtMm(n: number, digits = 3): string {
+    if (!Number.isFinite(n)) return "NaN";
+    return n.toFixed(digits);
+}
+
+function cssVarOnApp(name: string): string {
+    return getComputedStyle(appRoot).getPropertyValue(name).trim() || "(unset)";
+}
+
+function boxDebugLines(
+    label: string,
+    el: HTMLElement | null,
+    mmRef: HTMLElement | null,
+): string[] {
+    if (!el) return [`${label}: (missing)`];
+    const ref = mmRef ?? el;
+    const wMm = convertPixelsToMillimeters(el.offsetWidth, ref);
+    const hMm = convertPixelsToMillimeters(el.offsetHeight, ref);
+    const cs = getComputedStyle(el);
+    return [
+        `${label}:`,
+        `  offsetPx=${el.offsetWidth}x${el.offsetHeight}  offsetMm≈${fmtMm(wMm)}x${fmtMm(hMm)}`,
+        `  clientPx=${el.clientWidth}x${el.clientHeight}  scrollPx=${el.scrollWidth}x${el.scrollHeight}`,
+        `  css height=${cs.height} max-height=${cs.maxHeight}`,
+        `  grid-row=${cs.gridRow} grid-column=${cs.gridColumn}`,
+    ];
+}
+
+/** Exhaustive vertical geometry dump for the DHS “Alturas” modal (copy/paste). */
+function buildGeometryDebugReport(): string {
+    const lines: string[] = [];
+    lines.push(`# Pamphlet geometry debug ${new Date().toISOString()}`);
+    lines.push(
+        `viewMode=${appRoot.dataset.viewMode ?? "(none)"} pamphletType=${appRoot.dataset.pamphletType ?? "(none)"}`,
+    );
+    lines.push(`rootFontPx=${getComputedStyle(document.documentElement).fontSize}`);
+    lines.push(`devicePixelRatio=${window.devicePixelRatio}`);
+    lines.push(`--mobile-view-scale=${cssVarOnApp("--mobile-view-scale")}`);
+    lines.push(`--desktop-view-scale=${cssVarOnApp("--desktop-view-scale")}`);
+    lines.push(`COLUMN_CONTENT_WIDTH_MM=${COLUMN_CONTENT_WIDTH_MM}`);
+    lines.push("");
+
+    lines.push("## FE activeGeometry (mirror used by densify)");
+    for (const [key, value] of Object.entries(activeGeometry)) {
+        lines.push(`${key}=${fmtMm(Number(value))}`);
+    }
+    lines.push("");
+
+    lines.push("## FE maxHeightForColumn (packing floor mm)");
+    for (const col of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        lines.push(`col ${col}: ${fmtMm(maxHeightForColumn(col))}`);
+    }
+    lines.push("");
+
+    lines.push("## CSS vars on .pamphlet-app");
+    for (const name of [
+        "--page-margin",
+        "--page-header-height",
+        "--header-body-gutter",
+        "--page-footer-height",
+        "--footer-body-gutter",
+        "--page1-body-height",
+        "--page1-right-col-height",
+        "--page1-left-col-height",
+        "--column-content-height",
+        "--column-content-width",
+        "--letter-landscape-width",
+        "--letter-landscape-height",
+        "--sheet-stack-height",
+        "--item-gap-height",
+    ]) {
+        lines.push(`${name}=${cssVarOnApp(name)}`);
+    }
+    lines.push("");
+
+    lines.push("## Schema chrome defaults");
+    lines.push(
+        `header.height=${PAMPHLET_HEADER_LAYOUT_MM.height} body_gutter=${PAMPHLET_HEADER_LAYOUT_MM.body_gutter} pad_top=${PAMPHLET_HEADER_LAYOUT_MM.pad_top} pad_bottom=${PAMPHLET_HEADER_LAYOUT_MM.pad_bottom}`,
+    );
+    lines.push(
+        `footer.height=${PAMPHLET_FOOTER_LAYOUT_MM.height} body_gutter=${PAMPHLET_FOOTER_LAYOUT_MM.body_gutter} pad=${PAMPHLET_FOOTER_LAYOUT_MM.pad} pad_top=${PAMPHLET_FOOTER_LAYOUT_MM.pad_top}`,
+    );
+    lines.push("");
+
+    lines.push("## Backend layout (last PDF preview SoT)");
+    const layout = typeof pdfSot !== "undefined" && pdfSot ? pdfSot.getLastLayout() : null;
+    if (!layout) {
+        lines.push("(no preview layout yet — trigger preview / wait for PDF)");
+    } else {
+        const bandKeys = [
+            "schema_version",
+            "page_width_mm",
+            "page_height_mm",
+            "page_count",
+            "margin_mm",
+            "content_band_mm",
+            "page1_body_mm",
+            "page1_right_col_mm",
+            "page1_left_col_mm",
+            "page2_col_mm",
+            "header_h_mm",
+            "header_body_gutter_mm",
+            "footer_h_mm",
+            "footer_body_gutter_mm",
+            "right_body_top_mm",
+            "left_body_top_mm",
+            "footer_top_mm",
+            "right_body_floor_mm",
+            "left_body_floor_mm",
+            "page2_floor_mm",
+        ] as const;
+        for (const key of bandKeys) {
+            const value = (layout as Record<string, unknown>)[key];
+            lines.push(`${key}=${value == null ? "(null)" : String(value)}`);
+        }
+        lines.push(`hits.length=${layout.hits?.length ?? 0}`);
+        for (const col of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+            const hits = (layout.hits ?? []).filter((hit) => hit.column === col);
+            if (hits.length === 0) {
+                lines.push(`backend col ${col}: hits=0`);
+                continue;
+            }
+            const tops = hits.map((hit) => hit.top_mm);
+            const bottoms = hits.map((hit) => hit.top_mm + hit.h_mm);
+            const floor =
+                col === 1 || col === 2
+                    ? layout.right_body_floor_mm
+                    : col === 7 || col === 8
+                      ? layout.left_body_floor_mm
+                      : layout.page2_floor_mm;
+            lines.push(
+                `backend col ${col}: n=${hits.length} topMin=${fmtMm(Math.min(...tops))} bottomMax=${fmtMm(Math.max(...bottoms))} floor=${floor ?? "(null)"} pastFloor=${floor != null && Math.max(...bottoms) > Number(floor) + 0.05 ? "YES" : "no"}`,
+            );
+            hits.forEach((hit, index) => {
+                lines.push(
+                    `  [${index}] kind=${hit.kind} page=${hit.page} top=${fmtMm(hit.top_mm)} h=${fmtMm(hit.h_mm)} bottom=${fmtMm(hit.top_mm + hit.h_mm)} x=${fmtMm(hit.x_mm)} w=${fmtMm(hit.w_mm)}`,
+                );
+            });
+        }
+    }
+    lines.push("");
+
+    lines.push("## Sheet DOM");
+    const refCol =
+        main.querySelector<HTMLElement>(":scope > .pamphlet-column-1") ??
+        main.querySelector<HTMLElement>(":scope > .dumb-column");
+    lines.push(...boxDebugLines("main.pamphlet-sheet", main, refCol));
+    lines.push(
+        ...boxDebugLines(
+            "header",
+            main.querySelector<HTMLElement>(":scope > .pamphlet-page-header"),
+            refCol,
+        ),
+    );
+    lines.push(
+        ...boxDebugLines(
+            "footer",
+            main.querySelector<HTMLElement>(":scope > .pamphlet-page-footer"),
+            main.querySelector<HTMLElement>(":scope > .pamphlet-column-7"),
+        ),
+    );
+    lines.push("");
+
+    lines.push("## Columns (vertical)");
+    for (const colNum of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        const col = main.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colNum}`);
+        const ink = col?.querySelector<HTMLElement>(":scope > .pamphlet-column-ink") ?? null;
+        const max = maxHeightForColumn(colNum);
+        const contentMm = ink && col ? inkContentHeightMm(ink, col) : 0;
+        const overflow = contentMm > max + PACK_FIT_EPSILON_MM;
+        lines.push(`### col ${colNum}`);
+        lines.push(...boxDebugLines(`column-${colNum}`, col, col));
+        lines.push(...boxDebugLines(`ink-${colNum}`, ink, col));
+        lines.push(
+            `maxHeightForColumn=${fmtMm(max)} contentChildrenMm=${fmtMm(contentMm)} OVERFLOW=${overflow ? "YES" : "no"} slackMm=${fmtMm(max - contentMm)}`,
+        );
+        if (ink) {
+            const kids = Array.from(ink.children) as HTMLElement[];
+            lines.push(`ink.children=${kids.length}`);
+            kids.forEach((kid, index) => {
+                const kind = kid.classList.contains("pamphlet-item-spacer")
+                    ? "spacer"
+                    : kid.getAttribute("data-item-type") || "node";
+                const hMm = col ? convertPixelsToMillimeters(kid.offsetHeight, col) : 0;
+                lines.push(`  [${index}] ${kind} hPx=${kid.offsetHeight} hMm=${fmtMm(hMm)}`);
+            });
+        }
+        const addBtn = col?.querySelector<HTMLElement>(":scope > .pamphlet-add-item-button");
+        if (addBtn && col) {
+            lines.push(...boxDebugLines(`add-btn-${colNum}`, addBtn, col));
+            const btnRect = addBtn.getBoundingClientRect();
+            const colRect = col.getBoundingClientRect();
+            lines.push(
+                `  addBtnBottom-colBottom px=${fmtMm(btnRect.bottom - colRect.bottom, 2)} (positive ⇒ + below column box)`,
+            );
+        }
+    }
+    lines.push("");
+
+    lines.push("## currentDoc column lengths");
+    if (!currentDoc) {
+        lines.push("(no currentDoc)");
+    } else {
+        for (const colNum of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+            const key = `column_${colNum}` as keyof PamphletStructure;
+            const items = currentDoc[key];
+            lines.push(`${String(key)}.length=${Array.isArray(items) ? items.length : "n/a"}`);
+        }
+    }
+    return lines.join("\n");
+}
+
+function refreshGeometryDebugModal(): void {
+    geometryDebugReport.textContent = buildGeometryDebugReport();
+}
+
+function openGeometryDebugModal(): void {
+    refreshGeometryDebugModal();
+    if (!geometryDebugModal.open) geometryDebugModal.showModal();
+}
+
+function closeGeometryDebugModal(): void {
+    if (geometryDebugModal.open) geometryDebugModal.close();
+}
+
+async function copyGeometryDebugReport(): Promise<void> {
+    const text = geometryDebugReport.textContent || buildGeometryDebugReport();
+    try {
+        await navigator.clipboard.writeText(text);
+        geometryDebugCopyBtn.textContent = "Copiado";
+        window.setTimeout(() => {
+            geometryDebugCopyBtn.textContent = "Copiar todo";
+        }, 1500);
+    } catch {
+        geometryDebugReport.focus();
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(geometryDebugReport);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+    }
+}
+
 /** Stable fingerprint of body columns for migration / densify persist checks. */
 function columnFingerprint(doc: PamphletStructure): string {
     return JSON.stringify(
@@ -1353,9 +1610,13 @@ function fillChromeModalForm(doc: PamphletStructure): void {
     chromeHeaderDate.value = coalesceChromeField(header.date, doc.header.date);
     chromeFooterAction.value = coalesceChromeField(footer.action, doc.footer.action);
     chromeFooterMessage.value = coalesceChromeField(footer.message, doc.footer.message);
+    chromeFooterLabel1.value = coalesceChromeField(footer.label1, doc.footer.label1);
     chromeFooterValue1.value = coalesceChromeField(footer.value1, doc.footer.value1);
+    chromeFooterLabel2.value = coalesceChromeField(footer.label2, doc.footer.label2);
     chromeFooterValue2.value = coalesceChromeField(footer.value2, doc.footer.value2);
+    chromeFooterLabel3.value = coalesceChromeField(footer.label3, doc.footer.label3);
     chromeFooterValue3.value = coalesceChromeField(footer.value3, doc.footer.value3);
+    chromeFooterLabel4.value = coalesceChromeField(footer.label4, doc.footer.label4);
     chromeFooterValue4.value = coalesceChromeField(footer.value4, doc.footer.value4);
 }
 
@@ -1370,22 +1631,18 @@ function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
             series_chapter: chromeHeaderChapter.value.trim(),
             date: chromeHeaderDate.value.trim(),
         },
-        footer: {
-            ...doc.footer,
-            ...footerFromForm({
-                action: chromeFooterAction.value,
-                message: chromeFooterMessage.value,
-                value1: chromeFooterValue1.value,
-                value2: chromeFooterValue2.value,
-                value3: chromeFooterValue3.value,
-                value4: chromeFooterValue4.value,
-            }),
-            // Keep existing captions (WhatsApp:/…) unless the profile form changed them.
-            label1: doc.footer.label1,
-            label2: doc.footer.label2,
-            label3: doc.footer.label3,
-            label4: doc.footer.label4,
-        },
+        footer: footerFromForm({
+            action: chromeFooterAction.value,
+            message: chromeFooterMessage.value,
+            label1: chromeFooterLabel1.value,
+            value1: chromeFooterValue1.value,
+            label2: chromeFooterLabel2.value,
+            value2: chromeFooterValue2.value,
+            label3: chromeFooterLabel3.value,
+            value3: chromeFooterValue3.value,
+            label4: chromeFooterLabel4.value,
+            value4: chromeFooterValue4.value,
+        }),
     };
 }
 
@@ -1410,14 +1667,14 @@ function openChromeModal(focusName: string | null = null): void {
         : focusName === "date" ? "chrome-header-date"
         : focusName === "action" ? "chrome-footer-action"
         : focusName === "message" ? "chrome-footer-message"
+        : focusName === "label1" ? "chrome-footer-label1"
         : focusName === "value1" ? "chrome-footer-value1"
+        : focusName === "label2" ? "chrome-footer-label2"
         : focusName === "value2" ? "chrome-footer-value2"
+        : focusName === "label3" ? "chrome-footer-label3"
         : focusName === "value3" ? "chrome-footer-value3"
+        : focusName === "label4" ? "chrome-footer-label4"
         : focusName === "value4" ? "chrome-footer-value4"
-        : focusName === "label1" ? "chrome-footer-value1"
-        : focusName === "label2" ? "chrome-footer-value2"
-        : focusName === "label3" ? "chrome-footer-value3"
-        : focusName === "label4" ? "chrome-footer-value4"
         : null;
     requestAnimationFrame(() => {
         const el =
@@ -2912,9 +3169,13 @@ function readFooterFormFields() {
     return footerFromForm({
         action: footerFormAction.value,
         message: footerFormMessage.value,
+        label1: footerFormLabel1.value,
         value1: footerFormValue1.value,
+        label2: footerFormLabel2.value,
         value2: footerFormValue2.value,
+        label3: footerFormLabel3.value,
         value3: footerFormValue3.value,
+        label4: footerFormLabel4.value,
         value4: footerFormValue4.value,
     });
 }
@@ -2925,9 +3186,13 @@ function fillFooterForm(profile: FooterProfile | null): void {
     const f = profile?.footer ?? emptyFooter();
     footerFormAction.value = f.action;
     footerFormMessage.value = f.message;
+    footerFormLabel1.value = f.label1;
     footerFormValue1.value = f.value1;
+    footerFormLabel2.value = f.label2;
     footerFormValue2.value = f.value2;
+    footerFormLabel3.value = f.label3;
     footerFormValue3.value = f.value3;
+    footerFormLabel4.value = f.label4;
     footerFormValue4.value = f.value4;
 }
 
@@ -3520,6 +3785,22 @@ on(printInkCancelBtn, "click", () => {
 
 on(printInkModal, "cancel", () => {
     // Escape closes the dialog; no print.
+});
+
+on(geometryDebugBtn, "click", () => {
+    openGeometryDebugModal();
+});
+
+on(geometryDebugRefreshBtn, "click", () => {
+    refreshGeometryDebugModal();
+});
+
+on(geometryDebugCopyBtn, "click", () => {
+    void copyGeometryDebugReport();
+});
+
+on(geometryDebugCloseBtn, "click", () => {
+    closeGeometryDebugModal();
 });
 
 on(window, "beforeprint", () => {

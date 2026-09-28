@@ -23,11 +23,6 @@ user asks to fix content “leaving the editable margin” of the sheet.
 - Selection / “+” overlays (`pdf_sot.ts`) are drawn **only** from
   `layout.hits` (+ band fields in `layout`). Do not invent column boxes or
   chrome hit strips in the client that disagree with the PDF.
-- **FE densify fit** flattens all body items in reading order, then fills each
-  column by available height (sum of ink children’s `offsetHeight` vs
-  `maxHeightForColumn`). Never a hard item-count cap; never keep underfilled
-  columns stuck to source-column buckets; never ink `scrollHeight` while ink is
-  `height: 100%`.
 
 Contract detail: `docs/specs/007-pamphlet-page1-column-geometry.md`.
 Workspace parent rule (multi-site): `eduardoos_services/.cursor/rules/pamphlet-geometry-sot.mdc`.
@@ -41,6 +36,35 @@ Workspace parent rule (multi-site): `eduardoos_services/.cursor/rules/pamphlet-g
   and preview stay aligned.
 - Changing the pamphlet typeface is a **contract change**: update this rule and
   spec 007 first, then CSS + `backend/pkg/pdf` embeds together.
+
+## Densify architecture (FE packing)
+
+Criterion: **how many items fit in the available column height** — never a
+hard item-count cap (the temporary `MAX_BODY_ITEMS_PER_COLUMN = 4` probe is
+forbidden in production).
+
+Required algorithm (`reflowAndReport` in `main.ts`):
+
+1. Collect every body item from columns **1→8** in
+   `PAMPHLET_BODY_COLUMN_READING_ORDER`.
+2. **Flatten** into one queue (do not keep items stuck in source-column buckets
+   when an earlier column still has room — that froze the 4-item probe after
+   persist).
+3. For each column in reading order, append items greedily until content height
+   would exceed `maxHeightForColumn(col)`.
+4. Measure fit by summing ink **children** `offsetHeight` (items + spacers),
+   converted px→mm via the column’s real CSS mm width.
+5. Do **not** use ink `scrollHeight` while `.pamphlet-column-ink` is
+   `height: 100%` — that reports the column **box**, not stacked content, and
+   falsely rejects items (or packs wrong).
+6. Spill forward only; do not force-pack past the col-8 floor into the page
+   margin.
+7. “+” stays outside the ink box and must not consume column mm.
+
+When diagnosing vertical overflow: prefer the geometry debug modal (DHS action
+“Alturas”) — copy backend layout bands, FE geometry mirror, sheet/column
+painted heights, and per-item mm. Lateral sizes are usually correct; failures
+are vertical.
 
 ## Formulas (page 1 asymmetric)
 
@@ -60,7 +84,7 @@ band size, packing floors, margins/gutters, or editor hit overlays:
    contract (formulas, SoT, or band ownership).
 3. If yes: **update this `.mdc` and/or `docs/specs/007-…` first**, get
    confirmation, then implement code to match the rules.
-4. If no (bugfix under the existing contract): keep rules, fix code to restore
+4. If no (bug fix under the existing contract): keep rules, fix code to restore
    PDF SoT + FE mirror lockstep.
 
 ## Forbidden
@@ -71,3 +95,7 @@ band size, packing floors, margins/gutters, or editor hit overlays:
 - Synthesizing selection hit regions in FE when the preview layout omitted them
   — fix the backend layout emission instead.
 - Force-packing overflow past the column floor into col 8 / page margin.
+- Hard item-count caps for densify (e.g. “max 4 items per column”).
+- Densify that only packs each source column’s own items without flattening
+  (leaves underfilled columns after a bad persist).
+- Using ink `scrollHeight` as content height while ink is `height: 100%`.

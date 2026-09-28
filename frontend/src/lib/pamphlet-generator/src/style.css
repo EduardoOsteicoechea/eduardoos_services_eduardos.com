@@ -69,6 +69,36 @@
   cursor: pointer;
 }
 
+.pamphlet-app .create-modal.geometry-debug-modal {
+  width: min(52rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+}
+
+.pamphlet-app .geometry-debug-modal__form {
+  min-height: 0;
+  max-height: calc(100% - 0rem);
+  overflow: hidden;
+}
+
+.pamphlet-app .geometry-debug-modal__report {
+  flex: 1 1 auto;
+  min-height: 12rem;
+  max-height: 28rem;
+  margin: 0;
+  padding: 0.75rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: var(--font-size-xs, 0.75rem);
+  line-height: 1.35;
+  border: var(--border-width, 0.0625rem) solid var(--color-border, #888);
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-surface, #111);
+  color: var(--color-text, #eee);
+  user-select: text;
+}
+
 .pamphlet-app .create-modal.footer-modal {
   width: min(480px, calc(100vw - 24px));
 }
