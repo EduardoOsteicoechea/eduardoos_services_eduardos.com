@@ -235,10 +235,31 @@ body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:focus-visible {
 }
 
 body.page-pamphlet #dynamic-header .header-dynamic-menu__btn--active,
-body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"] {
-  background: transparent;
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"],
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.is-active {
+  background: var(--color-text);
   border: 0;
-  color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn--active .icon-btn,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"] .icon-btn,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.is-active .icon-btn {
+  color: var(--color-bg);
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn--active:hover:not(:disabled),
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"]:hover:not(:disabled),
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.is-active:hover:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-bg);
+  opacity: 0.9;
+}
+
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn--active:hover:not(:disabled) .icon-btn,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn[aria-pressed="true"]:hover:not(:disabled) .icon-btn,
+body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.is-active:hover:not(:disabled) .icon-btn {
+  color: var(--color-bg);
 }
 
 body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:disabled {
