@@ -86,12 +86,24 @@ function isChromeColumn(column: number): boolean {
     return column === HEADER_COLUMN || column === FOOTER_COLUMN;
 }
 
-/** Click targets for header/footer on page 1 (PDF-first; backend body hits only). */
+/**
+ * Prefer backend chrome hits (column 0 / 9 from drawHeader/drawFooter).
+ * Equal-slice fallback only when the preview API omits them (older binary).
+ */
 function mergeChromeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
+    const hasHeader = hits.some((h) => h.column === HEADER_COLUMN);
+    const hasFooter = hits.some((h) => h.column === FOOTER_COLUMN);
+    if (hasHeader && hasFooter) return hits;
+
+    log("chrome.hits.fallback", {
+        hasHeader,
+        hasFooter,
+        bodyHits: hits.length,
+    });
+
     const pageHeightMm = 215.9;
     const marginMm = PAMPHLET_MARGIN_MM;
     const bandW = PAMPHLET_COL_WIDTH_MM * 2 + PAMPHLET_GUTTER_NARROW_MM;
-    // Match backend colX(6) / colX(2) via pamphletColXMm column→track map.
     const headerX = pamphletColXMm(5);
     const headerH = PAMPHLET_HEADER_LAYOUT_MM.height;
     const headerTopMm = marginMm;
@@ -100,34 +112,38 @@ function mergeChromeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
     const footerTopMm = pageHeightMm - marginMm - footerH;
 
     const chrome: PamphletLayoutHit[] = [];
-    const headerSlice = headerH / Math.max(1, HEADER_FIELD_KEYS.length);
-    HEADER_FIELD_KEYS.forEach((kind, index) => {
-        chrome.push({
-            id: hitId(HEADER_COLUMN, index),
-            kind: `header_${kind}`,
-            page: 1,
-            column: HEADER_COLUMN,
-            index,
-            x_mm: headerX,
-            top_mm: headerTopMm + index * headerSlice,
-            w_mm: bandW,
-            h_mm: headerSlice,
+    if (!hasHeader) {
+        const headerSlice = headerH / Math.max(1, HEADER_FIELD_KEYS.length);
+        HEADER_FIELD_KEYS.forEach((kind, index) => {
+            chrome.push({
+                id: hitId(HEADER_COLUMN, index),
+                kind: `header_${kind}`,
+                page: 1,
+                column: HEADER_COLUMN,
+                index,
+                x_mm: headerX,
+                top_mm: headerTopMm + index * headerSlice,
+                w_mm: bandW,
+                h_mm: headerSlice,
+            });
         });
-    });
-    const footerSlice = footerH / Math.max(1, FOOTER_FIELD_KEYS.length);
-    FOOTER_FIELD_KEYS.forEach((kind, index) => {
-        chrome.push({
-            id: hitId(FOOTER_COLUMN, index),
-            kind: `footer_${kind}`,
-            page: 1,
-            column: FOOTER_COLUMN,
-            index,
-            x_mm: footerX,
-            top_mm: footerTopMm + index * footerSlice,
-            w_mm: bandW,
-            h_mm: footerSlice,
+    }
+    if (!hasFooter) {
+        const footerSlice = footerH / Math.max(1, FOOTER_FIELD_KEYS.length);
+        FOOTER_FIELD_KEYS.forEach((kind, index) => {
+            chrome.push({
+                id: hitId(FOOTER_COLUMN, index),
+                kind: `footer_${kind}`,
+                page: 1,
+                column: FOOTER_COLUMN,
+                index,
+                x_mm: footerX,
+                top_mm: footerTopMm + index * footerSlice,
+                w_mm: bandW,
+                h_mm: footerSlice,
+            });
         });
-    });
+    }
     return [...hits, ...chrome];
 }
 

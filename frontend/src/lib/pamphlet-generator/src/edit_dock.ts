@@ -47,6 +47,8 @@ import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerEr
 const LIVE_DEBOUNCE_MS = 120;
 /** Tablet + desktop: dock stays open on the left. Phone: overlay only while editing. */
 const DOCK_PERSISTENT_MQ = "(min-width: 48rem)";
+const DOCK_PHONE_MQ = "(max-width: 47.999rem)";
+const PHONE_DOCK_BODY_CLASS = "pamphlet-phone-dock-open";
 
 export type EditDockInsertRequest =
     | { mode: "end"; column: number }
@@ -83,6 +85,8 @@ export type EditDockHost = {
     /** Hidden sheet DOM for header/footer fields (PDF-first). */
     syncLiveChromeContent: (loc: LastEditedElement, content: string) => void;
     commitChromeOnly: (doc: PamphletStructure) => void;
+    /** Reflow dock top inset + sheet margin after phone portal mount. */
+    requestLayoutSync: () => void;
 };
 
 type EditDockSession = {
@@ -179,6 +183,9 @@ export function setupEditDock(
     let destroyed = false;
     const disposers: Array<() => void> = [];
     const persistentMq = window.matchMedia(DOCK_PERSISTENT_MQ);
+    const phoneMq = window.matchMedia(DOCK_PHONE_MQ);
+    const dockHomeParent = dockRoot.parentElement;
+    const dockHomeNext = dockRoot.nextElementSibling;
 
     const on = <K extends keyof HTMLElementEventMap>(
         el: HTMLElement | Document | Window,
@@ -225,8 +232,32 @@ export function setupEditDock(
         }
     }
 
+    function syncPhoneDockPortal(): void {
+        if (destroyed || !dockHomeParent) return;
+        const shouldPin =
+            phoneMq.matches && !isPersistent() && session != null && !dockRoot.hidden;
+        if (shouldPin) {
+            document.body.classList.add(PHONE_DOCK_BODY_CLASS);
+            if (dockRoot.parentElement !== document.body) {
+                document.body.appendChild(dockRoot);
+            }
+            host.requestLayoutSync();
+            return;
+        }
+        document.body.classList.remove(PHONE_DOCK_BODY_CLASS);
+        if (dockRoot.parentElement === document.body) {
+            if (dockHomeNext && dockHomeNext.parentElement === dockHomeParent) {
+                dockHomeParent.insertBefore(dockRoot, dockHomeNext);
+            } else {
+                dockHomeParent.insertBefore(dockRoot, dockHomeParent.firstChild);
+            }
+        }
+        host.requestLayoutSync();
+    }
+
     function showShell(): void {
         dockRoot.hidden = false;
+        syncPhoneDockPortal();
     }
 
     function close(): void {
@@ -244,6 +275,7 @@ export function setupEditDock(
             showShell();
         } else {
             dockRoot.hidden = true;
+            syncPhoneDockPortal();
         }
         log("close", { persistent: isPersistent() });
     }
@@ -261,6 +293,7 @@ export function setupEditDock(
         } else {
             dockRoot.hidden = true;
             setIdle(true);
+            syncPhoneDockPortal();
         }
     }
 
@@ -306,8 +339,9 @@ export function setupEditDock(
             const withId = host.ensureDocumentId(current);
             host.setDoc(withId);
             host.syncLiveChromeContent(session.loc, value);
+            // Spec 006: do not regenerate PDF on every chrome keystroke — remounting
+            // hits races the dock. Preview runs on Approve / cancel / profile apply.
             host.schedulePersist();
-            host.schedulePreview();
             log("live-chrome", {
                 column: session.loc.column,
                 index: session.loc.index,
@@ -513,6 +547,7 @@ export function setupEditDock(
                         writeChromeContent(current, snap.loc, snap.initialContent);
                         host.setDoc(host.ensureDocumentId(current));
                         host.syncLiveChromeContent(snap.loc, snap.initialContent);
+                        host.schedulePreview();
                     }
                     close();
                     return;
@@ -786,13 +821,23 @@ export function setupEditDock(
         reader.readAsDataURL(file);
     });
 
-    const onMqChange = () => syncPersistentShell();
+    const onMqChange = () => {
+        syncPersistentShell();
+        syncPhoneDockPortal();
+    };
     if (typeof persistentMq.addEventListener === "function") {
         persistentMq.addEventListener("change", onMqChange);
         disposers.push(() => persistentMq.removeEventListener("change", onMqChange));
     } else {
         persistentMq.addListener(onMqChange);
         disposers.push(() => persistentMq.removeListener(onMqChange));
+    }
+    if (typeof phoneMq.addEventListener === "function") {
+        phoneMq.addEventListener("change", onMqChange);
+        disposers.push(() => phoneMq.removeEventListener("change", onMqChange));
+    } else {
+        phoneMq.addListener(onMqChange);
+        disposers.push(() => phoneMq.removeListener(onMqChange));
     }
 
     syncPersistentShell();
@@ -803,10 +848,11 @@ export function setupEditDock(
         destroy() {
             destroyed = true;
             clearLiveTimer();
-            for (const dispose of disposers) dispose();
-            disposers.length = 0;
             session = null;
             dockRoot.hidden = true;
+            syncPhoneDockPortal();
+            for (const dispose of disposers) dispose();
+            disposers.length = 0;
             log("destroy");
         },
         isOpen: () => session != null && !dockRoot.hidden,

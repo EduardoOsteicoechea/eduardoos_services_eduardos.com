@@ -1,6 +1,6 @@
 # 006 — Pamphlet header/footer (chrome) edit repair
 
-Status: **planned** (partial FE patch shipped; still broken in production UX)  
+Status: **implemented** (backend chrome hits + dock preview-on-approve; see status log)  
 Sites: `eduardoos.com`, `creevzla.org`, `iglesiabiblicapalabraviva.com` (parity)  
 Scope: in-browser Pamphlet / EPAM editor (`frontend/src/lib/pamphlet-generator` + `backend/pkg/pdf`)
 
@@ -139,4 +139,4 @@ Desktop PDF view, open pamphlet:
 | Date | Note |
 | --- | --- |
 | 2026-09-28 | FE-only chromeMode + equal-slice hits shipped; user reports still broken. This spec written as the repair plan. |
-| — | Mark **done** when backend hits + no-live-preview-on-chrome + acceptance checklist pass on eduardoos production. |
+| 2026-09-28 | Implemented: backend `drawHeader`/`drawFooter` emit column 0/9 hits; dock chrome skips live PDF regen; FE uses backend hits (equal-slice fallback only if missing); Go test asserts `c0:0` / `c9:0`. |
