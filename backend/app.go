@@ -315,6 +315,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/epams/{id}/copy", a.copyEpamHandler)
 	mux.HandleFunc("GET /api/epams/{id}", a.getEpamHandler)
 	mux.HandleFunc("PUT /api/epams/{id}", a.updateEpamHandler)
+	mux.HandleFunc("PATCH /api/epams/{id}/publication", a.setEpamPublicationHandler)
 	mux.HandleFunc("DELETE /api/epams/{id}", a.deleteEpamHandler)
 	mux.HandleFunc("POST /api/documents/pamphlet/pdf", a.pamphletPDFHandler)
 	mux.HandleFunc("POST /api/documents/pamphlet/preview", a.pamphletPreviewHandler)

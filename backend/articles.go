@@ -21,7 +21,7 @@ func (a *App) publicArticleOwner(r *http.Request) (*User, bool) {
 }
 
 // autoPublishEpamForArticles marks pamphlets owned by the configured articles
-// publisher as public on every cloud save (metadata for admin tools / imports).
+// publisher as public on create (not on later updates, so Manage hide sticks).
 func (a *App) autoPublishEpamForArticles(user *User, rec *EpamRecord) {
 	if user == nil || rec == nil {
 		return
@@ -185,6 +185,9 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	out := make([]EpamRecord, 0, len(records))
 	for _, record := range records {
+		if !record.Public {
+			continue
+		}
 		record.Body = nil
 		out = append(out, record)
 	}
@@ -202,7 +205,7 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	if !found {
+	if !found || !record.Public {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}

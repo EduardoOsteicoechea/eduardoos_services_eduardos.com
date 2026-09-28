@@ -265,7 +265,6 @@ func (a *App) updateEpamHandler(w http.ResponseWriter, r *http.Request) {
 	lockedID := existing.EpamID
 	applyEpamWrite(&existing, body)
 	existing.EpamID = lockedID
-	a.autoPublishEpamForArticles(user, &existing)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -277,6 +276,46 @@ func (a *App) updateEpamHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, saved)
+}
+
+type epamPublicationBody struct {
+	Published bool `json:"published"`
+}
+
+func (a *App) setEpamPublicationHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requirePamphletWrite(w, r)
+	if user == nil {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("id"))
+	if id == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body epamPublicationBody
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 8<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	rid := requestIDFrom(r, nil)
+	existing, ok, err := a.pamphlet.GetEpam(r.Context(), user.ID, id, rid)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !ok {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	existing.Public = body.Published
+	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "epam_publication", map[bool]string{true: "published", false: "unpublished"}[body.Published], user.ID)
+	a.mustLogf(r, "epams.publication.ok", "epam_id", id, "published", body.Published)
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "epamId": saved.EpamID, "public": saved.Public})
 }
 
 func (a *App) deleteEpamHandler(w http.ResponseWriter, r *http.Request) {
@@ -367,6 +406,7 @@ func (a *App) copyEpamHandler(w http.ResponseWriter, r *http.Request) {
 		Author: src.Author, Date: src.Date, Body: body,
 	}
 	syncEpamMetaFromHeader(&copyRec)
+	a.autoPublishEpamForArticles(user, &copyRec)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), copyRec, rid)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

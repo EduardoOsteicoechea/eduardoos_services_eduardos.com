@@ -161,18 +161,18 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 	}
 }
 
-func TestArticlesLoadAllPamphletsForConfiguredOwner(t *testing.T) {
+func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
 	_, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
-		UserID: "member-1", EpamID: "saved", Title: "Saved",
+		UserID: "member-1", EpamID: "saved", Title: "Saved", Public: true,
 		Body: map[string]any{"header": map[string]any{"title": "Saved"}, "column_1": []any{map[string]any{"type": "paragraph", "text": "Visible"}}, "footer": map[string]any{}},
 	}, "test")
 	if err != nil {
 		t.Fatal(err)
 	}
 	_, err = app.pamphlet.SaveEpam(context.Background(), EpamRecord{
-		UserID: "member-1", EpamID: "draft", Title: "Draft",
+		UserID: "member-1", EpamID: "draft", Title: "Draft", Public: false,
 		Body: map[string]any{"header": map[string]any{"title": "Draft"}, "footer": map[string]any{}},
 	}, "test")
 	if err != nil {
@@ -187,18 +187,18 @@ func TestArticlesLoadAllPamphletsForConfiguredOwner(t *testing.T) {
 	}
 	list := httptest.NewRecorder()
 	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
-	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(2) {
-		t.Fatalf("owner list: %d %s", list.Code, list.Body.String())
+	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(1) {
+		t.Fatalf("owner public list: %d %s", list.Code, list.Body.String())
 	}
-	got := httptest.NewRecorder()
-	app.Handler().ServeHTTP(got, httptest.NewRequest(http.MethodGet, "/api/articles/draft", nil))
-	if got.Code != http.StatusOK {
-		t.Fatalf("saved pamphlet should load as article: %d %s", got.Code, got.Body.String())
+	draft := httptest.NewRecorder()
+	app.Handler().ServeHTTP(draft, httptest.NewRequest(http.MethodGet, "/api/articles/draft", nil))
+	if draft.Code != http.StatusNotFound {
+		t.Fatalf("unpublished pamphlet should be hidden: %d %s", draft.Code, draft.Body.String())
 	}
 	saved := httptest.NewRecorder()
 	app.Handler().ServeHTTP(saved, httptest.NewRequest(http.MethodGet, "/api/articles/saved", nil))
 	if saved.Code != http.StatusOK {
-		t.Fatalf("article with column text: %d %s", saved.Code, saved.Body.String())
+		t.Fatalf("public article with column text: %d %s", saved.Code, saved.Body.String())
 	}
 	payload := decodeMap(t, saved)
 	blocks, _ := payload["blocks"].([]any)
@@ -213,6 +213,39 @@ func TestArticlesLoadAllPamphletsForConfiguredOwner(t *testing.T) {
 	app.Handler().ServeHTTP(foreign, httptest.NewRequest(http.MethodGet, "/api/articles/foreign", nil))
 	if foreign.Code != http.StatusNotFound {
 		t.Fatalf("other owner's pamphlet exposed: %d %s", foreign.Code, foreign.Body.String())
+	}
+}
+
+func TestEpamOwnerPublicationToggle(t *testing.T) {
+	app := newTestApp(false)
+	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
+	_ = app.grantEntitlement("member-1", productEpam)
+	if _, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "toggle-me", Title: "Toggle", Public: true,
+		Body: map[string]any{"header": map[string]any{"title": "Toggle"}, "footer": map[string]any{}},
+	}, "test"); err != nil {
+		t.Fatal(err)
+	}
+	hide := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/epams/toggle-me/publication", `{"published":false}`)
+	if hide.Code != http.StatusOK {
+		t.Fatalf("hide: %d %s", hide.Code, hide.Body.String())
+	}
+	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "toggle-me", "test")
+	if err != nil || !ok || rec.Public {
+		t.Fatalf("expected unpublished: %#v ok=%t err=%v", rec, ok, err)
+	}
+	list := httptest.NewRecorder()
+	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(0) {
+		t.Fatalf("hidden article still listed: %d %s", list.Code, list.Body.String())
+	}
+	show := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/epams/toggle-me/publication", `{"published":true}`)
+	if show.Code != http.StatusOK {
+		t.Fatalf("show: %d %s", show.Code, show.Body.String())
+	}
+	rec, ok, err = app.pamphlet.GetEpam(context.Background(), "member-1", "toggle-me", "test")
+	if err != nil || !ok || !rec.Public {
+		t.Fatalf("expected published: %#v ok=%t err=%v", rec, ok, err)
 	}
 }
 

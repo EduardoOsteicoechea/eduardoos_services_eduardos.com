@@ -63,8 +63,16 @@ import {
     savePamphlet,
     setOpenFileName,
 } from "./pamphlet_file";
-import { copyEpam, fetchEpam, fetchEpams, fetchEpamSeriesTree, recycleEpam, saveEpamToCloud } from "../../epams";
-import type { EpamSeriesTreeItem, EpamSeriesTreeResponse } from "../../epams";
+import {
+    copyEpam,
+    fetchEpam,
+    fetchEpams,
+    fetchEpamSeriesTree,
+    recycleEpam,
+    saveEpamToCloud,
+    setEpamPublication,
+} from "../../epams";
+import type { EpamRecord, EpamSeriesTreeItem, EpamSeriesTreeResponse } from "../../epams";
 import {
     createFooterProfile,
     deleteFooterProfile,
@@ -87,6 +95,7 @@ import {
     getItemLocation,
     isChromeItem,
     isImageItem,
+    ensureSheetBackground,
     renderFromPamphlet,
     renderPageChrome,
     serializePamphlet,
@@ -189,6 +198,28 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const openCloudCancelBtn = requireElement<HTMLButtonElement>("#open-cloud-cancel");
     const openCloudDeleteToggle = requireElement<HTMLButtonElement>("#open-cloud-delete-toggle");
     const openCloudDeleteConfirm = requireElement<HTMLButtonElement>("#open-cloud-delete-confirm");
+    const manageEpamModal = requireElement<HTMLDialogElement>("#manage-epam-modal");
+    const manageEpamHint = requireElement<HTMLElement>("#manage-epam-hint");
+    const manageEpamList = requireElement<HTMLElement>("#manage-epam-list");
+    const manageEpamDetail = requireElement<HTMLElement>("#manage-epam-detail");
+    const manageEpamDetailTitle = requireElement<HTMLElement>("#manage-epam-detail-title");
+    const manageEpamPublic = requireElement<HTMLInputElement>("#manage-epam-public");
+    const manageEpamChromeForm = requireElement<HTMLFormElement>("#manage-epam-chrome-form");
+    const manageHeaderTitle = requireElement<HTMLInputElement>("#manage-header-title");
+    const manageHeaderSubtitle = requireElement<HTMLInputElement>("#manage-header-subtitle");
+    const manageHeaderAuthor = requireElement<HTMLInputElement>("#manage-header-author");
+    const manageHeaderSeries = requireElement<HTMLInputElement>("#manage-header-series");
+    const manageHeaderSeriesChapter = requireElement<HTMLInputElement>("#manage-header-series-chapter");
+    const manageHeaderDate = requireElement<HTMLInputElement>("#manage-header-date");
+    const manageFooterAction = requireElement<HTMLInputElement>("#manage-footer-action");
+    const manageFooterMessage = requireElement<HTMLInputElement>("#manage-footer-message");
+    const manageFooterValue1 = requireElement<HTMLInputElement>("#manage-footer-value1");
+    const manageFooterValue2 = requireElement<HTMLInputElement>("#manage-footer-value2");
+    const manageFooterValue3 = requireElement<HTMLInputElement>("#manage-footer-value3");
+    const manageFooterValue4 = requireElement<HTMLInputElement>("#manage-footer-value4");
+    const manageEpamOpenFooters = requireElement<HTMLButtonElement>("#manage-epam-open-footers");
+    const manageEpamDelete = requireElement<HTMLButtonElement>("#manage-epam-delete");
+    const manageEpamClose = requireElement<HTMLButtonElement>("#manage-epam-close");
     const createForm = requireElement<HTMLFormElement>("#create-form");
     const modalCancelBtn = requireElement<HTMLButtonElement>("#modal-cancel");
     const modalTitle = requireElement<HTMLInputElement>("#modal-title");
@@ -472,7 +503,6 @@ function syncDesktopViewScale(): void {
 
 function syncSheetScale(): void {
     syncTabletDockViewportHeight();
-    syncPhoneEditDockInset();
     syncMobileViewScale();
     syncDesktopViewScale();
 }
@@ -777,6 +807,8 @@ let pendingInsert: PendingInsert | null = null;
 let cloudEpamId: string | null = null;
 /** Display title from cloud meta — used if header.title is briefly empty on save. */
 let cloudEpamTitle: string | null = null;
+/** Manage-modal working document (chrome edit without opening the canvas). */
+let managedEpam: { meta: EpamRecord; document: PamphletStructure } | null = null;
 /** In-browser session with no File System Access handle (HTTP staging, unsupported browsers). */
 let memorySession = false;
 /** Latest client snapshot waiting for background disk/cloud flush (coalesced). */
@@ -1089,6 +1121,7 @@ function reflowAndReport(container: HTMLElement) {
     // Densify in reading order (1→2 under header, 3–6 page 2, 7–8 page 1 left).
     const itemsBySourceColumn = collectColumnItemsByNumber(container);
     container.innerHTML = "";
+    ensureSheetBackground(container);
 
     const filledByColumn = new Map<number, number>();
 
@@ -1621,20 +1654,6 @@ editDock = setupEditDock(editDockRoot, {
     commitChromeOnly,
     requestLayoutSync: () => syncSheetScale(),
 });
-
-/** Phone edit dock: pin below the activity bar; follow visualViewport when the URL bar moves. */
-function syncPhoneEditDockInset(): void {
-    if (!mobileViewportMq.matches || !editDock.isOpen()) {
-        appRoot.style.removeProperty("--pamphlet-phone-dock-top");
-        return;
-    }
-    const rootFs = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    const headerEl = document.querySelector<HTMLElement>(".app-header--start");
-    const headerPx = headerEl?.getBoundingClientRect().height ?? 0;
-    const vvTop = window.visualViewport?.offsetTop ?? 0;
-    const topPx = Math.max(0, vvTop + headerPx);
-    appRoot.style.setProperty("--pamphlet-phone-dock-top", `${topPx / rootFs}rem`);
-}
 
 function highlightMobileEditItem(loc: LastEditedElement | null): void {
     main.querySelectorAll<HTMLElement>(".pamphlet-item.is-editing").forEach((el) => {
@@ -2791,28 +2810,52 @@ function fillFooterForm(profile: FooterProfile | null): void {
 }
 
 async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "linked"): Promise<void> {
-    if (!currentDoc) {
-        setError("Abre un panfleto para aplicar este pie.");
+    if (currentDoc) {
+        const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
+        const next: PamphletStructure = {
+            ...live,
+            footer: { ...profile.footer },
+            footer_profile_id: profile.footerId,
+            footer_bind: bind,
+        };
+        currentDoc = next;
+        renderPageChrome(main, next);
+        schedulePersist();
+        schedulePreviewRegen();
+        setStatus(
+            bind === "linked"
+                ? `Pie vinculado: ${profile.name}`
+                : `Pie copiado: ${profile.name}`,
+            "success",
+        );
+        await refreshFooterProfiles();
         return;
     }
-    const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
-    const next: PamphletStructure = {
-        ...live,
-        footer: { ...profile.footer },
-        footer_profile_id: profile.footerId,
-        footer_bind: bind,
-    };
-    currentDoc = next;
-    renderPageChrome(main, next);
-    schedulePersist();
-    schedulePreviewRegen();
-    setStatus(
-        bind === "linked"
-            ? `Pie vinculado: ${profile.name}`
-            : `Pie copiado: ${profile.name}`,
-        "success",
-    );
-    await refreshFooterProfiles();
+    if (managedEpam) {
+        const next: PamphletStructure = {
+            ...managedEpam.document,
+            footer: { ...profile.footer },
+            footer_profile_id: profile.footerId,
+            footer_bind: bind,
+        };
+        const saved = await saveEpamToCloud({
+            document: next,
+            epamId: managedEpam.meta.epamId,
+            fileName: managedEpam.meta.fileName,
+            fallbackTitle: managedEpam.meta.title,
+        });
+        managedEpam = { meta: saved.meta, document: saved.document };
+        fillManageChromeForm(managedEpam.document);
+        setStatus(
+            bind === "linked"
+                ? `Pie vinculado: ${profile.name}`
+                : `Pie copiado: ${profile.name}`,
+            "success",
+        );
+        await refreshFooterProfiles();
+        return;
+    }
+    setError("Abre un panfleto para aplicar este pie.");
 }
 
 async function refreshFooterProfiles(): Promise<void> {
@@ -2821,9 +2864,10 @@ async function refreshFooterProfiles(): Promise<void> {
         footerModalHint.textContent = "Inicia sesión para guardar pies reutilizables.";
         return;
     }
-    footerModalHint.textContent = currentDoc
-        ? "Copia deja un snapshot. Vincular actualiza este panfleto cuando edites el maestro."
-        : "Crea pies reutilizables (la info). Abre un panfleto para copiarlos o vincularlos.";
+    footerModalHint.textContent =
+        currentDoc || managedEpam
+            ? "Copia deja un snapshot. Vincular actualiza este panfleto cuando edites el maestro."
+            : "Crea pies reutilizables (la info). Abre un panfleto para copiarlos o vincularlos.";
     try {
         const { footers } = await fetchFooterProfiles();
         if (footers.length === 0) {
@@ -2837,7 +2881,8 @@ async function refreshFooterProfiles(): Promise<void> {
             const card = document.createElement("article");
             card.className = "footer-profile-card";
             card.setAttribute("role", "listitem");
-            if (currentDoc?.footer_profile_id === profile.footerId) {
+            const activeDoc = currentDoc ?? managedEpam?.document ?? null;
+            if (activeDoc?.footer_profile_id === profile.footerId) {
                 card.classList.add("is-current");
             }
             const heading = document.createElement("h3");
@@ -2846,8 +2891,8 @@ async function refreshFooterProfiles(): Promise<void> {
             const meta = document.createElement("p");
             meta.className = "footer-profile-card__meta";
             const bindLabel =
-                currentDoc?.footer_profile_id === profile.footerId
-                    ? currentDoc.footer_bind === "linked"
+                activeDoc?.footer_profile_id === profile.footerId
+                    ? activeDoc.footer_bind === "linked"
                         ? "vinculado"
                         : "copiado en este panfleto"
                     : "";
@@ -2880,7 +2925,7 @@ async function refreshFooterProfiles(): Promise<void> {
             });
 
             actions.append(editBtn, delBtn);
-            if (currentDoc) {
+            if (activeDoc) {
                 const snapBtn = document.createElement("button");
                 snapBtn.type = "button";
                 snapBtn.textContent = "Copiar";
@@ -2932,17 +2977,29 @@ on(footerFormReset, "click", () => {
 });
 
 on(footerFormFromSheet, "click", () => {
-    if (!currentDoc) {
-        setError("Abre un panfleto para copiar su pie al formulario.");
+    if (currentDoc) {
+        const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
+        fillFooterForm({
+            userId: "",
+            footerId: footerFormId.value,
+            name: footerFormName.value.trim() || live.header.title || "Pie actual",
+            footer: live.footer,
+        });
         return;
     }
-    const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
-    fillFooterForm({
-        userId: "",
-        footerId: footerFormId.value,
-        name: footerFormName.value.trim() || live.header.title || "Pie actual",
-        footer: live.footer,
-    });
+    if (managedEpam) {
+        fillFooterForm({
+            userId: "",
+            footerId: footerFormId.value,
+            name:
+                footerFormName.value.trim() ||
+                managedEpam.document.header.title ||
+                "Pie actual",
+            footer: managedEpam.document.footer,
+        });
+        return;
+    }
+    setError("Abre un panfleto para copiar su pie al formulario.");
 });
 
 on(footerProfileForm, "submit", (event: Event) => {
@@ -3436,6 +3493,280 @@ if (window.visualViewport) {
         setStatus("No file open — open an existing .epam or create a new one.");
     }
 
+function clearManageSelection(): void {
+    managedEpam = null;
+    manageEpamDetail.hidden = true;
+    manageEpamPublic.checked = false;
+    manageEpamList
+        .querySelectorAll(".open-cloud-list__card.is-selected")
+        .forEach((el) => el.classList.remove("is-selected"));
+}
+
+function fillManageChromeForm(doc: PamphletStructure): void {
+    manageHeaderTitle.value = doc.header.title ?? "";
+    manageHeaderSubtitle.value = doc.header.subtitle ?? "";
+    manageHeaderAuthor.value = doc.header.author ?? "";
+    manageHeaderSeries.value = doc.header.series ?? "";
+    manageHeaderSeriesChapter.value = doc.header.series_chapter ?? "";
+    manageHeaderDate.value = doc.header.date ?? "";
+    manageFooterAction.value = doc.footer.action ?? "";
+    manageFooterMessage.value = doc.footer.message ?? "";
+    manageFooterValue1.value = doc.footer.value1 ?? "";
+    manageFooterValue2.value = doc.footer.value2 ?? "";
+    manageFooterValue3.value = doc.footer.value3 ?? "";
+    manageFooterValue4.value = doc.footer.value4 ?? "";
+}
+
+function readManageChromeForm(doc: PamphletStructure): PamphletStructure {
+    return {
+        ...doc,
+        header: {
+            title: manageHeaderTitle.value.trim(),
+            subtitle: manageHeaderSubtitle.value.trim(),
+            author: manageHeaderAuthor.value.trim(),
+            series: manageHeaderSeries.value.trim(),
+            series_chapter: manageHeaderSeriesChapter.value.trim(),
+            date: manageHeaderDate.value.trim(),
+        },
+        footer: footerFromForm({
+            action: manageFooterAction.value,
+            message: manageFooterMessage.value,
+            value1: manageFooterValue1.value,
+            value2: manageFooterValue2.value,
+            value3: manageFooterValue3.value,
+            value4: manageFooterValue4.value,
+        }),
+    };
+}
+
+async function selectManagedEpam(epamId: string): Promise<void> {
+    manageEpamHint.textContent = "Loading pamphlet…";
+    const { meta, document } = await fetchEpam(epamId);
+    managedEpam = { meta, document };
+    manageEpamDetail.hidden = false;
+    manageEpamDetailTitle.textContent = meta.title || meta.fileName || meta.epamId;
+    manageEpamPublic.checked = Boolean(meta.public);
+    fillManageChromeForm(document);
+    manageEpamList
+        .querySelectorAll(".open-cloud-list__card.is-selected")
+        .forEach((el) => el.classList.remove("is-selected"));
+    manageEpamList
+        .querySelector(`[data-manage-epam-id="${CSS.escape(epamId)}"]`)
+        ?.classList.add("is-selected");
+    manageEpamHint.textContent =
+        "Hide from Articles, delete, edit header/footer, or apply a footer profile.";
+}
+
+function appendManagePamphletRow(parent: HTMLElement, item: EpamSeriesTreeItem): void {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "open-cloud-list__item open-cloud-list__card";
+    btn.dataset.manageEpamId = item.epamId;
+    btn.setAttribute(
+        "aria-label",
+        `Manage pamphlet ${item.title || item.fileName || item.epamId}`,
+    );
+    const title = document.createElement("span");
+    title.className = "open-cloud-list__title";
+    title.textContent = item.title || item.fileName || item.epamId;
+    const meta = document.createElement("span");
+    meta.className = "open-cloud-list__meta";
+    const updated = (item.updatedAt ?? "").slice(0, 10) || "—";
+    meta.textContent = `${item.fileName || "sin-nombre.epam"} · ${updated}`;
+    btn.append(title, meta);
+    btn.addEventListener("click", () => {
+        void (async () => {
+            btn.disabled = true;
+            try {
+                await selectManagedEpam(item.epamId);
+            } catch (err) {
+                const message = err instanceof Error ? err.message : String(err);
+                setError(`Could not load pamphlet: ${message}`);
+                openApiErrorModal(message, {
+                    title: "Manage pamphlet",
+                    summary: "Could not load this .epam from the server.",
+                });
+            } finally {
+                btn.disabled = false;
+            }
+        })();
+    });
+    parent.appendChild(btn);
+}
+
+function renderManageEpamTree(tree: EpamSeriesTreeResponse): void {
+    manageEpamList.replaceChildren();
+    if (tree.count === 0) {
+        manageEpamHint.textContent = "No cloud pamphlets for this account yet.";
+        const empty = document.createElement("p");
+        empty.className = "open-cloud-list__empty";
+        empty.textContent = "Save a pamphlet with “Save to cloud” first.";
+        manageEpamList.appendChild(empty);
+        return;
+    }
+    for (const seriesNode of tree.series) {
+        const seriesEl = document.createElement("details");
+        seriesEl.className = "open-cloud-list__series";
+        seriesEl.open = true;
+        const seriesSummary = document.createElement("summary");
+        seriesSummary.className = "open-cloud-list__series-title";
+        seriesSummary.textContent = seriesNode.name;
+        seriesEl.appendChild(seriesSummary);
+        for (const chapter of seriesNode.chapters) {
+            const chapterEl = document.createElement("details");
+            chapterEl.className = "open-cloud-list__chapter";
+            chapterEl.open = true;
+            const chapterSummary = document.createElement("summary");
+            chapterSummary.className = "open-cloud-list__chapter-title";
+            chapterSummary.textContent = `Capítulo ${chapter.name}`;
+            chapterEl.appendChild(chapterSummary);
+            const chapterList = document.createElement("div");
+            chapterList.className = "open-cloud-list__chapter-items";
+            for (const item of chapter.items) {
+                appendManagePamphletRow(chapterList, item);
+            }
+            chapterEl.appendChild(chapterList);
+            seriesEl.appendChild(chapterEl);
+        }
+        manageEpamList.appendChild(seriesEl);
+    }
+}
+
+async function openManageEpamModal(): Promise<void> {
+    clearError();
+    clearManageSelection();
+    if (!getAuthToken() || !isAuthenticated()) {
+        setError("Sign in to manage cloud pamphlets.");
+        manageEpamHint.textContent = "Sign in to manage cloud pamphlets.";
+        manageEpamModal.showModal();
+        return;
+    }
+    manageEpamHint.textContent = "Loading pamphlets…";
+    manageEpamModal.showModal();
+    try {
+        const tree = await fetchEpamSeriesTree();
+        renderManageEpamTree(tree);
+        if (tree.count > 0) {
+            manageEpamHint.textContent =
+                "Select a pamphlet to hide from Articles, delete, or edit headers and footers.";
+        }
+    } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        manageEpamHint.textContent = `Could not list pamphlets: ${message}`;
+        openApiErrorModal(message, {
+            title: "Manage pamphlet",
+            summary: "Could not list pamphlets from the server.",
+        });
+    }
+}
+
+on(manageEpamClose, "click", () => {
+    if (manageEpamModal.open) manageEpamModal.close();
+    clearManageSelection();
+});
+
+on(manageEpamPublic, "change", () => {
+    void (async () => {
+        if (!managedEpam) return;
+        const published = manageEpamPublic.checked;
+        manageEpamPublic.disabled = true;
+        try {
+            const result = await setEpamPublication(managedEpam.meta.epamId, published);
+            managedEpam = {
+                ...managedEpam,
+                meta: { ...managedEpam.meta, public: result.public },
+            };
+            setStatus(
+                result.public
+                    ? "Pamphlet is visible in Articles."
+                    : "Pamphlet hidden from Articles.",
+                "success",
+            );
+        } catch (err) {
+            manageEpamPublic.checked = !published;
+            const message = err instanceof Error ? err.message : String(err);
+            setError(`Visibility update failed: ${message}`);
+            openApiErrorModal(message, {
+                title: "Manage pamphlet",
+                summary: "Could not update Articles visibility.",
+            });
+        } finally {
+            manageEpamPublic.disabled = false;
+        }
+    })();
+});
+
+on(manageEpamChromeForm, "submit", (event: Event) => {
+    event.preventDefault();
+    void (async () => {
+        if (!managedEpam) return;
+        const next = readManageChromeForm(managedEpam.document);
+        try {
+            const saved = await saveEpamToCloud({
+                document: next,
+                epamId: managedEpam.meta.epamId,
+                fileName: managedEpam.meta.fileName,
+                fallbackTitle: managedEpam.meta.title,
+            });
+            managedEpam = { meta: saved.meta, document: saved.document };
+            manageEpamDetailTitle.textContent =
+                saved.meta.title || saved.meta.fileName || saved.meta.epamId;
+            fillManageChromeForm(saved.document);
+            setStatus("Header and footer saved.", "success");
+            const tree = await fetchEpamSeriesTree();
+            renderManageEpamTree(tree);
+            manageEpamList
+                .querySelector(`[data-manage-epam-id="${CSS.escape(saved.meta.epamId)}"]`)
+                ?.classList.add("is-selected");
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            setError(`Save failed: ${message}`);
+            openApiErrorModal(message, {
+                title: "Manage pamphlet",
+                summary: "Could not save header and footer.",
+            });
+        }
+    })();
+});
+
+on(manageEpamOpenFooters, "click", () => {
+    void openFooterModal();
+});
+
+on(manageEpamDelete, "click", () => {
+    void (async () => {
+        if (!managedEpam) return;
+        const label =
+            managedEpam.meta.title || managedEpam.meta.fileName || managedEpam.meta.epamId;
+        if (!window.confirm(`Delete “${label}”? This cannot be undone from Manage.`)) {
+            return;
+        }
+        const id = managedEpam.meta.epamId;
+        manageEpamDelete.disabled = true;
+        try {
+            await recycleEpam(id);
+            if (cloudEpamId === id) {
+                cloudEpamId = null;
+                cloudEpamTitle = null;
+                rememberLastEpamId(null);
+            }
+            clearManageSelection();
+            setStatus("Pamphlet deleted.", "success");
+            const tree = await fetchEpamSeriesTree();
+            renderManageEpamTree(tree);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            setError(`Delete failed: ${message}`);
+            openApiErrorModal(message, {
+                title: "Manage pamphlet",
+                summary: "Could not delete this pamphlet.",
+            });
+        } finally {
+            manageEpamDelete.disabled = false;
+        }
+    })();
+});
+
     /**
      * Hub path intents (/documents/pamphlet/{new|open|recent|manage|footers}).
      * Skip cloud autoload when an explicit flow was requested.
@@ -3470,10 +3801,7 @@ if (window.visualViewport) {
             return true;
         }
         if (view === "manage") {
-            // Manage must always offer local .epam load + cloud list (do not
-            // auto-open the last document and skip the picker).
-            syncOpenSourceModalForFsa();
-            openSourceModal.showModal();
+            void openManageEpamModal();
             return true;
         }
         if (view === "open" || view === "recent" || view === "edit") {

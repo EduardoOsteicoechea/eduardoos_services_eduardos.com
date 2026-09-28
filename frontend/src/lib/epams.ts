@@ -18,6 +18,8 @@ export type EpamRecord = {
   seriesChapter?: string;
   author?: string;
   date?: string;
+  /** When true, the configured articles owner may list this EPAM on /articles. */
+  public?: boolean;
   contentSizeBytes?: number;
   createdAt?: string;
   updatedAt?: string;
@@ -169,6 +171,31 @@ export async function recycleEpam(epamId: string): Promise<void> {
   if (status < 200 || status >= 300) {
     throw new Error(data.message || "Could not delete pamphlet.");
   }
+}
+
+export async function setEpamPublication(
+  epamId: string,
+  published: boolean,
+): Promise<{ ok: boolean; epamId: string; public: boolean }> {
+  const { status, data } = await apiRequest<{
+    ok?: boolean;
+    epamId?: string;
+    public?: boolean;
+    message?: string;
+  }>(`/epams/${encodeURIComponent(epamId)}/publication`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ published }),
+  });
+  if (mustLog) console.log("[epams] publication", { status, epamId, published });
+  if (status < 200 || status >= 300) {
+    throw new Error(data.message || "Could not update article visibility.");
+  }
+  return {
+    ok: Boolean(data.ok),
+    epamId: data.epamId || epamId,
+    public: Boolean(data.public),
+  };
 }
 
 export async function copyEpam(epamId: string): Promise<EpamDocumentResponse> {
