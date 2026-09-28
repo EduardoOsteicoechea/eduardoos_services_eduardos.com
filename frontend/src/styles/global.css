@@ -634,6 +634,10 @@ a {
   background: var(--color-surface);
 }
 
+#main-menu .sidebar-toolbar {
+  margin-bottom: calc(var(--tray-body-pad-top) + 0.5rem);
+}
+
 /* Paint the toolbar band across docked DHS / agent columns (controls stay left).
    Width follows data-menu-toolbar from chrome: menu | menu-dhs | menu-agent | menu-dhs-agent.
    Homescool fixed rail is not a docked overlay, so it does not widen the band. */
