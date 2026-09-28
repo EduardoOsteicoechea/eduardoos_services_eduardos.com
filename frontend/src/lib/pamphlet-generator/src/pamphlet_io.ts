@@ -701,7 +701,13 @@ export function serializePamphlet(
     lastEdited: LastEditedElement,
     existing?: Pick<
         PamphletStructure,
-        "id" | "ownerUserId" | "type" | "footer_profile_id" | "footer_bind"
+        | "id"
+        | "ownerUserId"
+        | "type"
+        | "footer_profile_id"
+        | "footer_bind"
+        | "header"
+        | "footer"
     > | null,
 ): PamphletStructure {
     const appType = main.closest(".pamphlet-app")?.getAttribute("data-pamphlet-type");
@@ -710,10 +716,24 @@ export function serializePamphlet(
         appType === "pamphlet_structured_images"
             ? "pamphlet_structured_images"
             : "pamphlet_single_sheet";
+    const hasHeader = Boolean(main.querySelector(":scope > .pamphlet-page-header"));
+    const hasFooter = Boolean(main.querySelector(":scope > .pamphlet-page-footer"));
     const pamphlet: PamphletStructure = {
         type,
-        header: serializeHeaderFromDom(main),
-        footer: serializeFooterFromDom(main),
+        // Reflow temporarily removes chrome nodes — keep prior header/footer when absent.
+        header: hasHeader
+            ? serializeHeaderFromDom(main)
+            : {
+                  title: existing?.header?.title ?? "",
+                  subtitle: existing?.header?.subtitle ?? "",
+                  author: existing?.header?.author ?? "",
+                  series: existing?.header?.series ?? "",
+                  series_chapter: existing?.header?.series_chapter ?? "",
+                  date: existing?.header?.date ?? "",
+              },
+        footer: hasFooter
+            ? serializeFooterFromDom(main)
+            : { ...(existing?.footer ?? emptyFooter()) },
         last_edited_element: { ...lastEdited },
         column_1: [],
         column_2: [],

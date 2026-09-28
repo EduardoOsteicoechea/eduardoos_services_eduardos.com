@@ -101,13 +101,6 @@ export function renderShell(_menuIconSrc?: string): string {
         "Guardar el panfleto abierto en la nube",
       )}
       ${actionBtn(
-        "btn-print",
-        ICONS.print,
-        "Imprimir",
-        "Exportar PDF en blanco y negro o azul #00368c",
-        "disabled",
-      )}
-      ${actionBtn(
         "btn-view-desktop",
         ICONS.desktop,
         "Escritorio",
@@ -147,6 +140,14 @@ export function renderShell(_menuIconSrc?: string): string {
         ICONS.footer,
         "Pie",
         "Gestionar pies de página reutilizables (copiar o vincular)",
+      )}
+      ${actionBtn(
+        "btn-print",
+        ICONS.print,
+        "Imprimir",
+        "Exportar PDF en blanco y negro o azul #00368c",
+        "disabled",
+        "header-dynamic-menu__btn dhs-action header-dynamic-menu__btn--action",
       )}
     </div>
   </div>
@@ -333,9 +334,25 @@ export function renderShell(_menuIconSrc?: string): string {
         <input id="chrome-footer-value4" name="value4" type="text" autocomplete="off" />
       </label>
     </fieldset>
-    <div class="create-modal-actions">
-      <button type="button" id="chrome-modal-cancel">Cancelar</button>
-      <button type="submit" id="chrome-modal-save">Guardar</button>
+    <div class="create-modal-actions chrome-modal-actions">
+      <button
+        type="button"
+        id="chrome-modal-cancel"
+        class="chrome-modal-btn chrome-modal-btn--cancel icon-btn"
+        aria-label="Cancelar"
+        title="Cancelar"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+      <button
+        type="submit"
+        id="chrome-modal-save"
+        class="chrome-modal-btn chrome-modal-btn--save icon-btn"
+        aria-label="Guardar"
+        title="Guardar"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">check</span>
+      </button>
     </div>
   </form>
 </dialog>
@@ -394,7 +411,9 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="item-type-options">
       <button type="button" data-item-type="paragraph">Paragraph</button>
       <button type="button" data-item-type="heading_1">Heading</button>
+      <!-- Temporarily hidden: image insert
       <button type="button" data-item-type="image">Image</button>
+      -->
     </div>
     <div class="create-modal-actions">
       <button type="button" id="item-type-cancel">Cancel</button>

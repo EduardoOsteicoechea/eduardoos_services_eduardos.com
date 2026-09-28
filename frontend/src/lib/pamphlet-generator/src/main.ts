@@ -90,6 +90,8 @@ import {
     ensureSheetBackground,
     renderFromPamphlet,
     renderPageChrome,
+    serializeFooterFromDom,
+    serializeHeaderFromDom,
     serializePamphlet,
     syncFooterMetaEmptyFlags,
     syncImageItemFromDom,
@@ -128,6 +130,13 @@ import {
     type PamphletItemNotes,
     type PamphletNoteEntry,
 } from "./pamphlet_schema";
+import {
+    applyPamphletGeometry,
+    computePamphletGeometry,
+    geometryFromLayoutBands,
+    maxHeightForColumnFromGeometry,
+    type PamphletGeometryMm,
+} from "./pamphlet_geometry";
 
 type PendingInsert =
     | { mode: "end"; column: number }
@@ -145,6 +154,20 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     appRoot.setAttribute("data-pdf-sot", "");
     appRoot.innerHTML = renderShell();
     host.replaceChildren(appRoot);
+    /** Active band geometry — mirror until preview layout arrives (PDF SoT). */
+    let activeGeometry: PamphletGeometryMm = computePamphletGeometry({
+        header: PAMPHLET_HEADER_LAYOUT_MM,
+        footer: PAMPHLET_FOOTER_LAYOUT_MM,
+    });
+    applyPamphletGeometry(appRoot, activeGeometry);
+
+    function syncGeometryFromLayout(layout: Parameters<typeof geometryFromLayoutBands>[0]): void {
+        activeGeometry = geometryFromLayoutBands(layout, {
+            header: PAMPHLET_HEADER_LAYOUT_MM,
+            footer: PAMPHLET_FOOTER_LAYOUT_MM,
+        });
+        applyPamphletGeometry(appRoot, activeGeometry);
+    }
 
     function requireElement<T extends HTMLElement>(selector: string): T {
         const el = appRoot.querySelector<T>(selector);
@@ -712,24 +735,6 @@ function closePrintInkModal(): void {
     if (printInkModal.open) printInkModal.close();
 }
 
-const usLetterHeightInMillimeters = 215.9;
-const pageMarginMm = 10;
-const pageHeaderHeightMm = PAMPHLET_HEADER_LAYOUT_MM.height;
-const pageFooterHeightMm = PAMPHLET_FOOTER_LAYOUT_MM.height;
-const colGutterNarrowMm = 4;
-/** Gap only between cols 7–8 and the footer (--footer-body-gutter). */
-const footerBodyGutterMm = 6;
-/** Gap between page header and cols 1–2 (matches --header-body-gutter). */
-const headerBodyGutterMm = PAMPHLET_HEADER_LAYOUT_MM.body_gutter;
-/** Page 2 band / full page-1 chrome band: letter − 2×margin */
-const columnContentHeightMm = usLetterHeightInMillimeters - pageMarginMm * 2;
-/** Cols 1–2: under page header → discount header + header→body gutter */
-const page1RightColHeightMm =
-    columnContentHeightMm - pageHeaderHeightMm - headerBodyGutterMm; // 156.4
-/** Cols 7–8: above page footer → discount footer↔body gutter + footer */
-const page1LeftColHeightMm =
-    columnContentHeightMm - footerBodyGutterMm - pageFooterHeightMm; // 160.1
-
 function nextBodyColumnInReadingOrder(columnIndex: number): number | null {
     const idx = PAMPHLET_BODY_COLUMN_READING_ORDER.indexOf(columnIndex);
     if (idx < 0 || idx >= PAMPHLET_BODY_COLUMN_READING_ORDER.length - 1) {
@@ -766,25 +771,9 @@ function ensureEightBodyColumns(container: HTMLElement): void {
 }
 
 function maxHeightForColumn(columnIndex: number): number {
-    const structured = currentDoc?.type === "pamphlet_structured_images";
-    const leadReserve = LEAD_IMAGE_HEIGHT_MM + LEAD_IMAGE_GAP_MM;
-    if (columnIndex === 1 || columnIndex === 2) {
-        if (structured && columnIndex === 2) {
-            // Lead shares col1 top (after header-body-gutter); body is right band − lead − gap.
-            return page1RightColHeightMm - leadReserve;
-        }
-        return page1RightColHeightMm;
-    }
-    if (columnIndex === 7 || columnIndex === 8) {
-        if (structured && columnIndex === 8) {
-            return page1LeftColHeightMm - leadReserve;
-        }
-        return page1LeftColHeightMm;
-    }
-    if (structured && (columnIndex === 4 || columnIndex === 6)) {
-        return columnContentHeightMm - leadReserve;
-    }
-    return columnContentHeightMm; // page-2 odd cols (3/5) or non-lead full bands
+    return maxHeightForColumnFromGeometry(activeGeometry, columnIndex, {
+        structured: currentDoc?.type === "pamphlet_structured_images",
+    });
 }
 
 /** Captured at load; used to keep app chrome size stable across browser zoom. */
@@ -1094,13 +1083,21 @@ function columnFingerprint(doc: PamphletStructure): string {
 /** Write packed DOM columns back into currentDoc so PDF SoT matches the densify. */
 function syncCurrentDocColumnsFromDom(container: HTMLElement): void {
     if (!currentDoc) return;
+    // Reflow clears header/footer from the sheet before this runs — never let
+    // serialize wipe in-memory chrome (that emptied the Cabecera modal).
+    const chromeHeader = { ...currentDoc.header };
+    const chromeFooter = { ...currentDoc.footer };
     const packed = serializePamphlet(
         container,
         currentDoc.last_edited_element,
         currentDoc,
     );
-    currentDoc = packed;
-    currentHeader = { ...packed.header };
+    currentDoc = {
+        ...packed,
+        header: chromeHeader,
+        footer: chromeFooter,
+    };
+    currentHeader = { ...chromeHeader };
 }
 
 function reflowAndReport(container: HTMLElement) {
@@ -1178,13 +1175,16 @@ function reflowAndReport(container: HTMLElement) {
         }
     }
 
-    // Past col 8: clip remainder into column 8 ink (CSS / PDF).
+    // Past col 8: pack only what still fits under the left-band floor (no margin overflow).
     if (pendingItems.length > 0) {
         const col8 =
             container.querySelector<HTMLElement>(`:scope > .pamphlet-column-8`) ??
             container.querySelector<HTMLElement>(":scope > .dumb-column")!;
         const ink8 = ensureColumnInk(col8);
         let filledMm = filledByColumn.get(8) ?? 0;
+        const max8 = maxHeightForColumn(8);
+        let trailingGapMm = 0;
+        let itemCount = filledMm > 0 ? 1 : 0;
         for (const item of pendingItems) {
             const staleSpacer = item.nextElementSibling;
             if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
@@ -1192,12 +1192,19 @@ function reflowAndReport(container: HTMLElement) {
             }
             const spacer = createItemSpacer();
             const measured = measureBlockInSandbox(item, spacer);
+            const filledContent =
+                itemCount > 0 ? Math.max(0, filledMm - trailingGapMm) : 0;
+            if (itemCount > 0 && filledContent + measured.itemMm > max8 + PACK_FIT_EPSILON_MM) {
+                break;
+            }
             ink8.appendChild(item);
             ink8.appendChild(spacer);
-            filledMm += measured.blockMm;
+            filledMm = filledContent + measured.blockMm;
+            itemCount++;
+            trailingGapMm = measured.spacerMm;
         }
         stripTrailingItemSpacer(ink8);
-        filledByColumn.set(8, filledMm);
+        filledByColumn.set(8, Math.max(0, filledMm - trailingGapMm));
     }
 
     ensureMeasureRoot().column.replaceChildren();
@@ -1212,11 +1219,12 @@ function reflowAndReport(container: HTMLElement) {
         [...filledByColumn.entries()].filter(([, mm]) => mm > 0).at(-1)?.[0] ?? 1;
     placeColumnAddButton(container, filledByColumn, lastFilledColumn);
 
-    syncCurrentDocColumnsFromDom(container);
-
+    // Restore chrome into the sheet before any serialize that reads the DOM,
+    // then sync columns while keeping in-memory header/footer intact.
     if (currentDoc) {
         renderPageChrome(container, currentDoc);
     }
+    syncCurrentDocColumnsFromDom(container);
 
     if (mustLog) {
         const lines: string[] = ["[pamphlet] column text"];
@@ -1315,19 +1323,29 @@ function chromeFocusNameFromKind(kind: string): string | null {
     return null;
 }
 
+function coalesceChromeField(primary: string | undefined, fallback: string | undefined): string {
+    const p = (primary ?? "").trim();
+    if (p) return primary ?? "";
+    return fallback ?? "";
+}
+
 function fillChromeModalForm(doc: PamphletStructure): void {
-    chromeHeaderTitle.value = doc.header.title ?? "";
-    chromeHeaderSubtitle.value = doc.header.subtitle ?? "";
-    chromeHeaderAuthor.value = doc.header.author ?? "";
-    chromeHeaderSeries.value = doc.header.series ?? "";
-    chromeHeaderChapter.value = doc.header.series_chapter ?? "";
-    chromeHeaderDate.value = doc.header.date ?? "";
-    chromeFooterAction.value = doc.footer.action ?? "";
-    chromeFooterMessage.value = doc.footer.message ?? "";
-    chromeFooterValue1.value = doc.footer.value1 ?? "";
-    chromeFooterValue2.value = doc.footer.value2 ?? "";
-    chromeFooterValue3.value = doc.footer.value3 ?? "";
-    chromeFooterValue4.value = doc.footer.value4 ?? "";
+    const hasHeader = Boolean(main.querySelector(":scope > .pamphlet-page-header"));
+    const hasFooter = Boolean(main.querySelector(":scope > .pamphlet-page-footer"));
+    const header = hasHeader ? serializeHeaderFromDom(main) : doc.header;
+    const footer = hasFooter ? serializeFooterFromDom(main) : doc.footer;
+    chromeHeaderTitle.value = coalesceChromeField(header.title, doc.header.title);
+    chromeHeaderSubtitle.value = coalesceChromeField(header.subtitle, doc.header.subtitle);
+    chromeHeaderAuthor.value = coalesceChromeField(header.author, doc.header.author);
+    chromeHeaderSeries.value = coalesceChromeField(header.series, doc.header.series);
+    chromeHeaderChapter.value = coalesceChromeField(header.series_chapter, doc.header.series_chapter);
+    chromeHeaderDate.value = coalesceChromeField(header.date, doc.header.date);
+    chromeFooterAction.value = coalesceChromeField(footer.action, doc.footer.action);
+    chromeFooterMessage.value = coalesceChromeField(footer.message, doc.footer.message);
+    chromeFooterValue1.value = coalesceChromeField(footer.value1, doc.footer.value1);
+    chromeFooterValue2.value = coalesceChromeField(footer.value2, doc.footer.value2);
+    chromeFooterValue3.value = coalesceChromeField(footer.value3, doc.footer.value3);
+    chromeFooterValue4.value = coalesceChromeField(footer.value4, doc.footer.value4);
 }
 
 function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
@@ -1615,6 +1633,9 @@ pdfSot = new PamphletPdfSot({
     onAddClick: (column) => {
         void handleAddItemButton(column);
     },
+    onLayout: (layout) => {
+        syncGeometryFromLayout(layout);
+    },
     // PDF packer may remap leads; only sync lead slots — never replace body text
     // mid-edit (that scrambled column sequence on approve/preview).
     onDocumentDrawn: (drawn) => {
@@ -1729,6 +1750,7 @@ editDock = setupEditDock(editDockRoot, {
     syncLiveChromeContent,
     commitChromeOnly,
     requestLayoutSync: () => syncSheetScale(),
+    maxColumnHeightMm: (column) => maxHeightForColumn(column),
 });
 
 function highlightMobileEditItem(loc: LastEditedElement | null): void {

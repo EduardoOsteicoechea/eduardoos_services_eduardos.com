@@ -446,7 +446,7 @@
   /* Margin under header band before cols 1–2 (PDF uses the same). */
   --header-body-gutter: 5mm;
   --page-footer-height: 29.8mm; /* PAMPHLET_FOOTER_LAYOUT_MM.height — value rows hidden when empty */
-  /* Page 1 body: 215.9 − 10 − 34.5 − 5 − 6 − 29.8 − 10 = 120.6mm */
+  /* Derived at runtime by pamphlet_geometry / preview layout (PDF SoT). Fallbacks = defaults. */
   --page1-body-height: 120.6mm;
   /* Page 2 content band: 215.9 − 10 − 10 = 195.9mm */
   --column-content-height: 195.9mm;
@@ -454,9 +454,8 @@
   --column-content-width: 57.85mm;
   /* Header/footer band: two content cols + narrow gutter */
   --header-footer-width: calc(var(--column-content-width) * 2 + var(--col-gutter-narrow));
-  /* Cols 1–2 under header: 195.9 − 34.5 − 5 = 156.4mm */
+  /* Cols 1–2 / 7–8 — overwritten by applyPamphletGeometry from PDF layout bands */
   --page1-right-col-height: 156.4mm;
-  /* Cols 7–8 above footer: 195.9 − 6 − 29.8 = 160.1mm */
   --page1-left-col-height: 160.1mm;
   /* Structured leads: 10:9 of column width + 0.75× former 5mm gap */
   --lead-image-height: calc(var(--column-content-width) * 0.9);
