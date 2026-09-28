@@ -1057,16 +1057,22 @@ function placeColumnAddButton(
 const PACK_FIT_EPSILON_MM = 0.05;
 
 /**
- * Painted ink height in the destination column (spec 007).
- * scrollHeight includes content clipped by overflow — that is the densify truth.
+ * Content height of ink children (items + spacers) in mm.
+ * Do NOT use scrollHeight: ink is height:100% so scrollHeight ≈ column box,
+ * not the stacked content — that falsely rejected almost every 2nd+ item.
  */
-function inkPaintedHeightMm(ink: HTMLElement, columnEl: HTMLElement): number {
+function inkContentHeightMm(ink: HTMLElement, columnEl: HTMLElement): number {
     void ink.offsetWidth;
-    return convertPixelsToMillimeters(ink.scrollHeight, columnEl);
+    let px = 0;
+    for (let i = 0; i < ink.children.length; i++) {
+        px += (ink.children[i] as HTMLElement).offsetHeight;
+    }
+    return convertPixelsToMillimeters(px, columnEl);
 }
 
 /**
- * Append item(+spacer) into destination ink; keep only if painted height fits.
+ * Append item(+spacer) into destination ink; keep only if content height fits
+ * the column floor (how many items fit in available height — no item-count cap).
  * First item in an empty column is always kept (clip if oversized).
  */
 function tryAppendItemToInk(
@@ -1074,7 +1080,7 @@ function tryAppendItemToInk(
     columnEl: HTMLElement,
     item: HTMLElement,
     columnIndex: number,
-): { packed: boolean; paintedMm: number } {
+): { packed: boolean; contentMm: number } {
     const staleSpacer = item.nextElementSibling;
     if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
         staleSpacer.remove();
@@ -1083,14 +1089,14 @@ function tryAppendItemToInk(
     const spacer = createItemSpacer();
     ink.appendChild(item);
     ink.appendChild(spacer);
-    const paintedMm = inkPaintedHeightMm(ink, columnEl);
+    const contentMm = inkContentHeightMm(ink, columnEl);
     const maxMm = maxHeightForColumn(columnIndex);
-    if (hadItems && paintedMm > maxMm + PACK_FIT_EPSILON_MM) {
+    if (hadItems && contentMm > maxMm + PACK_FIT_EPSILON_MM) {
         spacer.remove();
         item.remove();
-        return { packed: false, paintedMm: inkPaintedHeightMm(ink, columnEl) };
+        return { packed: false, contentMm: inkContentHeightMm(ink, columnEl) };
     }
-    return { packed: true, paintedMm };
+    return { packed: true, contentMm };
 }
 
 /** Stable fingerprint of body columns for migration / densify persist checks. */
@@ -1180,9 +1186,8 @@ function reflowAndReport(container: HTMLElement) {
         }
 
         stripTrailingItemSpacer(ink);
-        const filledMm = inkPaintedHeightMm(ink, currentColumnDiv);
         if (ink.querySelector(":scope > .pamphlet-item")) {
-            filledByColumn.set(columnIndex, filledMm);
+            filledByColumn.set(columnIndex, inkContentHeightMm(ink, currentColumnDiv));
         }
     }
 
@@ -1200,7 +1205,7 @@ function reflowAndReport(container: HTMLElement) {
         }
         stripTrailingItemSpacer(ink8);
         if (ink8.querySelector(":scope > .pamphlet-item")) {
-            filledByColumn.set(8, inkPaintedHeightMm(ink8, col8));
+            filledByColumn.set(8, inkContentHeightMm(ink8, col8));
         }
     }
 

@@ -72,12 +72,12 @@ Do **not** change heights without updating:
 ## Packing rules (pixel-perfect)
 
 1. **Strict fit (FE)** — `PACK_FIT_EPSILON_MM = 0.05` (float only).
-2. **Painted-ink authority (FE densify)** — after appending a candidate into the
-   destination `.pamphlet-column-ink`, compare `scrollHeight` (px→mm via column
-   width) to `maxHeightForColumn`. Sandbox pre-measure alone is not enough:
-   wrap/font paint can exceed sandbox estimates. If painted height exceeds the
-   floor, remove the candidate and spill forward. Do not use a hard item-count
-   cap as the packing rule.
+2. **Content-height authority (FE densify)** — pack by available column height
+   only (no item-count cap). After appending a candidate into the destination
+   `.pamphlet-column-ink`, sum children’s `offsetHeight` (px→mm via column width)
+   and compare to `maxHeightForColumn`. Do **not** use ink `scrollHeight`: ink is
+   `height: 100%`, so `scrollHeight` ≈ the column box and falsely rejects items.
+   If content height exceeds the floor, remove the candidate and spill forward.
 3. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
 4. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
 5. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
