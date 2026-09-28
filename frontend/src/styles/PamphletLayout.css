@@ -248,6 +248,7 @@ body.page-pamphlet #dynamic-header .header-dynamic-menu__btn:disabled {
 /* Primary tray CTA (print): below tools, inverted fg/bg */
 body.page-pamphlet #dynamic-header .header-dynamic-menu__btn.dhs-action.header-dynamic-menu__btn--action {
   margin-top: var(--rail-gap);
+  margin-inline: 0.5rem;
   justify-content: center;
   min-height: var(--control-height);
   padding: var(--control-padding-block) var(--space-padding);
