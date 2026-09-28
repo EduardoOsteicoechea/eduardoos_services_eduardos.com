@@ -1,7 +1,7 @@
 /**
  * PDF-first edit dock: live text edits + toolbar actions against FlatRef / pamphlet_doc.
  */
-import { normalizeImageDataUrlToJpeg } from "./create_element";
+import { normalizeImageDataUrlToJpeg, setChromeStatus } from "./create_element";
 import { ICONS } from "./icons";
 import {
     applyBoldRange,
@@ -29,6 +29,13 @@ import {
     imageOffsetYMmFromStyles,
     imageScaleFromStyles,
     writeImageTransformToStyles,
+    FOOTER_COLUMN,
+    FOOTER_FIELD_KEYS,
+    HEADER_COLUMN,
+    HEADER_FIELD_KEYS,
+    chromeFieldMaxLength,
+    type FooterFieldKey,
+    type HeaderFieldKey,
     type LastEditedElement,
     type PamphletItem,
     type PamphletStructure,
@@ -69,21 +76,57 @@ export type EditDockHost = {
     openItemTypeModal: (insert: EditDockInsertRequest) => void;
     openNotesModal: (detail: EditDockNotesRequest) => Promise<void>;
     findBodyItemContainer: (loc: LastEditedElement) => HTMLElement | null;
-    activateChromeEdit: (doc: PamphletStructure, loc: LastEditedElement) => void;
     /** Mobile stacked sheet: highlight the item being edited. */
     highlightBodyItem: (loc: LastEditedElement | null) => void;
     /** Mobile stacked sheet: paint live text into the DOM item. */
     syncLiveBodyContent: (loc: LastEditedElement, content: string) => void;
+    /** Hidden sheet DOM for header/footer fields (PDF-first). */
+    syncLiveChromeContent: (loc: LastEditedElement, content: string) => void;
+    commitChromeOnly: (doc: PamphletStructure) => void;
 };
 
 type EditDockSession = {
     loc: FlatRef;
     kind: string;
     imageMode: boolean;
+    chromeMode: boolean;
     initialContent: string;
     initialHeightMm: number;
     initialStyles: StyleIndexes;
 };
+
+function isChromeColumn(column: number): boolean {
+    return column === HEADER_COLUMN || column === FOOTER_COLUMN;
+}
+
+function chromeFieldAt(loc: LastEditedElement): HeaderFieldKey | FooterFieldKey | null {
+    if (loc.column === HEADER_COLUMN) {
+        return HEADER_FIELD_KEYS[loc.index] ?? null;
+    }
+    if (loc.column === FOOTER_COLUMN) {
+        return FOOTER_FIELD_KEYS[loc.index] ?? null;
+    }
+    return null;
+}
+
+function readChromeContent(doc: PamphletStructure, loc: LastEditedElement): string {
+    const field = chromeFieldAt(loc);
+    if (!field) return "";
+    if (loc.column === HEADER_COLUMN) {
+        return doc.header[field as HeaderFieldKey] ?? "";
+    }
+    return doc.footer[field as FooterFieldKey] ?? "";
+}
+
+function writeChromeContent(doc: PamphletStructure, loc: LastEditedElement, content: string): void {
+    const field = chromeFieldAt(loc);
+    if (!field) return;
+    if (loc.column === HEADER_COLUMN) {
+        doc.header = { ...doc.header, [field as HeaderFieldKey]: content };
+        return;
+    }
+    doc.footer = { ...doc.footer, [field as FooterFieldKey]: content };
+}
 
 export type EditDockController = {
     open: (loc: LastEditedElement, kindHint?: string) => void;
@@ -188,6 +231,7 @@ export function setupEditDock(
 
     function close(): void {
         clearLiveTimer();
+        setChromeStatus(false);
         session = null;
         textarea.hidden = true;
         textarea.value = "";
@@ -233,9 +277,44 @@ export function setupEditDock(
         log("mutate", { column: session.loc.column, index: session.loc.index });
     }
 
+    function setDockToolbarForChrome(chrome: boolean): void {
+        for (const action of [
+            "move-up",
+            "move-down",
+            "add-above",
+            "add-below",
+            "bold",
+            "notes",
+            "copy",
+            "delete",
+        ]) {
+            const btn = dockRoot.querySelector<HTMLButtonElement>(`[data-dock-action="${action}"]`);
+            if (!btn) continue;
+            if (chrome && action !== "copy") {
+                btn.hidden = true;
+            } else if (chrome) {
+                btn.hidden = false;
+            }
+        }
+    }
+
     function applyLiveText(value: string): void {
         const current = host.getDoc();
         if (!current || !session || session.imageMode) return;
+        if (session.chromeMode) {
+            writeChromeContent(current, session.loc, value);
+            const withId = host.ensureDocumentId(current);
+            host.setDoc(withId);
+            host.syncLiveChromeContent(session.loc, value);
+            host.schedulePersist();
+            host.schedulePreview();
+            log("live-chrome", {
+                column: session.loc.column,
+                index: session.loc.index,
+                chars: value.length,
+            });
+            return;
+        }
         updateItemContent(current, session.loc, value);
         const withId = host.ensureDocumentId(current);
         host.setDoc(withId);
@@ -272,8 +351,53 @@ export function setupEditDock(
             host.setError("No pamphlet file is open.");
             return;
         }
+
+        if (isChromeColumn(loc.column)) {
+            flushLiveText();
+            const field = chromeFieldAt(loc);
+            if (!field) {
+                host.setError("Campo de cabecera o pie no válido.");
+                return;
+            }
+            const content = readChromeContent(current, loc);
+            const max = chromeFieldMaxLength(field);
+            session = {
+                loc: { column: loc.column, index: loc.index },
+                kind: kindHint || field,
+                imageMode: false,
+                chromeMode: true,
+                initialContent: content,
+                initialHeightMm: 0,
+                initialStyles: [[0, 0], [0, 0], [0, 0]],
+            };
+            current.last_edited_element = { column: loc.column, index: loc.index };
+            host.setDoc(host.ensureDocumentId(current));
+            host.setSelected(loc.column, loc.index);
+            host.highlightBodyItem(null);
+
+            showShell();
+            setIdle(false);
+            imagePanel.hidden = true;
+            textarea.hidden = false;
+            suppressInput = true;
+            textarea.value = content;
+            textarea.maxLength = max;
+            const updateStatus = () => {
+                setChromeStatus(true, Math.max(0, max - textarea.value.length), max);
+            };
+            updateStatus();
+            suppressInput = false;
+            setDockToolbarForChrome(true);
+            requestAnimationFrame(() => {
+                textarea.focus();
+                textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+            });
+            log("open.chrome", { column: loc.column, index: loc.index, field });
+            return;
+        }
+
         if (loc.column < 1 || loc.column > 8) {
-            host.activateChromeEdit(current, loc);
+            host.setError("Campo de cabecera o pie no válido.");
             return;
         }
 
@@ -294,6 +418,7 @@ export function setupEditDock(
             loc: { column: loc.column, index: loc.index },
             kind: kindHint || item.type,
             imageMode,
+            chromeMode: false,
             initialContent: item.content,
             initialHeightMm: item.height_mm || DEFAULT_IMAGE_HEIGHT_MM,
             initialStyles: styles,
@@ -320,6 +445,7 @@ export function setupEditDock(
         }
         suppressInput = false;
 
+        setDockToolbarForChrome(false);
         for (const action of [
             "move-up",
             "move-down",
@@ -349,6 +475,14 @@ export function setupEditDock(
     async function handleAction(action: string): Promise<void> {
         const current = host.getDoc();
         if (!current || !session) return;
+        if (
+            session.chromeMode &&
+            action !== "ok" &&
+            action !== "cancel" &&
+            action !== "copy"
+        ) {
+            return;
+        }
         const loc = session.loc;
         log("action", { action, column: loc.column, index: loc.index });
 
@@ -356,12 +490,33 @@ export function setupEditDock(
 
         switch (action) {
             case "ok": {
+                flushLiveText();
+                if (session.chromeMode) {
+                    const doc = host.getDoc();
+                    if (doc) {
+                        host.pushUndoSnapshot();
+                        host.commitChromeOnly(clonePamphlet(doc));
+                    }
+                    close();
+                    return;
+                }
                 close();
                 const doc = host.getDoc();
                 if (doc) host.applyLocalDoc(clonePamphlet(doc), { openEdit: false });
                 return;
             }
             case "cancel": {
+                if (session.chromeMode) {
+                    const snap = session;
+                    const current = host.getDoc();
+                    if (current) {
+                        writeChromeContent(current, snap.loc, snap.initialContent);
+                        host.setDoc(host.ensureDocumentId(current));
+                        host.syncLiveChromeContent(snap.loc, snap.initialContent);
+                    }
+                    close();
+                    return;
+                }
                 // Discard all edits for this item session (not the activity-bar single-step undo).
                 const snap = session;
                 mutateDoc((data, l) => {
@@ -553,6 +708,13 @@ export function setupEditDock(
 
     on(textarea, "input", () => {
         if (suppressInput || !session || session.imageMode) return;
+        if (session.chromeMode) {
+            const field = chromeFieldAt(session.loc);
+            if (field) {
+                const max = chromeFieldMaxLength(field);
+                setChromeStatus(true, Math.max(0, max - textarea.value.length), max);
+            }
+        }
         scheduleLiveText(textarea.value);
     });
 

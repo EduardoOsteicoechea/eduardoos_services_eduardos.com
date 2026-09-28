@@ -20,7 +20,7 @@ import { ICONS } from "./icons";
 
 const STYLE_INDEXES_ATTR = "data-style-indexes";
 
-function setChromeStatus(visible: boolean, remaining?: number, max?: number) {
+export function setChromeStatus(visible: boolean, remaining?: number, max?: number) {
     const bar = document.getElementById("pamphlet-chrome-status");
     if (!bar) return;
     if (!visible) {
