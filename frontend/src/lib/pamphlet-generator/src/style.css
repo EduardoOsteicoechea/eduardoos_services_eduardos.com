@@ -1901,10 +1901,9 @@
   overflow: auto;
 }
 
-/* Tablet cols view: larger edit text for touch reading (mobile unchanged). */
-.pamphlet-app[data-view-mode="tablet"] .edit_tray_text_area {
-  font-size: calc(32px * var(--mobile-inv-scale, 1));
-  line-height: 1.5;
+/* Tablet cols: edit-dock textarea text 2× (mobile/desktop unchanged). */
+.pamphlet-app[data-view-mode="tablet"] .pamphlet-edit-dock__textarea {
+  font-size: calc(var(--font-size-sm, 0.875rem) * 2);
 }
 
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-header .edit_tray_text_area,
@@ -2976,17 +2975,18 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
   }
 }
 
-/* Phone: fixed 12.5rem tray flush to viewport top; sheet scrolls below it */
+/* Phone: fixed 12.5rem tray below activity bar; sheet scrolls underneath (portal on body). */
 @media (max-width: 47.999rem) {
   .pamphlet-workspace {
     position: relative;
     flex-direction: column;
   }
 
+  body.page-pamphlet.pamphlet-phone-dock-open #pamphlet-edit-dock:not([hidden]),
   .pamphlet-edit-dock:not([hidden]) {
     order: 0;
     position: fixed;
-    top: 0;
+    top: var(--pamphlet-phone-dock-top, var(--mobile-header-height, var(--header-size)));
     left: 0;
     right: 0;
     width: auto;
@@ -2997,14 +2997,17 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     max-height: 12.5rem;
     min-height: 12.5rem;
     z-index: calc(var(--z-activity, 20) + 5);
-  border-radius: 0;
+    border-radius: 0;
     border-left: 0;
     border-right: 0;
     border-top: 0;
   }
 
+  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-workspace main.pamphlet-sheet,
   .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
-    margin-top: 12.5rem;
+    margin-top: calc(
+      var(--pamphlet-phone-dock-top, var(--mobile-header-height, var(--header-size))) + 12.5rem
+    );
   }
 
   .pamphlet-edit-dock__body {
