@@ -551,11 +551,14 @@ main > .diag{
   grid-column: 1 / span var(--span-full);
   box-sizing: border-box;
   /* main already supplies --main-inline / --main-padding (1rem). */
-  max-width: none;
+  width: auto;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
   margin-inline: 0;
   padding-inline: 0;
   gap: var(--space-padding);
   justify-self: start;
+  min-width: 0;
+  overflow-x: clip;
 }
 
 .article-page__header{
@@ -566,6 +569,7 @@ main > .diag{
   background: transparent;
   border: 0;
   border-bottom: var(--border-width) solid var(--color-border);
+  min-width: 0;
 }
 
 .article-page h1{
@@ -601,12 +605,15 @@ main > .diag{
   gap: 0;
   font-size: var(--font-size-md);
   line-height: 1.5rem;
+  min-width: 0;
 }
 
 .article-page__body > p,
 .article-page__body > h2,
 .article-page__body > img{
   margin: 0 0 1.75rem;
+  min-width: 0;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
 }
 
 .article-page__body > p:last-child,
@@ -620,6 +627,7 @@ main > .diag{
   line-height: 1.5rem;
   color: var(--color-text);
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 .article-page__body h2{
@@ -627,9 +635,14 @@ main > .diag{
   font-size: var(--font-size-xl);
   line-height: var(--leading-tight);
   letter-spacing: -0.015em;
+  overflow-wrap: break-word;
 }
 
 .article-page img{
+  display: block;
+  width: auto;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
+  height: auto;
   border-radius: var(--radius-lg);
   border: var(--border-width) solid var(--color-border);
 }
@@ -640,12 +653,12 @@ main > .diag{
   background: transparent;
   border: 0;
   border-top: var(--border-width) solid var(--color-border);
+  min-width: 0;
 }
 
-/* Article body stays full main width (1rem gutters from main only). */
+/* Article body stays within the main column (1rem gutters from main only). */
 @media (min-width: 48rem) {
   .article-page {
-    max-width: none;
     padding-inline: 0;
   }
 }
