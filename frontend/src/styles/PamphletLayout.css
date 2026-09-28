@@ -13,6 +13,12 @@ html:has(body.page-pamphlet) {
   overscroll-behavior: none;
 }
 
+/* Phone edit dock open: stop html scrollport (breaks position:fixed under the URL bar). */
+html.page-pamphlet.pamphlet-phone-dock-open,
+html.pamphlet-phone-dock-open:has(body.page-pamphlet) {
+  overflow: hidden;
+}
+
 body.page-pamphlet {
   max-width: 100%;
   width: 100%;
@@ -492,7 +498,8 @@ body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .pamphlet-page-footer,
 body.page-pamphlet .pamphlet-app[data-view-mode="mobile"] .dumb-column[class*="pamphlet-column-"] {
   background: var(--pamphlet-paper-bg, var(--site-body-bg));
   color: var(--pamphlet-ink, var(--site-body-fg));
-  border: 1px solid color-mix(in srgb, var(--site-body-fg) 28%, transparent);
+  /* Temporary: hide header/footer (and column) frames — fields stay. */
+  border: none;
 }
 
 @media (prefers-color-scheme: dark) {

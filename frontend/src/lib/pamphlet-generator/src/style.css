@@ -721,7 +721,8 @@
     z-index: 5;
     box-sizing: border-box;
     background: transparent;
-    border: var(--header-stroke) solid var(--pamphlet-rule);
+    /* Temporary: hide header frame borders (fields stay). Restore: var(--header-stroke) solid var(--pamphlet-rule) */
+    border: none;
     border-radius: var(--header-radius);
     padding: var(--header-pad-top) var(--header-pad-x) var(--header-pad-bottom);
     color: var(--pamphlet-ink);
@@ -732,7 +733,8 @@
     content: "";
     position: absolute;
     inset: var(--header-inner-inset);
-    border: var(--header-inner-stroke) solid var(--pamphlet-rule);
+    /* Temporary: hide inner header frame. */
+    border: none;
     border-radius: var(--header-inner-radius);
     pointer-events: none;
     z-index: 1;
@@ -810,7 +812,8 @@
     z-index: 5;
     box-sizing: border-box;
     padding: 1.2mm 1.2mm 0; /* pad_top / pad_x / pad_bottom */
-    border: 0.2mm solid var(--pamphlet-rule); /* stroke */
+    /* Temporary: hide footer frame borders (fields stay). Restore: 0.2mm solid var(--pamphlet-rule) */
+    border: none;
     border-radius: 1mm; /* radius */
     background: transparent;
     color: var(--pamphlet-ink);
@@ -834,7 +837,8 @@
     content: "";
     position: absolute;
     inset: 0.45mm;
-    border: 0.1mm solid var(--pamphlet-rule);
+    /* Temporary: hide inner footer frame. */
+    border: none;
     border-radius: 0.6mm;
     pointer-events: none;
     z-index: 1;
@@ -2057,9 +2061,11 @@ body.pamphlet-phone-dock-open .pamphlet-edit-dock__textarea,
   box-sizing: border-box;
 }
 
-/* Spec 035: hide body column frames in mobile view (header/footer keep theirs). */
+/* Spec 035: hide body column frames in mobile view. Temporary: also hide header/footer frames. */
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .dumb-column[class*="pamphlet-column-"],
-.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-lead-slot {
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-lead-slot,
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-header,
+.pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-footer {
   border: none !important;
 }
 
