@@ -52,11 +52,13 @@ Required algorithm (`reflowAndReport` in `main.ts`):
    persist).
 3. For each column in reading order, append items greedily until content height
    would exceed `maxHeightForColumn(col)`.
-4. Measure fit by summing ink **children** `offsetHeight` (items + spacers),
-   converted px→mm via the column’s real CSS mm width.
+4. Measure fit with **pack mm** per child (not raw snapped px→mm alone):
+   spacer = `2.5` (CSS `--item-gap-height` / Go `PamphletItemGapMm`);
+   paragraph ≥ `3.0×1.25=3.75`; heading ≥ `4.25×1.2`; else measured.
+   Device pixels quantize CSS mm (3.75→14px→3.698), so raw `offsetHeight`
+   underestimates and packs one extra item past the PDF floor.
 5. Do **not** use ink `scrollHeight` while `.pamphlet-column-ink` is
-   `height: 100%` — that reports the column **box**, not stacked content, and
-   falsely rejects items (or packs wrong).
+   `height: 100%` — that reports the column **box**, not stacked content.
 6. Spill forward only; do not force-pack past the col-8 floor into the page
    margin.
 7. “+” stays outside the ink box and must not consume column mm.

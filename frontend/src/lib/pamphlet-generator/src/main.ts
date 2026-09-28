@@ -1070,18 +1070,45 @@ function placeColumnAddButton(
  */
 const PACK_FIT_EPSILON_MM = 0.05;
 
+/** Must match CSS --item-gap-height + Go PamphletItemGapMm. */
+const PACK_ITEM_GAP_MM = 2.5;
+/** paragraph 3mm × lh 1.25 — same as Go pamphletBodySizeMm * pamphletBodyLH. */
+const PACK_BODY_LINE_MM = 3.0 * 1.25;
+/** heading 4.25mm × lh 1.2 — same as Go pamphletHeadingSizeMm * pamphletHeadingLH. */
+const PACK_HEADING_LINE_MM = 4.25 * 1.2;
+
 /**
- * Content height of ink children (items + spacers) in mm.
- * Do NOT use scrollHeight: ink is height:100% so scrollHeight ≈ column box,
- * not the stacked content — that falsely rejected almost every 2nd+ item.
+ * Packing height for one ink child. Device pixels quantize CSS mm (e.g. 3.75mm→14px
+ * →3.698mm), so raw offsetHeight underestimates vs PDF. Use PDF/CSS nominal floors
+ * for spacers and single-line type; keep measured when multi-line is taller.
+ */
+function childPackHeightMm(el: HTMLElement, columnEl: HTMLElement): number {
+    const measured = convertPixelsToMillimeters(el.offsetHeight, columnEl);
+    if (el.classList.contains("pamphlet-item-spacer")) {
+        return PACK_ITEM_GAP_MM;
+    }
+    const type = el.getAttribute("data-item-type");
+    if (type === "paragraph") {
+        return Math.max(measured, PACK_BODY_LINE_MM);
+    }
+    if (type === "heading_1") {
+        return Math.max(measured, PACK_HEADING_LINE_MM);
+    }
+    return measured;
+}
+
+/**
+ * Content height of ink children (items + spacers) in mm for densify.
+ * Do NOT use scrollHeight: ink is height:100% so scrollHeight ≈ column box.
+ * Do NOT sum raw offsetHeight mm alone — pixel snap packs past the PDF floor.
  */
 function inkContentHeightMm(ink: HTMLElement, columnEl: HTMLElement): number {
     void ink.offsetWidth;
-    let px = 0;
+    let mm = 0;
     for (let i = 0; i < ink.children.length; i++) {
-        px += (ink.children[i] as HTMLElement).offsetHeight;
+        mm += childPackHeightMm(ink.children[i] as HTMLElement, columnEl);
     }
-    return convertPixelsToMillimeters(px, columnEl);
+    return mm;
 }
 
 /**
@@ -1296,8 +1323,11 @@ function buildGeometryDebugReport(): string {
                 const kind = kid.classList.contains("pamphlet-item-spacer")
                     ? "spacer"
                     : kid.getAttribute("data-item-type") || "node";
-                const hMm = col ? convertPixelsToMillimeters(kid.offsetHeight, col) : 0;
-                lines.push(`  [${index}] ${kind} hPx=${kid.offsetHeight} hMm=${fmtMm(hMm)}`);
+                const measuredMm = col ? convertPixelsToMillimeters(kid.offsetHeight, col) : 0;
+                const packMm = col ? childPackHeightMm(kid, col) : 0;
+                lines.push(
+                    `  [${index}] ${kind} hPx=${kid.offsetHeight} measuredMm=${fmtMm(measuredMm)} packMm=${fmtMm(packMm)}`,
+                );
             });
         }
         const addBtn = col?.querySelector<HTMLElement>(":scope > .pamphlet-add-item-button");

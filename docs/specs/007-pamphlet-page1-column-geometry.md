@@ -77,11 +77,11 @@ Do **not** change heights without updating:
    queue, then fill each column greedily until content height would exceed
    `maxHeightForColumn`. Do not keep items stuck in their source column when an
    earlier column still has room (that froze the temporary 4-item probe). After
-   appending a candidate, sum children’s `offsetHeight` (px→mm via column width).
-   Do **not** use ink `scrollHeight` (`height: 100%` reports the box, not content).
-   Contract: `.cursor/rules/pamphlet-geometry-sot.mdc` § Densify architecture.
-   Diagnose vertical overflow with DHS action **Alturas** (copyable report:
-   backend bands, FE mirror, sheet/column painted mm).
+   appending a candidate, use **pack mm** per child: spacer `2.5`, paragraph
+   ≥ `3.75`, heading ≥ `5.1`, else measured — raw px→mm underestimates because
+   device pixels snap CSS mm (PDF stays on nominal 3.75/2.5). Do **not** use ink
+   `scrollHeight`. Contract: `pamphlet-geometry-sot.mdc` § Densify architecture.
+   Diagnose with DHS **Alturas**.
 3. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
 4. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
 5. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
