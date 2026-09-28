@@ -674,12 +674,9 @@
 }
 
 /*
- * Spec 035 / 007: edit trays sit outside the ink box → unlock ink while a tray is open.
+ * The edit tray may escape the sheet, but body ink may not. Keeping the ink
+ * clipped here enforces the PDF column floor while an item is being edited.
  */
-.pamphlet-app[data-view-mode="desktop"] main.pamphlet-sheet:has(.element_edit_tray) .dumb-column[class*="pamphlet-column-"] > .pamphlet-column-ink,
-.pamphlet-app[data-view-mode="desktop"] .dumb-column[class*="pamphlet-column-"]:has(.element_edit_tray) > .pamphlet-column-ink {
-    overflow: visible !important;
-}
 
 .pamphlet-app[data-view-mode="desktop"] .dumb-column .pamphlet-item,
 .pamphlet-app[data-view-mode="desktop"] .dumb-column .pamphlet-item p,
