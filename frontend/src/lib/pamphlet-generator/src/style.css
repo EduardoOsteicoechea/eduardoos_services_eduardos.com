@@ -1920,9 +1920,14 @@
   overflow: auto;
 }
 
-/* Tablet cols: edit-dock textarea text 2× (mobile/desktop unchanged). */
+/* Tablet cols: edit-dock textarea ~0.85× of prior 2× scale. */
 .pamphlet-app[data-view-mode="tablet"] .pamphlet-edit-dock__textarea {
-  font-size: calc(var(--font-size-sm, 0.875rem) * 2);
+  font-size: calc(var(--font-size-sm, 0.875rem) * 1.7);
+}
+
+/* Phone: edit-dock textarea 1.5× base for readability. */
+.pamphlet-app[data-view-mode="mobile"] .pamphlet-edit-dock__textarea {
+  font-size: calc(var(--font-size-sm, 0.875rem) * 1.5);
 }
 
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-header .edit_tray_text_area,
