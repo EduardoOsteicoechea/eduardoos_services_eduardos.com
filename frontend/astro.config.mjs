@@ -22,6 +22,7 @@ export default defineConfig({
         !page.includes("/ereport") &&
         !page.includes("/scrib") &&
         !page.includes("/homescool") &&
+        !page.includes("/homeschool") &&
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
         !page.includes("/eoproject") &&

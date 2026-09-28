@@ -1,0 +1,186 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Compromiso de no difusión"
+  description="Compromiso de no difusión de contenido de La Vid Homeschool. Visualiza y descarga el documento en PDF."
+  page="homeschool-commitment"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <h1 class="page-title-sr">Compromiso de no difusión</h1>
+
+  <div
+    class="commitment-modal"
+    data-commitment-modal
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="commitment-modal-title"
+  >
+    <div class="commitment-modal__dialog">
+      <header class="commitment-modal__toolbar">
+        <h2 id="commitment-modal-title">Compromiso de no difusión</h2>
+      </header>
+
+      <div class="commitment-modal__body">
+        <figure class="commitment-modal__sheet">
+          <img
+            src="/Compromiso_la_vid_1.jpeg"
+            alt="Compromiso de no difusión de contenido — página 1"
+            width="850"
+            height="1100"
+            decoding="async"
+          />
+        </figure>
+        <figure class="commitment-modal__sheet">
+          <img
+            src="/Compromiso_la_vid_2.jpeg"
+            alt="Compromiso de no difusión de contenido — página 2"
+            width="850"
+            height="1100"
+            decoding="async"
+          />
+        </figure>
+      </div>
+
+      <div class="commitment-modal__footer">
+        <button
+          class="btn btn--primary commitment-modal__download"
+          type="button"
+          data-commitment-download
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">download</span>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .commitment-modal {
+    position: fixed;
+    z-index: var(--z-modal);
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  }
+
+  .commitment-modal__dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: min(var(--content-basis, 48rem), calc(var(--shell-viewport-width, 30rem) - 2rem));
+    max-height: calc(var(--content-basis, 48rem) * 0.9);
+    min-height: 0;
+    padding: var(--space-padding);
+    padding-bottom: calc(var(--control-height) + 2rem);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .commitment-modal__toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    flex-shrink: 0;
+  }
+
+  .commitment-modal__toolbar h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .commitment-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    flex: 1;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .commitment-modal__sheet {
+    margin: 0;
+    padding: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .commitment-modal__sheet img {
+    display: block;
+    width: auto;
+    max-width: calc(var(--content-basis, 48rem) - 4rem);
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .commitment-modal__footer {
+    position: absolute;
+    left: var(--space-padding);
+    right: var(--space-padding);
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: var(--rail-gap);
+  }
+
+  .commitment-modal__download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rail-gap);
+    min-width: calc(var(--content-basis, 30rem) * 0.35);
+  }
+
+  .commitment-modal__download[disabled] {
+    opacity: 0.6;
+    cursor: wait;
+  }
+</style>
+
+<script>
+  import { showErrorModal } from "../../lib/error-modal";
+  import { mustLog } from "../../lib/dev-log";
+  import { downloadCommitmentPdf } from "../../lib/homeschool-commitment-pdf";
+
+  function bindDownload(): void {
+    const button = document.querySelector<HTMLButtonElement>("[data-commitment-download]");
+    if (!button || button.dataset.bound === "1") return;
+    button.dataset.bound = "1";
+
+    button.addEventListener("click", async () => {
+      if (button.disabled) return;
+      button.disabled = true;
+      const label = button.textContent?.trim() || "Descargar PDF";
+      button.setAttribute("aria-busy", "true");
+      try {
+        if (mustLog) console.log("[homeschool-commitment] download.click");
+        await downloadCommitmentPdf("Compromiso_la_vid.pdf");
+      } catch (err) {
+        showErrorModal({
+          message: "No se pudo generar el PDF. Inténtalo de nuevo.",
+          details: err instanceof Error ? err.message : String(err),
+        });
+      } finally {
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+        if (mustLog) console.log("[homeschool-commitment] download.end", { label });
+      }
+    });
+  }
+
+  bindDownload();
+  document.addEventListener("astro:page-load", bindDownload);
+</script>
