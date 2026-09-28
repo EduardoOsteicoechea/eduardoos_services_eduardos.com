@@ -190,6 +190,7 @@ import Layout from "../../layouts/Layout.astro";
     restoreReportHistory,
     saveOrgReport,
     saveSharedReport,
+    createEreportSavePump,
     sharedImageUploadPath,
     updateEreportOrgs,
     type EreportHistoryCard,
@@ -307,16 +308,18 @@ import Layout from "../../layouts/Layout.astro";
       pendingCmds.push(command);
     };
 
+    const cloudSavePump = createEreportSavePump((body) =>
+      isShared ? saveSharedReport(orgId, reportId, body) : saveOrgReport(orgId, reportId, body),
+    );
+
     const persistCloud = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
       if (disposed || !orgId || !reportId) return false;
       payload = next;
       publishAgentPayload(next);
       const nextTema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       tema = nextTema;
-      const res = isShared
-        ? await saveSharedReport(orgId, reportId, { payload: next, tema: nextTema })
-        : await saveOrgReport(orgId, reportId, { payload: next, tema: nextTema });
-      if (disposed) return false;
+      const res = await cloudSavePump.enqueueAndWait({ payload: next, tema: nextTema });
+      if (disposed || !res) return false;
       const orgName = String(next.orgName || "").trim();
       if (!isShared && res.status < 300 && orgName) {
         await updateEreportOrgs([{ id: orgId, name: orgName }]);

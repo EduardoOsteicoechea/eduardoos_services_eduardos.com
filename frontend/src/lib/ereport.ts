@@ -267,6 +267,63 @@ export function saveInviteReport(reportId: string, body: { tema?: string; payloa
   return putJSON<{ meta?: EreportMeta }>(`/ereport/invite-session/reports/${reportId}`, body, { timeoutMs: 120000 });
 }
 
+export type EreportSaveBody = { tema?: string; payload?: EreportPayload };
+export type EreportSaveResult = Awaited<ReturnType<typeof saveInviteReport>>;
+
+/**
+ * Serializes cloud saves and keeps only the newest pending payload.
+ * Rapid edits on large reports (~2s PUTs) otherwise let an older in-flight
+ * response overwrite a newer one — invitees see their changes “not saving”.
+ */
+export function createEreportSavePump(saveFn: (body: EreportSaveBody) => Promise<EreportSaveResult>) {
+  let pending: EreportSaveBody | null = null;
+  let running = false;
+  let lastResult: EreportSaveResult | null = null;
+  let idleWaiters: Array<() => void> = [];
+
+  const settleIdle = () => {
+    if (running || pending) return;
+    const waiters = idleWaiters.splice(0);
+    for (const wait of waiters) wait();
+  };
+
+  const kick = async () => {
+    if (running) return;
+    running = true;
+    try {
+      while (pending) {
+        const job = pending;
+        pending = null;
+        lastResult = await saveFn(job);
+      }
+    } finally {
+      running = false;
+      if (pending) {
+        void kick();
+      } else {
+        settleIdle();
+      }
+    }
+  };
+
+  return {
+    /** Fire-and-forget (autosave). Coalesces to the latest body. */
+    enqueue(body: EreportSaveBody): void {
+      pending = body;
+      void kick();
+    },
+    /** Wait until this body (or a newer one that superseded it) has flushed. */
+    enqueueAndWait(body: EreportSaveBody): Promise<EreportSaveResult | null> {
+      pending = body;
+      void kick();
+      return new Promise((resolve) => {
+        idleWaiters.push(() => resolve(lastResult));
+        settleIdle();
+      });
+    },
+  };
+}
+
 export function ownerImageUploadPath(orgId: string, reportId: string): string {
   return `/api/ereport/orgs/${orgId}/reports/${reportId}/images`;
 }

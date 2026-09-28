@@ -14,8 +14,31 @@ import {
   workspaceHref,
 } from "./ereport-routes";
 import { bumpUiScale, handleTrackerMessage, SITE_TEXT_SCALE_STEPS, startTrackerHost, trackerConfigMessage, usesFilesystemImageRef } from "./ereport-workspace";
+import { createEreportSavePump, type EreportSaveResult } from "./ereport";
 
 const here = dirname(fileURLToPath(import.meta.url));
+
+describe("createEreportSavePump", () => {
+  it("keeps only the newest payload and never lets an older PUT finish last", async () => {
+    const started: string[] = [];
+    const finished: string[] = [];
+    const pump = createEreportSavePump(async (body) => {
+      const tema = String(body.tema || "");
+      started.push(tema);
+      await new Promise((r) => setTimeout(r, tema === "old" ? 40 : 5));
+      finished.push(tema);
+      return { status: 200, data: { meta: { id: "r", tema, orgId: "o" } }, requestId: tema } as EreportSaveResult;
+    });
+    const first = pump.enqueueAndWait({ tema: "old", payload: { reportName: "old" } });
+    await new Promise((r) => setTimeout(r, 5));
+    const second = pump.enqueueAndWait({ tema: "new", payload: { reportName: "new" } });
+    const [a, b] = await Promise.all([first, second]);
+    expect(started).toEqual(["old", "new"]);
+    expect(finished).toEqual(["old", "new"]);
+    expect(a?.data.meta?.tema).toBe("new");
+    expect(b?.data.meta?.tema).toBe("new");
+  });
+});
 
 describe("eReport public invite routing", () => {
   it("treats /ereport/invite as public and hub/workspace as owner UX", () => {
@@ -302,7 +325,10 @@ describe("eReport workspace chrome", () => {
     expect(inviteSrc).toContain("claimInviteSession");
     expect(inviteSrc).toContain("inviteImageUploadPath");
     expect(inviteSrc).toContain("data-invite-editor-banner");
+    expect(inviteSrc).toContain("createEreportSavePump");
+    expect(inviteSrc).toContain("persistInvite");
     expect(inviteSrc).toContain("Background autosave: banner only");
+    expect(inviteSrc).toContain("invite_session_expired");
     expect(inviteSrc).toContain('window.addEventListener("ereport-ui-scale"');
     expect(inviteSrc).toContain('window.addEventListener("ereport-theme"');
   });

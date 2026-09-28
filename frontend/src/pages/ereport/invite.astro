@@ -63,6 +63,7 @@ import Layout from "../../layouts/Layout.astro";
     rememberedCsrf,
     requestInviteOTP,
     saveInviteReport,
+    createEreportSavePump,
     verifyInviteOTP,
     type EreportPayload,
     type ReportCard,
@@ -94,6 +95,7 @@ import Layout from "../../layouts/Layout.astro";
     let canEditActive = false;
     let payload: EreportPayload | null = null;
     const pendingCmds: TrackerCommand[] = [];
+    const savePump = createEreportSavePump((body) => saveInviteReport(activeReportId, body));
 
     const sendCmd = (command: TrackerCommand) => {
       if (host) {
@@ -114,6 +116,42 @@ import Layout from "../../layouts/Layout.astro";
       };
       paint(banner);
       paint(document.querySelector("[data-invite-editor-banner]"));
+    };
+
+    const persistInvite = async (
+      reportId: string,
+      next: EreportPayload,
+      opts: { silent?: boolean } = {},
+    ) => {
+      if (!canEditActive || !reportId) return null;
+      activeReportId = reportId;
+      payload = next;
+      const body = {
+        payload: next,
+        tema: String(next.reportName || next.appTitle || "").trim(),
+      };
+      let saved = await savePump.enqueueAndWait(body);
+      // Invite cookie can drop while the site session stays logged in — reclaim once.
+      if (saved && saved.status === 401 && saved.data.error === "invite_session_expired" && inviteId && secret) {
+        const claimed = await claimInviteSession(inviteId, secret);
+        if (claimed.status === 200) {
+          saved = await savePump.enqueueAndWait(body);
+        }
+      }
+      if (!saved || saved.status === 0) return saved;
+      if (saved.status >= 300) {
+        setStatus(saved.data.message || "Could not save. Try Save or reload the invite link.", "err");
+        if (!opts.silent) {
+          showErrorModal({
+            message: saved.data.message || "Could not save.",
+            requestId: saved.data.request_id,
+            details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
+          });
+        }
+        return saved;
+      }
+      setStatus(opts.silent ? "Autosaved." : "Saved.", "ok");
+      return saved;
     };
 
     const mountTracker = (reportPayload: EreportPayload, opts: { uploadUrl: string; canEdit: boolean; reportId: string }) => {
@@ -147,7 +185,6 @@ import Layout from "../../layouts/Layout.astro";
         handlers: {
           onCloudSave: (next) => {
             if (!opts.canEdit) return;
-            payload = next;
             setAgentRoutePayload({
               kind: "ereport_report",
               inviteId,
@@ -155,19 +192,8 @@ import Layout from "../../layouts/Layout.astro";
               canEdit: opts.canEdit,
               payload: next,
             });
-            void saveInviteReport(opts.reportId, {
-              payload: next,
-              tema: String(next.reportName || next.appTitle || "").trim(),
-            }).then((saved) => {
-              // Background autosave: banner only — never the global "Sign in" modal.
-              if (saved.status === 0) return;
-              if (saved.status >= 300) {
-                setStatus(
-                  saved.data.message || "Could not autosave. Try Save or reload the invite link.",
-                  "err",
-                );
-              }
-            });
+            // Background autosave: banner only — never the global "Sign in" modal.
+            void persistInvite(opts.reportId, next as EreportPayload, { silent: true });
           },
           onError: (message) => setStatus(message, "err"),
           onNeedConfig: () => {
@@ -311,25 +337,24 @@ import Layout from "../../layouts/Layout.astro";
       const saveBtn = node.closest("[data-invite-save]");
       if (saveBtn) {
         if (!canEditActive || !host || !activeReportId) return;
-        void host.collect(8000).then((next) => {
-          payload = next;
-          return saveInviteReport(activeReportId, {
-            payload: next,
-            tema: String(next.reportName || next.appTitle || "").trim(),
-          });
-        }).then((saved) => {
-          if (!saved || saved.status === 0) return;
-          if (saved.status >= 300) {
-            setStatus(saved.data.message || "Could not save.", "err");
-            showErrorModal({
-              message: saved.data.message || "Could not save.",
-              requestId: saved.data.request_id,
-              details: saved.data.request_id ? `request_id=${saved.data.request_id}` : "",
+        void host
+          .collect(8000)
+          .then((next) => {
+            setAgentRoutePayload({
+              kind: "ereport_report",
+              inviteId,
+              reportId: activeReportId,
+              canEdit: canEditActive,
+              payload: next,
             });
-            return;
-          }
-          setStatus("Saved.", "ok");
-        });
+            return persistInvite(activeReportId, next as EreportPayload);
+          })
+          .catch((err) => {
+            setStatus(err instanceof Error ? err.message : "Could not collect report state.", "err");
+            showErrorModal({
+              message: err instanceof Error ? err.message : "Could not collect report state.",
+            });
+          });
         return;
       }
       const cmd = node.closest("[data-tracker-cmd]");
