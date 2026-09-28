@@ -25,7 +25,9 @@ function syncShellViewportWidth(): void {
     return;
   }
   const widthPx = window.visualViewport?.width ?? window.innerWidth;
+  const heightPx = window.visualViewport?.height ?? window.innerHeight;
   root.style.setProperty("--shell-viewport-width", `${widthPx / fontSize}rem`);
+  root.style.setProperty("--shell-viewport-height", `${heightPx / fontSize}rem`);
 }
 
 declare global {
