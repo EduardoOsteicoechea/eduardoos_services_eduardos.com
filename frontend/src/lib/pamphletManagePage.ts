@@ -55,9 +55,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const headerDate = requireEl<HTMLInputElement>(root, "[data-manage-header-date]");
   const footerAction = requireEl<HTMLInputElement>(root, "[data-manage-footer-action]");
   const footerMessage = requireEl<HTMLInputElement>(root, "[data-manage-footer-message]");
+  const footerLabel1 = requireEl<HTMLInputElement>(root, "[data-manage-footer-label1]");
   const footerValue1 = requireEl<HTMLInputElement>(root, "[data-manage-footer-value1]");
+  const footerLabel2 = requireEl<HTMLInputElement>(root, "[data-manage-footer-label2]");
   const footerValue2 = requireEl<HTMLInputElement>(root, "[data-manage-footer-value2]");
+  const footerLabel3 = requireEl<HTMLInputElement>(root, "[data-manage-footer-label3]");
   const footerValue3 = requireEl<HTMLInputElement>(root, "[data-manage-footer-value3]");
+  const footerLabel4 = requireEl<HTMLInputElement>(root, "[data-manage-footer-label4]");
   const footerValue4 = requireEl<HTMLInputElement>(root, "[data-manage-footer-value4]");
   const deleteBtn = requireEl<HTMLButtonElement>(root, "[data-manage-delete]");
   const profileList = requireEl<HTMLElement>(root, "[data-manage-profile-list]");
@@ -66,9 +70,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const profileName = requireEl<HTMLInputElement>(root, "[data-manage-profile-name]");
   const profileAction = requireEl<HTMLInputElement>(root, "[data-manage-profile-action]");
   const profileMessage = requireEl<HTMLInputElement>(root, "[data-manage-profile-message]");
+  const profileLabel1 = requireEl<HTMLInputElement>(root, "[data-manage-profile-label1]");
   const profileValue1 = requireEl<HTMLInputElement>(root, "[data-manage-profile-value1]");
+  const profileLabel2 = requireEl<HTMLInputElement>(root, "[data-manage-profile-label2]");
   const profileValue2 = requireEl<HTMLInputElement>(root, "[data-manage-profile-value2]");
+  const profileLabel3 = requireEl<HTMLInputElement>(root, "[data-manage-profile-label3]");
   const profileValue3 = requireEl<HTMLInputElement>(root, "[data-manage-profile-value3]");
+  const profileLabel4 = requireEl<HTMLInputElement>(root, "[data-manage-profile-label4]");
   const profileValue4 = requireEl<HTMLInputElement>(root, "[data-manage-profile-value4]");
   const profileReset = requireEl<HTMLButtonElement>(root, "[data-manage-profile-reset]");
   const profileFromDoc = requireEl<HTMLButtonElement>(root, "[data-manage-profile-from-doc]");
@@ -105,9 +113,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     headerDate.value = doc.header.date ?? "";
     footerAction.value = doc.footer.action ?? "";
     footerMessage.value = doc.footer.message ?? "";
+    footerLabel1.value = doc.footer.label1 ?? "";
     footerValue1.value = doc.footer.value1 ?? "";
+    footerLabel2.value = doc.footer.label2 ?? "";
     footerValue2.value = doc.footer.value2 ?? "";
+    footerLabel3.value = doc.footer.label3 ?? "";
     footerValue3.value = doc.footer.value3 ?? "";
+    footerLabel4.value = doc.footer.label4 ?? "";
     footerValue4.value = doc.footer.value4 ?? "";
   }
 
@@ -125,9 +137,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
       footer: footerFromForm({
         action: footerAction.value,
         message: footerMessage.value,
+        label1: footerLabel1.value,
         value1: footerValue1.value,
+        label2: footerLabel2.value,
         value2: footerValue2.value,
+        label3: footerLabel3.value,
         value3: footerValue3.value,
+        label4: footerLabel4.value,
         value4: footerValue4.value,
       }),
     };
@@ -139,9 +155,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     const f = profile?.footer ?? emptyFooter();
     profileAction.value = f.action;
     profileMessage.value = f.message;
+    profileLabel1.value = f.label1;
     profileValue1.value = f.value1;
+    profileLabel2.value = f.label2;
     profileValue2.value = f.value2;
+    profileLabel3.value = f.label3;
     profileValue3.value = f.value3;
+    profileLabel4.value = f.label4;
     profileValue4.value = f.value4;
   }
 
@@ -515,9 +535,13 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
         footer: footerFromForm({
           action: profileAction.value,
           message: profileMessage.value,
+          label1: profileLabel1.value,
           value1: profileValue1.value,
+          label2: profileLabel2.value,
           value2: profileValue2.value,
+          label3: profileLabel3.value,
           value3: profileValue3.value,
+          label4: profileLabel4.value,
           value4: profileValue4.value,
         }),
       };

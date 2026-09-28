@@ -3,7 +3,12 @@
  */
 
 import { apiRequest } from "./api";
-import { emptyFooter, type PamphletFooter } from "./pamphlet-generator/src/pamphlet_schema";
+import {
+  emptyFooter,
+  ensureFooterLabelColon,
+  FOOTER_DEFAULT_LABELS,
+  type PamphletFooter,
+} from "./pamphlet-generator/src/pamphlet_schema";
 
 export type FooterProfile = {
   userId: string;
@@ -73,5 +78,10 @@ export async function deleteFooterProfile(footerId: string): Promise<void> {
 }
 
 export function footerFromForm(form: Partial<PamphletFooter> | null | undefined): PamphletFooter {
-  return { ...emptyFooter(), ...(form || {}) };
+  const f = { ...emptyFooter(), ...(form || {}) };
+  f.label1 = ensureFooterLabelColon(f.label1.trim() ? f.label1 : FOOTER_DEFAULT_LABELS.label1);
+  f.label2 = ensureFooterLabelColon(f.label2.trim() ? f.label2 : FOOTER_DEFAULT_LABELS.label2);
+  f.label3 = ensureFooterLabelColon(f.label3.trim() ? f.label3 : FOOTER_DEFAULT_LABELS.label3);
+  f.label4 = ensureFooterLabelColon(f.label4.trim() ? f.label4 : FOOTER_DEFAULT_LABELS.label4);
+  return f;
 }
