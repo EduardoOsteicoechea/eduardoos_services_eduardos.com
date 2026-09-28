@@ -713,18 +713,22 @@ function nextBodyColumnInReadingOrder(columnIndex: number): number | null {
     return PAMPHLET_BODY_COLUMN_READING_ORDER[idx + 1] ?? null;
 }
 
-function collectColumnItemsInReadingOrder(container: HTMLElement): HTMLElement[] {
-    const items: HTMLElement[] = [];
+function collectColumnItemsByNumber(container: HTMLElement): Map<number, HTMLElement[]> {
+    const byColumn = new Map<number, HTMLElement[]>();
     for (const colNum of PAMPHLET_BODY_COLUMN_READING_ORDER) {
         const col = container.querySelector<HTMLElement>(
             `:scope > .dumb-column.pamphlet-column-${colNum}`,
         );
-        if (!col) continue;
-        items.push(
-            ...Array.from(col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item")),
+        if (!col) {
+            byColumn.set(colNum, []);
+            continue;
+        }
+        byColumn.set(
+            colNum,
+            Array.from(col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item")),
         );
     }
-    return items;
+    return byColumn;
 }
 
 function ensureEightBodyColumns(container: HTMLElement): void {
@@ -1083,9 +1087,8 @@ function reflowAndReport(container: HTMLElement) {
         container.querySelectorAll<HTMLElement>(":scope > .pamphlet-lead-slot"),
     );
 
-    // Densify in pamphlet reading order (7→8→1→2→3→4→5→6) so page-1 overflow
-    // spills to the next physical column instead of painting past the band top.
-    const items = collectColumnItemsInReadingOrder(container);
+    // Densify in reading order (1→2 under header, 3–6 page 2, 7–8 page 1 left).
+    const itemsBySourceColumn = collectColumnItemsByNumber(container);
     container.innerHTML = "";
 
     const filledByColumn = new Map<number, number>();
@@ -1096,65 +1099,83 @@ function reflowAndReport(container: HTMLElement) {
         container.appendChild(col);
     }
 
-    const firstReadingCol = PAMPHLET_BODY_COLUMN_READING_ORDER[0] ?? 7;
-    let columnIndex = firstReadingCol;
-    let currentColumnDiv =
-        container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${columnIndex}`) ??
-        container.querySelector<HTMLElement>(":scope > .dumb-column")!;
-    let currentColumnFilledMm = 0;
-    let currentColumnItemsCount = 0;
-    let trailingGapMm = 0;
+    let pendingItems: HTMLElement[] = [];
 
-    items.forEach((item) => {
-        const staleSpacer = item.nextElementSibling;
-        if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
-            staleSpacer.remove();
-        }
+    for (const columnIndex of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        const currentColumnDiv =
+            container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${columnIndex}`) ??
+            container.querySelector<HTMLElement>(":scope > .dumb-column")!;
+        const queue = [
+            ...pendingItems,
+            ...(itemsBySourceColumn.get(columnIndex) ?? []),
+        ];
+        pendingItems = [];
 
-        const spacer = createItemSpacer();
-        const measured = measureBlockInSandbox(item, spacer);
-        const { itemMm, spacerMm, blockMm } = measured;
-        const currentMaxMm = maxHeightForColumn(columnIndex);
-        const filledContent =
-            currentColumnItemsCount > 0
-                ? Math.max(0, currentColumnFilledMm - trailingGapMm)
-                : 0;
-        const wouldOverflow =
-            currentColumnItemsCount > 0 &&
-            filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
+        let currentColumnFilledMm = 0;
+        let currentColumnItemsCount = 0;
+        let trailingGapMm = 0;
 
-        const nextCol = nextBodyColumnInReadingOrder(columnIndex);
-        if (wouldOverflow && nextCol !== null) {
-            stripTrailingItemSpacer(currentColumnDiv);
-            filledByColumn.set(columnIndex, filledContent);
+        for (let qi = 0; qi < queue.length; qi++) {
+            const item = queue[qi]!;
+            const staleSpacer = item.nextElementSibling;
+            if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
+                staleSpacer.remove();
+            }
 
-            columnIndex = nextCol;
-            currentColumnDiv =
-                container.querySelector<HTMLElement>(
-                    `:scope > .pamphlet-column-${columnIndex}`,
-                ) ?? currentColumnDiv;
-            currentColumnDiv.appendChild(item);
-            currentColumnDiv.appendChild(spacer);
+            const spacer = createItemSpacer();
+            const measured = measureBlockInSandbox(item, spacer);
+            const { itemMm, spacerMm, blockMm } = measured;
+            const currentMaxMm = maxHeightForColumn(columnIndex);
+            const filledContent =
+                currentColumnItemsCount > 0
+                    ? Math.max(0, currentColumnFilledMm - trailingGapMm)
+                    : 0;
+            const wouldOverflow =
+                currentColumnItemsCount > 0 &&
+                filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
 
-            currentColumnFilledMm = blockMm;
-            currentColumnItemsCount = 1;
-            trailingGapMm = spacerMm;
-        } else {
+            if (wouldOverflow) {
+                stripTrailingItemSpacer(currentColumnDiv);
+                pendingItems.push(item, ...queue.slice(qi + 1));
+                break;
+            }
+
             currentColumnDiv.appendChild(item);
             currentColumnDiv.appendChild(spacer);
             currentColumnFilledMm = filledContent + blockMm;
             currentColumnItemsCount++;
             trailingGapMm = spacerMm;
         }
-    });
+
+        if (currentColumnItemsCount > 0) {
+            stripTrailingItemSpacer(currentColumnDiv);
+            const filledContent = Math.max(0, currentColumnFilledMm - trailingGapMm);
+            filledByColumn.set(columnIndex, filledContent);
+        }
+    }
+
+    // Past col 8: clip remainder into column 8 (CSS / PDF).
+    if (pendingItems.length > 0) {
+        const col8 =
+            container.querySelector<HTMLElement>(`:scope > .pamphlet-column-8`) ??
+            container.querySelector<HTMLElement>(":scope > .dumb-column")!;
+        let filledMm = filledByColumn.get(8) ?? 0;
+        for (const item of pendingItems) {
+            const staleSpacer = item.nextElementSibling;
+            if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
+                staleSpacer.remove();
+            }
+            const spacer = createItemSpacer();
+            const measured = measureBlockInSandbox(item, spacer);
+            col8.appendChild(item);
+            col8.appendChild(spacer);
+            filledMm += measured.blockMm;
+        }
+        stripTrailingItemSpacer(col8);
+        filledByColumn.set(8, filledMm);
+    }
 
     ensureMeasureRoot().column.replaceChildren();
-
-    if (currentColumnItemsCount > 0) {
-        stripTrailingItemSpacer(currentColumnDiv);
-        const filledContent = Math.max(0, currentColumnFilledMm - trailingGapMm);
-        filledByColumn.set(columnIndex, filledContent);
-    }
 
     ensureEightBodyColumns(container);
 

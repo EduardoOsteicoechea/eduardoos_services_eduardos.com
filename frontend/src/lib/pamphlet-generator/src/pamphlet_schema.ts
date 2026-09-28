@@ -121,8 +121,10 @@ export const COLUMN_KEYS = [
     "column_8",
 ] as const;
 
-/** Body overflow / densify / PDF “+” control follow pamphlet reading order. */
-export const PAMPHLET_BODY_COLUMN_READING_ORDER: readonly number[] = [7, 8, 1, 2, 3, 4, 5, 6];
+/** Body overflow / densify / PDF “+”: pg1 cols 1–2, pg2 cols 3–6, pg1 cols 7–8. */
+export const PAMPHLET_BODY_COLUMN_READING_ORDER: readonly number[] = [
+    1, 2, 3, 4, 5, 6, 7, 8,
+];
 
 export type ColumnKey = (typeof COLUMN_KEYS)[number];
 

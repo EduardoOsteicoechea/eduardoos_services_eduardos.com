@@ -645,7 +645,7 @@ export class PamphletPdfSot {
 
     /**
      * Single "+" under the last content item in pamphlet reading order
-     * (page1: 7→8→1→2, page2: 3→4→5→6). Only rendered on that item's page.
+     * (1→2 page-1 right, 3→6 page 2, 7→8 page-1 left). Only on that item's page.
      */
     private appendAddControl(
         pageEl: HTMLElement,
