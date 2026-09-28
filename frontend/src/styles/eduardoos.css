@@ -32,7 +32,6 @@
 .api-keys,
 .articles-page,
 .article-page {
-  max-width: none;
   margin-inline: 0;
   min-width: 0;
 }
@@ -545,6 +544,11 @@ main > .diag{
 
 /* ---------- Long-form article reading ---------- */
 
+/* Desktop reading column = 500px at root 16px; phone clamps to the shell. */
+:root {
+  --article-measure: 31.25rem;
+}
+
 /* Fill the shell so the article footer can sit on the viewport bottom. */
 .shell:has(.article-page) {
   display: flex;
@@ -566,7 +570,10 @@ main > .diag{
   box-sizing: border-box;
   /* main already supplies --main-inline / --main-padding (1rem). */
   width: auto;
-  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
+  max-width: min(
+    var(--article-measure),
+    calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
+  );
   margin-inline: 0;
   padding-inline: 0;
   gap: var(--space-padding);
@@ -629,7 +636,10 @@ main > .diag{
 .article-page__body > img{
   margin: 0 0 1.75rem;
   min-width: 0;
-  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
+  max-width: min(
+    var(--article-measure),
+    calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
+  );
 }
 
 .article-page__body > p:last-child,
@@ -657,7 +667,10 @@ main > .diag{
 .article-page img{
   display: block;
   width: auto;
-  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2));
+  max-width: min(
+    var(--article-measure),
+    calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
+  );
   height: auto;
   border-radius: var(--radius-lg);
   border: var(--border-width) solid var(--color-border);
@@ -680,7 +693,7 @@ main > .diag{
   margin-top: auto;
 }
 
-/* Article body stays within the main column (1rem gutters from main only). */
+/* Article body stays within the reading measure (1rem gutters from main only). */
 @media (min-width: 48rem) {
   .article-page {
     padding-inline: 0;
@@ -691,9 +704,14 @@ main > .diag{
 
 .articles-page{
   grid-column: 1 / span var(--span-full);
-  max-width: none;
+  max-width: min(
+    var(--article-measure),
+    calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
+  );
   margin-inline: 0;
   gap: var(--space-padding);
+  justify-self: start;
+  min-width: 0;
 }
 
 .articles-page__tree{
