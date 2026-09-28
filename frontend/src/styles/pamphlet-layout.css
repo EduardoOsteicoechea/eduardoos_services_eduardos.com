@@ -492,9 +492,13 @@ body.page-pamphlet #item-type-cancel {
   color: var(--color-text);
 }
 
-body.page-pamphlet #modal-confirm {
-  background: var(--color-accent);
-  color: var(--site-accent-fg);
+body.page-pamphlet #modal-confirm,
+body.page-pamphlet #series-modal-save,
+body.page-pamphlet .create-modal-actions button[type="submit"] {
+  /* Use button tokens — accent is near-white in dark theme and --site-accent-fg is unset here. */
+  background: var(--color-button-bg);
+  color: var(--color-button-fg);
+  border: var(--border-width) solid var(--color-border);
 }
 
 /* Sheet paper follows site theme on screen; print / PDF stay white via token overrides. */

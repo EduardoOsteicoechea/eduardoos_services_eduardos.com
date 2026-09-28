@@ -3268,6 +3268,36 @@ let pendingCreateMeta: CreatePamphletMeta | null = null;
 /** Nuevo -> desde .epam: picking cloud should copy into a new pamphlet. */
 let createFromEpamFlow = false;
 
+/**
+ * Open the next dialog after the current click finishes.
+ * Same-tick close→showModal lets the originating click hit the new dialog and dismiss it.
+ */
+function openDialogSoon(open: () => void): void {
+    window.setTimeout(open, 0);
+}
+
+/** Leave /new so a remount does not reopen the create wizard over the new doc. */
+function markCreatedSessionInUrl(): void {
+    host.dataset.pamphletView = "open";
+    window.__eduardoosPamphletView = "open";
+    const id = cloudEpamId?.trim();
+    if (id) {
+        host.dataset.pamphletEpamId = id;
+        window.__eduardoosPamphletEpamId = id;
+        replacePamphletUrl(`${PAMPHLET_BASE_PATH}/open#${encodeURIComponent(id)}`);
+        return;
+    }
+    delete host.dataset.pamphletEpamId;
+    window.__eduardoosPamphletEpamId = undefined;
+    replacePamphletUrl(`${PAMPHLET_BASE_PATH}/open`);
+}
+
+function finishCreatedPamphlet(data: PamphletStructure): void {
+    markCreatedSessionInUrl();
+    loadPamphlet(data);
+    openDialogSoon(() => openItemTypeModal({ mode: "end", column: 1 }));
+}
+
 function closeCreateSourceModal(): void {
     if (createSourceModal.open) createSourceModal.close();
 }
@@ -3321,7 +3351,7 @@ on(createBtn, "click", () => {
 on(createSourceBlankBtn, "click", () => {
     closeCreateSourceModal();
     createFromEpamFlow = false;
-    openCreateModal();
+    openDialogSoon(() => openCreateModal());
 });
 
 on(createSourceEpamBtn, "click", () => {
@@ -3335,7 +3365,7 @@ on(createSourceEpamBtn, "click", () => {
             ? "Elige un .epam de este dispositivo o de la nube para usarlo como base del nuevo panfleto."
             : "Los archivos del dispositivo requieren HTTPS (o localhost). Elige uno de la nube si has iniciado sesión.";
     }
-    openSourceModal.showModal();
+    openDialogSoon(() => openSourceModal.showModal());
 });
 
 on(createSourceCancelBtn, "click", () => {
@@ -3372,7 +3402,7 @@ on(createForm, "submit", (event) => {
 
     pendingCreateMeta = { title, series, series_chapter, author };
     closeCreateModal();
-    openCreateSaveModal();
+    openDialogSoon(() => openCreateSaveModal());
 });
 
 on(createSaveCancelBtn, "click", () => {
@@ -3392,8 +3422,7 @@ on(createSaveLocalBtn, "click", async () => {
             cloudEpamId = null;
             cloudEpamTitle = null;
             closeCreateSaveModal();
-            loadPamphlet(data);
-            openItemTypeModal({ mode: "end", column: 1 });
+            finishCreatedPamphlet(data);
             return;
         }
         // No FSA (typical on http://host:port): editable blank sheet in this tab only.
@@ -3407,8 +3436,7 @@ on(createSaveLocalBtn, "click", async () => {
         );
         pendingCreateMeta = null;
         closeCreateSaveModal();
-        loadPamphlet(blank);
-        openItemTypeModal({ mode: "end", column: 1 });
+        finishCreatedPamphlet(blank);
         setStatus("Editing in this browser — Save to cloud to keep a copy. Device files need HTTPS.", "info");
     } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
@@ -3437,8 +3465,7 @@ on(createSaveCloudBtn, "click", async () => {
         const savedDoc = await persistCloud(blank);
         pendingCreateMeta = null;
         closeCreateSaveModal();
-        loadPamphlet(savedDoc);
-        openItemTypeModal({ mode: "end", column: 1 });
+        finishCreatedPamphlet(savedDoc);
         setStatus(`Saved to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
