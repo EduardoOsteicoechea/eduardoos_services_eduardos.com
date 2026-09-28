@@ -90,6 +90,30 @@ function isChromeColumn(column: number): boolean {
  * Prefer backend chrome hits (column 0 / 9 from drawHeader/drawFooter).
  * Equal-slice fallback only when the preview API omits them (older binary).
  */
+/** Coerce layout hit numerics — JSON is fine, but defensive against stringified fields. */
+function normalizeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
+    return hits.map((h) => {
+        const column = Number(h.column);
+        const index = Number(h.index);
+        const page = Number(h.page);
+        const x_mm = Number(h.x_mm);
+        const top_mm = Number(h.top_mm);
+        const w_mm = Number(h.w_mm);
+        const h_mm = Number(h.h_mm);
+        return {
+            id: h.id || hitId(column, index),
+            kind: typeof h.kind === "string" ? h.kind : "",
+            page: Number.isFinite(page) && page > 0 ? page : 1,
+            column: Number.isFinite(column) ? column : -1,
+            index: Number.isFinite(index) ? index : -1,
+            x_mm: Number.isFinite(x_mm) ? x_mm : 0,
+            top_mm: Number.isFinite(top_mm) ? top_mm : 0,
+            w_mm: Number.isFinite(w_mm) ? w_mm : 0,
+            h_mm: Number.isFinite(h_mm) ? h_mm : 0,
+        };
+    });
+}
+
 function mergeChromeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
     const hasHeader = hits.some((h) => h.column === HEADER_COLUMN);
     const hasFooter = hits.some((h) => h.column === FOOTER_COLUMN);
@@ -518,7 +542,9 @@ export class PamphletPdfSot {
 
     private async renderPreview(payload: PamphletPreviewResponse, seq: number): Promise<void> {
         const { pdf_base64, layout } = payload;
-        const hits = mergeChromeLayoutHits(Array.isArray(layout.hits) ? layout.hits : []);
+        const hits = mergeChromeLayoutHits(
+            normalizeLayoutHits(Array.isArray(layout.hits) ? layout.hits : []),
+        );
         log("render.pages.start", { seq, pageCount: layout.page_count, hitCount: hits.length });
 
         let pdf: PDFDocumentProxy;

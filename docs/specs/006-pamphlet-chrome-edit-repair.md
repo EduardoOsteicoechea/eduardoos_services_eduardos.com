@@ -140,3 +140,4 @@ Desktop PDF view, open pamphlet:
 | --- | --- |
 | 2026-09-28 | FE-only chromeMode + equal-slice hits shipped; user reports still broken. This spec written as the repair plan. |
 | 2026-09-28 | Implemented: backend `drawHeader`/`drawFooter` emit column 0/9 hits; dock chrome skips live PDF regen; FE uses backend hits (equal-slice fallback only if missing); Go test asserts `c0:0` / `c9:0`. |
+| 2026-09-28 | Follow-up (only-subtitle report): footer meta hits side-by-side (not stacked under ink); resolve chrome by `kind`; defer chrome persist until Approve; stop DOM serialize wiping header on series/footer/edit-open. |

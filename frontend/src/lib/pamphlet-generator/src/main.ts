@@ -2061,6 +2061,16 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         if (suppressEditOpenSave) return;
         const loc = locationFromContainer(detail.container);
         if (!loc) return;
+        // Chrome: keep in-memory header/footer — serializePamphlet(DOM) can wipe
+        // dock live edits that have not been painted back into every field.
+        if (loc.column === HEADER_COLUMN || loc.column === FOOTER_COLUMN) {
+            if (!currentDoc) return;
+            currentDoc = ensureDocumentId(currentDoc);
+            currentHeader = { ...currentDoc.header };
+            editDock.open(loc);
+            clearError();
+            return;
+        }
         const next = snapshotFromDom(loc);
         if (!next) return;
         currentDoc = ensureDocumentId(next);
@@ -2760,8 +2770,12 @@ on(seriesForm, "submit", (event: Event) => {
             series_chapter,
         };
         currentHeader = nextHeader;
-        const base = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
-        const nextDoc: PamphletStructure = { ...base, header: nextHeader };
+        // Prefer in-memory doc — DOM serialize was wiping unrelated chrome fields.
+        const nextDoc: PamphletStructure = {
+            ...clonePamphlet(currentDoc),
+            header: nextHeader,
+            last_edited_element: currentDoc.last_edited_element,
+        };
         applyLocalDoc(nextDoc, { openEdit: false });
         if (getAuthToken() && isAuthenticated() && !canBackgroundPersist()) {
             void (async () => {
@@ -2811,9 +2825,8 @@ function fillFooterForm(profile: FooterProfile | null): void {
 
 async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "linked"): Promise<void> {
     if (currentDoc) {
-        const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
         const next: PamphletStructure = {
-            ...live,
+            ...clonePamphlet(currentDoc),
             footer: { ...profile.footer },
             footer_profile_id: profile.footerId,
             footer_bind: bind,
@@ -2978,12 +2991,11 @@ on(footerFormReset, "click", () => {
 
 on(footerFormFromSheet, "click", () => {
     if (currentDoc) {
-        const live = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
         fillFooterForm({
             userId: "",
             footerId: footerFormId.value,
-            name: footerFormName.value.trim() || live.header.title || "Pie actual",
-            footer: live.footer,
+            name: footerFormName.value.trim() || currentDoc.header.title || "Pie actual",
+            footer: { ...currentDoc.footer },
         });
         return;
     }

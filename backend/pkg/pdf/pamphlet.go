@@ -772,6 +772,10 @@ func drawHeader(s *strings.Builder, h PamphletHeader, layout PamphletHeaderLayou
 	if titleHitH < titleLineHMm {
 		titleHitH = titleLineHMm
 	}
+	// Include title→divider pad so clicks on the title block (not only glyph ink) hit.
+	if layout.TitlePadBottom > 0 {
+		titleHitH += layout.TitlePadBottom
+	}
 	sink.add(page, pamphletHeaderHitColumn, headerHitTitle, "header_title", innerX, innerTop, innerW, titleHitH)
 
 	// Double rule under title (same strokes as footer Acción→Mensaje divider).
@@ -1532,29 +1536,28 @@ func drawFooter(s *strings.Builder, f PamphletFooter, layout PamphletFooterLayou
 		}
 
 		// Hit indexes follow FE FOOTER_FIELD_KEYS (labelN/valueN interleaved).
+		// Paint is label|value on one row — hits must be side-by-side full rowH,
+		// not stacked strips (stacked put value under the ink users click).
 		labelLIdx, valueLIdx, labelRIdx, valueRIdx := footerHitLabel1, footerHitValue1, footerHitLabel2, footerHitValue2
 		if i == 1 {
 			labelLIdx, valueLIdx, labelRIdx, valueRIdx = footerHitLabel3, footerHitValue3, footerHitLabel4, footerHitValue4
 		}
-		labelH := pair.labelRowH
-		if labelH > rowH {
-			labelH = rowH
+		labelW := half * 0.38
+		if labelW < 8 {
+			labelW = half * 0.35
 		}
-		valueH := rowH - labelH
-		if valueH < 1.2 {
-			valueH = rowH * 0.45
-			if valueH < 1.2 {
-				valueH = 1.2
-			}
-			if valueH > rowH {
-				valueH = rowH
-			}
-			labelH = rowH - valueH
+		if labelW > half*0.5 {
+			labelW = half * 0.5
 		}
-		sink.add(page, pamphletFooterHitColumn, labelLIdx, fmt.Sprintf("footer_label%d", i*2+1), innerX, cursorTop, half, labelH)
-		sink.add(page, pamphletFooterHitColumn, labelRIdx, fmt.Sprintf("footer_label%d", i*2+2), rightX, cursorTop, half, labelH)
-		sink.add(page, pamphletFooterHitColumn, valueLIdx, fmt.Sprintf("footer_value%d", i*2+1), innerX, cursorTop-labelH, half, valueH)
-		sink.add(page, pamphletFooterHitColumn, valueRIdx, fmt.Sprintf("footer_value%d", i*2+2), rightX, cursorTop-labelH, half, valueH)
+		valueW := half - labelW
+		if valueW < 4 {
+			valueW = half * 0.55
+			labelW = half - valueW
+		}
+		sink.add(page, pamphletFooterHitColumn, labelLIdx, fmt.Sprintf("footer_label%d", i*2+1), innerX, cursorTop, labelW, rowH)
+		sink.add(page, pamphletFooterHitColumn, valueLIdx, fmt.Sprintf("footer_value%d", i*2+1), innerX+labelW, cursorTop, valueW, rowH)
+		sink.add(page, pamphletFooterHitColumn, labelRIdx, fmt.Sprintf("footer_label%d", i*2+2), rightX, cursorTop, labelW, rowH)
+		sink.add(page, pamphletFooterHitColumn, valueRIdx, fmt.Sprintf("footer_value%d", i*2+2), rightX+labelW, cursorTop, valueW, rowH)
 
 		drawMetaPairCell(innerX, pair.labelL, pair.valueL)
 		drawMetaPairCell(rightX, pair.labelR, pair.valueR)

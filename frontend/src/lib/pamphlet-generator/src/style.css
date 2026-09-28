@@ -2671,6 +2671,7 @@ html[data-theme="light"] .pamphlet-pdf-page__canvas {
   border-radius: var(--border-radius, 0.25rem);
   cursor: pointer;
   background: transparent;
+  z-index: 1;
 }
 
 .pamphlet-pdf-hit:hover:not(.is-selected) {
@@ -3028,20 +3029,23 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
   }
 }
 
-/* Phone: fixed 12.5rem tray below activity bar; sheet scrolls underneath (portal on body). */
+/* Phone: dock pinned to visualViewport top:0 (covers menu); page scroll moves to app host. */
 @media (max-width: 47.999rem) {
   .pamphlet-workspace {
     position: relative;
     flex-direction: column;
   }
 
+  /* Portaled to body + inline visualViewport pin (edit_dock.ts). Fallback CSS below. */
+  body.page-pamphlet #pamphlet-edit-dock[data-phone-pinned]:not([hidden]),
   body.page-pamphlet.pamphlet-phone-dock-open #pamphlet-edit-dock:not([hidden]),
   .pamphlet-edit-dock:not([hidden]) {
     order: 0;
     position: fixed;
-    top: var(--pamphlet-phone-dock-top, var(--mobile-header-height, var(--header-size)));
+    top: 0;
     left: 0;
     right: 0;
+    bottom: auto;
     width: auto;
     flex: none;
     display: flex;
@@ -3049,18 +3053,46 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     height: 12.5rem;
     max-height: 12.5rem;
     min-height: 12.5rem;
-    z-index: calc(var(--z-activity, 20) + 5);
+    /* Above activity menu button; below error modal */
+    z-index: calc(var(--z-modal, 40) - 1);
     border-radius: 0;
     border-left: 0;
     border-right: 0;
     border-top: 0;
+    background: var(--color-surface, var(--pamphlet-paper-bg, #fff));
   }
 
-  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-workspace main.pamphlet-sheet,
   .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
-    margin-top: calc(
-      var(--pamphlet-phone-dock-top, var(--mobile-header-height, var(--header-size))) + 12.5rem
-    );
+    margin-top: 12.5rem;
+  }
+
+  /* Document scroll is locked on html/body; sheet scrolls under the fixed dock */
+  html.pamphlet-phone-dock-open {
+    overflow: hidden;
+  }
+
+  body.page-pamphlet.pamphlet-phone-dock-open {
+    overflow: hidden;
+  }
+
+  body.page-pamphlet.pamphlet-phone-dock-open .shell,
+  body.page-pamphlet.pamphlet-phone-dock-open main:not(.pamphlet-sheet) {
+    overflow: hidden;
+    max-height: 100%;
+  }
+
+  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-layout-workspace,
+  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-app {
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 100%;
+    padding-top: 12.5rem;
+    box-sizing: border-box;
+  }
+
+  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-workspace main.pamphlet-sheet {
+    margin-top: 0;
   }
 
   .pamphlet-edit-dock__body {

@@ -884,6 +884,39 @@ func TestBuildPamphletPDFWithLayoutHits(t *testing.T) {
 	}
 }
 
+func TestFooterMetaHitsAreSideBySide(t *testing.T) {
+	_, layout, _ := BuildPamphletPDFWithLayout(PamphletDocument{
+		Type: "pamphlet_single_sheet",
+		Header: PamphletHeader{Title: "T", Subtitle: "S"},
+		Footer: PamphletFooter{
+			Action: "A", Message: "M",
+			Label1: "WhatsApp:", Value1: "111",
+			Label2: "Tel:", Value2: "222",
+			Label3: "Dir:", Value3: "333",
+			Label4: "Act:", Value4: "444",
+		},
+	})
+	byID := map[string]PamphletHit{}
+	for _, h := range layout.Hits {
+		byID[h.ID] = h
+	}
+	label := byID["c9:2"] // label1
+	value := byID["c9:3"] // value1
+	if label.ID == "" || value.ID == "" {
+		t.Fatalf("missing footer meta hits: %#v", byID)
+	}
+	// Same CSS top (side-by-side row), value to the right of label — not stacked under it.
+	if value.TopMm < label.TopMm-0.2 || value.TopMm > label.TopMm+0.2 {
+		t.Fatalf("expected side-by-side tops, label top=%.2f value top=%.2f", label.TopMm, value.TopMm)
+	}
+	if value.XMm <= label.XMm {
+		t.Fatalf("expected value to the right of label, label x=%.2f value x=%.2f", label.XMm, value.XMm)
+	}
+	if value.HMm < label.HMm-0.2 {
+		t.Fatalf("value hit should span full row height, label h=%.2f value h=%.2f", label.HMm, value.HMm)
+	}
+}
+
 func tinyJPEGDataURL(t *testing.T) string {
 	t.Helper()
 	img := image.NewRGBA(image.Rect(0, 0, 16, 16))

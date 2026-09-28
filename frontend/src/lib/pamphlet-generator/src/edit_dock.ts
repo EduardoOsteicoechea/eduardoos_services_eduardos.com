@@ -103,7 +103,27 @@ function isChromeColumn(column: number): boolean {
     return column === HEADER_COLUMN || column === FOOTER_COLUMN;
 }
 
-function chromeFieldAt(loc: LastEditedElement): HeaderFieldKey | FooterFieldKey | null {
+function chromeFieldFromKind(kind: string): HeaderFieldKey | FooterFieldKey | null {
+    const k = kind.trim();
+    if (k.startsWith("header_")) {
+        const field = k.slice("header_".length) as HeaderFieldKey;
+        return HEADER_FIELD_KEYS.includes(field) ? field : null;
+    }
+    if (k.startsWith("footer_")) {
+        const field = k.slice("footer_".length) as FooterFieldKey;
+        return FOOTER_FIELD_KEYS.includes(field) ? field : null;
+    }
+    if (HEADER_FIELD_KEYS.includes(k as HeaderFieldKey)) return k as HeaderFieldKey;
+    if (FOOTER_FIELD_KEYS.includes(k as FooterFieldKey)) return k as FooterFieldKey;
+    return null;
+}
+
+function chromeFieldAt(
+    loc: LastEditedElement,
+    kindHint = "",
+): HeaderFieldKey | FooterFieldKey | null {
+    const fromKind = chromeFieldFromKind(kindHint);
+    if (fromKind) return fromKind;
     if (loc.column === HEADER_COLUMN) {
         return HEADER_FIELD_KEYS[loc.index] ?? null;
     }
@@ -113,19 +133,41 @@ function chromeFieldAt(loc: LastEditedElement): HeaderFieldKey | FooterFieldKey 
     return null;
 }
 
-function readChromeContent(doc: PamphletStructure, loc: LastEditedElement): string {
-    const field = chromeFieldAt(loc);
+function locForChromeField(
+    field: HeaderFieldKey | FooterFieldKey,
+    fallback: LastEditedElement,
+): LastEditedElement {
+    const hi = HEADER_FIELD_KEYS.indexOf(field as HeaderFieldKey);
+    if (hi >= 0) return { column: HEADER_COLUMN, index: hi };
+    const fi = FOOTER_FIELD_KEYS.indexOf(field as FooterFieldKey);
+    if (fi >= 0) return { column: FOOTER_COLUMN, index: fi };
+    return { column: fallback.column, index: fallback.index };
+}
+
+function readChromeContent(
+    doc: PamphletStructure,
+    loc: LastEditedElement,
+    kindHint = "",
+): string {
+    const field = chromeFieldAt(loc, kindHint);
     if (!field) return "";
-    if (loc.column === HEADER_COLUMN) {
+    const resolved = locForChromeField(field, loc);
+    if (resolved.column === HEADER_COLUMN) {
         return doc.header[field as HeaderFieldKey] ?? "";
     }
     return doc.footer[field as FooterFieldKey] ?? "";
 }
 
-function writeChromeContent(doc: PamphletStructure, loc: LastEditedElement, content: string): void {
-    const field = chromeFieldAt(loc);
+function writeChromeContent(
+    doc: PamphletStructure,
+    loc: LastEditedElement,
+    content: string,
+    kindHint = "",
+): void {
+    const field = chromeFieldAt(loc, kindHint);
     if (!field) return;
-    if (loc.column === HEADER_COLUMN) {
+    const resolved = locForChromeField(field, loc);
+    if (resolved.column === HEADER_COLUMN) {
         doc.header = { ...doc.header, [field as HeaderFieldKey]: content };
         return;
     }
@@ -181,11 +223,81 @@ export function setupEditDock(
     let suppressInput = false;
     let liveTimer: ReturnType<typeof setTimeout> | null = null;
     let destroyed = false;
+    let phoneScrollLocked = false;
+    let phoneLockedScrollY = 0;
     const disposers: Array<() => void> = [];
     const persistentMq = window.matchMedia(DOCK_PERSISTENT_MQ);
     const phoneMq = window.matchMedia(DOCK_PHONE_MQ);
     const dockHomeParent = dockRoot.parentElement;
     const dockHomeNext = dockRoot.nextElementSibling;
+
+    function rootFontPx(): number {
+        return Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    }
+
+    function pxToRem(px: number): string {
+        return `${px / rootFontPx()}rem`;
+    }
+
+    function clearPhoneDockInlinePin(): void {
+        dockRoot.style.position = "";
+        dockRoot.style.top = "";
+        dockRoot.style.left = "";
+        dockRoot.style.right = "";
+        dockRoot.style.bottom = "";
+        dockRoot.style.width = "";
+        dockRoot.style.height = "";
+        dockRoot.style.maxHeight = "";
+        dockRoot.style.minHeight = "";
+        dockRoot.style.margin = "";
+        dockRoot.style.zIndex = "";
+        dockRoot.style.transform = "";
+    }
+
+    /** Pin dock to the *visual* viewport top (survives browser URL bar + html scrollport). */
+    function syncPhoneDockViewportPin(): void {
+        if (destroyed || !dockRoot.hasAttribute("data-phone-pinned") || dockRoot.hidden) {
+            return;
+        }
+        const vv = window.visualViewport;
+        const topPx = vv?.offsetTop ?? 0;
+        const leftPx = vv?.offsetLeft ?? 0;
+        const widthPx = vv?.width ?? window.innerWidth;
+        dockRoot.style.position = "fixed";
+        dockRoot.style.top = pxToRem(topPx);
+        dockRoot.style.left = pxToRem(leftPx);
+        dockRoot.style.width = pxToRem(widthPx);
+        dockRoot.style.right = "auto";
+        dockRoot.style.bottom = "auto";
+        dockRoot.style.height = "12.5rem";
+        dockRoot.style.maxHeight = "12.5rem";
+        dockRoot.style.minHeight = "12.5rem";
+        dockRoot.style.margin = "0";
+        dockRoot.style.zIndex = "39";
+        dockRoot.style.transform = "translateZ(0)";
+    }
+
+    function lockPhonePageScroll(): void {
+        if (phoneScrollLocked) return;
+        phoneScrollLocked = true;
+        phoneLockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        document.body.style.position = "fixed";
+        document.body.style.top = pxToRem(-phoneLockedScrollY);
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.width = "auto";
+    }
+
+    function unlockPhonePageScroll(): void {
+        if (!phoneScrollLocked) return;
+        phoneScrollLocked = false;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        window.scrollTo(0, phoneLockedScrollY);
+    }
 
     const on = <K extends keyof HTMLElementEventMap>(
         el: HTMLElement | Document | Window,
@@ -234,17 +346,28 @@ export function setupEditDock(
 
     function syncPhoneDockPortal(): void {
         if (destroyed || !dockHomeParent) return;
+        // Phone: html is the page scrollport, which breaks CSS position:fixed on
+        // mobile (dock scrolls under the browser URL bar). Portal to body, lock
+        // document scroll, pin to visualViewport.offsetTop (= visible top:0).
         const shouldPin =
             phoneMq.matches && !isPersistent() && session != null && !dockRoot.hidden;
         if (shouldPin) {
             document.body.classList.add(PHONE_DOCK_BODY_CLASS);
+            document.documentElement.classList.add(PHONE_DOCK_BODY_CLASS);
+            dockRoot.setAttribute("data-phone-pinned", "");
             if (dockRoot.parentElement !== document.body) {
                 document.body.appendChild(dockRoot);
             }
+            lockPhonePageScroll();
+            syncPhoneDockViewportPin();
             host.requestLayoutSync();
             return;
         }
         document.body.classList.remove(PHONE_DOCK_BODY_CLASS);
+        document.documentElement.classList.remove(PHONE_DOCK_BODY_CLASS);
+        dockRoot.removeAttribute("data-phone-pinned");
+        clearPhoneDockInlinePin();
+        unlockPhonePageScroll();
         if (dockRoot.parentElement === document.body) {
             if (dockHomeNext && dockHomeNext.parentElement === dockHomeParent) {
                 dockHomeParent.insertBefore(dockRoot, dockHomeNext);
@@ -335,13 +458,12 @@ export function setupEditDock(
         const current = host.getDoc();
         if (!current || !session || session.imageMode) return;
         if (session.chromeMode) {
-            writeChromeContent(current, session.loc, value);
+            writeChromeContent(current, session.loc, value, session.kind);
             const withId = host.ensureDocumentId(current);
             host.setDoc(withId);
             host.syncLiveChromeContent(session.loc, value);
-            // Spec 006: do not regenerate PDF on every chrome keystroke — remounting
-            // hits races the dock. Preview runs on Approve / cancel / profile apply.
-            host.schedulePersist();
+            // Spec 006: no live PDF regen; also defer persist until Approve so a
+            // linked footer / cloud round-trip cannot wipe in-progress chrome.
             log("live-chrome", {
                 column: session.loc.column,
                 index: session.loc.index,
@@ -386,17 +508,18 @@ export function setupEditDock(
             return;
         }
 
-        if (isChromeColumn(loc.column)) {
+        if (isChromeColumn(loc.column) || chromeFieldFromKind(kindHint)) {
             flushLiveText();
-            const field = chromeFieldAt(loc);
+            const field = chromeFieldAt(loc, kindHint);
             if (!field) {
                 host.setError("Campo de cabecera o pie no válido.");
                 return;
             }
-            const content = readChromeContent(current, loc);
+            const resolved = locForChromeField(field, loc);
+            const content = readChromeContent(current, resolved, kindHint || field);
             const max = chromeFieldMaxLength(field);
             session = {
-                loc: { column: loc.column, index: loc.index },
+                loc: { column: resolved.column, index: resolved.index },
                 kind: kindHint || field,
                 imageMode: false,
                 chromeMode: true,
@@ -404,9 +527,12 @@ export function setupEditDock(
                 initialHeightMm: 0,
                 initialStyles: [[0, 0], [0, 0], [0, 0]],
             };
-            current.last_edited_element = { column: loc.column, index: loc.index };
+            current.last_edited_element = {
+                column: resolved.column,
+                index: resolved.index,
+            };
             host.setDoc(host.ensureDocumentId(current));
-            host.setSelected(loc.column, loc.index);
+            host.setSelected(resolved.column, resolved.index);
             host.highlightBodyItem(null);
 
             showShell();
@@ -426,7 +552,12 @@ export function setupEditDock(
                 textarea.focus();
                 textarea.setSelectionRange(textarea.value.length, textarea.value.length);
             });
-            log("open.chrome", { column: loc.column, index: loc.index, field });
+            log("open.chrome", {
+                column: resolved.column,
+                index: resolved.index,
+                field,
+                kindHint: kindHint || null,
+            });
             return;
         }
 
@@ -544,7 +675,12 @@ export function setupEditDock(
                     const snap = session;
                     const current = host.getDoc();
                     if (current) {
-                        writeChromeContent(current, snap.loc, snap.initialContent);
+                        writeChromeContent(
+                            current,
+                            snap.loc,
+                            snap.initialContent,
+                            snap.kind,
+                        );
                         host.setDoc(host.ensureDocumentId(current));
                         host.syncLiveChromeContent(snap.loc, snap.initialContent);
                         host.schedulePreview();
@@ -744,7 +880,7 @@ export function setupEditDock(
     on(textarea, "input", () => {
         if (suppressInput || !session || session.imageMode) return;
         if (session.chromeMode) {
-            const field = chromeFieldAt(session.loc);
+            const field = chromeFieldAt(session.loc, session.kind);
             if (field) {
                 const max = chromeFieldMaxLength(field);
                 setChromeStatus(true, Math.max(0, max - textarea.value.length), max);
@@ -839,6 +975,18 @@ export function setupEditDock(
         phoneMq.addListener(onMqChange);
         disposers.push(() => phoneMq.removeListener(onMqChange));
     }
+
+    const onVvPin = () => syncPhoneDockViewportPin();
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", onVvPin);
+        window.visualViewport.addEventListener("scroll", onVvPin);
+        disposers.push(() => {
+            window.visualViewport?.removeEventListener("resize", onVvPin);
+            window.visualViewport?.removeEventListener("scroll", onVvPin);
+        });
+    }
+    window.addEventListener("resize", onVvPin);
+    disposers.push(() => window.removeEventListener("resize", onVvPin));
 
     syncPersistentShell();
 
