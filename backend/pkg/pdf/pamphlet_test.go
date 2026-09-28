@@ -258,15 +258,15 @@ func TestHeaderFrameFromLayout(t *testing.T) {
 		Series: "Romanos",
 	}, layout, 100, 200, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
-	// Outer + inner black frames + title divider + gray meta top + mid + vertical.
+	// Temporary: outer/inner frames off (stroke 0). Title divider + gray meta top/mid/vertical remain.
 	strokeCount := strings.Count(out, "S\n")
-	if strokeCount < 7 {
-		t.Fatalf("expected ≥7 strokes (frame+title divider+meta top/cross) in header stream, got %d in %q", strokeCount, out)
+	if strokeCount < 5 {
+		t.Fatalf("expected ≥5 strokes (title divider+meta top/cross) in header stream, got %d in %q", strokeCount, out)
 	}
 	if !strings.Contains(out, "0.4 0.4 0.4 RG") {
 		t.Fatalf("expected gray meta cross stroke color, got %q", out)
 	}
-	if layout.PadTop != 2.2 || layout.PadBottom != 0.5 || layout.PadX != 2.2 || layout.Stroke != 0.2 || layout.InnerInset != 0.45 {
+	if layout.PadTop != 2.2 || layout.PadBottom != 0.5 || layout.PadX != 2.2 || layout.Stroke != 0 || layout.InnerInset != 0.45 {
 		t.Fatalf("header frame mm mismatch: %+v", layout)
 	}
 	if layout.MetaPadTop != 0.5 {
@@ -348,11 +348,9 @@ func TestDrawFooterStructuredChrome(t *testing.T) {
 		Value4:  "Domingo 10am",
 	}, defaultFooterLayout(), 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
+	// Temporary: outer/inner frames off; Acción→Mensaje divider + meta cross still stroke.
 	if !strings.Contains(out, " S\n") && !strings.Contains(out, "S\n") {
-		t.Fatalf("footer missing stroke S op for rounded frame: %q", out)
-	}
-	if !strings.Contains(out, " c\n") {
-		t.Fatalf("footer missing cubic curve ops for 1mm radius: %q", out)
+		t.Fatalf("footer missing stroke S op for divider/meta: %q", out)
 	}
 	// Input cell borders (re) are editor-only — PDF print must not stroke them.
 	if strings.Contains(out, " re\n") {
@@ -383,8 +381,9 @@ func TestFooterLayoutActionMessageGapAndInnerInset(t *testing.T) {
 	if d.ChromeGap < 0.55 || d.ChromeGap > 0.65 {
 		t.Fatalf("chrome_gap want 0.6mm, got %v", d.ChromeGap)
 	}
+	// Temporary: frame strokes are 0 — path inset collapses to clear InnerInset only.
 	pathInset := d.Stroke/2 + d.InnerInset + d.InnerStroke/2
-	want := 0.2/2 + 0.45 + 0.1/2
+	want := 0.45
 	if pathInset < want-0.001 || pathInset > want+0.001 {
 		t.Fatalf("inner path inset=%.3f want %.3f", pathInset, want)
 	}
@@ -466,9 +465,9 @@ func TestDrawFooterReservesMetaDespiteLongAction(t *testing.T) {
 			t.Fatalf("long-action footer missing meta %q: %q", want, out)
 		}
 	}
-	// Outer frame still stroked (bottom segment present via rounded-rect path).
+	// Temporary: frames off; divider/meta strokes remain.
 	if !strings.Contains(out, " S\n") && !strings.Contains(out, "S\n") {
-		t.Fatalf("long-action footer missing frame stroke: %q", out)
+		t.Fatalf("long-action footer missing divider/meta stroke: %q", out)
 	}
 }
 

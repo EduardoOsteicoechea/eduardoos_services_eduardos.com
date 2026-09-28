@@ -277,9 +277,10 @@ export const PAMPHLET_HEADER_LAYOUT_MM: PamphletHeaderLayoutMm = {
     pad_bottom: 0.5, // −0.5mm vs prior 1.0
     pad_x: 2.2,
     radius: 1,
-    stroke: 0.2,
+    /* Temporary: hide outer/inner header frames in PDF + desktop preview. Restore 0.2 / 0.1. */
+    stroke: 0,
     inner_inset: 0.45,
-    inner_stroke: 0.1,
+    inner_stroke: 0,
     inner_radius: 0.6,
     title_size: 6.75, // .pamphlet-header-title p
     title_lh: 1.1,
@@ -373,9 +374,10 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     pad_top: 1.2,
     pad_bottom: 0,
     radius: 1,
-    stroke: 0.2,
+    /* Temporary: hide outer/inner footer frames in PDF + desktop preview. Restore 0.2 / 0.1. */
+    stroke: 0,
     inner_inset: 0.45,
-    inner_stroke: 0.1,
+    inner_stroke: 0,
     inner_radius: 0.6,
     chrome_gap: 0.6,
     divider_outer_stroke: 0.2,

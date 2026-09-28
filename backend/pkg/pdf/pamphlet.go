@@ -923,9 +923,10 @@ func defaultHeaderLayout() PamphletHeaderLayout {
 		PadBottom:          0.5,
 		PadX:               2.2,
 		Radius:             1,
-		Stroke:             0.2,
+		// Temporary: hide header frames in PDF. Restore 0.2 / 0.1 with FE PAMPHLET_HEADER_LAYOUT_MM.
+		Stroke:             0,
 		InnerInset:         0.45,
-		InnerStroke:        0.1,
+		InnerStroke:        0,
 		InnerRadius:        0.6,
 		TitleSize:          pamphletTitleSizeMm,
 		TitleLH:            pamphletTitleLH,
@@ -1014,9 +1015,10 @@ func defaultFooterLayout() PamphletFooterLayout {
 		PadTop:             1.2,
 		PadBottom:          0,
 		Radius:             1.0,
-		Stroke:             0.2,
+		// Temporary: hide footer frames in PDF. Restore 0.2 / 0.1 with FE PAMPHLET_FOOTER_LAYOUT_MM.
+		Stroke:             0,
 		InnerInset:         0.45,
-		InnerStroke:        0.1,
+		InnerStroke:        0,
 		InnerRadius:        0.6,
 		ChromeGap:          0.6,
 		DividerOuterStroke: 0.2,
@@ -1145,7 +1147,7 @@ func normalizeFooterLayout(l PamphletFooterLayout) PamphletFooterLayout {
 // strokeRoundedRectMm strokes a rounded rectangle. x/top/width/height are mm;
 // top is the CSS box top (PDF y increases upward). radius and strokeMm are mm.
 func strokeRoundedRectMm(s *strings.Builder, x, top, width, height, radius, strokeMm float64) {
-	if width <= 0 || height <= 0 {
+	if width <= 0 || height <= 0 || strokeMm <= 0 {
 		return
 	}
 	r := radius
