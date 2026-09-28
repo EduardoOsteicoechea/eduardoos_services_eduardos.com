@@ -16,6 +16,13 @@ import {
     PAMPHLET_HEADER_LAYOUT_MM,
     type PamphletStructure,
 } from "./pamphlet_schema";
+import {
+    columnFloorMm,
+    columnTopMm,
+    geometryFromLayoutBands,
+    type PamphletGeometryMm,
+    type PamphletLayoutBands,
+} from "./pamphlet_geometry";
 
 // Stable public URL (copied by scripts/copy-pdf-worker.mjs on prebuild/predev).
 // Avoid hashed /_astro/*.mjs — Nginx often fails ES-module fetch for those.
@@ -33,7 +40,7 @@ export type PamphletLayoutHit = {
     h_mm: number;
 };
 
-export type PamphletPreviewLayout = {
+export type PamphletPreviewLayout = PamphletLayoutBands & {
     page_width_mm: number;
     page_height_mm: number;
     page_count: number;
@@ -53,6 +60,7 @@ export type PamphletPreviewResponse = {
 export type PdfHitClickHandler = (column: number, index: number, kind: string) => void;
 export type PdfAddClickHandler = (column: number) => void;
 export type PdfDocumentDrawnHandler = (doc: PamphletStructure) => void;
+export type PdfLayoutHandler = (layout: PamphletPreviewLayout) => void;
 
 export type PamphletPdfSotOptions = {
     stage: HTMLElement;
@@ -60,6 +68,8 @@ export type PamphletPdfSotOptions = {
     onAddClick?: PdfAddClickHandler;
     /** Called when preview returns a migrated document body to adopt as SoT. */
     onDocumentDrawn?: PdfDocumentDrawnHandler;
+    /** Called with layout bands + hits after a successful preview (PDF geometry SoT). */
+    onLayout?: PdfLayoutHandler;
 };
 
 function rootFontSizePx(): number {
@@ -88,7 +98,8 @@ function isChromeColumn(column: number): boolean {
 
 /**
  * Prefer backend chrome hits (column 0 / 9 from drawHeader/drawFooter).
- * Equal-slice fallback only when the preview API omits them (older binary).
+ * Legacy equal-slice fallback only when the API omits chrome (pre schema v5).
+ * Prefer fixing backend emission over inventing FE boxes.
  */
 /** Coerce layout hit numerics — JSON is fine, but defensive against stringified fields. */
 function normalizeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
@@ -176,11 +187,11 @@ const PAMPHLET_COL_WIDTH_MM = 57.85;
 const PAMPHLET_GUTTER_NARROW_MM = 4;
 const PAMPHLET_GUTTER_WIDE_MM = 20;
 
-/** CSS-top (from page top) fallback for empty columns on page 1 right band. */
-function pamphletRightBodyTopMm(): number {
-    const headerH = PAMPHLET_HEADER_LAYOUT_MM.height;
-    const gutter = PAMPHLET_HEADER_LAYOUT_MM.body_gutter;
-    return PAMPHLET_MARGIN_MM + headerH + gutter;
+function geometryForLayout(layout: PamphletPreviewLayout | null): PamphletGeometryMm {
+    return geometryFromLayoutBands(layout, {
+        header: PAMPHLET_HEADER_LAYOUT_MM,
+        footer: PAMPHLET_FOOTER_LAYOUT_MM,
+    });
 }
 
 /** Column left edge in mm (matches backend colX tracks). */
@@ -287,6 +298,7 @@ export class PamphletPdfSot {
     private readonly onHitClick: PdfHitClickHandler;
     private readonly onAddClick: PdfAddClickHandler | null;
     private readonly onDocumentDrawn: PdfDocumentDrawnHandler | null;
+    private readonly onLayout: PdfLayoutHandler | null;
     private selectedId: string | null = null;
     private previewQueued = false;
     private previewFlushing = false;
@@ -305,6 +317,7 @@ export class PamphletPdfSot {
         this.onHitClick = opts.onHitClick;
         this.onAddClick = opts.onAddClick ?? null;
         this.onDocumentDrawn = opts.onDocumentDrawn ?? null;
+        this.onLayout = opts.onLayout ?? null;
         if (!this.stage.querySelector(".pamphlet-pdf-stage__pages")) {
             const pages = document.createElement("div");
             pages.className = "pamphlet-pdf-stage__pages";
@@ -537,14 +550,20 @@ export class PamphletPdfSot {
         if (data.document && this.onDocumentDrawn) {
             this.onDocumentDrawn(data.document);
         }
+        if (data.layout && this.onLayout) {
+            this.onLayout(data.layout);
+        }
         return data;
     }
 
     private async renderPreview(payload: PamphletPreviewResponse, seq: number): Promise<void> {
         const { pdf_base64, layout } = payload;
-        const hits = mergeChromeLayoutHits(
-            normalizeLayoutHits(Array.isArray(layout.hits) ? layout.hits : []),
-        );
+        // Prefer backend hits as-is; chrome fallback only if API omitted columns 0/9.
+        const rawHits = normalizeLayoutHits(Array.isArray(layout.hits) ? layout.hits : []);
+        const hits =
+            layout.schema_version != null && layout.schema_version >= 5
+                ? rawHits
+                : mergeChromeLayoutHits(rawHits);
         log("render.pages.start", { seq, pageCount: layout.page_count, hitCount: hits.length });
 
         let pdf: PDFDocumentProxy;
@@ -650,7 +669,7 @@ export class PamphletPdfSot {
                     pageEl.appendChild(hitEl);
                 }
 
-                this.appendAddControl(pageEl, pageNum, hits, mmToRem);
+                this.appendAddControl(pageEl, pageNum, hits, mmToRem, layout);
 
                 nextPages.appendChild(pageEl);
                 log("render.page.ok", { seq, pageNum, hits: pageHits.length });
@@ -694,6 +713,7 @@ export class PamphletPdfSot {
         pageNum: number,
         allHits: PamphletLayoutHit[],
         mmToRem: number,
+        layout: PamphletPreviewLayout,
     ): void {
         if (!this.onAddClick) return;
 
@@ -707,30 +727,21 @@ export class PamphletPdfSot {
 
         const btnMm = 9;
         const gapMm = 1;
+        const g = geometryForLayout(layout);
 
         if (!last) {
             if (pageNum !== 1) return;
-            this.mountAddButton(
-                pageEl,
-                1,
-                pamphletColXMm(1),
-                pamphletRightBodyTopMm(),
-                btnMm,
-                mmToRem,
-            );
+            const top = Math.min(columnTopMm(g, 1), columnFloorMm(g, 1) - btnMm);
+            this.mountAddButton(pageEl, 1, pamphletColXMm(1), top, btnMm, mmToRem);
             return;
         }
 
         if (last.page !== pageNum) return;
 
-        this.mountAddButton(
-            pageEl,
-            last.column,
-            last.x_mm,
-            last.top_mm + last.h_mm + gapMm,
-            btnMm,
-            mmToRem,
-        );
+        const floor = columnFloorMm(g, last.column);
+        const rawTop = last.top_mm + last.h_mm + gapMm;
+        const top = Math.min(rawTop, Math.max(columnTopMm(g, last.column), floor - btnMm));
+        this.mountAddButton(pageEl, last.column, last.x_mm, top, btnMm, mmToRem);
     }
 
     private mountAddButton(

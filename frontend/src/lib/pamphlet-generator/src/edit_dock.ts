@@ -87,6 +87,8 @@ export type EditDockHost = {
     commitChromeOnly: (doc: PamphletStructure) => void;
     /** Reflow dock top inset + sheet margin after phone portal mount. */
     requestLayoutSync: () => void;
+    /** Column ink ceiling in mm (PDF geometry SoT / FE mirror). */
+    maxColumnHeightMm: (column: number) => number;
 };
 
 type EditDockSession = {
@@ -810,6 +812,7 @@ export function setupEditDock(
                         l,
                         clampImageHeightMm(
                             (item.height_mm || DEFAULT_IMAGE_HEIGHT_MM) + IMAGE_HEIGHT_STEP_MM,
+                            host.maxColumnHeightMm(l.column),
                         ),
                     );
                 });
@@ -827,6 +830,7 @@ export function setupEditDock(
                                 MIN_IMAGE_HEIGHT_MM,
                                 (item.height_mm || DEFAULT_IMAGE_HEIGHT_MM) - IMAGE_HEIGHT_STEP_MM,
                             ),
+                            host.maxColumnHeightMm(l.column),
                         ),
                     );
                 });
