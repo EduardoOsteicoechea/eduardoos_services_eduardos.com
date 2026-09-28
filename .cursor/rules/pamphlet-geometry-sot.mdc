@@ -1,0 +1,58 @@
+---
+description: Pamphlet page geometry — PDF Go is SoT; update rules before code
+globs: "{frontend/src/lib/pamphlet-generator/**,backend/pkg/pdf/pamphlet*.go,backend/pamphlet_pdf.go,docs/specs/007*}"
+alwaysApply: false
+---
+
+# Pamphlet geometry SoT (PDF backend)
+
+Applies when changing pamphlet/EPAM **page geometry**: column heights, header/footer
+band size, margins/gutters, packing floors, densify maxima, or editor hit / “+”
+overlays — even if those files are not open. Also applies by intention when the
+user asks to fix content “leaving the editable margin” of the sheet.
+
+## Authority
+
+- The **Go PDF pamphlet builder** (`backend/pkg/pdf/pamphlet.go` →
+  `computePamphletGeometry` + draw + `layout` JSON) is the **only canonical
+  measurement engine** for page bands, column heights, chrome gutters, and
+  hit rectangles.
+- Frontend `pamphlet_geometry.ts` is a **mirror** of those formulas for densify
+  and CSS variables only. After each preview, FE must apply band sizes from the
+  backend `layout` response.
+- Selection / “+” overlays (`pdf_sot.ts`) are drawn **only** from
+  `layout.hits` (+ band fields in `layout`). Do not invent column boxes or
+  chrome hit strips in the client that disagree with the PDF.
+
+Contract detail: `docs/specs/007-pamphlet-page1-column-geometry.md`.
+Workspace parent rule (multi-site): `eduardoos_services/.cursor/rules/pamphlet-geometry-sot.mdc`.
+
+## Formulas (page 1 asymmetric)
+
+- `contentBand = pageH − 2×margin`
+- cols **1–2** = `contentBand − headerH − headerBodyGutter`
+- cols **7–8** = `contentBand − footerBodyGutter − footerH`
+- `page1Body` track = `contentBand − headerH − headerGutter − footerGutter − footerH`
+- Header height changes → cols **1–2** only. Footer height changes → cols **7–8** only.
+
+## Gate: rules before code
+
+When the user asks to change pamphlet geometry, column heights, header/footer
+band size, packing floors, margins/gutters, or editor hit overlays:
+
+1. **Stop.** Do not edit CSS literals, `maxHeightForColumn`, or hit fallbacks first.
+2. **Cite this rule** (and spec 007) and ask whether the request changes the
+   contract (formulas, SoT, or band ownership).
+3. If yes: **update this `.mdc` and/or `docs/specs/007-…` first**, get
+   confirmation, then implement code to match the rules.
+4. If no (bugfix under the existing contract): keep rules, fix code to restore
+   PDF SoT + FE mirror lockstep.
+
+## Forbidden
+
+- Hardcoding `--page1-right-col-height` / left / body as independent magic
+  numbers that do not derive from header/footer inputs.
+- FE-only geometry that packing trusts while PDF uses different heights.
+- Synthesizing selection hit regions in FE when the preview layout omitted them
+  — fix the backend layout emission instead.
+- Force-packing overflow past the column floor into col 8 / page margin.

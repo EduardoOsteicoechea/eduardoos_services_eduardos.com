@@ -2,9 +2,18 @@
 
 Status: **shipped** (eduardoos.com; keep FE CSS / JS / PDF mm in lockstep)  
 Sites: `eduardoos.com` (reference); apply same numbers on creevzla / iglesiabiblicapalabraviva when Pamphlet is ported  
-Scope: `frontend/src/lib/pamphlet-generator` + `backend/pkg/pdf/pamphlet.go`
+Scope: `frontend/src/lib/pamphlet-generator` + `backend/pkg/pdf/pamphlet.go`  
+Agent rule: `.cursor/rules/pamphlet-geometry-sot.mdc` — **update rules/spec before code** when changing this contract.
 
-## Symptom (fixed)
+## Source of truth
+
+1. **Canonical:** Go PDF builder `computePamphletGeometry` + draw + `layout` JSON
+   (`BuildPamphletPDFWithLayout`, `schema_version` ≥ 5).
+2. **FE mirror:** `pamphlet_geometry.ts` for densify + CSS vars before/without preview.
+3. After each preview, FE **applies band fields from `layout`** (`applyPamphletGeometry`)
+   and draws selection / “+” overlays **only** from `layout.hits` (no invented column boxes).
+
+## Symptom (fixed historically)
 
 Body text on page 1 painted **above** the column band (into the header / past the top of cols 1–2), and overflow did not reliably move to the next column.
 
@@ -18,61 +27,62 @@ Constant: `PAMPHLET_BODY_COLUMN_READING_ORDER` in `pamphlet_schema.ts`.
 
 ## Sheet geometry (US Letter landscape)
 
-| Token / constant | mm | cm | Role |
-| --- | ---: | ---: | --- |
-| Page height | 215.9 | 21.59 | Letter landscape |
-| Page margin (each edge) | 10 | 1.0 | Grid tracks |
-| Header band | 34.5 | 3.45 | `--page-header-height` / `PAMPHLET_HEADER_LAYOUT_MM.height` |
-| Header → body gutter | 5 | 0.5 | `--header-body-gutter` |
-| Page-1 center body track | 120.6 | 12.06 | `--page1-body-height` |
-| Footer ↔ body gutter | 6 | 0.6 | `--footer-body-gutter` |
-| Footer band | 29.8 | 2.98 | `--page-footer-height` |
-| Page-2 / full content band | 195.9 | 19.59 | `215.9 − 2×10` |
+| Token / constant | mm | Role |
+| --- | ---: | --- |
+| Page height | 215.9 | Letter landscape |
+| Page margin (each edge) | 10 | Grid tracks |
+| Header band | from `header_layout.height` (default 34.5) | |
+| Header → body gutter | from `header_layout.body_gutter` (default 5) | |
+| Footer ↔ body gutter | from `footer_layout.body_gutter` (default 6) | |
+| Footer band | from `footer_layout.height` (default 29.8) | |
+| contentBand | `pageH − 2×margin` (195.9) | |
 
-### Column ink heights (must match CSS, JS `maxHeightForColumn`, PDF)
+### Column ink heights (derived — never hardcode independently)
 
-| Columns | mm | cm | Formula |
-| --- | ---: | ---: | --- |
-| **1, 2** (page 1 right) | **156.4** | **15.64** | `195.9 − 34.5 − 5` |
-| **7, 8** (page 1 left) | **160.1** | **16.01** | `195.9 − 6 − 29.8` |
-| **3–6** (page 2) | **195.9** | **19.59** | full content band |
+| Columns | Formula |
+| --- | --- |
+| **1, 2** (page 1 right) | `contentBand − headerH − headerBodyGutter` |
+| **7, 8** (page 1 left) | `contentBand − footerBodyGutter − footerH` |
+| **3–6** (page 2) | `contentBand` |
+| page1Body track | `contentBand − headerH − headerGutter − footerGutter − footerH` |
+
+Header height changes → cols **1–2** only. Footer height changes → cols **7–8** only.
+
+Defaults at 34.5 / 5 / 6 / 29.8 → right **156.4**, left **160.1**, body track **120.6**.
 
 Grid placement:
 
-- Cols **1–2**: `grid-row: 4 / 7` (body + footer-gutter + footer tracks on the right) → **156.4 mm**, `align-self: start` (top = under header).
-- Cols **7–8**: `grid-row: 2 / 5` (header + header-gutter + body on the left) → **160.1 mm**, `align-self: start`.
+- Cols **1–2**: `grid-row: 4 / 7` → right band, `align-self: start`.
+- Cols **7–8**: `grid-row: 2 / 5` → left band, `align-self: start`.
 
-Do **not** change these heights without updating all three of:
+Do **not** change heights without updating:
 
-1. `style.css` (`--page1-right-col-height`, `--page1-left-col-height`)
-2. `main.ts` (`page1RightColHeightMm`, `page1LeftColHeightMm`)
-3. `backend/pkg/pdf/pamphlet.go` (`PamphletPage1RightColMm`, `PamphletPage1LeftColMm`)
+1. Go `computePamphletGeometry` (SoT) + layout JSON fields
+2. FE `pamphlet_geometry.ts` mirror
+3. This spec + `pamphlet-geometry-sot.mdc` **first** if the contract changes
 
 ## Packing rules (pixel-perfect)
 
-1. **Strict fit (FE)** — `PACK_FIT_EPSILON_MM = 0.05` (float only). Never restore a soft floor like `2.5`; that packed past the band and looked like “columns stick out at the top”.
-2. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must **not** paint below the column floor into the 10mm page margin or the footer gutter. A previous “overflow:visible soft floor” (~one body line) made ink disappear “under the sheet” between page 1 and page 2. Truncated remainder is spilled by FE densify on the next reflow, not drawn in the margin.
-3. **Spill forward only** — when an item does not fit, move it (and the rest of the queue) to the **next** column in reading order; do not pull later columns into column 1.
-4. **“+” outside ink** — `.pamphlet-add-item-button` is `position: absolute; top: 100%` on the column shell. It does **not** consume column mm.
-5. **Clip ink, not the shell** — items live in `.pamphlet-column-ink` with `overflow: clip`. The column shell stays `overflow: visible` so “+” is visible. **Never** set `overflow: visible` on the whole column merely because “+” is present (that regression painted body text into the header).
+1. **Strict fit (FE)** — `PACK_FIT_EPSILON_MM = 0.05` (float only).
+2. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
+3. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
+4. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
+5. **“+” outside ink** — clamped to column floor from layout bands.
+6. **Clip ink, not the shell** — `.pamphlet-column-ink` uses `overflow: clip`.
 
-## DOM shape
+## Layout JSON bands (`schema_version` ≥ 5)
 
-```html
-<div class="dumb-column pamphlet-column-1">
-  <div class="pamphlet-column-ink">…items + spacers…</div>
-  <button class="pamphlet-add-item-button" type="button">…</button>
-</div>
-```
-
-Helpers: `ensureColumnInk`, `columnBodyItems` in `pamphlet_io.ts`.
+Preview returns (among others): `margin_mm`, `content_band_mm`, `page1_body_mm`,
+`page1_right_col_mm`, `page1_left_col_mm`, `page2_col_mm`, `header_h_mm`,
+`header_body_gutter_mm`, `footer_h_mm`, `footer_body_gutter_mm`,
+`right_body_top_mm`, `left_body_top_mm`, `footer_top_mm`, floors, `hits[]`.
 
 ## Regression checklist
 
-- [ ] Cols 1–2 top edge aligns with bottom of header-body gutter (no ink in header).
-- [ ] Overflow from col 1 goes to col 2, then 3…8 — not upward / not into the page margin.
-- [ ] PDF preview: no body text between page-1 bottom margin and page-2 top (no ink “under the sheet”).
+- [ ] Cols 1–2 top edge aligns with bottom of header-body gutter.
+- [ ] Overflow from col 1 goes to col 2, then 3…8 — not into the page margin.
+- [ ] PDF preview: no body text between page-1 bottom margin and page-2 top.
 - [ ] Cols 7–8 do not paint into the footer band.
-- [ ] “+” remains clickable below the last packed column without unlocking ink overflow.
-- [ ] Print / PDF band heights still 156.4 / 160.1 / 195.9 mm.
-- [ ] Opening an existing .epam reflows without leaving clipped text above the band.
+- [ ] “+” stays within the column floor from layout.
+- [ ] Changing header height in layout shrinks only cols 1–2; footer height only 7–8.
+- [ ] Hit overlays match PDF ink (no FE-synthesized chrome strips when schema ≥ 5).
