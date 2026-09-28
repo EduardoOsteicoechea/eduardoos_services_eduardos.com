@@ -7,6 +7,11 @@ import { apiRequest } from "../../api";
 import { mustLog } from "../../dev-log";
 import { openApiErrorModal } from "../../../components/ServerErrorModal/ServerErrorModal";
 import {
+    FOOTER_COLUMN,
+    FOOTER_FIELD_KEYS,
+    HEADER_COLUMN,
+    HEADER_FIELD_KEYS,
+    PAMPHLET_BODY_COLUMN_READING_ORDER,
     PAMPHLET_FOOTER_LAYOUT_MM,
     PAMPHLET_HEADER_LAYOUT_MM,
     type PamphletStructure,
@@ -75,6 +80,55 @@ function bodySnippet(text: string, max = 800): string {
 
 function hitId(column: number, index: number): string {
     return `c${column}:${index}`;
+}
+
+function isChromeColumn(column: number): boolean {
+    return column === HEADER_COLUMN || column === FOOTER_COLUMN;
+}
+
+/** Click targets for header/footer on page 1 (PDF-first; backend body hits only). */
+function mergeChromeLayoutHits(hits: PamphletLayoutHit[]): PamphletLayoutHit[] {
+    const pageHeightMm = 215.9;
+    const marginMm = PAMPHLET_MARGIN_MM;
+    const bandW = PAMPHLET_COL_WIDTH_MM * 2 + PAMPHLET_GUTTER_NARROW_MM;
+    // Match backend colX(6) / colX(2) via pamphletColXMm column→track map.
+    const headerX = pamphletColXMm(5);
+    const headerH = PAMPHLET_HEADER_LAYOUT_MM.height;
+    const headerTopMm = marginMm;
+    const footerX = pamphletColXMm(7);
+    const footerH = PAMPHLET_FOOTER_LAYOUT_MM.height;
+    const footerTopMm = pageHeightMm - marginMm - footerH;
+
+    const chrome: PamphletLayoutHit[] = [];
+    const headerSlice = headerH / Math.max(1, HEADER_FIELD_KEYS.length);
+    HEADER_FIELD_KEYS.forEach((kind, index) => {
+        chrome.push({
+            id: hitId(HEADER_COLUMN, index),
+            kind: `header_${kind}`,
+            page: 1,
+            column: HEADER_COLUMN,
+            index,
+            x_mm: headerX,
+            top_mm: headerTopMm + index * headerSlice,
+            w_mm: bandW,
+            h_mm: headerSlice,
+        });
+    });
+    const footerSlice = footerH / Math.max(1, FOOTER_FIELD_KEYS.length);
+    FOOTER_FIELD_KEYS.forEach((kind, index) => {
+        chrome.push({
+            id: hitId(FOOTER_COLUMN, index),
+            kind: `footer_${kind}`,
+            page: 1,
+            column: FOOTER_COLUMN,
+            index,
+            x_mm: footerX,
+            top_mm: footerTopMm + index * footerSlice,
+            w_mm: bandW,
+            h_mm: footerSlice,
+        });
+    });
+    return [...hits, ...chrome];
 }
 
 const PAMPHLET_MARGIN_MM = 10;
@@ -240,10 +294,14 @@ export class PamphletPdfSot {
     }
 
     setSelected(column: number | null, index: number | null): void {
-        this.selectedId =
-            column != null && index != null && column >= 1 && column <= 8
-                ? hitId(column, index)
-                : null;
+        if (column != null && index != null && isChromeColumn(column)) {
+            this.selectedId = hitId(column, index);
+        } else {
+            this.selectedId =
+                column != null && index != null && column >= 1 && column <= 8
+                    ? hitId(column, index)
+                    : null;
+        }
         this.applySelectedClass();
     }
 
@@ -444,7 +502,7 @@ export class PamphletPdfSot {
 
     private async renderPreview(payload: PamphletPreviewResponse, seq: number): Promise<void> {
         const { pdf_base64, layout } = payload;
-        const hits = Array.isArray(layout.hits) ? layout.hits : [];
+        const hits = mergeChromeLayoutHits(Array.isArray(layout.hits) ? layout.hits : []);
         log("render.pages.start", { seq, pageCount: layout.page_count, hitCount: hits.length });
 
         let pdf: PDFDocumentProxy;
@@ -525,7 +583,9 @@ export class PamphletPdfSot {
                     hitEl.setAttribute("role", "button");
                     hitEl.setAttribute(
                         "aria-label",
-                        `Editar columna ${hit.column}, elemento ${hit.index + 1}`,
+                        isChromeColumn(hit.column)
+                            ? `Editar ${hit.kind || "cabecera o pie"}`
+                            : `Editar columna ${hit.column}, elemento ${hit.index + 1}`,
                     );
                     hitEl.tabIndex = 0;
                     hitEl.style.left = `${hit.x_mm * mmToRem}rem`;
@@ -595,9 +655,8 @@ export class PamphletPdfSot {
     ): void {
         if (!this.onAddClick) return;
 
-        const readingOrder = [7, 8, 1, 2, 3, 4, 5, 6];
         let last: PamphletLayoutHit | null = null;
-        for (const col of readingOrder) {
+        for (const col of PAMPHLET_BODY_COLUMN_READING_ORDER) {
             const colHits = allHits
                 .filter((h) => h.column === col)
                 .sort((a, b) => a.index - b.index);

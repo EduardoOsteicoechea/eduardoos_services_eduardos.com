@@ -100,6 +100,7 @@ import {
     FOOTER_FIELD_KEYS,
     HEADER_COLUMN,
     HEADER_FIELD_KEYS,
+    PAMPHLET_BODY_COLUMN_READING_ORDER,
     PAMPHLET_FOOTER_LAYOUT_MM,
     PAMPHLET_HEADER_LAYOUT_MM,
     createParagraphItem,
@@ -704,6 +705,37 @@ const page1RightColHeightMm =
 const page1LeftColHeightMm =
     columnContentHeightMm - footerBodyGutterMm - pageFooterHeightMm; // 160.1
 
+function nextBodyColumnInReadingOrder(columnIndex: number): number | null {
+    const idx = PAMPHLET_BODY_COLUMN_READING_ORDER.indexOf(columnIndex);
+    if (idx < 0 || idx >= PAMPHLET_BODY_COLUMN_READING_ORDER.length - 1) {
+        return null;
+    }
+    return PAMPHLET_BODY_COLUMN_READING_ORDER[idx + 1] ?? null;
+}
+
+function collectColumnItemsInReadingOrder(container: HTMLElement): HTMLElement[] {
+    const items: HTMLElement[] = [];
+    for (const colNum of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        const col = container.querySelector<HTMLElement>(
+            `:scope > .dumb-column.pamphlet-column-${colNum}`,
+        );
+        if (!col) continue;
+        items.push(
+            ...Array.from(col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item")),
+        );
+    }
+    return items;
+}
+
+function ensureEightBodyColumns(container: HTMLElement): void {
+    for (let colNum = 1; colNum <= 8; colNum++) {
+        if (container.querySelector(`:scope > .pamphlet-column-${colNum}`)) continue;
+        const col = document.createElement("div");
+        col.className = `dumb-column pamphlet-column-${colNum}`;
+        container.appendChild(col);
+    }
+}
+
 function maxHeightForColumn(columnIndex: number): number {
     const structured = currentDoc?.type === "pamphlet_structured_images";
     const leadReserve = LEAD_IMAGE_HEIGHT_MM + LEAD_IMAGE_GAP_MM;
@@ -979,7 +1011,7 @@ function placeColumnAddButton(
     // filledByColumn already stores content mm (no trailing item-gap).
     let filledContent = filledByColumn.get(colIdx) ?? 0;
 
-    while (colIdx <= 8) {
+    for (;;) {
         const max = maxHeightForColumn(colIdx);
         if (filledContent + newItemMm + buttonMm <= max + PACK_FIT_EPSILON_MM) {
             const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
@@ -989,7 +1021,16 @@ function placeColumnAddButton(
             }
             return;
         }
-        colIdx++;
+        const nextCol = nextBodyColumnInReadingOrder(colIdx);
+        if (nextCol === null) {
+            const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
+            if (col) {
+                col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
+                col.appendChild(createAddItemButton(colIdx));
+            }
+            return;
+        }
+        colIdx = nextCol;
         filledContent = 0;
     }
 }
@@ -1041,90 +1082,28 @@ function reflowAndReport(container: HTMLElement) {
     const leadSlots = Array.from(
         container.querySelectorAll<HTMLElement>(":scope > .pamphlet-lead-slot"),
     );
-    const structured = currentDoc?.type === "pamphlet_structured_images";
 
-    // Structured leads shrink even columns; keep body items in their source
-    // columns so lead insertion does not cascade col2→3→4 (white gaps).
-    if (structured) {
-        const byColumn: HTMLElement[][] = Array.from({ length: 8 }, () => []);
-        for (let i = 1; i <= 8; i++) {
-            const col = container.querySelector<HTMLElement>(
-                `:scope > .dumb-column.pamphlet-column-${i}`,
-            );
-            if (!col) continue;
-            byColumn[i - 1] = Array.from(
-                col.querySelectorAll<HTMLElement>(":scope > .pamphlet-item"),
-            );
-        }
-        container.innerHTML = "";
-
-        const filledByColumn = new Map<number, number>();
-        let lastFilledColumn = 1;
-        for (let i = 1; i <= 8; i++) {
-            const col = document.createElement("div");
-            col.className = `dumb-column pamphlet-column-${i}`;
-            container.appendChild(col);
-            const items = byColumn[i - 1];
-            let filledMm = 0;
-            items.forEach((item, itemIndex) => {
-                const staleSpacer = item.nextElementSibling;
-                if (staleSpacer?.classList.contains("pamphlet-item-spacer")) {
-                    staleSpacer.remove();
-                }
-                const spacer = createItemSpacer();
-                const measured = measureBlockInSandbox(item, spacer);
-                col.appendChild(item);
-                if (itemIndex < items.length - 1) {
-                    col.appendChild(spacer);
-                    filledMm += measured.blockMm;
-                } else {
-                    filledMm += measured.itemMm;
-                }
-            });
-            ensureMeasureRoot().column.replaceChildren();
-            filledByColumn.set(i, filledMm);
-            if (items.length > 0) lastFilledColumn = i;
-        }
-        for (const slot of leadSlots) {
-            container.appendChild(slot);
-        }
-        placeColumnAddButton(container, filledByColumn, lastFilledColumn);
-        syncCurrentDocColumnsFromDom(container);
-        if (currentDoc) {
-            renderPageChrome(container, currentDoc);
-        }
-        requestAnimationFrame(() => {
-            syncSheetScale();
-        });
-        return;
-    }
-
-    // Simple pamphlet: densify reading order (col1→…→col8) so earlier columns
-    // fill before spilling — fixes empty bottoms with orphaned next-column text.
-    const items = Array.from(
-        container.querySelectorAll<HTMLElement>(
-            ":scope > .dumb-column[class*='pamphlet-column-'] > .pamphlet-item",
-        ),
-    );
+    // Densify in pamphlet reading order (7→8→1→2→3→4→5→6) so page-1 overflow
+    // spills to the next physical column instead of painting past the band top.
+    const items = collectColumnItemsInReadingOrder(container);
     container.innerHTML = "";
 
     const filledByColumn = new Map<number, number>();
 
-    function createAndAppendColumn() {
-        const index =
-            container.querySelectorAll(":scope > .dumb-column[class*='pamphlet-column-']")
-                .length + 1;
+    for (let colNum = 1; colNum <= 8; colNum++) {
         const col = document.createElement("div");
-        col.className = `dumb-column pamphlet-column-${index}`;
+        col.className = `dumb-column pamphlet-column-${colNum}`;
         container.appendChild(col);
-        return col;
     }
 
-    let currentColumnDiv = createAndAppendColumn();
+    const firstReadingCol = PAMPHLET_BODY_COLUMN_READING_ORDER[0] ?? 7;
+    let columnIndex = firstReadingCol;
+    let currentColumnDiv =
+        container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${columnIndex}`) ??
+        container.querySelector<HTMLElement>(":scope > .dumb-column")!;
     let currentColumnFilledMm = 0;
     let currentColumnItemsCount = 0;
     let trailingGapMm = 0;
-    let columnIndex = 1;
 
     items.forEach((item) => {
         const staleSpacer = item.nextElementSibling;
@@ -1136,7 +1115,6 @@ function reflowAndReport(container: HTMLElement) {
         const measured = measureBlockInSandbox(item, spacer);
         const { itemMm, spacerMm, blockMm } = measured;
         const currentMaxMm = maxHeightForColumn(columnIndex);
-        // Content height only (trailing gap is not part of the final column).
         const filledContent =
             currentColumnItemsCount > 0
                 ? Math.max(0, currentColumnFilledMm - trailingGapMm)
@@ -1145,12 +1123,16 @@ function reflowAndReport(container: HTMLElement) {
             currentColumnItemsCount > 0 &&
             filledContent + itemMm > currentMaxMm + PACK_FIT_EPSILON_MM;
 
-        if (wouldOverflow && columnIndex < 8) {
+        const nextCol = nextBodyColumnInReadingOrder(columnIndex);
+        if (wouldOverflow && nextCol !== null) {
             stripTrailingItemSpacer(currentColumnDiv);
             filledByColumn.set(columnIndex, filledContent);
 
-            columnIndex++;
-            currentColumnDiv = createAndAppendColumn();
+            columnIndex = nextCol;
+            currentColumnDiv =
+                container.querySelector<HTMLElement>(
+                    `:scope > .pamphlet-column-${columnIndex}`,
+                ) ?? currentColumnDiv;
             currentColumnDiv.appendChild(item);
             currentColumnDiv.appendChild(spacer);
 
@@ -1158,7 +1140,6 @@ function reflowAndReport(container: HTMLElement) {
             currentColumnItemsCount = 1;
             trailingGapMm = spacerMm;
         } else {
-            // Past col 8 capacity: keep packing into col 8 (CSS / PDF clips).
             currentColumnDiv.appendChild(item);
             currentColumnDiv.appendChild(spacer);
             currentColumnFilledMm = filledContent + blockMm;
@@ -1175,11 +1156,7 @@ function reflowAndReport(container: HTMLElement) {
         filledByColumn.set(columnIndex, filledContent);
     }
 
-    while (
-        container.querySelectorAll(":scope > .dumb-column[class*='pamphlet-column-']").length < 8
-    ) {
-        createAndAppendColumn();
-    }
+    ensureEightBodyColumns(container);
 
     for (const slot of leadSlots) {
         container.appendChild(slot);
@@ -1565,6 +1542,32 @@ function columnLeadSignature(doc: PamphletStructure): Record<string, string> {
     return sig;
 }
 
+function syncLiveChromeContent(loc: LastEditedElement, content: string): void {
+    if (loc.column === HEADER_COLUMN) {
+        const field = HEADER_FIELD_KEYS[loc.index];
+        if (!field) return;
+        const item = main.querySelector<HTMLElement>(
+            `:scope > .pamphlet-page-header .pamphlet-item[data-header-field="${field}"]`,
+        );
+        const inner = item?.firstElementChild as HTMLElement | null;
+        if (inner) inner.textContent = content;
+        return;
+    }
+    if (loc.column === FOOTER_COLUMN) {
+        const field = FOOTER_FIELD_KEYS[loc.index];
+        if (!field) return;
+        const item = main.querySelector<HTMLElement>(
+            `:scope > .pamphlet-page-footer .pamphlet-item[data-footer-field="${field}"]`,
+        );
+        const inner = item?.firstElementChild as HTMLElement | null;
+        if (inner) inner.textContent = content;
+        const footerRoot = main.querySelector<HTMLElement>(":scope > .pamphlet-page-footer");
+        if (footerRoot && currentDoc) {
+            syncFooterMetaEmptyFlags(footerRoot, currentDoc.footer);
+        }
+    }
+}
+
 editDock = setupEditDock(editDockRoot, {
     getDoc: () => currentDoc,
     setDoc: (doc) => {
@@ -1589,9 +1592,10 @@ editDock = setupEditDock(editDockRoot, {
         await openNotesModal(detail);
     },
     findBodyItemContainer,
-    activateChromeEdit: (doc, loc) => activateEditAtChrome(doc, loc),
     highlightBodyItem: (loc) => highlightMobileEditItem(loc),
     syncLiveBodyContent: (loc, content) => syncMobileLiveContent(loc, content),
+    syncLiveChromeContent,
+    commitChromeOnly,
 });
 
 function highlightMobileEditItem(loc: LastEditedElement | null): void {
@@ -2008,21 +2012,7 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
         currentDoc = ensureDocumentId(next);
         currentHeader = { ...currentDoc.header };
         schedulePersist();
-        if (loc.column >= 1 && loc.column <= 8) {
-            editDock.open(loc);
-            clearError();
-            return;
-        }
-        if (hasOpenFile()) {
-            setStatus(`Saving: ${getOpenFileName()}`, "success");
-        } else if (cloudEpamId) {
-            setStatus(`Saving to cloud: ${getOpenFileName() || cloudEpamId}`, "success");
-        } else if (memorySession || currentDoc) {
-            setStatus("Updated in browser — use Save to cloud to keep a copy.", "info");
-        } else {
-            setError("No pamphlet file is open. Open or create a file first.");
-            return;
-        }
+        editDock.open(loc);
         clearError();
         return;
     }
@@ -2780,6 +2770,7 @@ async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "li
     currentDoc = next;
     renderPageChrome(main, next);
     schedulePersist();
+    schedulePreviewRegen();
     setStatus(
         bind === "linked"
             ? `Pie vinculado: ${profile.name}`

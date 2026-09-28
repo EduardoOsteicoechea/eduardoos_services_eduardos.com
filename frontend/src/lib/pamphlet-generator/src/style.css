@@ -1497,6 +1497,20 @@
   - Right: header above 1 & 2; 1 & 2 (body + gutter + footer)
   Page 2 (row 9): columns 3,4,5,6
 */
+.pamphlet-column-7,
+.pamphlet-column-8 {
+  height: var(--page1-left-col-height);
+  max-height: var(--page1-left-col-height);
+  min-height: 0;
+  align-self: end;
+}
+.pamphlet-column-1,
+.pamphlet-column-2 {
+  height: var(--page1-right-col-height);
+  max-height: var(--page1-right-col-height);
+  min-height: 0;
+  align-self: start;
+}
 .pamphlet-column-7 { grid-column: 2; grid-row: 2 / 5; }
 .pamphlet-column-8 { grid-column: 4; grid-row: 2 / 5; }
 .pamphlet-column-1 { grid-column: 6; grid-row: 4 / 7; }
@@ -1884,6 +1898,12 @@
   font-size: calc(16px * var(--mobile-inv-scale, 1));
   box-sizing: border-box;
   overflow: auto;
+}
+
+/* Tablet cols view: larger edit text for touch reading (mobile unchanged). */
+.pamphlet-app[data-view-mode="tablet"] .edit_tray_text_area {
+  font-size: calc(32px * var(--mobile-inv-scale, 1));
+  line-height: 1.5;
 }
 
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-page-header .edit_tray_text_area,
