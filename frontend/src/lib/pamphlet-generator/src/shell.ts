@@ -174,50 +174,6 @@ export function renderShell(_menuIconSrc?: string): string {
   </div>
 </dialog>
 
-<dialog id="manage-epam-modal" class="create-modal manage-epam-modal">
-  <div class="create-modal-form manage-epam-modal__form">
-    <h2>Manage pamphlets</h2>
-    <p class="create-modal-hint" id="manage-epam-hint">Select a cloud pamphlet to hide from Articles, delete, or edit its header and footer.</p>
-    <div class="manage-epam-modal__layout">
-      <div id="manage-epam-list" class="open-cloud-list manage-epam-list" role="list"></div>
-      <section id="manage-epam-detail" class="manage-epam-detail" hidden>
-        <h3 class="manage-epam-detail__title" id="manage-epam-detail-title">Selected pamphlet</h3>
-        <label class="manage-epam-detail__toggle">
-          <input type="checkbox" id="manage-epam-public" />
-          Visible in Articles
-        </label>
-        <form id="manage-epam-chrome-form" class="manage-epam-chrome-form">
-          <fieldset>
-            <legend>Header</legend>
-            <label>Title <input id="manage-header-title" name="title" type="text" autocomplete="off" /></label>
-            <label>Subtitle <input id="manage-header-subtitle" name="subtitle" type="text" autocomplete="off" /></label>
-            <label>Author <input id="manage-header-author" name="author" type="text" autocomplete="off" /></label>
-            <label>Series <input id="manage-header-series" name="series" type="text" autocomplete="off" /></label>
-            <label>Chapter <input id="manage-header-series-chapter" name="series_chapter" type="text" autocomplete="off" /></label>
-            <label>Date <input id="manage-header-date" name="date" type="text" autocomplete="off" /></label>
-          </fieldset>
-          <fieldset>
-            <legend>Footer</legend>
-            <label>Action <input id="manage-footer-action" name="action" type="text" autocomplete="off" /></label>
-            <label>Message <input id="manage-footer-message" name="message" type="text" autocomplete="off" /></label>
-            <label>Value 1 <input id="manage-footer-value1" name="value1" type="text" autocomplete="off" /></label>
-            <label>Value 2 <input id="manage-footer-value2" name="value2" type="text" autocomplete="off" /></label>
-            <label>Value 3 <input id="manage-footer-value3" name="value3" type="text" autocomplete="off" /></label>
-            <label>Value 4 <input id="manage-footer-value4" name="value4" type="text" autocomplete="off" /></label>
-          </fieldset>
-          <div class="create-modal-actions">
-            <button type="submit" id="manage-epam-save-chrome">Save header &amp; footer</button>
-            <button type="button" id="manage-epam-open-footers">Footer profiles</button>
-            <button type="button" id="manage-epam-delete">Delete</button>
-          </div>
-        </form>
-      </section>
-    </div>
-    <div class="create-modal-actions">
-      <button type="button" id="manage-epam-close">Close</button>
-    </div>
-  </div>
-</dialog>
 
 <dialog id="create-source-modal" class="create-modal">
   <div class="create-modal-form">

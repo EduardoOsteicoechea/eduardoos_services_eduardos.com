@@ -56,6 +56,74 @@ import Layout from "../../layouts/Layout.astro";
     </section>
   </section>
 
+  <section id="pamphlet-manage" class="pamphlet-manage" aria-label="Manage EPAMs" hidden>
+    <header class="pamphlet-manage__head">
+      <a class="pamphlet-manage__back" href="/documents/pamphlet" data-pamphlet-nav="dashboard">← Back to EPAM</a>
+      <p class="pamphlet-manage__hint" data-manage-hint>Select a cloud pamphlet to hide from Articles, delete, or edit its header and footer.</p>
+      <p class="pamphlet-manage__status" data-manage-status hidden></p>
+    </header>
+
+    <div class="pamphlet-manage__layout">
+      <section class="pamphlet-manage__list-panel" aria-label="Cloud pamphlets">
+        <h2 class="pamphlet-manage__section-title">Cloud EPAMs</h2>
+        <div class="pamphlet-manage__list" data-manage-list role="list"></div>
+      </section>
+
+      <section class="pamphlet-manage__detail product-dash__card" data-manage-detail hidden>
+        <h2 class="pamphlet-manage__section-title" data-manage-detail-title>Selected pamphlet</h2>
+        <label class="pamphlet-manage__toggle">
+          <input type="checkbox" data-manage-public />
+          Visible in Articles
+        </label>
+        <form class="pamphlet-manage__chrome-form" data-manage-chrome-form>
+          <fieldset>
+            <legend>Header</legend>
+            <label>Title <input data-manage-header-title name="title" type="text" autocomplete="off" /></label>
+            <label>Subtitle <input data-manage-header-subtitle name="subtitle" type="text" autocomplete="off" /></label>
+            <label>Author <input data-manage-header-author name="author" type="text" autocomplete="off" /></label>
+            <label>Series <input data-manage-header-series name="series" type="text" autocomplete="off" /></label>
+            <label>Chapter <input data-manage-header-chapter name="series_chapter" type="text" autocomplete="off" /></label>
+            <label>Date <input data-manage-header-date name="date" type="text" autocomplete="off" /></label>
+          </fieldset>
+          <fieldset>
+            <legend>Footer</legend>
+            <label>Action <input data-manage-footer-action name="action" type="text" autocomplete="off" /></label>
+            <label>Message <input data-manage-footer-message name="message" type="text" autocomplete="off" /></label>
+            <label>Value 1 <input data-manage-footer-value1 name="value1" type="text" autocomplete="off" /></label>
+            <label>Value 2 <input data-manage-footer-value2 name="value2" type="text" autocomplete="off" /></label>
+            <label>Value 3 <input data-manage-footer-value3 name="value3" type="text" autocomplete="off" /></label>
+            <label>Value 4 <input data-manage-footer-value4 name="value4" type="text" autocomplete="off" /></label>
+          </fieldset>
+          <div class="pamphlet-manage__actions">
+            <button type="submit">Save header &amp; footer</button>
+            <button type="button" data-manage-delete>Delete</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="pamphlet-manage__profiles" aria-labelledby="manage-profiles-title">
+      <h2 class="pamphlet-manage__section-title" id="manage-profiles-title">Footer profiles</h2>
+      <p class="pamphlet-manage__hint">Create reusable footers. With a pamphlet selected, Copy or Link applies it.</p>
+      <div class="pamphlet-manage__profile-list" data-manage-profile-list></div>
+      <form class="pamphlet-manage__profile-form product-dash__card" data-manage-profile-form>
+        <input type="hidden" data-manage-profile-id value="" />
+        <label>Name <input data-manage-profile-name name="name" type="text" required autocomplete="off" /></label>
+        <label>Action <input data-manage-profile-action name="action" type="text" autocomplete="off" /></label>
+        <label>Message <input data-manage-profile-message name="message" type="text" autocomplete="off" /></label>
+        <label>Value 1 <input data-manage-profile-value1 name="value1" type="text" autocomplete="off" /></label>
+        <label>Value 2 <input data-manage-profile-value2 name="value2" type="text" autocomplete="off" /></label>
+        <label>Value 3 <input data-manage-profile-value3 name="value3" type="text" autocomplete="off" /></label>
+        <label>Value 4 <input data-manage-profile-value4 name="value4" type="text" autocomplete="off" /></label>
+        <div class="pamphlet-manage__actions">
+          <button type="button" data-manage-profile-reset>New</button>
+          <button type="button" data-manage-profile-from-doc>Use selected footer</button>
+          <button type="submit">Save profile</button>
+        </div>
+      </form>
+    </section>
+  </section>
+
   <div id="pamphlet-root" class="pamphlet-route-root pamphlet-layout-workspace" hidden></div>
 </Layout>
 
@@ -168,10 +236,167 @@ import Layout from "../../layouts/Layout.astro";
   .pamphlet-route-root[hidden] {
     display: none;
   }
+
+  .pamphlet-manage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    color: var(--color-text);
+  }
+
+  .pamphlet-manage[hidden] {
+    display: none;
+  }
+
+  .pamphlet-manage__head,
+  .pamphlet-manage__layout,
+  .pamphlet-manage__profiles,
+  .pamphlet-manage__list-panel,
+  .pamphlet-manage__detail,
+  .pamphlet-manage__chrome-form,
+  .pamphlet-manage__profile-form,
+  .pamphlet-manage__profile-list,
+  .pamphlet-manage__chapter-items,
+  .pamphlet-manage__actions,
+  .pamphlet-manage__profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .pamphlet-manage__back {
+    color: var(--color-link);
+    font-size: var(--font-size-sm);
+    width: fit-content;
+  }
+
+  .pamphlet-manage__hint,
+  .pamphlet-manage__item-meta,
+  .pamphlet-manage__profile-meta,
+  .pamphlet-manage__empty {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .pamphlet-manage__status {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .pamphlet-manage__status[data-kind="success"] {
+    color: var(--color-ok);
+  }
+
+  .pamphlet-manage__status[data-kind="error"] {
+    color: var(--color-err);
+  }
+
+  .pamphlet-manage__section-title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+  }
+
+  .pamphlet-manage__item {
+    align-items: flex-start;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .pamphlet-manage__item.is-selected,
+  .pamphlet-manage__profile.is-current {
+    border-color: var(--color-accent);
+    outline: var(--border-width) solid var(--color-accent);
+  }
+
+  .pamphlet-manage__item-title,
+  .pamphlet-manage__profile-name {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .pamphlet-manage__toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+
+  .pamphlet-manage__chrome-form fieldset,
+  .pamphlet-manage__profile-form {
+    margin: 0;
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  .pamphlet-manage__chrome-form legend {
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    padding-inline: var(--control-padding-inline);
+  }
+
+  .pamphlet-manage__chrome-form label,
+  .pamphlet-manage__profile-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-xs);
+  }
+
+  .pamphlet-manage__chrome-form input,
+  .pamphlet-manage__profile-form input,
+  .pamphlet-manage__actions button,
+  .pamphlet-manage__profile-actions button {
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .pamphlet-manage__actions,
+  .pamphlet-manage__profile-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .pamphlet-manage__series,
+  .pamphlet-manage__chapter {
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--space-padding);
+  }
+
+  .pamphlet-manage__series summary,
+  .pamphlet-manage__chapter summary {
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  @media (min-width: 48rem) {
+    .pamphlet-manage__layout {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .pamphlet-manage__list-panel,
+    .pamphlet-manage__detail {
+      flex: 1;
+      min-width: 0;
+    }
+  }
 </style>
 
 <script>
   import { fetchEpams } from "../../lib/epams";
+  import { mountPamphletManagePage } from "../../lib/pamphletManagePage";
+  import type { PamphletManageHandle } from "../../lib/pamphletManagePage";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
   import { pushClientUrl, replaceClientUrl } from "../../lib/router";
@@ -180,6 +405,7 @@ import Layout from "../../layouts/Layout.astro";
   const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers", "edit"]);
 
   let handle: PamphletMountHandle | null = null;
+  let manageHandle: PamphletManageHandle | null = null;
 
   function formatEpamDate(value: string | undefined): string {
     if (!value) return "";
@@ -298,18 +524,51 @@ import Layout from "../../layouts/Layout.astro";
     document.body.classList.add("page-pamphlet");
   }
 
+  function destroyManage(): void {
+    manageHandle?.destroy();
+    manageHandle = null;
+  }
+
+  function hideAllSurfaces(): void {
+    const dash = document.getElementById("pamphlet-dash");
+    const manage = document.getElementById("pamphlet-manage");
+    const host = document.getElementById("pamphlet-root");
+    if (dash) dash.hidden = true;
+    if (manage) manage.hidden = true;
+    if (host) host.hidden = true;
+  }
+
   function showDashboard(): void {
     destroyEditor();
+    destroyManage();
     clearBleed();
+    hideAllSurfaces();
     const dash = document.getElementById("pamphlet-dash");
-    const host = document.getElementById("pamphlet-root");
     if (dash) dash.hidden = false;
-    if (host) host.hidden = true;
     void loadDashboardRecents();
   }
 
+  function showManage(): void {
+    destroyEditor();
+    destroyManage();
+    clearBleed();
+    hideAllSurfaces();
+    const manage = document.getElementById("pamphlet-manage");
+    if (!manage) {
+      console.error("[pamphlet] missing #pamphlet-manage");
+      return;
+    }
+    manage.hidden = false;
+    try {
+      manageHandle = mountPamphletManagePage(manage);
+    } catch (err) {
+      console.error("[pamphlet] manage mount failed", err);
+      const message = err instanceof Error ? err.message : String(err);
+      manage.textContent = `Could not open manage page: ${message}`;
+    }
+  }
+
   function showEditor(view: string, epamId = ""): void {
-    const dash = document.getElementById("pamphlet-dash");
     const host = document.getElementById("pamphlet-root");
     if (!host) {
       console.error("[pamphlet] missing #pamphlet-root");
@@ -317,7 +576,8 @@ import Layout from "../../layouts/Layout.astro";
     }
 
     destroyEditor();
-    if (dash) dash.hidden = true;
+    destroyManage();
+    hideAllSurfaces();
     host.hidden = false;
     applyBleed();
 
@@ -339,6 +599,7 @@ import Layout from "../../layouts/Layout.astro";
   function syncFromUrl(): void {
     const { view, epamId } = readRoute();
     if (view === "dashboard") showDashboard();
+    else if (view === "manage") showManage();
     else showEditor(view, epamId);
   }
 
@@ -364,8 +625,14 @@ import Layout from "../../layouts/Layout.astro";
     if (!nav) return;
     event.preventDefault();
     const view = (nav.dataset.pamphletNav || "new").toLowerCase();
+    if (view === "dashboard") {
+      setViewInUrl("dashboard");
+      showDashboard();
+      return;
+    }
     setViewInUrl(view);
-    showEditor(view);
+    if (view === "manage") showManage();
+    else showEditor(view);
   }
 
   function boot(): void {
@@ -376,6 +643,7 @@ import Layout from "../../layouts/Layout.astro";
     };
     const onBeforeSwap = () => {
       destroyEditor();
+      destroyManage();
       clearBleed();
       document.removeEventListener("click", onClick);
       window.removeEventListener("popstate", syncFromUrl);
