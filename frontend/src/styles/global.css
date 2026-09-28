@@ -323,6 +323,7 @@ a {
   display: none;
 }
 
+.sidebar-nav-section--session-guest,
 .sidebar-nav-section--services,
 .sidebar-nav-section--admin,
 .sidebar-nav-section--session {
@@ -742,6 +743,10 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
 /* The tray owns the surface; navigation sections remain transparent. */
 .sidebar-nav-section {
   background: transparent;
+}
+
+.sidebar-nav-section--session-guest {
+  flex-shrink: 0;
 }
 
 .sidebar-nav-section--session {

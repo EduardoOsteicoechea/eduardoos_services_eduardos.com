@@ -407,6 +407,12 @@ const jsonLdString =
           </button>
         </header>
         <nav aria-label="Primary">
+          <div class="sidebar-nav-section sidebar-nav-section--session-guest">
+            <a class="sidebar-nav-action" href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">login</span>
+              Sign in
+            </a>
+          </div>
           <div class="sidebar-nav-section sidebar-nav-section--site">
             <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">home</span>
@@ -482,10 +488,6 @@ const jsonLdString =
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--session">
-            <a class="sidebar-nav-action" href="/session" data-route data-guest-only aria-current={path === "/session" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">login</span>
-              Sign in
-            </a>
             <button class="sidebar-nav-action" type="button" data-logout data-authed-only hidden>
               <span class="material-symbols-outlined" aria-hidden="true">logout</span>
               Sign out
