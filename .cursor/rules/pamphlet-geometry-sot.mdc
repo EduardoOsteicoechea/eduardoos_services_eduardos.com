@@ -1,5 +1,5 @@
 ---
-description: Pamphlet page geometry — PDF Go is SoT; update rules before code
+description: Pamphlet geometry SoT (PDF Go) + densify pack-mm + diagnose via Alturas debug
 globs: "{frontend/src/lib/pamphlet-generator/**,backend/pkg/pdf/pamphlet*.go,backend/pamphlet_pdf.go,docs/specs/007*}"
 alwaysApply: false
 ---
@@ -9,7 +9,8 @@ alwaysApply: false
 Applies when changing pamphlet/EPAM **page geometry**: column heights, header/footer
 band size, margins/gutters, packing floors, densify maxima, or editor hit / “+”
 overlays — even if those files are not open. Also applies by intention when the
-user asks to fix content “leaving the editable margin” of the sheet.
+user asks to fix content “leaving the editable margin” of the sheet, densify
+mis-packing, or FE vs PDF column mismatch.
 
 ## Authority
 
@@ -43,7 +44,7 @@ Criterion: **how many items fit in the available column height** — never a
 hard item-count cap (the temporary `MAX_BODY_ITEMS_PER_COLUMN = 4` probe is
 forbidden in production).
 
-Required algorithm (`reflowAndReport` in `main.ts`):
+Required algorithm (`reflowAndReport` / `tryAppendItemToInk` in `main.ts`):
 
 1. Collect every body item from columns **1→8** in
    `PAMPHLET_BODY_COLUMN_READING_ORDER`.
@@ -52,21 +53,50 @@ Required algorithm (`reflowAndReport` in `main.ts`):
    persist).
 3. For each column in reading order, append items greedily until content height
    would exceed `maxHeightForColumn(col)`.
-4. Measure fit with **pack mm** per child (not raw snapped px→mm alone):
-   spacer = `2.5` (CSS `--item-gap-height` / Go `PamphletItemGapMm`);
-   paragraph ≥ `3.0×1.25=3.75`; heading ≥ `4.25×1.2`; else measured.
-   Device pixels quantize CSS mm (3.75→14px→3.698), so raw `offsetHeight`
-   underestimates and packs one extra item past the PDF floor.
+4. Measure fit with **pack mm** per child via `childPackHeightMm` (not raw
+   snapped px→mm alone):
+   - spacer = `2.5` (CSS `--item-gap-height` / Go `PamphletItemGapMm`)
+   - paragraph ≥ `3.0×1.25 = 3.75`
+   - heading ≥ `4.25×1.2 = 5.1`
+   - else measured
+   Device pixels quantize CSS mm (e.g. 3.75mm → 14px → 3.698mm), so raw
+   `offsetHeight` **underestimates** and packs **one extra item** past the PDF
+   floor. Known regression: FE `column_1.length=26` vs backend hits `n=25`.
 5. Do **not** use ink `scrollHeight` while `.pamphlet-column-ink` is
    `height: 100%` — that reports the column **box**, not stacked content.
 6. Spill forward only; do not force-pack past the col-8 floor into the page
    margin.
 7. “+” stays outside the ink box and must not consume column mm.
 
-When diagnosing vertical overflow: prefer the geometry debug modal (DHS action
-“Alturas”) — copy backend layout bands, FE geometry mirror, sheet/column
-painted heights, and per-item mm. Lateral sizes are usually correct; failures
-are vertical.
+## Diagnosis: DHS “Alturas” (required before guessing)
+
+When vertical overflow, densify wrong-count, FE vs PDF mismatch, or packing
+floor bugs are suspected:
+
+1. **Do not** invent root causes from screenshots alone.
+2. Open the pamphlet editor → global menu / DHS → **Alturas**
+   (`#btn-geometry-debug` / `buildGeometryDebugReport` in `main.ts`).
+3. Prefer a fresh PDF preview so **Backend layout (last PDF preview SoT)** is
+   populated, then **Actualizar** and **Copiar todo**.
+4. Ask the user for that paste (or read it if already provided) **before**
+   changing packing/geometry code.
+5. Lateral (`COLUMN_CONTENT_WIDTH_MM`, `w=`) is usually fine; failures are
+   **vertical**.
+
+### What to read in the Alturas report
+
+| Section | Look for |
+| --- | --- |
+| `FE maxHeightForColumn` vs `Backend layout` floors | Must match (`page1_right_col_mm` ↔ cols 1–2, etc.). Mismatch → FE mirror / CSS vars out of sync with Go. |
+| `backend col N: n=… pastFloor=` | `pastFloor=yes` or `bottomMax` > `floor` → PDF ink past band. |
+| `currentDoc column_N.length` vs `backend col N: n=` | FE items in column ≠ PDF hits → densify used softer heights than PDF (classic pixel-snap undercount). |
+| `contentChildrenMm` / `OVERFLOW=` | Uses **pack mm**. `OVERFLOW=YES` → FE packing past floor. |
+| Per-child `measuredMm` vs `packMm` | If `measuredMm < packMm`, device-pixel snap; densify **must** use `packMm`. |
+| `ink.children` + spacers | Spacers count in height; last spacer after last item is included in stack. |
+| Sheet / column `offsetMm` vs CSS vars | Painted box vs `--page1-right-col-height` etc. |
+
+Classic false negative: `OVERFLOW=no` with raw px sum while PDF already truncated
+one item — always compare FE length to backend `hits` / `n=`.
 
 ## Formulas (page 1 asymmetric)
 
@@ -87,7 +117,8 @@ band size, packing floors, margins/gutters, or editor hit overlays:
 3. If yes: **update this `.mdc` and/or `docs/specs/007-…` first**, get
    confirmation, then implement code to match the rules.
 4. If no (bug fix under the existing contract): keep rules, fix code to restore
-   PDF SoT + FE mirror lockstep.
+   PDF SoT + FE mirror lockstep — start from an **Alturas** paste when the
+   symptom is vertical.
 
 ## Forbidden
 
@@ -101,3 +132,6 @@ band size, packing floors, margins/gutters, or editor hit overlays:
 - Densify that only packs each source column’s own items without flattening
   (leaves underfilled columns after a bad persist).
 - Using ink `scrollHeight` as content height while ink is `height: 100%`.
+- Using raw `offsetHeight`→mm alone for densify fit (must use pack mm floors).
+- Changing packing/geometry for vertical overflow without reading Alturas
+  (bands + backend hits + FE column lengths + measuredMm/packMm).

@@ -81,12 +81,27 @@ Do **not** change heights without updating:
    ≥ `3.75`, heading ≥ `5.1`, else measured — raw px→mm underestimates because
    device pixels snap CSS mm (PDF stays on nominal 3.75/2.5). Do **not** use ink
    `scrollHeight`. Contract: `pamphlet-geometry-sot.mdc` § Densify architecture.
-   Diagnose with DHS **Alturas**.
 3. **Strict floor (PDF)** — `drawStackedItems` / `writeWrapped` must not paint below the column floor.
 4. **Spill forward only** — when an item does not fit, move it to the next column in reading order.
 5. **No force-pack past floor on col 8** — remainder that does not fit stays unpacked (PDF truncates; FE must not shove past `page1LeftCol`).
 6. **“+” outside ink** — clamped to column floor from layout bands.
 7. **Clip ink, not the shell** — `.pamphlet-column-ink` uses `overflow: clip`.
+
+## Diagnosis (DHS Alturas)
+
+Editor path: pamphlet DHS → **Alturas** (`buildGeometryDebugReport` in `main.ts`).
+Agents **must** request/read this paste before changing packing or geometry when
+the symptom is vertical overflow, densify wrong-count, or FE vs PDF mismatch.
+
+Read in order:
+
+1. `FE maxHeightForColumn` vs backend `page1_right_col_mm` / left / page2 — lockstep.
+2. `backend col N: n=` + `pastFloor` vs `currentDoc column_N.length`.
+3. Per-child `measuredMm` vs `packMm` (snap undercount if measured < pack).
+4. `contentChildrenMm` / `OVERFLOW=` (pack-mm based — trust this over raw px sums).
+
+Known false negative: FE reported `OVERFLOW=no` with 26 items while PDF only
+placed 25 hits — densify had used snapped px→mm. Fix: pack mm floors.
 
 ## Layout JSON bands (`schema_version` ≥ 5)
 
@@ -104,3 +119,5 @@ Preview returns (among others): `margin_mm`, `content_band_mm`, `page1_body_mm`,
 - [ ] “+” stays within the column floor from layout.
 - [ ] Changing header height in layout shrinks only cols 1–2; footer height only 7–8.
 - [ ] Hit overlays match PDF ink (no FE-synthesized chrome strips when schema ≥ 5).
+- [ ] Alturas: FE column lengths match backend hit counts per column; `measuredMm` ≤ `packMm` does not let densify overfill.
+- [ ] Densify uses pack mm (`childPackHeightMm`), not raw `offsetHeight` alone.
