@@ -519,11 +519,110 @@ html.dark .scrib-page {
   width: 100%;
 }
 
-/* —— Reference trays (Institutes / Bible): docked panel only — never cover the sheet —— */
+/* —— Tool rail (icon-only; 50px → 3.125rem) —— */
+:root {
+  --scrib-tool-rail-width: 3.125rem;
+}
+
+.scrib-tool-rail {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 81;
+  box-sizing: border-box;
+  width: var(--scrib-tool-rail-width);
+  max-width: var(--scrib-tool-rail-width);
+  margin: 0;
+  padding: var(--rail-gap) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--rail-gap);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 0;
+  border-inline-end: var(--border-width) solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  pointer-events: auto;
+}
+
+.scrib-tool-rail--left {
+  left: 0;
+  right: auto;
+  border-inline-end: var(--border-width) solid var(--color-border);
+  border-inline-start: 0;
+}
+
+.scrib-tool-rail--right {
+  left: auto;
+  right: 0;
+  border-inline-start: var(--border-width) solid var(--color-border);
+  border-inline-end: 0;
+}
+
+.scrib-tool-rail__btn.icon-btn {
+  flex: 0 0 auto;
+  width: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
+  height: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.scrib-tool-rail__btn.icon-btn:hover,
+.scrib-tool-rail__btn.icon-btn:focus-visible {
+  color: var(--color-accent);
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: -0.0625rem;
+}
+
+.scrib-tool-rail__btn.icon-btn.is-active,
+.scrib-tool-rail__btn.icon-btn[aria-pressed="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.scrib-tool-rail__btn.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.scrib-tool-rail__btn .material-symbols-outlined {
+  font-size: var(--icon-size);
+  line-height: 1;
+}
+
+.scrib-tool-rail__stroke {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
+  min-height: 1.25rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted, var(--color-text));
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-all;
+}
+
+.scrib-tool-rail__saving {
+  font-size: var(--font-size-sm);
+  opacity: 0.7;
+}
+
+/* —— Reference trays (Institutes / Bible): docked to the tool rail —— */
 .scrib-ref-panel {
   position: fixed;
   top: 0;
-  right: 0;
   z-index: 80;
   width: var(--sidebar-width);
   max-width: var(--sidebar-width);
@@ -536,10 +635,21 @@ html.dark .scrib-page {
   gap: var(--rail-gap);
   overflow: hidden;
   border: var(--border-width) solid var(--color-border);
-  border-radius: 0 0 0 var(--border-radius);
   background: var(--color-bg);
   color: var(--color-text);
   pointer-events: auto;
+}
+
+.scrib-ref-panel--dock-left {
+  left: var(--scrib-tool-rail-width);
+  right: auto;
+  border-radius: 0 0 var(--border-radius) 0;
+}
+
+.scrib-ref-panel--dock-right {
+  left: auto;
+  right: var(--scrib-tool-rail-width);
+  border-radius: 0 0 0 var(--border-radius);
 }
 
 .scrib-ref-panel__head {
@@ -654,13 +764,37 @@ html.dark .scrib-page {
   color: var(--color-accent);
 }
 
+.scrib-ref-panel__nav-toggle.icon-btn {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: auto;
+  height: var(--button-size);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.scrib-ref-panel__nav-toggle.icon-btn:hover,
+.scrib-ref-panel__nav-toggle.icon-btn:focus-visible {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.scrib-ref-panel__nav-toggle .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
 .scrib-ref-panel__text {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   padding: 0.5rem 0.55rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.35rem;
   min-height: 0;
+  flex: 1 1 auto;
 }
 
 .scrib-ref-panel__text-id {
@@ -668,27 +802,70 @@ html.dark .scrib-page {
   font-family: var(--font-family);
   font-size: var(--font-size-xs);
   opacity: 0.75;
+  flex-shrink: 0;
 }
 
 .scrib-ref-panel__text-body {
+  box-sizing: border-box;
   margin: 0;
-  white-space: pre-wrap;
+  width: auto;
+  flex: 1 1 auto;
+  min-height: 8rem;
+  max-height: 14rem;
+  padding: 0.35rem 0.4rem;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-family);
   font-size: var(--font-size-sm);
   line-height: 1.45;
-  max-height: 14rem;
+  white-space: pre-wrap;
+  resize: none;
   overflow: auto;
   user-select: text;
 }
 
+.scrib-ref-panel--nav-collapsed {
+  max-height: 42rem;
+}
+
+.scrib-ref-panel--nav-collapsed .scrib-ref-panel__scroll {
+  flex: 1;
+}
+
+.scrib-ref-panel--nav-collapsed .scrib-ref-panel__text {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scrib-ref-panel--nav-collapsed .scrib-ref-panel__text-body {
+  flex: 1 1 auto;
+  min-height: 18rem;
+  max-height: none;
+  font-size: calc(var(--font-size-sm) * 1.5);
+  line-height: 1.5;
+}
+
 @media (max-width: 40rem) {
-  .scrib-ref-panel {
-    left: 0;
-    right: 0;
+  .scrib-ref-panel,
+  .scrib-ref-panel--dock-left,
+  .scrib-ref-panel--dock-right {
     top: 0;
-    width: auto;
-    max-width: none;
+    width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
     max-height: 12rem;
     border-radius: 0;
+  }
+
+  .scrib-ref-panel--dock-left {
+    left: var(--scrib-tool-rail-width);
+    right: auto;
+  }
+
+  .scrib-ref-panel--dock-right {
+    left: auto;
+    right: var(--scrib-tool-rail-width);
   }
 
   .scrib-ref-panel__chips {
@@ -697,6 +874,16 @@ html.dark .scrib-page {
 
   .scrib-ref-panel__text-body {
     max-height: 3rem;
+    min-height: 3rem;
+  }
+
+  .scrib-ref-panel--nav-collapsed {
+    max-height: 18rem;
+  }
+
+  .scrib-ref-panel--nav-collapsed .scrib-ref-panel__text-body {
+    min-height: 10rem;
+    max-height: none;
   }
 }
 
@@ -731,6 +918,7 @@ html.dark .scrib-page {
   .header-dynamic-menu,
   .scrib-layers-modal,
   .scrib-ref-panel,
+  .scrib-tool-rail,
   .scrib-fullscreen-controls,
   .scrib-save-hint,
   .scrib-stroke-widget {

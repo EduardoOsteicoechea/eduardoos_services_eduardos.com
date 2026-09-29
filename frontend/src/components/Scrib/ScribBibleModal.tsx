@@ -1,5 +1,5 @@
 /**
- * Scrib Bible panel — Book → Chapter → Verse, docked top-right (same UX as Institutes).
+ * Scrib Bible panel — Book → Chapter → Verse, docked beside the tool rail.
  * For now only Romans (Greek / SBLGNT) is available.
  */
 
@@ -11,6 +11,7 @@ import {
   type BibleVerse,
 } from "../../lib/scribBible";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
+import type { ScribDockSide } from "./ScribToolbar";
 
 const NAV_STORAGE_KEY = "eduardoos-scrib-bible-nav";
 
@@ -46,9 +47,13 @@ function writeStoredNav(nav: StoredNav): void {
 
 type ScribBibleModalProps = {
   open: boolean;
+  dockSide?: ScribDockSide;
 };
 
-export default function ScribBibleModal({ open }: ScribBibleModalProps) {
+export default function ScribBibleModal({
+  open,
+  dockSide = "left",
+}: ScribBibleModalProps) {
   const stored = useMemo(() => readStoredNav(), []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -56,6 +61,7 @@ export default function ScribBibleModal({ open }: ScribBibleModalProps) {
   const [doc, setDoc] = useState<BibleBookDoc | null>(null);
   const [chapter, setChapter] = useState<number | null>(stored?.chapter ?? null);
   const [verse, setVerse] = useState<number | null>(stored?.verse ?? null);
+  const [navCollapsed, setNavCollapsed] = useState(false);
 
   const chapterDoc = useMemo(() => {
     if (!doc || chapter == null) return null;
@@ -117,8 +123,19 @@ export default function ScribBibleModal({ open }: ScribBibleModalProps) {
 
   if (!open) return null;
 
+  const dockClass =
+    dockSide === "right"
+      ? "scrib-ref-panel scrib-ref-panel--dock-right"
+      : "scrib-ref-panel scrib-ref-panel--dock-left";
+  const panelClass = navCollapsed
+    ? `${dockClass} scrib-ref-panel--nav-collapsed`
+    : dockClass;
+  const collapseLabel = navCollapsed
+    ? "Mostrar selector de libro, capítulo y verso"
+    : "Ocultar selector de libro, capítulo y verso";
+
   return (
-    <aside className="scrib-ref-panel" aria-label="Bible">
+    <aside className={panelClass} aria-label="Bible">
       <header className="scrib-ref-panel__head">
         <h2>Bible</h2>
       </header>
@@ -130,107 +147,133 @@ export default function ScribBibleModal({ open }: ScribBibleModalProps) {
           <ViewLoading compact label="Loading Bible" />
         ) : (
           <>
-            <div className="scrib-ref-panel__tabs" role="tablist" aria-label="Books">
-              {SCRIB_BIBLE_BOOKS.map((book) => (
-                <button
-                  key={book.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={bookId === book.id}
-                  className={
-                    bookId === book.id
-                      ? "scrib-ref-panel__tab is-active"
-                      : "scrib-ref-panel__tab"
-                  }
-                  onClick={() => {
-                    setBookId(book.id);
-                    setChapter(null);
-                    setVerse(null);
-                    setDoc(null);
-                  }}
-                >
-                  {book.name}
-                  <span className="scrib-ref-panel__tab-meta">{book.languageLabel}</span>
-                </button>
-              ))}
-            </div>
-
-            <section className="scrib-ref-panel__step" aria-label="Chapter">
-              <div
-                className="scrib-ref-panel__chips scrib-ref-panel__chips--chapters"
-                role="listbox"
-                aria-label="Chapter number"
-              >
-                {(doc?.chapters ?? []).map((entry) => (
-                  <button
-                    key={entry.chapter}
-                    type="button"
-                    role="option"
-                    aria-selected={chapter === entry.chapter}
-                    className={
-                      chapter === entry.chapter
-                        ? "scrib-ref-panel__chip is-active"
-                        : "scrib-ref-panel__chip"
-                    }
-                    onClick={() => {
-                      setChapter(entry.chapter);
-                      setVerse(null);
-                    }}
-                  >
-                    {entry.chapter}
-                  </button>
-                ))}
-              </div>
-              {chapter == null ? (
-                <p className="scrib-ref-panel__status">Select a chapter.</p>
-              ) : null}
-            </section>
-
-            {chapter != null ? (
-              <section className="scrib-ref-panel__step" aria-label="Verse">
-                {loading ? (
-                  <ViewLoading compact label="Loading verses" />
-                ) : (
-                  <>
-                    <div
-                      className="scrib-ref-panel__chips scrib-ref-panel__chips--verses"
-                      role="listbox"
-                      aria-label="Verse number"
+            {!navCollapsed ? (
+              <>
+                <div className="scrib-ref-panel__tabs" role="tablist" aria-label="Books">
+                  {SCRIB_BIBLE_BOOKS.map((book) => (
+                    <button
+                      key={book.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={bookId === book.id}
+                      className={
+                        bookId === book.id
+                          ? "scrib-ref-panel__tab is-active"
+                          : "scrib-ref-panel__tab"
+                      }
+                      onClick={() => {
+                        setBookId(book.id);
+                        setChapter(null);
+                        setVerse(null);
+                        setDoc(null);
+                      }}
                     >
-                      {verses.map((v) => (
-                        <button
-                          key={v.verse}
-                          type="button"
-                          role="option"
-                          aria-selected={verse === v.verse}
-                          className={
-                            verse === v.verse
-                              ? "scrib-ref-panel__chip is-active"
-                              : "scrib-ref-panel__chip"
-                          }
-                          onClick={() => setVerse(v.verse)}
+                      {book.name}
+                      <span className="scrib-ref-panel__tab-meta">{book.languageLabel}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <section className="scrib-ref-panel__step" aria-label="Chapter">
+                  <div
+                    className="scrib-ref-panel__chips scrib-ref-panel__chips--chapters"
+                    role="listbox"
+                    aria-label="Chapter number"
+                  >
+                    {(doc?.chapters ?? []).map((entry) => (
+                      <button
+                        key={entry.chapter}
+                        type="button"
+                        role="option"
+                        aria-selected={chapter === entry.chapter}
+                        className={
+                          chapter === entry.chapter
+                            ? "scrib-ref-panel__chip is-active"
+                            : "scrib-ref-panel__chip"
+                        }
+                        onClick={() => {
+                          setChapter(entry.chapter);
+                          setVerse(null);
+                        }}
+                      >
+                        {entry.chapter}
+                      </button>
+                    ))}
+                  </div>
+                  {chapter == null ? (
+                    <p className="scrib-ref-panel__status">Select a chapter.</p>
+                  ) : null}
+                </section>
+
+                {chapter != null ? (
+                  <section className="scrib-ref-panel__step" aria-label="Verse">
+                    {loading ? (
+                      <ViewLoading compact label="Loading verses" />
+                    ) : (
+                      <>
+                        <div
+                          className="scrib-ref-panel__chips scrib-ref-panel__chips--verses"
+                          role="listbox"
+                          aria-label="Verse number"
                         >
-                          {v.verse}
-                        </button>
-                      ))}
-                    </div>
-                    {verse == null ? (
-                      <p className="scrib-ref-panel__status">Select a verse.</p>
-                    ) : null}
-                  </>
-                )}
-              </section>
+                          {verses.map((v) => (
+                            <button
+                              key={v.verse}
+                              type="button"
+                              role="option"
+                              aria-selected={verse === v.verse}
+                              className={
+                                verse === v.verse
+                                  ? "scrib-ref-panel__chip is-active"
+                                  : "scrib-ref-panel__chip"
+                              }
+                              onClick={() => setVerse(v.verse)}
+                            >
+                              {v.verse}
+                            </button>
+                          ))}
+                        </div>
+                        {verse == null ? (
+                          <p className="scrib-ref-panel__status">Select a verse.</p>
+                        ) : null}
+                      </>
+                    )}
+                  </section>
+                ) : null}
+              </>
             ) : null}
 
-            {activeVerse ? (
-              <section className="scrib-ref-panel__text" aria-live="polite">
+            <button
+              type="button"
+              className="scrib-ref-panel__nav-toggle icon-btn"
+              title={collapseLabel}
+              aria-label={collapseLabel}
+              aria-pressed={navCollapsed}
+              onClick={() => setNavCollapsed((v) => !v)}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                {navCollapsed ? "unfold_more" : "unfold_less"}
+              </span>
+            </button>
+
+            <section
+              className="scrib-ref-panel__text"
+              aria-live="polite"
+            >
+              {activeVerse ? (
                 <p className="scrib-ref-panel__text-id">
                   {doc?.bookName} {chapter}:{activeVerse.verse}
                   {doc?.edition ? ` · ${doc.edition}` : ""}
                 </p>
-                <p className="scrib-ref-panel__text-body">{activeVerse.text}</p>
-              </section>
-            ) : null}
+              ) : null}
+              <textarea
+                className="scrib-ref-panel__text-body"
+                readOnly
+                value={activeVerse?.text ?? ""}
+                placeholder={activeVerse ? undefined : "Select a verse."}
+                aria-label="Verse text"
+              />
+            </section>
           </>
         )}
       </div>

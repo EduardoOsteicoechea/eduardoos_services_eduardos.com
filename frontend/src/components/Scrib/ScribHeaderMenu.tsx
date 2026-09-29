@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { APP_ROUTES } from "../../config/routes";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
+import type { ScribDockSide } from "./ScribToolbar";
 
 export type ScribToolMode = "draw" | "zoom" | "erase";
 
@@ -29,6 +30,8 @@ type ScribHeaderMenuProps = {
   institutesOpen?: boolean;
   onOpenBible: () => void;
   bibleOpen?: boolean;
+  dockSide?: ScribDockSide;
+  onToggleDock?: () => void;
   onUndo: () => void;
   onPrint: () => void;
 };
@@ -184,6 +187,35 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
             <ActionIcon name="auto_stories" />
             <span className="header-dynamic-menu__label">Bible</span>
           </button>
+          {props.onToggleDock ? (
+            <button
+              type="button"
+              className={actionClass(props.dockSide === "right")}
+              title={
+                props.dockSide === "right"
+                  ? "Mover barra y panel a la izquierda"
+                  : "Mover barra y panel a la derecha"
+              }
+              aria-label={
+                props.dockSide === "right"
+                  ? "Mover barra y panel a la izquierda"
+                  : "Mover barra y panel a la derecha"
+              }
+              aria-pressed={props.dockSide === "right"}
+              onClick={props.onToggleDock}
+            >
+              <ActionIcon
+                name={
+                  props.dockSide === "right"
+                    ? "keyboard_arrow_left"
+                    : "keyboard_arrow_right"
+                }
+              />
+              <span className="header-dynamic-menu__label">
+                {props.dockSide === "right" ? "Dock izq." : "Dock der."}
+              </span>
+            </button>
+          ) : null}
           <button
             type="button"
             className={actionClass()}

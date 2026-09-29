@@ -13,6 +13,7 @@ import ScribBibleModal from "./ScribBibleModal";
 import ScribHeaderMenu, { type ScribToolMode } from "./ScribHeaderMenu";
 import ScribInstitutesModal from "./ScribInstitutesModal";
 import ScribSheetBackground from "./ScribSheetBackground";
+import ScribToolbar, { type ScribDockSide } from "./ScribToolbar";
 import {
   fetchScribSheet,
   isScribDrawableLayer,
@@ -116,6 +117,7 @@ export default function ScribEditor() {
   const [layersOpen, setLayersOpen] = useState(false);
   const [institutesOpen, setInstitutesOpen] = useState(false);
   const [bibleOpen, setBibleOpen] = useState(false);
+  const [dockSide, setDockSide] = useState<ScribDockSide>("left");
   const [saving, setSaving] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -503,6 +505,60 @@ export default function ScribEditor() {
     });
   }
 
+  const toggleDock = useCallback(() => {
+    setDockSide((side) => (side === "left" ? "right" : "left"));
+  }, []);
+
+  const openDashboard = useCallback(() => {
+    window.location.href = APP_ROUTES.scrib;
+  }, []);
+
+  const bumpStroke = useCallback((delta: number) => {
+    const current = sheetSnapshotRef.current;
+    if (!current) return;
+    const next =
+      delta > 0
+        ? Math.min(STROKE_MAX, +(current.strokeWidthMm + STROKE_STEP).toFixed(2))
+        : Math.max(STROKE_MIN, +(current.strokeWidthMm - STROKE_STEP).toFixed(2));
+    commitSheet({ ...current, strokeWidthMm: next });
+  }, [commitSheet]);
+
+  const openLayers = useCallback(() => setLayersOpen(true), []);
+
+  const toggleInstitutes = useCallback(() => {
+    setLayersOpen(false);
+    setBibleOpen(false);
+    setInstitutesOpen((v) => !v);
+  }, []);
+
+  const toggleBible = useCallback(() => {
+    setLayersOpen(false);
+    setInstitutesOpen(false);
+    setBibleOpen((v) => !v);
+  }, []);
+
+  const printSheet = useCallback(() => {
+    setLayersOpen(false);
+    setDraftPath("");
+    const el = sheetRef.current;
+    const current = sheetSnapshotRef.current;
+    if (!el || !current) {
+      setError("Sheet not ready to print.");
+      return;
+    }
+    void (async () => {
+      try {
+        setError("");
+        setSaving(true);
+        await downloadScribSheetPdf(el, current);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Print PDF failed");
+      } finally {
+        setSaving(false);
+      }
+    })();
+  }, []);
+
   if (!ids && error) {
     return (
       <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
@@ -519,71 +575,49 @@ export default function ScribEditor() {
         canUndo={undoStack.length > 0}
         saving={saving}
         isFullscreen={isFullscreen}
-        onDashboard={() => {
-          window.location.href = APP_ROUTES.scrib;
-        }}
+        onDashboard={openDashboard}
         onSelectZoom={() => setMode("zoom")}
         onSelectDraw={() => setMode("draw")}
-        onStrokePlus={() => {
-          const current = sheetSnapshotRef.current;
-          if (!current) return;
-          commitSheet({
-            ...current,
-            strokeWidthMm: Math.min(
-              STROKE_MAX,
-              +(current.strokeWidthMm + STROKE_STEP).toFixed(2),
-            ),
-          });
-        }}
-        onStrokeMinus={() => {
-          const current = sheetSnapshotRef.current;
-          if (!current) return;
-          commitSheet({
-            ...current,
-            strokeWidthMm: Math.max(
-              STROKE_MIN,
-              +(current.strokeWidthMm - STROKE_STEP).toFixed(2),
-            ),
-          });
-        }}
+        onStrokePlus={() => bumpStroke(1)}
+        onStrokeMinus={() => bumpStroke(-1)}
         onSelectErase={() => setMode("erase")}
         onEnterFullscreen={() => void enterFullscreen()}
-        onOpenLayers={() => setLayersOpen(true)}
+        onOpenLayers={openLayers}
         institutesOpen={institutesOpen}
-        onOpenInstitutes={() => {
-          setLayersOpen(false);
-          setBibleOpen(false);
-          setInstitutesOpen((v) => !v);
-        }}
+        onOpenInstitutes={toggleInstitutes}
         bibleOpen={bibleOpen}
-        onOpenBible={() => {
-          setLayersOpen(false);
-          setInstitutesOpen(false);
-          setBibleOpen((v) => !v);
-        }}
-        onPrint={() => {
-          setLayersOpen(false);
-          setDraftPath("");
-          const el = sheetRef.current;
-          const current = sheetSnapshotRef.current;
-          if (!el || !current) {
-            setError("Sheet not ready to print.");
-            return;
-          }
-          void (async () => {
-            try {
-              setError("");
-              setSaving(true);
-              await downloadScribSheetPdf(el, current);
-            } catch (e) {
-              setError(e instanceof Error ? e.message : "Print PDF failed");
-            } finally {
-              setSaving(false);
-            }
-          })();
-        }}
+        onOpenBible={toggleBible}
+        dockSide={dockSide}
+        onToggleDock={toggleDock}
+        onPrint={printSheet}
         onUndo={() => void onUndo()}
       />
+
+      {sheet ? (
+        <ScribToolbar
+          mode={mode}
+          strokeWidthMm={sheet.strokeWidthMm}
+          canUndo={undoStack.length > 0}
+          saving={saving}
+          isFullscreen={isFullscreen}
+          institutesOpen={institutesOpen}
+          bibleOpen={bibleOpen}
+          dockSide={dockSide}
+          onDashboard={openDashboard}
+          onSelectZoom={() => setMode("zoom")}
+          onSelectDraw={() => setMode("draw")}
+          onStrokePlus={() => bumpStroke(1)}
+          onStrokeMinus={() => bumpStroke(-1)}
+          onSelectErase={() => setMode("erase")}
+          onEnterFullscreen={() => void enterFullscreen()}
+          onOpenLayers={openLayers}
+          onOpenInstitutes={toggleInstitutes}
+          onOpenBible={toggleBible}
+          onPrint={printSheet}
+          onUndo={() => void onUndo()}
+          onToggleDock={toggleDock}
+        />
+      ) : null}
 
       {loading ? <ViewLoading label="Cargando hoja" /> : null}
       {error ? <p className="scrib-dashboard__error">{error}</p> : null}
@@ -774,8 +808,8 @@ export default function ScribEditor() {
         </div>
       ) : null}
 
-      <ScribInstitutesModal open={institutesOpen} />
-      <ScribBibleModal open={bibleOpen} />
+      <ScribInstitutesModal open={institutesOpen} dockSide={dockSide} />
+      <ScribBibleModal open={bibleOpen} dockSide={dockSide} />
     </ServiceGate>
   );
 }
