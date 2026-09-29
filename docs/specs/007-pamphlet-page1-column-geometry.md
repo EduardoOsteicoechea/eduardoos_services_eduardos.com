@@ -83,7 +83,8 @@ Do **not** change heights without updating:
    `packingFloorMm` = min(`maxHeightForColumn`, painted column mm). Do not keep
    items stuck in their source column when an earlier column still has room.
    After appending a candidate, use **pack mm** per child (exclude trailing
-   spacer): spacer `2.5`, paragraph ≥ `3.75`, heading ≥ `5.1`, else measured.
+   spacer): spacer `2.5`; paragraph/heading **ceil to N×3.75 / N×5.1** line
+   grids (not only a 1-line floor — multi-line px snap undercounts); else measured.
    After each column, `spillOverflowFromInk` if pack mm still exceeds the floor
    (wrap/DPR growth / paint snap — classic Alturas `OVERFLOW=YES` clipping the
    last line). Do **not** use ink `scrollHeight`. Contract:

@@ -1090,9 +1090,25 @@ const PACK_BODY_LINE_MM = 3.0 * 1.25;
 const PACK_HEADING_LINE_MM = 4.25 * 1.2;
 
 /**
+ * Round measured height up onto the PDF line grid.
+ * Pixel snap undercounts every line (3.75→~3.43, 7.5→~6.87, 11.25→~10.30), so
+ * `Math.max(measured, oneLine)` only fixed single-line blocks — multi-line still
+ * packed short and left Alturas OVERFLOW=no while the last glyphs clipped
+ * (FE col1 length 14 vs PDF hits n=13).
+ */
+function packHeightOnLineGridMm(measuredMm: number, lineMm: number): number {
+    if (!(measuredMm > 0) || !(lineMm > 0)) return lineMm;
+    const lines = Math.max(
+        1,
+        Math.ceil((measuredMm - PACK_FIT_EPSILON_MM) / lineMm),
+    );
+    return lines * lineMm;
+}
+
+/**
  * Packing height for one ink child. Device pixels quantize CSS mm (e.g. 3.75mm→14px
- * →3.698mm), so raw offsetHeight underestimates vs PDF. Use PDF/CSS nominal floors
- * for spacers and single-line type; keep measured when multi-line is taller.
+ * →3.698mm), so raw offsetHeight underestimates vs PDF. Spacers use nominal gap;
+ * paragraph/heading snap up to whole PDF line multiples.
  */
 function childPackHeightMm(el: HTMLElement, columnEl: HTMLElement): number {
     const measured = convertPixelsToMillimeters(el.offsetHeight, columnEl);
@@ -1101,10 +1117,10 @@ function childPackHeightMm(el: HTMLElement, columnEl: HTMLElement): number {
     }
     const type = el.getAttribute("data-item-type");
     if (type === "paragraph") {
-        return Math.max(measured, PACK_BODY_LINE_MM);
+        return packHeightOnLineGridMm(measured, PACK_BODY_LINE_MM);
     }
     if (type === "heading_1") {
-        return Math.max(measured, PACK_HEADING_LINE_MM);
+        return packHeightOnLineGridMm(measured, PACK_HEADING_LINE_MM);
     }
     return measured;
 }
