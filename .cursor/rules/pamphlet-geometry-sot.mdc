@@ -59,15 +59,15 @@ Required algorithm (`reflowAndReport` / `tryAppendItemToInk` in `main.ts`):
 4. Measure fit with **pack mm** per child via `childPackHeightMm` (not raw
    snapped px→mm alone):
    - spacer = `2.5` (CSS `--item-gap-height` / Go `PamphletItemGapMm`)
-   - paragraph / heading = **ceil onto the PDF line grid**
-     (`packHeightOnLineGridMm`: N×3.75 / N×5.1), not only `max(measured, 1 line)`.
-     Multi-line snap undercounts every line (7.5→~6.87, 11.25→~10.30) and packed
-     an extra item while Alturas still said `OVERFLOW=no` (FE col1 length 14 vs
-     PDF `n=13`, last line clipped).
+   - paragraph / heading = **nearest PDF line grid** via
+     `packHeightOnLineGridMm` = `max(measured, round(measured/line)×line)`
+     (line = 3.75 / 5.1). Not only `max(measured, 1 line)`, and **not** plain
+     `ceil` — ceil turns 11.359→15.0 and spills a column early (~9mm slack).
+     Nearest-line lifts under-snap (10.30→11.25) without inventing an extra line.
    - else measured
    Exclude the trailing spacer from the fit sum (it is stripped after pack).
-   Known regressions: FE 26 vs PDF 25 (1-line floor missing); FE 14 vs PDF 13
-   (multi-line grid missing).
+   Known regressions: FE 26 vs PDF 25 (1-line floor); FE 14 vs PDF 13 (no
+   multi-line grid); early column break with slackMm≈9 (ceil overshoot).
 5. After each column: `spillOverflowFromInk` — pop last items until pack mm
    fits; prepend onto the densify queue. Optional settle reflow after rAF if
    wrap/DPR grew content (`Alturas` `OVERFLOW=YES` with tiny negative slack).
@@ -100,7 +100,7 @@ floor bugs are suspected:
 | `backend col N: n=… pastFloor=` | `pastFloor=yes` or `bottomMax` > `floor` → PDF ink past band. |
 | `currentDoc column_N.length` vs `backend col N: n=` | FE items in column ≠ PDF hits → densify used softer heights than PDF (classic pixel-snap undercount). |
 | `contentChildrenMm` / `OVERFLOW=` / `packingFloorMm` | Pack mm vs **min(geo, painted)**. `OVERFLOW=YES` with small negative slack → last line clipped by ink; spill last item. |
-| Per-child `measuredMm` vs `packMm` | If `measuredMm < packMm`, device-pixel snap; densify **must** use `packMm` on the **line grid** (N×3.75), not only 1-line floor. |
+| Per-child `measuredMm` vs `packMm` | Under-snap: packMm lifts to nearest N×3.75. If packMm ≫ measured (e.g. 15 vs 11.3), `ceil` overshoot — use **nearest** line, not ceil. |
 | `ink.children` + spacers | Spacers count in height; last spacer after last item is included in stack. |
 | Sheet / column `offsetMm` vs CSS vars | Painted box vs `--page1-right-col-height` etc. |
 

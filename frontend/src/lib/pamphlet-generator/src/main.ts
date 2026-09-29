@@ -1090,19 +1090,21 @@ const PACK_BODY_LINE_MM = 3.0 * 1.25;
 const PACK_HEADING_LINE_MM = 4.25 * 1.2;
 
 /**
- * Round measured height up onto the PDF line grid.
- * Pixel snap undercounts every line (3.75→~3.43, 7.5→~6.87, 11.25→~10.30), so
- * `Math.max(measured, oneLine)` only fixed single-line blocks — multi-line still
- * packed short and left Alturas OVERFLOW=no while the last glyphs clipped
- * (FE col1 length 14 vs PDF hits n=13).
+ * Map measured height onto the PDF line grid (N × lineMm).
+ *
+ * - Pixel snap usually *undercounts* (7.5→~6.87, 11.25→~10.30): nearest-line
+ *   grid lifts those back to PDF nominal.
+ * - Snap can also land *slightly above* the grid (11.359 vs 11.25). Plain
+ *   `ceil` then jumps a whole extra line (15.0) and densify spills early
+ *   (Alturas slackMm≈9.5 with packMm 15/18.75 on 3–4 line blocks).
+ *
+ * Use nearest line count, then never pack shorter than painted ink.
  */
 function packHeightOnLineGridMm(measuredMm: number, lineMm: number): number {
     if (!(measuredMm > 0) || !(lineMm > 0)) return lineMm;
-    const lines = Math.max(
-        1,
-        Math.ceil((measuredMm - PACK_FIT_EPSILON_MM) / lineMm),
-    );
-    return lines * lineMm;
+    const lines = Math.max(1, Math.round(measuredMm / lineMm));
+    const grid = lines * lineMm;
+    return Math.max(measuredMm, grid);
 }
 
 /**
