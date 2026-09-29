@@ -52,21 +52,28 @@ Required algorithm (`reflowAndReport` / `tryAppendItemToInk` in `main.ts`):
    when an earlier column still has room — that froze the 4-item probe after
    persist).
 3. For each column in reading order, append items greedily until content height
-   would exceed `maxHeightForColumn(col)`.
+   would exceed `packingFloorMm(col)` = **min**(geo `maxHeightForColumn`,
+   painted column mm). Device snap often paints the band short of the CSS mm
+   floor (e.g. offsetMm 156.116 vs geo 156.400) — packing only against geo
+   clips the last glyphs inside `overflow:clip` ink.
 4. Measure fit with **pack mm** per child via `childPackHeightMm` (not raw
    snapped px→mm alone):
    - spacer = `2.5` (CSS `--item-gap-height` / Go `PamphletItemGapMm`)
    - paragraph ≥ `3.0×1.25 = 3.75`
    - heading ≥ `4.25×1.2 = 5.1`
    - else measured
+   Exclude the trailing spacer from the fit sum (it is stripped after pack).
    Device pixels quantize CSS mm (e.g. 3.75mm → 14px → 3.698mm), so raw
    `offsetHeight` **underestimates** and packs **one extra item** past the PDF
    floor. Known regression: FE `column_1.length=26` vs backend hits `n=25`.
-5. Do **not** use ink `scrollHeight` while `.pamphlet-column-ink` is
+5. After each column: `spillOverflowFromInk` — pop last items until pack mm
+   fits; prepend onto the densify queue. Optional settle reflow after rAF if
+   wrap/DPR grew content (`Alturas` `OVERFLOW=YES` with tiny negative slack).
+6. Do **not** use ink `scrollHeight` while `.pamphlet-column-ink` is
    `height: 100%` — that reports the column **box**, not stacked content.
-6. Spill forward only; do not force-pack past the col-8 floor into the page
+7. Spill forward only; do not force-pack past the col-8 floor into the page
    margin.
-7. “+” stays outside the ink box and must not consume column mm.
+8. “+” stays outside the ink box and must not consume column mm.
 
 ## Diagnosis: DHS “Alturas” (required before guessing)
 
@@ -90,7 +97,7 @@ floor bugs are suspected:
 | `FE maxHeightForColumn` vs `Backend layout` floors | Must match (`page1_right_col_mm` ↔ cols 1–2, etc.). Mismatch → FE mirror / CSS vars out of sync with Go. |
 | `backend col N: n=… pastFloor=` | `pastFloor=yes` or `bottomMax` > `floor` → PDF ink past band. |
 | `currentDoc column_N.length` vs `backend col N: n=` | FE items in column ≠ PDF hits → densify used softer heights than PDF (classic pixel-snap undercount). |
-| `contentChildrenMm` / `OVERFLOW=` | Uses **pack mm**. `OVERFLOW=YES` → FE packing past floor. |
+| `contentChildrenMm` / `OVERFLOW=` / `packingFloorMm` | Pack mm vs **min(geo, painted)**. `OVERFLOW=YES` with small negative slack → last line clipped by ink; spill last item. |
 | Per-child `measuredMm` vs `packMm` | If `measuredMm < packMm`, device-pixel snap; densify **must** use `packMm`. |
 | `ink.children` + spacers | Spacers count in height; last spacer after last item is included in stack. |
 | Sheet / column `offsetMm` vs CSS vars | Painted box vs `--page1-right-col-height` etc. |

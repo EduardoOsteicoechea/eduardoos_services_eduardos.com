@@ -1113,14 +1113,65 @@ function childPackHeightMm(el: HTMLElement, columnEl: HTMLElement): number {
  * Content height of ink children (items + spacers) in mm for densify.
  * Do NOT use scrollHeight: ink is height:100% so scrollHeight ≈ column box.
  * Do NOT sum raw offsetHeight mm alone — pixel snap packs past the PDF floor.
+ * Trailing spacer is excluded — densify strips it after each column, so fit
+ * must match the final DOM (including it falsely "bought" 2.5mm of room).
  */
 function inkContentHeightMm(ink: HTMLElement, columnEl: HTMLElement): number {
     void ink.offsetWidth;
     let mm = 0;
-    for (let i = 0; i < ink.children.length; i++) {
-        mm += childPackHeightMm(ink.children[i] as HTMLElement, columnEl);
+    const kids = ink.children;
+    const last = kids.length ? (kids[kids.length - 1] as HTMLElement) : null;
+    const end =
+        last?.classList.contains("pamphlet-item-spacer") ? kids.length - 1 : kids.length;
+    for (let i = 0; i < end; i++) {
+        mm += childPackHeightMm(kids[i] as HTMLElement, columnEl);
     }
     return mm;
+}
+
+/**
+ * Packing ceiling for a column: tighter of geometry SoT and the painted box.
+ * Device snap often paints ~0.2–0.3mm short of the CSS mm floor (Alturas:
+ * offsetMm 156.116 vs maxHeightForColumn 156.400) — packing only against geo
+ * clips the last line inside overflow:clip ink.
+ */
+function packingFloorMm(columnIndex: number, columnEl: HTMLElement): number {
+    const geo = maxHeightForColumn(columnIndex);
+    void columnEl.offsetHeight;
+    const paintedPx = columnEl.clientHeight || columnEl.offsetHeight;
+    if (paintedPx <= 0) return geo;
+    const painted = convertPixelsToMillimeters(paintedPx, columnEl);
+    return Math.min(geo, painted);
+}
+
+/**
+ * After pack/strip: pop last items until ink fits the packing floor.
+ * Returns spilled items in reading order (to prepend onto the densify queue).
+ * Keeps a single oversized first item (existing clip policy).
+ */
+function spillOverflowFromInk(
+    ink: HTMLElement,
+    columnEl: HTMLElement,
+    columnIndex: number,
+): HTMLElement[] {
+    const spilled: HTMLElement[] = [];
+    stripTrailingItemSpacer(ink);
+    while (true) {
+        const items = ink.querySelectorAll<HTMLElement>(":scope > .pamphlet-item");
+        if (items.length <= 1) break;
+        const contentMm = inkContentHeightMm(ink, columnEl);
+        const maxMm = packingFloorMm(columnIndex, columnEl);
+        if (contentMm <= maxMm + PACK_FIT_EPSILON_MM) break;
+        const last = items[items.length - 1]!;
+        const prev = last.previousElementSibling;
+        last.remove();
+        if (prev?.classList.contains("pamphlet-item-spacer")) {
+            prev.remove();
+        }
+        spilled.unshift(last);
+    }
+    stripTrailingItemSpacer(ink);
+    return spilled;
 }
 
 /**
@@ -1143,7 +1194,7 @@ function tryAppendItemToInk(
     ink.appendChild(item);
     ink.appendChild(spacer);
     const contentMm = inkContentHeightMm(ink, columnEl);
-    const maxMm = maxHeightForColumn(columnIndex);
+    const maxMm = packingFloorMm(columnIndex, columnEl);
     if (hadItems && contentMm > maxMm + PACK_FIT_EPSILON_MM) {
         spacer.remove();
         item.remove();
@@ -1320,13 +1371,14 @@ function buildGeometryDebugReport(): string {
         const col = main.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colNum}`);
         const ink = col?.querySelector<HTMLElement>(":scope > .pamphlet-column-ink") ?? null;
         const max = maxHeightForColumn(colNum);
+        const packFloor = col ? packingFloorMm(colNum, col) : max;
         const contentMm = ink && col ? inkContentHeightMm(ink, col) : 0;
-        const overflow = contentMm > max + PACK_FIT_EPSILON_MM;
+        const overflow = contentMm > packFloor + PACK_FIT_EPSILON_MM;
         lines.push(`### col ${colNum}`);
         lines.push(...boxDebugLines(`column-${colNum}`, col, col));
         lines.push(...boxDebugLines(`ink-${colNum}`, ink, col));
         lines.push(
-            `maxHeightForColumn=${fmtMm(max)} contentChildrenMm=${fmtMm(contentMm)} OVERFLOW=${overflow ? "YES" : "no"} slackMm=${fmtMm(max - contentMm)}`,
+            `maxHeightForColumn=${fmtMm(max)} packingFloorMm=${fmtMm(packFloor)} contentChildrenMm=${fmtMm(contentMm)} OVERFLOW=${overflow ? "YES" : "no"} slackMm=${fmtMm(packFloor - contentMm)}`,
         );
         if (ink) {
             const kids = Array.from(ink.children) as HTMLElement[];
@@ -1442,7 +1494,8 @@ function syncCurrentDocColumnsFromDom(container: HTMLElement): void {
     currentHeader = { ...chromeHeader };
 }
 
-function reflowAndReport(container: HTMLElement) {
+function reflowAndReport(container: HTMLElement, opts?: { settlePass?: boolean }) {
+    const settlePass = Boolean(opts?.settlePass);
     const leadSlots = Array.from(
         container.querySelectorAll<HTMLElement>(":scope > .pamphlet-lead-slot"),
     );
@@ -1493,6 +1546,12 @@ function reflowAndReport(container: HTMLElement) {
         }
 
         stripTrailingItemSpacer(ink);
+        // Wrap/paint can grow after append (DPR zoom, multi-line reflow). Spill
+        // past the tighter painted/geo floor so overflow:clip does not cut glyphs.
+        const spilled = spillOverflowFromInk(ink, currentColumnDiv, columnIndex);
+        if (spilled.length > 0) {
+            allItems.splice(itemCursor, 0, ...spilled);
+        }
         if (ink.querySelector(":scope > .pamphlet-item")) {
             filledByColumn.set(columnIndex, inkContentHeightMm(ink, currentColumnDiv));
         }
@@ -1512,6 +1571,8 @@ function reflowAndReport(container: HTMLElement) {
             itemCursor++;
         }
         stripTrailingItemSpacer(ink8);
+        // Past col 8 there is no forward column — trim overflow; leftover stays unpacked.
+        spillOverflowFromInk(ink8, col8, 8);
         if (ink8.querySelector(":scope > .pamphlet-item")) {
             filledByColumn.set(8, inkContentHeightMm(ink8, col8));
         }
@@ -1569,7 +1630,29 @@ function reflowAndReport(container: HTMLElement) {
 
     requestAnimationFrame(() => {
         syncSheetScale();
+        // Second pass after layout/wrap settles (DPR zoom, multi-line). One retry max.
+        if (settlePass) return;
+        requestAnimationFrame(() => {
+            if (sheetHasPackOverflow(container)) {
+                reflowAndReport(container, { settlePass: true });
+            }
+        });
     });
+}
+
+/** True when any body column’s pack mm exceeds its painted/geo packing floor. */
+function sheetHasPackOverflow(container: HTMLElement): boolean {
+    for (const colNum of PAMPHLET_BODY_COLUMN_READING_ORDER) {
+        const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colNum}`);
+        const ink = col?.querySelector<HTMLElement>(":scope > .pamphlet-column-ink");
+        if (!col || !ink) continue;
+        const items = ink.querySelectorAll(":scope > .pamphlet-item");
+        if (items.length <= 1) continue;
+        if (inkContentHeightMm(ink, col) > packingFloorMm(colNum, col) + PACK_FIT_EPSILON_MM) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function clickInner(target: HTMLElement | undefined): void {
