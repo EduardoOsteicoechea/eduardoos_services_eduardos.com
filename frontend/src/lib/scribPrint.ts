@@ -7,10 +7,12 @@
 import { mustLog } from "./dev-log";
 import {
   isScribDrawableLayer,
+  normalizeScribBackgroundPattern,
   postScribPrintPdf,
   SCRIB_BACKGROUND_LAYER_ID,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
+  type ScribBackgroundPattern,
   type ScribSheet,
   type StrokePath,
 } from "./scrib";
@@ -38,9 +40,10 @@ function drawRuledBackground(
   ctx: CanvasRenderingContext2D,
   pxPerMm: number,
   opacity: number,
+  pattern: ScribBackgroundPattern,
 ): void {
   if (opacity <= 0) return;
-  const g = buildScribSheetBackgroundGeometry();
+  const g = buildScribSheetBackgroundGeometry({ pattern });
   const sw = Math.max(1, g.strokeWidthMm * pxPerMm);
   ctx.save();
   ctx.globalAlpha = Math.min(1, Math.max(0, opacity));
@@ -125,7 +128,12 @@ export async function captureScribSheetLightGrayscale(
   ctx.fillRect(0, 0, widthPx, heightPx);
 
   const bgLayer = sheet.layers.find((l) => l.id === SCRIB_BACKGROUND_LAYER_ID);
-  drawRuledBackground(ctx, PRINT_PX_PER_MM, bgLayer?.opacity ?? 1);
+  drawRuledBackground(
+    ctx,
+    PRINT_PX_PER_MM,
+    bgLayer?.opacity ?? 1,
+    normalizeScribBackgroundPattern(sheet.backgroundPattern),
+  );
 
   for (const layer of sheet.layers) {
     if (!isScribDrawableLayer(layer.id)) continue;

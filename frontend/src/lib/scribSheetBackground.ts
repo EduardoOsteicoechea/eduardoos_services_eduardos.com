@@ -3,9 +3,29 @@
  * Port of formatted_sheet_generator/app.py (columnas + renglones) to SVG mm units.
  */
 
-import { SCRIB_PAGE_HEIGHT_MM, SCRIB_PAGE_WIDTH_MM } from "./scrib";
+import {
+  normalizeScribBackgroundPattern,
+  SCRIB_PAGE_HEIGHT_MM,
+  SCRIB_PAGE_WIDTH_MM,
+  type ScribBackgroundPattern,
+} from "./scrib";
+
+export type { ScribBackgroundPattern };
+
+/** Band heights (mm) for one cycle of the given pattern. */
+export function scribBackgroundPatternBands(
+  pattern: ScribBackgroundPattern,
+  altoDeLineaMm: number,
+  espacioEntreLineasMm: number,
+): number[] {
+  if (pattern === "ruled-4-3-3") {
+    return [altoDeLineaMm, espacioEntreLineasMm, espacioEntreLineasMm];
+  }
+  return [altoDeLineaMm, espacioEntreLineasMm];
+}
 
 export type ScribSheetBgOptions = {
+  pattern?: ScribBackgroundPattern;
   margenLateralMm?: number;
   margenVerticalMm?: number;
   margenEntreColumnasMm?: number;
@@ -93,6 +113,12 @@ export function buildScribSheetBackgroundGeometry(
     options.bandaExtremaEspacioMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaEspacioMm,
     espacioEntreLineasMm / 2,
   );
+  const pattern = normalizeScribBackgroundPattern(options.pattern);
+  const cycleBands = scribBackgroundPatternBands(
+    pattern,
+    altoDeLineaMm,
+    espacioEntreLineasMm,
+  );
 
   const usableW = pageWidthMm - 2 * margenLateralMm;
   const usableH = pageHeightMm - 2 * margenVerticalMm;
@@ -106,6 +132,21 @@ export function buildScribSheetBackgroundGeometry(
   };
   const vLine = (x: number, y1: number, y2: number, stroke: string) => {
     lines.push({ x1: x, y1, x2: x, y2, stroke });
+  };
+
+  /** Dark bottom edge + two soft interior guides for a band of height `bandH`. */
+  const appendBand = (
+    xStart: number,
+    xEnd: number,
+    yTop: number,
+    bandH: number,
+    edgeBandMm: number,
+  ) => {
+    const yBottom = yTop + bandH;
+    const edge = Math.min(edgeBandMm, bandH / 2);
+    hLine(xStart, xEnd, yBottom, colorOscuro);
+    hLine(xStart, xEnd, yBottom - (bandH - edge), colorSuave);
+    hLine(xStart, xEnd, yBottom - edge, colorSuave);
   };
 
   for (let col = 0; col < columnas; col++) {
@@ -131,24 +172,15 @@ export function buildScribSheetBackgroundGeometry(
     }
 
     let yActual = yStart;
+    let bandIndex = 0;
     while (true) {
-      yActual += altoDeLineaMm;
-      if (yActual >= yEnd) break;
-
-      hLine(xStart, xEnd, yActual, colorOscuro);
-
-      // Writing row: top bandaExtrema | middle | bottom bandaExtrema (default 1.1 | 1.8 | 1.1).
-      hLine(xStart, xEnd, yActual - (altoDeLineaMm - bandaExtremaMm), colorSuave);
-      hLine(xStart, xEnd, yActual - bandaExtremaMm, colorSuave);
-
-      yActual += espacioEntreLineasMm;
-      if (yActual >= yEnd) break;
-
-      hLine(xStart, xEnd, yActual, colorOscuro);
-
-      // Gap: top bandaExtremaEspacio | middle | bottom (default 0.9 | 1.2 | 0.9).
-      hLine(xStart, xEnd, yActual - (espacioEntreLineasMm - bandaExtremaEspacioMm), colorSuave);
-      hLine(xStart, xEnd, yActual - bandaExtremaEspacioMm, colorSuave);
+      const cyclePos = bandIndex % cycleBands.length;
+      const bandH = cycleBands[cyclePos]!;
+      bandIndex += 1;
+      if (yActual + bandH >= yEnd) break;
+      const edgeBandMm = cyclePos === 0 ? bandaExtremaMm : bandaExtremaEspacioMm;
+      appendBand(xStart, xEnd, yActual, bandH, edgeBandMm);
+      yActual += bandH;
     }
   }
 

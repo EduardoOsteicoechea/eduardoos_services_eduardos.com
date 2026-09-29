@@ -3,14 +3,17 @@ import {
   SCRIB_BACKGROUND_LAYER_ID,
   SCRIB_DRAW_LAYER_IDS,
   SCRIB_LAYER_IDS,
+  SCRIB_PAGE_HEIGHT_MM,
+  SCRIB_PAGE_WIDTH_MM,
   isScribDrawableLayer,
+  normalizeScribBackgroundPattern,
+  toggleScribBackgroundPattern,
 } from "./scrib";
 import {
   buildScribSheetBackgroundGeometry,
   buildScribSheetBackgroundSvgMarkup,
   SCRIB_SHEET_BG_DEFAULTS,
 } from "./scribSheetBackground";
-import { SCRIB_PAGE_HEIGHT_MM, SCRIB_PAGE_WIDTH_MM } from "./scrib";
 
 describe("scribSheetBackground", () => {
   it("matches US Letter page size and default column count", () => {
@@ -91,6 +94,77 @@ describe("scribSheetBackground", () => {
     expect(softYs).toContain(bottomOfFirstGap - (espacio - edge));
     expect(softYs).toContain(bottomOfFirstGap - edge);
     expect(edge + (espacio - 2 * edge) + edge).toBe(espacio);
+  });
+
+  it("defaults pattern to ruled-4-3 and toggles to ruled-4-3-3", () => {
+    expect(normalizeScribBackgroundPattern(undefined)).toBe("ruled-4-3");
+    expect(normalizeScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3-3");
+    expect(toggleScribBackgroundPattern("ruled-4-3")).toBe("ruled-4-3-3");
+    expect(toggleScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3");
+  });
+
+  it("ruled-4-3-3 places two 3 mm gaps after the first 4 mm row", () => {
+    const g = buildScribSheetBackgroundGeometry({ pattern: "ruled-4-3-3" });
+    const ml = SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const mv = SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm;
+    const alto = SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
+    const espacio = SCRIB_SHEET_BG_DEFAULTS.espacioEntreLineasMm;
+    const edgeW = SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm;
+    const edgeG = SCRIB_SHEET_BG_DEFAULTS.bandaExtremaEspacioMm;
+    const darkYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorOscuro &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1)
+      .sort((a, b) => a - b);
+    const softYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorSuave &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1);
+
+    const y0 = mv;
+    const y4 = mv + alto;
+    const y7 = y4 + espacio;
+    const y10 = y7 + espacio;
+    expect(darkYs).toContain(y0);
+    expect(darkYs).toContain(y4);
+    expect(darkYs).toContain(y7);
+    expect(darkYs).toContain(y10);
+    // Soft guides inside writing row and both gaps.
+    expect(softYs).toContain(y4 - (alto - edgeW));
+    expect(softYs).toContain(y4 - edgeW);
+    expect(softYs).toContain(y7 - (espacio - edgeG));
+    expect(softYs).toContain(y7 - edgeG);
+    expect(softYs).toContain(y10 - (espacio - edgeG));
+    expect(softYs).toContain(y10 - edgeG);
+  });
+
+  it("ruled-4-3 keeps a single 3 mm gap before the next 4 mm row", () => {
+    const g = buildScribSheetBackgroundGeometry({ pattern: "ruled-4-3" });
+    const ml = SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const mv = SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm;
+    const alto = SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
+    const espacio = SCRIB_SHEET_BG_DEFAULTS.espacioEntreLineasMm;
+    const darkYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorOscuro &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1)
+      .sort((a, b) => a - b);
+    expect(darkYs).toContain(mv + alto);
+    expect(darkYs).toContain(mv + alto + espacio);
+    expect(darkYs).toContain(mv + alto + espacio + alto);
+    expect(darkYs).not.toContain(mv + alto + espacio + espacio);
   });
 });
 

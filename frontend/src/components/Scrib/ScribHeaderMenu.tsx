@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { APP_ROUTES } from "../../config/routes";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
+import type { ScribBackgroundPattern } from "../../lib/scrib";
 import type { ScribDockSide } from "./ScribToolbar";
 
 export type ScribToolMode = "draw" | "zoom" | "erase";
@@ -18,6 +19,7 @@ type ScribHeaderMenuProps = {
   canUndo: boolean;
   saving: boolean;
   isFullscreen: boolean;
+  backgroundPattern: ScribBackgroundPattern;
   onDashboard: () => void;
   onSelectZoom: () => void;
   onSelectDraw: () => void;
@@ -26,6 +28,7 @@ type ScribHeaderMenuProps = {
   onSelectErase: () => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
+  onToggleBackgroundPattern: () => void;
   onOpenInstitutes: () => void;
   institutesOpen?: boolean;
   onOpenBible: () => void;
@@ -158,6 +161,25 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           >
             <ActionIcon name="layers" />
             <span className="header-dynamic-menu__label">Capas</span>
+          </button>
+          <button
+            type="button"
+            className={actionClass(props.backgroundPattern === "ruled-4-3-3")}
+            title={
+              props.backgroundPattern === "ruled-4-3-3"
+                ? "Fondo 4+3+3 — cambiar a 4+3"
+                : "Fondo 4+3 — cambiar a 4+3+3"
+            }
+            aria-label={
+              props.backgroundPattern === "ruled-4-3-3"
+                ? "Cambiar fondo a renglón 4+3"
+                : "Cambiar fondo a renglón 4+3+3"
+            }
+            aria-pressed={props.backgroundPattern === "ruled-4-3-3"}
+            onClick={props.onToggleBackgroundPattern}
+          >
+            <ActionIcon name="format_line_spacing" />
+            <span className="header-dynamic-menu__label">Fondo</span>
           </button>
           <button
             type="button"

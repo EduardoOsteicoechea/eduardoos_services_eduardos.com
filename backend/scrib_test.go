@@ -232,3 +232,19 @@ func TestEmptyScribLayers(t *testing.T) {
 		t.Fatal("drawable layer validation")
 	}
 }
+
+func TestScribNormalizeBackgroundPattern(t *testing.T) {
+	if got := scribNormalizeBackgroundPattern(""); got != scribBackgroundPatternDefault {
+		t.Fatalf("empty want %s got %s", scribBackgroundPatternDefault, got)
+	}
+	if got := scribNormalizeBackgroundPattern("nope"); got != scribBackgroundPatternDefault {
+		t.Fatalf("unknown want %s got %s", scribBackgroundPatternDefault, got)
+	}
+	if got := scribNormalizeBackgroundPattern(scribBackgroundPatternDoubleGap); got != scribBackgroundPatternDoubleGap {
+		t.Fatalf("double-gap want %s got %s", scribBackgroundPatternDoubleGap, got)
+	}
+	sheet := scribNewEmptySheet("b", "s", "Hoja", "2020-01-01T00:00:00Z")
+	if sheet.BackgroundPattern != scribBackgroundPatternDefault {
+		t.Fatalf("new sheet pattern=%s", sheet.BackgroundPattern)
+	}
+}

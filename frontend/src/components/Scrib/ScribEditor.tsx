@@ -17,14 +17,17 @@ import ScribToolbar, { type ScribDockSide } from "./ScribToolbar";
 import {
   fetchScribSheet,
   isScribDrawableLayer,
+  normalizeScribBackgroundPattern,
   resolveScribSheetFromLocation,
   saveScribSheet,
   SCRIB_BACKGROUND_LAYER_ID,
+  SCRIB_BACKGROUND_PATTERN_DEFAULT,
   SCRIB_DRAW_LAYER_IDS,
   SCRIB_LAYER_IDS,
   SCRIB_LAYER_LABELS,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
+  toggleScribBackgroundPattern,
   type ScribLayer,
   type ScribLayerId,
   type ScribSheet,
@@ -64,7 +67,12 @@ function ensureLayers(sheet: ScribSheet): ScribSheet {
   if (!isScribDrawableLayer(activeLayerId)) {
     activeLayerId = SCRIB_DRAW_LAYER_IDS[0] ?? "chapter";
   }
-  return { ...sheet, layers, activeLayerId };
+  return {
+    ...sheet,
+    layers,
+    activeLayerId,
+    backgroundPattern: normalizeScribBackgroundPattern(sheet.backgroundPattern),
+  };
 }
 
 /** Sample points from an SVG path `d` built as M/L segments. */
@@ -523,6 +531,19 @@ export default function ScribEditor() {
     commitSheet({ ...current, strokeWidthMm: next });
   }, [commitSheet]);
 
+  const onToggleBackgroundPattern = useCallback(() => {
+    const current = sheetSnapshotRef.current;
+    if (!current) return;
+    const next: ScribSheet = {
+      ...current,
+      backgroundPattern: toggleScribBackgroundPattern(
+        normalizeScribBackgroundPattern(current.backgroundPattern),
+      ),
+    };
+    commitSheet(next);
+    persist(next);
+  }, [commitSheet, persist]);
+
   const openLayers = useCallback(() => setLayersOpen(true), []);
 
   const toggleInstitutes = useCallback(() => {
@@ -575,6 +596,11 @@ export default function ScribEditor() {
         canUndo={undoStack.length > 0}
         saving={saving}
         isFullscreen={isFullscreen}
+        backgroundPattern={
+          sheet
+            ? normalizeScribBackgroundPattern(sheet.backgroundPattern)
+            : SCRIB_BACKGROUND_PATTERN_DEFAULT
+        }
         onDashboard={openDashboard}
         onSelectZoom={() => setMode("zoom")}
         onSelectDraw={() => setMode("draw")}
@@ -583,6 +609,7 @@ export default function ScribEditor() {
         onSelectErase={() => setMode("erase")}
         onEnterFullscreen={() => void enterFullscreen()}
         onOpenLayers={openLayers}
+        onToggleBackgroundPattern={onToggleBackgroundPattern}
         institutesOpen={institutesOpen}
         onOpenInstitutes={toggleInstitutes}
         bibleOpen={bibleOpen}
@@ -600,6 +627,7 @@ export default function ScribEditor() {
           canUndo={undoStack.length > 0}
           saving={saving}
           isFullscreen={isFullscreen}
+          backgroundPattern={normalizeScribBackgroundPattern(sheet.backgroundPattern)}
           institutesOpen={institutesOpen}
           bibleOpen={bibleOpen}
           dockSide={dockSide}
@@ -611,6 +639,7 @@ export default function ScribEditor() {
           onSelectErase={() => setMode("erase")}
           onEnterFullscreen={() => void enterFullscreen()}
           onOpenLayers={openLayers}
+          onToggleBackgroundPattern={onToggleBackgroundPattern}
           onOpenInstitutes={toggleInstitutes}
           onOpenBible={toggleBible}
           onPrint={printSheet}
@@ -651,6 +680,7 @@ export default function ScribEditor() {
             >
               <ScribSheetBackground
                 scale={scale}
+                pattern={normalizeScribBackgroundPattern(sheet.backgroundPattern)}
                 opacity={
                   sheet.layers.find((l) => l.id === SCRIB_BACKGROUND_LAYER_ID)?.opacity ?? 1
                 }

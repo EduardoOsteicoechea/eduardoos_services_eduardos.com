@@ -169,15 +169,16 @@ type mongoScribBookDoc struct {
 }
 
 type mongoScribSheetDoc struct {
-	Key           string       `bson:"_id"`
-	ID            string       `bson:"id"`
-	UserID        string       `bson:"user_id"`
-	BookID        string       `bson:"bookId"`
-	Name          string       `bson:"name"`
-	ActiveLayerID string       `bson:"activeLayerId"`
-	StrokeWidthMm float64      `bson:"strokeWidthMm"`
-	Layers        []scribLayer `bson:"layers"`
-	UpdatedAt     string       `bson:"updatedAt"`
+	Key               string       `bson:"_id"`
+	ID                string       `bson:"id"`
+	UserID            string       `bson:"user_id"`
+	BookID            string       `bson:"bookId"`
+	Name              string       `bson:"name"`
+	ActiveLayerID     string       `bson:"activeLayerId"`
+	StrokeWidthMm     float64      `bson:"strokeWidthMm"`
+	BackgroundPattern string       `bson:"backgroundPattern"`
+	Layers            []scribLayer `bson:"layers"`
+	UpdatedAt         string       `bson:"updatedAt"`
 }
 
 func (s *mongoScribStore) GetLibrary(ctx context.Context, userID string) (*scribLibrary, error) {
@@ -292,14 +293,15 @@ func (s *mongoScribStore) GetSheet(ctx context.Context, userID, bookID, sheetID 
 		return nil, err
 	}
 	sheet := &scribSheet{
-		ID:            doc.ID,
-		UserID:        doc.UserID,
-		BookID:        doc.BookID,
-		Name:          doc.Name,
-		ActiveLayerID: doc.ActiveLayerID,
-		StrokeWidthMm: doc.StrokeWidthMm,
-		Layers:        doc.Layers,
-		UpdatedAt:     doc.UpdatedAt,
+		ID:                doc.ID,
+		UserID:            doc.UserID,
+		BookID:            doc.BookID,
+		Name:              doc.Name,
+		ActiveLayerID:     doc.ActiveLayerID,
+		StrokeWidthMm:     doc.StrokeWidthMm,
+		BackgroundPattern: scribNormalizeBackgroundPattern(doc.BackgroundPattern),
+		Layers:            doc.Layers,
+		UpdatedAt:         doc.UpdatedAt,
 	}
 	if sheet.Layers == nil {
 		sheet.Layers = scribEmptyLayers()
@@ -312,15 +314,16 @@ func (s *mongoScribStore) SaveSheet(ctx context.Context, sheet *scribSheet) erro
 		sheet.Layers = scribEmptyLayers()
 	}
 	doc := mongoScribSheetDoc{
-		Key:           scribSheetDocID(sheet.UserID, sheet.BookID, sheet.ID),
-		ID:            sheet.ID,
-		UserID:        sheet.UserID,
-		BookID:        sheet.BookID,
-		Name:          sheet.Name,
-		ActiveLayerID: sheet.ActiveLayerID,
-		StrokeWidthMm: sheet.StrokeWidthMm,
-		Layers:        sheet.Layers,
-		UpdatedAt:     sheet.UpdatedAt,
+		Key:               scribSheetDocID(sheet.UserID, sheet.BookID, sheet.ID),
+		ID:                sheet.ID,
+		UserID:            sheet.UserID,
+		BookID:            sheet.BookID,
+		Name:              sheet.Name,
+		ActiveLayerID:     sheet.ActiveLayerID,
+		StrokeWidthMm:     sheet.StrokeWidthMm,
+		BackgroundPattern: scribNormalizeBackgroundPattern(sheet.BackgroundPattern),
+		Layers:            sheet.Layers,
+		UpdatedAt:         sheet.UpdatedAt,
 	}
 	_, err := s.sheets().ReplaceOne(ctx,
 		bson.M{"_id": doc.Key},

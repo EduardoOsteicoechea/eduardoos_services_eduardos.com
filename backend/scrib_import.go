@@ -143,6 +143,7 @@ func importScribFromFiles(ctx context.Context, store DataStore, scrib ScribStore
 		if sheet.StrokeWidthMm <= 0 {
 			sheet.StrokeWidthMm = 0.35
 		}
+		sheet.BackgroundPattern = scribNormalizeBackgroundPattern(sheet.BackgroundPattern)
 		if len(sheet.Layers) == 0 {
 			sheet.Layers = scribEmptyLayers()
 		}

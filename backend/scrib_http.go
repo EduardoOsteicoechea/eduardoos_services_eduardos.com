@@ -253,6 +253,7 @@ func (a *App) scribGetSheetHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	sheet.BackgroundPattern = scribNormalizeBackgroundPattern(sheet.BackgroundPattern)
 	writeJSON(w, http.StatusOK, sheet)
 }
 
@@ -284,6 +285,7 @@ func (a *App) scribPutSheetHandler(w http.ResponseWriter, r *http.Request) {
 	if sheet.StrokeWidthMm <= 0 {
 		sheet.StrokeWidthMm = 0.35
 	}
+	sheet.BackgroundPattern = scribNormalizeBackgroundPattern(sheet.BackgroundPattern)
 	if len(sheet.Layers) == 0 {
 		sheet.Layers = scribEmptyLayers()
 	}

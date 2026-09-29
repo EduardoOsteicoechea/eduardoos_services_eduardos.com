@@ -8,6 +8,24 @@ import { mustLog } from "./dev-log";
 export const SCRIB_PAGE_WIDTH_MM = 215.9;
 export const SCRIB_PAGE_HEIGHT_MM = 279.4;
 
+/** Ruled background cycle persisted on each sheet. */
+export type ScribBackgroundPattern = "ruled-4-3" | "ruled-4-3-3";
+
+export const SCRIB_BACKGROUND_PATTERN_DEFAULT: ScribBackgroundPattern = "ruled-4-3";
+
+export function normalizeScribBackgroundPattern(
+  value: string | undefined | null,
+): ScribBackgroundPattern {
+  if (value === "ruled-4-3-3") return "ruled-4-3-3";
+  return SCRIB_BACKGROUND_PATTERN_DEFAULT;
+}
+
+export function toggleScribBackgroundPattern(
+  current: ScribBackgroundPattern,
+): ScribBackgroundPattern {
+  return current === "ruled-4-3" ? "ruled-4-3-3" : "ruled-4-3";
+}
+
 /** Ruled SVG sheet — first layer; opacity only (not drawable). */
 export const SCRIB_BACKGROUND_LAYER_ID = "background" as const;
 
@@ -71,9 +89,19 @@ export type ScribSheet = {
   name: string;
   activeLayerId: string;
   strokeWidthMm: number;
+  /** Ruled background cycle: `ruled-4-3` (default) or `ruled-4-3-3`. */
+  backgroundPattern?: ScribBackgroundPattern;
   layers: ScribLayer[];
   updatedAt: string;
 };
+
+/** Normalize API/legacy sheets that omit `backgroundPattern`. */
+export function normalizeScribSheet(sheet: ScribSheet): ScribSheet {
+  return {
+    ...sheet,
+    backgroundPattern: normalizeScribBackgroundPattern(sheet.backgroundPattern),
+  };
+}
 
 function errMsg(data: { message?: string }, fallback: string): string {
   return data.message || fallback;
@@ -162,7 +190,7 @@ export async function createScribSheet(
   if (status < 200 || status >= 300) {
     return { sheet: null, error: errMsg(data, "Could not create sheet."), requestId };
   }
-  return { sheet: data ?? null, requestId };
+  return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
 
 /** Full sheet JSON can be large after many strokes; default API timeout (12s) is too short. */
@@ -180,7 +208,7 @@ export async function fetchScribSheet(
   if (status < 200 || status >= 300) {
     return { sheet: null, error: errMsg(data, "Could not load sheet."), requestId };
   }
-  return { sheet: data ?? null, requestId };
+  return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
 
 /** Rename a sheet by loading it, updating `name`, and saving the full document. */
@@ -215,7 +243,7 @@ export async function saveScribSheet(
   if (status < 200 || status >= 300) {
     return { sheet: null, error: errMsg(data, "Could not save sheet."), requestId };
   }
-  return { sheet: data ?? null, requestId };
+  return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
 
 export async function deleteScribSheet(

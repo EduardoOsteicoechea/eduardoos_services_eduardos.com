@@ -9,6 +9,16 @@ var scribLayerIDs = []string{
 const scribBackgroundLayerID = "background"
 const scribDefaultActiveLayerID = "chapter"
 
+const scribBackgroundPatternDefault = "ruled-4-3"
+const scribBackgroundPatternDoubleGap = "ruled-4-3-3"
+
+func scribNormalizeBackgroundPattern(value string) string {
+	if value == scribBackgroundPatternDoubleGap {
+		return scribBackgroundPatternDoubleGap
+	}
+	return scribBackgroundPatternDefault
+}
+
 func scribIsDrawableLayerID(id string) bool {
 	if id == "" || id == scribBackgroundLayerID {
 		return false
@@ -54,14 +64,15 @@ type scribBook struct {
 }
 
 type scribSheet struct {
-	ID            string       `json:"id" bson:"id"`
-	UserID        string       `json:"-" bson:"user_id"`
-	BookID        string       `json:"bookId" bson:"bookId"`
-	Name          string       `json:"name" bson:"name"`
-	ActiveLayerID string       `json:"activeLayerId" bson:"activeLayerId"`
-	StrokeWidthMm float64      `json:"strokeWidthMm" bson:"strokeWidthMm"`
-	Layers        []scribLayer `json:"layers" bson:"layers"`
-	UpdatedAt     string       `json:"updatedAt" bson:"updatedAt"`
+	ID                string       `json:"id" bson:"id"`
+	UserID            string       `json:"-" bson:"user_id"`
+	BookID            string       `json:"bookId" bson:"bookId"`
+	Name              string       `json:"name" bson:"name"`
+	ActiveLayerID     string       `json:"activeLayerId" bson:"activeLayerId"`
+	StrokeWidthMm     float64      `json:"strokeWidthMm" bson:"strokeWidthMm"`
+	BackgroundPattern string       `json:"backgroundPattern" bson:"backgroundPattern"`
+	Layers            []scribLayer `json:"layers" bson:"layers"`
+	UpdatedAt         string       `json:"updatedAt" bson:"updatedAt"`
 }
 
 func scribEmptyLayers() []scribLayer {
@@ -97,13 +108,14 @@ type (
 
 func scribNewEmptySheet(bookID, sheetID, name, now string) scribSheet {
 	return scribSheet{
-		ID:            sheetID,
-		BookID:        bookID,
-		Name:          name,
-		ActiveLayerID: scribDefaultActiveLayerID,
-		StrokeWidthMm: 0.35,
-		Layers:        scribEmptyLayers(),
-		UpdatedAt:     now,
+		ID:                sheetID,
+		BookID:            bookID,
+		Name:              name,
+		ActiveLayerID:     scribDefaultActiveLayerID,
+		StrokeWidthMm:     0.35,
+		BackgroundPattern: scribBackgroundPatternDefault,
+		Layers:            scribEmptyLayers(),
+		UpdatedAt:         now,
 	}
 }
 

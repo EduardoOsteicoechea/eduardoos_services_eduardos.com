@@ -3,6 +3,7 @@
  * Theme tokens; docks flush to the viewport edge beside the book panel.
  */
 
+import type { ScribBackgroundPattern } from "../../lib/scrib";
 import type { ScribToolMode } from "./ScribHeaderMenu";
 
 export type ScribDockSide = "left" | "right";
@@ -13,6 +14,7 @@ type ScribToolbarProps = {
   canUndo: boolean;
   saving: boolean;
   isFullscreen: boolean;
+  backgroundPattern: ScribBackgroundPattern;
   institutesOpen: boolean;
   bibleOpen: boolean;
   dockSide: ScribDockSide;
@@ -24,6 +26,7 @@ type ScribToolbarProps = {
   onSelectErase: () => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
+  onToggleBackgroundPattern: () => void;
   onOpenInstitutes: () => void;
   onOpenBible: () => void;
   onUndo: () => void;
@@ -145,6 +148,24 @@ export default function ScribToolbar(props: ScribToolbarProps) {
         onClick={props.onOpenLayers}
       >
         <ToolIcon name="layers" />
+      </button>
+      <button
+        type="button"
+        className={toolClass(props.backgroundPattern === "ruled-4-3-3")}
+        title={
+          props.backgroundPattern === "ruled-4-3-3"
+            ? "Fondo 4+3+3 — cambiar a 4+3"
+            : "Fondo 4+3 — cambiar a 4+3+3"
+        }
+        aria-label={
+          props.backgroundPattern === "ruled-4-3-3"
+            ? "Cambiar fondo a renglón 4+3"
+            : "Cambiar fondo a renglón 4+3+3"
+        }
+        aria-pressed={props.backgroundPattern === "ruled-4-3-3"}
+        onClick={props.onToggleBackgroundPattern}
+      >
+        <ToolIcon name="format_line_spacing" />
       </button>
       <button
         type="button"

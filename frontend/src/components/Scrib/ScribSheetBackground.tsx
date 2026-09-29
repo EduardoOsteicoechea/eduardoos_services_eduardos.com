@@ -4,7 +4,12 @@
  */
 
 import { useMemo } from "react";
-import { SCRIB_PAGE_HEIGHT_MM, SCRIB_PAGE_WIDTH_MM } from "../../lib/scrib";
+import {
+  normalizeScribBackgroundPattern,
+  SCRIB_PAGE_HEIGHT_MM,
+  SCRIB_PAGE_WIDTH_MM,
+  type ScribBackgroundPattern,
+} from "../../lib/scrib";
 import {
   buildScribSheetBackgroundGeometry,
   SCRIB_SHEET_BG_DEFAULTS,
@@ -15,6 +20,8 @@ type Props = {
   scale: number;
   /** Opacity from the background layer (ruled lines only). */
   opacity?: number;
+  /** Ruled cycle: `ruled-4-3` or `ruled-4-3-3`. */
+  pattern?: ScribBackgroundPattern;
 };
 
 function ruleStroke(hex: string): string {
@@ -23,8 +30,16 @@ function ruleStroke(hex: string): string {
     : "var(--scrib-rule-soft)";
 }
 
-export default function ScribSheetBackground({ scale, opacity = 1 }: Props) {
-  const geometry = useMemo(() => buildScribSheetBackgroundGeometry(), []);
+export default function ScribSheetBackground({
+  scale,
+  opacity = 1,
+  pattern,
+}: Props) {
+  const resolvedPattern = normalizeScribBackgroundPattern(pattern);
+  const geometry = useMemo(
+    () => buildScribSheetBackgroundGeometry({ pattern: resolvedPattern }),
+    [resolvedPattern],
+  );
   const w = `${SCRIB_PAGE_WIDTH_MM * scale}mm`;
   const h = `${SCRIB_PAGE_HEIGHT_MM * scale}mm`;
 
