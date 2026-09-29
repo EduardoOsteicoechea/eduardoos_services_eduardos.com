@@ -42,13 +42,13 @@ Constant: `PAMPHLET_BODY_COLUMN_READING_ORDER` in `pamphlet_schema.ts`.
 | Header band | from `header_layout.height` (default 34.5) | |
 | Header → body gutter | from `header_layout.body_gutter` (default 5) | |
 | Footer ↔ body gutter | from `footer_layout.body_gutter` (default 6) | |
-| Footer band | from `footer_layout.height` (default 30.3) | |
+| Footer band | from `footer_layout.height` (default 30.8) | |
 | contentBand | `pageH − 2×margin` (195.9) | |
 
 Footer chrome (lockstep with `PAMPHLET_FOOTER_LAYOUT_MM` / Go `defaultFooterLayout`):
 
 - `action_pad_x` / `message_pad_x` = **0** (flush to footer content edge; no lateral pad)
-- `chrome_gap` = **1.1** (message → meta; +0.5mm vs prior 0.6, funded by footer height +0.5)
+- `chrome_gap` = **1.6** (message → meta; +1.0mm vs original 0.6, funded by footer height +1.0)
 
 ### Column ink heights (derived — never hardcode independently)
 
@@ -61,7 +61,7 @@ Footer chrome (lockstep with `PAMPHLET_FOOTER_LAYOUT_MM` / Go `defaultFooterLayo
 
 Header height changes → cols **1–2** only. Footer height changes → cols **7–8** only.
 
-Defaults at 34.5 / 5 / 6 / 30.3 → right **156.4**, left **159.6**, body track **120.1**.
+Defaults at 34.5 / 5 / 6 / 30.8 → right **156.4**, left **159.1**, body track **119.6**.
 
 Grid placement:
 
