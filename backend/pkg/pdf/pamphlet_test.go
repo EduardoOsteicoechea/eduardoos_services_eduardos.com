@@ -145,11 +145,11 @@ func TestFooterMessagePadBottomReduced(t *testing.T) {
 	if d.PadTop != 0 || d.PadBottom != 0 || d.Pad != 0 {
 		t.Fatalf("footer pad want 0 (frames off), got pad=%v top=%v bottom=%v", d.Pad, d.PadTop, d.PadBottom)
 	}
-	if d.Height != 29.8 {
-		t.Fatalf("footer height want 29.8 (unchanged by label2 pad top), got %v", d.Height)
+	if d.Height != 30.3 {
+		t.Fatalf("footer height want 30.3 (+0.5mm chrome_gap), got %v", d.Height)
 	}
 	got := normalizeFooterLayout(PamphletFooterLayout{
-		Height:           29.8,
+		Height:           30.3,
 		PadTop:           0,
 		PadBottom:        0,
 		MessagePadTop:    0.4,
@@ -380,8 +380,8 @@ func TestFooterLayoutActionMessageGapAndInnerInset(t *testing.T) {
 	if divH < 0.4 || divH > 0.5 {
 		t.Fatalf("divider block height want ~0.45mm (strokes off), got %v", divH)
 	}
-	if d.ChromeGap < 0.55 || d.ChromeGap > 0.65 {
-		t.Fatalf("chrome_gap want 0.6mm, got %v", d.ChromeGap)
+	if d.ChromeGap < 1.05 || d.ChromeGap > 1.15 {
+		t.Fatalf("chrome_gap want 1.1mm, got %v", d.ChromeGap)
 	}
 	// Temporary: frame strokes are 0 — path inset collapses to clear InnerInset only.
 	pathInset := d.Stroke/2 + d.InnerInset + d.InnerStroke/2
@@ -389,11 +389,14 @@ func TestFooterLayoutActionMessageGapAndInnerInset(t *testing.T) {
 	if pathInset < want-0.001 || pathInset > want+0.001 {
 		t.Fatalf("inner path inset=%.3f want %.3f", pathInset, want)
 	}
-	if d.Height < 29.5 || d.Height > 30.5 {
-		t.Fatalf("footer height want 29.8mm, got %v", d.Height)
+	if d.Height < 30.0 || d.Height > 30.6 {
+		t.Fatalf("footer height want 30.3mm, got %v", d.Height)
 	}
-	if d.Height != 29.8 {
-		t.Fatalf("footer height must stay 29.8mm (spec 034), got %v", d.Height)
+	if d.Height != 30.3 {
+		t.Fatalf("footer height must stay 30.3mm (spec 007), got %v", d.Height)
+	}
+	if d.ActionPadX != 0 || d.MessagePadX != 0 {
+		t.Fatalf("action/message pad_x want 0, got action=%v message=%v", d.ActionPadX, d.MessagePadX)
 	}
 }
 
@@ -455,8 +458,8 @@ func TestDrawFooterReservesMetaDespiteLongAction(t *testing.T) {
 		Value4:  "Reunión dominical los domingos a las 10:00 am",
 	}, layout, 10, 58, PamphletColWidthMm*2+PamphletGutterNarrow, 1, nil)
 	out := s.String()
-	if layout.Height != 29.8 {
-		t.Fatalf("footer height must stay 29.8, got %v", layout.Height)
+	if layout.Height != 30.3 {
+		t.Fatalf("footer height must stay 30.3, got %v", layout.Height)
 	}
 	for _, want := range []string{"WhatsApp", "Direcci", "Actividades", "campito", "dominical"} {
 		stem := want
@@ -573,7 +576,7 @@ func TestBuildPamphletPDFLayoutExposesBands(t *testing.T) {
 	if layout.Page1RightColMm < 156.3 || layout.Page1RightColMm > 156.5 {
 		t.Fatalf("page1_right_col_mm=%.2f", layout.Page1RightColMm)
 	}
-	if layout.Page1LeftColMm < 160.0 || layout.Page1LeftColMm > 160.2 {
+	if layout.Page1LeftColMm < 159.5 || layout.Page1LeftColMm > 159.7 {
 		t.Fatalf("page1_left_col_mm=%.2f", layout.Page1LeftColMm)
 	}
 	if layout.RightBodyTopMm < 49.4 || layout.RightBodyTopMm > 49.6 {

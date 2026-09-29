@@ -64,7 +64,7 @@ export function formatHeaderLastUpdateDate(
  * then a 2×2 meta grid of label+value pairs (spec 034):
  *   row1: (label1|value1) | (label2|value2)  — inline, single line
  *   row2: (label3|value3) | (label4|value4)  — label + wrapping value (2 lines)
- * Band height stays 29.8mm; pair row heights reuse label + value mm tokens.
+ * Band height stays 30.3mm; pair row heights reuse label + value mm tokens.
  */
 export interface PamphletFooter {
     action: string;
@@ -393,8 +393,8 @@ export type PamphletFooterLayoutMm = {
 
 /** Exact mm from style.css `.pamphlet-page-footer` — PDF must use these, not invent sizes. */
 export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
-    // Net: prior 30 − pad_bottom 1.2 + label2 +1 → 29.8 (other chrome unchanged)
-    height: 29.8,
+    // Net: prior 29.8 + 0.5 chrome_gap (message→meta) → 30.3
+    height: 30.3,
     width: 119.7, // 57.85×2 + 4
     body_gutter: 6, // --footer-body-gutter
     /* Temporary: no chrome pad while frames are off. Restore pad 1.2 / pad_top 1.2. */
@@ -407,19 +407,19 @@ export const PAMPHLET_FOOTER_LAYOUT_MM: PamphletFooterLayoutMm = {
     inner_inset: 0.45,
     inner_stroke: 0,
     inner_radius: 0.6,
-    chrome_gap: 0.6,
+    chrome_gap: 1.1, // message → meta (+0.5mm; footer height +0.5)
     /* Temporary: hide Acción→Mensaje divider in PDF. Restore 0.2 / 0.45 / 0.1. */
     divider_outer_stroke: 0,
     divider_gap: 0.45,
     divider_inner_stroke: 0,
     action_size: 3.175,
     action_lh: 1.25,
-    action_pad_x: 1.4,
+    action_pad_x: 0, // flush desktop/PDF (no lateral pad)
     action_pad_y: 0.7,
     action_min_h: 4.5,
     message_size: 2.469,
     message_lh: 1.25,
-    message_pad_x: 1.4,
+    message_pad_x: 0, // flush desktop/PDF (no lateral pad)
     message_pad_top: 0.4, // −0.3 vs prior 0.7 (with message_min_h 3.5)
     message_pad_bottom: 0, // −1mm vs prior symmetric 0.7 (clamped)
     message_pad_y: 0.7, // legacy fallback

@@ -478,9 +478,9 @@
   --page-header-height: 34.5mm;
   /* Margin under header band before cols 1–2 (PDF uses the same). */
   --header-body-gutter: 5mm;
-  --page-footer-height: 29.8mm; /* PAMPHLET_FOOTER_LAYOUT_MM.height — value rows hidden when empty */
+  --page-footer-height: 30.3mm; /* PAMPHLET_FOOTER_LAYOUT_MM.height — value rows hidden when empty */
   /* Derived at runtime by pamphlet_geometry / preview layout (PDF SoT). Fallbacks = defaults. */
-  --page1-body-height: 120.6mm;
+  --page1-body-height: 120.1mm;
   /* Page 2 content band: 215.9 − 10 − 10 = 195.9mm */
   --column-content-height: 195.9mm;
   /* Content column width: (279.4 − 10−4−20−4−10) / 4 = 57.85mm */
@@ -489,7 +489,7 @@
   --header-footer-width: calc(var(--column-content-width) * 2 + var(--col-gutter-narrow));
   /* Cols 1–2 / 7–8 — overwritten by applyPamphletGeometry from PDF layout bands */
   --page1-right-col-height: 156.4mm;
-  --page1-left-col-height: 160.1mm;
+  --page1-left-col-height: 159.6mm;
   /* Structured leads: 10:9 of column width + 0.75× former 5mm gap */
   --lead-image-height: calc(var(--column-content-width) * 0.9);
   --lead-image-gap: 3.75mm;
@@ -833,7 +833,7 @@
     justify-content: flex-start;
     align-items: stretch;
     align-content: flex-start;
-    gap: 0.6mm; /* chrome_gap — message → meta */
+    gap: 1.1mm; /* chrome_gap — message → meta (+0.5mm) */
     /* Keep chrome inside the band so trays don't paint over cols 7–8.
        clip (not hidden): mask ink without trapping page wheel scroll. */
     overflow: clip;
@@ -991,7 +991,7 @@
     justify-content: flex-start;
     box-sizing: border-box;
     border: none !important;
-    padding: 0.7mm 1.4mm !important;
+    padding: 0.7mm 0 !important; /* action_pad_y / action_pad_x=0 */
     background: transparent;
     min-height: 4.5mm;
     overflow: hidden !important;
@@ -1011,7 +1011,7 @@
     justify-content: flex-start;
     box-sizing: border-box;
     border: none !important;
-    padding: 0.4mm 1.4mm 0 !important; /* message_pad_top / pad_x / pad_bottom */
+    padding: 0.4mm 0 0 !important; /* message_pad_top / pad_x=0 / pad_bottom */
     background: transparent;
     overflow: hidden !important;
 }
@@ -1106,7 +1106,7 @@
 /*
   Spec 034 pair rows — heights = label row + value row when values present.
   valuesEmpty=1 drops the 1.5mm value slice (same reservation as old hidden value rows).
-  Footer band height stays 29.8mm.
+  Footer band height stays 30.3mm.
 */
 .pamphlet-footer-meta-row[data-meta-kind="pair1"] {
     flex: 0 0 4.5mm; /* 3.0 + 1.5 */

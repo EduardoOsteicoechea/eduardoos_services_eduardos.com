@@ -18,7 +18,7 @@ Authoritative mm table, packing rules, and regression checklist:
 [`docs/specs/007-pamphlet-page1-column-geometry.md`](../../../../docs/specs/007-pamphlet-page1-column-geometry.md)
 
 - Cols **1–2**: **156.4 mm** under header  
-- Cols **7–8**: **160.1 mm** above footer  
+- Cols **7–8**: **159.6 mm** above footer  
 - Reading order: **1→2→3→4→5→6→7→8**  
 - Ink clips inside `.pamphlet-column-ink`; “+” sits outside the ink box
 
