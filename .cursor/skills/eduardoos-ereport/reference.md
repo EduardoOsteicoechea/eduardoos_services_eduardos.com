@@ -35,7 +35,7 @@ Auth: `Authorization: Bearer eos_live_…` (required for all `/api/v1/ereport/*`
 - `POST …/groups`, `PATCH …/groups/{groupId}`
 - `POST …/items`, `PATCH …/items/{itemId}`
 
-Embed: `https://eduardoos.com/ereport/embed.js` → `EduardoOSEreport.mount({ apiKey, menuSelector })`.
+Embed: `https://eduardoos.com/ereport/embed.js` + theme `…/embed-theme.css` → `EduardoOSEreport.mount({ apiKey, menuSelector })`. Hosts must restyle `--eos-ereport-*` / `.eos-ereport-embed-menu-btn` to match their menu.
 
 ## Local execution log (optional — user consent first)
 

@@ -35,6 +35,7 @@ API POST is additive. Do not modify or delete existing item ids. New items need 
 When the consumer project is a website, mount the hosted loader (API key = eduardoos.com `eos_live_…`):
 
 ```html
+<link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
 <script src="https://eduardoos.com/ereport/embed.js"></script>
 <script>
   EduardoOSEreport.mount({
@@ -50,5 +51,38 @@ When the consumer project is a website, mount the hosted loader (API key = eduar
 - Opens an iframe modal at `/ereport/web-connector` (same-origin to the API — no CORS wildcard).
 - Cascading UI: org → report → section (concept = `productHistory`) → subsection → issue form.
 - Granular writes: `POST`/`PATCH` under `/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections|…/groups|…/items` (see live docs). Does **not** change append/replace.
+
+### Theme the host control (required for a polished site)
+
+Default stylesheet: `https://eduardoos.com/ereport/embed-theme.css`.
+
+1. Prefer loading that CSS (or let `embed.js` inject it).
+2. **Override `--eos-ereport-*` variables** with the host brand tokens (colors, font, radius).
+3. Style `.eos-ereport-embed-menu-btn` like the other links in the host global menu (same padding, font-size, icon treatment). Do not leave the default FAB look when a menu exists.
+4. Keep rem lengths; match the host chrome so the control does not look foreign.
+
+Example:
+
+```css
+:root {
+  --eos-ereport-font: var(--font-family);
+  --eos-ereport-bg: var(--color-bg);
+  --eos-ereport-surface: var(--color-surface);
+  --eos-ereport-text: var(--color-text);
+  --eos-ereport-muted: var(--color-muted);
+  --eos-ereport-border: var(--color-border);
+  --eos-ereport-accent: var(--color-accent);
+  --eos-ereport-button-bg: var(--color-button-bg);
+  --eos-ereport-button-fg: var(--color-button-fg);
+  --eos-ereport-radius: var(--border-radius);
+}
+
+#main-menu .eos-ereport-embed-menu-btn {
+  /* mirror #main-menu a */
+  width: 100%;
+  padding: 0.375rem 1rem;
+  font-size: var(--font-size-sm);
+}
+```
 
 Keys are created only in the signed-in UI (`/session/profile`). Never create keys from the external API.

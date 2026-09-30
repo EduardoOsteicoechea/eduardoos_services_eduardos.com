@@ -29,6 +29,9 @@ Create/update one node without append/replace:
 
 ### Web embed
 
-`https://eduardoos.com/ereport/embed.js` → `EduardoOSEreport.mount({ apiKey, menuSelector })` opens `/ereport/web-connector` in an iframe.
+- Loader: `https://eduardoos.com/ereport/embed.js`
+- Default theme: `https://eduardoos.com/ereport/embed-theme.css` (`--eos-ereport-*` variables)
+- Mount: `EduardoOSEreport.mount({ apiKey, menuSelector })` opens `/ereport/web-connector` in an iframe
+- **Host duty:** override `--eos-ereport-*` and style `.eos-ereport-embed-menu-btn` to match the site menu (see SKILL.md “Theme the host control”)
 
 `viewUrl`: `{BASE}/ereport/workspace?user={ownerSafe}&org={orgId}&report={reportId}` — `user=` is display-only.

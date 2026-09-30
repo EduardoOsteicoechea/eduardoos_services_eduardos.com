@@ -75,8 +75,9 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"postBodyReplaceExample": `{"confirmOverwrite":true,"mode":"replace","tema":"Model Checker 1.1","payload":{"appTitle":"Issue Tracker","orgName":"…","reportName":"…","reportDate":"YYYY-MM-DD","reportNumber":"…","theme":"dark","validationCriteria":[],"sections":[]}}`,
 				"webConnector": map[string]any{
 					"embedScript": "https://eduardoos.com/ereport/embed.js",
+					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
 					"modalPath":   "/ereport/web-connector",
-					"notes":       "Host sites call EduardoOSEreport.mount({ apiKey, menuSelector }). Modal runs same-origin in an iframe; uses granular node routes.",
+					"notes":       "Host sites call EduardoOSEreport.mount({ apiKey, menuSelector }). Modal runs same-origin in an iframe; uses granular node routes. Override --eos-ereport-* and .eos-ereport-embed-menu-btn to match the host menu.",
 				},
 				"modes": map[string]any{
 					"append":  "Default. Additive merge only. Conservative for agents.",

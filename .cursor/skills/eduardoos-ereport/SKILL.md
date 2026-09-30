@@ -62,6 +62,7 @@ Never enable logging silently. Never imply REJECT blocks eReport API sync.
 ### Mode W (web embed)
 
 ```html
+<link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
 <script src="https://eduardoos.com/ereport/embed.js"></script>
 <script>
   EduardoOSEreport.mount({
@@ -74,6 +75,8 @@ Never enable logging silently. Never imply REJECT blocks eReport API sync.
 ```
 
 Opens `/ereport/web-connector` in an iframe. Uses granular `POST`/`PATCH` section/group/item routes (see live docs). Does not change append/replace.
+
+**Theme:** override `--eos-ereport-*` from `embed-theme.css` and style `.eos-ereport-embed-menu-btn` like the host nav. Default chrome is intentional fallback only — each site should make it look native.
 
 ### Mode B (API — docs first)
 

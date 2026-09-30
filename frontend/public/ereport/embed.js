@@ -1,18 +1,21 @@
 /**
  * eReport web connector loader for host websites.
+ *
+ * Default look: /ereport/embed-theme.css (CSS variables --eos-ereport-*).
+ * Host sites SHOULD override those variables (and .eos-ereport-embed-menu-btn)
+ * so the control matches the site menu — see that file’s header comments.
+ *
  * Usage:
+ *   <link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
  *   <script src="https://eduardoos.com/ereport/embed.js"></script>
  *   <script>
  *     EduardoOSEreport.mount({
  *       apiKey: "eos_live_…",
- *       menuSelector: "#main-menu nav", // optional
+ *       menuSelector: "#main-menu nav",
  *       label: "eReport",
  *       baseUrl: "https://eduardoos.com"
  *     });
  *   </script>
- *
- * The API key is for the key owner’s own projects. Do not embed third-party keys
- * on public anonymous sites.
  */
 (function (global) {
   "use strict";
@@ -20,42 +23,27 @@
   var INIT_TYPE = "ereport-embed-init";
   var READY_TYPE = "ereport-embed-ready";
   var OVERLAY_ID = "eduardoos-ereport-embed-overlay";
-  var STYLE_ID = "eduardoos-ereport-embed-style";
+  var THEME_ID = "eduardoos-ereport-embed-theme";
   var activeMessageHandler = null;
 
-  function ensureStyles() {
-    if (document.getElementById(STYLE_ID)) return;
-    var style = document.createElement("style");
-    style.id = STYLE_ID;
-    style.textContent = [
-      "#" + OVERLAY_ID + "{",
-      "position:fixed;inset:0;z-index:2147483646;",
-      "display:flex;align-items:center;justify-content:center;",
-      "background:rgba(0,0,0,0.45);",
-      "padding:1rem;box-sizing:border-box;",
-      "}",
-      "#" + OVERLAY_ID + " .eos-ereport-embed-frame{",
-      "position:relative;width:min(40rem,100%);height:min(48rem,100%);",
-      "border:0;border-radius:0.25rem;background:#121212;",
-      "box-shadow:0 0.5rem 2rem rgba(0,0,0,0.35);",
-      "}",
-      "#" + OVERLAY_ID + " iframe{",
-      "width:100%;height:100%;border:0;border-radius:0.25rem;display:block;",
-      "}",
-      "#" + OVERLAY_ID + " .eos-ereport-embed-close{",
-      "position:absolute;top:0.5rem;right:0.5rem;z-index:2;",
-      "width:2.5rem;height:2.5rem;border-radius:50%;border:0;",
-      "cursor:pointer;background:rgba(255,255,255,0.12);color:#f5f5f5;",
-      "font-size:1.25rem;line-height:1;",
-      "}",
-      ".eos-ereport-embed-menu-btn{cursor:pointer;}",
-      ".eos-ereport-embed-fab{",
-      "position:fixed;bottom:1rem;right:1rem;z-index:2147483645;",
-      "padding:0.5rem 1rem;border-radius:0.25rem;border:0.0625rem solid currentColor;",
-      "background:#121212;color:#f5f5f5;cursor:pointer;font:inherit;",
-      "}",
-    ].join("");
-    document.head.appendChild(style);
+  function scriptBaseUrl() {
+    var scripts = document.getElementsByTagName("script");
+    for (var i = scripts.length - 1; i >= 0; i--) {
+      var src = scripts[i].src || "";
+      if (src.indexOf("/ereport/embed.js") !== -1) {
+        return src.replace(/\/ereport\/embed\.js(?:\?.*)?$/, "");
+      }
+    }
+    return "https://eduardoos.com";
+  }
+
+  function ensureTheme(baseUrl) {
+    if (document.getElementById(THEME_ID)) return;
+    var link = document.createElement("link");
+    link.id = THEME_ID;
+    link.rel = "stylesheet";
+    link.href = (baseUrl || scriptBaseUrl()).replace(/\/$/, "") + "/ereport/embed-theme.css";
+    document.head.appendChild(link);
   }
 
   function onEscape(ev) {
@@ -85,10 +73,10 @@
   }
 
   function openModal(opts) {
-    ensureStyles();
+    var baseUrl = (opts.baseUrl || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
+    ensureTheme(baseUrl);
     closeOverlay();
 
-    var baseUrl = (opts.baseUrl || "https://eduardoos.com").replace(/\/$/, "");
     var overlay = document.createElement("div");
     overlay.id = OVERLAY_ID;
     overlay.setAttribute("role", "dialog");
@@ -152,7 +140,8 @@
     if (!opts.apiKey || typeof opts.apiKey !== "string") {
       throw new Error("EduardoOSEreport.mount requires apiKey (eos_live_…)");
     }
-    ensureStyles();
+    var baseUrl = (opts.baseUrl || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
+    ensureTheme(baseUrl);
 
     var label = opts.label || "eReport";
     var open = function (ev) {
@@ -169,6 +158,7 @@
         btn.className = "eos-ereport-embed-menu-btn";
         btn.textContent = label;
         btn.setAttribute("aria-label", label);
+        btn.setAttribute("title", label);
         btn.addEventListener("click", open);
         menu.appendChild(btn);
         return { open: open, close: closeOverlay, el: btn };
