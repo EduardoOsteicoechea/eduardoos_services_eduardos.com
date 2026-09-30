@@ -5,6 +5,8 @@ import {
   createNoteAnnotation,
   createNoteArea,
   createNoteBlock,
+  hitTestNoteRect,
+  isRectSelected,
   mapAnnotationInk,
   sheetNoteBlocks,
   withNoteBlocks,
@@ -100,5 +102,16 @@ describe("scribAnnotations helpers", () => {
       { x: 10, y: 20, w: 30, h: 40 },
     );
     expect(sheetNoteBlocks(next)[0].rects).toEqual([{ x: 10, y: 20, w: 30, h: 40 }]);
+  });
+
+  it("hitTestNoteRect and isRectSelected pick a drawn area", () => {
+    const block = createNoteBlock("B");
+    block.rects = [{ x: 10, y: 20, w: 30, h: 40 }];
+    const hit = hitTestNoteRect([block], { x: 15, y: 25 });
+    expect(hit).toEqual({ blockId: block.id, rectIndex: 0 });
+    expect(isRectSelected(hit, block.id, undefined, 0)).toBe(true);
+    expect(isRectSelected({ blockId: block.id }, block.id, undefined, 0)).toBe(
+      false,
+    );
   });
 });

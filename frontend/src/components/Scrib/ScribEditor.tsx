@@ -45,6 +45,7 @@ import {
   createNoteArea,
   createNoteBlock,
   findNoteAnnotation,
+  hitTestNoteRect,
   listOpenAnnotationViews,
   mapAnnotationInk,
   popLastRectFromSelection,
@@ -362,9 +363,14 @@ export default function ScribEditor() {
     if (!sheet || mode === "zoom" || annotationEditorOpen) return;
 
     if (mode === "annotate") {
-      if (annotateSubtool !== "rect" || !annotateSelection) return;
       const pt = mmFromClient(e.clientX, e.clientY);
       if (!pt) return;
+      if (annotateSubtool === "select") {
+        const hit = hitTestNoteRect(sheetNoteBlocks(sheet), pt);
+        if (hit) setAnnotateSelection(hit);
+        return;
+      }
+      if (annotateSubtool !== "rect" || !annotateSelection) return;
       rectDragRef.current = { startX: pt.x, startY: pt.y };
       const zero = { x: pt.x, y: pt.y, w: 0, h: 0 };
       draftRectRef.current = zero;
@@ -438,6 +444,22 @@ export default function ScribEditor() {
     if (!current || !draft || !sel) return;
     const next = appendRectToSelection(current, sel, draft);
     if (next === current) return;
+    const blocks = sheetNoteBlocks(next);
+    const block = blocks.find((b) => b.id === sel.blockId);
+    let rectIndex = 0;
+    if (block) {
+      if (sel.areaId) {
+        const area = block.areas.find((a) => a.id === sel.areaId);
+        rectIndex = Math.max(0, (area?.rects.length ?? 1) - 1);
+      } else {
+        rectIndex = Math.max(0, block.rects.length - 1);
+      }
+    }
+    setAnnotateSelection({
+      blockId: sel.blockId,
+      areaId: sel.areaId,
+      rectIndex,
+    });
     commitSheet(next);
     persist(next);
   }

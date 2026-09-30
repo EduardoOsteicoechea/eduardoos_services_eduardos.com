@@ -1003,75 +1003,61 @@ html.dark .scrib-page {
 .scrib-annotations-tree__toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--rail-gap);
 }
 
-.scrib-annotations-tree__chip {
-  min-height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-}
-
-.scrib-annotations-tree__chip.is-active {
-  border-color: var(--color-accent);
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
-.scrib-annotations-tree__chip:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.scrib-annotations-tree__add {
-  align-self: flex-start;
-  min-height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  border: var(--border-width) dashed var(--color-border);
-  border-radius: var(--border-radius);
-  background: transparent;
-  color: var(--color-link);
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
-
-.scrib-annotations-tree__add--nested {
-  margin-left: 1rem;
-  font-size: var(--font-size-xs);
-}
-
 .scrib-annotations-tree__list,
-.scrib-annotations-tree__areas,
-.scrib-annotations-tree__anns {
+.scrib-annotations-tree__children {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
 }
 
-.scrib-annotations-tree__areas {
+.scrib-annotations-tree__children {
   margin-left: 0.75rem;
+  padding-left: 0.75rem;
 }
 
-.scrib-annotations-tree__anns {
-  margin-left: 0.75rem;
+.scrib-annotations-tree__node {
+  position: relative;
+  padding-left: 0.75rem;
+}
+
+.scrib-annotations-tree__node::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: var(--border-width) solid var(--color-border);
+}
+
+.scrib-annotations-tree__node--last::before {
+  bottom: auto;
+  height: 1rem;
+}
+
+.scrib-annotations-tree__branch {
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 0.75rem;
+  height: 0;
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .scrib-annotations-tree__row {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--rail-gap);
-  padding: 0.25rem;
+  min-height: var(--control-height);
+  padding: 0.125rem 0.25rem;
   border-radius: var(--border-radius);
 }
 
@@ -1092,7 +1078,7 @@ html.dark .scrib-page {
 
 .scrib-annotations-tree__name {
   flex: 1;
-  min-width: 4rem;
+  min-width: 3rem;
   text-align: left;
   border: 0;
   background: transparent;
@@ -1102,18 +1088,25 @@ html.dark .scrib-page {
   cursor: pointer;
 }
 
-.scrib-annotations-tree__icon-btn {
+.scrib-annotations-tree__icon-btn.icon-btn {
   width: var(--rail-button-size);
   height: var(--rail-button-size);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  min-width: var(--rail-button-size);
   padding: 0;
   border: 0;
   border-radius: var(--border-radius);
   background: transparent;
   color: var(--color-text);
-  cursor: pointer;
+}
+
+.scrib-annotations-tree__icon-btn.icon-btn.is-active {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.scrib-annotations-tree__icon-btn.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .scrib-annotations-tree__icon-btn .material-symbols-outlined {

@@ -18,6 +18,8 @@ export type ScribAnnotateSelection = {
   blockId: string;
   areaId?: string;
   annotationId?: string;
+  /** Index into block.rects, or area.rects when areaId is set. */
+  rectIndex?: number;
 };
 
 export type ScribNoteInkField = "heading" | "body";
@@ -218,6 +220,48 @@ export function setAnnotationView(
       };
     }),
   );
+}
+
+/** Hit-test page mm against visible note rects (topmost area rects first). */
+export function hitTestNoteRect(
+  blocks: ScribNoteBlock[],
+  pt: { x: number; y: number },
+): ScribAnnotateSelection | null {
+  const contains = (r: ScribRectMm) =>
+    pt.x >= r.x && pt.x <= r.x + r.w && pt.y >= r.y && pt.y <= r.y + r.h;
+
+  for (let bi = blocks.length - 1; bi >= 0; bi--) {
+    const block = blocks[bi];
+    if (!block.visible) continue;
+    for (let ai = block.areas.length - 1; ai >= 0; ai--) {
+      const area = block.areas[ai];
+      if (!area.visible) continue;
+      for (let ri = area.rects.length - 1; ri >= 0; ri--) {
+        if (contains(area.rects[ri])) {
+          return { blockId: block.id, areaId: area.id, rectIndex: ri };
+        }
+      }
+    }
+    for (let ri = block.rects.length - 1; ri >= 0; ri--) {
+      if (contains(block.rects[ri])) {
+        return { blockId: block.id, rectIndex: ri };
+      }
+    }
+  }
+  return null;
+}
+
+export function isRectSelected(
+  selection: ScribAnnotateSelection | null,
+  blockId: string,
+  areaId: string | undefined,
+  rectIndex: number,
+): boolean {
+  if (!selection || selection.blockId !== blockId) return false;
+  if (typeof selection.rectIndex !== "number") return false;
+  if (selection.rectIndex !== rectIndex) return false;
+  if (areaId) return selection.areaId === areaId && !selection.annotationId;
+  return !selection.areaId;
 }
 
 /** Open annotations for view windows (may span multiple blocks). */

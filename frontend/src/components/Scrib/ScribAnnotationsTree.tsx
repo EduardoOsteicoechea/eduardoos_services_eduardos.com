@@ -1,5 +1,6 @@
 /**
  * Scrib annotations tree — docked like Bible/Institutes (scrib-ref-panel).
+ * Icon-only actions; nested lists draw connector lines.
  */
 
 import type { ScribNoteBlock } from "../../lib/scrib";
@@ -40,6 +41,40 @@ type ScribAnnotationsTreeProps = {
   onPopLastRect: () => void;
 };
 
+function IconBtn({
+  name,
+  title,
+  active,
+  disabled,
+  onClick,
+}: {
+  name: string;
+  title: string;
+  active?: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={
+        active
+          ? "scrib-annotations-tree__icon-btn icon-btn is-active"
+          : "scrib-annotations-tree__icon-btn icon-btn"
+      }
+      title={title}
+      aria-label={title}
+      aria-pressed={active}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      <span className="material-symbols-outlined" aria-hidden="true">
+        {name}
+      </span>
+    </button>
+  );
+}
+
 export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
   if (!props.open) return null;
 
@@ -64,61 +99,56 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
         <h2>Anotaciones</h2>
       </header>
       <div className="scrib-ref-panel__scroll scrib-annotations-tree__scroll">
-        <div className="scrib-annotations-tree__toolbar" role="toolbar" aria-label="Herramientas de área">
-          <button
-            type="button"
-            className={
-              props.subtool === "select"
-                ? "scrib-annotations-tree__chip is-active"
-                : "scrib-annotations-tree__chip"
-            }
-            aria-pressed={props.subtool === "select"}
-            onClick={() => props.onSelectSubtool("select")}
-          >
-            Seleccionar
-          </button>
-          <button
-            type="button"
-            className={
-              props.subtool === "rect"
-                ? "scrib-annotations-tree__chip is-active"
-                : "scrib-annotations-tree__chip"
-            }
-            aria-pressed={props.subtool === "rect"}
-            title="Arrastrar rectángulo sobre la hoja"
-            onClick={() => props.onSelectSubtool("rect")}
-          >
-            Rectángulo
-          </button>
-          <button
-            type="button"
-            className="scrib-annotations-tree__chip"
-            disabled={!canPopRect}
-            title="Eliminar último rectángulo del bloque o área seleccionado"
-            onClick={props.onPopLastRect}
-          >
-            Quitar rect
-          </button>
-        </div>
-
-        <button
-          type="button"
-          className="scrib-annotations-tree__add"
-          onClick={props.onCreateBlock}
+        <div
+          className="scrib-annotations-tree__toolbar"
+          role="toolbar"
+          aria-label="Herramientas de área"
         >
-          + Bloque
-        </button>
+          <IconBtn
+            name="arrow_selector_tool"
+            title="Seleccionar"
+            active={props.subtool === "select"}
+            onClick={() => props.onSelectSubtool("select")}
+          />
+          <IconBtn
+            name="crop_square"
+            title="Arrastrar rectángulo sobre la hoja"
+            active={props.subtool === "rect"}
+            onClick={() => props.onSelectSubtool("rect")}
+          />
+          <IconBtn
+            name="ink_eraser"
+            title="Eliminar último rectángulo del bloque o área seleccionado"
+            disabled={!canPopRect}
+            onClick={props.onPopLastRect}
+          />
+          <IconBtn
+            name="create_new_folder"
+            title="Crear bloque"
+            onClick={props.onCreateBlock}
+          />
+        </div>
 
         {props.blocks.length === 0 ? (
           <p className="scrib-ref-panel__status">Crea un bloque de notas.</p>
         ) : null}
 
         <ul className="scrib-annotations-tree__list">
-          {props.blocks.map((block) => {
+          {props.blocks.map((block, blockIndex) => {
             const blockSelected =
-              props.selection?.blockId === block.id && !props.selection.areaId;
+              props.selection?.blockId === block.id &&
+              !props.selection.areaId &&
+              typeof props.selection.rectIndex !== "number";
+            const isLastBlock = blockIndex === props.blocks.length - 1;
             return (
-              <li key={block.id} className="scrib-annotations-tree__block">
+              <li
+                key={block.id}
+                className={
+                  isLastBlock
+                    ? "scrib-annotations-tree__node scrib-annotations-tree__node--last"
+                    : "scrib-annotations-tree__node"
+                }
+              >
                 <div
                   className={
                     blockSelected
@@ -126,6 +156,7 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
                       : "scrib-annotations-tree__row"
                   }
                 >
+                  <span className="scrib-annotations-tree__branch" aria-hidden />
                   <input
                     type="checkbox"
                     checked={block.visible}
@@ -150,236 +181,230 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
                   >
                     {block.name}
                   </button>
-                  <button
-                    type="button"
-                    className="scrib-annotations-tree__icon-btn"
+                  <IconBtn
+                    name="add_box"
+                    title="Crear área"
+                    onClick={() => props.onCreateArea(block.id)}
+                  />
+                  <IconBtn
+                    name="edit"
                     title="Renombrar bloque"
-                    aria-label="Renombrar bloque"
                     onClick={() => {
                       const name = window.prompt("Nombre del bloque", block.name);
                       if (name != null && name.trim()) {
                         props.onRenameBlock(block.id, name.trim());
                       }
                     }}
-                  >
-                    <span className="material-symbols-outlined" aria-hidden="true">
-                      edit
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className="scrib-annotations-tree__icon-btn"
+                  />
+                  <IconBtn
+                    name="delete"
                     title="Eliminar bloque"
-                    aria-label="Eliminar bloque"
                     onClick={() => {
                       if (window.confirm(`¿Eliminar bloque “${block.name}”?`)) {
                         props.onDeleteBlock(block.id);
                       }
                     }}
-                  >
-                    <span className="material-symbols-outlined" aria-hidden="true">
-                      delete
-                    </span>
-                  </button>
+                  />
                 </div>
-                <button
-                  type="button"
-                  className="scrib-annotations-tree__add scrib-annotations-tree__add--nested"
-                  onClick={() => props.onCreateArea(block.id)}
-                >
-                  + Área
-                </button>
-                <ul className="scrib-annotations-tree__areas">
-                  {block.areas.map((area) => {
-                    const areaSelected =
-                      props.selection?.blockId === block.id &&
-                      props.selection.areaId === area.id &&
-                      !props.selection.annotationId;
-                    return (
-                      <li key={area.id} className="scrib-annotations-tree__area">
-                        <div
+
+                <ul className="scrib-annotations-tree__children">
+                    {block.areas.map((area, areaIndex) => {
+                      const areaSelected =
+                        props.selection?.blockId === block.id &&
+                        props.selection.areaId === area.id &&
+                        !props.selection.annotationId &&
+                        typeof props.selection.rectIndex !== "number";
+                      const isLastArea = areaIndex === block.areas.length - 1;
+                      return (
+                        <li
+                          key={area.id}
                           className={
-                            areaSelected
-                              ? "scrib-annotations-tree__row is-selected"
-                              : "scrib-annotations-tree__row"
+                            isLastArea
+                              ? "scrib-annotations-tree__node scrib-annotations-tree__node--last"
+                              : "scrib-annotations-tree__node"
                           }
                         >
-                          <input
-                            type="checkbox"
-                            checked={area.visible}
-                            title="Visible"
-                            aria-label={`Visible ${area.name}`}
-                            onChange={(e) =>
-                              props.onSetAreaVisible(
-                                block.id,
-                                area.id,
-                                e.target.checked,
-                              )
-                            }
-                          />
-                          <input
-                            type="color"
-                            className="scrib-annotations-tree__color"
-                            value={area.color}
-                            title="Color del área"
-                            aria-label={`Color ${area.name}`}
-                            onChange={(e) =>
-                              props.onSetAreaColor(block.id, area.id, e.target.value)
-                            }
-                          />
-                          <button
-                            type="button"
-                            className="scrib-annotations-tree__name"
-                            onClick={() =>
-                              props.onSelect({ blockId: block.id, areaId: area.id })
+                          <div
+                            className={
+                              areaSelected
+                                ? "scrib-annotations-tree__row is-selected"
+                                : "scrib-annotations-tree__row"
                             }
                           >
-                            {area.name}
-                          </button>
-                          <button
-                            type="button"
-                            className="scrib-annotations-tree__icon-btn"
-                            title="Renombrar área"
-                            aria-label="Renombrar área"
-                            onClick={() => {
-                              const name = window.prompt("Nombre del área", area.name);
-                              if (name != null && name.trim()) {
-                                props.onRenameArea(block.id, area.id, name.trim());
+                            <span
+                              className="scrib-annotations-tree__branch"
+                              aria-hidden
+                            />
+                            <input
+                              type="checkbox"
+                              checked={area.visible}
+                              title="Visible"
+                              aria-label={`Visible ${area.name}`}
+                              onChange={(e) =>
+                                props.onSetAreaVisible(
+                                  block.id,
+                                  area.id,
+                                  e.target.checked,
+                                )
                               }
-                            }}
-                          >
-                            <span className="material-symbols-outlined" aria-hidden="true">
-                              edit
-                            </span>
-                          </button>
-                          <button
-                            type="button"
-                            className="scrib-annotations-tree__icon-btn"
-                            title="Eliminar área"
-                            aria-label="Eliminar área"
-                            onClick={() => {
-                              if (window.confirm(`¿Eliminar área “${area.name}”?`)) {
-                                props.onDeleteArea(block.id, area.id);
+                            />
+                            <input
+                              type="color"
+                              className="scrib-annotations-tree__color"
+                              value={area.color}
+                              title="Color del área"
+                              aria-label={`Color ${area.name}`}
+                              onChange={(e) =>
+                                props.onSetAreaColor(
+                                  block.id,
+                                  area.id,
+                                  e.target.value,
+                                )
                               }
-                            }}
-                          >
-                            <span className="material-symbols-outlined" aria-hidden="true">
-                              delete
-                            </span>
-                          </button>
-                        </div>
-                        <button
-                          type="button"
-                          className="scrib-annotations-tree__add scrib-annotations-tree__add--nested"
-                          onClick={() => props.onCreateAnnotation(block.id, area.id)}
-                        >
-                          + Anotación
-                        </button>
-                        <ul className="scrib-annotations-tree__anns">
-                          {area.annotations.map((ann) => {
-                            const annSelected =
-                              props.selection?.blockId === block.id &&
-                              props.selection.areaId === area.id &&
-                              props.selection.annotationId === ann.id;
-                            const sel = {
-                              blockId: block.id,
-                              areaId: area.id,
-                              annotationId: ann.id,
-                            };
-                            return (
-                              <li key={ann.id} className="scrib-annotations-tree__ann">
-                                <div
+                            />
+                            <button
+                              type="button"
+                              className="scrib-annotations-tree__name"
+                              onClick={() =>
+                                props.onSelect({
+                                  blockId: block.id,
+                                  areaId: area.id,
+                                })
+                              }
+                            >
+                              {area.name}
+                            </button>
+                            <IconBtn
+                              name="note_add"
+                              title="Crear anotación"
+                              onClick={() =>
+                                props.onCreateAnnotation(block.id, area.id)
+                              }
+                            />
+                            <IconBtn
+                              name="edit"
+                              title="Renombrar área"
+                              onClick={() => {
+                                const name = window.prompt(
+                                  "Nombre del área",
+                                  area.name,
+                                );
+                                if (name != null && name.trim()) {
+                                  props.onRenameArea(
+                                    block.id,
+                                    area.id,
+                                    name.trim(),
+                                  );
+                                }
+                              }}
+                            />
+                            <IconBtn
+                              name="delete"
+                              title="Eliminar área"
+                              onClick={() => {
+                                if (
+                                  window.confirm(`¿Eliminar área “${area.name}”?`)
+                                ) {
+                                  props.onDeleteArea(block.id, area.id);
+                                }
+                              }}
+                            />
+                          </div>
+
+                          <ul className="scrib-annotations-tree__children">
+                            {area.annotations.map((ann, annIndex) => {
+                              const annSelected =
+                                props.selection?.blockId === block.id &&
+                                props.selection.areaId === area.id &&
+                                props.selection.annotationId === ann.id;
+                              const sel: ScribAnnotateSelection = {
+                                blockId: block.id,
+                                areaId: area.id,
+                                annotationId: ann.id,
+                              };
+                              const isLastAnn =
+                                annIndex === area.annotations.length - 1;
+                              return (
+                                <li
+                                  key={ann.id}
                                   className={
-                                    annSelected
-                                      ? "scrib-annotations-tree__row is-selected"
-                                      : "scrib-annotations-tree__row"
+                                    isLastAnn
+                                      ? "scrib-annotations-tree__node scrib-annotations-tree__node--last"
+                                      : "scrib-annotations-tree__node"
                                   }
                                 >
-                                  <button
-                                    type="button"
-                                    className="scrib-annotations-tree__name"
-                                    onClick={() => props.onSelect(sel)}
-                                    onDoubleClick={() => props.onOpenEditor(sel)}
-                                  >
-                                    {ann.name}
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="scrib-annotations-tree__chip"
-                                    title="Editar tinta"
-                                    onClick={() => props.onOpenEditor(sel)}
-                                  >
-                                    Editar
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="scrib-annotations-tree__chip"
-                                    title="Ver al predicar"
-                                    onClick={() => props.onOpenView(sel)}
-                                  >
-                                    Ver
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="scrib-annotations-tree__icon-btn"
-                                    title="Renombrar anotación"
-                                    aria-label="Renombrar anotación"
-                                    onClick={() => {
-                                      const name = window.prompt(
-                                        "Nombre de la anotación",
-                                        ann.name,
-                                      );
-                                      if (name != null && name.trim()) {
-                                        props.onRenameAnnotation(
-                                          block.id,
-                                          area.id,
-                                          ann.id,
-                                          name.trim(),
-                                        );
-                                      }
-                                    }}
+                                  <div
+                                    className={
+                                      annSelected
+                                        ? "scrib-annotations-tree__row is-selected"
+                                        : "scrib-annotations-tree__row"
+                                    }
                                   >
                                     <span
-                                      className="material-symbols-outlined"
-                                      aria-hidden="true"
+                                      className="scrib-annotations-tree__branch"
+                                      aria-hidden
+                                    />
+                                    <button
+                                      type="button"
+                                      className="scrib-annotations-tree__name"
+                                      onClick={() => props.onSelect(sel)}
+                                      onDoubleClick={() => props.onOpenEditor(sel)}
                                     >
-                                      edit
-                                    </span>
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="scrib-annotations-tree__icon-btn"
-                                    title="Eliminar anotación"
-                                    aria-label="Eliminar anotación"
-                                    onClick={() => {
-                                      if (
-                                        window.confirm(
-                                          `¿Eliminar anotación “${ann.name}”?`,
-                                        )
-                                      ) {
-                                        props.onDeleteAnnotation(
-                                          block.id,
-                                          area.id,
-                                          ann.id,
+                                      {ann.name}
+                                    </button>
+                                    <IconBtn
+                                      name="draw"
+                                      title="Editar tinta"
+                                      onClick={() => props.onOpenEditor(sel)}
+                                    />
+                                    <IconBtn
+                                      name="visibility"
+                                      title="Ver al predicar"
+                                      onClick={() => props.onOpenView(sel)}
+                                    />
+                                    <IconBtn
+                                      name="edit"
+                                      title="Renombrar anotación"
+                                      onClick={() => {
+                                        const name = window.prompt(
+                                          "Nombre de la anotación",
+                                          ann.name,
                                         );
-                                      }
-                                    }}
-                                  >
-                                    <span
-                                      className="material-symbols-outlined"
-                                      aria-hidden="true"
-                                    >
-                                      delete
-                                    </span>
-                                  </button>
-                                </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </li>
-                    );
-                  })}
+                                        if (name != null && name.trim()) {
+                                          props.onRenameAnnotation(
+                                            block.id,
+                                            area.id,
+                                            ann.id,
+                                            name.trim(),
+                                          );
+                                        }
+                                      }}
+                                    />
+                                    <IconBtn
+                                      name="delete"
+                                      title="Eliminar anotación"
+                                      onClick={() => {
+                                        if (
+                                          window.confirm(
+                                            `¿Eliminar anotación “${ann.name}”?`,
+                                          )
+                                        ) {
+                                          props.onDeleteAnnotation(
+                                            block.id,
+                                            area.id,
+                                            ann.id,
+                                          );
+                                        }
+                                      }}
+                                    />
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </li>
+                      );
+                    })}
                 </ul>
               </li>
             );
