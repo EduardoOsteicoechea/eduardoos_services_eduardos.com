@@ -254,6 +254,7 @@ func (a *App) scribGetSheetHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	sheet.BackgroundPattern = scribNormalizeBackgroundPattern(sheet.BackgroundPattern)
+	sheet.NoteBlocks = scribNormalizeNoteBlocks(sheet.NoteBlocks)
 	writeJSON(w, http.StatusOK, sheet)
 }
 
@@ -289,6 +290,7 @@ func (a *App) scribPutSheetHandler(w http.ResponseWriter, r *http.Request) {
 	if len(sheet.Layers) == 0 {
 		sheet.Layers = scribEmptyLayers()
 	}
+	sheet.NoteBlocks = scribNormalizeNoteBlocks(sheet.NoteBlocks)
 	now := scribNow()
 	sheet.UpdatedAt = now
 	if err := a.scrib.SaveSheet(r.Context(), &sheet); err != nil {

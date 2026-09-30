@@ -37,6 +37,51 @@ type scribLayer struct {
 	Paths   []scribStrokePath `json:"paths" bson:"paths"`
 }
 
+type scribInk struct {
+	Paths []scribStrokePath `json:"paths" bson:"paths"`
+}
+
+type scribRectMm struct {
+	X float64 `json:"x" bson:"x"`
+	Y float64 `json:"y" bson:"y"`
+	W float64 `json:"w" bson:"w"`
+	H float64 `json:"h" bson:"h"`
+}
+
+type scribNoteView struct {
+	Open bool    `json:"open" bson:"open"`
+	X    float64 `json:"x" bson:"x"`
+	Y    float64 `json:"y" bson:"y"`
+	W    float64 `json:"w" bson:"w"`
+	H    float64 `json:"h" bson:"h"`
+}
+
+type scribNoteAnnotation struct {
+	ID      string        `json:"id" bson:"id"`
+	Name    string        `json:"name" bson:"name"`
+	Heading scribInk      `json:"heading" bson:"heading"`
+	Body    scribInk      `json:"body" bson:"body"`
+	View    scribNoteView `json:"view" bson:"view"`
+}
+
+type scribNoteArea struct {
+	ID          string                `json:"id" bson:"id"`
+	Name        string                `json:"name" bson:"name"`
+	Visible     bool                  `json:"visible" bson:"visible"`
+	Color       string                `json:"color" bson:"color"`
+	Rects       []scribRectMm         `json:"rects" bson:"rects"`
+	Annotations []scribNoteAnnotation `json:"annotations" bson:"annotations"`
+}
+
+type scribNoteBlock struct {
+	ID      string          `json:"id" bson:"id"`
+	Name    string          `json:"name" bson:"name"`
+	Visible bool            `json:"visible" bson:"visible"`
+	Color   string          `json:"color" bson:"color"`
+	Rects   []scribRectMm   `json:"rects" bson:"rects"`
+	Areas   []scribNoteArea `json:"areas" bson:"areas"`
+}
+
 type scribSheetMeta struct {
 	ID        string `json:"id" bson:"id"`
 	Name      string `json:"name" bson:"name"`
@@ -64,15 +109,55 @@ type scribBook struct {
 }
 
 type scribSheet struct {
-	ID                string       `json:"id" bson:"id"`
-	UserID            string       `json:"-" bson:"user_id"`
-	BookID            string       `json:"bookId" bson:"bookId"`
-	Name              string       `json:"name" bson:"name"`
-	ActiveLayerID     string       `json:"activeLayerId" bson:"activeLayerId"`
-	StrokeWidthMm     float64      `json:"strokeWidthMm" bson:"strokeWidthMm"`
-	BackgroundPattern string       `json:"backgroundPattern" bson:"backgroundPattern"`
-	Layers            []scribLayer `json:"layers" bson:"layers"`
-	UpdatedAt         string       `json:"updatedAt" bson:"updatedAt"`
+	ID                string           `json:"id" bson:"id"`
+	UserID            string           `json:"-" bson:"user_id"`
+	BookID            string           `json:"bookId" bson:"bookId"`
+	Name              string           `json:"name" bson:"name"`
+	ActiveLayerID     string           `json:"activeLayerId" bson:"activeLayerId"`
+	StrokeWidthMm     float64          `json:"strokeWidthMm" bson:"strokeWidthMm"`
+	BackgroundPattern string           `json:"backgroundPattern" bson:"backgroundPattern"`
+	Layers            []scribLayer     `json:"layers" bson:"layers"`
+	NoteBlocks        []scribNoteBlock `json:"noteBlocks,omitempty" bson:"noteBlocks,omitempty"`
+	UpdatedAt         string           `json:"updatedAt" bson:"updatedAt"`
+}
+
+func scribNormalizeNoteBlocks(blocks []scribNoteBlock) []scribNoteBlock {
+	if blocks == nil {
+		return []scribNoteBlock{}
+	}
+	out := make([]scribNoteBlock, 0, len(blocks))
+	for _, block := range blocks {
+		if block.Rects == nil {
+			block.Rects = []scribRectMm{}
+		}
+		if block.Areas == nil {
+			block.Areas = []scribNoteArea{}
+		}
+		areas := make([]scribNoteArea, 0, len(block.Areas))
+		for _, area := range block.Areas {
+			if area.Rects == nil {
+				area.Rects = []scribRectMm{}
+			}
+			if area.Annotations == nil {
+				area.Annotations = []scribNoteAnnotation{}
+			}
+			anns := make([]scribNoteAnnotation, 0, len(area.Annotations))
+			for _, ann := range area.Annotations {
+				if ann.Heading.Paths == nil {
+					ann.Heading.Paths = []scribStrokePath{}
+				}
+				if ann.Body.Paths == nil {
+					ann.Body.Paths = []scribStrokePath{}
+				}
+				anns = append(anns, ann)
+			}
+			area.Annotations = anns
+			areas = append(areas, area)
+		}
+		block.Areas = areas
+		out = append(out, block)
+	}
+	return out
 }
 
 func scribEmptyLayers() []scribLayer {
@@ -115,6 +200,7 @@ func scribNewEmptySheet(bookID, sheetID, name, now string) scribSheet {
 		StrokeWidthMm:     0.35,
 		BackgroundPattern: scribBackgroundPatternDefault,
 		Layers:            scribEmptyLayers(),
+		NoteBlocks:        []scribNoteBlock{},
 		UpdatedAt:         now,
 	}
 }

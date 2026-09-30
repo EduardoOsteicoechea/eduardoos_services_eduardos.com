@@ -169,16 +169,17 @@ type mongoScribBookDoc struct {
 }
 
 type mongoScribSheetDoc struct {
-	Key               string       `bson:"_id"`
-	ID                string       `bson:"id"`
-	UserID            string       `bson:"user_id"`
-	BookID            string       `bson:"bookId"`
-	Name              string       `bson:"name"`
-	ActiveLayerID     string       `bson:"activeLayerId"`
-	StrokeWidthMm     float64      `bson:"strokeWidthMm"`
-	BackgroundPattern string       `bson:"backgroundPattern"`
-	Layers            []scribLayer `bson:"layers"`
-	UpdatedAt         string       `bson:"updatedAt"`
+	Key               string           `bson:"_id"`
+	ID                string           `bson:"id"`
+	UserID            string           `bson:"user_id"`
+	BookID            string           `bson:"bookId"`
+	Name              string           `bson:"name"`
+	ActiveLayerID     string           `bson:"activeLayerId"`
+	StrokeWidthMm     float64          `bson:"strokeWidthMm"`
+	BackgroundPattern string           `bson:"backgroundPattern"`
+	Layers            []scribLayer     `bson:"layers"`
+	NoteBlocks        []scribNoteBlock `bson:"noteBlocks,omitempty"`
+	UpdatedAt         string           `bson:"updatedAt"`
 }
 
 func (s *mongoScribStore) GetLibrary(ctx context.Context, userID string) (*scribLibrary, error) {
@@ -301,6 +302,7 @@ func (s *mongoScribStore) GetSheet(ctx context.Context, userID, bookID, sheetID 
 		StrokeWidthMm:     doc.StrokeWidthMm,
 		BackgroundPattern: scribNormalizeBackgroundPattern(doc.BackgroundPattern),
 		Layers:            doc.Layers,
+		NoteBlocks:        scribNormalizeNoteBlocks(doc.NoteBlocks),
 		UpdatedAt:         doc.UpdatedAt,
 	}
 	if sheet.Layers == nil {
@@ -313,6 +315,7 @@ func (s *mongoScribStore) SaveSheet(ctx context.Context, sheet *scribSheet) erro
 	if sheet.Layers == nil {
 		sheet.Layers = scribEmptyLayers()
 	}
+	sheet.NoteBlocks = scribNormalizeNoteBlocks(sheet.NoteBlocks)
 	doc := mongoScribSheetDoc{
 		Key:               scribSheetDocID(sheet.UserID, sheet.BookID, sheet.ID),
 		ID:                sheet.ID,
@@ -323,6 +326,7 @@ func (s *mongoScribStore) SaveSheet(ctx context.Context, sheet *scribSheet) erro
 		StrokeWidthMm:     sheet.StrokeWidthMm,
 		BackgroundPattern: scribNormalizeBackgroundPattern(sheet.BackgroundPattern),
 		Layers:            sheet.Layers,
+		NoteBlocks:        sheet.NoteBlocks,
 		UpdatedAt:         sheet.UpdatedAt,
 	}
 	_, err := s.sheets().ReplaceOne(ctx,

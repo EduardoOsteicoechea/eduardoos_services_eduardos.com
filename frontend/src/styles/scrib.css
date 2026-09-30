@@ -971,3 +971,327 @@ html.dark .scrib-page {
     print-color-adjust: exact;
   }
 }
+
+/* —— Annotations mode —— */
+.scrib-annotate-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  border: 0.25rem solid #ff8800;
+  box-sizing: border-box;
+}
+
+.scrib-annotation-rects {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.scrib-annotations-tree {
+  z-index: 160;
+  max-height: 36rem;
+}
+
+.scrib-annotations-tree__scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotations-tree__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotations-tree__chip {
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.scrib-annotations-tree__chip.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.scrib-annotations-tree__chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.scrib-annotations-tree__add {
+  align-self: flex-start;
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-link);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.scrib-annotations-tree__add--nested {
+  margin-left: 1rem;
+  font-size: var(--font-size-xs);
+}
+
+.scrib-annotations-tree__list,
+.scrib-annotations-tree__areas,
+.scrib-annotations-tree__anns {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotations-tree__areas {
+  margin-left: 0.75rem;
+}
+
+.scrib-annotations-tree__anns {
+  margin-left: 0.75rem;
+}
+
+.scrib-annotations-tree__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+  padding: 0.25rem;
+  border-radius: var(--border-radius);
+}
+
+.scrib-annotations-tree__row.is-selected {
+  outline: var(--border-width) solid #ff8800;
+  background: color-mix(in srgb, #ff8800 12%, transparent);
+}
+
+.scrib-annotations-tree__color {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.scrib-annotations-tree__name {
+  flex: 1;
+  min-width: 4rem;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.scrib-annotations-tree__icon-btn {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.scrib-annotations-tree__icon-btn .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.scrib-annotation-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+}
+
+.scrib-annotation-editor__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: min(40rem, calc(var(--shell-viewport-width, 30rem) - 2rem));
+  max-height: calc(100% - 2rem);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.scrib-annotation-editor__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotation-editor__head h2 {
+  margin: 0;
+  flex: 1;
+  font-size: var(--font-size-md);
+}
+
+.scrib-annotation-editor__hint {
+  margin: 0;
+  flex-basis: 100%;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.scrib-annotation-editor__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  overflow: auto;
+  min-height: 0;
+}
+
+.scrib-annotation-editor__canvas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--rail-gap);
+}
+
+.scrib-annotation-editor__canvas.is-active {
+  border-color: #ff8800;
+}
+
+.scrib-annotation-editor__field-btn {
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.scrib-annotation-editor__canvas-scroll {
+  overflow: auto;
+  max-height: 12rem;
+}
+
+.scrib-annotation-editor__svg {
+  display: block;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.scrib-annotation-views {
+  position: absolute;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.scrib-annotation-view {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  box-shadow: 0 0.15rem 0.5rem color-mix(in srgb, #000 25%, transparent);
+  overflow: hidden;
+}
+
+.scrib-annotation-view.is-selected {
+  outline: 0.125rem solid #ff8800;
+}
+
+.scrib-annotation-view__head {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  min-height: var(--control-height);
+  padding: 0.25rem 0.5rem;
+  border-bottom: var(--border-width) solid var(--color-border);
+  cursor: grab;
+  touch-action: none;
+}
+
+.scrib-annotation-view__title {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scrib-annotation-view__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.scrib-annotation-view__close {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+}
+
+.scrib-annotation-view__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--rail-gap);
+}
+
+.scrib-annotation-view__ink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotation-view__svg {
+  width: 12rem;
+  height: 8rem;
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.scrib-annotation-view__resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1rem;
+  height: 1rem;
+  cursor: nwse-resize;
+  touch-action: none;
+  background: linear-gradient(
+    135deg,
+    transparent 0 45%,
+    var(--color-border) 45% 55%,
+    transparent 55% 70%,
+    var(--color-border) 70% 80%,
+    transparent 80%
+  );
+}

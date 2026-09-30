@@ -83,6 +83,51 @@ export type ScribBookCard = {
   sheets: SheetMeta[];
 };
 
+export type ScribInk = {
+  paths: StrokePath[];
+};
+
+export type ScribRectMm = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
+
+export type ScribNoteView = {
+  open: boolean;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
+
+export type ScribNoteAnnotation = {
+  id: string;
+  name: string;
+  heading: ScribInk;
+  body: ScribInk;
+  view: ScribNoteView;
+};
+
+export type ScribNoteArea = {
+  id: string;
+  name: string;
+  visible: boolean;
+  color: string;
+  rects: ScribRectMm[];
+  annotations: ScribNoteAnnotation[];
+};
+
+export type ScribNoteBlock = {
+  id: string;
+  name: string;
+  visible: boolean;
+  color: string;
+  rects: ScribRectMm[];
+  areas: ScribNoteArea[];
+};
+
 export type ScribSheet = {
   id: string;
   bookId: string;
@@ -92,14 +137,71 @@ export type ScribSheet = {
   /** Ruled background cycle: `ruled-4-3` (default) or `ruled-4-3-3`. */
   backgroundPattern?: ScribBackgroundPattern;
   layers: ScribLayer[];
+  /** Annotation tree (optional; legacy sheets omit). */
+  noteBlocks?: ScribNoteBlock[];
   updatedAt: string;
 };
 
-/** Normalize API/legacy sheets that omit `backgroundPattern`. */
+function normalizeInk(ink: ScribInk | undefined | null): ScribInk {
+  return { paths: Array.isArray(ink?.paths) ? ink!.paths.map((p) => ({ ...p })) : [] };
+}
+
+function normalizeRect(r: ScribRectMm): ScribRectMm {
+  return {
+    x: Number(r.x) || 0,
+    y: Number(r.y) || 0,
+    w: Number(r.w) || 0,
+    h: Number(r.h) || 0,
+  };
+}
+
+function normalizeNoteView(view: ScribNoteView | undefined | null): ScribNoteView {
+  return {
+    open: Boolean(view?.open),
+    x: Number(view?.x) || 0,
+    y: Number(view?.y) || 0,
+    w: Number(view?.w) > 0 ? Number(view?.w) : 280,
+    h: Number(view?.h) > 0 ? Number(view?.h) : 200,
+  };
+}
+
+export function normalizeScribNoteBlocks(
+  blocks: ScribNoteBlock[] | undefined | null,
+): ScribNoteBlock[] {
+  if (!Array.isArray(blocks)) return [];
+  return blocks.map((block) => ({
+    id: String(block.id ?? ""),
+    name: String(block.name ?? "Bloque"),
+    visible: block.visible !== false,
+    color: typeof block.color === "string" && block.color ? block.color : "#ff8800",
+    rects: Array.isArray(block.rects) ? block.rects.map(normalizeRect) : [],
+    areas: Array.isArray(block.areas)
+      ? block.areas.map((area) => ({
+          id: String(area.id ?? ""),
+          name: String(area.name ?? "Área"),
+          visible: area.visible !== false,
+          color: typeof area.color === "string" && area.color ? area.color : "#2266aa",
+          rects: Array.isArray(area.rects) ? area.rects.map(normalizeRect) : [],
+          annotations: Array.isArray(area.annotations)
+            ? area.annotations.map((ann) => ({
+                id: String(ann.id ?? ""),
+                name: String(ann.name ?? "Nota"),
+                heading: normalizeInk(ann.heading),
+                body: normalizeInk(ann.body),
+                view: normalizeNoteView(ann.view),
+              }))
+            : [],
+        }))
+      : [],
+  }));
+}
+
+/** Normalize API/legacy sheets that omit `backgroundPattern` / `noteBlocks`. */
 export function normalizeScribSheet(sheet: ScribSheet): ScribSheet {
   return {
     ...sheet,
     backgroundPattern: normalizeScribBackgroundPattern(sheet.backgroundPattern),
+    noteBlocks: normalizeScribNoteBlocks(sheet.noteBlocks),
   };
 }
 

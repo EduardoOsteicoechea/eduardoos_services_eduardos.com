@@ -17,6 +17,7 @@ type ScribToolbarProps = {
   backgroundPattern: ScribBackgroundPattern;
   institutesOpen: boolean;
   bibleOpen: boolean;
+  annotateTreeOpen: boolean;
   dockSide: ScribDockSide;
   onDashboard: () => void;
   onSelectZoom: () => void;
@@ -24,11 +25,13 @@ type ScribToolbarProps = {
   onStrokePlus: () => void;
   onStrokeMinus: () => void;
   onSelectErase: () => void;
+  onSelectAnnotate: () => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
   onToggleBackgroundPattern: () => void;
   onOpenInstitutes: () => void;
   onOpenBible: () => void;
+  onToggleAnnotateTree: () => void;
   onUndo: () => void;
   onPrint: () => void;
   onToggleDock: () => void;
@@ -128,6 +131,34 @@ export default function ScribToolbar(props: ScribToolbarProps) {
         onClick={props.onSelectErase}
       >
         <ToolIcon name="ink_eraser" />
+      </button>
+      <button
+        type="button"
+        className={toolClass(props.mode === "annotate")}
+        title="Modo anotación"
+        aria-label="Modo anotación"
+        aria-pressed={props.mode === "annotate"}
+        onClick={props.onSelectAnnotate}
+      >
+        <ToolIcon name="edit_note" />
+      </button>
+      <button
+        type="button"
+        className={toolClass(props.annotateTreeOpen)}
+        title={
+          props.annotateTreeOpen
+            ? "Cerrar árbol de anotaciones"
+            : "Árbol de anotaciones"
+        }
+        aria-label={
+          props.annotateTreeOpen
+            ? "Cerrar árbol de anotaciones"
+            : "Abrir árbol de anotaciones"
+        }
+        aria-pressed={props.annotateTreeOpen}
+        onClick={props.onToggleAnnotateTree}
+      >
+        <ToolIcon name="account_tree" />
       </button>
       <button
         type="button"
