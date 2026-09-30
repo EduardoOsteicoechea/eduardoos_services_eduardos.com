@@ -77,7 +77,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 					"embedScript": "https://eduardoos.com/ereport/embed.js",
 					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
 					"modalPath":   "/ereport/web-connector",
-					"notes":       "Host sites call EduardoOSEreport.mount({ apiKey, menuSelector }). Modal runs same-origin in an iframe; uses granular node routes. Override --eos-ereport-* and .eos-ereport-embed-menu-btn to match the host menu.",
+					"notes":       "Host mount({ orgId, reportId, menuSelector }). Opens a wide same-origin modal. Auth is cookie session + eReport subscription (no API key). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items. Override --eos-ereport-* for host menu styling.",
 				},
 				"modes": map[string]any{
 					"append":  "Default. Additive merge only. Conservative for agents.",

@@ -1,4 +1,4 @@
-/* 073 — eReport product surface. Shell chrome (header / #main-menu / #dynamic-header)
+/* 073 â eReport product surface. Shell chrome (header / #main-menu / #dynamic-header)
    uses shared global.css; do not restyle those here. Tracker iframe is separate. */
 
 html[data-page^="ereport"] {
@@ -157,7 +157,7 @@ html[data-page^="ereport"] .ereport-signin-card__alt {
   font-size: var(--font-sm);
 }
 
-/* Workspace tool icons only — row chrome matches shared .dhs-action */
+/* Workspace tool icons only â row chrome matches shared .dhs-action */
 html[data-page^="ereport"] #dynamic-header .ereport-hds-svg {
   width: calc(var(--rail-button-size) * 0.72);
   height: calc(var(--rail-button-size) * 0.72);
@@ -436,7 +436,7 @@ html[data-page^="ereport"] .ereport-hub__error {
     background: color-mix(in srgb, var(--site-body-fg) 28%, transparent);
   }
 
-  /* Single-column cards — minmax(11rem) overflows and squashes text on narrow phones. */
+  /* Single-column cards â minmax(11rem) overflows and squashes text on narrow phones. */
   html[data-page^="ereport"] .product-dash__grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -708,4 +708,73 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   html[data-page="ereport"] .ereport-hub .product-dash__grid {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* —— eReport connector modal (any page; canvas widens with open state) —— */
+.ereport-connector-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--color-bg) 35%, transparent);
+}
+
+.ereport-connector-overlay__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  max-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  height: calc(var(--shell-viewport-height, 40rem) - 2rem);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--color-text) 25%, transparent);
+  overflow: hidden;
+}
+
+html.ereport-connector-open .ereport-connector-overlay__frame {
+  width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  max-width: calc(var(--shell-viewport-width, var(--content-basis, 64rem)) - 2rem);
+  height: calc(var(--shell-viewport-height, 40rem) - 2rem);
+}
+
+.ereport-connector-overlay__iframe {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  background: var(--color-bg);
+}
+
+.ereport-connector-overlay__close {
+  position: absolute;
+  top: var(--rail-gap);
+  right: var(--rail-gap);
+  z-index: 2;
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.ereport-connector-overlay__close:hover,
+.ereport-connector-overlay__close:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
 }

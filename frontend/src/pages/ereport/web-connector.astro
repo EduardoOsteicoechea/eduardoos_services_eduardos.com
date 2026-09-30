@@ -7,39 +7,35 @@ import Layout from "../../layouts/Layout.astro";
   page="ereport-web-connector"
   robots="noindex,nofollow"
   showPageTitle={false}
-  description="eReport web connector embed — select org, report, section, subsection, and edit issues via API key."
+  description="eReport web connector — session + subscription gated issue editing for a fixed site report."
 >
   <h1 class="page-title-sr">eReport connector</h1>
   <section class="ereport-wc" data-ereport-web-connector>
     <header class="ereport-wc__hero">
       <p class="ereport-wc__eyebrow">eReport</p>
       <p class="ereport-wc__title" aria-hidden="true">Connector</p>
+      <p class="ereport-wc__report" data-wc-report-label hidden></p>
       <p class="status ereport-wc__status" data-wc-status>Loading…</p>
     </header>
 
-    <div class="ereport-wc__card" data-wc-key-panel hidden>
-      <h2>API key</h2>
-      <p class="hint">Paste your eduardoos.com <code>eos_live_…</code> key (owner of the organizations).</p>
+    <div class="ereport-wc__card" data-wc-auth hidden>
+      <h2>Access</h2>
+      <p class="hint" data-wc-auth-msg>Checking session…</p>
+    </div>
+
+    <div class="ereport-wc__card" data-wc-path hidden>
+      <h2><span class="ereport-wc__step">1</span> Organization &amp; report</h2>
       <label>
-        API key
-        <input type="password" data-wc-key autocomplete="off" spellcheck="false" />
+        Organization
+        <select data-wc-org></select>
       </label>
-      <button type="button" class="ereport-wc__btn ereport-wc__btn--primary" data-wc-key-apply>Continue</button>
+      <label>
+        Report
+        <select data-wc-report></select>
+      </label>
     </div>
 
     <div class="ereport-wc__stack" data-wc-cascade hidden>
-      <div class="ereport-wc__card">
-        <h2><span class="ereport-wc__step">1</span> Organization &amp; report</h2>
-        <label>
-          Organization
-          <select data-wc-org></select>
-        </label>
-        <label>
-          Report
-          <select data-wc-report></select>
-        </label>
-      </div>
-
       <div class="ereport-wc__card">
         <div class="ereport-wc__card-head">
           <h2><span class="ereport-wc__step">2</span> Section</h2>
@@ -159,7 +155,7 @@ import Layout from "../../layouts/Layout.astro";
     display: block;
     padding: var(--space-padding);
     margin: 0;
-    max-width: 40rem;
+    max-width: none;
   }
 
   html[data-page="ereport-web-connector"] main > .ereport-wc {
@@ -167,6 +163,7 @@ import Layout from "../../layouts/Layout.astro";
     flex-direction: column;
     gap: var(--space-padding);
     grid-column: unset;
+    max-width: 56rem;
   }
 
   .ereport-wc__hero {
@@ -191,6 +188,12 @@ import Layout from "../../layouts/Layout.astro";
     font-weight: 600;
     color: var(--color-text);
     line-height: 1.2;
+  }
+
+  .ereport-wc__report {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
   }
 
   .ereport-wc__status {
@@ -260,6 +263,10 @@ import Layout from "../../layouts/Layout.astro";
     color: var(--color-muted);
   }
 
+  .ereport-wc__card .hint a {
+    color: var(--color-link);
+  }
+
   .ereport-wc__card select,
   .ereport-wc__card input:not([type="checkbox"]),
   .ereport-wc__card textarea {
@@ -283,13 +290,6 @@ import Layout from "../../layouts/Layout.astro";
     min-height: var(--textarea-min-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
     resize: vertical;
-  }
-
-  .ereport-wc__card select:focus-visible,
-  .ereport-wc__card input:focus-visible,
-  .ereport-wc__card textarea:focus-visible {
-    outline: var(--border-width) solid var(--color-accent);
-    outline-offset: 0.125rem;
   }
 
   .ereport-wc__editor {
@@ -333,23 +333,10 @@ import Layout from "../../layouts/Layout.astro";
     border-color: var(--color-button-bg);
   }
 
-  .ereport-wc__btn--primary:hover,
-  .ereport-wc__btn--primary:focus-visible {
-    filter: brightness(1.05);
-    outline: none;
-  }
-
   .ereport-wc__btn--ghost {
     background: transparent;
     color: var(--color-text);
     border-color: var(--color-border);
-  }
-
-  .ereport-wc__btn--ghost:hover,
-  .ereport-wc__btn--ghost:focus-visible {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    outline: none;
   }
 </style>
 

@@ -181,3 +181,22 @@ func v1JSON(t *testing.T, app *App, secret, method, path string, body []byte) *h
 	app.Handler().ServeHTTP(rec, req)
 	return rec
 }
+
+func TestEreportSessionNodeCreate(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Sess","firstReportName":"Base"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	secBody := `{"title":"From session","kind":"funcionalidades","productHistory":"c1"}`
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections", secBody)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("session post section: %d %s", rec.Code, rec.Body.String())
+	}
+	node := decodeMap(t, rec)["node"].(map[string]any)
+	if node["title"] != "From session" {
+		t.Fatalf("node: %#v", node)
+	}
+}

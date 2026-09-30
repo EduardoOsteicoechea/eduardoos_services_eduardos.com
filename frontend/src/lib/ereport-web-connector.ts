@@ -1,11 +1,16 @@
+import { apiRequest, getCsrf } from "./api";
 import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
+import {
+  fetchEreportAccess,
+  fetchEreportOrg,
+  fetchEreportOrgs,
+  fetchOrgReport,
+} from "./ereport";
 
 const INIT_TYPE = "ereport-embed-init";
 const READY_TYPE = "ereport-embed-ready";
 
-type OrgCard = { id: string; name: string };
-type ReportCard = { id: string; tema: string; reportNumber?: string };
 type ChecklistRow = { id?: string; label?: string; checked?: boolean };
 type ItemNode = {
   id: string;
@@ -34,11 +39,10 @@ type ReportPayload = {
   sections?: SectionNode[];
 };
 
-type ApiErrorBody = {
-  error?: string;
-  message?: string;
-  request_id?: string;
-  hint?: string;
+type ConnectorConfig = {
+  orgId: string;
+  reportId: string;
+  locked: boolean;
 };
 
 function el<T extends HTMLElement>(root: ParentNode, sel: string): T | null {
@@ -60,55 +64,48 @@ function fillSelect(select: HTMLSelectElement, options: { value: string; label: 
   select.value = "";
 }
 
-async function apiFetch(
-  apiKey: string,
-  method: string,
+function readQueryConfig(): ConnectorConfig {
+  const params = new URLSearchParams(window.location.search);
+  const orgId = (params.get("org") || params.get("orgId") || "").trim();
+  const reportId = (params.get("report") || params.get("reportId") || "").trim();
+  return { orgId, reportId, locked: Boolean(orgId && reportId) };
+}
+
+async function nodeWrite(
+  method: "POST" | "PATCH",
   path: string,
-  body?: unknown,
+  body: Record<string, unknown>,
 ): Promise<{ status: number; requestId: string; data: Record<string, unknown> }> {
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${apiKey}`,
-    Accept: "application/json",
-  };
-  let payload: string | undefined;
-  if (body !== undefined) {
-    headers["Content-Type"] = "application/json";
-    payload = JSON.stringify(body);
-  }
-  if (mustLog) console.log("[ereport-web-connector] fetch", { method, path });
-  const res = await fetch(path, { method, headers, body: payload, credentials: "omit" });
-  const requestId = res.headers.get("X-Request-ID") || "";
-  let data: Record<string, unknown> = {};
-  try {
-    data = (await res.json()) as Record<string, unknown>;
-  } catch {
-    data = {};
-  }
-  if (mustLog) console.log("[ereport-web-connector] response", { method, path, status: res.status, requestId });
-  return { status: res.status, requestId, data };
+  await getCsrf();
+  const { status, data, requestId } = await apiRequest<Record<string, unknown>>(path, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return { status, requestId, data: data as Record<string, unknown> };
 }
 
 function raiseApiError(status: number, requestId: string, data: Record<string, unknown>) {
-  const err = data as ApiErrorBody;
   showErrorModal({
-    message: err.message || "Request failed.",
-    requestId: err.request_id || requestId,
-    details: err.hint || err.error || `HTTP ${status}`,
+    message: String(data.message || "Request failed."),
+    requestId: String(data.request_id || requestId),
+    details: String(data.hint || data.error || `HTTP ${status}`),
   });
 }
 
 export function startEreportWebConnector(root: HTMLElement) {
-  let apiKey = "";
+  let config = readQueryConfig();
   let payload: ReportPayload | null = null;
 
   const statusEl = el<HTMLElement>(root, "[data-wc-status]");
-  const keyPanel = el<HTMLElement>(root, "[data-wc-key-panel]");
-  const keyInput = el<HTMLInputElement>(root, "[data-wc-key]");
-  const keyApply = el<HTMLButtonElement>(root, "[data-wc-key-apply]");
+  const authPanel = el<HTMLElement>(root, "[data-wc-auth]");
+  const authMsg = el<HTMLElement>(root, "[data-wc-auth-msg]");
+  const pathCard = el<HTMLElement>(root, "[data-wc-path]");
   const cascade = el<HTMLElement>(root, "[data-wc-cascade]");
+  const reportLabel = el<HTMLElement>(root, "[data-wc-report-label]");
 
-  const orgSelect = el<HTMLSelectElement>(root, "[data-wc-org]")!;
-  const reportSelect = el<HTMLSelectElement>(root, "[data-wc-report]")!;
+  const orgSelect = el<HTMLSelectElement>(root, "[data-wc-org]");
+  const reportSelect = el<HTMLSelectElement>(root, "[data-wc-report]");
   const sectionSelect = el<HTMLSelectElement>(root, "[data-wc-section]")!;
   const groupSelect = el<HTMLSelectElement>(root, "[data-wc-group]")!;
   const itemSelect = el<HTMLSelectElement>(root, "[data-wc-item]")!;
@@ -120,11 +117,9 @@ export function startEreportWebConnector(root: HTMLElement) {
   const sectionTitle = el<HTMLInputElement>(root, "[data-wc-section-title]")!;
   const sectionConcept = el<HTMLTextAreaElement>(root, "[data-wc-section-concept]")!;
   const sectionSave = el<HTMLButtonElement>(root, "[data-wc-section-save]")!;
-
   const groupTitle = el<HTMLInputElement>(root, "[data-wc-group-title]")!;
   const groupConcept = el<HTMLTextAreaElement>(root, "[data-wc-group-concept]")!;
   const groupSave = el<HTMLButtonElement>(root, "[data-wc-group-save]")!;
-
   const itemNombre = el<HTMLInputElement>(root, "[data-wc-item-nombre]")!;
   const itemIncidencia = el<HTMLTextAreaElement>(root, "[data-wc-item-incidencia]")!;
   const itemFechaInc = el<HTMLInputElement>(root, "[data-wc-item-fecha-inc]")!;
@@ -141,20 +136,11 @@ export function startEreportWebConnector(root: HTMLElement) {
     if (statusEl) statusEl.textContent = msg;
   }
 
-  function requireKey(): string | null {
-    if (!apiKey) {
-      setStatus("Waiting for API key…");
-      keyPanel?.removeAttribute("hidden");
-      return null;
-    }
-    return apiKey;
-  }
-
   function selectedOrg(): string {
-    return orgSelect.value;
+    return config.locked ? config.orgId : orgSelect?.value || config.orgId;
   }
   function selectedReport(): string {
-    return reportSelect.value;
+    return config.locked ? config.reportId : reportSelect?.value || config.reportId;
   }
   function selectedSection(): string {
     return sectionSelect.value;
@@ -176,6 +162,10 @@ export function startEreportWebConnector(root: HTMLElement) {
     return grp?.items?.find((it) => it.id === id);
   }
 
+  function basePath(): string {
+    return `/ereport/orgs/${selectedOrg()}/reports/${selectedReport()}`;
+  }
+
   function refreshSectionOptions() {
     const secs = payload?.sections || [];
     fillSelect(
@@ -192,10 +182,9 @@ export function startEreportWebConnector(root: HTMLElement) {
 
   function refreshGroupOptions() {
     const sec = findSection(selectedSection());
-    const groups = sec?.groups || [];
     fillSelect(
       groupSelect,
-      groups.map((g) => ({ value: g.id, label: g.title || g.id })),
+      (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
       "Select subsection…",
     );
     groupFields.hidden = true;
@@ -205,10 +194,9 @@ export function startEreportWebConnector(root: HTMLElement) {
 
   function refreshItemOptions() {
     const grp = findGroup(findSection(selectedSection()), selectedGroup());
-    const items = grp?.items || [];
     fillSelect(
       itemSelect,
-      items.map((it) => ({
+      (grp?.items || []).map((it) => ({
         value: it.id,
         label: it.nombre || it.incidencia?.slice(0, 48) || it.id,
       })),
@@ -254,46 +242,57 @@ export function startEreportWebConnector(root: HTMLElement) {
     itemFechaSol.value = (it.fechaSolucion || "").slice(0, 16);
   }
 
-  async function applyKey(key: string) {
-    apiKey = key.trim();
-    if (!apiKey) {
-      setStatus("API key required.");
+  async function loadReportPayload() {
+    const orgId = selectedOrg();
+    const reportId = selectedReport();
+    if (!orgId || !reportId) return;
+    setStatus("Loading report…");
+    const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
+    if (status !== 200) {
+      raiseApiError(status, requestId, data as unknown as Record<string, unknown>);
+      setStatus("Could not load report.");
       return;
     }
-    keyPanel?.setAttribute("hidden", "");
-    setStatus("Loading organizations…");
+    payload = (data.payload as ReportPayload) || { sections: [] };
+    const tema = data.meta?.tema || reportId;
+    if (reportLabel) {
+      reportLabel.textContent = tema;
+      reportLabel.hidden = false;
+    }
     cascade?.removeAttribute("hidden");
-    const { status, requestId, data } = await apiFetch(apiKey, "GET", "/api/v1/ereport/orgs");
+    refreshSectionOptions();
+    setStatus("Select a section, or create one.");
+  }
+
+  async function loadOrgsForPicker() {
+    if (!orgSelect || !reportSelect || !pathCard) return;
+    pathCard.hidden = false;
+    const { status, data, requestId } = await fetchEreportOrgs();
     if (status !== 200) {
-      raiseApiError(status, requestId, data);
+      raiseApiError(status, requestId, data as unknown as Record<string, unknown>);
       setStatus("Could not load organizations.");
       return;
     }
-    const orgs = (data.orgs as OrgCard[]) || [];
+    const orgs = data.orgs || [];
     fillSelect(
       orgSelect,
-      orgs.map((o) => ({ value: o.id, label: o.name || o.id })),
+      orgs.filter((o) => !o.hidden).map((o) => ({ value: o.id, label: o.name || o.id })),
       "Select organization…",
     );
     fillSelect(reportSelect, [], "Select report…");
-    payload = null;
-    refreshSectionOptions();
-    setStatus(orgs.length ? "Select an organization." : "No organizations for this key.");
+    setStatus(orgs.length ? "Select organization and report." : "No organizations yet.");
   }
 
-  async function loadReports() {
-    const key = requireKey();
-    if (!key) return;
-    const orgId = selectedOrg();
+  async function loadReportsForPicker() {
+    if (!orgSelect || !reportSelect) return;
+    const orgId = orgSelect.value;
     if (!orgId) return;
-    setStatus("Loading reports…");
-    const { status, requestId, data } = await apiFetch(key, "GET", `/api/v1/ereport/orgs/${orgId}/reports`);
+    const { status, data, requestId } = await fetchEreportOrg(orgId);
     if (status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not load reports.");
+      raiseApiError(status, requestId, data as unknown as Record<string, unknown>);
       return;
     }
-    const reports = (data.reports as ReportCard[]) || [];
+    const reports = data.reports || [];
     fillSelect(
       reportSelect,
       reports.map((r) => ({
@@ -302,44 +301,57 @@ export function startEreportWebConnector(root: HTMLElement) {
       })),
       "Select report…",
     );
-    payload = null;
-    refreshSectionOptions();
-    setStatus(reports.length ? "Select a report." : "No reports in this organization.");
   }
 
-  async function loadReportPayload() {
-    const key = requireKey();
-    if (!key) return;
-    const orgId = selectedOrg();
-    const reportId = selectedReport();
-    if (!orgId || !reportId) return;
-    setStatus("Loading report…");
-    const { status, requestId, data } = await apiFetch(
-      key,
-      "GET",
-      `/api/v1/ereport/orgs/${orgId}/reports/${reportId}`,
-    );
-    if (status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not load report.");
+  async function bootstrap(next?: Partial<ConnectorConfig>) {
+    if (next?.orgId && next?.reportId) {
+      config = { orgId: next.orgId, reportId: next.reportId, locked: true };
+    }
+    authGate?.setAttribute("hidden", "");
+    pathCard?.setAttribute("hidden", "");
+    cascade?.setAttribute("hidden", "");
+    if (reportLabel) reportLabel.hidden = true;
+    setStatus("Checking subscription…");
+
+    const access = await fetchEreportAccess();
+    if (access.status === 401) {
+      authGate?.removeAttribute("hidden");
+      if (authMsg) {
+        authMsg.innerHTML =
+          'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
+      }
+      setStatus("Sign in required.");
       return;
     }
-    payload = (data.payload as ReportPayload) || { sections: [] };
-    refreshSectionOptions();
-    setStatus("Select a section, or create one.");
-  }
+    if (access.status !== 200) {
+      raiseApiError(access.status, access.requestId, access.data as unknown as Record<string, unknown>);
+      setStatus("Could not verify access.");
+      return;
+    }
+    if (!access.data.canCreate) {
+      authGate?.removeAttribute("hidden");
+      if (authMsg) {
+        authMsg.innerHTML =
+          'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
+      }
+      setStatus("Subscription required.");
+      return;
+    }
 
-  function basePath(): string {
-    return `/api/v1/ereport/orgs/${selectedOrg()}/reports/${selectedReport()}`;
+    if (config.locked) {
+      pathCard?.setAttribute("hidden", "");
+      await loadReportPayload();
+      return;
+    }
+    await loadOrgsForPicker();
   }
 
   async function createSection() {
-    const key = requireKey();
-    if (!key || !selectedOrg() || !selectedReport()) return;
+    if (!selectedOrg() || !selectedReport()) return;
     const title = window.prompt("New section title");
-    if (!title || !title.trim()) return;
+    if (!title?.trim()) return;
     setStatus("Creating section…");
-    const { status, requestId, data } = await apiFetch(key, "POST", `${basePath()}/sections`, {
+    const { status, requestId, data } = await nodeWrite("POST", `${basePath()}/sections`, {
       title: title.trim(),
       kind: "funcionalidades",
       productHistory: "",
@@ -361,11 +373,10 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   async function saveSection() {
-    const key = requireKey();
     const sectionId = selectedSection();
-    if (!key || !sectionId) return;
+    if (!sectionId) return;
     setStatus("Saving section…");
-    const { status, requestId, data } = await apiFetch(key, "PATCH", `${basePath()}/sections/${sectionId}`, {
+    const { status, requestId, data } = await nodeWrite("PATCH", `${basePath()}/sections/${sectionId}`, {
       title: sectionTitle.value.trim(),
       productHistory: sectionConcept.value,
     });
@@ -375,27 +386,23 @@ export function startEreportWebConnector(root: HTMLElement) {
       return;
     }
     payload = (data.payload as ReportPayload) || payload;
-    const keep = sectionId;
     refreshSectionOptions();
-    sectionSelect.value = keep;
+    sectionSelect.value = sectionId;
     loadSectionFields();
     refreshGroupOptions();
     setStatus("Section saved.");
   }
 
   async function createGroup() {
-    const key = requireKey();
     const sectionId = selectedSection();
-    if (!key || !sectionId) return;
+    if (!sectionId) return;
     const title = window.prompt("New subsection title");
-    if (!title || !title.trim()) return;
+    if (!title?.trim()) return;
     setStatus("Creating subsection…");
-    const { status, requestId, data } = await apiFetch(
-      key,
-      "POST",
-      `${basePath()}/sections/${sectionId}/groups`,
-      { title: title.trim(), productHistory: "" },
-    );
+    const { status, requestId, data } = await nodeWrite("POST", `${basePath()}/sections/${sectionId}/groups`, {
+      title: title.trim(),
+      productHistory: "",
+    });
     if (status !== 201 && status !== 200) {
       raiseApiError(status, requestId, data);
       setStatus("Could not create subsection.");
@@ -413,13 +420,11 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   async function saveGroup() {
-    const key = requireKey();
     const sectionId = selectedSection();
     const groupId = selectedGroup();
-    if (!key || !sectionId || !groupId) return;
+    if (!sectionId || !groupId) return;
     setStatus("Saving subsection…");
-    const { status, requestId, data } = await apiFetch(
-      key,
+    const { status, requestId, data } = await nodeWrite(
       "PATCH",
       `${basePath()}/sections/${sectionId}/groups/${groupId}`,
       { title: groupTitle.value.trim(), productHistory: groupConcept.value },
@@ -430,24 +435,21 @@ export function startEreportWebConnector(root: HTMLElement) {
       return;
     }
     payload = (data.payload as ReportPayload) || payload;
-    const keep = groupId;
     refreshGroupOptions();
-    groupSelect.value = keep;
+    groupSelect.value = groupId;
     loadGroupFields();
     refreshItemOptions();
     setStatus("Subsection saved.");
   }
 
   async function createItem() {
-    const key = requireKey();
     const sectionId = selectedSection();
     const groupId = selectedGroup();
-    if (!key || !sectionId || !groupId) return;
+    if (!sectionId || !groupId) return;
     const incidencia = window.prompt("New issue text (incidencia)");
-    if (!incidencia || !incidencia.trim()) return;
+    if (!incidencia?.trim()) return;
     setStatus("Creating issue…");
-    const { status, requestId, data } = await apiFetch(
-      key,
+    const { status, requestId, data } = await nodeWrite(
       "POST",
       `${basePath()}/sections/${sectionId}/groups/${groupId}/items`,
       { incidencia: incidencia.trim(), status: "reprobado", nombre: "" },
@@ -468,14 +470,12 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   async function saveItem() {
-    const key = requireKey();
     const sectionId = selectedSection();
     const groupId = selectedGroup();
     const itemId = selectedItem();
-    if (!key || !sectionId || !groupId || !itemId) return;
+    if (!sectionId || !groupId || !itemId) return;
     setStatus("Saving issue…");
-    const { status, requestId, data } = await apiFetch(
-      key,
+    const { status, requestId, data } = await nodeWrite(
       "PATCH",
       `${basePath()}/sections/${sectionId}/groups/${groupId}/items/${itemId}`,
       {
@@ -493,17 +493,18 @@ export function startEreportWebConnector(root: HTMLElement) {
       return;
     }
     payload = (data.payload as ReportPayload) || payload;
-    const keep = itemId;
     refreshItemOptions();
-    itemSelect.value = keep;
+    itemSelect.value = itemId;
     loadItemFields();
     setStatus("Issue saved.");
   }
 
-  orgSelect.addEventListener("change", () => {
-    void loadReports();
+  orgSelect?.addEventListener("change", () => {
+    void loadReportsForPicker();
   });
-  reportSelect.addEventListener("change", () => {
+  reportSelect?.addEventListener("change", () => {
+    config.orgId = orgSelect?.value || "";
+    config.reportId = reportSelect?.value || "";
     void loadReportPayload();
   });
   sectionSelect.addEventListener("change", () => {
@@ -535,21 +536,17 @@ export function startEreportWebConnector(root: HTMLElement) {
   itemSave.addEventListener("click", () => {
     void saveItem();
   });
-  keyApply?.addEventListener("click", () => {
-    void applyKey(keyInput?.value || "");
-  });
 
   window.addEventListener("message", (ev: MessageEvent) => {
     const data = ev.data;
     if (!data || typeof data !== "object") return;
     if ((data as { type?: string }).type !== INIT_TYPE) return;
-    const key = String((data as { apiKey?: string }).apiKey || "").trim();
-    if (!key) return;
-    if (mustLog) console.log("[ereport-web-connector] received embed init");
-    void applyKey(key);
+    const orgId = String((data as { orgId?: string }).orgId || "").trim();
+    const reportId = String((data as { reportId?: string }).reportId || "").trim();
+    if (mustLog) console.log("[ereport-web-connector] embed init", { orgId: Boolean(orgId), reportId: Boolean(reportId) });
+    void bootstrap({ orgId, reportId });
   });
 
-  // Signal ready to parent loader
   try {
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({ type: READY_TYPE }, "*");
@@ -558,6 +555,5 @@ export function startEreportWebConnector(root: HTMLElement) {
     /* ignore */
   }
 
-  setStatus("Waiting for API key from host…");
-  keyPanel?.removeAttribute("hidden");
+  void bootstrap();
 }

@@ -30,8 +30,8 @@ Create/update one node without append/replace:
 ### Web embed
 
 - Loader: `https://eduardoos.com/ereport/embed.js`
-- Default theme: `https://eduardoos.com/ereport/embed-theme.css` (`--eos-ereport-*` variables)
-- Mount: `EduardoOSEreport.mount({ apiKey, menuSelector })` opens `/ereport/web-connector` in an iframe
-- **Host duty:** override `--eos-ereport-*` and style `.eos-ereport-embed-menu-btn` to match the site menu (see SKILL.md “Theme the host control”)
+- Theme: `https://eduardoos.com/ereport/embed-theme.css`
+- Mount: `EduardoOSEreport.mount({ orgId, reportId, menuSelector })` — wide modal, session + subscription, locked report
+- Session writes: `/api/ereport/orgs/{orgId}/reports/{reportId}/sections|groups|items`
 
 `viewUrl`: `{BASE}/ereport/workspace?user={ownerSafe}&org={orgId}&report={reportId}` — `user=` is display-only.

@@ -1,6 +1,7 @@
 import { clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
+import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { startVoiceChat } from "./voice";
@@ -543,6 +544,8 @@ function restoreChromeAfterNavigation(): void {
 
 export function startChrome(): void {
   startClientRouting();
+  exposeEreportConnectorGlobal();
+  wireEreportConnectorMenu();
   sessionLogStorage("chrome.start");
 
   applyStoredPreferences();
@@ -645,6 +648,7 @@ export function startChrome(): void {
 
     document.addEventListener("astro:after-swap", () => {
       restoreChromeAfterNavigation();
+      wireEreportConnectorMenu();
     });
 
     const dhs = document.getElementById("dynamic-header");

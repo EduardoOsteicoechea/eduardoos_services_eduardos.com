@@ -1,21 +1,22 @@
 /**
  * eReport web connector loader for host websites.
  *
- * Default look: /ereport/embed-theme.css (CSS variables --eos-ereport-*).
- * Host sites SHOULD override those variables (and .eos-ereport-embed-menu-btn)
- * so the control matches the site menu — see that file’s header comments.
+ * Auth: eduardoos.com cookie session + eReport subscription (no API key paste).
+ * The host locks the modal to one report:
  *
- * Usage:
  *   <link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
  *   <script src="https://eduardoos.com/ereport/embed.js"></script>
  *   <script>
  *     EduardoOSEreport.mount({
- *       apiKey: "eos_live_…",
+ *       orgId: "…",
+ *       reportId: "…",
  *       menuSelector: "#main-menu nav",
  *       label: "eReport",
  *       baseUrl: "https://eduardoos.com"
  *     });
  *   </script>
+ *
+ * Override --eos-ereport-* so the menu control matches the host chrome.
  */
 (function (global) {
   "use strict";
@@ -47,17 +48,14 @@
   }
 
   function onEscape(ev) {
-    if (ev.key === "Escape") {
-      closeOverlay();
-    }
+    if (ev.key === "Escape") closeOverlay();
   }
 
   function closeOverlay() {
     var existing = document.getElementById(OVERLAY_ID);
-    if (existing && existing.parentNode) {
-      existing.parentNode.removeChild(existing);
-    }
+    if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
     document.removeEventListener("keydown", onEscape, true);
+    document.documentElement.classList.remove("ereport-connector-open");
     if (activeMessageHandler) {
       window.removeEventListener("message", activeMessageHandler);
       activeMessageHandler = null;
@@ -74,8 +72,17 @@
 
   function openModal(opts) {
     var baseUrl = (opts.baseUrl || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
+    var orgId = String(opts.orgId || "").trim();
+    var reportId = String(opts.reportId || "").trim();
+    if (!orgId || !reportId) {
+      throw new Error("EduardoOSEreport.open requires orgId and reportId");
+    }
     ensureTheme(baseUrl);
     closeOverlay();
+
+    var params = new URLSearchParams();
+    params.set("org", orgId);
+    params.set("report", reportId);
 
     var overlay = document.createElement("div");
     overlay.id = OVERLAY_ID;
@@ -94,23 +101,20 @@
     closeBtn.addEventListener("click", closeOverlay);
 
     var iframe = document.createElement("iframe");
-    iframe.src = baseUrl + "/ereport/web-connector";
+    iframe.src = baseUrl + "/ereport/web-connector?" + params.toString();
     iframe.title = opts.label || "eReport connector";
     iframe.setAttribute("allow", "clipboard-write");
 
-    var apiKey = opts.apiKey || "";
     var sent = false;
-
     function sendInit() {
-      if (sent || !apiKey || !iframe.contentWindow) return;
+      if (sent || !iframe.contentWindow) return;
       try {
-        iframe.contentWindow.postMessage({ type: INIT_TYPE, apiKey: apiKey }, baseUrl);
+        iframe.contentWindow.postMessage({ type: INIT_TYPE, orgId: orgId, reportId: reportId }, baseUrl);
         sent = true;
       } catch (e) {
         /* ignore */
       }
     }
-
     iframe.addEventListener("load", sendInit);
 
     activeMessageHandler = function (ev) {
@@ -131,14 +135,15 @@
     frameWrap.appendChild(iframe);
     overlay.appendChild(frameWrap);
     document.body.appendChild(overlay);
+    document.documentElement.classList.add("ereport-connector-open");
     document.addEventListener("keydown", onEscape, true);
     closeBtn.focus();
   }
 
   function mount(options) {
     var opts = options || {};
-    if (!opts.apiKey || typeof opts.apiKey !== "string") {
-      throw new Error("EduardoOSEreport.mount requires apiKey (eos_live_…)");
+    if (!opts.orgId || !opts.reportId) {
+      throw new Error("EduardoOSEreport.mount requires orgId and reportId");
     }
     var baseUrl = (opts.baseUrl || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
     ensureTheme(baseUrl);
@@ -149,9 +154,8 @@
       openModal(opts);
     };
 
-    var menuSelector = opts.menuSelector;
-    if (menuSelector) {
-      var menu = document.querySelector(menuSelector);
+    if (opts.menuSelector) {
+      var menu = document.querySelector(opts.menuSelector);
       if (menu) {
         var btn = document.createElement("button");
         btn.type = "button";
@@ -177,9 +181,7 @@
 
   global.EduardoOSEreport = {
     mount: mount,
-    open: function (opts) {
-      openModal(opts || {});
-    },
+    open: openModal,
     close: closeOverlay,
   };
 })(typeof window !== "undefined" ? window : this);

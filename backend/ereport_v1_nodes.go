@@ -12,11 +12,11 @@ const (
 	ereportNodeStatusNA        = "no_aplica"
 )
 
-// Additive granular v1 mutations for the web connector embed.
+// Additive granular mutations for API-key (v1) and session (web connector).
 // Does not use or alter mergeAppend / replace semantics.
 
-func (a *App) ereportV1PostSectionHandler(w http.ResponseWriter, r *http.Request) {
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutateCreateSection() ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		title := strings.TrimSpace(asString(body["title"]))
 		if title == "" {
 			return nil, apiWriteErr("invalid_request", "title required")
@@ -49,12 +49,11 @@ func (a *App) ereportV1PostSectionHandler(w http.ResponseWriter, r *http.Request
 		secs = append(secs, sec)
 		payload["sections"] = mapSliceToAny(secs)
 		return sec, nil
-	})
+	}
 }
 
-func (a *App) ereportV1PatchSectionHandler(w http.ResponseWriter, r *http.Request) {
-	sectionID := r.PathValue("sectionId")
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutatePatchSection(sectionID string) ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		sec, idx, err := findSection(payload, sectionID)
 		if err != nil {
 			return nil, err
@@ -80,12 +79,11 @@ func (a *App) ereportV1PatchSectionHandler(w http.ResponseWriter, r *http.Reques
 		secs[idx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return sec, nil
-	})
+	}
 }
 
-func (a *App) ereportV1PostGroupHandler(w http.ResponseWriter, r *http.Request) {
-	sectionID := r.PathValue("sectionId")
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutateCreateGroup(sectionID string) ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		sec, secIdx, err := findSection(payload, sectionID)
 		if err != nil {
 			return nil, err
@@ -116,13 +114,11 @@ func (a *App) ereportV1PostGroupHandler(w http.ResponseWriter, r *http.Request) 
 		secs[secIdx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return grp, nil
-	})
+	}
 }
 
-func (a *App) ereportV1PatchGroupHandler(w http.ResponseWriter, r *http.Request) {
-	sectionID := r.PathValue("sectionId")
-	groupID := r.PathValue("groupId")
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutatePatchGroup(sectionID, groupID string) ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		sec, secIdx, err := findSection(payload, sectionID)
 		if err != nil {
 			return nil, err
@@ -148,13 +144,11 @@ func (a *App) ereportV1PatchGroupHandler(w http.ResponseWriter, r *http.Request)
 		secs[secIdx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return grp, nil
-	})
+	}
 }
 
-func (a *App) ereportV1PostItemHandler(w http.ResponseWriter, r *http.Request) {
-	sectionID := r.PathValue("sectionId")
-	groupID := r.PathValue("groupId")
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutateCreateItem(sectionID, groupID string) ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		sec, secIdx, err := findSection(payload, sectionID)
 		if err != nil {
 			return nil, err
@@ -212,14 +206,11 @@ func (a *App) ereportV1PostItemHandler(w http.ResponseWriter, r *http.Request) {
 		secs[secIdx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return item, nil
-	})
+	}
 }
 
-func (a *App) ereportV1PatchItemHandler(w http.ResponseWriter, r *http.Request) {
-	sectionID := r.PathValue("sectionId")
-	groupID := r.PathValue("groupId")
-	itemID := r.PathValue("itemId")
-	a.ereportV1MutateReport(w, r, func(payload map[string]any, body map[string]any) (any, error) {
+func mutatePatchItem(sectionID, groupID, itemID string) ereportNodeMutator {
+	return func(payload map[string]any, body map[string]any) (any, error) {
 		sec, secIdx, err := findSection(payload, sectionID)
 		if err != nil {
 			return nil, err
@@ -267,13 +258,57 @@ func (a *App) ereportV1PatchItemHandler(w http.ResponseWriter, r *http.Request) 
 		secs[secIdx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return item, nil
-	})
+	}
+}
+
+func (a *App) ereportV1PostSectionHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutateCreateSection())
+}
+
+func (a *App) ereportV1PatchSectionHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutatePatchSection(r.PathValue("sectionId")))
+}
+
+func (a *App) ereportV1PostGroupHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutateCreateGroup(r.PathValue("sectionId")))
+}
+
+func (a *App) ereportV1PatchGroupHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutatePatchGroup(r.PathValue("sectionId"), r.PathValue("groupId")))
+}
+
+func (a *App) ereportV1PostItemHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutateCreateItem(r.PathValue("sectionId"), r.PathValue("groupId")))
+}
+
+func (a *App) ereportV1PatchItemHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportV1MutateReport(w, r, mutatePatchItem(r.PathValue("sectionId"), r.PathValue("groupId"), r.PathValue("itemId")))
 }
 
 type ereportNodeMutator func(payload map[string]any, body map[string]any) (node any, err error)
 
 func (a *App) ereportV1MutateReport(w http.ResponseWriter, r *http.Request, mutate ereportNodeMutator) {
 	user := apiUserFrom(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	a.ereportMutateReportNodes(w, r, user, "api-node", apiKeyPrefixFrom(r), mutate)
+}
+
+// Session-cookie path for the web connector embed (subscription + ownership).
+func (a *App) ereportSessionMutateReport(w http.ResponseWriter, r *http.Request, mutate ereportNodeMutator) {
+	user := a.requireEreportOwnerWrite(w, r)
+	if user == nil {
+		return
+	}
+	if !a.requireCreateEntitlement(w, r, user) {
+		return
+	}
+	a.ereportMutateReportNodes(w, r, user, "web-connector", "", mutate)
+}
+
+func (a *App) ereportMutateReportNodes(w http.ResponseWriter, r *http.Request, user *User, snapshotSource, keyPrefix string, mutate ereportNodeMutator) {
 	orgID := r.PathValue("orgId")
 	reportID := r.PathValue("reportId")
 	meta, payload, err := a.ereport.loadReport(user.ID, orgID, reportID)
@@ -309,7 +344,6 @@ func (a *App) ereportV1MutateReport(w http.ResponseWriter, r *http.Request, muta
 		if apiErr.Detail != "" {
 			out["hint"] = apiErr.Detail
 		}
-		// conflict may not have a safe message mapping — keep generic message
 		if apiErr.Code == "conflict" {
 			out["message"] = "That resource already exists."
 		}
@@ -321,7 +355,7 @@ func (a *App) ereportV1MutateReport(w http.ResponseWriter, r *http.Request, muta
 	}
 	var snapshotID string
 	if payload != nil {
-		sid, snapErr := a.ereport.saveSnapshot(user.ID, orgID, reportID, meta.Tema, "api-node", apiKeyPrefixFrom(r), payload)
+		sid, snapErr := a.ereport.saveSnapshot(user.ID, orgID, reportID, meta.Tema, snapshotSource, keyPrefix, payload)
 		if snapErr != nil {
 			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 			return
@@ -355,6 +389,39 @@ func (a *App) ereportV1MutateReport(w http.ResponseWriter, r *http.Request, muta
 		out["snapshotId"] = snapshotID
 	}
 	writeJSON(w, status, out)
+}
+
+func (a *App) ereportPostSectionHandler(w http.ResponseWriter, r *http.Request) {
+	a.ereportSessionMutateReport(w, r, mutateCreateSection())
+}
+
+func (a *App) ereportPatchSectionHandler(w http.ResponseWriter, r *http.Request) {
+	sectionID := r.PathValue("sectionId")
+	a.ereportSessionMutateReport(w, r, mutatePatchSection(sectionID))
+}
+
+func (a *App) ereportPostGroupHandler(w http.ResponseWriter, r *http.Request) {
+	sectionID := r.PathValue("sectionId")
+	a.ereportSessionMutateReport(w, r, mutateCreateGroup(sectionID))
+}
+
+func (a *App) ereportPatchGroupHandler(w http.ResponseWriter, r *http.Request) {
+	sectionID := r.PathValue("sectionId")
+	groupID := r.PathValue("groupId")
+	a.ereportSessionMutateReport(w, r, mutatePatchGroup(sectionID, groupID))
+}
+
+func (a *App) ereportPostItemHandler(w http.ResponseWriter, r *http.Request) {
+	sectionID := r.PathValue("sectionId")
+	groupID := r.PathValue("groupId")
+	a.ereportSessionMutateReport(w, r, mutateCreateItem(sectionID, groupID))
+}
+
+func (a *App) ereportPatchItemHandler(w http.ResponseWriter, r *http.Request) {
+	sectionID := r.PathValue("sectionId")
+	groupID := r.PathValue("groupId")
+	itemID := r.PathValue("itemId")
+	a.ereportSessionMutateReport(w, r, mutatePatchItem(sectionID, groupID, itemID))
 }
 
 func findSection(payload map[string]any, sectionID string) (map[string]any, int, error) {

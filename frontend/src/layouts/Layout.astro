@@ -457,20 +457,20 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
               eoProject
             </a>
-            <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || (path.startsWith("/ereport/") && path !== "/ereport/web-connector") ? "page" : undefined}>
+            <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
               eReport
             </a>
-            <a
-              href="/ereport/web-connector"
-              data-route
+            <button
+              type="button"
+              data-ereport-connector-open
               data-service="ereport"
               hidden
-              aria-current={path === "/ereport/web-connector" ? "page" : undefined}
+              aria-label="Open eReport connector"
             >
               <span class="material-symbols-outlined" aria-hidden="true">cable</span>
               Connector
-            </a>
+            </button>
             <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">api</span>
               API docs
