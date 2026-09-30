@@ -35,7 +35,7 @@ describe("classifyLessonParas", () => {
 });
 
 describe("lesson rich layout", () => {
-  it("places Explora left and Práctica + Error right under Idea central", () => {
+  it("places Práctica full-width with workspace, then Explora left and Error right", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -57,14 +57,40 @@ describe("lesson rich layout", () => {
     });
     const pages = renderEoschoolPages(doc);
     const rich = pages[0].querySelector(".homescool-letter__rich");
+    expect(rich?.querySelector(".homescool-letter__box--lead")).toBeTruthy();
+    const practice = rich?.querySelector(".homescool-letter__practice-strip .homescool-letter__box--practice");
+    expect(practice).toBeTruthy();
+    expect(practice?.querySelector(".homescool-letter__practice-workspace--write")).toBeTruthy();
     const row = rich?.querySelector(".homescool-letter__lesson-row");
     expect(row).toBeTruthy();
     const main = row?.querySelector(".homescool-letter__lesson-main");
     const side = row?.querySelector(".homescool-letter__lesson-side");
     expect(main?.querySelector(".homescool-letter__box--card")).toBeTruthy();
-    expect(side?.querySelectorAll(".homescool-letter__box--practice, .homescool-letter__box--error")).toHaveLength(2);
-    expect(rich?.querySelector(".homescool-letter__box--lead")).toBeTruthy();
+    expect(side?.querySelector(".homescool-letter__box--error")).toBeTruthy();
+    expect(side?.querySelector(".homescool-letter__box--practice")).toBeFalsy();
     expect(pages[0].querySelector(".homescool-letter__point")?.className).not.toMatch(/border/);
+  });
+
+  it("gives drawing practices a blank draw workspace", () => {
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          {
+            id: "p1",
+            heading: "Panorama",
+            body: ["Idea.", "Detalle.", "Práctica: dibuja un perfil.", "Error a corregir: omitir detalles."].join(
+              "\n\n",
+            ),
+          },
+        ],
+        summary: "",
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const practice = pages[0].querySelector(".homescool-letter__box--practice");
+    expect(practice?.querySelector(".homescool-letter__practice-workspace--draw")).toBeTruthy();
   });
 });
 

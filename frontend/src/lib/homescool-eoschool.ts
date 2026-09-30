@@ -747,11 +747,20 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
 
   const lead = paras.filter((p) => p.kind === "lead");
   const mid = paras.filter((p) => p.kind === "card" || p.kind === "contrast");
-  const specials = paras.filter(
-    (p) => p.kind === "practice" || p.kind === "error" || p.kind === "tip" || p.kind === "goal",
+  const practices = paras.filter((p) => p.kind === "practice");
+  const sideSpecials = paras.filter(
+    (p) => p.kind === "error" || p.kind === "tip" || p.kind === "goal",
   );
 
   for (const p of lead) root.append(renderParaBlock(p));
+
+  // Práctica full-width under Idea central so the in-box write/draw workspace fits
+  // (capped in CSS to ~⅓ of the Letter content band).
+  if (practices.length) {
+    const practiceStrip = el("div", "homescool-letter__practice-strip");
+    for (const p of practices) practiceStrip.append(renderParaBlock(p));
+    root.append(practiceStrip);
+  }
 
   const appendMidBlocks = (parent: HTMLElement) => {
     mid.forEach((p, i) => {
@@ -761,12 +770,12 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
     });
   };
 
-  if (mid.length && specials.length) {
+  if (mid.length && sideSpecials.length) {
     const row = el("div", "homescool-letter__lesson-row");
     const main = el("div", "homescool-letter__lesson-main");
     appendMidBlocks(main);
     const side = el("div", "homescool-letter__lesson-side");
-    for (const p of specials) side.append(renderParaBlock(p));
+    for (const p of sideSpecials) side.append(renderParaBlock(p));
     row.append(main, side);
     root.append(row);
   } else {
@@ -775,9 +784,9 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
       appendMidBlocks(grid);
       root.append(grid);
     }
-    if (specials.length) {
+    if (sideSpecials.length) {
       const strip = el("div", "homescool-letter__specials");
-      for (const p of specials) strip.append(renderParaBlock(p));
+      for (const p of sideSpecials) strip.append(renderParaBlock(p));
       root.append(strip);
     }
   }
@@ -786,6 +795,27 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
     root.append(el("p", "homescool-letter__body", body));
   }
   return root;
+}
+
+function practiceNeedsDraw(text: string): boolean {
+  return /\b(dibuja|dibujar|traza|trazar|bosqueja|bosquejar|colorea|colorear|pinta|pintar|draw|sketch|trace)\b/i.test(
+    text,
+  );
+}
+
+function buildPracticeWorkspace(text: string): HTMLElement {
+  if (practiceNeedsDraw(text)) {
+    const area = el("div", "homescool-letter__practice-workspace homescool-letter__practice-workspace--draw");
+    area.setAttribute("aria-hidden", "true");
+    area.title = "Espacio para dibujar la práctica";
+    return area;
+  }
+  const lines = el("div", "homescool-letter__practice-workspace homescool-letter__practice-workspace--write");
+  lines.setAttribute("aria-hidden", "true");
+  for (let n = 0; n < 5; n++) {
+    lines.append(el("div", "homescool-letter__write-line"));
+  }
+  return lines;
 }
 
 function renderParaBlock(p: RichPara): HTMLElement {
@@ -818,15 +848,9 @@ function renderParaBlock(p: RichPara): HTMLElement {
     row.append(mark);
     const copy = el("div", "homescool-letter__practice-copy");
     copy.append(el("p", "homescool-letter__body", p.text));
-    copy.append(
-      el(
-        "p",
-        "homescool-letter__practice-hint",
-        "Si hace falta, haz la práctica en el reverso de la hoja.",
-      ),
-    );
     row.append(copy);
     box.append(row);
+    box.append(buildPracticeWorkspace(p.text));
     return box;
   }
 

@@ -828,7 +828,14 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   gap: 0.28rem;
 }
 
-/* Idea central full width; Explora left, Práctica + Error right. */
+/* Idea central + Práctica full width; Explora left, Error/Tip right. */
+.homescool-letter__practice-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
 .homescool-letter__lesson-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -912,6 +919,11 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__box--practice {
   background: transparent;
   border-color: var(--hc-blue);
+  /* Cap practice+workspace to ~⅓ of the Letter content band (page − margins − hero). */
+  max-height: calc((11in - 2cm - 1.6cm) / 3);
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .homescool-letter__box--error {
@@ -1186,7 +1198,9 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex-direction: column;
   gap: 0.45rem;
   margin: 0.25rem 0 0.15rem;
-  padding-left: calc(var(--hc-q-num-size) + 0.35rem);
+  /* Full card width (text stays indented via .homescool-letter__q-head). */
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .homescool-letter__write-line {
@@ -1863,12 +1877,13 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   }
 }
 
-/* Practice check (cambio 4) */
+/* Practice check + in-box workspace (write lines or draw blank). */
 .homescool-letter__practice-row {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 0.35rem;
+  flex: 0 0 auto;
 }
 
 .homescool-letter__practice-mark {
@@ -1889,13 +1904,29 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex: 1 1 auto;
 }
 
-.homescool-letter__practice-hint {
-  margin: 0;
-  font-size: 0.3cm;
-  line-height: 0.3cm;
-  line-height: 1.3;
-  color: var(--hc-ink-soft);
-  font-style: italic;
+.homescool-letter__practice-workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 2.2cm;
+  margin-top: 0.2rem;
+  min-width: 0;
+}
+
+.homescool-letter__practice-workspace--write {
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.homescool-letter__practice-workspace--write .homescool-letter__write-line {
+  flex: 1 1 auto;
+  min-height: 0.7rem;
+}
+
+.homescool-letter__practice-workspace--draw {
+  border: 0.06rem dashed var(--hc-blue);
+  border-radius: 0.22rem;
+  background: transparent;
 }
 
 /* Day-5 expo lined page (cambio 14) */
