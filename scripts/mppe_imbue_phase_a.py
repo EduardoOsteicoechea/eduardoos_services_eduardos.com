@@ -423,7 +423,191 @@ CELLS_B: dict[tuple[int, str, int], CellSpec] = {
     ),
 }
 
-ALL_CELLS: dict[tuple[int, str, int], CellSpec] = {**CELLS, **CELLS_B}
+# Phase C: ing + LT + cie (weeks 1–2, imbuición ligera)
+CELLS_C: dict[tuple[int, str, int], CellSpec] = {
+    # --- ING week 1 (-ar/-er/-ir) — labels EN ---
+    (1, "ing", 1): spec(
+        [
+            ("len-lec-07", "I spot nouns and verbs in Spanish examples."),
+            ("len-lec-05", "I read Spanish lines aloud to practice."),
+        ],
+        "Link to **history** this week: «Los **Timotocuicas** **viven** en los llanos» — **viven** = verb, **Timotocuicas** = noun.",
+        ("d1-q8", "Choose the correct answer. What is **cantar**?", ["An infinitive", "A country", "A number", "A map"], "An infinitive"),
+    ),
+    (1, "ing", 2): spec(
+        [("len-lec-05", "I read and repeat -er verb patterns.")],
+        "Pattern: **comer** → yo **como**; same rhythm as **vivir** → yo **vivo**.",
+        ("d2-q7", "Choose the correct answer. The stem of **comer** is:", ["com-", "comer-", "come-", "como-"], "com-"),
+    ),
+    (1, "ing", 3): spec(
+        [("len-lec-06", "I order Spanish words into a sentence.")],
+        "Word bank: **Caracas / es / grande** → **Caracas es grande** (capital of Venezuela).",
+        ("d3-q7", "Choose the correct answer. **Vivir** belongs to which family?", ["-ir", "-ar only", "-er only", "English -ing"], "-ir"),
+    ),
+    (1, "ing", 4): spec(
+        [("len-esc-03", "I write short Spanish sentences with correct endings.")],
+        "Write: «Yo **estudio** español en **Caracas**» — check yo ending -o on **estudiar**.",
+        ("d4-q7", "Choose the correct answer. **Tú cantas** uses which ending?", ["-as", "-o", "-e", "-en"], "-as"),
+    ),
+    (1, "ing", 5): spec(
+        [
+            ("len-ora-05", "I say conjugations aloud clearly."),
+            ("len-lec-05", "I review the week by reading aloud."),
+        ],
+        "Recite the three families **-ar / -er / -ir** once each for yo, tú, él.",
+        ("d5-q7", "Choose the correct answer. How many Spanish verb families this week?", ["Three", "One", "Nine", "Zero"], "Three"),
+    ),
+    # --- ING week 2 (tenses) ---
+    (2, "ing", 1): spec(
+        [
+            ("len-lec-06", "I build history sentences with Spanish time words."),
+            ("len-lec-05", "I read one-word vs two-word tenses aloud."),
+        ],
+        "History link: «**Colón llegó** en 1498» (one word, closed past) vs «**he llegado**» (two words).",
+        ("d1-q8", "Choose the correct answer. **He cantado** has how many verb words?", ["Two", "One", "Zero", "Five"], "Two"),
+    ),
+    (2, "ing", 2): spec(
+        [("len-lec-05", "I compare **canto** and **he cantado** aloud.")],
+        "**Canto** = now/habit; **he cantado** = already done and still matters.",
+        ("d2-q7", "Choose the correct answer. **Canto** is mostly:", ["One word", "Two words", "Three words", "No verb"], "One word"),
+    ),
+    (2, "ing", 3): spec(
+        [("len-lec-06", "I order words about the 1499 voyage.")],
+        "Order: «**Ojeda / exploró / la / costa**».",
+        ("d3-q7", "Choose the correct answer. **Había comido** uses:", ["Two words", "One word", "No verb", "Only English"], "Two words"),
+    ),
+    (2, "ing", 4): spec(
+        [("len-esc-04", "I plan three Spanish sentences before writing.")],
+        "Plan three lines: past (one word), past (two words), future (**cantaré**).",
+        ("d4-q7", "Choose the correct answer. **Cantaré** points to:", ["Future", "Yesterday only", "No time", "English past"], "Future"),
+    ),
+    (2, "ing", 5): spec(
+        [("len-ora-05", "I explain one-word vs two-word tenses aloud.")],
+        "Tell someone at home when to pick **canté** vs **he cantado**.",
+        ("d5-q7", "Choose the correct answer. This week we learned:", ["When to use one or two verb words", "Only English grammar", "Map of Europe only", "Latin prepositions"], "When to use one or two verb words"),
+    ),
+    # --- LT week 1 ---
+    (1, "LT", 1): spec(
+        [
+            ("len-lec-08", "Leo mapas al ubicar pueblos antiguos."),
+            ("ide-hum-02", "Comparo formas de contar el pasado."),
+        ],
+        "En la **misma franja de tiempo**, en el territorio que hoy es **Venezuela**, también vivían pueblos originarios (puente con **historia** de esta semana).",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué herramienta usas en la práctica del punto 3?", ["Un mapa", "Una calculadora", "Un volcán", "Un piano"], "Un mapa"),
+    ),
+    (1, "LT", 2): spec(
+        [("len-lec-08", "Ubico Mesopotamia en un mapa.")],
+        "Mientras estudias **sumerios** entre ríos, recuerda que América también tiene su propia línea de tiempo paralela.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Entre qué ríos está Mesopotamia?", ["Tigris y Éufrates", "Nilo y Amazonas", "Orinoco y Danubio", "Senegal y Volga"], "Tigris y Éufrates"),
+    ),
+    (1, "LT", 3): spec(
+        [
+            ("len-lec-08", "Leo mapas de Egipto, India, Creta y Grecia."),
+            ("ide-hum-02", "Separo fuentes: historia y relato bíblico."),
+        ],
+        "Al marcar **Creta** y **Grecia**, di en voz alta: «En Venezuela, en esa misma era lejana, otros pueblos también tenían su historia».",
+        ("d3-q7", "Elige la respuesta correcta. ¿Qué son los minoicos?", ["Un pueblo de Creta", "Una capital de Venezuela", "Un tejido", "Un verbo"], "Un pueblo de Creta"),
+    ),
+    (1, "LT", 4): spec(
+        [("len-lec-05", "Leo la línea de tiempo en voz alta.")],
+        "Repasa hitos en orden sin mezclar fecha histórica con capítulo bíblico.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué es un hito?", ["Un hecho importante para recordar", "Un color", "Una tabla del 7", "Un adjetivo"], "Un hecho importante para recordar"),
+    ),
+    (1, "LT", 5): spec(
+        [
+            ("ide-hum-02", "Explico dos fuentes distintas del pasado."),
+            ("len-lec-08", "Repaso mapa y línea juntos."),
+        ],
+        "Cierra la semana nombrando un pueblo del mapa mundial y un hito de Génesis **sin** mezclarlos.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué NO debes mezclar?", ["Relato bíblico y fecha histórica como si fueran lo mismo", "Lápiz y goma", "Agua y sed", "Día y noche"], "Relato bíblico y fecha histórica como si fueran lo mismo"),
+    ),
+    # --- LT week 2 ---
+    (2, "LT", 1): spec(
+        [
+            ("len-lec-08", "Leo mapas de reinos antiguos."),
+            ("ide-hum-02", "Relaciono pasado lejano con Venezuela."),
+        ],
+        "En la misma franja de tiempo, en **Venezuela** también hay relatos de pueblos y luego de viajes europeos (conecta con **historia** s2).",
+        ("d1-q8", "Elige la respuesta correcta. ¿Para qué sirve la línea de tiempo?", ["Ordenar hechos", "Cocinar", "Multiplicar", "Dibujar OiLS"], "Ordenar hechos"),
+    ),
+    (2, "LT", 2): spec(
+        [("len-lec-08", "Ubico regiones en el mapa antiguo.")],
+        "Un reino lejano en el mapa no quita que **Paria** y **La Guajira** también tienen historia en esa época.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Qué país estudias en historia esta semana?", ["Venezuela", "Japón", "Australia", "Islandia"], "Venezuela"),
+    ),
+    (2, "LT", 3): spec(
+        [("len-lec-05", "Leo nombres de pueblos antiguos con atención.")],
+        "Patriarcas e imperios van en la línea mundial; la costa venezolana tiene su propio hilo narrativo.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Qué colocas primero en la línea?", ["Lo más antiguo", "Lo de mañana", "Lo inventado", "Nada"], "Lo más antiguo"),
+    ),
+    (2, "LT", 4): spec(
+        [("len-lec-08", "Comparo dos regiones en el mapa.")],
+        "Señala dos lugares lejanos y repite la frase ancla sobre **Venezuela** en la misma franja temporal.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué usas para no confundir regiones?", ["El mapa", "Solo adivinar", "Olvidar nombres", "Mezclar todo"], "El mapa"),
+    ),
+    (2, "LT", 5): spec(
+        [
+            ("ide-hum-02", "Cuento pasado lejano sin mezclar fuentes."),
+            ("len-lec-08", "Repaso mapa de la semana."),
+        ],
+        "Repaso: mundo antiguo + ancla **Venezuela** + orden en la línea.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué materia comparte la costa venezolana esta semana?", ["Historia", "Solo latín", "Solo arte OiLS", "Nada"], "Historia"),
+    ),
+    # --- CIE week 1 (tejidos) ---
+    (1, "cie", 1): spec(
+        [("cie-cts-03", "Observo, describo y clasifico como científico escolar.")],
+        "Actitud de **cuidado**: observa la **piel** (epitelial) sin dañarla; lávese las manos antes de tocar modelos.",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué tejido cubre la piel?", ["Epitelial", "Nervioso solo", "Cartílago solo", "Agua"], "Epitelial"),
+    ),
+    (1, "cie", 2): spec(
+        [("cie-cts-03", "Registro lo que observo al comparar músculos.")],
+        "Al mover el brazo, **observa** esquelético vs liso y anota en una frase qué cambió.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Qué tejido mueve el bíceps?", ["Muscular esquelético", "Epitelial", "Sangre sola", "Pelo"], "Muscular esquelético"),
+    ),
+    (1, "cie", 3): spec(
+        [("cie-cts-03", "Sigo estímulo → mensaje → respuesta.")],
+        "Protege tu cuerpo: si algo duele al tocar caliente, el **nervioso** avisa — no ignores la señal.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Qué tejido lleva mensajes?", ["Nervioso", "Conectivo óseo", "Solo epitelial", "Aire"], "Nervioso"),
+    ),
+    (1, "cie", 4): spec(
+        [("cie-cts-03", "Clasifico los cuatro tejidos con evidencia.")],
+        "Tabla sencilla: tejido | ejemplo | función — **observa** antes de escribir.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Cuántos tejidos estudias esta semana?", ["Cuatro", "Dos", "Doce", "Uno"], "Cuatro"),
+    ),
+    (1, "cie", 5): spec(
+        [("cie-cts-03", "Comunico lo aprendido sobre cuidar el cuerpo.")],
+        "Explica a alguien en casa un hábito de **cuidado** (postura, higiene) ligado a tus tejidos.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué NO es un tejido?", ["Una camisa de algodón", "Músculo", "Piel", "Nervio"], "Una camisa de algodón"),
+    ),
+    # --- CIE week 2 (huesos) ---
+    (2, "cie", 1): spec(
+        [("cie-cts-03", "Observo y nombro partes del esqueleto.")],
+        "El **hueso** conectivo protege órganos: **observa** cráneo, costillas y columna con cuidado en el dibujo.",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué protege el cráneo?", ["El cerebro", "El estómago", "La piel sola", "El cabello"], "El cerebro"),
+    ),
+    (2, "cie", 2): spec(
+        [("cie-cts-03", "Comparo huesos en una tabla.")],
+        "Anota: hueso | para qué sirve | cómo lo **cuidas** (ejercicio suave, no golpes).",
+        ("d2-q7", "Elige la respuesta correcta. ¿Dónde están las vértebras?", ["En la columna", "En la nariz sola", "En el pelo", "En la uña"], "En la columna"),
+    ),
+    (2, "cie", 3): spec(
+        [("cie-cts-03", "Describo el esternón y las costillas.")],
+        "Las **costillas** forman jaula; respira profundo y siente el movimiento sin forzar.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Qué une costillas y esternón?", ["Proteger el pecho", "Multiplicar", "Mapa", "Verbo"], "Proteger el pecho"),
+    ),
+    (2, "cie", 4): spec(
+        [("cie-cts-03", "Registro un dibujo etiquetado del esqueleto.")],
+        "Etiqueta tres huesos y escribe una regla de **cuidado** (calzado, postura, calentamiento).",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué es el esqueleto?", ["Conjunto de huesos", "Un músculo", "Un tejido epitelial", "Un río"], "Conjunto de huesos"),
+    ),
+    (2, "cie", 5): spec(
+        [("cie-cts-03", "Explico cómo cuidar huesos y músculos.")],
+        "Repaso: nombra cráneo, vértebras, costillas, esternón + un hábito saludable.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué semana es?", ["Huesos que cuidan tu cuerpo", "Plantas y fotosíntesis", "Mezclas y alimentos", "Gravedad"], "Huesos que cuidan tu cuerpo"),
+    ),
+}
+
+ALL_CELLS: dict[tuple[int, str, int], CellSpec] = {**CELLS, **CELLS_B, **CELLS_C}
 
 
 def inject_anchor(body: str, anchor: str) -> str:
@@ -501,7 +685,7 @@ def apply_file(path: Path, week: int, subject: str, day: int, cells: dict | None
 
 def main() -> int:
     touched: list[str] = []
-    subjects = ("his", "geo", "esp", "pro", "mat", "art")
+    subjects = ("his", "geo", "esp", "pro", "mat", "art", "ing", "LT", "cie")
     for week in (1, 2):
         for subject in subjects:
             for day in range(1, 6):
