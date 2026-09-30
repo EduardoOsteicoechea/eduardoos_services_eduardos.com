@@ -23,6 +23,7 @@
 
   var INIT_TYPE = "ereport-embed-init";
   var READY_TYPE = "ereport-embed-ready";
+  var CLOSE_TYPE = "ereport-embed-close";
   var OVERLAY_ID = "eduardoos-ereport-embed-overlay";
   var THEME_ID = "eduardoos-ereport-embed-theme";
   var activeMessageHandler = null;
@@ -120,6 +121,10 @@
     activeMessageHandler = function (ev) {
       if (!ev || !ev.data || typeof ev.data !== "object") return;
       if (!sameHost(ev.origin, baseUrl)) return;
+      if (ev.data.type === CLOSE_TYPE) {
+        closeOverlay();
+        return;
+      }
       if (ev.data.type === READY_TYPE) {
         sent = false;
         sendInit();

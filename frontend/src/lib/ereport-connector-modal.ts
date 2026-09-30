@@ -3,6 +3,7 @@ import { mustLog } from "./dev-log";
 const OVERLAY_ID = "eduardoos-ereport-connector-overlay";
 const INIT_TYPE = "ereport-embed-init";
 const READY_TYPE = "ereport-embed-ready";
+const CLOSE_TYPE = "ereport-embed-close";
 
 export type EreportConnectorOpenOpts = {
   orgId?: string;
@@ -17,25 +18,40 @@ function baseOrigin(opts?: EreportConnectorOpenOpts): string {
 }
 
 function onEscape(ev: KeyboardEvent) {
-  if (ev.key === "Escape") closeEreportConnectorModal();
+  if (ev.key === "Escape") {
+    ev.preventDefault();
+    ev.stopPropagation();
+    closeEreportConnectorModal();
+  }
 }
 
 let messageHandler: ((ev: MessageEvent) => void) | null = null;
+let openBase = "";
 
 export function closeEreportConnectorModal() {
   const existing = document.getElementById(OVERLAY_ID);
   if (existing?.parentNode) existing.parentNode.removeChild(existing);
   document.removeEventListener("keydown", onEscape, true);
   document.documentElement.classList.remove("ereport-connector-open");
+  openBase = "";
   if (messageHandler) {
     window.removeEventListener("message", messageHandler);
     messageHandler = null;
   }
 }
 
+function sameHost(origin: string, base: string): boolean {
+  try {
+    return new URL(origin).host === new URL(base).host;
+  } catch {
+    return false;
+  }
+}
+
 export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   closeEreportConnectorModal();
   const base = baseOrigin(opts);
+  openBase = base;
   const orgId = (opts.orgId || "").trim();
   const reportId = (opts.reportId || "").trim();
 
@@ -60,7 +76,11 @@ export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   closeBtn.className = "ereport-connector-overlay__close";
   closeBtn.setAttribute("aria-label", "Close");
   closeBtn.textContent = "×";
-  closeBtn.addEventListener("click", () => closeEreportConnectorModal());
+  closeBtn.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    closeEreportConnectorModal();
+  });
 
   const iframe = document.createElement("iframe");
   iframe.className = "ereport-connector-overlay__iframe";
@@ -83,12 +103,13 @@ export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
 
   messageHandler = (ev: MessageEvent) => {
     if (!ev.data || typeof ev.data !== "object") return;
-    try {
-      if (new URL(ev.origin).host !== new URL(base).host) return;
-    } catch {
+    if (!sameHost(ev.origin, openBase || base)) return;
+    const type = (ev.data as { type?: string }).type;
+    if (type === CLOSE_TYPE) {
+      closeEreportConnectorModal();
       return;
     }
-    if ((ev.data as { type?: string }).type === READY_TYPE) {
+    if (type === READY_TYPE) {
       sent = false;
       sendInit();
     }
@@ -106,12 +127,8 @@ export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   document.addEventListener("keydown", onEscape, true);
   closeBtn.focus();
 
-  // Close global trays so the wide canvas is unobstructed.
-  document.getElementById("main-menu")?.setAttribute("hidden", "");
-  document.getElementById("dynamic-header")?.setAttribute("hidden", "");
-  document.querySelectorAll(".header-menu[aria-expanded='true']").forEach((btn) => {
-    btn.setAttribute("aria-expanded", "false");
-  });
+  // Ask chrome to close trays without breaking aria state.
+  document.dispatchEvent(new CustomEvent("eos:close-trays"));
 
   if (mustLog) console.log("[ereport-connector-modal] open", { orgId: Boolean(orgId), reportId: Boolean(reportId) });
 }

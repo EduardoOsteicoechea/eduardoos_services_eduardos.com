@@ -554,6 +554,9 @@ export function startChrome(): void {
 
   if (!window.__chromeStarted) {
     window.__chromeStarted = true;
+    document.addEventListener("eos:close-trays", () => {
+      closeAllPanels();
+    });
     syncShellViewportWidth();
     window.addEventListener("resize", syncShellViewportWidth);
     window.visualViewport?.addEventListener("resize", syncShellViewportWidth);

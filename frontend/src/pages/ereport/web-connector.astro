@@ -135,23 +135,24 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <style is:global>
-  html[data-page="ereport-web-connector"] .app-header,
-  html[data-page="ereport-web-connector"] #main-menu,
-  html[data-page="ereport-web-connector"] #dynamic-header,
-  html[data-page="ereport-web-connector"] #agent-sidebar,
-  html[data-page="ereport-web-connector"] .app-header--end {
+  /* Only strip site chrome when this route is mounted inside the connector iframe. */
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] .app-header,
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] #main-menu,
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] #dynamic-header,
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] #agent-sidebar,
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] .app-header--end {
     display: none !important;
   }
 
-  html[data-page="ereport-web-connector"] {
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] {
     background: var(--color-bg);
   }
 
-  html[data-page="ereport-web-connector"] body {
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] body {
     background: var(--color-bg);
   }
 
-  html[data-page="ereport-web-connector"] main {
+  html[data-page="ereport-web-connector"][data-ereport-embed="1"] main {
     display: block;
     padding: var(--space-padding);
     margin: 0;
@@ -163,7 +164,7 @@ import Layout from "../../layouts/Layout.astro";
     flex-direction: column;
     gap: var(--space-padding);
     grid-column: unset;
-    max-width: 56rem;
+    max-width: 40rem;
   }
 
   .ereport-wc__hero {

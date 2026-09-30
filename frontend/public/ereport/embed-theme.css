@@ -40,11 +40,8 @@
   --eos-ereport-pad: 1rem;
   --eos-ereport-control-h: 2.5rem;
   --eos-ereport-overlay: rgba(0, 0, 0, 0.5);
-  --eos-ereport-frame-w: 72rem;
-  --eos-ereport-frame-h: 56rem;
-  /* When modal is open, frame stretches to near-viewport (host may set these). */
-  --eos-ereport-frame-open-w: 90rem;
-  --eos-ereport-frame-open-h: 56rem;
+  --eos-ereport-frame-w: 40rem;
+  --eos-ereport-frame-h: 36rem;
   --eos-ereport-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.4);
   --eos-ereport-z-overlay: 2147483646;
   --eos-ereport-z-fab: 2147483645;
@@ -122,31 +119,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   min-height: 0;
   width: var(--eos-ereport-frame-w);
   height: var(--eos-ereport-frame-h);
-  max-width: calc(var(--eos-ereport-frame-open-w) - 0rem);
-  max-height: calc(var(--eos-ereport-frame-open-h) - 0rem);
+  max-width: calc(var(--eos-ereport-frame-w) + 0rem);
+  max-height: calc(var(--eos-ereport-frame-h) + 0rem);
   border: 0.0625rem solid var(--eos-ereport-border);
   border-radius: var(--eos-ereport-radius);
   background: var(--eos-ereport-bg);
   box-shadow: var(--eos-ereport-shadow);
   overflow: hidden;
-}
-
-html.ereport-connector-open #eduardoos-ereport-embed-overlay {
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-html.ereport-connector-open #eduardoos-ereport-embed-overlay .eos-ereport-embed-frame {
-  width: auto;
-  height: auto;
-  max-width: none;
-  max-height: none;
-  flex: 1;
 }
 
 #eduardoos-ereport-embed-overlay iframe {

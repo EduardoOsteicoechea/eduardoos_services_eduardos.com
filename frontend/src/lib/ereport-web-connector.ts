@@ -10,6 +10,7 @@ import {
 
 const INIT_TYPE = "ereport-embed-init";
 const READY_TYPE = "ereport-embed-ready";
+const CLOSE_TYPE = "ereport-embed-close";
 
 type ChecklistRow = { id?: string; label?: string; checked?: boolean };
 type ItemNode = {
@@ -537,6 +538,11 @@ export function startEreportWebConnector(root: HTMLElement) {
     void saveItem();
   });
 
+  const embedded = Boolean(window.parent && window.parent !== window);
+  if (embedded) {
+    document.documentElement.dataset.ereportEmbed = "1";
+  }
+
   window.addEventListener("message", (ev: MessageEvent) => {
     const data = ev.data;
     if (!data || typeof data !== "object") return;
@@ -547,8 +553,23 @@ export function startEreportWebConnector(root: HTMLElement) {
     void bootstrap({ orgId, reportId });
   });
 
+  document.addEventListener(
+    "keydown",
+    (ev) => {
+      if (ev.key !== "Escape" || !embedded) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      try {
+        window.parent.postMessage({ type: CLOSE_TYPE }, window.location.origin);
+      } catch {
+        /* ignore */
+      }
+    },
+    true,
+  );
+
   try {
-    if (window.parent && window.parent !== window) {
+    if (embedded) {
       window.parent.postMessage({ type: READY_TYPE }, "*");
     }
   } catch {
