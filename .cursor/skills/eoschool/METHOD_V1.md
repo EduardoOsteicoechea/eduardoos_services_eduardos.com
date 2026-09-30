@@ -31,17 +31,19 @@ A child of â‰ˆ8 must be able to **read the sheet alone** and understand ever
 **Forbidden:** jargon without an immediate plain-language gloss (e.g. bare Â«participioÂ», Â«auxiliarÂ», Â«indicativoÂ», Â«epitelialÂ»).  
 Define on first use: *X = explicaciÃ³n sencilla + ejemplo*. Prefer kid words (*forma ya hecha*, *palabra ayudante*, *una palabra / dos palabras*) alongside the school term.
 
-**Narrative voice (mandatory):** keep the FE boxes (Idea central â†’ Explora â†’ PrÃ¡ctica â†’ Error), but write **guided prose** that continues from one box to the next (Â«Hoy vamosâ€¦Â», Â«Sigamos juntosâ€¦Â», Â«Ahora te tocaâ€¦Â»).  
-Forbidden: bullet-stack / checklist tone inside Idea central.  
-Forbidden: telegraphic separators in student-facing prose (`|`, bare `TÃ©rmino = glosa`, `A â†’ B â†’ C` chains, `LÃ­nea: A | B`). Prefer full short sentences (Â«La promesa esâ€¦Â», Â«Escribe una frase sobre la creaciÃ³n, otra sobreâ€¦Â»). Keep math equations and conjugation maps (`habl- â†’ hablo`) when they teach a form.  
-Avoid bare Â«frente aÂ» / Â«vsÂ» in mid paragraphs unless you *want* a Contraste two-column split.
+**Narrative voice (mandatory):** full contract in [`docs/specs/009-homescool-narrative-language.md`](../../../docs/specs/009-homescool-narrative-language.md). Summary:
+
+- FE boxes = **blank-line paragraphs** (Idea central → Explora → Práctica → Error). **Do not** paste `Idea central:` / `Explora:` / `explora:` inside the body; the UI already labels boxes.
+- **Guided prose** for ≈8 years: one opening hook per point, then examples, then **`Práctica: Ahora te toca a ti.`** + task, then **`Error común:`** without filler («Antes de terminar, un aviso» forbidden).
+- **Forbidden:** checklist Idea central, telegraphic `|` / `A → B` chains, repeated boilerplate («Esta clase te ayuda a aprender…», «Antes de hacer la actividad…», «Aprendemos:» headings), bare jargon, orders-only deepen bodies.
+- **Allowed:** math/conjugation maps when they teach form; bare «frente a» / «vs» only when you want a Contraste split.
 
 Each `lesson.points[].body` uses blank-line paragraphs so the FE boxes them:
 
 1. **Idea central** (first paragraph): what the idea is + definitions of every technical word used that day.  
-2. **Explora** (1â€“3 paragraphs): worked examples step by step.  
-3. **`PrÃ¡ctica:`** â€¦ concrete tasks.  
-4. **`Error comÃºn:`** â€¦ one typical mistake.  
+2. **Explora** (1–3 paragraphs): worked examples step by step (optional bridge «Sigamos juntos.» on the first Explora paragraph only).  
+3. **`Práctica:`** — start with **`Práctica: Ahora te toca a ti.`** then a capitalized task.  
+4. **`Error común:`** — one typical mistake, direct tone.  
 5. Optional **`Consejo:`** / **`Meta:`**.
 
 Deepen days re-teach the focus point fully (assume day 1 may be forgotten). Intro points define their own terms. Review overviews are mini-explanations, not slogans.
@@ -127,6 +129,7 @@ question, not only its instruction prefix. Each MCQ needs a new concrete prompt
 and plausible distractors drawn from the lesson’s likely confusions; each
 `write` prompt needs a new, short instruction that matches the day’s content.
 Adding «Elige la respuesta correcta» to an old question is not an adaptation.
+See [`docs/specs/009-homescool-narrative-language.md`](../../../docs/specs/009-homescool-narrative-language.md) for MCQ/choice wording rules (no `Respuesta:` prefix, etc.).
 
 **Week 1 (legacy):** days 1–3 accumulate **8** items/day (**8 / 16 / 24**); day 4 = **36**; day 5 = **52**. Mixed types allowed.
 
@@ -309,7 +312,7 @@ Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/h
 | `art` | Five elements of form (*Drawing with Children* / OiLS) |
 | `pro` | Scientific experiment â€” persistence of vision (Â«GuiÃ±andoÂ») |
 
-### Week 2 themes (same age band â‰ˆ 10)
+### Week 2 themes (same age band ≈ 8)
 
 | Code | Theme |
 | --- | --- |

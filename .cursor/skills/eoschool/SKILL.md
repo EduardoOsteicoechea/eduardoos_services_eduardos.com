@@ -13,6 +13,7 @@ disable-model-invocation: true
 **Install location:** project sidecar **`.eoschool/`** (connector repo).  
 **Before first run:** read [CAVEATS.md](CAVEATS.md).  
 **Method v1 (required):** [METHOD_V1.md](METHOD_V1.md)  
+**Narrative copy (level 6, required):** [docs/specs/009-homescool-narrative-language.md](../../docs/specs/009-homescool-narrative-language.md)  
 **Legacy HTML patterns:** [MATERIALS.md](MATERIALS.md) · [TEMPLATES.md](TEMPLATES.md) — do **not** use for new level-6 content.  
 **Live API contract:** always `GET /api/v1/docs` first (see [reference.md](reference.md)).  
 **CLI:** `.eoschool/eoschool_client.py`

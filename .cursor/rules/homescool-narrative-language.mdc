@@ -1,0 +1,26 @@
+---
+description: Homescool / eoschool lesson and quiz copy — narrative voice for level 6 (~8 years)
+globs:
+  - frontend/public/homescool/**/*.eoschool.json
+  - frontend/public/homescool/curriculum.json
+  - frontend/public/skills/eoschool/**
+  - .cursor/skills/eoschool/**
+  - scripts/build-homescool-curriculum.mjs
+  - docs/specs/009-homescool-narrative-language.md
+---
+
+# Homescool narrative language
+
+When authoring or revising **Homescool** `.eoschool` JSON (level **6**, ≈ **8 years**), follow the full contract:
+
+**[`docs/specs/009-homescool-narrative-language.md`](../../docs/specs/009-homescool-narrative-language.md)**
+
+Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) pedagogy (intro/deepen/review, quiz counts, dual storage).
+
+## Non-negotiables (summary)
+
+- Split each `lesson.points[].body` with **blank lines** into Idea central → Explora → **`Práctica: Ahora te toca a ti.`** → **`Error común:`**.
+- **Never** embed UI labels (`Idea central:`, `Explora:`, `explora:`) in the body text.
+- **Never** use forbidden boilerplate listed in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).
+- Adapt quizzes by **replacing** questions, not only prefixes.
+- After cell edits: `node scripts/build-homescool-curriculum.mjs` with API env to refresh `curriculum.json` and Mongo.
