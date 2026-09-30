@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+	"sync"
 )
 
 const (
@@ -11,6 +12,16 @@ const (
 	ereportNodeStatusReprobado = "reprobado"
 	ereportNodeStatusNA        = "no_aplica"
 )
+
+// Per-report locks so concurrent node writes (section/group/item) cannot
+// load-mutate-save and overwrite each other.
+var ereportNodeLocks sync.Map // key owner/org/report → *sync.Mutex
+
+func ereportReportNodeLock(ownerUserID, orgID, reportID string) *sync.Mutex {
+	key := strings.TrimSpace(ownerUserID) + "/" + strings.TrimSpace(orgID) + "/" + strings.TrimSpace(reportID)
+	v, _ := ereportNodeLocks.LoadOrStore(key, &sync.Mutex{})
+	return v.(*sync.Mutex)
+}
 
 // Additive granular mutations for API-key (v1) and session (web connector).
 // Does not use or alter mergeAppend / replace semantics.
@@ -311,6 +322,10 @@ func (a *App) ereportSessionMutateReport(w http.ResponseWriter, r *http.Request,
 func (a *App) ereportMutateReportNodes(w http.ResponseWriter, r *http.Request, user *User, snapshotSource, keyPrefix string, mutate ereportNodeMutator) {
 	orgID := r.PathValue("orgId")
 	reportID := r.PathValue("reportId")
+	lock := ereportReportNodeLock(user.ID, orgID, reportID)
+	lock.Lock()
+	defer lock.Unlock()
+
 	meta, payload, err := a.ereport.loadReport(user.ID, orgID, reportID)
 	if err != nil {
 		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))

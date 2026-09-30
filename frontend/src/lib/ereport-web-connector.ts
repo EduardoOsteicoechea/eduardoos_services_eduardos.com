@@ -164,36 +164,63 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   function basePath(): string {
-    return `/ereport/orgs/${selectedOrg()}/reports/${selectedReport()}`;
+    const org = encodeURIComponent(selectedOrg());
+    const report = encodeURIComponent(selectedReport());
+    return `/ereport/orgs/${org}/reports/${report}`;
   }
 
-  function refreshSectionOptions() {
+  function setBusy(busy: boolean) {
+    for (const btn of [
+      sectionCreate,
+      groupCreate,
+      itemCreate,
+      sectionSave,
+      groupSave,
+      itemSave,
+    ]) {
+      if (btn) btn.disabled = busy;
+    }
+  }
+
+  let writeChain: Promise<void> = Promise.resolve();
+  function enqueueWrite<T>(fn: () => Promise<T>): Promise<T> {
+    const run = writeChain.then(fn, fn);
+    writeChain = run.then(
+      () => undefined,
+      () => undefined,
+    );
+    return run;
+  }
+
+  function applyPayload(
+    next: ReportPayload | null | undefined,
+    keep: { sectionId?: string; groupId?: string; itemId?: string } = {},
+  ) {
+    if (next) payload = next;
+    const sectionId = keep.sectionId || "";
+    const groupId = keep.groupId || "";
+    const itemId = keep.itemId || "";
+
     const secs = payload?.sections || [];
     fillSelect(
       sectionSelect,
       secs.map((s) => ({ value: s.id, label: s.title || s.id })),
       "Select section…",
     );
-    sectionFields.hidden = true;
-    groupFields.hidden = true;
-    itemFields.hidden = true;
-    fillSelect(groupSelect, [], "Select subsection…");
-    fillSelect(itemSelect, [], "Select issue…");
-  }
+    if (sectionId && secs.some((s) => s.id === sectionId)) {
+      sectionSelect.value = sectionId;
+    }
 
-  function refreshGroupOptions() {
     const sec = findSection(selectedSection());
     fillSelect(
       groupSelect,
       (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
       "Select subsection…",
     );
-    groupFields.hidden = true;
-    itemFields.hidden = true;
-    fillSelect(itemSelect, [], "Select issue…");
-  }
+    if (groupId && (sec?.groups || []).some((g) => g.id === groupId)) {
+      groupSelect.value = groupId;
+    }
 
-  function refreshItemOptions() {
     const grp = findGroup(findSection(selectedSection()), selectedGroup());
     fillSelect(
       itemSelect,
@@ -203,7 +230,25 @@ export function startEreportWebConnector(root: HTMLElement) {
       })),
       "Select issue…",
     );
-    itemFields.hidden = true;
+    if (itemId && (grp?.items || []).some((it) => it.id === itemId)) {
+      itemSelect.value = itemId;
+    }
+
+    loadSectionFields();
+    loadGroupFields();
+    loadItemFields();
+  }
+
+  function refreshSectionOptions() {
+    applyPayload(payload);
+  }
+
+  function refreshGroupOptions() {
+    applyPayload(payload, { sectionId: selectedSection() });
+  }
+
+  function refreshItemOptions() {
+    applyPayload(payload, { sectionId: selectedSection(), groupId: selectedGroup() });
   }
 
   function loadSectionFields() {
@@ -261,8 +306,251 @@ export function startEreportWebConnector(root: HTMLElement) {
       reportLabel.hidden = false;
     }
     cascade?.removeAttribute("hidden");
-    refreshSectionOptions();
+    applyPayload(payload);
     setStatus("Select a section, or create one.");
+  }
+
+  async function ensureGroup(sectionId: string): Promise<string | null> {
+    const sec = findSection(sectionId);
+    const existing = sec?.groups?.[0]?.id;
+    if (existing) return existing;
+    setStatus("Creating subsection…");
+    const { status, requestId, data } = await nodeWrite(
+      "POST",
+      `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups`,
+      { title: "General", productHistory: "" },
+    );
+    if (status !== 201 && status !== 200) {
+      raiseApiError(status, requestId, data);
+      setStatus("Could not create subsection.");
+      return null;
+    }
+    payload = (data.payload as ReportPayload) || payload;
+    const node = data.node as GroupNode;
+    return node?.id || null;
+  }
+
+  async function createSection() {
+    if (!selectedOrg() || !selectedReport()) {
+      setStatus("Select an organization and report first.");
+      return;
+    }
+    const title = window.prompt("New section title");
+    if (!title?.trim()) return;
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        setStatus("Creating section…");
+        const { status, requestId, data } = await nodeWrite("POST", `${basePath()}/sections`, {
+          title: title.trim(),
+          kind: "funcionalidades",
+          productHistory: "",
+        });
+        if (status !== 201 && status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not create section.");
+          return;
+        }
+        payload = (data.payload as ReportPayload) || payload;
+        const node = data.node as SectionNode;
+        let groupId = "";
+        if (node?.id) {
+          const gid = await ensureGroup(node.id);
+          groupId = gid || "";
+        }
+        applyPayload(payload, { sectionId: node?.id, groupId });
+        setStatus(groupId ? "Section created (with General subsection)." : "Section created.");
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+
+  async function saveSection() {
+    const sectionId = selectedSection();
+    if (!sectionId) {
+      setStatus("Select a section to save.");
+      return;
+    }
+    const title = sectionTitle.value.trim();
+    if (!title) {
+      setStatus("Section title cannot be empty.");
+      return;
+    }
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        setStatus("Saving section…");
+        const keep = { sectionId, groupId: selectedGroup(), itemId: selectedItem() };
+        const { status, requestId, data } = await nodeWrite(
+          "PATCH",
+          `${basePath()}/sections/${encodeURIComponent(sectionId)}`,
+          { title, productHistory: sectionConcept.value },
+        );
+        if (status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not save section.");
+          return;
+        }
+        applyPayload((data.payload as ReportPayload) || payload, keep);
+        setStatus("Section saved.");
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+
+  async function createGroup() {
+    const sectionId = selectedSection();
+    if (!sectionId) {
+      setStatus("Select a section first.");
+      return;
+    }
+    const title = window.prompt("New subsection title");
+    if (!title?.trim()) return;
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        setStatus("Creating subsection…");
+        const { status, requestId, data } = await nodeWrite(
+          "POST",
+          `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups`,
+          { title: title.trim(), productHistory: "" },
+        );
+        if (status !== 201 && status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not create subsection.");
+          return;
+        }
+        const node = data.node as GroupNode;
+        applyPayload((data.payload as ReportPayload) || payload, {
+          sectionId,
+          groupId: node?.id,
+        });
+        setStatus("Subsection created.");
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+
+  async function saveGroup() {
+    const sectionId = selectedSection();
+    const groupId = selectedGroup();
+    if (!sectionId || !groupId) {
+      setStatus("Select a subsection to save.");
+      return;
+    }
+    const title = groupTitle.value.trim();
+    if (!title) {
+      setStatus("Subsection title cannot be empty.");
+      return;
+    }
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        setStatus("Saving subsection…");
+        const keep = { sectionId, groupId, itemId: selectedItem() };
+        const { status, requestId, data } = await nodeWrite(
+          "PATCH",
+          `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}`,
+          { title, productHistory: groupConcept.value },
+        );
+        if (status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not save subsection.");
+          return;
+        }
+        applyPayload((data.payload as ReportPayload) || payload, keep);
+        setStatus("Subsection saved.");
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+
+  async function createItem() {
+    const sectionId = selectedSection();
+    if (!sectionId) {
+      setStatus("Select a section first.");
+      return;
+    }
+    const incidencia = window.prompt("New issue text (incidencia)");
+    if (!incidencia?.trim()) return;
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        let groupId = selectedGroup();
+        if (!groupId) {
+          const gid = await ensureGroup(sectionId);
+          if (!gid) return;
+          groupId = gid;
+          applyPayload(payload, { sectionId, groupId });
+        }
+        setStatus("Creating issue…");
+        const { status, requestId, data } = await nodeWrite(
+          "POST",
+          `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items`,
+          { incidencia: incidencia.trim(), status: "reprobado", nombre: "" },
+        );
+        if (status !== 201 && status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not create issue.");
+          return;
+        }
+        const node = data.node as ItemNode;
+        applyPayload((data.payload as ReportPayload) || payload, {
+          sectionId,
+          groupId,
+          itemId: node?.id,
+        });
+        setStatus("Issue created.");
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+
+  async function saveItem() {
+    const sectionId = selectedSection();
+    const groupId = selectedGroup();
+    const itemId = selectedItem();
+    if (!sectionId || !groupId || !itemId) {
+      setStatus("Select an issue to save.");
+      return;
+    }
+    if (!itemIncidencia.value.trim()) {
+      setStatus("Incidencia cannot be empty.");
+      return;
+    }
+    await enqueueWrite(async () => {
+      setBusy(true);
+      try {
+        setStatus("Saving issue…");
+        const keep = { sectionId, groupId, itemId };
+        const { status, requestId, data } = await nodeWrite(
+          "PATCH",
+          `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items/${encodeURIComponent(itemId)}`,
+          {
+            nombre: itemNombre.value,
+            incidencia: itemIncidencia.value,
+            fechaIncidencia: itemFechaInc.value,
+            status: itemStatus.value,
+            solucion: itemSolucion.value,
+            fechaSolucion: itemFechaSol.value,
+          },
+        );
+        if (status !== 200) {
+          raiseApiError(status, requestId, data);
+          setStatus("Could not save issue.");
+          return;
+        }
+        applyPayload((data.payload as ReportPayload) || payload, keep);
+        setStatus("Issue saved.");
+      } finally {
+        setBusy(false);
+      }
+    });
   }
 
   async function loadOrgsForPicker() {
@@ -354,159 +642,6 @@ export function startEreportWebConnector(root: HTMLElement) {
         details: err instanceof Error ? err.message : String(err),
       });
     }
-  }
-
-  async function createSection() {
-    if (!selectedOrg() || !selectedReport()) return;
-    const title = window.prompt("New section title");
-    if (!title?.trim()) return;
-    setStatus("Creating section…");
-    const { status, requestId, data } = await nodeWrite("POST", `${basePath()}/sections`, {
-      title: title.trim(),
-      kind: "funcionalidades",
-      productHistory: "",
-    });
-    if (status !== 201 && status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not create section.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    const node = data.node as SectionNode;
-    refreshSectionOptions();
-    if (node?.id) {
-      sectionSelect.value = node.id;
-      loadSectionFields();
-      refreshGroupOptions();
-    }
-    setStatus("Section created.");
-  }
-
-  async function saveSection() {
-    const sectionId = selectedSection();
-    if (!sectionId) return;
-    setStatus("Saving section…");
-    const { status, requestId, data } = await nodeWrite("PATCH", `${basePath()}/sections/${sectionId}`, {
-      title: sectionTitle.value.trim(),
-      productHistory: sectionConcept.value,
-    });
-    if (status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not save section.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    refreshSectionOptions();
-    sectionSelect.value = sectionId;
-    loadSectionFields();
-    refreshGroupOptions();
-    setStatus("Section saved.");
-  }
-
-  async function createGroup() {
-    const sectionId = selectedSection();
-    if (!sectionId) return;
-    const title = window.prompt("New subsection title");
-    if (!title?.trim()) return;
-    setStatus("Creating subsection…");
-    const { status, requestId, data } = await nodeWrite("POST", `${basePath()}/sections/${sectionId}/groups`, {
-      title: title.trim(),
-      productHistory: "",
-    });
-    if (status !== 201 && status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not create subsection.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    const node = data.node as GroupNode;
-    refreshGroupOptions();
-    if (node?.id) {
-      groupSelect.value = node.id;
-      loadGroupFields();
-      refreshItemOptions();
-    }
-    setStatus("Subsection created.");
-  }
-
-  async function saveGroup() {
-    const sectionId = selectedSection();
-    const groupId = selectedGroup();
-    if (!sectionId || !groupId) return;
-    setStatus("Saving subsection…");
-    const { status, requestId, data } = await nodeWrite(
-      "PATCH",
-      `${basePath()}/sections/${sectionId}/groups/${groupId}`,
-      { title: groupTitle.value.trim(), productHistory: groupConcept.value },
-    );
-    if (status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not save subsection.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    refreshGroupOptions();
-    groupSelect.value = groupId;
-    loadGroupFields();
-    refreshItemOptions();
-    setStatus("Subsection saved.");
-  }
-
-  async function createItem() {
-    const sectionId = selectedSection();
-    const groupId = selectedGroup();
-    if (!sectionId || !groupId) return;
-    const incidencia = window.prompt("New issue text (incidencia)");
-    if (!incidencia?.trim()) return;
-    setStatus("Creating issue…");
-    const { status, requestId, data } = await nodeWrite(
-      "POST",
-      `${basePath()}/sections/${sectionId}/groups/${groupId}/items`,
-      { incidencia: incidencia.trim(), status: "reprobado", nombre: "" },
-    );
-    if (status !== 201 && status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not create issue.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    const node = data.node as ItemNode;
-    refreshItemOptions();
-    if (node?.id) {
-      itemSelect.value = node.id;
-      loadItemFields();
-    }
-    setStatus("Issue created.");
-  }
-
-  async function saveItem() {
-    const sectionId = selectedSection();
-    const groupId = selectedGroup();
-    const itemId = selectedItem();
-    if (!sectionId || !groupId || !itemId) return;
-    setStatus("Saving issue…");
-    const { status, requestId, data } = await nodeWrite(
-      "PATCH",
-      `${basePath()}/sections/${sectionId}/groups/${groupId}/items/${itemId}`,
-      {
-        nombre: itemNombre.value,
-        incidencia: itemIncidencia.value,
-        fechaIncidencia: itemFechaInc.value,
-        status: itemStatus.value,
-        solucion: itemSolucion.value,
-        fechaSolucion: itemFechaSol.value,
-      },
-    );
-    if (status !== 200) {
-      raiseApiError(status, requestId, data);
-      setStatus("Could not save issue.");
-      return;
-    }
-    payload = (data.payload as ReportPayload) || payload;
-    refreshItemOptions();
-    itemSelect.value = itemId;
-    loadItemFields();
-    setStatus("Issue saved.");
   }
 
   orgSelect?.addEventListener("change", () => {

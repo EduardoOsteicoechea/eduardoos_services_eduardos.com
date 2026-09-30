@@ -200,3 +200,75 @@ func TestEreportSessionNodeCreate(t *testing.T) {
 		t.Fatalf("node: %#v", node)
 	}
 }
+
+func TestEreportSessionNodeConcurrentSaves(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"Race","firstReportName":"Base"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	secRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections", `{"title":"S1","kind":"funcionalidades"}`)
+	if secRec.Code != http.StatusCreated {
+		t.Fatalf("section: %d %s", secRec.Code, secRec.Body.String())
+	}
+	sectionID := decodeMap(t, secRec)["node"].(map[string]any)["id"].(string)
+	grpRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups", `{"title":"G1"}`)
+	if grpRec.Code != http.StatusCreated {
+		t.Fatalf("group: %d %s", grpRec.Code, grpRec.Body.String())
+	}
+	groupID := decodeMap(t, grpRec)["node"].(map[string]any)["id"].(string)
+
+	done := make(chan int, 2)
+	go func() {
+		rec := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID, `{"title":"S1-saved","productHistory":"concept"}`)
+		done <- rec.Code
+	}()
+	go func() {
+		rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items", `{"incidencia":"concurrent issue","status":"reprobado"}`)
+		done <- rec.Code
+	}()
+	c1, c2 := <-done, <-done
+	if c1 != http.StatusOK && c1 != http.StatusCreated {
+		t.Fatalf("unexpected status %d", c1)
+	}
+	if c2 != http.StatusOK && c2 != http.StatusCreated {
+		t.Fatalf("unexpected status %d", c2)
+	}
+
+	getRec := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+reportID, "")
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("get: %d", getRec.Code)
+	}
+	payload := decodeMap(t, getRec)["payload"].(map[string]any)
+	var foundSec map[string]any
+	for _, raw := range payload["sections"].([]any) {
+		sec := raw.(map[string]any)
+		if asString(sec["id"]) == sectionID {
+			foundSec = sec
+			break
+		}
+	}
+	if foundSec == nil {
+		t.Fatalf("section %s missing after concurrent write", sectionID)
+	}
+	if foundSec["title"] != "S1-saved" {
+		t.Fatalf("section title lost after concurrent write: %#v", foundSec["title"])
+	}
+	var foundGrp map[string]any
+	for _, raw := range foundSec["groups"].([]any) {
+		grp := raw.(map[string]any)
+		if asString(grp["id"]) == groupID {
+			foundGrp = grp
+			break
+		}
+	}
+	if foundGrp == nil {
+		t.Fatalf("group %s missing", groupID)
+	}
+	items := foundGrp["items"].([]any)
+	if len(items) < 1 {
+		t.Fatalf("item lost after concurrent write")
+	}
+}
