@@ -35,7 +35,7 @@ describe("classifyLessonParas", () => {
 });
 
 describe("lesson rich layout", () => {
-  it("places Práctica full-width with workspace, then Explora left and Error right", () => {
+  it("stacks Idea, Explora, Práctica and Error full-width in reading order", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -53,22 +53,53 @@ describe("lesson rich layout", () => {
           },
         ],
         summary: "",
+        memoryPhrase: "**Sustantivo**, verbo, adjetivo",
       },
     });
     const pages = renderEoschoolPages(doc);
+    expect(pages[0].querySelector(".homescool-letter__memory")).toBeTruthy();
+    expect(pages[0].querySelector(".homescool-letter__key")?.textContent).toBe("Sustantivo");
     const rich = pages[0].querySelector(".homescool-letter__rich");
     expect(rich?.querySelector(".homescool-letter__box--lead")).toBeTruthy();
-    const practice = rich?.querySelector(".homescool-letter__practice-strip .homescool-letter__box--practice");
+    expect(rich?.querySelector(".homescool-letter__box--card")).toBeTruthy();
+    const practice = rich?.querySelector(".homescool-letter__box--practice");
     expect(practice).toBeTruthy();
     expect(practice?.querySelector(".homescool-letter__practice-workspace--write")).toBeTruthy();
-    const row = rich?.querySelector(".homescool-letter__lesson-row");
-    expect(row).toBeTruthy();
-    const main = row?.querySelector(".homescool-letter__lesson-main");
-    const side = row?.querySelector(".homescool-letter__lesson-side");
-    expect(main?.querySelector(".homescool-letter__box--card")).toBeTruthy();
-    expect(side?.querySelector(".homescool-letter__box--error")).toBeTruthy();
-    expect(side?.querySelector(".homescool-letter__box--practice")).toBeFalsy();
+    expect(rich?.querySelector(".homescool-letter__box--error")).toBeTruthy();
+    expect(rich?.querySelector(".homescool-letter__lesson-row")).toBeFalsy();
     expect(pages[0].querySelector(".homescool-letter__point")?.className).not.toMatch(/border/);
+  });
+
+  it("shows week and prior-day recaps on deepen days 3–4", () => {
+    const doc = baseDoc({
+      day: 3,
+      lesson: {
+        kind: "deepen",
+        focusPoint: 2,
+        points: [
+          {
+            id: "p1",
+            heading: "Punto 2",
+            body: [
+              "Idea del día.",
+              "## Más ejemplos",
+              "Un ejemplo claro.",
+              "Práctica: escribe uno.",
+              "Error común: saltar el resumen.",
+            ].join("\n\n"),
+          },
+        ],
+        summary: "Cierre corto.",
+        weekRecap: "Resumen de toda la semana en pocas líneas.",
+        priorDayRecap: "Ayer vimos el punto 1.",
+        memoryPhrase: "Lista corta a memorizar",
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    expect(pages[0].querySelector(".homescool-letter__memory")).toBeTruthy();
+    expect(pages[0].querySelector(".homescool-letter__week-recap")).toBeTruthy();
+    expect(pages[0].querySelector(".homescool-letter__prior-recap")).toBeTruthy();
+    expect(pages[0].querySelector(".homescool-letter__subtitle")?.textContent).toBe("Más ejemplos");
   });
 
   it("gives drawing practices a blank draw workspace", () => {

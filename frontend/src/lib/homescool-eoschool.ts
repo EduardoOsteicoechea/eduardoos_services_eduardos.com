@@ -198,6 +198,9 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   if (kind === "deepen") {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
+    appendMemoryPhrase(doc, page);
+    appendWeekRecap(doc, page);
+    appendPriorDayRecap(doc, page);
     page.append(buildDeepenRibbon(doc));
     page.append(buildLessonStack(doc, points));
     appendSummary(doc, page);
@@ -231,9 +234,10 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     return [];
   }
 
-  return batches.map((batch) => {
+  return batches.map((batch, batchIndex) => {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
+    if (batchIndex === 0) appendMemoryPhrase(doc, page);
     const segments = batch
       .filter((block): block is Extract<LessonPageBlock, { type: "point" }> => block.type === "point")
       .map((block) => block.segment);
@@ -601,7 +605,12 @@ function buildLessonWithQuizPage(
     `homescool-letter-page--${kind}`,
   );
   page.append(lessonHeader(doc, "Clase + cuestionario"));
-  if (kind === "deepen") page.append(buildDeepenRibbon(doc));
+  appendMemoryPhrase(doc, page);
+  if (kind === "deepen") {
+    appendWeekRecap(doc, page);
+    appendPriorDayRecap(doc, page);
+    page.append(buildDeepenRibbon(doc));
+  }
   page.append(buildLessonStack(doc, doc.lesson?.points ?? []));
   appendSummary(doc, page);
   page.append(buildQuizList(doc, questions, startIndex, total));
@@ -745,54 +754,21 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
   const paras = classifyLessonParas(body);
   const root = el("div", `homescool-letter__rich homescool-letter__rich--${opts.mode}`);
 
-  const lead = paras.filter((p) => p.kind === "lead");
-  const mid = paras.filter((p) => p.kind === "card" || p.kind === "contrast");
-  const practices = paras.filter((p) => p.kind === "practice");
-  const sideSpecials = paras.filter(
-    (p) => p.kind === "error" || p.kind === "tip" || p.kind === "goal",
-  );
-
-  for (const p of lead) root.append(renderParaBlock(p));
-
-  // Práctica full-width under Idea central so the in-box write/draw workspace fits
-  // (capped in CSS to ~⅓ of the Letter content band).
-  if (practices.length) {
-    const practiceStrip = el("div", "homescool-letter__practice-strip");
-    for (const p of practices) practiceStrip.append(renderParaBlock(p));
-    root.append(practiceStrip);
-  }
-
-  const appendMidBlocks = (parent: HTMLElement) => {
-    mid.forEach((p, i) => {
-      const node = renderParaBlock(p);
-      if (p.kind === "card") node.classList.add(`homescool-letter__card-tone--${(i % 4) + 1}`);
-      parent.append(node);
-    });
-  };
-
-  if (mid.length && sideSpecials.length) {
-    const row = el("div", "homescool-letter__lesson-row");
-    const main = el("div", "homescool-letter__lesson-main");
-    appendMidBlocks(main);
-    const side = el("div", "homescool-letter__lesson-side");
-    for (const p of sideSpecials) side.append(renderParaBlock(p));
-    row.append(main, side);
-    root.append(row);
-  } else {
-    if (mid.length) {
-      const grid = el("div", "homescool-letter__cards");
-      appendMidBlocks(grid);
-      root.append(grid);
+  // Full-width stack in reading order — no two-column lesson layout (kids screen better).
+  let cardTone = 0;
+  for (const p of paras) {
+    const node = renderParaBlock(p);
+    if (p.kind === "card") {
+      cardTone += 1;
+      node.classList.add(`homescool-letter__card-tone--${((cardTone - 1) % 4) + 1}`);
     }
-    if (sideSpecials.length) {
-      const strip = el("div", "homescool-letter__specials");
-      for (const p of sideSpecials) strip.append(renderParaBlock(p));
-      root.append(strip);
-    }
+    root.append(node);
   }
 
   if (!paras.length && body.trim()) {
-    root.append(el("p", "homescool-letter__body", body));
+    const fallback = el("p", "homescool-letter__body");
+    appendFormattedText(fallback, body);
+    root.append(fallback);
   }
   return root;
 }
@@ -823,15 +799,16 @@ function renderParaBlock(p: RichPara): HTMLElement {
   if (p.kind === "contrast" && p.left && p.right) {
     const box = el("div", "homescool-letter__box homescool-letter__box--contrast");
     box.append(boxLabel(meta.label));
-    const cols = el("div", "homescool-letter__cols");
-    const a = el("div", "homescool-letter__col homescool-letter__col--a");
-    a.append(el("p", "homescool-letter__body", p.left));
-    const b = el("div", "homescool-letter__col homescool-letter__col--b");
-    b.append(el("p", "homescool-letter__body", p.right));
-    cols.append(a, b);
-    box.append(cols);
+    // Still stacked full-width (no side-by-side) so the child reads one idea at a time.
+    const a = el("p", "homescool-letter__body");
+    appendFormattedText(a, p.left);
+    const b = el("p", "homescool-letter__body");
+    appendFormattedText(b, p.right);
+    box.append(a, b);
     if (p.left.length + p.right.length + 40 < p.text.length) {
-      box.append(el("p", "homescool-letter__body homescool-letter__body--muted", p.text));
+      const muted = el("p", "homescool-letter__body homescool-letter__body--muted");
+      appendFormattedText(muted, p.text);
+      box.append(muted);
     }
     return box;
   }
@@ -847,15 +824,92 @@ function renderParaBlock(p: RichPara): HTMLElement {
     mark.title = "Marca cuando hayas hecho la práctica";
     row.append(mark);
     const copy = el("div", "homescool-letter__practice-copy");
-    copy.append(el("p", "homescool-letter__body", p.text));
+    appendBodyWithSubtitles(copy, p.text);
     row.append(copy);
     box.append(row);
     box.append(buildPracticeWorkspace(p.text));
     return box;
   }
 
-  box.append(el("p", "homescool-letter__body", p.text));
+  appendBodyWithSubtitles(box, p.text);
   return box;
+}
+
+/** Render ## Subtitle lines + **bold** key ideas for kid screening. */
+function appendBodyWithSubtitles(parent: HTMLElement, text: string): void {
+  const lines = String(text || "").split(/\n/);
+  let buffer: string[] = [];
+  const flush = () => {
+    const chunk = buffer.join("\n").trim();
+    buffer = [];
+    if (!chunk) return;
+    const p = el("p", "homescool-letter__body");
+    appendFormattedText(p, chunk);
+    parent.append(p);
+  };
+  for (const raw of lines) {
+    const sub = raw.match(/^#{1,3}\s+(.+)\s*$/);
+    if (sub) {
+      flush();
+      parent.append(el("h4", "homescool-letter__subtitle", sub[1].trim()));
+      continue;
+    }
+    buffer.push(raw);
+  }
+  flush();
+}
+
+/** Inline **bold** markers → <strong> for key ideas. */
+function appendFormattedText(parent: HTMLElement, text: string): void {
+  const parts = String(text || "").split(/(\*\*[^*]+\*\*)/g);
+  for (const part of parts) {
+    if (!part) continue;
+    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+    if (bold) {
+      parent.append(el("strong", "homescool-letter__key", bold[1]));
+    } else {
+      parent.append(document.createTextNode(part));
+    }
+  }
+}
+
+function appendMemoryPhrase(doc: EoschoolDocument, page: HTMLElement): void {
+  const phrase = doc.lesson?.memoryPhrase?.trim();
+  if (!phrase) return;
+  const box = el("section", "homescool-letter__memory");
+  const label = el("h3", "homescool-letter__memory-label");
+  label.append(el("span", "homescool-letter__box-label-text", "Frase a memorizar"));
+  box.append(label);
+  const p = el("p", "homescool-letter__body homescool-letter__memory-text");
+  appendFormattedText(p, phrase);
+  box.append(p);
+  page.append(box);
+}
+
+function appendWeekRecap(doc: EoschoolDocument, page: HTMLElement): void {
+  const text = doc.lesson?.weekRecap?.trim();
+  if (!text) return;
+  const box = el("section", "homescool-letter__week-recap");
+  const label = el("h3", "homescool-letter__week-recap-label");
+  label.append(el("span", "homescool-letter__box-label-text", "Resumen de la clase"));
+  box.append(label);
+  const p = el("p", "homescool-letter__body");
+  appendFormattedText(p, text);
+  box.append(p);
+  page.append(box);
+}
+
+function appendPriorDayRecap(doc: EoschoolDocument, page: HTMLElement): void {
+  const text = doc.lesson?.priorDayRecap?.trim();
+  if (!text) return;
+  const box = el("section", "homescool-letter__prior-recap");
+  const label = el("h3", "homescool-letter__prior-recap-label");
+  label.append(el("span", "homescool-letter__box-label-text", "Repaso del día anterior"));
+  box.append(label);
+  const p = el("p", "homescool-letter__body");
+  appendFormattedText(p, text);
+  box.append(p);
+  page.append(box);
 }
 
 function boxLabel(text: string, soft = false): HTMLElement {

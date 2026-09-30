@@ -85,10 +85,12 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 | Day | Lesson | Quiz |
 | --- | --- | --- |
 | 1 | **Intro:** exactly **3 points** + **summary** | **8** items (`originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 | **16** items (days 1–2) |
-| 3 | **Deepen** point 2 | **24** items (days 1–3) |
-| 4 | **Deepen** point 3 | **36** items |
+| 2 | **Deepen** point 1 of day 1 — open with **weekRecap** (~5 cm) | **16** items (days 1–2) |
+| 3 | **Deepen** point 2 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **24** items (days 1–3) |
+| 4 | **Deepen** point 3 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **36** items |
 | 5 | **Review:** five overview blocks | **52** items; prefer shuffle of prior MCQ |
+
+**Kid screening (mandatory):** lesson boxes are **full-width** (one column). Use `##` subtitles and `**bold**` key ideas inside bodies. Subjects `esp`, `ing`, `lat`, `his`, `LT`, `geo`, `cie` set `lesson.memoryPhrase` every day. Prefer a `supportUrl` reference video suitable for ~8-year-olds.
 
 ### Exception: `pro` (Proyecto) — one experiment per week
 

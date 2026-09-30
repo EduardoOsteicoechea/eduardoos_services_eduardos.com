@@ -47,10 +47,13 @@ type EoschoolDocument struct {
 }
 
 type EoschoolLesson struct {
-	Kind       string          `json:"kind"`
-	FocusPoint *int            `json:"focusPoint"`
-	Points     []EoschoolPoint `json:"points"`
-	Summary    string          `json:"summary,omitempty"`
+	Kind          string          `json:"kind"`
+	FocusPoint    *int            `json:"focusPoint"`
+	Points        []EoschoolPoint `json:"points"`
+	Summary       string          `json:"summary,omitempty"`
+	WeekRecap     string          `json:"weekRecap,omitempty"`
+	PriorDayRecap string          `json:"priorDayRecap,omitempty"`
+	MemoryPhrase  string          `json:"memoryPhrase,omitempty"`
 }
 
 type EoschoolPoint struct {

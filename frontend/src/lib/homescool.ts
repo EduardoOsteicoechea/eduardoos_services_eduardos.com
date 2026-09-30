@@ -244,6 +244,12 @@ export type EoschoolDocument = {
     focusPoint?: number | null;
     points: { id?: string; heading: string; body: string }[];
     summary?: string;
+    /** Short week overview shown first on deepen days 2–4 (~5 cm band). */
+    weekRecap?: string;
+    /** Previous-day review shown after weekRecap on days 3–4 (~2.5 cm band). */
+    priorDayRecap?: string;
+    /** Memorization sentence for esp/ing/lat/his/LT/geo/cie (every day). */
+    memoryPhrase?: string;
   };
   quiz: {
     questionCount: number;

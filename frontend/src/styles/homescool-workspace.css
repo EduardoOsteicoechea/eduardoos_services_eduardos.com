@@ -828,47 +828,18 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   gap: 0.28rem;
 }
 
-/* Idea central + Práctica full width; Explora left, Error/Tip right. */
-.homescool-letter__practice-strip {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  min-width: 0;
-}
-
-.homescool-letter__lesson-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.3rem;
-  align-items: stretch;
-}
-
+/* All lesson boxes stack full-width (one column) for clearer kid screening. */
+.homescool-letter__practice-strip,
+.homescool-letter__lesson-row,
 .homescool-letter__lesson-main,
-.homescool-letter__lesson-side {
+.homescool-letter__lesson-side,
+.homescool-letter__cards,
+.homescool-letter__specials,
+.homescool-letter__specials-row {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   min-width: 0;
-}
-
-.homescool-letter__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.3rem;
-  align-items: stretch;
-}
-
-.homescool-letter__specials {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.homescool-letter__specials-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.3rem;
-  align-items: stretch;
 }
 
 .homescool-letter__box {
@@ -972,9 +943,74 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__cols {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 0.3rem;
+}
+
+.homescool-letter__subtitle {
+  margin: 0.15rem 0 0;
+  font-size: 0.3cm;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--hc-navy);
+}
+
+.homescool-letter__key {
+  font-weight: 700;
+}
+
+.homescool-letter__memory,
+.homescool-letter__week-recap,
+.homescool-letter__prior-recap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.28rem;
+  border: 0.08rem solid var(--hc-line);
+  background: transparent;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.homescool-letter__memory {
+  border-color: var(--hc-orange);
+  min-height: 1.8cm;
+}
+
+.homescool-letter__week-recap {
+  border-color: var(--hc-navy);
+  height: 5cm;
+  max-height: 5cm;
+}
+
+.homescool-letter__prior-recap {
+  border-color: var(--hc-olive);
+  height: 2.5cm;
+  max-height: 2.5cm;
+}
+
+.homescool-letter__memory-label,
+.homescool-letter__week-recap-label,
+.homescool-letter__prior-recap-label {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  color: var(--hc-rail);
+  line-height: 1.3;
+  display: block;
+}
+
+.homescool-letter__memory-label .homescool-letter__box-label-text,
+.homescool-letter__week-recap-label .homescool-letter__box-label-text,
+.homescool-letter__prior-recap-label .homescool-letter__box-label-text {
+  text-transform: uppercase;
+}
+
+.homescool-letter__memory-text {
+  font-weight: 700;
 }
 
 .homescool-letter__col {
@@ -1028,7 +1064,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--intro .homescool-letter__cards {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
 }
 
 .homescool-letter-page--intro .homescool-letter__rich--intro .homescool-letter__box--lead .homescool-letter__body,
