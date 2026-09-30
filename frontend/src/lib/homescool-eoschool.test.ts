@@ -70,6 +70,30 @@ describe("lesson rich layout", () => {
     expect(pages[0].querySelector(".homescool-letter__point")?.className).not.toMatch(/border/);
   });
 
+  it("renders Objetivos MPPE when mppe.objectives is set", () => {
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          { id: "p1", heading: "Panorama", body: "Idea.\n\nExplora.\n\nPráctica: hazlo.\n\nError común: saltar." },
+          { id: "p2", heading: "Dos", body: "Idea dos." },
+          { id: "p3", heading: "Tres", body: "Idea tres." },
+        ],
+        summary: "Cierre.",
+      },
+      mppe: {
+        objectives: [{ id: "ide-ven-01", label: "Conozco estados y capitales." }],
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const box = pages[0].querySelector(".homescool-letter__mppe");
+    expect(box).toBeTruthy();
+    expect(box?.textContent).toContain("Objetivos MPPE");
+    expect(box?.textContent).toContain("ide-ven-01");
+    expect(box?.textContent).toContain("Conozco estados y capitales.");
+  });
+
   it("shows week and prior-day recaps on deepen days 3–4", () => {
     const doc = baseDoc({
       day: 3,

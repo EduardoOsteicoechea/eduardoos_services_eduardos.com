@@ -28,16 +28,29 @@ import "../../styles/homescool-workspace.css";
       </section>
       </div>
       <div class="homescool-dhs__footer">
-        <button
-          class="homescool-dhs__debug-btn"
-          type="button"
-          data-homescool-debug-toggle
-          title="Mostrar u ocultar HC debug"
-          aria-label="Mostrar u ocultar HC debug"
-          aria-pressed="false"
-        >
-          <span class="material-symbols-outlined" aria-hidden="true">help</span>
-        </button>
+        <div class="homescool-dhs__icon-row">
+          <button
+            class="homescool-dhs__debug-btn"
+            type="button"
+            data-homescool-mppe-toggle
+            title="Checklist MPPE (imbuición)"
+            aria-label="Checklist MPPE (imbuición)"
+            aria-pressed="false"
+            aria-controls="homescool-mppe-modal"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">fact_check</span>
+          </button>
+          <button
+            class="homescool-dhs__debug-btn"
+            type="button"
+            data-homescool-debug-toggle
+            title="Mostrar u ocultar HC debug"
+            aria-label="Mostrar u ocultar HC debug"
+            aria-pressed="false"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">help</span>
+          </button>
+        </div>
         <div class="homescool-dhs__print-row" data-homescool-print-row>
           <div class="homescool-dhs__print-tray" id="homescool-print-tray" data-homescool-print-tray hidden>
             <button type="button" class="homescool-dhs__print-option" data-print-mode="current">Clase actual</button>
@@ -134,6 +147,33 @@ import "../../styles/homescool-workspace.css";
       </div>
     </div>
   </section>
+
+  <div
+    class="homescool-mppe-modal"
+    id="homescool-mppe-modal"
+    data-homescool-mppe-modal
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="homescool-mppe-modal-title"
+  >
+    <div class="homescool-mppe-modal__dialog">
+      <header class="homescool-mppe-modal__head">
+        <h2 class="homescool-mppe-modal__title" id="homescool-mppe-modal-title">Checklist MPPE · 3.er grado</h2>
+        <button
+          type="button"
+          class="homescool-mppe-modal__close icon-btn"
+          data-homescool-mppe-close
+          title="Cerrar checklist MPPE"
+          aria-label="Cerrar checklist MPPE"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </header>
+      <p class="homescool-mppe-modal__summary" data-homescool-mppe-summary>Cargando…</p>
+      <div class="homescool-mppe-modal__body" data-homescool-mppe-body tabindex="0"></div>
+    </div>
+  </div>
 </Layout>
 
 <script>
@@ -172,6 +212,7 @@ import "../../styles/homescool-workspace.css";
     setHomescoolDebugPanelVisible,
     isHomescoolDebugPanelVisible,
   } from "../../lib/homescool-debug";
+  import { buildMppeCoverage, loadMppeChecklist } from "../../lib/homescool-mppe";
 
   const LEVEL = 6;
   const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "pro" };
@@ -211,6 +252,7 @@ import "../../styles/homescool-workspace.css";
   let supportBound = false;
   let collapseBound = false;
   let debugToggleBound = false;
+  let mppeModalBound = false;
   const DHS_COLLAPSE_KEY = "homescool-dhs-collapsed";
   const SELECTION_STORAGE_KEY = "homescool-nav-selection";
 
@@ -672,6 +714,122 @@ import "../../styles/homescool-workspace.css";
     });
   }
 
+  function setMppeModalOpen(open: boolean) {
+    const modal = qs<HTMLElement>("[data-homescool-mppe-modal]");
+    if (!modal) return;
+    setHidden(modal, !open);
+    for (const btn of qsa<HTMLButtonElement>("[data-homescool-mppe-toggle]")) {
+      btn.setAttribute("aria-pressed", open ? "true" : "false");
+    }
+    if (open) {
+      const closeBtn = qs<HTMLButtonElement>("[data-homescool-mppe-close]");
+      closeBtn?.focus();
+    }
+  }
+
+  async function renderMppeChecklistModal() {
+    const summary = qs<HTMLElement>("[data-homescool-mppe-summary]");
+    const body = qs<HTMLElement>("[data-homescool-mppe-body]");
+    if (!summary || !body) return;
+    summary.textContent = "Cargando checklist…";
+    body.replaceChildren();
+    const checklist = await loadMppeChecklist();
+    if (!checklist) {
+      summary.textContent = "No se pudo cargar el catálogo MPPE.";
+      return;
+    }
+    const classDocs: Array<HomescoolCurriculumClass | EoschoolDocument> = [];
+    if (curriculumBackup?.classes?.length) classDocs.push(...curriculumBackup.classes);
+    for (const cell of cells) {
+      if (cell.curriculum) classDocs.push(cell.curriculum);
+    }
+    if (currentDoc) classDocs.push(currentDoc);
+    const coverage = buildMppeCoverage(checklist, classDocs);
+    summary.textContent = `Imbuidos ${coverage.imbued} / ${coverage.total} · eoschool es master; MPPE es cobertura requerida.`;
+
+    for (const area of checklist.areas) {
+      const areaStats = coverage.byArea[area.id];
+      const section = document.createElement("section");
+      section.className = "homescool-mppe-modal__area";
+      const h = document.createElement("h3");
+      h.className = "homescool-mppe-modal__area-title";
+      h.textContent = `${area.title} (${areaStats?.imbued ?? 0}/${areaStats?.total ?? 0})`;
+      section.append(h);
+
+      for (const comp of area.components) {
+        const compEl = document.createElement("div");
+        compEl.className = "homescool-mppe-modal__component";
+        const ch = document.createElement("h4");
+        ch.className = "homescool-mppe-modal__component-title";
+        ch.textContent = comp.title;
+        compEl.append(ch);
+        const ul = document.createElement("ul");
+        ul.className = "homescool-mppe-modal__list";
+        for (const objective of comp.objectives) {
+          const row = coverage.rows.find((r) => r.objective.id === objective.id);
+          const li = document.createElement("li");
+          li.className = `homescool-mppe-modal__item homescool-mppe-modal__item--${row?.status ?? "gap"}`;
+          const mark = document.createElement("span");
+          mark.className = "homescool-mppe-modal__mark material-symbols-outlined";
+          mark.setAttribute("aria-hidden", "true");
+          mark.textContent = row?.status === "imbued" ? "check_circle" : "radio_button_unchecked";
+          const main = document.createElement("div");
+          main.className = "homescool-mppe-modal__item-main";
+          const idEl = document.createElement("code");
+          idEl.className = "homescool-mppe-modal__id";
+          idEl.textContent = objective.id;
+          const text = document.createElement("p");
+          text.className = "homescool-mppe-modal__aprendizaje";
+          text.textContent = objective.aprendizaje;
+          const keys = document.createElement("p");
+          keys.className = "homescool-mppe-modal__keys";
+          keys.textContent = row?.classKeys.length
+            ? `Clases: ${row.classKeys.join(", ")}`
+            : "Sin imbuición declarada en clases";
+          main.append(idEl, text, keys);
+          li.append(mark, main);
+          ul.append(li);
+        }
+        compEl.append(ul);
+        section.append(compEl);
+      }
+      body.append(section);
+    }
+    log("mppe.modal.render", { total: coverage.total, imbued: coverage.imbued });
+  }
+
+  function bindMppeModalOnce() {
+    if (mppeModalBound) return;
+    mppeModalBound = true;
+    document.addEventListener("click", (ev) => {
+      const t = ev.target;
+      if (!(t instanceof Element)) return;
+      if (t.closest("[data-homescool-mppe-toggle]")) {
+        const modal = qs<HTMLElement>("[data-homescool-mppe-modal]");
+        const opening = Boolean(modal?.hasAttribute("hidden"));
+        setMppeModalOpen(opening);
+        if (opening) void renderMppeChecklistModal();
+        log("mppe.modal.toggle", { open: opening });
+        return;
+      }
+      if (t.closest("[data-homescool-mppe-close]")) {
+        setMppeModalOpen(false);
+        return;
+      }
+      const modal = qs<HTMLElement>("[data-homescool-mppe-modal]");
+      if (modal && !modal.hasAttribute("hidden") && t === modal) {
+        setMppeModalOpen(false);
+      }
+    });
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Escape") return;
+      const modal = qs<HTMLElement>("[data-homescool-mppe-modal]");
+      if (modal && !modal.hasAttribute("hidden")) {
+        setMppeModalOpen(false);
+      }
+    });
+  }
+
   function setPrintTrayOpen(open: boolean) {
     const tray = dhsQs<HTMLElement>("[data-homescool-print-tray]");
     const menuBtn = dhsQs<HTMLButtonElement>("[data-homescool-print-menu]");
@@ -1012,6 +1170,7 @@ import "../../styles/homescool-workspace.css";
     setHidden(workspace, false);
     bindCollapseOnce();
     bindDebugToggleOnce();
+    bindMppeModalOnce();
     bindPrintOnce();
     bindSupportOnce();
     log("boot.loading_materials");

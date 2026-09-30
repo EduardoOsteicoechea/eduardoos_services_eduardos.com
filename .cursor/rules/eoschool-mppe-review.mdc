@@ -1,0 +1,44 @@
+---
+description: Review Homescool/eoschool drafting against MPPE imbuition — track whether all grade-3 objectives are being fulfilled
+globs:
+  - frontend/public/homescool/**/*.eoschool.json
+  - frontend/public/homescool/curriculum.json
+  - frontend/public/homescool/mppe-grade3-checklist.json
+  - .cursor/skills/eoschool/**/*
+  - ministerio_de_educacion_de_venezuela/**/*
+alwaysApply: false
+---
+
+# MPPE imbuition review (eoschool drafting)
+
+Use this rule when **reviewing** or **auditing** Homescool copy for MPPE Venezuela grade-3 coverage. Content master remains eoschool (`eoschool-mppe-master.mdc`).
+
+## Review questions (every pass)
+
+1. **Catalog completeness** — Does `mppe-grade3-checklist.json` still list every aprendizaje esperado from `marco_programatico_mppe_y_tercer_grado.md` Part II? If the marco gained items, update the catalog first.
+2. **Claim vs evidence** — For each class with `mppe.objectives[]`, does the lesson/quiz **actually** practice that id (not only list it)?
+3. **Orphan objectives** — Which checklist ids have **zero** class keys declaring them? Mark as gap; propose imbuition into an existing week theme or a **new** week theme.
+4. **Over-claim** — Same id listed on many days without new practice? Prefer day-1 intro + deepen evidence, not copy-paste of the whole week list on every day unless each day truly reinforces it.
+5. **Student visibility** — Is the label on the sheet explicit and readable? Missing `mppe` block on a class that clearly imbues MPPE = fail the review.
+6. **Master integrity** — Did the edit keep METHOD_V1 structure and narrative spec 009 while imbuing?
+
+## Pass / fail signals
+
+| Signal | Pass | Fail |
+| --- | --- | --- |
+| Objective in catalog | Has stable `id` | Free-text only, no id |
+| Class declaration | `mppe.objectives` with id+label | Imbuition in prose but no declaration |
+| Coverage trend | Gaps shrink week over week | Permanent silent gaps in Ciencias/Identidad blocks |
+| Theme master | Title/3 points intact | Theme replaced by MPPE syllabus dump |
+
+## Review workflow for agents
+
+1. Open checklist + curriculum (or cell JSON under `media/weekN/`).
+2. Build a coverage table: `objectiveId → [class keys]`.
+3. List **uncovered** ids grouped by area (mat / cie / ide / len).
+4. For the files in scope, verify declaration ↔ body alignment.
+5. Report: covered count / total, top gaps, concrete next imbuitions (class key + id + where in body).
+
+## UI cross-check
+
+After content changes, use the Homescool **MPPE checklist** modal (`fact_check` in DHS) to confirm the same coverage the agent computed. Do not treat the modal alone as authorization to skip reading lesson bodies.

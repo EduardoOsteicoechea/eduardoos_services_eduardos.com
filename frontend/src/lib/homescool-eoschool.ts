@@ -199,6 +199,7 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
     appendMemoryPhrase(doc, page);
+    appendMppeObjectives(doc, page);
     appendWeekRecap(doc, page);
     appendPriorDayRecap(doc, page);
     page.append(buildDeepenRibbon(doc));
@@ -237,7 +238,10 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   return batches.map((batch, batchIndex) => {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
-    if (batchIndex === 0) appendMemoryPhrase(doc, page);
+    if (batchIndex === 0) {
+      appendMemoryPhrase(doc, page);
+      appendMppeObjectives(doc, page);
+    }
     const segments = batch
       .filter((block): block is Extract<LessonPageBlock, { type: "point" }> => block.type === "point")
       .map((block) => block.segment);
@@ -606,6 +610,7 @@ function buildLessonWithQuizPage(
   );
   page.append(lessonHeader(doc, "Clase + cuestionario"));
   appendMemoryPhrase(doc, page);
+  appendMppeObjectives(doc, page);
   if (kind === "deepen") {
     appendWeekRecap(doc, page);
     appendPriorDayRecap(doc, page);
@@ -883,6 +888,27 @@ function appendMemoryPhrase(doc: EoschoolDocument, page: HTMLElement): void {
   const p = el("p", "homescool-letter__body homescool-letter__memory-text");
   appendFormattedText(p, phrase);
   box.append(p);
+  page.append(box);
+}
+
+/** Explicit MPPE objetivos fulfilled by this class (student-facing checklist on the sheet). */
+export function appendMppeObjectives(doc: EoschoolDocument, page: HTMLElement): void {
+  const items = doc.mppe?.objectives?.filter((o) => o?.id?.trim() && o?.label?.trim()) ?? [];
+  if (!items.length) return;
+  const box = el("section", "homescool-letter__mppe");
+  const label = el("h3", "homescool-letter__mppe-label");
+  label.append(el("span", "homescool-letter__box-label-text", "Objetivos MPPE"));
+  box.append(label);
+  const list = el("ul", "homescool-letter__mppe-list");
+  for (const o of items) {
+    const li = el("li", "homescool-letter__mppe-item");
+    const id = el("span", "homescool-letter__mppe-id", o.id.trim());
+    const text = el("span", "homescool-letter__mppe-text");
+    appendFormattedText(text, o.label.trim());
+    li.append(id, text);
+    list.append(li);
+  }
+  box.append(list);
   page.append(box);
 }
 

@@ -36,6 +36,7 @@ export function toEoschoolDocument(row: HomescoolCurriculumClass): EoschoolDocum
     quiz: row.quiz,
     media: row.media,
     supportUrl: row.supportUrl,
+    mppe: row.mppe,
   };
 }
 

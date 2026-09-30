@@ -229,6 +229,13 @@ export type EoschoolQuestion = {
   gridMark?: EoschoolGridMark;
 };
 
+export type EoschoolMPPEObjective = {
+  /** Stable id from /homescool/mppe-grade3-checklist.json */
+  id: string;
+  /** Student-facing label shown on the letter sheet */
+  label: string;
+};
+
 export type EoschoolDocument = {
   format: string;
   version: number;
@@ -258,6 +265,10 @@ export type EoschoolDocument = {
   media?: { id?: string; path: string; alt?: string }[];
   /** Optional support video/website URL (admin-set; rendered as first section when present). */
   supportUrl?: string;
+  /** MPPE Venezuela grade-3 objectives this class imbues (required when claiming coverage). */
+  mppe?: {
+    objectives: EoschoolMPPEObjective[];
+  };
 };
 
 export type HomescoolCycleSummary = {

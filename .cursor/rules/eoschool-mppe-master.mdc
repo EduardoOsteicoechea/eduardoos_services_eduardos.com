@@ -1,0 +1,63 @@
+---
+description: eoschool is content master; MPPE Venezuela grade-3 must be fully imbued and declared in each class
+globs:
+  - frontend/public/homescool/**/*
+  - frontend/src/lib/homescool*.ts
+  - frontend/src/pages/homescool/**/*
+  - backend/homescool_eoschool.go
+  - .cursor/skills/eoschool/**/*
+  - docs/specs/009-homescool-narrative-language.md
+  - ministerio_de_educacion_de_venezuela/**/*
+alwaysApply: false
+---
+
+# eoschool master + MPPE Venezuela (required imbuition)
+
+## Authority
+
+1. **eoschool / Homescool content is the master** for pedagogy, week themes, intro→deepen→review, quiz counts, letter layout, and narrative voice (METHOD_V1 + spec 009).
+2. **MPPE Venezuela (consulta de contenidos, 3.er grado)** is **required coverage**: every grade-3 aprendizaje esperado must eventually be **imbued** into the eoschool master — not as a parallel curriculum that replaces titles, and not as optional flavor.
+
+Canonical inventories:
+
+- Framework + grade 3: `ministerio_de_educacion_de_venezuela/marco_programatico_mppe_y_tercer_grado.md`
+- Integration analysis: `ministerio_de_educacion_de_venezuela/analisis_integracion_mppe_homescool.md`
+- Machine checklist: `frontend/public/homescool/mppe-grade3-checklist.json`
+
+## Imbuition (not replacement)
+
+- Keep the Homescool **weekly theme** (`title` + day-1 three points) as the memorization spine.
+- Imbue MPPE via contexts, practices, examples, maps, bitácoras, social language purposes, and quiz application items.
+- Prefer new weeks when an MPPE block cannot fit the current theme (e.g. alimentación, mezclas, plantas).
+
+## Explicit declaration in every class (mandatory)
+
+Every `.eoschool` document that claims MPPE coverage **must** include:
+
+```json
+"mppe": {
+  "objectives": [
+    {
+      "id": "<id from mppe-grade3-checklist.json>",
+      "label": "<short student-facing label of the aprendizaje esperado>"
+    }
+  ]
+}
+```
+
+- `id` must exist in the checklist catalog.
+- `label` is what the **letter sheet** shows under **Objetivos MPPE** (child-readable, Spanish unless `locale: "en"`).
+- If a class does not yet imbue any MPPE item, omit `mppe` or use `"objectives": []` — do **not** invent fake ids.
+- Do not claim an objective unless Idea central / Explora / Práctica / quiz actually teaches or practices it that day.
+
+## Agent obligations when authoring or editing cells
+
+1. Read the checklist ids for the relevant MPPE area/component.
+2. Choose which ids this cell truly covers; write them in `mppe.objectives`.
+3. Make the imbuition visible in the lesson body (practice purpose, VE example, map, scientific process, etc.).
+4. Rebuild curriculum / sync Mongo per METHOD dual storage.
+5. Goal: **full checklist coverage** across the cycle (imbuition + future weeks), not a permanent gap list.
+
+## UI
+
+Homescool DHS exposes a toggleable MPPE checklist modal (`fact_check`) that shows all catalog objectives and which class keys currently declare them.

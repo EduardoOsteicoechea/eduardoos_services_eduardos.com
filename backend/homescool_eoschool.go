@@ -44,6 +44,18 @@ type EoschoolDocument struct {
 	Quiz       EoschoolQuiz    `json:"quiz"`
 	Media      []EoschoolMedia `json:"media,omitempty"`
 	SupportURL string          `json:"supportUrl,omitempty"`
+	// MPPE lists grade-3 aprendizajes esperados this class imbues (ids from mppe-grade3-checklist.json).
+	MPPE *EoschoolMPPE `json:"mppe,omitempty"`
+}
+
+// EoschoolMPPE declares which MPPE Venezuela objectives this cell fulfills.
+type EoschoolMPPE struct {
+	Objectives []EoschoolMPPEObjective `json:"objectives"`
+}
+
+type EoschoolMPPEObjective struct {
+	ID    string `json:"id"`
+	Label string `json:"label"`
 }
 
 type EoschoolLesson struct {
@@ -325,6 +337,41 @@ func validateEoschoolLetterQuizMix(doc *EoschoolDocument) error {
 	return nil
 }
 
+func validateEoschoolMPPE(mppe *EoschoolMPPE) error {
+	if mppe == nil {
+		return nil
+	}
+	if mppe.Objectives == nil {
+		mppe.Objectives = []EoschoolMPPEObjective{}
+	}
+	if len(mppe.Objectives) > 24 {
+		return fmt.Errorf("mppe.objectives: at most 24 items")
+	}
+	seen := map[string]struct{}{}
+	for i := range mppe.Objectives {
+		o := &mppe.Objectives[i]
+		o.ID = strings.TrimSpace(o.ID)
+		o.Label = strings.TrimSpace(o.Label)
+		if o.ID == "" {
+			return fmt.Errorf("mppe.objectives[%d].id required", i)
+		}
+		if len(o.ID) > 64 {
+			return fmt.Errorf("mppe.objectives[%d].id too long", i)
+		}
+		if o.Label == "" {
+			return fmt.Errorf("mppe.objectives[%d].label required", i)
+		}
+		if len(o.Label) > 280 {
+			return fmt.Errorf("mppe.objectives[%d].label too long", i)
+		}
+		if _, ok := seen[o.ID]; ok {
+			return fmt.Errorf("mppe.objectives[%d].id duplicated", i)
+		}
+		seen[o.ID] = struct{}{}
+	}
+	return nil
+}
+
 func validateEoschoolDocument(doc *EoschoolDocument) error {
 	if doc == nil {
 		return fmt.Errorf("document required")
@@ -368,6 +415,9 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		if len(doc.SupportURL) > 2000 {
 			return fmt.Errorf("supportUrl too long")
 		}
+	}
+	if err := validateEoschoolMPPE(doc.MPPE); err != nil {
+		return err
 	}
 
 	wantCount := eoschoolExpectedQuizCount(doc.Day, doc.Week)

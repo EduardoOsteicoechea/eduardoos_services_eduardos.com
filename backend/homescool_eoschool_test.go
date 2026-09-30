@@ -194,3 +194,17 @@ func sampleEoschoolDay1() EoschoolDocument {
 	}
 	return doc
 }
+
+func TestValidateEoschoolMPPE(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.MPPE = &EoschoolMPPE{Objectives: []EoschoolMPPEObjective{
+		{ID: "mat-num-06", Label: "Multiplico con la unidad seguida de cero."},
+	}}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatalf("expected ok with mppe: %v", err)
+	}
+	doc.MPPE.Objectives[0].Label = ""
+	if err := validateEoschoolDocument(&doc); err == nil {
+		t.Fatal("expected error for empty mppe label")
+	}
+}

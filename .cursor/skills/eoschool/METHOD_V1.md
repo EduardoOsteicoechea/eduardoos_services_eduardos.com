@@ -70,6 +70,13 @@ Example (esp compuestos): *participio = forma ya hecha (-ado/-ido)*; *haber = pa
 
 DHS chip labels use short text only (no number on the button): `proy`, `esp`, `ing`, `lat`, `mat`, `hist`, `LinT`, `geo`, `cienc`, `art`. Class numbers 1–10 appear in tooltips and letter headers.
 
+## MPPE Venezuela (required imbuition)
+
+- **eoschool content is the master** (themes, METHOD pedagogy, narrative).
+- **MPPE 3.er grado is required coverage**: imbue aprendizajes into the master; declare them on each cell as `mppe.objectives[{id,label}]` (ids from `frontend/public/homescool/mppe-grade3-checklist.json`).
+- Letter sheets render an **Objetivos MPPE** box from that field. DHS `fact_check` opens the full checklist + coverage.
+- Agent rules: `.cursor/rules/eoschool-mppe-master.mdc`, `.cursor/rules/eoschool-mppe-review.mdc`.
+
 ## Dual storage (edit both)
 
 | Layer | Role | Path / how |

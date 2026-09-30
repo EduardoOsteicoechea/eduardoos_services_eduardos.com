@@ -321,6 +321,15 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   z-index: 1;
 }
 
+.homescool-dhs__icon-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: center;
+  align-self: flex-start;
+}
+
 .homescool-dhs__debug-btn {
   width: var(--control-height);
   height: var(--control-height);
@@ -346,6 +355,148 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-dhs__debug-btn[aria-pressed="true"] {
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+
+/* MPPE checklist modal (coverage of grade-3 objetivos imbued into eoschool). */
+.homescool-mppe-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-padding);
+  background: color-mix(in srgb, var(--color-text) 35%, transparent);
+}
+
+.homescool-mppe-modal[hidden] {
+  display: none;
+}
+
+.homescool-mppe-modal__dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: var(--modal-width, 28rem);
+  max-width: calc(var(--content-basis, 30rem) - 2rem);
+  max-height: calc(100% - 2rem);
+  margin: 0;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.homescool-mppe-modal__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+  flex: 0 0 auto;
+}
+
+.homescool-mppe-modal__title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.homescool-mppe-modal__close {
+  flex: 0 0 auto;
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+}
+
+.homescool-mppe-modal__summary {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.homescool-mppe-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-padding);
+}
+
+.homescool-mppe-modal__area-title {
+  margin: 0 0 var(--rail-gap);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.homescool-mppe-modal__component-title {
+  margin: 0 0 var(--rail-gap);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.homescool-mppe-modal__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.homescool-mppe-modal__item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--rail-gap);
+  padding: var(--rail-gap);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.homescool-mppe-modal__item--imbued {
+  border-color: var(--color-ok);
+}
+
+.homescool-mppe-modal__mark {
+  flex: 0 0 auto;
+  font-size: var(--icon-size);
+  color: var(--color-muted);
+}
+
+.homescool-mppe-modal__item--imbued .homescool-mppe-modal__mark {
+  color: var(--color-ok);
+}
+
+.homescool-mppe-modal__item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.homescool-mppe-modal__id {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.homescool-mppe-modal__aprendizaje,
+.homescool-mppe-modal__keys {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+}
+
+.homescool-mppe-modal__keys {
+  color: var(--color-muted);
 }
 
 .homescool-dhs__print-row {
@@ -961,6 +1112,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__memory,
+.homescool-letter__mppe,
 .homescool-letter__week-recap,
 .homescool-letter__prior-recap {
   display: flex;
@@ -972,6 +1124,54 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: transparent;
   min-width: 0;
   overflow: hidden;
+}
+
+.homescool-letter__mppe {
+  border-color: var(--hc-blue);
+}
+
+.homescool-letter__mppe-label {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  color: var(--hc-rail);
+  line-height: 1.3;
+}
+
+.homescool-letter__mppe-label .homescool-letter__box-label-text {
+  text-transform: uppercase;
+}
+
+.homescool-letter__mppe-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.homescool-letter__mppe-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.4rem;
+  align-items: baseline;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.homescool-letter__mppe-id {
+  font-family: ui-monospace, monospace;
+  font-size: 0.62rem;
+  color: var(--hc-navy);
+  font-weight: 700;
+}
+
+.homescool-letter__mppe-text {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .homescool-letter__memory {

@@ -1,0 +1,256 @@
+{
+  "format": "homescool-mppe-checklist",
+  "version": 1,
+  "grade": 3,
+  "locale": "es",
+  "source": "MPPE propuestas de contenidos (consulta 2025) — 3.er grado",
+  "areas": [
+    {
+      "id": "mat",
+      "title": "Matemáticas",
+      "components": [
+        {
+          "id": "mat-geo",
+          "title": "Geometría",
+          "objectives": [
+            { "id": "mat-geo-01", "content": "Polígono", "aprendizaje": "Diferencia los polígonos de acuerdo al número de lados." },
+            { "id": "mat-geo-02", "content": "Noción de ángulo", "aprendizaje": "Identifica y usa la noción de ángulo en figuras del entorno." },
+            { "id": "mat-geo-03", "content": "Cuerpos geométricos", "aprendizaje": "Identifica los elementos de los cuerpos geométricos y semejanzas/diferencias entre formas y cuerpos." },
+            { "id": "mat-geo-04", "content": "Círculo y circunferencia", "aprendizaje": "Diferencia círculo de una circunferencia." },
+            { "id": "mat-geo-05", "content": "La recta, el punto, el plano", "aprendizaje": "Diferencia recta y punto, la traza en un plano; diferencia rectas paralelas y perpendiculares." },
+            { "id": "mat-geo-06", "content": "Orientación espacial y temporal / croquis", "aprendizaje": "Se orienta espacial y temporalmente; traza un croquis partiendo de un punto de referencia." }
+          ]
+        },
+        {
+          "id": "mat-med",
+          "title": "Magnitudes y medidas",
+          "objectives": [
+            { "id": "mat-med-01", "content": "Posición y desplazamiento de un objeto", "aprendizaje": "Describe posición y desplazamiento de objetos." },
+            { "id": "mat-med-02", "content": "Medidas convencionales y no convencionales", "aprendizaje": "Diferencia medidas convencionales y no convencionales; usa el cuerpo para medir superficies." },
+            { "id": "mat-med-03", "content": "Longitud, masa, capacidad, tiempo y submúltiplos", "aprendizaje": "Utiliza medidas de longitud, masa, capacidad y tiempo para medir objetos." },
+            { "id": "mat-med-04", "content": "Sistema monetario", "aprendizaje": "Realiza cálculos con cambios de la moneda nacional." }
+          ]
+        },
+        {
+          "id": "mat-num",
+          "title": "Números y operaciones",
+          "objectives": [
+            { "id": "mat-num-01", "content": "Números naturales (10 000)", "aprendizaje": "Cuenta y lee cantidades hasta el diez mil." },
+            { "id": "mat-num-02", "content": "Números ordinales", "aprendizaje": "Usa números ordinales en contextos cotidianos y escolares." },
+            { "id": "mat-num-03", "content": "Valor de posición (hasta centenas de mil)", "aprendizaje": "Usa el cartel de valores para ubicar números o cantidades hasta el diez mil / valor posicional." },
+            { "id": "mat-num-04", "content": "Adición y propiedades", "aprendizaje": "Realiza adiciones y sus propiedades con números hasta diez mil." },
+            { "id": "mat-num-05", "content": "Sustracción", "aprendizaje": "Realiza sustracciones con números hasta diez mil." },
+            { "id": "mat-num-06", "content": "Multiplicación (unidad seguida de cero; dos dígitos)", "aprendizaje": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero." }
+          ]
+        },
+        {
+          "id": "mat-est",
+          "title": "Estadística y probabilidad",
+          "objectives": [
+            { "id": "mat-est-01", "content": "Pictogramas, diagramas de barras y tablas", "aprendizaje": "Recopila, organiza, clasifica y representa gráficamente datos." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cie",
+      "title": "Ciencias Naturales",
+      "components": [
+        {
+          "id": "cie-sal",
+          "title": "Salud integral — Alimentación en Venezuela",
+          "objectives": [
+            { "id": "cie-sal-01", "content": "Alimentación, salud y crecimiento / trompo de los alimentos", "aprendizaje": "Comprende qué es una alimentación saludable e identifica grupos de alimentos." },
+            { "id": "cie-sal-02", "content": "Importancia de la alimentación saludable", "aprendizaje": "Reconoce la importancia de la alimentación saludable para un estado óptimo de salud." },
+            { "id": "cie-sal-03", "content": "Gastronomía venezolana y recetas familiares", "aprendizaje": "Reconoce platos típicos e ingredientes; valora tradiciones culinarias y diversidad alimentaria." },
+            { "id": "cie-sal-04", "content": "Alimentación y bienestar comunitario", "aprendizaje": "Valora la alimentación saludable para el bienestar comunitario." }
+          ]
+        },
+        {
+          "id": "cie-cts",
+          "title": "Ciencia, tecnología y sociedad — Mezclas",
+          "objectives": [
+            { "id": "cie-cts-01", "content": "Tipos de mezclas homo/heterogéneas", "aprendizaje": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas." },
+            { "id": "cie-cts-02", "content": "Propiedades y separación de mezclas", "aprendizaje": "Describe propiedades e identifica métodos sencillos de separación de componentes." },
+            { "id": "cie-cts-03", "content": "Experimentación con mezclas", "aprendizaje": "Formula preguntas, observa y concluye a partir de experimentos con mezclas." }
+          ]
+        },
+        {
+          "id": "cie-amb",
+          "title": "El ambiente — Biodiversidad",
+          "objectives": [
+            { "id": "cie-amb-01", "content": "Biodiversidad y ecosistemas", "aprendizaje": "Observa y describe la biodiversidad y su importancia en ecosistemas del entorno." },
+            { "id": "cie-amb-02", "content": "Agua y biodiversidad", "aprendizaje": "Reconoce el papel del agua; participa en proyectos de conservación." },
+            { "id": "cie-amb-03", "content": "Cambio climático y protección", "aprendizaje": "Reconoce efectos del cambio climático; valora y protege la biodiversidad." }
+          ]
+        },
+        {
+          "id": "cie-ser",
+          "title": "Seres vivos — Plantas",
+          "objectives": [
+            { "id": "cie-ser-01", "content": "Clasificación, partes y funciones de plantas", "aprendizaje": "Identifica y clasifica plantas; describe partes y funciones; etapas de crecimiento." },
+            { "id": "cie-ser-02", "content": "Fotosíntesis", "aprendizaje": "Comprende la importancia de la fotosíntesis para plantas y otros seres vivos." },
+            { "id": "cie-ser-03", "content": "Reproducción e importancia ambiental", "aprendizaje": "Reconoce reproducción sexual/asexual; reflexiona sobre el rol de las plantas y el oxígeno." }
+          ]
+        },
+        {
+          "id": "cie-ene",
+          "title": "Energía–materia — Energía en las comunidades",
+          "objectives": [
+            { "id": "cie-ene-01", "content": "Formas y fuentes de energía", "aprendizaje": "Comprende la presencia de la energía, formas y fuentes." },
+            { "id": "cie-ene-02", "content": "Energía y desarrollo comunitario", "aprendizaje": "Reconoce la importancia del acceso a la energía en el desarrollo comunitario." },
+            { "id": "cie-ene-03", "content": "Uso responsable y sostenible", "aprendizaje": "Demuestra actitud responsable; valora el buen uso sostenible de la energía." }
+          ]
+        },
+        {
+          "id": "cie-uni",
+          "title": "La Tierra en el universo — Gravedad",
+          "objectives": [
+            { "id": "cie-uni-01", "content": "Fuerza de gravedad", "aprendizaje": "Comprende origen e importancia de la gravedad en la Tierra y el espacio." },
+            { "id": "cie-uni-02", "content": "Efectos observables de la gravedad", "aprendizaje": "Observa efectos (caída libre, peso); registra fenómenos astronómicos." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ide",
+      "title": "Identidad",
+      "components": [
+        {
+          "id": "ide-hum",
+          "title": "La Humanidad",
+          "objectives": [
+            { "id": "ide-hum-01", "content": "Períodos de la Historia de Venezuela", "aprendizaje": "Conoce períodos: indígena, colonial, republicano agrícola y republicano petrolero." },
+            { "id": "ide-hum-02", "content": "Comunicación y formas del conocimiento en el tiempo", "aprendizaje": "Identifica formas de comunicación y transmisión de conocimientos desde primeras culturas hasta hoy." }
+          ]
+        },
+        {
+          "id": "ide-mun",
+          "title": "Nuestro Mundo",
+          "objectives": [
+            { "id": "ide-mun-01", "content": "Vivienda, caserío y comunidad / planos", "aprendizaje": "Reconoce vivienda y caserío; elementos de comunidad; elabora planos del entorno." },
+            { "id": "ide-mun-02", "content": "Mar Caribe, ciclones y cuidado del agua/Tierra", "aprendizaje": "Conoce el Caribe, navegación/pesca, ciclones; usa agua potable con responsabilidad." }
+          ]
+        },
+        {
+          "id": "ide-ven",
+          "title": "Venezuela en el Mundo",
+          "objectives": [
+            { "id": "ide-ven-01", "content": "Superficie, estados, capitales y Caracas", "aprendizaje": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas." }
+          ]
+        },
+        {
+          "id": "ide-ind",
+          "title": "Pueblos Indígenas",
+          "objectives": [
+            { "id": "ide-ind-01", "content": "Resistencia indígena, cacicazgo y liderazgos", "aprendizaje": "Comprende la resistencia indígena, el cacicazgo y lideresas/líderes frente a la invasión europea." }
+          ]
+        },
+        {
+          "id": "ide-afr",
+          "title": "Pueblos Afrovenezolanos",
+          "objectives": [
+            { "id": "ide-afr-01", "content": "Trabajo colonial y sabores africanos", "aprendizaje": "Conoce el papel laboral afrovenezolano en la sociedad colonial e identifica alimentos de origen africano." }
+          ]
+        },
+        {
+          "id": "ide-bol",
+          "title": "Libertador Simón Bolívar",
+          "objectives": [
+            { "id": "ide-bol-01", "content": "Juventud, Europa, matrimonio y viudez", "aprendizaje": "Reconoce la juventud de Bolívar, viajes a Europa, matrimonio y viudez." },
+            { "id": "ide-bol-02", "content": "Juramento del Monte Sacro", "aprendizaje": "Conoce el Juramento en el Monte Sacro y el compromiso con la Libertad de América hasta 1810." }
+          ]
+        },
+        {
+          "id": "ide-agr",
+          "title": "Nación Agrícola",
+          "objectives": [
+            { "id": "ide-agr-01", "content": "Zamora y Cipriano Castro", "aprendizaje": "Conoce a Ezequiel Zamora y a Cipriano Castro en luchas campesinas y defensa de la soberanía." }
+          ]
+        },
+        {
+          "id": "ide-pet",
+          "title": "Nación Petrolera",
+          "objectives": [
+            { "id": "ide-pet-01", "content": "Presidentes y momentos siglos XX–XXI", "aprendizaje": "Reconoce presidentes y momentos de la Historia del siglo XX y XXI." }
+          ]
+        },
+        {
+          "id": "ide-cul",
+          "title": "Cultura Venezolana",
+          "objectives": [
+            { "id": "ide-cul-01", "content": "Simón Rodríguez y Luis B. Prieto Figueroa", "aprendizaje": "Conoce a estos maestros y valora el día del Maestro." },
+            { "id": "ide-cul-02", "content": "Mestizaje y diversidad cultural", "aprendizaje": "Reconoce diversidad cultural y comprende el mestizaje." },
+            { "id": "ide-cul-03", "content": "Símbolos patrios", "aprendizaje": "Describe bandera, escudo e himno y conoce su significado." },
+            { "id": "ide-cul-04", "content": "Moneda Bolívar", "aprendizaje": "Conoce el origen de la moneda nacional, el Bolívar." }
+          ]
+        },
+        {
+          "id": "ide-ter",
+          "title": "Territorio Productivo",
+          "objectives": [
+            { "id": "ide-ter-01", "content": "Conjuntos regionales y paisajes productivos", "aprendizaje": "Reconoce Costa-montaña, Llanos y Guayana, características productivas e hitos productivos históricos." }
+          ]
+        },
+        {
+          "id": "ide-soc",
+          "title": "Sociedad y Ciudadanía",
+          "objectives": [
+            { "id": "ide-soc-01", "content": "Comunidad y roles escolares", "aprendizaje": "Conoce comunidad, organizaciones y roles en la comunidad escolar." },
+            { "id": "ide-soc-02", "content": "Normas y trabajo en equipo", "aprendizaje": "Valora normas de convivencia y habilidades de trabajo en equipo." },
+            { "id": "ide-soc-03", "content": "Familia y bienestar", "aprendizaje": "Reconoce diversidad familiar, planificación familiar y necesidades básicas." },
+            { "id": "ide-soc-04", "content": "Señales de tránsito", "aprendizaje": "Conoce señales de tránsito para conductores y peatones." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "len",
+      "title": "Prácticas del Lenguaje",
+      "components": [
+        {
+          "id": "len-lec",
+          "title": "Lectura",
+          "objectives": [
+            { "id": "len-lec-01", "content": "Textos instruccionales", "aprendizaje": "Ejecuta secuencias interpretando textos instruccionales." },
+            { "id": "len-lec-02", "content": "Biografías", "aprendizaje": "Conoce datos de biografías de personajes destacados (p. ej. Bolívar, Rodríguez, epónimos locales)." },
+            { "id": "len-lec-03", "content": "Textos informativos y noticias", "aprendizaje": "Busca información en fuentes; se interesa por el acontecer diario." },
+            { "id": "len-lec-04", "content": "Preferencia e índices", "aprendizaje": "Elige lecturas con criterios; usa índices de libros." },
+            { "id": "len-lec-05", "content": "Modalidades de lectura", "aprendizaje": "Lee exploratoria, acuciosa y para redactar." },
+            { "id": "len-lec-06", "content": "Ordenar palabras / tipos de texto / estructura narrativa", "aprendizaje": "Ordena palabras en oraciones; diferencia tipos de texto; conoce trama, personajes, escenarios." },
+            { "id": "len-lec-07", "content": "Alfabeto, metáforas, signos, clases de palabras", "aprendizaje": "Nombra letras; comprende metáforas sencillas; interpreta ¿!; conoce sustantivo y adjetivo." },
+            { "id": "len-lec-08", "content": "Curiosidades, compuestas, mapas y señalética", "aprendizaje": "Analiza curiosidades léxicas; palabras compuestas; lee mapas/gráficos; identifica señales básicas." },
+            { "id": "len-lec-09", "content": "Personajes, Constitución, LSV, documentos", "aprendizaje": "Conoce ilustres, derechos constitucionales básicos, gestos LSV, partida de nacimiento y cédula." }
+          ]
+        },
+        {
+          "id": "len-esc",
+          "title": "Escritura",
+          "objectives": [
+            { "id": "len-esc-01", "content": "Nombre propio, mayúscula y tilde", "aprendizaje": "Escribe nombre y palabras familiares; mayúscula en propios; tilde en repertorio familiar." },
+            { "id": "len-esc-02", "content": "Normas de convivencia", "aprendizaje": "Participa en revisión/reescritura de normas, deberes, ambiente y patria." },
+            { "id": "len-esc-03", "content": "Derivación, juegos, duda ortográfica, concordancia", "aprendizaje": "Deriva campos lexicales; juega con palabras; resuelve dudas; concordancia sustantivo-adjetivo." },
+            { "id": "len-esc-04", "content": "Planificar, dictar, ordenar, escribir textos", "aprendizaje": "Planifica en equipo; dicta; construye oraciones; escribe listas/cuentos/carteles." },
+            { "id": "len-esc-05", "content": "Copia, dictado, revisión, caligrafía", "aprendizaje": "Copia y toma dictado con propósito; revisa/edita; caligrafía artística funcional." },
+            { "id": "len-esc-06", "content": "Singular/plural y género", "aprendizaje": "Usa oposición singular/plural y femenino/masculino en escritura." },
+            { "id": "len-esc-07", "content": "Cuentos, versiones, restricciones gue-gui/que-qui", "aprendizaje": "Escribe cuentos y versiones; aplica dígrafo gu/qu." },
+            { "id": "len-esc-08", "content": "Reseñas, inicios, ortografía básica, R/RR, CCV/VC/CVC", "aprendizaje": "Reseñas; textos desde inicios; mayúsculas/punto; R/RR; sílabas complejas." },
+            { "id": "len-esc-09", "content": "Registro de temas leídos; ¿ y !", "aprendizaje": "Registra contenidos leídos; diferencia y escribe interrogativas/exclamativas." }
+          ]
+        },
+        {
+          "id": "len-ora",
+          "title": "Oralidad",
+          "objectives": [
+            { "id": "len-ora-01", "content": "Intenciones y hablante-oyente", "aprendizaje": "Actúa como hablante-oyente reflexivo en situaciones diversas." },
+            { "id": "len-ora-02", "content": "Fórmulas sociales y decisiones colectivas", "aprendizaje": "Usa gracias/por favor/etc.; aporta ideas a normas de convivencia." },
+            { "id": "len-ora-03", "content": "Intercambios sobre textos y diálogos", "aprendizaje": "Manifiesta interpretaciones; escucha; dialoga para acordar/resolver." },
+            { "id": "len-ora-04", "content": "Preguntas, evaluación, cineforo, léxico", "aprendizaje": "Pregunta/responde; compara respuestas; comenta películas; amplía léxico." },
+            { "id": "len-ora-05", "content": "Narrar, exponer, lúdico, tecnología, canto", "aprendizaje": "Narra cuentos; expone; chistes/adivinanzas; discute tecnología; canta/declama." },
+            { "id": "len-ora-06", "content": "Sonidos de animales, historietas, adjetivos, noticias, refranes, espectáculos", "aprendizaje": "Nombra sonidos; inventa desde imágenes; usa adjetivos; comenta noticias; usa refranes; espectador responsable." }
+          ]
+        }
+      ]
+    }
+  ]
+}
