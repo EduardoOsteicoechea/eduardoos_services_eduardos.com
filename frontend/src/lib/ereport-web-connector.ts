@@ -305,46 +305,55 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   async function bootstrap(next?: Partial<ConnectorConfig>) {
-    if (next?.orgId && next?.reportId) {
-      config = { orgId: next.orgId, reportId: next.reportId, locked: true };
-    }
-    authGate?.setAttribute("hidden", "");
-    pathCard?.setAttribute("hidden", "");
-    cascade?.setAttribute("hidden", "");
-    if (reportLabel) reportLabel.hidden = true;
-    setStatus("Checking subscription…");
-
-    const access = await fetchEreportAccess();
-    if (access.status === 401) {
-      authGate?.removeAttribute("hidden");
-      if (authMsg) {
-        authMsg.innerHTML =
-          'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
+    try {
+      if (next?.orgId && next?.reportId) {
+        config = { orgId: next.orgId, reportId: next.reportId, locked: true };
       }
-      setStatus("Sign in required.");
-      return;
-    }
-    if (access.status !== 200) {
-      raiseApiError(access.status, access.requestId, access.data as unknown as Record<string, unknown>);
-      setStatus("Could not verify access.");
-      return;
-    }
-    if (!access.data.canCreate) {
-      authGate?.removeAttribute("hidden");
-      if (authMsg) {
-        authMsg.innerHTML =
-          'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
-      }
-      setStatus("Subscription required.");
-      return;
-    }
-
-    if (config.locked) {
+      authPanel?.setAttribute("hidden", "");
       pathCard?.setAttribute("hidden", "");
-      await loadReportPayload();
-      return;
+      cascade?.setAttribute("hidden", "");
+      if (reportLabel) reportLabel.hidden = true;
+      setStatus("Checking subscription…");
+
+      const access = await fetchEreportAccess();
+      if (access.status === 401) {
+        authPanel?.removeAttribute("hidden");
+        if (authMsg) {
+          authMsg.innerHTML =
+            'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
+        }
+        setStatus("Sign in required.");
+        return;
+      }
+      if (access.status !== 200) {
+        raiseApiError(access.status, access.requestId, access.data as unknown as Record<string, unknown>);
+        setStatus("Could not verify access.");
+        return;
+      }
+      if (!access.data.canCreate) {
+        authPanel?.removeAttribute("hidden");
+        if (authMsg) {
+          authMsg.innerHTML =
+            'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
+        }
+        setStatus("Subscription required.");
+        return;
+      }
+
+      if (config.locked) {
+        pathCard?.setAttribute("hidden", "");
+        await loadReportPayload();
+        return;
+      }
+      await loadOrgsForPicker();
+    } catch (err) {
+      if (mustLog) console.log("[ereport-web-connector] bootstrap failed", err);
+      setStatus("Could not start connector.");
+      showErrorModal({
+        message: "Could not start the eReport connector.",
+        details: err instanceof Error ? err.message : String(err),
+      });
     }
-    await loadOrgsForPicker();
   }
 
   async function createSection() {
