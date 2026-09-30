@@ -9,7 +9,7 @@ func TestValidateEoschoolDocumentDay1(t *testing.T) {
 	}
 }
 
-func TestValidateEoschoolDocumentDay1MixedActivityTypes(t *testing.T) {
+func TestValidateEoschoolDocumentRejectsNonLetterQuizTypes(t *testing.T) {
 	doc := sampleEoschoolDay1()
 	doc.Media = []EoschoolMedia{{ID: "img1", Path: "/homescool/media/sample.png", Alt: "mapa"}}
 	doc.Quiz.Questions[0] = EoschoolQuestion{
@@ -25,38 +25,8 @@ func TestValidateEoschoolDocumentDay1MixedActivityTypes(t *testing.T) {
 			CluesDown:   []EoschoolClue{{Num: 2, Clue: "Vertical"}},
 		},
 	}
-	doc.Quiz.Questions[1] = EoschoolQuestion{
-		ID: "ws", OriginDay: 1, Type: "wordsearch", Prompt: "Encuentra las palabras",
-		Wordsearch: &EoschoolWordsearch{
-			Grid:  [][]string{{"A", "B"}, {"C", "D"}},
-			Words: []string{"AB", "CD"},
-		},
-	}
-	doc.Quiz.Questions[2] = EoschoolQuestion{
-		ID: "mt", OriginDay: 1, Type: "match", Prompt: "Empareja",
-		Match: &EoschoolMatch{
-			Left:  []string{"uno", "dos", "tres"},
-			Right: []string{"1", "2", "3"},
-		},
-	}
-	doc.Quiz.Questions[3] = EoschoolQuestion{
-		ID: "di", OriginDay: 1, Type: "draw_image", Prompt: "Traza sobre el mapa",
-		DrawImage: &EoschoolDrawImage{MediaID: "img1"},
-	}
-	doc.Quiz.Questions[4] = EoschoolQuestion{
-		ID: "db", OriginDay: 1, Type: "draw_box", Prompt: "Dibuja el ciclo",
-		DrawBox: &EoschoolDrawBox{HeightCm: 6},
-	}
-	doc.Quiz.Questions[5] = EoschoolQuestion{
-		ID: "gm", OriginDay: 1, Type: "grid_mark", Prompt: "Marca las celdas correctas",
-		GridMark: &EoschoolGridMark{Cols: 8, Rows: 8},
-		Answer:   "A6,G4",
-	}
-	doc.Quiz.Questions[6] = EoschoolQuestion{
-		ID: "wr", OriginDay: 1, Type: "write", Prompt: "Explica en dos oraciones",
-	}
-	if err := validateEoschoolDocument(&doc); err != nil {
-		t.Fatal(err)
+	if err := validateEoschoolDocument(&doc); err == nil {
+		t.Fatal("expected letter-quiz type error")
 	}
 }
 
@@ -72,6 +42,7 @@ func TestValidateEoschoolDocumentRejectsIncompleteCrossword(t *testing.T) {
 
 func TestValidateEoschoolDocumentRejectsDrawImageWithoutMedia(t *testing.T) {
 	doc := sampleEoschoolDay1()
+	doc.Media = []EoschoolMedia{{ID: "img1", Path: "/homescool/media/sample.png", Alt: "mapa"}}
 	doc.Quiz.Questions[0] = EoschoolQuestion{
 		ID: "di", OriginDay: 1, Type: "draw_image", Prompt: "Dibuja",
 		DrawImage: &EoschoolDrawImage{MediaID: "missing"},
@@ -83,9 +54,6 @@ func TestValidateEoschoolDocumentRejectsDrawImageWithoutMedia(t *testing.T) {
 
 func TestValidateEoschoolDocumentDay1AllowsWrite(t *testing.T) {
 	doc := sampleEoschoolDay1()
-	doc.Quiz.Questions[0] = EoschoolQuestion{
-		ID: "w", OriginDay: 1, Type: "write", Prompt: "Escribe tu idea",
-	}
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -100,24 +68,7 @@ func TestValidateEoschoolDocumentDay5(t *testing.T) {
 	for i := range doc.Lesson.Points {
 		doc.Lesson.Points[i] = EoschoolPoint{ID: "p", Heading: "h", Body: "b"}
 	}
-	doc.Quiz.QuestionCount = 52
-	doc.Quiz.Questions = make([]EoschoolQuestion, 52)
-	for i := 0; i < 40; i++ {
-		doc.Quiz.Questions[i] = EoschoolQuestion{
-			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
-			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
-		}
-	}
-	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[40+i] = EoschoolQuestion{
-			ID: "w4", OriginDay: 4, Type: "write", Prompt: "escribe?",
-		}
-	}
-	for i := 0; i < 8; i++ {
-		doc.Quiz.Questions[44+i] = EoschoolQuestion{
-			ID: "w5", OriginDay: 5, Type: "write", Prompt: "reflexiona?",
-		}
-	}
+	fillLetterQuizDay5(&doc)
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -130,24 +81,7 @@ func TestValidateEoschoolDocumentProDay5AllowsOnePoint(t *testing.T) {
 	doc.Lesson.Kind = eoschoolKindReview
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Presenta el proyecto", Body: "Continúa el mismo experimento."}}
-	doc.Quiz.QuestionCount = 52
-	doc.Quiz.Questions = make([]EoschoolQuestion, 52)
-	for i := 0; i < 40; i++ {
-		doc.Quiz.Questions[i] = EoschoolQuestion{
-			ID: "q", OriginDay: (i % 5) + 1, Type: "mcq", Prompt: "p?",
-			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
-		}
-	}
-	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[40+i] = EoschoolQuestion{
-			ID: "w4", OriginDay: 4, Type: "write", Prompt: "escribe?",
-		}
-	}
-	for i := 0; i < 8; i++ {
-		doc.Quiz.Questions[44+i] = EoschoolQuestion{
-			ID: "w5", OriginDay: 5, Type: "write", Prompt: "reflexiona?",
-		}
-	}
+	fillLetterQuizDay5(&doc)
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -165,19 +99,7 @@ func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
 	doc.Lesson.FocusPoint = &fp
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
-	doc.Quiz.QuestionCount = 36
-	doc.Quiz.Questions = make([]EoschoolQuestion, 36)
-	for i := 0; i < 32; i++ {
-		doc.Quiz.Questions[i] = EoschoolQuestion{
-			ID: "q", OriginDay: (i % 4) + 1, Type: "mcq", Prompt: "p?",
-			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
-		}
-	}
-	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[32+i] = EoschoolQuestion{
-			ID: "w", OriginDay: 4, Type: "write", Prompt: "escribe?",
-		}
-	}
+	fillLetterQuizDay(&doc, 4)
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -186,19 +108,6 @@ func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
 func TestValidateEoschoolDocumentWeek2Day1Sheet(t *testing.T) {
 	doc := sampleEoschoolDay1()
 	doc.Week = 2
-	doc.Quiz.QuestionCount = 16
-	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
-	for i := 0; i < 12; i++ {
-		doc.Quiz.Questions[i] = EoschoolQuestion{
-			ID: "q", OriginDay: 1, Type: "mcq", Prompt: "p?",
-			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
-		}
-	}
-	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[12+i] = EoschoolQuestion{
-			ID: "w", OriginDay: 1, Type: "write", Prompt: "cita y explica?",
-		}
-	}
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -213,6 +122,13 @@ func TestValidateEoschoolDocumentWeek2Day3Sheet(t *testing.T) {
 	doc.Lesson.FocusPoint = &fp
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
+	fillLetterQuizDay(&doc, 3)
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func fillLetterQuizDay(doc *EoschoolDocument, day int) {
 	doc.Quiz.QuestionCount = 16
 	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
 	for i := 0; i < 6; i++ {
@@ -223,33 +139,23 @@ func TestValidateEoschoolDocumentWeek2Day3Sheet(t *testing.T) {
 	}
 	for i := 0; i < 6; i++ {
 		doc.Quiz.Questions[6+i] = EoschoolQuestion{
-			ID: "q3", OriginDay: 3, Type: "mcq", Prompt: "p?",
+			ID: "qd", OriginDay: day, Type: "mcq", Prompt: "p?",
 			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
 		}
 	}
 	for i := 0; i < 4; i++ {
 		doc.Quiz.Questions[12+i] = EoschoolQuestion{
-			ID: "w", OriginDay: 3, Type: "write", Prompt: "cita y explica?",
+			ID: "w", OriginDay: day, Type: "write", Prompt: "cita y explica?",
 		}
-	}
-	if err := validateEoschoolDocument(&doc); err != nil {
-		t.Fatal(err)
 	}
 }
 
+func fillLetterQuizDay5(doc *EoschoolDocument) {
+	fillLetterQuizDay(doc, 5)
+}
+
 func sampleEoschoolDay1() EoschoolDocument {
-	qs := make([]EoschoolQuestion, 8)
-	for i := range qs {
-		qs[i] = EoschoolQuestion{
-			ID:        "q",
-			OriginDay: 1,
-			Type:      "mcq",
-			Prompt:    "¿2×3?",
-			Choices:   []string{"5", "6", "7", "8"},
-			Answer:    "6",
-		}
-	}
-	return EoschoolDocument{
+	doc := EoschoolDocument{
 		Format:  eoschoolFormatName,
 		Version: eoschoolVersion,
 		Cycle:   1,
@@ -268,6 +174,23 @@ func sampleEoschoolDay1() EoschoolDocument {
 			},
 			Summary: "Memorizar productos 1×1 a 12×12.",
 		},
-		Quiz: EoschoolQuiz{QuestionCount: 8, Questions: qs},
 	}
+	doc.Quiz.QuestionCount = 16
+	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
+	for i := 0; i < 12; i++ {
+		doc.Quiz.Questions[i] = EoschoolQuestion{
+			ID:        "q",
+			OriginDay: 1,
+			Type:      "mcq",
+			Prompt:    "¿2×3?",
+			Choices:   []string{"5", "6", "7", "8"},
+			Answer:    "6",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[12+i] = EoschoolQuestion{
+			ID: "w", OriginDay: 1, Type: "write", Prompt: "Escribe tu idea",
+		}
+	}
+	return doc
 }

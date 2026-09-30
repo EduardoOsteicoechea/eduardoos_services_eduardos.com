@@ -26,7 +26,7 @@
     "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué queda al norte de Venezuela?",
@@ -39,7 +39,7 @@
         "answer": "El Mar Caribe"
       },
       {
-        "id": "d1-q2",
+        "id": "d2-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué país está al sur de Venezuela?",
@@ -52,7 +52,7 @@
         "answer": "Brasil"
       },
       {
-        "id": "d1-q3",
+        "id": "d2-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué país está al este de Venezuela?",
@@ -65,7 +65,7 @@
         "answer": "Guyana"
       },
       {
-        "id": "d1-q4",
+        "id": "d2-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué país está al oeste de Venezuela?",
@@ -78,7 +78,7 @@
         "answer": "Colombia"
       },
       {
-        "id": "d1-q5",
+        "id": "d2-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuál es el punto límite norte de la lección?",
@@ -91,7 +91,7 @@
         "answer": "Cabo San Román"
       },
       {
-        "id": "d1-q6",
+        "id": "d2-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuál es el punto límite sur de la lección?",
@@ -104,33 +104,7 @@
         "answer": "El nacimiento del río Ararí"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Cuál es una región de Venezuela?",
-        "choices": [
-          "Los Llanos",
-          "Europa",
-          "Antártida",
-          "Escandinavia"
-        ],
-        "answer": "Los Llanos"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué estudia esta semana de geografía?",
-        "choices": [
-          "Fronteras, límites y regiones",
-          "Volcanes de Asia",
-          "Capitales de Europa",
-          "Océanos del mundo"
-        ],
-        "answer": "Fronteras, límites y regiones"
-      },
-      {
-        "id": "d2-q1",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Qué es una frontera?",
@@ -143,7 +117,7 @@
         "answer": "La línea que separa un país de otro"
       },
       {
-        "id": "d2-q2",
+        "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
         "prompt": "En un mapa común, ¿hacia dónde apunta el norte?",
@@ -156,7 +130,7 @@
         "answer": "Hacia arriba"
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q9",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Por qué lado está el Mar Caribe?",
@@ -169,7 +143,7 @@
         "answer": "Al norte"
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q10",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Por qué lado está Brasil?",
@@ -182,7 +156,7 @@
         "answer": "Al sur"
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q11",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Por qué lado está Guyana?",
@@ -195,7 +169,7 @@
         "answer": "Al este"
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q12",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Por qué lado está Colombia?",
@@ -208,30 +182,28 @@
         "answer": "Al oeste"
       },
       {
-        "id": "d2-q7",
+        "id": "d2-w1",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué palabra nombra al país vecino del este?",
-        "choices": [
-          "Guyana",
-          "Guayana",
-          "Los Llanos",
-          "Caribe"
-        ],
-        "answer": "Guyana"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («Las fronteras de Venezuela») y escribe entre comillas las palabras exactas donde la clase habla de esto: Una frontera es la línea que separa un país de otro. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d2-q8",
+        "id": "d2-w2",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué debes recordar sobre Guyana y Guayana?",
-        "choices": [
-          "Son nombres de lugares diferentes",
-          "Son el mismo país",
-          "Son dos ríos",
-          "Son regiones de Europa"
-        ],
-        "answer": "Son nombres de lugares diferentes"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Las fronteras de Venezuela») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "En el punto 1 («Las fronteras de Venezuela»), encuentra y copia entre comillas las palabras exactas relacionadas con: Error común: Guyana es el país vecino al este; Guayana es una…. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Las fronteras de Venezuela») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

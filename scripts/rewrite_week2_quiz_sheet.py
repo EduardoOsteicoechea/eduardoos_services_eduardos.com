@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rewrite week-2 eoschool quizzes: 12 mcq + 4 write citation prompts per day."""
+"""Rewrite published eoschool quizzes: 12 mcq + 4 write citation prompts per day (week1 + week2)."""
 
 from __future__ import annotations
 
@@ -8,7 +8,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-WEEK2 = ROOT / "frontend" / "public" / "homescool" / "media" / "week2"
+MEDIA = ROOT / "frontend" / "public" / "homescool" / "media"
+PUBLISHED_WEEKS = (1, 2)
 
 DISTRACTORS = [
     "No aparece en la clase de hoy",
@@ -28,10 +29,10 @@ def save(path: Path, doc: dict) -> None:
     path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def subject_files(subject: str) -> dict[int, Path]:
+def subject_files(subject: str, week: int) -> dict[int, Path]:
     out: dict[int, Path] = {}
     for day in range(1, 6):
-        path = WEEK2 / f"{subject}-c3-w2-d{day}-l6.eoschool.json"
+        path = MEDIA / f"week{week}" / f"{subject}-c3-w{week}-d{day}-l6.eoschool.json"
         if not path.exists():
             raise FileNotFoundError(path)
         out[day] = path
@@ -204,8 +205,8 @@ def renumber(questions: list[dict], day: int) -> list[dict]:
     return out
 
 
-def rebuild_subject(subject: str) -> None:
-    paths = subject_files(subject)
+def rebuild_subject(subject: str, week: int) -> None:
+    paths = subject_files(subject, week)
     docs = {day: load(path) for day, path in paths.items()}
 
     # Collect mcq banks by origin day from the richest existing files.
@@ -244,14 +245,16 @@ def rebuild_subject(subject: str) -> None:
 
 
 def main() -> None:
-    subjects = sorted(
-        {
-            p.name.split("-")[0]
-            for p in WEEK2.glob("*-c3-w2-d1-l6.eoschool.json")
-        }
-    )
-    for subject in subjects:
-        rebuild_subject(subject)
+    for week in PUBLISHED_WEEKS:
+        week_dir = MEDIA / f"week{week}"
+        subjects = sorted(
+            {
+                p.name.split("-")[0]
+                for p in week_dir.glob(f"*-c3-w{week}-d1-l6.eoschool.json")
+            }
+        )
+        for subject in subjects:
+            rebuild_subject(subject, week)
 
 
 if __name__ == "__main__":

@@ -24,9 +24,8 @@ Edit cell JSON under `frontend/public/homescool/media/weekN/`, then `node script
 ## Pedagogy
 
 - Day 1: 3 points + summary. Days 2–4: deepen. Day 5: five overview blocks (`pro`: ≥1).
-- **Week ≥ 2 quiz:** fixed **16** items/day — **12 mcq** + **4 write** (cite exact class phrases + explain). Day 1: 12 mcq from day 1. Days 2–5: 6 mcq day 1 + 6 mcq today.
-- **Week 1 quiz (legacy):** **8 / 16 / 24 / 36 / 52** by day.
-- Slot types: `mcq`, `write`, `crossword`, `wordsearch`, `match`, `draw_image`, `draw_box`, `grid_mark`. Week ≥ 2 quiz uses mcq+write only. One crossword/wordsearch = one complete puzzle.
+- **Quiz (all days):** fixed **16** items/day — **12 mcq** + **4 write** (cite exact class phrases + explain). Day 1: 12 mcq from day 1. Days 2–5: 6 mcq day 1 + 6 mcq today.
+- Slot types in published packs: **`mcq` + `write` only**. Schema still allows legacy puzzles for old drafts; do not add them to new level-6 cells.
 - Packing: full-page activities (`crossword`, `wordsearch`, `draw_*`, `grid_mark`) alone on a Letter page; `mcq`/`write` fill pages as before.
 
 ## UI / print

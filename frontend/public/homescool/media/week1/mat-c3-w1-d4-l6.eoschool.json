@@ -23,10 +23,10 @@
     "priorDayRecap": "Piensa con multiplicaciones: Practicar 5–8. Hoy practicamos las tablas del 5 al 8. Un patrón es una regla que se repite y ayuda a recordar un producto. Sigue siendo importante saber que cada multiplicación representa."
   },
   "quiz": {
-    "questionCount": 36,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d4-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuánto es 3 × 4?",
@@ -39,7 +39,7 @@
         "answer": "12"
       },
       {
-        "id": "d1-q2",
+        "id": "d4-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué representa 5 × 3?",
@@ -52,7 +52,7 @@
         "answer": "Cinco grupos de tres"
       },
       {
-        "id": "d1-q3",
+        "id": "d4-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
@@ -65,7 +65,7 @@
         "answer": "24"
       },
       {
-        "id": "d1-q4",
+        "id": "d4-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué terminación puede tener la tabla del 5?",
@@ -78,7 +78,7 @@
         "answer": "0 o 5"
       },
       {
-        "id": "d1-q5",
+        "id": "d4-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuánto es 6 × 7?",
@@ -91,7 +91,7 @@
         "answer": "42"
       },
       {
-        "id": "d1-q6",
+        "id": "d4-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuánto es 8 × 8?",
@@ -104,241 +104,7 @@
         "answer": "64"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Cuánto es 9 × 8?",
-        "choices": [
-          "72",
-          "12",
-          "Cinco grupos de tres",
-          "24"
-        ],
-        "answer": "72"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Cuánto es 12 × 11?",
-        "choices": [
-          "Cinco grupos de tres",
-          "24",
-          "0 o 5",
-          "132"
-        ],
-        "answer": "132"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Qué terminación puede tener la tabla del 5?",
-        "choices": [
-          "12",
-          "0 o 5",
-          "72",
-          "132"
-        ],
-        "answer": "0 o 5"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuánto es 6 × 7?",
-        "choices": [
-          "42",
-          "132",
-          "12",
-          "Cinco grupos de tres"
-        ],
-        "answer": "42"
-      },
-      {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuánto es 8 × 8?",
-        "choices": [
-          "12",
-          "Cinco grupos de tres",
-          "24",
-          "64"
-        ],
-        "answer": "64"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuánto es 9 × 8?",
-        "choices": [
-          "24",
-          "0 o 5",
-          "72",
-          "Cinco grupos de tres"
-        ],
-        "answer": "72"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuánto es 12 × 11?",
-        "choices": [
-          "42",
-          "132",
-          "24",
-          "0 o 5"
-        ],
-        "answer": "132"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuánto es 3 × 4?",
-        "choices": [
-          "12",
-          "0 o 5",
-          "42",
-          "64"
-        ],
-        "answer": "12"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Qué representa 5 × 3?",
-        "choices": [
-          "42",
-          "64",
-          "72",
-          "Cinco grupos de tres"
-        ],
-        "answer": "Cinco grupos de tres"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
-        "choices": [
-          "72",
-          "132",
-          "24",
-          "64"
-        ],
-        "answer": "24"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 9 × 8?",
-        "choices": [
-          "72",
-          "24",
-          "0 o 5",
-          "42"
-        ],
-        "answer": "72"
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 12 × 11?",
-        "choices": [
-          "0 o 5",
-          "42",
-          "64",
-          "132"
-        ],
-        "answer": "132"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 3 × 4?",
-        "choices": [
-          "64",
-          "72",
-          "12",
-          "42"
-        ],
-        "answer": "12"
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Qué representa 5 × 3?",
-        "choices": [
-          "132",
-          "Cinco grupos de tres",
-          "64",
-          "72"
-        ],
-        "answer": "Cinco grupos de tres"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
-        "choices": [
-          "24",
-          "72",
-          "132",
-          "12"
-        ],
-        "answer": "24"
-      },
-      {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Qué terminación puede tener la tabla del 5?",
-        "choices": [
-          "132",
-          "12",
-          "Cinco grupos de tres",
-          "0 o 5"
-        ],
-        "answer": "0 o 5"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 6 × 7?",
-        "choices": [
-          "Cinco grupos de tres",
-          "24",
-          "42",
-          "12"
-        ],
-        "answer": "42"
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 8 × 8?",
-        "choices": [
-          "0 o 5",
-          "64",
-          "Cinco grupos de tres",
-          "24"
-        ],
-        "answer": "64"
-      },
-      {
-        "id": "d4-q1",
+        "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Qué representa 5 × 3?",
@@ -351,7 +117,7 @@
         "answer": "Cinco grupos de tres"
       },
       {
-        "id": "d4-q2",
+        "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
@@ -364,7 +130,7 @@
         "answer": "24"
       },
       {
-        "id": "d4-q3",
+        "id": "d4-q9",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Qué terminación puede tener la tabla del 5?",
@@ -377,7 +143,7 @@
         "answer": "0 o 5"
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q10",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Cuánto es 6 × 7?",
@@ -390,7 +156,7 @@
         "answer": "42"
       },
       {
-        "id": "d4-q5",
+        "id": "d4-q11",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Cuánto es 8 × 8?",
@@ -403,7 +169,7 @@
         "answer": "64"
       },
       {
-        "id": "d4-q6",
+        "id": "d4-q12",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Explica el detalle estudiado: ¿Cuánto es 9 × 8?",
@@ -416,62 +182,28 @@
         "answer": "72"
       },
       {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Explica el detalle estudiado: ¿Cuánto es 12 × 11?",
-        "choices": [
-          "72",
-          "132",
-          "42",
-          "64"
-        ],
-        "answer": "132"
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Explica el detalle estudiado: ¿Cuánto es 3 × 4?",
-        "choices": [
-          "12",
-          "64",
-          "72",
-          "132"
-        ],
-        "answer": "12"
-      },
-      {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica cómo comprobar 9 × 8.",
-        "answer": "",
-        "choices": []
+        "prompt": "Busca en el punto 1 («Piensa con multiplicaciones: Practicar 9–12») y escribe entre comillas las palabras exactas donde la clase habla de esto: Error común: 11×11 no es 111. Luego explica con tus palabras qué entendiste."
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe una suma repetida para 3 × 4.",
-        "answer": "",
-        "choices": []
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Piensa con multiplicaciones: Practicar 9–12») que mejor resume la idea principal. Después explica por qué esa frase es importante."
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica cómo usar un doble para 4 × 6.",
-        "answer": "",
-        "choices": []
+        "prompt": "En el punto 1 («Piensa con multiplicaciones: Practicar 9–12»), encuentra y copia entre comillas las palabras exactas relacionadas con: Es 121, porque once grupos de once forman ciento veintiuno. Explica qué significa esa idea en la clase de hoy."
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe un producto de la tabla del 5.",
-        "answer": "",
-        "choices": []
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Piensa con multiplicaciones: Practicar 9–12») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

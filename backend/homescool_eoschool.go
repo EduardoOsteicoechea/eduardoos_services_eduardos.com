@@ -147,19 +147,10 @@ func eoschoolSubjectOK(subject string) bool {
 }
 
 func eoschoolExpectedQuizCount(day, week int) int {
-	// Week ≥2: fixed Letter sheet — 12 mcq + 4 write reflection = 16.
-	// Week 1 (legacy): days 1–3 accumulate 8/day; day 4 = 36; day 5 = 52.
-	if week >= 2 {
-		return 16
-	}
-	switch day {
-	case 4:
-		return 36
-	case 5:
-		return 52
-	default:
-		return 8 * day
-	}
+	// Every published day: one Letter quiz sheet — 12 mcq + 4 write = 16.
+	_ = day
+	_ = week
+	return 16
 }
 
 func eoschoolMediaIDSet(media []EoschoolMedia) map[string]struct{} {
@@ -295,9 +286,9 @@ func validateEoschoolQuestionPayload(i int, q *EoschoolQuestion, mediaIDs map[st
 	return nil
 }
 
-// Week ≥2 Letter quiz: 12 mcq + 4 write. Day 1: all mcq from day 1.
+// Letter quiz (all weeks): 12 mcq + 4 write. Day 1: all mcq from day 1.
 // Days 2–5: 6 mcq from day 1 + 6 mcq from the current day; write = current day.
-func validateEoschoolWeek2QuizMix(doc *EoschoolDocument) error {
+func validateEoschoolLetterQuizMix(doc *EoschoolDocument) error {
 	mcqDay1, mcqToday, writeN := 0, 0, 0
 	for i, q := range doc.Quiz.Questions {
 		typ := strings.TrimSpace(strings.ToLower(q.Type))
@@ -308,28 +299,28 @@ func validateEoschoolWeek2QuizMix(doc *EoschoolDocument) error {
 			} else if q.OriginDay == doc.Day {
 				mcqToday++
 			} else {
-				return fmt.Errorf("quiz.questions[%d].originDay must be 1 or %d for week≥2 mcq", i, doc.Day)
+				return fmt.Errorf("quiz.questions[%d].originDay must be 1 or %d for letter-quiz mcq", i, doc.Day)
 			}
 		case "write":
 			if q.OriginDay != doc.Day {
-				return fmt.Errorf("quiz.questions[%d].originDay must be %d for week≥2 write", i, doc.Day)
+				return fmt.Errorf("quiz.questions[%d].originDay must be %d for letter-quiz write", i, doc.Day)
 			}
 			writeN++
 		default:
-			return fmt.Errorf("quiz.questions[%d].type must be mcq or write for week≥2", i)
+			return fmt.Errorf("quiz.questions[%d].type must be mcq or write for letter quiz", i)
 		}
 	}
 	if writeN != 4 {
-		return fmt.Errorf("week≥2 quiz needs exactly 4 write questions, got %d", writeN)
+		return fmt.Errorf("letter quiz needs exactly 4 write questions, got %d", writeN)
 	}
 	if doc.Day == 1 {
 		if mcqDay1 != 12 || mcqToday != 0 {
-			return fmt.Errorf("week≥2 day 1 needs 12 mcq from day 1, got day1=%d other=%d", mcqDay1, mcqToday)
+			return fmt.Errorf("day 1 needs 12 mcq from day 1, got day1=%d other=%d", mcqDay1, mcqToday)
 		}
 		return nil
 	}
 	if mcqDay1 != 6 || mcqToday != 6 {
-		return fmt.Errorf("week≥2 day %d needs 6 mcq from day 1 and 6 from day %d, got day1=%d today=%d", doc.Day, doc.Day, mcqDay1, mcqToday)
+		return fmt.Errorf("day %d needs 6 mcq from day 1 and 6 from day %d, got day1=%d today=%d", doc.Day, doc.Day, mcqDay1, mcqToday)
 	}
 	return nil
 }
@@ -386,10 +377,8 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	if len(doc.Quiz.Questions) != wantCount {
 		return fmt.Errorf("quiz.questions length must be %d", wantCount)
 	}
-	if doc.Week >= 2 {
-		if err := validateEoschoolWeek2QuizMix(doc); err != nil {
-			return err
-		}
+	if err := validateEoschoolLetterQuizMix(doc); err != nil {
+		return err
 	}
 
 	kind := strings.TrimSpace(strings.ToLower(doc.Lesson.Kind))

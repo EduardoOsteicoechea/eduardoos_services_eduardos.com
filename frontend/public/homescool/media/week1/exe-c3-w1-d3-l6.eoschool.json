@@ -23,10 +23,10 @@
     "priorDayRecap": "Pablo escribe la carta. Hoy vamos a entender esta idea con calma, paso a paso. La exégesis es explicar un texto con cuidado, atendiendo a lo que realmente dice."
   },
   "quiz": {
-    "questionCount": 24,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d3-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué es la exégesis?",
@@ -39,7 +39,7 @@
         "answer": "Explicar un texto con cuidado atendiendo a lo que dice"
       },
       {
-        "id": "d1-q2",
+        "id": "d3-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Quién se presenta como escritor en Romanos 1:1?",
@@ -52,7 +52,7 @@
         "answer": "Pablo"
       },
       {
-        "id": "d1-q3",
+        "id": "d3-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué conviene mirar antes de explicar una idea larga?",
@@ -65,7 +65,7 @@
         "answer": "Quién habla y qué palabras usa"
       },
       {
-        "id": "d1-q4",
+        "id": "d3-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Por qué importa saber quién habla?",
@@ -78,7 +78,7 @@
         "answer": "Ayuda a entender el mensaje en su contexto"
       },
       {
-        "id": "d1-q5",
+        "id": "d3-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué debes subrayar en la práctica?",
@@ -91,7 +91,7 @@
         "answer": "Pablo"
       },
       {
-        "id": "d1-q6",
+        "id": "d3-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué parte no debes saltar?",
@@ -104,137 +104,7 @@
         "answer": "El saludo"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué ayuda a comprender un texto?",
-        "choices": [
-          "Observar sus palabras exactas",
-          "Cambiar sus palabras",
-          "Leer solo una línea al azar",
-          "Olvidar al autor"
-        ],
-        "answer": "Observar sus palabras exactas"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué carta estudia la lección?",
-        "choices": [
-          "Romanos",
-          "Génesis",
-          "Salmos",
-          "Éxodo"
-        ],
-        "answer": "Romanos"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cómo llama Romanos 1:1 a Pablo?",
-        "choices": [
-          "Siervo de Cristo Jesús y apóstol",
-          "Rey y soldado",
-          "Médico y pescador",
-          "Juez y escriba"
-        ],
-        "answer": "Siervo de Cristo Jesús y apóstol"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué describe la palabra siervo?",
-        "choices": [
-          "Alguien que pertenece y sirve a Cristo",
-          "Alguien que gobierna Roma",
-          "Una montaña",
-          "Un río"
-        ],
-        "answer": "Alguien que pertenece y sirve a Cristo"
-      },
-      {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué significa apóstol?",
-        "choices": [
-          "Enviado con un mensaje",
-          "Persona que dibuja",
-          "Lugar lejano",
-          "Tipo de carta"
-        ],
-        "answer": "Enviado con un mensaje"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué tarea muestran los títulos de Pablo?",
-        "choices": [
-          "Servir a Cristo y anunciar su mensaje",
-          "Construir ciudades",
-          "Cuidar animales",
-          "Dibujar mapas"
-        ],
-        "answer": "Servir a Cristo y anunciar su mensaje"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Por qué los títulos importan?",
-        "choices": [
-          "Aportan ideas sobre su misión",
-          "Solo decoran el texto",
-          "Cambian el idioma",
-          "Ocultan el mensaje"
-        ],
-        "answer": "Aportan ideas sobre su misión"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué dos palabras debes encontrar en el versículo?",
-        "choices": [
-          "Siervo y apóstol",
-          "Nilo y Caribe",
-          "Piel y hueso",
-          "Norte y sur"
-        ],
-        "answer": "Siervo y apóstol"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿A quién sirve Pablo?",
-        "choices": [
-          "A Cristo Jesús",
-          "A un rey romano",
-          "A un río",
-          "A una ciudad"
-        ],
-        "answer": "A Cristo Jesús"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué hace un enviado?",
-        "choices": [
-          "Lleva un mensaje",
-          "Construye un puente",
-          "Mide una región",
-          "Forma cartílago"
-        ],
-        "answer": "Lleva un mensaje"
-      },
-      {
-        "id": "d3-q1",
+        "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Qué significa apartado?",
@@ -247,7 +117,7 @@
         "answer": "Separado para una tarea especial"
       },
       {
-        "id": "d3-q2",
+        "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Para qué fue apartado Pablo?",
@@ -260,7 +130,7 @@
         "answer": "Para el evangelio de Dios"
       },
       {
-        "id": "d3-q3",
+        "id": "d3-q9",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Qué significa evangelio?",
@@ -273,7 +143,7 @@
         "answer": "Buena noticia"
       },
       {
-        "id": "d3-q4",
+        "id": "d3-q10",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Qué muestran las palabras de Dios?",
@@ -286,7 +156,7 @@
         "answer": "Que el evangelio viene de Dios"
       },
       {
-        "id": "d3-q5",
+        "id": "d3-q11",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Qué frase no debes quitar?",
@@ -299,7 +169,7 @@
         "answer": "De Dios"
       },
       {
-        "id": "d3-q6",
+        "id": "d3-q12",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿Qué hace Pablo antes de explicar?",
@@ -312,30 +182,28 @@
         "answer": "Se presenta en el versículo"
       },
       {
-        "id": "d3-q7",
+        "id": "d3-w1",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué debes hacer al releer Romanos 1:1?",
-        "choices": [
-          "Mirar las palabras del texto",
-          "Añadir palabras nuevas",
-          "Saltar el saludo",
-          "Leer otro libro"
-        ],
-        "answer": "Mirar las palabras del texto"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («Siervo y apóstol») y escribe entre comillas las palabras exactas donde la clase habla de esto: «Apóstol» significa enviado con un mensaje. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d3-q8",
+        "id": "d3-w2",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué idea completa la frase evangelio de Dios?",
-        "choices": [
-          "La buena noticia que viene de Dios",
-          "Un lugar de Grecia",
-          "Una frontera de Venezuela",
-          "Un tipo de tejido"
-        ],
-        "answer": "La buena noticia que viene de Dios"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Siervo y apóstol») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d3-w3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "En el punto 1 («Siervo y apóstol»), encuentra y copia entre comillas las palabras exactas relacionadas con: Error común: No pienses que los títulos son adornos; cada palabra…. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d3-w4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Siervo y apóstol») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

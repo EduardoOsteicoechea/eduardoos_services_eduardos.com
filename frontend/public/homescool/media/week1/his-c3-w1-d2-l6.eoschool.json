@@ -30,7 +30,7 @@
     "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué afirma la lección sobre Venezuela antes de Colón?",
@@ -43,7 +43,7 @@
         "answer": "Ya estaba habitada por pueblos diversos"
       },
       {
-        "id": "d1-q2",
+        "id": "d2-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué pueblo se relaciona con llanos y conucos?",
@@ -56,7 +56,7 @@
         "answer": "Timotocuicas"
       },
       {
-        "id": "d1-q3",
+        "id": "d2-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué pueblo se estudia con litoral y canoas?",
@@ -69,7 +69,7 @@
         "answer": "Caribes"
       },
       {
-        "id": "d1-q4",
+        "id": "d2-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué pueblo se vincula con selvas y yuca\"",
@@ -82,7 +82,7 @@
         "answer": "Arawacos"
       },
       {
-        "id": "d1-q5",
+        "id": "d2-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué pueblo habita principalmente La Guajira\"",
@@ -95,7 +95,7 @@
         "answer": "Wayús"
       },
       {
-        "id": "d1-q6",
+        "id": "d2-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué actividad conectaba comunidades?",
@@ -108,33 +108,7 @@
         "answer": "El trueque"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué estudia la arqueología\"",
-        "choices": [
-          "Restos como cerámica y herramientas",
-          "Ya estaba habitada por pueblos diversos",
-          "Timotocuicas",
-          "Caribes"
-        ],
-        "answer": "Restos como cerámica y herramientas"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Por qué se nombran los pueblos originarios?",
-        "choices": [
-          "Timotocuicas",
-          "Caribes",
-          "Arawacos",
-          "Para reconocer sus culturas y memoria"
-        ],
-        "answer": "Para reconocer sus culturas y memoria"
-      },
-      {
-        "id": "d2-q1",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Qué pueblo se vincula con selvas y yuca\"",
@@ -147,7 +121,7 @@
         "answer": "Arawacos"
       },
       {
-        "id": "d2-q2",
+        "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Qué pueblo habita principalmente La Guajira\"",
@@ -160,7 +134,7 @@
         "answer": "Wayús"
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q9",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Qué actividad conectaba comunidades?",
@@ -173,7 +147,7 @@
         "answer": "El trueque"
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q10",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Qué estudia la arqueología\"",
@@ -186,7 +160,7 @@
         "answer": "Restos como cerámica y herramientas"
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q11",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Por qué se nombran los pueblos originarios?",
@@ -199,7 +173,7 @@
         "answer": "Para reconocer sus culturas y memoria"
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q12",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Aplica lo practicado hoy: ¿Qué afirma la lección sobre Venezuela antes de Colón?",
@@ -212,30 +186,28 @@
         "answer": "Ya estaba habitada por pueblos diversos"
       },
       {
-        "id": "d2-q7",
+        "id": "d2-w1",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Qué pueblo se relaciona con llanos y conucos?",
-        "choices": [
-          "Wayús",
-          "El trueque",
-          "Restos como cerámica y herramientas",
-          "Timotocuicas"
-        ],
-        "answer": "Timotocuicas"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («Historia con respeto: Timotocuicas y los llanos») y escribe entre comillas las palabras exactas donde la clase habla de esto: Un llano es una planicie amplia con pastos y ríos. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d2-q8",
+        "id": "d2-w2",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "Aplica lo practicado hoy: ¿Qué pueblo se estudia con litoral y canoas?",
-        "choices": [
-          "Restos como cerámica y herramientas",
-          "Para reconocer sus culturas y memoria",
-          "Caribes",
-          "El trueque"
-        ],
-        "answer": "Caribes"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 2 («Historia con respeto: Memorización») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "En el punto 1 («Historia con respeto: Timotocuicas y los llanos»), encuentra y copia entre comillas las palabras exactas relacionadas con: Los **Timotocuicas** cultivaban en conucos, que son parcelas donde…. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 2 («Historia con respeto: Memorización») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },
