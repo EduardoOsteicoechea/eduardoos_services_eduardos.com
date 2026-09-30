@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Piensa con multiplicaciones: Lo que aprendimos",
-        "body": "Esta semana estudiaste las tablas del 1 al 12 como grupos iguales. Los números que multiplicas son factores y el resultado es el producto. Puedes comprobar un producto con suma repetida, con un patrón o con otro producto que ya conoces.\n\n## Idea clave\n\nPor ejemplo, 3×4 son tres grupos de cuatro: 4+4+4=12. Para recordar 6×7, puedes duplicar 3×7=21 y obtener 42. Para 9×8, puedes usar que el orden no cambia el producto y recordar 8×9=72.\n\nPráctica: Ahora te toca a ti. Elige un producto de las tablas 1–4, otro de 5–8 y otro de 9–12. Resuélvelos y explica cómo comprobaste cada respuesta.\n\nError común: No intentes sumar solo los dos factores. Una multiplicación representa grupos iguales."
+        "body": "Esta semana estudiaste las tablas del 1 al 12 como grupos iguales. Los números que multiplicas son factores y el resultado es el producto. Puedes comprobar un producto con suma repetida, con un patrón o con otro producto que ya conoces.\n\n## Idea clave\n\nPor ejemplo, 3×4 son tres grupos de cuatro: 4+4+4=12. Para recordar 6×7, puedes duplicar 3×7=21 y obtener 42. Para 9×8, puedes usar que el orden no cambia el producto y recordar 8×9=72.\n\nHaz un **pictograma**: cada dibujo = 2 tablas que dominaste; cuenta cuántas llevas esta semana.\n\nPráctica: Ahora te toca a ti. Elige un producto de las tablas 1–4, otro de 5–8 y otro de 9–12. Resuélvelos y explica cómo comprobaste cada respuesta.\n\nError común: No intentes sumar solo los dos factores. Una multiplicación representa grupos iguales."
       },
       {
         "id": "p2",
@@ -125,14 +125,14 @@
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Relaciona el repaso semanal: ¿Cuánto es 3 × 4?",
+        "prompt": "Elige la respuesta correcta. ¿Para qué sirve un pictograma aquí?",
         "choices": [
-          "132",
-          "Cinco grupos de tres",
-          "12",
-          "72"
+          "Mostrar cuántas tablas practicaste",
+          "Olvidar números",
+          "Evitar multiplicar",
+          "No registrar"
         ],
-        "answer": "12"
+        "answer": "Mostrar cuántas tablas practicaste"
       },
       {
         "id": "d5-q8",
@@ -226,5 +226,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-est-01",
+        "label": "Organizo datos en una tabla o pictograma."
+      },
+      {
+        "id": "mat-num-06",
+        "label": "Repaso tablas con conteo."
+      }
+    ]
+  }
 }

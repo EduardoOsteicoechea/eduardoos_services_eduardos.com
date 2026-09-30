@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Tablas del 5 al 8",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Multiplicar es hacer grupos iguales. Los factores son los números que multiplicas y el producto es la respuesta.\n\n## Idea clave\n\nSigamos juntos. En 5×9=45, hay nueve grupos de cinco. En la tabla del 5 los productos terminan en 0 o 5. Para 6×7, puedes doblar 3×7=21 y obtener 42.\n\nPráctica: Ahora te toca a ti. Escribe las tablas del 5 y del 7 desde 1 hasta 12. Marca tres resultados para repasar.\n\nError común: No confundas 6×7=42 con 6×6=36. Comprueba con grupos o con un doble."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Multiplicar es hacer grupos iguales. Los factores son los números que multiplicas y el producto es la respuesta.\n\n## Idea clave\n\nSigamos juntos. En 5×9=45, hay nueve grupos de cinco. En la tabla del 5 los productos terminan en 0 o 5. Para 6×7, puedes doblar 3×7=21 y obtener 42.\n\nEn la tienda: **12** paquetes de **3** galletas → **12×3**; descompón **10×3 + 2×3**.\n\nPráctica: Ahora te toca a ti. Escribe las tablas del 5 y del 7 desde 1 hasta 12. Marca tres resultados para repasar.\n\nError común: No confundas 6×7=42 con 6×6=36. Comprueba con grupos o con un doble."
       },
       {
         "id": "p2",
@@ -128,14 +128,14 @@
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué patrón ayuda a recordar la tabla del 5?",
+        "prompt": "Elige la respuesta correcta. ¿Qué operación cuenta 12 grupos de 3?",
         "choices": [
-          "0 o 5.",
-          "2 o 7.",
-          "3 o 8.",
-          "Siempre 1."
+          "12×3",
+          "12+3",
+          "12−3",
+          "12÷3 solo"
         ],
-        "answer": "0 o 5."
+        "answer": "12×3"
       },
       {
         "id": "d1-q9",
@@ -216,5 +216,13 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-num-06",
+        "label": "Multiplico dos dígitos por un dígito."
+      }
+    ]
+  }
 }

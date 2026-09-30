@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "El mapa completo",
-        "body": "Esta semana practicamos las tablas del 5 al 16, siempre hasta 12.\n\n## Idea clave\n\nSigamos juntos. Organizalas en tres grupos: 58, 912 y 1316.\n\nPráctica: Ahora te toca a ti. Di una tabla de cada grupo en voz alta.\n\nError común: No cambies de tabla a mitad de una cuenta."
+        "body": "Esta semana practicamos las tablas del 5 al 16, siempre hasta 12.\n\n## Idea clave\n\nSigamos juntos. Organizalas en tres grupos: 58, 912 y 1316.\n\nTabla de la semana: anota cinco productos que aún te cuestan y cuántas veces los practicaste.\n\nPráctica: Ahora te toca a ti. Di una tabla de cada grupo en voz alta.\n\nError común: No cambies de tabla a mitad de una cuenta."
       },
       {
         "id": "p2",
@@ -125,14 +125,14 @@
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué representa multiplicar?",
+        "prompt": "Elige la respuesta correcta. ¿Qué guardas en la tabla de repaso?",
         "choices": [
-          "Dibujar un reloj.",
-          "Formar grupos iguales.",
-          "Ordenar letras.",
-          "Cambiar de color."
+          "Productos y prácticas",
+          "Solo colores",
+          "Nombres de países",
+          "Recetas"
         ],
-        "answer": "Formar grupos iguales."
+        "answer": "Productos y prácticas"
       },
       {
         "id": "d5-q8",
@@ -226,5 +226,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-est-01",
+        "label": "Leo una tabla de resultados de multiplicación."
+      },
+      {
+        "id": "mat-num-06",
+        "label": "Aplico tablas en problemas."
+      }
+    ]
+  }
 }

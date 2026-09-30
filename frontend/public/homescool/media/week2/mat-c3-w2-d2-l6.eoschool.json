@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Patrones y dobles",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Las tablas del 5 al 8 son herramientas para resolver otras multiplicaciones.\n\n## Idea clave\n\nSigamos juntos. Un patrón es algo que se repite y ayuda a recordar. La tabla del 5 termina en 0 o 5; 6×7 puede verse como el doble de 3×7.\n\nPráctica: Ahora te toca a ti. Resuelve 5×12, 6×4, 7×8 y 8×6. Explica un resultado con grupos iguales.\n\nError común: No adivines: comprueba con una suma repetida o con un doble."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Las tablas del 5 al 8 son herramientas para resolver otras multiplicaciones.\n\n## Idea clave\n\nSigamos juntos. Un patrón es algo que se repite y ayuda a recordar. La tabla del 5 termina en 0 o 5; 6×7 puede verse como el doble de 3×7.\n\nProblema: **7** niños llevan **6** libros cada uno → **7×6**; comprueba con suma o doble de **3×6**.\n\nPráctica: Ahora te toca a ti. Resuelve 5×12, 6×4, 7×8 y 8×6. Explica un resultado con grupos iguales.\n\nError común: No adivines: comprueba con una suma repetida o con un doble."
       }
     ],
     "summary": "Esta semana seguimos con: Practicamos del 5 al 8. Lee cada parte con calma y prueba la actividad.",
@@ -106,14 +106,14 @@
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué sirve para comprobar una multiplicación si dudas?",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 7×6?",
         "choices": [
-          "Una suma repetida o un doble.",
-          "Adivinar rápido.",
-          "Cambiar los números.",
-          "Borrar el signo."
+          "42",
+          "36",
+          "13",
+          "76"
         ],
-        "answer": "Una suma repetida o un doble."
+        "answer": "42"
       },
       {
         "id": "d2-q8",
@@ -207,5 +207,13 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-num-06",
+        "label": "Multiplico con tablas del 5 al 8."
+      }
+    ]
+  }
 }

@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Repaso de la semana",
-        "body": "Esta semana aprendiste a mirar un dibujo por partes: formas redondas, puntos, líneas rectas y curvas.\n\n## Idea clave\n\nSigamos juntos. Repasa las tres ideas principales antes de responder. Piensa qué significa cada palabra nueva y busca un ejemplo.\n\nPráctica: Ahora te toca a ti. Cuenta con tus palabras las tres ideas que aprendiste.\n\nError común: No repitas solo títulos; explica qué significa cada idea."
+        "body": "Esta semana aprendiste a mirar un dibujo por partes: formas redondas, puntos, líneas rectas y curvas.\n\n## Idea clave\n\nSigamos juntos. Repasa las tres ideas principales antes de responder. Piensa qué significa cada palabra nueva y busca un ejemplo.\n\nRepasa: **O** = círculo; contorno = **circunferencia**; casa = **polígono** de cuatro lados.\n\nPráctica: Ahora te toca a ti. Cuenta con tus palabras las tres ideas que aprendiste.\n\nError común: No repitas solo títulos; explica qué significa cada idea."
       },
       {
         "id": "p2",
@@ -125,14 +125,14 @@
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué es mejor mirar primero?",
+        "prompt": "Elige la respuesta correcta. ¿Qué método usamos esta semana?",
         "choices": [
-          "Las formas más grandes",
-          "Los adornos pequeños",
-          "La firma",
-          "El color final"
+          "OiLS",
+          "Solo colorear",
+          "Solo números",
+          "Mapas"
         ],
-        "answer": "Las formas más grandes"
+        "answer": "OiLS"
       },
       {
         "id": "d5-q8",
@@ -226,5 +226,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g"
+  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-geo-04",
+        "label": "Repaso círculo y circunferencia."
+      },
+      {
+        "id": "mat-geo-01",
+        "label": "Repaso polígonos y lados."
+      }
+    ]
+  }
 }

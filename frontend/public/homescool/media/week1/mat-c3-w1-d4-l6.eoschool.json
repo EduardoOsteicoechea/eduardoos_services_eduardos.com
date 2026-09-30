@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Piensa con multiplicaciones: Practicar 9–12",
-        "body": "Hoy practicamos las tablas del 9 al 12. El orden de los factores no cambia el producto: 9×8 y 8×9 dan 72. Esta propiedad permite usar un producto conocido para resolver otro.\n\n## Idea clave\n\nSigamos juntos. La tabla del 10 añade un cero, como en 10×6=60. En muchos productos de 9, las cifras del resultado suman 9: 9×7=63. También conviene memorizar 11×5=55, 11×11=121, 12×11=132 y 12×12=144.\n\nPráctica: Ahora te toca a ti. Resuelve 9×6, 9×7, 9×8, 11×11, 12×11 y 12×12. Elige dos resultados y explica qué patrón o producto conocido usaste para comprobarlos.\n\nError común: 11×11 no es 111. Es 121, porque once grupos de once forman ciento veintiuno."
+        "body": "Hoy practicamos las tablas del 9 al 12. El orden de los factores no cambia el producto: 9×8 y 8×9 dan 72. Esta propiedad permite usar un producto conocido para resolver otro.\n\n## Idea clave\n\nSigamos juntos. La tabla del 10 añade un cero, como en 10×6=60. En muchos productos de 9, las cifras del resultado suman 9: 9×7=63. También conviene memorizar 11×5=55, 11×11=121, 12×11=132 y 12×12=144.\n\n×10 en moneda: **3×20 bolívares = 60**; **3×200 = 600**; **3×2.000 = 6.000** (tres **mil**).\n\nPráctica: Ahora te toca a ti. Resuelve 9×6, 9×7, 9×8, 11×11, 12×11 y 12×12. Elige dos resultados y explica qué patrón o producto conocido usaste para comprobarlos.\n\nError común: 11×11 no es 111. Es 121, porque once grupos de once forman ciento veintiuno."
       }
     ],
     "summary": "En esta clase usarás grupos iguales, patrones y comprobaciones para pensar las tablas.",
@@ -107,14 +107,14 @@
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Explica el detalle estudiado: ¿Qué representa 5 × 3?",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 4×1.000?",
         "choices": [
-          "72",
-          "132",
-          "12",
-          "Cinco grupos de tres"
+          "4.000",
+          "400",
+          "40",
+          "4"
         ],
-        "answer": "Cinco grupos de tres"
+        "answer": "4.000"
       },
       {
         "id": "d4-q8",
@@ -208,5 +208,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-num-06",
+        "label": "Multiplico por la unidad seguida de cero (×10)."
+      },
+      {
+        "id": "mat-num-03",
+        "label": "Leo cantidades con miles en un problema."
+      }
+    ]
+  }
 }

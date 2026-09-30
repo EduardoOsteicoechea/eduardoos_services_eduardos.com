@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "S: líneas curvas",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. En OiLS, S representa líneas curvas abiertas, como arcos u ondas.\n\n## Idea clave\n\nSigamos juntos. Una curva puede aparecer en una hoja, una serpiente o una sonrisa. Al combinar O, i, L y S, puedes construir un objeto por partes en vez de intentar dibujarlo todo de una vez.\n\nPráctica: Ahora te toca a ti. Dibuja un animal sencillo y señala una O, una i, una L y una S que hayas usado.\n\nError común: No olvides las curvas cuando el objeto las necesita; observa su dirección antes de trazarlas."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. En OiLS, S representa líneas curvas abiertas, como arcos u ondas.\n\n## Idea clave\n\nSigamos juntos. Una curva puede aparecer en una hoja, una serpiente o una sonrisa. Al combinar O, i, L y S, puedes construir un objeto por partes en vez de intentar dibujarlo todo de una vez.\n\nAl juntar **O**, **L** y **S** comparas **formas planas** (círculo, rectángulo, curva) como piezas de un rompecabezas.\n\nPráctica: Ahora te toca a ti. Dibuja un animal sencillo y señala una O, una i, una L y una S que hayas usado.\n\nError común: No olvides las curvas cuando el objeto las necesita; observa su dirección antes de trazarlas."
       }
     ],
     "summary": "Esta semana aprendiste a mirar un dibujo por partes: formas redondas, puntos, líneas rectas y curvas.",
@@ -107,14 +107,14 @@
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué tipo de línea parece un arco?",
+        "prompt": "Elige la respuesta correcta. ¿Qué pieza OiLS es curva abierta?",
         "choices": [
-          "Una curva S",
-          "Una horizontal L",
-          "Un punto i",
-          "Un círculo O"
+          "S",
+          "L",
+          "O",
+          "i"
         ],
-        "answer": "Una curva S"
+        "answer": "S"
       },
       {
         "id": "d4-q8",
@@ -208,5 +208,13 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g"
+  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-geo-03",
+        "label": "Comparo formas planas al combinar O, L y S."
+      }
+    ]
+  }
 }

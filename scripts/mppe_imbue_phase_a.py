@@ -291,6 +291,140 @@ CELLS: dict[tuple[int, str, int], CellSpec] = {
     ),
 }
 
+# Phase B: mat + art (weeks 1–2)
+CELLS_B: dict[tuple[int, str, int], CellSpec] = {
+    # --- MAT week 1 (tablas 1–12) ---
+    (1, "mat", 1): spec(
+        [("mat-num-06", "Multiplico con grupos iguales (tablas).")],
+        "Multiplicar también sirve en la feria: 4 bolsas de 5 mangos son **4×5=20** mangos — grupos iguales del entorno.",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué significa 3×4?", ["Tres grupos de cuatro", "Tres más cuatro", "Un solo mango", "Una resta"], "Tres grupos de cuatro"),
+    ),
+    (1, "mat", 2): spec(
+        [("mat-num-06", "Uso patrones para multiplicar (dobles, tabla del 5).")],
+        "Patrón del 5 en precios: si un jugo cuesta **5** bolívares, **6** jugos son **6×5=30**.",
+        ("d2-q7", "Elige la respuesta correcta. ¿En qué terminan muchos productos ×5?", ["En 0 o 5", "Siempre en 1", "En letras", "En 9 solamente"], "En 0 o 5"),
+    ),
+    (1, "mat", 3): spec(
+        [("mat-num-06", "Multiplico hasta la tabla del 12.")],
+        "El orden no cambia el producto: **9×8** y **8×9** dan lo mismo — útil al contar cajas en filas y columnas.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Cuánto es 10×6?", ["60", "16", "106", "610"], "60"),
+    ),
+    (1, "mat", 4): spec(
+        [
+            ("mat-num-06", "Multiplico por la unidad seguida de cero (×10)."),
+            ("mat-num-03", "Leo cantidades con miles en un problema."),
+        ],
+        "×10 en moneda: **3×20 bolívares = 60**; **3×200 = 600**; **3×2.000 = 6.000** (tres **mil**).",
+        ("d4-q7", "Elige la respuesta correcta. ¿Cuánto es 4×1.000?", ["4.000", "400", "40", "4"], "4.000"),
+    ),
+    (1, "mat", 5): spec(
+        [
+            ("mat-est-01", "Organizo datos en una tabla o pictograma."),
+            ("mat-num-06", "Repaso tablas con conteo."),
+        ],
+        "Haz un **pictograma**: cada dibujo = 2 tablas que dominaste; cuenta cuántas llevas esta semana.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Para qué sirve un pictograma aquí?", ["Mostrar cuántas tablas practicaste", "Olvidar números", "Evitar multiplicar", "No registrar"], "Mostrar cuántas tablas practicaste"),
+    ),
+    # --- MAT week 2 (tablas 5–16) ---
+    (2, "mat", 1): spec(
+        [("mat-num-06", "Multiplico dos dígitos por un dígito.")],
+        "En la tienda: **12** paquetes de **3** galletas → **12×3**; descompón **10×3 + 2×3**.",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué operación cuenta 12 grupos de 3?", ["12×3", "12+3", "12−3", "12÷3 solo"], "12×3"),
+    ),
+    (2, "mat", 2): spec(
+        [("mat-num-06", "Multiplico con tablas del 5 al 8.")],
+        "Problema: **7** niños llevan **6** libros cada uno → **7×6**; comprueba con suma o doble de **3×6**.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Cuánto es 7×6?", ["42", "36", "13", "76"], "42"),
+    ),
+    (2, "mat", 3): spec(
+        [("mat-num-06", "Multiplico tablas altas (9–16).")],
+        "**16×4**: piensa **10×4=40** y **6×4=24**; suma **64**.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Cuánto es 12×12?", ["144", "121", "122", "24"], "144"),
+    ),
+    (2, "mat", 4): spec(
+        [("mat-med-04", "Calculo con bolívares en un problema.")],
+        "Pagas con **bolívares**: **5** lápices a **800** c/u → **5×800=4.000**; revisa el cambio si pagas **5.000**.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué moneda usa el problema?", ["Bolívares", "Dólares de juego", "Euros", "Pesos argentinos"], "Bolívares"),
+    ),
+    (2, "mat", 5): spec(
+        [
+            ("mat-est-01", "Leo una tabla de resultados de multiplicación."),
+            ("mat-num-06", "Aplico tablas en problemas."),
+        ],
+        "Tabla de la semana: anota cinco productos que aún te cuestan y cuántas veces los practicaste.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué guardas en la tabla de repaso?", ["Productos y prácticas", "Solo colores", "Nombres de países", "Recetas"], "Productos y prácticas"),
+    ),
+    # --- ART week 1 (OiLS) ---
+    (1, "art", 1): spec(
+        [
+            ("mat-geo-04", "Diferencio círculo y circunferencia."),
+            ("mat-geo-02", "Veo ángulos en formas redondas."),
+        ],
+        "La letra **O** dibuja un **círculo** (relleno); el contorno solo, sin rellenar, es la **circunferencia**.",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué es solo la línea alrededor del círculo?", ["Circunferencia", "Triángulo", "Cuadrado", "Punto"], "Circunferencia"),
+    ),
+    (1, "art", 2): spec(
+        [
+            ("mat-geo-05", "Uso rectas horizontales, verticales y diagonales."),
+            ("mat-geo-02", "Reconozco ángulos en la casa."),
+        ],
+        "Las líneas **L** son **rectas**: horizontal, vertical y diagonal forman **ángulos** en la esquina de la casa.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Qué línea va de arriba abajo?", ["Vertical", "Horizontal", "Circular", "Diagonal siempre"], "Vertical"),
+    ),
+    (1, "art", 3): spec(
+        [("mat-geo-01", "Cuento lados de un polígono sencillo.")],
+        "La casa con **L** tiene un **polígono** de cuatro lados (rectángulo): cuenta lados antes de decorar.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Cuántos lados tiene un rectángulo?", ["Cuatro", "Tres", "Cinco", "Uno"], "Cuatro"),
+    ),
+    (1, "art", 4): spec(
+        [("mat-geo-03", "Comparo formas planas al combinar O, L y S.")],
+        "Al juntar **O**, **L** y **S** comparas **formas planas** (círculo, rectángulo, curva) como piezas de un rompecabezas.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué pieza OiLS es curva abierta?", ["S", "L", "O", "i"], "S"),
+    ),
+    (1, "art", 5): spec(
+        [
+            ("mat-geo-04", "Repaso círculo y circunferencia."),
+            ("mat-geo-01", "Repaso polígonos y lados."),
+        ],
+        "Repasa: **O** = círculo; contorno = **circunferencia**; casa = **polígono** de cuatro lados.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué método usamos esta semana?", ["OiLS", "Solo colorear", "Solo números", "Mapas"], "OiLS"),
+    ),
+    # --- ART week 2 (espejo / simetría) ---
+    (2, "art", 1): spec(
+        [
+            ("mat-geo-02", "Uso el eje como línea de simetría."),
+            ("mat-geo-05", "La recta eje divide la figura."),
+        ],
+        "El **eje** del espejo es una **recta**: cada punto de un lado tiene la misma distancia al otro (simetría).",
+        ("d1-q8", "Elige la respuesta correcta. ¿Qué divide la figura en dos mitades iguales?", ["El eje", "Un color", "Un borrador", "Un número"], "El eje"),
+    ),
+    (2, "art", 2): spec(
+        [("mat-geo-02", "Completo ángulos y curvas en simetría.")],
+        "Al copiar la media imagen, el **ángulo** y la **curva** del otro lado deben tener la misma abertura respecto al eje.",
+        ("d2-q7", "Elige la respuesta correcta. ¿Qué revisas antes de sombrear?", ["Que las líneas coincidan", "Solo el color", "Nada", "El título"], "Que las líneas coincidan"),
+    ),
+    (2, "art", 3): spec(
+        [("mat-geo-05", "Trazo el eje como recta de referencia.")],
+        "Traza el **eje vertical** con regla: es tu **recta** guía; mide distancias con pequeños puntos.",
+        ("d3-q7", "Elige la respuesta correcta. ¿Qué herramienta ayuda a trazar el eje recto?", ["Regla", "Tijeras", "Cinta adhesiva", "Agua"], "Regla"),
+    ),
+    (2, "art", 4): spec(
+        [("mat-geo-02", "Reflexión: figura simétrica.")],
+        "Nombrar cada línea (O, L, S) en ambos lados confirma que la **figura simétrica** quedó balanceada.",
+        ("d4-q7", "Elige la respuesta correcta. ¿Qué significa simetría en el dibujo?", ["Mitades iguales en el eje", "Solo un lado", "Sin líneas", "Caos"], "Mitades iguales en el eje"),
+    ),
+    (2, "art", 5): spec(
+        [
+            ("mat-geo-02", "Explico simetría con mis palabras."),
+            ("mat-geo-05", "Uso el eje como recta."),
+        ],
+        "Explica tu dibujo espejo: señala el **eje** y dos distancias iguales a la **recta** central.",
+        ("d5-q7", "Elige la respuesta correcta. ¿Qué semana practicamos?", ["Dibujo espejo", "Tablas del 1", "Preposiciones latinas", "Tejidos"], "Dibujo espejo"),
+    ),
+}
+
+ALL_CELLS: dict[tuple[int, str, int], CellSpec] = {**CELLS, **CELLS_B}
+
 
 def inject_anchor(body: str, anchor: str) -> str:
     if not anchor or anchor in body:
@@ -326,9 +460,10 @@ def fix_typos(text: str) -> str:
     return text.replace("149?8", "1498").replace("149?9", "1499")
 
 
-def apply_file(path: Path, week: int, subject: str, day: int) -> bool:
+def apply_file(path: Path, week: int, subject: str, day: int, cells: dict | None = None) -> bool:
     key = (week, subject, day)
-    cell = CELLS.get(key)
+    catalog = cells if cells is not None else ALL_CELLS
+    cell = catalog.get(key)
     if not cell:
         return False
     doc = json.loads(path.read_text(encoding="utf-8"))
@@ -366,8 +501,9 @@ def apply_file(path: Path, week: int, subject: str, day: int) -> bool:
 
 def main() -> int:
     touched: list[str] = []
+    subjects = ("his", "geo", "esp", "pro", "mat", "art")
     for week in (1, 2):
-        for subject in ("his", "geo", "esp", "pro"):
+        for subject in subjects:
             for day in range(1, 6):
                 name = f"{subject}-c3-w{week}-d{day}-l6.eoschool.json"
                 path = MEDIA / f"week{week}" / name

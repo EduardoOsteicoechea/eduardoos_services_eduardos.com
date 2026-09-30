@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Piensa con multiplicaciones: Practicar 5–8",
-        "body": "Hoy practicamos las tablas del 5 al 8. Un patrón es una regla que se repite y ayuda a recordar un producto. Sigue siendo importante saber que cada multiplicación representa grupos iguales.\n\n## Idea clave\n\nSigamos juntos. Los productos de 5 terminan en 0 o 5, por ejemplo 5×9=45. Para la tabla del 6, usa que 6 es el doble de 3: 6×7 es el doble de 3×7, así que es 42. Para la tabla del 8, usa que 8 es el doble de 4: 8×8=64 porque 4×8=32 y el doble de 32 es 64.\n\nPráctica: Ahora te toca a ti. Completa las tablas del 5, 6, 7 y 8 hasta ×12. Marca 6×7, 7×8 y 8×8, y explica con una oración qué patrón te ayuda con cada una.\n\nError común: 6×7 no es 36; 36 es 6×6. Comprueba con suma repetida o con el doble de 3×7."
+        "body": "Hoy practicamos las tablas del 5 al 8. Un patrón es una regla que se repite y ayuda a recordar un producto. Sigue siendo importante saber que cada multiplicación representa grupos iguales.\n\n## Idea clave\n\nSigamos juntos. Los productos de 5 terminan en 0 o 5, por ejemplo 5×9=45. Para la tabla del 6, usa que 6 es el doble de 3: 6×7 es el doble de 3×7, así que es 42. Para la tabla del 8, usa que 8 es el doble de 4: 8×8=64 porque 4×8=32 y el doble de 32 es 64.\n\nEl orden no cambia el producto: **9×8** y **8×9** dan lo mismo — útil al contar cajas en filas y columnas.\n\nPráctica: Ahora te toca a ti. Completa las tablas del 5, 6, 7 y 8 hasta ×12. Marca 6×7, 7×8 y 8×8, y explica con una oración qué patrón te ayuda con cada una.\n\nError común: 6×7 no es 36; 36 es 6×6. Comprueba con suma repetida o con el doble de 3×7."
       }
     ],
     "summary": "En esta clase usarás grupos iguales, patrones y comprobaciones para pensar las tablas.",
@@ -107,14 +107,14 @@
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Usa el ejemplo de la lección: ¿Cuánto es 9 × 8?",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 10×6?",
         "choices": [
-          "72",
-          "24",
-          "0 o 5",
-          "42"
+          "60",
+          "16",
+          "106",
+          "610"
         ],
-        "answer": "72"
+        "answer": "60"
       },
       {
         "id": "d3-q8",
@@ -208,5 +208,13 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4"
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-num-06",
+        "label": "Multiplico hasta la tabla del 12."
+      }
+    ]
+  }
 }

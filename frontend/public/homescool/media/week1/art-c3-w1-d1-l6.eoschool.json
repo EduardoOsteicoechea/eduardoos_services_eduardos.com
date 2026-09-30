@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "O e i: redondos y puntos",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. OiLS es un método de Mona Brookes para mirar un dibujo como piezas sencillas antes de añadir detalles.\n\n## Idea clave\n\nSigamos juntos. O representa círculos o formas redondas; i representa puntos o marcas pequeñas. Una forma redonda puede ser el cuerpo de una flor y un punto puede ser su centro. Primero observa las piezas grandes y luego las pequeñas.\n\nPráctica: Ahora te toca a ti. Dibuja una flor o un pez usando primero O e i. Señala con una letra dónde usaste cada forma.\n\nError común: No comiences con detalles diminutos; busca primero las formas grandes."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. OiLS es un método de Mona Brookes para mirar un dibujo como piezas sencillas antes de añadir detalles.\n\n## Idea clave\n\nSigamos juntos. O representa círculos o formas redondas; i representa puntos o marcas pequeñas. Una forma redonda puede ser el cuerpo de una flor y un punto puede ser su centro. Primero observa las piezas grandes y luego las pequeñas.\n\nLa letra **O** dibuja un **círculo** (relleno); el contorno solo, sin rellenar, es la **circunferencia**.\n\nPráctica: Ahora te toca a ti. Dibuja una flor o un pez usando primero O e i. Señala con una letra dónde usaste cada forma.\n\nError común: No comiences con detalles diminutos; busca primero las formas grandes."
       },
       {
         "id": "p2",
@@ -128,14 +128,14 @@
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Quién creó el método OiLS mencionado?",
+        "prompt": "Elige la respuesta correcta. ¿Qué es solo la línea alrededor del círculo?",
         "choices": [
-          "Mona Brookes",
-          "Pablo Picasso",
-          "Simón Bolívar",
-          "Isaac Newton"
+          "Circunferencia",
+          "Triángulo",
+          "Cuadrado",
+          "Punto"
         ],
-        "answer": "Mona Brookes"
+        "answer": "Circunferencia"
       },
       {
         "id": "d1-q9",
@@ -216,5 +216,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g"
+  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-geo-04",
+        "label": "Diferencio círculo y circunferencia."
+      },
+      {
+        "id": "mat-geo-02",
+        "label": "Veo ángulos en formas redondas."
+      }
+    ]
+  }
 }

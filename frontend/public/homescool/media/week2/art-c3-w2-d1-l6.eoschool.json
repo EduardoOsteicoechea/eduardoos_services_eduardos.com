@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Atención: medias imágenes",
-        "body": "Hoy aprendemos a mirar una media imagen antes de completarla. OiLS es una manera de reconocer las formas básicas de un dibujo: O son círculos, i son puntos, L son ángulos y S son curvas. Atención significa mirar despacio antes de hacer una línea. Una media imagen muestra solo una mitad de una figura.\n\n## Idea clave\n\nSigamos juntos. La simetría aparece cuando dos lados se parecen como el reflejo de un espejo. El eje de simetría es la línea central que divide esos lados. Si un ojo está a dos espacios del eje, el otro ojo debe quedar a dos espacios al otro lado. Contar espacios te ayuda a dibujar con cuidado.\n\nPráctica: Ahora te toca a ti. Busca un objeto que tenga simetría, como una hoja o una botella vista de frente. Dibuja su eje central y señala una forma OiLS que veas en cada mitad.\n\nError común: Copiar la segunda mitad sin medir la distancia al eje. Mira primero el eje, después la forma y por último el espacio entre ambos."
+        "body": "Hoy aprendemos a mirar una media imagen antes de completarla. OiLS es una manera de reconocer las formas básicas de un dibujo: O son círculos, i son puntos, L son ángulos y S son curvas. Atención significa mirar despacio antes de hacer una línea. Una media imagen muestra solo una mitad de una figura.\n\n## Idea clave\n\nSigamos juntos. La simetría aparece cuando dos lados se parecen como el reflejo de un espejo. El eje de simetría es la línea central que divide esos lados. Si un ojo está a dos espacios del eje, el otro ojo debe quedar a dos espacios al otro lado. Contar espacios te ayuda a dibujar con cuidado.\n\nEl **eje** del espejo es una **recta**: cada punto de un lado tiene la misma distancia al otro (simetría).\n\nPráctica: Ahora te toca a ti. Busca un objeto que tenga simetría, como una hoja o una botella vista de frente. Dibuja su eje central y señala una forma OiLS que veas en cada mitad.\n\nError común: Copiar la segunda mitad sin medir la distancia al eje. Mira primero el eje, después la forma y por último el espacio entre ambos."
       },
       {
         "id": "p2",
@@ -128,14 +128,14 @@
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Si un círculo está cerca del eje a la izquierda, ¿dónde va su reflejo?",
+        "prompt": "Elige la respuesta correcta. ¿Qué divide la figura en dos mitades iguales?",
         "choices": [
-          "Cerca del eje a la derecha",
-          "En una esquina cualquiera",
-          "Debajo del eje",
-          "Fuera de la hoja"
+          "El eje",
+          "Un color",
+          "Un borrador",
+          "Un número"
         ],
-        "answer": "Cerca del eje a la derecha"
+        "answer": "El eje"
       },
       {
         "id": "d1-q9",
@@ -222,5 +222,17 @@
       "alt": "Media flor para completar mediante simetría y espacio de dibujo."
     }
   ],
-  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g"
+  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-geo-02",
+        "label": "Uso el eje como línea de simetría."
+      },
+      {
+        "id": "mat-geo-05",
+        "label": "La recta eje divide la figura."
+      }
+    ]
+  }
 }

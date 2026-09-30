@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Panorama de la semana",
-        "body": "Esta semana aprendimos a completar imágenes espejo con tres pasos. Atención significa observar antes de dibujar. Nombrar significa decir qué forma vemos y dónde está. Expresar significa usar esas observaciones para dibujar la mitad que falta. Una imagen espejo tiene simetría cuando ambos lados va conn a cada lado de un eje central.\n\n## Idea clave\n\nSigamos juntos. Las formas OiLS son una ayuda para mirar: círculos, puntos, líneas rectas, ángulos y curvas. Para cada forma visible, pregunta qué es, a qué distancia está del eje y hacia qué dirección va. Después dibuja su pareja al otro lado.\n\nPráctica: Ahora te toca a ti. Explica los tres pasos con una figura sencilla, como una mariposa. Dibuja un eje, marca tres formas de una mitad y completa la otra usando las mismas distancias.\n\nError común: Saltar directamente al dibujo sin observar. El orden atención, nombrar y expresar hace que la simetría sea más fácil."
+        "body": "Esta semana aprendimos a completar imágenes espejo con tres pasos. Atención significa observar antes de dibujar. Nombrar significa decir qué forma vemos y dónde está. Expresar significa usar esas observaciones para dibujar la mitad que falta. Una imagen espejo tiene simetría cuando ambos lados va conn a cada lado de un eje central.\n\n## Idea clave\n\nSigamos juntos. Las formas OiLS son una ayuda para mirar: círculos, puntos, líneas rectas, ángulos y curvas. Para cada forma visible, pregunta qué es, a qué distancia está del eje y hacia qué dirección va. Después dibuja su pareja al otro lado.\n\nExplica tu dibujo espejo: señala el **eje** y dos distancias iguales a la **recta** central.\n\nPráctica: Ahora te toca a ti. Explica los tres pasos con una figura sencilla, como una mariposa. Dibuja un eje, marca tres formas de una mitad y completa la otra usando las mismas distancias.\n\nError común: Saltar directamente al dibujo sin observar. El orden atención, nombrar y expresar hace que la simetría sea más fácil."
       },
       {
         "id": "p2",
@@ -125,14 +125,14 @@
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa nombrar una forma?",
+        "prompt": "Elige la respuesta correcta. ¿Qué semana practicamos?",
         "choices": [
-          "Decir qué es y dónde está",
-          "Cambiarla por otra",
-          "Borrarla sin mirar",
-          "Pintarla de negro"
+          "Dibujo espejo",
+          "Tablas del 1",
+          "Preposiciones latinas",
+          "Tejidos"
         ],
-        "answer": "Decir qué es y dónde está"
+        "answer": "Dibujo espejo"
       },
       {
         "id": "d5-q8",
@@ -232,5 +232,17 @@
       "alt": "Media flor para completar mediante simetría y espacio de dibujo."
     }
   ],
-  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g"
+  "supportUrl": "https://www.youtube.com/watch?v=QZubq5z5C8g",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-geo-02",
+        "label": "Explico simetría con mis palabras."
+      },
+      {
+        "id": "mat-geo-05",
+        "label": "Uso el eje como recta."
+      }
+    ]
+  }
 }
