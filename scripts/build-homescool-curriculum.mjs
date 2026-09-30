@@ -54,7 +54,7 @@ const out = {
   version: 1,
   level: 6,
   description:
-    "Published Homescool pack: ciclo 3 / semanas 1–2 / nivel 6 (≈10 años). FE backup for review; Mongo is runtime SoT.",
+    "Published Homescool pack: ciclo 3 / semanas 1–2 / nivel 6 (≈8 años). FE backup for review; Mongo is runtime SoT.",
   classCount: classes.length,
   classes,
 };

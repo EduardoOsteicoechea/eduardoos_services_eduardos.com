@@ -20,13 +20,13 @@ Per week Ã— level: **12 subjects Ã— 5 days = 60 quizzes**.
 
 ### Level (v1 scope)
 
-- Prepare **only level 6** (â‰ˆ **10-year-old**).
-- Write in clear, concrete language for that age (short sentences, worked examples, few jargon terms).
+- Prepare **only level 6** (â‰ˆ **8-year-old**).
+- Write in clear, concrete language for that age (short sentences, familiar examples, and very few jargon terms).
 - API rejects other levels until the method expands.
 
 ### Self-teaching lesson bodies (mandatory)
 
-A child of â‰ˆ10 must be able to **read the sheet alone** and understand every term **before** any practice task.  
+A child of â‰ˆ8 must be able to **read the sheet alone** and understand every term **before** any practice task.  
 **Forbidden:** deepen/review bodies that are only orders (Â«Conjugaâ€¦Â», Â«Marcaâ€¦Â», Â«Hazâ€¦Â») with no definitions.  
 **Forbidden:** jargon without an immediate plain-language gloss (e.g. bare Â«participioÂ», Â«auxiliarÂ», Â«indicativoÂ», Â«epitelialÂ»).  
 Define on first use: *X = explicaciÃ³n sencilla + ejemplo*. Prefer kid words (*forma ya hecha*, *palabra ayudante*, *una palabra / dos palabras*) alongside the school term.
@@ -306,7 +306,7 @@ Cookie UI: curriculum SoT `GET /homescool/curriculum.json`; preview `POST /api/h
 | Code | Theme |
 | --- | --- |
 | `mat` | Multiplication tables **5â€“16** (same letter layout; extends beyond 12) |
-| `esp` / `ing` | Indicative tenses (simple + compound) â€” keep, but language for 10-year-olds |
+| `esp` / `ing` | Indicative tenses (simple + compound) â€” keep, but use language for 8-year-olds |
 | `his` | Columbus in Venezuela: whom he met and how they interacted |
 | `lat` | Conjunctions/adverbs: etâ€“and, utâ€“so that, nonâ€“not |
 | `LT` | Timeline wonders / patriarchal Israel / Hittitesâ€“Canaanites / Kush / Assyrians / Babylonians / Shang |
