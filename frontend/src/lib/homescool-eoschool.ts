@@ -978,11 +978,20 @@ const week2QuizPracticeImages: Record<string, { src: string; alt: string }> = {
   },
 };
 
+function quizPracticeImage(doc: EoschoolDocument): { src: string; alt: string } | undefined {
+  const fromMedia = resolveMediaPath(doc, "quiz-practice");
+  if (fromMedia?.path) {
+    return { src: fromMedia.path, alt: fromMedia.alt || "Imagen de práctica" };
+  }
+  if (doc.week === 2) return week2QuizPracticeImages[doc.subject];
+  return undefined;
+}
+
 function buildQuizSheetPracticeBand(doc: EoschoolDocument): HTMLElement {
   const band = el("div", "homescool-letter__quiz-practice");
   band.setAttribute("aria-hidden", "true");
   band.title = "Espacio para dibujar o copiar la práctica";
-  const image = doc.week === 2 ? week2QuizPracticeImages[doc.subject] : undefined;
+  const image = quizPracticeImage(doc);
   if (image) {
     const img = document.createElement("img");
     img.className = "homescool-letter__quiz-practice-image";

@@ -377,6 +377,13 @@ describe("renderEoschoolPages pagination", () => {
           { id: "q1", originDay: 1, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
         ],
       },
+      media: [
+        {
+          id: "quiz-practice",
+          path: "/homescool/media/week2/practice-images/science-skeleton-practice.jpg",
+          alt: "Esquema del esqueleto superior con líneas para identificar huesos.",
+        },
+      ],
     });
 
     const pages = renderEoschoolPages(doc);

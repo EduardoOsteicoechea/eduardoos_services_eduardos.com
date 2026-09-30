@@ -11,11 +11,13 @@
   "lesson": {
     "kind": "deepen",
     "focusPoint": 2,
-    "points": {
-      "id": "p1",
-      "heading": "Aprendemos: Nombrar: espejo y eje de simetría",
-      "body": "Idea central: Hoy aprendemos a nombrar lo que vemos en una imagen espejo. Nombrar significa decir con precisión qué forma aparece. El eje de simetría es la línea central que separa dos mitades parecidas. La simetría ocurre cuando una forma de un lado tiene una forma correspondiente al otro lado, como si se reflejara en un espejo.\n\nExplora: Usa el vocabulario OiLS para describir la imagen. Puedes decir: «Hay un círculo a la izquierda del eje» o «Hay una curva que baja desde la parte alta». Al nombrar la forma y su lugar, sabes qué debes repetir. No copies de memoria: compara cada parte con el eje.\n\nPráctica: Elige una figura simétrica sencilla. Escribe cinco frases que nombren partes de la mitad izquierda: al menos un círculo, una curva, una línea o ángulo, el eje y un espacio. Luego completa la otra mitad siguiendo tus frases.\n\nError común: Decir solo «hay una forma». Usa el nombre de la forma y explica dónde está respecto al eje."
-    },
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Aprendemos: Nombrar: espejo y eje de simetría",
+        "body": "Idea central: Hoy aprendemos a nombrar lo que vemos en una imagen espejo. Nombrar significa decir con precisión qué forma aparece. El eje de simetría es la línea central que separa dos mitades parecidas. La simetría ocurre cuando una forma de un lado tiene una forma correspondiente al otro lado, como si se reflejara en un espejo.\n\nExplora: Usa el vocabulario OiLS para describir la imagen. Puedes decir: «Hay un círculo a la izquierda del eje» o «Hay una curva que baja desde la parte alta». Al nombrar la forma y su lugar, sabes qué debes repetir. No copies de memoria: compara cada parte con el eje.\n\nPráctica: Elige una figura simétrica sencilla. Escribe cinco frases que nombren partes de la mitad izquierda: al menos un círculo, una curva, una línea o ángulo, el eje y un espacio. Luego completa la otra mitad siguiendo tus frases.\n\nError común: Decir solo «hay una forma». Usa el nombre de la forma y explica dónde está respecto al eje."
+      }
+    ],
     "summary": "Hoy usamos Atención, Nombrar y Expresar para completar una figura como si se reflejara en un espejo."
   },
   "quiz": {
@@ -203,5 +205,11 @@
       }
     ]
   },
-  "media": null
+  "media": [
+    {
+      "id": "quiz-practice",
+      "path": "/homescool/media/week2/practice-images/art-symmetry-practice.jpg",
+      "alt": "Media flor para completar mediante simetría y espacio de dibujo."
+    }
+  ]
 }

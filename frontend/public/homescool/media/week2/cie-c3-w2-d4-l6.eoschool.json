@@ -11,11 +11,13 @@
   "lesson": {
     "kind": "deepen",
     "focusPoint": 3,
-    "points": {
-      "id": "p1",
-      "heading": "Aprendemos: Profundizar caja torácica",
-      "body": "Idea central: La caja torácica es la grupo de partes de huesos del pecho. Está formada por las costillas a los lados, el esternón al frente y las vértebras torácicas atrás. Su función principal es proteger el corazón y los pulmones, que son órganos necesarios para vivir.\n\nExplora: Las costillas son curvas y se conectan hacia el frente mediante partes flexibles llamadas cartílagos, parecidas a una unión firme pero no dura como un hueso. Al respirar, la caja torácica puede abrirse un poco para que los pulmones tengan espacio para llenarse de aire.\n\nPráctica: Dibuja la caja torácica y etiqueta costillas, esternón y vértebras torácicas. Luego escribe dos oraciones: qué órganos protege y cómo participa cuando respiras.\n\nError común: Decir que el esternón está en la espalda. Está en la parte delantera y central del pecho."
-    },
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Aprendemos: Profundizar caja torácica",
+        "body": "Idea central: La caja torácica es la grupo de partes de huesos del pecho. Está formada por las costillas a los lados, el esternón al frente y las vértebras torácicas atrás. Su función principal es proteger el corazón y los pulmones, que son órganos necesarios para vivir.\n\nExplora: Las costillas son curvas y se conectan hacia el frente mediante partes flexibles llamadas cartílagos, parecidas a una unión firme pero no dura como un hueso. Al respirar, la caja torácica puede abrirse un poco para que los pulmones tengan espacio para llenarse de aire.\n\nPráctica: Dibuja la caja torácica y etiqueta costillas, esternón y vértebras torácicas. Luego escribe dos oraciones: qué órganos protege y cómo participa cuando respiras.\n\nError común: Decir que el esternón está en la espalda. Está en la parte delantera y central del pecho."
+      }
+    ],
     "summary": "Hoy aprendimos qué huesos forman el cráneo, la columna y la caja torácica, y qué parte del cuerpo cuida cada uno."
   },
   "quiz": {
@@ -203,5 +205,11 @@
       }
     ]
   },
-  "media": null
+  "media": [
+    {
+      "id": "quiz-practice",
+      "path": "/homescool/media/week2/practice-images/science-skeleton-practice.jpg",
+      "alt": "Esquema del esqueleto superior con líneas para identificar huesos."
+    }
+  ]
 }

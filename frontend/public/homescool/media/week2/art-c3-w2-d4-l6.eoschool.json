@@ -11,11 +11,13 @@
   "lesson": {
     "kind": "deepen",
     "focusPoint": 3,
-    "points": {
-      "id": "p1",
-      "heading": "Aprendemos: Expresar: completar el espejo",
-      "body": "Idea central: Hoy vamos a expresar una imagen espejo completa. Expresar significa convertir lo observado en un dibujo propio y cuidado. Para lograr simetría, una figura debe conservar el tipo de forma, su tamaño aproximado y su distancia al eje. Los elementos OiLS te ayudan a construirla: círculos, puntos, líneas rectas, ángulos y curvas.\n\nExplora: Trabaja en este orden. Traza el eje de simetría. Observa una forma de la mitad visible y nómbrala. Mide con la vista cuántos espacios hay entre esa forma y el eje. Por último, dibuja en el lado vacío una forma que vaya en dirección contraria, pero a la misma distancia. Repite el proceso hasta terminar.\n\nPráctica: Dibuja media mariposa con círculos, curvas y ángulos. Añade un eje vertical y completa la otra ala paso a paso. Revisa primero el contorno y después los detalles.\n\nError común: Terminar un lado con muchos adornos y dejar el otro vacío o diferente. Completa primero la forma principal de ambos lados."
-    },
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Aprendemos: Expresar: completar el espejo",
+        "body": "Idea central: Hoy vamos a expresar una imagen espejo completa. Expresar significa convertir lo observado en un dibujo propio y cuidado. Para lograr simetría, una figura debe conservar el tipo de forma, su tamaño aproximado y su distancia al eje. Los elementos OiLS te ayudan a construirla: círculos, puntos, líneas rectas, ángulos y curvas.\n\nExplora: Trabaja en este orden. Traza el eje de simetría. Observa una forma de la mitad visible y nómbrala. Mide con la vista cuántos espacios hay entre esa forma y el eje. Por último, dibuja en el lado vacío una forma que vaya en dirección contraria, pero a la misma distancia. Repite el proceso hasta terminar.\n\nPráctica: Dibuja media mariposa con círculos, curvas y ángulos. Añade un eje vertical y completa la otra ala paso a paso. Revisa primero el contorno y después los detalles.\n\nError común: Terminar un lado con muchos adornos y dejar el otro vacío o diferente. Completa primero la forma principal de ambos lados."
+      }
+    ],
     "summary": "Hoy usamos Atención, Nombrar y Expresar para completar una figura como si se reflejara en un espejo."
   },
   "quiz": {
@@ -203,5 +205,11 @@
       }
     ]
   },
-  "media": null
+  "media": [
+    {
+      "id": "quiz-practice",
+      "path": "/homescool/media/week2/practice-images/art-symmetry-practice.jpg",
+      "alt": "Media flor para completar mediante simetría y espacio de dibujo."
+    }
+  ]
 }
