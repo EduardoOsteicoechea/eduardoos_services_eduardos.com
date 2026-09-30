@@ -164,11 +164,19 @@ export default function ScribAnnotationEditorModal(
         <header className="scrib-annotation-editor__canvas-head">
           <button
             type="button"
-            className="scrib-annotation-editor__field-btn"
+            className={
+              active
+                ? "scrib-tool-rail__btn icon-btn is-active"
+                : "scrib-tool-rail__btn icon-btn"
+            }
+            title={label}
+            aria-label={label}
             aria-pressed={active}
             onClick={() => props.onActiveField(field)}
           >
-            {label}
+            <span className="material-symbols-outlined" aria-hidden="true">
+              {field === "heading" ? "title" : "notes"}
+            </span>
           </button>
         </header>
         <div className="scrib-annotation-editor__canvas-scroll">
@@ -233,12 +241,20 @@ export default function ScribAnnotationEditorModal(
     >
       <div className="scrib-annotation-editor__panel">
         <header className="scrib-annotation-editor__head">
-          <h2>{props.name}</h2>
+          <h2 title={props.name}>{props.name}</h2>
           <p className="scrib-annotation-editor__hint">
             Usa Dibujar / Borrar de la barra sobre el título o el cuerpo (stylus).
           </p>
-          <button type="button" className="btn" onClick={props.onClose}>
-            Cerrar
+          <button
+            type="button"
+            className="scrib-tool-rail__btn icon-btn"
+            title="Cerrar"
+            aria-label="Cerrar editor de anotación"
+            onClick={props.onClose}
+          >
+            <span className="material-symbols-outlined" aria-hidden="true">
+              close
+            </span>
           </button>
         </header>
         <div className="scrib-annotation-editor__body">

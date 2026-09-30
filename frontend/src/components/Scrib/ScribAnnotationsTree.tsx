@@ -41,6 +41,7 @@ type ScribAnnotationsTreeProps = {
   onPopLastRect: () => void;
 };
 
+/** Same chrome as ScribToolbar icon-only controls (title = native tooltip). */
 function IconBtn({
   name,
   title,
@@ -59,12 +60,12 @@ function IconBtn({
       type="button"
       className={
         active
-          ? "scrib-annotations-tree__icon-btn icon-btn is-active"
-          : "scrib-annotations-tree__icon-btn icon-btn"
+          ? "scrib-tool-rail__btn icon-btn is-active"
+          : "scrib-tool-rail__btn icon-btn"
       }
       title={title}
       aria-label={title}
-      aria-pressed={active}
+      aria-pressed={typeof active === "boolean" ? active : undefined}
       disabled={disabled}
       onClick={onClick}
     >
@@ -177,6 +178,8 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
                   <button
                     type="button"
                     className="scrib-annotations-tree__name"
+                    title={block.name}
+                    aria-label={`Seleccionar bloque ${block.name}`}
                     onClick={() => props.onSelect({ blockId: block.id })}
                   >
                     {block.name}
@@ -265,6 +268,8 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
                             <button
                               type="button"
                               className="scrib-annotations-tree__name"
+                              title={area.name}
+                              aria-label={`Seleccionar área ${area.name}`}
                               onClick={() =>
                                 props.onSelect({
                                   blockId: block.id,
@@ -347,6 +352,8 @@ export default function ScribAnnotationsTree(props: ScribAnnotationsTreeProps) {
                                     <button
                                       type="button"
                                       className="scrib-annotations-tree__name"
+                                      title={ann.name}
+                                      aria-label={`Seleccionar anotación ${ann.name}`}
                                       onClick={() => props.onSelect(sel)}
                                       onDoubleClick={() => props.onOpenEditor(sel)}
                                     >

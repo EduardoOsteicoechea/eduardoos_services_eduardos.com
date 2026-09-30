@@ -1088,29 +1088,14 @@ html.dark .scrib-page {
   cursor: pointer;
 }
 
-.scrib-annotations-tree__icon-btn.icon-btn {
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
-  min-width: var(--rail-button-size);
-  padding: 0;
-  border: 0;
-  border-radius: var(--border-radius);
-  background: transparent;
-  color: var(--color-text);
+.scrib-annotations-tree .scrib-tool-rail__btn.icon-btn {
+  flex-shrink: 0;
 }
 
-.scrib-annotations-tree__icon-btn.icon-btn.is-active {
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
-.scrib-annotations-tree__icon-btn.icon-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.scrib-annotations-tree__icon-btn .material-symbols-outlined {
-  font-size: var(--icon-size);
+.scrib-annotation-editor__canvas-head {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
 }
 
 .scrib-annotation-editor {

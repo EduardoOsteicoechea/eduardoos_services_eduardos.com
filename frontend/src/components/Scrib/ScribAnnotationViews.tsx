@@ -184,7 +184,7 @@ export default function ScribAnnotationViews({
               </span>
               <button
                 type="button"
-                className="scrib-annotation-view__close icon-btn"
+                className="scrib-tool-rail__btn icon-btn"
                 title="Cerrar vista"
                 aria-label="Cerrar vista de anotación"
                 onPointerDown={(e) => e.stopPropagation()}
