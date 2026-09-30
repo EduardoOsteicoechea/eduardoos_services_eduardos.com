@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "La pregunta del experimento",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Una gota redonda de agua puede funcionar como una pequena lupa y hacer que las letras parezcan más grandes. Una lente convexa es una lente abultada en el centro, como la gota.\n\n## Idea clave\n\nSigamos juntos. La luz cambia un poco de camino al pasar del aire al agua. Ese cambio se llama refracción. Por eso tus ojos ven las letras de otra manera. El cristalino, una lente dentro del ojo, también ayuda a enfocar.\n\nPráctica: Ahora te toca a ti. Escribe: Quiero observar si una gota redonda hace que las letras parezcan más grandes. Luego dibuja una gota sobre una palabra.\n\nError común: No digas que las letras crecen. Las letras siguen iguales; cambia el camino de la luz."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. Una gota redonda de agua puede funcionar como una pequena lupa y hacer que las letras parezcan más grandes. Una lente convexa es una lente abultada en el centro, como la gota.\n\n## Idea clave\n\nSigamos juntos. La luz cambia un poco de camino al pasar del aire al agua. Ese cambio se llama refracción. Por eso tus ojos ven las letras de otra manera. El cristalino, una lente dentro del ojo, también ayuda a enfocar.\n\nAgua + gota sobre letras forma una **mezcla** visible; **lee las instrucciones** antes de montar el experimento.\n\nPráctica: Ahora te toca a ti. Escribe: Quiero observar si una gota redonda hace que las letras parezcan más grandes. Luego dibuja una gota sobre una palabra.\n\nError común: No digas que las letras crecen. Las letras siguen iguales; cambia el camino de la luz."
       },
       {
         "id": "p2",
@@ -128,14 +128,14 @@
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué forma ayuda a que la gota funcione como lente?",
+        "prompt": "Elige la respuesta correcta. ¿Qué debes leer antes de empezar?",
         "choices": [
-          "Redonda y abultada en el centro.",
-          "Cuadrada y seca.",
-          "Plana como una regla.",
-          "Llena de arena."
+          "Las instrucciones numeradas",
+          "Un cuento ajeno",
+          "Nada",
+          "Solo el título"
         ],
-        "answer": "Redonda y abultada en el centro."
+        "answer": "Las instrucciones numeradas"
       },
       {
         "id": "d1-q9",
@@ -216,5 +216,17 @@
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=KmsoxoXED3E"
+  "supportUrl": "https://www.youtube.com/watch?v=KmsoxoXED3E",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "len-lec-01",
+        "label": "Leo instrucciones para armar la gota-lupa."
+      },
+      {
+        "id": "cie-cts-01",
+        "label": "Observo una mezcla (agua + gota) y describo."
+      }
+    ]
+  }
 }

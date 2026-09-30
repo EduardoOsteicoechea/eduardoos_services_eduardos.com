@@ -15,7 +15,7 @@
       {
         "id": "p1",
         "heading": "Panorama de la semana",
-        "body": "Hoy vamos a entender esta idea con calma, paso a paso. En este bloque conectamos panorama de la semana con un ejemplo concreto.\n\n## Idea clave\n\nSigamos juntos. Esta semana memorizaste cuatro pares estado–capital del centro y litoral: Distrito Capital, **La Guaira**, **Miranda** y **Aragua**.\n\nPráctica: Ahora te toca a ti. Un estado es una división política de Venezuela; la capital es la sede de su gobierno. Esta semana memorizas cuatro pares. Empezamos por el Distrito Capital—Caracas y La Guaira—La Guaira.\n\nError común: Lee el ejemplo otra vez y explícalo con tus palabras antes de la tarea."
+        "body": "Hoy vamos a entender esta idea con calma, paso a paso. En este bloque conectamos panorama de la semana con un ejemplo concreto.\n\n## Idea clave\n\nSigamos juntos. Esta semana memorizaste cuatro pares estado–capital del centro y litoral: Distrito Capital, **La Guaira**, **Miranda** y **Aragua**.\n\nRepasa los cuatro pares señalando cada capital en un mapa de Venezuela.\n\nPráctica: Ahora te toca a ti. Un estado es una división política de Venezuela; la capital es la sede de su gobierno. Esta semana memorizas cuatro pares. Empezamos por el Distrito Capital—Caracas y La Guaira—La Guaira.\n\nError común: Lee el ejemplo otra vez y explícalo con tus palabras antes de la tarea."
       },
       {
         "id": "p2",
@@ -126,14 +126,14 @@
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué par está escrito correctamente?",
+        "prompt": "Elige la respuesta correcta. ¿Capital del estado La Guaira?",
         "choices": [
-          "Aragua — Maracay",
-          "Miranda — Maracay",
-          "La Guaira — Caracas",
-          "Distrito Capital — Los Teques"
+          "La Guaira",
+          "Caracas",
+          "Maracay",
+          "Valencia"
         ],
-        "answer": "Aragua — Maracay"
+        "answer": "La Guaira"
       },
       {
         "id": "d5-q8",
@@ -233,5 +233,13 @@
       "alt": "Mapa de Venezuela de práctica con marcadores y recuadros sin texto."
     }
   ],
-  "supportUrl": "https://www.youtube.com/watch?v=uBe59oJjMfk"
+  "supportUrl": "https://www.youtube.com/watch?v=uBe59oJjMfk",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "ide-ven-01",
+        "label": "Conozco estados, capitales y Caracas."
+      }
+    ]
+  }
 }
