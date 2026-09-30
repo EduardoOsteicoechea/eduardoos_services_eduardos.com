@@ -946,9 +946,18 @@ function buildQuizItem(doc: EoschoolDocument, q: EoschoolQuestion, index: number
       break;
     default:
       li.append(buildMcqChoices(q));
+      // Leftover cell height becomes a draw/copy pad under the options.
+      li.append(buildQuizPracticePad());
       break;
   }
   return li;
+}
+
+function buildQuizPracticePad(): HTMLElement {
+  const pad = el("div", "homescool-letter__q-practice");
+  pad.setAttribute("aria-hidden", "true");
+  pad.title = "Espacio para dibujar o copiar la práctica";
+  return pad;
 }
 
 function buildWriteLines(): HTMLElement {

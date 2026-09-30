@@ -357,5 +357,7 @@ describe("renderEoschoolPages pagination", () => {
     expect(q?.querySelector(".homescool-letter__q-num")?.textContent).toBe("1");
     expect(q?.querySelector(".homescool-letter__q-head .homescool-letter__body")?.textContent).toMatch(/Q\?/);
     expect(q?.querySelector(".homescool-letter__q-head + .homescool-letter__choices-list")).toBeTruthy();
+    // MCQ keeps a draw/copy pad under the options for leftover cell height.
+    expect(q?.querySelector(".homescool-letter__choices-list + .homescool-letter__q-practice")).toBeTruthy();
   });
 });
