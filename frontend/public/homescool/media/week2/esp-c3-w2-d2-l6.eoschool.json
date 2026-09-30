@@ -24,7 +24,7 @@
     "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuántas estructuras de oración memorizamos?",
@@ -37,7 +37,7 @@
         "answer": "Cuatro"
       },
       {
-        "id": "d1-q2",
+        "id": "d2-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«El gato duerme» es oración…",
@@ -50,7 +50,7 @@
         "answer": "Simple"
       },
       {
-        "id": "d1-q3",
+        "id": "d2-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«Estudio y juego» es…",
@@ -63,7 +63,7 @@
         "answer": "Compuesta coordinada"
       },
       {
-        "id": "d1-q4",
+        "id": "d2-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«Llegué cuando llamaste» es…",
@@ -76,7 +76,7 @@
         "answer": "Compuesta subordinada"
       },
       {
-        "id": "d1-q5",
+        "id": "d2-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Oración compleja…",
@@ -89,7 +89,7 @@
         "answer": "Mezcla coordinación y/o varias subordinadas"
       },
       {
-        "id": "d1-q6",
+        "id": "d2-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "En la simple hay…",
@@ -102,33 +102,7 @@
         "answer": "Un verbo principal"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "«Pero» en coordinada suele marcar…",
-        "choices": [
-          "Contraste",
-          "Solo lugar",
-          "Solo plural",
-          "Solo género"
-        ],
-        "answer": "Contraste"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Memorización: la primera estructura es…",
-        "choices": [
-          "Compleja",
-          "Simple",
-          "Subordinada",
-          "Coordinada"
-        ],
-        "answer": "Simple"
-      },
-      {
-        "id": "d2-q1",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Cuál es simple?",
@@ -141,7 +115,7 @@
         "answer": "Corro"
       },
       {
-        "id": "d2-q2",
+        "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
         "prompt": "«Leo o escribo» es…",
@@ -154,7 +128,7 @@
         "answer": "Coordinada"
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q9",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Coordina con «y»:",
@@ -167,7 +141,7 @@
         "answer": "Comí / y bebí"
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q10",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Una subordinada depende de…",
@@ -180,7 +154,7 @@
         "answer": "La oración principal"
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q11",
         "originDay": 2,
         "type": "mcq",
         "prompt": "«Si estudias, aprendes» tiene subordinada con…",
@@ -193,7 +167,7 @@
         "answer": "Si"
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q12",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Memorización: segunda estructura…",
@@ -206,30 +180,28 @@
         "answer": "Compuesta coordinada"
       },
       {
-        "id": "d2-q7",
+        "id": "d2-w1",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué estructura une ideas del mismo nivel?",
-        "choices": [
-          "Subordinada",
-          "Coordinada",
-          "Solo simple",
-          "Solo nombre"
-        ],
-        "answer": "Coordinada"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («Profundizar: oración simple») y escribe entre comillas las palabras exactas donde la clase habla de esto: Mi hermana pequeña dibuja. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d2-q8",
+        "id": "d2-w2",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "«Llueve y salgo» con dos acciones principales es…",
-        "choices": [
-          "Compuesta coordinada",
-          "Solo simple",
-          "Solo interjección",
-          "Sin verbo"
-        ],
-        "answer": "Compuesta coordinada"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Profundizar: oración simple») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "En el punto 1 («Profundizar: oración simple»), encuentra y copia entre comillas las palabras exactas relacionadas con: mi hermana pequeña. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Profundizar: oración simple») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

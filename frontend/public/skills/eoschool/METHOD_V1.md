@@ -111,12 +111,18 @@ Student-facing rule: day 1 teaches; the rest of the week **works and presents** 
 **Locale of student-facing text:** headings, bodies, quiz prompts/choices must match `locale`.  
 For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checklist`, `vs`, `deepen`, `review`). Use Spanish (`Panorama…`, `lista…`, `o`, `frente a` only when you want a Contraste split). Grammar terms that are Spanish (`tiempo simple`, `Error común`) are fine.
 
-### Quiz accumulation rule
+### Quiz sheet rule
 
-- Days 1–3: each day adds **8** new items; serve all items from days `1…day`. Totals: **8 / 16 / 24**.
-- Day 4: **36** items. Day 5: **52** items.
-- Any slot may be **`mcq`**, **`write`**, or an activity type below. Existing week1/week2 materials that are all-`mcq` (or mcq+write) remain valid.
-- Prefer mostly `mcq` on days 1–3; use activity types when pedagogy needs them (they still count **1** toward `questionCount`).
+**Week ≥ 2 (current):** every day serves a fixed **16**-item Letter quiz that fills one question sheet:
+
+- **12 `mcq`** + **4 `write`** (citation / reflection).
+- Day **1**: all 12 mcq have `originDay == 1`.
+- Days **2–5**: **6** mcq from day 1 + **6** mcq from the current day; the 4 write items use `originDay == day`.
+- Write prompts must make the student **search the class text**, copy an **exact phrase in quotes**, and **explain** what they understood (e.g. «Escribe entre comillas las palabras exactas del punto N donde dice… y explica qué entendiste»).
+
+**Week 1 (legacy):** days 1–3 accumulate **8** items/day (**8 / 16 / 24**); day 4 = **36**; day 5 = **52**. Mixed types allowed.
+
+Activity types (`crossword`, `wordsearch`, …) remain valid in week 1; week ≥ 2 quiz slots are **`mcq` + `write` only**.
 
 ### Question types
 
@@ -188,11 +194,12 @@ For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checkli
 - `format` must be `"eoschool"`; `version` must be `1`.
 - `cycle` ∈ 1..3; `week` ∈ 1..24; `day` ∈ 1..5; `level` must be `6` (v1); `subject` ∈ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
 - Logical key: `owner + cycle + week + day + level + subject` (no free slug).
-- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null, `quiz.questionCount == 8`, every question `originDay == 1`.
-- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block, `questionCount == 8 * day`, each `originDay` ∈ 1..day.
-- `day == 4` → `kind == "deepen"`, `focusPoint == 3`, `questionCount == 36`.
-- `day == 5` → `kind == "review"`, exactly **5** point blocks (except `pro`: ≥1), `questionCount == 52`.
-- Question `type`: **`mcq`** | **`write`** | **`crossword`** | **`wordsearch`** | **`match`** | **`draw_image`** | **`draw_box`** | **`grid_mark`**. Payload required per type (see table above). Mixed types allowed; count must match the day total.
+- `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null; every question `originDay` ∈ 1..day (week ≥ 2 write/mcq mix above).
+- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block.
+- `day == 4` → `kind == "deepen"`, `focusPoint == 3`.
+- `day == 5` → `kind == "review"`, exactly **5** point blocks (except `pro`: ≥1).
+- `quiz.questionCount` / `questions.length`: **week ≥ 2 → 16** (12 mcq + 4 write, mix above); **week 1 → 8 / 16 / 24 / 36 / 52** by day.
+- Question `type`: **`mcq`** | **`write`** | **`crossword`** | **`wordsearch`** | **`match`** | **`draw_image`** | **`draw_box`** | **`grid_mark`**. Payload required per type (see table above). Count must match the week/day total.
 
 ### Activity type examples (one slot each)
 

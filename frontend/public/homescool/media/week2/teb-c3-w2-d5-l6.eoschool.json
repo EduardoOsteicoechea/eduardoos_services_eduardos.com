@@ -41,49 +41,88 @@
     "summary": ""
   },
   "quiz": {
-    "questionCount": 52,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d2-q2",
-        "originDay": 2,
+        "id": "d5-q1",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "«Dios vio que era bueno» aparece en:",
+        "prompt": "El primer bloque del panorama trata sobre:",
         "choices": [
-          "Mateo 28",
-          "Génesis 1",
-          "Génesis 50 solo",
-          "Romanos 1"
+          "solo el diluvio",
+          "creación y bondad",
+          "solo las tablas",
+          "solo Romanos"
         ],
-        "answer": "Génesis 1"
+        "answer": "creación y bondad"
       },
       {
-        "id": "d1-q4",
+        "id": "d5-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El ser humano en Génesis 1–2 es hecho:",
+        "choices": [
+          "solo para trabajar sin descanso",
+          "sin dignidad",
+          "a imagen de Dios",
+          "sin responsabilidad"
+        ],
+        "answer": "a imagen de Dios"
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El segundo bloque incluye:",
+        "choices": [
+          "solo los profetas",
+          "solo geografía",
+          "solo el Nuevo Testamento",
+          "caída y diluvio"
+        ],
+        "answer": "caída y diluvio"
+      },
+      {
+        "id": "d5-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Después del diluvio, señal del pacto con Noé:",
         "choices": [
-          "arco en el cielo",
-          "solo una torre",
           "solo un templo en Roma",
-          "solo un mapa"
+          "solo un mapa",
+          "arco en el cielo",
+          "solo una torre"
         ],
         "answer": "arco en el cielo"
       },
       {
-        "id": "d2-q3",
-        "originDay": 2,
+        "id": "d5-q5",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "Imagen de Dios sugiere:",
+        "prompt": "El tercer bloque trata de:",
         "choices": [
-          "no cuidar la creación",
-          "no tener valor",
-          "ser omnipotente como Dios",
-          "dignidad y responsabilidad"
+          "solo imperio romano",
+          "promesa y patriarcas",
+          "solo dinosaurios",
+          "solo matemáticas"
         ],
-        "answer": "dignidad y responsabilidad"
+        "answer": "promesa y patriarcas"
       },
       {
-        "id": "d5-q5",
+        "id": "d5-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Abraham recibe especialmente:",
+        "choices": [
+          "promesa de bendición y descendencia",
+          "solo un castigo",
+          "solo un barco",
+          "solo una ley romana"
+        ],
+        "answer": "promesa de bendición y descendencia"
+      },
+      {
+        "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Patriarca de la promesa inicial:",
@@ -96,72 +135,7 @@
         "answer": "Abraham"
       },
       {
-        "id": "d4-q2",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Abraham es llamado desde:",
-        "choices": [
-          "solo Roma",
-          "solo Egipto moderno",
-          "Ur (idea de salida)",
-          "solo Atenas"
-        ],
-        "answer": "Ur (idea de salida)"
-      },
-      {
-        "id": "d4-q1",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "promesa y patriarcas",
-          "solo creación",
-          "solo diluvio",
-          "solo Romanos 1:1"
-        ],
-        "answer": "promesa y patriarcas"
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Panorama completo en orden:",
-        "choices": [
-          "patriarcas → nada más",
-          "solo Romanos",
-          "solo diluvio",
-          "creación → caída/diluvio → patriarcas"
-        ],
-        "answer": "creación → caída/diluvio → patriarcas"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Error común sobre Génesis:",
-        "choices": [
-          "pensar que solo habla de castigo",
-          "nombrar la bondad",
-          "agradecer a Dios",
-          "leer la creación"
-        ],
-        "answer": "pensar que solo habla de castigo"
-      },
-      {
-        "id": "d1-q5",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El tercer bloque trata de:",
-        "choices": [
-          "solo dinosaurios",
-          "promesa y patriarcas",
-          "solo imperio romano",
-          "solo matemáticas"
-        ],
-        "answer": "promesa y patriarcas"
-      },
-      {
-        "id": "d5-q1",
+        "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Orden del panorama:",
@@ -174,72 +148,7 @@
         "answer": "creación, caída/diluvio, promesa/patriarcas"
       },
       {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Primer bloque del panorama:",
-        "choices": [
-          "solo Hechos",
-          "solo geografía",
-          "solo consumación",
-          "creación y bondad"
-        ],
-        "answer": "creación y bondad"
-      },
-      {
-        "id": "d4-q5",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Jacob se relaciona con:",
-        "choices": [
-          "las tribus de Israel (idea)",
-          "solo tablas del 12",
-          "solo Génesis 1",
-          "solo el arca"
-        ],
-        "answer": "las tribus de Israel (idea)"
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Dios ante el mal en estos relatos:",
-        "choices": [
-          "solo castiga sin esperanza",
-          "juzga y también preserva promesa",
-          "desaparece",
-          "no importa el pecado"
-        ],
-        "answer": "juzga y también preserva promesa"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "La caída explica:",
-        "choices": [
-          "por qué hay dolor y necesidad de salvación",
-          "por qué no hay pecado",
-          "por qué no hay Dios",
-          "por qué no hay promesa"
-        ],
-        "answer": "por qué hay dolor y necesidad de salvación"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "El segundo bloque del intro era:",
-        "choices": [
-          "creación sola",
-          "solo Apocalipsis",
-          "solo tablas",
-          "caída y diluvio"
-        ],
-        "answer": "caída y diluvio"
-      },
-      {
-        "id": "d5-q3",
+        "id": "d5-q9",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Imagen de Dios implica:",
@@ -252,7 +161,7 @@
         "answer": "dignidad humana"
       },
       {
-        "id": "d5-q4",
+        "id": "d5-q10",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Señal con Noé:",
@@ -265,72 +174,7 @@
         "answer": "arco del pacto"
       },
       {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "«Bendición a las naciones» significa (idea):",
-        "choices": [
-          "las naciones serán bendecidas por la promesa",
-          "solo imperio romano",
-          "solo una familia aislada",
-          "solo geografía"
-        ],
-        "answer": "las naciones serán bendecidas por la promesa"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "En Génesis 3 entra:",
-        "choices": [
-          "solo el arca",
-          "solo Pablo",
-          "solo Abraham",
-          "pecado y consecuencias"
-        ],
-        "answer": "pecado y consecuencias"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Confundir diluvio con final sin pecado es:",
-        "choices": [
-          "lo mismo que Génesis 1",
-          "obligatorio",
-          "un error",
-          "el objetivo de la clase"
-        ],
-        "answer": "un error"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hoy NO profundizas solo:",
-        "choices": [
-          "promesa en 3:15",
-          "patriarcas (eso es día 4)",
-          "caída",
-          "diluvio"
-        ],
-        "answer": "patriarcas (eso es día 4)"
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Leer patriarcas sin promesa es:",
-        "choices": [
-          "perder el hilo bíblico",
-          "ideal",
-          "lo mismo que Génesis 1",
-          "obligatorio en exégesis"
-        ],
-        "answer": "perder el hilo bíblico"
-      },
-      {
-        "id": "d5-q6",
+        "id": "d5-q11",
         "originDay": 5,
         "type": "mcq",
         "prompt": "La síntesis final pide repetir:",
@@ -343,46 +187,7 @@
         "answer": "los tres bloques en orden"
       },
       {
-        "id": "d4-q6",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Hilo que une patriarcas:",
-        "choices": [
-          "promesa de Dios",
-          "solo matemáticas",
-          "solo castigos",
-          "solo viajes sin sentido"
-        ],
-        "answer": "promesa de Dios"
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Señal después del diluvio:",
-        "choices": [
-          "solo una espada",
-          "solo un templo",
-          "arco iris / arco del pacto",
-          "solo una corona"
-        ],
-        "answer": "arco iris / arco del pacto"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "caída y diluvio",
-          "solo tablas",
-          "solo creación",
-          "solo Latínínín"
-        ],
-        "answer": "caída y diluvio"
-      },
-      {
-        "id": "d5-q8",
+        "id": "d5-q12",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Título de la semana enfatiza:",
@@ -395,257 +200,28 @@
         "answer": "temas clave de Génesis"
       },
       {
-        "id": "d5-q2",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Libro base:",
-        "choices": [
-          "Génesis",
-          "Filemón",
-          "2 Juan",
-          "Judas"
-        ],
-        "answer": "Génesis"
-      },
-      {
-        "id": "d1-q3",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El segundo bloque incluye:",
-        "choices": [
-          "solo los profetas",
-          "caída y diluvio",
-          "solo geografía",
-          "solo el Nuevo Testamento"
-        ],
-        "answer": "caída y diluvio"
-      },
-      {
-        "id": "d1-q1",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El primer bloque del panorama trata sobre:",
-        "choices": [
-          "solo Romanos",
-          "solo el diluvio",
-          "creación y bondad",
-          "solo las tablas"
-        ],
-        "answer": "creación y bondad"
-      },
-      {
-        "id": "d5-q7",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Sin caída, la promesa:",
-        "choices": [
-          "desaparece Génesis 1",
-          "solo es geografía",
-          "no tiene sentido ninguno",
-          "se entiende peor (¿promesa de qué?)"
-        ],
-        "answer": "se entiende peor (¿promesa de qué?)"
-      },
-      {
-        "id": "d4-q4",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Isaac es recordado como:",
-        "choices": [
-          "hijo de la promesa",
-          "patriarca del diluvio",
-          "rey de Roma",
-          "autor de Romanos"
-        ],
-        "answer": "hijo de la promesa"
-      },
-      {
-        "id": "d1-q6",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Abraham recibe especialmente:",
-        "choices": [
-          "solo una ley romana",
-          "promesa de bendición y descendencia",
-          "solo un castigo",
-          "solo un barco"
-        ],
-        "answer": "promesa de bendición y descendencia"
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tres patriarcas citados en la lección:",
-        "choices": [
-          "Abraham, Isaac, Jacob",
-          "Pedro, Pablo, Juan",
-          "Moisés, Aarón, Josué",
-          "David, Salomón, Saúl"
-        ],
-        "answer": "Abraham, Isaac, Jacob"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "solo patriarcas",
-          "solo diluvio",
-          "solo Romanos 16",
-          "creación y bondad"
-        ],
-        "answer": "creación y bondad"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Promesa temprana tras la caída (idea):",
-        "choices": [
-          "esperanza contra la serpiente / mal",
-          "solo diluvio sin señal",
-          "solo ley romana",
-          "no hay esperanza"
-        ],
-        "answer": "esperanza contra la serpiente / mal"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Tercer bloque del intro:",
-        "choices": [
-          "solo creación",
-          "promesa y patriarcas",
-          "solo exégesis",
-          "solo diluvio"
-        ],
-        "answer": "promesa y patriarcas"
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "El diluvio salva especialmente a:",
-        "choices": [
-          "Noé y su familia",
-          "solo César",
-          "solo Faraón",
-          "solo Abraham antes de nacer"
-        ],
-        "answer": "Noé y su familia"
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El ser humano en Génesis 1–2 es hecho:",
-        "choices": [
-          "sin dignidad",
-          "sin responsabilidad",
-          "solo para trabajar sin descanso",
-          "a imagen de Dios"
-        ],
-        "answer": "a imagen de Dios"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Libro principal de este panorama:",
-        "choices": [
-          "Salmos solo",
-          "Hechos solo",
-          "Génesis",
-          "Apocalipsis solo"
-        ],
-        "answer": "Génesis"
-      },
-      {
-        "id": "d4-w1",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Resume la promesa a Abraham en dos frases (Génesis 12).",
-        "answer": ""
-      },
-      {
-        "id": "d4-w2",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Nombra Abraham, Isaac y Jacob y una idea de cada uno.",
-        "answer": ""
-      },
-      {
-        "id": "d4-w3",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "¿Qué significa «bendición a las naciones» en palabras sencillas?",
-        "answer": ""
-      },
-      {
-        "id": "d4-w4",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Dibuja o escribe una mini línea: creación → caída/diluvio → patriarcas.",
-        "answer": ""
-      },
-      {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Resume el panorama de Génesis en tres oraciones.",
-        "answer": ""
+        "prompt": "Busca en el punto 1 («Panorama de la semana») y escribe entre comillas las palabras exactas donde la clase habla de esto: Génesis no es un listado suelto: es un relato de Dios que crea,…. Luego explica con tus palabras qué entendiste."
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Lista creación/bondad, caída/diluvio y promesa/patriarcas con una frase cada uno.",
-        "answer": ""
+        "prompt": "Copia entre comillas la frase exacta del punto 2 («Panorama: creación y bondad») que mejor resume la idea principal. Después explica por qué esa frase es importante."
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe una pregunta bíblica de repaso y respóndela.",
-        "answer": ""
+        "prompt": "En el punto 3 («Panorama: caída y diluvio»), encuentra y copia entre comillas las palabras exactas relacionadas con: La gracia sola salva; las obras son fruto, no causa (confesión…. Explica qué significa esa idea en la clase de hoy."
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "¿Cómo te ayuda Génesis a entender por qué el mundo necesita salvación?",
-        "answer": ""
-      },
-      {
-        "id": "d5-w5",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Error común (saltar la caída o la promesa) y cómo evitarlo.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w6",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Esquema de los tres bloques de la semana.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w7",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Cuenta a alguien qué enseña Génesis 1 sobre la bondad de Dios.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w8",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Meta: leer un capítulo de Génesis la próxima semana.",
-        "answer": ""
+        "prompt": "Escribe entre comillas una cita exacta del punto 4 («Panorama: promesa y patriarcas») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

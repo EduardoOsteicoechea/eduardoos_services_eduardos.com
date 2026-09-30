@@ -41,49 +41,88 @@
     "summary": "Et une ideas, ut explica una finalidad y non niega. Al reconocer el trabajo de cada palabra, podemos traducir y escribir oraciones latinas sencillas con más precisión."
   },
   "quiz": {
-    "questionCount": 52,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d2-q2",
-        "originDay": 2,
+        "id": "d5-q1",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "¿et es adverbio o conjunción?",
+        "prompt": "et ≈",
         "choices": [
-          "verbo",
-          "sustantivo",
-          "conjunción",
-          "adverbio"
+          "no",
+          "para que",
+          "pero",
+          "y"
         ],
-        "answer": "conjunción"
+        "answer": "y"
       },
       {
-        "id": "d1-q4",
+        "id": "d5-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "ut (final) ≈",
+        "choices": [
+          "y",
+          "para que",
+          "después",
+          "no"
+        ],
+        "answer": "para que"
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "non ≈",
+        "choices": [
+          "no",
+          "sí",
+          "porque",
+          "y"
+        ],
+        "answer": "no"
+      },
+      {
+        "id": "d5-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«puer et puella» traduce:",
         "choices": [
-          "el niño o la niña",
-          "para que haya niña",
           "no hay niño",
-          "el niño y la niña"
+          "el niño y la niña",
+          "el niño o la niña",
+          "para que haya niña"
         ],
         "answer": "el niño y la niña"
       },
       {
-        "id": "d2-q3",
-        "originDay": 2,
+        "id": "d5-q5",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "A et B significa:",
+        "prompt": "Función de et:",
         "choices": [
-          "A y B",
-          "A para B",
-          "A o B",
-          "A no B"
+          "verbo",
+          "preposición de lugar",
+          "adverbio de negación",
+          "conjunción copulativa"
         ],
-        "answer": "A y B"
+        "answer": "conjunción copulativa"
       },
       {
-        "id": "d5-q5",
+        "id": "d5-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Función de non:",
+        "choices": [
+          "finalidad",
+          "artículo",
+          "unión copulativa",
+          "negación"
+        ],
+        "answer": "negación"
+      },
+      {
+        "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Para unir usas:",
@@ -96,72 +135,7 @@
         "answer": "et"
       },
       {
-        "id": "d4-q2",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Punto de hoy:",
-        "choices": [
-          "ut — para que",
-          "non — no",
-          "solo ablativo",
-          "et — y"
-        ],
-        "answer": "non — no"
-      },
-      {
-        "id": "d4-q1",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "non en español ≈",
-        "choices": [
-          "y",
-          "para que",
-          "con",
-          "no"
-        ],
-        "answer": "no"
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Negar «venit» correctamente:",
-        "choices": [
-          "non venit",
-          "et venit",
-          "venit ut",
-          "ut venit"
-        ],
-        "answer": "non venit"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "La forma escrita correcta es:",
-        "choices": [
-          "ed",
-          "eh",
-          "et",
-          "at"
-        ],
-        "answer": "et"
-      },
-      {
-        "id": "d1-q5",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Función de et:",
-        "choices": [
-          "adverbio de negación",
-          "preposición de lugar",
-          "verbo",
-          "conjunción copulativa"
-        ],
-        "answer": "conjunción copulativa"
-      },
-      {
-        "id": "d5-q1",
+        "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
         "prompt": "et",
@@ -174,72 +148,7 @@
         "answer": "y"
       },
       {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Idea de cláusula: ut + verbo ≈",
-        "choices": [
-          "porque no…",
-          "y…",
-          "para que…",
-          "no…"
-        ],
-        "answer": "para que…"
-      },
-      {
-        "id": "d4-q5",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "La forma escrita correcta es:",
-        "choices": [
-          "non",
-          "nun",
-          "et",
-          "ut"
-        ],
-        "answer": "non"
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Ante ut pregunta:",
-        "choices": [
-          "¿cuánto es?",
-          "¿quién pinta?",
-          "¿qué capital?",
-          "¿para qué?"
-        ],
-        "answer": "¿para qué?"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "ut introduce a menudo:",
-        "choices": [
-          "negación",
-          "nombres propios",
-          "sumas",
-          "finalidad"
-        ],
-        "answer": "finalidad"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Punto de hoy:",
-        "choices": [
-          "ut — para que",
-          "solo casos",
-          "et — y",
-          "non — no"
-        ],
-        "answer": "et — y"
-      },
-      {
-        "id": "d5-q3",
+        "id": "d5-q9",
         "originDay": 5,
         "type": "mcq",
         "prompt": "non",
@@ -252,7 +161,7 @@
         "answer": "no"
       },
       {
-        "id": "d5-q4",
+        "id": "d5-q10",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Tema de la semana:",
@@ -265,72 +174,7 @@
         "answer": "et ut non"
       },
       {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "non es:",
-        "choices": [
-          "verbo",
-          "sustantivo",
-          "conjunción",
-          "adverbio de negación"
-        ],
-        "answer": "adverbio de negación"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Traducción de et:",
-        "choices": [
-          "no",
-          "y",
-          "sin",
-          "para que"
-        ],
-        "answer": "y"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "ut no significa:",
-        "choices": [
-          "de modo que",
-          "y",
-          "para que",
-          "finalidad"
-        ],
-        "answer": "y"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿ut significa lo mismo que non?",
-        "choices": [
-          "solo en poesía",
-          "solo en matemáticas",
-          "no",
-          "sí"
-        ],
-        "answer": "no"
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "non suele ir:",
-        "choices": [
-          "delante de lo negado",
-          "solo en números",
-          "solo en títulos",
-          "siempre al final absoluto"
-        ],
-        "answer": "delante de lo negado"
-      },
-      {
-        "id": "d5-q6",
+        "id": "d5-q11",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Para negar usas:",
@@ -343,46 +187,7 @@
         "answer": "non"
       },
       {
-        "id": "d4-q6",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿non = et?",
-        "choices": [
-          "sí",
-          "no",
-          "solo en listas",
-          "solo en títulos"
-        ],
-        "answer": "no"
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "La forma escrita correcta es:",
-        "choices": [
-          "uh",
-          "et",
-          "non",
-          "ut"
-        ],
-        "answer": "ut"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "ut final en español ≈",
-        "choices": [
-          "y",
-          "para que",
-          "después",
-          "no"
-        ],
-        "answer": "para que"
-      },
-      {
-        "id": "d5-q8",
+        "id": "d5-q12",
         "originDay": 5,
         "type": "mcq",
         "prompt": "El trío de la semana es:",
@@ -395,257 +200,28 @@
         "answer": "et, ut, non"
       },
       {
-        "id": "d5-q2",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "ut",
-        "choices": [
-          "para que",
-          "no",
-          "y",
-          "después"
-        ],
-        "answer": "para que"
-      },
-      {
-        "id": "d1-q3",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "non ≈",
-        "choices": [
-          "no",
-          "porque",
-          "y",
-          "sí"
-        ],
-        "answer": "no"
-      },
-      {
-        "id": "d1-q1",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "et ≈",
-        "choices": [
-          "para que",
-          "pero",
-          "y",
-          "no"
-        ],
-        "answer": "y"
-      },
-      {
-        "id": "d5-q7",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Para finalidad usas:",
-        "choices": [
-          "non et",
-          "et",
-          "non",
-          "ut"
-        ],
-        "answer": "ut"
-      },
-      {
-        "id": "d4-q4",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Para negar «venit» escribes:",
-        "choices": [
-          "et venit",
-          "non venit",
-          "ut venit",
-          "venit et"
-        ],
-        "answer": "non venit"
-      },
-      {
-        "id": "d1-q6",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Función de non:",
-        "choices": [
-          "negación",
-          "finalidad",
-          "artículo",
-          "unión copulativa"
-        ],
-        "answer": "negación"
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema de la semana:",
-        "choices": [
-          "et, ut, non",
-          "solo geografía",
-          "solo números",
-          "solo declinaciones"
-        ],
-        "answer": "et, ut, non"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Para unir Marcus y Lucia usas:",
-        "choices": [
-          "ut",
-          "ad",
-          "non",
-          "et"
-        ],
-        "answer": "et"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "et une:",
-        "choices": [
-          "solo verbos",
-          "solo números",
-          "palabras o cláusulas",
-          "nada"
-        ],
-        "answer": "palabras o cláusulas"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "et… et… puede matizar:",
-        "choices": [
-          "nunca… nunca…",
-          "solo futuro",
-          "solo negación",
-          "tanto… como…"
-        ],
-        "answer": "tanto… como…"
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Punto de hoy:",
-        "choices": [
-          "non — no",
-          "solo nominativo",
-          "et — y",
-          "ut — para que"
-        ],
-        "answer": "ut — para que"
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "ut (final) ≈",
-        "choices": [
-          "no",
-          "y",
-          "después",
-          "para que"
-        ],
-        "answer": "para que"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Función escolar de ut final:",
-        "choices": [
-          "finalidad",
-          "negación",
-          "unión",
-          "artículo"
-        ],
-        "answer": "finalidad"
-      },
-      {
-        "id": "d4-w1",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Escribe tres oraciones cortas usando et, ut y non (una palabra en cada oración).",
-        "answer": ""
-      },
-      {
-        "id": "d4-w2",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Explica con tus palabras qué hace ut en una oración (idea de propósito o resultado).",
-        "answer": ""
-      },
-      {
-        "id": "d4-w3",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Da un ejemplo de confundir et con ut y corrígelo.",
-        "answer": ""
-      },
-      {
-        "id": "d4-w4",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Traduce al español una frase sencilla con non negando un verbo.",
-        "answer": ""
-      },
-      {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Resume en tres frases para qué sirven et, ut y non.",
-        "answer": ""
+        "prompt": "Busca en el punto 1 («Panorama de la semana») y escribe entre comillas las palabras exactas donde la clase habla de esto: Puer et puella. Luego explica con tus palabras qué entendiste."
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Lista un ejemplo de cada palabra (et / ut / non) con traducción.",
-        "answer": ""
+        "prompt": "Copia entre comillas la frase exacta del punto 2 («Panorama: et — y») que mejor resume la idea principal. Después explica por qué esa frase es importante."
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe una pregunta de repaso de latín y respóndela.",
-        "answer": ""
+        "prompt": "En el punto 3 («Panorama: ut — para que»), encuentra y copia entre comillas las palabras exactas relacionadas con: laboro ut discam. Explica qué significa esa idea en la clase de hoy."
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "¿Dónde ves raíces latinas en español? Da dos palabras.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w5",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "¿Qué error con ut o et casi cometes?",
-        "answer": ""
-      },
-      {
-        "id": "d5-w6",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Dibuja tres cajas: et | ut | non, con una frase en cada una.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w7",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Enseña a alguien qué significa et en una frase.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w8",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Meta: tres palabras latinas nuevas para la próxima semana.",
-        "answer": ""
+        "prompt": "Escribe entre comillas una cita exacta del punto 4 («Panorama: non — no») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

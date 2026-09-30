@@ -24,111 +24,85 @@
     "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "et ≈",
         "choices": [
-          "pero",
-          "y",
           "no",
-          "para que"
+          "para que",
+          "pero",
+          "y"
         ],
         "answer": "y"
       },
       {
-        "id": "d1-q2",
+        "id": "d2-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "ut (final) ≈",
         "choices": [
-          "para que",
-          "no",
           "y",
-          "después"
+          "para que",
+          "después",
+          "no"
         ],
         "answer": "para que"
       },
       {
-        "id": "d1-q3",
+        "id": "d2-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "non ≈",
         "choices": [
-          "y",
-          "porque",
           "no",
-          "sí"
+          "sí",
+          "porque",
+          "y"
         ],
         "answer": "no"
       },
       {
-        "id": "d1-q4",
+        "id": "d2-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«puer et puella» traduce:",
         "choices": [
-          "el niño o la niña",
-          "para que haya niña",
           "no hay niño",
-          "el niño y la niña"
+          "el niño y la niña",
+          "el niño o la niña",
+          "para que haya niña"
         ],
         "answer": "el niño y la niña"
       },
       {
-        "id": "d1-q5",
+        "id": "d2-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Función de et:",
         "choices": [
-          "adverbio de negación",
+          "verbo",
           "preposición de lugar",
-          "conjunción copulativa",
-          "verbo"
+          "adverbio de negación",
+          "conjunción copulativa"
         ],
         "answer": "conjunción copulativa"
       },
       {
-        "id": "d1-q6",
+        "id": "d2-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Función de non:",
         "choices": [
-          "unión copulativa",
           "finalidad",
-          "negación",
-          "artículo"
+          "artículo",
+          "unión copulativa",
+          "negación"
         ],
         "answer": "negación"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema de la semana:",
-        "choices": [
-          "solo declinaciones",
-          "solo números",
-          "solo geografía",
-          "et, ut, non"
-        ],
-        "answer": "et, ut, non"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Función escolar de ut final:",
-        "choices": [
-          "unión",
-          "finalidad",
-          "artículo",
-          "negación"
-        ],
-        "answer": "finalidad"
-      },
-      {
-        "id": "d2-q1",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Para unir Marcus y Lucia usas:",
@@ -141,7 +115,7 @@
         "answer": "et"
       },
       {
-        "id": "d2-q2",
+        "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿et es adverbio o conjunción?",
@@ -154,7 +128,7 @@
         "answer": "conjunción"
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q9",
         "originDay": 2,
         "type": "mcq",
         "prompt": "A et B significa:",
@@ -167,7 +141,7 @@
         "answer": "A y B"
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q10",
         "originDay": 2,
         "type": "mcq",
         "prompt": "La forma escrita correcta es:",
@@ -180,7 +154,7 @@
         "answer": "et"
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q11",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Punto de hoy:",
@@ -193,7 +167,7 @@
         "answer": "et — y"
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q12",
         "originDay": 2,
         "type": "mcq",
         "prompt": "Traducción de et:",
@@ -206,30 +180,28 @@
         "answer": "y"
       },
       {
-        "id": "d2-q7",
+        "id": "d2-w1",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "et une:",
-        "choices": [
-          "palabras o cláusulas",
-          "solo números",
-          "nada",
-          "solo verbos"
-        ],
-        "answer": "palabras o cláusulas"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («et — profundizar la coordinación») y escribe entre comillas las palabras exactas donde la clase habla de esto: Marcus et Lucia. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d2-q8",
+        "id": "d2-w2",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "et… et… puede matizar:",
-        "choices": [
-          "tanto… como…",
-          "solo negación",
-          "solo futuro",
-          "nunca… nunca…"
-        ],
-        "answer": "tanto… como…"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («et — profundizar la coordinación») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "En el punto 1 («et — profundizar la coordinación»), encuentra y copia entre comillas las palabras exactas relacionadas con: Marcus et Lucia et puer. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («et — profundizar la coordinación») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

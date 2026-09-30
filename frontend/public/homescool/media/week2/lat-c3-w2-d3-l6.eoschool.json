@@ -21,62 +21,62 @@
     "summary": "Ut puede abrir una cláusula de finalidad. Después de reconocer la acción principal, preguntamos «¿para qué?» para comprender su propósito."
   },
   "quiz": {
-    "questionCount": 24,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d3-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "et ≈",
         "choices": [
           "no",
-          "pero",
           "para que",
+          "pero",
           "y"
         ],
         "answer": "y"
       },
       {
-        "id": "d1-q2",
+        "id": "d3-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "ut (final) ≈",
         "choices": [
+          "y",
           "para que",
           "después",
-          "y",
           "no"
         ],
         "answer": "para que"
       },
       {
-        "id": "d1-q3",
+        "id": "d3-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "non ≈",
         "choices": [
-          "porque",
-          "sí",
           "no",
+          "sí",
+          "porque",
           "y"
         ],
         "answer": "no"
       },
       {
-        "id": "d1-q4",
+        "id": "d3-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "«puer et puella» traduce:",
         "choices": [
-          "el niño o la niña",
-          "el niño y la niña",
           "no hay niño",
+          "el niño y la niña",
+          "el niño o la niña",
           "para que haya niña"
         ],
         "answer": "el niño y la niña"
       },
       {
-        "id": "d1-q5",
+        "id": "d3-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Función de et:",
@@ -89,150 +89,20 @@
         "answer": "conjunción copulativa"
       },
       {
-        "id": "d1-q6",
+        "id": "d3-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Función de non:",
         "choices": [
-          "unión copulativa",
-          "artículo",
           "finalidad",
+          "artículo",
+          "unión copulativa",
           "negación"
         ],
         "answer": "negación"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema de la semana:",
-        "choices": [
-          "solo declinaciones",
-          "solo geografía",
-          "et, ut, non",
-          "solo números"
-        ],
-        "answer": "et, ut, non"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Función escolar de ut final:",
-        "choices": [
-          "unión",
-          "finalidad",
-          "negación",
-          "artículo"
-        ],
-        "answer": "finalidad"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Para unir Marcus y Lucia usas:",
-        "choices": [
-          "ut",
-          "ad",
-          "et",
-          "non"
-        ],
-        "answer": "et"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿et es adverbio o conjunción?",
-        "choices": [
-          "adverbio",
-          "verbo",
-          "sustantivo",
-          "conjunción"
-        ],
-        "answer": "conjunción"
-      },
-      {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "A et B significa:",
-        "choices": [
-          "A y B",
-          "A o B",
-          "A para B",
-          "A no B"
-        ],
-        "answer": "A y B"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "La forma escrita correcta es:",
-        "choices": [
-          "ed",
-          "eh",
-          "et",
-          "at"
-        ],
-        "answer": "et"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Punto de hoy:",
-        "choices": [
-          "non — no",
-          "solo casos",
-          "ut — para que",
-          "et — y"
-        ],
-        "answer": "et — y"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Traducción de et:",
-        "choices": [
-          "y",
-          "sin",
-          "para que",
-          "no"
-        ],
-        "answer": "y"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "et une:",
-        "choices": [
-          "nada",
-          "solo verbos",
-          "palabras o cláusulas",
-          "solo números"
-        ],
-        "answer": "palabras o cláusulas"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "et… et… puede matizar:",
-        "choices": [
-          "tanto… como…",
-          "nunca… nunca…",
-          "solo negación",
-          "solo futuro"
-        ],
-        "answer": "tanto… como…"
-      },
-      {
-        "id": "d3-q1",
+        "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
         "prompt": "ut final en español ≈",
@@ -245,7 +115,7 @@
         "answer": "para que"
       },
       {
-        "id": "d3-q2",
+        "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Punto de hoy:",
@@ -258,7 +128,7 @@
         "answer": "ut — para que"
       },
       {
-        "id": "d3-q3",
+        "id": "d3-q9",
         "originDay": 3,
         "type": "mcq",
         "prompt": "ut introduce a menudo:",
@@ -271,7 +141,7 @@
         "answer": "finalidad"
       },
       {
-        "id": "d3-q4",
+        "id": "d3-q10",
         "originDay": 3,
         "type": "mcq",
         "prompt": "La forma escrita correcta es:",
@@ -284,7 +154,7 @@
         "answer": "ut"
       },
       {
-        "id": "d3-q5",
+        "id": "d3-q11",
         "originDay": 3,
         "type": "mcq",
         "prompt": "¿ut significa lo mismo que non?",
@@ -297,7 +167,7 @@
         "answer": "no"
       },
       {
-        "id": "d3-q6",
+        "id": "d3-q12",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Idea de cláusula: ut + verbo ≈",
@@ -310,30 +180,28 @@
         "answer": "para que…"
       },
       {
-        "id": "d3-q7",
+        "id": "d3-w1",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "ut no significa:",
-        "choices": [
-          "finalidad",
-          "para que",
-          "y",
-          "de modo que"
-        ],
-        "answer": "y"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («ut — profundizar propósito y resultado») y escribe entre comillas las palabras exactas donde la clase habla de esto: laboro ut discam. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d3-q8",
+        "id": "d3-w2",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "Ante ut pregunta:",
-        "choices": [
-          "¿para qué?",
-          "¿cuánto es?",
-          "¿quién pinta?",
-          "¿qué capital?"
-        ],
-        "answer": "¿para qué?"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («ut — profundizar propósito y resultado») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d3-w3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "En el punto 1 («ut — profundizar propósito y resultado»), encuentra y copia entre comillas las palabras exactas relacionadas con: para aprender. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d3-w4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («ut — profundizar propósito y resultado») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

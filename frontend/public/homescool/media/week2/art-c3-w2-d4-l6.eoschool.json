@@ -21,322 +21,88 @@
     "summary": "Expresar una imagen espejo requiere trazar el eje, reconocer las formas OiLS y repetir cada una con tamaño y distancia semejantes. El contorno se completa antes de los detalles."
   },
   "quiz": {
-    "questionCount": 36,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d4-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "La secuencia Brookes de la lección es:",
         "choices": [
-          "Solo cortar / pegar",
-          "Atención / Nombrar / Expresar",
           "Solo pintar / firmar",
-          "Solo borrar / olvidar"
+          "Solo cortar / pegar",
+          "Solo borrar / olvidar",
+          "Atención / Nombrar / Expresar"
         ],
         "answer": "Atención / Nombrar / Expresar"
       },
       {
-        "id": "d1-q2",
+        "id": "d4-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Una media imagen simétrica se usa para entrenar:",
         "choices": [
-          "el ojo antes del lápiz",
-          "solo correr",
           "solo sumar",
-          "solo cantar"
+          "solo cantar",
+          "el ojo antes del lápiz",
+          "solo correr"
         ],
         "answer": "el ojo antes del lápiz"
       },
       {
-        "id": "d1-q3",
+        "id": "d4-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Imagen espejo significa:",
         "choices": [
-          "cualquier garabato",
-          "solo color",
           "solo sombra",
-          "igual pero invertida como en un espejo"
+          "igual pero invertida como en un espejo",
+          "cualquier garabato",
+          "solo color"
         ],
         "answer": "igual pero invertida como en un espejo"
       },
       {
-        "id": "d1-q4",
+        "id": "d4-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Línea de simetría es:",
         "choices": [
           "el eje donde coinciden las mitades",
-          "un marco",
+          "un color",
           "un borrador",
-          "un color"
+          "un marco"
         ],
         "answer": "el eje donde coinciden las mitades"
       },
       {
-        "id": "d1-q5",
+        "id": "d4-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Modelos de la lección incluyen:",
         "choices": [
-          "solo coches",
+          "solo mapas de Paria",
           "solo tablas",
-          "columna, vaso/florero, cara",
-          "solo mapas de Paria"
+          "solo coches",
+          "columna, vaso/florero, cara"
         ],
         "answer": "columna, vaso/florero, cara"
       },
       {
-        "id": "d1-q6",
+        "id": "d4-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Páginas Brookes citadas:",
         "choices": [
           "67–69",
+          "sin libro",
           "900–901",
-          "1–2 solo",
-          "sin libro"
+          "1–2 solo"
         ],
         "answer": "67–69"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema:",
-        "choices": [
-          "solo Romanos",
-          "solo gota",
-          "solo Kush",
-          "imágenes espejo (Mona Brookes)"
-        ],
-        "answer": "imágenes espejo (Mona Brookes)"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "En Expresar se puede comprobar:",
-        "choices": [
-          "solo contando hasta 12",
-          "solo con latín",
-          "doblando por el eje",
-          "solo gritando"
-        ],
-        "answer": "doblando por el eje"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "solo Expresar sin mirar",
-          "Atención",
-          "solo color final",
-          "solo firmar"
-        ],
-        "answer": "Atención"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Antes de dibujar debes:",
-        "choices": [
-          "ignorar el modelo",
-          "terminar en 2 segundos",
-          "observar bordes y huecos",
-          "cerrar los ojos"
-        ],
-        "answer": "observar bordes y huecos"
-      },
-      {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Un recurso visible es:",
-        "choices": [
-          "solo un alambre 20",
-          "solo un mapa de Shang",
-          "solo un motor",
-          "columna griega a mitad"
-        ],
-        "answer": "columna griega a mitad"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Atención precede a:",
-        "choices": [
-          "la técnica / el dibujo",
-          "solo el barniz",
-          "solo la firma",
-          "solo el marco dorado"
-        ],
-        "answer": "la técnica / el dibujo"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Lista de detalles tras mirar un minuto sirve para:",
-        "choices": [
-          "evitar mirar",
-          "saltar a firmar",
-          "entrenar el ojo",
-          "borrar el método"
-        ],
-        "answer": "entrenar el ojo"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "No dibujar aún significa:",
-        "choices": [
-          "priorizar observación",
-          "abandonar el arte",
-          "solo usar tinta",
-          "solo usar regla"
-        ],
-        "answer": "priorizar observación"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Pregunta útil de Atención:",
-        "choices": [
-          "¿cuánto es 12×12?",
-          "¿quién escribió Romanos?",
-          "¿qué es ut?",
-          "¿qué ves en el borde del corte?"
-        ],
-        "answer": "¿qué ves en el borde del corte?"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Error típico:",
-        "choices": [
-          "dibujar en los primeros segundos",
-          "describir bordes",
-          "usar modelos",
-          "mirar un minuto"
-        ],
-        "answer": "dibujar en los primeros segundos"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "solo Atención sin palabras",
-          "Nombrar",
-          "solo marco",
-          "solo barniz"
-        ],
-        "answer": "Nombrar"
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Imagen espejo + línea de simetría son:",
-        "choices": [
-          "solo firmas",
-          "solo colores",
-          "vocabulario clave",
-          "solo barnices"
-        ],
-        "answer": "vocabulario clave"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Los cinco elementos de la forma pertenecen al método:",
-        "choices": [
-          "solo Colón",
-          "solo la gota",
-          "solo Asiria",
-          "Brookes"
-        ],
-        "answer": "Brookes"
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Sin palabras claras, el alumno:",
-        "choices": [
-          "deja el arte",
-          "aprende latín",
-          "copia sin entender",
-          "siempre mejora solo"
-        ],
-        "answer": "copia sin entender"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Señala el eje en:",
-        "choices": [
-          "solo el alambre",
-          "columna, vaso y cara",
-          "solo el pie",
-          "solo el mapa"
-        ],
-        "answer": "columna, vaso y cara"
-      },
-      {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Glosario de cuatro términos ayuda a:",
-        "choices": [
-          "fijar conceptos antes de Expresar",
-          "evitar Nombrar",
-          "borrar Atención",
-          "saltar el eje"
-        ],
-        "answer": "fijar conceptos antes de Expresar"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Imagen espejo no es:",
-        "choices": [
-          "una mitad invertida",
-          "concepto de Brookes",
-          "vocabulario de Nombrar",
-          "cualquier dibujo sin eje"
-        ],
-        "answer": "cualquier dibujo sin eje"
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Nombrar viene:",
-        "choices": [
-          "después de Atención y antes de Expresar",
-          "solo en matemáticas",
-          "nunca",
-          "al final solo"
-        ],
-        "answer": "después de Atención y antes de Expresar"
-      },
-      {
-        "id": "d4-q1",
+        "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Hoy profundizas:",
@@ -349,7 +115,7 @@
         "answer": "Expresar"
       },
       {
-        "id": "d4-q2",
+        "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Completar la media imagen usa:",
@@ -362,7 +128,7 @@
         "answer": "los elementos de la forma"
       },
       {
-        "id": "d4-q3",
+        "id": "d4-q9",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Doblar el papel sirve para:",
@@ -375,7 +141,7 @@
         "answer": "comprobar coincidencias"
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q10",
         "originDay": 4,
         "type": "mcq",
         "prompt": "El éxito primero no es «bonito», sino:",
@@ -388,7 +154,7 @@
         "answer": "observar, nombrar y construir simetría"
       },
       {
-        "id": "d4-q5",
+        "id": "d4-q11",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Materiales típicos:",
@@ -401,7 +167,7 @@
         "answer": "papel, lápices, modelos, pizarra"
       },
       {
-        "id": "d4-q6",
+        "id": "d4-q12",
         "originDay": 4,
         "type": "mcq",
         "prompt": "Si el doblez no coincide:",
@@ -414,58 +180,28 @@
         "answer": "ajustas el trazo que falla"
       },
       {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Cierre oral útil:",
-        "choices": [
-          "solo contar",
-          "solo traducir ut",
-          "solo firmar",
-          "Atención miro, Nombrar digo, Expresar dibujo"
-        ],
-        "answer": "Atención miro, Nombrar digo, Expresar dibujo"
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Páginas de referencia:",
-        "choices": [
-          "67–69",
-          "solo portada",
-          "sin número",
-          "2000–2001"
-        ],
-        "answer": "67–69"
-      },
-      {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Describe qué es un dibujo «espejo» según Mona Brookes (con tus palabras).",
-        "answer": ""
+        "prompt": "Busca en el punto 1 («Expresar: completar el espejo») y escribe entre comillas las palabras exactas donde la clase habla de esto: Expresar significa convertir lo observado en un dibujo propio y…. Luego explica con tus palabras qué entendiste."
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica un paso del método que practicaste hoy.",
-        "answer": ""
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Expresar: completar el espejo») que mejor resume la idea principal. Después explica por qué esa frase es importante."
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "¿Qué forma básica usaste más (círculo, óvalo, línea)? ¿Para qué?",
-        "answer": ""
+        "prompt": "En el punto 1 («Expresar: completar el espejo»), encuentra y copia entre comillas las palabras exactas relacionadas con: Observa una forma de la mitad visible y nómbrala. Explica qué significa esa idea en la clase de hoy."
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "¿Qué parte del dibujo te costó más y cómo la mejorarías?",
-        "answer": ""
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Expresar: completar el espejo») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

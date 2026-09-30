@@ -23,11 +23,10 @@ Edit cell JSON under `frontend/public/homescool/media/weekN/`, then `node script
 
 ## Pedagogy
 
-- Day 1: 3 points + summary; quiz **8** items.
-- Days 2–3: deepen points 1–2; quiz **16** / **24** items.
-- Day 4: deepen point 3; quiz **36** items.
-- Day 5: five overview blocks; quiz **52** items.
-- Slot types: `mcq`, `write`, `crossword`, `wordsearch`, `match`, `draw_image`, `draw_box`, `grid_mark` (any mix; count fixed). One crossword/wordsearch = one complete puzzle.
+- Day 1: 3 points + summary. Days 2–4: deepen. Day 5: five overview blocks (`pro`: ≥1).
+- **Week ≥ 2 quiz:** fixed **16** items/day — **12 mcq** + **4 write** (cite exact class phrases + explain). Day 1: 12 mcq from day 1. Days 2–5: 6 mcq day 1 + 6 mcq today.
+- **Week 1 quiz (legacy):** **8 / 16 / 24 / 36 / 52** by day.
+- Slot types: `mcq`, `write`, `crossword`, `wordsearch`, `match`, `draw_image`, `draw_box`, `grid_mark`. Week ≥ 2 quiz uses mcq+write only. One crossword/wordsearch = one complete puzzle.
 - Packing: full-page activities (`crossword`, `wordsearch`, `draw_*`, `grid_mark`) alone on a Letter page; `mcq`/`write` fill pages as before.
 
 ## UI / print

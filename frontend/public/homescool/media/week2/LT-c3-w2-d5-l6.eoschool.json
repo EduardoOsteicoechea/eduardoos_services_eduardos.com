@@ -41,49 +41,88 @@
     "summary": "Repasamos los hitos 8 al 14 como una lista organizada de temas antiguos. Cada hito se aprende mejor al relacionar un nombre con una región y una característica: maravillas, patriarcas, pueblos de Anatolia y Canaán, Kush, Mesopotamia y la antigua China."
   },
   "quiz": {
-    "questionCount": 52,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d2-q2",
-        "originDay": 2,
+        "id": "d5-q1",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "Patriarcas asociados al hito 9:",
+        "prompt": "El hito 8 recuerda:",
         "choices": [
-          "Abraham, Isaac, Jacob",
-          "César y Augusto",
-          "Shang Taí",
-          "Colón y Magallanes"
+          "las siete maravillas",
+          "solo Kush",
+          "solo Shang",
+          "solo Paria"
         ],
-        "answer": "Abraham, Isaac, Jacob"
+        "answer": "las siete maravillas"
       },
       {
-        "id": "d1-q4",
+        "id": "d5-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "El hito 9 sitúa:",
+        "choices": [
+          "solo Asiria",
+          "solo Colón",
+          "solo el Faro sin más",
+          "Israel patriarcal"
+        ],
+        "answer": "Israel patriarcal"
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Hititas/cananeos son el hito:",
+        "choices": [
+          "13",
+          "14",
+          "10",
+          "12"
+        ],
+        "answer": "10"
+      },
+      {
+        "id": "d5-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Kush es el hito:",
         "choices": [
-          "11",
-          "13",
           "8",
-          "9"
+          "9",
+          "11",
+          "13"
         ],
         "answer": "11"
       },
       {
-        "id": "d2-q3",
-        "originDay": 2,
+        "id": "d5-q5",
+        "originDay": 1,
         "type": "mcq",
-        "prompt": "Número de las maravillas en la lista de hitos:",
+        "prompt": "Asirios / babilonios / Shang:",
         "choices": [
-          "8",
-          "12",
-          "14",
-          "11"
+          "10–11–12",
+          "8–9–10",
+          "12–13–14",
+          "11–12–13"
         ],
-        "answer": "8"
+        "answer": "12–13–14"
       },
       {
-        "id": "d5-q5",
+        "id": "d5-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Una maravilla clásica:",
+        "choices": [
+          "Empire State",
+          "un celular",
+          "Torre Eiffel",
+          "Gran Pirámide de Guiza"
+        ],
+        "answer": "Gran Pirámide de Guiza"
+      },
+      {
+        "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Israel patriarcal es el hito:",
@@ -96,72 +135,7 @@
         "answer": "9"
       },
       {
-        "id": "d4-q2",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Babilonia se asocia al:",
-        "choices": [
-          "sur mesopotámico",
-          "solo Kush",
-          "solo Canadá",
-          "solo Rodas"
-        ],
-        "answer": "sur mesopotámico"
-      },
-      {
-        "id": "d4-q1",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Asiria destaca por:",
-        "choices": [
-          "solo arte moderno",
-          "solo la dinastía Shang",
-          "solo navegación vikinga",
-          "imperio militar en Mesopotamia norte"
-        ],
-        "answer": "imperio militar en Mesopotamia norte"
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Mesopotamia frente a Shang muestra:",
-        "choices": [
-          "que Shang es asirio",
-          "que Babilonia es china",
-          "mismas geografías exactas",
-          "reinos antiguos en geografías distintas"
-        ],
-        "answer": "reinos antiguos en geografías distintas"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Número de Israel patriarcal:",
-        "choices": [
-          "14",
-          "8",
-          "9",
-          "13"
-        ],
-        "answer": "9"
-      },
-      {
-        "id": "d1-q5",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Asirios / babilonios / Shang:",
-        "choices": [
-          "12–13–14",
-          "8–9–10",
-          "10–11–12",
-          "11–12–13"
-        ],
-        "answer": "12–13–14"
-      },
-      {
-        "id": "d5-q1",
+        "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Orden correcto inicial:",
@@ -174,72 +148,7 @@
         "answer": "8 maravillas, 9 patriarcal"
       },
       {
-        "id": "d3-q6",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "hitos 10–11",
-          "solo patriarcas",
-          "solo Shang",
-          "solo maravillas"
-        ],
-        "answer": "hitos 10–11"
-      },
-      {
-        "id": "d4-q5",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "solo el 8",
-          "solo Canaan",
-          "hitos 12–14",
-          "solo el 9"
-        ],
-        "answer": "hitos 12–14"
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Los carros y tratados se asocian más a:",
-        "choices": [
-          "hititas",
-          "solo patriarcas",
-          "solo Shang sin más",
-          "solo el Faro"
-        ],
-        "answer": "hititas"
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Kush está al sur de:",
-        "choices": [
-          "Francia",
-          "Asiria siempre",
-          "China Shang",
-          "Egipto"
-        ],
-        "answer": "Egipto"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "hitos 8–9",
-          "solo Asiria",
-          "solo Kush",
-          "solo Shang"
-        ],
-        "answer": "hitos 8–9"
-      },
-      {
-        "id": "d5-q3",
+        "id": "d5-q9",
         "originDay": 5,
         "type": "mcq",
         "prompt": "12, 13, 14 son:",
@@ -252,7 +161,7 @@
         "answer": "asirios, babilonios, Shang"
       },
       {
-        "id": "d5-q4",
+        "id": "d5-q10",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Tema de la semana:",
@@ -265,72 +174,7 @@
         "answer": "línea de tiempo: maravillas y reinos"
       },
       {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Shang destaca por:",
-        "choices": [
-          "solo carros hititas",
-          "solo Paria",
-          "solo las pirámides de Guiza",
-          "bronces rituales y escritura temprana"
-        ],
-        "answer": "bronces rituales y escritura temprana"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Una maravilla clásica es:",
-        "choices": [
-          "la Gran Pirámide de Guiza",
-          "un celular",
-          "el Empire State",
-          "la Torre Eiffel"
-        ],
-        "answer": "la Gran Pirámide de Guiza"
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Kush no es lo mismo que:",
-        "choices": [
-          "hito 11",
-          "Asiria",
-          "Nubia en la lección",
-          "reino del Nilo medio"
-        ],
-        "answer": "Asiria"
-      },
-      {
-        "id": "d3-q5",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Número de Kush:",
-        "choices": [
-          "9",
-          "11",
-          "13",
-          "8"
-        ],
-        "answer": "11"
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Hammurabi se asocia en la lección al mundo de:",
-        "choices": [
-          "solo Kush",
-          "solo Rodas",
-          "solo Paria",
-          "Babilonia"
-        ],
-        "answer": "Babilonia"
-      },
-      {
-        "id": "d5-q6",
+        "id": "d5-q11",
         "originDay": 5,
         "type": "mcq",
         "prompt": "La síntesis final vuelve a:",
@@ -343,46 +187,7 @@
         "answer": "8–9 como arranque"
       },
       {
-        "id": "d4-q6",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Shang se ubica en:",
-        "choices": [
-          "solo el Tigris",
-          "valle del Amarillo (China)",
-          "solo Anatolia",
-          "solo Nubia"
-        ],
-        "answer": "valle del Amarillo (China)"
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Número de hititas/cananeos:",
-        "choices": [
-          "10",
-          "13",
-          "12",
-          "14"
-        ],
-        "answer": "10"
-      },
-      {
-        "id": "d3-q1",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Hititas se ubican sobre todo en:",
-        "choices": [
-          "el Amazonas",
-          "Japón",
-          "la Antártida",
-          "Anatolia"
-        ],
-        "answer": "Anatolia"
-      },
-      {
-        "id": "d5-q8",
+        "id": "d5-q12",
         "originDay": 5,
         "type": "mcq",
         "prompt": "Asiria es el hito:",
@@ -395,257 +200,28 @@
         "answer": "12"
       },
       {
-        "id": "d5-q2",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "10 y 11 son:",
-        "choices": [
-          "solo patriarcas",
-          "hititas/cananeos y Kush",
-          "Shang y Asiria",
-          "solo maravillas"
-        ],
-        "answer": "hititas/cananeos y Kush"
-      },
-      {
-        "id": "d1-q3",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Hititas/cananeos son el hito:",
-        "choices": [
-          "10",
-          "12",
-          "13",
-          "14"
-        ],
-        "answer": "10"
-      },
-      {
-        "id": "d1-q1",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El hito 8 recuerda:",
-        "choices": [
-          "solo Kush",
-          "solo Paria",
-          "solo Shang",
-          "las siete maravillas"
-        ],
-        "answer": "las siete maravillas"
-      },
-      {
-        "id": "d5-q7",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Shang es el hito:",
-        "choices": [
-          "10",
-          "14",
-          "13",
-          "11"
-        ],
-        "answer": "14"
-      },
-      {
-        "id": "d4-q4",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Número asirios / babilonios / Shang:",
-        "choices": [
-          "12–13–14",
-          "11–12–13",
-          "10–11–12",
-          "8–9–10"
-        ],
-        "answer": "12–13–14"
-      },
-      {
-        "id": "d1-q6",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Una maravilla clásica:",
-        "choices": [
-          "Gran Pirámide de Guiza",
-          "Empire State",
-          "Torre Eiffel",
-          "un celular"
-        ],
-        "answer": "Gran Pirámide de Guiza"
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema de la semana:",
-        "choices": [
-          "solo verbos",
-          "solo et",
-          "solo gota",
-          "línea de tiempo: maravillas y reinos"
-        ],
-        "answer": "línea de tiempo: maravillas y reinos"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Las siete maravillas son hitos sobre todo de:",
-        "choices": [
-          "Oceanía moderna",
-          "solo Alaska",
-          "solo el siglo XXI",
-          "Mediterráneo y Cercano Oriente antiguos"
-        ],
-        "answer": "Mediterráneo y Cercano Oriente antiguos"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "La época patriarcal se asocia a:",
-        "choices": [
-          "solo fábricas",
-          "pastoreo, alianzas y promesa",
-          "solo el Renacimiento",
-          "solo internet"
-        ],
-        "answer": "pastoreo, alianzas y promesa"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "El Faro de Alejandría pertenece al bloque de:",
-        "choices": [
-          "solo Kush",
-          "solo Shang",
-          "maravillas (hito 8)",
-          "solo hititas"
-        ],
-        "answer": "maravillas (hito 8)"
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Cananeos se asocian al:",
-        "choices": [
-          "Australia",
-          "Polinesia",
-          "Ártico",
-          "Levante"
-        ],
-        "answer": "Levante"
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "El hito 9 sitúa:",
-        "choices": [
-          "Israel patriarcal",
-          "solo Colón",
-          "solo el Faro sin más",
-          "solo Asiria"
-        ],
-        "answer": "Israel patriarcal"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Shang se asocia al valle del:",
-        "choices": [
-          "Sena",
-          "Amarillo",
-          "Orinoco",
-          "Amazonas"
-        ],
-        "answer": "Amarillo"
-      },
-      {
-        "id": "d4-w1",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Coloca en orden tres hitos de la línea de tiempo que recuerdes (nombre + idea).",
-        "answer": ""
-      },
-      {
-        "id": "d4-w2",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Explica qué conecta maravillas antiguas con reinos en la lección.",
-        "answer": ""
-      },
-      {
-        "id": "d4-w3",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "Escribe un evento que pondrías en la línea de tiempo y por qué importa.",
-        "answer": ""
-      },
-      {
-        "id": "d4-w4",
-        "originDay": 4,
-        "type": "write",
-        "prompt": "¿Qué hito te costó más ubicar? ¿Cómo lo repasarías?",
-        "answer": ""
-      },
-      {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Resume la semana de línea de tiempo en tres oraciones.",
-        "answer": ""
+        "prompt": "Busca en el punto 1 («Panorama de la semana») y escribe entre comillas las palabras exactas donde la clase habla de esto: Cada hito es una entrada importante: 8 y 9 recuerdan las…. Luego explica con tus palabras qué entendiste."
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Lista tres puntos del intro con una frase cada uno.",
-        "answer": ""
+        "prompt": "Copia entre comillas la frase exacta del punto 2 («Panorama: 8–9: maravillas e Israel patriarcal») que mejor resume la idea principal. Después explica por qué esa frase es importante."
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe una pregunta de fechas o reinos y respóndela.",
-        "answer": ""
+        "prompt": "En el punto 3 («Panorama: 10–11: hititas, cananeos y Kush»), encuentra y copia entre comillas las palabras exactas relacionadas con: Un reino es un territorio gobernado por una autoridad, y un pueblo…. Explica qué significa esa idea en la clase de hoy."
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "¿Cómo usarías una línea de tiempo en otra materia?",
-        "answer": ""
-      },
-      {
-        "id": "d5-w5",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Error común que evitaste al ordenar hitos.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w6",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Describe tu línea de tiempo mental de la semana.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w7",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Explica a alguien un hito en una frase.",
-        "answer": ""
-      },
-      {
-        "id": "d5-w8",
-        "originDay": 5,
-        "type": "write",
-        "prompt": "Meta: tres fechas para memorizar la próxima semana.",
-        "answer": ""
+        "prompt": "Escribe entre comillas una cita exacta del punto 4 («Panorama: 12–14: Asiria, Babilonia y Shang») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

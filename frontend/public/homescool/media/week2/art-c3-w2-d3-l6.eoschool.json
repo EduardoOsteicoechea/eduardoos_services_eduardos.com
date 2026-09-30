@@ -21,10 +21,10 @@
     "summary": "Nombrar una imagen espejo ayuda a completarla: identifica el eje de simetría, la forma OiLS y su posición. Una descripción precisa permite encontrar la forma correspondiente en la otra mitad."
   },
   "quiz": {
-    "questionCount": 24,
+    "questionCount": 16,
     "questions": [
       {
-        "id": "d1-q1",
+        "id": "d3-q1",
         "originDay": 1,
         "type": "mcq",
         "prompt": "La secuencia Brookes de la lección es:",
@@ -37,46 +37,46 @@
         "answer": "Atención / Nombrar / Expresar"
       },
       {
-        "id": "d1-q2",
+        "id": "d3-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Una media imagen simétrica se usa para entrenar:",
         "choices": [
-          "el ojo antes del lápiz",
           "solo sumar",
           "solo cantar",
+          "el ojo antes del lápiz",
           "solo correr"
         ],
         "answer": "el ojo antes del lápiz"
       },
       {
-        "id": "d1-q3",
+        "id": "d3-q3",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Imagen espejo significa:",
         "choices": [
-          "cualquier garabato",
-          "igual pero invertida como en un espejo",
           "solo sombra",
+          "igual pero invertida como en un espejo",
+          "cualquier garabato",
           "solo color"
         ],
         "answer": "igual pero invertida como en un espejo"
       },
       {
-        "id": "d1-q4",
+        "id": "d3-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Línea de simetría es:",
         "choices": [
-          "un borrador",
-          "un color",
           "el eje donde coinciden las mitades",
+          "un color",
+          "un borrador",
           "un marco"
         ],
         "answer": "el eje donde coinciden las mitades"
       },
       {
-        "id": "d1-q5",
+        "id": "d3-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Modelos de la lección incluyen:",
@@ -89,7 +89,7 @@
         "answer": "columna, vaso/florero, cara"
       },
       {
-        "id": "d1-q6",
+        "id": "d3-q6",
         "originDay": 1,
         "type": "mcq",
         "prompt": "Páginas Brookes citadas:",
@@ -102,137 +102,7 @@
         "answer": "67–69"
       },
       {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "Tema:",
-        "choices": [
-          "solo gota",
-          "imágenes espejo (Mona Brookes)",
-          "solo Romanos",
-          "solo Kush"
-        ],
-        "answer": "imágenes espejo (Mona Brookes)"
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "En Expresar se puede comprobar:",
-        "choices": [
-          "doblando por el eje",
-          "solo gritando",
-          "solo contando hasta 12",
-          "solo con latín"
-        ],
-        "answer": "doblando por el eje"
-      },
-      {
-        "id": "d2-q1",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Hoy profundizas:",
-        "choices": [
-          "solo Expresar sin mirar",
-          "solo firmar",
-          "solo color final",
-          "Atención"
-        ],
-        "answer": "Atención"
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Antes de dibujar debes:",
-        "choices": [
-          "observar bordes y huecos",
-          "ignorar el modelo",
-          "cerrar los ojos",
-          "terminar en 2 segundos"
-        ],
-        "answer": "observar bordes y huecos"
-      },
-      {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Un recurso visible es:",
-        "choices": [
-          "solo un motor",
-          "columna griega a mitad",
-          "solo un mapa de Shang",
-          "solo un alambre 20"
-        ],
-        "answer": "columna griega a mitad"
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Atención precede a:",
-        "choices": [
-          "la técnica / el dibujo",
-          "solo la firma",
-          "solo el marco dorado",
-          "solo el barniz"
-        ],
-        "answer": "la técnica / el dibujo"
-      },
-      {
-        "id": "d2-q5",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Lista de detalles tras mirar un minuto sirve para:",
-        "choices": [
-          "evitar mirar",
-          "saltar a firmar",
-          "borrar el método",
-          "entrenar el ojo"
-        ],
-        "answer": "entrenar el ojo"
-      },
-      {
-        "id": "d2-q6",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "No dibujar aún significa:",
-        "choices": [
-          "solo usar tinta",
-          "solo usar regla",
-          "priorizar observación",
-          "abandonar el arte"
-        ],
-        "answer": "priorizar observación"
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Pregunta útil de Atención:",
-        "choices": [
-          "¿qué es ut?",
-          "¿qué ves en el borde del corte?",
-          "¿cuánto es 12×12?",
-          "¿quién escribió Romanos?"
-        ],
-        "answer": "¿qué ves en el borde del corte?"
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Error típico:",
-        "choices": [
-          "dibujar en los primeros segundos",
-          "mirar un minuto",
-          "describir bordes",
-          "usar modelos"
-        ],
-        "answer": "dibujar en los primeros segundos"
-      },
-      {
-        "id": "d3-q1",
+        "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Hoy profundizas:",
@@ -245,7 +115,7 @@
         "answer": "Nombrar"
       },
       {
-        "id": "d3-q2",
+        "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Imagen espejo + línea de simetría son:",
@@ -258,7 +128,7 @@
         "answer": "vocabulario clave"
       },
       {
-        "id": "d3-q3",
+        "id": "d3-q9",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Los cinco elementos de la forma pertenecen al método:",
@@ -271,7 +141,7 @@
         "answer": "Brookes"
       },
       {
-        "id": "d3-q4",
+        "id": "d3-q10",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Sin palabras claras, el alumno:",
@@ -284,7 +154,7 @@
         "answer": "copia sin entender"
       },
       {
-        "id": "d3-q5",
+        "id": "d3-q11",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Señala el eje en:",
@@ -297,7 +167,7 @@
         "answer": "columna, vaso y cara"
       },
       {
-        "id": "d3-q6",
+        "id": "d3-q12",
         "originDay": 3,
         "type": "mcq",
         "prompt": "Glosario de cuatro términos ayuda a:",
@@ -310,30 +180,28 @@
         "answer": "fijar conceptos antes de Expresar"
       },
       {
-        "id": "d3-q7",
+        "id": "d3-w1",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "Imagen espejo no es:",
-        "choices": [
-          "una mitad invertida",
-          "cualquier dibujo sin eje",
-          "vocabulario de Nombrar",
-          "concepto de Brookes"
-        ],
-        "answer": "cualquier dibujo sin eje"
+        "type": "write",
+        "prompt": "Busca en el punto 1 («Nombrar: espejo y eje de simetría») y escribe entre comillas las palabras exactas donde la clase habla de esto: Hay un círculo a la izquierda del eje. Luego explica con tus palabras qué entendiste."
       },
       {
-        "id": "d3-q8",
+        "id": "d3-w2",
         "originDay": 3,
-        "type": "mcq",
-        "prompt": "Nombrar viene:",
-        "choices": [
-          "nunca",
-          "al final solo",
-          "después de Atención y antes de Expresar",
-          "solo en matemáticas"
-        ],
-        "answer": "después de Atención y antes de Expresar"
+        "type": "write",
+        "prompt": "Copia entre comillas la frase exacta del punto 1 («Nombrar: espejo y eje de simetría») que mejor resume la idea principal. Después explica por qué esa frase es importante."
+      },
+      {
+        "id": "d3-w3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "En el punto 1 («Nombrar: espejo y eje de simetría»), encuentra y copia entre comillas las palabras exactas relacionadas con: hay una forma. Explica qué significa esa idea en la clase de hoy."
+      },
+      {
+        "id": "d3-w4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Escribe entre comillas una cita exacta del punto 1 («Nombrar: espejo y eje de simetría») que puedas usar para enseñarle a un compañero esta idea. Luego explica la cita con tus propias palabras."
       }
     ]
   },

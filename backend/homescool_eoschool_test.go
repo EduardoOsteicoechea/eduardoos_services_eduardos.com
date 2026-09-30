@@ -183,6 +183,60 @@ func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
 	}
 }
 
+func TestValidateEoschoolDocumentWeek2Day1Sheet(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Week = 2
+	doc.Quiz.QuestionCount = 16
+	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
+	for i := 0; i < 12; i++ {
+		doc.Quiz.Questions[i] = EoschoolQuestion{
+			ID: "q", OriginDay: 1, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[12+i] = EoschoolQuestion{
+			ID: "w", OriginDay: 1, Type: "write", Prompt: "cita y explica?",
+		}
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestValidateEoschoolDocumentWeek2Day3Sheet(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Week = 2
+	doc.Day = 3
+	doc.Lesson.Kind = eoschoolKindDeepen
+	fp := 2
+	doc.Lesson.FocusPoint = &fp
+	doc.Lesson.Summary = ""
+	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
+	doc.Quiz.QuestionCount = 16
+	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
+	for i := 0; i < 6; i++ {
+		doc.Quiz.Questions[i] = EoschoolQuestion{
+			ID: "q1", OriginDay: 1, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 6; i++ {
+		doc.Quiz.Questions[6+i] = EoschoolQuestion{
+			ID: "q3", OriginDay: 3, Type: "mcq", Prompt: "p?",
+			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
+		}
+	}
+	for i := 0; i < 4; i++ {
+		doc.Quiz.Questions[12+i] = EoschoolQuestion{
+			ID: "w", OriginDay: 3, Type: "write", Prompt: "cita y explica?",
+		}
+	}
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func sampleEoschoolDay1() EoschoolDocument {
 	qs := make([]EoschoolQuestion, 8)
 	for i := range qs {
