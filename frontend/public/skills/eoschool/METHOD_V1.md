@@ -120,6 +120,14 @@ For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checkli
 - Days **2–5**: **6** mcq from day 1 + **6** mcq from the current day; the 4 write items use `originDay == day`.
 - Write prompts must make the student **search the class text**, copy an **exact phrase in quotes**, and **explain** what they understood (e.g. «Escribe entre comillas las palabras exactas del punto N donde dice… y explica qué entendiste»).
 
+### Adapting quizzes for the age band
+
+When adapting a pack for the level-6 eight-year-old band, replace every quiz
+question, not only its instruction prefix. Each MCQ needs a new concrete prompt
+and plausible distractors drawn from the lesson’s likely confusions; each
+`write` prompt needs a new, short instruction that matches the day’s content.
+Adding «Elige la respuesta correcta» to an old question is not an adaptation.
+
 **Week 1 (legacy):** days 1–3 accumulate **8** items/day (**8 / 16 / 24**); day 4 = **36**; day 5 = **52**. Mixed types allowed.
 
 Activity types (`crossword`, `wordsearch`, …) remain valid in week 1; week ≥ 2 quiz slots are **`mcq` + `write` only**.

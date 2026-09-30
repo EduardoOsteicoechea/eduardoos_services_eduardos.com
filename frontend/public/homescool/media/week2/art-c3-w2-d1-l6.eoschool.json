@@ -1,219 +1,219 @@
 {
-    "format":  "eoschool",
-    "version":  1,
-    "cycle":  3,
-    "week":  2,
-    "day":  1,
-    "level":  6,
-    "subject":  "art",
-    "locale":  "es",
-    "title":  "Dibujos espejo paso a paso",
-    "lesson":  {
-                   "kind":  "intro",
-                   "focusPoint":  null,
-                   "points":  [
-                                  {
-                                      "id":  "p1",
-                                      "heading":  "Aprendemos: Atención: medias imágenes",
-                                      "body":  "Idea central: Hoy aprendemos a mirar una media imagen antes de completarla. OiLS es una manera de reconocer las formas básicas de un dibujo: O son círculos, i son puntos, L son ángulos y S son curvas. Atención significa mirar despacio antes de hacer una línea. Una media imagen muestra solo una mitad de una figura.\n\nExplora: La simetría aparece cuando dos lados se parecen como el reflejo de un espejo. El eje de simetría es la línea central que divide esos lados. Si un ojo está a dos espacios del eje, el otro ojo debe quedar a dos espacios al otro lado. Contar espacios te ayuda a dibujar con cuidado.\n\nPráctica: Busca un objeto que tenga simetría, como una hoja o una botella vista de frente. Dibuja su eje central y señala una forma OiLS que veas en cada mitad.\n\nError común: Copiar la segunda mitad sin medir la distancia al eje. Mira primero el eje, después la forma y por último el espacio entre ambos."
-                                  },
-                                  {
-                                      "id":  "p2",
-                                      "heading":  "Aprendemos: Nombrar: espejo y simetría",
-                                      "body":  "Idea central: Un espejo devuelve una imagen parecida a lo que tiene delante. En un dibujo simétrico usamos esa idea sin necesitar un espejo real. Llamamos eje a la línea central, mitad izquierda a un lado, mitad derecha al otro y reflejo a la forma que se repite al lado contrario.\n\nExplora: Para completar una figura, no basta con decir que los lados se parecen. Observa qué forma está arriba, cuál está abajo y a qué distancia queda del eje. Por ejemplo, si una curva comienza cerca del eje y termina lejos de él, la curva reflejada debe hacer lo mismo al otro lado.\n\nPráctica: Dobla un papel por la mitad y marca el pliegue como eje. Dibuja tres formas distintas a un lado. Abre el papel y dibuja las formas correspondientes al otro lado, cuidando sus distancias.\n\nError común: Cambiar de tamaño una forma solo porque parece bonita. En la simetría, el lugar y el tamaño también deben va conr."
-                                  },
-                                  {
-                                      "id":  "p3",
-                                      "heading":  "Aprendemos: Expresar: completar y doblar",
-                                      "body":  "Idea central: Expresar en dibujo significa usar lo que observaste para crear una imagen. Los elementos OiLS son piezas sencillas: un círculo es una curva cerrada; un punto es una mancha pequeña; una línea recta no cambia de dirección; un ángulo tiene dos líneas que se encuentran; una curva cambia de dirección suavemente. Estas piezas pueden formar las dos mitades de una figura.\n\nExplora: Cuando completas una imagen espejo, primero nombra las piezas de la mitad visible. Después busca su posición respecto al eje y dibuja la pieza correspondiente. Por ejemplo, una curva larga que sale del eje hacia la derecha necesita una curva larga que salga del eje hacia la izquierda.\n\nPráctica: Dibuja media flor usando solo círculos, curvas y líneas. Traza el eje y completa la otra mitad. Escribe al lado tres elementos OiLS que usaste.\n\nError común: Añadir detalles nuevos en la mitad que faltaba. Primero completa la grupo de partes simétrica; los adornos llegan después."
-                                  }
-                              ],
-                   "summary":  "Hoy usamos Atención, Nombrar y Expresar para completar una figura como si se reflejara en un espejo."
-               },
-    "quiz":  {
-                 "questionCount":  16,
-                 "questions":  [
-                                   {
-                                       "id":  "d1-q1",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La secuencia Brookes de la lección es:",
-                                       "choices":  [
-                                                       "pintar y firmar",
-                                                       "cortar y pegar",
-                                                       "borrar y olvidar",
-                                                       "Atención y Nombrar y Expresar"
-                                                   ],
-                                       "answer":  "Atención y Nombrar y Expresar"
-                                   },
-                                   {
-                                       "id":  "d1-q2",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Una media imagen simétrica se usa para entrenar:",
-                                       "choices":  [
-                                                       "sumar",
-                                                       "cantar",
-                                                       "el ojo antes del lápiz",
-                                                       "correr"
-                                                   ],
-                                       "answer":  "el ojo antes del lápiz"
-                                   },
-                                   {
-                                       "id":  "d1-q3",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Imagen espejo significa:",
-                                       "choices":  [
-                                                       "sombra",
-                                                       "igual pero invertida como en un espejo",
-                                                       "cualquier garabato",
-                                                       "color"
-                                                   ],
-                                       "answer":  "igual pero invertida como en un espejo"
-                                   },
-                                   {
-                                       "id":  "d1-q4",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Línea de simetría es:",
-                                       "choices":  [
-                                                       "el eje donde coinciden las mitades",
-                                                       "un color",
-                                                       "un borrador",
-                                                       "un marco"
-                                                   ],
-                                       "answer":  "el eje donde coinciden las mitades"
-                                   },
-                                   {
-                                       "id":  "d1-q5",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Modelos de la lección incluyen:",
-                                       "choices":  [
-                                                       "mapas de Paria",
-                                                       "tablas",
-                                                       "coches",
-                                                       "columna, vaso/florero, cara"
-                                                   ],
-                                       "answer":  "columna, vaso/florero, cara"
-                                   },
-                                   {
-                                       "id":  "d1-q6",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Páginas Brookes citadas:",
-                                       "choices":  [
-                                                       "67–69",
-                                                       "sin libro",
-                                                       "900–901",
-                                                       "1–2 solo"
-                                                   ],
-                                       "answer":  "67–69"
-                                   },
-                                   {
-                                       "id":  "d1-q7",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Cuál es el tema de esta clase?",
-                                       "choices":  [
-                                                       "Romanos",
-                                                       "gota",
-                                                       "imágenes espejo (Mona Brookes)",
-                                                       "Kush"
-                                                   ],
-                                       "answer":  "imágenes espejo (Mona Brookes)"
-                                   },
-                                   {
-                                       "id":  "d1-q8",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. En Expresar se puede comprobar:",
-                                       "choices":  [
-                                                       "doblando por el eje",
-                                                       "contando hasta 12",
-                                                       "gritando",
-                                                       "con latín"
-                                                   ],
-                                       "answer":  "doblando por el eje"
-                                   },
-                                   {
-                                       "id":  "d1-q9",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Según la clase, ¿qué idea desarrolla principalmente el punto 1?",
-                                       "choices":  [
-                                                       "Atención: medias imágenes",
-                                                       "Nombrar: espejo y simetría",
-                                                       "Expresar: completar y doblar",
-                                                       "Una idea de otra materia"
-                                                   ],
-                                       "answer":  "Atención: medias imágenes"
-                                   },
-                                   {
-                                       "id":  "d1-q10",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Según la clase, ¿qué idea desarrolla principalmente el punto 2?",
-                                       "choices":  [
-                                                       "Atención: medias imágenes",
-                                                       "Expresar: completar y doblar",
-                                                       "Una idea de otra materia",
-                                                       "Nombrar: espejo y simetría"
-                                                   ],
-                                       "answer":  "Nombrar: espejo y simetría"
-                                   },
-                                   {
-                                       "id":  "d1-q11",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Según la clase, ¿qué idea desarrolla principalmente el punto 3?",
-                                       "choices":  [
-                                                       "Nombrar: espejo y simetría",
-                                                       "Una idea de otra materia",
-                                                       "Expresar: completar y doblar",
-                                                       "Atención: medias imágenes"
-                                                   ],
-                                       "answer":  "Expresar: completar y doblar"
-                                   },
-                                   {
-                                       "id":  "d1-q12",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Según la clase, ¿qué idea desarrolla principalmente el punto 1?",
-                                       "choices":  [
-                                                       "Una idea de otra materia",
-                                                       "Atención: medias imágenes",
-                                                       "Nombrar: espejo y simetría",
-                                                       "Expresar: completar y doblar"
-                                                   ],
-                                       "answer":  "Atención: medias imágenes"
-                                   },
-                                   {
-                                       "id":  "d1-w1",
-                                       "originDay":  1,
-                                       "type":  "write",
-                                       "prompt":  "Lee el punto \u0027Aprendemos: Atención: medias imágenes\u0027. Copia una oración corta que explique la idea principal y después dilo con tus propias palabras."
-                                   },
-                                   {
-                                       "id":  "d1-w2",
-                                       "originDay":  1,
-                                       "type":  "write",
-                                       "prompt":  "Vuelve a leer \u0027Aprendemos: Nombrar: espejo y simetría\u0027. Escribe una idea importante y cuenta por qué te ayuda a entender la lección."
-                                   },
-                                   {
-                                       "id":  "d1-w3",
-                                       "originDay":  1,
-                                       "type":  "write",
-                                       "prompt":  "En \u0027Aprendemos: Expresar: completar y doblar\u0027, busca una palabra nueva. Cópiala, explica qué significa y úsala en una oración sencilla."
-                                   },
-                                   {
-                                       "id":  "d1-w4",
-                                       "originDay":  1,
-                                       "type":  "write",
-                                       "prompt":  "Lee \u0027Aprendemos: Expresar: completar y doblar\u0027. Elige una oración que le enseñarías a un compañero y explícasela con tus propias palabras."
-                                   }
-                               ]
-             },
-    "media":  null
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "art",
+  "locale": "es",
+  "title": "Dibujos espejo paso a paso",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Aprendemos: Atención: medias imágenes",
+        "body": "Idea central: Hoy aprendemos a mirar una media imagen antes de completarla. OiLS es una manera de reconocer las formas básicas de un dibujo: O son círculos, i son puntos, L son ángulos y S son curvas. Atención significa mirar despacio antes de hacer una línea. Una media imagen muestra solo una mitad de una figura.\n\nExplora: La simetría aparece cuando dos lados se parecen como el reflejo de un espejo. El eje de simetría es la línea central que divide esos lados. Si un ojo está a dos espacios del eje, el otro ojo debe quedar a dos espacios al otro lado. Contar espacios te ayuda a dibujar con cuidado.\n\nPráctica: Busca un objeto que tenga simetría, como una hoja o una botella vista de frente. Dibuja su eje central y señala una forma OiLS que veas en cada mitad.\n\nError común: Copiar la segunda mitad sin medir la distancia al eje. Mira primero el eje, después la forma y por último el espacio entre ambos."
+      },
+      {
+        "id": "p2",
+        "heading": "Aprendemos: Nombrar: espejo y simetría",
+        "body": "Idea central: Un espejo devuelve una imagen parecida a lo que tiene delante. En un dibujo simétrico usamos esa idea sin necesitar un espejo real. Llamamos eje a la línea central, mitad izquierda a un lado, mitad derecha al otro y reflejo a la forma que se repite al lado contrario.\n\nExplora: Para completar una figura, no basta con decir que los lados se parecen. Observa qué forma está arriba, cuál está abajo y a qué distancia queda del eje. Por ejemplo, si una curva comienza cerca del eje y termina lejos de él, la curva reflejada debe hacer lo mismo al otro lado.\n\nPráctica: Dobla un papel por la mitad y marca el pliegue como eje. Dibuja tres formas distintas a un lado. Abre el papel y dibuja las formas correspondientes al otro lado, cuidando sus distancias.\n\nError común: Cambiar de tamaño una forma solo porque parece bonita. En la simetría, el lugar y el tamaño también deben va conr."
+      },
+      {
+        "id": "p3",
+        "heading": "Aprendemos: Expresar: completar y doblar",
+        "body": "Idea central: Expresar en dibujo significa usar lo que observaste para crear una imagen. Los elementos OiLS son piezas sencillas: un círculo es una curva cerrada; un punto es una mancha pequeña; una línea recta no cambia de dirección; un ángulo tiene dos líneas que se encuentran; una curva cambia de dirección suavemente. Estas piezas pueden formar las dos mitades de una figura.\n\nExplora: Cuando completas una imagen espejo, primero nombra las piezas de la mitad visible. Después busca su posición respecto al eje y dibuja la pieza correspondiente. Por ejemplo, una curva larga que sale del eje hacia la derecha necesita una curva larga que salga del eje hacia la izquierda.\n\nPráctica: Dibuja media flor usando solo círculos, curvas y líneas. Traza el eje y completa la otra mitad. Escribe al lado tres elementos OiLS que usaste.\n\nError común: Añadir detalles nuevos en la mitad que faltaba. Primero completa la grupo de partes simétrica; los adornos llegan después."
+      }
+    ],
+    "summary": "Hoy usamos Atención, Nombrar y Expresar para completar una figura como si se reflejara en un espejo."
+  },
+  "quiz": {
+    "questionCount": 16,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué significa prestar atención antes de dibujar?",
+        "choices": [
+          "Observar con calma formas y espacios",
+          "Pintar muy rápido",
+          "Elegir colores al azar",
+          "Borrar toda la hoja"
+        ],
+        "answer": "Observar con calma formas y espacios"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué es una media imagen?",
+        "choices": [
+          "Una figura de la que solo vemos un lado",
+          "Un dibujo sin líneas",
+          "Un color muy claro",
+          "Una hoja doblada en cuatro"
+        ],
+        "answer": "Una figura de la que solo vemos un lado"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué línea divide las dos partes de una figura simétrica?",
+        "choices": [
+          "El eje de simetría",
+          "El borde del papel",
+          "La línea de sombra",
+          "El marco del dibujo"
+        ],
+        "answer": "El eje de simetría"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué significa simetría en un dibujo espejo?",
+        "choices": [
+          "Que cada lado tiene una forma correspondiente al otro",
+          "Que todos los colores son iguales",
+          "Que no hay líneas",
+          "Que un lado es más grande"
+        ],
+        "answer": "Que cada lado tiene una forma correspondiente al otro"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál de estas formas pertenece a OiLS?",
+        "choices": [
+          "Una curva",
+          "Un sonido",
+          "Un sabor",
+          "Un número"
+        ],
+        "answer": "Una curva"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Antes de copiar una curva, ¿qué conviene mirar?",
+        "choices": [
+          "Su distancia al eje y hacia dónde va",
+          "El nombre del artista",
+          "El color del lápiz",
+          "La hora del día"
+        ],
+        "answer": "Su distancia al eje y hacia dónde va"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué significa nombrar una forma?",
+        "choices": [
+          "Decir qué es y dónde está",
+          "Cambiarla por otra",
+          "Borrarla sin mirar",
+          "Pintarla de negro"
+        ],
+        "answer": "Decir qué es y dónde está"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Si un círculo está cerca del eje a la izquierda, ¿dónde va su reflejo?",
+        "choices": [
+          "Cerca del eje a la derecha",
+          "En una esquina cualquiera",
+          "Debajo del eje",
+          "Fuera de la hoja"
+        ],
+        "answer": "Cerca del eje a la derecha"
+      },
+      {
+        "id": "d1-q9",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué se dibuja primero al completar una imagen espejo?",
+        "choices": [
+          "El contorno grande",
+          "Los adornos pequeños",
+          "El color final",
+          "La firma"
+        ],
+        "answer": "El contorno grande"
+      },
+      {
+        "id": "d1-q10",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué ayuda a revisar una figura simétrica?",
+        "choices": [
+          "Comparar formas y espacios a ambos lados",
+          "Tapar un ojo",
+          "Añadir más colores",
+          "Cambiar el eje"
+        ],
+        "answer": "Comparar formas y espacios a ambos lados"
+      },
+      {
+        "id": "d1-q11",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué paso viene después de observar y nombrar?",
+        "choices": [
+          "Expresar dibujando la mitad que falta",
+          "Cerrar el cuaderno",
+          "Cambiar de tema",
+          "Romper el papel"
+        ],
+        "answer": "Expresar dibujando la mitad que falta"
+      },
+      {
+        "id": "d1-q12",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué debes hacer si una curva quedó a una distancia incorrecta del eje?",
+        "choices": [
+          "Borrarla y corregir su posición",
+          "Dejarla sin revisar",
+          "Ocultarla con color",
+          "Mover el eje al azar"
+        ],
+        "answer": "Borrarla y corregir su posición"
+      },
+      {
+        "id": "d1-w1",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Copia exactamente «El eje de simetría es la línea central que divide esos lados.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d1-w2",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Copia exactamente «Atención significa mirar despacio antes de hacer una línea.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d1-w3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Copia exactamente «Nombrar significa decir con precisión qué forma aparece.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d1-w4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Copia exactamente «Expresar en dibujo significa usar lo que observaste para crear una imagen.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      }
+    ]
+  },
+  "media": null
 }

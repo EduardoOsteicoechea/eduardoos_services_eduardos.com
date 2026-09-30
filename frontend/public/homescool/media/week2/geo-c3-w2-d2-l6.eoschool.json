@@ -1,207 +1,207 @@
 {
-    "format":  "eoschool",
-    "version":  1,
-    "cycle":  3,
-    "week":  2,
-    "day":  2,
-    "level":  6,
-    "subject":  "geo",
-    "locale":  "es",
-    "title":  "Cuatro estados y sus capitales de Venezuela",
-    "lesson":  {
-                   "kind":  "deepen",
-                   "focusPoint":  1,
-                   "points":  {
-                                  "id":  "p1",
-                                  "heading":  "Aprendemos: Distrito Capital y La Guaira",
-                                  "body":  "Idea central: Hoy miramos el par Distrito Capital—Caracas y La Guaira—La Guaira desde el mapa político. Caracas concentra sedes nacionales; el Distrito Capital es una entidad pequeña pero muy poblada. El estado La Guaira es la franja litoral que conecta el puerto con la cordillera.\n\nExplora: Cuando memorices, di siempre los dos nombres juntos, como una sola frase: «Distrito Capital, Caracas» y «La Guaira, La Guaira». Repetir en voz alta fija el ritmo del texto de memorización.\n\nPráctica: En un mapa, señala Caracas y La Guaira. Escribe tres diferencias: tamaño del estado, relación con el mar y función de cada capital.\n\nError común: Usar solo «Caracas» sin decir a qué estado pertenece cuando practicas el texto de memoria."
-                              },
-                   "summary":  "Hoy practicamos los cuatro pares: Distrito Capital–Caracas, La Guaira–La Guaira, Miranda–Los Teques y Aragua–Maracay."
-               },
-    "quiz":  {
-                 "questionCount":  16,
-                 "questions":  [
-                                   {
-                                       "id":  "d2-q1",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital del Distrito Capital:",
-                                       "choices":  [
-                                                       "Caracas",
-                                                       "Maracay",
-                                                       "Los Teques",
-                                                       "La Guaira"
-                                                   ],
-                                       "answer":  "Caracas"
-                                   },
-                                   {
-                                       "id":  "d2-q2",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de La Guaira:",
-                                       "choices":  [
-                                                       "La Guaira",
-                                                       "Caracas",
-                                                       "Maiquetía",
-                                                       "Valencia"
-                                                   ],
-                                       "answer":  "La Guaira"
-                                   },
-                                   {
-                                       "id":  "d2-q3",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Miranda:",
-                                       "choices":  [
-                                                       "Los Teques",
-                                                       "Maracay",
-                                                       "Barcelona",
-                                                       "Caracas"
-                                                   ],
-                                       "answer":  "Los Teques"
-                                   },
-                                   {
-                                       "id":  "d2-q4",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Aragua:",
-                                       "choices":  [
-                                                       "Maracay",
-                                                       "Los Teques",
-                                                       "Coro",
-                                                       "Barquisimeto"
-                                                   ],
-                                       "answer":  "Maracay"
-                                   },
-                                   {
-                                       "id":  "d2-q5",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Cuántos pares memorizas esta semana?",
-                                       "choices":  [
-                                                       "cuatro",
-                                                       "veinticuatro",
-                                                       "dos",
-                                                       "doce"
-                                                   ],
-                                       "answer":  "cuatro"
-                                   },
-                                   {
-                                       "id":  "d2-q6",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Caracas es capital nacional y del:",
-                                       "choices":  [
-                                                       "Distrito Capital",
-                                                       "Zulia",
-                                                       "Bolívar",
-                                                       "Amazonas"
-                                                   ],
-                                       "answer":  "Distrito Capital"
-                                   },
-                                   {
-                                       "id":  "d2-q7",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Qué aprendemos más hoy?",
-                                       "choices":  [
-                                                       "Distrito Capital y La Guaira",
-                                                       "Amazonas",
-                                                       "Europa",
-                                                       "ríos"
-                                                   ],
-                                       "answer":  "Distrito Capital y La Guaira"
-                                   },
-                                   {
-                                       "id":  "d2-q8",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Par correcto:",
-                                       "choices":  [
-                                                       "Distrito Capital — Caracas",
-                                                       "Distrito Capital — Maracay",
-                                                       "Miranda — Caracas",
-                                                       "Aragua — Caracas"
-                                                   ],
-                                       "answer":  "Distrito Capital — Caracas"
-                                   },
-                                   {
-                                       "id":  "d2-q9",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La Guaira —",
-                                       "choices":  [
-                                                       "La Guaira",
-                                                       "Caracas",
-                                                       "Los Teques",
-                                                       "Valencia"
-                                                   ],
-                                       "answer":  "La Guaira"
-                                   },
-                                   {
-                                       "id":  "d2-q10",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Caracas es capital:",
-                                       "choices":  [
-                                                       "nacional y del DC",
-                                                       "de Zulia",
-                                                       "de Guyana",
-                                                       "de todos los estados"
-                                                   ],
-                                       "answer":  "nacional y del DC"
-                                   },
-                                   {
-                                       "id":  "d2-q11",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. El estado La Guaira está:",
-                                       "choices":  [
-                                                       "en la costa",
-                                                       "en los Andes",
-                                                       "en la Antártida",
-                                                       "en Europa"
-                                                   ],
-                                       "answer":  "en la costa"
-                                   },
-                                   {
-                                       "id":  "d2-q12",
-                                       "originDay":  2,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Memorizar significa:",
-                                       "choices":  [
-                                                       "recitar el texto de memoria",
-                                                       "dibujar",
-                                                       "adivinar",
-                                                       "ignorar el mapa"
-                                                   ],
-                                       "answer":  "recitar el texto de memoria"
-                                   },
-                                   {
-                                       "id":  "d2-w1",
-                                       "originDay":  2,
-                                       "type":  "write",
-                                       "prompt":  "Lee el punto \u0027Aprendemos: Distrito Capital y La Guaira\u0027. Copia una oración corta que explique la idea principal y después dilo con tus propias palabras."
-                                   },
-                                   {
-                                       "id":  "d2-w2",
-                                       "originDay":  2,
-                                       "type":  "write",
-                                       "prompt":  "Vuelve a leer \u0027Aprendemos: Distrito Capital y La Guaira\u0027. Escribe una idea importante y cuenta por qué te ayuda a entender la lección."
-                                   },
-                                   {
-                                       "id":  "d2-w3",
-                                       "originDay":  2,
-                                       "type":  "write",
-                                       "prompt":  "En \u0027Aprendemos: Distrito Capital y La Guaira\u0027, busca una palabra nueva. Cópiala, explica qué significa y úsala en una oración sencilla."
-                                   },
-                                   {
-                                       "id":  "d2-w4",
-                                       "originDay":  2,
-                                       "type":  "write",
-                                       "prompt":  "Lee \u0027Aprendemos: Distrito Capital y La Guaira\u0027. Elige una oración que le enseñarías a un compañero y explícasela con tus propias palabras."
-                                   }
-                               ]
-             },
-    "media":  null
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 2,
+  "level": 6,
+  "subject": "geo",
+  "locale": "es",
+  "title": "Cuatro estados y sus capitales de Venezuela",
+  "lesson": {
+    "kind": "deepen",
+    "focusPoint": 1,
+    "points": {
+      "id": "p1",
+      "heading": "Aprendemos: Distrito Capital y La Guaira",
+      "body": "Idea central: Hoy miramos el par Distrito Capital—Caracas y La Guaira—La Guaira desde el mapa político. Caracas concentra sedes nacionales; el Distrito Capital es una entidad pequeña pero muy poblada. El estado La Guaira es la franja litoral que conecta el puerto con la cordillera.\n\nExplora: Cuando memorices, di siempre los dos nombres juntos, como una sola frase: «Distrito Capital, Caracas» y «La Guaira, La Guaira». Repetir en voz alta fija el ritmo del texto de memorización.\n\nPráctica: En un mapa, señala Caracas y La Guaira. Escribe tres diferencias: tamaño del estado, relación con el mar y función de cada capital.\n\nError común: Usar solo «Caracas» sin decir a qué estado pertenece cuando practicas el texto de memoria."
+    },
+    "summary": "Hoy practicamos los cuatro pares: Distrito Capital–Caracas, La Guaira–La Guaira, Miranda–Los Teques y Aragua–Maracay."
+  },
+  "quiz": {
+    "questionCount": 16,
+    "questions": [
+      {
+        "id": "d2-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital del Distrito Capital?",
+        "choices": [
+          "Caracas",
+          "Maracay",
+          "Los Teques",
+          "La Guaira"
+        ],
+        "answer": "Caracas"
+      },
+      {
+        "id": "d2-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué estado tiene a Caracas como capital?",
+        "choices": [
+          "Distrito Capital",
+          "Miranda",
+          "Aragua",
+          "La Guaira"
+        ],
+        "answer": "Distrito Capital"
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital del estado La Guaira?",
+        "choices": [
+          "La Guaira",
+          "Maiquetía",
+          "Caracas",
+          "Valencia"
+        ],
+        "answer": "La Guaira"
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué capital corresponde a Miranda?",
+        "choices": [
+          "Los Teques",
+          "Maracay",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Los Teques"
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué estado tiene a Los Teques como capital?",
+        "choices": [
+          "Miranda",
+          "Aragua",
+          "Distrito Capital",
+          "La Guaira"
+        ],
+        "answer": "Miranda"
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital de Aragua?",
+        "choices": [
+          "Maracay",
+          "Los Teques",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Maracay"
+      },
+      {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué par está escrito correctamente?",
+        "choices": [
+          "Aragua — Maracay",
+          "Miranda — Maracay",
+          "La Guaira — Caracas",
+          "Distrito Capital — Los Teques"
+        ],
+        "answer": "Aragua — Maracay"
+      },
+      {
+        "id": "d2-q8",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué ciudad concentra sedes nacionales según la lección?",
+        "choices": [
+          "Caracas",
+          "Los Teques",
+          "Maracay",
+          "La Guaira"
+        ],
+        "answer": "Caracas"
+      },
+      {
+        "id": "d2-q9",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué estado se describe como una franja litoral?",
+        "choices": [
+          "La Guaira",
+          "Miranda",
+          "Aragua",
+          "Distrito Capital"
+        ],
+        "answer": "La Guaira"
+      },
+      {
+        "id": "d2-q10",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué capital está en altura, sobre el valle de Caracas?",
+        "choices": [
+          "Los Teques",
+          "Maracay",
+          "La Guaira",
+          "Caracas"
+        ],
+        "answer": "Los Teques"
+      },
+      {
+        "id": "d2-q11",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué capital se relaciona con una planicie y valle fértil?",
+        "choices": [
+          "Maracay",
+          "Los Teques",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Maracay"
+      },
+      {
+        "id": "d2-q12",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuál es una buena forma de memorizar los pares geográficos?",
+        "choices": [
+          "Decir juntos el estado y su capital",
+          "Cambiar las capitales cada vez",
+          "Aprender solo las iniciales",
+          "Mezclar los cuatro pares"
+        ],
+        "answer": "Decir juntos el estado y su capital"
+      },
+      {
+        "id": "d2-w1",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Copia exactamente «Distrito Capital—Caracas.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d2-w2",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Copia exactamente «La Guaira—La Guaira.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Copia exactamente «Miranda—Los Teques.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Copia exactamente «Aragua—Maracay.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      }
+    ]
+  },
+  "media": null
 }

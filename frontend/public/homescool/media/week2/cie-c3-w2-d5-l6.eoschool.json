@@ -1,229 +1,229 @@
 {
-    "format":  "eoschool",
-    "version":  1,
-    "cycle":  3,
-    "week":  2,
-    "day":  5,
-    "level":  6,
-    "subject":  "cie",
-    "locale":  "es",
-    "title":  "Huesos que cuidan tu cuerpo",
-    "lesson":  {
-                   "kind":  "review",
-                   "focusPoint":  null,
-                   "points":  [
-                                  {
-                                      "id":  "p1",
-                                      "heading":  "Aprendemos: Panorama de la semana",
-                                      "body":  "Idea central: El esqueleto es el conjunto de huesos que da forma al cuerpo, lo sostiene y protege órganos. Esta semana estudiamos tres protecciones: el cráneo cuida el cerebro, la columna protege la médula espinal y la caja torácica protege el corazón y los pulmones.\n\nExplora: Piensa en un recorrido de arriba hacia abajo. Primero está el cráneo en la cabeza. Después sigue la columna por la espalda. En el pecho, las costillas, el esternón y las vértebras torácicas forman una caja protectora.\n\nPráctica: Explica ese recorrido a alguien usando tu propio cuerpo como guía. Di el nombre, el lugar y lo que protege cada una de las tres grupo de partess.\n\nError común: Mezclar el trabajo del cráneo con el de la caja torácica. Cada grupo de partes protege órganos distintos."
-                                  },
-                                  {
-                                      "id":  "p2",
-                                      "heading":  "Aprendemos: Panorama: Cráneo",
-                                      "body":  "Idea central: El cráneo es la caja de huesos de la cabeza. Su tarea principal es proteger el cerebro, el órgano que participa en el pensamiento, la memoria y el control de movimientos. La mandíbula está unida a esta zona, pero es el hueso que se mueve para abrir la boca.\n\nExplora: Al tocar con suavidad la parte alta de tu cabeza puedes sentir la protección dura del cráneo. No necesitas ver el cerebro para saber dónde está: se encuentra dentro de esa caja ósea.\n\nPráctica: Dibuja una cabeza de lado, señala el cráneo y la mandíbula, y escribe una frase que diga qué protege el cráneo.\n\nError común: Pensar que el cráneo protege el corazón. El corazón está en el pecho y lo protege la caja torácica."
-                                  },
-                                  {
-                                      "id":  "p3",
-                                      "heading":  "Aprendemos: Panorama: Vértebras y columna",
-                                      "body":  "Idea central: Una vértebra es un hueso de la espalda. Muchas vértebras apiladas forman la columna vertebral, que sostiene el tronco y protege la médula espinal. La médula es una vía de nervios que lleva mensajes entre el cerebro y el resto del cuerpo.\n\nExplora: La columna tiene zonas: cervical en el cuello, torácica en el pecho y lumbar en la espalda baja. Esta organización permite sostener el cuerpo y movernos sin que todas las partes hagan exactamente el mismo trabajo.\n\nPráctica: Escribe cervical, torácica y lumbar en orden. Junto a cada palabra, dibuja un punto que indique su lugar en una silueta y explica una función de la columna.\n\nError común: Decir que la columna es un solo hueso largo. Está formada por muchas vértebras."
-                                  },
-                                  {
-                                      "id":  "p4",
-                                      "heading":  "Aprendemos: Panorama: Costillas y esternón",
-                                      "body":  "Idea central: Las costillas son huesos curvos que están a los lados del pecho. El esternón es el hueso plano del centro delantero del pecho. Con las vértebras torácicas de la espalda, forman la caja torácica.\n\nExplora: Esta caja rodea órganos importantes: el corazón y los pulmones. Cuando tomas aire, las costillas pueden subir un poco y la caja ofrece más espacio para que los pulmones se llenen.\n\nPráctica: Dibuja una caja torácica sencilla y marca las costillas, el esternón y las vértebras. Escribe los nombres de los dos órganos que protege.\n\nError común: Colocar el esternón detrás del cuerpo. El esternón está al frente del pecho."
-                                  },
-                                  {
-                                      "id":  "p5",
-                                      "heading":  "Aprendemos: Síntesis",
-                                      "body":  "Idea central: Los huesos estudiados trabajan como un equipo de protección. El cráneo protege el cerebro en la cabeza. La columna, hecha de vértebras, protege la médula espinal en la espalda. La caja torácica, hecha de costillas, esternón y vértebras torácicas, protege el corazón y los pulmones.\n\nExplora: Una buena explicación no solo nombra los huesos: dice dónde están y qué cuidan. Por ejemplo, puedes recorrer tu cuerpo de arriba hacia abajo y unir cada grupo de partes con el órgano que protege.\n\nPráctica: Escribe un párrafo de cuatro oraciones. Incluye cráneo, columna y caja torácica; para cada una, menciona su lugar y su función protectora.\n\nError común: Repetir solo los nombres. Añade siempre qué órgano protege cada grupo de partes."
-                                  }
-                              ],
-                   "summary":  "En el repaso semanal, aprendimos qué huesos forman el cráneo, la columna y la caja torácica, y qué parte del cuerpo cuida cada uno."
-               },
-    "quiz":  {
-                 "questionCount":  16,
-                 "questions":  [
-                                   {
-                                       "id":  "d5-q1",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. El cráneo protege sobre todo:",
-                                       "choices":  [
-                                                       "la piel",
-                                                       "el encéfalo/cerebro",
-                                                       "el hígado",
-                                                       "el pie"
-                                                   ],
-                                       "answer":  "el encéfalo/cerebro"
-                                   },
-                                   {
-                                       "id":  "d5-q2",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Las vértebras forman:",
-                                       "choices":  [
-                                                       "el cráneo",
-                                                       "la mano",
-                                                       "la columna vertebral",
-                                                       "las uñas"
-                                                   ],
-                                       "answer":  "la columna vertebral"
-                                   },
-                                   {
-                                       "id":  "d5-q3",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La caja torácica protege:",
-                                       "choices":  [
-                                                       "los dientes",
-                                                       "las uñas",
-                                                       "el cerebro",
-                                                       "corazón y pulmones"
-                                                   ],
-                                       "answer":  "corazón y pulmones"
-                                   },
-                                   {
-                                       "id":  "d5-q4",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. El esternón está:",
-                                       "choices":  [
-                                                       "al frente del pecho",
-                                                       "en la rodilla",
-                                                       "en la oreja",
-                                                       "en la planta del pie"
-                                                   ],
-                                       "answer":  "al frente del pecho"
-                                   },
-                                   {
-                                       "id":  "d5-q5",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Cuál es el tema de esta clase?",
-                                       "choices":  [
-                                                       "botánica",
-                                                       "música",
-                                                       "esqueleto: cráneo, vértebras, costillas, esternón",
-                                                       "astronomía"
-                                                   ],
-                                       "answer":  "esqueleto: cráneo, vértebras, costillas, esternón"
-                                   },
-                                   {
-                                       "id":  "d5-q6",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La médula espinal se asocia a:",
-                                       "choices":  [
-                                                       "la columna vertebral",
-                                                       "el cabello",
-                                                       "el talón",
-                                                       "la lengua"
-                                                   ],
-                                       "answer":  "la columna vertebral"
-                                   },
-                                   {
-                                       "id":  "d5-q7",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Qué protege el cráneo?",
-                                       "choices":  [
-                                                       "el pie",
-                                                       "la piel",
-                                                       "el encéfalo/cerebro",
-                                                       "el hígado"
-                                                   ],
-                                       "answer":  "el encéfalo/cerebro"
-                                   },
-                                   {
-                                       "id":  "d5-q8",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Empieza el panorama por:",
-                                       "choices":  [
-                                                       "el cráneo",
-                                                       "la uña",
-                                                       "el dedo meñique",
-                                                       "el cabello"
-                                                   ],
-                                       "answer":  "el cráneo"
-                                   },
-                                   {
-                                       "id":  "d5-q9",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Cierra el tórax con:",
-                                       "choices":  [
-                                                       "costillas y esternón",
-                                                       "clavícula aislada",
-                                                       "metatarsos",
-                                                       "falanges"
-                                                   ],
-                                       "answer":  "costillas y esternón"
-                                   },
-                                   {
-                                       "id":  "d5-q10",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Cuál es el tema de esta clase?",
-                                       "choices":  [
-                                                       "botánica",
-                                                       "música",
-                                                       "esqueleto: cráneo, vértebras, costillas, esternón",
-                                                       "astronomía"
-                                                   ],
-                                       "answer":  "esqueleto: cráneo, vértebras, costillas, esternón"
-                                   },
-                                   {
-                                       "id":  "d5-q11",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La síntesis final recuerda:",
-                                       "choices":  [
-                                                       "negar la columna",
-                                                       "estudiar solo uñas",
-                                                       "olvidar el tórax",
-                                                       "empezar por el cráneo"
-                                                   ],
-                                       "answer":  "empezar por el cráneo"
-                                   },
-                                   {
-                                       "id":  "d5-q12",
-                                       "originDay":  5,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. La médula está resguardada en:",
-                                       "choices":  [
-                                                       "la órbita",
-                                                       "el talón",
-                                                       "el cabello",
-                                                       "el canal vertebral"
-                                                   ],
-                                       "answer":  "el canal vertebral"
-                                   },
-                                   {
-                                       "id":  "d5-w1",
-                                       "originDay":  5,
-                                       "type":  "write",
-                                       "prompt":  "Lee el punto \u0027Aprendemos: Panorama de la semana\u0027. Copia una oración corta que explique la idea principal y después dilo con tus propias palabras."
-                                   },
-                                   {
-                                       "id":  "d5-w2",
-                                       "originDay":  5,
-                                       "type":  "write",
-                                       "prompt":  "Vuelve a leer \u0027Aprendemos: Panorama: Cráneo\u0027. Escribe una idea importante y cuenta por qué te ayuda a entender la lección."
-                                   },
-                                   {
-                                       "id":  "d5-w3",
-                                       "originDay":  5,
-                                       "type":  "write",
-                                       "prompt":  "En \u0027Aprendemos: Panorama: Vértebras y columna\u0027, busca una palabra nueva. Cópiala, explica qué significa y úsala en una oración sencilla."
-                                   },
-                                   {
-                                       "id":  "d5-w4",
-                                       "originDay":  5,
-                                       "type":  "write",
-                                       "prompt":  "Lee \u0027Aprendemos: Panorama: Costillas y esternón\u0027. Elige una oración que le enseñarías a un compañero y explícasela con tus propias palabras."
-                                   }
-                               ]
-             },
-    "media":  null
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 5,
+  "level": 6,
+  "subject": "cie",
+  "locale": "es",
+  "title": "Huesos que cuidan tu cuerpo",
+  "lesson": {
+    "kind": "review",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Aprendemos: Panorama de la semana",
+        "body": "Idea central: El esqueleto es el conjunto de huesos que da forma al cuerpo, lo sostiene y protege órganos. Esta semana estudiamos tres protecciones: el cráneo cuida el cerebro, la columna protege la médula espinal y la caja torácica protege el corazón y los pulmones.\n\nExplora: Piensa en un recorrido de arriba hacia abajo. Primero está el cráneo en la cabeza. Después sigue la columna por la espalda. En el pecho, las costillas, el esternón y las vértebras torácicas forman una caja protectora.\n\nPráctica: Explica ese recorrido a alguien usando tu propio cuerpo como guía. Di el nombre, el lugar y lo que protege cada una de las tres grupo de partess.\n\nError común: Mezclar el trabajo del cráneo con el de la caja torácica. Cada grupo de partes protege órganos distintos."
+      },
+      {
+        "id": "p2",
+        "heading": "Aprendemos: Panorama: Cráneo",
+        "body": "Idea central: El cráneo es la caja de huesos de la cabeza. Su tarea principal es proteger el cerebro, el órgano que participa en el pensamiento, la memoria y el control de movimientos. La mandíbula está unida a esta zona, pero es el hueso que se mueve para abrir la boca.\n\nExplora: Al tocar con suavidad la parte alta de tu cabeza puedes sentir la protección dura del cráneo. No necesitas ver el cerebro para saber dónde está: se encuentra dentro de esa caja ósea.\n\nPráctica: Dibuja una cabeza de lado, señala el cráneo y la mandíbula, y escribe una frase que diga qué protege el cráneo.\n\nError común: Pensar que el cráneo protege el corazón. El corazón está en el pecho y lo protege la caja torácica."
+      },
+      {
+        "id": "p3",
+        "heading": "Aprendemos: Panorama: Vértebras y columna",
+        "body": "Idea central: Una vértebra es un hueso de la espalda. Muchas vértebras apiladas forman la columna vertebral, que sostiene el tronco y protege la médula espinal. La médula es una vía de nervios que lleva mensajes entre el cerebro y el resto del cuerpo.\n\nExplora: La columna tiene zonas: cervical en el cuello, torácica en el pecho y lumbar en la espalda baja. Esta organización permite sostener el cuerpo y movernos sin que todas las partes hagan exactamente el mismo trabajo.\n\nPráctica: Escribe cervical, torácica y lumbar en orden. Junto a cada palabra, dibuja un punto que indique su lugar en una silueta y explica una función de la columna.\n\nError común: Decir que la columna es un solo hueso largo. Está formada por muchas vértebras."
+      },
+      {
+        "id": "p4",
+        "heading": "Aprendemos: Panorama: Costillas y esternón",
+        "body": "Idea central: Las costillas son huesos curvos que están a los lados del pecho. El esternón es el hueso plano del centro delantero del pecho. Con las vértebras torácicas de la espalda, forman la caja torácica.\n\nExplora: Esta caja rodea órganos importantes: el corazón y los pulmones. Cuando tomas aire, las costillas pueden subir un poco y la caja ofrece más espacio para que los pulmones se llenen.\n\nPráctica: Dibuja una caja torácica sencilla y marca las costillas, el esternón y las vértebras. Escribe los nombres de los dos órganos que protege.\n\nError común: Colocar el esternón detrás del cuerpo. El esternón está al frente del pecho."
+      },
+      {
+        "id": "p5",
+        "heading": "Aprendemos: Síntesis",
+        "body": "Idea central: Los huesos estudiados trabajan como un equipo de protección. El cráneo protege el cerebro en la cabeza. La columna, hecha de vértebras, protege la médula espinal en la espalda. La caja torácica, hecha de costillas, esternón y vértebras torácicas, protege el corazón y los pulmones.\n\nExplora: Una buena explicación no solo nombra los huesos: dice dónde están y qué cuidan. Por ejemplo, puedes recorrer tu cuerpo de arriba hacia abajo y unir cada grupo de partes con el órgano que protege.\n\nPráctica: Escribe un párrafo de cuatro oraciones. Incluye cráneo, columna y caja torácica; para cada una, menciona su lugar y su función protectora.\n\nError común: Repetir solo los nombres. Añade siempre qué órgano protege cada grupo de partes."
+      }
+    ],
+    "summary": "En el repaso semanal, aprendimos qué huesos forman el cráneo, la columna y la caja torácica, y qué parte del cuerpo cuida cada uno."
+  },
+  "quiz": {
+    "questionCount": 16,
+    "questions": [
+      {
+        "id": "d5-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué protege principalmente el cráneo?",
+        "choices": [
+          "El cerebro",
+          "El corazón",
+          "Los pulmones",
+          "El estómago"
+        ],
+        "answer": "El cerebro"
+      },
+      {
+        "id": "d5-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué hueso de la cara puede moverse para hablar y masticar?",
+        "choices": [
+          "La mandíbula",
+          "El cráneo",
+          "El esternón",
+          "Una costilla"
+        ],
+        "answer": "La mandíbula"
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cómo se llama el conjunto de huesos pequeños de la espalda?",
+        "choices": [
+          "Vértebras",
+          "Costillas",
+          "Mandíbulas",
+          "Uñas"
+        ],
+        "answer": "Vértebras"
+      },
+      {
+        "id": "d5-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué forman muchas vértebras colocadas una sobre otra?",
+        "choices": [
+          "La columna vertebral",
+          "La caja torácica",
+          "El cráneo",
+          "La mandíbula"
+        ],
+        "answer": "La columna vertebral"
+      },
+      {
+        "id": "d5-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué parte protege la columna vertebral?",
+        "choices": [
+          "La médula espinal",
+          "El cabello",
+          "La lengua",
+          "Las uñas"
+        ],
+        "answer": "La médula espinal"
+      },
+      {
+        "id": "d5-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Dónde comienza el recorrido de la columna?",
+        "choices": [
+          "En el cuello",
+          "En los dedos",
+          "En la muñeca",
+          "En el tobillo"
+        ],
+        "answer": "En el cuello"
+      },
+      {
+        "id": "d5-q7",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué huesos curvos rodean los lados del pecho?",
+        "choices": [
+          "Las costillas",
+          "Las vértebras",
+          "Los dientes",
+          "Las falanges"
+        ],
+        "answer": "Las costillas"
+      },
+      {
+        "id": "d5-q8",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Dónde está el esternón?",
+        "choices": [
+          "En el centro y al frente del pecho",
+          "En la espalda baja",
+          "En la cabeza",
+          "En la rodilla"
+        ],
+        "answer": "En el centro y al frente del pecho"
+      },
+      {
+        "id": "d5-q9",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué forman costillas, esternón y vértebras de la espalda?",
+        "choices": [
+          "La caja torácica",
+          "La mandíbula",
+          "El cráneo",
+          "La pelvis"
+        ],
+        "answer": "La caja torácica"
+      },
+      {
+        "id": "d5-q10",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué dos órganos cuida la caja torácica?",
+        "choices": [
+          "El corazón y los pulmones",
+          "El cerebro y los ojos",
+          "El hígado y los riñones",
+          "Los dientes y la lengua"
+        ],
+        "answer": "El corazón y los pulmones"
+      },
+      {
+        "id": "d5-q11",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué ocurre un poco con las costillas al respirar?",
+        "choices": [
+          "Suben y bajan",
+          "Se convierten en músculos",
+          "Salen del cuerpo",
+          "Dejan de proteger"
+        ],
+        "answer": "Suben y bajan"
+      },
+      {
+        "id": "d5-q12",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuál comparación ayuda a entender el cráneo?",
+        "choices": [
+          "Una caja o casco protector de huesos",
+          "Una cuerda flexible",
+          "Una capa de piel",
+          "Una rueda que gira"
+        ],
+        "answer": "Una caja o casco protector de huesos"
+      },
+      {
+        "id": "d5-w1",
+        "originDay": 5,
+        "type": "write",
+        "prompt": "Copia exactamente «El cráneo es la caja formada por huesos de la cabeza.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d5-w2",
+        "originDay": 5,
+        "type": "write",
+        "prompt": "Copia exactamente «Muchas vértebras colocadas una sobre otra forman la columna vertebral.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d5-w3",
+        "originDay": 5,
+        "type": "write",
+        "prompt": "Copia exactamente «Las costillas son huesos curvos que rodean los lados del pecho.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d5-w4",
+        "originDay": 5,
+        "type": "write",
+        "prompt": "Copia exactamente «La caja torácica cuida el corazón y los pulmones.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      }
+    ]
+  },
+  "media": null
 }

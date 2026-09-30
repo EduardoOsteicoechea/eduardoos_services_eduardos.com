@@ -1,207 +1,207 @@
 {
-    "format":  "eoschool",
-    "version":  1,
-    "cycle":  3,
-    "week":  2,
-    "day":  3,
-    "level":  6,
-    "subject":  "geo",
-    "locale":  "es",
-    "title":  "Cuatro estados y sus capitales de Venezuela",
-    "lesson":  {
-                   "kind":  "deepen",
-                   "focusPoint":  2,
-                   "points":  {
-                                  "id":  "p1",
-                                  "heading":  "Aprendemos: Miranda y Aragua",
-                                  "body":  "Idea central: Hoy exploramos Miranda y Aragua comparando su relieve. Los Teques está en altura, sobre el valle de Caracas; Maracay está en planicie y valle fértil, cerca del Henri Pittier y del lago de Valencia. Esa diferencia ayuda a recordar qué capital va con cada estado.\n\nExplora: Juega a «detective del mapa»: si te dicen «Los Teques», debes responder «Miranda»; si dicen «Maracay», «Aragua». Invierte el juego: estado primero, capital después.\n\nPráctica: Dibuja cuatro cajas con los cuatro pares de la semana. Colorea de azul los dos del litoral (DC y La Guaira) y de verde los dos del interior central (Miranda y Aragua).\n\nError común: Olvidar que Los Teques lleva artículo y mayúscula como nombre propio de la capital."
-                              },
-                   "summary":  "Hoy practicamos los cuatro pares: Distrito Capital–Caracas, La Guaira–La Guaira, Miranda–Los Teques y Aragua–Maracay."
-               },
-    "quiz":  {
-                 "questionCount":  16,
-                 "questions":  [
-                                   {
-                                       "id":  "d3-q1",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital del Distrito Capital:",
-                                       "choices":  [
-                                                       "Caracas",
-                                                       "Maracay",
-                                                       "Los Teques",
-                                                       "La Guaira"
-                                                   ],
-                                       "answer":  "Caracas"
-                                   },
-                                   {
-                                       "id":  "d3-q2",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de La Guaira:",
-                                       "choices":  [
-                                                       "La Guaira",
-                                                       "Caracas",
-                                                       "Maiquetía",
-                                                       "Valencia"
-                                                   ],
-                                       "answer":  "La Guaira"
-                                   },
-                                   {
-                                       "id":  "d3-q3",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Miranda:",
-                                       "choices":  [
-                                                       "Los Teques",
-                                                       "Maracay",
-                                                       "Barcelona",
-                                                       "Caracas"
-                                                   ],
-                                       "answer":  "Los Teques"
-                                   },
-                                   {
-                                       "id":  "d3-q4",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Aragua:",
-                                       "choices":  [
-                                                       "Maracay",
-                                                       "Los Teques",
-                                                       "Coro",
-                                                       "Barquisimeto"
-                                                   ],
-                                       "answer":  "Maracay"
-                                   },
-                                   {
-                                       "id":  "d3-q5",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Cuántos pares memorizas esta semana?",
-                                       "choices":  [
-                                                       "cuatro",
-                                                       "veinticuatro",
-                                                       "dos",
-                                                       "doce"
-                                                   ],
-                                       "answer":  "cuatro"
-                                   },
-                                   {
-                                       "id":  "d3-q6",
-                                       "originDay":  1,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Caracas es capital nacional y del:",
-                                       "choices":  [
-                                                       "Distrito Capital",
-                                                       "Zulia",
-                                                       "Bolívar",
-                                                       "Amazonas"
-                                                   ],
-                                       "answer":  "Distrito Capital"
-                                   },
-                                   {
-                                       "id":  "d3-q7",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Miranda:",
-                                       "choices":  [
-                                                       "Los Teques",
-                                                       "Maracay",
-                                                       "Caracas",
-                                                       "La Guaira"
-                                                   ],
-                                       "answer":  "Los Teques"
-                                   },
-                                   {
-                                       "id":  "d3-q8",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Capital de Aragua:",
-                                       "choices":  [
-                                                       "Maracay",
-                                                       "Los Teques",
-                                                       "San Felipe",
-                                                       "Coro"
-                                                   ],
-                                       "answer":  "Maracay"
-                                   },
-                                   {
-                                       "id":  "d3-q9",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. ¿Qué aprendemos más hoy?",
-                                       "choices":  [
-                                                       "Miranda y Aragua",
-                                                       "fronteras",
-                                                       "Guyana",
-                                                       "océanos"
-                                                   ],
-                                       "answer":  "Miranda y Aragua"
-                                   },
-                                   {
-                                       "id":  "d3-q10",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Maracay no es capital de:",
-                                       "choices":  [
-                                                       "Miranda",
-                                                       "Aragua",
-                                                       "ningún estado",
-                                                       "La Guaira"
-                                                   ],
-                                       "answer":  "Miranda"
-                                   },
-                                   {
-                                       "id":  "d3-q11",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Los Teques suele asociarse a:",
-                                       "choices":  [
-                                                       "relieve alto y Miranda",
-                                                       "litoral",
-                                                       "Guyana país",
-                                                       "Europa"
-                                                   ],
-                                       "answer":  "relieve alto y Miranda"
-                                   },
-                                   {
-                                       "id":  "d3-q12",
-                                       "originDay":  3,
-                                       "type":  "mcq",
-                                       "prompt":  "Elige la respuesta correcta. Maracay está en:",
-                                       "choices":  [
-                                                       "Aragua",
-                                                       "Miranda",
-                                                       "La Guaira",
-                                                       "Bolívar"
-                                                   ],
-                                       "answer":  "Aragua"
-                                   },
-                                   {
-                                       "id":  "d3-w1",
-                                       "originDay":  3,
-                                       "type":  "write",
-                                       "prompt":  "Lee el punto \u0027Aprendemos: Miranda y Aragua\u0027. Copia una oración corta que explique la idea principal y después dilo con tus propias palabras."
-                                   },
-                                   {
-                                       "id":  "d3-w2",
-                                       "originDay":  3,
-                                       "type":  "write",
-                                       "prompt":  "Vuelve a leer \u0027Aprendemos: Miranda y Aragua\u0027. Escribe una idea importante y cuenta por qué te ayuda a entender la lección."
-                                   },
-                                   {
-                                       "id":  "d3-w3",
-                                       "originDay":  3,
-                                       "type":  "write",
-                                       "prompt":  "En \u0027Aprendemos: Miranda y Aragua\u0027, busca una palabra nueva. Cópiala, explica qué significa y úsala en una oración sencilla."
-                                   },
-                                   {
-                                       "id":  "d3-w4",
-                                       "originDay":  3,
-                                       "type":  "write",
-                                       "prompt":  "Lee \u0027Aprendemos: Miranda y Aragua\u0027. Elige una oración que le enseñarías a un compañero y explícasela con tus propias palabras."
-                                   }
-                               ]
-             },
-    "media":  null
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 3,
+  "level": 6,
+  "subject": "geo",
+  "locale": "es",
+  "title": "Cuatro estados y sus capitales de Venezuela",
+  "lesson": {
+    "kind": "deepen",
+    "focusPoint": 2,
+    "points": {
+      "id": "p1",
+      "heading": "Aprendemos: Miranda y Aragua",
+      "body": "Idea central: Hoy exploramos Miranda y Aragua comparando su relieve. Los Teques está en altura, sobre el valle de Caracas; Maracay está en planicie y valle fértil, cerca del Henri Pittier y del lago de Valencia. Esa diferencia ayuda a recordar qué capital va con cada estado.\n\nExplora: Juega a «detective del mapa»: si te dicen «Los Teques», debes responder «Miranda»; si dicen «Maracay», «Aragua». Invierte el juego: estado primero, capital después.\n\nPráctica: Dibuja cuatro cajas con los cuatro pares de la semana. Colorea de azul los dos del litoral (DC y La Guaira) y de verde los dos del interior central (Miranda y Aragua).\n\nError común: Olvidar que Los Teques lleva artículo y mayúscula como nombre propio de la capital."
+    },
+    "summary": "Hoy practicamos los cuatro pares: Distrito Capital–Caracas, La Guaira–La Guaira, Miranda–Los Teques y Aragua–Maracay."
+  },
+  "quiz": {
+    "questionCount": 16,
+    "questions": [
+      {
+        "id": "d3-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital del Distrito Capital?",
+        "choices": [
+          "Caracas",
+          "Maracay",
+          "Los Teques",
+          "La Guaira"
+        ],
+        "answer": "Caracas"
+      },
+      {
+        "id": "d3-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué estado tiene a Caracas como capital?",
+        "choices": [
+          "Distrito Capital",
+          "Miranda",
+          "Aragua",
+          "La Guaira"
+        ],
+        "answer": "Distrito Capital"
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital del estado La Guaira?",
+        "choices": [
+          "La Guaira",
+          "Maiquetía",
+          "Caracas",
+          "Valencia"
+        ],
+        "answer": "La Guaira"
+      },
+      {
+        "id": "d3-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué capital corresponde a Miranda?",
+        "choices": [
+          "Los Teques",
+          "Maracay",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Los Teques"
+      },
+      {
+        "id": "d3-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué estado tiene a Los Teques como capital?",
+        "choices": [
+          "Miranda",
+          "Aragua",
+          "Distrito Capital",
+          "La Guaira"
+        ],
+        "answer": "Miranda"
+      },
+      {
+        "id": "d3-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital de Aragua?",
+        "choices": [
+          "Maracay",
+          "Los Teques",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Maracay"
+      },
+      {
+        "id": "d3-q7",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué par está escrito correctamente?",
+        "choices": [
+          "Aragua — Maracay",
+          "Miranda — Maracay",
+          "La Guaira — Caracas",
+          "Distrito Capital — Los Teques"
+        ],
+        "answer": "Aragua — Maracay"
+      },
+      {
+        "id": "d3-q8",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué ciudad concentra sedes nacionales según la lección?",
+        "choices": [
+          "Caracas",
+          "Los Teques",
+          "Maracay",
+          "La Guaira"
+        ],
+        "answer": "Caracas"
+      },
+      {
+        "id": "d3-q9",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué estado se describe como una franja litoral?",
+        "choices": [
+          "La Guaira",
+          "Miranda",
+          "Aragua",
+          "Distrito Capital"
+        ],
+        "answer": "La Guaira"
+      },
+      {
+        "id": "d3-q10",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué capital está en altura, sobre el valle de Caracas?",
+        "choices": [
+          "Los Teques",
+          "Maracay",
+          "La Guaira",
+          "Caracas"
+        ],
+        "answer": "Los Teques"
+      },
+      {
+        "id": "d3-q11",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué capital se relaciona con una planicie y valle fértil?",
+        "choices": [
+          "Maracay",
+          "Los Teques",
+          "Caracas",
+          "La Guaira"
+        ],
+        "answer": "Maracay"
+      },
+      {
+        "id": "d3-q12",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuál es una buena forma de memorizar los pares geográficos?",
+        "choices": [
+          "Decir juntos el estado y su capital",
+          "Cambiar las capitales cada vez",
+          "Aprender solo las iniciales",
+          "Mezclar los cuatro pares"
+        ],
+        "answer": "Decir juntos el estado y su capital"
+      },
+      {
+        "id": "d3-w1",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Copia exactamente «Distrito Capital—Caracas.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d3-w2",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Copia exactamente «La Guaira—La Guaira.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d3-w3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Copia exactamente «Miranda—Los Teques.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      },
+      {
+        "id": "d3-w4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Copia exactamente «Aragua—Maracay.» y luego explica con tus propias palabras qué entendiste de esa frase."
+      }
+    ]
+  },
+  "media": null
 }
