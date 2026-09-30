@@ -59,7 +59,7 @@ export default function ScribAnnotationRects({
                 fill={block.color}
                 fillOpacity={blockHl === "strong" ? 0.28 : 0.12}
                 stroke={block.color}
-                strokeWidth={blockHl === "strong" ? 0.7 : 0.35}
+                strokeWidth={0.1}
                 strokeOpacity={blockHl === "none" ? 0.55 : 1}
               />
             ))}
@@ -78,7 +78,7 @@ export default function ScribAnnotationRects({
                       fill={area.color}
                       fillOpacity={areaHl === "strong" ? 0.32 : 0.14}
                       stroke={area.color}
-                      strokeWidth={areaHl === "strong" ? 0.7 : 0.35}
+                      strokeWidth={0.1}
                       strokeOpacity={areaHl === "none" ? 0.55 : 1}
                     />
                   ))}
@@ -96,7 +96,7 @@ export default function ScribAnnotationRects({
           height={Math.abs(draftRect.h)}
           fill="none"
           stroke="#ff8800"
-          strokeWidth={0.5}
+          strokeWidth={0.1}
           strokeDasharray="2 1.5"
         />
       ) : null}
