@@ -911,7 +911,7 @@ function buildQuizList(
   wrap.append(list);
   // One full-width band under the grid consumes leftover Letter height.
   if (!hasActivity) {
-    wrap.append(buildQuizSheetPracticeBand());
+    wrap.append(buildQuizSheetPracticeBand(doc));
   }
   return wrap;
 }
@@ -955,10 +955,42 @@ function buildQuizItem(doc: EoschoolDocument, q: EoschoolQuestion, index: number
   return li;
 }
 
-function buildQuizSheetPracticeBand(): HTMLElement {
+const week2QuizPracticeImages: Record<string, { src: string; alt: string }> = {
+  his: {
+    src: "/homescool/media/week2/practice-images/history-coastline-practice.jpg",
+    alt: "Mapa de práctica de la costa venezolana con ruta y marcadores sin texto.",
+  },
+  LT: {
+    src: "/homescool/media/week2/practice-images/timeline-milestones-practice.jpg",
+    alt: "Línea de tiempo de práctica con hitos e ilustraciones antiguas.",
+  },
+  geo: {
+    src: "/homescool/media/week2/practice-images/geography-venezuela-practice.jpg",
+    alt: "Mapa de Venezuela de práctica con marcadores y recuadros sin texto.",
+  },
+  cie: {
+    src: "/homescool/media/week2/practice-images/science-skeleton-practice.jpg",
+    alt: "Esquema del esqueleto superior con líneas para identificar huesos.",
+  },
+  art: {
+    src: "/homescool/media/week2/practice-images/art-symmetry-practice.jpg",
+    alt: "Media flor para completar mediante simetría y espacio de dibujo.",
+  },
+};
+
+function buildQuizSheetPracticeBand(doc: EoschoolDocument): HTMLElement {
   const band = el("div", "homescool-letter__quiz-practice");
   band.setAttribute("aria-hidden", "true");
   band.title = "Espacio para dibujar o copiar la práctica";
+  const image = doc.week === 2 ? week2QuizPracticeImages[doc.subject] : undefined;
+  if (image) {
+    const img = document.createElement("img");
+    img.className = "homescool-letter__quiz-practice-image";
+    img.src = image.src;
+    img.alt = image.alt;
+    band.removeAttribute("aria-hidden");
+    band.append(img);
+  }
   return band;
 }
 

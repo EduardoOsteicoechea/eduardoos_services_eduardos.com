@@ -361,4 +361,28 @@ describe("renderEoschoolPages pagination", () => {
     expect(q?.querySelector(".homescool-letter__q-practice")).toBeFalsy();
     expect(quizPage?.querySelector(".homescool-letter__quiz + .homescool-letter__quiz-practice")).toBeTruthy();
   });
+
+  it("shows the week-2 science practice illustration in the free quiz band", () => {
+    const doc = baseDoc({
+      subject: "cie",
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [{ id: "p1", heading: "Huesos", body: "Idea." }],
+        summary: "",
+      },
+      quiz: {
+        questionCount: 1,
+        questions: [
+          { id: "q1", originDay: 1, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
+        ],
+      },
+    });
+
+    const pages = renderEoschoolPages(doc);
+    const quizPage = pages.find((page) => page.classList.contains("homescool-letter-page--quiz"));
+    const image = quizPage?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
+    expect(image?.src).toContain("/homescool/media/week2/practice-images/science-skeleton-practice.jpg");
+    expect(image?.alt).toMatch(/esqueleto/i);
+  });
 });
