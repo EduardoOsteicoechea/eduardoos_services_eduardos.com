@@ -117,6 +117,82 @@ func TestScribLibraryBookSheetRoundTrip(t *testing.T) {
 	}
 }
 
+func TestScribNoteBlocksRoundTrip(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productScrib)
+
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/scrib/books", `{"name":"Notas"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create book status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var book scribBook
+	if err := json.Unmarshal(rec.Body.Bytes(), &book); err != nil {
+		t.Fatal(err)
+	}
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/scrib/books/"+book.ID+"/sheets", `{"name":"Hoja notas"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create sheet status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var sheet scribSheet
+	if err := json.Unmarshal(rec.Body.Bytes(), &sheet); err != nil {
+		t.Fatal(err)
+	}
+	sheet.NoteBlocks = []scribNoteBlock{{
+		ID:      "block-1",
+		Name:    "Romans 1",
+		Visible: true,
+		Color:   "#ff8800",
+		Rects:   []scribRectMm{{X: 10, Y: 20, W: 30, H: 40}},
+		Areas: []scribNoteArea{{
+			ID:      "area-1",
+			Name:    "v1-7",
+			Visible: true,
+			Color:   "#2266aa",
+			Rects:   []scribRectMm{{X: 12, Y: 22, W: 20, H: 10}},
+			Annotations: []scribNoteAnnotation{{
+				ID:   "ann-1",
+				Name: "Grace",
+				Heading: scribInk{Paths: []scribStrokePath{
+					{D: "M 0 0 L 1 1", StrokeWidth: 0.35},
+				}},
+				Body: scribInk{Paths: []scribStrokePath{}},
+				View: scribNoteView{Open: true, X: 40, Y: 60, W: 280, H: 200},
+			}},
+		}},
+	}}
+	body, _ := json.Marshal(sheet)
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPut, "/api/scrib/books/"+book.ID+"/sheets/"+sheet.ID, string(body))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("put sheet status=%d body=%s", rec.Code, rec.Body.String())
+	}
+
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/scrib/books/"+book.ID+"/sheets/"+sheet.ID, "")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("get sheet status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var loaded scribSheet
+	if err := json.Unmarshal(rec.Body.Bytes(), &loaded); err != nil {
+		t.Fatal(err)
+	}
+	if len(loaded.NoteBlocks) != 1 {
+		t.Fatalf("noteBlocks=%#v", loaded.NoteBlocks)
+	}
+	block := loaded.NoteBlocks[0]
+	if block.ID != "block-1" || block.Color != "#ff8800" || len(block.Rects) != 1 {
+		t.Fatalf("block=%#v", block)
+	}
+	if len(block.Areas) != 1 || len(block.Areas[0].Annotations) != 1 {
+		t.Fatalf("areas=%#v", block.Areas)
+	}
+	ann := block.Areas[0].Annotations[0]
+	if len(ann.Heading.Paths) != 1 || !ann.View.Open || ann.View.W != 280 {
+		t.Fatalf("annotation=%#v", ann)
+	}
+	if len(loaded.Layers) != 7 {
+		t.Fatalf("layers len=%d", len(loaded.Layers))
+	}
+}
+
 func TestScribPrintPDFMagicBytes(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productScrib)

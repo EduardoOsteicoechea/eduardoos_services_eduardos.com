@@ -11,7 +11,7 @@ import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import type { ScribBackgroundPattern } from "../../lib/scrib";
 import type { ScribDockSide } from "./ScribToolbar";
 
-export type ScribToolMode = "draw" | "zoom" | "erase";
+export type ScribToolMode = "draw" | "zoom" | "erase" | "annotate";
 
 type ScribHeaderMenuProps = {
   mode: ScribToolMode;
@@ -26,6 +26,7 @@ type ScribHeaderMenuProps = {
   onStrokePlus: () => void;
   onStrokeMinus: () => void;
   onSelectErase: () => void;
+  onSelectAnnotate: () => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
   onToggleBackgroundPattern: () => void;
@@ -33,6 +34,8 @@ type ScribHeaderMenuProps = {
   institutesOpen?: boolean;
   onOpenBible: () => void;
   bibleOpen?: boolean;
+  annotateTreeOpen?: boolean;
+  onToggleAnnotateTree?: () => void;
   dockSide?: ScribDockSide;
   onToggleDock?: () => void;
   onUndo: () => void;
@@ -140,6 +143,38 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
             <ActionIcon name="ink_eraser" />
             <span className="header-dynamic-menu__label">Borrar</span>
           </button>
+          <button
+            type="button"
+            className={actionClass(props.mode === "annotate")}
+            title="Modo anotación"
+            aria-label="Modo anotación"
+            aria-pressed={props.mode === "annotate"}
+            onClick={props.onSelectAnnotate}
+          >
+            <ActionIcon name="edit_note" />
+            <span className="header-dynamic-menu__label">Anotar</span>
+          </button>
+          {props.onToggleAnnotateTree ? (
+            <button
+              type="button"
+              className={actionClass(Boolean(props.annotateTreeOpen))}
+              title={
+                props.annotateTreeOpen
+                  ? "Cerrar árbol de anotaciones"
+                  : "Árbol de anotaciones"
+              }
+              aria-label={
+                props.annotateTreeOpen
+                  ? "Cerrar árbol de anotaciones"
+                  : "Abrir árbol de anotaciones"
+              }
+              aria-pressed={Boolean(props.annotateTreeOpen)}
+              onClick={props.onToggleAnnotateTree}
+            >
+              <ActionIcon name="account_tree" />
+              <span className="header-dynamic-menu__label">Árbol notas</span>
+            </button>
+          ) : null}
           <button
             type="button"
             className={actionClass(props.isFullscreen)}

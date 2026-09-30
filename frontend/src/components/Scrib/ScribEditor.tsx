@@ -4,11 +4,15 @@
  * erasing update one authoritative snapshot and save serially after each completed action.
  */
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { APP_ROUTES } from "../../config/routes";
 import { replaceClientUrl } from "../../lib/router";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
+import ScribAnnotationEditorModal from "./ScribAnnotationEditorModal";
+import ScribAnnotationRects from "./ScribAnnotationRects";
+import ScribAnnotationViews from "./ScribAnnotationViews";
+import ScribAnnotationsTree from "./ScribAnnotationsTree";
 import ScribBibleModal from "./ScribBibleModal";
 import ScribHeaderMenu, { type ScribToolMode } from "./ScribHeaderMenu";
 import ScribInstitutesModal from "./ScribInstitutesModal";
@@ -18,6 +22,7 @@ import {
   fetchScribSheet,
   isScribDrawableLayer,
   normalizeScribBackgroundPattern,
+  normalizeScribNoteBlocks,
   resolveScribSheetFromLocation,
   saveScribSheet,
   SCRIB_BACKGROUND_LAYER_ID,
@@ -34,6 +39,22 @@ import {
   type StrokePath,
   scribSheetPrettyPath,
 } from "../../lib/scrib";
+import {
+  appendRectToSelection,
+  createNoteAnnotation,
+  createNoteArea,
+  createNoteBlock,
+  findNoteAnnotation,
+  listOpenAnnotationViews,
+  mapAnnotationInk,
+  popLastRectFromSelection,
+  setAnnotationView,
+  sheetNoteBlocks,
+  updateNoteBlocks,
+  type ScribAnnotateSelection,
+  type ScribAnnotateSubtool,
+  type ScribNoteInkField,
+} from "../../lib/scribAnnotations";
 import { downloadScribSheetPdf } from "../../lib/scribPrint";
 import "./Scrib.css";
 
@@ -43,10 +64,14 @@ const STROKE_STEP = 0.05;
 const ZOOM_MIN = 0.25;
 const ZOOM_MAX = 4;
 
-type UndoEntry = {
-  layerId: string;
-  pathsBefore: StrokePath[];
-};
+type UndoEntry =
+  | { kind: "layer"; layerId: string; pathsBefore: StrokePath[] }
+  | {
+      kind: "note";
+      selection: ScribAnnotateSelection;
+      field: ScribNoteInkField;
+      pathsBefore: StrokePath[];
+    };
 
 function clonePaths(paths: StrokePath[]): StrokePath[] {
   return paths.map((p) => ({ ...p }));
@@ -72,6 +97,7 @@ function ensureLayers(sheet: ScribSheet): ScribSheet {
     layers,
     activeLayerId,
     backgroundPattern: normalizeScribBackgroundPattern(sheet.backgroundPattern),
+    noteBlocks: normalizeScribNoteBlocks(sheet.noteBlocks),
   };
 }
 
@@ -125,6 +151,20 @@ export default function ScribEditor() {
   const [layersOpen, setLayersOpen] = useState(false);
   const [institutesOpen, setInstitutesOpen] = useState(false);
   const [bibleOpen, setBibleOpen] = useState(false);
+  const [annotateTreeOpen, setAnnotateTreeOpen] = useState(false);
+  const [annotateSelection, setAnnotateSelection] =
+    useState<ScribAnnotateSelection | null>(null);
+  const [annotateSubtool, setAnnotateSubtool] =
+    useState<ScribAnnotateSubtool>("select");
+  const [annotationEditorOpen, setAnnotationEditorOpen] = useState(false);
+  const [annotationInkField, setAnnotationInkField] =
+    useState<ScribNoteInkField>("heading");
+  const [draftRect, setDraftRect] = useState<{
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  } | null>(null);
   const [dockSide, setDockSide] = useState<ScribDockSide>("left");
   const [saving, setSaving] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -132,6 +172,16 @@ export default function ScribEditor() {
   const [scale, setScale] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
+  const rectDragRef = useRef<{
+    startX: number;
+    startY: number;
+  } | null>(null);
+  const draftRectRef = useRef<{
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+  } | null>(null);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   /** Tracks mount of the viewport node (ServiceGate can delay children past sheet fetch). */
@@ -309,7 +359,22 @@ export default function ScribEditor() {
   }
 
   function onPointerDown(e: React.PointerEvent) {
-    if (!sheet || mode === "zoom") return;
+    if (!sheet || mode === "zoom" || annotationEditorOpen) return;
+
+    if (mode === "annotate") {
+      if (annotateSubtool !== "rect" || !annotateSelection) return;
+      const pt = mmFromClient(e.clientX, e.clientY);
+      if (!pt) return;
+      rectDragRef.current = { startX: pt.x, startY: pt.y };
+      const zero = { x: pt.x, y: pt.y, w: 0, h: 0 };
+      draftRectRef.current = zero;
+      setDraftRect(zero);
+      activePointerIdRef.current = e.pointerId;
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      return;
+    }
+
+    if (mode !== "draw" && mode !== "erase") return;
     if (!acceptsStylus(e)) return;
     const pt = mmFromClient(e.clientX, e.clientY);
     if (!pt) return;
@@ -321,6 +386,28 @@ export default function ScribEditor() {
   }
 
   function onPointerMove(e: React.PointerEvent) {
+    if (annotationEditorOpen) return;
+
+    if (mode === "annotate" && rectDragRef.current) {
+      if (
+        activePointerIdRef.current !== null &&
+        e.pointerId !== activePointerIdRef.current
+      ) {
+        return;
+      }
+      const pt = mmFromClient(e.clientX, e.clientY);
+      if (!pt) return;
+      const nextDraft = {
+        x: rectDragRef.current.startX,
+        y: rectDragRef.current.startY,
+        w: pt.x - rectDragRef.current.startX,
+        h: pt.y - rectDragRef.current.startY,
+      };
+      draftRectRef.current = nextDraft;
+      setDraftRect(nextDraft);
+      return;
+    }
+
     if (mode === "zoom" || !drawingRef.current) return;
     if (
       activePointerIdRef.current !== null &&
@@ -341,12 +428,27 @@ export default function ScribEditor() {
     }
   }
 
+  function finishRect() {
+    const draft = draftRectRef.current;
+    const sel = annotateSelection;
+    rectDragRef.current = null;
+    draftRectRef.current = null;
+    setDraftRect(null);
+    const current = sheetSnapshotRef.current;
+    if (!current || !draft || !sel) return;
+    const next = appendRectToSelection(current, sel, draft);
+    if (next === current) return;
+    commitSheet(next);
+    persist(next);
+  }
+
   async function finishStroke() {
     if (!drawingRef.current) return;
     drawingRef.current = false;
     const pts = pointsRef.current;
     pointsRef.current = [];
     setDraftPath("");
+    if (mode !== "draw" && mode !== "erase") return;
     const current = sheetSnapshotRef.current;
     if (!current || pts.length < 2) return;
 
@@ -371,7 +473,7 @@ export default function ScribEditor() {
     });
     setUndoStack((stack) => [
       ...stack,
-      { layerId: activeId, pathsBefore },
+      { kind: "layer", layerId: activeId, pathsBefore },
     ]);
     const next: ScribSheet = { ...current, layers };
     commitSheet(next);
@@ -464,6 +566,10 @@ export default function ScribEditor() {
       return;
     }
     activePointerIdRef.current = null;
+    if (mode === "annotate" && rectDragRef.current) {
+      finishRect();
+      return;
+    }
     void finishStroke();
   }
 
@@ -472,12 +578,50 @@ export default function ScribEditor() {
     if (!current || undoStack.length === 0) return;
     const entry = undoStack[undoStack.length - 1];
     setUndoStack((s) => s.slice(0, -1));
+    if (entry.kind === "note") {
+      const next = mapAnnotationInk(
+        current,
+        entry.selection,
+        entry.field,
+        () => clonePaths(entry.pathsBefore),
+      );
+      commitSheet(next);
+      persist(next);
+      return;
+    }
     const next: ScribSheet = {
       ...current,
       layers: current.layers.map((l) =>
         l.id === entry.layerId ? { ...l, paths: clonePaths(entry.pathsBefore) } : l,
       ),
     };
+    commitSheet(next);
+    persist(next);
+  }
+
+  function leaveAnnotateMode(nextMode: ScribToolMode) {
+    setAnnotationEditorOpen(false);
+    setAnnotateTreeOpen(false);
+    setDraftRect(null);
+    draftRectRef.current = null;
+    rectDragRef.current = null;
+    setMode(nextMode);
+  }
+
+  function enterAnnotateMode() {
+    setLayersOpen(false);
+    setBibleOpen(false);
+    setInstitutesOpen(false);
+    setMode("annotate");
+    setAnnotateTreeOpen(true);
+  }
+
+  function mutateNotes(
+    updater: (current: ScribSheet) => ScribSheet,
+  ) {
+    const current = sheetSnapshotRef.current;
+    if (!current) return;
+    const next = updater(current);
     commitSheet(next);
     persist(next);
   }
@@ -544,18 +688,32 @@ export default function ScribEditor() {
     persist(next);
   }, [commitSheet, persist]);
 
-  const openLayers = useCallback(() => setLayersOpen(true), []);
+  const openLayers = useCallback(() => {
+    setAnnotateTreeOpen(false);
+    setBibleOpen(false);
+    setInstitutesOpen(false);
+    setLayersOpen(true);
+  }, []);
 
   const toggleInstitutes = useCallback(() => {
     setLayersOpen(false);
     setBibleOpen(false);
+    setAnnotateTreeOpen(false);
     setInstitutesOpen((v) => !v);
   }, []);
 
   const toggleBible = useCallback(() => {
     setLayersOpen(false);
     setInstitutesOpen(false);
+    setAnnotateTreeOpen(false);
     setBibleOpen((v) => !v);
+  }, []);
+
+  const toggleAnnotateTree = useCallback(() => {
+    setLayersOpen(false);
+    setBibleOpen(false);
+    setInstitutesOpen(false);
+    setAnnotateTreeOpen((v) => !v);
   }, []);
 
   const printSheet = useCallback(() => {
@@ -580,6 +738,34 @@ export default function ScribEditor() {
     })();
   }, []);
 
+  const noteBlocks = useMemo(
+    () => (sheet ? sheetNoteBlocks(sheet) : []),
+    [sheet],
+  );
+  const openViews = useMemo(
+    () => listOpenAnnotationViews(noteBlocks),
+    [noteBlocks],
+  );
+  const editorAnn = useMemo(() => {
+    if (!annotationEditorOpen || !annotateSelection) return null;
+    return findNoteAnnotation(noteBlocks, annotateSelection);
+  }, [annotationEditorOpen, annotateSelection, noteBlocks]);
+
+  const selectToolMode = useCallback(
+    (next: ScribToolMode) => {
+      if (next === "annotate") {
+        enterAnnotateMode();
+        return;
+      }
+      if (mode === "annotate" && !annotationEditorOpen) {
+        leaveAnnotateMode(next);
+        return;
+      }
+      setMode(next);
+    },
+    [mode, annotationEditorOpen],
+  );
+
   if (!ids && error) {
     return (
       <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
@@ -590,6 +776,9 @@ export default function ScribEditor() {
 
   return (
     <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
+      {mode === "annotate" ? (
+        <div className="scrib-annotate-frame" aria-hidden />
+      ) : null}
       <ScribHeaderMenu
         mode={mode}
         strokeWidthMm={sheet?.strokeWidthMm ?? 0.35}
@@ -602,11 +791,12 @@ export default function ScribEditor() {
             : SCRIB_BACKGROUND_PATTERN_DEFAULT
         }
         onDashboard={openDashboard}
-        onSelectZoom={() => setMode("zoom")}
-        onSelectDraw={() => setMode("draw")}
+        onSelectZoom={() => selectToolMode("zoom")}
+        onSelectDraw={() => selectToolMode("draw")}
         onStrokePlus={() => bumpStroke(1)}
         onStrokeMinus={() => bumpStroke(-1)}
-        onSelectErase={() => setMode("erase")}
+        onSelectErase={() => selectToolMode("erase")}
+        onSelectAnnotate={() => selectToolMode("annotate")}
         onEnterFullscreen={() => void enterFullscreen()}
         onOpenLayers={openLayers}
         onToggleBackgroundPattern={onToggleBackgroundPattern}
@@ -614,6 +804,8 @@ export default function ScribEditor() {
         onOpenInstitutes={toggleInstitutes}
         bibleOpen={bibleOpen}
         onOpenBible={toggleBible}
+        annotateTreeOpen={annotateTreeOpen}
+        onToggleAnnotateTree={toggleAnnotateTree}
         dockSide={dockSide}
         onToggleDock={toggleDock}
         onPrint={printSheet}
@@ -630,18 +822,21 @@ export default function ScribEditor() {
           backgroundPattern={normalizeScribBackgroundPattern(sheet.backgroundPattern)}
           institutesOpen={institutesOpen}
           bibleOpen={bibleOpen}
+          annotateTreeOpen={annotateTreeOpen}
           dockSide={dockSide}
           onDashboard={openDashboard}
-          onSelectZoom={() => setMode("zoom")}
-          onSelectDraw={() => setMode("draw")}
+          onSelectZoom={() => selectToolMode("zoom")}
+          onSelectDraw={() => selectToolMode("draw")}
           onStrokePlus={() => bumpStroke(1)}
           onStrokeMinus={() => bumpStroke(-1)}
-          onSelectErase={() => setMode("erase")}
+          onSelectErase={() => selectToolMode("erase")}
+          onSelectAnnotate={() => selectToolMode("annotate")}
           onEnterFullscreen={() => void enterFullscreen()}
           onOpenLayers={openLayers}
           onToggleBackgroundPattern={onToggleBackgroundPattern}
           onOpenInstitutes={toggleInstitutes}
           onOpenBible={toggleBible}
+          onToggleAnnotateTree={toggleAnnotateTree}
           onPrint={printSheet}
           onUndo={() => void onUndo()}
           onToggleDock={toggleDock}
@@ -711,7 +906,10 @@ export default function ScribEditor() {
                       strokeLinejoin="round"
                     />
                   ))}
-                  {layer.id === sheet.activeLayerId && draftPath && mode === "draw" ? (
+                  {layer.id === sheet.activeLayerId &&
+                  draftPath &&
+                  mode === "draw" &&
+                  !annotationEditorOpen ? (
                     <path
                       d={draftPath}
                       fill="none"
@@ -724,8 +922,30 @@ export default function ScribEditor() {
                   ) : null}
                 </svg>
               ))}
+              {mode === "annotate" ? (
+                <ScribAnnotationRects
+                  blocks={noteBlocks}
+                  selection={annotateSelection}
+                  scale={scale}
+                  draftRect={draftRect}
+                />
+              ) : null}
             </div>
           </div>
+          <ScribAnnotationViews
+            items={openViews}
+            selectedAnnotationId={annotateSelection?.annotationId ?? null}
+            onSelect={setAnnotateSelection}
+            onMove={(sel, x, y) =>
+              mutateNotes((cur) => setAnnotationView(cur, sel, { x, y }))
+            }
+            onResize={(sel, w, h) =>
+              mutateNotes((cur) => setAnnotationView(cur, sel, { w, h }))
+            }
+            onClose={(sel) =>
+              mutateNotes((cur) => setAnnotationView(cur, sel, { open: false }))
+            }
+          />
           {isFullscreen ? (
             <div className="scrib-fullscreen-controls">
               <button
@@ -837,6 +1057,239 @@ export default function ScribEditor() {
           </div>
         </div>
       ) : null}
+
+      <ScribAnnotationsTree
+        open={annotateTreeOpen}
+        dockSide={dockSide}
+        blocks={noteBlocks}
+        selection={annotateSelection}
+        subtool={annotateSubtool}
+        onSelectSubtool={setAnnotateSubtool}
+        onSelect={setAnnotateSelection}
+        onCreateBlock={() =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) => [...blocks, createNoteBlock()]),
+          )
+        }
+        onCreateArea={(blockId) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id === blockId
+                  ? { ...b, areas: [...b.areas, createNoteArea()] }
+                  : b,
+              ),
+            ),
+          )
+        }
+        onCreateAnnotation={(blockId, areaId) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id !== areaId
+                          ? a
+                          : {
+                              ...a,
+                              annotations: [...a.annotations, createNoteAnnotation()],
+                            },
+                      ),
+                    },
+              ),
+            ),
+          )
+        }
+        onRenameBlock={(blockId, name) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) => (b.id === blockId ? { ...b, name } : b)),
+            ),
+          )
+        }
+        onRenameArea={(blockId, areaId, name) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id === areaId ? { ...a, name } : a,
+                      ),
+                    },
+              ),
+            ),
+          )
+        }
+        onRenameAnnotation={(blockId, areaId, annotationId, name) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id !== areaId
+                          ? a
+                          : {
+                              ...a,
+                              annotations: a.annotations.map((n) =>
+                                n.id === annotationId ? { ...n, name } : n,
+                              ),
+                            },
+                      ),
+                    },
+              ),
+            ),
+          )
+        }
+        onSetBlockVisible={(blockId, visible) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) => (b.id === blockId ? { ...b, visible } : b)),
+            ),
+          )
+        }
+        onSetBlockColor={(blockId, color) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) => (b.id === blockId ? { ...b, color } : b)),
+            ),
+          )
+        }
+        onSetAreaVisible={(blockId, areaId, visible) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id === areaId ? { ...a, visible } : a,
+                      ),
+                    },
+              ),
+            ),
+          )
+        }
+        onSetAreaColor={(blockId, areaId, color) =>
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id === areaId ? { ...a, color } : a,
+                      ),
+                    },
+              ),
+            ),
+          )
+        }
+        onOpenEditor={(sel) => {
+          setAnnotateSelection(sel);
+          setAnnotationEditorOpen(true);
+          setMode("draw");
+        }}
+        onOpenView={(sel) => {
+          setAnnotateSelection(sel);
+          mutateNotes((cur) => setAnnotationView(cur, sel, { open: true }));
+        }}
+        onDeleteBlock={(blockId) => {
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) => blocks.filter((b) => b.id !== blockId)),
+          );
+          if (annotateSelection?.blockId === blockId) {
+            setAnnotateSelection(null);
+            setAnnotationEditorOpen(false);
+          }
+        }}
+        onDeleteArea={(blockId, areaId) => {
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : { ...b, areas: b.areas.filter((a) => a.id !== areaId) },
+              ),
+            ),
+          );
+          if (
+            annotateSelection?.blockId === blockId &&
+            annotateSelection.areaId === areaId
+          ) {
+            setAnnotateSelection({ blockId });
+            setAnnotationEditorOpen(false);
+          }
+        }}
+        onDeleteAnnotation={(blockId, areaId, annotationId) => {
+          mutateNotes((cur) =>
+            updateNoteBlocks(cur, (blocks) =>
+              blocks.map((b) =>
+                b.id !== blockId
+                  ? b
+                  : {
+                      ...b,
+                      areas: b.areas.map((a) =>
+                        a.id !== areaId
+                          ? a
+                          : {
+                              ...a,
+                              annotations: a.annotations.filter(
+                                (n) => n.id !== annotationId,
+                              ),
+                            },
+                      ),
+                    },
+              ),
+            ),
+          );
+          if (annotateSelection?.annotationId === annotationId) {
+            setAnnotateSelection({ blockId, areaId });
+            setAnnotationEditorOpen(false);
+          }
+        }}
+        onPopLastRect={() => {
+          if (!annotateSelection) return;
+          mutateNotes((cur) => popLastRectFromSelection(cur, annotateSelection));
+        }}
+      />
+
+      <ScribAnnotationEditorModal
+        open={Boolean(editorAnn && annotateSelection)}
+        name={editorAnn?.annotation.name ?? ""}
+        mode={mode}
+        strokeWidthMm={sheet?.strokeWidthMm ?? 0.35}
+        headingPaths={editorAnn?.annotation.heading.paths ?? []}
+        bodyPaths={editorAnn?.annotation.body.paths ?? []}
+        activeField={annotationInkField}
+        onActiveField={setAnnotationInkField}
+        onCommitField={(field, paths, pathsBefore) => {
+          if (!annotateSelection) return;
+          setUndoStack((stack) => [
+            ...stack,
+            { kind: "note", selection: annotateSelection, field, pathsBefore },
+          ]);
+          mutateNotes((cur) =>
+            mapAnnotationInk(cur, annotateSelection, field, () => paths),
+          );
+        }}
+        onClose={() => {
+          setAnnotationEditorOpen(false);
+          if (mode === "draw" || mode === "erase") {
+            setMode("annotate");
+          }
+        }}
+      />
 
       <ScribInstitutesModal open={institutesOpen} dockSide={dockSide} />
       <ScribBibleModal open={bibleOpen} dockSide={dockSide} />
