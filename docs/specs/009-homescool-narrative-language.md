@@ -13,12 +13,25 @@ Each `lesson.points[].body` is split on **blank lines** (`\n\n`). The Homescool 
 | Paragraph | Box label in UI | How the FE classifies it |
 | --- | --- | --- |
 | First paragraph | **Idea central** | Always the lead block |
-| Middle paragraph(s) | **Explora** | Default for paragraphs 2…n−2 that are not specials |
-| Paragraph starting with `Práctica:` / `Practice:` | **Práctica** | Full-width practice strip (with workspace) |
-| Paragraph starting with `Error común:` / `Common mistake:` | **Error a corregir** | Side column when Explora + error share a row |
-| Optional `Consejo:` / `Meta:` | Consejo / Meta | Same side column |
+| Middle paragraph(s) | **Explora** | Default for non-special middle paragraphs |
+| Paragraph starting with `Práctica:` / `Practice:` | **Práctica** | Practice box + write/draw workspace |
+| Paragraph starting with `Error común:` / `Common mistake:` | **Error a corregir** | Error box |
+| Optional `Consejo:` / `Meta:` | Consejo / Meta | Tip / goal boxes |
+
+All lesson boxes stack **full-width** (one column) in reading order — never author for a two-column Explora/Error layout.
+
+**Screening helpers (mandatory):** inside bodies, use `## Subtítulo` lines and wrap key terms in `**negrita**` so the child can scan. Optional block `## Más ejemplos` / `## More examples` is required for `esp` / `ing` / `lat`.
 
 **Do not** paste meta-labels into the prose (`Idea central:`, `Explora:`, `explora:`). The UI already shows those titles. Labels inside the body duplicate chrome and break the narrative flow.
+
+## Lesson-level kid clarity fields (METHOD_V1)
+
+| Field | When |
+| --- | --- |
+| `supportUrl` | Every cell — one ~8yo reference video |
+| `lesson.memoryPhrase` | Every day for `esp` `ing` `lat` `his` `LT` `geo` `cie` |
+| `lesson.weekRecap` | Days 2–4 (~5 cm band before the deepen point) |
+| `lesson.priorDayRecap` | Days 3–4 (~2.5 cm band after weekRecap) |
 
 ## Voice: guided prose, not a checklist
 
@@ -43,7 +56,7 @@ Write so a child can **read alone** and feel accompanied:
 - Duplicate section labels (`Idea central:`, `explora:`) or broken glue (`Sigamos juntos. explora:`).
 - Orders with no teaching («Conjuga…» / «Marca…» only) on deepen/review days.
 - Jargon with no immediate gloss («participio», «epitelial», …) — define on first use.
-- Bare «frente a» / «vs» mid-paragraph unless you **want** a Contraste two-column split (FE detects those markers).
+- Bare «frente a» / «vs» mid-paragraph unless you **want** a Contraste pair (FE still stacks both sides full-width).
 
 **Allowed exceptions**
 

@@ -13,6 +13,7 @@ disable-model-invocation: true
 **Install location:** project sidecar **`.eoschool/`** (connector repo).  
 **Before first run:** read [CAVEATS.md](CAVEATS.md).  
 **Method v1 (required):** [METHOD_V1.md](METHOD_V1.md)  
+**Narrative copy (level 6, required):** [docs/specs/009-homescool-narrative-language.md](../../docs/specs/009-homescool-narrative-language.md)  
 **Legacy HTML patterns:** [MATERIALS.md](MATERIALS.md) · [TEMPLATES.md](TEMPLATES.md) — do **not** use for new level-6 content.  
 **Live API contract:** always `GET /api/v1/docs` first (see [reference.md](reference.md)).  
 **CLI:** `.eoschool/eoschool_client.py`
@@ -25,6 +26,20 @@ Docs: https://eduardoos.com/api-docs
 Follow **METHOD_V1.md** and live `payloadSchema.homescool`. New materials are `.eoschool` JSON (not free-form HTML). Level **6** only for now. One document per `cycle + week + day + level + subject`.
 
 **Paused subjects (until the user re-enables them):** do **not** generate, rewrite, or upsert `teb` (Teología bíblica) or `exe` (Exégesis). They are hidden from the Homescool menu.
+
+## Kid clarity checklist (every new/edited class)
+
+Before upserting, confirm:
+
+| Requirement | Field / practice |
+| --- | --- |
+| Full-width reading order | Bodies use Idea → Explora → Práctica → Error; no two-column intent |
+| Screening | `##` subtitles + `**bold**` key terms in bodies |
+| Day 2 | `lesson.weekRecap` (~5 cm week overview) |
+| Days 3–4 | `weekRecap` + `lesson.priorDayRecap` (~2.5 cm) |
+| Memory subjects | `esp` `ing` `lat` `his` `LT` `geo` `cie` → `lesson.memoryPhrase` every day |
+| Video | `supportUrl` age-appropriate (~8yo) http(s) |
+| Language subjects | `esp` `ing` `lat` → rich Más ejemplos / More examples block |
 
 ## Mode B (API — docs first)
 
@@ -50,6 +65,7 @@ python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --f
     "subject": "mat",
     "locale": "es",
     "title": "Tablas de multiplicar 1–12",
+    "supportUrl": "https://www.youtube.com/watch?v=…",
     "lesson": {
       "kind": "intro",
       "points": [
@@ -57,10 +73,13 @@ python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --f
         { "id": "p2", "heading": "…", "body": "…" },
         { "id": "p3", "heading": "…", "body": "…" }
       ],
-      "summary": "…"
+      "summary": "…",
+      "memoryPhrase": "**…** (required for esp/ing/lat/his/LT/geo/cie)",
+      "weekRecap": "… (required days 2–4)",
+      "priorDayRecap": "… (required days 3–4)"
     },
     "quiz": {
-      "questionCount": 8,
+      "questionCount": 16,
       "questions": []
     },
     "media": []

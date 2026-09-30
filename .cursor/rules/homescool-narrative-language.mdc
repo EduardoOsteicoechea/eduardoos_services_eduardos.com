@@ -24,3 +24,11 @@ Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) p
 - **Never** use forbidden boilerplate listed in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).
 - Adapt quizzes by **replacing** questions, not only prefixes.
 - After cell edits: `node scripts/build-homescool-curriculum.mjs` with API env to refresh `curriculum.json` and Mongo.
+
+## Kid clarity (also mandatory — same METHOD_V1)
+
+- Lesson boxes are **full-width** (one column). Add `##` subtitles and `**bold**` key ideas for screening.
+- Days **2–4:** `lesson.weekRecap` (~5 cm). Days **3–4:** also `lesson.priorDayRecap` (~2.5 cm).
+- Subjects `esp` `ing` `lat` `his` `LT` `geo` `cie`: `lesson.memoryPhrase` **every day**.
+- Every cell: `supportUrl` with a ~8yo reference video.
+- `esp` `ing` `lat`: many worked examples (Más ejemplos / More examples), not a single token.

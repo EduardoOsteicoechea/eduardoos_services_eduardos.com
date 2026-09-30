@@ -10,6 +10,8 @@ alwaysApply: false
 
 New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (1 cm margin); backend PDF matches.
 
+**Kid clarity (authoring):** full-width lesson boxes; day 2–4 `weekRecap` / day 3–4 `priorDayRecap`; `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` video; `##` + `**bold**` screening; extra examples on language subjects. See `eoschool-method-v1.mdc` § Kid clarity.
+
 ## Letter pagination (mandatory — no empty pages)
 
 - Never emit a Letter page that is only the hero/header with no lesson, quiz, support, or expo content.

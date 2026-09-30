@@ -28,6 +28,18 @@ Edit cell JSON under `frontend/public/homescool/media/weekN/`, then `node script
 - Slot types in published packs: **`mcq` + `write` only**. Schema still allows legacy puzzles for old drafts; do not add them to new level-6 cells.
 - Packing: full-page activities (`crossword`, `wordsearch`, `draw_*`, `grid_mark`) alone on a Letter page; `mcq`/`write` fill pages as before.
 
+## Kid clarity (mandatory on every new/edited cell)
+
+Do **not** ship a class that skips these. Full detail: `METHOD_V1.md` + `docs/specs/009-homescool-narrative-language.md`.
+
+1. **Full-width sections** — FE stacks Idea / Explora / Práctica / Error in **one column**. Do not author for two-column lesson layout. Avoid bare «frente a» / «vs» unless you truly want a Contraste pair (still stacked).
+2. **Day 2:** set `lesson.weekRecap` (short week overview; FE band ~5 cm) before the deepen point. No `priorDayRecap`.
+3. **Days 3–4:** set `lesson.weekRecap` (~5 cm) **and** `lesson.priorDayRecap` (~2.5 cm, previous day’s focus) before the deepen point.
+4. **Screening:** in bodies use `##` subtitle lines and `**bold**` key terms so the child can scan.
+5. **Memory phrase:** every day, for `esp` `ing` `lat` `his` `LT` `geo` `cie`, set `lesson.memoryPhrase` (same week sentence; bold the anchors).
+6. **Reference video:** set `supportUrl` to one age-appropriate (~8yo) educational http(s) video for that subject×week.
+7. **Language load:** for `esp` `ing` `lat`, include a rich **Más ejemplos / More examples** block (many worked sentences), not a single token example.
+
 ## UI / print
 
 - DHS: cycle tabs → week grid → day grid → subject grid → Print.
