@@ -57,6 +57,23 @@ Never enable logging silently. Never imply REJECT blocks eReport API sync.
 | **B** | Sync via API key (docs → get → append or replace → post) |
 | **C** | Parse complaints → append open issues → post |
 | **D** | Local execution log — **only after user ACCEPT** |
+| **W** | Web project — mount `https://eduardoos.com/ereport/embed.js` |
+
+### Mode W (web embed)
+
+```html
+<script src="https://eduardoos.com/ereport/embed.js"></script>
+<script>
+  EduardoOSEreport.mount({
+    apiKey: "eos_live_…",
+    menuSelector: "#main-menu nav",
+    label: "eReport",
+    baseUrl: "https://eduardoos.com"
+  });
+</script>
+```
+
+Opens `/ereport/web-connector` in an iframe. Uses granular `POST`/`PATCH` section/group/item routes (see live docs). Does not change append/replace.
 
 ### Mode B (API — docs first)
 

@@ -30,4 +30,25 @@ Storage is the VPS filesystem under `media/ereport/<ownerUserId>/`. There are no
 
 API POST is additive. Do not modify or delete existing item ids. New items need non-empty `incidencia` and `status: "reprobado"`. Print `viewUrl` after a write.
 
+## Web projects (embed)
+
+When the consumer project is a website, mount the hosted loader (API key = eduardoos.com `eos_live_…`):
+
+```html
+<script src="https://eduardoos.com/ereport/embed.js"></script>
+<script>
+  EduardoOSEreport.mount({
+    apiKey: "eos_live_…",
+    menuSelector: "#main-menu nav",
+    label: "eReport",
+    baseUrl: "https://eduardoos.com"
+  });
+</script>
+```
+
+- Adds a button to the host global menu (`menuSelector`). If the selector is missing, a floating control is used.
+- Opens an iframe modal at `/ereport/web-connector` (same-origin to the API — no CORS wildcard).
+- Cascading UI: org → report → section (concept = `productHistory`) → subsection → issue form.
+- Granular writes: `POST`/`PATCH` under `/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections|…/groups|…/items` (see live docs). Does **not** change append/replace.
+
 Keys are created only in the signed-in UI (`/session/profile`). Never create keys from the external API.

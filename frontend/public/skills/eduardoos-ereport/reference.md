@@ -16,4 +16,19 @@ Auth: `Authorization: Bearer eos_live_…` for `/api/v1/ereport/*`.
 
 Server **merges** additively. Existing item ids cannot change.
 
+### Granular nodes (web connector)
+
+Create/update one node without append/replace:
+
+- `POST …/reports/{reportId}/sections`
+- `PATCH …/sections/{sectionId}` (`title`, `kind`, `productHistory`)
+- `POST …/sections/{sectionId}/groups`
+- `PATCH …/groups/{groupId}` (`title`, `productHistory`)
+- `POST …/groups/{groupId}/items` (new item: `incidencia` + `status: "reprobado"`)
+- `PATCH …/items/{itemId}` (edit issue fields)
+
+### Web embed
+
+`https://eduardoos.com/ereport/embed.js` → `EduardoOSEreport.mount({ apiKey, menuSelector })` opens `/ereport/web-connector` in an iframe.
+
 `viewUrl`: `{BASE}/ereport/workspace?user={ownerSafe}&org={orgId}&report={reportId}` — `user=` is display-only.

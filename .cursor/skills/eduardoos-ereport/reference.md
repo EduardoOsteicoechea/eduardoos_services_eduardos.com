@@ -29,6 +29,14 @@ Auth: `Authorization: Bearer eos_live_…` (required for all `/api/v1/ereport/*`
 | `append` (default) | Merge only; existing ids immutable; new items = non-empty `incidencia` + `status: "reprobado"` |
 | `replace` | Full payload replace; requires `confirmOverwrite: true`; mixed statuses OK |
 
+### Granular nodes (web connector)
+
+- `POST …/sections`, `PATCH …/sections/{sectionId}`
+- `POST …/groups`, `PATCH …/groups/{groupId}`
+- `POST …/items`, `PATCH …/items/{itemId}`
+
+Embed: `https://eduardoos.com/ereport/embed.js` → `EduardoOSEreport.mount({ apiKey, menuSelector })`.
+
 ## Local execution log (optional — user consent first)
 
 **Not** on the Eduardo OS API. Under `.ereport/execution/` in the **consumer** project only after the user **ACCEPT**s.

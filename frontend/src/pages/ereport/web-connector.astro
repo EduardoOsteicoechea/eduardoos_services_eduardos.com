@@ -1,0 +1,201 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eReport connector"
+  page="ereport-web-connector"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+  description="eReport web connector embed — select org, report, section, subsection, and edit issues via API key."
+>
+  <h1 class="page-title-sr">eReport connector</h1>
+  <section class="ereport-wc session-grid" data-ereport-web-connector>
+    <p class="status" data-wc-status>Loading…</p>
+
+    <div class="panel" data-wc-key-panel hidden>
+      <h2>API key</h2>
+      <p class="hint">Paste your eduardoos.com <code>eos_live_…</code> key (owner of the organizations).</p>
+      <label>
+        API key
+        <input type="password" data-wc-key autocomplete="off" spellcheck="false" />
+      </label>
+      <button type="button" data-wc-key-apply>Continue</button>
+    </div>
+
+    <div class="panel ereport-wc__cascade" data-wc-cascade hidden>
+      <h2>Report path</h2>
+
+      <label>
+        Organization
+        <select data-wc-org></select>
+      </label>
+
+      <label>
+        Report
+        <select data-wc-report></select>
+      </label>
+
+      <div class="ereport-wc__row">
+        <label class="ereport-wc__grow">
+          Section
+          <select data-wc-section></select>
+        </label>
+        <button type="button" class="ereport-wc__aside" data-wc-section-create title="Create section">
+          Create
+        </button>
+      </div>
+
+      <div class="panel ereport-wc__nested" data-wc-section-fields hidden>
+        <label>
+          Section title
+          <input type="text" data-wc-section-title />
+        </label>
+        <label>
+          Concept
+          <textarea data-wc-section-concept rows="3"></textarea>
+        </label>
+        <button type="button" data-wc-section-save>Save section</button>
+      </div>
+
+      <div class="ereport-wc__row">
+        <label class="ereport-wc__grow">
+          Subsection
+          <select data-wc-group></select>
+        </label>
+        <button type="button" class="ereport-wc__aside" data-wc-group-create title="Create subsection">
+          Create
+        </button>
+      </div>
+
+      <div class="panel ereport-wc__nested" data-wc-group-fields hidden>
+        <label>
+          Subsection title
+          <input type="text" data-wc-group-title />
+        </label>
+        <label>
+          Concept
+          <textarea data-wc-group-concept rows="3"></textarea>
+        </label>
+        <button type="button" data-wc-group-save>Save subsection</button>
+      </div>
+
+      <div class="ereport-wc__row">
+        <label class="ereport-wc__grow">
+          Issue
+          <select data-wc-item></select>
+        </label>
+        <button type="button" class="ereport-wc__aside" data-wc-item-create title="Create issue">
+          Create
+        </button>
+      </div>
+
+      <div class="panel ereport-wc__nested" data-wc-item-fields hidden>
+        <label>
+          Name
+          <input type="text" data-wc-item-nombre />
+        </label>
+        <label>
+          Incidencia
+          <textarea data-wc-item-incidencia rows="4"></textarea>
+        </label>
+        <label>
+          Fecha incidencia
+          <input type="datetime-local" data-wc-item-fecha-inc />
+        </label>
+        <label>
+          Status
+          <select data-wc-item-status>
+            <option value="">(empty)</option>
+            <option value="reprobado">reprobado</option>
+            <option value="aprobado">aprobado</option>
+            <option value="no_aplica">no_aplica</option>
+          </select>
+        </label>
+        <label>
+          Solución
+          <textarea data-wc-item-solucion rows="3"></textarea>
+        </label>
+        <label>
+          Fecha solución
+          <input type="datetime-local" data-wc-item-fecha-sol />
+        </label>
+        <button type="button" data-wc-item-save>Save issue</button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  html[data-page="ereport-web-connector"] .app-header,
+  html[data-page="ereport-web-connector"] #main-menu,
+  html[data-page="ereport-web-connector"] #dynamic-header,
+  html[data-page="ereport-web-connector"] #agent-sidebar,
+  html[data-page="ereport-web-connector"] .app-header--end {
+    display: none !important;
+  }
+
+  html[data-page="ereport-web-connector"] main {
+    padding-top: var(--space-padding);
+    padding-inline: var(--main-inline);
+    margin: 0;
+  }
+
+  .ereport-wc {
+    gap: var(--rail-gap);
+  }
+
+  .ereport-wc__row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--rail-gap);
+  }
+
+  .ereport-wc__grow {
+    flex: 1;
+  }
+
+  .ereport-wc__aside {
+    flex-shrink: 0;
+    height: var(--control-height);
+  }
+
+  .ereport-wc__nested {
+    margin: 0;
+  }
+
+  .ereport-wc__cascade label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+
+  .ereport-wc__cascade select,
+  .ereport-wc__cascade input,
+  .ereport-wc__cascade textarea,
+  .ereport-wc__cascade button {
+    font-size: var(--font-size-md);
+  }
+
+  .ereport-wc__cascade select,
+  .ereport-wc__cascade input:not([type="checkbox"]) {
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+  }
+
+  .ereport-wc__cascade textarea {
+    min-height: var(--textarea-min-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+  }
+</style>
+
+<script>
+  import { startEreportWebConnector } from "../../lib/ereport-web-connector";
+
+  const root = document.querySelector("[data-ereport-web-connector]");
+  if (root instanceof HTMLElement) {
+    startEreportWebConnector(root);
+  }
+</script>
