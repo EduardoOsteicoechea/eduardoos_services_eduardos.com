@@ -127,6 +127,12 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     }
   }
 
+  // Practice image (if any) is its own Letter sheet — never under the 4-col quiz.
+  if (quizPracticeImage(doc)) {
+    pages.push(buildPracticeImagePage(doc));
+    hcLog("eoschool", "practice-image.page", { subject: doc.subject, week: doc.week });
+  }
+
   // Defensive: drop hero-only empty shells (cambio 2).
   const filtered = pages.filter((page) => !isHeroOnlyEmptyPage(page));
   if (filtered.length !== pages.length) {
@@ -652,12 +658,7 @@ function buildComboLessonQuizPage(
   page.append(band);
   if (questions.length) {
     const quizBand = el("div", "homescool-letter__quiz-band");
-    quizBand.append(
-      buildQuizList(doc, questions, startIndex, total, {
-        showLabel: true,
-        practiceBand: false,
-      }),
-    );
+    quizBand.append(buildQuizList(doc, questions, startIndex, total, { showLabel: true }));
     page.append(quizBand);
   }
   return page;
@@ -1056,7 +1057,7 @@ function buildQuizList(
   questions: EoschoolQuestion[],
   startIndex: number,
   total: number,
-  opts?: { showLabel?: boolean; practiceBand?: boolean },
+  opts?: { showLabel?: boolean },
 ): HTMLElement {
   const wrap = el("section", "homescool-letter__quiz-wrap");
   if (opts?.showLabel !== false) {
@@ -1083,10 +1084,6 @@ function buildQuizList(
     list.append(buildQuizItem(doc, q, startIndex + i));
   });
   wrap.append(list);
-  // Practice image band only on dedicated quiz sheets — on combo it steals the lower half.
-  if (!hasActivity && opts?.practiceBand !== false) {
-    wrap.append(buildQuizSheetPracticeBand(doc));
-  }
   return wrap;
 }
 
@@ -1161,9 +1158,11 @@ function quizPracticeImage(doc: EoschoolDocument): { src: string; alt: string } 
   return undefined;
 }
 
-function buildQuizSheetPracticeBand(doc: EoschoolDocument): HTMLElement {
+/** Full Letter sheet for the class practice image (never under the 4-col quiz). */
+function buildPracticeImagePage(doc: EoschoolDocument): HTMLElement {
+  const page = letterPage("homescool-letter-page--lesson", "homescool-letter-page--practice-image");
+  page.append(lessonHeader(doc, "Práctica visual"));
   const band = el("div", "homescool-letter__quiz-practice");
-  band.setAttribute("aria-hidden", "true");
   band.title = "Espacio para dibujar o copiar la práctica";
   const image = quizPracticeImage(doc);
   if (image) {
@@ -1171,10 +1170,10 @@ function buildQuizSheetPracticeBand(doc: EoschoolDocument): HTMLElement {
     img.className = "homescool-letter__quiz-practice-image";
     img.src = image.src;
     img.alt = image.alt;
-    band.removeAttribute("aria-hidden");
     band.append(img);
   }
-  return band;
+  page.append(band);
+  return page;
 }
 
 function buildWriteLines(): HTMLElement {
