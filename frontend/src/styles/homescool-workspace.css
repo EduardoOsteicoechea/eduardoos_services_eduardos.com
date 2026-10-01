@@ -893,7 +893,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   min-height: 11in;
   max-height: 11in;
   /* Letter page margin (viewer + PDF capture must match). */
-  --hc-page-margin: 0.75cm;
+  --hc-page-margin: 0.5cm;
   padding: var(--hc-page-margin);
   background: #ffffff;
   color: var(--hc-ink);
@@ -1019,6 +1019,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--combo .homescool-letter__lesson-band {
   flex: 0 1 auto;
+  /* Shrink with content; never claim more than half the sheet. */
+  max-height: 50%;
 }
 
 .homescool-letter__quiz-band {
@@ -1058,9 +1060,15 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__lesson-band .homescool-letter__point {
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.35rem;
   min-width: 0;
+}
+
+.homescool-letter__lesson-band .homescool-letter__point-title {
+  /* First title line shares the vertical center of the point badge. */
+  margin-top: calc((1.35rem - 1lh) / 2);
 }
 
 .homescool-letter__lesson-band .homescool-letter__point-copy {
@@ -2046,7 +2054,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   height: 11in;
   min-height: 11in;
   /* Inherit page margin from .homescool-letter-page; do not shrink it. */
-  padding: var(--hc-page-margin, 0.75cm);
+  padding: var(--hc-page-margin, 0.5cm);
   gap: 0.3rem;
   overflow: hidden;
   display: flex;
@@ -2386,16 +2394,33 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   /* Same 4-column quiz packing as dedicated quiz sheets. */
   flex: 1 1 auto;
   align-content: start;
+  align-items: stretch;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.22rem;
+  gap: 0.22rem 0.22rem;
 }
 
 .homescool-letter-page--combo .homescool-letter__q {
   --hc-q-num-size: 1.05rem;
-  padding: 0.2rem;
+  padding: 0.2rem 0.2rem 0.35rem;
   gap: 0;
-  height: auto;
+  height: 100%;
   min-height: 0;
+  align-self: stretch;
+  border-bottom: 0.06rem solid var(--hc-line);
+  box-sizing: border-box;
+}
+
+/* Last quiz row (q9–q12): stretch write lines to match tallest card. */
+.homescool-letter-page--combo .homescool-letter__q:nth-child(n + 9) {
+  display: flex;
+  flex-direction: column;
+}
+
+.homescool-letter-page--combo .homescool-letter__q:nth-child(n + 9) .homescool-letter__write-lines {
+  flex: 1 1 auto;
+  justify-content: space-between;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
 }
 
 .homescool-letter-page--practice-image {

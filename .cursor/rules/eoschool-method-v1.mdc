@@ -33,7 +33,7 @@ Edit cell JSON under `frontend/public/homescool/media/weekN/`, then `node script
 
 Do **not** ship a class that skips these. Full detail: `METHOD_V1.md` + `docs/specs/009-homescool-narrative-language.md`.
 
-1. **Two-column lesson stack** — FE lays out lesson boxes in **two CSS columns** on the Letter sheet (margin **0.75 cm**). Author short, scannable blocks (`##` + `**bold**`); keep Idea / Explora / Práctica / Error as separate blank-line paragraphs. Avoid bare «frente a» / «vs» unless you truly want a Contraste pair.
+1. **Two-column lesson stack** — FE lays out lesson boxes in **two CSS columns** on the Letter sheet (margin **0.5 cm**). Author short, scannable blocks (`##` + `**bold**`); keep Idea / Explora / Práctica / Error as separate blank-line paragraphs. Avoid bare «frente a» / «vs» unless you truly want a Contraste pair.
 2. **Day 2:** set `lesson.weekRecap` (short week overview; FE band ~5 cm) before the deepen point. No `priorDayRecap`.
 3. **Days 3–4:** set `lesson.weekRecap` (~5 cm) **and** `lesson.priorDayRecap` (~2.5 cm, previous day’s focus) before the deepen point.
 4. **Screening:** in bodies use `##` subtitle lines and `**bold**` key terms so the child can scan.
@@ -44,7 +44,7 @@ Do **not** ship a class that skips these. Full detail: `METHOD_V1.md` + `docs/sp
 ## UI / print
 
 - DHS: cycle tabs → week grid → day grid → subject grid → Print.
-- Stage: always stacked US Letter **portrait** pages; margin **0.75 cm** (`--hc-page-margin`); backend PDF capture must match.
+- Stage: always stacked US Letter **portrait** pages; margin **0.5 cm** (`--hc-page-margin`); backend PDF capture must match.
 - Lesson body: **two columns**; quiz MCQ choices have **no** border and **no** vertical padding.
 - Media v1: `frontend/public/homescool/media/`.
 

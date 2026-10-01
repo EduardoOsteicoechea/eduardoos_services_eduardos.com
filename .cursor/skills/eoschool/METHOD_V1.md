@@ -168,7 +168,7 @@ Legacy activity types (`crossword`, `wordsearch`, …) remain in the schema for 
 ## Presentation / print (always)
 
 - Frontend stage = **N** stacked **US Letter portrait** pages (`8.5in Ã— 11in`).
-- Page margin **0.75 cm** (`--hc-page-margin`; viewer and backend PDF capture must match).
+- Page margin **0.5 cm** (`--hc-page-margin`; viewer and backend PDF capture must match).
 - Lesson body: **two CSS columns**. Quiz MCQ choices: no border, no vertical padding.
 - Day 5: review + **expo prep** (two lined columns) on the **same** sheet; packing reserves the band.
 - Drawings: blank draw workspace only when Práctica text matches `practiceNeedsDraw` (dibuja/traza/bosqueja/colorea/pinta / draw/sketch/trace).

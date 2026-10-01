@@ -519,7 +519,10 @@ describe("renderEoschoolPages pagination", () => {
       pages.find((p) => p.classList.contains("homescool-letter-page--quiz")) ||
       pages.find((p) => p.classList.contains("homescool-letter-page--combo"));
     expect(host).toBeTruthy();
-    expect(host?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
+    expect(host?.querySelector(".homescool-letter__class-no")).toBeNull();
+    expect(host?.querySelector(".homescool-letter__heading")?.textContent).toMatch(
+      /^\d+ - .+ - .*Tiempos/,
+    );
     expect(host?.querySelector(".homescool-letter__kicker")).toBeNull();
     const meta = host?.querySelector(".homescool-letter__meta")?.textContent || "";
     expect(meta).toMatch(/c\d+ - s\d+ - d\d+ - esp - p\d+ - n\d+/);

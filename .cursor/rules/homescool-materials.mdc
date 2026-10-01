@@ -8,7 +8,7 @@ alwaysApply: false
 
 **METHOD_V1 is authoritative** for new content: [`.cursor/rules/eoschool-method-v1.mdc`](eoschool-method-v1.mdc) and `skills/eoschool/METHOD_V1.md`.
 
-New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (**0.75 cm** margin via `--hc-page-margin`); backend PDF matches.
+New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (**0.5 cm** margin via `--hc-page-margin`); backend PDF matches.
 
 **Kid clarity (authoring):** two-column lesson stack; day 2–4 `weekRecap` / day 3–4 `priorDayRecap`; `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` video on **every** class; `##` + `**bold**` screening; extra examples on language subjects. See `eoschool-method-v1.mdc` § Kid clarity.
 

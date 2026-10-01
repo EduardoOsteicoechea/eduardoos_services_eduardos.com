@@ -242,6 +242,11 @@ function finalizeLessonBand(band: HTMLElement): void {
   if (!items.length) return;
   if (typeof document === "undefined" || !document.body) return;
 
+  const page = band.closest(".homescool-letter-page") as HTMLElement | null;
+  const pageH = page?.clientHeight || page?.offsetHeight || 0;
+  // Class band may shrink with content; never exceed half the Letter sheet.
+  const maxH = pageH > 0 ? Math.floor(pageH * 0.5) : 0;
+
   const bandW = band.clientWidth || band.offsetWidth || 0;
   const gapPx = (() => {
     const raw = getComputedStyle(band).columnGap || getComputedStyle(band).gap || "0";
@@ -265,14 +270,17 @@ function finalizeLessonBand(band: HTMLElement): void {
 
   // Half of narrow-column stack (+ slack for break-inside:avoid chunks).
   let target = Math.max(1, Math.ceil(stack / 2) + 12);
+  if (maxH > 0) target = Math.min(target, maxH);
   band.style.columnCount = "2";
   band.style.columnFill = "balance";
   band.style.height = `${target}px`;
+  if (maxH > 0) band.style.maxHeight = `${maxH}px`;
   void band.offsetHeight;
 
-  // Grow until no overflow columns (scrollWidth would exceed the band).
+  // Grow until no overflow columns (scrollWidth would exceed the band), capped at maxH.
   for (let i = 0; i < 48 && band.scrollWidth > band.clientWidth + 1; i++) {
-    target += 20;
+    if (maxH > 0 && target >= maxH) break;
+    target = maxH > 0 ? Math.min(target + 20, maxH) : target + 20;
     band.style.height = `${target}px`;
     void band.offsetHeight;
   }
@@ -1545,17 +1553,19 @@ export function enumerateLetterPageCodes(doc: EoschoolDocument, pages: HTMLEleme
 function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTMLElement {
   const head = el("header", "homescool-letter__hero");
   const classNo = subjectClassNumber(doc.subject);
+  const materia = subjectDisplayName(doc.subject);
+  // "N - <Materia> - <Titulo de clase>" (no boxed class-no).
+  const rawTitle = String(doc.title || "").trim().replace(/^\d+\s*[-–—.]?\s*/, "");
+  let title = rawTitle;
   if (classNo > 0) {
-    const num = el("span", "homescool-letter__class-no", String(classNo));
-    num.setAttribute("aria-label", `Clase número ${classNo}`);
-    head.append(num);
+    title = rawTitle
+      ? `${classNo} - ${materia} - ${rawTitle}`
+      : `${classNo} - ${materia}`;
+  } else if (materia && rawTitle) {
+    title = `${materia} - ${rawTitle}`;
+  } else {
+    title = rawTitle || materia;
   }
-  // Title always leads with the subject class number, then the topic name.
-  const rawTitle = String(doc.title || "").trim();
-  const title =
-    classNo > 0 && !new RegExp(`^${classNo}\\b`).test(rawTitle)
-      ? `${classNo} ${rawTitle}`
-      : rawTitle || (classNo > 0 ? String(classNo) : "");
   head.append(el("h2", "homescool-letter__heading", title));
   const extras: string[] = [];
   if (kicker.trim() && !isLessonKindKicker(kicker)) extras.push(kicker.trim());

@@ -6,7 +6,7 @@
 
 import type { EoschoolDocument } from "./homescool";
 import { mustLog } from "./dev-log";
-import { subjectClassNumber } from "./homescool-subjects";
+import { subjectClassNumber, subjectDisplayName } from "./homescool-subjects";
 
 type Level = { label: string; tables: number[] };
 
@@ -78,16 +78,17 @@ function buildMatPage(doc: EoschoolDocument, mode: "read" | "practice", density:
   const header = document.createElement("header");
   header.className = "homescool-mat__header";
   const classNo = subjectClassNumber(doc.subject);
-  if (classNo > 0) {
-    const num = document.createElement("span");
-    num.className = "homescool-letter__class-no homescool-mat__class-no";
-    num.textContent = String(classNo);
-    num.setAttribute("aria-label", `Clase número ${classNo}`);
-    header.append(num);
-  }
+  const materia = subjectDisplayName(doc.subject);
+  const rawTitle = String(doc.title || "").trim().replace(/^\d+\s*[-–—.]?\s*/, "");
   const heading = document.createElement("h2");
   heading.className = "homescool-mat__heading";
-  heading.textContent = doc.title;
+  if (classNo > 0) {
+    heading.textContent = rawTitle
+      ? `${classNo} - ${materia} - ${rawTitle}`
+      : `${classNo} - ${materia}`;
+  } else {
+    heading.textContent = rawTitle || materia;
+  }
   const meta = document.createElement("span");
   meta.className = "homescool-mat__meta";
   meta.dataset.metaExtra = `tablas ${matTableRangeLabel(doc.week)} · ${mode === "read" ? "hoja 1 · leer/cantar" : "hoja 2 · practicar"}`;
