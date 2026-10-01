@@ -958,13 +958,14 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__deepen-panel {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  height: auto;
   min-height: 0;
   padding: 0.4rem;
   border-radius: 0.35rem;
   border: 0.08rem solid var(--hc-blue);
   background: transparent;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .homescool-letter__rich {
@@ -1123,7 +1124,9 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   border: 0.08rem solid var(--hc-line);
   background: transparent;
   min-width: 0;
-  overflow: hidden;
+  flex: 0 0 auto;
+  height: auto;
+  overflow: visible;
 }
 
 .homescool-letter__mppe {
@@ -1176,19 +1179,20 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__memory {
   border-color: var(--hc-orange);
-  min-height: 1.8cm;
+  min-height: 0;
+  max-height: none;
 }
 
 .homescool-letter__week-recap {
   border-color: var(--hc-navy);
-  height: 5cm;
-  max-height: 5cm;
+  min-height: 0;
+  max-height: none;
 }
 
 .homescool-letter__prior-recap {
   border-color: var(--hc-olive);
-  height: 2.5cm;
-  max-height: 2.5cm;
+  min-height: 0;
+  max-height: none;
 }
 
 .homescool-letter__memory-label,
@@ -1254,7 +1258,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--deepen .homescool-letter__stack {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
