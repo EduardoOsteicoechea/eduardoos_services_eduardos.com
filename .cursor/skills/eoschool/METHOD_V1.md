@@ -181,29 +181,25 @@ Legacy activity types (`crossword`, `wordsearch`, …) remain in the schema for 
   "level": 6,
   "subject": "mat",
   "locale": "es",
-  "title": "…",
-  "supportUrl": "https://www.youtube.com/watch?v=…",
+  "title": "â€¦",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
-      { "id": "p1", "heading": "…", "body": "…" },
-      { "id": "p2", "heading": "…", "body": "…" },
-      { "id": "p3", "heading": "…", "body": "…" }
+      { "id": "p1", "heading": "â€¦", "body": "â€¦" },
+      { "id": "p2", "heading": "â€¦", "body": "â€¦" },
+      { "id": "p3", "heading": "â€¦", "body": "â€¦" }
     ],
-    "summary": "…",
-    "memoryPhrase": "… (esp/ing/lat/his/LT/geo/cie every day)",
-    "weekRecap": "… (days 2–4)",
-    "priorDayRecap": "… (days 3–4)"
+    "summary": "â€¦"
   },
   "quiz": {
-    "questionCount": 16,
+    "questionCount": 8,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "…",
+        "prompt": "â€¦",
         "choices": ["A", "B", "C", "D"],
         "answer": "A"
       }
@@ -219,9 +215,8 @@ Legacy activity types (`crossword`, `wordsearch`, …) remain in the schema for 
 - `cycle` ∈ 1..3; `week` ∈ 1..24; `day` ∈ 1..5; `level` must be `6` (v1); `subject` ∈ the 12 codes (case-sensitive for `LT`, lowercase otherwise).
 - Logical key: `owner + cycle + week + day + level + subject` (no free slug).
 - `day == 1` → `lesson.kind == "intro"`, exactly 3 points, `summary` required, `focusPoint` null; letter-quiz mcq/write mix above.
-- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block; **authoring must** include `weekRecap` (day 2+) and `priorDayRecap` (day 3+).
-- `day == 4` → `kind == "deepen"`, `focusPoint == 3`; same recap fields as day 3.
-- Authoring (agents): `supportUrl` on every cell; `memoryPhrase` on esp/ing/lat/his/LT/geo/cie every day; bodies use `##` + `**bold**`; language subjects include many worked examples.
+- `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block.
+- `day == 4` → `kind == "deepen"`, `focusPoint == 3`.
 - `day == 5` → `kind == "review"`, exactly **5** point blocks (except `pro`: ≥1).
 - `quiz.questionCount` / `questions.length`: **always 16** (12 mcq + 4 write, mix above).
 - Question `type`: **`mcq`** | **`write`** | **`crossword`** | **`wordsearch`** | **`match`** | **`draw_image`** | **`draw_box`** | **`grid_mark`**. Payload required per type (see table above). Count must match the week/day total.
