@@ -91,11 +91,11 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 
 | Day | Lesson | Quiz |
 | --- | --- | --- |
-| 1 | **Intro:** exactly **3 points** + **summary** | **16** items (12 mcq + 4 write; all `originDay: 1`) |
-| 2 | **Deepen** point 1 of day 1 — open with **weekRecap** (~5 cm) | **16** items (6 mcq day 1 + 6 mcq day 2 + 4 write) |
-| 3 | **Deepen** point 2 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **16** items (6+6+4) |
-| 4 | **Deepen** point 3 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **16** items (6+6+4) |
-| 5 | **Review:** five overview blocks | **16** items (6+6+4; shuffle prior MCQ into the 12 slots) |
+| 1 | **Intro:** exactly **3 points** + **summary** | **12** items (8 mcq + 4 write; all `originDay: 1`) |
+| 2 | **Deepen** point 1 of day 1 — open with **weekRecap** (~5 cm) | **12** items (2 mcq review + 6 mcq day 2 + 4 write) |
+| 3 | **Deepen** point 2 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **12** items (2 review + 6 today + 4 write) |
+| 4 | **Deepen** point 3 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **12** items (2 review + 6 today + 4 write) |
+| 5 | **Review:** five overview blocks | **12** items (2 review + 6 today + 4 write) |
 
 **Kid screening (mandatory):** lesson boxes pack in **two columns** on the Letter sheet (margin **0.75 cm**). Use `##` subtitles and `**bold**` key ideas inside bodies. Subjects `esp`, `ing`, `lat`, `his`, `LT`, `geo`, `cie` set `lesson.memoryPhrase` every day. **Every** class must set `supportUrl` to one age-appropriate (~8yo) educational http(s) video.
 
@@ -106,7 +106,7 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 | Day | `pro` lesson |
 | --- | --- |
 | **1** | **Full explanation only here:** purpose, materials/procedure, why it works (3 points + summary). |
-| **2–4** | Short **continuation / lab time** (1 point): same project, no new experiment, no re-teach of the whole intro. Quiz stays **16** items/day (letter sheet). |
+| **2–4** | Short **continuation / lab time** (1 point): same project, no new experiment, no re-teach of the whole intro. Quiz stays **12** items/day (letter sheet). |
 | **5** | Brief wrap + **expo prep** (1 point). FE adds **two lined columns under the review** on the same Letter sheet (not a separate expo page). Do **not** emit five panorama re-hashes of the experiment. API: `pro` day 5 accepts **>= 1** overview point; other subjects still require **exactly 5**. |
 
 Student-facing rule: day 1 teaches; the rest of the week **works and presents** that same project.
@@ -126,11 +126,11 @@ For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checkli
 
 ### Quiz sheet rule
 
-**Every published day (weeks 1–2 and forward):** one fixed **16**-item Letter quiz that fills one question sheet:
+**Every published day (weeks 1–2 and forward):** one fixed **12**-item Letter quiz that fits under the class on the same sheet:
 
-- **12 `mcq`** + **4 `write`** (citation / reflection).
-- Day **1**: all 12 mcq have `originDay == 1`.
-- Days **2–5**: **6** mcq from day 1 + **6** mcq from the current day; the 4 write items use `originDay == day`.
+- **8 `mcq`** + **4 `write`** (citation / reflection).
+- Day **1**: all 8 mcq have `originDay == 1`.
+- Days **2–5**: **2** review mcq (`originDay` from a prior day) + **6** mcq from the current day; the 4 write items use `originDay == day`.
 - Write prompts must make the student **search the class text**, copy an **exact phrase in quotes**, and **explain** what they understood (e.g. «Escribe entre comillas las palabras exactas del punto N donde dice… y explica qué entendiste»).
 
 ### Adapting quizzes for the age band
@@ -223,7 +223,7 @@ Legacy activity types (`crossword`, `wordsearch`, …) remain in the schema for 
 - `day` ∈ 2..3 → `kind == "deepen"`, `focusPoint == day - 1`, ≥1 point block.
 - `day == 4` → `kind == "deepen"`, `focusPoint == 3`.
 - `day == 5` → `kind == "review"`, exactly **5** point blocks (except `pro`: ≥1).
-- `quiz.questionCount` / `questions.length`: **always 16** (12 mcq + 4 write, mix above).
+- `quiz.questionCount` / `questions.length`: **always 12** (8 mcq + 4 write, mix above).
 - Question `type`: **`mcq`** | **`write`** | **`crossword`** | **`wordsearch`** | **`match`** | **`draw_image`** | **`draw_box`** | **`grid_mark`**. Payload required per type (see table above). Count must match the week/day total.
 
 ### Activity type examples (one slot each)

@@ -159,10 +159,10 @@ func eoschoolSubjectOK(subject string) bool {
 }
 
 func eoschoolExpectedQuizCount(day, week int) int {
-	// Every published day: one Letter quiz sheet — 12 mcq + 4 write = 16.
+	// Every published day: 8 mcq + 4 write = 12 (fits under class on one Letter sheet).
 	_ = day
 	_ = week
-	return 16
+	return 12
 }
 
 func eoschoolMediaIDSet(media []EoschoolMedia) map[string]struct{} {
@@ -298,20 +298,20 @@ func validateEoschoolQuestionPayload(i int, q *EoschoolQuestion, mediaIDs map[st
 	return nil
 }
 
-// Letter quiz (all weeks): 12 mcq + 4 write. Day 1: all mcq from day 1.
-// Days 2–5: 6 mcq from day 1 + 6 mcq from the current day; write = current day.
+// Letter quiz (all weeks): 8 mcq + 4 write. Day 1: all mcq from day 1.
+// Days 2–5: 2 review mcq (prior day) + 6 mcq from the current day; write = current day.
 func validateEoschoolLetterQuizMix(doc *EoschoolDocument) error {
-	mcqDay1, mcqToday, writeN := 0, 0, 0
+	mcqReview, mcqToday, writeN := 0, 0, 0
 	for i, q := range doc.Quiz.Questions {
 		typ := strings.TrimSpace(strings.ToLower(q.Type))
 		switch typ {
 		case "mcq":
-			if q.OriginDay == 1 {
-				mcqDay1++
-			} else if q.OriginDay == doc.Day {
+			if q.OriginDay == doc.Day {
 				mcqToday++
+			} else if q.OriginDay >= 1 && q.OriginDay < doc.Day {
+				mcqReview++
 			} else {
-				return fmt.Errorf("quiz.questions[%d].originDay must be 1 or %d for letter-quiz mcq", i, doc.Day)
+				return fmt.Errorf("quiz.questions[%d].originDay must be a prior day or %d for letter-quiz mcq", i, doc.Day)
 			}
 		case "write":
 			if q.OriginDay != doc.Day {
@@ -326,13 +326,13 @@ func validateEoschoolLetterQuizMix(doc *EoschoolDocument) error {
 		return fmt.Errorf("letter quiz needs exactly 4 write questions, got %d", writeN)
 	}
 	if doc.Day == 1 {
-		if mcqDay1 != 12 || mcqToday != 0 {
-			return fmt.Errorf("day 1 needs 12 mcq from day 1, got day1=%d other=%d", mcqDay1, mcqToday)
+		if mcqToday != 8 || mcqReview != 0 {
+			return fmt.Errorf("day 1 needs 8 mcq from day 1, got today=%d review=%d", mcqToday, mcqReview)
 		}
 		return nil
 	}
-	if mcqDay1 != 6 || mcqToday != 6 {
-		return fmt.Errorf("day %d needs 6 mcq from day 1 and 6 from day %d, got day1=%d today=%d", doc.Day, doc.Day, mcqDay1, mcqToday)
+	if mcqReview != 2 || mcqToday != 6 {
+		return fmt.Errorf("day %d needs 2 review mcq and 6 from day %d, got review=%d today=%d", doc.Day, doc.Day, mcqReview, mcqToday)
 	}
 	return nil
 }

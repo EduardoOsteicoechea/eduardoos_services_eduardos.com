@@ -129,22 +129,22 @@ func TestValidateEoschoolDocumentWeek2Day3Sheet(t *testing.T) {
 }
 
 func fillLetterQuizDay(doc *EoschoolDocument, day int) {
-	doc.Quiz.QuestionCount = 16
-	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
-	for i := 0; i < 6; i++ {
+	doc.Quiz.QuestionCount = 12
+	doc.Quiz.Questions = make([]EoschoolQuestion, 12)
+	for i := 0; i < 2; i++ {
 		doc.Quiz.Questions[i] = EoschoolQuestion{
 			ID: "q1", OriginDay: 1, Type: "mcq", Prompt: "p?",
 			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
 		}
 	}
 	for i := 0; i < 6; i++ {
-		doc.Quiz.Questions[6+i] = EoschoolQuestion{
+		doc.Quiz.Questions[2+i] = EoschoolQuestion{
 			ID: "qd", OriginDay: day, Type: "mcq", Prompt: "p?",
 			Choices: []string{"a", "b", "c", "d"}, Answer: "a",
 		}
 	}
 	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[12+i] = EoschoolQuestion{
+		doc.Quiz.Questions[8+i] = EoschoolQuestion{
 			ID: "w", OriginDay: day, Type: "write", Prompt: "cita y explica?",
 		}
 	}
@@ -175,9 +175,9 @@ func sampleEoschoolDay1() EoschoolDocument {
 			Summary: "Memorizar productos 1×1 a 12×12.",
 		},
 	}
-	doc.Quiz.QuestionCount = 16
-	doc.Quiz.Questions = make([]EoschoolQuestion, 16)
-	for i := 0; i < 12; i++ {
+	doc.Quiz.QuestionCount = 12
+	doc.Quiz.Questions = make([]EoschoolQuestion, 12)
+	for i := 0; i < 8; i++ {
 		doc.Quiz.Questions[i] = EoschoolQuestion{
 			ID:        "q",
 			OriginDay: 1,
@@ -188,7 +188,7 @@ func sampleEoschoolDay1() EoschoolDocument {
 		}
 	}
 	for i := 0; i < 4; i++ {
-		doc.Quiz.Questions[12+i] = EoschoolQuestion{
+		doc.Quiz.Questions[8+i] = EoschoolQuestion{
 			ID: "w", OriginDay: 1, Type: "write", Prompt: "Escribe tu idea",
 		}
 	}

@@ -4,7 +4,6 @@
 import { describe, expect, it } from "vitest";
 import type { EoschoolDocument } from "./homescool";
 import {
-  balanceColumnCut,
   classifyLessonParas,
   packLessonBatches,
   packLessonBlocksExpanding,
@@ -12,16 +11,6 @@ import {
   type LessonPageBlock,
 } from "./homescool-eoschool";
 import { calculateLetterPages } from "./homescool-letter-layout";
-
-describe("balanceColumnCut", () => {
-  it("splits so both columns get content when there are 2+ items", () => {
-    expect(balanceColumnCut([10])).toBe(1);
-    expect(balanceColumnCut([10, 10])).toBe(1);
-    expect(balanceColumnCut([100, 10, 10, 10])).toBe(1);
-    expect(balanceColumnCut([10, 10, 10, 100])).toBe(3);
-    expect(balanceColumnCut([20, 20, 20, 20])).toBe(2);
-  });
-});
 
 describe("classifyLessonParas", () => {
   it("marks lead, cards, practice and error for deepen bodies", () => {
@@ -183,7 +172,7 @@ describe("lesson rich layout", () => {
     expect(pages.some((p) => p.classList.contains("homescool-letter-page--expo"))).toBe(false);
   });
 
-  it("packs intro points into two balanced lesson columns (not zigzag 1+3 / 2)", () => {
+  it("flows the lesson band as balanced CSS columns (height pinned for split)", () => {
     const doc = baseDoc({
       lesson: {
         kind: "intro",
@@ -221,28 +210,21 @@ describe("lesson rich layout", () => {
       },
     });
     const pages = renderEoschoolPages(doc);
-    const band = pages[0].querySelector(".homescool-letter__lesson-band");
-    const colA = band?.querySelector(":scope > .homescool-letter__col--a");
-    const colB = band?.querySelector(":scope > .homescool-letter__col--b");
-    expect(colA).toBeTruthy();
-    expect(colB).toBeTruthy();
-    expect(colA?.children.length ?? 0).toBeGreaterThan(0);
-    expect(colB?.children.length ?? 0).toBeGreaterThan(0);
-    // Sequential cut: point 1 stays whole in one column; not zigzag 1+3 vs 2.
-    const pointsInA = colA?.querySelectorAll(".homescool-letter__point").length ?? 0;
-    const pointsInB = colB?.querySelectorAll(".homescool-letter__point").length ?? 0;
-    expect(pointsInA + pointsInB).toBe(3);
-    expect(Math.abs(pointsInA - pointsInB)).toBeLessThanOrEqual(1);
+    const band = pages[0].querySelector<HTMLElement>(".homescool-letter__lesson-band");
+    expect(band).toBeTruthy();
+    expect(band?.querySelector(":scope > .homescool-letter__col--a")).toBeFalsy();
+    expect(band?.style.height).toMatch(/px$/);
+    expect(band?.querySelectorAll(".homescool-letter__point").length).toBe(3);
   });
 
   it("puts deepen class and quiz on one combo Letter page (lesson band + quiz band)", () => {
-    const questions = Array.from({ length: 16 }, (_, i) => ({
+    const questions = Array.from({ length: 12 }, (_, i) => ({
       id: `q${i + 1}`,
-      originDay: 1 as const,
-      type: "mcq" as const,
+      originDay: (i < 2 ? 1 : 3) as 1 | 3,
+      type: (i < 8 ? "mcq" : "write") as "mcq" | "write",
       prompt: `Pregunta ${i + 1}?`,
-      choices: ["a", "b", "c", "d"],
-      answer: "a",
+      choices: i < 8 ? ["a", "b", "c", "d"] : undefined,
+      answer: i < 8 ? "a" : undefined,
     }));
     const doc = baseDoc({
       day: 3,
@@ -266,7 +248,7 @@ describe("lesson rich layout", () => {
         priorDayRecap: "Ayer vimos sustantivos.",
         memoryPhrase: "Sustantivo, verbo, adjetivo",
       },
-      quiz: { questionCount: 16, questions },
+      quiz: { questionCount: 12, questions },
     });
     const pages = renderEoschoolPages(doc);
     const combo = pages.find((p) => p.classList.contains("homescool-letter-page--combo"));
@@ -275,7 +257,7 @@ describe("lesson rich layout", () => {
     expect(combo?.querySelector(".homescool-letter__quiz-band")).toBeTruthy();
     const inlineQs = combo?.querySelectorAll(".homescool-letter__q").length ?? 0;
     expect(inlineQs).toBeGreaterThan(0);
-    expect(inlineQs).toBeLessThanOrEqual(16);
+    expect(inlineQs).toBeLessThanOrEqual(12);
   });
 });
 

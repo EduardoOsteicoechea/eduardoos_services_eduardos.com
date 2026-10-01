@@ -211,29 +211,6 @@ export function packLessonBatches(
   return batches;
 }
 
-/**
- * Split items across two columns with a single cut so left+right heights stay close
- * while preserving reading order (finish the left column, then the right).
- */
-export function balanceColumnCut(heights: readonly number[]): number {
-  const n = heights.length;
-  if (n <= 1) return n;
-  if (n === 2) return 1;
-  const total = heights.reduce((a, b) => a + b, 0);
-  let left = 0;
-  let bestK = 1;
-  let bestDiff = Number.POSITIVE_INFINITY;
-  for (let k = 1; k < n; k++) {
-    left += heights[k - 1]!;
-    const diff = Math.abs(left - (total - left));
-    if (diff < bestDiff) {
-      bestDiff = diff;
-      bestK = k;
-    }
-  }
-  return bestK;
-}
-
 function flattenLessonBandItems(band: HTMLElement): HTMLElement[] {
   const out: HTMLElement[] = [];
   const visit = (node: HTMLElement) => {
@@ -241,7 +218,8 @@ function flattenLessonBandItems(band: HTMLElement): HTMLElement[] {
       if (
         child.classList.contains("homescool-letter__stack") ||
         child.classList.contains("homescool-letter__deepen-panel") ||
-        child.classList.contains("homescool-letter__rich")
+        child.classList.contains("homescool-letter__rich") ||
+        child.classList.contains("homescool-letter__col")
       ) {
         visit(child);
         continue;
@@ -253,43 +231,31 @@ function flattenLessonBandItems(band: HTMLElement): HTMLElement[] {
   return out;
 }
 
-function measureBandItemHeights(items: readonly HTMLElement[]): number[] {
-  if (!items.length) return [];
-  if (typeof document === "undefined" || !document.body) {
-    return items.map((node) => Math.max(40, (node.textContent || "").length));
-  }
-  const host = document.createElement("div");
-  host.setAttribute("data-homescool-measure", "1");
-  host.style.cssText =
-    "position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none;width:3.7in;box-sizing:border-box;";
-  const probe = document.createElement("div");
-  probe.style.cssText = "display:flex;flex-direction:column;gap:0.3rem;width:100%;";
-  host.append(probe);
-  document.body.append(host);
-  const heights = items.map((item) => {
-    probe.append(item);
-    void probe.offsetHeight;
-    const h = item.getBoundingClientRect().height || item.offsetHeight || 1;
-    probe.removeChild(item);
-    return Math.max(1, h);
-  });
-  host.remove();
-  return heights;
-}
-
-/** Pack band children into two equal-height columns (left then right reading order). */
+/**
+ * Continuous 2-column newspaper flow: unwrap wrappers, then pin band height to
+ * ~half the single-column stack so CSS `column-fill: balance` lets a section
+ * start in column 1 and continue in column 2.
+ */
 function finalizeLessonBand(band: HTMLElement): void {
   const items = flattenLessonBandItems(band);
-  if (!items.length) {
-    band.replaceChildren();
-    return;
+  band.replaceChildren(...items);
+  if (!items.length) return;
+  if (typeof document === "undefined" || !document.body) return;
+
+  band.style.columnCount = "1";
+  band.style.height = "auto";
+  band.style.maxHeight = "none";
+  void band.offsetHeight;
+  let full = band.scrollHeight;
+  // jsdom / headless often reports ~0; estimate from text so print path still pins height.
+  if (full < 8) {
+    const chars = (band.textContent || "").length;
+    full = Math.max(120, Math.ceil(chars * 0.35));
   }
-  const cut = balanceColumnCut(measureBandItemHeights(items));
-  const colA = el("div", "homescool-letter__col homescool-letter__col--a");
-  const colB = el("div", "homescool-letter__col homescool-letter__col--b");
-  for (const item of items.slice(0, cut)) colA.append(item);
-  for (const item of items.slice(cut)) colB.append(item);
-  band.replaceChildren(colA, colB);
+  // Half height (+ tiny slack) forces both columns; content may split mid-section.
+  const half = Math.max(1, Math.ceil(full / 2) + 2);
+  band.style.columnCount = "";
+  band.style.height = `${half}px`;
 }
 
 function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
@@ -755,10 +721,7 @@ function buildComboLessonQuizPage(
 function maxComboQuizCount(doc: EoschoolDocument, questions: EoschoolQuestion[]): number {
   if (!questions.length) return 0;
   if (typeof document === "undefined" || !document.body) {
-    // SSR/fallback: deepen/review usually leave room for a full 16-item sheet half.
-    const kind = doc.lesson?.kind;
-    if (kind === "deepen") return Math.min(questions.length, 16);
-    if (kind === "intro") return Math.min(questions.length, 8);
+    // SSR/fallback: combo sheet targets 12 items (8 mcq + 4 write).
     return Math.min(questions.length, 12);
   }
   let lo = 0;
@@ -795,9 +758,6 @@ function comboSliceFits(doc: EoschoolDocument, questions: EoschoolQuestion[]): b
   const scroll = page.scrollHeight;
   page.remove();
   if (client < 8) {
-    const kind = doc.lesson?.kind;
-    if (kind === "deepen") return questions.length <= 16;
-    if (kind === "intro") return questions.length <= 8;
     return questions.length <= 12;
   }
   return scroll <= client + 1;

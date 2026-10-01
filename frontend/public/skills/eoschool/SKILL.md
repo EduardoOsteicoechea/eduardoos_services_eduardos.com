@@ -79,7 +79,7 @@ python .eoschool/eoschool_client.py request POST /api/v1/homescool/materials --f
       "priorDayRecap": "… (required days 3–4)"
     },
     "quiz": {
-      "questionCount": 16,
+      "questionCount": 12,
       "questions": []
     },
     "media": []

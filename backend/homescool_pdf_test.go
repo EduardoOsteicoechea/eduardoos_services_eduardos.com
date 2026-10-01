@@ -71,8 +71,7 @@ func TestInlineQuizPrintCapacityDeepen(t *testing.T) {
 	doc.Lesson.FocusPoint = &fp
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Deep", Body: "Short deepen body."}}
-	doc.Quiz.QuestionCount = 16
-	doc.Quiz.Questions = append(append([]EoschoolQuestion{}, doc.Quiz.Questions...), doc.Quiz.Questions...)
+	doc.Quiz.QuestionCount = 12
 	if got := inlineQuizPrintCapacity(doc); got != 0 {
 		t.Fatalf("deepen inline=%d want 0", got)
 	}

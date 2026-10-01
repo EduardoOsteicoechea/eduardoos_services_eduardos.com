@@ -1004,29 +1004,19 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 /*
- * Lesson band: two explicit columns packed by height (JS finalizeLessonBand)
- * so left and right grow together. Reading order = left column, then right.
+ * Lesson band: CSS multicol with balanced fill. JS finalizeLessonBand pins
+ * height to ~½ single-column stack so a section can split across columns.
  */
 .homescool-letter__lesson-band {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  column-count: 2;
   column-gap: 0.45rem;
-  row-gap: 0.3rem;
-  align-items: start;
-  align-content: start;
+  column-fill: balance;
   flex: 0 1 auto;
   min-height: 0;
 }
 
 .homescool-letter-page--combo .homescool-letter__lesson-band {
   flex: 0 1 auto;
-}
-
-.homescool-letter__lesson-band > .homescool-letter__col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  min-width: 0;
 }
 
 .homescool-letter__quiz-band {
@@ -1041,6 +1031,27 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--combo {
   gap: 0.25rem;
+}
+
+/* Allow points/boxes to break across columns so both sides grow equally. */
+.homescool-letter__lesson-band .homescool-letter__point,
+.homescool-letter__lesson-band .homescool-letter__box,
+.homescool-letter__lesson-band .homescool-letter__memory,
+.homescool-letter__lesson-band .homescool-letter__week-recap,
+.homescool-letter__lesson-band .homescool-letter__prior-recap,
+.homescool-letter__lesson-band .homescool-letter__summary,
+.homescool-letter__lesson-band .homescool-letter__ribbon,
+.homescool-letter__lesson-band .homescool-letter__mppe {
+  break-inside: auto;
+  -webkit-column-break-inside: auto;
+}
+
+/* Keep interactive strips whole when possible (lines / draw box). */
+.homescool-letter__lesson-band .homescool-letter__practice-workspace,
+.homescool-letter__lesson-band .homescool-letter__box-label,
+.homescool-letter__lesson-band .homescool-letter__point-badge {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
 }
 
 .homescool-letter__lesson-band .homescool-letter__point {
