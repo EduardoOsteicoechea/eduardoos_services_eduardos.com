@@ -8,16 +8,17 @@ alwaysApply: false
 
 **METHOD_V1 is authoritative** for new content: [`.cursor/rules/eoschool-method-v1.mdc`](eoschool-method-v1.mdc) and `skills/eoschool/METHOD_V1.md`.
 
-New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (1 cm margin); backend PDF matches.
+New materials are `.eoschool` JSON (not free-form HTML). Level 6 only. DHS navigation: cycle → week → day → subject → Print. Stage = stacked US Letter portrait pages (**0.75 cm** margin via `--hc-page-margin`); backend PDF matches.
 
-**Kid clarity (authoring):** full-width lesson boxes; day 2–4 `weekRecap` / day 3–4 `priorDayRecap`; `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` video; `##` + `**bold**` screening; extra examples on language subjects. See `eoschool-method-v1.mdc` § Kid clarity.
+**Kid clarity (authoring):** two-column lesson stack; day 2–4 `weekRecap` / day 3–4 `priorDayRecap`; `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` video on **every** class; `##` + `**bold**` screening; extra examples on language subjects. See `eoschool-method-v1.mdc` § Kid clarity.
 
 ## Letter pagination (mandatory — no empty pages)
 
 - Never emit a Letter page that is only the hero/header with no lesson, quiz, support, or expo content.
 - Pack lesson blocks and quiz items to **fill** the usable Letter area before opening a new page (DOM measure when available).
-- Day 5 appends a final expo page with writing lines every **0.75 cm**.
-- Minimum body font on Letter sheets: **0.3 cm** size with **0.3 cm** line-height (half of the prior 0.6 cm line box). Practice boxes include a **0.75 cm** outline check circle and a reverse-side hint.
+- Day 5: review class + **expo prep** (two lined columns) on the **same** sheet — not a separate expo page. Packing reserves the expo band.
+- Drawings: blank draw workspace only when Práctica text matches `practiceNeedsDraw` (dibuja/traza/bosqueja/colorea/pinta / draw/sketch/trace).
+- Minimum body font on Letter sheets: **0.3 cm × 0.89** (`--hc-fs`). Practice boxes include a **0.75 cm** outline check circle and a reverse-side hint.
 - Subject menu / class number order: `teb exe LT his geo art mat esp ing lat cie pro` (1–12).
 
 ## Letter sheet print style (mandatory)

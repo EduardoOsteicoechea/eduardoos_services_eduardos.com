@@ -25,8 +25,8 @@ function lockLetterGeometry(page: HTMLElement): () => void {
   page.style.height = "11in";
   page.style.minHeight = "11in";
   page.style.maxHeight = "11in";
-  // Force METHOD_V1 margin even if a cascade override shrank padding.
-  page.style.padding = "1cm";
+  // Force Letter margin even if a cascade override shrank padding.
+  page.style.padding = "0.75cm";
   page.style.transform = "none";
   page.style.overflow = "hidden";
   page.style.boxShadow = "none";

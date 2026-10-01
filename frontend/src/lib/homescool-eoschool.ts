@@ -39,6 +39,8 @@ export type { HomescoolSubject };
 function inlineQuizCapacity(doc: EoschoolDocument): number {
   const kind = doc.lesson?.kind;
   if (kind === "deepen") return 0;
+  // Day 5 keeps the sheet for review + expo prep lines (no inline quiz).
+  if (doc.day === 5) return 0;
   if (kind === "review") {
     const points = doc.lesson?.points ?? [];
     const chars = points.reduce((n, p) => n + (p.body?.length ?? 0) + (p.heading?.length ?? 0), 0);
@@ -48,7 +50,7 @@ function inlineQuizCapacity(doc: EoschoolDocument): number {
   return 0;
 }
 
-/** Build letter-portrait DOM pages for lesson + quiz (+ d5 expo). */
+/** Build letter-portrait DOM pages for lesson + quiz (+ d5 expo prep under review). */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   hcLog("eoschool", "render.start", {
     subject: doc.subject,
@@ -64,7 +66,10 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
 
   if (isMatTablesLayout(doc)) {
     const pages = renderMatTablesPages(doc);
-    if (doc.day === 5) pages.push(buildExpoPage(doc));
+    if (doc.day === 5 && pages.length) {
+      appendExpoPrepColumns(pages[pages.length - 1]!);
+      hcLog("eoschool", "expo.prep", { layout: "mat-tables", attached: true });
+    }
     enumerateLetterPageCodes(doc, pages);
     hcLog("eoschool", "render.done", { pages: pages.length, layout: "mat-tables" });
     return pages;
@@ -106,9 +111,15 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     }
   }
 
+  // Day 5: expo prep is two lined columns under the review class (same sheet), not a separate page.
   if (doc.day === 5) {
-    pages.push(buildExpoPage(doc));
-    hcLog("eoschool", "expo.page", { day: 5 });
+    const host =
+      [...pages].reverse().find((p) => p.classList.contains("homescool-letter-page--lesson")) ||
+      pages[pages.length - 1];
+    if (host) {
+      appendExpoPrepColumns(host);
+      hcLog("eoschool", "expo.prep", { attached: true });
+    }
   }
 
   // Defensive: drop hero-only empty shells (cambio 2).
@@ -364,6 +375,8 @@ function lessonBlocksFit(
 
   if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
   if (withSummary) appendSummary(doc, page);
+  // Day 5: reserve the expo-prep band so review text does not crowd it out.
+  if (doc.day === 5) appendExpoPrepColumns(page);
 
   document.body.append(page);
   void page.offsetHeight;
@@ -375,6 +388,7 @@ function lessonBlocksFit(
       segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
       withSummary,
       doc.lesson?.summary,
+      doc.day === 5,
     );
   }
   return scroll <= client + 1;
@@ -533,6 +547,7 @@ function estimateLessonSliceFits(
   points: LessonPoint[],
   withSummary: boolean,
   summary?: string,
+  reserveExpoPrep = false,
 ): boolean {
   let score = 14;
   for (const p of points) {
@@ -546,6 +561,8 @@ function estimateLessonSliceFits(
   if (withSummary && summary?.trim()) {
     score += 10 + Math.ceil(summary.trim().length / 95);
   }
+  // Expo prep ≈ half the usable sheet (two lined columns under the review).
+  if (reserveExpoPrep) score += 48;
   return score <= 105;
 }
 
@@ -573,27 +590,30 @@ function buildSupportPage(doc: EoschoolDocument): HTMLElement {
   return page;
 }
 
-function buildExpoPage(doc: EoschoolDocument): HTMLElement {
-  const page = letterPage("homescool-letter-page--expo");
-  page.append(lessonHeader(doc, "Expo semanal"));
-  const intro = el("section", "homescool-letter__box homescool-letter__box--goal");
-  intro.append(boxLabel("Preparación de la presentación"));
-  intro.append(
+/** Day-5 expo prep: two lined columns under the review class (same Letter page). */
+function appendExpoPrepColumns(page: HTMLElement): void {
+  if (page.querySelector(".homescool-letter__expo-prep")) return;
+  page.classList.add("homescool-letter-page--expo-prep");
+  const wrap = el("section", "homescool-letter__expo-prep");
+  wrap.append(boxLabel("Preparación de la exposición semanal"));
+  wrap.append(
     el(
       "p",
       "homescool-letter__body",
-      "Bosqueja o escribe aquí lo que presentarás en la expo semanal: idea principal, ejemplos y cierre.",
+      "Escribe en las dos columnas lo que presentarás: idea principal, ejemplos y cierre de lo aprendido en la semana.",
     ),
   );
-  page.append(intro);
-  const lines = el("div", "homescool-letter__expo-lines");
-  lines.setAttribute("aria-hidden", "true");
-  // US Letter ~11in − margins/header ≈ fill with 0.75cm rows.
-  for (let i = 0; i < 28; i++) {
-    lines.append(el("div", "homescool-letter__expo-line"));
+  const cols = el("div", "homescool-letter__expo-prep-cols");
+  for (let c = 0; c < 2; c++) {
+    const col = el("div", "homescool-letter__expo-prep-col");
+    col.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 16; i++) {
+      col.append(el("div", "homescool-letter__expo-line"));
+    }
+    cols.append(col);
   }
-  page.append(lines);
-  return page;
+  wrap.append(cols);
+  page.append(wrap);
 }
 
 function buildLessonWithQuizPage(

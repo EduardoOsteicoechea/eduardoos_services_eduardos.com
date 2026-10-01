@@ -97,7 +97,7 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 | 4 | **Deepen** point 3 — **weekRecap** (~5 cm) + **priorDayRecap** (~2.5 cm) | **16** items (6+6+4) |
 | 5 | **Review:** five overview blocks | **16** items (6+6+4; shuffle prior MCQ into the 12 slots) |
 
-**Kid screening (mandatory):** lesson boxes are **full-width** (one column). Use `##` subtitles and `**bold**` key ideas inside bodies. Subjects `esp`, `ing`, `lat`, `his`, `LT`, `geo`, `cie` set `lesson.memoryPhrase` every day. Prefer a `supportUrl` reference video suitable for ~8-year-olds.
+**Kid screening (mandatory):** lesson boxes pack in **two columns** on the Letter sheet (margin **0.75 cm**). Use `##` subtitles and `**bold**` key ideas inside bodies. Subjects `esp`, `ing`, `lat`, `his`, `LT`, `geo`, `cie` set `lesson.memoryPhrase` every day. **Every** class must set `supportUrl` to one age-appropriate (~8yo) educational http(s) video.
 
 ### Exception: `pro` (Proyecto) — one experiment per week
 
@@ -107,7 +107,7 @@ Always edit the cell JSON (or the Python pack generators under `.eoschool/`), re
 | --- | --- |
 | **1** | **Full explanation only here:** purpose, materials/procedure, why it works (3 points + summary). |
 | **2–4** | Short **continuation / lab time** (1 point): same project, no new experiment, no re-teach of the whole intro. Quiz stays **16** items/day (letter sheet). |
-| **5** | Brief wrap + **expo prep** (1 point). FE still adds the lined expo page. Do **not** emit five panorama re-hashes of the experiment. API: `pro` day 5 accepts **>= 1** overview point; other subjects still require **exactly 5**. |
+| **5** | Brief wrap + **expo prep** (1 point). FE adds **two lined columns under the review** on the same Letter sheet (not a separate expo page). Do **not** emit five panorama re-hashes of the experiment. API: `pro` day 5 accepts **>= 1** overview point; other subjects still require **exactly 5**. |
 
 Student-facing rule: day 1 teaches; the rest of the week **works and presents** that same project.
 
@@ -118,6 +118,8 @@ Student-facing rule: day 1 teaches; the rest of the week **works and presents** 
 3. Overview of point 2  
 4. Overview of point 3  
 5. Overview of point 1 again, rephrased and more synthetic  
+
+**Expo prep (FE, same sheet):** under the review class, two lined columns for the child to draft the weekly oral presentation (main idea, examples, closing). Do **not** author a separate expo page in JSON. Keep day-5 overview copy short so the lines fit.
 
 **Locale of student-facing text:** headings, bodies, quiz prompts/choices must match `locale`.  
 For `esp` / `locale: "es"`: never show English meta-labels (`Overview`, `checklist`, `vs`, `deepen`, `review`). Use Spanish (`Panorama…`, `lista…`, `o`, `frente a` only when you want a Contraste split). Grammar terms that are Spanish (`tiempo simple`, `Error común`) are fine.
@@ -166,7 +168,10 @@ Legacy activity types (`crossword`, `wordsearch`, …) remain in the schema for 
 ## Presentation / print (always)
 
 - Frontend stage = **N** stacked **US Letter portrait** pages (`8.5in Ã— 11in`).
-- Page margin **1 cm** (viewer and backend PDF must match).
+- Page margin **0.75 cm** (`--hc-page-margin`; viewer and backend PDF capture must match).
+- Lesson body: **two CSS columns**. Quiz MCQ choices: no border, no vertical padding.
+- Day 5: review + **expo prep** (two lined columns) on the **same** sheet; packing reserves the band.
+- Drawings: blank draw workspace only when Práctica text matches `practiceNeedsDraw` (dibuja/traza/bosqueja/colorea/pinta / draw/sketch/trace).
 - Media for v1 lives under `frontend/public/homescool/media/` (URLs `/homescool/media/...`).
 
 ## `.eoschool` JSON contract

@@ -147,6 +147,30 @@ describe("lesson rich layout", () => {
     const practice = pages[0].querySelector(".homescool-letter__box--practice");
     expect(practice?.querySelector(".homescool-letter__practice-workspace--draw")).toBeTruthy();
   });
+
+  it("attaches day-5 expo prep under the review lesson (not a separate page)", () => {
+    const doc = baseDoc({
+      day: 5,
+      lesson: {
+        kind: "review",
+        focusPoint: null,
+        points: [
+          { id: "p1", heading: "Panorama", body: "Idea.\n\nExplora.\n\nPráctica: escribe.\n\nError común: saltar." },
+          { id: "p2", heading: "Punto 1", body: "Repaso corto." },
+          { id: "p3", heading: "Punto 2", body: "Repaso corto." },
+          { id: "p4", heading: "Punto 3", body: "Repaso corto." },
+          { id: "p5", heading: "Síntesis", body: "Cierre." },
+        ],
+        summary: "",
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
+    const withExpo = lessonPages.filter((p) => p.querySelector(".homescool-letter__expo-prep"));
+    expect(withExpo.length).toBe(1);
+    expect(withExpo[0].querySelectorAll(".homescool-letter__expo-prep-col").length).toBe(2);
+    expect(pages.some((p) => p.classList.contains("homescool-letter-page--expo"))).toBe(false);
+  });
 });
 
 describe("packLessonBatches", () => {
