@@ -69,10 +69,24 @@ export async function captureHomescoolLetterPages(host: HTMLElement): Promise<st
   if (!pages.length) {
     throw new Error("No letter pages to capture.");
   }
+
+  // Parent opacity/visibility multiply into the raster — force a paint-eligible host.
+  const hostPrev = {
+    opacity: host.style.opacity,
+    visibility: host.style.visibility,
+  };
+  host.style.opacity = "1";
+  host.style.visibility = "visible";
+
   const out: string[] = [];
-  for (let i = 0; i < pages.length; i++) {
-    hcLog("print", "capture.page", { index: i + 1, of: pages.length });
-    out.push(await captureLetterPage(pages[i]));
+  try {
+    for (let i = 0; i < pages.length; i++) {
+      hcLog("print", "capture.page", { index: i + 1, of: pages.length });
+      out.push(await captureLetterPage(pages[i]));
+    }
+  } finally {
+    host.style.opacity = hostPrev.opacity;
+    host.style.visibility = hostPrev.visibility;
   }
   hcLog("print", "capture.done", { pages: out.length });
   return out;

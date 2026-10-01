@@ -331,16 +331,16 @@ function splitLessonSegment(segment: LessonSegment): string[][] {
   return paragraphs.map((paragraph) => [paragraph]);
 }
 
-/** Keep a little air above the bottom margin so packed sheets are not flush-clipped. */
-const LETTER_FIT_SLACK_PX = 16;
+/** Tiny slack so packed sheets do not flush-clip the last border. Keep low to fill pages. */
+const LETTER_FIT_SLACK_PX = 4;
 
 function mountLetterMeasurePage(page: HTMLElement): void {
-  // Paint-eligible offscreen probe (visibility:hidden under-reports overflow in some engines).
-  page.style.position = "fixed";
-  page.style.left = "0";
+  // Off-viewport but fully laid out (no visibility:hidden / near-zero opacity).
+  page.style.position = "absolute";
+  page.style.left = "-10000px";
   page.style.top = "0";
-  page.style.zIndex = "-1";
-  page.style.opacity = "0.01";
+  page.style.opacity = "1";
+  page.style.visibility = "visible";
   page.style.pointerEvents = "none";
   page.style.width = "8.5in";
   page.style.height = "11in";
@@ -822,7 +822,8 @@ function buildPracticeWorkspace(text: string): HTMLElement {
   }
   const lines = el("div", "homescool-letter__practice-workspace homescool-letter__practice-workspace--write");
   lines.setAttribute("aria-hidden", "true");
-  for (let n = 0; n < 5; n++) {
+  // Three write lines keep practice compact so following boxes can still pack on the sheet.
+  for (let n = 0; n < 3; n++) {
     lines.append(el("div", "homescool-letter__write-line"));
   }
   return lines;

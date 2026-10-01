@@ -763,13 +763,20 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page[data-homescool-measure="1"] .homescool-letter__stack,
-.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__summary {
+.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__summary,
+.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__deepen-panel,
+.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__rich,
+.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__box,
+.homescool-letter-page[data-homescool-measure="1"] .homescool-letter__practice-workspace {
   flex: 0 0 auto;
+  height: auto;
   min-height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 .homescool-letter-page[data-homescool-measure="1"] .homescool-letter__summary {
-  margin-top: 0;
+  margin-top: 0.35rem;
 }
 
 .homescool-letter__hero {
@@ -846,8 +853,10 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  flex: 1 1 auto;
+  /* Pack content to the top; do not stretch empty flex space across the sheet. */
+  flex: 0 0 auto;
   min-height: 0;
+  height: auto;
 }
 
 .homescool-letter__point {
@@ -958,13 +967,14 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__deepen-panel {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  height: auto;
   min-height: 0;
   padding: 0.4rem;
   border-radius: 0.35rem;
   border: 0.08rem solid var(--hc-blue);
   background: transparent;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .homescool-letter__rich {
@@ -1041,11 +1051,11 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__box--practice {
   background: transparent;
   border-color: var(--hc-blue);
-  /* Cap practice+workspace to ~⅓ of the Letter content band (page − margins − hero). */
-  max-height: calc((11in - 2cm - 1.6cm) / 3);
-  flex: 0 1 auto;
+  flex: 0 0 auto;
+  height: auto;
   min-height: 0;
-  overflow: hidden;
+  max-height: none;
+  overflow: visible;
 }
 
 .homescool-letter__box--error {
@@ -1176,19 +1186,22 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__memory {
   border-color: var(--hc-orange);
-  min-height: 1.8cm;
+  height: auto;
+  min-height: 0;
 }
 
 .homescool-letter__week-recap {
   border-color: var(--hc-navy);
-  height: 5cm;
-  max-height: 5cm;
+  height: auto;
+  min-height: 0;
+  max-height: none;
 }
 
 .homescool-letter__prior-recap {
   border-color: var(--hc-olive);
-  height: 2.5cm;
-  max-height: 2.5cm;
+  height: auto;
+  min-height: 0;
+  max-height: none;
 }
 
 .homescool-letter__memory-label,
@@ -1254,7 +1267,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--deepen .homescool-letter__stack {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
@@ -1283,7 +1297,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__summary {
-  margin-top: auto;
+  margin-top: 0.35rem;
   padding: 0.4rem 0.5rem;
   border-radius: 0.3rem;
   border: 0.08rem solid var(--hc-coral);
@@ -1291,6 +1305,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  flex: 0 0 auto;
+  height: auto;
 }
 
 .homescool-letter__summary-label {
@@ -2175,19 +2191,21 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__practice-workspace {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 2.2cm;
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
   margin-top: 0.2rem;
   min-width: 0;
 }
 
 .homescool-letter__practice-workspace--write {
-  gap: 0.4rem;
-  justify-content: flex-end;
+  gap: 0.35rem;
+  justify-content: flex-start;
 }
 
 .homescool-letter__practice-workspace--write .homescool-letter__write-line {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  height: 0.7rem;
   min-height: 0.7rem;
 }
 
@@ -2195,6 +2213,10 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   border: 0.06rem dashed var(--hc-blue);
   border-radius: 0.22rem;
   background: transparent;
+  /* Compact draw band — grows only with content packing, not a fixed empty slab. */
+  height: 3.5cm;
+  min-height: 3.5cm;
+  max-height: 3.5cm;
 }
 
 /* Day-5 expo lined page (cambio 14) */
