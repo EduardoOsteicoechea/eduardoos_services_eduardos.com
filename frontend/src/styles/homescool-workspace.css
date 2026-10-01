@@ -39,7 +39,8 @@ html[data-page="homescool-workspace"] main:has([data-homescool-support-admin]:no
 
 /* Fixed curriculum rail (cycle / week / day / subject / Print) */
 html[data-page="homescool-workspace"] {
-  --homescool-dhs-width: 13rem;
+  /* +75px vs prior 13rem (at 16px root) */
+  --homescool-dhs-width: 17.6875rem;
 }
 
 html[data-page="homescool-workspace"] #dynamic-header {
@@ -99,7 +100,8 @@ html[data-page="homescool-workspace"] .app-header .header-menu.icon-btn {
 
 @media (max-width: 47.999rem) {
   html[data-page="homescool-workspace"] {
-    --homescool-dhs-width: 11rem;
+    /* +75px vs prior 11rem (at 16px root) */
+    --homescool-dhs-width: 15.6875rem;
   }
 }
 
@@ -668,16 +670,17 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 /* Collapse / expand control on the rail’s right edge (vertical middle). */
 .homescool-dhs__collapse {
   position: fixed;
-  left: var(--homescool-dhs-width, 13rem);
+  left: var(--homescool-dhs-width, 17.6875rem);
   top: 50%;
   z-index: calc(var(--z-sidebar) + 2);
   transform: translate(-50%, -50%);
-  width: var(--control-height);
+  /* Narrow handle: same height as before, 20px wide (1.25rem at 16px root). */
+  width: 1.25rem;
   height: var(--control-height);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   border: var(--border-width) solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
@@ -686,7 +689,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-dhs__collapse .material-symbols-outlined {
-  font-size: var(--icon-size);
+  font-size: 1rem;
 }
 
 .homescool-dhs__collapse:hover,
