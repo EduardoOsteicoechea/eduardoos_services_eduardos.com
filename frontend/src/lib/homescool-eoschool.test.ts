@@ -241,6 +241,20 @@ describe("packLessonBlocksExpanding", () => {
     expect(pages[1][0].type === "point" && pages[1][0].segment.continuation).toBe(true);
     expect(pages[1][0].type === "point" && pages[1][0].segment.paragraphs).toEqual(["b", "c"]);
   });
+
+  it("treats the first packed page as isFirstPage for lead-chrome-aware fitters", () => {
+    const seen: boolean[] = [];
+    const pages = packLessonBlocksExpanding(
+      [point("p1", ["a"]), point("p2", ["b"]), point("p3", ["c"])],
+      (candidate, ctx) => {
+        seen.push(ctx.isFirstPage);
+        return candidate.length <= 1;
+      },
+    );
+    expect(pages).toHaveLength(3);
+    expect(seen[0]).toBe(true);
+    expect(seen.some((v, i) => i > 0 && v === false)).toBe(true);
+  });
 });
 
 function baseDoc(over: Partial<EoschoolDocument> & { lesson: EoschoolDocument["lesson"] }): EoschoolDocument {
@@ -358,7 +372,7 @@ describe("renderEoschoolPages pagination", () => {
     });
   });
 
-  it("keeps deepen on a single lesson page", () => {
+  it("keeps a short deepen lesson on a single page", () => {
     const doc = baseDoc({
       lesson: {
         kind: "deepen",
@@ -369,6 +383,39 @@ describe("renderEoschoolPages pagination", () => {
     });
     const pages = renderEoschoolPages(doc);
     expect(pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"))).toHaveLength(1);
+    expect(pages[0].querySelector(".homescool-letter__deepen-panel")).toBeTruthy();
+  });
+
+  it("paginates a dense deepen lesson instead of clipping", () => {
+    const dense = Array.from({ length: 8 }, (_, i) =>
+      [
+        `Idea central densa número ${i + 1} con bastante texto para llenar la hoja Letter.`,
+        `Explora más detalles del punto ${i + 1} con ejemplos, matices y oraciones largas.`,
+        `Práctica: escribe tres oraciones propias sobre el punto ${i + 1} y revisa.`,
+        `Consejo: repasa con calma el punto ${i + 1} antes de seguir.`,
+      ].join("\n\n"),
+    ).join("\n\n");
+    const doc = baseDoc({
+      lesson: {
+        kind: "deepen",
+        focusPoint: 1,
+        points: [{ id: "p1", heading: "Foco denso", body: dense }],
+        summary: "Resumen final.",
+        memoryPhrase: "Frase larga a memorizar para ocupar chrome de la primera hoja.",
+        weekRecap: "Recuerdo de la clase anterior con detalle suficiente.",
+        priorDayRecap: "Ayer vimos la idea base con varios ejemplos.",
+      },
+      mppe: {
+        objectives: [
+          { id: "esp-1", label: "Objetivo MPPE de prueba con texto visible en la hoja." },
+        ],
+      },
+    });
+    const lessonPages = renderEoschoolPages(doc).filter((p) =>
+      p.classList.contains("homescool-letter-page--lesson"),
+    );
+    expect(lessonPages.length).toBeGreaterThan(1);
+    expect(lessonPages.some((p) => /continuación/i.test(p.textContent || ""))).toBe(true);
   });
 
   it("keeps quiz and lesson headings free of decorative icon marks", () => {

@@ -195,19 +195,7 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   const points = doc.lesson?.points ?? [];
   const kicker = kind === "deepen" ? "Profundización" : kind === "review" ? "Repaso" : "Clase";
 
-  if (kind === "deepen") {
-    const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
-    page.append(lessonHeader(doc, kicker));
-    appendMemoryPhrase(doc, page);
-    appendMppeObjectives(doc, page);
-    appendWeekRecap(doc, page);
-    appendPriorDayRecap(doc, page);
-    page.append(buildDeepenRibbon(doc));
-    page.append(buildLessonStack(doc, points));
-    appendSummary(doc, page);
-    return [page];
-  }
-
+  // Deepen keeps one focus point, but still paginates when lead chrome + body overflow.
   const blocks: LessonPageBlock[] = points.map((point, pointIndex) => ({
     type: "point",
     segment: {
@@ -224,10 +212,12 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     return [];
   }
 
-  const fits = (candidate: readonly LessonPageBlock[]) =>
-    lessonBlocksFit(doc, candidate, kicker, kind);
+  // First-page fit must include memory/MPPE/(deepen recap) chrome — otherwise the
+  // packer overfills page 1 and overflow:hidden clips the bottom of the sheet.
+  const fitsAware = (candidate: readonly LessonPageBlock[], ctx: LetterPackContext) =>
+    lessonBlocksFit(doc, candidate, kicker, kind, { leadChrome: ctx.isFirstPage });
 
-  const batches = packLessonBlocksExpanding(blocks, fits);
+  const batches = packLessonBlocksExpanding(blocks, fitsAware);
 
   if (!batches.length) {
     // Never emit a header-only blank page (cambio 2).
@@ -241,6 +231,11 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     if (batchIndex === 0) {
       appendMemoryPhrase(doc, page);
       appendMppeObjectives(doc, page);
+      if (kind === "deepen") {
+        appendWeekRecap(doc, page);
+        appendPriorDayRecap(doc, page);
+        page.append(buildDeepenRibbon(doc));
+      }
     }
     const segments = batch
       .filter((block): block is Extract<LessonPageBlock, { type: "point" }> => block.type === "point")
@@ -251,9 +246,11 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   });
 }
 
+export type LetterPackContext = { isFirstPage: boolean };
+
 export function packLessonBlocksExpanding(
   blocks: readonly LessonPageBlock[],
-  fits: (candidate: readonly LessonPageBlock[]) => boolean,
+  fits: (candidate: readonly LessonPageBlock[], ctx: LetterPackContext) => boolean,
 ): LessonPageBlock[][] {
   const pages: LessonPageBlock[][] = [];
   const queue = [...blocks];
@@ -268,10 +265,12 @@ export function packLessonBlocksExpanding(
     segment: { ...source.segment, paragraphs, continuation },
   });
 
+  const ctx = (): LetterPackContext => ({ isFirstPage: pages.length === 0 });
+
   while (queue.length) {
     const next = queue.shift()!;
     const candidate = [...current, next];
-    if (fits(candidate)) {
+    if (fits(candidate, ctx())) {
       current = candidate;
       continue;
     }
@@ -280,7 +279,7 @@ export function packLessonBlocksExpanding(
       const paras = next.segment.paragraphs;
       let take = 0;
       for (let n = 1; n <= paras.length; n++) {
-        if (fits([...current, pointPart(next, paras.slice(0, n), next.segment.continuation)])) {
+        if (fits([...current, pointPart(next, paras.slice(0, n), next.segment.continuation)], ctx())) {
           take = n;
         } else {
           break;
@@ -332,11 +331,30 @@ function splitLessonSegment(segment: LessonSegment): string[][] {
   return paragraphs.map((paragraph) => [paragraph]);
 }
 
+/** Keep a little air above the bottom margin so packed sheets are not flush-clipped. */
+const LETTER_FIT_SLACK_PX = 16;
+
+function mountLetterMeasurePage(page: HTMLElement): void {
+  // Paint-eligible offscreen probe (visibility:hidden under-reports overflow in some engines).
+  page.style.position = "fixed";
+  page.style.left = "0";
+  page.style.top = "0";
+  page.style.zIndex = "-1";
+  page.style.opacity = "0.01";
+  page.style.pointerEvents = "none";
+  page.style.width = "8.5in";
+  page.style.height = "11in";
+  page.style.maxHeight = "11in";
+  page.style.overflow = "hidden";
+  page.style.boxSizing = "border-box";
+}
+
 function lessonBlocksFit(
   doc: EoschoolDocument,
   blocks: readonly LessonPageBlock[] | readonly LessonSegment[],
   kicker: string,
   kind: string,
+  opts?: { leadChrome?: boolean },
 ): boolean {
   const segments = lessonSegmentsFromBlocks(blocks);
   const withSummary = blocks.some((block) => "type" in block && block.type === "summary");
@@ -345,22 +363,23 @@ function lessonBlocksFit(
       segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
       withSummary,
       doc.lesson?.summary,
+      opts?.leadChrome,
     );
   }
 
   const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
   page.setAttribute("data-homescool-measure", "1");
-  page.style.position = "absolute";
-  page.style.left = "-10000px";
-  page.style.top = "0";
-  page.style.visibility = "hidden";
-  page.style.pointerEvents = "none";
-  page.style.width = "8.5in";
-  page.style.height = "11in";
-  page.style.maxHeight = "11in";
-  page.style.overflow = "hidden";
-  page.style.boxSizing = "border-box";
+  mountLetterMeasurePage(page);
   page.append(lessonHeader(doc, kicker));
+  if (opts?.leadChrome) {
+    appendMemoryPhrase(doc, page);
+    appendMppeObjectives(doc, page);
+    if (kind === "deepen") {
+      appendWeekRecap(doc, page);
+      appendPriorDayRecap(doc, page);
+      page.append(buildDeepenRibbon(doc));
+    }
+  }
 
   if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
   if (withSummary) appendSummary(doc, page);
@@ -375,9 +394,10 @@ function lessonBlocksFit(
       segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
       withSummary,
       doc.lesson?.summary,
+      opts?.leadChrome,
     );
   }
-  return scroll <= client + 1;
+  return scroll <= client - LETTER_FIT_SLACK_PX;
 }
 
 /** MCQ/write items on a dedicated quiz Letter sheet (4 columns × 9 rows). */
@@ -484,16 +504,7 @@ function quizSliceFits(
 ): boolean {
   const page = letterPage("homescool-letter-page--quiz");
   page.setAttribute("data-homescool-measure", "1");
-  page.style.position = "absolute";
-  page.style.left = "-10000px";
-  page.style.top = "0";
-  page.style.visibility = "hidden";
-  page.style.pointerEvents = "none";
-  page.style.width = "8.5in";
-  page.style.height = "11in";
-  page.style.maxHeight = "11in";
-  page.style.overflow = "hidden";
-  page.style.boxSizing = "border-box";
+  mountLetterMeasurePage(page);
   page.append(
     lessonHeader(
       doc,
@@ -512,7 +523,7 @@ function quizSliceFits(
     if (questions.some((q) => quizItemType(q) === "match")) return questions.length <= 1;
     return questions.length <= QUIZ_SHEET_MCQ_CAPACITY;
   }
-  return scroll <= client + 1;
+  return scroll <= client - LETTER_FIT_SLACK_PX;
 }
 
 function lessonSegmentsFromBlocks(
@@ -533,20 +544,25 @@ function estimateLessonSliceFits(
   points: LessonPoint[],
   withSummary: boolean,
   summary?: string,
+  leadChrome = false,
 ): boolean {
+  // Heuristic only when DOM measure is unavailable (e.g. jsdom). Browser packing
+  // uses real scrollHeight and already includes lead chrome + LETTER_FIT_SLACK_PX.
   let score = 14;
+  if (leadChrome) score += 10;
   for (const p of points) {
     score += 10;
     score += Math.ceil((p.heading?.length ?? 0) / 48);
     for (const para of classifyLessonParas(p.body || "")) {
       score += 7 + Math.ceil(para.text.length / 95);
       if (para.kind === "contrast") score += 4;
+      if (para.kind === "practice") score += 10;
     }
   }
   if (withSummary && summary?.trim()) {
     score += 10 + Math.ceil(summary.trim().length / 95);
   }
-  return score <= 105;
+  return score <= 108;
 }
 
 function buildSupportPage(doc: EoschoolDocument): HTMLElement {
@@ -682,8 +698,21 @@ function buildLessonStack(
 function buildLessonSegmentStack(doc: EoschoolDocument, segments: readonly LessonSegment[]): HTMLElement {
   const stack = el("div", "homescool-letter__stack");
   const kind = doc.lesson?.kind ?? "intro";
+  const richMode: RichMode = kind === "deepen" ? "deepen" : kind === "review" ? "review" : "intro";
   for (const segment of segments) {
     const tone = (segment.pointIndex % 3) + 1;
+    if (kind === "deepen") {
+      const panel = el("section", `homescool-letter__deepen-panel homescool-letter__point--${tone}`);
+      if (segment.continuation && segment.point.heading) {
+        panel.append(
+          el("h3", "homescool-letter__point-title", `${segment.point.heading} · continuación`),
+        );
+      }
+      const body = segment.paragraphs.join("\n\n");
+      if (body) panel.append(buildRichBody(body, { mode: richMode }));
+      stack.append(panel);
+      continue;
+    }
     const block = el("section", `homescool-letter__point homescool-letter__point--${tone}`);
     const badge = el("span", "homescool-letter__point-badge", String(segment.pointIndex + 1));
     const copy = el("div", "homescool-letter__point-copy");
@@ -694,7 +723,7 @@ function buildLessonSegmentStack(doc: EoschoolDocument, segments: readonly Lesso
       copy.append(el("h3", "homescool-letter__point-title", heading));
     }
     const body = segment.paragraphs.join("\n\n");
-    if (body) copy.append(buildRichBody(body, { mode: kind === "review" ? "review" : "intro" }));
+    if (body) copy.append(buildRichBody(body, { mode: richMode }));
     block.append(badge, copy);
     stack.append(block);
   }

@@ -1069,11 +1069,16 @@ import "../../styles/homescool-workspace.css";
       }
 
       // Multi-doc: render offscreen, capture all pages, post via session print endpoint.
+      // Keep visibility:visible — modern-screenshot paints blank under visibility:hidden.
       const holder = document.createElement("div");
-      holder.style.position = "absolute";
-      holder.style.left = "-10000px";
+      holder.setAttribute("data-homescool-print-batch", "1");
+      holder.setAttribute("aria-hidden", "true");
+      holder.style.position = "fixed";
+      holder.style.left = "0";
       holder.style.top = "0";
-      holder.style.visibility = "hidden";
+      holder.style.zIndex = "-1";
+      holder.style.pointerEvents = "none";
+      holder.style.opacity = "0.01";
       document.body.append(holder);
       const allPages: string[] = [];
       try {
@@ -1087,6 +1092,9 @@ import "../../styles/homescool-workspace.css";
           }
           const pages = renderEoschoolPages(doc);
           holder.replaceChildren(...pages);
+          // Fonts + layout must settle while the tree is still paint-eligible.
+          if (document.fonts?.ready) await document.fonts.ready;
+          await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
           const rasters = await captureHomescoolLetterPages(holder);
           allPages.push(...rasters);
           setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
@@ -1102,11 +1110,8 @@ import "../../styles/homescool-workspace.css";
       }
 
       const fileName = `homescool-c${selection.cycle}-w${selection.week}-${mode}.pdf`;
-      const result = await postHomescoolPrintPdf(
-        allPages,
-        fileName,
-        currentMaterialId || undefined,
-      );
+      // Always use the session print endpoint for multi-doc batches.
+      const result = await postHomescoolPrintPdf(allPages, fileName);
       if (!result.ok) {
         showErrorModal({
           message: result.error || "Could not download PDF.",
