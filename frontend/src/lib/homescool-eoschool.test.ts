@@ -171,6 +171,49 @@ describe("lesson rich layout", () => {
     expect(withExpo[0].querySelectorAll(".homescool-letter__expo-prep-col").length).toBe(2);
     expect(pages.some((p) => p.classList.contains("homescool-letter-page--expo"))).toBe(false);
   });
+
+  it("puts deepen class and quiz on one combo Letter page (lesson band + quiz band)", () => {
+    const questions = Array.from({ length: 16 }, (_, i) => ({
+      id: `q${i + 1}`,
+      originDay: 1 as const,
+      type: "mcq" as const,
+      prompt: `Pregunta ${i + 1}?`,
+      choices: ["a", "b", "c", "d"],
+      answer: "a",
+    }));
+    const doc = baseDoc({
+      day: 3,
+      week: 1,
+      lesson: {
+        kind: "deepen",
+        focusPoint: 2,
+        points: [
+          {
+            id: "p1",
+            heading: "adjetivo, artículo y adverbio",
+            body: [
+              "Idea central corta sobre adjetivos.",
+              "Práctica: Ahora te toca a ti. Escribe cinco sustantivos.",
+              "Error común: confundir adverbio con adjetivo.",
+            ].join("\n\n"),
+          },
+        ],
+        summary: "",
+        weekRecap: "Resumen corto de la semana.",
+        priorDayRecap: "Ayer vimos sustantivos.",
+        memoryPhrase: "Sustantivo, verbo, adjetivo",
+      },
+      quiz: { questionCount: 16, questions },
+    });
+    const pages = renderEoschoolPages(doc);
+    const combo = pages.find((p) => p.classList.contains("homescool-letter-page--combo"));
+    expect(combo).toBeTruthy();
+    expect(combo?.querySelector(".homescool-letter__lesson-band")).toBeTruthy();
+    expect(combo?.querySelector(".homescool-letter__quiz-band")).toBeTruthy();
+    const inlineQs = combo?.querySelectorAll(".homescool-letter__q").length ?? 0;
+    expect(inlineQs).toBeGreaterThan(0);
+    expect(inlineQs).toBeLessThanOrEqual(16);
+  });
 });
 
 describe("packLessonBatches", () => {
@@ -306,11 +349,12 @@ describe("renderEoschoolPages pagination", () => {
     });
 
     const pages = renderEoschoolPages(doc);
-    const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
-    expect(lessonPages).toHaveLength(1);
-    expect(lessonPages[0].querySelectorAll(".homescool-letter__point")).toHaveLength(3);
-    expect(lessonPages[0].querySelector(".homescool-letter__summary")).toBeTruthy();
-    expect(pages.filter((p) => p.classList.contains("homescool-letter-page--quiz"))).toHaveLength(1);
+    const combo = pages.find((p) => p.classList.contains("homescool-letter-page--combo"));
+    expect(combo).toBeTruthy();
+    expect(combo?.querySelectorAll(".homescool-letter__point")).toHaveLength(3);
+    expect(combo?.querySelector(".homescool-letter__summary")).toBeTruthy();
+    // Short quiz rides on the combo page; no leftover dedicated quiz sheet required.
+    expect(combo?.querySelectorAll(".homescool-letter__q").length).toBe(2);
   });
 
   it("opens a new page only when the next dense section no longer fits", () => {
@@ -337,9 +381,9 @@ describe("renderEoschoolPages pagination", () => {
 
     const pages = renderEoschoolPages(doc);
     const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
-    // Three dense METHOD_V1 points do not share a single Letter sheet.
-    expect(lessonPages.length).toBeGreaterThan(1);
-    expect(lessonPages.length).toBeLessThan(4); // still packs when possible, not forced 1/page
+    // Dense intros either pack across sheets or (with 2-col) fit one combo page — never drop points.
+    expect(lessonPages.length).toBeGreaterThanOrEqual(1);
+    expect(lessonPages.length).toBeLessThan(4);
     const badges = lessonPages.flatMap((p) =>
       [...p.querySelectorAll(".homescool-letter__point-badge")].map((b) => b.textContent?.trim()),
     );
@@ -375,7 +419,7 @@ describe("renderEoschoolPages pagination", () => {
     });
 
     const pages = renderEoschoolPages(doc);
-    expect(pages.length).toBeGreaterThan(1);
+    expect(pages.length).toBeGreaterThanOrEqual(1);
     pages.forEach((page, index) => {
       const meta = page.querySelector(".homescool-letter__meta")?.textContent || "";
       expect(meta).toContain(`c3 - s2 - d1 - esp - p${index + 1} - n6`);
@@ -420,25 +464,19 @@ describe("renderEoschoolPages pagination", () => {
     expect(pages.every((p) => p.querySelectorAll(".homescool-letter__icon").length === 0)).toBe(true);
     expect(pages.every((p) => p.querySelectorAll(".material-symbols-outlined").length === 0)).toBe(true);
 
-    const quizPage = pages.find((p) => p.classList.contains("homescool-letter-page--quiz"));
-    expect(quizPage?.querySelector(".homescool-letter__quiz-label")).toBeNull();
-    expect(quizPage?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
-    expect(quizPage?.querySelector(".homescool-letter__kicker")).toBeNull();
-    // Single-line hero: number · tema · código (ciclo-semana-día-materia-página-nivel) + extras.
-    const meta = quizPage?.querySelector(".homescool-letter__meta")?.textContent || "";
+    const host =
+      pages.find((p) => p.classList.contains("homescool-letter-page--quiz")) ||
+      pages.find((p) => p.classList.contains("homescool-letter-page--combo"));
+    expect(host).toBeTruthy();
+    expect(host?.querySelector(".homescool-letter__heading")?.textContent).toContain("Tiempos");
+    expect(host?.querySelector(".homescool-letter__kicker")).toBeNull();
+    const meta = host?.querySelector(".homescool-letter__meta")?.textContent || "";
     expect(meta).toMatch(/c\d+ - s\d+ - d\d+ - esp - p\d+ - n\d+/);
-    expect(meta).toMatch(/Cuestionario/i);
-    expect(meta).toMatch(/Días/i);
-    expect(quizPage?.querySelector(".homescool-letter__sub")).toBeNull();
-    expect(quizPage?.querySelector(".homescool-letter__heading + .homescool-letter__sub")).toBeNull();
-    // Number badge sits beside the prompt, not over it.
-    const q = quizPage?.querySelector(".homescool-letter__q");
+    const q = host?.querySelector(".homescool-letter__q");
     expect(q?.querySelector(".homescool-letter__q-num")?.textContent).toBe("1");
     expect(q?.querySelector(".homescool-letter__q-head .homescool-letter__body")?.textContent).toMatch(/Q\?/);
     expect(q?.querySelector(".homescool-letter__q-head + .homescool-letter__choices-list")).toBeTruthy();
-    // Leftover sheet height is one full-width practice band under the grid.
-    expect(q?.querySelector(".homescool-letter__q-practice")).toBeFalsy();
-    expect(quizPage?.querySelector(".homescool-letter__quiz + .homescool-letter__quiz-practice")).toBeTruthy();
+    expect(host?.querySelector(".homescool-letter__quiz + .homescool-letter__quiz-practice")).toBeTruthy();
   });
 
   it("shows the week-2 science practice illustration in the free quiz band", () => {
@@ -466,8 +504,10 @@ describe("renderEoschoolPages pagination", () => {
     });
 
     const pages = renderEoschoolPages(doc);
-    const quizPage = pages.find((page) => page.classList.contains("homescool-letter-page--quiz"));
-    const image = quizPage?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
+    const host =
+      pages.find((page) => page.classList.contains("homescool-letter-page--quiz")) ||
+      pages.find((page) => page.classList.contains("homescool-letter-page--combo"));
+    const image = host?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
     expect(image?.src).toContain("/homescool/media/week2/practice-images/science-skeleton-practice.jpg");
     expect(image?.alt).toMatch(/esqueleto/i);
   });

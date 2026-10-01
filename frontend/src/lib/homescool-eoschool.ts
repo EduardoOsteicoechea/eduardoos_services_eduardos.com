@@ -31,25 +31,6 @@ export {
 };
 export type { HomescoolSubject };
 
-/**
- * How many MCQs can ride on the lesson sheet when the lesson is short
- * (deepen / light review). Keeps accumulated questions on the first sheet
- * instead of forcing a blank new quiz page.
- */
-function inlineQuizCapacity(doc: EoschoolDocument): number {
-  const kind = doc.lesson?.kind;
-  if (kind === "deepen") return 0;
-  // Day 5 keeps the sheet for review + expo prep lines (no inline quiz).
-  if (doc.day === 5) return 0;
-  if (kind === "review") {
-    const points = doc.lesson?.points ?? [];
-    const chars = points.reduce((n, p) => n + (p.body?.length ?? 0) + (p.heading?.length ?? 0), 0);
-    if (chars < 1800) return 4;
-    return 0;
-  }
-  return 0;
-}
-
 /** Build letter-portrait DOM pages for lesson + quiz (+ d5 expo prep under review). */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   hcLog("eoschool", "render.start", {
@@ -76,49 +57,73 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   }
 
   const qs = doc.quiz?.questions ?? [];
-  const inlineCap = inlineQuizCapacity(doc);
-  const inlineCount = Math.min(inlineCap, qs.length);
   const pages: HTMLElement[] = [];
 
   if (doc.supportUrl?.trim()) {
     pages.push(buildSupportPage(doc));
   }
 
-  if (inlineCount > 0) {
-    pages.push(buildLessonWithQuizPage(doc, qs.slice(0, inlineCount), 1, qs.length));
-  } else {
-    const lessonPages = buildLessonPages(doc);
-    hcLog("eoschool", "lesson.pages", {
-      count: lessonPages.length,
-      kind: doc.lesson?.kind,
-      points: doc.lesson?.points?.length ?? 0,
-    });
-    pages.push(...lessonPages);
-  }
-
-  const remaining = qs.slice(inlineCount);
-  if (remaining.length) {
-    const quizBatches = packQuizQuestions(doc, remaining, inlineCount);
-    hcLog("eoschool", "quiz.pack", {
-      remaining: remaining.length,
-      batches: quizBatches.map((b) => b.length),
-      filledPages: quizBatches.length,
-    });
-    let start = inlineCount + 1;
-    for (const batch of quizBatches) {
-      pages.push(buildQuizPage(doc, batch, start, qs.length));
-      start += batch.length;
-    }
-  }
-
-  // Day 5: expo prep is two lined columns under the review class (same sheet), not a separate page.
+  // Day 5: review + expo prep on the lesson sheet; quiz stays on its own page(s).
   if (doc.day === 5) {
+    const lessonPages = buildLessonPages(doc);
+    pages.push(...lessonPages);
     const host =
       [...pages].reverse().find((p) => p.classList.contains("homescool-letter-page--lesson")) ||
       pages[pages.length - 1];
     if (host) {
       appendExpoPrepColumns(host);
       hcLog("eoschool", "expo.prep", { attached: true });
+    }
+    if (qs.length) {
+      const quizBatches = packQuizQuestions(doc, qs, 0);
+      let start = 1;
+      for (const batch of quizBatches) {
+        pages.push(buildQuizPage(doc, batch, start, qs.length));
+        start += batch.length;
+      }
+    }
+  } else {
+    // Days 1–4: prefer one Letter page = class (2-col) + quiz bottom. Dense intros that
+    // cannot fit the lesson alone fall back to multi-page lesson + dedicated quiz sheets.
+    const inlineable = qs.filter((q) => {
+      const t = quizItemType(q);
+      return t === "mcq" || t === "write";
+    });
+    const deferred = qs.filter((q) => {
+      const t = quizItemType(q);
+      return t !== "mcq" && t !== "write";
+    });
+    const lessonFitsOnePage = comboSliceFits(doc, []);
+    if (!lessonFitsOnePage && (doc.lesson?.kind === "intro" || doc.lesson?.kind === "review")) {
+      const lessonPages = buildLessonPages(doc);
+      pages.push(...lessonPages);
+      hcLog("eoschool", "combo.fallback-multipage", { lessonPages: lessonPages.length });
+      if (qs.length) {
+        const quizBatches = packQuizQuestions(doc, qs, 0);
+        let start = 1;
+        for (const batch of quizBatches) {
+          pages.push(buildQuizPage(doc, batch, start, qs.length));
+          start += batch.length;
+        }
+      }
+    } else {
+      const fitted = maxComboQuizCount(doc, inlineable);
+      const comboQs = inlineable.slice(0, fitted);
+      pages.push(buildComboLessonQuizPage(doc, comboQs, 1, qs.length));
+      hcLog("eoschool", "combo.pack", {
+        fitted,
+        deferred: deferred.length,
+        leftover: inlineable.length - fitted,
+      });
+      const remaining = [...inlineable.slice(fitted), ...deferred];
+      if (remaining.length) {
+        const quizBatches = packQuizQuestions(doc, remaining, fitted);
+        let start = fitted + 1;
+        for (const batch of quizBatches) {
+          pages.push(buildQuizPage(doc, batch, start, qs.length));
+          start += batch.length;
+        }
+      }
     }
   }
 
@@ -138,7 +143,6 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   hcLog("eoschool", "render.done", {
     pages: filtered.length,
     layout: "default",
-    inlineQuiz: inlineCount,
     quizTotal: qs.length,
   });
   return filtered;
@@ -209,13 +213,15 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   if (kind === "deepen") {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
-    appendMemoryPhrase(doc, page);
-    appendMppeObjectives(doc, page);
-    appendWeekRecap(doc, page);
-    appendPriorDayRecap(doc, page);
-    page.append(buildDeepenRibbon(doc));
-    page.append(buildLessonStack(doc, points));
-    appendSummary(doc, page);
+    const band = el("div", "homescool-letter__lesson-band");
+    appendMemoryPhrase(doc, band);
+    appendMppeObjectives(doc, band);
+    appendWeekRecap(doc, band);
+    appendPriorDayRecap(doc, band);
+    band.append(buildDeepenRibbon(doc));
+    band.append(buildLessonStack(doc, points));
+    appendSummary(doc, band);
+    page.append(band);
     return [page];
   }
 
@@ -249,15 +255,17 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   return batches.map((batch, batchIndex) => {
     const page = letterPage("homescool-letter-page--lesson", `homescool-letter-page--${kind}`);
     page.append(lessonHeader(doc, kicker));
+    const band = el("div", "homescool-letter__lesson-band");
     if (batchIndex === 0) {
-      appendMemoryPhrase(doc, page);
-      appendMppeObjectives(doc, page);
+      appendMemoryPhrase(doc, band);
+      appendMppeObjectives(doc, band);
     }
     const segments = batch
       .filter((block): block is Extract<LessonPageBlock, { type: "point" }> => block.type === "point")
       .map((block) => block.segment);
-    if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
-    if (batch.some((block) => block.type === "summary")) appendSummary(doc, page);
+    if (segments.length) band.append(buildLessonSegmentStack(doc, segments));
+    if (batch.some((block) => block.type === "summary")) appendSummary(doc, band);
+    page.append(band);
     return page;
   });
 }
@@ -616,7 +624,8 @@ function appendExpoPrepColumns(page: HTMLElement): void {
   page.append(wrap);
 }
 
-function buildLessonWithQuizPage(
+/** Top half: class in a 2-column band. Bottom half: quiz on the same Letter page. */
+function buildComboLessonQuizPage(
   doc: EoschoolDocument,
   questions: EoschoolQuestion[],
   startIndex: number,
@@ -625,21 +634,80 @@ function buildLessonWithQuizPage(
   const kind = doc.lesson?.kind ?? "intro";
   const page = letterPage(
     "homescool-letter-page--lesson",
+    "homescool-letter-page--combo",
     "homescool-letter-page--with-quiz",
     `homescool-letter-page--${kind}`,
   );
-  page.append(lessonHeader(doc, "Clase + cuestionario"));
-  appendMemoryPhrase(doc, page);
-  appendMppeObjectives(doc, page);
+  page.append(lessonHeader(doc, kind === "deepen" ? "Profundización" : "Clase"));
+  const band = el("div", "homescool-letter__lesson-band");
+  appendMemoryPhrase(doc, band);
+  appendMppeObjectives(doc, band);
   if (kind === "deepen") {
-    appendWeekRecap(doc, page);
-    appendPriorDayRecap(doc, page);
-    page.append(buildDeepenRibbon(doc));
+    appendWeekRecap(doc, band);
+    appendPriorDayRecap(doc, band);
+    band.append(buildDeepenRibbon(doc));
   }
-  page.append(buildLessonStack(doc, doc.lesson?.points ?? []));
-  appendSummary(doc, page);
-  page.append(buildQuizList(doc, questions, startIndex, total));
+  band.append(buildLessonStack(doc, doc.lesson?.points ?? []));
+  appendSummary(doc, band);
+  page.append(band);
+  if (questions.length) {
+    const quizBand = el("div", "homescool-letter__quiz-band");
+    quizBand.append(buildQuizList(doc, questions, startIndex, total));
+    page.append(quizBand);
+  }
   return page;
+}
+
+/** Binary-search how many mcq/write items fit under the lesson band on one Letter page. */
+function maxComboQuizCount(doc: EoschoolDocument, questions: EoschoolQuestion[]): number {
+  if (!questions.length) return 0;
+  if (typeof document === "undefined" || !document.body) {
+    // SSR/fallback: deepen/review usually leave room for a full 16-item sheet half.
+    const kind = doc.lesson?.kind;
+    if (kind === "deepen") return Math.min(questions.length, 16);
+    if (kind === "intro") return Math.min(questions.length, 8);
+    return Math.min(questions.length, 12);
+  }
+  let lo = 0;
+  let hi = questions.length;
+  let best = 0;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (comboSliceFits(doc, questions.slice(0, mid))) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best;
+}
+
+function comboSliceFits(doc: EoschoolDocument, questions: EoschoolQuestion[]): boolean {
+  const page = buildComboLessonQuizPage(doc, questions, 1, Math.max(questions.length, 1));
+  page.setAttribute("data-homescool-measure", "1");
+  page.style.position = "absolute";
+  page.style.left = "-10000px";
+  page.style.top = "0";
+  page.style.visibility = "hidden";
+  page.style.pointerEvents = "none";
+  page.style.width = "8.5in";
+  page.style.height = "11in";
+  page.style.maxHeight = "11in";
+  page.style.overflow = "hidden";
+  page.style.boxSizing = "border-box";
+  document.body.append(page);
+  void page.offsetHeight;
+  const client = page.clientHeight;
+  const scroll = page.scrollHeight;
+  page.remove();
+  if (client < 8) {
+    const kind = doc.lesson?.kind;
+    if (kind === "deepen") return questions.length <= 16;
+    if (kind === "intro") return questions.length <= 8;
+    return questions.length <= 12;
+  }
+  return scroll <= client + 1;
 }
 
 function buildDeepenRibbon(doc: EoschoolDocument): HTMLElement {
@@ -779,7 +847,7 @@ function buildRichBody(body: string, opts: { mode: RichMode }): HTMLElement {
   const paras = classifyLessonParas(body);
   const root = el("div", `homescool-letter__rich homescool-letter__rich--${opts.mode}`);
 
-  // Full-width stack in reading order — no two-column lesson layout (kids screen better).
+  // Boxes flow inside the page's 2-column lesson band (break-inside avoid per box).
   let cardTone = 0;
   for (const p of paras) {
     const node = renderParaBlock(p);
@@ -813,7 +881,8 @@ function buildPracticeWorkspace(text: string): HTMLElement {
   }
   const lines = el("div", "homescool-letter__practice-workspace homescool-letter__practice-workspace--write");
   lines.setAttribute("aria-hidden", "true");
-  for (let n = 0; n < 5; n++) {
+  // Compact lined band so the quiz half of the Letter page still fits.
+  for (let n = 0; n < 3; n++) {
     lines.append(el("div", "homescool-letter__write-line"));
   }
   return lines;
