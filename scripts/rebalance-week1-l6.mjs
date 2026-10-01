@@ -170,21 +170,39 @@ function fitPointBody(body, maxWords, locale = "es", isOverview = false) {
   let er = normalizeError(error, locale, isOverview);
   const fixed = wordCount(pr) + wordCount(er) + 2;
   let ieMax = Math.max(15, maxWords - fixed);
-  if (isOverview) ieMax = Math.min(ieMax, 22);
+  if (isOverview) ieMax = Math.min(ieMax, 28);
   let ie = trimToWords(ideaExplora, ieMax);
   return joinBody(ie, pr, er);
 }
 
-function padExplora(body, addWords, locale = "es") {
+const EXTRA_ES = [
+  "Compara dos ejemplos en voz alta y señala qué cambia y qué se mantiene igual.",
+  "Escribe una frase corta con tus propias palabras antes de pasar a la práctica.",
+  "Repite la idea clave sin mirar el texto y comprueba si faltó algún detalle importante.",
+  "Enseña el punto a alguien en casa con un ejemplo nuevo inventado por ti.",
+];
+const EXTRA_EN = [
+  "Compare two short examples out loud. Say what changes and what stays the same.",
+  "Write one sentence in your own words before you start the practice task.",
+  "Say the key idea without looking, then check whether any important detail is missing.",
+  "Teach this point to someone at home with a new example you invent.",
+];
+
+function padExplora(body, targetIdeaWords, locale = "es") {
   const t = stripBoilerplate(body);
   const { ideaExplora, practice, error } = splitBody(t, locale);
-  const extra =
-    locale === "en"
-      ? "Compare two short examples out loud. Say what changes and what stays the same. Write one sentence in your own words before you start the practice task."
-      : "Compara dos ejemplos en voz alta y señala qué cambia y qué se mantiene igual. Escribe una frase corta con tus propias palabras antes de pasar a la práctica.";
-  let ie = ideaExplora;
-  if (wordCount(ie) < addWords) {
-    ie = `${ie}\n\n${extra}`;
+  const extras = locale === "en" ? EXTRA_EN : EXTRA_ES;
+  let ie = ideaExplora.replace(
+    /\n\nCompara dos ejemplos[\s\S]*$/i,
+    "",
+  ).replace(
+    /\n\nCompare two short examples[\s\S]*$/i,
+    "",
+  ).trim();
+  let i = 0;
+  while (wordCount(ie) < targetIdeaWords && i < extras.length * 3) {
+    ie = `${ie}\n\n${extras[i % extras.length]}`;
+    i += 1;
   }
   return joinBody(ie, normalizePractice(practice, locale, false), normalizeError(error, locale, false));
 }
@@ -220,15 +238,27 @@ function processDoc(doc) {
 
   for (const p of doc.lesson?.points ?? []) {
     let body = stripBoilerplate(p.body || "");
+    // Strip prior pad leftovers before fitting
+    body = body
+      .replace(/\n\nCompara dos ejemplos[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nCompare two short examples[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nEscribe una frase corta[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nRepite la idea clave[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nEnseña el punto[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nWrite one sentence[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nSay the key idea without looking[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n")
+      .replace(/\n\nTeach this point[\s\S]*?(?=\n\nPráctica:|\n\nPractice:)/gi, "\n\n");
+
     if (day === 1 && kind === "intro") {
       p.body = fitPointBody(body, BUDGET.d1PointBody.max, loc);
     } else if (day === 5 && kind === "review" && subject !== "pro") {
-      p.body = fitPointBody(body, BUDGET.d5Overview.max, loc, true);
+      // Compact overview: short idea + fixed practice/error (~36–42 words/point)
+      p.body = fitPointBody(body, 42, loc, true);
     } else if (day >= 2 && day <= 4) {
-      const bodyMax = Math.min(200, Math.max(140, 248 - recapWords));
-      p.body = fitPointBody(body, bodyMax, loc);
+      // Soft max so curated deepen copy is kept; pad loop fills the band
+      p.body = fitPointBody(body, 220, loc);
     } else if (day === 5 && subject === "pro") {
-      p.body = fitPointBody(body, 150, loc, false);
+      p.body = fitPointBody(body, 160, loc, false);
     } else {
       p.body = fitPointBody(body, 140, loc);
     }
@@ -237,9 +267,9 @@ function processDoc(doc) {
   if (day === 5 && kind === "review" && subject !== "pro") {
     let total = (doc.lesson.points || []).reduce((s, p) => s + wordCount(p.body), 0);
     let guard = 0;
-    while (total > BUDGET.d5Total.max && guard < 8) {
+    while (total > BUDGET.d5Total.max && guard < 10) {
       for (const p of doc.lesson.points) {
-        p.body = fitPointBody(p.body, Math.max(28, BUDGET.d5Overview.max - 4), loc, true);
+        p.body = fitPointBody(p.body, 30, loc, true);
       }
       total = (doc.lesson.points || []).reduce((s, p) => s + wordCount(p.body), 0);
       guard += 1;
@@ -247,25 +277,54 @@ function processDoc(doc) {
   }
 
   let band = classBand(doc);
-  if (day >= 2 && day <= 4 && band < BUDGET.deepenBody.min) {
-    for (const p of doc.lesson.points) {
-      p.body = padExplora(p.body, BUDGET.deepenBody.min - recapWords, loc);
+  if (day >= 2 && day <= 4) {
+    let guard = 0;
+    while (band < BUDGET.deepenBody.min && guard < 8) {
+      const need = BUDGET.deepenBody.min - band + 10;
+      const perPoint = Math.ceil(need / Math.max(1, doc.lesson.points.length));
+      for (const p of doc.lesson.points) {
+        const { ideaExplora } = splitBody(p.body, loc);
+        p.body = padExplora(p.body, wordCount(ideaExplora) + perPoint, loc);
+      }
+      band = classBand(doc);
+      guard += 1;
     }
-    band = classBand(doc);
-  }
-  if (day === 1 && kind === "intro" && band < BUDGET.d1Total.min) {
-    for (const p of doc.lesson.points) {
-      p.body = padExplora(p.body, 90, loc);
+    guard = 0;
+    while (band > BUDGET.deepenBody.max && guard < 8) {
+      for (const p of doc.lesson.points) {
+        p.body = fitPointBody(p.body, Math.max(120, wordCount(p.body) - 25), loc);
+      }
+      band = classBand(doc);
+      guard += 1;
     }
   }
-  if (day === 5 && kind === "review" && subject !== "pro" && band < 180) {
-    for (const p of doc.lesson.points) {
-      if (wordCount(p.body) < 36) p.body = padExplora(p.body, 36, loc);
+  if (day === 1 && kind === "intro") {
+    let guard = 0;
+    while (band < BUDGET.d1Total.min && guard < 6) {
+      for (const p of doc.lesson.points) {
+        const { ideaExplora } = splitBody(p.body, loc);
+        p.body = padExplora(p.body, wordCount(ideaExplora) + 20, loc);
+      }
+      band = classBand(doc);
+      guard += 1;
+    }
+    guard = 0;
+    while (band > BUDGET.d1Total.max && guard < 6) {
+      for (const p of doc.lesson.points) {
+        p.body = fitPointBody(p.body, Math.max(70, BUDGET.d1PointBody.max - 10 - guard * 5), loc);
+      }
+      if (doc.lesson.summary) {
+        doc.lesson.summary = trimToWords(doc.lesson.summary, Math.max(25, BUDGET.d1Summary.max - guard * 5));
+      }
+      band = classBand(doc);
+      guard += 1;
     }
   }
+  // Day 5 reviews: never padExplora (would multiply across 5 overviews).
   if (day === 5 && kind === "review" && subject === "pro" && band < 100) {
     for (const p of doc.lesson.points) {
-      p.body = padExplora(p.body, 110, loc);
+      const { ideaExplora } = splitBody(p.body, loc);
+      p.body = padExplora(p.body, wordCount(ideaExplora) + 40, loc);
     }
   }
 }

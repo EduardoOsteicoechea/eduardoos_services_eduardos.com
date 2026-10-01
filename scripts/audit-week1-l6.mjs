@@ -36,8 +36,8 @@ for (const s of subjects) {
     if (d === 1) ok = b >= 280 && b <= 350 ? "sí" : b < 280 ? "no-bajo" : "no-alto";
     else if (d >= 2 && d <= 4) ok = b >= 180 && b <= 260 ? "sí" : b < 180 ? "no-bajo" : "no-alto";
     else if (d === 5) {
-      if (s === "pro") ok = b <= 220 ? "sí" : "no-alto";
-      else ok = b <= 220 && b >= 160 ? "sí" : b > 220 ? "no-alto" : "no-bajo";
+      if (s === "pro") ok = b <= 220 && b >= 90 ? "sí" : b > 220 ? "no-alto" : "no-bajo";
+      else ok = b <= 220 && b >= 150 ? "sí" : b > 220 ? "no-alto" : "no-bajo";
     }
     rows.push({
       key,
@@ -52,15 +52,12 @@ for (const s of subjects) {
   }
 }
 
-console.log(JSON.stringify(rows, null, 2));
-console.log(
-  "---",
-  "total",
-  rows.length,
-  "under",
-  rows.filter((r) => String(r.ok).includes("bajo")).length,
-  "ok",
-  rows.filter((r) => r.ok === "sí").length,
-  "over",
-  rows.filter((r) => String(r.ok).includes("alto")).length,
-);
+const outPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "week1-l6-audit.json");
+fs.writeFileSync(outPath, `${JSON.stringify(rows, null, 2)}\n`);
+const under = rows.filter((r) => String(r.ok).includes("bajo")).length;
+const ok = rows.filter((r) => r.ok === "sí").length;
+const over = rows.filter((r) => String(r.ok).includes("alto")).length;
+console.log(JSON.stringify({ total: rows.length, ok, under, over, outPath }, null, 2));
+for (const r of rows.filter((x) => x.ok !== "sí")) {
+  console.log(`${r.key}\t${r.band}\t${r.ok}`);
+}
