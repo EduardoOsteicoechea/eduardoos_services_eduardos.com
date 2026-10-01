@@ -171,7 +171,47 @@ import "../../styles/homescool-workspace.css";
         </button>
       </header>
       <p class="homescool-mppe-modal__summary" data-homescool-mppe-summary>Cargando…</p>
-      <div class="homescool-mppe-modal__body" data-homescool-mppe-body tabindex="0"></div>
+      <div class="homescool-mppe-modal__tabs" role="tablist" aria-label="Vista del checklist MPPE">
+        <button
+          type="button"
+          class="homescool-mppe-modal__tab"
+          role="tab"
+          id="homescool-mppe-tab-schedule"
+          aria-selected="true"
+          aria-controls="homescool-mppe-panel-schedule"
+          data-homescool-mppe-tab="schedule"
+        >
+          Por calendario
+        </button>
+        <button
+          type="button"
+          class="homescool-mppe-modal__tab"
+          role="tab"
+          id="homescool-mppe-tab-catalog"
+          aria-selected="false"
+          aria-controls="homescool-mppe-panel-catalog"
+          data-homescool-mppe-tab="catalog"
+        >
+          Por catálogo
+        </button>
+      </div>
+      <div class="homescool-mppe-modal__body" data-homescool-mppe-body tabindex="0">
+        <div
+          class="homescool-mppe-modal__panel"
+          id="homescool-mppe-panel-schedule"
+          role="tabpanel"
+          aria-labelledby="homescool-mppe-tab-schedule"
+          data-homescool-mppe-panel="schedule"
+        ></div>
+        <div
+          class="homescool-mppe-modal__panel"
+          id="homescool-mppe-panel-catalog"
+          role="tabpanel"
+          aria-labelledby="homescool-mppe-tab-catalog"
+          data-homescool-mppe-panel="catalog"
+          hidden
+        ></div>
+      </div>
     </div>
   </div>
 </Layout>
@@ -212,7 +252,11 @@ import "../../styles/homescool-workspace.css";
     setHomescoolDebugPanelVisible,
     isHomescoolDebugPanelVisible,
   } from "../../lib/homescool-debug";
-  import { buildMppeCoverage, loadMppeChecklist } from "../../lib/homescool-mppe";
+  import {
+    buildMppeCoverage,
+    buildMppeScheduleReport,
+    loadMppeChecklist,
+  } from "../../lib/homescool-mppe";
 
   const LEVEL = 6;
   const DEFAULT_SELECTION = { cycle: 3, week: 2, day: 1, subject: "pro" };
@@ -727,26 +771,129 @@ import "../../styles/homescool-workspace.css";
     }
   }
 
-  async function renderMppeChecklistModal() {
-    const summary = qs<HTMLElement>("[data-homescool-mppe-summary]");
-    const body = qs<HTMLElement>("[data-homescool-mppe-body]");
-    if (!summary || !body) return;
-    summary.textContent = "Cargando checklist…";
-    body.replaceChildren();
-    const checklist = await loadMppeChecklist();
-    if (!checklist) {
-      summary.textContent = "No se pudo cargar el catálogo MPPE.";
-      return;
+  function setMppeModalTab(tab: "schedule" | "catalog") {
+    for (const btn of qsa<HTMLButtonElement>("[data-homescool-mppe-tab]")) {
+      const active = btn.getAttribute("data-homescool-mppe-tab") === tab;
+      btn.setAttribute("aria-selected", active ? "true" : "false");
     }
+    for (const panel of qsa<HTMLElement>("[data-homescool-mppe-panel]")) {
+      const active = panel.getAttribute("data-homescool-mppe-panel") === tab;
+      setHidden(panel, !active);
+    }
+  }
+
+  function collectMppeClassDocs(): Array<HomescoolCurriculumClass | EoschoolDocument> {
     const classDocs: Array<HomescoolCurriculumClass | EoschoolDocument> = [];
     if (curriculumBackup?.classes?.length) classDocs.push(...curriculumBackup.classes);
     for (const cell of cells) {
       if (cell.curriculum) classDocs.push(cell.curriculum);
     }
     if (currentDoc) classDocs.push(currentDoc);
-    const coverage = buildMppeCoverage(checklist, classDocs);
-    summary.textContent = `Imbuidos ${coverage.imbued} / ${coverage.total} · eoschool es master; MPPE es cobertura requerida.`;
+    return classDocs;
+  }
 
+  function renderMppeSchedulePanel(
+    host: HTMLElement,
+    schedule: ReturnType<typeof buildMppeScheduleReport>,
+  ) {
+    host.replaceChildren();
+    if (!schedule.cycles.length) {
+      const empty = document.createElement("p");
+      empty.className = "homescool-mppe-modal__empty";
+      empty.textContent = "No hay clases con coordenadas de ciclo/semana/día en el currículo cargado.";
+      host.append(empty);
+      return;
+    }
+    for (const cycle of schedule.cycles) {
+      const cycleEl = document.createElement("section");
+      cycleEl.className = "homescool-mppe-modal__cycle";
+      const cycleH = document.createElement("h3");
+      cycleH.className = "homescool-mppe-modal__cycle-title";
+      cycleH.textContent = `Ciclo ${cycle.cycle} · ${cycle.objectiveIds.length} objetivos · ${cycle.classesWithMppe}/${cycle.classCount} clases con MPPE`;
+      cycleEl.append(cycleH);
+
+      for (const week of cycle.weeks) {
+        const weekEl = document.createElement("div");
+        weekEl.className = "homescool-mppe-modal__week";
+        const weekH = document.createElement("h4");
+        weekH.className = "homescool-mppe-modal__week-title";
+        weekH.textContent = `Semana ${week.week} · ${week.objectiveIds.length} objetivos · ${week.classesWithMppe}/${week.classCount} clases`;
+        weekEl.append(weekH);
+
+        for (const day of week.days) {
+          const dayEl = document.createElement("div");
+          dayEl.className = "homescool-mppe-modal__day";
+          const dayH = document.createElement("h5");
+          dayH.className = "homescool-mppe-modal__day-title";
+          dayH.textContent = `Día ${day.day} · ${day.objectiveCount} objetivos · ${day.classesWithMppe}/${day.classes.length} clases`;
+          dayEl.append(dayH);
+
+          const classList = document.createElement("ul");
+          classList.className = "homescool-mppe-modal__class-list";
+          for (const cls of day.classes) {
+            const li = document.createElement("li");
+            li.className = `homescool-mppe-modal__class ${
+              cls.objectives.length
+                ? "homescool-mppe-modal__class--imbued"
+                : "homescool-mppe-modal__class--gap"
+            }`;
+            const head = document.createElement("div");
+            head.className = "homescool-mppe-modal__class-head";
+            const mark = document.createElement("span");
+            mark.className = "homescool-mppe-modal__mark material-symbols-outlined";
+            mark.setAttribute("aria-hidden", "true");
+            mark.textContent = cls.objectives.length ? "check_circle" : "radio_button_unchecked";
+            const name = document.createElement("strong");
+            name.className = "homescool-mppe-modal__class-name";
+            name.textContent = subjectDisplayName(cls.subject) || cls.subject;
+            const title = document.createElement("span");
+            title.className = "homescool-mppe-modal__class-title";
+            title.textContent = cls.title;
+            const key = document.createElement("code");
+            key.className = "homescool-mppe-modal__id";
+            key.textContent = cls.key;
+            head.append(mark, name, title, key);
+            li.append(head);
+
+            if (cls.objectives.length) {
+              const objUl = document.createElement("ul");
+              objUl.className = "homescool-mppe-modal__obj-list";
+              for (const obj of cls.objectives) {
+                const objLi = document.createElement("li");
+                objLi.className = "homescool-mppe-modal__obj";
+                const idEl = document.createElement("code");
+                idEl.className = "homescool-mppe-modal__id";
+                idEl.textContent = obj.id;
+                const label = document.createElement("span");
+                label.textContent = obj.label;
+                objLi.append(idEl, label);
+                objUl.append(objLi);
+              }
+              li.append(objUl);
+            } else {
+              const none = document.createElement("p");
+              none.className = "homescool-mppe-modal__keys";
+              none.textContent = "Sin objetivos MPPE declarados";
+              li.append(none);
+            }
+            classList.append(li);
+          }
+          dayEl.append(classList);
+          weekEl.append(dayEl);
+        }
+        cycleEl.append(weekEl);
+      }
+      host.append(cycleEl);
+    }
+  }
+
+  function renderMppeCatalogPanel(
+    host: HTMLElement,
+    checklist: Awaited<ReturnType<typeof loadMppeChecklist>>,
+    coverage: ReturnType<typeof buildMppeCoverage>,
+  ) {
+    host.replaceChildren();
+    if (!checklist) return;
     for (const area of checklist.areas) {
       const areaStats = coverage.byArea[area.id];
       const section = document.createElement("section");
@@ -793,9 +940,40 @@ import "../../styles/homescool-workspace.css";
         compEl.append(ul);
         section.append(compEl);
       }
-      body.append(section);
+      host.append(section);
     }
-    log("mppe.modal.render", { total: coverage.total, imbued: coverage.imbued });
+  }
+
+  async function renderMppeChecklistModal() {
+    const summary = qs<HTMLElement>("[data-homescool-mppe-summary]");
+    const schedulePanel = qs<HTMLElement>('[data-homescool-mppe-panel="schedule"]');
+    const catalogPanel = qs<HTMLElement>('[data-homescool-mppe-panel="catalog"]');
+    if (!summary || !schedulePanel || !catalogPanel) return;
+    summary.textContent = "Cargando checklist…";
+    schedulePanel.replaceChildren();
+    catalogPanel.replaceChildren();
+    const checklist = await loadMppeChecklist();
+    if (!checklist) {
+      summary.textContent = "No se pudo cargar el catálogo MPPE.";
+      return;
+    }
+    const classDocs = collectMppeClassDocs();
+    const coverage = buildMppeCoverage(checklist, classDocs);
+    const schedule = buildMppeScheduleReport(checklist, classDocs);
+    summary.textContent =
+      `Catálogo ${coverage.imbued}/${coverage.total} · ` +
+      `Calendario ${schedule.uniqueObjectiveIds.length} únicos en ${schedule.classesWithMppe}/${schedule.classCount} clases · ` +
+      `eoschool master; MPPE cobertura requerida.`;
+    renderMppeSchedulePanel(schedulePanel, schedule);
+    renderMppeCatalogPanel(catalogPanel, checklist, coverage);
+    setMppeModalTab("schedule");
+    log("mppe.modal.render", {
+      total: coverage.total,
+      imbued: coverage.imbued,
+      scheduleClasses: schedule.classCount,
+      scheduleWithMppe: schedule.classesWithMppe,
+      uniqueInSchedule: schedule.uniqueObjectiveIds.length,
+    });
   }
 
   function bindMppeModalOnce() {
@@ -804,6 +982,12 @@ import "../../styles/homescool-workspace.css";
     document.addEventListener("click", (ev) => {
       const t = ev.target;
       if (!(t instanceof Element)) return;
+      const tabBtn = t.closest<HTMLButtonElement>("[data-homescool-mppe-tab]");
+      if (tabBtn) {
+        const tab = tabBtn.getAttribute("data-homescool-mppe-tab");
+        if (tab === "schedule" || tab === "catalog") setMppeModalTab(tab);
+        return;
+      }
       if (t.closest("[data-homescool-mppe-toggle]")) {
         const modal = qs<HTMLElement>("[data-homescool-mppe-modal]");
         const opening = Boolean(modal?.hasAttribute("hidden"));
