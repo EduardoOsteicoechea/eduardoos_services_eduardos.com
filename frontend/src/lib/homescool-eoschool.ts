@@ -1126,26 +1126,35 @@ function buildQuizItem(doc: EoschoolDocument, q: EoschoolQuestion, index: number
   return li;
 }
 
-const week2QuizPracticeImages: Record<string, { src: string; alt: string }> = {
-  his: {
-    src: "/homescool/media/week2/practice-images/history-coastline-practice.jpg",
-    alt: "Mapa de práctica de la costa venezolana con ruta y marcadores sin texto.",
+/** Practice-band illustrations: `{subject}-c3-w{week}-practice.jpg` under weekN/practice-images/. */
+const QUIZ_PRACTICE_ALTS: Record<number, Record<string, string>> = {
+  1: {
+    art: "Esquema de figuras básicas OiLS (círculo, línea, ángulo, curva), ejemplos de pez y flor, y dos recuadros punteados en blanco para dibujar.",
+    cie: "Cuatro láminas comparativas de tejidos corporales (epitelial, conectivo, muscular y nervioso) sobre cajas punteadas con líneas de escritura.",
+    esp: "Tres tiras de oraciones ilustradas con casillas punteadas bajo cada palabra y leyenda con figuras para sustantivo, verbo y pronombre.",
+    exe: "Diagrama de flujo de carta apostólica que conecta a Pablo con las insignias de siervo y apóstol hacia el rollo del evangelio, con cajas en blanco para replicar.",
+    geo: "Mapa mudo de contorno de Venezuela con flechas hacia los límites cardinales (Mar Caribe, Brasil, Guyana, Colombia) y estrella central en Caracas con recuadros vacíos.",
+    his: "Cuatro viñetas representativas de los pueblos originarios de Venezuela (palafito, terrazas andinas, canoa fluvial, choza de palma) con cajetines punteados inferiores.",
+    ing: "Tres árboles esquemáticos con raíces rotuladas -AR, -ER e -IR cuyas ramas terminan en óvalos punteados en blanco.",
+    lat: "Seis tarjetas con preposiciones en latín (IN, APUD, PER, SINE, A/AB, DE) ilustradas con iconos espaciales y líneas de escritura inferiores.",
+    LT: "Línea de tiempo doble en paralelo que sincroniza hitos de la Historia Antigua con la cronología de Génesis y etiquetas vacías.",
+    mat: "Grupos y matrices visuales de estrellas, manzanas en cuadrícula y triángulos con casillas numéricas para operaciones de multiplicación.",
+    pro: "Esquema paso a paso de un taumatropo óptico con cara A (jaula), cara B (pájaro en vuelo), flechas de rotación y un disco circular vacío con lápiz.",
+    teb: "Cadena de la historia de la redención con cinco medallones ilustrados (Creación, Caída, Promesa, Diluvio, Patriarcas) y cajas de notas punteadas.",
   },
-  LT: {
-    src: "/homescool/media/week2/practice-images/timeline-milestones-practice.jpg",
-    alt: "Línea de tiempo de práctica con hitos e ilustraciones antiguas.",
-  },
-  geo: {
-    src: "/homescool/media/week2/practice-images/geography-venezuela-practice.jpg",
-    alt: "Mapa de Venezuela de práctica con marcadores y recuadros sin texto.",
-  },
-  cie: {
-    src: "/homescool/media/week2/practice-images/science-skeleton-practice.jpg",
-    alt: "Esquema del esqueleto superior con líneas para identificar huesos.",
-  },
-  art: {
-    src: "/homescool/media/week2/practice-images/art-symmetry-practice.jpg",
-    alt: "Media flor para completar mediante simetría y espacio de dibujo.",
+  2: {
+    art: "Ejercicio de simetría especular con la mitad izquierda dibujada de una flor y mariposa ornamentales, eje vertical punteado y cuadrícula tenue vacía a la derecha.",
+    cie: "Esquema del esqueleto axial humano superior (cráneo, vértebras cervicales, costillas y esternón) con líneas guía hacia cuatro recuadros vacíos.",
+    esp: "Cuadro comparativo entre tiempos verbales de 1 palabra (simples) y de 2 palabras (compuestos), con cajas punteadas vacías.",
+    exe: "Diagrama secuencial de Romanos 1:2 conectando los símbolos de Promesa, Profetas y Santa Escritura con casillas de réplica en la parte inferior.",
+    geo: "Cuatro tarjetas de la Región Centro Norte (Distrito Capital, La Guaira, Miranda, Aragua) con siluetas cartográficas, iconos geográficos y recuadros de capitales.",
+    his: "Mapa de la costa venezolana mostrando las rutas de navegación de 1498 (Colón por Paria) y 1499 (Ojeda por el Golfo) con marcadores numerados y líneas de ubicación.",
+    ing: "Tarjetas ilustradas en inglés comparando One-word verbs frente a Two-word verbs con recuadros punteados.",
+    lat: "Tres tarjetas de conectores en latín: ET, UT y NON, con renglones punteados.",
+    LT: "Flecha horizontal continua con siete medallones numerados del 8 al 14 representando maravillas y reinos antiguos, con etiquetas en blanco.",
+    mat: "Matrices de peces en filas, grupos de flores en macetas y agrupaciones de rombos con renglones de factores y productos matemáticos.",
+    pro: "Diagrama del experimento de la gota-lupa con fases Antes, Paso a paso y Después, junto a un círculo de observación en blanco.",
+    teb: "Fila horizontal de seis tarjetas delimitadas para los días de la Creación con líneas para completar.",
   },
 };
 
@@ -1154,8 +1163,15 @@ function quizPracticeImage(doc: EoschoolDocument): { src: string; alt: string } 
   if (fromMedia?.path) {
     return { src: fromMedia.path, alt: fromMedia.alt || "Imagen de práctica" };
   }
-  if (doc.week === 2) return week2QuizPracticeImages[doc.subject];
-  return undefined;
+  const week = doc.week;
+  const subject = doc.subject;
+  if (week !== 1 && week !== 2) return undefined;
+  const alt = QUIZ_PRACTICE_ALTS[week]?.[subject];
+  if (!alt) return undefined;
+  return {
+    src: `/homescool/media/week${week}/practice-images/${subject}-c3-w${week}-practice.jpg`,
+    alt,
+  };
 }
 
 /** Full Letter sheet for the class practice image (never under the 4-col quiz). */

@@ -436,7 +436,13 @@ describe("renderEoschoolPages pagination", () => {
       },
     });
     const pages = renderEoschoolPages(doc);
-    expect(pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"))).toHaveLength(1);
+    expect(
+      pages.filter(
+        (p) =>
+          p.classList.contains("homescool-letter-page--lesson") &&
+          !p.classList.contains("homescool-letter-page--practice-image"),
+      ),
+    ).toHaveLength(1);
   });
 
   it("keeps quiz and lesson headings free of decorative icon marks", () => {
@@ -497,13 +503,6 @@ describe("renderEoschoolPages pagination", () => {
           { id: "q1", originDay: 1, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
         ],
       },
-      media: [
-        {
-          id: "quiz-practice",
-          path: "/homescool/media/week2/practice-images/science-skeleton-practice.jpg",
-          alt: "Esquema del esqueleto superior con líneas para identificar huesos.",
-        },
-      ],
     });
 
     const pages = renderEoschoolPages(doc);
@@ -512,7 +511,7 @@ describe("renderEoschoolPages pagination", () => {
     );
     expect(practicePage).toBeTruthy();
     const image = practicePage?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
-    expect(image?.src).toContain("/homescool/media/week2/practice-images/science-skeleton-practice.jpg");
+    expect(image?.src).toContain("/homescool/media/week2/practice-images/cie-c3-w2-practice.jpg");
     expect(image?.alt).toMatch(/esqueleto/i);
     expect(
       pages.some(
@@ -522,5 +521,31 @@ describe("renderEoschoolPages pagination", () => {
           p.querySelector(".homescool-letter__quiz-practice-image"),
       ),
     ).toBe(false);
+  });
+
+  it("resolves week-1 practice illustrations by subject convention", () => {
+    const doc = baseDoc({
+      subject: "geo",
+      week: 1,
+      day: 2,
+      lesson: {
+        kind: "deepen",
+        focusPoint: null,
+        points: [{ id: "p1", heading: "Límites", body: "Idea." }],
+        summary: "",
+      },
+      quiz: {
+        questionCount: 1,
+        questions: [
+          { id: "q1", originDay: 2, type: "mcq", prompt: "Q?", choices: ["a", "b"], answer: "a" },
+        ],
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const image = pages
+      .find((page) => page.classList.contains("homescool-letter-page--practice-image"))
+      ?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
+    expect(image?.src).toContain("/homescool/media/week1/practice-images/geo-c3-w1-practice.jpg");
+    expect(image?.alt).toMatch(/Venezuela/i);
   });
 });
