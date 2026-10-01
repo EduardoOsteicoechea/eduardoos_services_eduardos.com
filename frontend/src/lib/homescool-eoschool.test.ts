@@ -476,14 +476,20 @@ describe("renderEoschoolPages pagination", () => {
     expect(q?.querySelector(".homescool-letter__q-num")?.textContent).toBe("1");
     expect(q?.querySelector(".homescool-letter__q-head .homescool-letter__body")?.textContent).toMatch(/Q\?/);
     expect(q?.querySelector(".homescool-letter__q-head + .homescool-letter__choices-list")).toBeTruthy();
-    expect(host?.querySelector(".homescool-letter__quiz + .homescool-letter__quiz-practice")).toBeTruthy();
+    // Practice image band is only on dedicated quiz sheets (not the combo lower half).
+    if (host?.classList.contains("homescool-letter-page--quiz")) {
+      expect(host.querySelector(".homescool-letter__quiz + .homescool-letter__quiz-practice")).toBeTruthy();
+    } else {
+      expect(host?.querySelector(".homescool-letter__quiz-practice")).toBeFalsy();
+    }
   });
 
   it("shows the week-2 science practice illustration in the free quiz band", () => {
     const doc = baseDoc({
       subject: "cie",
+      day: 5,
       lesson: {
-        kind: "intro",
+        kind: "review",
         focusPoint: null,
         points: [{ id: "p1", heading: "Huesos", body: "Idea." }],
         summary: "",
@@ -504,10 +510,8 @@ describe("renderEoschoolPages pagination", () => {
     });
 
     const pages = renderEoschoolPages(doc);
-    const host =
-      pages.find((page) => page.classList.contains("homescool-letter-page--quiz")) ||
-      pages.find((page) => page.classList.contains("homescool-letter-page--combo"));
-    const image = host?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
+    const quizPage = pages.find((page) => page.classList.contains("homescool-letter-page--quiz"));
+    const image = quizPage?.querySelector<HTMLImageElement>(".homescool-letter__quiz-practice-image");
     expect(image?.src).toContain("/homescool/media/week2/practice-images/science-skeleton-practice.jpg");
     expect(image?.alt).toMatch(/esqueleto/i);
   });

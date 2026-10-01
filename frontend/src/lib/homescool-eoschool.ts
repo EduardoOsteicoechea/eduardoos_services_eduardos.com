@@ -652,7 +652,12 @@ function buildComboLessonQuizPage(
   page.append(band);
   if (questions.length) {
     const quizBand = el("div", "homescool-letter__quiz-band");
-    quizBand.append(buildQuizList(doc, questions, startIndex, total));
+    quizBand.append(
+      buildQuizList(doc, questions, startIndex, total, {
+        showLabel: true,
+        practiceBand: false,
+      }),
+    );
     page.append(quizBand);
   }
   return page;
@@ -1051,7 +1056,7 @@ function buildQuizList(
   questions: EoschoolQuestion[],
   startIndex: number,
   total: number,
-  opts?: { showLabel?: boolean },
+  opts?: { showLabel?: boolean; practiceBand?: boolean },
 ): HTMLElement {
   const wrap = el("section", "homescool-letter__quiz-wrap");
   if (opts?.showLabel !== false) {
@@ -1078,8 +1083,8 @@ function buildQuizList(
     list.append(buildQuizItem(doc, q, startIndex + i));
   });
   wrap.append(list);
-  // One full-width band under the grid consumes leftover Letter height.
-  if (!hasActivity) {
+  // Practice image band only on dedicated quiz sheets — on combo it steals the lower half.
+  if (!hasActivity && opts?.practiceBand !== false) {
     wrap.append(buildQuizSheetPracticeBand(doc));
   }
   return wrap;
@@ -1463,7 +1468,13 @@ function lessonHeader(doc: EoschoolDocument, kicker: string, sub?: string): HTML
     num.setAttribute("aria-label", `Clase número ${classNo}`);
     head.append(num);
   }
-  head.append(el("h2", "homescool-letter__heading", doc.title));
+  // Title always leads with the subject class number, then the topic name.
+  const rawTitle = String(doc.title || "").trim();
+  const title =
+    classNo > 0 && !new RegExp(`^${classNo}\\b`).test(rawTitle)
+      ? `${classNo} ${rawTitle}`
+      : rawTitle || (classNo > 0 ? String(classNo) : "");
+  head.append(el("h2", "homescool-letter__heading", title));
   const extras: string[] = [];
   if (kicker.trim() && !isLessonKindKicker(kicker)) extras.push(kicker.trim());
   if (sub?.trim()) extras.push(sub.trim());
