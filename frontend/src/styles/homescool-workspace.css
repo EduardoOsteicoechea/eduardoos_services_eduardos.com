@@ -736,6 +736,20 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   --hc-teal: var(--hc-blue);
   --hc-on-dark: var(--hc-cream);
 
+  /* Compact type scale (0.89× prior Letter sizes) to free vertical room. */
+  --hc-fs: 0.89;
+  --hc-fs-body: calc(0.3cm * var(--hc-fs));
+  --hc-fs-heading: calc(0.35cm * var(--hc-fs));
+  --hc-fs-class-no: calc(0.5cm * var(--hc-fs));
+  --hc-lh-heading: calc(0.4cm * var(--hc-fs));
+  --hc-fs-label: calc(0.62rem * var(--hc-fs));
+  --hc-fs-sub: calc(0.72rem * var(--hc-fs));
+  --hc-fs-badge: calc(0.75rem * var(--hc-fs));
+  --hc-fs-point-title: calc(0.88rem * var(--hc-fs));
+  --hc-fs-ribbon-title: calc(0.9rem * var(--hc-fs));
+  --hc-fs-ribbon-badge: calc(0.65rem * var(--hc-fs));
+  --hc-fs-quiz-label: calc(0.7rem * var(--hc-fs));
+
   box-sizing: border-box;
   width: 8.5in;
   height: 11in;
@@ -798,7 +812,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   padding: 0 0.12cm;
   border: 0.08rem solid var(--hc-navy);
   border-radius: 0.25rem;
-  font-size: 0.5cm;
+  font-size: var(--hc-fs-class-no);
   font-weight: 800;
   line-height: 1;
   color: var(--hc-navy);
@@ -816,8 +830,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__heading {
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 0.35cm;
-  line-height: 0.4cm;
+  font-size: var(--hc-fs-heading);
+  line-height: var(--hc-lh-heading);
   font-weight: 700;
   margin: 0;
   white-space: nowrap;
@@ -827,8 +841,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__meta {
   flex: 0 0 auto;
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: var(--hc-fs-body);
   opacity: 0.85;
   margin: 0;
   white-space: nowrap;
@@ -837,7 +851,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__sub {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: var(--hc-fs-sub);
   opacity: 0.9;
   line-height: 1.35;
 }
@@ -877,7 +891,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: transparent;
   border: 0.06rem solid var(--hc-navy);
   color: var(--hc-navy);
-  font-size: 0.75rem;
+  font-size: var(--hc-fs-badge);
   font-weight: 700;
   line-height: 1;
 }
@@ -909,7 +923,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__point-title {
-  font-size: 0.88rem;
+  font-size: var(--hc-fs-point-title);
   font-weight: 700;
   margin: 0;
   color: var(--hc-ink);
@@ -921,9 +935,9 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.35rem 0.45rem;
-  border-radius: 0.3rem;
-  border: 0.08rem solid var(--hc-blue);
+  padding: 0.2rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
 }
 
@@ -934,7 +948,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: transparent;
   border: 0.06rem solid var(--hc-blue);
   color: var(--hc-blue);
-  font-size: 0.65rem;
+  font-size: var(--hc-fs-ribbon-badge);
   font-weight: 700;
   letter-spacing: 0.04rem;
   text-transform: uppercase;
@@ -944,7 +958,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__ribbon-title {
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 0.9rem;
+  font-size: var(--hc-fs-ribbon-title);
   font-weight: 700;
   color: var(--hc-ink);
   line-height: 1.3;
@@ -952,7 +966,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__ribbon-hint {
   flex: 0 1 auto;
-  font-size: 0.62rem;
+  font-size: var(--hc-fs-label);
   color: var(--hc-ink-soft);
   line-height: 1.3;
 }
@@ -961,9 +975,9 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex: 0 0 auto;
   height: auto;
   min-height: 0;
-  padding: 0.4rem;
-  border-radius: 0.35rem;
-  border: 0.08rem solid var(--hc-blue);
+  padding: 0.2rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
   overflow: visible;
 }
@@ -997,51 +1011,38 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__box {
   display: flex;
   flex-direction: column;
-  gap: 0.18rem;
-  padding: 0.35rem 0.4rem;
-  border-radius: 0.28rem;
-  border: 0.08rem solid var(--hc-line);
+  gap: 0.12rem;
+  padding: 0.18rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
   min-width: 0;
 }
 
 .homescool-letter__box--lead {
   background: transparent;
-  border-color: var(--hc-navy);
-  padding: 0.45rem 0.5rem;
+  border: 0;
+  padding: 0.2rem 0;
 }
 
 .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   font-weight: 600;
   line-height: 1.35;
 }
 
 .homescool-letter__box--card,
-.homescool-letter__card-tone--1 {
-  background: transparent;
-  border-color: var(--hc-blue);
-}
-
-.homescool-letter__card-tone--2 {
-  background: transparent;
-  border-color: var(--hc-navy);
-}
-
-.homescool-letter__card-tone--3 {
-  background: transparent;
-  border-color: var(--hc-olive);
-}
-
+.homescool-letter__card-tone--1,
+.homescool-letter__card-tone--2,
+.homescool-letter__card-tone--3,
 .homescool-letter__card-tone--4 {
   background: transparent;
-  border-color: var(--hc-orange);
+  border: 0;
 }
 
 .homescool-letter__box--practice {
   background: transparent;
-  border-color: var(--hc-blue);
+  border: 0;
   /* Cap practice+workspace to ~⅓ of the Letter content band (page − margins − hero). */
   max-height: calc((11in - 2cm - 1.6cm) / 3);
   flex: 0 1 auto;
@@ -1049,26 +1050,17 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   overflow: hidden;
 }
 
-.homescool-letter__box--error {
-  background: transparent;
-  border-color: var(--hc-orange);
-}
-
+.homescool-letter__box--error,
 .homescool-letter__box--tip,
-.homescool-letter__box--goal {
-  background: transparent;
-  border-color: var(--hc-olive);
-}
-
+.homescool-letter__box--goal,
 .homescool-letter__box--contrast {
   background: transparent;
-  border-style: dashed;
-  border-color: var(--hc-navy);
+  border: 0;
 }
 
 .homescool-letter__box-label {
   margin: 0;
-  font-size: 0.62rem;
+  font-size: var(--hc-fs-label);
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-rail);
@@ -1102,7 +1094,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__subtitle {
   margin: 0.15rem 0 0;
-  font-size: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.3;
   font-weight: 700;
   color: var(--hc-navy);
@@ -1118,10 +1110,10 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__prior-recap {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.3rem 0.4rem;
-  border-radius: 0.28rem;
-  border: 0.08rem solid var(--hc-line);
+  gap: 0.1rem;
+  padding: 0.15rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
   min-width: 0;
   flex: 0 0 auto;
@@ -1130,12 +1122,12 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__mppe {
-  border-color: var(--hc-blue);
+  border: 0;
 }
 
 .homescool-letter__mppe-label {
   margin: 0;
-  font-size: 0.62rem;
+  font-size: var(--hc-fs-label);
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-rail);
@@ -1161,13 +1153,13 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex-wrap: wrap;
   gap: 0.25rem 0.4rem;
   align-items: baseline;
-  font-size: 0.72rem;
+  font-size: var(--hc-fs-sub);
   line-height: 1.35;
 }
 
 .homescool-letter__mppe-id {
   font-family: ui-monospace, monospace;
-  font-size: 0.62rem;
+  font-size: var(--hc-fs-label);
   color: var(--hc-navy);
   font-weight: 700;
 }
@@ -1177,20 +1169,10 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   flex: 1 1 auto;
 }
 
-.homescool-letter__memory {
-  border-color: var(--hc-orange);
-  min-height: 0;
-  max-height: none;
-}
-
-.homescool-letter__week-recap {
-  border-color: var(--hc-navy);
-  min-height: 0;
-  max-height: none;
-}
-
+.homescool-letter__memory,
+.homescool-letter__week-recap,
 .homescool-letter__prior-recap {
-  border-color: var(--hc-olive);
+  border: 0;
   min-height: 0;
   max-height: none;
 }
@@ -1199,7 +1181,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__week-recap-label,
 .homescool-letter__prior-recap-label {
   margin: 0;
-  font-size: 0.62rem;
+  font-size: var(--hc-fs-label);
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-rail);
@@ -1218,29 +1200,24 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__col {
-  padding: 0.3rem 0.35rem;
-  border-radius: 0.22rem;
-  border: 0.05rem solid var(--hc-line);
+  padding: 0.15rem 0;
+  border-radius: 0;
+  border: 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
 }
 
-.homescool-letter__col--a {
-  background: transparent;
-  border-color: var(--hc-blue);
-}
-
+.homescool-letter__col--a,
 .homescool-letter__col--b {
   background: transparent;
-  border-color: var(--hc-orange);
+  border: 0;
 }
 
 .homescool-letter__body,
 .homescool-letter__choices {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   margin: 0;
   line-height: 1.35;
   color: var(--hc-ink);
@@ -1252,8 +1229,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__body--muted {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
   color: var(--hc-ink-soft);
 }
 
@@ -1263,8 +1240,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--deepen .homescool-letter__box .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.35;
 }
 
@@ -1275,32 +1251,31 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--intro .homescool-letter__rich--intro .homescool-letter__box--lead .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__rich--review .homescool-letter__box--lead .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   font-weight: 600;
+  line-height: 1.35;
 }
 
 .homescool-letter-page--intro .homescool-letter__box .homescool-letter__body,
 .homescool-letter-page--review .homescool-letter__box .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.3;
 }
 
 .homescool-letter__summary {
   margin-top: auto;
-  padding: 0.4rem 0.5rem;
-  border-radius: 0.3rem;
-  border: 0.08rem solid var(--hc-coral);
+  padding: 0.2rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .homescool-letter__summary-label {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: var(--hc-fs-sub);
   font-weight: 700;
   letter-spacing: 0.05rem;
   color: var(--hc-coral);
@@ -1322,7 +1297,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__quiz-label {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: var(--hc-fs-quiz-label);
   font-weight: 700;
   letter-spacing: 0.04rem;
   color: var(--hc-coral);
@@ -1345,8 +1320,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--with-quiz .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.3;
 }
 
@@ -1424,19 +1398,18 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter-page--quiz .homescool-letter__q-num {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
 }
 
 .homescool-letter-page--quiz .homescool-letter__q .homescool-letter__body {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.25;
 }
 
 .homescool-letter-page--quiz .homescool-letter__choice {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
   padding: 0.08rem 0.18rem;
   gap: 0.2rem;
 }
@@ -1444,16 +1417,16 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter-page--quiz .homescool-letter__choice-mark {
   width: 0.85rem;
   height: 0.85rem;
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
 }
 
 .homescool-letter__q {
-  --hc-q-num-size: 1.15rem;
+  --hc-q-num-size: calc(1.15rem * var(--hc-fs));
   margin: 0;
-  padding: 0.35rem;
-  border-radius: 0.3rem;
-  border: 0.08rem solid var(--hc-blue);
+  padding: 0.2rem 0;
+  border-radius: 0;
+  border: 0;
   background: transparent;
   min-height: 0;
   display: flex;
@@ -1537,7 +1510,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   position: relative;
   min-height: 0.55cm;
   background: transparent;
-  font-size: 0.35cm;
+  font-size: calc(0.35cm * var(--hc-fs));
   line-height: 1;
   color: var(--hc-ink, var(--hc-navy));
 }
@@ -1551,7 +1524,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   position: absolute;
   top: 0.05cm;
   left: 0.06cm;
-  font-size: 0.22cm;
+  font-size: calc(0.22cm * var(--hc-fs));
   line-height: 1;
   font-weight: 700;
   color: var(--hc-navy);
@@ -1565,7 +1538,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__cw-clue-title {
   margin: 0 0 0.2rem;
-  font-size: 0.3cm;
+  font-size: var(--hc-fs-body);
   font-weight: 700;
   color: var(--hc-coral, var(--hc-orange));
   text-transform: uppercase;
@@ -1575,7 +1548,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter__cw-clue-list {
   margin: 0;
   padding-left: 1.1rem;
-  font-size: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.35;
   color: var(--hc-ink, var(--hc-navy));
 }
@@ -1587,7 +1560,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.3;
   color: var(--hc-ink, var(--hc-navy));
 }
@@ -1611,7 +1584,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.35;
   color: var(--hc-ink, var(--hc-navy));
 }
@@ -1798,8 +1771,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   margin: 0;
   /* First prompt line shares the vertical center of the number circle. */
   margin-top: calc((var(--hc-q-num-size) - 1lh) / 2);
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.3;
   font-weight: 600;
 }
@@ -1816,13 +1788,12 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter__choice {
   margin: 0;
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
   line-height: 1.25;
   display: flex;
   align-items: flex-start;
   gap: 0.25rem;
-  padding: 0.12rem 0.22rem;
+  padding: 0.12rem 0;
   border-radius: 0.18rem;
   background: transparent;
   border: 0.05rem solid var(--hc-line);
@@ -1836,8 +1807,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: transparent;
   border: 0.06rem solid var(--hc-rail);
   color: var(--hc-rail);
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -2223,8 +2194,8 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 .homescool-letter__support-link {
-  font-size: 0.3cm;
-  line-height: 0.3cm;
+  font-size: var(--hc-fs-body);
+  line-height: 1.35;
   color: var(--hc-blue);
   word-break: break-all;
 }
