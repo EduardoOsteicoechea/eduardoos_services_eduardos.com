@@ -1004,13 +1004,15 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 /*
- * Lesson band: CSS multicol with balanced fill. JS finalizeLessonBand pins
- * height to ~½ single-column stack so a section can split across columns.
+ * Lesson band: exactly 2 CSS columns. JS pins height from narrow-column
+ * measure so content never spills a 3rd column past the Letter edge.
  */
 .homescool-letter__lesson-band {
   column-count: 2;
   column-gap: 0.45rem;
   column-fill: balance;
+  overflow-x: clip;
+  max-width: 100%;
   flex: 0 1 auto;
   min-height: 0;
 }

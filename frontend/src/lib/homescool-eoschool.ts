@@ -232,9 +232,9 @@ function flattenLessonBandItems(band: HTMLElement): HTMLElement[] {
 }
 
 /**
- * Continuous 2-column newspaper flow: unwrap wrappers, then pin band height to
- * ~half the single-column stack so CSS `column-fill: balance` lets a section
- * start in column 1 and continue in column 2.
+ * Continuous 2-column newspaper flow. Height must be measured at *column*
+ * width (≈ half band): measuring at full width then halving underestimates
+ * wrap and CSS multicol spills a 3rd column off the Letter page.
  */
 function finalizeLessonBand(band: HTMLElement): void {
   const items = flattenLessonBandItems(band);
@@ -242,20 +242,40 @@ function finalizeLessonBand(band: HTMLElement): void {
   if (!items.length) return;
   if (typeof document === "undefined" || !document.body) return;
 
+  const bandW = band.clientWidth || band.offsetWidth || 0;
+  const gapPx = (() => {
+    const raw = getComputedStyle(band).columnGap || getComputedStyle(band).gap || "0";
+    const n = parseFloat(raw);
+    return Number.isFinite(n) ? n : 0;
+  })();
+  const colW = bandW > 8 ? Math.max(40, (bandW - gapPx) / 2) : 0;
+
   band.style.columnCount = "1";
   band.style.height = "auto";
   band.style.maxHeight = "none";
+  if (colW > 0) band.style.width = `${colW}px`;
   void band.offsetHeight;
-  let full = band.scrollHeight;
-  // jsdom / headless often reports ~0; estimate from text so print path still pins height.
-  if (full < 8) {
+  let stack = band.scrollHeight;
+  band.style.width = "";
+  // jsdom / headless often reports ~0; estimate from text.
+  if (stack < 8) {
     const chars = (band.textContent || "").length;
-    full = Math.max(120, Math.ceil(chars * 0.35));
+    stack = Math.max(160, Math.ceil(chars * 0.55));
   }
-  // Half height (+ tiny slack) forces both columns; content may split mid-section.
-  const half = Math.max(1, Math.ceil(full / 2) + 2);
-  band.style.columnCount = "";
-  band.style.height = `${half}px`;
+
+  // Half of narrow-column stack (+ slack for break-inside:avoid chunks).
+  let target = Math.max(1, Math.ceil(stack / 2) + 12);
+  band.style.columnCount = "2";
+  band.style.columnFill = "balance";
+  band.style.height = `${target}px`;
+  void band.offsetHeight;
+
+  // Grow until no overflow columns (scrollWidth would exceed the band).
+  for (let i = 0; i < 48 && band.scrollWidth > band.clientWidth + 1; i++) {
+    target += 20;
+    band.style.height = `${target}px`;
+    void band.offsetHeight;
+  }
 }
 
 function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
