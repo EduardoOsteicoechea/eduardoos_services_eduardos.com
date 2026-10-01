@@ -1004,14 +1004,15 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 }
 
 /*
- * Lesson band: explicit 2-column grid so short classes still fill left+right
- * (CSS column-count leaves col 2 empty when content is short).
+ * Lesson band: two explicit columns packed by height (JS finalizeLessonBand)
+ * so left and right grow together. Reading order = left column, then right.
  */
 .homescool-letter__lesson-band {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 0.45rem;
   row-gap: 0.3rem;
+  align-items: start;
   align-content: start;
   flex: 0 1 auto;
   min-height: 0;
@@ -1019,6 +1020,13 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--combo .homescool-letter__lesson-band {
   flex: 0 1 auto;
+}
+
+.homescool-letter__lesson-band > .homescool-letter__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
 }
 
 .homescool-letter__quiz-band {
@@ -1033,13 +1041,6 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-page--combo {
   gap: 0.25rem;
-}
-
-/* Unwrap only the chrome wrappers so boxes/points land on the 2-col grid. */
-.homescool-letter__lesson-band > .homescool-letter__stack,
-.homescool-letter__lesson-band .homescool-letter__deepen-panel,
-.homescool-letter__lesson-band .homescool-letter__rich {
-  display: contents;
 }
 
 .homescool-letter__lesson-band .homescool-letter__point {

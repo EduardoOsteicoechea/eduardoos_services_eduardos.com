@@ -211,6 +211,87 @@ export function packLessonBatches(
   return batches;
 }
 
+/**
+ * Split items across two columns with a single cut so left+right heights stay close
+ * while preserving reading order (finish the left column, then the right).
+ */
+export function balanceColumnCut(heights: readonly number[]): number {
+  const n = heights.length;
+  if (n <= 1) return n;
+  if (n === 2) return 1;
+  const total = heights.reduce((a, b) => a + b, 0);
+  let left = 0;
+  let bestK = 1;
+  let bestDiff = Number.POSITIVE_INFINITY;
+  for (let k = 1; k < n; k++) {
+    left += heights[k - 1]!;
+    const diff = Math.abs(left - (total - left));
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestK = k;
+    }
+  }
+  return bestK;
+}
+
+function flattenLessonBandItems(band: HTMLElement): HTMLElement[] {
+  const out: HTMLElement[] = [];
+  const visit = (node: HTMLElement) => {
+    for (const child of Array.from(node.children) as HTMLElement[]) {
+      if (
+        child.classList.contains("homescool-letter__stack") ||
+        child.classList.contains("homescool-letter__deepen-panel") ||
+        child.classList.contains("homescool-letter__rich")
+      ) {
+        visit(child);
+        continue;
+      }
+      out.push(child);
+    }
+  };
+  visit(band);
+  return out;
+}
+
+function measureBandItemHeights(items: readonly HTMLElement[]): number[] {
+  if (!items.length) return [];
+  if (typeof document === "undefined" || !document.body) {
+    return items.map((node) => Math.max(40, (node.textContent || "").length));
+  }
+  const host = document.createElement("div");
+  host.setAttribute("data-homescool-measure", "1");
+  host.style.cssText =
+    "position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none;width:3.7in;box-sizing:border-box;";
+  const probe = document.createElement("div");
+  probe.style.cssText = "display:flex;flex-direction:column;gap:0.3rem;width:100%;";
+  host.append(probe);
+  document.body.append(host);
+  const heights = items.map((item) => {
+    probe.append(item);
+    void probe.offsetHeight;
+    const h = item.getBoundingClientRect().height || item.offsetHeight || 1;
+    probe.removeChild(item);
+    return Math.max(1, h);
+  });
+  host.remove();
+  return heights;
+}
+
+/** Pack band children into two equal-height columns (left then right reading order). */
+function finalizeLessonBand(band: HTMLElement): void {
+  const items = flattenLessonBandItems(band);
+  if (!items.length) {
+    band.replaceChildren();
+    return;
+  }
+  const cut = balanceColumnCut(measureBandItemHeights(items));
+  const colA = el("div", "homescool-letter__col homescool-letter__col--a");
+  const colB = el("div", "homescool-letter__col homescool-letter__col--b");
+  for (const item of items.slice(0, cut)) colA.append(item);
+  for (const item of items.slice(cut)) colB.append(item);
+  band.replaceChildren(colA, colB);
+}
+
 function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
   const kind = doc.lesson?.kind ?? "intro";
   const points = doc.lesson?.points ?? [];
@@ -227,6 +308,7 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
     band.append(buildDeepenRibbon(doc));
     band.append(buildLessonStack(doc, points));
     appendSummary(doc, band);
+    finalizeLessonBand(band);
     page.append(band);
     return [page];
   }
@@ -271,6 +353,7 @@ function buildLessonPages(doc: EoschoolDocument): HTMLElement[] {
       .map((block) => block.segment);
     if (segments.length) band.append(buildLessonSegmentStack(doc, segments));
     if (batch.some((block) => block.type === "summary")) appendSummary(doc, band);
+    finalizeLessonBand(band);
     page.append(band);
     return page;
   });
@@ -387,8 +470,11 @@ function lessonBlocksFit(
   page.style.boxSizing = "border-box";
   page.append(lessonHeader(doc, kicker));
 
-  if (segments.length) page.append(buildLessonSegmentStack(doc, segments));
-  if (withSummary) appendSummary(doc, page);
+  const band = el("div", "homescool-letter__lesson-band");
+  if (segments.length) band.append(buildLessonSegmentStack(doc, segments));
+  if (withSummary) appendSummary(doc, band);
+  finalizeLessonBand(band);
+  page.append(band);
   // Day 5: reserve the expo-prep band so review text does not crowd it out.
   if (doc.day === 5) appendExpoPrepColumns(page);
 
@@ -655,6 +741,7 @@ function buildComboLessonQuizPage(
   }
   band.append(buildLessonStack(doc, doc.lesson?.points ?? []));
   appendSummary(doc, band);
+  finalizeLessonBand(band);
   page.append(band);
   if (questions.length) {
     const quizBand = el("div", "homescool-letter__quiz-band");

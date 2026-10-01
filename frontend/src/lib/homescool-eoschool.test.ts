@@ -4,6 +4,7 @@
 import { describe, expect, it } from "vitest";
 import type { EoschoolDocument } from "./homescool";
 import {
+  balanceColumnCut,
   classifyLessonParas,
   packLessonBatches,
   packLessonBlocksExpanding,
@@ -11,6 +12,16 @@ import {
   type LessonPageBlock,
 } from "./homescool-eoschool";
 import { calculateLetterPages } from "./homescool-letter-layout";
+
+describe("balanceColumnCut", () => {
+  it("splits so both columns get content when there are 2+ items", () => {
+    expect(balanceColumnCut([10])).toBe(1);
+    expect(balanceColumnCut([10, 10])).toBe(1);
+    expect(balanceColumnCut([100, 10, 10, 10])).toBe(1);
+    expect(balanceColumnCut([10, 10, 10, 100])).toBe(3);
+    expect(balanceColumnCut([20, 20, 20, 20])).toBe(2);
+  });
+});
 
 describe("classifyLessonParas", () => {
   it("marks lead, cards, practice and error for deepen bodies", () => {
@@ -170,6 +181,58 @@ describe("lesson rich layout", () => {
     expect(withExpo.length).toBe(1);
     expect(withExpo[0].querySelectorAll(".homescool-letter__expo-prep-col").length).toBe(2);
     expect(pages.some((p) => p.classList.contains("homescool-letter-page--expo"))).toBe(false);
+  });
+
+  it("packs intro points into two balanced lesson columns (not zigzag 1+3 / 2)", () => {
+    const doc = baseDoc({
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          {
+            id: "p1",
+            heading: "Materiales",
+            body: [
+              "Idea: persiste la visión.",
+              "Práctica: dibuja las dos caras en el disco.",
+              "Error común: desalineado.",
+            ].join("\n\n"),
+          },
+          {
+            id: "p2",
+            heading: "Procedimiento",
+            body: [
+              "Idea: orden del giro.",
+              "Práctica: anota los pasos.",
+              "Error común: girar lento.",
+            ].join("\n\n"),
+          },
+          {
+            id: "p3",
+            heading: "Por qué ocurre",
+            body: [
+              "Idea: el cerebro funde fases.",
+              "Práctica: explica en tres frases.",
+              "Error común: pensar que se mezclan tinta.",
+            ].join("\n\n"),
+          },
+        ],
+        summary: "El disco parece guiñar cuando gira rápido.",
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const band = pages[0].querySelector(".homescool-letter__lesson-band");
+    const colA = band?.querySelector(":scope > .homescool-letter__col--a");
+    const colB = band?.querySelector(":scope > .homescool-letter__col--b");
+    expect(colA).toBeTruthy();
+    expect(colB).toBeTruthy();
+    expect(colA?.children.length ?? 0).toBeGreaterThan(0);
+    expect(colB?.children.length ?? 0).toBeGreaterThan(0);
+    // Sequential cut: point 1 stays whole in one column; not zigzag 1+3 vs 2.
+    const pointsInA = colA?.querySelectorAll(".homescool-letter__point").length ?? 0;
+    const pointsInB = colB?.querySelectorAll(".homescool-letter__point").length ?? 0;
+    expect(pointsInA + pointsInB).toBe(3);
+    expect(Math.abs(pointsInA - pointsInB)).toBeLessThanOrEqual(1);
   });
 
   it("puts deepen class and quiz on one combo Letter page (lesson band + quiz band)", () => {
