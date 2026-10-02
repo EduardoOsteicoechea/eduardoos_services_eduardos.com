@@ -488,6 +488,27 @@ func practiceImageRelPath(subject string, week int) string {
 	return fmt.Sprintf("week%d/practice-images/%s-c3-w%d-practice.jpg", week, subject, week)
 }
 
+// AttachHomescoolPracticeImage embeds week practice JPEG when present on disk.
+func AttachHomescoolPracticeImage(page HCLetterPageInk, subject string, week int) HCLetterPageInk {
+	imgPath, err := resolveHomescoolMediaPath(practiceImageRelPath(subject, week))
+	if err != nil {
+		return page
+	}
+	jpeg, err := os.ReadFile(imgPath)
+	if err != nil {
+		return page
+	}
+	w, h, ok := jpegSize(jpeg)
+	if !ok {
+		return page
+	}
+	page.PracticeImageJPEG = jpeg
+	page.PracticeImageWidth = w
+	page.PracticeImageHeight = h
+	page.ImageBandText = ""
+	return page
+}
+
 // LoadHCLetterPageWithPracticeImage loads .eoschool JSON and the matching practice JPEG.
 func LoadHCLetterPageWithPracticeImage(eoschoolRel string) (HCLetterPageInk, error) {
 	path, err := resolveHomescoolMediaPath(eoschoolRel)
@@ -506,23 +527,7 @@ func LoadHCLetterPageWithPracticeImage(eoschoolRel string) (HCLetterPageInk, err
 	if err := json.Unmarshal(raw, &doc); err != nil {
 		return HCLetterPageInk{}, err
 	}
-	imgPath, err := resolveHomescoolMediaPath(practiceImageRelPath(doc.Subject, doc.Week))
-	if err != nil {
-		return page, nil
-	}
-	jpeg, err := os.ReadFile(imgPath)
-	if err != nil {
-		return page, nil
-	}
-	w, h, ok := jpegSize(jpeg)
-	if !ok {
-		return page, nil
-	}
-	page.PracticeImageJPEG = jpeg
-	page.PracticeImageWidth = w
-	page.PracticeImageHeight = h
-	page.ImageBandText = ""
-	return page, nil
+	return AttachHomescoolPracticeImage(page, doc.Subject, doc.Week), nil
 }
 
 func fitOneLineInk(text string, sizePt, maxWidthPt float64, bold bool) string {

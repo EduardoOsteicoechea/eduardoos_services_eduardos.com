@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -8,6 +9,14 @@ import (
 )
 
 func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
+	return buildEoschoolPDFFromRaw(nil, doc)
+}
+
+func buildEoschoolPDFFromRaw(raw []byte, doc EoschoolDocument) ([]byte, error) {
+	if len(doc.Lesson.SlotSequence) > 0 {
+		return buildEoschoolLetterV2PDF(raw, doc)
+	}
+
 	meta := fmt.Sprintf("Ciclo %d · Semana %d · Día %d · Nivel %d · %s",
 		doc.Cycle, doc.Week, doc.Day, doc.Level, doc.Subject)
 
@@ -25,7 +34,27 @@ func buildEoschoolPDF(doc EoschoolDocument) ([]byte, error) {
 	})
 }
 
+func buildEoschoolLetterV2PDF(raw []byte, doc EoschoolDocument) ([]byte, error) {
+	if len(raw) == 0 {
+		var err error
+		raw, err = json.Marshal(doc)
+		if err != nil {
+			return nil, err
+		}
+	}
+	page, err := pdf.HCLetterPageInkFromEoschoolBytes(raw)
+	if err != nil {
+		return nil, err
+	}
+	page = pdf.AttachHomescoolPracticeImage(page, doc.Subject, doc.Week)
+	return pdf.BuildHomescoolLetterGridPDF([]pdf.HCLetterPageInk{page})
+}
+
 func isMatTablesLayout(doc EoschoolDocument) bool {
+	// Letter v2 slot sheets use the grid, not the mat-tables layout.
+	if len(doc.Lesson.SlotSequence) > 0 {
+		return false
+	}
 	// Week 1: tables 1–12. Week 2: tables 5–16.
 	subj := strings.EqualFold(strings.TrimSpace(doc.Subject), "mat")
 	return subj && (doc.Week == 1 || doc.Week == 2)

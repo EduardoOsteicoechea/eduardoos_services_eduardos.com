@@ -214,6 +214,24 @@ export type EoschoolGridMark = {
   rows: number;
 };
 
+export type EoschoolSlot = {
+  index: number;
+  column: number;
+  line: number;
+  kind: string;
+  text?: string;
+  questionId?: string;
+  questionType?: string;
+  optionIndex?: number;
+  gutter?: Record<string, string>;
+};
+
+export type EoschoolQuestionSlot = {
+  column: number;
+  line: number;
+  index: number;
+};
+
 export type EoschoolQuestion = {
   id: string;
   originDay: number;
@@ -221,6 +239,9 @@ export type EoschoolQuestion = {
   prompt: string;
   choices?: string[];
   answer?: string;
+  schematic?: boolean;
+  slotQuestionType?: string;
+  slot?: EoschoolQuestionSlot;
   crossword?: EoschoolCrossword;
   wordsearch?: EoschoolWordsearch;
   match?: EoschoolMatch;
@@ -257,6 +278,15 @@ export type EoschoolDocument = {
     priorDayRecap?: string;
     /** Memorization sentence for esp/ing/lat/his/LT/geo/cie (every day). */
     memoryPhrase?: string;
+    title?: string;
+    layout?: string;
+    v2Flow?: boolean;
+    quizIntegrated?: boolean;
+    packOrder?: string;
+    method?: string;
+    imageBandInstruction?: string;
+    /** Letter v2: 156 column-major slots (52×3). */
+    slotSequence?: EoschoolSlot[];
   };
   quiz: {
     questionCount: number;

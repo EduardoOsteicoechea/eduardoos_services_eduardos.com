@@ -121,18 +121,6 @@ import "../../styles/homescool-workspace.css";
 
   <section class="product-workspace homescool-workspace" data-homescool-workspace hidden>
     <div class="product-workspace__main">
-      <div class="homescool-support-admin" data-homescool-support-admin hidden>
-        <label class="homescool-support-admin__label" for="homescool-support-url">Link de apoyo (admin)</label>
-        <input
-          id="homescool-support-url"
-          class="homescool-support-admin__input"
-          type="url"
-          data-homescool-support-input
-          placeholder="https://…"
-          autocomplete="off"
-        />
-        <button type="button" class="homescool-support-admin__save" data-homescool-support-save>Guardar</button>
-      </div>
       <div class="homescool-workspace__stage" data-homescool-stage>
         <div class="homescool-workspace__overlay" data-homescool-empty hidden>
           <p class="homescool-workspace__empty-msg" data-homescool-empty-msg>
@@ -218,7 +206,7 @@ import "../../styles/homescool-workspace.css";
 
 <script>
   import { requireService, setHidden } from "../../lib/productGate";
-  import { currentCsrf, getCsrf, getMe } from "../../lib/api";
+  import { getMe } from "../../lib/api";
   import {
     fetchHomescoolMaterial,
     fetchHomescoolMaterials,
@@ -288,12 +276,10 @@ import "../../styles/homescool-workspace.css";
   let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
   let currentDoc: EoschoolDocument | null = null;
-  let isAdmin = false;
   let openSeq = 0;
   let bootSeq = 0;
   let selection: Selection = { ...DEFAULT_SELECTION };
   let printBound = false;
-  let supportBound = false;
   let collapseBound = false;
   let debugToggleBound = false;
   let mppeModalBound = false;
@@ -1056,64 +1042,6 @@ import "../../styles/homescool-workspace.css";
     });
   }
 
-  function bindSupportOnce() {
-    if (supportBound) return;
-    supportBound = true;
-    document.addEventListener("click", (ev) => {
-      const t = ev.target;
-      if (!(t instanceof Element)) return;
-      if (!t.closest("[data-homescool-support-save]")) return;
-      void saveSupportUrl();
-    });
-  }
-
-  function syncSupportAdminUi(doc: EoschoolDocument | null) {
-    const bar = qs<HTMLElement>("[data-homescool-support-admin]");
-    const input = qs<HTMLInputElement>("[data-homescool-support-input]");
-    if (!bar || !input) return;
-    const show = isAdmin && Boolean(currentMaterialId);
-    setHidden(bar, !show);
-    input.value = doc?.supportUrl?.trim() || "";
-    log("support.ui", { show, hasUrl: Boolean(input.value), materialId: currentMaterialId });
-  }
-
-  async function saveSupportUrl() {
-    const input = qs<HTMLInputElement>("[data-homescool-support-input]");
-    if (!input || !currentMaterialId || !isAdmin) return;
-    const supportUrl = input.value.trim();
-    log("support.save.start", { materialId: currentMaterialId, hasUrl: Boolean(supportUrl) });
-    await getCsrf();
-    const headers = new Headers({ Accept: "application/json", "Content-Type": "application/json" });
-    const csrf = currentCsrf();
-    if (csrf) headers.set("X-CSRF-Token", csrf);
-    try {
-      const res = await fetch(`/api/homescool/materials/${encodeURIComponent(currentMaterialId)}/support`, {
-        method: "PATCH",
-        credentials: "include",
-        headers,
-        body: JSON.stringify({ supportUrl }),
-      });
-      const requestId = res.headers.get("X-Request-ID") || "";
-      if (!res.ok) {
-        let message = `No se pudo guardar el link (${res.status})`;
-        try {
-          const body = (await res.json()) as { message?: string };
-          if (body.message) message = body.message;
-        } catch {
-          /* ignore */
-        }
-        showErrorModal({ message, requestId, details: requestId ? `request_id=${requestId}` : "" });
-        hcLog("workspace", "support.save.fail", { status: res.status, requestId }, "error");
-        return;
-      }
-      log("support.save.ok", { requestId });
-      await openSelection();
-    } catch (err) {
-      hcLog("workspace", "support.save.error", { err: String(err) }, "error");
-      showErrorModal({ message: "No se pudo guardar el link de apoyo." });
-    }
-  }
-
   async function loadDocForCell(cell: WorkspaceCell): Promise<EoschoolDocument | null> {
     if (cell.source === "mongo" && cell.materialId) {
       const res = await fetchHomescoolMaterial(cell.materialId);
@@ -1334,8 +1262,7 @@ import "../../styles/homescool-workspace.css";
     }
 
     const me = await getMe();
-    isAdmin = me.status === 200 && String(me.data.role || "").toLowerCase() === "admin";
-    log("boot.me", { status: me.status, isAdmin, requestId: me.requestId });
+    log("boot.me", { status: me.status, requestId: me.requestId });
 
     const teacher = await requireService("homescool", { requireSubscription: true });
     if (seq !== bootSeq) return;
@@ -1362,7 +1289,6 @@ import "../../styles/homescool-workspace.css";
     bindDebugToggleOnce();
     bindMppeModalOnce();
     bindPrintOnce();
-    bindSupportOnce();
     log("boot.loading_materials");
 
     const [mongoRes, feRes] = await Promise.all([
@@ -1446,7 +1372,6 @@ import "../../styles/homescool-workspace.css";
       setStageMode("empty");
       if (sheetsHost) sheetsHost.replaceChildren();
       if (emptyMsg) emptyMsg.textContent = msg;
-      syncSupportAdminUi(null);
       log("openSelection.empty");
       return;
     }
@@ -1510,7 +1435,6 @@ import "../../styles/homescool-workspace.css";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       setPrintEnabled(true);
-      syncSupportAdminUi(doc);
       rebuildPublishedChips();
       log("openSelection.ready", {
         key: match.key,
@@ -1528,7 +1452,6 @@ import "../../styles/homescool-workspace.css";
       setStageMode("empty");
       if (emptyMsg) emptyMsg.textContent = "No se pudo cargar el documento.";
       showErrorModal({ message: "Could not load eoschool document." });
-      syncSupportAdminUi(null);
     }
   }
 

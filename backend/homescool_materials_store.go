@@ -95,16 +95,21 @@ func (s *memoryHomescoolStore) UpsertMaterial(_ context.Context, m HomescoolMate
 		return HomescoolMaterial{}, fmt.Errorf("document body required")
 	}
 	if m.Format == eoschoolFormatName {
-		doc, err := parseEoschoolDocument(body)
+		doc, kept, err := parseEoschoolDocumentPreserveRaw(body)
 		if err != nil {
 			return HomescoolMaterial{}, err
 		}
 		m.Cycle, m.Week, m.Day, m.Level = doc.Cycle, doc.Week, doc.Day, doc.Level
 		m.Subject, m.Title = doc.Subject, doc.Title
 		m.Slug = doc.Subject
-		body, err = marshalEoschoolDocument(doc)
-		if err != nil {
-			return HomescoolMaterial{}, err
+		// Prefer the validated upload bytes so Letter v2 fields are never dropped.
+		if len(doc.Lesson.SlotSequence) > 0 {
+			body = kept
+		} else {
+			body, err = marshalEoschoolDocument(doc)
+			if err != nil {
+				return HomescoolMaterial{}, err
+			}
 		}
 	} else {
 		body = []byte(homescoolRewriteWebAssetLinks(string(body)))
@@ -168,16 +173,20 @@ func (s *mongoHomescoolStore) UpsertMaterial(ctx context.Context, m HomescoolMat
 		return HomescoolMaterial{}, fmt.Errorf("document body required")
 	}
 	if m.Format == eoschoolFormatName {
-		doc, err := parseEoschoolDocument(body)
+		doc, kept, err := parseEoschoolDocumentPreserveRaw(body)
 		if err != nil {
 			return HomescoolMaterial{}, err
 		}
 		m.Cycle, m.Week, m.Day, m.Level = doc.Cycle, doc.Week, doc.Day, doc.Level
 		m.Subject, m.Title = doc.Subject, doc.Title
 		m.Slug = doc.Subject
-		body, err = marshalEoschoolDocument(doc)
-		if err != nil {
-			return HomescoolMaterial{}, err
+		if len(doc.Lesson.SlotSequence) > 0 {
+			body = kept
+		} else {
+			body, err = marshalEoschoolDocument(doc)
+			if err != nil {
+				return HomescoolMaterial{}, err
+			}
 		}
 	} else {
 		body = []byte(homescoolRewriteWebAssetLinks(string(body)))

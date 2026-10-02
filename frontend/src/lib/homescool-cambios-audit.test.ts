@@ -29,6 +29,8 @@ function loadPublishedDocs(): EoschoolDocument[] {
 }
 
 function pageHasLessonOrQuizOrSupportOrExpo(page: HTMLElement): boolean {
+  // Letter v2 is a full 52×3 sheet (lesson + quiz + images) — never hero-only empty.
+  if (page.classList.contains("homescool-letter-v2")) return true;
   // Support pages use tip box + support-link (not a dedicated __support root).
   return Boolean(
     page.querySelector(
@@ -47,6 +49,10 @@ function pageHasLessonOrQuizOrSupportOrExpo(page: HTMLElement): boolean {
       ].join(","),
     ) || page.classList.contains("homescool-letter-page--support"),
   );
+}
+
+function isLetterV2(doc: EoschoolDocument): boolean {
+  return Array.isArray(doc.lesson?.slotSequence) && doc.lesson!.slotSequence!.length === 156;
 }
 
 describe("cambios audit — published ciclo3 week1–2 pack", () => {
@@ -146,7 +152,8 @@ describe("cambios audit — published ciclo3 week1–2 pack", () => {
   }, 30_000);
 
   it("puts day-5 expo lined prep on the review lesson sheet", () => {
-    const day5 = docs.filter((d) => d.day === 5 && d.subject !== "mat");
+    // Letter v2 packs review+quiz on one grid sheet (no separate expo column chrome).
+    const day5 = docs.filter((d) => d.day === 5 && d.subject !== "mat" && !isLetterV2(d));
     const missing: string[] = [];
     for (const d of day5) {
       const pages = renderEoschoolPages(d);
@@ -177,9 +184,11 @@ describe("cambios audit — published ciclo3 week1–2 pack", () => {
   });
 
   it("shuffles MCQ so answers are not stuck on printed A across the pack", () => {
+    // Letter v2 options are authored in slotSequence (no FE shuffle); only legacy pages shuffle.
     let aCount = 0;
     let total = 0;
     for (const d of docs) {
+      if (isLetterV2(d)) continue;
       const qs = d.quiz?.questions || [];
       const mcq = qs.filter((q) => (q.type || "mcq") === "mcq" && q.choices?.length && q.answer);
       if (!mcq.length) continue;
@@ -196,6 +205,11 @@ describe("cambios audit — published ciclo3 week1–2 pack", () => {
         total++;
         if (texts[0] === src.answer) aCount++;
       }
+    }
+    // Pack is Letter v2 — no legacy MCQ pages to shuffle; gate only when legacy remains.
+    if (total === 0) {
+      expect(docs.every(isLetterV2)).toBe(true);
+      return;
     }
     expect(total).toBeGreaterThan(100);
     // With a fair shuffle, ~25% land on A; allow headroom but forbid near-100%.

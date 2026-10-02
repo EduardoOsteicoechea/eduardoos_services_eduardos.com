@@ -32,11 +32,6 @@ html[data-page="homescool-workspace"] main {
   overflow-x: hidden;
 }
 
-/* Admin link row sits in the menu-button band (replaces empty top padding). */
-html[data-page="homescool-workspace"] main:has([data-homescool-support-admin]:not([hidden])) {
-  padding-top: 0;
-}
-
 /* Fixed curriculum rail (cycle / week / day / subject / Print) */
 html[data-page="homescool-workspace"] {
   /* +75px vs prior 13rem (at 16px root) */
@@ -2496,59 +2491,6 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   word-break: break-all;
 }
 
-/* Admin support URL bar — sits in the site menu band (same row as hamburger). */
-.homescool-support-admin {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: var(--rail-gap);
-  flex: 0 0 auto;
-  box-sizing: border-box;
-  min-height: var(--mobile-header-height);
-  height: var(--mobile-header-height);
-  padding: var(--space-padding);
-  /* Clear the fixed site menu button on the right. */
-  padding-right: calc(var(--menu-button-size) + var(--space-padding) + var(--space-padding));
-  border-bottom: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.homescool-support-admin[hidden] {
-  display: none !important;
-}
-
-.homescool-support-admin__label {
-  flex: 0 0 auto;
-  font-size: var(--font-size-xs);
-  color: var(--color-muted);
-  white-space: nowrap;
-}
-
-.homescool-support-admin__input {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-size: var(--font-size-sm);
-}
-
-.homescool-support-admin__save {
-  flex: 0 0 auto;
-  height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-button-bg);
-  color: var(--color-button-fg);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
-
 /* Expert debug panel — hidden until DHS ? toggle */
 .homescool-debug {
   position: fixed;
@@ -2654,4 +2596,145 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   font-family: ui-monospace, monospace;
   font-size: var(--font-size-xs);
   line-height: 1.3;
+}
+
+/* Letter v2 grid (mirror of Go PDF SoT; 1 mm ≈ 0.23625 rem at 16px/96dpi) */
+.homescool-letter-v2 {
+  --hc-mm: 0.23625rem;
+  --hc-v2-pad: calc(2 * var(--hc-mm));
+  --hc-v2-radius: calc(1 * var(--hc-mm));
+  --hc-v2-gap: calc(2 * var(--hc-mm));
+  --hc-v2-stroke: var(--border-width);
+  box-sizing: border-box;
+  width: calc(215.9 * var(--hc-mm));
+  height: calc(279.4 * var(--hc-mm));
+  padding: calc(5 * var(--hc-mm));
+  display: flex;
+  flex-direction: column;
+  gap: var(--hc-v2-gap);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 0;
+  font-family: var(--font-family);
+  font-size: 0.5rem; /* 8 pt */
+  line-height: 1.15;
+  overflow: hidden;
+}
+
+.homescool-letter-v2__cabecera {
+  display: flex;
+  flex-direction: row;
+  gap: var(--hc-v2-gap);
+  flex: 0 0 auto;
+}
+
+.homescool-letter-v2__cabecera--1 {
+  height: calc(7 * var(--hc-mm));
+}
+
+.homescool-letter-v2__cabecera--2 {
+  height: calc(5 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  height: 100%;
+  padding-left: var(--hc-v2-pad);
+  padding-right: var(--hc-v2-pad);
+  border: var(--hc-v2-stroke) solid var(--color-text);
+  border-radius: var(--hc-v2-radius);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.homescool-letter-v2__field--name {
+  flex: 0 0 calc(45 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field--topic {
+  flex: 1 1 auto;
+}
+
+.homescool-letter-v2__field--code {
+  flex: 0 0 calc(41 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field--meta {
+  flex: 1 1 auto;
+}
+
+.homescool-letter-v2__main {
+  display: flex;
+  flex-direction: row;
+  gap: var(--hc-v2-gap);
+  flex: 1 1 auto;
+  min-height: 0;
+  height: calc(182 * var(--hc-mm));
+}
+
+.homescool-letter-v2__col {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: var(--hc-v2-stroke) solid var(--color-text);
+  border-radius: var(--hc-v2-radius);
+  padding-top: var(--hc-v2-pad);
+  padding-bottom: var(--hc-v2-pad);
+  padding-left: var(--hc-v2-pad);
+  padding-right: var(--hc-v2-pad);
+  overflow: hidden;
+}
+
+.homescool-letter-v2__col[data-col="1"] {
+  flex: 0 0 calc(63 * var(--hc-mm));
+}
+
+.homescool-letter-v2__line {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.homescool-letter-v2__line--heading {
+  font-weight: 700;
+}
+
+.homescool-letter-v2__images {
+  box-sizing: border-box;
+  flex: 0 0 calc(70 * var(--hc-mm));
+  height: calc(70 * var(--hc-mm));
+  border: var(--hc-v2-stroke) solid var(--color-text);
+  border-radius: var(--hc-v2-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homescool-letter-v2__practice {
+  flex: 1 1 auto;
+  align-self: stretch;
+  max-width: calc(205.9 * var(--hc-mm));
+  max-height: calc(70 * var(--hc-mm));
+  object-fit: contain;
+  display: block;
+}
+
+.homescool-letter-v2__images-fallback {
+  margin: 0;
+  padding: var(--hc-v2-pad);
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
 }

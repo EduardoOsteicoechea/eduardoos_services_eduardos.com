@@ -37,7 +37,7 @@ func (a *App) postHomescoolPreviewHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	pdfBytes, err := buildEoschoolPDF(doc)
+	pdfBytes, err := buildEoschoolPDFFromRaw(raw, doc)
 	if err != nil {
 		a.mustLogf(r, "homescool.preview.build_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

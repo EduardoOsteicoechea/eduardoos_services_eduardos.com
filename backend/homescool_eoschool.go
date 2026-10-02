@@ -59,13 +59,42 @@ type EoschoolMPPEObjective struct {
 }
 
 type EoschoolLesson struct {
-	Kind          string          `json:"kind"`
-	FocusPoint    *int            `json:"focusPoint"`
-	Points        []EoschoolPoint `json:"points"`
-	Summary       string          `json:"summary,omitempty"`
-	WeekRecap     string          `json:"weekRecap,omitempty"`
-	PriorDayRecap string          `json:"priorDayRecap,omitempty"`
-	MemoryPhrase  string          `json:"memoryPhrase,omitempty"`
+	Kind                 string          `json:"kind"`
+	FocusPoint           *int            `json:"focusPoint"`
+	Points               []EoschoolPoint `json:"points"`
+	Summary              string          `json:"summary,omitempty"`
+	WeekRecap            string          `json:"weekRecap,omitempty"`
+	PriorDayRecap        string          `json:"priorDayRecap,omitempty"`
+	MemoryPhrase         string          `json:"memoryPhrase,omitempty"`
+	Title                string          `json:"title,omitempty"`
+	Layout               string          `json:"layout,omitempty"`
+	V2Flow               bool            `json:"v2Flow,omitempty"`
+	QuizIntegrated       bool            `json:"quizIntegrated,omitempty"`
+	PackOrder            string          `json:"packOrder,omitempty"`
+	Method               string          `json:"method,omitempty"`
+	ImageBandInstruction string          `json:"imageBandInstruction,omitempty"`
+	// SlotSequence is the Letter v2 156-slot column-major sheet (omit for legacy docs).
+	SlotSequence []EoschoolSlot `json:"slotSequence,omitempty"`
+}
+
+// EoschoolSlot is one line cell on the Letter v2 grid (column × line).
+type EoschoolSlot struct {
+	Index        int                    `json:"index"`
+	Column       int                    `json:"column"`
+	Line         int                    `json:"line"`
+	Kind         string                 `json:"kind"`
+	Text         string                 `json:"text,omitempty"`
+	QuestionID   string                 `json:"questionId,omitempty"`
+	QuestionType string                 `json:"questionType,omitempty"`
+	OptionIndex  int                    `json:"optionIndex,omitempty"`
+	Gutter       map[string]interface{} `json:"gutter,omitempty"`
+}
+
+// EoschoolQuestionSlot pins a quiz item onto the Letter v2 grid.
+type EoschoolQuestionSlot struct {
+	Column int `json:"column"`
+	Line   int `json:"line"`
+	Index  int `json:"index"`
 }
 
 type EoschoolPoint struct {
@@ -80,19 +109,21 @@ type EoschoolQuiz struct {
 }
 
 type EoschoolQuestion struct {
-	ID         string              `json:"id"`
-	OriginDay  int                 `json:"originDay"`
-	Type       string              `json:"type"`
-	Prompt     string              `json:"prompt"`
-	Choices    []string            `json:"choices,omitempty"`
-	Answer     string              `json:"answer,omitempty"`
-	Schematic  bool                `json:"schematic,omitempty"`
-	Crossword  *EoschoolCrossword  `json:"crossword,omitempty"`
-	Wordsearch *EoschoolWordsearch `json:"wordsearch,omitempty"`
-	Match      *EoschoolMatch      `json:"match,omitempty"`
-	DrawImage  *EoschoolDrawImage  `json:"drawImage,omitempty"`
-	DrawBox    *EoschoolDrawBox    `json:"drawBox,omitempty"`
-	GridMark   *EoschoolGridMark   `json:"gridMark,omitempty"`
+	ID               string                `json:"id"`
+	OriginDay        int                   `json:"originDay"`
+	Type             string                `json:"type"`
+	Prompt           string                `json:"prompt"`
+	Choices          []string              `json:"choices,omitempty"`
+	Answer           string                `json:"answer,omitempty"`
+	Schematic        bool                  `json:"schematic,omitempty"`
+	SlotQuestionType string                `json:"slotQuestionType,omitempty"`
+	Slot             *EoschoolQuestionSlot `json:"slot,omitempty"`
+	Crossword        *EoschoolCrossword    `json:"crossword,omitempty"`
+	Wordsearch       *EoschoolWordsearch   `json:"wordsearch,omitempty"`
+	Match            *EoschoolMatch        `json:"match,omitempty"`
+	DrawImage        *EoschoolDrawImage    `json:"drawImage,omitempty"`
+	DrawBox          *EoschoolDrawBox      `json:"drawBox,omitempty"`
+	GridMark         *EoschoolGridMark     `json:"gridMark,omitempty"`
 }
 
 type EoschoolClue struct {
@@ -422,6 +453,9 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	if err := validateEoschoolMPPE(doc.MPPE); err != nil {
 		return err
 	}
+	if err := validateEoschoolSlotSequence(doc); err != nil {
+		return err
+	}
 
 	n := len(doc.Quiz.Questions)
 	if n < eoschoolQuizMinCount || n > eoschoolQuizMaxCount {
@@ -517,11 +551,59 @@ func parseEoschoolDocument(raw []byte) (EoschoolDocument, error) {
 	return doc, nil
 }
 
+// parseEoschoolDocumentPreserveRaw validates and returns the original bytes unchanged
+// when they already round-trip through the typed struct (Letter v2 fields included).
+func parseEoschoolDocumentPreserveRaw(raw []byte) (EoschoolDocument, []byte, error) {
+	doc, err := parseEoschoolDocument(raw)
+	if err != nil {
+		return EoschoolDocument{}, nil, err
+	}
+	return doc, raw, nil
+}
+
 func marshalEoschoolDocument(doc EoschoolDocument) ([]byte, error) {
 	if err := validateEoschoolDocument(&doc); err != nil {
 		return nil, err
 	}
 	return json.MarshalIndent(doc, "", "  ")
+}
+
+var eoschoolSlotKinds = map[string]struct{}{
+	"opening": {}, "lesson": {}, "heading": {}, "blank": {}, "summary": {},
+	"question": {}, "option": {}, "answerLine": {}, "imageInstruction": {}, "drawing": {},
+}
+
+func validateEoschoolSlotSequence(doc *EoschoolDocument) error {
+	seq := doc.Lesson.SlotSequence
+	if len(seq) == 0 {
+		return nil
+	}
+	if len(seq) != 156 {
+		return fmt.Errorf("lesson.slotSequence must have 156 slots, got %d", len(seq))
+	}
+	for i := range seq {
+		s := &seq[i]
+		kind := strings.TrimSpace(s.Kind)
+		if _, ok := eoschoolSlotKinds[kind]; !ok {
+			return fmt.Errorf("lesson.slotSequence[%d].kind %q not allowed", i, s.Kind)
+		}
+		s.Kind = kind
+		if s.Index != i+1 {
+			return fmt.Errorf("lesson.slotSequence[%d].index must be %d", i, i+1)
+		}
+		if s.Column < 1 || s.Column > 3 {
+			return fmt.Errorf("lesson.slotSequence[%d].column must be 1–3", i)
+		}
+		if s.Line < 1 || s.Line > 52 {
+			return fmt.Errorf("lesson.slotSequence[%d].line must be 1–52", i)
+		}
+		wantCol := ((s.Index - 1) / 52) + 1
+		wantLine := ((s.Index - 1) % 52) + 1
+		if s.Column != wantCol || s.Line != wantLine {
+			return fmt.Errorf("lesson.slotSequence[%d] column/line must match column-major index", i)
+		}
+	}
+	return nil
 }
 
 func homescoolEoschoolLogicKey(cycle, week, day, level int, subject string) string {

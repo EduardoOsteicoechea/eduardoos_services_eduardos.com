@@ -242,14 +242,24 @@ func (a *App) patchHomescoolMaterialSupportHandler(w http.ResponseWriter, r *htt
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	doc, err := parseEoschoolDocument(raw)
-	if err != nil {
-		a.mustLogf(r, "homescool.materials.support.parse_err", "err", err.Error())
+	// Patch supportUrl on the raw JSON map so Letter v2 fields are never remashed away.
+	var root map[string]json.RawMessage
+	if err := json.Unmarshal(raw, &root); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	doc.SupportURL = strings.TrimSpace(body.SupportURL)
-	out, err := marshalEoschoolDocument(doc)
+	urlBytes, err := json.Marshal(strings.TrimSpace(body.SupportURL))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	root["supportUrl"] = urlBytes
+	out, err := json.Marshal(root)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	doc, err := parseEoschoolDocument(out)
 	if err != nil {
 		a.mustLogf(r, "homescool.materials.support.validate_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -307,8 +317,8 @@ func (a *App) getHomescoolMaterialPDFHandler(w http.ResponseWriter, r *http.Requ
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	a.mustLogf(r, "homescool.materials.pdf.build", "day", doc.Day, "quiz", doc.Quiz.QuestionCount, "points", len(doc.Lesson.Points))
-	pdfBytes, err := buildEoschoolPDF(doc)
+	a.mustLogf(r, "homescool.materials.pdf.build", "day", doc.Day, "quiz", doc.Quiz.QuestionCount, "points", len(doc.Lesson.Points), "slots", len(doc.Lesson.SlotSequence))
+	pdfBytes, err := buildEoschoolPDFFromRaw(raw, doc)
 	if err != nil {
 		a.mustLogf(r, "homescool.pdf.error", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -534,7 +544,7 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 
 	if probe.Format == eoschoolFormatName || (probe.Format == "" && probe.HTML == "") {
 		a.mustLogf(r, "homescool.v1.post.branch", "branch", "eoschool")
-		doc, err := parseEoschoolDocument(body.Material)
+		doc, kept, err := parseEoschoolDocumentPreserveRaw(body.Material)
 		if err != nil {
 			a.mustLogf(r, "homescool.v1.post.validate", "err", err.Error())
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -543,12 +553,15 @@ func (a *App) homescoolV1PostMaterialHandler(w http.ResponseWriter, r *http.Requ
 		a.mustLogf(r, "homescool.v1.post.validated",
 			"cycle", doc.Cycle, "week", doc.Week, "day", doc.Day, "level", doc.Level,
 			"subject", doc.Subject, "kind", doc.Lesson.Kind, "points", len(doc.Lesson.Points),
-			"quiz", doc.Quiz.QuestionCount)
-		raw, err := marshalEoschoolDocument(doc)
-		if err != nil {
-			a.mustLogf(r, "homescool.v1.post.marshal_err", "err", err.Error())
-			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
-			return
+			"quiz", doc.Quiz.QuestionCount, "slots", len(doc.Lesson.SlotSequence))
+		raw := kept
+		if len(doc.Lesson.SlotSequence) == 0 {
+			raw, err = marshalEoschoolDocument(doc)
+			if err != nil {
+				a.mustLogf(r, "homescool.v1.post.marshal_err", "err", err.Error())
+				a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+				return
+			}
 		}
 		m := HomescoolMaterial{
 			OwnerUserID: user.ID,

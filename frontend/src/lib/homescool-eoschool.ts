@@ -4,6 +4,7 @@
 
 import type { EoschoolDocument, EoschoolQuestion } from "./homescool";
 import { hcLog } from "./homescool-debug";
+import { hasLetterV2Slots, renderLetterV2Page } from "./homescool-letter-v2";
 import { isMatTablesLayout, renderMatTablesPages } from "./homescool-mat-tables";
 import {
   HOMESCOOL_SUBJECTS,
@@ -42,8 +43,16 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     points: doc.lesson?.points?.length,
     quiz: doc.quiz?.questionCount,
     supportUrl: Boolean(doc.supportUrl?.trim()),
+    letterV2: hasLetterV2Slots(doc),
     matTables: isMatTablesLayout(doc),
   });
+
+  if (hasLetterV2Slots(doc)) {
+    const page = renderLetterV2Page(doc);
+    enumerateLetterPageCodes(doc, [page]);
+    hcLog("eoschool", "render.done", { pages: 1, layout: "letter-grid-v2" });
+    return [page];
+  }
 
   if (isMatTablesLayout(doc)) {
     const pages = renderMatTablesPages(doc);
