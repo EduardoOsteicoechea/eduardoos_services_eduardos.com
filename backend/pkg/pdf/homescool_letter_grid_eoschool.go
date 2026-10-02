@@ -616,12 +616,15 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 	contentWPt := MmToPoints(box.W - 2*inset)
 	textX := box.X + inset
 
+	// Outer main-column border (#000), always on.
+	strokeContainerCSSTopMm(s, box.X, box.Top, box.W, box.H, HCLetterGridStrokeMm)
+
 	if HCLetterShowMainRules {
 		topY := homescoolPDFYMm(box.Top)
 		strokeRuleRGB(s,
 			box.X, topY,
 			box.X+box.W, topY,
-			HCLetterGridStrokeMm, hcLetterContainerR, hcLetterContainerR, hcLetterContainerR,
+			HCLetterGridStrokeMm, hcLetterRuleR, hcLetterRuleR, hcLetterRuleR,
 		)
 	}
 	nRows := int(box.H / stepMm)
@@ -635,7 +638,7 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 			strokeRuleRGB(s,
 				box.X+inset, pdfY,
 				box.X+box.W-inset, pdfY,
-				HCLetterGridStrokeMm, hcLetterContainerR, hcLetterContainerR, hcLetterContainerR,
+				HCLetterGridStrokeMm, hcLetterRuleR, hcLetterRuleR, hcLetterRuleR,
 			)
 		}
 

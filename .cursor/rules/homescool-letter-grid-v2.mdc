@@ -48,19 +48,19 @@ When this contract changes, **update this rule and the Go SoT in the same change
 
 ## Chrome and stroke
 
-- Stroke **0.15 mm**, colour **#ddd**, **square corners** (no border radius).
-- Header sub-boxes: bordered.
-- Main columns: **top** edge **#ddd** 0.15 mm across full column width; interior horizontal rules + gutter cells; **no** outer left/right/bottom column border. Images band: full **#ddd** rect border.
+- Stroke **0.15 mm**, **square corners** (no border radius).
+- **Outer borders `#000`:** Containercabecera1/2 sub-boxes, main columns (full rect), Containerimages.
+- Interior horizontal rules (when shown): **#ddd**.
 - Gaps between header sub-fields and between cabecera rows: **2 mm**.
 
 ## Main column ruling (no gutter boxes)
 
 Main columns keep **52 slots × 3.5 mm** for packing — **no** line-number / question-marker squares.
 
-- **Visible rules (toggle):** `HCLetterShowMainRules` in `homescool_letter_grid.go`. Default **`false`** — rules are **hidden** (not removed): same slot geometry, no #ddd strokes, cleaner sheet. Set **`true`** to show full-width #ddd rules (0.15 mm) again.
+- **Outer column border:** always stroked **#000** 0.15 mm (full rect).
+- **Visible interior rules (toggle):** `HCLetterShowMainRules` in `homescool_letter_grid.go`. Default **`false`** — interior #ddd rules hidden; outer border stays. Set **`true`** to show full-width #ddd rules (0.15 mm) again.
 - Text/ink uses the **full column width** (small stroke inset only).
 - Quiz rows are marked by content + the darker **quiz separator** above the first question in a column (separator stays visible even when main rules are hidden).
-- **Containerimages** keeps a **#ddd** outer border (0.15 mm) like header boxes.
 - JSON may still carry optional `gutter` metadata on `question` slots for tooling; PDF/print **ignore** it.
 
 ## Text alignment contract (writers / packers)
@@ -163,6 +163,6 @@ Spans **ContainerHeaderMargin** through **ContainerCol3**. Image/content placeme
 - Changing track mm or sub-field widths without updating this rule and Go SoT.
 - Hard-coded slot counts other than **52 / column** and **156 / sheet** unless `Containermain` height or `HCLetterRuleStepMm` changes.
 - Drawing line-number or question-marker **gutter boxes** in main columns.
-- Removing the **Containerimages** outer **#ddd** border.
+- Removing the **#000** outer borders on cabecera, main columns, or Containerimages.
 - Parallel geometry in FE/PDF that disagrees with `ComputeHomescoolLetterGrid`.
 - Equal-height lesson/quiz bands across columns (quiz starting at the same line in col 1/2/3). Use sequential column fill only.

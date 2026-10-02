@@ -15,13 +15,16 @@ import (
 const (
 	HCLetterGridStrokeMm = 0.15
 	HCLetterRuleStepMm   = 3.5
-	// HCLetterShowMainRules: when false, main-column ruled lines stay in the layout
-	// (3.5 mm slots) but are not stroked — cleaner sheet; set true to show #ddd rules again.
+	// HCLetterShowMainRules: when false, main-column interior ruled lines stay in the
+	// layout (3.5 mm slots) but are not stroked. Outer column borders stay visible.
 	HCLetterShowMainRules = false
 	// Darker full-column rule between lesson text and the first quiz prompt in a column.
 	HCLetterQuizSeparatorStrokeMm = 0.35
 	hcHeaderFieldGapMm            = 2.0 // gaps between cabecera1/2 and between header sub-boxes
-	hcLetterContainerR            = 0xDD / 255.0
+	// Interior rule colour when HCLetterShowMainRules is true.
+	hcLetterRuleR = 0xDD / 255.0
+	// Outer borders: main columns, cabecera sub-boxes, images band → #000.
+	hcLetterBorderR = 0.0
 )
 
 // Column track indices (0-based).
@@ -77,9 +80,9 @@ type HomescoolLetterGrid struct {
 	Images   RectMm // HeaderMargin → Col3 in Containerimages
 }
 
-// strokeContainerCSSTopMm strokes a square-corner box; cssTop is mm from the page top.
+// strokeContainerCSSTopMm strokes a square-corner box in #000; cssTop is mm from the page top.
 func strokeContainerCSSTopMm(s *strings.Builder, x, cssTop, width, height, strokeMm float64) {
-	strokeRectCSSTopRGB(s, x, cssTop, width, height, strokeMm, hcLetterContainerR, hcLetterContainerR, hcLetterContainerR)
+	strokeRectCSSTopRGB(s, x, cssTop, width, height, strokeMm, hcLetterBorderR, hcLetterBorderR, hcLetterBorderR)
 }
 
 func strokeRectCSSTopRGB(s *strings.Builder, x, cssTop, width, height, strokeMm, sr, sg, sb float64) {
@@ -218,11 +221,14 @@ func writeTextFillMm(s *strings.Builder, font string, sizePt float64, xMm, pdfYM
 // HCLetterColumnQuestionLines marks 1-based line indices that use question-marker chrome in a main column.
 type HCLetterColumnQuestionLines map[int]bool
 
-// drawLinedBox optionally strokes #ddd rules every stepMm across the full column width
-// (top edge + interior rules; no side/bottom outer border; no gutter boxes).
-// Slot geometry always uses stepMm; visibility is gated by HCLetterShowMainRules.
+// drawLinedBox strokes the outer #000 column border, and optionally #ddd interior
+// rules every stepMm when HCLetterShowMainRules is true (no gutter boxes).
 func drawLinedBox(s *strings.Builder, box RectMm, stepMm float64, _ HCLetterColumnQuestionLines) {
-	if box.W <= 0 || box.H <= 0 || !HCLetterShowMainRules {
+	if box.W <= 0 || box.H <= 0 {
+		return
+	}
+	strokeContainerCSSTopMm(s, box.X, box.Top, box.W, box.H, HCLetterGridStrokeMm)
+	if !HCLetterShowMainRules {
 		return
 	}
 
@@ -231,7 +237,7 @@ func drawLinedBox(s *strings.Builder, box RectMm, stepMm float64, _ HCLetterColu
 	strokeRuleRGB(s,
 		box.X, topY,
 		box.X+box.W, topY,
-		HCLetterGridStrokeMm, hcLetterContainerR, hcLetterContainerR, hcLetterContainerR,
+		HCLetterGridStrokeMm, hcLetterRuleR, hcLetterRuleR, hcLetterRuleR,
 	)
 	nRows := int(box.H / stepMm)
 	for i := 0; i < nRows; i++ {
@@ -241,7 +247,7 @@ func drawLinedBox(s *strings.Builder, box RectMm, stepMm float64, _ HCLetterColu
 		strokeRuleRGB(s,
 			box.X+inset, pdfY,
 			box.X+box.W-inset, pdfY,
-			HCLetterGridStrokeMm, hcLetterContainerR, hcLetterContainerR, hcLetterContainerR,
+			HCLetterGridStrokeMm, hcLetterRuleR, hcLetterRuleR, hcLetterRuleR,
 		)
 	}
 }
