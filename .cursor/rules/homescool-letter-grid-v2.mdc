@@ -1,0 +1,168 @@
+---
+description: Homescool US Letter grid v2 (mm tracks, 156 main line slots, PDF SoT) — lesson/quiz packing TBD
+globs: backend/pkg/pdf/homescool_letter_grid*,backend/pkg/pdf/homescool*,frontend/src/**/*homescool*,frontend/src/styles/homescool-workspace.css,backend/homescool_materials*,.eoschool/**/*
+alwaysApply: false
+---
+
+# Homescool Letter grid v2 (US Letter portrait)
+
+Applies when changing Homescool **print/PDF Letter layout**, header chrome, main-column ruling, images band, or any algorithm that **writes text/ink** into named regions.
+
+## Authority
+
+- **Canonical engine:** `backend/pkg/pdf/homescool_letter_grid.go` (`ComputeHomescoolLetterGrid` → `HomescoolLetterGrid` / `RectMm`).
+- Page size: US Letter **215.9 × 279.4 mm** (`EoschoolPageWidthMm` / `EoschoolPageHeightMm`).
+- Coordinates: **`x`**, **`top`**, **`w`**, **`h`** in **mm**; **`top`** = distance from **page top** (CSS-style). Bottom edge = `top + h`.
+- Sample PDF: `go test ./pkg/pdf -run TestWriteHomescoolLetterGridSamplePDF` → `backend/.data/homescool-letter-grid-sample.pdf`.
+
+When this contract changes, **update this rule and the Go SoT in the same change**.
+
+## Row tracks (vertical)
+
+| Track | mm |
+| --- | --- |
+| gapTop | 5 |
+| Containercabecera1 | 7 |
+| gapCabecera | 2 |
+| Containercabecera2 | 5 |
+| gapCabeceraMain | 2 |
+| Containermain | 182 |
+| gapMainImages | 2 |
+| Containerimages | 70 |
+
+**Sum:** 275 mm.
+
+## Column tracks (horizontal)
+
+| Track | mm |
+| --- | --- |
+| gapLeft | 5 |
+| ContainerHeaderMargin | 15 |
+| ContainerCol1 | 48 |
+| gapCol1Col2 | 2 |
+| ContainerCol2 | 68 |
+| gapCol2Col3 | 2 |
+| ContainerCol3 | 68 |
+
+**Sum:** 208 mm.
+
+## Chrome and stroke
+
+- Stroke **0.15 mm**, colour **#ddd**, **square corners** (no border radius).
+- Header sub-boxes: bordered.
+- Main columns: **top** edge **#ddd** 0.15 mm across full column width; interior horizontal rules + gutter cells; **no** outer left/right/bottom column border. Images band: full **#ddd** rect border.
+- Gaps between header sub-fields and between cabecera rows: **2 mm**.
+
+## Main column ruling (no gutter boxes)
+
+Main columns keep **52 slots × 3.5 mm** for packing — **no** line-number / question-marker squares.
+
+- **Visible rules (toggle):** `HCLetterShowMainRules` in `homescool_letter_grid.go`. Default **`false`** — rules are **hidden** (not removed): same slot geometry, no #ddd strokes, cleaner sheet. Set **`true`** to show full-width #ddd rules (0.15 mm) again.
+- Text/ink uses the **full column width** (small stroke inset only).
+- Quiz rows are marked by content + the darker **quiz separator** above the first question in a column (separator stays visible even when main rules are hidden).
+- **Containerimages** keeps a **#ddd** outer border (0.15 mm) like header boxes.
+- JSON may still carry optional `gutter` metadata on `question` slots for tooling; PDF/print **ignore** it.
+
+## Text alignment contract (writers / packers)
+
+Use the **`{ x, top, w, h }`** boxes below as the **only** placement targets.
+
+| Region | Horizontal | Vertical |
+| --- | --- | --- |
+| **Containercabecera1** sub-boxes (`SignatureName`, `SignatureTopic`, `SheetCode`) | **left** | **middle** (centred in the 7 mm row height) |
+| **Containercabecera2** sub-boxes (`Date`, `Student`, `Reviewer`, `ReviewerSignature`) | **left** | **middle** (centred in the 5 mm row height) |
+| **Main** content slot (per line, full column width) | **left** | **middle** (centred in the 3.5 mm row band) |
+| **Containerimages** | practice JPEG fit | centred in band |
+
+PDF: baseline from vertical middle of the target `h`. HTML/print mirror: `display: flex; align-items: center; justify-content: flex-start` (or equivalent) inside each target rect.
+
+Optional symmetric **text inset** from box edges: **0.5 mm** when stroke clipping is needed; default is flush to the logical box above.
+
+**Type size (PDF SoT):** minimum **8 pt** for body (`hcLetterContentFontPt`), header (`hcLetterHeaderFontPt`), and images-band instruction (`hcLetterImagesFontPt`). Do not ship Letter ink below 8 pt.
+
+---
+
+## Resolved boxes — Containercabecera1 (top = 5 mm, row height 7 mm)
+
+| Field | x | top | w | h |
+| --- | --- | --- | --- | --- |
+| SignatureName | 20 | 5 | 45 | 7 |
+| SignatureTopic | 67 | 5 | 98 | 7 |
+| SheetCode | 167 | 5 | 41 | 7 |
+
+Gaps between fields: **2 mm** (not drawable; e.g. SignatureName ends at x=65, next field starts at 67).
+
+## Resolved boxes — Containercabecera2 (top = 14 mm, row height 5 mm)
+
+| Field | x | top | w | h |
+| --- | --- | --- | --- | --- |
+| Date | 20 | 14 | 23 | 5 |
+| Student | 45 | 14 | 70 | 5 |
+| Reviewer | 117 | 14 | 70 | 5 |
+| ReviewerSignature | 189 | 14 | 19 | 5 |
+
+---
+
+## Resolved boxes — Containermain (top = 21 mm, height 182 mm)
+
+| Field | x | top | w | h |
+| --- | --- | --- | --- | --- |
+| MainCol1 | 5 | 21 | 63 | 182 |
+| MainCol2 | 70 | 21 | 68 | 182 |
+| MainCol3 | 140 | 21 | 68 | 182 |
+
+**Ruling step:** **3.5 mm** (`HCLetterRuleStepMm`). Rule colour **#ddd**.
+
+**Line count:** `floor(182 / 3.5)` = **52** rows per column → **156** slots sheet-wide (52 × 3).
+
+### Per-line geometry (column `MainColN`, line index `i` = 1…52)
+
+Let `M` = the column’s `{ x, top, w, h }` above. Row band:
+
+- `rowTop = M.top + (i - 1) × 3.5`
+- **ContentSlot** (lesson / quiz ink): `x = M.x`, `top = rowTop`, `w = M.w`, `h = 3.5` — **left + middle**; full column width (no gutter).
+- **Section headings** (`kind: "heading"`): **bold** ink (PDF `F2` / Helvetica-Bold).
+- **Quiz block:** one `question` row + **four** following rows (`option` for mcq, empty `answerLine` for write/schematic — **no** dotted filler). Separate questions with one `blank`. MCQ options print as `A) …` … `D) …`.
+- **Heading band:** one `blank` on the line **before** the heading and one `blank` on the line **after**.
+- **Cabecera1 SignatureName:** print the **subject display name** (e.g. `Español`), not the literal «Materia».
+- **Quiz separator:** when a column’s first `question` row is reached after lesson text, PDF draws a **darker full-column rule** (`HCLetterQuizSeparatorStrokeMm` ≈ 0.35 mm, near-black) on that row’s **top** edge.
+- **Fill order (column-major, mandatory):** fill **all 52 lines of col 1**, then **all 52 of col 2**, then **all 52 of col 3**. Content stream: **lesson → quiz (60) → `imageInstruction` (K lines at col 3 end)**. **Forbidden:** parallel “section heights” that start the quiz at the same line in every column, or splitting lesson/quiz by equal vertical bands across columns.
+- **Col 3 tail:** `imageInstruction` slots (one or more lines) carry `lesson.imageBandInstruction`; not only line 52.
+
+| Column | ContentSlot x | ContentSlot w | ContentSlot h |
+| --- | --- | --- | --- |
+| MainCol1 | 5 | 63 | 3.5 |
+| MainCol2 | 70 | 68 | 3.5 |
+| MainCol3 | 140 | 68 | 3.5 |
+
+Packing key (future): `(MainCol1|MainCol2|MainCol3, lineIndex 1…52)` → one ContentSlot rect.
+
+---
+
+## Resolved box — Containerimages
+
+| Field | x | top | w | h |
+| --- | --- | --- | --- | --- |
+| Containerimages | 5 | 205 | 203 | 70 |
+
+Spans **ContainerHeaderMargin** through **ContainerCol3**. Image/content placement inside this rect is **TBD**; algorithms must treat **`203 × 70 mm`** at **`(5, 205)`** as the reserved band until subdivided.
+
+---
+
+## Algorithm checklist
+
+1. Call **`ComputeHomescoolLetterGrid()`** (or read the tables above) — do not re-derive from tracks by hand in scattered code.
+2. Map header strings into the seven cabecera **`RectMm`** fields; align **left + middle** in each box.
+3. Map lesson/quiz atoms into **ContentSlot** rects (156 max per sheet) in **column-major** order: col1 lines 1→52, then col2, then col3. Lesson first, then quiz, then col3 `imageInstruction` tail.
+4. Map practice JPEG into **Containerimages** (203×70 mm).
+5. Any new subdivisions (e.g. splitting the images band) require updating **this rule**, tests in `homescool_letter_grid_test.go`, and `homescool_letter_grid.go`.
+
+## Forbidden
+
+- Rounded corners on grid containers.
+- Changing track mm or sub-field widths without updating this rule and Go SoT.
+- Hard-coded slot counts other than **52 / column** and **156 / sheet** unless `Containermain` height or `HCLetterRuleStepMm` changes.
+- Drawing line-number or question-marker **gutter boxes** in main columns.
+- Removing the **Containerimages** outer **#ddd** border.
+- Parallel geometry in FE/PDF that disagrees with `ComputeHomescoolLetterGrid`.
+- Equal-height lesson/quiz bands across columns (quiz starting at the same line in col 1/2/3). Use sequential column fill only.
