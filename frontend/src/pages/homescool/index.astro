@@ -225,6 +225,13 @@ import "../../styles/homescool-workspace.css";
     downloadHomescoolStyledPdf,
     postHomescoolPrintPdf,
   } from "../../lib/homescoolPrint";
+  import {
+    downloadPdfBytes,
+    fetchHomescoolPdfPreview,
+    pdfBytesToJpegDataUrls,
+    renderHomescoolPdfPreview,
+  } from "../../lib/homescool-pdf-preview";
+  import { hasLetterV2Slots } from "../../lib/homescool-letter-v2";
   import { showErrorModal } from "../../lib/error-modal";
   import {
     HOMESCOOL_SUBJECTS_ACTIVE,
@@ -276,6 +283,8 @@ import "../../styles/homescool-workspace.css";
   let currentMaterialId = "";
   let currentPdfName = "homescool.pdf";
   let currentDoc: EoschoolDocument | null = null;
+  /** Cached Go Letter-grid PDF for the open class (Letter v2); UI + download share this. */
+  let currentPdfBytes: Uint8Array | null = null;
   let openSeq = 0;
   let bootSeq = 0;
   let selection: Selection = { ...DEFAULT_SELECTION };
@@ -1159,6 +1168,23 @@ import "../../styles/homescool-workspace.css";
 
     try {
       if (mode === "current") {
+        // Letter v2: download the same Go PDF shown in the viewer (not HTML raster).
+        if (currentPdfBytes?.length) {
+          downloadPdfBytes(currentPdfBytes, currentPdfName);
+          setPrintProgress({ busy: true, ratio: 1 });
+          log("pdf.ok", { mode, source: "go-letter-v2", materialId: currentMaterialId || "session" });
+          return;
+        }
+        if (currentDoc && hasLetterV2Slots(currentDoc)) {
+          const preview = await fetchHomescoolPdfPreview(currentDoc);
+          if (preview.ok && preview.pdfBytes?.length) {
+            currentPdfBytes = preview.pdfBytes;
+            downloadPdfBytes(preview.pdfBytes, currentPdfName);
+            setPrintProgress({ busy: true, ratio: 1 });
+            log("pdf.ok", { mode, source: "go-letter-v2-refetch" });
+            return;
+          }
+        }
         const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
         if (!(sheetsHost instanceof HTMLElement)) return;
         const result = await downloadHomescoolStyledPdf(
@@ -1180,7 +1206,7 @@ import "../../styles/homescool-workspace.css";
         return;
       }
 
-      // Multi-doc: render offscreen, capture all pages, post via session print endpoint.
+      // Multi-doc: Letter v2 → rasterize Go PDF pages; legacy → HTML capture.
       // Must stay opacity:1 + visibility:visible — parent opacity multiplies into JPEG capture.
       const holder = document.createElement("div");
       holder.setAttribute("data-homescool-print-batch", "1");
@@ -1203,15 +1229,30 @@ import "../../styles/homescool-workspace.css";
             setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
             continue;
           }
-          const pages = renderEoschoolPages(doc);
-          holder.replaceChildren(...pages);
-          // Fonts + layout must settle while the tree is still paint-eligible.
-          if (document.fonts?.ready) await document.fonts.ready;
-          await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
-          const rasters = await captureHomescoolLetterPages(holder);
+          let rasters: string[];
+          if (hasLetterV2Slots(doc)) {
+            const preview = await fetchHomescoolPdfPreview(doc);
+            if (!preview.ok || !preview.pdfBytes?.length) {
+              hcLog("workspace", "pdf.batch.v2-fail", { key: cell.key, error: preview.error }, "warn");
+              setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
+              continue;
+            }
+            rasters = await pdfBytesToJpegDataUrls(preview.pdfBytes);
+          } else {
+            const pages = renderEoschoolPages(doc);
+            holder.replaceChildren(...pages);
+            if (document.fonts?.ready) await document.fonts.ready;
+            await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+            rasters = await captureHomescoolLetterPages(holder);
+          }
           allPages.push(...rasters);
           setPrintProgress({ busy: true, ratio: (i + 1) / (targets.length + 1) });
-          log("pdf.batch.cell", { key: cell.key, pages: rasters.length, total: allPages.length });
+          log("pdf.batch.cell", {
+            key: cell.key,
+            pages: rasters.length,
+            total: allPages.length,
+            letterV2: hasLetterV2Slots(doc),
+          });
         }
       } finally {
         holder.remove();
@@ -1365,6 +1406,7 @@ import "../../styles/homescool-workspace.css";
     currentMaterialId = "";
     currentPdfName = "homescool.pdf";
     currentDoc = null;
+    currentPdfBytes = null;
     setPrintEnabled(false);
     const match = findCell();
     if (!match) {
@@ -1428,7 +1470,8 @@ import "../../styles/homescool-workspace.css";
         subject: doc.subject,
       };
       currentDoc = doc;
-      mountEoschool(doc);
+      await mountEoschool(doc, seq);
+      if (seq !== openSeq) return;
       const safeTitle = (doc.title || "homescool").replace(/[\\/:*?"<>|]+/g, "_").trim() || "homescool";
       currentPdfName = `${safeTitle}-c${doc.cycle}w${doc.week}d${doc.day}.pdf`;
       const sourceHint = currentMaterialId ? "Mongo" : "FE backup";
@@ -1444,7 +1487,12 @@ import "../../styles/homescool-workspace.css";
         selection,
         classNo: subjectClassNumber(doc.subject),
         supportUrl: Boolean(doc.supportUrl?.trim()),
-        pages: qs("[data-homescool-sheets]")?.querySelectorAll(".homescool-letter-page").length ?? 0,
+        letterV2: hasLetterV2Slots(doc),
+        pdfPreview: Boolean(currentPdfBytes),
+        pages:
+          qs("[data-homescool-sheets]")?.querySelectorAll(
+            ".homescool-letter-page, .homescool-pdf-page",
+          ).length ?? 0,
       });
     } catch (err) {
       if (seq !== openSeq) return;
@@ -1455,10 +1503,42 @@ import "../../styles/homescool-workspace.css";
     }
   }
 
-  function mountEoschool(doc: EoschoolDocument) {
+  async function mountEoschool(doc: EoschoolDocument, seq: number) {
     const sheetsHost = qs<HTMLElement>("[data-homescool-sheets]");
     if (!(sheetsHost instanceof HTMLElement)) return;
     sheetsHost.replaceChildren();
+    currentPdfBytes = null;
+
+    // Letter v2: UI shows the Go PDF (Helvetica 8pt, exact mm grid) via pdf.js.
+    if (hasLetterV2Slots(doc)) {
+      const preview = await fetchHomescoolPdfPreview(doc);
+      if (seq !== openSeq) return;
+      if (preview.ok && preview.pdfBytes?.length) {
+        currentPdfBytes = preview.pdfBytes;
+        const pageCount = await renderHomescoolPdfPreview(sheetsHost, preview.pdfBytes, {
+          pageWidthMm: preview.data?.page_width_mm,
+          pageHeightMm: preview.data?.page_height_mm,
+          seq,
+          isStale: () => seq !== openSeq,
+        });
+        if (seq !== openSeq) return;
+        log("mount.pdf-preview", {
+          pages: pageCount,
+          bytes: preview.pdfBytes.length,
+          day: doc.day,
+          subject: doc.subject,
+        });
+        setStageMode("sheets");
+        return;
+      }
+      hcLog(
+        "workspace",
+        "mount.pdf-preview.fallback-html",
+        { error: preview.error, requestId: preview.requestId },
+        "warn",
+      );
+    }
+
     const pages = renderEoschoolPages(doc);
     let emptyHero = 0;
     for (const page of pages) {
@@ -1470,6 +1550,7 @@ import "../../styles/homescool-workspace.css";
       emptyHeroSuspects: emptyHero,
       day: doc.day,
       subject: doc.subject,
+      letterV2Html: hasLetterV2Slots(doc),
     });
     setStageMode("sheets");
   }

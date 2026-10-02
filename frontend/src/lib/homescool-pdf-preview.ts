@@ -155,3 +155,43 @@ export function downloadPdfBytes(pdfBytes: Uint8Array, fileName: string): void {
   a.remove();
   window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000);
 }
+
+/**
+ * Rasterize each PDF page to a JPEG data URL for the legacy print-merge endpoint.
+ * Used so Letter v2 batch print still ships the Go PDF ink (not the HTML mirror).
+ */
+export async function pdfBytesToJpegDataUrls(
+  pdfBytes: Uint8Array,
+  opts?: { scale?: number; quality?: number },
+): Promise<string[]> {
+  const scale = opts?.scale && opts.scale > 0 ? opts.scale : 2;
+  const quality =
+    opts?.quality != null && opts.quality > 0 && opts.quality <= 1 ? opts.quality : 0.92;
+  const copy = new Uint8Array(pdfBytes.byteLength);
+  copy.set(pdfBytes);
+  const pdf = await getDocument({ data: copy }).promise;
+  const out: string[] = [];
+  try {
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.floor(viewport.width));
+      canvas.height = Math.max(1, Math.floor(viewport.height));
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Canvas 2D unavailable.");
+      await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+      out.push(canvas.toDataURL("image/jpeg", quality));
+    }
+  } finally {
+    try {
+      pdf.cleanup();
+    } catch {
+      /* ignore */
+    }
+  }
+  if (mustLog) {
+    console.log("[homescool-pdf-preview] raster.done", { pages: out.length, scale });
+  }
+  return out;
+}

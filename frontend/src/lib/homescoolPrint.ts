@@ -21,15 +21,23 @@ function lockLetterGeometry(page: HTMLElement): () => void {
     overflow: page.style.overflow,
     boxShadow: page.style.boxShadow,
   };
-  page.style.width = "8.5in";
-  page.style.height = "11in";
-  page.style.minHeight = "11in";
-  page.style.maxHeight = "11in";
-  // Force Letter margin even if a cascade override shrank padding.
-  page.style.padding = "0.5cm";
-  page.style.transform = "none";
-  page.style.overflow = "hidden";
-  page.style.boxShadow = "none";
+  const isLetterV2 = page.classList.contains("homescool-letter-v2");
+  if (isLetterV2) {
+    // Letter v2 geometry is rem/mm SoT — do not force legacy 0.5cm padding.
+    page.style.transform = "none";
+    page.style.overflow = "hidden";
+    page.style.boxShadow = "none";
+  } else {
+    page.style.width = "8.5in";
+    page.style.height = "11in";
+    page.style.minHeight = "11in";
+    page.style.maxHeight = "11in";
+    // Force Letter margin even if a cascade override shrank padding.
+    page.style.padding = "0.5cm";
+    page.style.transform = "none";
+    page.style.overflow = "hidden";
+    page.style.boxShadow = "none";
+  }
   return () => {
     page.style.width = prev.width;
     page.style.height = prev.height;

@@ -2628,8 +2628,9 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   background: #ffffff;
   color: var(--hc-v2-ink);
   border: 0;
-  font-family: var(--font-family);
-  font-size: 0.5rem; /* 8 pt floor, matches PDF SoT */
+  /* Match Go PDF Type1 Helvetica (fallback only when pdf.js preview fails). */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.5rem; /* 8 pt at 16px root — same floor as hcLetterContentFontPt */
   line-height: 1.15;
   overflow: hidden;
 }
