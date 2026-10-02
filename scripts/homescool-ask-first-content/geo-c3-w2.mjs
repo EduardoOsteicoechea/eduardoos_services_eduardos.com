@@ -91,7 +91,7 @@ export default [
         { q: "¿Cuál es la capital de Venezuela?", o: ["Caracas", "Maracay", "Los Teques", "La Guaira"] },
         { q: "¿Dónde está Caracas?", o: ["Distrito Capital", "Miranda", "Aragua", "Bolívar"] },
         { q: "¿Cuál es la capital de La Guaira?", o: ["La Guaira", "Maiquetía", "Caracas", "Maracay"] },
-        { q: "¿Qué par está bien dicho?", o: ["Aragua—Maracay", "Miranda—Maracay", "Aragua—Los Teques", "Miranda—Caracas"] },
+        { q: "¿Qué par une bien el estado con su capital?", o: ["Aragua—Maracay", "Miranda—Maracay", "Aragua—Los Teques", "Miranda—Caracas"] },
       ],
       write: [
         "Explica con tus palabras qué es una capital.",

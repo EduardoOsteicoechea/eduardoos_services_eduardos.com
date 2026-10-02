@@ -411,7 +411,7 @@ export default [
       mcq: [
         { q: "¿Dónde estaban Asiria y Babilonia?", o: ["En Mesopotamia", "En Anatolia", "En China", "En Canaán"] },
         { q: "¿Cuáles son los ríos de Mesopotamia?", o: ["Tigris y Éufrates", "Nilo y Congo", "Orinoco y Caroní", "Rin y Sena"] },
-        { q: "¿Qué reino destaca por su ejército?", o: ["Asiria", "Babilonia", "Kush", "Shang"] },
+        { q: "De los reinos de Mesopotamia, ¿cuál destaca por su ejército?", o: ["Asiria", "Babilonia", "Kush", "Shang"] },
         { q: "¿Qué es un ejército?", o: ["Un grupo grande de soldados", "Una familia gobernante", "Un río de Asia", "Una obra de piedra"] },
         { q: "¿Qué reino destaca por ciudad y leyes?", o: ["Babilonia", "Asiria", "Shang", "Kush"] },
         { q: "¿Qué número de hito es Shang?", o: ["14", "12", "13", "9"] },
@@ -520,7 +520,7 @@ export default [
         { q: "¿Quiénes son los patriarcas?", o: ["Abraham, Isaac y Jacob", "Asiria y Babilonia", "Hititas y Kush", "Shang y Kush"] },
         { q: "¿Dónde vivían los hititas?", o: ["En Anatolia", "En Canaán", "En China", "En Egipto"] },
         { q: "¿Dónde queda el reino de Kush?", o: ["Al sur de Egipto", "En Mesopotamia", "En China", "En Anatolia"] },
-        { q: "¿Qué reino destaca por su ejército?", o: ["Asiria", "Babilonia", "Shang", "Kush"] },
+        { q: "De los reinos de Mesopotamia, ¿cuál destaca por su ejército?", o: ["Asiria", "Babilonia", "Shang", "Kush"] },
         { q: "¿Dónde estuvo la dinastía Shang?", o: ["En China", "En Mesopotamia", "En Canaán", "En Anatolia"] },
         { q: "¿Qué hace falta al contar la semana?", o: ["Nombre y lugar", "Solo números", "Solo colores", "Solo dibujos"] },
       ],

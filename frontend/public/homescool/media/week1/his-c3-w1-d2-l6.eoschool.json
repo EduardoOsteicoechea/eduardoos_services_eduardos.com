@@ -982,7 +982,7 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Cómo se llama esa forma de organizarse?",
+        "text": "Varias aldeas guiadas por un jefe: ¿cómo se",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -996,8 +996,8 @@
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "option",
-        "text": "A) Trueque",
+        "kind": "lesson",
+        "text": "llama esa forma de organizarse?",
         "questionId": "d2-q7"
       },
       {
@@ -1005,7 +1005,7 @@
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Terraza",
+        "text": "A) Trueque",
         "questionId": "d2-q7"
       },
       {
@@ -1013,7 +1013,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Cacicazgo",
+        "text": "B) Terraza",
         "questionId": "d2-q7"
       },
       {
@@ -1021,24 +1021,32 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Cultivo",
+        "text": "C) Cacicazgo",
         "questionId": "d2-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Cultivo",
+        "questionId": "d2-q7"
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
         "kind": "question",
-        "text": "¿Qué es el trueque?",
-        "questionId": "d2-q8",
-        "questionType": "mcq",
+        "text": "Escribe qué cultivaban los Timotocuicas y",
+        "questionId": "d2-w1",
+        "questionType": "write",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1047,36 +1055,28 @@
         }
       },
       {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "option",
-        "text": "A) Cambiar una cosa por otra",
-        "questionId": "d2-q8"
-      },
-      {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "option",
-        "text": "B) Comprar con dinero",
-        "questionId": "d2-q8"
+        "kind": "lesson",
+        "text": "dónde.",
+        "questionId": "d2-w1"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "option",
-        "text": "C) Tejer una hamaca",
-        "questionId": "d2-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "option",
-        "text": "D) Dibujar en piedra",
-        "questionId": "d2-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
       },
       {
         "index": 134,
@@ -1090,8 +1090,8 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Escribe qué cultivaban los Timotocuicas y",
-        "questionId": "d2-w1",
+        "text": "Explica con tus palabras qué hacía un",
+        "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
           "role": "question",
@@ -1105,8 +1105,8 @@
         "column": 3,
         "line": 32,
         "kind": "lesson",
-        "text": "dónde.",
-        "questionId": "d2-w1"
+        "text": "cacique.",
+        "questionId": "d2-w2"
       },
       {
         "index": 137,
@@ -1114,7 +1114,7 @@
         "line": 33,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w1"
+        "questionId": "d2-w2"
       },
       {
         "index": 138,
@@ -1122,7 +1122,7 @@
         "line": 34,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w1"
+        "questionId": "d2-w2"
       },
       {
         "index": 139,
@@ -1136,9 +1136,9 @@
         "column": 3,
         "line": 36,
         "kind": "question",
-        "text": "Explica con tus palabras qué hacía un",
-        "questionId": "d2-w2",
-        "questionType": "write",
+        "text": "Dibuja una montaña con terrazas y rotula",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1151,8 +1151,8 @@
         "column": 3,
         "line": 37,
         "kind": "lesson",
-        "text": "cacique.",
-        "questionId": "d2-w2"
+        "text": "qué se siembra.",
+        "questionId": "d2-w3"
       },
       {
         "index": 142,
@@ -1160,7 +1160,7 @@
         "line": 38,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w2"
+        "questionId": "d2-w3"
       },
       {
         "index": 143,
@@ -1168,7 +1168,7 @@
         "line": 39,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w2"
+        "questionId": "d2-w3"
       },
       {
         "index": 144,
@@ -1182,8 +1182,8 @@
         "column": 3,
         "line": 41,
         "kind": "question",
-        "text": "Dibuja una montaña con terrazas y rotula",
-        "questionId": "d2-w3",
+        "text": "Dibuja el trueque entre dos aldeas.",
+        "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
           "role": "question",
@@ -1196,9 +1196,9 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "lesson",
-        "text": "qué se siembra.",
-        "questionId": "d2-w3"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 147,
@@ -1206,15 +1206,14 @@
         "line": 43,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w3"
+        "questionId": "d2-w4"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 149,
@@ -1227,32 +1226,22 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "question",
-        "text": "Dibuja el trueque entre dos aldeas.",
-        "questionId": "d2-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1287,7 +1276,7 @@
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
@@ -1401,7 +1390,7 @@
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cómo se llama esa forma de organizarse?",
+        "prompt": "Varias aldeas guiadas por un jefe: ¿cómo se llama esa forma de organizarse?",
         "choices": [
           "Trueque",
           "Terraza",
@@ -1416,32 +1405,14 @@
         }
       },
       {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué es el trueque?",
-        "choices": [
-          "Cambiar una cosa por otra",
-          "Comprar con dinero",
-          "Tejer una hamaca",
-          "Dibujar en piedra"
-        ],
-        "answer": "Cambiar una cosa por otra",
-        "slot": {
-          "column": 3,
-          "line": 25,
-          "index": 129
-        }
-      },
-      {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
         "prompt": "Escribe qué cultivaban los Timotocuicas y dónde.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 26,
+          "index": 130
         }
       },
       {
@@ -1451,8 +1422,8 @@
         "prompt": "Explica con tus palabras qué hacía un cacique.",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1464,8 +1435,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 41,
-          "index": 145
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1477,8 +1448,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 46,
-          "index": 150
+          "line": 41,
+          "index": 145
         }
       }
     ]

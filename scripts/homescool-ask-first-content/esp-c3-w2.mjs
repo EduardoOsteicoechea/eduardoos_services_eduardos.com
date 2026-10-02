@@ -396,9 +396,9 @@ export default [
       mcq: [
         { q: "En «Ayer terminé», ¿qué dice «ayer»?", o: ["El hecho cerró", "Sigue vivo hoy", "Es un fondo", "Es una orden"] },
         { q: "¿Qué palabra trae el resultado a hoy?", o: ["Ya", "Ayer", "Cuando", "Mañana"] },
-        { q: "En la campana, ¿cuál verbo es el fondo?", o: ["Caminaba", "Sonó", "Campana", "Cuando"] },
-        { q: "En ese cuento, ¿cuál verbo es el golpe?", o: ["Sonó", "Caminaba", "Cuando", "Por"] },
-        { q: "Cuando llegué, ella ___ salido.", o: ["había", "ha", "hemos", "habrá"] },
+        { q: "En «Caminaba cuando sonó la campana», ¿cuál verbo es el fondo?", o: ["Caminaba", "Sonó", "Campana", "Cuando"] },
+        { q: "En «Caminaba cuando sonó la campana», ¿cuál verbo es el golpe?", o: ["Sonó", "Caminaba", "Cuando", "Por"] },
+        { q: "Completa: «Cuando llegué, ella ya ___ salido.»", o: ["había", "ha", "hemos", "habrá"] },
         { q: "¿Cuál pregunta está bien escrita?", o: ["¿Cuándo llegaste a Cumaná?", "Cuándo llegaste a Cumaná?", "¿Cuándo llegaste a Cumaná", "Cuándo llegaste a Cumaná"] },
         { q: "¿Qué pregunta ayuda a elegir «terminé»?", o: ["¿Cerró el hecho?", "¿Cuántas letras tiene?", "¿Es larga la palabra?", "¿Rima con algo?"] },
         { q: "¿Qué forma usas para un fondo?", o: ["terminaba", "terminé", "he terminado", "terminaré"] },

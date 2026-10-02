@@ -927,7 +927,7 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Qué reino destaca por su ejército?",
+        "text": "De los reinos de Mesopotamia, ¿cuál destaca",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -941,8 +941,8 @@
         "index": 118,
         "column": 3,
         "line": 14,
-        "kind": "option",
-        "text": "A) Babilonia",
+        "kind": "lesson",
+        "text": "por su ejército?",
         "questionId": "d5-q6"
       },
       {
@@ -950,7 +950,7 @@
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Shang",
+        "text": "A) Babilonia",
         "questionId": "d5-q6"
       },
       {
@@ -958,7 +958,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Kush",
+        "text": "B) Shang",
         "questionId": "d5-q6"
       },
       {
@@ -966,20 +966,28 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Asiria",
+        "text": "C) Kush",
         "questionId": "d5-q6"
       },
       {
         "index": 122,
         "column": 3,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Asiria",
+        "questionId": "d5-q6"
       },
       {
         "index": 123,
         "column": 3,
         "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
         "kind": "question",
         "text": "¿Dónde estuvo la dinastía Shang?",
         "questionId": "d5-q7",
@@ -992,19 +1000,11 @@
         }
       },
       {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "option",
-        "text": "A) En Mesopotamia",
-        "questionId": "d5-q7"
-      },
-      {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) En China",
+        "text": "A) En Mesopotamia",
         "questionId": "d5-q7"
       },
       {
@@ -1012,7 +1012,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) En Canaán",
+        "text": "B) En China",
         "questionId": "d5-q7"
       },
       {
@@ -1020,24 +1020,32 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) En Anatolia",
+        "text": "C) En Canaán",
         "questionId": "d5-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) En Anatolia",
+        "questionId": "d5-q7"
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
         "kind": "question",
-        "text": "¿Qué hace falta al contar la semana?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
+        "text": "Cuenta con tus palabras los hitos de la",
+        "questionId": "d5-w1",
+        "questionType": "write",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1046,36 +1054,28 @@
         }
       },
       {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "option",
-        "text": "A) Solo números",
-        "questionId": "d5-q8"
-      },
-      {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "option",
-        "text": "B) Solo colores",
-        "questionId": "d5-q8"
+        "kind": "lesson",
+        "text": "semana.",
+        "questionId": "d5-w1"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "option",
-        "text": "C) Nombre y lugar",
-        "questionId": "d5-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "option",
-        "text": "D) Solo dibujos",
-        "questionId": "d5-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
       },
       {
         "index": 134,
@@ -1089,8 +1089,8 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Cuenta con tus palabras los hitos de la",
-        "questionId": "d5-w1",
+        "text": "Explica por qué no basta repetir la lista.",
+        "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
           "role": "question",
@@ -1103,9 +1103,9 @@
         "index": 136,
         "column": 3,
         "line": 32,
-        "kind": "lesson",
-        "text": "semana.",
-        "questionId": "d5-w1"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 137,
@@ -1113,31 +1113,23 @@
         "line": 33,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d5-w1"
+        "questionId": "d5-w2"
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
         "kind": "question",
-        "text": "Explica por qué no basta repetir la lista.",
-        "questionId": "d5-w2",
-        "questionType": "write",
+        "text": "Dibuja un mapa con Egipto, Anatolia,",
+        "questionId": "d5-w3",
+        "questionType": "schematic",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1146,12 +1138,20 @@
         }
       },
       {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Canaán, Mesopotamia y China.",
+        "questionId": "d5-w3"
+      },
+      {
         "index": 141,
         "column": 3,
         "line": 37,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d5-w2"
+        "questionId": "d5-w3"
       },
       {
         "index": 142,
@@ -1159,7 +1159,7 @@
         "line": 38,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d5-w2"
+        "questionId": "d5-w3"
       },
       {
         "index": 143,
@@ -1173,8 +1173,8 @@
         "column": 3,
         "line": 40,
         "kind": "question",
-        "text": "Dibuja un mapa con Egipto, Anatolia,",
-        "questionId": "d5-w3",
+        "text": "Dibuja una tabla: nombre, lugar y pista de",
+        "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
           "role": "question",
@@ -1188,8 +1188,8 @@
         "column": 3,
         "line": 41,
         "kind": "lesson",
-        "text": "Canaán, Mesopotamia y China.",
-        "questionId": "d5-w3"
+        "text": "cada tema.",
+        "questionId": "d5-w4"
       },
       {
         "index": 146,
@@ -1197,7 +1197,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d5-w3"
+        "questionId": "d5-w4"
       },
       {
         "index": 147,
@@ -1205,7 +1205,7 @@
         "line": 43,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d5-w3"
+        "questionId": "d5-w4"
       },
       {
         "index": 148,
@@ -1218,40 +1218,29 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "question",
-        "text": "Dibuja una tabla: nombre, lugar y pista de",
-        "questionId": "d5-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "lesson",
-        "text": "cada tema.",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1286,7 +1275,7 @@
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1382,7 +1371,7 @@
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué reino destaca por su ejército?",
+        "prompt": "De los reinos de Mesopotamia, ¿cuál destaca por su ejército?",
         "choices": [
           "Babilonia",
           "Shang",
@@ -1410,26 +1399,8 @@
         "answer": "En China",
         "slot": {
           "column": 3,
-          "line": 19,
-          "index": 123
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué hace falta al contar la semana?",
-        "choices": [
-          "Solo números",
-          "Solo colores",
-          "Nombre y lugar",
-          "Solo dibujos"
-        ],
-        "answer": "Nombre y lugar",
-        "slot": {
-          "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 20,
+          "index": 124
         }
       },
       {
@@ -1439,8 +1410,8 @@
         "prompt": "Cuenta con tus palabras los hitos de la semana.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 26,
+          "index": 130
         }
       },
       {
@@ -1450,8 +1421,8 @@
         "prompt": "Explica por qué no basta repetir la lista.",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1463,8 +1434,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1476,8 +1447,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 45,
-          "index": 149
+          "line": 40,
+          "index": 144
         }
       }
     ]

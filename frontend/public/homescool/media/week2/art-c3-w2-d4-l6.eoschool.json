@@ -1036,7 +1036,7 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Si no coinciden, ¿qué haces?",
+        "text": "Si las dos mitades del reflejo no coinciden,",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1050,8 +1050,8 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "option",
-        "text": "A) Cambias el papel",
+        "kind": "lesson",
+        "text": "¿qué haces?",
         "questionId": "d4-q8"
       },
       {
@@ -1059,7 +1059,7 @@
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Corriges una curva",
+        "text": "A) Cambias el papel",
         "questionId": "d4-q8"
       },
       {
@@ -1067,7 +1067,7 @@
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Borras el eje",
+        "text": "B) Corriges una curva",
         "questionId": "d4-q8"
       },
       {
@@ -1075,20 +1075,28 @@
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Añades adornos",
+        "text": "C) Borras el eje",
         "questionId": "d4-q8"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Añades adornos",
+        "questionId": "d4-q8"
       },
       {
         "index": 135,
         "column": 3,
         "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
         "kind": "question",
         "text": "Escribe los cuatro pasos de un dibujo espejo.",
         "questionId": "d4-w1",
@@ -1099,14 +1107,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
       },
       {
         "index": 137,
@@ -1120,13 +1120,21 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Explica cómo compruebas la simetría.",
         "questionId": "d4-w2",
@@ -1137,14 +1145,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 141,
@@ -1158,13 +1158,21 @@
         "index": 142,
         "column": 3,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 143,
         "column": 3,
         "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
         "text": "Dibuja media montaña con su eje y sus",
         "questionId": "d4-w3",
@@ -1177,19 +1185,11 @@
         }
       },
       {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "lesson",
-        "text": "parejas.",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "parejas.",
         "questionId": "d4-w3"
       },
       {
@@ -1204,13 +1204,21 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
         "text": "Dibuja los cuatro pasos con flechas.",
         "questionId": "d4-w4",
@@ -1221,14 +1229,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1242,8 +1242,9 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
       },
       {
         "index": 152,
@@ -1417,7 +1418,7 @@
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Si no coinciden, ¿qué haces?",
+        "prompt": "Si las dos mitades del reflejo no coinciden, ¿qué haces?",
         "choices": [
           "Cambias el papel",
           "Corriges una curva",
@@ -1438,8 +1439,8 @@
         "prompt": "Escribe los cuatro pasos de un dibujo espejo.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 32,
+          "index": 136
         }
       },
       {
@@ -1449,8 +1450,8 @@
         "prompt": "Explica cómo compruebas la simetría.",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1462,8 +1463,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 39,
-          "index": 143
+          "line": 40,
+          "index": 144
         }
       },
       {
@@ -1475,8 +1476,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

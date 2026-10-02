@@ -408,10 +408,10 @@ export default [
       mcq: [
         { q: "¿Cómo se llama la meta final?", o: ["Consumación", "Caída", "Creación", "Pacto"] },
         { q: "¿Qué es la restauración?", o: ["Reparar lo dañado", "Empezar un diluvio", "Perder una promesa", "Escribir un libro"] },
-        { q: "¿Qué hará Dios con su creación?", o: ["La renovará", "La olvidará", "La dejará igual", "La esconderá"] },
+        { q: "Al final de la historia, ¿qué hará Dios con su creación?", o: ["La renovará", "La olvidará", "La dejará igual", "La esconderá"] },
         { q: "¿Dónde termina el Orinoco?", o: ["En un delta junto al Atlántico", "En una montaña", "En una cueva", "En un puente"] },
         { q: "¿Qué no habrá en la nueva tierra?", o: ["Muerte ni llanto", "Justicia", "Dios", "Personas"] },
-        { q: "¿Con quién vivirá Dios allí?", o: ["Con su pueblo", "Con nadie", "Solo con reyes", "Solo con ángeles"] },
+        { q: "En la nueva tierra, ¿con quién vivirá Dios?", o: ["Con su pueblo", "Con nadie", "Solo con reyes", "Solo con ángeles"] },
         { q: "¿Qué mira la esperanza bíblica?", o: ["Una creación nueva", "Solo huir del mundo", "El diluvio", "Olvidar todo"] },
         { q: "¿Cómo empieza el resumen en tres frases?", o: ["Dios creó un mundo bueno", "La nueva tierra", "El diluvio", "Una cueva"] },
       ],

@@ -406,7 +406,7 @@ export default [
         { q: "¿Qué pista dice que el resultado vive?", o: ["Ya", "Ayer", "Mañana", "Cuando era pequeña"] },
         { q: "¿Cuál frase usa dos palabras?", o: ["Ya he terminado.", "Ayer terminé.", "Terminaré mañana.", "Terminaba."] },
         { q: "«Leía cuando sonó»: ¿cuál es el fondo?", o: ["Leía", "Sonó", "Cuando", "El teléfono"] },
-        { q: "En esa frase, ¿cuál es el golpe?", o: ["sonó", "leía", "cuando", "el"] },
+        { q: "En «Leía cuando sonó el teléfono», ¿cuál es el golpe?", o: ["sonó", "leía", "cuando", "el"] },
         { q: "¿Qué forma sirve para una costumbre?", o: ["subía", "subí", "he subido", "subiré"] },
         { q: "¿Qué forma va con «mañana»?", o: ["subiré", "subí", "subía", "he subido"] },
         { q: "¿Cuál es la pregunta uno para elegir?", o: ["¿Hay un momento cerrado?", "¿Cuántas letras tiene?", "¿Es largo el participio?", "¿Quién escribe?"] },

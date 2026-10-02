@@ -396,7 +396,7 @@ export default [
         { q: "Dos cumbres arriba: ¿cuántas abajo?", o: ["Dos", "Una", "Tres", "Ninguna"] },
         { q: "¿Qué debe conservar el reflejo?", o: ["Tipo, tamaño y distancia", "Solo el color", "Solo el nombre", "Solo el adorno"] },
         { q: "¿Cómo compruebas las mitades?", o: ["Doblando la hoja por el eje", "Pintando todo", "Borrando el eje", "Mirando de lejos"] },
-        { q: "Si no coinciden, ¿qué haces?", o: ["Corriges una curva", "Cambias el papel", "Borras el eje", "Añades adornos"] },
+        { q: "Si las dos mitades del reflejo no coinciden, ¿qué haces?", o: ["Corriges una curva", "Cambias el papel", "Borras el eje", "Añades adornos"] },
       ],
       write: [
         "Escribe los cuatro pasos de un dibujo espejo.",

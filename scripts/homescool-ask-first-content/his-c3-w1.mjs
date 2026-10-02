@@ -197,7 +197,7 @@ export default [
         { q: "¿Qué cultivaban los Timotocuicas?", o: ["Maíz y papa", "Solo pescado", "Solo cabras", "Solo yuca"] },
         { q: "¿Con qué se sostiene un palafito?", o: ["Con palos", "Con velas", "Con nieve", "Con terrazas"] },
         { q: "¿Cómo se llamaba el jefe de una aldea?", o: ["Cacique", "Pescador", "Tejedor", "Navegante"] },
-        { q: "¿Cómo se llama esa forma de organizarse?", o: ["Cacicazgo", "Trueque", "Terraza", "Cultivo"] },
+        { q: "Varias aldeas guiadas por un jefe: ¿cómo se llama esa forma de organizarse?", o: ["Cacicazgo", "Trueque", "Terraza", "Cultivo"] },
         { q: "¿Qué es el trueque?", o: ["Cambiar una cosa por otra", "Comprar con dinero", "Tejer una hamaca", "Dibujar en piedra"] },
       ],
       write: [

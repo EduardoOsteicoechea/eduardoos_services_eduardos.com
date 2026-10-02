@@ -875,7 +875,7 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "En esa frase, ¿cuál es el golpe?",
+        "text": "En «Leía cuando sonó el teléfono», ¿cuál es",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -889,8 +889,8 @@
         "index": 112,
         "column": 3,
         "line": 8,
-        "kind": "option",
-        "text": "A) leía",
+        "kind": "lesson",
+        "text": "el golpe?",
         "questionId": "d4-q5"
       },
       {
@@ -898,7 +898,7 @@
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) cuando",
+        "text": "A) leía",
         "questionId": "d4-q5"
       },
       {
@@ -906,7 +906,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) sonó",
+        "text": "B) cuando",
         "questionId": "d4-q5"
       },
       {
@@ -914,20 +914,28 @@
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) el",
+        "text": "C) sonó",
         "questionId": "d4-q5"
       },
       {
         "index": 116,
         "column": 3,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) el",
+        "questionId": "d4-q5"
       },
       {
         "index": 117,
         "column": 3,
         "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
         "kind": "question",
         "text": "¿Qué forma sirve para una costumbre?",
         "questionId": "d4-q6",
@@ -940,19 +948,11 @@
         }
       },
       {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "option",
-        "text": "A) subía",
-        "questionId": "d4-q6"
-      },
-      {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) subí",
+        "text": "A) subía",
         "questionId": "d4-q6"
       },
       {
@@ -960,7 +960,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) he subido",
+        "text": "B) subí",
         "questionId": "d4-q6"
       },
       {
@@ -968,20 +968,28 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) subiré",
+        "text": "C) he subido",
         "questionId": "d4-q6"
       },
       {
         "index": 122,
         "column": 3,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) subiré",
+        "questionId": "d4-q6"
       },
       {
         "index": 123,
         "column": 3,
         "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
         "kind": "question",
         "text": "¿Qué forma va con «mañana»?",
         "questionId": "d4-q7",
@@ -994,19 +1002,11 @@
         }
       },
       {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "option",
-        "text": "A) subí",
-        "questionId": "d4-q7"
-      },
-      {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) subía",
+        "text": "A) subí",
         "questionId": "d4-q7"
       },
       {
@@ -1014,7 +1014,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) he subido",
+        "text": "B) subía",
         "questionId": "d4-q7"
       },
       {
@@ -1022,24 +1022,32 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) subiré",
+        "text": "C) he subido",
         "questionId": "d4-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) subiré",
+        "questionId": "d4-q7"
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
         "kind": "question",
-        "text": "¿Cuál es la pregunta uno para elegir?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
+        "text": "Escribe una frase de una palabra y otra de",
+        "questionId": "d4-w1",
+        "questionType": "write",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1048,36 +1056,28 @@
         }
       },
       {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "option",
-        "text": "A) ¿Cuántas letras tiene?",
-        "questionId": "d4-q8"
-      },
-      {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "option",
-        "text": "B) ¿Hay un momento cerrado?",
-        "questionId": "d4-q8"
+        "kind": "lesson",
+        "text": "dos.",
+        "questionId": "d4-w1"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "option",
-        "text": "C) ¿Es largo el participio?",
-        "questionId": "d4-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "option",
-        "text": "D) ¿Quién escribe?",
-        "questionId": "d4-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
       },
       {
         "index": 134,
@@ -1091,8 +1091,8 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Escribe una frase de una palabra y otra de",
-        "questionId": "d4-w1",
+        "text": "Explica por qué «ayer terminé» es una",
+        "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
           "role": "question",
@@ -1106,8 +1106,8 @@
         "column": 3,
         "line": 32,
         "kind": "lesson",
-        "text": "dos.",
-        "questionId": "d4-w1"
+        "text": "palabra.",
+        "questionId": "d4-w2"
       },
       {
         "index": 137,
@@ -1115,7 +1115,7 @@
         "line": 33,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w1"
+        "questionId": "d4-w2"
       },
       {
         "index": 138,
@@ -1123,7 +1123,7 @@
         "line": 34,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w1"
+        "questionId": "d4-w2"
       },
       {
         "index": 139,
@@ -1137,52 +1137,6 @@
         "column": 3,
         "line": 36,
         "kind": "question",
-        "text": "Explica por qué «ayer terminé» es una",
-        "questionId": "d4-w2",
-        "questionType": "write",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "lesson",
-        "text": "palabra.",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "question",
         "text": "Dibuja un esquema con las tres preguntas.",
         "questionId": "d4-w3",
         "questionType": "schematic",
@@ -1194,32 +1148,32 @@
         }
       },
       {
-        "index": 146,
+        "index": 141,
         "column": 3,
-        "line": 42,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
       },
       {
-        "index": 147,
+        "index": 142,
         "column": 3,
-        "line": 43,
+        "line": 38,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
       },
       {
-        "index": 148,
+        "index": 143,
         "column": 3,
-        "line": 44,
+        "line": 39,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 149,
+        "index": 144,
         "column": 3,
-        "line": 45,
+        "line": 40,
         "kind": "question",
         "text": "Dibuja «Leía cuando sonó» con fondo y",
         "questionId": "d4-w4",
@@ -1232,28 +1186,63 @@
         }
       },
       {
-        "index": 150,
+        "index": 145,
         "column": 3,
-        "line": 46,
+        "line": 41,
         "kind": "lesson",
         "text": "golpe.",
         "questionId": "d4-w4"
       },
       {
-        "index": 151,
+        "index": 146,
         "column": 3,
-        "line": 47,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w4"
       },
       {
-        "index": 152,
+        "index": 147,
         "column": 3,
-        "line": 48,
+        "line": 43,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1288,7 +1277,7 @@
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
@@ -1366,7 +1355,7 @@
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "En esa frase, ¿cuál es el golpe?",
+        "prompt": "En «Leía cuando sonó el teléfono», ¿cuál es el golpe?",
         "choices": [
           "leía",
           "cuando",
@@ -1394,8 +1383,8 @@
         "answer": "subía",
         "slot": {
           "column": 3,
-          "line": 13,
-          "index": 117
+          "line": 14,
+          "index": 118
         }
       },
       {
@@ -1412,26 +1401,8 @@
         "answer": "subiré",
         "slot": {
           "column": 3,
-          "line": 19,
-          "index": 123
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Cuál es la pregunta uno para elegir?",
-        "choices": [
-          "¿Cuántas letras tiene?",
-          "¿Hay un momento cerrado?",
-          "¿Es largo el participio?",
-          "¿Quién escribe?"
-        ],
-        "answer": "¿Hay un momento cerrado?",
-        "slot": {
-          "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 20,
+          "index": 124
         }
       },
       {
@@ -1441,8 +1412,8 @@
         "prompt": "Escribe una frase de una palabra y otra de dos.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 26,
+          "index": 130
         }
       },
       {
@@ -1452,8 +1423,8 @@
         "prompt": "Explica por qué «ayer terminé» es una palabra.",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1465,8 +1436,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 41,
-          "index": 145
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1478,8 +1449,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 45,
-          "index": 149
+          "line": 40,
+          "index": 144
         }
       }
     ]

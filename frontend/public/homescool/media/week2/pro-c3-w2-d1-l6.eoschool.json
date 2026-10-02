@@ -860,7 +860,7 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Cómo se llama una lente curva así?",
+        "text": "¿Cómo se llama una lente abultada en el",
         "questionId": "d1-q4",
         "questionType": "mcq",
         "gutter": {
@@ -874,8 +874,8 @@
         "index": 112,
         "column": 3,
         "line": 8,
-        "kind": "option",
-        "text": "A) Lente plana",
+        "kind": "lesson",
+        "text": "centro, como la gota?",
         "questionId": "d1-q4"
       },
       {
@@ -883,7 +883,7 @@
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Lente rota",
+        "text": "A) Lente plana",
         "questionId": "d1-q4"
       },
       {
@@ -891,7 +891,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Lente convexa",
+        "text": "B) Lente rota",
         "questionId": "d1-q4"
       },
       {
@@ -899,20 +899,28 @@
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Lente seca",
+        "text": "C) Lente convexa",
         "questionId": "d1-q4"
       },
       {
         "index": 116,
         "column": 3,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Lente seca",
+        "questionId": "d1-q4"
       },
       {
         "index": 117,
         "column": 3,
         "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
         "kind": "question",
         "text": "¿Qué es la refracción?",
         "questionId": "d1-q5",
@@ -925,19 +933,11 @@
         }
       },
       {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "option",
-        "text": "A) El brillo del agua",
-        "questionId": "d1-q5"
-      },
-      {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) La sombra de la letra",
+        "text": "A) El brillo del agua",
         "questionId": "d1-q5"
       },
       {
@@ -945,7 +945,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) El peso de la gota",
+        "text": "B) La sombra de la letra",
         "questionId": "d1-q5"
       },
       {
@@ -953,20 +953,28 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Cambio de dirección de la luz",
+        "text": "C) El peso de la gota",
         "questionId": "d1-q5"
       },
       {
         "index": 122,
         "column": 3,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Cambio de dirección de la luz",
+        "questionId": "d1-q5"
       },
       {
         "index": 123,
         "column": 3,
         "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
         "kind": "question",
         "text": "¿Crecen de verdad las letras?",
         "questionId": "d1-q6",
@@ -979,19 +987,11 @@
         }
       },
       {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "option",
-        "text": "A) Sí, crecen mucho",
-        "questionId": "d1-q6"
-      },
-      {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) No, solo lo parecen",
+        "text": "A) Sí, crecen mucho",
         "questionId": "d1-q6"
       },
       {
@@ -999,7 +999,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Solo con agua fría",
+        "text": "B) No, solo lo parecen",
         "questionId": "d1-q6"
       },
       {
@@ -1007,24 +1007,32 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Solo las más grandes",
+        "text": "C) Solo con agua fría",
         "questionId": "d1-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Solo las más grandes",
+        "questionId": "d1-q6"
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
         "kind": "question",
-        "text": "¿Qué necesitas para hacer el aro?",
-        "questionId": "d1-q7",
-        "questionType": "mcq",
+        "text": "Escribe la pregunta de tu experimento con",
+        "questionId": "d1-w1",
+        "questionType": "write",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1033,36 +1041,28 @@
         }
       },
       {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "option",
-        "text": "A) Alambre fino y un lápiz",
-        "questionId": "d1-q7"
-      },
-      {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "option",
-        "text": "B) Cartulina y tijeras",
-        "questionId": "d1-q7"
+        "kind": "lesson",
+        "text": "tus palabras.",
+        "questionId": "d1-w1"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "option",
-        "text": "C) Pintura y pincel",
-        "questionId": "d1-q7"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "option",
-        "text": "D) Cuerda y clavos",
-        "questionId": "d1-q7"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
       },
       {
         "index": 134,
@@ -1076,8 +1076,8 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Escribe la pregunta de tu experimento con",
-        "questionId": "d1-w1",
+        "text": "Explica qué es una lente convexa.",
+        "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
           "role": "question",
@@ -1090,9 +1090,9 @@
         "index": 136,
         "column": 3,
         "line": 32,
-        "kind": "lesson",
-        "text": "tus palabras.",
-        "questionId": "d1-w1"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 137,
@@ -1100,31 +1100,23 @@
         "line": 33,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w1"
+        "questionId": "d1-w2"
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
         "kind": "question",
-        "text": "Explica qué es una lente convexa.",
-        "questionId": "d1-w2",
-        "questionType": "write",
+        "text": "Dibuja una gota redonda sobre una letra",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1133,12 +1125,20 @@
         }
       },
       {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "lesson",
+        "text": "pequeña.",
+        "questionId": "d1-w3"
+      },
+      {
         "index": 141,
         "column": 3,
         "line": 37,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w2"
+        "questionId": "d1-w3"
       },
       {
         "index": 142,
@@ -1146,7 +1146,7 @@
         "line": 38,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w2"
+        "questionId": "d1-w3"
       },
       {
         "index": 143,
@@ -1160,8 +1160,8 @@
         "column": 3,
         "line": 40,
         "kind": "question",
-        "text": "Dibuja una gota redonda sobre una letra",
-        "questionId": "d1-w3",
+        "text": "Dibuja la luz entrando del aire a la gota de",
+        "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
           "role": "question",
@@ -1175,8 +1175,8 @@
         "column": 3,
         "line": 41,
         "kind": "lesson",
-        "text": "pequeña.",
-        "questionId": "d1-w3"
+        "text": "agua.",
+        "questionId": "d1-w4"
       },
       {
         "index": 146,
@@ -1184,7 +1184,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w3"
+        "questionId": "d1-w4"
       },
       {
         "index": 147,
@@ -1192,7 +1192,7 @@
         "line": 43,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w3"
+        "questionId": "d1-w4"
       },
       {
         "index": 148,
@@ -1205,40 +1205,29 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "question",
-        "text": "Dibuja la luz entrando del aire a la gota de",
-        "questionId": "d1-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "lesson",
-        "text": "agua.",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1273,7 +1262,7 @@
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 11,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d1-q1",
@@ -1333,7 +1322,7 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se llama una lente curva así?",
+        "prompt": "¿Cómo se llama una lente abultada en el centro, como la gota?",
         "choices": [
           "Lente plana",
           "Lente rota",
@@ -1361,8 +1350,8 @@
         "answer": "Cambio de dirección de la luz",
         "slot": {
           "column": 3,
-          "line": 13,
-          "index": 117
+          "line": 14,
+          "index": 118
         }
       },
       {
@@ -1379,26 +1368,8 @@
         "answer": "No, solo lo parecen",
         "slot": {
           "column": 3,
-          "line": 19,
-          "index": 123
-        }
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué necesitas para hacer el aro?",
-        "choices": [
-          "Alambre fino y un lápiz",
-          "Cartulina y tijeras",
-          "Pintura y pincel",
-          "Cuerda y clavos"
-        ],
-        "answer": "Alambre fino y un lápiz",
-        "slot": {
-          "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 20,
+          "index": 124
         }
       },
       {
@@ -1408,8 +1379,8 @@
         "prompt": "Escribe la pregunta de tu experimento con tus palabras.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 26,
+          "index": 130
         }
       },
       {
@@ -1419,8 +1390,8 @@
         "prompt": "Explica qué es una lente convexa.",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1432,8 +1403,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1445,8 +1416,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 45,
-          "index": 149
+          "line": 40,
+          "index": 144
         }
       }
     ]

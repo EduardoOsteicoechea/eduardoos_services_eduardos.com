@@ -192,7 +192,7 @@ export default [
         { q: "¿Cuál es un nombre propio?", o: ["Pico Bolívar", "montaña", "laguna", "nieve"] },
         { q: "¿Cuál es un nombre común?", o: ["montaña", "Pico Bolívar", "Mérida", "Sofía"] },
         { q: "«El frailejón alto», ¿cómo va en plural?", o: ["los frailejones altos", "los frailejón alto", "el frailejones altos", "los frailejones alto"] },
-        { q: "Si hay varios, ¿qué pasa con las palabras?", o: ["Todas pasan a plural", "Solo cambia el nombre", "Ninguna cambia", "Solo cambia el adjetivo"] },
+        { q: "Si hablas de varios niños, ¿qué pasa con el artículo, el nombre y el adjetivo?", o: ["Todas pasan a plural", "Solo cambia el nombre", "Ninguna cambia", "Solo cambia el adjetivo"] },
         { q: "¿Qué parte del verbo «subo» no cambia?", o: ["sub-", "-o", "yo", "-es"] },
         { q: "¿Cómo dices «ella» con el verbo subir?", o: ["ella sube", "ella subo", "ella subes", "ella subimos"] },
         { q: "¿Qué palabra ocupa el lugar de Sofía?", o: ["Ella", "Nieve", "Monte", "Sube"] },

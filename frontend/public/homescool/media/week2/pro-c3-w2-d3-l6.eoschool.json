@@ -1024,7 +1024,7 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Si la imagen solo se movió, ¿qué pasó?",
+        "text": "Si al mirar por la gota la imagen solo se",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -1038,8 +1038,8 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "option",
-        "text": "A) Puede no haber crecido",
+        "kind": "lesson",
+        "text": "movió, ¿qué pasó?",
         "questionId": "d3-q7"
       },
       {
@@ -1047,7 +1047,7 @@
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Creció seguro",
+        "text": "A) Puede no haber crecido",
         "questionId": "d3-q7"
       },
       {
@@ -1055,7 +1055,7 @@
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Se rompió el agua",
+        "text": "B) Creció seguro",
         "questionId": "d3-q7"
       },
       {
@@ -1063,20 +1063,28 @@
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Cambió el alambre",
+        "text": "C) Se rompió el agua",
         "questionId": "d3-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Cambió el alambre",
+        "questionId": "d3-q7"
       },
       {
         "index": 135,
         "column": 3,
         "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
         "kind": "question",
         "text": "Escribe qué intento se vio mejor y por qué.",
         "questionId": "d3-w1",
@@ -1087,14 +1095,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
       },
       {
         "index": 137,
@@ -1108,13 +1108,21 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Explica por qué repetir ayuda a confiar en lo",
         "questionId": "d3-w2",
@@ -1127,19 +1135,11 @@
         }
       },
       {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "lesson",
-        "text": "que viste.",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "que viste.",
         "questionId": "d3-w2"
       },
       {
@@ -1154,13 +1154,21 @@
         "index": 143,
         "column": 3,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
         "kind": "question",
         "text": "Dibuja una tabla con dos intentos.",
         "questionId": "d3-w3",
@@ -1171,14 +1179,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 146,
@@ -1192,13 +1192,21 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
         "text": "Dibuja la misma letra sin gota y con gota.",
         "questionId": "d3-w4",
@@ -1209,14 +1217,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
       },
       {
         "index": 150,
@@ -1230,8 +1230,9 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 152,
@@ -1387,7 +1388,7 @@
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Si la imagen solo se movió, ¿qué pasó?",
+        "prompt": "Si al mirar por la gota la imagen solo se movió, ¿qué pasó?",
         "choices": [
           "Puede no haber crecido",
           "Creció seguro",
@@ -1408,8 +1409,8 @@
         "prompt": "Escribe qué intento se vio mejor y por qué.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 32,
+          "index": 136
         }
       },
       {
@@ -1419,8 +1420,8 @@
         "prompt": "Explica por qué repetir ayuda a confiar en lo que viste.",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1432,8 +1433,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 41,
+          "index": 145
         }
       },
       {
@@ -1445,8 +1446,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

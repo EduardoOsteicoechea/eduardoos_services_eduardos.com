@@ -188,7 +188,7 @@ export default [
         { q: "¿Qué letra es un granito de arena?", o: ["i", "O", "L", "S"] },
         { q: "¿Qué va primero, la O o la i?", o: ["La O", "La i", "Las dos juntas", "Ninguna"] },
         { q: "¿Cómo es el punto frente a la O?", o: ["Más pequeño", "Igual de grande", "Más grande", "Más largo"] },
-        { q: "Si miden igual, ¿qué pasa?", o: ["No se sabe cuál manda", "Queda perfecto", "Se vuelve una L", "Se vuelve una S"] },
+        { q: "Si el punto y la O miden igual, ¿qué pasa?", o: ["No se sabe cuál manda", "Queda perfecto", "Se vuelve una L", "Se vuelve una S"] },
         { q: "¿Para qué sirve etiquetar?", o: ["Para nombrar cada pieza", "Para borrar el dibujo", "Para pintarlo", "Para agrandarlo"] },
         { q: "¿Qué letra va junto a un círculo?", o: ["O", "i", "L", "S"] },
         { q: "¿Qué pasa si pones muchos detalles?", o: ["El dibujo se llena", "Queda más claro", "Se vuelve una L", "Se vuelve una O"] },

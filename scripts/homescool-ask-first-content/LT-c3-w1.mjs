@@ -196,7 +196,7 @@ export default [
       mcq: [
         { q: "¿Qué es una fuente?", o: ["Donde viene lo que sabemos", "Un tipo de mapa", "Un río grande", "Un dibujo con color"] },
         { q: "¿Qué es también una fuente?", o: ["Un petroglifo", "Una lluvia", "Un camino", "Un zapato"] },
-        { q: "¿Cómo van las dos líneas de hoy?", o: ["Lado a lado", "Cruzadas", "Mezcladas", "Redondas"] },
+        { q: "En la línea de tiempo de hoy, ¿cómo van las dos líneas paralelas?", o: ["Lado a lado", "Cruzadas", "Mezcladas", "Redondas"] },
         { q: "¿Qué cuenta la creación en Génesis?", o: ["Que Dios hizo el mundo", "Un río de Asia", "Un pueblo antiguo", "Un tipo de mapa"] },
         { q: "¿Qué es la caída en Génesis?", o: ["Cuando el pecado entró al mundo", "Un río de Asia", "Un pueblo antiguo", "Un tipo de mapa"] },
         { q: "¿Qué significa «Mesopotamia»?", o: ["Tierra entre ríos", "Tierra de montañas", "Mar de arena", "Isla grande"] },
@@ -306,7 +306,7 @@ export default [
         { q: "¿Cómo se estudian los sumerios?", o: ["Con historia y con el mapa", "Con un cuento", "Con una canción", "Con un juego"] },
         { q: "¿Dónde vivían los sumerios?", o: ["En Mesopotamia", "En una isla", "En el Sahara", "En la selva"] },
         { q: "¿Entre qué ríos vivían?", o: ["Tigris y Éufrates", "Nilo y Congo", "Orinoco y Amazonas", "Rin y Sena"] },
-        { q: "¿Cómo se llama su escritura de cuña?", o: ["Cuneiforme", "Alfabeto latino", "Dibujo animado", "Código postal"] },
+        { q: "¿Cómo se llama la escritura de cuña de los sumerios?", o: ["Cuneiforme", "Alfabeto latino", "Dibujo animado", "Código postal"] },
         { q: "¿Qué lleva una ficha?", o: ["Una frase y una etiqueta", "Solo un número", "Solo un color", "Un nombre sin frase"] },
         { q: "¿Qué etiqueta lleva Babel?", o: ["Génesis", "Historia", "Mapa", "Río"] },
         { q: "¿Qué etiqueta lleva «sumerios»?", o: ["Historia", "Génesis", "Torre", "Lengua"] },
