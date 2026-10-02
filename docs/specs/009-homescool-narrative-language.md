@@ -2,104 +2,85 @@
 
 **Status:** canonical for all new and revised `.eoschool` lesson copy.  
 **Audience:** level **6** (≈ **8 years**).  
-**Applies to:** `lesson.points[].body`, `lesson.summary`, quiz prompts/choices, and headings — every student-facing string in a cell JSON.
+**Applies to:** `lesson.points[].body`, `lesson.summary`, quiz prompts/choices, headings, and `lesson.slotSequence` text (Letter grid v2).
 
 Agents, connectors, and human authors **must** follow this spec together with [METHOD_V1.md](../../frontend/public/skills/eoschool/METHOD_V1.md).
 
-## How the frontend maps your text
+## The one writing rule: ask first
 
-Each `lesson.points[].body` is split on **blank lines** (`\n\n`). The Homescool Letter UI assigns boxes from paragraph order and prefixes (see `classifyLessonParas` in `frontend/src/lib/homescool-eoschool.ts`):
+The whole class is **one natural, inductive narrative**. Every idea follows the same beat:
 
-| Paragraph | Box label in UI | How the FE classifies it |
-| --- | --- | --- |
-| First paragraph | **Idea central** | Always the lead block |
-| Middle paragraph(s) | **Explora** | Default for paragraphs 2…n−2 that are not specials |
-| Paragraph starting with `Práctica:` / `Practice:` | **Práctica** | Full-width practice strip (with workspace) |
-| Paragraph starting with `Error común:` / `Common mistake:` | **Error a corregir** | Side column when Explora + error share a row |
-| Optional `Consejo:` / `Meta:` | Consejo / Meta | Same side column |
+1. **Question** — wakes the child's interest («Ahora te pregunto, …»).
+2. **Blank space** — the child tries; he feels the need because he does not have the answer yet.
+3. **Answer below** — heading `Punto N: …` + short answer phrases.
+4. **Copy** — `Cópiala aquí:` + 2 blank lines; the child iterates the idea by copying the answer.
 
-**Do not** paste meta-labels into the prose (`Idea central:`, `Explora:`, `explora:`). The UI already shows those titles. Labels inside the body duplicate chrome and break the narrative flow.
+There are **no** separate Idea / Explora / Práctica / Error común / «Para cerrar» sections and no end-of-class question block. Practice and common mistakes are folded into the same beat (e.g. «Una pregunta con truco: …»).
 
-## Voice: guided prose, not a checklist
+## Letter grid v2 sheet
 
-Write so a child can **read alone** and feel accompanied:
+Rhythm for `lesson.layout: "letter-grid-v2"` (`slotSequence` of 156):
 
-1. **Open the idea** in plain language (definitions + kid gloss for every school term on first use).
-2. **Walk through examples** in full short sentences (Explora).
-3. **Hand off to the child** with one clear practice block.
-4. **Warn about one typical mistake** in friendly direct speech.
+1. Opening question + 2 blank lines (day 1 = hook; days 2–5 = «¿Qué aprendiste ayer sobre esta misma materia?»).
+2. Heading `Repaso` + 3 short narrated lines.
+3. Typically 5 points, each with the beat above.
+4. Soft max **~66 characters** per lesson line; one idea per line; blank line between paragraphs and between a question and its answer space; no markdown in slot text.
 
-**Use** natural bridges when they help continuity:
+Full packing contract: [`.cursor/rules/homescool-class-method-v2.mdc`](../../.cursor/rules/homescool-class-method-v2.mdc).
 
-- Lead: «Hoy vamos a…», «Esta semana…», «Primero…» (only **one** opening hook per point; do not repeat the same hook on every paragraph).
-- Explora: «Sigamos juntos.», «Mira este ejemplo.», «Fíjate en…» (optional on the **first** Explora paragraph only).
-- Practice: always **`Práctica: Ahora te toca a ti.`** then the task with a **capitalized** verb («Escribe…», «Resuelve…», «Cuenta…»).
-- Error: **`Error común:`** then the mistake — **without** filler like «Antes de terminar, un aviso.»
+## `points[].body`
 
-**Forbidden in lesson bodies**
+One point per `Punto N`. Paragraphs are separated by blank lines (`\n\n`): the question first, then the answer. The first point starts with the opening question and, on days 2–5, `## Repaso` + its lines. The printed sheet's source of truth is `slotSequence`.
 
-- Checklist stacks in Idea central (bare «Término = glosa» lists, `A | B | C`, `A → B → C` chains without sentences).
-- Telegraphic meta repeated every day: «Esta clase te ayuda a aprender…», «Antes de hacer la actividad, di qué aprendiste», «Aprendemos:» in headings.
-- Duplicate section labels (`Idea central:`, `explora:`) or broken glue (`Sigamos juntos. explora:`).
-- Orders with no teaching («Conjuga…» / «Marca…» only) on deepen/review days.
-- Jargon with no immediate gloss («participio», «epitelial», …) — define on first use.
-- Bare «frente a» / «vs» mid-paragraph unless you **want** a Contraste two-column split (FE detects those markers).
+## Voice
+
+- Short complete sentences a child can read alone; gloss every school term on first use.
+- The narrative flows from one question to the next: each answer raises the next question.
+- Natural bridges are welcome («Sigamos.», «Imagina que…», «Una pregunta con truco…»); do not repeat the same hook on every point.
+
+**Forbidden**
+
+- UI labels pasted into prose (`Idea central:`, `Explora:`, `Práctica:`, `Error común:`).
+- Checklist stacks (bare «Término = glosa» lists, `A | B | C`, `A → B → C` chains without sentences).
+- Telegraphic filler repeated every day: «Esta clase te ayuda a aprender…», «Antes de terminar, un aviso», «Aprendemos:» in headings.
+- Orders with no teaching («Conjuga…» / «Marca…» only).
+- Jargon with no immediate gloss («participio», «epitelial», …).
 
 **Allowed exceptions**
 
 - Math and conjugation **maps** when they teach form (`habl- → hablo`, `6×7`, table layouts).
 - Quoted Scripture / citations in write prompts and teología blocks.
 
-## Paragraph template (copy pattern)
-
-Use **exactly four paragraphs** per point when possible (blank line between each):
-
-```text
-Hoy vamos a [idea en lenguaje de 8 años]. [Definiciones: término = explicación + ejemplo corto.]
-
-Sigamos juntos. [Ejemplo trabajado paso a paso en oraciones completas.]
-
-Práctica: Ahora te toca a ti. [Tarea concreta que use la clase.]
-
-Error común: [Un error típico y cómo evitarlo, sin sermón.]
-```
-
-English (`locale: "en"`, subject `ing`): same structure; use `Practice: Now it's your turn.` and `Common mistake:`.
+English (`locale: "en"`, subject `ing`): same ideas; sheet labels stay Spanish unless the cell is `locale: "en"`.
 
 ## Headings and summaries
 
-- **`heading`:** short topic title only — no «Aprendemos:», no «Palabras en acción:», no double colons.
-- **`summary`:** one or two sentences the child can retell; intro days synthesize the week; deepen days may use «Esta semana seguimos con: [title]. Lee cada parte con calma y prueba la actividad.» — not the old template «Primero entiende la idea, luego explórala…».
-- Review day (5): five overview blocks are **mini-explanations**, not slogans or bare «Repaso:» prefixes.
+- **`heading`:** short topic title only — `Punto N: …`, no «Aprendemos:», no double colons.
+- **`summary`:** one or two sentences the child can retell; intro days synthesize the week.
 
 ## Quiz copy (level 6)
 
-When adapting for ≈8 years, **replace every question** (prompt + distractors / write instruction), not only add «Elige la respuesta correcta».
+When adapting for ≈8 years, **replace every question** (prompt + distractors / write instruction).
 
 | Rule | Detail |
 | --- | --- |
-| MCQ prompt | Start with «Elige la respuesta correcta. » (one space after the period) then a **new**, concrete question tied to that day’s lesson. |
-| Choices | Plausible confusions from the lesson; **never** prefix `Respuesta:` on a choice or on `answer`. |
-| Write | Short instruction; student searches class text, quotes an exact phrase, explains in their words (see METHOD_V1 quiz sheet rule). |
+| MCQ prompt | **One line**, concrete, tied to that day's printed lesson. Vary openings; no required prefix. |
+| Choices | Plausible confusions from the lesson; **never** prefix `Respuesta:` on a choice or on `answer`. Rotate correct-answer position across items. |
+| Write / schematic | Short instruction; answerable from sheet text; ≥2 schematic per day on v2 sheets. |
 | Locale | Spanish cells: Spanish only in prompts/choices (no English meta like Overview, checklist, vs). |
 
 ## Encoding and typography
 
 - UTF-8 Spanish: tildes and «¿?» («patrón», «dirección», «refracción», «acompáñala», …).
 - Prefer «comillas angulares» for examples in Spanish copy.
-- Fix known bad patterns: «profundizamos en…» not «miraremos con más calma en la…»; «consecuencias» not «lo que ocurre después» glued to «pecado y sus».
 
 ## Quality gate before upsert
 
-1. Each `lesson.points[]` has `body` with `\n\n`-separated paragraphs; `points` is a **JSON array** (never a single object).
+1. `points` is a **JSON array** (never a single object).
 2. Spot-read aloud: sounds like a teacher talking to one child, not a rubric.
-3. MCQ: every `answer` appears verbatim in `choices`.
-4. Rebuild and sync: `node scripts/build-homescool-curriculum.mjs` (with API env) updates `curriculum.json` and Mongo.
-
-## Local polish script (optional)
-
-After bulk edits, the sidecar helper `.eoschool/polish_language_all.py` (gitignored clone) can re-apply this spec to all cell files under `frontend/public/homescool/media/week1/` and `week2/`. It does **not** replace thoughtful authoring for new themes — it enforces structure and removes forbidden boilerplate.
+3. MCQ: every `answer` appears verbatim in `choices`; every quiz item is answerable from explicit sheet text.
+4. Rebuild and sync: `node scripts/build-homescool-curriculum.mjs` (with API env) updates `curriculum.json` and Mongo — only when the user asks.
 
 ## Reference implementation
 
-Cycle 3 weeks **1–2**, level **6**: `frontend/public/homescool/media/week1/*.eoschool.json` and `week2/*.eoschool.json` after the narrative-language pass (commit message family: «pulir lenguaje narrativo»).
+Generator: `scripts/build-homescool-ask-first-v2.mjs` + `scripts/homescool-ask-first-content/*.mjs` (cycle 3, level 6, weeks 1–2).

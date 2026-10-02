@@ -14,143 +14,1471 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Hoy seguimos",
-        "body": "No abrimos otro tema hasta cerrar este experimento con datos claros. Repasa la pregunta del día 1: ¿una gota redonda hace que las letras parezcan más grandes? Vuelve a leer tus pasos numerados y comprueba que tienes alambre, tazón, agua limpia y letras pequeñas impresas. Haz un intento nuevo con luz estable (cerca de una ventana, sin sol directo en los ojos). Anota en **tabla** si la gota agrandó más la letra **A** o la **O**, si la imagen se veía borrosa y si la gota quedó redonda o aplastada.\n\nObserva un caso real de «Hoy seguimos». Di en una frase qué aprendiste: No abrimos otro tema hasta cerrar este experimento.\n\nPráctica: Ahora te toca a ti. Escribe tres líneas: qué ya hiciste, qué observaste hoy y qué necesitas intentar otra vez.\n\nError común: No empieces otro experimento distinto. Primero termina y entiende esta gota-lupa."
+        "heading": "Punto 1: Revisar los materiales",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer supiste que una gota redonda se parece a una lupa.\nLa luz cambia de dirección al pasar del aire al agua.\nConociste los materiales y los pasos numerados.\n\nPiensa un momento: ¿qué debes tener a la mano para un intento nuevo?\n\nRevisa que tengas alambre, tazón y agua limpia. Ten a la mano las letras pequeñas impresas. Relee tus pasos numerados antes de empezar."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: La luz estable",
+        "body": "Sigamos. ¿Dónde pondrías el experimento para ver mejor? ¿Cerca de una ventana o en la oscuridad?\n\nCerca de una ventana, donde haya luz que no cambie. Evita que el sol te dé directo en los ojos. Con buena luz, las letras se ven con más claridad."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Anotar en una tabla",
+        "body": "Imagina que pruebas la letra A y luego la letra O. ¿Cómo te acordarías de lo que viste en cada una?\n\nHaz una tabla en tu bitácora. Una columna dice «Letra» y otra dice «Qué vi». Anota si la gota agrandó más la A o la O. Anota si la imagen se veía borrosa."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: La forma de la gota",
+        "body": "Una pregunta con truco: si la gota queda aplastada, ¿el resultado vale igual?\n\nNo es igual: la gota debe quedar redonda y abultada. Anota en la tabla si quedó redonda o aplastada. Si quedó aplastada, forma otra gota y prueba otra vez."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Terminar lo que empezamos",
+        "body": "Ahora tú: ¿por qué no empezamos otro experimento distinto hoy?\n\nPrimero se termina este experimento con datos claros. Esta semana seguimos solo con la gota-lupa. Al final escribe: qué hiciste, qué viste y qué falta."
       }
     ],
-    "summary": "Esta semana seguimos con: Seguimos el mismo experimento. Lee cada parte con calma y prueba la actividad.",
-    "weekRecap": "Esta semana seguimos con: Una gota que parece lupa. Lee cada parte con calma y prueba la actividad."
+    "summary": "Con buena luz y una gota redonda, anotas en una tabla qué viste con la A y la O.",
+    "weekRecap": "Esta semana seguimos con: Una gota que parece lupa. Lee cada parte con calma y prueba la actividad.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja una ventana con luz entrando a tu mesa. Dibuja sobre la mesa el tazón y el aro con su gota. Dibuja la letra A vista a través de la gota. Rotula: ventana, luz, tazón, aro y gota.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer supiste que una gota redonda se parece a una lupa."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "La luz cambia de dirección al pasar del aire al agua."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Conociste los materiales y los pasos numerados."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Piensa un momento: ¿qué debes tener a la mano para"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "un intento nuevo?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "heading",
+        "text": "Punto 1: Revisar los materiales"
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Revisa que tengas alambre, tazón y agua limpia."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Ten a la mano las letras pequeñas impresas."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Relee tus pasos numerados antes de empezar."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Sigamos. ¿Dónde pondrías el experimento para ver"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "mejor? ¿Cerca de una ventana o en la oscuridad?"
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "heading",
+        "text": "Punto 2: La luz estable"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Cerca de una ventana, donde haya luz que no cambie."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Evita que el sol te dé directo en los ojos."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Con buena luz, las letras se ven con más claridad."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Imagina que pruebas la letra A y luego la letra O."
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "¿Cómo te acordarías de lo que viste en cada una?"
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "heading",
+        "text": "Punto 3: Anotar en una tabla"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Haz una tabla en tu bitácora."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Una columna dice «Letra» y otra dice «Qué vi»."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Anota si la gota agrandó más la A o la O."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Anota si la imagen se veía borrosa."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: si la gota queda aplastada,"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "¿el resultado vale igual?"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "heading",
+        "text": "Punto 4: La forma de la gota"
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "No es igual: la gota debe quedar redonda y abultada."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Anota en la tabla si quedó redonda o aplastada."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Si quedó aplastada, forma otra gota y prueba otra vez."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Ahora tú: ¿por qué no empezamos otro experimento"
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "distinto hoy?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 5: Terminar lo que empezamos"
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Primero se termina este experimento con datos claros."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Esta semana seguimos solo con la gota-lupa."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Al final escribe: qué hiciste, qué viste y qué falta."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Dónde pones el experimento para ver mejor?",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) En un cuarto sin luz",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Bajo el sol en los ojos",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Dentro de un armario",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Cerca de una ventana",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué debes evitar con el sol?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Que entre por la ventana",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Que te dé directo en los ojos",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Que caliente la mesa",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Que se vea afuera",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Qué letras probaste hoy?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) La X y la Z",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) La B y la T",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) La A y la O",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Solo la M",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué columnas tiene tu tabla de hoy?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Fecha y Peso",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Color y Precio",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Hora y Lugar",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Letra y Qué vi",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Qué debes anotar de la imagen?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) Cuánto costó",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) Si se veía borrosa",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) De qué color era la mesa",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) Quién la vio",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cómo debe quedar la gota?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) Redonda y abultada",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) Aplastada",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) Cuadrada",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) Muy delgada",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "Si la gota queda aplastada, ¿qué haces?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) Dejas de anotar",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Cambias de tema",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Formas otra gota y pruebas",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Rompes el aro",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Con cuál experimento seguimos esta semana?",
+        "questionId": "d2-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Con la gota-lupa",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Con el disco Guiñando",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Con uno nuevo",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Con ninguno",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe tres líneas: qué hiciste, qué viste y qué falta.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica por qué la gota debe quedar redonda.",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja una tabla con las columnas Letra y Qué vi.",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una gota redonda y otra aplastada, y compáralas.",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja una ventana con luz entrando a tu mesa."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Dibuja sobre la mesa el tazón y el aro con su gota."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Dibuja la letra A vista a través de la gota."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Rotula: ventana, luz, tazón, aro y gota."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d2-q1",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué cambia cuando miras letras a través de una gota redonda?",
+        "prompt": "¿Dónde pones el experimento para ver mejor?",
         "choices": [
-          "Las letras se vuelven azules.",
-          "El papel se hace més pesado.",
-          "La gota escribe palabras.",
-          "Las letras pueden verse més grandes."
+          "En un cuarto sin luz",
+          "Bajo el sol en los ojos",
+          "Dentro de un armario",
+          "Cerca de una ventana"
         ],
-        "answer": "Las letras se vuelven azules."
+        "answer": "Cerca de una ventana",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d2-q2",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo debe ser la gota para parecerse a una lupa?",
+        "prompt": "¿Qué debes evitar con el sol?",
         "choices": [
-          "Plana como una regla.",
-          "Llena de arena.",
-          "Redonda y abultada en el centro.",
-          "Cuadrada y seca."
+          "Que entre por la ventana",
+          "Que te dé directo en los ojos",
+          "Que caliente la mesa",
+          "Que se vea afuera"
         ],
-        "answer": "Redonda y abultada en el centro."
+        "answer": "Que te dé directo en los ojos",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué letras probaste hoy?",
+        "choices": [
+          "La X y la Z",
+          "La B y la T",
+          "La A y la O",
+          "Solo la M"
+        ],
+        "answer": "La A y la O",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué columnas tiene tu tabla de hoy?",
+        "choices": [
+          "Fecha y Peso",
+          "Color y Precio",
+          "Hora y Lugar",
+          "Letra y Qué vi"
+        ],
+        "answer": "Letra y Qué vi",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué debes anotar de la imagen?",
+        "choices": [
+          "Cuánto costó",
+          "Si se veía borrosa",
+          "De qué color era la mesa",
+          "Quién la vio"
+        ],
+        "answer": "Si se veía borrosa",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cómo debe quedar la gota?",
+        "choices": [
+          "Redonda y abultada",
+          "Aplastada",
+          "Cuadrada",
+          "Muy delgada"
+        ],
+        "answer": "Redonda y abultada",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué comparas en la bitácora?",
+        "prompt": "Si la gota queda aplastada, ¿qué haces?",
         "choices": [
-          "Resultados de cada intento",
-          "Colores del cielo",
-          "Nombres de dinosaurios",
-          "Capitales europeas"
+          "Dejas de anotar",
+          "Cambias de tema",
+          "Formas otra gota y pruebas",
+          "Rompes el aro"
         ],
-        "answer": "Resultados de cada intento"
+        "answer": "Formas otra gota y pruebas",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿En qué conviene concentrarse antes de comenzar otro experimento?",
+        "prompt": "¿Con cuál experimento seguimos esta semana?",
         "choices": [
-          "Una carrera de barcos.",
-          "Un experimento con imanes.",
-          "Un dibujo de volcanes.",
-          "La lente hecha con una gota de agua."
+          "Con la gota-lupa",
+          "Con el disco Guiñando",
+          "Con uno nuevo",
+          "Con ninguno"
         ],
-        "answer": "La lente hecha con una gota de agua."
-      },
-      {
-        "id": "d2-q9",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Qué proyecto continúa hoy?",
-        "choices": [
-          "Un experimento con imanes.",
-          "Un dibujo de volcanes.",
-          "La lente hecha con una gota de agua.",
-          "Una carrera de barcos."
-        ],
-        "answer": "La lente hecha con una gota de agua."
-      },
-      {
-        "id": "d2-q10",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿En qué conviene concentrarse antes de comenzar otro experimento?",
-        "choices": [
-          "Un dibujo de volcanes.",
-          "La lente hecha con una gota de agua.",
-          "Una carrera de barcos.",
-          "Un experimento con imanes."
-        ],
-        "answer": "La lente hecha con una gota de agua."
-      },
-      {
-        "id": "d2-q11",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Qué proyecto continúa hoy?",
-        "choices": [
-          "La lente hecha con una gota de agua.",
-          "Una carrera de barcos.",
-          "Un experimento con imanes.",
-          "Un dibujo de volcanes."
-        ],
-        "answer": "La lente hecha con una gota de agua."
-      },
-      {
-        "id": "d2-q12",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿En qué conviene concentrarse antes de comenzar otro experimento?",
-        "choices": [
-          "Una carrera de barcos.",
-          "Un experimento con imanes.",
-          "Un dibujo de volcanes.",
-          "La lente hecha con una gota de agua."
-        ],
-        "answer": "La lente hecha con una gota de agua."
+        "answer": "Con la gota-lupa",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy seguimos» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe tres líneas: qué hiciste, qué viste y qué falta.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «No abrimos otro tema hasta cerrar este experimento con datos claros.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica por qué la gota debe quedar redonda.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Compara dos ejemplos en voz alta y señala qué cambia y qué se mantiene igual.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una tabla con las columnas Letra y Qué vi.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una gota redonda y otra aplastada, y compáralas.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

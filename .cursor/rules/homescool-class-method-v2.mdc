@@ -1,0 +1,74 @@
+---
+description: Homescool clase v2 — Letter 156 slots, ritmo pregunta→espacio→respuesta→copiar
+globs: frontend/public/homescool/media/**/*.eoschool.json,.cursor/skills/eoschool/**,docs/specs/009-homescool-narrative-language.md,frontend/src/lib/homescool*.ts
+alwaysApply: false
+---
+
+# Homescool class method v2 (Letter grid + ask-first)
+
+**Canonical for new Letter-grid rewrites** (printed sheet / `lesson.slotSequence`).  
+Supersedes Idea→Explora→`Práctica:`→`Error común:` **on the v2 sheet**.
+
+**Still authoritative:** [`eoschool-method-v1.mdc`](eoschool-method-v1.mdc) (cycle/week/day/level/subject, 12 quiz, `supportUrl`, `memoryPhrase`), [`homescool-letter-grid-v2.mdc`](homescool-letter-grid-v2.mdc) (mm + **156** slots).  
+Voice ≈ **8 years** — see [`homescool-narrative-language.mdc`](homescool-narrative-language.mdc) § Letter grid v2.
+
+**Pilot / generator:** `scripts/build-homescool-ask-first-v2.mjs` + `scripts/homescool-ask-first-content/*.mjs`.
+
+## Physical layout
+
+One US Letter **v2** sheet = **exactly 156** ContentSlots (52 × 3 × 3.5 mm). No overflow page.
+
+**Fill order (column-major):** col 1 lines 1→52, then col 2, then col 3.  
+Stream: **lesson → quiz (12×[1+4] + blanks between questions) → `imageInstruction` (K at col 3 end)**.  
+Leftover lesson slots go into **answer blanks**, not a dead hole before the quiz.
+
+**Headings:** `blank` before + `heading` + `blank` after.  
+**Quiz:** no gutter boxes; no dotted `….` on `answerLine`; blank between question blocks; ≥2 schematic.  
+MCQ prompts: **one line**, varied wording — **do not** force the prefix «Elige la respuesta correcta.».
+
+## Sheet rhythm (mandatory)
+
+### Opening
+
+1. **Days 2–5:** `¿Qué aprendiste ayer sobre esta misma materia?` + **2** blank answer lines.  
+2. **Day 1:** age-appropriate hook (not theory dump) + **2** blanks.  
+3. Heading **`Repaso`** + **exactly 3** short narrated lines (child can retell / copy upward into the opening blanks when useful).
+
+### Each teaching point (typically **5** per class)
+
+Same beat every time:
+
+1. **Question** — prefer `Ahora te pregunto, …` (or a concrete puzzle / «pregunta con truco»).  
+2. **Blank lines** for the child’s first try (share leftover slots across points).  
+3. Heading **`Punto N: título`** + short answer phrases underneath.  
+4. Label **`Cópiala aquí:`** + **2** blank lines to copy the answer.
+
+Practice and common mistakes are **not** separate `Práctica:` / `Error común:` blocks — fold them into the same question→space→answer→copy rhythm (e.g. «Una pregunta con truco: …»).
+
+### Close of lesson body
+
+- Optional short **summary** lines if they fit.  
+- Col 3 ends with **K** `imageInstruction` lines (= `lesson.imageBandInstruction`).  
+- Then quiz.
+
+## Line craft
+
+- One idea per slot; prefer **≤ 66** characters (column fit).  
+- No markdown (`**`, `##`) in `slotSequence.text`.  
+- No boilerplate («Sigamos juntos», «Esta clase te ayuda…», «Para cerrar…» as filler dump).  
+- Every quiz item answerable from **explicit** sheet text.
+
+## Carried from v1
+
+- `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` every class.  
+- Subject order: `teb exe LT his geo art mat esp ing lat cie pro`.  
+- Quiz counts: **8 mcq + 4 write** (write includes schematic).  
+- Backup before rewrite: `week{N}/archive/{basename}.pre-askfirst-{YYYYMMDD}.eoschool.json` (or dated equivalent).  
+- No upsert / commit / push unless the user asks.
+
+## Forbidden
+
+- Opening with theory before the reflective / hook question.  
+- Parallel equal-height quiz bands across columns.  
+- Requiring Idea→Explora→Práctica→Error común labels on the **v2 printed sheet**.  
+- Quiz that needs facts not printed on the sheet.

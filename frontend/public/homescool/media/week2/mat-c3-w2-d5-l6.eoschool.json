@@ -14,162 +14,1470 @@
     "points": [
       {
         "id": "p1",
-        "heading": "El mapa completo",
-        "body": "Repaso: esta semana recorrimos las tablas del 5 al 16 hasta ×12, siempre como grupos iguales.\n\nObserva un caso real de «El mapa completo». Di en una frase qué aprendiste: Repaso: esta semana recorrimos las tablas del 5 al.\n\nPráctica: Ahora te toca a ti. Di en voz alta la idea clave.\n\nError común: No cambies de tabla a mitad de una cuenta; termina la operación que empezaste."
+        "heading": "Punto 1: Todo son grupos iguales",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer construimos las tablas del 13 al 16.\nPartimos el 13 en 10 y 3, y doblamos el 14 y el 16.\nTambién resolvimos un problema con bolívares.\n\nHoy repasamos toda la semana. ¿Qué es multiplicar?\n\nMultiplicar es formar grupos iguales. Esta semana recorrimos las tablas del 5 al 16. Los factores se multiplican y dan el producto. Si dudas, usa una suma repetida o un doble."
       },
       {
         "id": "p2",
-        "heading": "Tablas 58",
-        "body": "Del 5 al 8 usamos patrones (terminaciones en 0 o 5) y dobles como 6×7=42.\n\nObserva un caso real de «Tablas 58». Di en una frase qué aprendiste: Del 5 al 8 usamos patrones (terminaciones en 0 o 5.\n\nPráctica: Ahora te toca a ti. Di en voz alta la idea clave.\n\nError común: No confundas 7×8=56 con 7×7=49."
+        "heading": "Punto 2: Del 5 al 8",
+        "body": "¿Qué trucos usaste del 5 al 8?\n\nEl 5 termina en 0 o en 5: 5 × 12 = 60. El 6 dobla el 3: 6 × 7 = 42. El 8 dobla el 4: 8 × 6 = 48. No mezcles 7 × 8 = 56 con 7 × 7 = 49."
       },
       {
         "id": "p3",
-        "heading": "Tablas 912",
-        "body": "Del 9 al 12 giramos factores (9×8=8×9) y usamos decenas en productos con 10.\n\nObserva un caso real de «Tablas 912». Di en una frase qué aprendiste: Del 9 al 12 giramos factores (9×8=8×9) y usamos de.\n\nPráctica: Ahora te toca a ti. Di en voz alta la idea clave.\n\nError común: No escribas 11×11=111; el producto correcto es 121."
+        "heading": "Punto 3: Del 9 al 12",
+        "body": "¿Y del 9 al 12? ¿Qué cuidados tuviste?\n\nEl orden no cambia el producto: 9 × 8 = 8 × 9 = 72. 10 × 8 = 80: ocho decenas, no 800. 11 × 11 = 121, no 111. 12 × 12 = 144 se parte en 120 + 24."
       },
       {
         "id": "p4",
-        "heading": "Tablas 1316",
-        "body": "Del 13 al 16 construimos productos con dobles y descomposiciones, también en bolívares.\n\nObserva un caso real de «Tablas 1316». Di en una frase qué aprendiste: Del 13 al 16 construimos productos con dobles y de.\n\nPráctica: Ahora te toca a ti. Di en voz alta la idea clave.\n\nError común: No olvides que 15×8=120, no 23."
+        "heading": "Punto 4: Del 13 al 16",
+        "body": "¿Y del 13 al 16? ¿Qué atajos usaste?\n\nPartir el 13 en 10 y 3: 13 × 5 = 65. Doblar: 14 × 7 = 98. Triplicar el 5: 15 × 8 = 120. Con bolívares: 5 × 800 = 4.000."
       },
       {
         "id": "p5",
-        "heading": "Cierre",
-        "body": "Cierre: multiplicar es formar grupos iguales; las tablas son mapas para resolver problemas reales.\n\nObserva un caso real de «Cierre». Di en una frase qué aprendiste: Cierre: multiplicar es formar grupos iguales; las .\n\nPráctica: Ahora te toca a ti. Di en voz alta la idea clave.\n\nError común: No memorices solo el número; explica los grupos que representa."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Mira esta tabla de resultados: 6 × 7 = 42, 9 × 8 = 72 y 12 × 12 = 144. ¿Cómo la contarías con orden?\n\nCada fila tiene una multiplicación y su producto. Leo: «seis por siete, cuarenta y dos». Luego cuento los grupos: seis grupos de siete. Al final compruebo con un doble o una descomposición."
       }
     ],
-    "summary": "Esta semana seguimos con: Repasamos del 5 al 16. Lee cada parte con calma y prueba la actividad."
+    "summary": "Del 5 al 16 multiplicamos con grupos iguales, trucos y comprobaciones, y ordenamos los resultados en una tabla.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja una tabla con 3 filas: 6 × 7, 9 × 8 y 12 × 12. En cada fila escribe el producto: 42, 72 y 144. Añade una columna que diga qué truco usaste. Revisa que cada producto esté en su fila.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer construimos las tablas del 13 al 16."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Partimos el 13 en 10 y 3, y doblamos el 14 y el 16."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "También resolvimos un problema con bolívares."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Hoy repasamos toda la semana. ¿Qué es multiplicar?"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: Todo son grupos iguales"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Multiplicar es formar grupos iguales."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Esta semana recorrimos las tablas del 5 al 16."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Los factores se multiplican y dan el producto."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Si dudas, usa una suma repetida o un doble."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "¿Qué trucos usaste del 5 al 8?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: Del 5 al 8"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "El 5 termina en 0 o en 5: 5 × 12 = 60."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "El 6 dobla el 3: 6 × 7 = 42."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "El 8 dobla el 4: 8 × 6 = 48."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "No mezcles 7 × 8 = 56 con 7 × 7 = 49."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "¿Y del 9 al 12? ¿Qué cuidados tuviste?"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "heading",
+        "text": "Punto 3: Del 9 al 12"
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "El orden no cambia el producto: 9 × 8 = 8 × 9 = 72."
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "10 × 8 = 80: ocho decenas, no 800."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "11 × 11 = 121, no 111."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "12 × 12 = 144 se parte en 120 + 24."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "lesson",
+        "text": "¿Y del 13 al 16? ¿Qué atajos usaste?"
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "heading",
+        "text": "Punto 4: Del 13 al 16"
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Partir el 13 en 10 y 3: 13 × 5 = 65."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Doblar: 14 × 7 = 98."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Triplicar el 5: 15 × 8 = 120."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Con bolívares: 5 × 800 = 4.000."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "Mira esta tabla de resultados: 6 × 7 = 42, 9 × 8 = 72"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "y 12 × 12 = 144. ¿Cómo la contarías con orden?"
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cada fila tiene una multiplicación y su producto."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Leo: «seis por siete, cuarenta y dos»."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Luego cuento los grupos: seis grupos de siete."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Al final compruebo con un doble o una descomposición."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Cuánto es 7 × 8?",
+        "questionId": "d5-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) 49",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) 15",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) 63",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) 56",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuánto es 9 × 8?",
+        "questionId": "d5-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) 17",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) 72",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) 81",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) 64",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuánto es 12 × 12?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 144",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 24",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 124",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 121",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto es 15 × 8?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 23",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 110",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 120",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 115",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cuánto es 14 × 7?",
+        "questionId": "d5-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 98",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 21",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 84",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 49",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cuánto cuestan 5 lápices a 800 bolívares cada uno?",
+        "questionId": "d5-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 4.800 bolívares",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 400 bolívares",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 805 bolívares",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 4.000 bolívares",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "En una tabla de resultados, ¿qué hay en cada fila?",
+        "questionId": "d5-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) Solo colores",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Una multiplicación y su producto",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Solo el signo ×",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Un nombre de país",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Qué representa multiplicar?",
+        "questionId": "d5-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Quitar de un grupo",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Repartir sin orden",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Formar grupos iguales",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Ordenar números",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica con tus palabras cómo lees la fila 6 × 7 = 42.",
+        "questionId": "d5-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Escribe tres trucos de la semana y un ejemplo de cada uno.",
+        "questionId": "d5-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja una tabla de dos columnas: cuenta y producto.",
+        "questionId": "d5-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja un mapa con tres bloques: 5 a 8, 9 a 12 y 13 a 16.",
+        "questionId": "d5-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja una tabla con 3 filas: 6 × 7, 9 × 8 y 12 × 12."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "En cada fila escribe el producto: 42, 72 y 144."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Añade una columna que diga qué truco usaste."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que cada producto esté en su fila."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d5-q1",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 5 × 9?",
+        "prompt": "¿Cuánto es 7 × 8?",
         "choices": [
-          "40",
-          "50",
-          "54",
-          "45"
+          "49",
+          "15",
+          "63",
+          "56"
         ],
-        "answer": "45"
+        "answer": "56",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d5-q2",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué terminación aparece en los productos de la tabla del 5?",
+        "prompt": "¿Cuánto es 9 × 8?",
         "choices": [
-          "3 o 8.",
-          "Siempre 1.",
-          "0 o 5.",
-          "2 o 7."
+          "17",
+          "72",
+          "81",
+          "64"
         ],
-        "answer": "0 o 5."
+        "answer": "72",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 12 × 12?",
+        "choices": [
+          "144",
+          "24",
+          "124",
+          "121"
+        ],
+        "answer": "144",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d5-q4",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 15 × 8?",
+        "choices": [
+          "23",
+          "110",
+          "120",
+          "115"
+        ],
+        "answer": "120",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d5-q5",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 14 × 7?",
+        "choices": [
+          "98",
+          "21",
+          "84",
+          "49"
+        ],
+        "answer": "98",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d5-q6",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuánto cuestan 5 lápices a 800 bolívares cada uno?",
+        "choices": [
+          "4.800 bolívares",
+          "400 bolívares",
+          "805 bolívares",
+          "4.000 bolívares"
+        ],
+        "answer": "4.000 bolívares",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué guardas en la tabla de repaso?",
+        "prompt": "En una tabla de resultados, ¿qué hay en cada fila?",
         "choices": [
-          "Productos y prácticas",
           "Solo colores",
-          "Nombres de países",
-          "Recetas"
+          "Una multiplicación y su producto",
+          "Solo el signo ×",
+          "Un nombre de país"
         ],
-        "answer": "Productos y prácticas"
+        "answer": "Una multiplicación y su producto",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuál es la idea central de la multiplicación?",
+        "prompt": "¿Qué representa multiplicar?",
         "choices": [
-          "Formar grupos iguales.",
-          "Ordenar letras.",
-          "Cambiar de color.",
-          "Dibujar un reloj."
+          "Quitar de un grupo",
+          "Repartir sin orden",
+          "Formar grupos iguales",
+          "Ordenar números"
         ],
-        "answer": "Formar grupos iguales."
-      },
-      {
-        "id": "d5-q9",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Qué representa multiplicar?",
-        "choices": [
-          "Ordenar letras.",
-          "Cambiar de color.",
-          "Dibujar un reloj.",
-          "Formar grupos iguales."
-        ],
-        "answer": "Formar grupos iguales."
-      },
-      {
-        "id": "d5-q10",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Cuál es la idea central de la multiplicación?",
-        "choices": [
-          "Cambiar de color.",
-          "Dibujar un reloj.",
-          "Formar grupos iguales.",
-          "Ordenar letras."
-        ],
-        "answer": "Formar grupos iguales."
-      },
-      {
-        "id": "d5-q11",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Qué representa multiplicar?",
-        "choices": [
-          "Dibujar un reloj.",
-          "Formar grupos iguales.",
-          "Ordenar letras.",
-          "Cambiar de color."
-        ],
-        "answer": "Formar grupos iguales."
-      },
-      {
-        "id": "d5-q12",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Cuál es la idea central de la multiplicación?",
-        "choices": [
-          "Formar grupos iguales.",
-          "Ordenar letras.",
-          "Cambiar de color.",
-          "Dibujar un reloj."
-        ],
-        "answer": "Formar grupos iguales."
+        "answer": "Formar grupos iguales",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «El mapa completo» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica con tus palabras cómo lees la fila 6 × 7 = 42.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Repaso: esta semana recorrimos las tablas del 5 al 16 hasta ×12, siempre como grupos iguales.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe tres trucos de la semana y un ejemplo de cada uno.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Mira de nuevo el ejemplo de la primera oración.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una tabla de dos columnas: cuenta y producto.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un mapa con tres bloques: 5 a 8, 9 a 12 y 13 a 16.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

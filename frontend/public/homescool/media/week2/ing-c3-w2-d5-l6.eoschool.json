@@ -7,170 +7,1478 @@
   "level": 6,
   "subject": "ing",
   "locale": "en",
-  "title": "Review Spanish indicative tenses",
+  "title": "Review Spanish indicative times",
   "lesson": {
     "kind": "review",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "Week overview",
-        "body": "This week we learn to narrate **when** in Spanish: **one-word** verb forms or **two words** with **haber** plus the participle.\n\nLook at a real case of \"Week overview\". Say one sentence about what you learned.\n\nPractice: Now it's your turn. Your turn. Say the key idea out loud.\n\nCommon mistake: Mixing up two different points."
+        "heading": "Punto 1: Una palabra o dos",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana aprendiste a contar cuándo pasa algo.\nHay formas de una palabra y formas de dos palabras.\nHoy las recuerdas y se las cuentas a alguien.\n\nSin mirar nada: ¿cuáles son las cinco formas de una palabra con «cantar» y cómo son las de dos palabras?\n\nUna palabra: canto / cantaba / canté / cantaré / cantaría. Dos palabras: ayudante haber + forma de lo ya hecho (he cantado). Si olvidaste alguna, dila otra vez en voz alta."
       },
       {
         "id": "p2",
-        "heading": "one word",
-        "body": "Five **one-word** stations with *cantar*: **canto**, **cantaba**, **canté**, **cantaré**, **cantaría** — same root, different time.\n\nLook at a real case of \"one word\". Say one sentence about what you learned.\n\nPractice: Now it's your turn. Your turn. Say the key idea out loud.\n\nCommon mistake: Mixing up two different points."
+        "heading": "Punto 2: Los cinco relojes",
+        "body": "¿Cuándo pasa cada forma? Une cada una con su momento: ahora, pasado abierto, pasado cerrado, después y «si pudiera».\n\n«Canto» es ahora y «cantaba» es pasado abierto. «Canté» es pasado cerrado y «cantaré» es después. «Cantaría» es lo que harías si pudieras. Cada reloj cambia solo el final; la raíz se queda."
       },
       {
         "id": "p3",
-        "heading": "two words",
-        "body": "Two-word times always look like **haber** + **-ado/-ido**: *he cantado*, *había comido*; only **haber** changes with I/you/he.\n\nLook at a real case of \"two words\". Say one sentence about what you learned.\n\nPractice: Now it's your turn. Your turn. Say the key idea out loud.\n\nCommon mistake: Mixing up two different points."
+        "heading": "Punto 3: Haber más participio",
+        "body": "Ahora las de dos palabras: ¿qué ayudante y qué participio usarías para decir que «cantar» ya está hecho?\n\nLa ayudante es «haber»: he, has, ha, hemos, han. El participio es «cantado»: -ado o -ido. Se dice «he cantado», «había comido», «habré vivido». El participio no cambia; solo cambia la ayudante."
       },
       {
         "id": "p4",
-        "heading": "choosing",
-        "body": "Choose by asking three questions: Is the past closed? Does the result still matter? Is it background or habit?\n\nLook at a real case of \"choosing\". Say one sentence about what you learned.\n\nPractice: Now it's your turn. Your turn. Say the key idea out loud.\n\nCommon mistake: Mixing up two different points."
+        "heading": "Punto 4: Elige con las tres preguntas",
+        "body": "Elige con «cantar»: «Ayer», «Ya» y «Cuando era pequeña». ¿Una palabra o dos en cada una?\n\n«Ayer canté»: una palabra, momento cerrado. «Ya he cantado»: dos palabras, resultado vivo. «Cuando era pequeña cantaba»: una palabra, costumbre. Esas tres preguntas te ayudan a elegir."
       },
       {
         "id": "p5",
-        "heading": "Synthesis",
-        "body": "If you can build one clear example of each path, you hold the heart of this week’s Spanish times.\n\nCompare \"Synthesis\" with something at home. How are they alike?\n\nPractice: Now it's your turn. Your turn. Say the key idea out loud.\n\nCommon mistake: Mixing up two different points."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contárselo a alguien de tu casa. ¿Cómo empezarías para que te entienda?\n\nUna buena exposición tiene inicio, medio y cierre. Inicio: «Hoy les cuento cómo decir cuándo pasa algo». Medio: un ejemplo de una palabra y uno de dos. Cierre: repite las tres preguntas y di «gracias»."
       }
     ],
-    "summary": "This week we keep working on: Review Spanish indicative tenses. Read each part calmly and try the activity.",
-    "memoryPhrase": "One word: **canto / cantaba / canté / cantaré / cantaría**. Two words: helper **haber** + already-done form (**he cantado**)."
+    "summary": "Contamos cuándo pasa algo con una palabra (canté) o con dos (he cantado), según las pistas.",
+    "memoryPhrase": "One word: **canto / cantaba / canté / cantaré / cantaría**. Two words: helper **haber** + already-done form (**he cantado**).",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja un reloj grande con cinco números. Escribe en cada número una forma de «cantar». Al lado dibuja las dos piezas de «he cantado». Revisa que no falte ninguna de las cinco formas.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Esta semana aprendiste a contar cuándo pasa algo."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Hay formas de una palabra y formas de dos palabras."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hoy las recuerdas y se las cuentas a alguien."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Sin mirar nada: ¿cuáles son las cinco formas de una"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "palabra con «cantar» y cómo son las de dos palabras?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "heading",
+        "text": "Punto 1: Una palabra o dos"
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Una palabra: canto / cantaba / canté / cantaré / cantaría."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Dos palabras: ayudante haber + forma de lo ya hecho (he cantado)."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Si olvidaste alguna, dila otra vez en voz alta."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "¿Cuándo pasa cada forma? Une cada una con su momento:"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "ahora, pasado abierto, pasado cerrado, después y «si pudiera»."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "heading",
+        "text": "Punto 2: Los cinco relojes"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "«Canto» es ahora y «cantaba» es pasado abierto."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "«Canté» es pasado cerrado y «cantaré» es después."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "«Cantaría» es lo que harías si pudieras."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Cada reloj cambia solo el final; la raíz se queda."
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Ahora las de dos palabras: ¿qué ayudante y qué participio"
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "usarías para decir que «cantar» ya está hecho?"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "heading",
+        "text": "Punto 3: Haber más participio"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "La ayudante es «haber»: he, has, ha, hemos, han."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "El participio es «cantado»: -ado o -ido."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Se dice «he cantado», «había comido», «habré vivido»."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "El participio no cambia; solo cambia la ayudante."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Elige con «cantar»: «Ayer», «Ya» y «Cuando era pequeña»."
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "¿Una palabra o dos en cada una?"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: Elige con las tres preguntas"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "«Ayer canté»: una palabra, momento cerrado."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "«Ya he cantado»: dos palabras, resultado vivo."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "«Cuando era pequeña cantaba»: una palabra, costumbre."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Esas tres preguntas te ayudan a elegir."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Vas a contárselo a alguien de tu casa."
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "¿Cómo empezarías para que te entienda?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Una buena exposición tiene inicio, medio y cierre."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Inicio: «Hoy les cuento cómo decir cuándo pasa algo»."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Medio: un ejemplo de una palabra y uno de dos."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Cierre: repite las tres preguntas y di «gracias»."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué forma de «cantar» es de una sola palabra?",
+        "questionId": "d5-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) he cantado",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) había cantado",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) habré cantado",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) cantaré",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué forma de «cantar» lleva dos palabras?",
+        "questionId": "d5-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) cantaba",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) he cantado",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) canté",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) cantaría",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuál es el participio de «cantar»?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) cantado",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) cantaba",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) cantar",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) canto",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué ayudante lleva «he cantado»?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) ser",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) estar",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) haber",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) hacer",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "«Ayer canté» usa una palabra. ¿Por qué?",
+        "questionId": "d5-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) Ayer cierra el momento",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) Porque es largo",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) Porque es futuro",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) No hay razón",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "«Ya he cantado» usa dos palabras. ¿Por qué?",
+        "questionId": "d5-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) El momento es cerrado",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) Es una costumbre",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) Es lo que harías",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) El resultado sigue vivo",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Qué forma sirve para una costumbre del pasado?",
+        "questionId": "d5-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) canté",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) cantaba",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) cantaré",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) he cantado",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Qué forma dice lo que harías si pudieras?",
+        "questionId": "d5-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) cantaré",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) cantaba",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) cantaría",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) canto",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe de memoria las cinco formas de una palabra de «cantar».",
+        "questionId": "d5-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Cuenta con tus palabras cuándo usar una o dos palabras.",
+        "questionId": "d5-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un esquema con las formas de una y de dos palabras.",
+        "questionId": "d5-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una línea del tiempo con tres frases tuyas.",
+        "questionId": "d5-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja un reloj grande con cinco números."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe en cada número una forma de «cantar»."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Al lado dibuja las dos piezas de «he cantado»."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que no falte ninguna de las cinco formas."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d5-q1",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Which Spanish form shows an action happening now?",
+        "prompt": "¿Qué forma de «cantar» es de una sola palabra?",
         "choices": [
-          "cantado",
+          "he cantado",
           "había cantado",
-          "hemos comido",
-          "canto"
+          "habré cantado",
+          "cantaré"
         ],
-        "answer": "canto"
+        "answer": "cantaré",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d5-q2",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Which form tells about a finished action yesterday?",
+        "prompt": "¿Qué forma de «cantar» lleva dos palabras?",
         "choices": [
-          "cantaré",
-          "cantado",
-          "cantó",
-          "cantaba"
+          "cantaba",
+          "he cantado",
+          "canté",
+          "cantaría"
         ],
-        "answer": "cantó"
+        "answer": "he cantado",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuál es el participio de «cantar»?",
+        "choices": [
+          "cantado",
+          "cantaba",
+          "cantar",
+          "canto"
+        ],
+        "answer": "cantado",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d5-q4",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué ayudante lleva «he cantado»?",
+        "choices": [
+          "ser",
+          "estar",
+          "haber",
+          "hacer"
+        ],
+        "answer": "haber",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d5-q5",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "«Ayer canté» usa una palabra. ¿Por qué?",
+        "choices": [
+          "Ayer cierra el momento",
+          "Porque es largo",
+          "Porque es futuro",
+          "No hay razón"
+        ],
+        "answer": "Ayer cierra el momento",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d5-q6",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "«Ya he cantado» usa dos palabras. ¿Por qué?",
+        "choices": [
+          "El momento es cerrado",
+          "Es una costumbre",
+          "Es lo que harías",
+          "El resultado sigue vivo"
+        ],
+        "answer": "El resultado sigue vivo",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Choose the correct answer. This week we learned:",
+        "prompt": "¿Qué forma sirve para una costumbre del pasado?",
         "choices": [
-          "When to use one or two verb words",
-          "Only English grammar",
-          "Map of Europe only",
-          "Latin prepositions"
+          "canté",
+          "cantaba",
+          "cantaré",
+          "he cantado"
         ],
-        "answer": "When to use one or two verb words"
+        "answer": "cantaba",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Choose the correct answer. What grammar decision comes before choosing the exact time?",
+        "prompt": "¿Qué forma dice lo que harías si pudieras?",
         "choices": [
-          "Choose whether the form is simple or compound.",
-          "Add extra long words.",
-          "Ignore the time clue.",
-          "Use every tense at once."
+          "cantaré",
+          "cantaba",
+          "cantaría",
+          "canto"
         ],
-        "answer": "Choose whether the form is simple or compound."
-      },
-      {
-        "id": "d5-q9",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Choose the correct answer. Choose the answer that matches today's activity. What is the first choice when telling a clear story?",
-        "choices": [
-          "Add extra long words.",
-          "Ignore the time clue.",
-          "Use every tense at once.",
-          "Choose whether the form is simple or compound."
-        ],
-        "answer": "Choose whether the form is simple or compound."
-      },
-      {
-        "id": "d5-q10",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Choose the correct answer. Think about today's practice. What grammar decision comes before choosing the exact time?",
-        "choices": [
-          "Ignore the time clue.",
-          "Use every tense at once.",
-          "Choose whether the form is simple or compound.",
-          "Add extra long words."
-        ],
-        "answer": "Choose whether the form is simple or compound."
-      },
-      {
-        "id": "d5-q11",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Choose the correct answer. Which option shows you understood the lesson? What is the first choice when telling a clear story?",
-        "choices": [
-          "Use every tense at once.",
-          "Choose whether the form is simple or compound.",
-          "Add extra long words.",
-          "Ignore the time clue."
-        ],
-        "answer": "Choose whether the form is simple or compound."
-      },
-      {
-        "id": "d5-q12",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Choose the correct answer. Look for the important detail. What grammar decision comes before choosing the exact time?",
-        "choices": [
-          "Choose whether the form is simple or compound.",
-          "Add extra long words.",
-          "Ignore the time clue.",
-          "Use every tense at once."
-        ],
-        "answer": "Choose whether the form is simple or compound."
+        "answer": "cantaría",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Find and copy the exact words “Week overview” from this class. Then explain what they mean in your own words."
+        "prompt": "Escribe de memoria las cinco formas de una palabra de «cantar».",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Find and copy the exact words “This week we learn to narrate **when** in Spanish: **one-word** verb forms or **two words** with **haber** plus the participle.” from this class. Then explain what they mean in your own words."
+        "prompt": "Cuenta con tus palabras cuándo usar una o dos palabras.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Find and copy the exact words “Look again at the example in the first sentence.” from this class. Then explain what they mean in your own words."
+        "prompt": "Dibuja un esquema con las formas de una y de dos palabras.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Find and copy the exact words “Practice: Now it's your turn.” from this class. Then explain what they mean in your own words."
+        "prompt": "Dibuja una línea del tiempo con tres frases tuyas.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

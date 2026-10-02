@@ -14,143 +14,1471 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Patrones y dobles",
-        "body": "Hoy profundizamos las tablas del 5 al 8, el primer bloque de la semana. Esas tablas son herramientas: cuando las dominas, puedes descomponer productos más grandes sin perder el sentido de grupos iguales. Un patrón es una regla que se repite y ayuda a recordar. En la tabla del 5 los productos terminan en 0 o en 5, como 5×11=55. Para 6×7 puedes pensar el doble de 3×7=21 y llegar a 42. En el aula, **7** niños llevan **6** libros cada uno: eso es **7×6**.\n\nObserva un caso real de «Patrones y dobles». Di en una frase qué aprendiste: Hoy profundizamos las tablas del 5 al 8, el primer.\n\nPráctica: Ahora te toca a ti. Resuelve 5×12, 6×4, 7×8 y 8×6. Elige uno y explica cuántos grupos formaste y de qué tamaño.\n\nError común: No adivines el producto porque «suena bien». Comprueba con suma repetida, con un doble o con otra tabla que ya sepas."
+        "heading": "Punto 1: Un patrón en la tabla del 5",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que las tablas son como piezas.\nMultiplicar es juntar grupos del mismo tamaño.\nHoy nos quedamos con el bloque del 5 al 8.\n\nEscribe la tabla del 5: 5, 10, 15, 20... ¿Qué patrón ves en los productos?\n\nTerminan en 0 o en 5: 5, 10, 15, 20, 25, 30... Un patrón es una regla que se repite. Por eso 5 × 11 = 55 y 5 × 12 = 60."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Un problema con la tabla del 6",
+        "body": "En el salón, 7 niños llevan 6 libros cada uno. ¿Cuántos libros hay en total?\n\nSon siete grupos de seis libros: 7 × 6. Piensa 3 × 7 = 21 y dobla: 21 + 21 = 42. Hay 42 libros en total. Comprueba: 6 × 7 también da 42."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Dobles para el 8",
+        "body": "Sigamos con el 8. Si 4 × 6 = 24, ¿cuánto es 8 × 6?\n\nEl 8 es el doble del 4. Dobla el producto: 24 + 24 = 48. Entonces 8 × 6 = 48. Con 8 × 5 pasa igual: 4 × 5 = 20 y el doble es 40."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: La tabla del 7 con dobles y vecinos",
+        "body": "Imagina que debes hallar 7 × 8. ¿Cómo lo comprobarías?\n\nDobla 7 × 4 = 28: 28 + 28 = 56. Entonces 7 × 8 = 56. Otra forma: 7 × 7 = 49, y 49 + 7 = 56."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Comprueba, no adivines",
+        "body": "Ana dice que 5 × 12 = 50 porque «suena bien». ¿Cómo lo comprobarías?\n\nCon el patrón: 5 × 10 = 50, y faltan 2 grupos de 5. 2 × 5 = 10, y 50 + 10 = 60. Entonces 5 × 12 = 60. Nunca adivines: usa una suma, un doble o un patrón."
       }
     ],
-    "summary": "Esta semana seguimos con: Practicamos del 5 al 8. Lee cada parte con calma y prueba la actividad.",
-    "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad."
+    "summary": "En el bloque del 5 al 8 usamos patrones, dobles y comprobaciones para no adivinar.",
+    "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja 7 mochilas con 6 libros en cada una. Escribe al lado: 7 × 6 = 42. Rotula cuántos grupos hay y cuántos libros en cada grupo. Comprueba contando de 6 en 6 hasta llegar a 42.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer vimos que las tablas son como piezas."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Multiplicar es juntar grupos del mismo tamaño."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hoy nos quedamos con el bloque del 5 al 8."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Escribe la tabla del 5: 5, 10, 15, 20... ¿Qué patrón"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "ves en los productos?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: Un patrón en la tabla del 5"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Terminan en 0 o en 5: 5, 10, 15, 20, 25, 30..."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Un patrón es una regla que se repite."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Por eso 5 × 11 = 55 y 5 × 12 = 60."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "En el salón, 7 niños llevan 6 libros cada uno."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "¿Cuántos libros hay en total?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: Un problema con la tabla del 6"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Son siete grupos de seis libros: 7 × 6."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Piensa 3 × 7 = 21 y dobla: 21 + 21 = 42."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Hay 42 libros en total."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Comprueba: 6 × 7 también da 42."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Sigamos con el 8. Si 4 × 6 = 24, ¿cuánto es 8 × 6?"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "heading",
+        "text": "Punto 3: Dobles para el 8"
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "El 8 es el doble del 4."
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Dobla el producto: 24 + 24 = 48."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Entonces 8 × 6 = 48."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Con 8 × 5 pasa igual: 4 × 5 = 20 y el doble es 40."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "lesson",
+        "text": "Imagina que debes hallar 7 × 8. ¿Cómo lo"
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "comprobarías?"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: La tabla del 7 con dobles y vecinos"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Dobla 7 × 4 = 28: 28 + 28 = 56."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Entonces 7 × 8 = 56."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Otra forma: 7 × 7 = 49, y 49 + 7 = 56."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "Ana dice que 5 × 12 = 50 porque «suena bien»."
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "¿Cómo lo comprobarías?"
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Comprueba, no adivines"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Con el patrón: 5 × 10 = 50, y faltan 2 grupos de 5."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "2 × 5 = 10, y 50 + 10 = 60."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Entonces 5 × 12 = 60."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Nunca adivines: usa una suma, un doble o un patrón."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿En qué terminan los productos de la tabla del 5?",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) En 2 o en 7",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) En 3 o en 8",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) En 1 o en 9",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) En 0 o en 5",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuánto es 5 × 12?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) 50",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) 60",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) 55",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) 17",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuántos libros llevan 7 niños con 6 libros cada uno?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 36",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 13",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 42",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 76",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 27",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 28",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 24",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 42",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cuánto es 8 × 6?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 14",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 48",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 42",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 54",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "Si 4 × 5 = 20, ¿cuánto es 8 × 5?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 40",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 25",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 24",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 28",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Cuánto es 7 × 8?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) 15",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) 49",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) 56",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) 63",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Qué sirve para comprobar un producto si dudas?",
+        "questionId": "d2-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Una suma repetida o un doble",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Adivinar rápido",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Borrar el signo",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Cambiar los números",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica cómo hallas 8 × 7 con el doble de 4 × 7.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Resuelve 7 × 3 con una suma repetida. Escribe los pasos.",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja 7 niños con 6 libros cada uno y escribe 7 × 6.",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja la flecha del doble: de 4 × 6 = 24 a 8 × 6 = 48.",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja 7 mochilas con 6 libros en cada una."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe al lado: 7 × 6 = 42."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula cuántos grupos hay y cuántos libros en cada grupo."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Comprueba contando de 6 en 6 hasta llegar a 42."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d2-q1",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 5 × 9?",
+        "prompt": "¿En qué terminan los productos de la tabla del 5?",
         "choices": [
-          "40",
-          "50",
-          "54",
-          "45"
+          "En 2 o en 7",
+          "En 3 o en 8",
+          "En 1 o en 9",
+          "En 0 o en 5"
         ],
-        "answer": "45"
+        "answer": "En 0 o en 5",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d2-q2",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué terminación aparece en los productos de la tabla del 5?",
+        "prompt": "¿Cuánto es 5 × 12?",
         "choices": [
-          "3 o 8.",
-          "Siempre 1.",
-          "0 o 5.",
-          "2 o 7."
+          "50",
+          "60",
+          "55",
+          "17"
         ],
-        "answer": "0 o 5."
+        "answer": "60",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuántos libros llevan 7 niños con 6 libros cada uno?",
+        "choices": [
+          "36",
+          "13",
+          "42",
+          "76"
+        ],
+        "answer": "42",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
+        "choices": [
+          "27",
+          "28",
+          "24",
+          "42"
+        ],
+        "answer": "42",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 8 × 6?",
+        "choices": [
+          "14",
+          "48",
+          "42",
+          "54"
+        ],
+        "answer": "48",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Si 4 × 5 = 20, ¿cuánto es 8 × 5?",
+        "choices": [
+          "40",
+          "25",
+          "24",
+          "28"
+        ],
+        "answer": "40",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 7×6?",
+        "prompt": "¿Cuánto es 7 × 8?",
         "choices": [
-          "42",
-          "36",
-          "13",
-          "76"
+          "15",
+          "49",
+          "56",
+          "63"
         ],
-        "answer": "42"
+        "answer": "56",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué estrategia ayuda a verificar un producto?",
+        "prompt": "¿Qué sirve para comprobar un producto si dudas?",
         "choices": [
-          "Adivinar rápido.",
-          "Cambiar los números.",
-          "Borrar el signo.",
-          "Una suma repetida o un doble."
+          "Una suma repetida o un doble",
+          "Adivinar rápido",
+          "Borrar el signo",
+          "Cambiar los números"
         ],
-        "answer": "Una suma repetida o un doble."
-      },
-      {
-        "id": "d2-q9",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Qué sirve para comprobar una multiplicación si dudas?",
-        "choices": [
-          "Cambiar los números.",
-          "Borrar el signo.",
-          "Una suma repetida o un doble.",
-          "Adivinar rápido."
-        ],
-        "answer": "Una suma repetida o un doble."
-      },
-      {
-        "id": "d2-q10",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Qué estrategia ayuda a verificar un producto?",
-        "choices": [
-          "Borrar el signo.",
-          "Una suma repetida o un doble.",
-          "Adivinar rápido.",
-          "Cambiar los números."
-        ],
-        "answer": "Una suma repetida o un doble."
-      },
-      {
-        "id": "d2-q11",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Qué sirve para comprobar una multiplicación si dudas?",
-        "choices": [
-          "Una suma repetida o un doble.",
-          "Adivinar rápido.",
-          "Cambiar los números.",
-          "Borrar el signo."
-        ],
-        "answer": "Una suma repetida o un doble."
-      },
-      {
-        "id": "d2-q12",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Qué estrategia ayuda a verificar un producto?",
-        "choices": [
-          "Adivinar rápido.",
-          "Cambiar los números.",
-          "Borrar el signo.",
-          "Una suma repetida o un doble."
-        ],
-        "answer": "Una suma repetida o un doble."
+        "answer": "Una suma repetida o un doble",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Patrones y dobles» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica cómo hallas 8 × 7 con el doble de 4 × 7.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy profundizamos las tablas del 5 al 8, el primer bloque de la semana.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Resuelve 7 × 3 con una suma repetida. Escribe los pasos.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Compara dos ejemplos en voz alta y señala qué cambia y qué se mantiene igual.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 7 niños con 6 libros cada uno y escribe 7 × 6.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja la flecha del doble: de 4 × 6 = 24 a 8 × 6 = 48.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

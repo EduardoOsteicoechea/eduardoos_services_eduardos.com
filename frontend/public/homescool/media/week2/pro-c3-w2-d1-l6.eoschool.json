@@ -14,21 +14,1275 @@
     "points": [
       {
         "id": "p1",
-        "heading": "La pregunta del experimento",
-        "body": "Esta semana investigamos si una gota redonda de agua puede actuar como una pequeña lupa. Una lente convexa es curva hacia afuera, más abultada en el centro, igual que una gota bien formada. La luz viaja en línea recta, pero al pasar del aire al agua cambia un poco de dirección; a eso le llamamos refracción.\n\nObserva un caso real de «La pregunta del experimento». Di en una frase qué aprendiste: Esta semana investigamos si una gota redonda de ag.\n\nPráctica: Ahora te toca a ti. Escribe: Quiero observar si una gota redonda hace que las letras parezcan más grandes. Luego dibuja una gota sobre una palabra en tu cuaderno.\n\nError común: No digas que las letras crecen de verdad. Siguen iguales; cambia el camino de la luz."
+        "heading": "Punto 1: La pregunta del experimento",
+        "body": "¿Puede una gota de agua hacer que las letras se vean más grandes?\n\nQuizá sí: esta semana lo vamos a comprobar. Una gota redonda de agua puede actuar como una lupa. Una lupa hace que lo pequeño se vea más grande. Nuestro experimento busca saber si eso pasa de verdad."
       },
       {
         "id": "p2",
-        "heading": "Como hacerlo con cuidado",
-        "body": "Un experimento ordenado tiene materiales claros y pasos numerados para que otra persona pueda repetirlo. Así registras lo que hiciste y puedes mejorar el intento siguiente. Necesitas alambre fino, un lápiz para guiar el aro, un tazón con agua limpia y letras pequeñas impresas (pueden estar en un libro o periódico).\n\nObserva un caso real de «Como hacerlo con cuidado». Di en una frase qué aprendiste: Un experimento ordenado tiene materiales claros y .\n\nPráctica: Ahora te toca a ti. Numera en tu cuaderno: hacer el aro, mojarlo, acercarlo a las letras y observar. Pide ayuda adulta si el alambre tiene punta filosa.\n\nError común: No aprietes la gota contra el papel ni uses un aro ovalado; la gota debe quedar redonda y abultada."
+        "heading": "Punto 2: La gota como lente",
+        "body": "Mira una gota de agua en una ventana. ¿Es plana o abultada en el centro?\n\nUna gota bien formada es abultada en el centro. Una lente convexa es curva hacia afuera, así. Por eso una gota redonda se parece a una lente convexa. Las lupas se hacen con lentes convexas."
       },
       {
         "id": "p3",
-        "heading": "Lo que observaste",
-        "body": "El resultado de un experimento es lo que observaste con tus sentidos, no lo que imaginas. Con una gota bien formada, muchas letras pequeñas se ven más grandes al mirar a través del agua. Compara la misma letra sin gota y con gota: anota si cambió el tamaño aparente, si se distorsionó o si se veía más nítida.\n\nObserva un caso real de «Lo que observaste». Di en una frase qué aprendiste: El resultado de un experimento es lo que observast.\n\nPráctica: Ahora te toca a ti. Escribe tres frases completas: qué hiciste, qué viste y por qué crees que pasó.\n\nError común: No inventes un resultado. Si no se ve claro, forma otra gota redonda y prueba otra vez."
+        "heading": "Punto 3: La refracción",
+        "body": "Sigamos. La luz viaja en línea recta. ¿Qué crees que le pasa cuando entra del aire al agua?\n\nCambia un poco de dirección. A ese cambio de dirección de la luz se le llama refracción. Por la refracción, las letras pueden verse más grandes. Las letras no crecen de verdad: siguen iguales."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Los materiales",
+        "body": "Imagina que quieres hacer una gota redonda. ¿Qué materiales necesitarías?\n\nNecesitas alambre fino y un lápiz para guiar el aro. Necesitas un tazón con agua limpia. Y letras pequeñas impresas, de un libro o un periódico. Pide ayuda adulta si el alambre tiene punta filosa."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Los pasos y lo que observas",
+        "body": "Una pregunta con truco: ¿puedes inventar el resultado antes de probar?\n\nNo. El resultado es lo que ves con tus ojos. Paso 1: haz un aro con el alambre. Paso 2: mójalo en el agua para que quede una gota. Paso 3: acércalo a las letras y observa. Compara la misma letra sin gota y con gota."
       }
     ],
-    "summary": "Esta semana seguimos con: Una gota que parece lupa. Lee cada parte con calma y prueba la actividad."
+    "summary": "Una gota redonda es como una lente convexa: por la refracción, las letras parecen más grandes.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja un aro de alambre con una gota redonda. Dibuja debajo una palabra con letras pequeñas. Rotula: aro, gota, agua y letras. Dibuja la letra más grande al mirar por la gota.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Puede una gota de agua hacer que las letras se vean más grandes?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 1: La pregunta del experimento"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Quizá sí: esta semana lo vamos a comprobar."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Una gota redonda de agua puede actuar como una lupa."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Una lupa hace que lo pequeño se vea más grande."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Nuestro experimento busca saber si eso pasa de verdad."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Mira una gota de agua en una ventana. ¿Es plana o"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "lesson",
+        "text": "abultada en el centro?"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 2: La gota como lente"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Una gota bien formada es abultada en el centro."
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Una lente convexa es curva hacia afuera, así."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Por eso una gota redonda se parece a una lente convexa."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Las lupas se hacen con lentes convexas."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Sigamos. La luz viaja en línea recta. ¿Qué crees que"
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "le pasa cuando entra del aire al agua?"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "heading",
+        "text": "Punto 3: La refracción"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Cambia un poco de dirección."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "A ese cambio de dirección de la luz se le llama refracción."
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "Por la refracción, las letras pueden verse más grandes."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "Las letras no crecen de verdad: siguen iguales."
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Imagina que quieres hacer una gota redonda. ¿Qué"
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "materiales necesitarías?"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "heading",
+        "text": "Punto 4: Los materiales"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "lesson",
+        "text": "Necesitas alambre fino y un lápiz para guiar el aro."
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Necesitas un tazón con agua limpia."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Y letras pequeñas impresas, de un libro o un periódico."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Pide ayuda adulta si el alambre tiene punta filosa."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿puedes inventar el resultado"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "antes de probar?"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "heading",
+        "text": "Punto 5: Los pasos y lo que observas"
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "No. El resultado es lo que ves con tus ojos."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Paso 1: haz un aro con el alambre."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Paso 2: mójalo en el agua para que quede una gota."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Paso 3: acércalo a las letras y observa."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Compara la misma letra sin gota y con gota."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué queremos saber con el experimento?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Si una gota agranda las letras",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Si el agua es fría",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Si el alambre pesa",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Si el libro es viejo",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué forma debe tener la gota?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Plana y aplastada",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Larga y delgada",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Cuadrada",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Redonda y abultada",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cómo se llama una lente curva hacia afuera?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Lente plana",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Lente convexa",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Lente rota",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Lente seca",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué es la refracción?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) El brillo del agua",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) La sombra de la letra",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) El cambio de dirección de la luz",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) El peso de la gota",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Crecen de verdad las letras?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) Sí, crecen de verdad",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) Solo si el agua está fría",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) Solo las letras grandes",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) No, siguen iguales",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué necesitas para hacer el aro?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) Cartulina y tijeras",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) Alambre fino y un lápiz",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) Pintura y pincel",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) Cuerda y clavos",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Quién te ayuda si el alambre tiene punta filosa?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) Un adulto",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Un amigo pequeño",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Una mascota",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Nadie",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Qué comparas en el experimento?",
+        "questionId": "d1-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Dos colores de lápiz",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Dos tazones vacíos",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) La misma letra sin gota y con gota",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) El ruido del agua",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe la pregunta de tu experimento con tus palabras.",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica qué es una lente convexa.",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja una gota redonda sobre una letra pequeña.",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja la luz entrando del aire a la gota de agua.",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja un aro de alambre con una gota redonda."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Dibuja debajo una palabra con letras pequeñas."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula: aro, gota, agua y letras."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Dibuja la letra más grande al mirar por la gota."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
@@ -37,129 +1291,193 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué cambia cuando miras letras a través de una gota redonda?",
+        "prompt": "¿Qué queremos saber con el experimento?",
         "choices": [
-          "Las letras se vuelven azules.",
-          "El papel se hace més pesado.",
-          "La gota escribe palabras.",
-          "Las letras pueden verse més grandes."
+          "Si una gota agranda las letras",
+          "Si el agua es fría",
+          "Si el alambre pesa",
+          "Si el libro es viejo"
         ],
-        "answer": "Las letras se vuelven azules."
+        "answer": "Si una gota agranda las letras",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo debe ser la gota para parecerse a una lupa?",
+        "prompt": "¿Qué forma debe tener la gota?",
         "choices": [
-          "Plana como una regla.",
-          "Llena de arena.",
-          "Redonda y abultada en el centro.",
-          "Cuadrada y seca."
+          "Plana y aplastada",
+          "Larga y delgada",
+          "Cuadrada",
+          "Redonda y abultada"
         ],
-        "answer": "Redonda y abultada en el centro."
+        "answer": "Redonda y abultada",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Por qué no crecen de verdad las letras?",
+        "prompt": "¿Cómo se llama una lente curva hacia afuera?",
         "choices": [
-          "Porque el lápiz borra el texto.",
-          "Porque cambia el camino de la luz, no el tamaño",
-          "Porque el papel se estira.",
-          "Porque el ojo se encoge."
+          "Lente plana",
+          "Lente convexa",
+          "Lente rota",
+          "Lente seca"
         ],
-        "answer": "Porque cambia el camino de la luz, no el tamaño"
+        "answer": "Lente convexa",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo se llama el cambio de dirección de la luz al pasar por agua?",
+        "prompt": "¿Qué es la refracción?",
         "choices": [
-          "Refracción.",
-          "Evaporación.",
-          "Vibración.",
-          "Germinación."
+          "El brillo del agua",
+          "La sombra de la letra",
+          "El cambio de dirección de la luz",
+          "El peso de la gota"
         ],
-        "answer": "Refracción."
+        "answer": "El cambio de dirección de la luz",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué parte del ojo también ayuda a enfocar?",
+        "prompt": "¿Crecen de verdad las letras?",
         "choices": [
-          "La uña.",
-          "El codo.",
-          "La lengua.",
-          "El cristalino."
+          "Sí, crecen de verdad",
+          "Solo si el agua está fría",
+          "Solo las letras grandes",
+          "No, siguen iguales"
         ],
-        "answer": "El cristalino."
+        "answer": "No, siguen iguales",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué debes hacer si la gota no deja ver con claridad?",
+        "prompt": "¿Qué necesitas para hacer el aro?",
         "choices": [
-          "Mojar el papel.",
-          "Cambiar a otro experimento.",
-          "Formar otra gota y probar de nuevo.",
-          "Inventar un resultado."
+          "Cartulina y tijeras",
+          "Alambre fino y un lápiz",
+          "Pintura y pincel",
+          "Cuerda y clavos"
         ],
-        "answer": "Formar otra gota y probar de nuevo."
+        "answer": "Alambre fino y un lápiz",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué efecto puede producir una gota redonda sobre letras pequeñas?",
+        "prompt": "¿Quién te ayuda si el alambre tiene punta filosa?",
         "choices": [
-          "La gota escribe palabras.",
-          "Las letras pueden verse més grandes.",
-          "Las letras se vuelven azules.",
-          "El papel se hace més pesado."
+          "Un adulto",
+          "Un amigo pequeño",
+          "Una mascota",
+          "Nadie"
         ],
-        "answer": "Las letras pueden verse més grandes."
+        "answer": "Un adulto",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué debes leer antes de empezar?",
+        "prompt": "¿Qué comparas en el experimento?",
         "choices": [
-          "Las instrucciones numeradas",
-          "Un cuento ajeno",
-          "Nada",
-          "Solo el título"
+          "Dos colores de lápiz",
+          "Dos tazones vacíos",
+          "La misma letra sin gota y con gota",
+          "El ruido del agua"
         ],
-        "answer": "Las instrucciones numeradas"
+        "answer": "La misma letra sin gota y con gota",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «La pregunta del experimento» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe la pregunta de tu experimento con tus palabras.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Esta semana investigamos si una gota redonda de agua puede actuar como una pequeña lupa.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica qué es una lente convexa.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Mira de nuevo el ejemplo de la primera oración.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una gota redonda sobre una letra pequeña.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja la luz entrando del aire a la gota de agua.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

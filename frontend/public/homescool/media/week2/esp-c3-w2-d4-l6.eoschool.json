@@ -7,152 +7,1480 @@
   "level": 6,
   "subject": "esp",
   "locale": "es",
-  "title": "Miramos subordinadas y complejas",
+  "title": "Pistas de tiempo en un cuento",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 3,
     "points": [
       {
         "id": "p1",
-        "heading": "elegir una o dos palabras",
-        "body": "Hoy juntas la habilidad del punto tres: **elegir** una palabra o dos según el cuento que quieres contar. Escucha la oración y mira las pistas de tiempo antes de conjugar.\n\nCompara pares. «**Ayer terminé**» cierra ayer con una palabra. «**Ya he terminado**» trae el resultado hasta ahora con haber más participio. «**Leía** cuando **sonó** el teléfono» mezcla fondo y golpe. «**Cuando llegué**, **había salido**» usa dos palabras para lo anterior al golpe. Pregunta: ¿cerró? ¿sigue vivo? ¿fondo?\n\nPráctica: Ahora te toca a ti. Escribe un mini-relato de tres oraciones usando al menos una forma de una palabra y una de dos.\n\nError común: Mezclar imperfecto y pretérito sin preguntarte si el hecho cerró o seguía en marcha."
+        "heading": "Punto 1: Las palabras de tiempo dan pistas",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que haber más participio usa dos palabras.\nDijimos he cantado, había cantado y habré cantado.\nEl participio no cambia: se dice «hemos comido».\n\nCompara: «Ayer terminé» y «Ya he terminado». ¿Qué palabra de tiempo te da una pista en cada una?\n\n«Ayer» cierra el hecho: «Ayer terminé la tarea». «Ya» trae el resultado hasta hoy: «Ya he terminado». Palabras como ayer, ya y cuando te orientan. Antes de conjugar, búscalas en la oración."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Fondo y golpe en un cuento",
+        "body": "Lee: «Leía cuando sonó el teléfono». ¿Cuál acción es el fondo y cuál es el golpe?\n\n«Leía» es el fondo: algo que estaba en marcha. «Sonó» es el golpe: pasó de repente y cerró. El fondo usa una forma larga y el golpe una cerrada. Es como un paisaje donde algo salta de pronto."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Lo anterior a otro pasado",
+        "body": "Completa: «Cuando llegué, mi amiga ___ salido». ¿Pones «ha», «había» o «habrá»?\n\nPones «había»: «Cuando llegué, mi amiga había salido». Salir pasó antes que llegar. Para lo anterior a otro pasado usas dos palabras."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Tres preguntas para elegir",
+        "body": "Vas a elegir la forma de un verbo. ¿Qué te preguntarías antes de decidir?\n\nPrimera: ¿el hecho cerró? Entonces usa «terminé». Segunda: ¿el resultado sigue vivo? Usa «he terminado». Tercera: ¿era un fondo que se alargaba? Usa «leía». Así eliges una palabra o dos según tu cuento."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Un mini-relato de tres oraciones",
+        "body": "Ahora tú: inventa tres oraciones sobre tu día de ayer. Usa una forma de una palabra y una de dos.\n\nPor ejemplo: «Ayer jugué en el patio». «Jugaba cuando sonó la campana». «Ya he guardado mis juguetes». Cada oración tiene su razón: cerró, fondo o resultado."
       }
     ],
-    "summary": "Esta semana seguimos con: Miramos subordinadas y complejas. Lee cada parte con calma y prueba la actividad.",
+    "summary": "Para elegir miras las pistas: ¿cerró?, ¿sigue vivo?, ¿era fondo? Así usas una palabra o dos.",
     "memoryPhrase": "Una palabra: **canto / cantaba / canté / cantaré / cantaría**. Dos palabras: **haber** + participio (**he cantado**).",
     "weekRecap": "Una palabra: canto, cantaba, canté, cantaré, cantaría. Dos palabras: haber más participio, como he cantado. Hoy eliges con pistas: ayer, ya, cuando; pasado cerrado, resultado presente, fondo que se alarga o hecho anterior a otro pasado.",
-    "priorDayRecap": "Ayer repasaste haber más participio: he cantado, había cantado, habré cantado; el participio no cambia de persona, solo cambia la forma de haber."
+    "priorDayRecap": "Ayer repasaste haber más participio: he cantado, había cantado, habré cantado; el participio no cambia de persona, solo cambia la forma de haber.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja a alguien leyendo y un teléfono que suena. Rotula «leía» en el fondo y «sonó» en el golpe. Añade un reloj y escribe «ya he terminado». Escribe debajo una frase con «ayer» y otra con «ya».",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer vimos que haber más participio usa dos palabras."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Dijimos he cantado, había cantado y habré cantado."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "El participio no cambia: se dice «hemos comido»."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Compara: «Ayer terminé» y «Ya he terminado»."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "¿Qué palabra de tiempo te da una pista en cada una?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: Las palabras de tiempo dan pistas"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "«Ayer» cierra el hecho: «Ayer terminé la tarea»."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "«Ya» trae el resultado hasta hoy: «Ya he terminado»."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Palabras como ayer, ya y cuando te orientan."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Antes de conjugar, búscalas en la oración."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Lee: «Leía cuando sonó el teléfono»."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "¿Cuál acción es el fondo y cuál es el golpe?"
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "heading",
+        "text": "Punto 2: Fondo y golpe en un cuento"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "«Leía» es el fondo: algo que estaba en marcha."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "«Sonó» es el golpe: pasó de repente y cerró."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "El fondo usa una forma larga y el golpe una cerrada."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Es como un paisaje donde algo salta de pronto."
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Completa: «Cuando llegué, mi amiga ___ salido»."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "¿Pones «ha», «había» o «habrá»?"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "heading",
+        "text": "Punto 3: Lo anterior a otro pasado"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Pones «había»: «Cuando llegué, mi amiga había salido»."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Salir pasó antes que llegar."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Para lo anterior a otro pasado usas dos palabras."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Vas a elegir la forma de un verbo."
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "¿Qué te preguntarías antes de decidir?"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: Tres preguntas para elegir"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Primera: ¿el hecho cerró? Entonces usa «terminé»."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Segunda: ¿el resultado sigue vivo? Usa «he terminado»."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Tercera: ¿era un fondo que se alargaba? Usa «leía»."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Así eliges una palabra o dos según tu cuento."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Ahora tú: inventa tres oraciones sobre tu día de ayer."
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Usa una forma de una palabra y una de dos."
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Un mini-relato de tres oraciones"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Por ejemplo: «Ayer jugué en el patio»."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "«Jugaba cuando sonó la campana»."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "«Ya he guardado mis juguetes»."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Cada oración tiene su razón: cerró, fondo o resultado."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "En «Ayer terminé», ¿qué dice la pista «ayer»?",
+        "questionId": "d4-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Sigue vivo hoy",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Es un fondo",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) El hecho cerró",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Es una orden",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué palabra trae el resultado hasta hoy?",
+        "questionId": "d4-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Ayer",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Cuando",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Mañana",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Ya",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "En «Leía cuando sonó el teléfono», ¿cuál es el fondo?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Sonó",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Leía",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Teléfono",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Cuando",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "En esa misma oración, ¿cuál es el golpe?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Sonó",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Leía",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Cuando",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) El",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "Completa: «Cuando llegué, mi amiga ___ salido».",
+        "questionId": "d4-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) ha",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) hemos",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) había",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) habrá",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué pregunta te ayuda a elegir «terminé»?",
+        "questionId": "d4-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) ¿El hecho cerró?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) ¿Cuántas letras tiene?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) ¿Es una palabra larga?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) ¿Cómo se escribe?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Qué forma usas para un fondo que se alargaba?",
+        "questionId": "d4-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) leí",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) leeré",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) he leído",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) leía",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cuál oración trae un resultado que llega a hoy?",
+        "questionId": "d4-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Ayer jugué en el patio.",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Ya he guardado mis juguetes.",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Jugaba cuando sonó la campana.",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Mañana jugaré.",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe un mini-relato de tres oraciones sobre tu ayer.",
+        "questionId": "d4-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica cómo eliges entre «terminé» y «he terminado».",
+        "questionId": "d4-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un esquema con las tres preguntas para elegir.",
+        "questionId": "d4-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja «Leía cuando sonó» con el fondo y el golpe.",
+        "questionId": "d4-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja a alguien leyendo y un teléfono que suena."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Rotula «leía» en el fondo y «sonó» en el golpe."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Añade un reloj y escribe «ya he terminado»."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Escribe debajo una frase con «ayer» y otra con «ya»."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d4-q1",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué es una oración simple?",
+        "prompt": "En «Ayer terminé», ¿qué dice la pista «ayer»?",
         "choices": [
-          "Una lista de colores.",
-          "Una pregunta sin palabras.",
-          "Una oración con cinco acciones obligatorias.",
-          "Una oración con una acción principal."
+          "Sigue vivo hoy",
+          "Es un fondo",
+          "El hecho cerró",
+          "Es una orden"
         ],
-        "answer": "Una oración con una acción principal."
+        "answer": "El hecho cerró",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d4-q2",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. En «Las aves cantan», ¿quién realiza la acción?",
+        "prompt": "¿Qué palabra trae el resultado hasta hoy?",
         "choices": [
-          "La palabra en.",
-          "Nadie.",
-          "Las aves.",
-          "Cantan."
+          "Ayer",
+          "Cuando",
+          "Mañana",
+          "Ya"
         ],
-        "answer": "Las aves."
+        "answer": "Ya",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d4-q3",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "En «Leía cuando sonó el teléfono», ¿cuál es el fondo?",
+        "choices": [
+          "Sonó",
+          "Leía",
+          "Teléfono",
+          "Cuando"
+        ],
+        "answer": "Leía",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "En esa misma oración, ¿cuál es el golpe?",
+        "choices": [
+          "Sonó",
+          "Leía",
+          "Cuando",
+          "El"
+        ],
+        "answer": "Sonó",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d4-q5",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "Completa: «Cuando llegué, mi amiga ___ salido».",
+        "choices": [
+          "ha",
+          "hemos",
+          "había",
+          "habrá"
+        ],
+        "answer": "había",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d4-q6",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué pregunta te ayuda a elegir «terminé»?",
+        "choices": [
+          "¿El hecho cerró?",
+          "¿Cuántas letras tiene?",
+          "¿Es una palabra larga?",
+          "¿Cómo se escribe?"
+        ],
+        "answer": "¿El hecho cerró?",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué signo abre una exclamación?",
+        "prompt": "¿Qué forma usas para un fondo que se alargaba?",
         "choices": [
-          "¡",
-          "?",
-          ".",
-          "("
+          "leí",
+          "leeré",
+          "he leído",
+          "leía"
         ],
-        "answer": "¡"
+        "answer": "leía",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué debes buscar para reconocer una parte subordinada?",
+        "prompt": "¿Cuál oración trae un resultado que llega a hoy?",
         "choices": [
-          "Porque siempre es una orden.",
-          "Porque depende de una idea principal.",
-          "Porque no tiene letras.",
-          "Porque es una suma."
+          "Ayer jugué en el patio.",
+          "Ya he guardado mis juguetes.",
+          "Jugaba cuando sonó la campana.",
+          "Mañana jugaré."
         ],
-        "answer": "Porque depende de una idea principal."
-      },
-      {
-        "id": "d4-q9",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Por qué «porque llovió» no se entiende igual de bien sola?",
-        "choices": [
-          "Porque depende de una idea principal.",
-          "Porque no tiene letras.",
-          "Porque es una suma.",
-          "Porque siempre es una orden."
-        ],
-        "answer": "Porque depende de una idea principal."
-      },
-      {
-        "id": "d4-q10",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Qué debes buscar para reconocer una parte subordinada?",
-        "choices": [
-          "Porque no tiene letras.",
-          "Porque es una suma.",
-          "Porque siempre es una orden.",
-          "Porque depende de una idea principal."
-        ],
-        "answer": "Porque depende de una idea principal."
-      },
-      {
-        "id": "d4-q11",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Por qué «porque llovió» no se entiende igual de bien sola?",
-        "choices": [
-          "Porque es una suma.",
-          "Porque siempre es una orden.",
-          "Porque depende de una idea principal.",
-          "Porque no tiene letras."
-        ],
-        "answer": "Porque depende de una idea principal."
-      },
-      {
-        "id": "d4-q12",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Qué debes buscar para reconocer una parte subordinada?",
-        "choices": [
-          "Porque siempre es una orden.",
-          "Porque depende de una idea principal.",
-          "Porque no tiene letras.",
-          "Porque es una suma."
-        ],
-        "answer": "Porque depende de una idea principal."
+        "answer": "Ya he guardado mis juguetes.",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «elegir una o dos palabras» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe un mini-relato de tres oraciones sobre tu ayer.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy juntas la habilidad del punto tres: **elegir** una palabra o dos según el cuento que quieres contar.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica cómo eliges entre «terminé» y «he terminado».",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Compara pares.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un esquema con las tres preguntas para elegir.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja «Leía cuando sonó» con el fondo y el golpe.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

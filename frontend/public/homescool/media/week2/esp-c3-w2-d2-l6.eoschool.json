@@ -7,151 +7,1479 @@
   "level": 6,
   "subject": "esp",
   "locale": "es",
-  "title": "Miramos la oración simple",
+  "title": "Pasado cerrado y pasado que se alarga",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 1,
     "points": [
       {
         "id": "p1",
-        "heading": "una sola palabra",
-        "body": "Conjugar es cambiar la **desinencia** sobre la **raíz** fija: con **terminar**, yo digo **termino**, **terminaba**, **terminé**, **terminaré**, **terminaría**. Cada forma responde a una pregunta distinta sobre el tiempo.\n\n**Terminaba** pinta un pasado que se alarga: «Cuando era niño, cantaba en el coro». **Terminé** cierra el hecho: «Ayer terminé la tarea a las cinco». **Terminaré** mira hacia delante: «Mañana terminaré el mapa». Con **leer** prueba leía / leí / leeré; con **correr**, corría / corrí / correré.\n\nPráctica: Ahora te toca a ti. Escribe tres oraciones con yo: una con imperfecto, una con pretérito cerrado y una con futuro.\n\nError común: «Ayer iba al cine» cuando fuiste y volviste. Si el viaje cerró, di «Ayer fui al cine»."
+        "heading": "Punto 1: Lo que cerró usa «terminé»",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que el verbo cambia para decir cuándo pasa algo.\nLa raíz se queda igual y el final, la desinencia, cambia.\nHay formas de una palabra y formas de dos palabras.\n\nPiensa en el verbo «terminar». Hoy yo termino la tarea. ¿Cómo dices que ayer la terminaste a las cinco?\n\nDices: «Ayer terminé la tarea a las cinco». «Terminé» cierra el hecho: ya se acabó. Esa forma se llama pretérito: un pasado que ya cerró. Su pista suele ser una palabra como «ayer»."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Lo que se alargaba usa «cantaba»",
+        "body": "Imagina que cuentas tu infancia: «yo cantaba en el coro». ¿Ese pasado cerró de golpe o se alargaba?\n\n«Cantaba» pinta un pasado que se alarga o se repite. Ejemplo: «Cuando era niño, cantaba en el coro». A esa forma se le llama imperfecto. Pinta el fondo, como el paisaje de un cuento."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Lo que viene usa «terminaré»",
+        "body": "Sigamos. Hoy es lunes y piensas en el mapa de mañana. ¿Cómo dices que lo terminarás?\n\nDices: «Mañana terminaré el mapa». «Terminaré» mira hacia delante: es el futuro. «Terminaría» imagina algo que podría pasar. Así, cada final responde a una pregunta sobre el tiempo."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Otros verbos hacen lo mismo",
+        "body": "Los verbos «leer» y «correr» también cambian. ¿Cómo crees que suenan para ayer, antes y mañana?\n\nCon «leer»: «leía» se alarga, «leí» cerró, «leeré» vendrá. Con «correr»: corría, corrí, correré. La raíz se queda y el final cambia."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Cuidado con el hecho cerrado",
+        "body": "Una pregunta con truco: ayer fuiste al cine y volviste. ¿Dices «Ayer iba al cine» o «Ayer fui al cine»?\n\nDices: «Ayer fui al cine». El viaje ya cerró, así que usas «fui». «Iba» se queda para costumbres: «Iba cada sábado». Pregúntate siempre: ¿se cerró o se alargaba?"
       }
     ],
-    "summary": "Esta semana seguimos con: Miramos la oración simple. Lee cada parte con calma y prueba la actividad.",
+    "summary": "Con una sola palabra el verbo dice si el hecho cerró, se alargaba o vendrá después.",
     "memoryPhrase": "Una palabra: **canto / cantaba / canté / cantaré / cantaría**. Dos palabras: **haber** + participio (**he cantado**).",
-    "weekRecap": "Una palabra: canto, cantaba, canté, cantaré, cantaría. Dos palabras: haber más participio, como he cantado. Esta semana narras **cuándo** ocurre una acción con indicativo: formas de una palabra o de dos, eligiendo según el momento, si el hecho cerró y si el resultado sigue importando hoy para quien escucha."
+    "weekRecap": "Una palabra: canto, cantaba, canté, cantaré, cantaría. Dos palabras: haber más participio, como he cantado. Esta semana narras **cuándo** ocurre una acción con indicativo: formas de una palabra o de dos, eligiendo según el momento, si el hecho cerró y si el resultado sigue importando hoy para quien escucha.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja tres escenas pequeñas: ayer, de niño y mañana. Debajo de cada escena escribe una oración con «yo». Usa una forma que cerró, una que se alarga y una futura. Subraya la raíz de cada verbo con un color.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer vimos que el verbo cambia para decir cuándo pasa algo."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "La raíz se queda igual y el final, la desinencia, cambia."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hay formas de una palabra y formas de dos palabras."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Piensa en el verbo «terminar». Hoy yo termino la tarea."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "¿Cómo dices que ayer la terminaste a las cinco?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: Lo que cerró usa «terminé»"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Dices: «Ayer terminé la tarea a las cinco»."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "«Terminé» cierra el hecho: ya se acabó."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Esa forma se llama pretérito: un pasado que ya cerró."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Su pista suele ser una palabra como «ayer»."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Imagina que cuentas tu infancia: «yo cantaba en el coro»."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "¿Ese pasado cerró de golpe o se alargaba?"
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "heading",
+        "text": "Punto 2: Lo que se alargaba usa «cantaba»"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "«Cantaba» pinta un pasado que se alarga o se repite."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Ejemplo: «Cuando era niño, cantaba en el coro»."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "A esa forma se le llama imperfecto."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Pinta el fondo, como el paisaje de un cuento."
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Sigamos. Hoy es lunes y piensas en el mapa de mañana."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "¿Cómo dices que lo terminarás?"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "heading",
+        "text": "Punto 3: Lo que viene usa «terminaré»"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Dices: «Mañana terminaré el mapa»."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "«Terminaré» mira hacia delante: es el futuro."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "«Terminaría» imagina algo que podría pasar."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "Así, cada final responde a una pregunta sobre el tiempo."
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "Los verbos «leer» y «correr» también cambian."
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "lesson",
+        "text": "¿Cómo crees que suenan para ayer, antes y mañana?"
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "heading",
+        "text": "Punto 4: Otros verbos hacen lo mismo"
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Con «leer»: «leía» se alarga, «leí» cerró, «leeré» vendrá."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Con «correr»: corría, corrí, correré."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "La raíz se queda y el final cambia."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ayer fuiste al cine y volviste."
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "¿Dices «Ayer iba al cine» o «Ayer fui al cine»?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Cuidado con el hecho cerrado"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Dices: «Ayer fui al cine»."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "El viaje ya cerró, así que usas «fui»."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "«Iba» se queda para costumbres: «Iba cada sábado»."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Pregúntate siempre: ¿se cerró o se alargaba?"
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "Completa: «Ayer ___ la tarea a las cinco».",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) terminaba",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) terminaré",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) terminaría",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) terminé",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuál forma cuenta un pasado que se alarga?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) canté",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) cantaba",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) cantaré",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) canto",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "Completa: «Mañana ___ el mapa».",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) terminé",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) terminaba",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) terminaré",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) termino",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cómo se llama el pasado que ya cerró?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Futuro",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Imperfecto",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Participio",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Pretérito",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cuál es la raíz de «corría», «corrí» y «correré»?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) -ía",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) corr-",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) -é",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) haber",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cuál forma de «leer» es un pasado que ya cerró?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) leí",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) leía",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) leeré",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) leo",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Cómo dices que el viaje de ayer ya cerró?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) Ayer iba al cine.",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Ayer iré al cine.",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Ayer fui al cine.",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Ayer voy al cine.",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Para qué sirve «cantaba» en «Cuando era niño, cantaba»?",
+        "questionId": "d2-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Pinta un pasado que se alarga",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Cierra el hecho de golpe",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Mira hacia delante",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Une dos ideas",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe tres oraciones con «yo»: pasado cerrado, largo y futuro.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica por qué se dice «Ayer fui al cine».",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja una línea del tiempo con terminaba, terminé y terminaré.",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una tabla de leer y correr con tres formas cada una.",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja tres escenas pequeñas: ayer, de niño y mañana."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Debajo de cada escena escribe una oración con «yo»."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Usa una forma que cerró, una que se alarga y una futura."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Subraya la raíz de cada verbo con un color."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d2-q1",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué es una oración simple?",
+        "prompt": "Completa: «Ayer ___ la tarea a las cinco».",
         "choices": [
-          "Una lista de colores.",
-          "Una pregunta sin palabras.",
-          "Una oración con cinco acciones obligatorias.",
-          "Una oración con una acción principal."
+          "terminaba",
+          "terminaré",
+          "terminaría",
+          "terminé"
         ],
-        "answer": "Una oración con una acción principal."
+        "answer": "terminé",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d2-q2",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. En «Las aves cantan», ¿quién realiza la acción?",
+        "prompt": "¿Cuál forma cuenta un pasado que se alarga?",
         "choices": [
-          "La palabra en.",
-          "Nadie.",
-          "Las aves.",
-          "Cantan."
+          "canté",
+          "cantaba",
+          "cantaré",
+          "canto"
         ],
-        "answer": "Las aves."
+        "answer": "cantaba",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Completa: «Mañana ___ el mapa».",
+        "choices": [
+          "terminé",
+          "terminaba",
+          "terminaré",
+          "termino"
+        ],
+        "answer": "terminaré",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cómo se llama el pasado que ya cerró?",
+        "choices": [
+          "Futuro",
+          "Imperfecto",
+          "Participio",
+          "Pretérito"
+        ],
+        "answer": "Pretérito",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuál es la raíz de «corría», «corrí» y «correré»?",
+        "choices": [
+          "-ía",
+          "corr-",
+          "-é",
+          "haber"
+        ],
+        "answer": "corr-",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuál forma de «leer» es un pasado que ya cerró?",
+        "choices": [
+          "leí",
+          "leía",
+          "leeré",
+          "leo"
+        ],
+        "answer": "leí",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué haces con un banco de palabras sueltas?",
+        "prompt": "¿Cómo dices que el viaje de ayer ya cerró?",
         "choices": [
-          "Ordenarlas en oración",
-          "Tirarlas",
-          "Mezclar sin leer",
-          "Ignorarlas"
+          "Ayer iba al cine.",
+          "Ayer iré al cine.",
+          "Ayer fui al cine.",
+          "Ayer voy al cine."
         ],
-        "answer": "Ordenarlas en oración"
+        "answer": "Ayer fui al cine.",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué ejemplo sigue siendo una oración simple aunque tenga un adjetivo?",
+        "prompt": "¿Para qué sirve «cantaba» en «Cuando era niño, cantaba»?",
         "choices": [
-          "Mi hermana dibuja y canta.",
-          "Cuando llegue, dibujaré.",
-          "Dibujo porque llueve.",
-          "Mi hermana pequeña dibuja."
+          "Pinta un pasado que se alarga",
+          "Cierra el hecho de golpe",
+          "Mira hacia delante",
+          "Une dos ideas"
         ],
-        "answer": "Mi hermana dibuja y canta."
-      },
-      {
-        "id": "d2-q9",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Cuál oración tiene una sola acción principal?",
-        "choices": [
-          "Cuando llegue, dibujaré.",
-          "Dibujo porque llueve.",
-          "Mi hermana pequeña dibuja.",
-          "Mi hermana dibuja y canta."
-        ],
-        "answer": "Mi hermana pequeña dibuja."
-      },
-      {
-        "id": "d2-q10",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Qué ejemplo sigue siendo una oración simple aunque tenga un adjetivo?",
-        "choices": [
-          "Dibujo porque llueve.",
-          "Mi hermana pequeña dibuja.",
-          "Mi hermana dibuja y canta.",
-          "Cuando llegue, dibujaré."
-        ],
-        "answer": "Mi hermana pequeña dibuja."
-      },
-      {
-        "id": "d2-q11",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Cuál oración tiene una sola acción principal?",
-        "choices": [
-          "Mi hermana pequeña dibuja.",
-          "Mi hermana dibuja y canta.",
-          "Cuando llegue, dibujaré.",
-          "Dibujo porque llueve."
-        ],
-        "answer": "Mi hermana pequeña dibuja."
-      },
-      {
-        "id": "d2-q12",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Qué ejemplo sigue siendo una oración simple aunque tenga un adjetivo?",
-        "choices": [
-          "Mi hermana dibuja y canta.",
-          "Cuando llegue, dibujaré.",
-          "Dibujo porque llueve.",
-          "Mi hermana pequeña dibuja."
-        ],
-        "answer": "Mi hermana pequeña dibuja."
+        "answer": "Pinta un pasado que se alarga",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «una sola palabra» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe tres oraciones con «yo»: pasado cerrado, largo y futuro.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Conjugar es cambiar la **desinencia** sobre la **raíz** fija: con **terminar**, yo digo **termino**, **terminaba**, **terminé**, **terminaré**, **terminaría**.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica por qué se dice «Ayer fui al cine».",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «**Terminaba** pinta un pasado que se alarga: «Cuando era niño, cantaba en el coro».» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una línea del tiempo con terminaba, terminé y terminaré.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una tabla de leer y correr con tres formas cada una.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

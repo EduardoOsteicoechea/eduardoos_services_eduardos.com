@@ -7,29 +7,1283 @@
   "level": 6,
   "subject": "lat",
   "locale": "es",
-  "title": "Latún sencillo: et, ut y non",
+  "title": "Latín sencillo: et, ut y non",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "et significa y",
-        "body": "**Et** significa **y**. Es una **conjunción**: palabra que une ideas del mismo nivel, como pegamento entre piezas iguales. En «puer **et** puella» une niño y niña. En «Puer currit **et** ridet» une dos acciones: corre y ríe.\n\nLee despacio: primero identifica qué une **et** (¿dos nombres o dos verbos?) y después traduce toda la frase. Si cambias **et** por otra palabra, la frase pierde el sentido de lista.\n\nPráctica: Ahora te toca a ti. Copia «puer et puella» y «Puer currit et ridet». Escribe el significado en español de cada una.\n\nError común: Traducir **et** como «no» o «para que». Solo significa «y»."
+        "heading": "Punto 1: Tres palabras, tres trabajos",
+        "body": "¿Cómo unes «el niño» y «la niña» en una sola frase?\n\nPara unir dos cosas dices «y»: el niño y la niña. En latín esa palabra es «et». Esta semana conocerás tres: et, ut y non. Cada una hace un trabajo distinto en la frase."
       },
       {
         "id": "p2",
-        "heading": "ut habla de una meta",
-        "body": "En esta lección **ut** significa **para que** y señala una **finalidad**, la meta de una acción. No suma dos cosas iguales: explica el propósito de lo anterior.\n\nEn «laboro **ut** discam», la parte después de **ut** explica para qué trabajo: para aprender. Pregunta «¿para qué?» cuando veas **ut**. En español suele sonar natural traducir **ut** como «para que» o «a fin de que».\n\nPráctica: Ahora te toca a ti. Escribe una frase en español con «para que» y señala cuál es la meta.\n\nError común: Usar **ut** para unir listas; para eso usamos **et**."
+        "heading": "Punto 2: Et une",
+        "body": "«Puer» es niño y «puella» es niña. ¿Qué dice «puer et puella»?\n\nDice «el niño y la niña». «Et» significa «y»: es una conjunción. Una conjunción une ideas del mismo nivel. En «puer et puella» une dos nombres. En «Puer currit et ridet» une dos acciones: corre y ríe."
       },
       {
         "id": "p3",
-        "heading": "non significa no",
-        "body": "**Non** significa **no**. Es una palabra de **negación**: convierte una frase afirmativa en negativa, como apagar una luz de «sí pasa» a «no pasa».\n\n«Venit» es «viene»; «**non** venit» es «no viene». Busca **non** antes del verbo o acción que niega. La acción sigue siendo la misma; solo cambia que no ocurre.\n\nPráctica: Ahora te toca a ti. Convierte «laborat» en negativa con **non** y tradúcela.\n\nError común: Poner **non** al final en los ejemplos de esta clase; va antes de lo que niega."
+        "heading": "Punto 3: Ut muestra la meta",
+        "body": "Piensa en «trabajo para aprender». ¿«Para aprender» suma otra cosa o dice la meta?\n\nDice la meta: para qué haces algo. En latín «ut» significa «para que». Laboro ut discam es «trabajo para aprender». Pregunta «¿para qué?» cuando veas «ut»."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Non niega",
+        "body": "«Venit» significa «viene». ¿Qué crees que quiere decir «non venit»?\n\nQuiere decir «no viene». «Non» significa «no»: es una negación. Va justo antes del verbo que niega. La acción es la misma, pero ahora no ocurre."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Cada una tiene su trabajo",
+        "body": "Una pregunta con truco: ¿«et» y «ut» sirven para lo mismo?\n\nNo: «et» suma cosas iguales y «ut» dice para qué. «Non» no suma ni explica: niega. Memoriza el trío: et = y · ut = para que / meta · non = no."
       }
     ],
-    "summary": "Esta semana aprendes **et**, **ut** y **non** para leer frases latinas sencillas con y, meta y negación.",
-    "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no."
+    "summary": "Et une cosas iguales, ut dice la meta y non niega: tres palabras con tres trabajos distintos.",
+    "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja a un niño y una niña con la palabra et en medio. Dibuja un cuaderno con una flecha y la palabra ut. Dibuja una puerta cerrada con la palabra non. Escribe debajo qué significa cada palabra.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Cómo unes «el niño» y «la niña» en una sola frase?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 1: Tres palabras, tres trabajos"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Para unir dos cosas dices «y»: el niño y la niña."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "En latín esa palabra es «et»."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Esta semana conocerás tres: et, ut y non."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Cada una hace un trabajo distinto en la frase."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "«Puer» es niño y «puella» es niña. ¿Qué dice"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "lesson",
+        "text": "«puer et puella»?"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 2: Et une"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Dice «el niño y la niña»."
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "«Et» significa «y»: es una conjunción."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Una conjunción une ideas del mismo nivel."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "En «puer et puella» une dos nombres."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "lesson",
+        "text": "En «Puer currit et ridet» une dos acciones: corre y ríe."
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Piensa en «trabajo para aprender». ¿«Para aprender»"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "suma otra cosa o dice la meta?"
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "heading",
+        "text": "Punto 3: Ut muestra la meta"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "Dice la meta: para qué haces algo."
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "En latín «ut» significa «para que»."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "Laboro ut discam es «trabajo para aprender»."
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "Pregunta «¿para qué?» cuando veas «ut»."
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "«Venit» significa «viene». ¿Qué crees que quiere decir"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "«non venit»?"
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 4: Non niega"
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Quiere decir «no viene»."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "«Non» significa «no»: es una negación."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Va justo antes del verbo que niega."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "La acción es la misma, pero ahora no ocurre."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«et» y «ut» sirven para lo"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "mismo?"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Cada una tiene su trabajo"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "No: «et» suma cosas iguales y «ut» dice para qué."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "«Non» no suma ni explica: niega."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Memoriza el trío:"
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "et = y · ut = para que / meta · non = no."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué significa «et»?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Y",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) No",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Para que",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Nunca",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué significa «puer et puella»?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) El niño no es niña",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) El niño para la niña",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) El niño sin la niña",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) El niño y la niña",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "En «Puer currit et ridet», ¿qué une «et»?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Dos nombres",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Dos acciones: corre y ríe",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Una meta y una acción",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Un lugar y un tiempo",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué significa «ut» en esta lección?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Y",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) No",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Para que",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Con",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Qué pregunta responde «ut»?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) ¿Dónde?",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) ¿Quién?",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) ¿Cuántos?",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) ¿Para qué?",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué significa «laboro ut discam»?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) Trabajo y aprendo",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) Trabajo para aprender",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) No trabajo",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) Aprendo sin trabajar",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Qué significa «non venit»?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) No viene",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Viene",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Viene y ve",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Viene para ver",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Dónde va «non» en la frase?",
+        "questionId": "d1-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Al final de la frase",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Después del nombre",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Justo antes del verbo",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) En cualquier lugar",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe qué trabajo hace cada palabra: et, ut y non.",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Escribe «non venit» y explica qué significa.",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un esquema con et, ut y non y su trabajo.",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una flecha de «laboro» a «ut discam».",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja a un niño y una niña con la palabra et en medio."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Dibuja un cuaderno con una flecha y la palabra ut."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Dibuja una puerta cerrada con la palabra non."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Escribe debajo qué significa cada palabra."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
@@ -38,129 +1292,193 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué significa et?",
+        "prompt": "¿Qué significa «et»?",
         "choices": [
-          "No.",
-          "Para que.",
-          "Nunca.",
-          "Y."
+          "Y",
+          "No",
+          "Para que",
+          "Nunca"
         ],
-        "answer": "Y."
+        "answer": "Y",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué hace et en «puer et puella»?",
+        "prompt": "¿Qué significa «puer et puella»?",
         "choices": [
-          "Muestra una meta.",
-          "Cambia el tiempo.",
-          "Une dos nombres.",
-          "Niega una acción."
+          "El niño no es niña",
+          "El niño para la niña",
+          "El niño sin la niña",
+          "El niño y la niña"
         ],
-        "answer": "Une dos nombres."
+        "answer": "El niño y la niña",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué significa ut en esta lección?",
+        "prompt": "En «Puer currit et ridet», ¿qué une «et»?",
         "choices": [
-          "Después.",
-          "Para que.",
-          "Y.",
-          "No."
+          "Dos nombres",
+          "Dos acciones: corre y ríe",
+          "Una meta y una acción",
+          "Un lugar y un tiempo"
         ],
-        "answer": "Para que."
+        "answer": "Dos acciones: corre y ríe",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué pregunta ayuda a encontrar una meta?",
+        "prompt": "¿Qué significa «ut» en esta lección?",
         "choices": [
-          "«Para qué»",
-          "«De qué color»",
-          "«Cuántos lápices»",
-          "«Quién ríe»"
+          "Y",
+          "No",
+          "Para que",
+          "Con"
         ],
-        "answer": "«Para qué»"
+        "answer": "Para que",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué significa non?",
+        "prompt": "¿Qué pregunta responde «ut»?",
         "choices": [
-          "Y.",
-          "Para que.",
-          "También.",
-          "No."
+          "¿Dónde?",
+          "¿Quién?",
+          "¿Cuántos?",
+          "¿Para qué?"
         ],
-        "answer": "No."
+        "answer": "¿Para qué?",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Dónde va non en los ejemplos de la lección?",
+        "prompt": "¿Qué significa «laboro ut discam»?",
         "choices": [
-          "Dentro de et.",
-          "Después de un dibujo.",
-          "Antes de la acción o del verbo.",
-          "Al final de toda frase."
+          "Trabajo y aprendo",
+          "Trabajo para aprender",
+          "No trabajo",
+          "Aprendo sin trabajar"
         ],
-        "answer": "Antes de la acción o del verbo."
+        "answer": "Trabajo para aprender",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo traduces et en una frase corta?",
+        "prompt": "¿Qué significa «non venit»?",
         "choices": [
-          "Nunca.",
-          "Y.",
-          "No.",
-          "Para que."
+          "No viene",
+          "Viene",
+          "Viene y ve",
+          "Viene para ver"
         ],
-        "answer": "Y."
+        "answer": "No viene",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué trabajo cumple et entre puer y puella?",
+        "prompt": "¿Dónde va «non» en la frase?",
         "choices": [
-          "Une dos nombres.",
-          "Niega una acción.",
-          "Muestra una meta.",
-          "Cambia el tiempo."
+          "Al final de la frase",
+          "Después del nombre",
+          "Justo antes del verbo",
+          "En cualquier lugar"
         ],
-        "answer": "Une dos nombres."
+        "answer": "Justo antes del verbo",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «et significa y» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe qué trabajo hace cada palabra: et, ut y non.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «**Et** significa **y**.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe «non venit» y explica qué significa.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Lee despacio: primero identifica qué une **et** (¿dos nombres o dos verbos?) y después traduce toda la frase.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un esquema con et, ut y non y su trabajo.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una flecha de «laboro» a «ut discam».",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

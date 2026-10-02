@@ -14,144 +14,1472 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Construimos tablas grandes",
-        "body": "Hoy cerramos el bloque grande con las tablas del 13 al 16. Se vuelven más fáciles si partes de una tabla que ya dominas y usas dobles o descomposiciones. Para 13×5 piensa **10×5=50** más **3×5=15** y sumas 65. Para 14×7 duplica 7×7=49 y obtienes 98. Para 16×6 duplica 8×6=48 y llegas a 96. Para 15×8 piensa tres veces 5×8=40 y sumas 120. En la papelería pagas con **bolívares**: **5** lápices a **800** c/u → **5×800=4.000**; si entregas **5.000**, el cambio es **1.000**. Comprueba el total con suma repetida de 800 cinco veces.\n\nObserva un caso real de «Construimos tablas grandes». Di en una frase qué aprendiste: Hoy cerramos el bloque grande con las tablas del 1.\n\nPráctica: Ahora te toca a ti. Resuelve 13×4, 14×7, 15×8 y 16×8. Escribe al lado qué estrategia usaste en cada una.\n\nError común: No copies un número porque «se ve bien». Revisa con el doble, con grupos o con una descomposición clara."
+        "heading": "Punto 1: El 13 se parte en 10 y 3",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicamos el orden de los factores y las decenas.\nVimos que 10 × 8 = 80 y que 12 × 12 = 144.\nHoy construimos las tablas del 13 al 16.\n\nPara 13 × 5, ¿qué tabla del 10 y qué tabla del 3 usarías?\n\nParte el 13 en 10 y 3. 10 × 5 = 50 y 3 × 5 = 15. 50 + 15 = 65. Entonces 13 × 5 = 65."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: El 14 es el doble del 7",
+        "body": "Si 7 × 7 = 49, ¿cómo hallas 14 × 7?\n\nEl 14 es el doble de 7. Dobla el producto: 49 + 49 = 98. Entonces 14 × 7 = 98. Comprueba: 10 × 7 = 70, 4 × 7 = 28 y 70 + 28 = 98."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: El 16 es el doble del 8",
+        "body": "¿Cómo hallarías 16 × 6? Pista: 8 × 6 = 48.\n\nEl 16 es el doble de 8. Dobla 48: 48 + 48 = 96. Entonces 16 × 6 = 96."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: El 15 es tres veces el 5",
+        "body": "¿Y 15 × 8? Pista: el 15 es tres veces el 5.\n\nPrimero 5 × 8 = 40. Tres veces 40 es 40 + 40 + 40 = 120. Entonces 15 × 8 = 120. No sumes 15 + 8 = 23: eso no es multiplicar."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Multiplicar con bolívares",
+        "body": "Cada lápiz cuesta 800 bolívares. Compras 5 lápices y pagas con 5.000. ¿Cuánto te devuelven?\n\nPrimero multiplica: 5 × 800 = 4.000 bolívares. Piensa 5 × 8 = 40 y añade dos ceros: 4.000. Luego resta: 5.000 − 4.000 = 1.000 bolívares. Te devuelven 1.000 bolívares. Comprueba sumando 800 cinco veces: da 4.000."
       }
     ],
-    "summary": "Esta semana seguimos con: Practicamos del 13 al 16. Lee cada parte con calma y prueba la actividad.",
+    "summary": "El 13 se parte en 10 y 3, el 14 y el 16 son dobles y el 15 es tres veces 5.",
     "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
-    "priorDayRecap": "Ayer repasaste orden de factores y decenas en las tablas del 9 al 12. Hoy construyes las tablas del 13 al 16 con dobles y problemas con bolívares."
+    "priorDayRecap": "Ayer repasaste orden de factores y decenas en las tablas del 9 al 12. Hoy construyes las tablas del 13 al 16 con dobles y problemas con bolívares.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja 5 lápices y escribe 800 bolívares en cada uno. Escribe la cuenta: 5 × 800 = 4.000 bolívares. Dibuja un billete de 5.000 y rotula el cambio de 1.000. Revisa tu cuenta sumando 800 cinco veces.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer practicamos el orden de los factores y las decenas."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Vimos que 10 × 8 = 80 y que 12 × 12 = 144."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hoy construimos las tablas del 13 al 16."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Para 13 × 5, ¿qué tabla del 10 y qué tabla del 3"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "usarías?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: El 13 se parte en 10 y 3"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Parte el 13 en 10 y 3."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "10 × 5 = 50 y 3 × 5 = 15."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "50 + 15 = 65."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Entonces 13 × 5 = 65."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Si 7 × 7 = 49, ¿cómo hallas 14 × 7?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: El 14 es el doble del 7"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "El 14 es el doble de 7."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Dobla el producto: 49 + 49 = 98."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Entonces 14 × 7 = 98."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Comprueba: 10 × 7 = 70, 4 × 7 = 28 y 70 + 28 = 98."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "¿Cómo hallarías 16 × 6? Pista: 8 × 6 = 48."
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "heading",
+        "text": "Punto 3: El 16 es el doble del 8"
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "El 16 es el doble de 8."
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Dobla 48: 48 + 48 = 96."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Entonces 16 × 6 = 96."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "¿Y 15 × 8? Pista: el 15 es tres veces el 5."
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 4: El 15 es tres veces el 5"
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Primero 5 × 8 = 40."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Tres veces 40 es 40 + 40 + 40 = 120."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Entonces 15 × 8 = 120."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "No sumes 15 + 8 = 23: eso no es multiplicar."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Cada lápiz cuesta 800 bolívares. Compras 5 lápices"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "y pagas con 5.000. ¿Cuánto te devuelven?"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "heading",
+        "text": "Punto 5: Multiplicar con bolívares"
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Primero multiplica: 5 × 800 = 4.000 bolívares."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Piensa 5 × 8 = 40 y añade dos ceros: 4.000."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Luego resta: 5.000 − 4.000 = 1.000 bolívares."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Te devuelven 1.000 bolívares."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Comprueba sumando 800 cinco veces: da 4.000."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Cuánto es 13 × 5?",
+        "questionId": "d4-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) 18",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) 53",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) 65",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) 55",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuánto es 14 × 7?",
+        "questionId": "d4-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) 21",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) 49",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) 84",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) 98",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuánto es 16 × 6?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 22",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 96",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 86",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 106",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto es 15 × 8?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 120",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 23",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 110",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 130",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "El 14 es el doble de ¿qué número?",
+        "questionId": "d4-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 5",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 6",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 7",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 4",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cuánto cuestan 5 lápices a 800 bolívares cada uno?",
+        "questionId": "d4-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 4.000 bolívares",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 4.800 bolívares",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 400 bolívares",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 805 bolívares",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "Pagas 5.000 por 4.000 bolívares. ¿Cuánto te devuelven?",
+        "questionId": "d4-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) 9.000 bolívares",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) 500 bolívares",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) 4.000 bolívares",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) 1.000 bolívares",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cómo se parte 13 × 5 para multiplicar fácil?",
+        "questionId": "d4-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) 13 + 5",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) 10 × 5 y 3 × 5",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) 10 + 3 + 5",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) 13 × 3",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica cómo hallas 14 × 7 con el doble de 7 × 7.",
+        "questionId": "d4-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Halla el total de 3 lápices a 800 bolívares cada uno.",
+        "questionId": "d4-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja 13 × 5 en dos cajas: 10 × 5 y 3 × 5.",
+        "questionId": "d4-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja 5 lápices de 800 bolívares y escribe el total.",
+        "questionId": "d4-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja 5 lápices y escribe 800 bolívares en cada uno."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe la cuenta: 5 × 800 = 4.000 bolívares."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Dibuja un billete de 5.000 y rotula el cambio de 1.000."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa tu cuenta sumando 800 cinco veces."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d4-q1",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 5 × 9?",
+        "prompt": "¿Cuánto es 13 × 5?",
         "choices": [
-          "40",
-          "50",
-          "54",
-          "45"
+          "18",
+          "53",
+          "65",
+          "55"
         ],
-        "answer": "45"
+        "answer": "65",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d4-q2",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué terminación aparece en los productos de la tabla del 5?",
+        "prompt": "¿Cuánto es 14 × 7?",
         "choices": [
-          "3 o 8.",
-          "Siempre 1.",
-          "0 o 5.",
-          "2 o 7."
+          "21",
+          "49",
+          "84",
+          "98"
         ],
-        "answer": "0 o 5."
+        "answer": "98",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d4-q3",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 16 × 6?",
+        "choices": [
+          "22",
+          "96",
+          "86",
+          "106"
+        ],
+        "answer": "96",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 15 × 8?",
+        "choices": [
+          "120",
+          "23",
+          "110",
+          "130"
+        ],
+        "answer": "120",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d4-q5",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "El 14 es el doble de ¿qué número?",
+        "choices": [
+          "5",
+          "6",
+          "7",
+          "4"
+        ],
+        "answer": "7",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d4-q6",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Cuánto cuestan 5 lápices a 800 bolívares cada uno?",
+        "choices": [
+          "4.000 bolívares",
+          "4.800 bolívares",
+          "400 bolívares",
+          "805 bolívares"
+        ],
+        "answer": "4.000 bolívares",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué moneda usa el problema?",
+        "prompt": "Pagas 5.000 por 4.000 bolívares. ¿Cuánto te devuelven?",
         "choices": [
-          "Bolívares",
-          "Dólares de juego",
-          "Euros",
-          "Pesos argentinos"
+          "9.000 bolívares",
+          "500 bolívares",
+          "4.000 bolívares",
+          "1.000 bolívares"
         ],
-        "answer": "Bolívares"
+        "answer": "1.000 bolívares",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué obtienes al duplicar 7 × 7?",
+        "prompt": "¿Cómo se parte 13 × 5 para multiplicar fácil?",
         "choices": [
-          "107",
-          "98",
-          "49",
-          "84"
+          "13 + 5",
+          "10 × 5 y 3 × 5",
+          "10 + 3 + 5",
+          "13 × 3"
         ],
-        "answer": "98"
-      },
-      {
-        "id": "d4-q9",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Cuánto es 14 × 7?",
-        "choices": [
-          "98",
-          "49",
-          "84",
-          "107"
-        ],
-        "answer": "98"
-      },
-      {
-        "id": "d4-q10",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Qué obtienes al duplicar 7 × 7?",
-        "choices": [
-          "49",
-          "84",
-          "107",
-          "98"
-        ],
-        "answer": "98"
-      },
-      {
-        "id": "d4-q11",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Cuánto es 14 × 7?",
-        "choices": [
-          "84",
-          "107",
-          "98",
-          "49"
-        ],
-        "answer": "98"
-      },
-      {
-        "id": "d4-q12",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Qué obtienes al duplicar 7 × 7?",
-        "choices": [
-          "107",
-          "98",
-          "49",
-          "84"
-        ],
-        "answer": "98"
+        "answer": "10 × 5 y 3 × 5",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Construimos tablas grandes» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica cómo hallas 14 × 7 con el doble de 7 × 7.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy cerramos el bloque grande con las tablas del 13 al 16.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Halla el total de 3 lápices a 800 bolívares cada uno.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Mira de nuevo el ejemplo de la primera oración.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 13 × 5 en dos cajas: 10 × 5 y 3 × 5.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 5 lápices de 800 bolívares y escribe el total.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

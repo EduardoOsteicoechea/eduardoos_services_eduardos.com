@@ -14,22 +14,1276 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Las fronteras de Venezuela",
-        "body": "Una **frontera** separa un país de otro. En el mapa de Venezuela: al norte el **Mar Caribe**; al sur **Brasil**; al este **Guyana**; al oeste **Colombia**.\n\nLos puntos cardinales ayudan: norte arriba, sur abajo, este derecha, oeste izquierda en un mapa común. No confundas **Guyana** (país) con **Guayana** (región).\n\nPráctica: Ahora te toca a ti. Dibuja un contorno y escribe en cada lado Caribe, Brasil, Guyana o Colombia.\n\nError común: Mezclar Guyana (país) con Guayana (región venezolana)."
+        "heading": "Punto 1: Una frontera separa países",
+        "body": "¿Qué crees que rodea a Venezuela por todos sus lados?\n\nUna frontera es la línea que separa un país de otro. Venezuela está rodeada por un mar y tres países vecinos. El mar queda arriba, en el norte del mapa. Vamos a descubrir lado por lado quién es cada vecino."
       },
       {
         "id": "p2",
-        "heading": "Los puntos extremos",
-        "body": "Un **punto extremo** es el lugar más lejano del país en una dirección; no es toda la frontera. Sirve para imaginar el «marco» de Venezuela: lo más al norte, sur, este y oeste según tu guía.\n\nUbicar extremos evita pensar que el país es solo Caracas o solo la costa.\n\nPráctica: Ahora te toca a ti. Marca en tu mapa mental o dibujo cuatro extremos y nómbralos con la guía.\n\nError común: Creer que un extremo es una frontera completa."
+        "heading": "Punto 2: Norte, sur, este y oeste",
+        "body": "Sigamos. En un mapa, el norte va arriba y el sur abajo. Si el mar queda arriba, ¿dónde crees que queda Brasil?\n\nCon el norte arriba, el sur queda abajo y el este a la derecha. Fronteras: Mar Caribe norte, Brasil sur, Guyana este, Colombia oeste. Así que Brasil queda abajo, hacia el sur."
       },
       {
         "id": "p3",
-        "heading": "Las regiones de Venezuela",
-        "body": "Una **región** es una parte grande que comparte relieve o clima. Seis regiones de estudio: Central, Oriental, Occidental, Los Andes, Los Llanos y Guayana.\n\nAndes = montañas; Llanos = planicies; Guayana = selvas y tepuyes. Una región puede tener varios estados.\n\nPráctica: Ahora te toca a ti. Escribe las seis regiones con un símbolo: montaña, llanura, costa o selva.\n\nError común: Confundir estado con región, o Guayana con Guyana."
+        "heading": "Punto 3: Guyana y Guayana",
+        "body": "Una pregunta con truco: ¿«Guyana» y «Guayana» son lo mismo? Fíjate bien en cómo se escriben.\n\nNo son lo mismo, aunque suenan casi igual. Guyana, con «y», es un país vecino, al este. Guayana, con «ua», es una región de Venezuela. Una queda del otro lado de la frontera; la otra, adentro."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Los puntos extremos",
+        "body": "Imagina que caminas hasta el borde más lejano del país. ¿Cómo llamarías a ese lugar?\n\nSe llama punto extremo: el lugar más lejano en una dirección. Sirve para imaginar el marco de Venezuela. Hay uno al norte, uno al sur, uno al este y uno al oeste. Un punto extremo es un solo lugar, no toda la frontera."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Las regiones",
+        "body": "¿Y adentro del país? ¿Crees que Venezuela es igual por todas partes? Piensa en montañas, llanuras y selvas.\n\nUna región es una parte grande del país con rasgos parecidos. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana. Los Andes tienen montañas, los Llanos planicies y Guayana selvas."
       }
     ],
-    "summary": "Venezuela por fronteras, puntos extremos y seis regiones de estudio.",
-    "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana."
+    "summary": "Venezuela tiene al mar Caribe al norte, a Brasil al sur, a Guyana al este y a Colombia al oeste.",
+    "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja el contorno de Venezuela en el recuadro. Escribe en cada lado: Caribe, Brasil, Guyana o Colombia. Dibuja una flecha hacia arriba y rotula la palabra norte. Revisa que cada vecino esté del lado correcto.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué crees que rodea a Venezuela por todos sus lados?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 1: Una frontera separa países"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Una frontera es la línea que separa un país de otro."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Venezuela está rodeada por un mar y tres países vecinos."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "El mar queda arriba, en el norte del mapa."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Vamos a descubrir lado por lado quién es cada vecino."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Sigamos. En un mapa, el norte va arriba y el sur abajo."
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "lesson",
+        "text": "Si el mar queda arriba, ¿dónde crees que queda Brasil?"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "heading",
+        "text": "Punto 2: Norte, sur, este y oeste"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Con el norte arriba, el sur queda abajo y el este a la derecha."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Fronteras: Mar Caribe norte, Brasil sur,"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Guyana este, Colombia oeste."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Así que Brasil queda abajo, hacia el sur."
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«Guyana» y «Guayana» son lo mismo?"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Fíjate bien en cómo se escriben."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "heading",
+        "text": "Punto 3: Guyana y Guayana"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "No son lo mismo, aunque suenan casi igual."
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "Guyana, con «y», es un país vecino, al este."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "Guayana, con «ua», es una región de Venezuela."
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "Una queda del otro lado de la frontera; la otra, adentro."
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Imagina que caminas hasta el borde más lejano del país."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "¿Cómo llamarías a ese lugar?"
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 4: Los puntos extremos"
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Se llama punto extremo: el lugar más lejano en una dirección."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Sirve para imaginar el marco de Venezuela."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hay uno al norte, uno al sur, uno al este y uno al oeste."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Un punto extremo es un solo lugar, no toda la frontera."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "¿Y adentro del país? ¿Crees que Venezuela es igual"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "por todas partes? Piensa en montañas, llanuras y selvas."
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 5: Las regiones"
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Una región es una parte grande del país con rasgos parecidos."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Los Andes tienen montañas, los Llanos planicies y Guayana selvas."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué queda al norte de Venezuela?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) El mar Caribe",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Brasil",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Guyana",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Colombia",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué país queda al sur de Venezuela?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Guyana",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Perú",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Chile",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Brasil",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Qué país queda al este de Venezuela?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Brasil",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Guyana",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Perú",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Chile",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué país queda al oeste de Venezuela?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Guyana",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Perú",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Colombia",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Chile",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "En un mapa común, ¿hacia dónde queda el norte?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) Abajo",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) A la derecha",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) A la izquierda",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) Arriba",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué es una frontera?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) Una montaña muy alta",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) La línea que separa un país de otro",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) Un río muy largo",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) Una región del país",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Qué es un punto extremo?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) El lugar más lejano en una dirección",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Toda la frontera de un país",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Una ciudad muy grande",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Un tipo de mapa",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cuál es el nombre de una región de Venezuela?",
+        "questionId": "d1-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Guyana",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Brasil",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Guayana",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Colombia",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica con tus palabras qué es una frontera.",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Escribe la diferencia entre Guyana y Guayana.",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja el contorno de Venezuela y rotula sus cuatro lados.",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja un esquema de las seis regiones con un símbolo cada una.",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja el contorno de Venezuela en el recuadro."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe en cada lado: Caribe, Brasil, Guyana o Colombia."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Dibuja una flecha hacia arriba y rotula la palabra norte."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que cada vecino esté del lado correcto."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
@@ -38,129 +1292,193 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué queda al norte de Venezuela?",
+        "prompt": "¿Qué queda al norte de Venezuela?",
         "choices": [
-          "El Mar Caribe",
+          "El mar Caribe",
           "Brasil",
           "Guyana",
           "Colombia"
         ],
-        "answer": "El Mar Caribe"
+        "answer": "El mar Caribe",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué país está al sur de Venezuela?",
+        "prompt": "¿Qué país queda al sur de Venezuela?",
         "choices": [
-          "Brasil",
-          "Colombia",
           "Guyana",
-          "Perú"
+          "Perú",
+          "Chile",
+          "Brasil"
         ],
-        "answer": "Brasil"
+        "answer": "Brasil",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué país está al este de Venezuela?",
+        "prompt": "¿Qué país queda al este de Venezuela?",
         "choices": [
-          "Guyana",
           "Brasil",
-          "Colombia",
-          "Ecuador"
+          "Guyana",
+          "Perú",
+          "Chile"
         ],
-        "answer": "Guyana"
+        "answer": "Guyana",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué país está al oeste de Venezuela?",
+        "prompt": "¿Qué país queda al oeste de Venezuela?",
         "choices": [
-          "Colombia",
           "Guyana",
-          "Brasil",
+          "Perú",
+          "Colombia",
           "Chile"
         ],
-        "answer": "Colombia"
+        "answer": "Colombia",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuál es el punto límite norte de la lección?",
+        "prompt": "En un mapa común, ¿hacia dónde queda el norte?",
         "choices": [
-          "Cabo San Román",
-          "Pico Bolívar",
-          "Caracas",
-          "Río Ararí"
+          "Abajo",
+          "A la derecha",
+          "A la izquierda",
+          "Arriba"
         ],
-        "answer": "Cabo San Román"
+        "answer": "Arriba",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuál es el punto límite sur de la lección?",
+        "prompt": "¿Qué es una frontera?",
         "choices": [
-          "El nacimiento del río Ararí",
-          "Cabo San Román",
-          "El Mar Caribe",
-          "Río Intermedio"
+          "Una montaña muy alta",
+          "La línea que separa un país de otro",
+          "Un río muy largo",
+          "Una región del país"
         ],
-        "answer": "El nacimiento del río Ararí"
+        "answer": "La línea que separa un país de otro",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuál es una región de Venezuela?",
+        "prompt": "¿Qué es un punto extremo?",
         "choices": [
-          "Los Llanos",
-          "Europa",
-          "Antártida",
-          "Escandinavia"
+          "El lugar más lejano en una dirección",
+          "Toda la frontera de un país",
+          "Una ciudad muy grande",
+          "Un tipo de mapa"
         ],
-        "answer": "Los Llanos"
+        "answer": "El lugar más lejano en una dirección",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué hay al norte de Venezuela en el mapa?",
+        "prompt": "¿Cuál es el nombre de una región de Venezuela?",
         "choices": [
-          "Mar Caribe",
-          "Océano Pacífico",
-          "Mar Mediterráneo",
-          "Lago Victoria"
+          "Guyana",
+          "Brasil",
+          "Guayana",
+          "Colombia"
         ],
-        "answer": "Mar Caribe"
+        "answer": "Guayana",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Las fronteras de Venezuela» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica con tus palabras qué es una frontera.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Una **frontera** separa un país de otro.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe la diferencia entre Guyana y Guayana.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Los puntos cardinales ayudan: norte arriba, sur abajo, este derecha, oeste izquierda en un mapa común.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja el contorno de Venezuela y rotula sus cuatro lados.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un esquema de las seis regiones con un símbolo cada una.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

@@ -14,145 +14,1473 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Pueblos del mundo antiguo",
-        "body": "Cierra añadiendo otro pueblo del mundo antiguo en tu línea y en el mapa. Pregunta: ¿antes o después del hito que ya marqué? ¿Cerca o lejos en el mapa?\n\nResume la semana en tres frases: qué es una línea de tiempo, por qué hay pistas distintas y un ejemplo (Babel o sumerios).\n\nPráctica: Ahora te toca a ti. Añade un pueblo más y escribe el resumen de tres frases.\n\nError común: Llenar la línea de nombres sin fechas relativas ni etiquetas de fuente."
+        "heading": "Punto 1: Más pueblos en la línea",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer hiciste fichas de Babel y de los sumerios.\nCada ficha lleva una frase y su etiqueta de fuente.\nBabel fue de Génesis y los sumerios fueron de historia.\n\nTu línea tiene solo dos nombres. ¿Qué harías para que cuente la historia del mundo antiguo?\n\nAñadiría otros pueblos del mundo antiguo. Cada pueblo nuevo se coloca en la línea y en el mapa. Así la línea cuenta más de lo que pasó en el mundo."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Cuatro lugares en el mapa",
+        "body": "Mira el mapa. ¿Dónde crees que quedan Egipto, India, Creta y Grecia?\n\nEgipto queda en África, junto al río Nilo. India queda en el sur de Asia. Creta es una isla del mar Mediterráneo. Grecia queda en el sur de Europa."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Antes o después",
+        "body": "Llega un pueblo nuevo a tu línea. ¿Qué dos preguntas te harías sobre su lugar en el tiempo?\n\nPregunta: ¿va antes o después de lo que ya marqué? Eso se llama orden relativo. Los sumerios existieron mucho antes que los griegos. Sin ese orden, los nombres quedan amontonados."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Cerca o lejos",
+        "body": "Y en el mapa, ¿qué preguntarías? Pista: no es sobre el tiempo, es sobre el lugar.\n\nPregunta: ¿queda cerca o lejos de lo que ya marqué? Creta y Grecia están cerca, en el Mediterráneo. India y Egipto están lejos una de la otra. El mapa muestra dónde; la línea muestra cuándo."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Resumir en tres frases",
+        "body": "Quieres leer tu línea en voz alta. ¿Qué tres cosas contarías sobre la semana?\n\nPrimera: qué es una línea de tiempo. Segunda: por qué hay pistas distintas. Tercera: un ejemplo, Babel o los sumerios. Léelas despacio, con la voz clara."
       }
     ],
-    "summary": "Esta semana ordenaste relatos y pueblos antiguos sin mezclarlos, usando una línea de tiempo y un mapa.",
+    "summary": "Cada pueblo nuevo se coloca en la línea (antes o después) y en el mapa (cerca o lejos), y la semana se cuenta en tres frases.",
     "memoryPhrase": "Orden antiguo: primero el relato, después el mapa. Recuerda: **Babel**, **sumerios** (Tigris y Éufrates), y otros pueblos del mundo antiguo.",
     "weekRecap": "Orden: primero el relato, después el mapa. Babel, sumerios (Tigris y Éufrates) y otros pueblos.",
-    "priorDayRecap": "Ayer separaste Babel y sumerios en fichas y pistas distintas."
+    "priorDayRecap": "Ayer separaste Babel y sumerios en fichas y pistas distintas.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja un mapa sencillo con cuatro lugares. Rotula Egipto, India, Creta y Grecia. Debajo dibuja una línea con un pueblo nuevo. Revisa que cada nombre esté en su lugar.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer hiciste fichas de Babel y de los sumerios."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Cada ficha lleva una frase y su etiqueta de fuente."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Babel fue de Génesis y los sumerios fueron de historia."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Tu línea tiene solo dos nombres. ¿Qué harías para que"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "cuente la historia del mundo antiguo?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: Más pueblos en la línea"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Añadiría otros pueblos del mundo antiguo."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Cada pueblo nuevo se coloca en la línea y en el mapa."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Así la línea cuenta más de lo que pasó en el mundo."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Mira el mapa. ¿Dónde crees que quedan Egipto, India,"
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Creta y Grecia?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: Cuatro lugares en el mapa"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Egipto queda en África, junto al río Nilo."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "India queda en el sur de Asia."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Creta es una isla del mar Mediterráneo."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Grecia queda en el sur de Europa."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Llega un pueblo nuevo a tu línea. ¿Qué dos preguntas"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "te harías sobre su lugar en el tiempo?"
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "heading",
+        "text": "Punto 3: Antes o después"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Pregunta: ¿va antes o después de lo que ya marqué?"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Eso se llama orden relativo."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Los sumerios existieron mucho antes que los griegos."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Sin ese orden, los nombres quedan amontonados."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Y en el mapa, ¿qué preguntarías?"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "Pista: no es sobre el tiempo, es sobre el lugar."
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: Cerca o lejos"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Pregunta: ¿queda cerca o lejos de lo que ya marqué?"
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Creta y Grecia están cerca, en el Mediterráneo."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "India y Egipto están lejos una de la otra."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "El mapa muestra dónde; la línea muestra cuándo."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Quieres leer tu línea en voz alta. ¿Qué tres cosas"
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "contarías sobre la semana?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Resumir en tres frases"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Primera: qué es una línea de tiempo."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Segunda: por qué hay pistas distintas."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Tercera: un ejemplo, Babel o los sumerios."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Léelas despacio, con la voz clara."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué hacemos con un pueblo nuevo?",
+        "questionId": "d4-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Lo borramos",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Lo escondemos",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Lo colocamos en la línea y en el mapa",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Lo mezclamos con Babel",
+        "questionId": "d4-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Dónde queda Egipto?",
+        "questionId": "d4-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) En Europa",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) En una isla",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) En América",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) En África, junto al Nilo",
+        "questionId": "d4-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Qué es Creta?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Un río de Asia",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Una isla del Mediterráneo",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Un pueblo sumerio",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Una montaña de Egipto",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Dónde queda India?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) En el sur de Asia",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) En el norte de África",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) En el sur de Europa",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) En Mesopotamia",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Qué pregunta hacemos para el tiempo?",
+        "questionId": "d4-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) ¿De qué color es?",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) ¿Cuánto pesa?",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) ¿Va antes o después?",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) ¿Cómo suena?",
+        "questionId": "d4-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué pregunta hacemos para el mapa?",
+        "questionId": "d4-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) ¿Queda cerca o lejos?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) ¿Cuántos años tiene?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) ¿Quién lo cuenta?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) ¿Cuál es su sabor?",
+        "questionId": "d4-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Quiénes existieron mucho antes que los griegos?",
+        "questionId": "d4-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) Los astronautas",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Los piratas",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Los vikingos",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Los sumerios",
+        "questionId": "d4-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Qué lleva el resumen de la semana?",
+        "questionId": "d4-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) Un solo número",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) Tres frases",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) Diez dibujos",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Una canción",
+        "questionId": "d4-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe tu resumen de tres frases sobre la semana.",
+        "questionId": "d4-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica qué significa «antes o después» en la línea.",
+        "questionId": "d4-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un mapa con Egipto, India, Creta y Grecia.",
+        "questionId": "d4-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una línea con Babel, sumerios y un pueblo nuevo.",
+        "questionId": "d4-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja un mapa sencillo con cuatro lugares."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Rotula Egipto, India, Creta y Grecia."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Debajo dibuja una línea con un pueblo nuevo."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que cada nombre esté en su lugar."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d4-q1",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Para qué sirve una línea de tiempo?",
+        "prompt": "¿Qué hacemos con un pueblo nuevo?",
         "choices": [
-          "Ordenar hechos de primero a después",
-          "Medir la temperatura",
-          "Dibujar solo mapas",
-          "Contar animales"
+          "Lo borramos",
+          "Lo escondemos",
+          "Lo colocamos en la línea y en el mapa",
+          "Lo mezclamos con Babel"
         ],
-        "answer": "Ordenar hechos de primero a después"
+        "answer": "Lo colocamos en la línea y en el mapa",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d4-q2",
-        "originDay": 3,
+        "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué es un hito en una línea de tiempo?",
+        "prompt": "¿Dónde queda Egipto?",
         "choices": [
-          "Un hecho importante para recordar una época",
-          "El nombre de un río",
-          "Una montaña muy alta",
-          "Un dibujo sin fecha"
+          "En Europa",
+          "En una isla",
+          "En América",
+          "En África, junto al Nilo"
         ],
-        "answer": "Un hecho importante para recordar una época"
+        "answer": "En África, junto al Nilo",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d4-q3",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué es Creta?",
+        "choices": [
+          "Un río de Asia",
+          "Una isla del Mediterráneo",
+          "Un pueblo sumerio",
+          "Una montaña de Egipto"
+        ],
+        "answer": "Una isla del Mediterráneo",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Dónde queda India?",
+        "choices": [
+          "En el sur de Asia",
+          "En el norte de África",
+          "En el sur de Europa",
+          "En Mesopotamia"
+        ],
+        "answer": "En el sur de Asia",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d4-q5",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué pregunta hacemos para el tiempo?",
+        "choices": [
+          "¿De qué color es?",
+          "¿Cuánto pesa?",
+          "¿Va antes o después?",
+          "¿Cómo suena?"
+        ],
+        "answer": "¿Va antes o después?",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d4-q6",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué pregunta hacemos para el mapa?",
+        "choices": [
+          "¿Queda cerca o lejos?",
+          "¿Cuántos años tiene?",
+          "¿Quién lo cuenta?",
+          "¿Cuál es su sabor?"
+        ],
+        "answer": "¿Queda cerca o lejos?",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué es un hito?",
+        "prompt": "¿Quiénes existieron mucho antes que los griegos?",
         "choices": [
-          "Un hecho importante para recordar",
-          "Un color",
-          "Una tabla del 7",
-          "Un adjetivo"
+          "Los astronautas",
+          "Los piratas",
+          "Los vikingos",
+          "Los sumerios"
         ],
-        "answer": "Un hecho importante para recordar"
+        "answer": "Los sumerios",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Dónde hubo ciudades planificadas?",
+        "prompt": "¿Qué lleva el resumen de la semana?",
         "choices": [
-          "En el valle del Indo",
-          "En Creta",
-          "En Grecia continental",
-          "En Mesopotamia"
+          "Un solo número",
+          "Tres frases",
+          "Diez dibujos",
+          "Una canción"
         ],
-        "answer": "En el valle del Indo"
-      },
-      {
-        "id": "d4-q9",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué pueblo vivía en Creta?",
-        "choices": [
-          "Los minoicos",
-          "Los sumerios",
-          "Los micénicos",
-          "Los egipcios"
-        ],
-        "answer": "Los minoicos"
-      },
-      {
-        "id": "d4-q10",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué pueblo vivía en Grecia continental?",
-        "choices": [
-          "Los micénicos",
-          "Los minoicos",
-          "Los sumerios",
-          "Los egipcios"
-        ],
-        "answer": "Los micénicos"
-      },
-      {
-        "id": "d4-q11",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué lugar corresponde a África en esta lección?",
-        "choices": [
-          "Egipto",
-          "El valle del Indo",
-          "Creta",
-          "Grecia continental"
-        ],
-        "answer": "Egipto"
-      },
-      {
-        "id": "d4-q12",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué lugar corresponde al subcontinente indio?",
-        "choices": [
-          "El valle del Indo",
-          "Egipto",
-          "Creta",
-          "Mesopotamia"
-        ],
-        "answer": "El valle del Indo"
+        "answer": "Tres frases",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Pueblos del mundo antiguo» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe tu resumen de tres frases sobre la semana.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Cierra añadiendo otro pueblo del mundo antiguo en tu línea y en el mapa.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica qué significa «antes o después» en la línea.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Resume la semana en tres frases: qué es una línea de tiempo, por qué hay pistas distintas y un ejemplo (Babel o sumerios).» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un mapa con Egipto, India, Creta y Grecia.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja una línea con Babel, sumerios y un pueblo nuevo.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

@@ -14,144 +14,1472 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Piensa con multiplicaciones: Practicar 5–8",
-        "body": "Hoy entran las tablas del **5 al 8**. Usa el patrón del 5 (0 o 5 al final). Para el 6, piensa 3×n y duplícalo, o 2×n y súmalo tres veces según te resulte más claro.\n\nEl 7 se afirma con repetición breve: elige cuatro productos y repítelos en voz alta. El 8 puede ser el doble de la tabla del 4: si 4×6=24, entonces 8×6=48.\n\nPráctica: Ahora te toca a ti. Resuelve 5×7, 6×5, 7×4 y 8×6. Escribe cómo comprobaste uno.\n\nError común: Adivinar el 7 sin estrategia. Usa suma repetida o un producto vecino."
+        "heading": "Punto 1: La tabla del 5 tiene un patrón",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicamos las tablas del 1 al 4.\nEl 1 conserva, el 2 dobla y el 4 dobla el doble.\nY comprobamos con suma repetida cuando dudamos.\n\nCuenta de 5 en 5: 5, 10, 15, 20... ¿En qué números terminan los productos de la tabla del 5?\n\nTerminan en 0 o en 5: 5, 10, 15, 20, 25, 30... Así 5 × 7 = 35 termina en 5. Y 5 × 6 = 30 termina en 0. Para 5 × 12 cuenta doce veces de 5 en 5: llegas a 60."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: La tabla del 6 dobla la del 3",
+        "body": "Sabes que 3 × 5 = 15. ¿Cómo sacarías 6 × 5?\n\nEl 6 es el doble del 3. Entonces 6 × 5 es el doble de 15. El doble de 15 es 30, así que 6 × 5 = 30. Con 6 × 7: 3 × 7 = 21 y su doble es 42."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: La tabla del 8 dobla la del 4",
+        "body": "Para 8 × 6, ¿qué tabla que ya conoces podrías doblar?\n\nLa del 4: 4 × 6 = 24. El 8 es el doble del 4. El doble de 24 es 48. Entonces 8 × 6 = 48."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: La tabla del 7 pide paciencia",
+        "body": "Una pregunta con truco: ¿cuánto es 7 × 4 si no te acuerdas del resultado?\n\nUsa una suma repetida: 7 + 7 + 7 + 7. 7 + 7 = 14 y 14 + 14 = 28. Entonces 7 × 4 = 28. O usa un vecino: 7 × 5 = 35, y 35 − 7 = 28."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Comprueba antes de decidir",
+        "body": "Camila dice que 5 × 7 = 12 porque suma 5 + 7. ¿Qué le dirías?\n\nQue sumó, pero debía formar grupos. 5 × 7 son cinco grupos de siete. Los productos del 5 terminan en 0 o en 5. El 12 no termina así: la respuesta es 35."
       }
     ],
-    "summary": "En esta clase usarás grupos iguales, patrones y comprobaciones para pensar las tablas.",
+    "summary": "El 5 termina en 0 o 5, el 6 dobla el 3, el 8 dobla el 4 y el 7 se comprueba sumando.",
     "weekRecap": "Multiplicar = grupos iguales. Factores y producto. Tablas 1–12 con patrones y comprobación.",
-    "priorDayRecap": "Ayer practicaste las tablas del 1 al 4 con grupos y suma repetida."
+    "priorDayRecap": "Ayer practicaste las tablas del 1 al 4 con grupos y suma repetida.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja 8 cajas con 6 lápices en cada una. Escribe el doble: 4 × 6 = 24 y luego 8 × 6 = 48. Rotula cuántos grupos hay y cuántos lápices en cada uno. Revisa que 48 sea el doble de 24.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer practicamos las tablas del 1 al 4."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "El 1 conserva, el 2 dobla y el 4 dobla el doble."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Y comprobamos con suma repetida cuando dudamos."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Cuenta de 5 en 5: 5, 10, 15, 20... ¿En qué números"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "terminan los productos de la tabla del 5?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: La tabla del 5 tiene un patrón"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Terminan en 0 o en 5: 5, 10, 15, 20, 25, 30..."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Así 5 × 7 = 35 termina en 5."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Y 5 × 6 = 30 termina en 0."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Para 5 × 12 cuenta doce veces de 5 en 5: llegas a 60."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Sabes que 3 × 5 = 15. ¿Cómo sacarías 6 × 5?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: La tabla del 6 dobla la del 3"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "El 6 es el doble del 3."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Entonces 6 × 5 es el doble de 15."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "El doble de 15 es 30, así que 6 × 5 = 30."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Con 6 × 7: 3 × 7 = 21 y su doble es 42."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Para 8 × 6, ¿qué tabla que ya conoces podrías doblar?"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "heading",
+        "text": "Punto 3: La tabla del 8 dobla la del 4"
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "La del 4: 4 × 6 = 24."
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "El 8 es el doble del 4."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "El doble de 24 es 48."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Entonces 8 × 6 = 48."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿cuánto es 7 × 4 si no te"
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "acuerdas del resultado?"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: La tabla del 7 pide paciencia"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Usa una suma repetida: 7 + 7 + 7 + 7."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "7 + 7 = 14 y 14 + 14 = 28."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Entonces 7 × 4 = 28."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "O usa un vecino: 7 × 5 = 35, y 35 − 7 = 28."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Camila dice que 5 × 7 = 12 porque suma 5 + 7."
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "¿Qué le dirías?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Comprueba antes de decidir"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Que sumó, pero debía formar grupos."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "5 × 7 son cinco grupos de siete."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Los productos del 5 terminan en 0 o en 5."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "El 12 no termina así: la respuesta es 35."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Cuánto es 5 × 7?",
+        "questionId": "d3-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) 12",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) 35",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) 30",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) 57",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿En qué terminan los productos de la tabla del 5?",
+        "questionId": "d3-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) En 1 o en 6",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) En 2 o en 7",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) En 0 o en 5",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) En 3 o en 8",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 27",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 28",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 24",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 42",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto es 6 × 5?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 11",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 30",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 35",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 25",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "Si 4 × 6 = 24, ¿cuánto es 8 × 6?",
+        "questionId": "d3-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 48",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 32",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 30",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 14",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cuánto es 7 × 4?",
+        "questionId": "d3-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 11",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 21",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 28",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 35",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "El 8 es el doble de ¿qué número?",
+        "questionId": "d3-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) 4",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) 2",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) 6",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) 3",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cómo se comprueba 7 × 4 con una suma?",
+        "questionId": "d3-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) 7 + 4",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) 4 + 4 + 4",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) 7 + 7 + 7",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) 7 + 7 + 7 + 7",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica cómo hallas 6 × 5 con la tabla del 3.",
+        "questionId": "d3-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Halla 8 × 5 con el doble de 4 × 5. Escribe los pasos.",
+        "questionId": "d3-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja 6 grupos de 5 puntos y escribe 6 × 5 = 30.",
+        "questionId": "d3-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja la flecha del doble: de 4 × 6 = 24 a 8 × 6 = 48.",
+        "questionId": "d3-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja 8 cajas con 6 lápices en cada una."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe el doble: 4 × 6 = 24 y luego 8 × 6 = 48."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula cuántos grupos hay y cuántos lápices en cada uno."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que 48 sea el doble de 24."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d3-q1",
-        "originDay": 2,
+        "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 3 × 4?",
+        "prompt": "¿Cuánto es 5 × 7?",
         "choices": [
-          "0 o 5",
-          "42",
           "12",
-          "24"
+          "35",
+          "30",
+          "57"
         ],
-        "answer": "12"
+        "answer": "35",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d3-q2",
-        "originDay": 2,
+        "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué representa 5 × 3?",
+        "prompt": "¿En qué terminan los productos de la tabla del 5?",
         "choices": [
-          "64",
-          "Cinco grupos de tres",
-          "0 o 5",
+          "En 1 o en 6",
+          "En 2 o en 7",
+          "En 0 o en 5",
+          "En 3 o en 8"
+        ],
+        "answer": "En 0 o en 5",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
+        "choices": [
+          "27",
+          "28",
+          "24",
           "42"
         ],
-        "answer": "Cinco grupos de tres"
+        "answer": "42",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 6 × 5?",
+        "choices": [
+          "11",
+          "30",
+          "35",
+          "25"
+        ],
+        "answer": "30",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d3-q5",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "Si 4 × 6 = 24, ¿cuánto es 8 × 6?",
+        "choices": [
+          "48",
+          "32",
+          "30",
+          "14"
+        ],
+        "answer": "48",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d3-q6",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 7 × 4?",
+        "choices": [
+          "11",
+          "21",
+          "28",
+          "35"
+        ],
+        "answer": "28",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 10×6?",
+        "prompt": "El 8 es el doble de ¿qué número?",
         "choices": [
-          "60",
-          "16",
-          "106",
-          "610"
+          "4",
+          "2",
+          "6",
+          "3"
         ],
-        "answer": "60"
+        "answer": "4",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Usa el ejemplo de la lección: ¿Cuánto es 12 × 11?",
+        "prompt": "¿Cómo se comprueba 7 × 4 con una suma?",
         "choices": [
-          "0 o 5",
-          "42",
-          "64",
-          "132"
+          "7 + 4",
+          "4 + 4 + 4",
+          "7 + 7 + 7",
+          "7 + 7 + 7 + 7"
         ],
-        "answer": "132"
-      },
-      {
-        "id": "d3-q9",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Usa el ejemplo de la lección: ¿Cuánto es 3 × 4?",
-        "choices": [
-          "64",
-          "72",
-          "12",
-          "42"
-        ],
-        "answer": "12"
-      },
-      {
-        "id": "d3-q10",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Usa el ejemplo de la lección: ¿Qué representa 5 × 3?",
-        "choices": [
-          "132",
-          "Cinco grupos de tres",
-          "64",
-          "72"
-        ],
-        "answer": "Cinco grupos de tres"
-      },
-      {
-        "id": "d3-q11",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Usa el ejemplo de la lección: ¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
-        "choices": [
-          "24",
-          "72",
-          "132",
-          "12"
-        ],
-        "answer": "24"
-      },
-      {
-        "id": "d3-q12",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Usa el ejemplo de la lección: ¿Qué terminación puede tener la tabla del 5?",
-        "choices": [
-          "132",
-          "12",
-          "Cinco grupos de tres",
-          "0 o 5"
-        ],
-        "answer": "0 o 5"
+        "answer": "7 + 7 + 7 + 7",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Piensa con multiplicaciones: Practicar 5–8» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica cómo hallas 6 × 5 con la tabla del 3.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy entran las tablas del **5 al 8**.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Halla 8 × 5 con el doble de 4 × 5. Escribe los pasos.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «El 7 se afirma con repetición breve: elige cuatro productos y repítelos en voz alta.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 6 grupos de 5 puntos y escribe 6 × 5 = 30.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja la flecha del doble: de 4 × 6 = 24 a 8 × 6 = 48.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

@@ -7,29 +7,1283 @@
   "level": 6,
   "subject": "ing",
   "locale": "en",
-  "title": "Spanish verbs: -ar, -er, and -ir",
+  "title": "Spanish -ar verbs: root and ending",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
     "points": [
       {
         "id": "p1",
-        "heading": "First conjugation (-ar / cantar)",
-        "body": "A Spanish verb names an action. To **conjugate** means to change it for the person who acts. An **infinitive** is the dictionary form, such as **cantar**. The **stem** remains after you drop **-ar**; the **ending** is what you add.\n\n**Cantar** belongs to the **-ar** family. With stem **cant-**: yo **canto**, tú **cantas**, él **canta**. **Hablar** follows the same pattern: hablo, hablas, habla.\n\nPractice: Now it's your turn. Your turn. Write yo / tú / él for cantar and hablar. Say them out loud.\n\nCommon mistake: Keeping the -ar on the stem (cantaro). Drop -ar first, then add the ending."
+        "heading": "Punto 1: El verbo cambia con quien actúa",
+        "body": "¿Por qué decimos «yo canto» y «tú cantas»? ¿Qué cambia?\n\nUn verbo es una palabra que dice una acción. «Cantar», «comer» y «vivir» son verbos. Cuando cambia quien actúa, el final del verbo cambia. Cambiar el verbo así se llama conjugar."
       },
       {
         "id": "p2",
-        "heading": "Second conjugation (-er / comer)",
-        "body": "**Comer** is an infinitive in the Spanish **-er** family. Its stem is **com-**. Present endings for yo, tú, and él are **-o**, **-es**, and **-e**.\n\nCom- plus -o makes yo **como**; plus -es makes tú **comes**; plus -e makes él **come**. **Beber** works the same way: bebo, bebes, bebe. Notice -er and -ir share -o/-es/-e for these three persons, but the infinitive ending still shows the family.\n\nPractice: Now it's your turn. Your turn. Write yo / tú / él for comer and beber. Circle the endings.\n\nCommon mistake: Using -as/-a (from -ar) with comer. Say comes / come, not comas / coma in this present pattern."
+        "heading": "Punto 2: La raíz y la terminación",
+        "body": "Sigamos. Mira «cantar». Si le quitas «-ar», ¿qué parte te queda?\n\n«Cantar» es el infinitivo: el verbo como en el diccionario. Si quitas «-ar», queda «cant-». Esa parte es la raíz. La raíz no cambia. Lo que añades al final es la terminación. «Cant-» más «-o» forma «canto»."
       },
       {
         "id": "p3",
-        "heading": "Third conjugation (-ir / vivir)",
-        "body": "**Vivir** is an infinitive in the Spanish **-ir** family. Its stem is **viv-**. For yo, tú, and él the present endings are again **-o**, **-es**, and **-e**: **vivo**, **vives**, **vive**.\n\n**Escribir** follows the same route: escribo, escribes, escribe. Compare three infinitives side by side: cantar / comer / vivir. The family label sits on the infinitive; the person shows in the ending.\n\nPractice: Now it's your turn. Your turn. Make a three-column chart for cantar, comer, and vivir (yo, tú, él).\n\nCommon mistake: Mixing families: writing «yo vive» or «él canto». Match stem family and person ending."
+        "heading": "Punto 3: La familia -ar",
+        "body": "Imagina tres cantantes: yo, tú y él. ¿Cómo dirías «cantar» para cada uno?\n\nSe dice: yo canto, tú cantas, él canta. Quitamos «-ar» y añadimos «-o», «-as» o «-a». «Hablar» hace lo mismo: hablo, hablas, habla. Estos verbos son de la familia «-ar»."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: La familia -er",
+        "body": "Ahora tú: ¿cómo dirías «comer» con yo, tú y él? Usa la misma idea: quita el final y añade otro.\n\nQuitas «-er» y queda la raíz «com-». Se dice: yo como, tú comes, él come. «Beber» hace lo mismo: bebo, bebes, bebe. Estos verbos son de la familia «-er»."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: La familia -ir",
+        "body": "Una pregunta con truco: ¿cómo dirías «vivir»? ¿Se parece a «comer» o a «cantar»?\n\nSe dice: yo vivo, tú vives, él vive. Familias del español: -ar (cantar → canto, cantas, canta), -er (comer → como, comes, come), -ir (vivir → vivo, vives, vive). «Escribir» también: escribo, escribes, escribe."
       }
     ],
-    "summary": "Three Spanish verb families: -ar, -er, and -ir. Conjugate cantar, comer, and vivir for yo, tú, and él.",
-    "memoryPhrase": "Spanish families: **-ar** (cantar → canto, cantas, canta), **-er** (comer → como, comes, come), **-ir** (vivir → vivo, vives, vive)."
+    "summary": "Un verbo dice una acción. Conjugar es cambiar su final: hay tres familias, -ar, -er e -ir.",
+    "memoryPhrase": "Spanish families: **-ar** (cantar → canto, cantas, canta), **-er** (comer → como, comes, come), **-ir** (vivir → vivo, vives, vive).",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja a tres personas: yo, tú y él, haciendo algo. Debajo de cada una escribe un verbo conjugado. Rotula la raíz y la terminación de uno de ellos. Revisa que el final del verbo cambie con cada persona.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Por qué decimos «yo canto» y «tú cantas»? ¿Qué cambia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Punto 1: El verbo cambia con quien actúa"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Un verbo es una palabra que dice una acción."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "«Cantar», «comer» y «vivir» son verbos."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Cuando cambia quien actúa, el final del verbo cambia."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Cambiar el verbo así se llama conjugar."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Sigamos. Mira «cantar». Si le quitas «-ar»,"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "lesson",
+        "text": "¿qué parte te queda?"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 2: La raíz y la terminación"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "lesson",
+        "text": "«Cantar» es el infinitivo: el verbo como en el diccionario."
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Si quitas «-ar», queda «cant-». Esa parte es la raíz."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "La raíz no cambia. Lo que añades al final es la terminación."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "«Cant-» más «-o» forma «canto»."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Imagina tres cantantes: yo, tú y él."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "¿Cómo dirías «cantar» para cada uno?"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "heading",
+        "text": "Punto 3: La familia -ar"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Se dice: yo canto, tú cantas, él canta."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "Quitamos «-ar» y añadimos «-o», «-as» o «-a»."
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "«Hablar» hace lo mismo: hablo, hablas, habla."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "Estos verbos son de la familia «-ar»."
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Ahora tú: ¿cómo dirías «comer» con yo, tú y él?"
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Usa la misma idea: quita el final y añade otro."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "heading",
+        "text": "Punto 4: La familia -er"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "lesson",
+        "text": "Quitas «-er» y queda la raíz «com-»."
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Se dice: yo como, tú comes, él come."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "«Beber» hace lo mismo: bebo, bebes, bebe."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Estos verbos son de la familia «-er»."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿cómo dirías «vivir»?"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "¿Se parece a «comer» o a «cantar»?"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "heading",
+        "text": "Punto 5: La familia -ir"
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Se dice: yo vivo, tú vives, él vive."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Familias del español: -ar (cantar → canto, cantas, canta),"
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "-er (comer → como, comes, come),"
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "-ir (vivir → vivo, vives, vive)."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "«Escribir» también: escribo, escribes, escribe."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué dice un verbo?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Una acción",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) Un lugar",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) Un color",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) Un número",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué significa conjugar un verbo?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Escribirlo más grande",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Quitarle todas las letras",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Traducirlo al inglés",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Cambiarlo según quien actúa",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Qué es «cantar»?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Una raíz",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) El infinitivo del verbo",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Una terminación",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Un pronombre",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "Si quitas «-ar» de «cantar», ¿qué raíz queda?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) canta",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) cantar",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) cant-",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) -ar",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cómo se dice «cantar» con tú?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) canto",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) canta",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) cantar",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) cantas",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cómo se dice «comer» con yo?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) comes",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) como",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) come",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) comer",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Cómo se dice «vivir» con él?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) vive",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) vives",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) vivo",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) vivir",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿De qué familia es «escribir»?",
+        "questionId": "d1-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) -ar",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) -er",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) -ir",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) Ninguna",
+        "questionId": "d1-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe yo, tú y él con el verbo «hablar».",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Explica con tus palabras qué es la raíz de un verbo.",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un esquema: raíz «cant-» y tres terminaciones.",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja tres cajas: familia -ar, -er e -ir, con un verbo.",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja a tres personas: yo, tú y él, haciendo algo."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Debajo de cada una escribe un verbo conjugado."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula la raíz y la terminación de uno de ellos."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que el final del verbo cambie con cada persona."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
@@ -38,129 +1292,193 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: Which ending completes \"yo canto\"?",
+        "prompt": "¿Qué dice un verbo?",
         "choices": [
-          "com-",
-          "yo como",
-          "-o",
-          "-a"
+          "Una acción",
+          "Un lugar",
+          "Un color",
+          "Un número"
         ],
-        "answer": "-o"
+        "answer": "Una acción",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: Which ending completes \"tu hablas\"?",
+        "prompt": "¿Qué significa conjugar un verbo?",
         "choices": [
-          "-es",
-          "-as",
-          "com-",
-          "yo como"
+          "Escribirlo más grande",
+          "Quitarle todas las letras",
+          "Traducirlo al inglés",
+          "Cambiarlo según quien actúa"
         ],
-        "answer": "-as"
+        "answer": "Cambiarlo según quien actúa",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: Which ending completes \"el canta\"?",
+        "prompt": "¿Qué es «cantar»?",
         "choices": [
-          "-a",
-          "yo como",
-          "-es",
-          "escribir"
+          "Una raíz",
+          "El infinitivo del verbo",
+          "Una terminación",
+          "Un pronombre"
         ],
-        "answer": "-a"
+        "answer": "El infinitivo del verbo",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: What is the stem of \"comer\"?",
+        "prompt": "Si quitas «-ar» de «cantar», ¿qué raíz queda?",
         "choices": [
-          "-es",
-          "escribir",
-          "It needs the correct person ending",
-          "com-"
+          "canta",
+          "cantar",
+          "cant-",
+          "-ar"
         ],
-        "answer": "com-"
+        "answer": "cant-",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: Which form means \"I eat\"?",
+        "prompt": "¿Cómo se dice «cantar» con tú?",
         "choices": [
-          "It needs the correct person ending",
-          "-o",
-          "yo como",
-          "escribir"
+          "canto",
+          "canta",
+          "cantar",
+          "cantas"
         ],
-        "answer": "yo como"
+        "answer": "cantas",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: Which ending completes \"tu vives\"?",
+        "prompt": "¿Cómo se dice «comer» con yo?",
         "choices": [
-          "-as",
-          "-es",
-          "It needs the correct person ending",
-          "-o"
+          "comes",
+          "como",
+          "come",
+          "comer"
         ],
-        "answer": "-es"
+        "answer": "como",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. Think about the main idea: What is the infinitive of \"escribo\"?",
+        "prompt": "¿Cómo se dice «vivir» con él?",
         "choices": [
-          "escribir",
-          "-o",
-          "-as",
-          "-a"
+          "vive",
+          "vives",
+          "vivo",
+          "vivir"
         ],
-        "answer": "escribir"
+        "answer": "vive",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Choose the correct answer. What is **cantar**?",
+        "prompt": "¿De qué familia es «escribir»?",
         "choices": [
-          "An infinitive",
-          "A country",
-          "A number",
-          "A map"
+          "-ar",
+          "-er",
+          "-ir",
+          "Ninguna"
         ],
-        "answer": "An infinitive"
+        "answer": "-ir",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Find and copy the exact words “First conjugation (-ar / cantar)” from this class. Then explain what they mean in your own words."
+        "prompt": "Escribe yo, tú y él con el verbo «hablar».",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Find and copy the exact words “A Spanish verb names an action.” from this class. Then explain what they mean in your own words."
+        "prompt": "Explica con tus palabras qué es la raíz de un verbo.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Find and copy the exact words “**Cantar** belongs to the **-ar** family.” from this class. Then explain what they mean in your own words."
+        "prompt": "Dibuja un esquema: raíz «cant-» y tres terminaciones.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Find and copy the exact words “Practice: Now it's your turn.” from this class. Then explain what they mean in your own words."
+        "prompt": "Dibuja tres cajas: familia -ar, -er e -ir, con un verbo.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

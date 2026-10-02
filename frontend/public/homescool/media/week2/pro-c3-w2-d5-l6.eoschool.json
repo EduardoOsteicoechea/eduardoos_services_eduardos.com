@@ -14,142 +14,1470 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Contamos lo aprendido",
-        "body": "Hoy cierras la semana de la gota-lupa y preparas tu miniexposición. Presentar es contar con claridad qué investigaste, qué materiales usaste, qué observaste y qué conclusión escribiste.\n\nUn orden útil es: propósito (la pregunta de la gota redonda), materiales (aro, agua, letras), observación (lo que anotaste en tabla) y explicación (refracción y lente convexa). Ensaya en voz alta dos minutos sin leer solo el título; muestra tu bitácora o un dibujo de la gota. Pide a tu audiencia que haga una pregunta y respóndela con tus datos, no inventando.\n\nPráctica: Ahora te toca a ti. Graba o practica frente a un adulto siguiendo ese orden. Termina con tu frase «Creo que pasó porque…».\n\nError común: No leas únicamente el título del experimento. Cuenta pasos, datos y conclusión."
+        "heading": "Punto 1: Recordar la semana",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana investigaste si una gota puede ser lupa.\nRepetiste, anotaste datos y escribiste tu conclusión.\nHoy se la cuentas a alguien con orden.\n\nSin mirar nada: ¿qué preguntaste, qué hiciste y qué descubriste esta semana?\n\nPreguntaste si una gota redonda agranda las letras. Armaste un aro y formaste una gota con agua. Repetiste, anotaste y explicaste con la refracción."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Cómo contarlo con orden",
+        "body": "Si cuentas todo revuelto, ¿se entiende? ¿Qué orden usarías?\n\nPrimero el propósito: la pregunta de la gota redonda. Luego los materiales: alambre, agua y letras pequeñas. Después la observación: lo que anotaste en la tabla. Al final la explicación: refracción y lente convexa."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Mostrar tus datos",
+        "body": "Imagina que ya hablas frente a tu familia. ¿Qué mostrarías para que te crean?\n\nMuestra tu bitácora o un dibujo de la gota. Ensaya dos minutos en voz alta, sin leer solo el título. Habla despacio y mira a quien te escucha."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Responder con tus datos",
+        "body": "Una pregunta con truco: si alguien pregunta algo que no anotaste, ¿qué respondes?\n\nResponde con lo que anotaste. No inventes una respuesta. Si no lo sabes, di: «Lo voy a probar otra vez». Escucha cada pregunta con respeto."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: El cierre de tu exposición",
+        "body": "Ahora tú: ¿con qué frase terminarías tu explicación?\n\nTermina con: «Creo que pasó porque…». Explica la refracción: la luz cambia de dirección. Y la gota redonda actúa como una lente convexa. Da las gracias a quien te escuchó."
       }
     ],
-    "summary": "Esta semana seguimos con: Presentamos nuestra gota-lupa. Lee cada parte con calma y prueba la actividad."
+    "summary": "Al exponer cuentas el propósito, los materiales, lo que viste y por qué pasó.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja a un niño mostrando su bitácora a su familia. Dibuja el aro con la gota sobre la mesa. Rotula: propósito, materiales, observación y explicación. Añade un globo con la frase «Creo que pasó porque…».",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Esta semana investigaste si una gota puede ser lupa."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Repetiste, anotaste datos y escribiste tu conclusión."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hoy se la cuentas a alguien con orden."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Sin mirar nada: ¿qué preguntaste, qué hiciste y qué"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "descubriste esta semana?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "heading",
+        "text": "Punto 1: Recordar la semana"
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Preguntaste si una gota redonda agranda las letras."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Armaste un aro y formaste una gota con agua."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Repetiste, anotaste y explicaste con la refracción."
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Si cuentas todo revuelto, ¿se entiende? ¿Qué orden"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "usarías?"
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "heading",
+        "text": "Punto 2: Cómo contarlo con orden"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Primero el propósito: la pregunta de la gota redonda."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Luego los materiales: alambre, agua y letras pequeñas."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Después la observación: lo que anotaste en la tabla."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Al final la explicación: refracción y lente convexa."
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Imagina que ya hablas frente a tu familia. ¿Qué"
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "mostrarías para que te crean?"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "heading",
+        "text": "Punto 3: Mostrar tus datos"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Muestra tu bitácora o un dibujo de la gota."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Ensaya dos minutos en voz alta, sin leer solo el título."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Habla despacio y mira a quien te escucha."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: si alguien pregunta algo que"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "no anotaste, ¿qué respondes?"
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "heading",
+        "text": "Punto 4: Responder con tus datos"
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Responde con lo que anotaste."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "No inventes una respuesta."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Si no lo sabes, di: «Lo voy a probar otra vez»."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Escucha cada pregunta con respeto."
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Ahora tú: ¿con qué frase terminarías tu explicación?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: El cierre de tu exposición"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Termina con: «Creo que pasó porque…»."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Explica la refracción: la luz cambia de dirección."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Y la gota redonda actúa como una lente convexa."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Da las gracias a quien te escuchó."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Qué se cuenta primero en la exposición?",
+        "questionId": "d5-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) Las gracias",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) La conclusión",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) El precio",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) El propósito",
+        "questionId": "d5-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Qué materiales usaste?",
+        "questionId": "d5-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) Pelota y cuerda",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) Alambre, agua y letras pequeñas",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) Pintura y arena",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) Libros y mesa",
+        "questionId": "d5-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Qué muestras mientras hablas?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Tu bitácora o un dibujo",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Una película",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Un juguete nuevo",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Nada",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto ensayas en voz alta?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Un segundo",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Una hora",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Dos minutos",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Una semana",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "Si no sabes la respuesta, ¿qué haces?",
+        "questionId": "d5-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) Dices que lo probarás otra vez",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) La inventas",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) Cambias de tema",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) Te vas",
+        "questionId": "d5-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Qué explica por qué las letras se ven más grandes?",
+        "questionId": "d5-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) El color del agua",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) El peso del alambre",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) El tamaño del tazón",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) La refracción de la luz",
+        "questionId": "d5-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Con qué frase cierras la explicación?",
+        "questionId": "d5-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) «Vi que…»",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) «Creo que pasó porque…»",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) «Hasta luego»",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) «No lo sé»",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿A qué se parece la gota redonda?",
+        "questionId": "d5-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) A una pared",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) A una regla",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) A una lente convexa",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) A un cubo",
+        "questionId": "d5-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Escribe tu exposición en cuatro líneas, en orden.",
+        "questionId": "d5-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Escribe una pregunta posible y cómo la responderías.",
+        "questionId": "d5-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja un esquema del orden: propósito a explicación.",
+        "questionId": "d5-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja la luz entrando en la gota con flechas.",
+        "questionId": "d5-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja a un niño mostrando su bitácora a su familia."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Dibuja el aro con la gota sobre la mesa."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula: propósito, materiales, observación y explicación."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Añade un globo con la frase «Creo que pasó porque…»."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d5-q1",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué cambia cuando miras letras a través de una gota redonda?",
+        "prompt": "¿Qué se cuenta primero en la exposición?",
         "choices": [
-          "Las letras se vuelven azules.",
-          "El papel se hace més pesado.",
-          "La gota escribe palabras.",
-          "Las letras pueden verse més grandes."
+          "Las gracias",
+          "La conclusión",
+          "El precio",
+          "El propósito"
         ],
-        "answer": "Las letras se vuelven azules."
+        "answer": "El propósito",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d5-q2",
-        "originDay": 4,
+        "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo debe ser la gota para parecerse a una lupa?",
+        "prompt": "¿Qué materiales usaste?",
         "choices": [
-          "Plana como una regla.",
-          "Llena de arena.",
-          "Redonda y abultada en el centro.",
-          "Cuadrada y seca."
+          "Pelota y cuerda",
+          "Alambre, agua y letras pequeñas",
+          "Pintura y arena",
+          "Libros y mesa"
         ],
-        "answer": "Redonda y abultada en el centro."
+        "answer": "Alambre, agua y letras pequeñas",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d5-q3",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué muestras mientras hablas?",
+        "choices": [
+          "Tu bitácora o un dibujo",
+          "Una película",
+          "Un juguete nuevo",
+          "Nada"
+        ],
+        "answer": "Tu bitácora o un dibujo",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d5-q4",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Cuánto ensayas en voz alta?",
+        "choices": [
+          "Un segundo",
+          "Una hora",
+          "Dos minutos",
+          "Una semana"
+        ],
+        "answer": "Dos minutos",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d5-q5",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "Si no sabes la respuesta, ¿qué haces?",
+        "choices": [
+          "Dices que lo probarás otra vez",
+          "La inventas",
+          "Cambias de tema",
+          "Te vas"
+        ],
+        "answer": "Dices que lo probarás otra vez",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d5-q6",
+        "originDay": 5,
+        "type": "mcq",
+        "prompt": "¿Qué explica por qué las letras se ven más grandes?",
+        "choices": [
+          "El color del agua",
+          "El peso del alambre",
+          "El tamaño del tazón",
+          "La refracción de la luz"
+        ],
+        "answer": "La refracción de la luz",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué compartes en la expo?",
+        "prompt": "¿Con qué frase cierras la explicación?",
         "choices": [
-          "Tu observación y conclusión",
-          "Un experimento distinto",
-          "Silencio total",
-          "Solo bromas"
+          "«Vi que…»",
+          "«Creo que pasó porque…»",
+          "«Hasta luego»",
+          "«No lo sé»"
         ],
-        "answer": "Tu observación y conclusión"
+        "answer": "«Creo que pasó porque…»",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cómo se ordena una presentación clara?",
+        "prompt": "¿A qué se parece la gota redonda?",
         "choices": [
-          "Propósito, materiales, observación y explicación.",
-          "Explicación, despedida y nada més.",
-          "Solo el título.",
-          "Un chiste y una firma."
+          "A una pared",
+          "A una regla",
+          "A una lente convexa",
+          "A un cubo"
         ],
-        "answer": "Propósito, materiales, observación y explicación."
-      },
-      {
-        "id": "d5-q9",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Cuál es un buen orden para presentar el experimento?",
-        "choices": [
-          "Explicación, despedida y nada més.",
-          "Solo el título.",
-          "Un chiste y una firma.",
-          "Propósito, materiales, observación y explicación."
-        ],
-        "answer": "Propósito, materiales, observación y explicación."
-      },
-      {
-        "id": "d5-q10",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Cómo se ordena una presentación clara?",
-        "choices": [
-          "Solo el título.",
-          "Un chiste y una firma.",
-          "Propósito, materiales, observación y explicación.",
-          "Explicación, despedida y nada més."
-        ],
-        "answer": "Propósito, materiales, observación y explicación."
-      },
-      {
-        "id": "d5-q11",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Cuál es un buen orden para presentar el experimento?",
-        "choices": [
-          "Un chiste y una firma.",
-          "Propósito, materiales, observación y explicación.",
-          "Explicación, despedida y nada més.",
-          "Solo el título."
-        ],
-        "answer": "Propósito, materiales, observación y explicación."
-      },
-      {
-        "id": "d5-q12",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Cómo se ordena una presentación clara?",
-        "choices": [
-          "Propósito, materiales, observación y explicación.",
-          "Explicación, despedida y nada més.",
-          "Solo el título.",
-          "Un chiste y una firma."
-        ],
-        "answer": "Propósito, materiales, observación y explicación."
+        "answer": "A una lente convexa",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Contamos lo aprendido» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe tu exposición en cuatro líneas, en orden.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy cierras la semana de la gota-lupa y preparas tu miniexposición.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Escribe una pregunta posible y cómo la responderías.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Un orden útil es: propósito (la pregunta de la gota redonda), materiales (aro, agua, letras), observación (lo que anotaste en tabla) y explicación (refracción y lente convexa).» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja un esquema del orden: propósito a explicación.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja la luz entrando en la gota con flechas.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

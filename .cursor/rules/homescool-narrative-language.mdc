@@ -6,21 +6,33 @@ globs:
   - frontend/public/skills/eoschool/**
   - .cursor/skills/eoschool/**
   - scripts/build-homescool-curriculum.mjs
+  - scripts/build-homescool-ask-first-v2.mjs
+  - scripts/homescool-ask-first-content/**
   - docs/specs/009-homescool-narrative-language.md
 ---
 
 # Homescool narrative language
 
-When authoring or revising **Homescool** `.eoschool` JSON (level **6**, ≈ **8 years**), follow the full contract:
+When authoring or revising **Homescool** `.eoschool` JSON (level **6**, ≈ **8 years**), follow:
 
 **[`docs/specs/009-homescool-narrative-language.md`](../../docs/specs/009-homescool-narrative-language.md)**
 
-Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) pedagogy (intro/deepen/review, quiz counts, dual storage).
+Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) pedagogy (intro/deepen/review, quiz counts, dual storage) and [`homescool-class-method-v2.mdc`](homescool-class-method-v2.mdc) for the **Letter grid v2** printed sheet.
 
-## Non-negotiables (summary)
+## Letter grid v2 (printed sheet — canonical for new rewrites)
 
-- Split each `lesson.points[].body` with **blank lines** into Idea central → Explora → **`Práctica: Ahora te toca a ti.`** → **`Error común:`**.
-- **Never** embed UI labels (`Idea central:`, `Explora:`, `explora:`) in the body text.
-- **Never** use forbidden boilerplate listed in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).
-- Adapt quizzes by **replacing** questions, not only prefixes.
-- After cell edits: `node scripts/build-homescool-curriculum.mjs` with API env to refresh `curriculum.json` and Mongo.
+Authority: **class-method-v2** ask-first rhythm on `lesson.slotSequence`:
+
+**pregunta → espacio en blanco → respuesta corta → `Cópiala aquí:` + 2 líneas**
+
+- Opening + Repaso (3 lines); typically **5** points per class.  
+- **Do not** require `Práctica: Ahora te toca a ti.` or `Error común:` as separate sheet blocks — fold practice/mistakes into the same beat.  
+- MCQ: one-line prompts; **do not** require the prefix «Elige la respuesta correcta.».  
+- Soft limit **≤ 66** characters per lesson line for column width.
+
+## Non-negotiables (all surfaces)
+
+- Voice ≈ 8 years; short complete sentences; gloss school terms on first use.  
+- **Never** forbidden boilerplate in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).  
+- Adapt quizzes by **replacing** questions, not only prefixes.  
+- After cell edits for publish: `node scripts/build-homescool-curriculum.mjs` only when the user asks.

@@ -14,144 +14,1472 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Orden y decenas",
-        "body": "Hoy practicamos las tablas del 9 al 12, el segundo bloque de la semana. Siguen siendo grupos iguales, pero conviene usar el orden de los factores y las decenas para ir más seguro. Puedes girar los factores: 8×9 y 9×8 dan 72 porque cuentas los mismos grupos. Con 10×8 piensa en ocho decenas y escribe 80; con 10×12 son doce decenas, o sea 120. Para **16×4** descompón **10×4=40** más **6×4=24** y suma 64. Repasa 9×6=54, 9×8=72, 11×11=121 y 12×12=144; di en voz alta cuántos grupos representa cada operación. En una feria, **12** puestos con **9** jugos cada uno son **12×9=108** jugos.\n\nObserva un caso real de «Orden y decenas». Di en una frase qué aprendiste: Hoy practicamos las tablas del 9 al 12, el segundo.\n\nPráctica: Ahora te toca a ti. Resuelve 9×8, 10×8, 11×11 y 12×12. Comprueba uno girando el orden de los factores.\n\nError común: No confundas multiplicar con sumar. 10×8 no es 10+8; son ocho grupos de diez."
+        "heading": "Punto 1: El orden no cambia el producto",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicamos patrones y dobles del 5 al 8.\nVimos que 6 × 7 = 42 y que 8 × 6 = 48.\nHoy pasamos al bloque del 9 al 12.\n\nSi 9 × 8 = 72, ¿cuánto crees que es 8 × 9?\n\nTambién 72: son los mismos grupos contados al revés. Cambiar el orden de los factores no cambia el producto. Puedes elegir la tabla que mejor recuerdes. Si sabes 8 × 9, ya sabes 9 × 8."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Multiplicar por 10",
+        "body": "¿Cuánto crees que es 10 × 8? ¿80 u 800?\n\nEs 80: son diez grupos de ocho. También son ocho grupos de diez, o sea ocho decenas. Ocho decenas valen 80, no 800. Y 10 × 12 = 120: doce grupos de diez."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Los productos del 11",
+        "body": "Piensa en 11 × 11. ¿Seguirá repitiéndose el dígito?\n\nNo siempre: 11 × 11 = 121. Hasta 11 × 9 = 99 el dígito sí se repite. Para 12 × 11: 12 × 10 = 120 y 12 × 1 = 12. 120 + 12 = 132."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: El 12 se parte en 10 y 2",
+        "body": "Para 12 × 12, ¿cómo usarías la tabla del 10 y la del 2?\n\nParte el segundo 12 en 10 y 2. 12 × 10 = 120 y 12 × 2 = 24. 120 + 24 = 144. Entonces 12 × 12 = 144."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Un problema de feria",
+        "body": "En una feria hay 12 puestos con 9 jugos cada uno. ¿Cuántos jugos hay en total?\n\nSon doce grupos de nueve: 12 × 9. Parte el 12: 10 × 9 = 90 y 2 × 9 = 18. 90 + 18 = 108 jugos. Comprueba: 9 × 12 también da 108."
       }
     ],
-    "summary": "Esta semana seguimos con: Practicamos del 9 al 12. Lee cada parte con calma y prueba la actividad.",
+    "summary": "El orden de los factores no cambia el producto, y el 12 se parte en 10 y 2.",
     "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
-    "priorDayRecap": "Ayer practicaste patrones y dobles en las tablas del 5 al 8. Hoy pasamos al bloque del 9 al 12, siempre con grupos iguales y comprobaciones."
+    "priorDayRecap": "Ayer practicaste patrones y dobles en las tablas del 5 al 8. Hoy pasamos al bloque del 9 al 12, siempre con grupos iguales y comprobaciones.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja 8 cajas con 10 frutas en cada una. Escribe al lado: 8 × 10 = 80. Rotula «ocho decenas» y «80 frutas». Revisa que no hayas escrito 800.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer practicamos patrones y dobles del 5 al 8."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Vimos que 6 × 7 = 42 y que 8 × 6 = 48."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Hoy pasamos al bloque del 9 al 12."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Si 9 × 8 = 72, ¿cuánto crees que es 8 × 9?"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "heading",
+        "text": "Punto 1: El orden no cambia el producto"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "lesson",
+        "text": "También 72: son los mismos grupos contados al revés."
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Cambiar el orden de los factores no cambia el producto."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Puedes elegir la tabla que mejor recuerdes."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Si sabes 8 × 9, ya sabes 9 × 8."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "¿Cuánto crees que es 10 × 8? ¿80 u 800?"
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "heading",
+        "text": "Punto 2: Multiplicar por 10"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "lesson",
+        "text": "Es 80: son diez grupos de ocho."
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "También son ocho grupos de diez, o sea ocho decenas."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Ocho decenas valen 80, no 800."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Y 10 × 12 = 120: doce grupos de diez."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "lesson",
+        "text": "Piensa en 11 × 11. ¿Seguirá repitiéndose el dígito?"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "heading",
+        "text": "Punto 3: Los productos del 11"
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "No siempre: 11 × 11 = 121."
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "Hasta 11 × 9 = 99 el dígito sí se repite."
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Para 12 × 11: 12 × 10 = 120 y 12 × 1 = 12."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "120 + 12 = 132."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "Para 12 × 12, ¿cómo usarías la tabla del 10 y la"
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "lesson",
+        "text": "del 2?"
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "heading",
+        "text": "Punto 4: El 12 se parte en 10 y 2"
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Parte el segundo 12 en 10 y 2."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "12 × 10 = 120 y 12 × 2 = 24."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "120 + 24 = 144."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Entonces 12 × 12 = 144."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "En una feria hay 12 puestos con 9 jugos cada uno."
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "¿Cuántos jugos hay en total?"
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: Un problema de feria"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Son doce grupos de nueve: 12 × 9."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Parte el 12: 10 × 9 = 90 y 2 × 9 = 18."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "90 + 18 = 108 jugos."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Comprueba: 9 × 12 también da 108."
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Cuánto es 12 × 12?",
+        "questionId": "d3-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) 121",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) 144",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) 122",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) 24",
+        "questionId": "d3-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuánto es 10 × 8?",
+        "questionId": "d3-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) 800",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) 18",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) 80",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) 90",
+        "questionId": "d3-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuánto valen ocho decenas?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 8",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 800",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 88",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 80",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto es 11 × 11?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 111",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 121",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 22",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 110",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cuánto es 12 × 11?",
+        "questionId": "d3-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 132",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 122",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 123",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 144",
+        "questionId": "d3-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cuántos jugos hay en 12 puestos con 9 cada uno?",
+        "questionId": "d3-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 90",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 21",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 108",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 118",
+        "questionId": "d3-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
+        "questionId": "d3-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) 72",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) 17",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) 64",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) 81",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cómo se parte 12 × 12 para multiplicar fácil?",
+        "questionId": "d3-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) 12 + 12",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) 10 × 2",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) 12 × 1 y 12 × 1",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) 12 × 10 y 12 × 2",
+        "questionId": "d3-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Explica por qué 10 × 8 vale 80 y no 800.",
+        "questionId": "d3-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Resuelve 12 × 9 partiendo el 12 en 10 y 2. Escribe los pasos.",
+        "questionId": "d3-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja 12 × 9 en dos cajas: 10 × 9 y 2 × 9.",
+        "questionId": "d3-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja 8 cajas de 10 frutas y escribe 8 × 10 = 80.",
+        "questionId": "d3-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja 8 cajas con 10 frutas en cada una."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe al lado: 8 × 10 = 80."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula «ocho decenas» y «80 frutas»."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que no hayas escrito 800."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d3-q1",
-        "originDay": 2,
+        "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 5 × 9?",
+        "prompt": "¿Cuánto es 12 × 12?",
         "choices": [
-          "40",
-          "50",
-          "54",
-          "45"
+          "121",
+          "144",
+          "122",
+          "24"
         ],
-        "answer": "45"
+        "answer": "144",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d3-q2",
-        "originDay": 2,
+        "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué terminación aparece en los productos de la tabla del 5?",
+        "prompt": "¿Cuánto es 10 × 8?",
         "choices": [
-          "3 o 8.",
-          "Siempre 1.",
-          "0 o 5.",
-          "2 o 7."
+          "800",
+          "18",
+          "80",
+          "90"
         ],
-        "answer": "0 o 5."
+        "answer": "80",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuánto valen ocho decenas?",
+        "choices": [
+          "8",
+          "800",
+          "88",
+          "80"
+        ],
+        "answer": "80",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 11 × 11?",
+        "choices": [
+          "111",
+          "121",
+          "22",
+          "110"
+        ],
+        "answer": "121",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d3-q5",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 12 × 11?",
+        "choices": [
+          "132",
+          "122",
+          "123",
+          "144"
+        ],
+        "answer": "132",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d3-q6",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cuántos jugos hay en 12 puestos con 9 cada uno?",
+        "choices": [
+          "90",
+          "21",
+          "108",
+          "118"
+        ],
+        "answer": "108",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 12×12?",
+        "prompt": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
         "choices": [
-          "144",
-          "121",
-          "122",
-          "24"
+          "72",
+          "17",
+          "64",
+          "81"
         ],
-        "answer": "144"
+        "answer": "72",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué resultado forman ocho decenas?",
+        "prompt": "¿Cómo se parte 12 × 12 para multiplicar fácil?",
         "choices": [
-          "800",
-          "90",
-          "80",
-          "18"
+          "12 + 12",
+          "10 × 2",
+          "12 × 1 y 12 × 1",
+          "12 × 10 y 12 × 2"
         ],
-        "answer": "800"
-      },
-      {
-        "id": "d3-q9",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Elige la respuesta que coincide con la actividad de hoy. ¿Cuánto es 8 × 10?",
-        "choices": [
-          "90",
-          "80",
-          "18",
-          "800"
-        ],
-        "answer": "80"
-      },
-      {
-        "id": "d3-q10",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Piensa en la práctica de hoy. ¿Qué resultado forman ocho decenas?",
-        "choices": [
-          "80",
-          "18",
-          "800",
-          "90"
-        ],
-        "answer": "80"
-      },
-      {
-        "id": "d3-q11",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué opción demuestra que entendiste la lección? ¿Cuánto es 8 × 10?",
-        "choices": [
-          "18",
-          "800",
-          "90",
-          "80"
-        ],
-        "answer": "800"
-      },
-      {
-        "id": "d3-q12",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Busca el detalle importante. ¿Qué resultado forman ocho decenas?",
-        "choices": [
-          "800",
-          "90",
-          "80",
-          "18"
-        ],
-        "answer": "800"
+        "answer": "12 × 10 y 12 × 2",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Orden y decenas» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Explica por qué 10 × 8 vale 80 y no 800.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Hoy practicamos las tablas del 9 al 12, el segundo bloque de la semana.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Resuelve 12 × 9 partiendo el 12 en 10 y 2. Escribe los pasos.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Mira de nuevo el ejemplo de la primera oración.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 12 × 9 en dos cajas: 10 × 9 y 2 × 9.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 8 cajas de 10 frutas y escribe 8 × 10 = 80.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },

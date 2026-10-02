@@ -1,0 +1,176 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "mat",
+  "locale": "es",
+  "title": "Multiplicar con las tablas del 1 al 12",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Piensa con multiplicaciones: Tablas 1 a 4",
+        "body": "Multiplicar es formar **grupos iguales**. Los números que se multiplican son **factores**; la respuesta es el **producto**. El signo × dice cuántos grupos y cuántos hay en cada grupo. Tablas **1 a 4**: la del 1 conserva el número (1×9=9); la del 2 busca el doble; la del 3 y la del 4 pueden comprobarse con suma repetida (3×4=4+4+4).\n\nObserva un caso real de «Piensa con multiplicaciones: Tablas 1 a 4». Di en una frase qué aprendiste: Multiplicar es formar grupos iguales. Los números .\n\nPráctica: Ahora te toca a ti. Resuelve 1×8, 2×7, 3×6 y 4×9. Escribe la suma repetida de uno de ellos.\n\nError común: Sumar los factores (3+4) en lugar de formar grupos (3×4)."
+      },
+      {
+        "id": "p2",
+        "heading": "Piensa con multiplicaciones: Tablas 5 a 8",
+        "body": "Tablas **5 a 8**: la del 5 termina en 0 o 5; la del 6 combina ideas del 2 y del 3; la del 7 pide práctica paciente; la del 8 duplica la del 4. Busca patrones en voz alta: 5, 10, 15, 20… y 8, 16, 24…. Si dudas, dibuja grupos o usa dedos por grupos, no adivines.\n\nObserva un caso real de «Piensa con multiplicaciones: Tablas 5 a 8». Di en una frase qué aprendiste: Tablas 5 a 8: la del 5 termina en 0 o 5; la del 6 .\n\nPráctica: Ahora te toca a ti. Resuelve 5×6, 6×4, 7×3 y 8×5. Explica un patrón que usaste.\n\nError común: Memorizar sin patrón. Un patrón te ayuda cuando olvidas un producto."
+      },
+      {
+        "id": "p3",
+        "heading": "Piensa con multiplicaciones: Tablas 9 a 12",
+        "body": "Tablas **9 a 12**: la del 9 tiene trucos con dedos o suma de dígitos; la del 10 añade un cero al otro factor; la del 11 (hasta 9×11) repite dígitos; la del 12 une 10× y 2×. Ejemplo: 12×7 = (10×7)+(2×7) = 70+14 = 84. Descomponer hace manejable lo grande. Compara dos ejemplos en voz alta y señala qué cambia y qué se mantiene igual.\n\nObserva un caso real de «Piensa con multiplicaciones: Tablas 9 a 12». Di en una frase qué aprendiste: Tablas 9 a 12: la del 9 tiene trucos con dedos o s.\n\nPráctica: Ahora te toca a ti. Resuelve 9×6, 10×8, 11×5 y 12×7. Muestra una descomposición para 12×7.\n\nError común: Olvidar que 12×n = 10×n + 2×n. Usa esa ayuda antes de rendirte."
+      }
+    ],
+    "summary": "Multiplicar como grupos iguales: tablas del 1 al 12 con patrones y comprobación."
+  },
+  "quiz": {
+    "questionCount": 12,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 3 × 4?",
+        "choices": [
+          "0 o 5",
+          "42",
+          "12",
+          "24"
+        ],
+        "answer": "12"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Qué representa 5 × 3?",
+        "choices": [
+          "64",
+          "Cinco grupos de tres",
+          "0 o 5",
+          "42"
+        ],
+        "answer": "Cinco grupos de tres"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Cuál es el doble de 2 × 6 = 12 para hallar 4 × 6?",
+        "choices": [
+          "24",
+          "42",
+          "64",
+          "72"
+        ],
+        "answer": "24"
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Qué terminación puede tener la tabla del 5?",
+        "choices": [
+          "64",
+          "72",
+          "132",
+          "0 o 5"
+        ],
+        "answer": "0 o 5"
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 6 × 7?",
+        "choices": [
+          "132",
+          "12",
+          "42",
+          "72"
+        ],
+        "answer": "42"
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 8 × 8?",
+        "choices": [
+          "Cinco grupos de tres",
+          "64",
+          "132",
+          "12"
+        ],
+        "answer": "64"
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Cuánto es 9 × 8?",
+        "choices": [
+          "72",
+          "12",
+          "Cinco grupos de tres",
+          "24"
+        ],
+        "answer": "72"
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta. ¿Qué significa 3×4?",
+        "choices": [
+          "Tres grupos de cuatro",
+          "Tres más cuatro",
+          "Un solo mango",
+          "Una resta"
+        ],
+        "answer": "Tres grupos de cuatro"
+      },
+      {
+        "id": "d1-w1",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Busca y copia entre comillas «Piensa con multiplicaciones: Tablas 1 a 4» en esta clase. Luego explica con tus palabras qué significa."
+      },
+      {
+        "id": "d1-w2",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Busca y copia entre comillas «Multiplicar es formar **grupos iguales**.» en esta clase. Luego explica con tus palabras qué significa."
+      },
+      {
+        "id": "d1-w3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Busca y copia entre comillas «Mira de nuevo el ejemplo de la primera oración.» en esta clase. Luego explica con tus palabras qué significa."
+      },
+      {
+        "id": "d1-w4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+      }
+    ]
+  },
+  "media": [],
+  "supportUrl": "https://www.youtube.com/watch?v=_UVcNBjoxs4",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "mat-num-06",
+        "label": "Multiplico con grupos iguales (tablas)."
+      }
+    ]
+  }
+}

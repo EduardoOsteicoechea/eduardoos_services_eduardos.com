@@ -14,143 +14,1471 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Piensa con multiplicaciones: Practicar 1–4",
-        "body": "Practica las tablas del **1 al 4** desde grupos iguales. 1×n deja n; 2×n es el doble; 3×n y 4×n se comprueban sumando n tres o cuatro veces.\n\nArma una cartela: dibuja 3 grupos de 4 puntos y escribe 3×4=12. Luego cambia a 4×3 y mira que el producto coincide aunque cambie el dibujo.\n\nPráctica: Ahora te toca a ti. Resuelve 1×8, 2×7, 3×6 y 4×9. Inventa un problema de grupos iguales para uno.\n\nError común: Sumar los dos factores. Para 3×4 cuenta tres grupos de cuatro."
+        "heading": "Punto 1: La tabla del 1 conserva el número",
+        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que multiplicar es juntar grupos iguales.\nLos números que se multiplican son los factores.\nLa respuesta es el producto: 3 × 4 = 12.\n\nTienes 1 caja con 8 caramelos. ¿Cuántos caramelos hay? ¿Qué pasa siempre con la tabla del 1?\n\nHay 8 caramelos: 1 × 8 = 8. Un solo grupo es el número completo. Por eso 1 × 5 = 5 y 1 × 9 = 9."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: La tabla del 2 es el doble",
+        "body": "Hay 7 mesas y cada mesa tiene 2 sillas. ¿Cuántas sillas hay en total?\n\nSon 14 sillas: 2 × 7 = 14. Con 2 en cada grupo, el resultado es el doble de 7. El doble de 7 es 7 + 7 = 14. También 2 × 9 = 18, porque 9 + 9 = 18."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: La tabla del 3 se comprueba sumando",
+        "body": "Imagina que no te sabes 3 × 6. ¿Cómo lo comprobarías sin la tabla?\n\nSuma el 6 tres veces: 6 + 6 + 6 = 18. Entonces 3 × 6 = 18. Otra forma: el doble de 6 es 12, y sumas otro 6: 18. La suma repetida sirve para comprobar cualquier producto."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: La tabla del 4 es el doble del doble",
+        "body": "Una pregunta con truco: ¿cuánto es 4 × 9? Pista: es el doble del doble de 9.\n\nEl doble de 9 es 18. El doble de 18 es 36. Entonces 4 × 9 = 36. Comprueba: 9 + 9 + 9 + 9 = 36."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: No sumes los factores",
+        "body": "Pedro dice que 3 × 4 = 7, porque suma 3 + 4. ¿Tiene razón?\n\nNo. Sumó los factores, y multiplicar es otra cosa. 3 × 4 son tres grupos de cuatro. 4 + 4 + 4 = 12, así que 3 × 4 = 12. Pregúntate siempre: ¿cuántos grupos y de cuántos?"
       }
     ],
-    "summary": "En esta clase usarás grupos iguales, patrones y comprobaciones para pensar las tablas.",
-    "weekRecap": "Multiplicar = grupos iguales. Factores y producto. Tablas 1–12 con patrones y comprobación."
+    "summary": "La tabla del 1 conserva, la del 2 dobla, la del 4 dobla el doble y la del 3 se comprueba sumando.",
+    "weekRecap": "Multiplicar = grupos iguales. Factores y producto. Tablas 1–12 con patrones y comprobación.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja 3 grupos con 6 flores en cada grupo. Escribe la suma repetida: 6 + 6 + 6 = 18. Rotula debajo: 3 × 6 = 18. Revisa que los tres grupos sean iguales.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "heading",
+        "text": "Repaso"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Ayer vimos que multiplicar es juntar grupos iguales."
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "Los números que se multiplican son los factores."
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "La respuesta es el producto: 3 × 4 = 12."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Tienes 1 caja con 8 caramelos. ¿Cuántos caramelos"
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "hay? ¿Qué pasa siempre con la tabla del 1?"
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 1: La tabla del 1 conserva el número"
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Hay 8 caramelos: 1 × 8 = 8."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "lesson",
+        "text": "Un solo grupo es el número completo."
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Por eso 1 × 5 = 5 y 1 × 9 = 9."
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Hay 7 mesas y cada mesa tiene 2 sillas."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "¿Cuántas sillas hay en total?"
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "heading",
+        "text": "Punto 2: La tabla del 2 es el doble"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Son 14 sillas: 2 × 7 = 14."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Con 2 en cada grupo, el resultado es el doble de 7."
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "El doble de 7 es 7 + 7 = 14."
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "También 2 × 9 = 18, porque 9 + 9 = 18."
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Imagina que no te sabes 3 × 6. ¿Cómo lo"
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "comprobarías sin la tabla?"
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "heading",
+        "text": "Punto 3: La tabla del 3 se comprueba sumando"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "Suma el 6 tres veces: 6 + 6 + 6 = 18."
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "Entonces 3 × 6 = 18."
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Otra forma: el doble de 6 es 12, y sumas otro 6: 18."
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "La suma repetida sirve para comprobar cualquier producto."
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿cuánto es 4 × 9?"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "Pista: es el doble del doble de 9."
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 4: La tabla del 4 es el doble del doble"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "El doble de 9 es 18."
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "El doble de 18 es 36."
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Entonces 4 × 9 = 36."
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Comprueba: 9 + 9 + 9 + 9 = 36."
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Pedro dice que 3 × 4 = 7, porque suma 3 + 4."
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "¿Tiene razón?"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "heading",
+        "text": "Punto 5: No sumes los factores"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "No. Sumó los factores, y multiplicar es otra cosa."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "3 × 4 son tres grupos de cuatro."
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "4 + 4 + 4 = 12, así que 3 × 4 = 12."
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Pregúntate siempre: ¿cuántos grupos y de cuántos?"
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Cópiala aquí:"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "question",
+        "text": "¿Cuánto es 1 × 8?",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "option",
+        "text": "A) 1",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "option",
+        "text": "B) 9",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "option",
+        "text": "C) 18",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "option",
+        "text": "D) 8",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "question",
+        "text": "¿Cuántas sillas hay en 7 mesas con 2 sillas cada una?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "option",
+        "text": "A) 9",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "option",
+        "text": "B) 14",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "option",
+        "text": "C) 12",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "option",
+        "text": "D) 27",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cuánto es 3 × 6?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) 9",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) 12",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) 18",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) 36",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuánto es 4 × 9?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) 13",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) 27",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) 49",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) 36",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "question",
+        "text": "¿Cuánto es 2 × 9?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "A) 11",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "B) 18",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "C) 29",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "option",
+        "text": "D) 81",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "question",
+        "text": "¿Cómo se comprueba 3 × 6 con una suma?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "A) 6 + 6 + 6",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "B) 3 + 6",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "C) 3 + 3 + 3",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "option",
+        "text": "D) 6 + 6",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "question",
+        "text": "¿Qué significa 3 × 4?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "A) 3 + 4 = 7",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "B) Cuatro menos tres",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "C) Tres grupos de cuatro",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "option",
+        "text": "D) Tres grupos de tres",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "question",
+        "text": "¿Cuál es el doble del doble de 9?",
+        "questionId": "d2-q8",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "A) 36",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "B) 18",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "C) 27",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "option",
+        "text": "D) 45",
+        "questionId": "d2-q8"
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "question",
+        "text": "Resuelve 3 × 8 con suma repetida. Escribe los pasos.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "question",
+        "text": "Inventa un problema de grupos iguales para 4 × 5.",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "question",
+        "text": "Dibuja 7 mesas con 2 sillas y escribe 2 × 7 = 14.",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja el doble del doble: 9, 18 y 36.",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja 3 grupos con 6 flores en cada grupo."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Escribe la suma repetida: 6 + 6 + 6 = 18."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Rotula debajo: 3 × 6 = 18."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Revisa que los tres grupos sean iguales."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
   },
   "quiz": {
     "questionCount": 12,
     "questions": [
       {
         "id": "d2-q1",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Cuánto es 3 × 4?",
+        "prompt": "¿Cuánto es 1 × 8?",
         "choices": [
-          "0 o 5",
-          "42",
-          "12",
-          "24"
+          "1",
+          "9",
+          "18",
+          "8"
         ],
-        "answer": "12"
+        "answer": "8",
+        "slot": {
+          "column": 2,
+          "line": 30,
+          "index": 82
+        }
       },
       {
         "id": "d2-q2",
-        "originDay": 1,
+        "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿Qué representa 5 × 3?",
+        "prompt": "¿Cuántas sillas hay en 7 mesas con 2 sillas cada una?",
         "choices": [
-          "64",
-          "Cinco grupos de tres",
-          "0 o 5",
-          "42"
+          "9",
+          "14",
+          "12",
+          "27"
         ],
-        "answer": "Cinco grupos de tres"
+        "answer": "14",
+        "slot": {
+          "column": 2,
+          "line": 36,
+          "index": 88
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 3 × 6?",
+        "choices": [
+          "9",
+          "12",
+          "18",
+          "36"
+        ],
+        "answer": "18",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 4 × 9?",
+        "choices": [
+          "13",
+          "27",
+          "49",
+          "36"
+        ],
+        "answer": "36",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 2 × 9?",
+        "choices": [
+          "11",
+          "18",
+          "29",
+          "81"
+        ],
+        "answer": "18",
+        "slot": {
+          "column": 3,
+          "line": 2,
+          "index": 106
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cómo se comprueba 3 × 6 con una suma?",
+        "choices": [
+          "6 + 6 + 6",
+          "3 + 6",
+          "3 + 3 + 3",
+          "6 + 6"
+        ],
+        "answer": "6 + 6 + 6",
+        "slot": {
+          "column": 3,
+          "line": 8,
+          "index": 112
+        }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. ¿En qué terminan muchos productos ×5?",
+        "prompt": "¿Qué significa 3 × 4?",
         "choices": [
-          "En 0 o 5",
-          "Siempre en 1",
-          "En letras",
-          "En 9 solamente"
+          "3 + 4 = 7",
+          "Cuatro menos tres",
+          "Tres grupos de cuatro",
+          "Tres grupos de tres"
         ],
-        "answer": "En 0 o 5"
+        "answer": "Tres grupos de cuatro",
+        "slot": {
+          "column": 3,
+          "line": 14,
+          "index": 118
+        }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Aplica lo practicado hoy: ¿Cuánto es 6 × 7?",
+        "prompt": "¿Cuál es el doble del doble de 9?",
         "choices": [
-          "42",
-          "132",
-          "12",
-          "Cinco grupos de tres"
+          "36",
+          "18",
+          "27",
+          "45"
         ],
-        "answer": "42"
-      },
-      {
-        "id": "d2-q9",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Aplica lo practicado hoy: ¿Cuánto es 8 × 8?",
-        "choices": [
-          "12",
-          "Cinco grupos de tres",
-          "24",
-          "64"
-        ],
-        "answer": "64"
-      },
-      {
-        "id": "d2-q10",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Aplica lo practicado hoy: ¿Cuánto es 9 × 8?",
-        "choices": [
-          "24",
-          "0 o 5",
-          "72",
-          "Cinco grupos de tres"
-        ],
-        "answer": "72"
-      },
-      {
-        "id": "d2-q11",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Aplica lo practicado hoy: ¿Cuánto es 12 × 11?",
-        "choices": [
-          "42",
-          "132",
-          "24",
-          "0 o 5"
-        ],
-        "answer": "132"
-      },
-      {
-        "id": "d2-q12",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Elige la respuesta correcta. Aplica lo practicado hoy: ¿Cuánto es 3 × 4?",
-        "choices": [
-          "12",
-          "0 o 5",
-          "42",
-          "64"
-        ],
-        "answer": "12"
+        "answer": "36",
+        "slot": {
+          "column": 3,
+          "line": 20,
+          "index": 124
+        }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Piensa con multiplicaciones: Practicar 1–4» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Resuelve 3 × 8 con suma repetida. Escribe los pasos.",
+        "slot": {
+          "column": 3,
+          "line": 26,
+          "index": 130
+        }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Practica las tablas del **1 al 4** desde grupos iguales.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Inventa un problema de grupos iguales para 4 × 5.",
+        "slot": {
+          "column": 3,
+          "line": 32,
+          "index": 136
+        }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Arma una cartela: dibuja 3 grupos de 4 puntos y escribe 3×4=12.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja 7 mesas con 2 sillas y escribe 2 × 7 = 14.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 38,
+          "index": 142
+        }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Busca y copia entre comillas «Práctica: Ahora te toca a ti.» en esta clase. Luego explica con tus palabras qué significa."
+        "prompt": "Dibuja el doble del doble: 9, 18 y 36.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
       }
     ]
   },
