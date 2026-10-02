@@ -15,11 +15,26 @@ import (
 const (
 	HCLetterGridStrokeMm = 0.15
 	HCLetterRuleStepMm   = 3.5
+	// HCLetterMainTextPadMm: interior padding (left and right) between a main column's
+	// border and its text. Text width = column width − 2 × this value.
+	HCLetterMainTextPadMm = 2.0
+	// HCLetterMainTextPadYMm: interior padding (top and bottom) between a main column's
+	// border and its first/last line. The 52 lines are kept; the row pitch shrinks to
+	// (column height − 2 × this value) / 52 (≈ 3.42 mm instead of 3.5 mm).
+	HCLetterMainTextPadYMm = 2.0
+	// HCLetterBorderRadiusMm: corner radius of every stroked box (header fields, main
+	// columns, images band). The practice JPEG is clipped to the same rounded path.
+	HCLetterBorderRadiusMm = 1.0
+	// HCLetterHeaderTextPadMm: lateral padding between a header field's border and its text.
+	HCLetterHeaderTextPadMm = 2.0
 	// HCLetterShowMainRules: when false, main-column interior ruled lines stay in the
 	// layout (3.5 mm slots) but are not stroked. Outer column borders stay visible.
 	HCLetterShowMainRules = false
 	// Darker full-column rule between lesson text and the first quiz prompt in a column.
 	HCLetterQuizSeparatorStrokeMm = 0.35
+	// HCLetterShowQuizSeparator: when false (current), no rule is drawn between the lesson
+	// text and the first quiz question of a column.
+	HCLetterShowQuizSeparator = false
 	hcHeaderFieldGapMm            = 2.0 // gaps between cabecera1/2 and between header sub-boxes
 	// Interior rule colour when HCLetterShowMainRules is true.
 	hcLetterRuleR = 0xDD / 255.0
@@ -80,26 +95,52 @@ type HomescoolLetterGrid struct {
 	Images   RectMm // HeaderMargin → Col3 in Containerimages
 }
 
-// strokeContainerCSSTopMm strokes a square-corner box in #000; cssTop is mm from the page top.
+// strokeContainerCSSTopMm strokes a #000 box with HCLetterBorderRadiusMm corners;
+// cssTop is mm from the page top.
 func strokeContainerCSSTopMm(s *strings.Builder, x, cssTop, width, height, strokeMm float64) {
 	strokeRectCSSTopRGB(s, x, cssTop, width, height, strokeMm, hcLetterBorderR, hcLetterBorderR, hcLetterBorderR)
+}
+
+// roundedRectPathCSSTop appends a closed rounded-rectangle path (no paint operator).
+func roundedRectPathCSSTop(s *strings.Builder, x, cssTop, width, height, radiusMm float64) {
+	r := radiusMm
+	if m := width / 2; r > m {
+		r = m
+	}
+	if m := height / 2; r > m {
+		r = m
+	}
+	if r < 0 {
+		r = 0
+	}
+	pdfTopMm := EoschoolPageHeightMm - cssTop
+	left := MmToPoints(x)
+	right := MmToPoints(x + width)
+	bottom := MmToPoints(pdfTopMm - height)
+	top := MmToPoints(pdfTopMm)
+	rp := MmToPoints(r)
+	k := rp * 0.5522847498 // Bezier circle constant
+	s.WriteString(fmt.Sprintf("%.2f %.2f m\n", left+rp, bottom))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", right-rp, bottom))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n", right-rp+k, bottom, right, bottom+rp-k, right, bottom+rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", right, top-rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n", right, top-rp+k, right-rp+k, top, right-rp, top))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", left+rp, top))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n", left+rp-k, top, left, top-rp+k, left, top-rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f l\n", left, bottom+rp))
+	s.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f %.2f %.2f c\n", left, bottom+rp-k, left+rp-k, bottom, left+rp, bottom))
+	s.WriteString("h\n")
 }
 
 func strokeRectCSSTopRGB(s *strings.Builder, x, cssTop, width, height, strokeMm, sr, sg, sb float64) {
 	if width <= 0 || height <= 0 || strokeMm <= 0 {
 		return
 	}
-	pdfTopMm := EoschoolPageHeightMm - cssTop
-	bottomMm := pdfTopMm - height
-	left := MmToPoints(x)
-	right := MmToPoints(x + width)
-	bottom := MmToPoints(bottomMm)
-	topPt := MmToPoints(pdfTopMm)
 	s.WriteString("q\n")
 	s.WriteString(fmt.Sprintf("%.3f %.3f %.3f RG\n", sr, sg, sb))
 	s.WriteString(fmt.Sprintf("%.3f w\n", MmToPoints(strokeMm)))
-	s.WriteString(fmt.Sprintf("%.2f %.2f m %.2f %.2f l %.2f %.2f l %.2f %.2f l %.2f %.2f l S\n",
-		left, bottom, right, bottom, right, topPt, left, topPt, left, bottom))
+	roundedRectPathCSSTop(s, x, cssTop, width, height, HCLetterBorderRadiusMm)
+	s.WriteString("S\n")
 	s.WriteString("Q\n")
 }
 

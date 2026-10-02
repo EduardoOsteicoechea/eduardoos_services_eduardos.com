@@ -408,8 +408,7 @@ func HCLetterPageInkFromEoschoolBytes(raw []byte) (HCLetterPageInk, error) {
 	g := ComputeHomescoolLetterGrid()
 	colWidths := []float64{g.MainCol1.W, g.MainCol2.W, g.MainCol3.W}
 	for i := 0; i < 3; i++ {
-		inset := HCLetterGridStrokeMm
-		contentWPt := MmToPoints(colWidths[i] - 2*inset)
+		contentWPt := MmToPoints(colWidths[i] - 2*HCLetterMainTextPadMm)
 		page.Columns[i] = buildColumnInk(
 			i+1,
 			doc.Lesson.SlotSequence,
@@ -553,24 +552,31 @@ func fitOneLineInk(text string, sizePt, maxWidthPt float64, bold bool) string {
 }
 
 func drawHeaderInk(s *strings.Builder, box RectMm, text string) {
-	text = fitOneLineInk(text, hcLetterHeaderFontPt, MmToPoints(box.W-1.0), false)
+	padX := HCLetterHeaderTextPadMm
+	text = fitOneLineInk(text, hcLetterHeaderFontPt, MmToPoints(box.W-2*padX), false)
 	if text == "" {
 		drawEmptyBox(s, box)
 		return
 	}
 	drawEmptyBox(s, box)
-	padX := 0.5
 	baselineCss := box.Top + box.H*0.65
 	writeTextFillMm(s, "F1", hcLetterHeaderFontPt, box.X+padX, homescoolPDFYMm(baselineCss),
 		0, 0, 0, text)
 }
 
 func drawImagesBandInk(s *strings.Builder, box RectMm, page HCLetterPageInk) {
-	drawEmptyBox(s, box)
 	if len(page.PracticeImageJPEG) > 0 && page.PracticeImageWidth > 0 && page.PracticeImageHeight > 0 {
+		// Image first (clipped to the rounded border), border last: the JPEG fills the band
+		// edge to edge and would hide the stroke.
+		s.WriteString("q\n")
+		roundedRectPathCSSTop(s, box.X, box.Top, box.W, box.H, HCLetterBorderRadiusMm)
+		s.WriteString("W n\n")
 		drawJPEGInCSSBox(s, box, "Im0", page.PracticeImageWidth, page.PracticeImageHeight)
+		s.WriteString("Q\n")
+		drawEmptyBox(s, box)
 		return
 	}
+	drawEmptyBox(s, box)
 	text := fitOneLineInk(page.ImageBandText, hcLetterImagesFontPt, MmToPoints(box.W-2.0), false)
 	if text == "" {
 		return
@@ -613,8 +619,8 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 		return
 	}
 	inset := HCLetterGridStrokeMm
-	contentWPt := MmToPoints(box.W - 2*inset)
-	textX := box.X + inset
+	contentWPt := MmToPoints(box.W - 2*HCLetterMainTextPadMm)
+	textX := box.X + HCLetterMainTextPadMm
 
 	// Outer main-column border (#000), always on.
 	strokeContainerCSSTopMm(s, box.X, box.Top, box.W, box.H, HCLetterGridStrokeMm)
@@ -628,9 +634,16 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 		)
 	}
 	nRows := int(box.H / stepMm)
+	// Vertical interior padding: keep nRows lines, compress the pitch to fit between pads.
+	padY := HCLetterMainTextPadYMm
+	if nRows > 0 && box.H > 2*padY {
+		stepMm = (box.H - 2*padY) / float64(nRows)
+	} else {
+		padY = 0
+	}
 	for i := 0; i < nRows; i++ {
 		lineNum := i + 1
-		rowTop := box.Top + float64(i)*stepMm
+		rowTop := box.Top + padY + float64(i)*stepMm
 		yTop := rowTop + stepMm
 
 		if HCLetterShowMainRules {
@@ -643,7 +656,7 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 		}
 
 		// Full-width darker rule between lesson text and first quiz row (always visible).
-		if ink.QuizSeparatorBeforeLine > 0 && lineNum == ink.QuizSeparatorBeforeLine {
+		if HCLetterShowQuizSeparator && ink.QuizSeparatorBeforeLine > 0 && lineNum == ink.QuizSeparatorBeforeLine {
 			sepY := homescoolPDFYMm(rowTop)
 			strokeRuleRGB(s,
 				box.X, sepY,
@@ -662,7 +675,7 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 				oneLine := fitOneLineInk(lineText, hcLetterContentFontPt, contentWPt, bold)
 				if oneLine != "" {
 					baselineCss := rowTop + stepMm*0.72
-					writeTextFillMm(s, font, hcLetterContentFontPt, textX+0.25, homescoolPDFYMm(baselineCss),
+					writeTextFillMm(s, font, hcLetterContentFontPt, textX, homescoolPDFYMm(baselineCss),
 						0, 0, 0, oneLine)
 				}
 			}
@@ -678,10 +691,11 @@ func renderHomescoolLetterGridPage(s *strings.Builder, g HomescoolLetterGrid, pa
 	drawHeaderInk(s, g.SignatureName, subject)
 	drawHeaderInk(s, g.SignatureTopic, page.TopicLabel)
 	drawHeaderInk(s, g.SheetCode, page.SheetCode)
-	drawHeaderInk(s, g.Date, "Fecha")
-	drawHeaderInk(s, g.Student, "Estudiante")
-	drawHeaderInk(s, g.Reviewer, "Revisor")
-	drawHeaderInk(s, g.ReviewerSignature, "Firma")
+	// Cabecera 2 are write-in fields: the colon tells the student to write after the label.
+	drawHeaderInk(s, g.Date, "Fecha:")
+	drawHeaderInk(s, g.Student, "Estudiante:")
+	drawHeaderInk(s, g.Reviewer, "Revisor:")
+	drawHeaderInk(s, g.ReviewerSignature, "Firma:")
 
 	cols := []RectMm{g.MainCol1, g.MainCol2, g.MainCol3}
 	for i := 0; i < 3; i++ {

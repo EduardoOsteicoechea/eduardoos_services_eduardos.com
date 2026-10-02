@@ -1,4 +1,4 @@
-﻿package pdf
+package pdf
 
 import (
 	"strings"
@@ -20,10 +20,10 @@ func TestHomescoolEspD1KeepsAccents(t *testing.T) {
 		}
 	}
 	s := all.String()
-	t.Logf("sample: %q", firstLineContaining(s, "Piensa primero"))
-	if !strings.Contains(s, "niña") && !strings.Contains(s, string([]byte{0xF1})) {
-		// after toWinAnsi, ñ is byte 0xF1 in a Go string
-		t.Fatalf("missing niña in ink; has nia=%v; snippet around nia: %q", strings.Contains(s, "nia"), snippetAround(s, "nia"))
+	t.Logf("sample: %q", firstLineContaining(s, "palabra"))
+	// The class text must carry accents after toWinAnsi (ñ is byte 0xF1 in a Go string).
+	if !strings.Contains(s, "Añade") && !strings.Contains(s, string([]byte{0xF1})) {
+		t.Fatalf("missing ñ in ink; snippet around ade: %q", snippetAround(s, "ade un ejemplo"))
 	}
 	raw, err := BuildHomescoolLetterGridPDF([]HCLetterPageInk{page})
 	if err != nil {

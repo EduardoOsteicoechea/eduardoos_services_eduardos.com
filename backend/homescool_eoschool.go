@@ -86,6 +86,7 @@ type EoschoolQuestion struct {
 	Prompt     string              `json:"prompt"`
 	Choices    []string            `json:"choices,omitempty"`
 	Answer     string              `json:"answer,omitempty"`
+	Schematic  bool                `json:"schematic,omitempty"`
 	Crossword  *EoschoolCrossword  `json:"crossword,omitempty"`
 	Wordsearch *EoschoolWordsearch `json:"wordsearch,omitempty"`
 	Match      *EoschoolMatch      `json:"match,omitempty"`
@@ -158,12 +159,13 @@ func eoschoolSubjectOK(subject string) bool {
 	return ok
 }
 
-func eoschoolExpectedQuizCount(day, week int) int {
-	// Every published day: 8 mcq + 4 write = 12 (fits under class on one Letter sheet).
-	_ = day
-	_ = week
-	return 12
-}
+// Quiz size bounds. The Letter sheet fits up to 12 items (8 mcq + 2 write +
+// 2 schematic); when blank lines between questions do not fit, the generator
+// drops questions but always keeps the minimum mix (see validateEoschoolLetterQuizMix).
+const (
+	eoschoolQuizMaxCount = 12
+	eoschoolQuizMinCount = 4
+)
 
 func eoschoolMediaIDSet(media []EoschoolMedia) map[string]struct{} {
 	out := make(map[string]struct{}, len(media))
@@ -298,41 +300,42 @@ func validateEoschoolQuestionPayload(i int, q *EoschoolQuestion, mediaIDs map[st
 	return nil
 }
 
-// Letter quiz (all weeks): 8 mcq + 4 write. Day 1: all mcq from day 1.
-// Days 2–5: 2 review mcq (prior day) + 6 mcq from the current day; write = current day.
+// Letter quiz (ask-first sheets): up to 12 questions (8 mcq + 2 write + 2 schematic).
+// When the sheet cannot fit them with blank lines between questions, questions are
+// dropped, but every quiz keeps at least 2 selection (mcq) and 2 write items
+// (1 schematic + 1 written reflection in new content). Review mcq
+// (originDay < day) are allowed, not required.
 func validateEoschoolLetterQuizMix(doc *EoschoolDocument) error {
-	mcqReview, mcqToday, writeN := 0, 0, 0
+	mcq, schematic, reflection := 0, 0, 0
 	for i, q := range doc.Quiz.Questions {
 		typ := strings.TrimSpace(strings.ToLower(q.Type))
 		switch typ {
 		case "mcq":
-			if q.OriginDay == doc.Day {
-				mcqToday++
-			} else if q.OriginDay >= 1 && q.OriginDay < doc.Day {
-				mcqReview++
-			} else {
-				return fmt.Errorf("quiz.questions[%d].originDay must be a prior day or %d for letter-quiz mcq", i, doc.Day)
+			if q.OriginDay < 1 || q.OriginDay > doc.Day {
+				return fmt.Errorf("quiz.questions[%d].originDay must be 1–%d for letter-quiz mcq", i, doc.Day)
 			}
+			mcq++
 		case "write":
 			if q.OriginDay != doc.Day {
 				return fmt.Errorf("quiz.questions[%d].originDay must be %d for letter-quiz write", i, doc.Day)
 			}
-			writeN++
+			if q.Schematic {
+				schematic++
+			} else {
+				reflection++
+			}
 		default:
 			return fmt.Errorf("quiz.questions[%d].type must be mcq or write for letter quiz", i)
 		}
 	}
-	if writeN != 4 {
-		return fmt.Errorf("letter quiz needs exactly 4 write questions, got %d", writeN)
+	if mcq < 2 {
+		return fmt.Errorf("letter quiz needs at least 2 mcq, got %d", mcq)
 	}
-	if doc.Day == 1 {
-		if mcqToday != 8 || mcqReview != 0 {
-			return fmt.Errorf("day 1 needs 8 mcq from day 1, got today=%d review=%d", mcqToday, mcqReview)
-		}
-		return nil
-	}
-	if mcqReview != 2 || mcqToday != 6 {
-		return fmt.Errorf("day %d needs 2 review mcq and 6 from day %d, got review=%d today=%d", doc.Day, doc.Day, mcqReview, mcqToday)
+	// Schematic vs reflection split is enforced by the content audit
+	// (scripts/audit-homescool-v2-review.mjs). Legacy stored materials have no
+	// "schematic" flag, so the server only requires at least two write items.
+	if schematic+reflection < 2 {
+		return fmt.Errorf("letter quiz needs at least 2 write questions (schematic + reflection), got %d", schematic+reflection)
 	}
 	return nil
 }
@@ -420,12 +423,12 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		return err
 	}
 
-	wantCount := eoschoolExpectedQuizCount(doc.Day, doc.Week)
-	if doc.Quiz.QuestionCount != wantCount {
-		return fmt.Errorf("quiz.questionCount must be %d for day %d week %d", wantCount, doc.Day, doc.Week)
+	n := len(doc.Quiz.Questions)
+	if n < eoschoolQuizMinCount || n > eoschoolQuizMaxCount {
+		return fmt.Errorf("quiz.questions length must be %d–%d", eoschoolQuizMinCount, eoschoolQuizMaxCount)
 	}
-	if len(doc.Quiz.Questions) != wantCount {
-		return fmt.Errorf("quiz.questions length must be %d", wantCount)
+	if doc.Quiz.QuestionCount != n {
+		return fmt.Errorf("quiz.questionCount must equal quiz.questions length (%d)", n)
 	}
 	if err := validateEoschoolLetterQuizMix(doc); err != nil {
 		return err
@@ -442,8 +445,8 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		if doc.Lesson.FocusPoint != nil {
 			return fmt.Errorf("day 1 focusPoint must be null")
 		}
-		if len(doc.Lesson.Points) != 3 {
-			return fmt.Errorf("day 1 requires exactly 3 points")
+		if len(doc.Lesson.Points) < 3 {
+			return fmt.Errorf("day 1 requires at least 3 points")
 		}
 		if strings.TrimSpace(doc.Lesson.Summary) == "" {
 			return fmt.Errorf("day 1 summary required")
@@ -463,13 +466,14 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		if kind != eoschoolKindReview {
 			return fmt.Errorf("day 5 lesson.kind must be review")
 		}
-		// pro = one project/week: day 5 is wrap/expo (often 1 block), not five panoramas.
+		// pro = one project/week: day 5 is wrap/expo (often 1 block). Ask-first sheets
+		// (Punto 1 = repaso de ayer + Punto 2..N) carry 5+ overview points.
 		if strings.EqualFold(strings.TrimSpace(doc.Subject), "pro") {
 			if len(doc.Lesson.Points) < 1 {
 				return fmt.Errorf("pro day 5 requires at least one overview point")
 			}
-		} else if len(doc.Lesson.Points) != 5 {
-			return fmt.Errorf("day 5 requires exactly 5 overview points")
+		} else if len(doc.Lesson.Points) < 5 {
+			return fmt.Errorf("day 5 requires at least 5 overview points")
 		}
 	}
 

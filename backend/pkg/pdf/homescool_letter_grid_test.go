@@ -86,8 +86,8 @@ func TestBuildHomescoolLetterGridSamplePDF(t *testing.T) {
 	if !strings.Contains(s, "/Count 2") {
 		t.Fatal("expected 2 pages")
 	}
-	if !strings.Contains(s, "Romanos") || !strings.Contains(s, "palabras") {
-		t.Fatal("expected teb/exe and esp sample ink in PDF")
+	if !strings.Contains(s, "Punto 1") || !strings.Contains(s, "aprendiste") {
+		t.Fatal("expected ask-first sample ink (Punto 1 / aprendiste) in PDF")
 	}
 	if !strings.Contains(s, "/Helvetica-Bold") {
 		t.Fatal("expected bold font for section headings")
@@ -185,5 +185,64 @@ func TestHCLetterMcqOptionExpansion(t *testing.T) {
 	// Parentheses are PDF-escaped: "(A\) Cuatro)".
 	if !strings.Contains(string(pdf), `A\) Cuatro`) {
 		t.Fatal("expected mcq option ink in PDF")
+	}
+}
+
+func TestHomescoolMainTextPadding(t *testing.T) {
+	if !almostEqual(HCLetterMainTextPadYMm, 2) {
+		t.Fatalf("HCLetterMainTextPadYMm=%v want 2", HCLetterMainTextPadYMm)
+	}
+	if !almostEqual(HCLetterMainTextPadMm, 2) {
+		t.Fatalf("HCLetterMainTextPadMm=%v want 2", HCLetterMainTextPadMm)
+	}
+	if !almostEqual(HCLetterHeaderTextPadMm, 2) {
+		t.Fatalf("HCLetterHeaderTextPadMm=%v want 2", HCLetterHeaderTextPadMm)
+	}
+}
+
+// Boxes with borders use a 1 mm corner radius (Bezier corners in the PDF stream) and the
+// cabecera 2 write-in labels end with a colon.
+func TestHomescoolRoundedBordersAndHeaderColons(t *testing.T) {
+	if !almostEqual(HCLetterBorderRadiusMm, 1) {
+		t.Fatalf("HCLetterBorderRadiusMm=%v want 1", HCLetterBorderRadiusMm)
+	}
+	var sb strings.Builder
+	strokeContainerCSSTopMm(&sb, 10, 10, 20, 10, HCLetterGridStrokeMm)
+	if got := strings.Count(sb.String(), " c\n"); got != 4 {
+		t.Fatalf("rounded rect should have 4 curve corners, got %d", got)
+	}
+	var page strings.Builder
+	renderHomescoolLetterGridPage(&page, ComputeHomescoolLetterGrid(), HCLetterPageInk{})
+	for _, label := range []string{"(Fecha:)", "(Estudiante:)", "(Revisor:)", "(Firma:)"} {
+		if !strings.Contains(page.String(), label) {
+			t.Fatalf("header 2 label %s missing", label)
+		}
+	}
+}
+
+// Every published v2 class line must fit its column inside the 2 mm padding (no silent truncation).
+func TestHomescoolPublishedClassesFitColumns(t *testing.T) {
+	files, _ := filepath.Glob(filepath.Join("..", "..", "..", "frontend", "public", "homescool", "media", "week*", "*-c3-w*-d*-l6.eoschool.json"))
+	if len(files) == 0 {
+		t.Skip("no published classes found")
+	}
+	g := ComputeHomescoolLetterGrid()
+	limit := MmToPoints(g.MainCol1.W - 2*HCLetterMainTextPadMm)
+	for _, f := range files {
+		raw, err := os.ReadFile(f)
+		if err != nil {
+			t.Fatal(err)
+		}
+		page, err := HCLetterPageInkFromEoschoolBytes(raw)
+		if err != nil {
+			t.Fatalf("%s: %v", filepath.Base(f), err)
+		}
+		for ci, col := range page.Columns {
+			for ln, text := range col.LineText {
+				if w := stringWidthPt(toWinAnsi(text), hcLetterContentFontPt, col.BoldLines[ln]); w > limit+0.01 {
+					t.Errorf("%s col %d line %d too wide (%.1f > %.1f): %q", filepath.Base(f), ci+1, ln, w, limit, text)
+				}
+			}
+		}
 	}
 }
