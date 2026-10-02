@@ -28,8 +28,8 @@ function rootFontSizePx(): number {
   return Number.isFinite(n) && n > 0 ? n : 16;
 }
 
-function pxToRem(px: number): number {
-  return px / rootFontSizePx();
+function pxToRem(px: number): string {
+  return `${px / rootFontSizePx()}rem`;
 }
 
 function base64ToBytes(b64: string): Uint8Array {
@@ -37,6 +37,25 @@ function base64ToBytes(b64: string): Uint8Array {
   const bytes = new Uint8Array(raw.length);
   for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
   return bytes;
+}
+
+/** Measure the visible stage (not a hidden sheet host) so Letter fills the workspace. */
+function measurePreviewBox(host: HTMLElement): { widthPx: number; heightPx: number } {
+  const stage = host.closest("[data-homescool-stage]") as HTMLElement | null;
+  const box = stage && stage.clientWidth > 0 ? stage : host;
+  const style = box ? getComputedStyle(box) : null;
+  const padX = style
+    ? (Number.parseFloat(style.paddingLeft) || 0) + (Number.parseFloat(style.paddingRight) || 0)
+    : 0;
+  const padY = style
+    ? (Number.parseFloat(style.paddingTop) || 0) + (Number.parseFloat(style.paddingBottom) || 0)
+    : 0;
+  const root = rootFontSizePx();
+  // Leave a small gutter so the sheet is not flush against the DHS / chrome.
+  const gutter = root * 1.5;
+  const widthPx = Math.max((box?.clientWidth || 0) - padX - gutter, root * 28);
+  const heightPx = Math.max((box?.clientHeight || 0) - padY - gutter, root * 36);
+  return { widthPx, heightPx };
 }
 
 export async function fetchHomescoolPdfPreview(doc: EoschoolDocument): Promise<{
@@ -96,12 +115,23 @@ export async function renderHomescoolPdfPreview(
     throw new Error("Could not open preview PDF.");
   }
 
-  const stageCssPx = Math.max(host.clientWidth || 0, rootFontSizePx() * 20);
-  const pageWidthRem = pxToRem(stageCssPx);
-  const mmToRem = pageWidthRem / pageWidthMm;
-  const pageHeightRem = pageHeightMm * mmToRem;
-  const dpr = Math.min(2.5, window.devicePixelRatio || 1);
+  const { widthPx: availW, heightPx: availH } = measurePreviewBox(host);
+  const aspect = pageWidthMm / pageHeightMm; // ~0.773
+  // Fit Letter inside the stage: prefer height (tall page), then clamp by width.
+  let cssWidthPx = availH * aspect;
+  let cssHeightPx = availH;
+  if (cssWidthPx > availW) {
+    cssWidthPx = availW;
+    cssHeightPx = availW / aspect;
+  }
+  // Keep a readable floor so a collapsed stage never paints a stamp-sized sheet.
+  const minW = rootFontSizePx() * 32;
+  if (cssWidthPx < minW) {
+    cssWidthPx = minW;
+    cssHeightPx = minW / aspect;
+  }
 
+  const dpr = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
   const pages = document.createElement("div");
   pages.className = "homescool-pdf-stage__pages";
 
@@ -112,21 +142,21 @@ export async function renderHomescoolPdfPreview(
     }
     const page = await pdf.getPage(pageNum);
     const baseViewport = page.getViewport({ scale: 1 });
-    const cssScale = (pageWidthRem * rootFontSizePx()) / baseViewport.width;
+    const cssScale = cssWidthPx / baseViewport.width;
     const viewport = page.getViewport({ scale: cssScale * dpr });
 
     const pageEl = document.createElement("div");
     pageEl.className = "homescool-pdf-page";
     pageEl.dataset.page = String(pageNum);
-    pageEl.style.width = `${pageWidthRem}rem`;
-    pageEl.style.height = `${pageHeightRem}rem`;
+    pageEl.style.width = pxToRem(cssWidthPx);
+    pageEl.style.height = pxToRem(cssHeightPx);
 
     const canvas = document.createElement("canvas");
     canvas.className = "homescool-pdf-page__canvas";
     canvas.width = Math.max(1, Math.floor(viewport.width));
     canvas.height = Math.max(1, Math.floor(viewport.height));
-    canvas.style.width = `${pageWidthRem}rem`;
-    canvas.style.height = `${pageHeightRem}rem`;
+    canvas.style.width = pxToRem(cssWidthPx);
+    canvas.style.height = pxToRem(cssHeightPx);
 
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Canvas 2D unavailable.");
@@ -137,7 +167,14 @@ export async function renderHomescoolPdfPreview(
 
   if (isStale()) return 0;
   host.replaceChildren(pages);
-  if (mustLog) console.log("[homescool-pdf-preview] render.done", { pages: pdf.numPages });
+  if (mustLog) {
+    console.log("[homescool-pdf-preview] render.done", {
+      pages: pdf.numPages,
+      cssWidthPx: Math.round(cssWidthPx),
+      cssHeightPx: Math.round(cssHeightPx),
+      dpr,
+    });
+  }
   return pdf.numPages;
 }
 

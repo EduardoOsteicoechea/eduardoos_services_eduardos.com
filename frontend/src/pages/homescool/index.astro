@@ -1515,6 +1515,8 @@ import "../../styles/homescool-workspace.css";
       if (seq !== openSeq) return;
       if (preview.ok && preview.pdfBytes?.length) {
         currentPdfBytes = preview.pdfBytes;
+        // Unhide the sheet host before measuring so the stage has a real box size.
+        setStageMode("sheets");
         const pageCount = await renderHomescoolPdfPreview(sheetsHost, preview.pdfBytes, {
           pageWidthMm: preview.data?.page_width_mm,
           pageHeightMm: preview.data?.page_height_mm,
@@ -1528,7 +1530,6 @@ import "../../styles/homescool-workspace.css";
           day: doc.day,
           subject: doc.subject,
         });
-        setStageMode("sheets");
         return;
       }
       hcLog(

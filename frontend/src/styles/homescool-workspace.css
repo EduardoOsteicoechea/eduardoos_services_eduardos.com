@@ -181,15 +181,17 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 }
 
 .homescool-sheet-host {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   width: auto;
   min-height: 0;
   background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--space-padding);
-  padding: 0 var(--space-padding) var(--space-padding);
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* PDF-first preview (backend BuildEoschoolPDF → pdf.js canvases) */
@@ -197,7 +199,12 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--space-padding);
+  flex: 0 0 auto;
+  width: auto;
+  padding: var(--space-padding);
+  box-sizing: border-box;
 }
 
 .homescool-pdf-page {
@@ -205,19 +212,21 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   flex: 0 0 auto;
   background: #fff;
   border: var(--border-width) solid var(--color-border);
+  box-shadow: none;
 }
 
 .homescool-pdf-page__canvas {
   display: block;
   width: inherit;
   height: inherit;
+  image-rendering: auto;
 }
 
 /* DHS: cycle / week / day / subject selectors */
 .homescool-dhs {
   display: flex;
   flex-direction: column;
-  gap: var(--space-padding);
+  gap: var(--rail-gap);
   padding: var(--space-padding);
   min-height: 0;
   height: 100%;
@@ -227,7 +236,7 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
 .homescool-dhs__scroll {
   display: flex;
   flex-direction: column;
-  gap: var(--space-padding);
+  gap: var(--rail-gap);
   flex: 1 1 auto;
   min-height: 0;
   overflow-x: hidden;
@@ -238,8 +247,8 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
-  padding-bottom: var(--space-padding);
-  border-bottom: var(--border-width) solid var(--color-border);
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .homescool-dhs__heading {

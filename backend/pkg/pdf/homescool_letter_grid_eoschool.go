@@ -468,11 +468,19 @@ func remapColumnInkToDisplay(src HCLetterColumnInk) HCLetterColumnInk {
 
 func homescoolMediaPathCandidates(rel string) []string {
 	rel = filepath.FromSlash(rel)
-	return []string{
+	out := make([]string, 0, 8)
+	if root := strings.TrimSpace(os.Getenv("HOMESCOOL_STATIC_MEDIA")); root != "" {
+		out = append(out, filepath.Join(root, rel))
+	}
+	// Production: Astro public → /var/www/<site>/html/homescool/media
+	out = append(out,
+		filepath.Join("/var/www/eduardoos.com/html/homescool/media", rel),
 		filepath.Join("..", "frontend", "public", "homescool", "media", rel),
+		filepath.Join("..", "..", "frontend", "public", "homescool", "media", rel),
 		filepath.Join("..", "..", "..", "frontend", "public", "homescool", "media", rel),
 		filepath.Join("frontend", "public", "homescool", "media", rel),
-	}
+	)
+	return out
 }
 
 func resolveHomescoolMediaPath(rel string) (string, error) {
@@ -539,10 +547,17 @@ func fitOneLineInk(text string, sizePt, maxWidthPt float64, bold bool) string {
 	if len(lines) == 0 {
 		return ""
 	}
-	if len(lines) == 1 {
-		return lines[0]
-	}
 	first := lines[0]
+	if stringWidthPt(first, sizePt, bold) <= maxWidthPt+0.01 {
+		if len(lines) == 1 {
+			return first
+		}
+		// Multi-line wrap: keep first segment only (single PDF line slot).
+		ellipsis := "..."
+		if stringWidthPt(first+ellipsis, sizePt, bold) <= maxWidthPt {
+			return first + ellipsis
+		}
+	}
 	ellipsis := "..."
 	if stringWidthPt(first+ellipsis, sizePt, bold) <= maxWidthPt {
 		return first + ellipsis
@@ -554,6 +569,26 @@ func fitOneLineInk(text string, sizePt, maxWidthPt float64, bold bool) string {
 		}
 	}
 	return ellipsis
+}
+
+// isUnderscoreAnswerLine detects write-in underline rows authored as "_" runs.
+func isUnderscoreAnswerLine(text string) bool {
+	s := strings.TrimSpace(text)
+	if s == "" {
+		return false
+	}
+	hasRule := false
+	for _, r := range s {
+		switch r {
+		case '_', '─', '—', '-':
+			hasRule = true
+		case ' ':
+			continue
+		default:
+			return false
+		}
+	}
+	return hasRule
 }
 
 func drawHeaderInk(s *strings.Builder, box RectMm, text string) {
@@ -672,6 +707,16 @@ func drawLinedBoxWithInk(s *strings.Builder, box RectMm, stepMm float64, ink HCL
 
 		if ink.LineText != nil {
 			if lineText, ok := ink.LineText[lineNum]; ok {
+				// Write-in rows: stroke a rule inside the column pad (never spill past the border).
+				if isUnderscoreAnswerLine(lineText) {
+					ruleY := homescoolPDFYMm(rowTop + stepMm*0.78)
+					strokeRuleRGB(s,
+						textX, ruleY,
+						textX+(box.W-2*HCLetterMainTextPadMm), ruleY,
+						HCLetterGridStrokeMm, 0, 0, 0,
+					)
+					continue
+				}
 				bold := ink.BoldLines != nil && ink.BoldLines[lineNum]
 				font := "F1"
 				if bold {
