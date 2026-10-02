@@ -1,0 +1,415 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Revisión eoschool"
+  description="Sube fotos del quiz Homescool, lee las respuestas y recibe coaching para el niño."
+  page="eoschool-revision"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+      Homescool
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Revisión eoschool</h1>
+
+  <section class="product-dash" data-eoschool-revision>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión e entitlement Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+
+    <div data-authed hidden>
+      <div class="product-dash__grid">
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Clase</h2>
+            <p class="product-dash__card-desc">Ciclo, semana, día y materia del quiz fotografiado.</p>
+          </header>
+          <div class="session-grid" data-class-form>
+            <label>
+              Ciclo
+              <select data-cycle></select>
+            </label>
+            <label>
+              Semana
+              <select data-week></select>
+            </label>
+            <label>
+              Día
+              <select data-day></select>
+            </label>
+            <label>
+              Clase
+              <select data-subject></select>
+            </label>
+            <p class="hint" data-class-title></p>
+          </div>
+        </article>
+
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Fotos del quiz</h2>
+            <p class="product-dash__card-desc">Hasta 2 páginas (JPEG/PNG/WebP). Se comprimen a WebP antes de enviar.</p>
+          </header>
+          <div class="session-grid">
+            <label>
+              Imágenes
+              <input
+                type="file"
+                data-files
+                accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                multiple
+              />
+            </label>
+            <button type="button" class="button" data-ocr disabled>Leer respuestas</button>
+            <p class="status" data-ocr-status hidden></p>
+          </div>
+        </article>
+      </div>
+
+      <article class="product-dash__card" data-results hidden>
+        <header class="product-dash__card-head">
+          <h2 class="product-dash__card-title">Resultados</h2>
+          <p class="product-dash__card-desc" data-score-summary></p>
+        </header>
+        <div data-mcq-table></div>
+        <div data-write-list></div>
+      </article>
+
+      <article class="product-dash__card" data-chat-card hidden>
+        <header class="product-dash__card-head">
+          <h2 class="product-dash__card-title">Chat de coaching</h2>
+          <p class="product-dash__card-desc">Contexto: clase + OCR. Pregunta qué trabajar con el niño.</p>
+        </header>
+        <div class="eoschool-revision-chat" data-chat-log></div>
+        <form class="session-grid" data-chat-form>
+          <label>
+            Mensaje
+            <textarea data-chat-input rows="3" maxlength="500" placeholder="¿Qué reforzamos hoy?"></textarea>
+          </label>
+          <button type="submit" class="button">Enviar</button>
+        </form>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .eoschool-revision-chat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    max-height: 20rem;
+    overflow-y: auto;
+    margin-block: var(--space-padding);
+  }
+  .eoschool-revision-chat__msg {
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    white-space: pre-wrap;
+  }
+  .eoschool-revision-chat__msg--user {
+    align-self: flex-start;
+  }
+  .eoschool-revision-chat__msg--assistant {
+    align-self: flex-end;
+  }
+  [data-mcq-table] table,
+  [data-write-list] {
+    font-size: var(--font-size-sm);
+  }
+  [data-mcq-table] th,
+  [data-mcq-table] td {
+    padding: 0.25rem 0.5rem;
+    text-align: start;
+    border-bottom: var(--border-width) solid var(--color-border);
+  }
+  [data-write-list] .eoschool-revision-write {
+    margin-block: var(--rail-gap);
+  }
+</style>
+
+<script>
+  import { clearAgentRoutePayload, postChatStream, type ChatTurn } from "../../lib/api";
+  import { mustLog } from "../../lib/dev-log";
+  import {
+    findCurriculumClass,
+    loadHomescoolCurriculum,
+    type HomescoolCurriculum,
+  } from "../../lib/homescool-curriculum";
+  import {
+    HOMESCOOL_SUBJECT_LABELS,
+    HOMESCOOL_SUBJECTS,
+    type HomescoolSubject,
+  } from "../../lib/homescool-subjects";
+  import {
+    buildRevisionChatSeedMessage,
+    postHomescoolRevisionOCR,
+    publishRevisionAgentPayload,
+    revisionClassFromCurriculum,
+    type RevisionOCRResult,
+  } from "../../lib/homescool-revision";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-eoschool-revision]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const cycleSel = root?.querySelector("[data-cycle]");
+  const weekSel = root?.querySelector("[data-week]");
+  const daySel = root?.querySelector("[data-day]");
+  const subjectSel = root?.querySelector("[data-subject]");
+  const classTitle = root?.querySelector("[data-class-title]");
+  const filesInput = root?.querySelector("[data-files]");
+  const ocrBtn = root?.querySelector("[data-ocr]");
+  const ocrStatus = root?.querySelector("[data-ocr-status]");
+  const results = root?.querySelector("[data-results]");
+  const scoreSummary = root?.querySelector("[data-score-summary]");
+  const mcqTable = root?.querySelector("[data-mcq-table]");
+  const writeList = root?.querySelector("[data-write-list]");
+  const chatCard = root?.querySelector("[data-chat-card]");
+  const chatLog = root?.querySelector("[data-chat-log]");
+  const chatForm = root?.querySelector("[data-chat-form]");
+  const chatInput = root?.querySelector("[data-chat-input]");
+
+  let curriculum: HomescoolCurriculum | null = null;
+  let lastOCR: RevisionOCRResult | null = null;
+  let chatHistory: ChatTurn[] = [];
+
+  function fillSelect(sel: Element | null | undefined, values: string[], labels?: (v: string) => string) {
+    if (!(sel instanceof HTMLSelectElement)) return;
+    sel.replaceChildren();
+    for (const v of values) {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = labels ? labels(v) : v;
+      sel.appendChild(opt);
+    }
+  }
+
+  function currentSelection() {
+    const cycle = Number((cycleSel instanceof HTMLSelectElement && cycleSel.value) || 3);
+    const week = Number((weekSel instanceof HTMLSelectElement && weekSel.value) || 1);
+    const day = Number((daySel instanceof HTMLSelectElement && daySel.value) || 1);
+    const subject = (subjectSel instanceof HTMLSelectElement && subjectSel.value) || "mat";
+    return { cycle, week, day, subject };
+  }
+
+  function refreshClassTitle() {
+    if (!curriculum || !(classTitle instanceof HTMLElement)) return;
+    const sel = currentSelection();
+    const row = findCurriculumClass(curriculum, sel);
+    classTitle.textContent = row
+      ? `${row.title} · ${row.key || ""}`
+      : "No hay clase en el curriculum para esta selección.";
+    if (ocrBtn instanceof HTMLButtonElement) {
+      ocrBtn.disabled = !row;
+    }
+  }
+
+  function rebuildSubjectOptions() {
+    if (!curriculum || !(subjectSel instanceof HTMLSelectElement)) return;
+    const { cycle, week, day } = currentSelection();
+    const subjects = HOMESCOOL_SUBJECTS.filter((s) =>
+      curriculum!.classes.some((c) => c.cycle === cycle && c.week === week && c.day === day && c.subject === s),
+    );
+    const list = subjects.length ? subjects : [...HOMESCOOL_SUBJECTS];
+    const prev = subjectSel.value;
+    fillSelect(subjectSel, list as string[], (v) => {
+      const label = HOMESCOOL_SUBJECT_LABELS[v as HomescoolSubject] || v;
+      return `${v} — ${label}`;
+    });
+    if (list.includes(prev as HomescoolSubject)) {
+      subjectSel.value = prev;
+    }
+    refreshClassTitle();
+  }
+
+  function renderResults(data: RevisionOCRResult) {
+    if (!(results instanceof HTMLElement) || !(mcqTable instanceof HTMLElement) || !(writeList instanceof HTMLElement)) {
+      return;
+    }
+    setHidden(results, false);
+    setHidden(chatCard, false);
+    if (scoreSummary instanceof HTMLElement) {
+      scoreSummary.textContent = `${data.scoring.mcqCorrect}/${data.scoring.mcqTotal} MCQ correctas · ${data.class.title}`;
+    }
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    for (const label of ["#", "Marcada", "Esperada", "OK"]) {
+      const th = document.createElement("th");
+      th.textContent = label;
+      headRow.appendChild(th);
+    }
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+    const tbody = document.createElement("tbody");
+    for (const row of data.scoring.mcq) {
+      const tr = document.createElement("tr");
+      const cells = [
+        String(row.n),
+        `${row.selectedKey} ${row.selectedText}`.trim(),
+        row.expected || "",
+        row.correct ? "sí" : "no",
+      ];
+      for (const cell of cells) {
+        const td = document.createElement("td");
+        td.textContent = cell;
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    mcqTable.replaceChildren(table);
+
+    writeList.replaceChildren();
+    for (const w of data.scoring.write) {
+      const div = document.createElement("div");
+      div.className = "eoschool-revision-write";
+      const h = document.createElement("strong");
+      h.textContent = `Escrita ${w.n}`;
+      const p = document.createElement("p");
+      p.textContent = w.illegible ? "(ilegible)" : w.text || "(vacío)";
+      const prompt = document.createElement("p");
+      prompt.className = "hint";
+      prompt.textContent = w.prompt || "";
+      div.append(h, prompt, p);
+      writeList.appendChild(div);
+    }
+  }
+
+  function appendChat(role: "user" | "assistant", text: string) {
+    if (!(chatLog instanceof HTMLElement)) return;
+    const div = document.createElement("div");
+    div.className = `eoschool-revision-chat__msg eoschool-revision-chat__msg--${role}`;
+    div.textContent = text;
+    chatLog.appendChild(div);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  async function runOCR() {
+    if (!curriculum || !(ocrBtn instanceof HTMLButtonElement) || !(filesInput instanceof HTMLInputElement)) return;
+    const sel = currentSelection();
+    const row = findCurriculumClass(curriculum, sel);
+    if (!row) {
+      apiFail("Selecciona una clase válida del curriculum.");
+      return;
+    }
+    const files = Array.from(filesInput.files || []).slice(0, 2);
+    if (!files.length) {
+      apiFail("Sube al menos una foto del quiz.");
+      return;
+    }
+    ocrBtn.disabled = true;
+    if (ocrStatus instanceof HTMLElement) {
+      ocrStatus.hidden = false;
+      ocrStatus.textContent = "Leyendo respuestas…";
+    }
+    const doc = revisionClassFromCurriculum(row);
+    const data = await postHomescoolRevisionOCR({
+      ...sel,
+      document: doc,
+      files,
+    });
+    ocrBtn.disabled = false;
+    if (data.error) {
+      if (ocrStatus instanceof HTMLElement) ocrStatus.textContent = data.error;
+      apiFail(data.error, { requestId: data.requestId });
+      return;
+    }
+    lastOCR = data;
+    if (ocrStatus instanceof HTMLElement) {
+      ocrStatus.textContent = `Listo · ${data.scoring.mcqCorrect}/${data.scoring.mcqTotal}`;
+    }
+    renderResults(data);
+    publishRevisionAgentPayload({
+      classDoc: doc,
+      scoring: data.scoring,
+      extraction: data.extraction,
+      classMeta: data.class,
+    });
+    chatHistory = [];
+    if (chatLog instanceof HTMLElement) chatLog.replaceChildren();
+    const seed = buildRevisionChatSeedMessage(data.scoring, data.class.title || doc.title);
+    if (chatInput instanceof HTMLTextAreaElement) {
+      chatInput.value = seed;
+    }
+  }
+
+  async function sendChat(message: string) {
+    const text = message.trim();
+    if (!text) return;
+    appendChat("user", text);
+    chatHistory = [...chatHistory, { role: "user", content: text }].slice(-8);
+    if (chatInput instanceof HTMLTextAreaElement) chatInput.value = "";
+    let assistant = "";
+    appendChat("assistant", "…");
+    const bubble = chatLog?.lastElementChild;
+    const { status, data, requestId } = await postChatStream(text, chatHistory.slice(0, -1), (delta) => {
+      assistant += delta;
+      if (bubble instanceof HTMLElement) bubble.textContent = assistant;
+    });
+    if (status < 200 || status >= 300 || data.error) {
+      const msg = data.message || "El chat no respondió.";
+      if (bubble instanceof HTMLElement) bubble.textContent = msg;
+      apiFail(msg, { requestId });
+      return;
+    }
+    const finalText = (data.text || assistant || "").trim() || "Sin respuesta.";
+    if (bubble instanceof HTMLElement) bubble.textContent = finalText;
+    chatHistory = [...chatHistory, { role: "assistant", content: finalText }].slice(-8);
+  }
+
+  clearAgentRoutePayload();
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso Homescool requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    const loaded = await loadHomescoolCurriculum();
+    if (loaded.error || !loaded.curriculum) {
+      if (banner instanceof HTMLElement) banner.textContent = loaded.error || "No se pudo cargar el curriculum.";
+      apiFail(loaded.error || "Curriculum unavailable.");
+    } else {
+      curriculum = loaded.curriculum;
+      const cycles = [...new Set(curriculum.classes.map((c) => c.cycle))].sort((a, b) => a - b).map(String);
+      const weeks = [...new Set(curriculum.classes.map((c) => c.week))].sort((a, b) => a - b).map(String);
+      fillSelect(cycleSel, cycles.length ? cycles : ["3"]);
+      fillSelect(weekSel, weeks.length ? weeks : ["1", "2"]);
+      fillSelect(daySel, ["1", "2", "3", "4", "5"]);
+      if (cycleSel instanceof HTMLSelectElement) cycleSel.value = "3";
+      if (weekSel instanceof HTMLSelectElement && weeks.includes("2")) weekSel.value = "2";
+      rebuildSubjectOptions();
+      if (banner instanceof HTMLElement) {
+        banner.textContent = `${curriculum.classCount || curriculum.classes.length} clases en curriculum.`;
+      }
+      if (mustLog) console.log("[eoschool-revision] ready", { classCount: curriculum.classes.length });
+    }
+  }
+
+  for (const el of [cycleSel, weekSel, daySel]) {
+    el?.addEventListener("change", () => {
+      rebuildSubjectOptions();
+    });
+  }
+  subjectSel?.addEventListener("change", () => refreshClassTitle());
+  ocrBtn?.addEventListener("click", () => void runOCR());
+  chatForm?.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    if (!(chatInput instanceof HTMLTextAreaElement)) return;
+    void sendChat(chatInput.value);
+  });
+</script>

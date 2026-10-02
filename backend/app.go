@@ -43,9 +43,10 @@ type App struct {
 	inviteOTPLimit  *limiter
 	inviteVerifyLim *limiter
 	apiKeyLimit     *limiter
-	ordinatoLimit   *limiter
-	publisherLimit  *limiter
-	ereport         *ereportFS
+	ordinatoLimit    *limiter
+	publisherLimit   *limiter
+	revisionOCRLimit *limiter
+	ereport          *ereportFS
 	evoiceMeta      evoiceMetaStore
 	evoiceFS        *evoiceFS
 	evoiceJobs      *evoiceJobStore
@@ -137,9 +138,10 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		inviteOTPLimit:  newLimiter(time.Hour, 8),
 		inviteVerifyLim: newLimiter(15*time.Minute, 10),
 		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
-		ordinatoLimit:   newLimiter(ordinatoProxyWindow, ordinatoProxyMax),
-		publisherLimit:  newLimiter(publisherProxyWindow, publisherProxyMax),
-		ereport:         newEreportFS(cfg.EreportMediaRoot),
+		ordinatoLimit:    newLimiter(ordinatoProxyWindow, ordinatoProxyMax),
+		publisherLimit:   newLimiter(publisherProxyWindow, publisherProxyMax),
+		revisionOCRLimit: newLimiter(homescoolRevisionOCRWindow, homescoolRevisionOCRUserMax),
+		ereport:          newEreportFS(cfg.EreportMediaRoot),
 		evoiceMeta:      newEvoiceMetaFromStore(store),
 		evoiceFS:        newEvoiceFS(cfg.EvoiceMediaRoot),
 	}
@@ -360,6 +362,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/homescool/print/pdf", a.postHomescoolPrintPDFHandler)
 	mux.HandleFunc("POST /api/homescool/materials/{materialId}/print/pdf", a.postHomescoolMaterialPrintPDFHandler)
 	mux.HandleFunc("POST /api/homescool/preview", a.postHomescoolPreviewHandler)
+	mux.HandleFunc("POST /api/homescool/revision/ocr", a.postHomescoolRevisionOCRHandler)
 	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
 
 	a.registerEvoiceRoutes(mux)

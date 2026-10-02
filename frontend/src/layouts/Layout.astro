@@ -69,6 +69,7 @@ const privateByDefault =
   path.startsWith("/ereport") ||
   path.startsWith("/scrib") ||
   path.startsWith("/homescool") ||
+  path.startsWith("/eoschool") ||
   path.startsWith("/homeschool") ||
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
@@ -441,9 +442,13 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
               Institutes
             </a>
-            <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") ? "page" : undefined}>
+            <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") || path.startsWith("/eoschool/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">school</span>
               Homescool
+            </a>
+            <a href="/eoschool/revision" data-route data-service="homescool" hidden aria-current={path === "/eoschool/revision" || path.startsWith("/eoschool/revision/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">grading</span>
+              Revisión
             </a>
             <a href="/documents/pamphlet" data-route data-service="epam" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>

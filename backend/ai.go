@@ -370,12 +370,26 @@ func sanitizeModelTextMax(text string, maxRunes int) string {
 	return out
 }
 
+type visionImagePart struct {
+	MIME string
+	Data []byte
+}
+
 func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, imageMIME string, imageData []byte, maxTokens int) (ChatResult, error) {
+	return c.CompleteVisionParts(ctx, system, prompt, []visionImagePart{{MIME: imageMIME, Data: imageData}}, maxTokens)
+}
+
+func (c openAICompatClient) CompleteVisionParts(ctx context.Context, system, prompt string, images []visionImagePart, maxTokens int) (ChatResult, error) {
 	if c.apiKey == "" {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	if len(imageData) == 0 || strings.TrimSpace(imageMIME) == "" {
+	if len(images) == 0 {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	for _, img := range images {
+		if len(img.Data) == 0 || strings.TrimSpace(img.MIME) == "" {
+			return ChatResult{}, fmt.Errorf("provider unavailable")
+		}
 	}
 	if maxTokens < 64 {
 		maxTokens = 64
@@ -388,10 +402,14 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 	if system == "" || prompt == "" {
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
-	dataURL := "data:" + imageMIME + ";base64," + base64.StdEncoding.EncodeToString(imageData)
-	userContent := []map[string]any{
-		{"type": "text", "text": prompt},
-		{"type": "image_url", "image_url": map[string]any{"url": dataURL}},
+	userContent := make([]map[string]any, 0, 1+len(images))
+	userContent = append(userContent, map[string]any{"type": "text", "text": prompt})
+	for _, img := range images {
+		dataURL := "data:" + img.MIME + ";base64," + base64.StdEncoding.EncodeToString(img.Data)
+		userContent = append(userContent, map[string]any{
+			"type":      "image_url",
+			"image_url": map[string]any{"url": dataURL},
+		})
 	}
 	payload := map[string]any{
 		"model": c.resolveVisionModel(),
@@ -400,7 +418,7 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 			{"role": "user", "content": userContent},
 		},
 		"max_tokens":  maxTokens,
-		"temperature": 0.4,
+		"temperature": 0.2,
 	}
 	body, err := json.Marshal(payload)
 	if err != nil {
@@ -436,6 +454,44 @@ func (c openAICompatClient) CompleteVision(ctx context.Context, system, prompt, 
 		return ChatResult{}, fmt.Errorf("provider unavailable")
 	}
 	return ChatResult{Text: text, Usage: parsed.Usage}, nil
+}
+
+func (c *recordingChat) CompleteVisionParts(_ context.Context, system, prompt string, images []visionImagePart, _ int) (ChatResult, error) {
+	total := 0
+	mime := ""
+	for _, img := range images {
+		total += len(img.Data)
+		if mime == "" {
+			mime = img.MIME
+		}
+	}
+	c.calls++
+	c.lastVision = true
+	c.lastSystem = system
+	c.last = prompt
+	c.lastMIME = mime
+	c.lastImage = total
+	c.lastHist = []ChatMessage{{Role: "user", Content: prompt}}
+	if c.fail {
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
+	return ChatResult{Text: c.text, Usage: c.usage}, nil
+}
+
+func completeVisionParts(client ChatClient, ctx context.Context, system, prompt string, images []visionImagePart, maxTokens int) (ChatResult, error) {
+	switch c := client.(type) {
+	case openAICompatClient:
+		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
+	case *openAICompatClient:
+		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
+	case *recordingChat:
+		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
+	default:
+		if v, ok := client.(VisionChatClient); ok && len(images) == 1 {
+			return v.CompleteVision(ctx, system, prompt, images[0].MIME, images[0].Data, maxTokens)
+		}
+		return ChatResult{}, fmt.Errorf("provider unavailable")
+	}
 }
 
 func newHTTPClient() *http.Client {
