@@ -2598,25 +2598,38 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   line-height: 1.3;
 }
 
-/* Letter v2 grid (mirror of Go PDF SoT; 1 mm ≈ 0.23625 rem at 16px/96dpi) */
-.homescool-letter-v2 {
+/*
+ * Letter v2 grid — HTML mirror of Go PDF SoT (homescool_letter_grid.go).
+ * 1 mm ≈ 0.23625 rem at 16px/96dpi. Always ink on white (never theme tokens).
+ * Cols: gapLeft 5 | HeaderMargin 15 | Col1 48 | gap 2 | Col2 68 | gap 2 | Col3 68
+ * Cabeceras start at x=20 (gapLeft+HeaderMargin); MainCol1 at x=5 (width 63).
+ */
+.homescool-letter-page.homescool-letter-v2 {
   --hc-mm: 0.23625rem;
   --hc-v2-pad: calc(2 * var(--hc-mm));
   --hc-v2-radius: calc(1 * var(--hc-mm));
   --hc-v2-gap: calc(2 * var(--hc-mm));
-  --hc-v2-stroke: var(--border-width);
+  --hc-v2-header-inset: calc(15 * var(--hc-mm)); /* ContainerHeaderMargin */
+  --hc-v2-stroke: calc(0.15 * var(--hc-mm));
+  --hc-v2-ink: #000000;
   box-sizing: border-box;
   width: calc(215.9 * var(--hc-mm));
   height: calc(279.4 * var(--hc-mm));
-  padding: calc(5 * var(--hc-mm));
+  min-height: calc(279.4 * var(--hc-mm));
+  max-height: calc(279.4 * var(--hc-mm));
+  /* gapTop / gapLeft = 5 mm; right slack ≈ 7.9 mm (page 215.9 − track sum 208). */
+  padding-top: calc(5 * var(--hc-mm));
+  padding-right: calc(7.9 * var(--hc-mm));
+  padding-bottom: calc(4.4 * var(--hc-mm));
+  padding-left: calc(5 * var(--hc-mm));
   display: flex;
   flex-direction: column;
   gap: var(--hc-v2-gap);
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: #ffffff;
+  color: var(--hc-v2-ink);
   border: 0;
   font-family: var(--font-family);
-  font-size: 0.5rem; /* 8 pt */
+  font-size: 0.5rem; /* 8 pt floor, matches PDF SoT */
   line-height: 1.15;
   overflow: hidden;
 }
@@ -2624,8 +2637,15 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 .homescool-letter-v2__cabecera {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: var(--hc-v2-gap);
   flex: 0 0 auto;
+  /* Align with PDF cabecera x=20: inset HeaderMargin inside the 5 mm page pad. */
+  margin-left: var(--hc-v2-header-inset);
+  width: calc(188 * var(--hc-mm)); /* 45+2+98+2+41 */
+  max-width: calc(188 * var(--hc-mm));
+  box-sizing: border-box;
 }
 
 .homescool-letter-v2__cabecera--1 {
@@ -2634,6 +2654,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-v2__cabecera--2 {
   height: calc(5 * var(--hc-mm));
+  width: calc(188 * var(--hc-mm)); /* 23+2+70+2+70+2+19 */
 }
 
 .homescool-letter-v2__field {
@@ -2641,60 +2662,85 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  flex-grow: 0;
+  flex-shrink: 0;
   min-width: 0;
   height: 100%;
   padding-left: var(--hc-v2-pad);
   padding-right: var(--hc-v2-pad);
-  border: var(--hc-v2-stroke) solid var(--color-text);
+  border: var(--hc-v2-stroke) solid var(--hc-v2-ink);
   border-radius: var(--hc-v2-radius);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: var(--hc-v2-ink);
+  background: #ffffff;
 }
 
 .homescool-letter-v2__field--name {
-  flex: 0 0 calc(45 * var(--hc-mm));
+  width: calc(45 * var(--hc-mm));
 }
 
 .homescool-letter-v2__field--topic {
-  flex: 1 1 auto;
+  width: calc(98 * var(--hc-mm));
 }
 
 .homescool-letter-v2__field--code {
-  flex: 0 0 calc(41 * var(--hc-mm));
+  width: calc(41 * var(--hc-mm));
 }
 
-.homescool-letter-v2__field--meta {
-  flex: 1 1 auto;
+.homescool-letter-v2__field--date {
+  width: calc(23 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field--student {
+  width: calc(70 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field--reviewer {
+  width: calc(70 * var(--hc-mm));
+}
+
+.homescool-letter-v2__field--firma {
+  width: calc(19 * var(--hc-mm));
 }
 
 .homescool-letter-v2__main {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   gap: var(--hc-v2-gap);
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 0 0 auto;
+  width: calc(203 * var(--hc-mm)); /* 63+2+68+2+68 */
   height: calc(182 * var(--hc-mm));
+  margin-left: 0;
 }
 
 .homescool-letter-v2__col {
   box-sizing: border-box;
-  flex: 1 1 0;
-  min-width: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: var(--hc-v2-stroke) solid var(--color-text);
+  border: var(--hc-v2-stroke) solid var(--hc-v2-ink);
   border-radius: var(--hc-v2-radius);
   padding-top: var(--hc-v2-pad);
   padding-bottom: var(--hc-v2-pad);
   padding-left: var(--hc-v2-pad);
   padding-right: var(--hc-v2-pad);
   overflow: hidden;
+  color: var(--hc-v2-ink);
+  background: #ffffff;
 }
 
 .homescool-letter-v2__col[data-col="1"] {
-  flex: 0 0 calc(63 * var(--hc-mm));
+  width: calc(63 * var(--hc-mm)); /* HeaderMargin 15 + Col1 48 */
+}
+
+.homescool-letter-v2__col[data-col="2"],
+.homescool-letter-v2__col[data-col="3"] {
+  width: calc(68 * var(--hc-mm));
 }
 
 .homescool-letter-v2__line {
@@ -2705,6 +2751,7 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   overflow: hidden;
   white-space: nowrap;
   text-overflow: clip;
+  color: var(--hc-v2-ink);
 }
 
 .homescool-letter-v2__line--heading {
@@ -2713,20 +2760,22 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
 .homescool-letter-v2__images {
   box-sizing: border-box;
-  flex: 0 0 calc(70 * var(--hc-mm));
+  flex: 0 0 auto;
+  width: calc(203 * var(--hc-mm));
   height: calc(70 * var(--hc-mm));
-  border: var(--hc-v2-stroke) solid var(--color-text);
+  border: var(--hc-v2-stroke) solid var(--hc-v2-ink);
   border-radius: var(--hc-v2-radius);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
 }
 
 .homescool-letter-v2__practice {
   flex: 1 1 auto;
   align-self: stretch;
-  max-width: calc(205.9 * var(--hc-mm));
+  max-width: calc(203 * var(--hc-mm));
   max-height: calc(70 * var(--hc-mm));
   object-fit: contain;
   display: block;
@@ -2736,5 +2785,5 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   margin: 0;
   padding: var(--hc-v2-pad);
   font-size: var(--font-size-xs);
-  color: var(--color-muted);
+  color: var(--hc-v2-ink);
 }

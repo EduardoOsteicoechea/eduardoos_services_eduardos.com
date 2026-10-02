@@ -37,8 +37,14 @@ function buildCabecera1(doc: EoschoolDocument): HTMLElement {
 
 function buildCabecera2(): HTMLElement {
   const row = el("div", "homescool-letter-v2__cabecera homescool-letter-v2__cabecera--2");
-  for (const label of ["Fecha:", "Estudiante:", "Revisor:", "Firma:"]) {
-    row.append(fieldBox(label, "homescool-letter-v2__field--meta"));
+  const fields: Array<[string, string]> = [
+    ["Fecha:", "homescool-letter-v2__field--date"],
+    ["Estudiante:", "homescool-letter-v2__field--student"],
+    ["Revisor:", "homescool-letter-v2__field--reviewer"],
+    ["Firma:", "homescool-letter-v2__field--firma"],
+  ];
+  for (const [label, cls] of fields) {
+    row.append(fieldBox(label, cls));
   }
   return row;
 }

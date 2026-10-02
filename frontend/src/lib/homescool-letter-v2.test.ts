@@ -23,7 +23,14 @@ describe("Letter v2 viewer", () => {
     const page = renderLetterV2Page(doc);
     expect(page.querySelectorAll(".homescool-letter-v2__col")).toHaveLength(3);
     expect(page.querySelectorAll(".homescool-letter-v2__line")).toHaveLength(156);
-    expect(page.textContent || "").toMatch(/Fecha:/);
+    expect(page.querySelector(".homescool-letter-v2__field--date")?.textContent).toBe("Fecha:");
+    expect(page.querySelector(".homescool-letter-v2__field--student")?.textContent).toBe(
+      "Estudiante:",
+    );
+    expect(page.querySelector(".homescool-letter-v2__field--reviewer")?.textContent).toBe(
+      "Revisor:",
+    );
+    expect(page.querySelector(".homescool-letter-v2__field--firma")?.textContent).toBe("Firma:");
     expect(page.textContent || "").toMatch(/Punto 1/);
   });
 
