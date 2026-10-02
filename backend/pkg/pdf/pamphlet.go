@@ -26,6 +26,7 @@ import (
 	_ "image/png"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 // Letter landscape page size used by the pamphlet sheet (exact CSS mm).
@@ -2153,12 +2154,23 @@ func splitLongWord(word string, sizePt, maxWidthPt float64, bold bool) []string 
 }
 
 // toWinAnsi converts Unicode text to a single-byte WinAnsi string suitable for
-// Raleway + /WinAnsiEncoding. Writing UTF-8 multi-byte sequences into the PDF
-// string (via WriteRune) was the source of Ã¡ / Â¿ mojibake.
+// Raleway/Helvetica + /WinAnsiEncoding. Writing UTF-8 multi-byte sequences into
+// the PDF string (via WriteRune) was the source of Ã¡ / Â¿ mojibake.
+//
+// Idempotent: if s is already WinAnsi (high bytes 0x80–0xFF), those bytes are
+// kept. A second pass must not treat them as invalid UTF-8 and drop accents
+// (that bug ate ñ/á/é in Homescool Letter ink after fitOneLineInk + writeText).
 func toWinAnsi(s string) string {
 	var b strings.Builder
 	b.Grow(len(s))
-	for _, r := range s {
+	for i := 0; i < len(s); {
+		r, size := utf8.DecodeRuneInString(s[i:])
+		if r == utf8.RuneError && size == 1 {
+			// Lone high byte: already WinAnsi from a prior conversion.
+			b.WriteByte(s[i])
+			i++
+			continue
+		}
 		switch {
 		case r == '\n' || r == '\r' || r == '\t':
 			b.WriteByte(' ')
@@ -2175,6 +2187,7 @@ func toWinAnsi(s string) string {
 			}
 			// drop other unsupported glyphs
 		}
+		i += size
 	}
 	return strings.TrimSpace(b.String())
 }
