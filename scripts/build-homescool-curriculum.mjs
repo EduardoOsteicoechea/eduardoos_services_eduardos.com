@@ -73,7 +73,7 @@ if (!apiKey || !baseURL) {
 
 /** Strip curriculum-only fields before POST. */
 function toEoschoolBody(row) {
-  return {
+  const body = {
     format: row.format,
     version: row.version,
     cycle: row.cycle,
@@ -87,6 +87,11 @@ function toEoschoolBody(row) {
     quiz: row.quiz,
     media: row.media,
   };
+  if (row.supportUrl) body.supportUrl = row.supportUrl;
+  if (row.mppe) body.mppe = row.mppe;
+  if (row.weekRecap) body.weekRecap = row.weekRecap;
+  if (row.priorDayRecap) body.priorDayRecap = row.priorDayRecap;
+  return body;
 }
 
 let ok = 0;
