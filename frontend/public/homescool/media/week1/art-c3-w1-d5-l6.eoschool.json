@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las cuatro letras",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana aprendiste a mirar un dibujo por partes.\nVimos formas redondas, puntos, rectas y curvas.\nHoy las recuerdas y aprendes a contarlas.\n\nSin mirar nada: ¿qué significa cada letra de OiLS?\n\nLa «O» son las formas redondas. La «i» son los puntos o marcas pequeñas. La «L» son las líneas rectas que forman ángulos. La «S» son las líneas curvas."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer dibujaste una duna con curvas S, un sol O y huellas i. Hoy lo recuerdas y lo cuentas."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Mirar antes de dibujar",
-        "body": "¿Quién enseñó esta forma de mirar los dibujos? ¿Y qué se mira primero?\n\nMona Brookes enseñó a mirar un dibujo por piezas. Primero se mira la forma grande y luego el detalle. Mirar bien antes de dibujar evita errores. Un dibujo con O, i, L y S resume la semana."
+        "heading": "Punto 2: Las cuatro letras",
+        "body": "Sin mirar: ¿qué significa cada letra de OiLS?\n\nLa O son las formas redondas. La i son los puntos pequeños. La L son las rectas, con ángulos. La S son las líneas curvas."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Buscar OiLS en una escena",
-        "body": "Imagina una casa con ventana redonda y humo en espiral. ¿Qué letras de OiLS encuentras?\n\nLa ventana redonda es una O. Las paredes y el techo son rectas: son L. El humo en espiral es una S. Y la perilla de la puerta es un punto: una i."
+        "heading": "Punto 3: Mirar antes de dibujar",
+        "body": "¿Quién enseñó a mirar un dibujo por piezas? ¿Y qué se mira primero?\n\nMona Brookes enseñó a mirarlo así. Primero se mira la forma grande, y después el detalle."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a mostrar tu dibujo a alguien de tu casa. ¿Cómo se lo explicarías con orden?\n\nEmpieza diciendo qué dibujaste. Sigue con la forma grande y luego con los detalles. Señala cada parte y di su letra: O, i, L o S. Termina contando qué fue lo más difícil y da las gracias."
+        "heading": "Punto 4: Buscar OiLS en la escena",
+        "body": "Un dibujo de los Médanos de Coro tiene sol, duna, palo y huellas. ¿Qué letras?\n\nEl sol redondo es una O. La duna y sus ondas son S. El palo recto es una L. Y las huellas son puntos: i."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Saber para qué sirve",
-        "body": "Una pregunta con truco: ¿basta con saber las letras de memoria?\n\nNo basta con la lista de letras. Hay que usarlas al mirar y al dibujar. Pregúntate: ¿qué forma veo aquí? Así tu dibujo tendrá orden y entenderás lo que hiciste."
+        "heading": "Punto 5: Cómo contarlo",
+        "body": "Vas a mostrar tu dibujo a tu familia. ¿Cómo se lo cuentas con orden?\n\nEmpieza diciendo qué dibujaste. Sigue con lo grande, luego los detalles. Señala cada parte y di su letra. Cuenta qué fue difícil y da gracias."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Usar lo que sabes",
+        "body": "Una pregunta con truco: ¿basta saber las letras de memoria?\n\nNo basta con repetir la lista. Úsala al mirar y al dibujar. Pregúntate: ¿qué forma veo aquí?"
       }
     ],
-    "summary": "OiLS nos ayuda a mirar un dibujo por piezas: O redondos, i puntos, L rectas y S curvas. Primero lo grande y luego el detalle.",
+    "summary": "OiLS nos ayuda a mirar un dibujo por piezas: O redondas, i puntos, L rectas y S curvas. En los Médanos de Coro primero se mira lo grande y luego el detalle.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una casa con ventana redonda, techo y humo en espiral. Rotula una O, una i, una L y una S en tu dibujo. Escribe al margen la lista O-i-L-S con un ejemplo de cada una. Revisa que se vea primero lo grande y luego los detalles.",
+    "imageBandInstruction": "Dibuja los Médanos de Coro con sol y duna. Añade un palo y huellas en la arena. Rotula una O, una i, una L y una S. Revisa que se vea primero lo grande.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,36 +88,36 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana aprendiste a mirar un dibujo por partes."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Vimos formas redondas, puntos, rectas y curvas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy las recuerdas y aprendes a contarlas."
+        "text": "Ayer dibujaste una duna con curvas S,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un sol O y huellas i."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada: ¿qué significa cada letra de OiLS?"
+        "text": "Hoy lo recuerdas y lo cuentas."
       },
       {
         "index": 11,
@@ -125,15 +130,15 @@
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -146,43 +151,43 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Las cuatro letras"
+        "kind": "lesson",
+        "text": "Sin mirar: ¿qué significa cada letra"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de OiLS?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "La «O» son las formas redondas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "La «i» son los puntos o marcas pequeñas."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "La «L» son las líneas rectas que forman ángulos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "La «S» son las líneas curvas."
+        "kind": "heading",
+        "text": "Punto 2: Las cuatro letras"
       },
       {
         "index": 21,
@@ -196,49 +201,49 @@
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "La O son las formas redondas."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La i son los puntos pequeños."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La L son las rectas, con ángulos."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Quién enseñó esta forma de mirar los dibujos?"
+        "text": "La S son las líneas curvas."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Y qué se mira primero?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -251,43 +256,43 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Mirar antes de dibujar"
+        "kind": "lesson",
+        "text": "¿Quién enseñó a mirar un dibujo por"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "piezas? ¿Y qué se mira primero?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Mona Brookes enseñó a mirar un dibujo por piezas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Primero se mira la forma grande y luego el detalle."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Mirar bien antes de dibujar evita errores."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Un dibujo con O, i, L y S resume la semana."
+        "kind": "heading",
+        "text": "Punto 3: Mirar antes de dibujar"
       },
       {
         "index": 36,
@@ -301,42 +306,42 @@
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Mona Brookes enseñó a mirarlo así."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero se mira la forma grande,"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y después el detalle."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Imagina una casa con ventana redonda y humo en espiral."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Qué letras de OiLS encuentras?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -349,43 +354,43 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Buscar OiLS en una escena"
+        "kind": "lesson",
+        "text": "Un dibujo de los Médanos de Coro tiene"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sol, duna, palo y huellas. ¿Qué letras?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "La ventana redonda es una O."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Las paredes y el techo son rectas: son L."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "El humo en espiral es una S."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Y la perilla de la puerta es un punto: una i."
+        "kind": "heading",
+        "text": "Punto 4: Buscar OiLS en la escena"
       },
       {
         "index": 50,
@@ -399,133 +404,133 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "El sol redondo es una O."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La duna y sus ondas son S."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El palo recto es una L."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Vas a mostrar tu dibujo a alguien de tu casa."
+        "text": "Y las huellas son puntos: i."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Cómo se lo explicarías con orden?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a mostrar tu dibujo a tu familia."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Empieza diciendo qué dibujaste."
+        "text": "¿Cómo se lo cuentas con orden?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Sigue con la forma grande y luego con los detalles."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Señala cada parte y di su letra: O, i, L o S."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Termina contando qué fue lo más difícil y da las gracias."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Empieza diciendo qué dibujaste."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sigue con lo grande, luego los detalles."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿basta con saber las letras"
+        "text": "Señala cada parte y di su letra."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "de memoria?"
+        "text": "Cuenta qué fue difícil y da gracias."
       },
       {
         "index": 70,
@@ -538,15 +543,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Saber para qué sirve"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -560,28 +565,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No basta con la lista de letras."
+        "text": "Una pregunta con truco: ¿basta saber"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Hay que usarlas al mirar y al dibujar."
+        "text": "las letras de memoria?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Pregúntate: ¿qué forma veo aquí?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Así tu dibujo tendrá orden y entenderás lo que hiciste."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -594,8 +599,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Usar lo que sabes"
       },
       {
         "index": 80,
@@ -608,55 +613,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No basta con repetir la lista."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Quién enseñó a mirar un dibujo por piezas sencillas?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Úsala al mirar y al dibujar."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Un pintor famoso",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Pregúntate: ¿qué forma veo aquí?"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Tu maestro de música",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Un escultor",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Mona Brookes",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "En la casa de hoy, ¿qué letra es la ventana redonda?",
-        "questionId": "d5-q2",
+        "text": "¿Quién enseñó a mirar por piezas?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) i",
-        "questionId": "d5-q2"
+        "text": "A) Un pintor",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) O",
-        "questionId": "d5-q2"
+        "text": "B) Tu maestro",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) L",
-        "questionId": "d5-q2"
+        "text": "C) Un escultor",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) S",
-        "questionId": "d5-q2"
+        "text": "D) Mona Brookes",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "En la casa de hoy, ¿qué letra es el humo en espiral?",
-        "questionId": "d5-q3",
+        "text": "En la escena, ¿qué letra es el sol?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,8 +732,8 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) S",
-        "questionId": "d5-q3"
+        "text": "A) i",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
@@ -748,23 +741,23 @@
         "line": 44,
         "kind": "option",
         "text": "B) O",
-        "questionId": "d5-q3"
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) i",
-        "questionId": "d5-q3"
+        "text": "C) L",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) L",
-        "questionId": "d5-q3"
+        "text": "D) S",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "En la casa de hoy, ¿qué letra son las paredes?",
-        "questionId": "d5-q4",
+        "text": "¿Qué letra son la duna y sus ondas?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,7 +787,7 @@
         "line": 49,
         "kind": "option",
         "text": "A) S",
-        "questionId": "d5-q4"
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
@@ -802,37 +795,84 @@
         "line": 50,
         "kind": "option",
         "text": "B) O",
-        "questionId": "d5-q4"
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) L",
-        "questionId": "d5-q4"
+        "text": "C) i",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) i",
-        "questionId": "d5-q4"
+        "text": "D) L",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué letra es el palo recto?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) S",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) O",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) L",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) i",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "En la casa de hoy, ¿qué letra es la perilla?",
+        "text": "¿Qué letra son las huellas?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,48 +883,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) i",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) L",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) S",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) O",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué se mira primero en un dibujo?",
         "questionId": "d5-q6",
@@ -897,48 +937,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) El detalle pequeño",
+        "text": "A) El detalle",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) La sombra",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) El marco",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) La forma grande",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Cómo empiezas a contar tu dibujo?",
         "questionId": "d5-q7",
@@ -951,50 +991,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Terminando con gracias",
+        "text": "A) Diciendo gracias",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Diciendo qué dibujaste",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Borrando algo",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Cambiando de tema",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué debes hacer además de saber las letras?",
+        "text": "¿Qué haces además de saber las letras?",
         "questionId": "d5-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Olvidarlas",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Cambiarlas",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Usarlas al mirar y dibujar",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Esconderlas",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe de memoria qué significa cada letra de OiLS.",
+        "text": "Escribe de memoria qué significa cada letra",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "de OiLS.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Cuenta cómo explicarías tu dibujo, de inicio a cierre.",
+        "text": "Cuenta cómo explicarías tu dibujo, de inicio a",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,50 +1145,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "fin.",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
         "kind": "question",
-        "text": "Dibuja una casa y rotula una O, una i, una L y una S.",
+        "text": "Dibuja una escena y rotula una O, i, L y S.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,30 +1189,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 146,
@@ -1202,15 +1202,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja un esquema con las cuatro letras y un ejemplo de cada una.",
+        "text": "Dibuja las cuatro letras con un ejemplo cada",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,19 +1229,11 @@
         }
       },
       {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
-      },
-      {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "una.",
         "questionId": "d5-w4"
       },
       {
@@ -1257,28 +1257,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una casa con ventana redonda, techo y humo en espiral."
+        "text": "Dibuja los Médanos de Coro con sol y duna."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula una O, una i, una L y una S en tu dibujo."
+        "text": "Añade un palo y huellas en la arena. Rotula"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe al margen la lista O-i-L-S con un ejemplo de cada una."
+        "text": "una O, una i, una L y una S. Revisa que se"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que se vea primero lo grande y luego los detalles."
+        "text": "vea primero lo grande."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1291,25 +1291,25 @@
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Quién enseñó a mirar un dibujo por piezas sencillas?",
+        "prompt": "¿Quién enseñó a mirar por piezas?",
         "choices": [
-          "Un pintor famoso",
-          "Tu maestro de música",
+          "Un pintor",
+          "Tu maestro",
           "Un escultor",
           "Mona Brookes"
         ],
         "answer": "Mona Brookes",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "En la casa de hoy, ¿qué letra es la ventana redonda?",
+        "prompt": "En la escena, ¿qué letra es el sol?",
         "choices": [
           "i",
           "O",
@@ -1319,15 +1319,15 @@
         "answer": "O",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "En la casa de hoy, ¿qué letra es el humo en espiral?",
+        "prompt": "¿Qué letra son la duna y sus ondas?",
         "choices": [
           "S",
           "O",
@@ -1337,15 +1337,15 @@
         "answer": "S",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q4",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "En la casa de hoy, ¿qué letra son las paredes?",
+        "prompt": "¿Qué letra es el palo recto?",
         "choices": [
           "S",
           "O",
@@ -1354,16 +1354,16 @@
         ],
         "answer": "L",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "En la casa de hoy, ¿qué letra es la perilla?",
+        "prompt": "¿Qué letra son las huellas?",
         "choices": [
           "i",
           "L",
@@ -1373,8 +1373,8 @@
         "answer": "i",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1383,7 +1383,7 @@
         "type": "mcq",
         "prompt": "¿Qué se mira primero en un dibujo?",
         "choices": [
-          "El detalle pequeño",
+          "El detalle",
           "La sombra",
           "El marco",
           "La forma grande"
@@ -1391,8 +1391,8 @@
         "answer": "La forma grande",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1401,7 +1401,7 @@
         "type": "mcq",
         "prompt": "¿Cómo empiezas a contar tu dibujo?",
         "choices": [
-          "Terminando con gracias",
+          "Diciendo gracias",
           "Diciendo qué dibujaste",
           "Borrando algo",
           "Cambiando de tema"
@@ -1409,15 +1409,15 @@
         "answer": "Diciendo qué dibujaste",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué debes hacer además de saber las letras?",
+        "prompt": "¿Qué haces además de saber las letras?",
         "choices": [
           "Olvidarlas",
           "Cambiarlas",
@@ -1427,8 +1427,8 @@
         "answer": "Usarlas al mirar y dibujar",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1438,45 +1438,45 @@
         "prompt": "Escribe de memoria qué significa cada letra de OiLS.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta cómo explicarías tu dibujo, de inicio a cierre.",
+        "prompt": "Cuenta cómo explicarías tu dibujo, de inicio a fin.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja una casa y rotula una O, una i, una L y una S.",
+        "prompt": "Dibuja una escena y rotula una O, i, L y S.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 41,
+          "index": 145
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con las cuatro letras y un ejemplo de cada una.",
+        "prompt": "Dibuja las cuatro letras con un ejemplo cada una.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

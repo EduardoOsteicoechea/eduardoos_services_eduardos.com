@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las tablas son como piezas",
-        "body": "¿Puedes hallar 13 × 4 si solo sabes las tablas hasta el 12?\n\nSí se puede: se arma con tablas que ya conoces. Multiplicar es juntar grupos del mismo tamaño. Los factores se multiplican y dan el producto. 7 × 6 son siete grupos de seis, o siete filas de seis. Esta semana vamos del 5 al 16, con trucos y sin adivinar."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nLa semana pasada recorriste las tablas del 1 al 12 y juntaste grupos iguales. Hoy subes a un bote rumbo a Morrocoy, en Falcón, para llegar hasta el 16."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Tablas del 5 al 8",
-        "body": "Empecemos con el 5, el 6, el 7 y el 8. ¿Qué trucos recuerdas de las tablas?\n\nLa tabla del 5 termina en 0 o en 5: 5 × 9 = 45. Para 6 × 7, dobla 3 × 7 = 21 y obtienes 42. Para 8 × 5, dobla 4 × 5 = 20 y obtienes 40. No lo mezcles: 6 × 7 = 42, pero 6 × 6 = 36."
+        "heading": "Punto 2: Grupos iguales y producto",
+        "body": "Imagina 4 cayos con 6 botes en cada uno. ¿Cómo los cuentas sin ir de uno en uno?\n\nMultiplicas: 4 × 6 = 24 botes. Los números que se multiplican se llaman factores, y el resultado es el producto."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Tablas del 9 al 12",
-        "body": "¿Por qué crees que 9 × 8 y 8 × 9 dan lo mismo?\n\nCambiar el orden de los factores no cambia el producto. 9 × 8 = 72 y 8 × 9 = 72. Puedes elegir la tabla que recuerdes mejor. Y 12 × 10 = 120: son diez grupos de doce, no 1.200."
+        "heading": "Punto 3: Tablas del 5 al 8",
+        "body": "Imagina 9 botes con 5 niños en cada uno. ¿Cuántos niños son? ¿En qué termina?\n\n5 × 9 = 45 niños. La tabla del 5 termina siempre en 0 o en 5. Para 6 × 7, dobla 3 × 7 = 21: da 42."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Los productos más grandes",
-        "body": "¿Cuánto crees que son 11 × 11 y 12 × 12? Piensa antes de mirar abajo.\n\n11 × 11 = 121. No repite el dígito, no es 111. 12 × 11 = 132. 12 × 12 = 144: 12 × 10 = 120 y 12 × 2 = 24. 120 + 24 = 144."
+        "heading": "Punto 4: Tablas del 9 al 12",
+        "body": "¿Es igual 9 botes con 8 niños cada uno que 8 botes con 9 niños cada uno?\n\nSí: 9 × 8 = 72 y 8 × 9 = 72. Cambiar el orden de los factores no cambia el producto."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tablas del 13 al 16",
-        "body": "Sigamos con 13 × 4. ¿Qué dos tablas fáciles podrías usar para armarlo?\n\nParte el 13 en 10 y 3: 10 × 4 = 40 y 3 × 4 = 12. 40 + 12 = 52, así que 13 × 4 = 52. 14 es el doble de 7 y 16 es el doble de 8. 15 es tres veces 5."
+        "heading": "Punto 5: Los productos más grandes",
+        "body": "Imagina 12 cayos con 12 botes cada uno. ¿Cuántos son? ¿Cómo lo puedes partir?\n\nParte uno de los 12 en 10 y 2: 12 × 10 = 120 y 12 × 2 = 24. 120 + 24 = 144 botes en total. Ojo: 11 × 11 = 121, no 111."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tablas del 13 al 16",
+        "body": "Imagina 13 botes con 4 niños cada uno. ¿Qué dos tablas fáciles te ayudan?\n\nParte el 13 en 10 y 3. 10 × 4 = 40 y 3 × 4 = 12. 40 + 12 = 52 niños. El 14 es el doble de 7; el 16, de 8."
       }
     ],
-    "summary": "Las tablas grandes se arman con tablas conocidas. Hoy vimos trucos del 5 al 16.",
+    "summary": "En Morrocoy las tablas grandes se arman con tablas que ya conoces.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja 8 filas con 5 puntos en cada fila. Escribe al lado: 8 × 5 = 40. Rotula las filas y los puntos de cada fila. Revisa que todas las filas tengan la misma cantidad.",
+    "imageBandInstruction": "Dibuja una hilera de 4 cayos de Morrocoy. En cada cayo dibuja 6 botes. Escribe al lado: 4 × 6 = 24. Rotula los factores y el producto.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Puedes hallar 13 × 4 si solo sabes las tablas hasta el 12?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Las tablas son como piezas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,85 +88,85 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Sí se puede: se arma con tablas que ya conoces."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Multiplicar es juntar grupos del mismo tamaño."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Los factores se multiplican y dan el producto."
+        "text": "La semana pasada recorriste las tablas"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "7 × 6 son siete grupos de seis, o siete filas de seis."
+        "text": "del 1 al 12 y juntaste grupos iguales."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Esta semana vamos del 5 al 16, con trucos y sin adivinar."
+        "text": "Hoy subes a un bote rumbo a Morrocoy,"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en Falcón, para llegar hasta el 16."
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Empecemos con el 5, el 6, el 7 y el 8. ¿Qué trucos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "recuerdas de las tablas?"
+        "text": "Imagina 4 cayos con 6 botes en cada uno."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo los cuentas sin ir de uno en uno?"
       },
       {
         "index": 18,
@@ -174,8 +179,8 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -188,92 +193,92 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Grupos iguales y producto"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Tablas del 5 al 8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Multiplicas: 4 × 6 = 24 botes."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "La tabla del 5 termina en 0 o en 5: 5 × 9 = 45."
+        "text": "Los números que se multiplican se llaman"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Para 6 × 7, dobla 3 × 7 = 21 y obtienes 42."
+        "text": "factores, y el resultado es el producto."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Para 8 × 5, dobla 4 × 5 = 20 y obtienes 40."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "No lo mezcles: 6 × 7 = 42, pero 6 × 6 = 36."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Imagina 9 botes con 5 niños en cada uno."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cuántos niños son? ¿En qué termina?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "¿Por qué crees que 9 × 8 y 8 × 9 dan lo mismo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -286,8 +291,8 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Tablas del 5 al 8"
       },
       {
         "index": 36,
@@ -300,64 +305,64 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "5 × 9 = 45 niños. La tabla del 5"
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Tablas del 9 al 12"
+        "kind": "lesson",
+        "text": "termina siempre en 0 o en 5."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Para 6 × 7, dobla 3 × 7 = 21: da 42."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Cambiar el orden de los factores no cambia el producto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "9 × 8 = 72 y 8 × 9 = 72."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Puedes elegir la tabla que recuerdes mejor."
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "Y 12 × 10 = 120: son diez grupos de doce, no 1.200."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Es igual 9 botes con 8 niños cada uno"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "que 8 botes con 9 niños cada uno?"
       },
       {
         "index": 46,
@@ -370,22 +375,22 @@
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "¿Cuánto crees que son 11 × 11 y 12 × 12?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Piensa antes de mirar abajo."
+        "kind": "heading",
+        "text": "Punto 4: Tablas del 9 al 12"
       },
       {
         "index": 50,
@@ -398,22 +403,22 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sí: 9 × 8 = 72 y 8 × 9 = 72."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cambiar el orden de los factores"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "no cambia el producto."
       },
       {
         "index": 54,
@@ -426,64 +431,64 @@
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "heading",
-        "text": "Punto 4: Los productos más grandes"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "lesson",
-        "text": "11 × 11 = 121. No repite el dígito, no es 111."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "12 × 11 = 132."
+        "text": "Imagina 12 cayos con 12 botes cada uno."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "12 × 12 = 144: 12 × 10 = 120 y 12 × 2 = 24."
+        "text": "¿Cuántos son? ¿Cómo lo puedes partir?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "120 + 24 = 144."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Los productos más grandes"
       },
       {
         "index": 64,
@@ -497,28 +502,28 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Sigamos con 13 × 4. ¿Qué dos tablas fáciles podrías"
+        "text": "Parte uno de los 12 en 10 y 2:"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "usar para armarlo?"
+        "text": "12 × 10 = 120 y 12 × 2 = 24."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "120 + 24 = 144 botes en total."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ojo: 11 × 11 = 121, no 111."
       },
       {
         "index": 69,
@@ -531,132 +536,120 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Tablas del 13 al 16"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Imagina 13 botes con 4 niños cada uno."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Parte el 13 en 10 y 3: 10 × 4 = 40 y 3 × 4 = 12."
+        "text": "¿Qué dos tablas fáciles te ayudan?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "40 + 12 = 52, así que 13 × 4 = 52."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "14 es el doble de 7 y 16 es el doble de 8."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "15 es tres veces 5."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Tablas del 13 al 16"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Parte el 13 en 10 y 3."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "10 × 4 = 40 y 3 × 4 = 12."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuánto es 5 × 9?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "40 + 12 = 52 niños."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) 45",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "El 14 es el doble de 7; el 16, de 8."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) 40",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) 50",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) 54",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿En qué terminan los productos de la tabla del 5?",
-        "questionId": "d1-q2",
+        "text": "¿Cuánto es 5 × 9?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) En 2 o en 7",
-        "questionId": "d1-q2"
+        "text": "A) 45",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) En 3 o en 8",
-        "questionId": "d1-q2"
+        "text": "B) 40",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) En 1 o en 9",
-        "questionId": "d1-q2"
+        "text": "C) 50",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) En 0 o en 5",
-        "questionId": "d1-q2"
+        "text": "D) 54",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 6 × 7?",
-        "questionId": "d1-q3",
+        "text": "¿En qué termina la tabla del 5?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +732,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 36",
-        "questionId": "d1-q3"
+        "text": "A) En 2 o en 7",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 42",
-        "questionId": "d1-q3"
+        "text": "B) En 3 o en 8",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 48",
-        "questionId": "d1-q3"
+        "text": "C) En 1 o en 9",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 40",
-        "questionId": "d1-q3"
+        "text": "D) En 0 o en 5",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Por qué 9 × 8 y 8 × 9 dan lo mismo?",
-        "questionId": "d1-q4",
+        "text": "¿Cuánto es 6 × 7?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,44 +786,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Porque 9 y 8 son iguales",
-        "questionId": "d1-q4"
+        "text": "A) 36",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Porque siempre se suma 1",
-        "questionId": "d1-q4"
+        "text": "B) 42",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Cambiar el orden no cambia el producto",
-        "questionId": "d1-q4"
+        "text": "C) 48",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Porque 8 es un cero",
-        "questionId": "d1-q4"
+        "text": "D) 40",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) 17",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) 64",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) 72",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) 81",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Cuánto es 12 × 12?",
         "questionId": "d1-q5",
@@ -843,50 +883,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) 124",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) 132",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) 154",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) 144",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Cuánto es 13 × 4?",
+        "text": "¿Cuánto es 11 × 11?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -897,50 +937,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) 43",
+        "text": "A) 111",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) 52",
+        "text": "B) 121",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) 40",
+        "text": "C) 22",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) 62",
+        "text": "D) 110",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cuánto es 11 × 11?",
+        "text": "¿Cuánto es 13 × 4?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,48 +991,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) 121",
+        "text": "A) 52",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) 111",
+        "text": "B) 43",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) 22",
+        "text": "C) 40",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) 110",
+        "text": "D) 62",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
         "text": "El 16 es el doble de ¿qué número?",
         "questionId": "d1-q8",
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) 7",
         "questionId": "d1-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) 6",
         "questionId": "d1-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) 8",
         "questionId": "d1-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) 4",
         "questionId": "d1-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe la tabla del 5, desde 5 × 1 hasta 5 × 12.",
+        "text": "Cuenta qué es un factor y qué es un",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "producto.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica con tus palabras cómo hallas 13 × 4.",
+        "text": "Explica cómo hallas 13 × 4 con 10 y 3.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,50 +1145,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja 7 filas con 6 puntos y escribe 7 × 6 = 42.",
+        "text": "Dibuja 4 cayos con 6 botes y escribe 4 × 6.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,22 +1181,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
       },
       {
         "index": 145,
@@ -1240,45 +1240,43 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja 8 filas con 5 puntos en cada fila."
+        "text": "Dibuja una hilera de 4 cayos de Morrocoy."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe al lado: 8 × 5 = 40."
+        "text": "En cada cayo dibuja 6 botes. Escribe al"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula las filas y los puntos de cada fila."
+        "text": "lado: 4 × 6 = 24. Rotula los factores y el"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que todas las filas tengan la misma cantidad."
+        "text": "producto."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1301,15 +1299,15 @@
         "answer": "45",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿En qué terminan los productos de la tabla del 5?",
+        "prompt": "¿En qué termina la tabla del 5?",
         "choices": [
           "En 2 o en 7",
           "En 3 o en 8",
@@ -1319,8 +1317,8 @@
         "answer": "En 0 o en 5",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1337,26 +1335,26 @@
         "answer": "42",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Por qué 9 × 8 y 8 × 9 dan lo mismo?",
+        "prompt": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
         "choices": [
-          "Porque 9 y 8 son iguales",
-          "Porque siempre se suma 1",
-          "Cambiar el orden no cambia el producto",
-          "Porque 8 es un cero"
+          "17",
+          "64",
+          "72",
+          "81"
         ],
-        "answer": "Cambiar el orden no cambia el producto",
+        "answer": "72",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1373,44 +1371,44 @@
         "answer": "144",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 13 × 4?",
-        "choices": [
-          "43",
-          "52",
-          "40",
-          "62"
-        ],
-        "answer": "52",
-        "slot": {
-          "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
         "prompt": "¿Cuánto es 11 × 11?",
         "choices": [
-          "121",
           "111",
+          "121",
           "22",
           "110"
         ],
         "answer": "121",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 13 × 4?",
+        "choices": [
+          "52",
+          "43",
+          "40",
+          "62"
+        ],
+        "answer": "52",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1427,43 +1425,43 @@
         "answer": "8",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe la tabla del 5, desde 5 × 1 hasta 5 × 12.",
+        "prompt": "Cuenta qué es un factor y qué es un producto.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica con tus palabras cómo hallas 13 × 4.",
+        "prompt": "Explica cómo hallas 13 × 4 con 10 y 3.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja 7 filas con 6 puntos y escribe 7 × 6 = 42.",
+        "prompt": "Dibuja 4 cayos con 6 botes y escribe 4 × 6.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {

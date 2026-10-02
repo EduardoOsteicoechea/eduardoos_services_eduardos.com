@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las seis palabras",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana conociste seis preposiciones latinas.\nCada una muestra una relación distinta.\nHoy las recuerdas y las cuentas con orden.\n\nSin mirar nada, ¿cuáles son las seis palabras y qué significa cada una?\n\nSon estas: in = en · apud = con · per = por · sine = sin · a/ab = de · de = de. Si olvidaste alguna, dila otra vez en voz alta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer separaste a/ab y de. Esta semana tendiste puentes con seis palabras que muestran relaciones. Hoy las recuerdas y las cuentas."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Seis relaciones",
-        "body": "Si las repartes por la relación que muestran, ¿cómo las agruparías?\n\nLugar: in. Compañía o cercanía: apud. Camino o medio: per. Ausencia: sine. Origen: a/ab. Tema: de. Cada palabra responde una pregunta distinta."
+        "heading": "Punto 2: Las seis palabras",
+        "body": "Sin mirar, ¿cuáles son las seis palabras puente y qué significa cada una?\n\nSon estas: in = en · apud = con · per = por · sine = sin · a/ab = de · de = de. Si olvidas alguna, dila en voz alta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Leer frases cortas",
-        "body": "Lee: «sine aqua», «ab urbe» e «in schola». ¿Qué relación muestra cada una?\n\n«Sine aqua» es «sin agua»: algo falta. «Ab urbe» es «desde la ciudad»: origen. «In schola» es «en la escuela»: lugar. Traduce primero la relación y luego la frase."
+        "heading": "Punto 3: Seis relaciones",
+        "body": "Agrupa las seis por la relación que muestran. ¿Cómo quedan?\n\nLugar: in. Compañía: apud. Camino: per. Lo que falta: sine. Origen: a/ab. Tema: de. Cada una une dos ideas distintas."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a explicar esto a alguien de tu casa. ¿Cómo empezarías tu exposición?\n\nInicio: «Hoy les voy a enseñar palabras en latín». Medio: tres ejemplos, como «per viam» y «apud amicos». Di qué significa cada uno y qué relación muestra. Cierre: repite la lista y termina con «gracias»."
+        "heading": "Punto 4: Leer frases cortas",
+        "body": "Lee: «per pontem», «a ripa», «in lacu». ¿Qué relación muestra cada una?\n\n«Per pontem»: por el puente, camino. «A ripa»: desde la orilla, origen. «In lacu»: en el lago, lugar. Primero la relación, luego la frase."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Preguntar antes de traducir",
-        "body": "¿Basta con memorizar la lista? ¿Qué debes preguntarte cada vez que veas una de estas palabras?\n\nNo basta con la lista. Pregúntate: ¿dónde, con quién, por dónde, de dónde? También: ¿falta algo o se habla acerca de algo? Así traduces con sentido y no al azar."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contarle esto a tu familia. ¿Cómo empiezas a contarlo con orden?\n\nInicio: «Hoy les enseño seis palabras». Medio: tres ejemplos, con su relación. Usa el puente de Maracaibo como imagen. Cierre: repite la lista y di «gracias»."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Pregunta antes de traducir",
+        "body": "¿Basta con memorizar la lista? ¿Qué preguntas antes de traducir?\n\nNo basta con la lista. Pregunta: ¿dónde, con quién, por dónde o de dónde? ¿Falta algo o es un tema? Así tu traducción tiene sentido."
       }
     ],
-    "summary": "Las seis preposiciones muestran lugar, compañía, camino, ausencia, origen y tema; pregunta la relación antes de traducir.",
+    "summary": "Seis palabras cortas, como puentes, muestran lugar, compañía, camino, falta, origen y tema.",
     "memoryPhrase": "**in** = en · **apud** = con · **per** = por · **sine** = sin · **a/ab** = de · **de** = de.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un mapa con ciudad, bosque, casa y unos amigos. Rotula: ab urbe, per silvam, in domo y apud amicos. Debajo de cada rótulo escribe qué significa. Escribe qué relación muestra cada uno.",
+    "imageBandInstruction": "Dibuja el puente sobre un lago. Rotula: per pontem, in lacu, a ripa. Añade unos amigos: apud amicos. Escribe qué significa cada rótulo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana conociste seis preposiciones latinas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Cada una muestra una relación distinta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy las recuerdas y las cuentas con orden."
+        "text": "Ayer separaste a/ab y de."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Esta semana tendiste puentes con seis"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿cuáles son las seis palabras y qué"
+        "text": "palabras que muestran relaciones."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "significa cada una?"
+        "text": "Hoy las recuerdas y las cuentas."
       },
       {
         "index": 12,
@@ -133,15 +138,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -154,85 +159,85 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Las seis palabras"
+        "kind": "lesson",
+        "text": "Sin mirar, ¿cuáles son las seis palabras"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "puente y qué significa cada una?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Son estas:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "in = en · apud = con · per = por · sine = sin ·"
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "a/ab = de · de = de."
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Si olvidaste alguna, dila otra vez en voz alta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Las seis palabras"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son estas:"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "in = en · apud = con · per = por ·"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Si las repartes por la relación que muestran,"
+        "text": "sine = sin · a/ab = de · de = de."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "¿cómo las agruparías?"
+        "text": "Si olvidas alguna, dila en voz alta."
       },
       {
         "index": 28,
@@ -245,15 +250,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Seis relaciones"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -267,49 +272,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Lugar: in. Compañía o cercanía: apud."
+        "text": "Agrupa las seis por la relación que"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Camino o medio: per. Ausencia: sine."
+        "text": "muestran. ¿Cómo quedan?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Origen: a/ab. Tema: de."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Cada palabra responde una pregunta distinta."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Seis relaciones"
       },
       {
         "index": 39,
@@ -323,70 +328,70 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Lee: «sine aqua», «ab urbe» e «in schola». ¿Qué"
+        "text": "Lugar: in. Compañía: apud."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "relación muestra cada una?"
+        "text": "Camino: per. Lo que falta: sine."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Origen: a/ab. Tema: de."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada una une dos ideas distintas."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Leer frases cortas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "«Sine aqua» es «sin agua»: algo falta."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "«Ab urbe» es «desde la ciudad»: origen."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "«In schola» es «en la escuela»: lugar."
+        "text": "Lee: «per pontem», «a ripa», «in lacu»."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Traduce primero la relación y luego la frase."
+        "text": "¿Qué relación muestra cada una?"
       },
       {
         "index": 50,
@@ -400,14 +405,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -420,85 +425,85 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Vas a explicar esto a alguien de tu casa."
+        "kind": "heading",
+        "text": "Punto 4: Leer frases cortas"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Cómo empezarías tu exposición?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Per pontem»: por el puente, camino."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«A ripa»: desde la orilla, origen."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "«In lacu»: en el lago, lugar."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero la relación, luego la frase."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Inicio: «Hoy les voy a enseñar palabras en latín»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Medio: tres ejemplos, como «per viam» y «apud amicos»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Di qué significa cada uno y qué relación muestra."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cierre: repite la lista y termina con «gracias»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a contarle esto a tu familia."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Cómo empiezas a contarlo con orden?"
       },
       {
         "index": 66,
@@ -511,22 +516,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "¿Basta con memorizar la lista? ¿Qué debes preguntarte"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "cada vez que veas una de estas palabras?"
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Inicio: «Hoy les enseño seis palabras»."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Preguntar antes de traducir"
+        "kind": "lesson",
+        "text": "Medio: tres ejemplos, con su relación."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Usa el puente de Maracaibo como imagen."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No basta con la lista."
+        "text": "Cierre: repite la lista y di «gracias»."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Pregúntate: ¿dónde, con quién, por dónde, de dónde?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "También: ¿falta algo o se habla acerca de algo?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Así traduces con sentido y no al azar."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Basta con memorizar la lista? ¿Qué"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "preguntas antes de traducir?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «apud»?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) En",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Sin",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: Pregunta antes de traducir"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Por",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Con o junto a",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "No basta con la lista."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pregunta: ¿dónde, con quién, por dónde"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué significa «sine»?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "o de dónde? ¿Falta algo o es un tema?"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Por",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Así tu traducción tiene sentido."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Sin",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) En",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Con",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué palabra marca el camino o el medio?",
-        "questionId": "d5-q3",
+        "text": "¿Qué significa «apud»?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) per",
-        "questionId": "d5-q3"
+        "text": "A) En",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) sine",
-        "questionId": "d5-q3"
+        "text": "B) Sin",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) apud",
-        "questionId": "d5-q3"
+        "text": "C) Por",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) de",
-        "questionId": "d5-q3"
+        "text": "D) Con",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué palabra marca el origen?",
-        "questionId": "d5-q4",
+        "text": "¿Qué significa «sine»?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +775,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) in",
-        "questionId": "d5-q4"
+        "text": "A) Por",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) apud",
-        "questionId": "d5-q4"
+        "text": "B) Sin",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) a/ab",
-        "questionId": "d5-q4"
+        "text": "C) En",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) per",
-        "questionId": "d5-q4"
+        "text": "D) Con",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué palabra marca el camino?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) per",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) sine",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) apud",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) de",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué significa «in schola»?",
+        "text": "¿Qué palabra marca el origen?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) in",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) apud",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) a/ab",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) per",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué palabra marca el tema?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +926,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) En la escuela",
+        "text": "A) de",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Con la escuela",
+        "text": "B) in",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Sin escuela",
+        "text": "C) per",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Desde la escuela",
+        "text": "D) sine",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué significa «de libro»?",
+        "text": "¿Qué significa «in lacu»?",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +980,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
-        "text": "A) Sin libro",
+        "text": "A) Con el lago",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
-        "text": "B) Por el libro",
+        "text": "B) Sin lago",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) Con el libro",
+        "text": "C) Desde el lago",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) Acerca del libro",
+        "text": "D) En el lago",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué relación marca «sine aqua»?",
+        "text": "¿Qué relación muestra «per pontem»?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Compañía",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
-        "text": "B) Falta algo",
+        "text": "B) Camino",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Lugar",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Tema",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Cómo empieza una buena exposición?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Con el cierre primero",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Sin ejemplos",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Con un inicio que presenta el tema",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Leyendo la lista sin explicar",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe las seis palabras con su significado.",
+        "text": "Escribe las seis palabras y qué significan.",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,48 +1088,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Escribe tu exposición: inicio, medio y cierre.",
         "questionId": "d5-w2",
@@ -1112,30 +1124,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1137,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un esquema con las seis palabras y sus relaciones.",
+        "text": "Dibuja un esquema con las seis relaciones.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1162,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1183,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja tres escenas y rotula cada una con su preposición.",
+        "text": "Dibuja tres escenas y rotula cada palabra",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1200,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "lesson",
+        "text": "corta.",
+        "questionId": "d5-w4"
       },
       {
         "index": 149,
@@ -1241,52 +1229,50 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un mapa con ciudad, bosque, casa y unos amigos."
+        "text": "Dibuja el puente sobre un lago. Rotula: per"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula: ab urbe, per silvam, in domo y apud amicos."
+        "text": "pontem, in lacu, a ripa. Añade unos amigos:"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo de cada rótulo escribe qué significa."
+        "text": "apud amicos. Escribe qué significa cada"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe qué relación muestra cada uno."
+        "text": "rótulo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1297,13 +1283,13 @@
           "En",
           "Sin",
           "Por",
-          "Con o junto a"
+          "Con"
         ],
-        "answer": "Con o junto a",
+        "answer": "Con",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1320,15 +1306,15 @@
         "answer": "Sin",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué palabra marca el camino o el medio?",
+        "prompt": "¿Qué palabra marca el camino?",
         "choices": [
           "per",
           "sine",
@@ -1337,9 +1323,9 @@
         ],
         "answer": "per",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1355,92 +1341,74 @@
         ],
         "answer": "a/ab",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «in schola»?",
+        "prompt": "¿Qué palabra marca el tema?",
         "choices": [
-          "En la escuela",
-          "Con la escuela",
-          "Sin escuela",
-          "Desde la escuela"
+          "de",
+          "in",
+          "per",
+          "sine"
         ],
-        "answer": "En la escuela",
+        "answer": "de",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «de libro»?",
+        "prompt": "¿Qué significa «in lacu»?",
         "choices": [
-          "Sin libro",
-          "Por el libro",
-          "Con el libro",
-          "Acerca del libro"
+          "Con el lago",
+          "Sin lago",
+          "Desde el lago",
+          "En el lago"
         ],
-        "answer": "Acerca del libro",
+        "answer": "En el lago",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué relación marca «sine aqua»?",
+        "prompt": "¿Qué relación muestra «per pontem»?",
         "choices": [
           "Compañía",
-          "Falta algo",
+          "Camino",
           "Lugar",
           "Tema"
         ],
-        "answer": "Falta algo",
+        "answer": "Camino",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Cómo empieza una buena exposición?",
-        "choices": [
-          "Con el cierre primero",
-          "Sin ejemplos",
-          "Con un inicio que presenta el tema",
-          "Leyendo la lista sin explicar"
-        ],
-        "answer": "Con un inicio que presenta el tema",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe las seis palabras con su significado.",
+        "prompt": "Escribe las seis palabras y qué significan.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1450,34 +1418,34 @@
         "prompt": "Escribe tu exposición: inicio, medio y cierre.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con las seis palabras y sus relaciones.",
+        "prompt": "Dibuja un esquema con las seis relaciones.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja tres escenas y rotula cada una con su preposición.",
+        "prompt": "Dibuja tres escenas y rotula cada palabra corta.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

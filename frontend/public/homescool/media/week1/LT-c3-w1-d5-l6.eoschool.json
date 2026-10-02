@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La línea y el hito",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana ordenaste relatos y pueblos antiguos.\nUsaste una línea de tiempo y un mapa a la vez.\nHoy lo recuerdas y se lo cuentas a alguien.\n\nSin mirar nada, ¿qué es una línea de tiempo y qué es un hito?\n\nUna línea de tiempo ordena los hitos. Un hito es un hecho importante de una época. El mapa muestra el lugar sin mezclar las fuentes."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer pusiste pueblos en la línea y en el mapa: antes o después, cerca o lejos. Hoy cuentas toda la semana, como quien explica los petroglifos de una roca."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Dos tipos de información",
-        "body": "¿Por qué la historia antigua y Génesis no se ponen en el mismo punto de la línea?\n\nSon dos fuentes distintas. Una estudia pueblos del Cercano Oriente. La otra es el relato de Génesis. Por eso llevan etiquetas y pistas separadas."
+        "heading": "Punto 2: La línea y el hito",
+        "body": "Sin mirar nada, ¿qué es una línea de tiempo y qué es un hito?\n\nUna línea de tiempo ordena los hitos. Un hito es un hecho importante de una época. Un petroglifo es como un hito: guarda un mensaje en piedra."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Babel y los sumerios",
-        "body": "¿Qué nombres de la semana recuerdas? ¿Y en qué pista pondrías cada uno?\n\nBabel va en la pista de Génesis. Los sumerios van en la pista de historia. Vivieron en Mesopotamia, entre el Tigris y el Éufrates. Después vinieron más pueblos, como Egipto y Grecia."
+        "heading": "Punto 3: Dos tipos de información",
+        "body": "¿Por qué historia antigua y Génesis no van en el mismo punto de la línea?\n\nSon dos fuentes distintas. Una estudia pueblos antiguos; la otra es el relato de Génesis. Por eso llevan etiquetas y pistas separadas, como dos rocas."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a contarle esto a tu familia. ¿Cómo lo dirías para que se entienda?\n\nOrden antiguo: primero el relato, después el mapa. Recuerda: Babel, sumerios (Tigris y Éufrates), y otros pueblos del mundo antiguo. Inicio: la línea. Medio: un ejemplo. Cierre: el mapa."
+        "heading": "Punto 4: Babel y los sumerios",
+        "body": "¿Qué nombres de la semana recuerdas? ¿En qué pista pondrías cada uno?\n\nBabel va en la pista de Génesis. Los sumerios, en la de historia. Vivieron entre el Tigris y el Éufrates. Luego vinieron Egipto, India, Creta y Grecia."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Saber de dónde viene cada dato",
-        "body": "¿Basta con repetir una lista de nombres? ¿Qué más necesitas saber de cada uno?\n\nNo basta con la lista de nombres. Hay que saber de qué fuente viene cada uno. Pregúntate: ¿qué sé de este hito y de dónde viene? Así explicas el orden y no solo repites nombres."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contárselo a tu familia, como un guía de petroglifos. ¿Cómo lo dices?\n\nOrden antiguo: primero el relato, después el mapa. Recuerda: Babel, sumerios (Tigris y Éufrates), y otros pueblos del mundo antiguo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Saber de dónde viene cada dato",
+        "body": "¿Basta con repetir una lista de nombres? ¿Qué más necesitas de cada uno?\n\nNo basta con la lista. Hay que saber de qué fuente viene cada nombre. Pregúntate: ¿qué sé y de dónde viene? Así explicas el orden y no solo nombras."
       }
     ],
-    "summary": "La semana fue ordenar: la línea dice cuándo, el mapa dice dónde, y cada dato lleva su fuente.",
+    "summary": "La semana fue ordenar: la línea dice cuándo, el mapa dice dónde y cada dato lleva su fuente.",
     "memoryPhrase": "Orden antiguo: primero el relato, después el mapa. Recuerda: **Babel**, **sumerios** (Tigris y Éufrates), y otros pueblos del mundo antiguo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una línea con tres hitos de la semana. Pon la etiqueta de fuente en cada uno. Debajo dibuja un mapa pequeño de Mesopotamia. Revisa que el orden se lea de primero a después.",
+    "imageBandInstruction": "Dibuja una roca con tres petroglifos. Cada uno es un hito de la semana con su etiqueta de fuente. Debajo, un mapa pequeño de Mesopotamia.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana ordenaste relatos y pueblos antiguos."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Usaste una línea de tiempo y un mapa a la vez."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy lo recuerdas y se lo cuentas a alguien."
+        "text": "Ayer pusiste pueblos en la línea y en"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el mapa: antes o después, cerca o lejos."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿qué es una línea de tiempo"
+        "text": "Hoy cuentas toda la semana, como quien"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "y qué es un hito?"
+        "text": "explica los petroglifos de una roca."
       },
       {
         "index": 12,
@@ -133,15 +138,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -154,36 +159,36 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La línea y el hito"
+        "kind": "lesson",
+        "text": "Sin mirar nada, ¿qué es una línea de"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "tiempo y qué es un hito?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Una línea de tiempo ordena los hitos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Un hito es un hecho importante de una época."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "El mapa muestra el lugar sin mezclar las fuentes."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -196,8 +201,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: La línea y el hito"
       },
       {
         "index": 23,
@@ -210,29 +215,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una línea de tiempo ordena los hitos."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Por qué la historia antigua y Génesis no se ponen"
+        "text": "Un hito es un hecho importante de una"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "en el mismo punto de la línea?"
+        "text": "época. Un petroglifo es como un hito:"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "guarda un mensaje en piedra."
       },
       {
         "index": 28,
@@ -245,15 +250,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Dos tipos de información"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -267,49 +272,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Son dos fuentes distintas."
+        "text": "¿Por qué historia antigua y Génesis no"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Una estudia pueblos del Cercano Oriente."
+        "text": "van en el mismo punto de la línea?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "La otra es el relato de Génesis."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Por eso llevan etiquetas y pistas separadas."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Dos tipos de información"
       },
       {
         "index": 39,
@@ -323,70 +328,70 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Qué nombres de la semana recuerdas? ¿Y en qué"
+        "text": "Son dos fuentes distintas. Una estudia"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "pista pondrías cada uno?"
+        "text": "pueblos antiguos; la otra es el relato"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de Génesis. Por eso llevan etiquetas"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y pistas separadas, como dos rocas."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Babel y los sumerios"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Babel va en la pista de Génesis."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Los sumerios van en la pista de historia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Vivieron en Mesopotamia, entre el Tigris y el Éufrates."
+        "text": "¿Qué nombres de la semana recuerdas? ¿En"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Después vinieron más pueblos, como Egipto y Grecia."
+        "text": "qué pista pondrías cada uno?"
       },
       {
         "index": 50,
@@ -400,14 +405,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -420,85 +425,85 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Vas a contarle esto a tu familia."
+        "kind": "heading",
+        "text": "Punto 4: Babel y los sumerios"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Cómo lo dirías para que se entienda?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Babel va en la pista de Génesis. Los"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sumerios, en la de historia. Vivieron"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "entre el Tigris y el Éufrates. Luego"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vinieron Egipto, India, Creta y Grecia."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Orden antiguo: primero el relato, después el mapa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Recuerda: Babel, sumerios (Tigris y Éufrates),"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "y otros pueblos del mundo antiguo."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Inicio: la línea. Medio: un ejemplo. Cierre: el mapa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a contárselo a tu familia, como un"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "guía de petroglifos. ¿Cómo lo dices?"
       },
       {
         "index": 66,
@@ -511,22 +516,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "¿Basta con repetir una lista de nombres?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Qué más necesitas saber de cada uno?"
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Orden antiguo: primero el relato,"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Saber de dónde viene cada dato"
+        "kind": "lesson",
+        "text": "después el mapa. Recuerda: Babel,"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sumerios (Tigris y Éufrates), y otros"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No basta con la lista de nombres."
+        "text": "pueblos del mundo antiguo."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Hay que saber de qué fuente viene cada uno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Pregúntate: ¿qué sé de este hito y de dónde viene?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Así explicas el orden y no solo repites nombres."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Basta con repetir una lista de nombres?"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué más necesitas de cada uno?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué hace una línea de tiempo?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Mide ríos",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Pinta mapas",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: Saber de dónde viene cada dato"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Cuenta pueblos",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Ordena los hitos",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "No basta con la lista. Hay que saber"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de qué fuente viene cada nombre."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué muestra el mapa en esta semana?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Pregúntate: ¿qué sé y de dónde viene?"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) La hora del día",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Así explicas el orden y no solo nombras."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) El lugar de cada pueblo",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) El precio del pan",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) El clima de hoy",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Por qué hay etiquetas distintas?",
-        "questionId": "d5-q3",
+        "text": "¿Qué hace una línea de tiempo?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Porque son fuentes distintas",
-        "questionId": "d5-q3"
+        "text": "A) Mide ríos",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Porque sobran colores",
-        "questionId": "d5-q3"
+        "text": "B) Pinta mapas",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Porque da igual",
-        "questionId": "d5-q3"
+        "text": "C) Cuenta rocas",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Porque es más corto",
-        "questionId": "d5-q3"
+        "text": "D) Ordena los hitos",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿En qué pista va Babel?",
-        "questionId": "d5-q4",
+        "text": "¿Qué es un hito?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,44 +775,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) En la de historia",
-        "questionId": "d5-q4"
+        "text": "A) Un río de Asia",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) En la de ríos",
-        "questionId": "d5-q4"
+        "text": "B) Un hecho importante de una época",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) En la de Génesis",
-        "questionId": "d5-q4"
+        "text": "C) Una montaña",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) En ninguna",
-        "questionId": "d5-q4"
+        "text": "D) Un color",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Por qué hay etiquetas distintas?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Porque son fuentes distintas",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Porque sobran colores",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Porque da igual",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Porque es más corto",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿En qué pista va Babel?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) En la de historia",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) En la de ríos",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) En la de Génesis",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) En ninguna",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿En qué pista van los sumerios?",
         "questionId": "d5-q5",
@@ -844,48 +926,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) En la de historia",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) En la de Génesis",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) En la de la torre",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) En ninguna",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Entre qué ríos vivían los sumerios?",
         "questionId": "d5-q6",
@@ -898,48 +980,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Nilo e Indo",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Orinoco y Caroní",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Sena y Rin",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Tigris y Éufrates",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "¿Qué va primero en el orden antiguo?",
         "questionId": "d5-q7",
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) El mapa",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) El relato",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) La torre",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) El resumen",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Basta con repetir una lista de nombres?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Sí, basta con eso",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Sí, si es rápido",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) No, hay que saber la fuente",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) No, hay que cantarla",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Cuenta con tus palabras qué aprendiste esta semana.",
+        "text": "Cuenta con tus palabras qué aprendiste.",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1088,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué Babel y los sumerios van en pistas distintas.",
+        "text": "Explica por qué Babel y sumerios van aparte.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,30 +1124,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1137,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja las dos pistas con Babel, sumerios y un pueblo más.",
+        "text": "Dibuja las dos pistas con tres nombres.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1162,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1183,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un mapa con Mesopotamia y sus dos ríos.",
+        "text": "Dibuja Mesopotamia con sus dos ríos.",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1200,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
       },
       {
         "index": 149,
@@ -1233,60 +1221,57 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una línea con tres hitos de la semana."
+        "text": "Dibuja una roca con tres petroglifos. Cada"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Pon la etiqueta de fuente en cada uno."
+        "text": "uno es un hito de la semana con su"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo dibuja un mapa pequeño de Mesopotamia."
+        "text": "etiqueta de fuente. Debajo, un mapa"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que el orden se lea de primero a después."
+        "text": "pequeño de Mesopotamia."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1296,32 +1281,32 @@
         "choices": [
           "Mide ríos",
           "Pinta mapas",
-          "Cuenta pueblos",
+          "Cuenta rocas",
           "Ordena los hitos"
         ],
         "answer": "Ordena los hitos",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué muestra el mapa en esta semana?",
+        "prompt": "¿Qué es un hito?",
         "choices": [
-          "La hora del día",
-          "El lugar de cada pueblo",
-          "El precio del pan",
-          "El clima de hoy"
+          "Un río de Asia",
+          "Un hecho importante de una época",
+          "Una montaña",
+          "Un color"
         ],
-        "answer": "El lugar de cada pueblo",
+        "answer": "Un hecho importante de una época",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1337,9 +1322,9 @@
         ],
         "answer": "Porque son fuentes distintas",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1355,9 +1340,9 @@
         ],
         "answer": "En la de Génesis",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1374,8 +1359,8 @@
         "answer": "En la de historia",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1392,8 +1377,8 @@
         "answer": "Tigris y Éufrates",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1410,74 +1395,56 @@
         "answer": "El relato",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Basta con repetir una lista de nombres?",
-        "choices": [
-          "Sí, basta con eso",
-          "Sí, si es rápido",
-          "No, hay que saber la fuente",
-          "No, hay que cantarla"
-        ],
-        "answer": "No, hay que saber la fuente",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta con tus palabras qué aprendiste esta semana.",
+        "prompt": "Cuenta con tus palabras qué aprendiste.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Explica por qué Babel y los sumerios van en pistas distintas.",
+        "prompt": "Explica por qué Babel y sumerios van aparte.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja las dos pistas con Babel, sumerios y un pueblo más.",
+        "prompt": "Dibuja las dos pistas con tres nombres.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un mapa con Mesopotamia y sus dos ríos.",
+        "prompt": "Dibuja Mesopotamia con sus dos ríos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

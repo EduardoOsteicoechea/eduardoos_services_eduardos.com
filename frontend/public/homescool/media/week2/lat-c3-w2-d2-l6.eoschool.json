@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Et une nombres",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer conociste tres palabras: et, ut y non.\nAyer viste que «et» significa «y» y une cosas del mismo nivel.\n«Ut» dice la meta y «non» niega el verbo.\n\n«Panis» es pan y «aqua» es agua. ¿Qué dice «panis et aqua»?\n\nDice «pan y agua». Aquí «et» une dos alimentos. Une nombres: cosas que se pueden nombrar. Los dos están al mismo nivel: ninguno explica al otro."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste tres palabras: et, ut y non. En Guri, el agua se une, se detiene y da energía. Hoy te quedas con la que une: et."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Et une acciones",
-        "body": "Sigamos. «Currit» es «corre» y «ridet» es «ríe». ¿Qué dice «currit et ridet»?\n\nDice «corre y ríe». Ahora «et» une dos acciones. Las dos pasan seguidas, sin explicar por qué. Marcus et Lucia es «Marco y Lucía»: une dos nombres."
+        "heading": "Punto 2: Et une nombres",
+        "body": "Llevas «panis» (pan) y «aqua» (agua) a Guri. ¿Cómo dices «pan y agua»?\n\nDices «panis et aqua»: pan y agua. Aquí «et» une dos nombres. Los dos están al mismo nivel, como el agua que se junta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Traducir et como y",
-        "body": "«Venit» es «viene» y «videt» es «ve». ¿Cómo traduces «venit et videt»?\n\nSe traduce «viene y ve». Cuando traduzcas, deja «et» como «y». No lo cambies por «pero» ni por «o». Cada pieza suma; ninguna cambia la idea."
+        "heading": "Punto 3: Et une acciones",
+        "body": "Un niño corre junto a la represa y ríe. «Currit» es «corre» y «ridet» es «ríe». ¿Cómo dices «corre y ríe»?\n\nDices «currit et ridet»: corre y ríe. Ahora «et» une dos acciones. «Marcus et Lucia» es «Marco y Lucía»: une dos nombres."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Et no explica el para qué",
-        "body": "Una pregunta con truco: en «laboro ut discam», ¿puedes cambiar «ut» por «et»?\n\nSi pones «et», la idea se vuelve una lista. Dirías «trabajo y aprendo». Eso ya no dice para qué trabajas. «Et» suma; no explica la meta."
+        "heading": "Punto 4: Traducir et como y",
+        "body": "Marco llega a Guri y mira el agua. «Venit» es «viene» y «videt» es «ve». ¿Cómo traduces «venit et videt»?\n\nSe traduce «viene y ve». Deja «et» como «y»: no lo cambies por «pero» ni por «o»."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tu propia pareja",
-        "body": "Ahora tú: inventa una pareja con «et». ¿Qué dos palabras unirías? ¿Son nombres o acciones?\n\nPor ejemplo: «panis et aqua» une dos nombres. O «currit et ridet» une dos acciones. Lee tu frase en voz alta y escucha la «y». Marca qué une tu «et»: nombres o acciones."
+        "heading": "Punto 5: Et no dice para qué",
+        "body": "Una pregunta con truco: en «laboro ut discam», ¿puedes cambiar «ut» por «et»?\n\nSi pones «et», dices «laboro et discam»: trabajo y aprendo. Es una lista. Ya no dice para qué trabajas. «Et» suma; «ut» dice la meta."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tu propia pareja",
+        "body": "Ahora tú: ¿qué dos cosas de Guri unirías con «et»? ¿Son nombres o acciones?\n\nPuede ser «aqua et lux»: agua y luz. Lee tu pareja en voz alta y escucha la «y» entre las dos."
       }
     ],
-    "summary": "Et significa «y» y une nombres o acciones del mismo nivel, sin explicar la meta.",
+    "summary": "Et significa «y»: une nombres o acciones, como el agua que se junta en Guri.",
     "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
     "weekRecap": "**et** une nombres o acciones · **ut** responde «¿para qué?» · **non** niega antes del verbo. Esta semana leemos frases latinas cortas mirando primero qué pieza aparece en cada oración.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una mesa con pan y una jarra de agua. Escribe entre los dos dibujos: et. Rotula debajo: panis et aqua. Escribe al lado qué significa.",
+    "imageBandInstruction": "Dibuja la represa con una jarra de agua. Dibuja al lado un pan. Escribe entre los dos dibujos: et. Rotula debajo: panis et aqua.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer conociste tres palabras: et, ut y non."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Ayer viste que «et» significa «y» y une cosas del mismo nivel."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "«Ut» dice la meta y «non» niega el verbo."
+        "text": "Ayer viste tres palabras: et, ut y non."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En Guri, el agua se une, se detiene"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "«Panis» es pan y «aqua» es agua. ¿Qué dice"
+        "text": "y da energía. Hoy te quedas con la"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "«panis et aqua»?"
+        "text": "que une: et."
       },
       {
         "index": 12,
@@ -134,57 +139,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Et une nombres"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Llevas «panis» (pan) y «aqua» (agua)"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Dice «pan y agua»."
+        "text": "a Guri. ¿Cómo dices «pan y agua»?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Aquí «et» une dos alimentos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Une nombres: cosas que se pueden nombrar."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Los dos están al mismo nivel: ninguno explica al otro."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -197,8 +202,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Et une nombres"
       },
       {
         "index": 23,
@@ -211,29 +216,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «panis et aqua»: pan y agua."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Sigamos. «Currit» es «corre» y «ridet» es «ríe»."
+        "text": "Aquí «et» une dos nombres."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Qué dice «currit et ridet»?"
+        "text": "Los dos están al mismo nivel,"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como el agua que se junta."
       },
       {
         "index": 28,
@@ -246,15 +251,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Et une acciones"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -268,42 +273,42 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Dice «corre y ríe»."
+        "text": "Un niño corre junto a la represa y ríe."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Ahora «et» une dos acciones."
+        "text": "«Currit» es «corre» y «ridet» es «ríe»."
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Las dos pasan seguidas, sin explicar por qué."
+        "text": "¿Cómo dices «corre y ríe»?"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Marcus et Lucia es «Marco y Lucía»: une dos nombres."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 38,
@@ -316,43 +321,43 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Et une acciones"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "«Venit» es «viene» y «videt» es «ve»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Cómo traduces «venit et videt»?"
+        "text": "Dices «currit et ridet»: corre y ríe."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora «et» une dos acciones."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Marcus et Lucia» es «Marco y Lucía»:"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Traducir et como y"
+        "kind": "lesson",
+        "text": "une dos nombres."
       },
       {
         "index": 45,
@@ -366,42 +371,42 @@
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Se traduce «viene y ve»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Cuando traduzcas, deja «et» como «y»."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "No lo cambies por «pero» ni por «o»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Cada pieza suma; ninguna cambia la idea."
+        "text": "Marco llega a Guri y mira el agua."
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Venit» es «viene» y «videt» es «ve»."
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Cómo traduces «venit et videt»?"
       },
       {
         "index": 52,
@@ -414,29 +419,29 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Una pregunta con truco: en «laboro ut discam», ¿puedes"
+        "text": "________________________________________"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "cambiar «ut» por «et»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Traducir et como y"
       },
       {
         "index": 57,
@@ -449,43 +454,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Et no explica el para qué"
+        "kind": "lesson",
+        "text": "Se traduce «viene y ve»."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Deja «et» como «y»: no lo cambies"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Si pones «et», la idea se vuelve una lista."
+        "text": "por «pero» ni por «o»."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Dirías «trabajo y aprendo»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Eso ya no dice para qué trabajas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "«Et» suma; no explica la meta."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -499,14 +504,14 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Una pregunta con truco: en «laboro ut"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "discam», ¿puedes cambiar «ut» por «et»?"
       },
       {
         "index": 67,
@@ -520,21 +525,21 @@
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: inventa una pareja con «et». ¿Qué dos"
+        "text": "________________________________________"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "palabras unirías? ¿Son nombres o acciones?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Et no dice para qué"
       },
       {
         "index": 71,
@@ -547,172 +552,148 @@
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Tu propia pareja"
+        "kind": "lesson",
+        "text": "Si pones «et», dices «laboro et discam»:"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "trabajo y aprendo. Es una lista."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Por ejemplo: «panis et aqua» une dos nombres."
+        "text": "Ya no dice para qué trabajas."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "O «currit et ridet» une dos acciones."
+        "text": "«Et» suma; «ut» dice la meta."
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Lee tu frase en voz alta y escucha la «y»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Marca qué une tu «et»: nombres o acciones."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora tú: ¿qué dos cosas de Guri unirías"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con «et»? ¿Son nombres o acciones?"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «panis et aqua»?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Pan para agua",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) No hay pan",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Pan sin agua",
-        "questionId": "d2-q1"
+        "kind": "heading",
+        "text": "Punto 6: Tu propia pareja"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Pan y agua",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Puede ser «aqua et lux»: agua y luz."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué significa «currit et ridet»?",
-        "questionId": "d2-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Lee tu pareja en voz alta y"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Corre para reír",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "escucha la «y» entre las dos."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Corre y ríe",
-        "questionId": "d2-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) No corre",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Corre sin reír",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -726,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "En «panis et aqua», ¿qué une «et»?",
-        "questionId": "d2-q3",
+        "text": "¿Qué significa «panis et aqua»?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Dos acciones",
-        "questionId": "d2-q3"
+        "text": "A) Pan para agua",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Una meta",
-        "questionId": "d2-q3"
+        "text": "B) No hay pan",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Dos nombres",
-        "questionId": "d2-q3"
+        "text": "C) Pan sin agua",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Una negación",
-        "questionId": "d2-q3"
+        "text": "D) Pan y agua",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -780,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "En «currit et ridet», ¿qué une «et»?",
-        "questionId": "d2-q4",
+        "text": "En «panis et aqua», ¿qué une «et»?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +776,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Dos nombres",
-        "questionId": "d2-q4"
+        "text": "A) Dos acciones",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Una meta",
-        "questionId": "d2-q4"
+        "text": "B) Dos nombres",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Una negación",
-        "questionId": "d2-q4"
+        "text": "C) Una meta",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Dos acciones",
-        "questionId": "d2-q4"
+        "text": "D) Una negación",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «currit et ridet»?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Corre para reír",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) No corre",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Corre y ríe",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Corre sin reír",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué significa «venit et videt»?",
+        "text": "En «currit et ridet», ¿qué une «et»?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Dos nombres",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Una meta",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Una negación",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Dos acciones",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué significa «Marcus et Lucia»?",
         "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +927,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Viene para ver",
+        "text": "A) Marco sin Lucía",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Viene y ve",
+        "text": "B) Marco y Lucía",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) No viene",
+        "text": "C) Marco para Lucía",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Ve y no viene",
+        "text": "D) Marco no Lucía",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cómo se traduce «et»?",
+        "text": "¿Qué significa «venit et videt»?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +981,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
-        "text": "A) Y",
+        "text": "A) Viene y ve",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
-        "text": "B) Pero",
+        "text": "B) Viene para ver",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) O",
+        "text": "C) No viene",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) No",
+        "text": "D) Ve y no viene",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué significa «Marcus et Lucia»?",
+        "text": "¿Cómo se traduce «et»?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,104 +1035,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Marco sin Lucía",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Marco para Lucía",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Marco y Lucía",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Marco no Lucía",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "Si cambias «ut» por «et», ¿qué pierdes?",
-        "questionId": "d2-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) La idea de para qué",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) El verbo",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) El nombre",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Las dos palabras",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 130,
         "column": 3,
         "line": 26,
+        "kind": "option",
+        "text": "A) Pero",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) O",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) Y",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) No",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tres parejas unidas por «et».",
+        "text": "Escribe tres parejas de Guri unidas por «et».",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1089,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Explica por qué «et» no dice la meta.",
         "questionId": "d2-w2",
@@ -1113,30 +1125,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1138,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja pan y agua unidos por «et».",
+        "text": "Dibuja el agua de Guri y la luz unidas por",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,19 +1165,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "«et».",
         "questionId": "d2-w3"
       },
       {
@@ -1212,7 +1200,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja un niño que corre y ríe, unido por «et».",
+        "text": "Dibuja un niño que corre y ríe, unido por",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1226,8 +1214,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "«et».",
         "questionId": "d2-w4"
       },
       {
@@ -1250,44 +1238,43 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "imageInstruction",
-        "text": "Dibuja una mesa con pan y una jarra de agua."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe entre los dos dibujos: et."
+        "text": "Dibuja la represa con una jarra de agua."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula debajo: panis et aqua."
+        "text": "Dibuja al lado un pan. Escribe entre los dos"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe al lado qué significa."
+        "text": "dibujos: et. Rotula debajo: panis et aqua."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
@@ -1303,44 +1290,44 @@
         "answer": "Pan y agua",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué significa «currit et ridet»?",
+        "prompt": "En «panis et aqua», ¿qué une «et»?",
         "choices": [
-          "Corre para reír",
-          "Corre y ríe",
-          "No corre",
-          "Corre sin reír"
+          "Dos acciones",
+          "Dos nombres",
+          "Una meta",
+          "Una negación"
         ],
-        "answer": "Corre y ríe",
+        "answer": "Dos nombres",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "En «panis et aqua», ¿qué une «et»?",
+        "prompt": "¿Qué significa «currit et ridet»?",
         "choices": [
-          "Dos acciones",
-          "Una meta",
-          "Dos nombres",
-          "Una negación"
+          "Corre para reír",
+          "No corre",
+          "Corre y ríe",
+          "Corre sin reír"
         ],
-        "answer": "Dos nombres",
+        "answer": "Corre y ríe",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1356,92 +1343,74 @@
         ],
         "answer": "Dos acciones",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué significa «venit et videt»?",
+        "prompt": "¿Qué significa «Marcus et Lucia»?",
         "choices": [
-          "Viene para ver",
-          "Viene y ve",
-          "No viene",
-          "Ve y no viene"
+          "Marco sin Lucía",
+          "Marco y Lucía",
+          "Marco para Lucía",
+          "Marco no Lucía"
         ],
-        "answer": "Viene y ve",
+        "answer": "Marco y Lucía",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cómo se traduce «et»?",
+        "prompt": "¿Qué significa «venit et videt»?",
         "choices": [
-          "Y",
-          "Pero",
-          "O",
-          "No"
+          "Viene y ve",
+          "Viene para ver",
+          "No viene",
+          "Ve y no viene"
         ],
-        "answer": "Y",
+        "answer": "Viene y ve",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué significa «Marcus et Lucia»?",
+        "prompt": "¿Cómo se traduce «et»?",
         "choices": [
-          "Marco sin Lucía",
-          "Marco para Lucía",
-          "Marco y Lucía",
-          "Marco no Lucía"
+          "Pero",
+          "O",
+          "Y",
+          "No"
         ],
-        "answer": "Marco y Lucía",
+        "answer": "Y",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "Si cambias «ut» por «et», ¿qué pierdes?",
-        "choices": [
-          "La idea de para qué",
-          "El verbo",
-          "El nombre",
-          "Las dos palabras"
-        ],
-        "answer": "La idea de para qué",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe tres parejas unidas por «et».",
+        "prompt": "Escribe tres parejas de Guri unidas por «et».",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,21 +1420,21 @@
         "prompt": "Explica por qué «et» no dice la meta.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja pan y agua unidos por «et».",
+        "prompt": "Dibuja el agua de Guri y la luz unidas por «et».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {

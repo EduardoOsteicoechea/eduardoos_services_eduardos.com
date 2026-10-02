@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La creación empieza la historia",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que la Biblia cuenta una sola gran historia.\nSe llama redención: Dios rescata y repara lo dañado.\nAyer conocimos la creación, la caída y la promesa.\n\nCuando Dios terminó de hacer el mundo, ¿cómo lo vio? ¿Qué dice Génesis?\n\nDios hizo el mundo y dijo que era bueno. Génesis es el primer libro de la Biblia. Allí la historia empieza con un mundo bueno."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que la Biblia es una sola historia de rescate, la redención. Hoy volvemos al comienzo del camino: el libro de Génesis."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La caída",
-        "body": "Una pregunta con truco: si el mundo era bueno, ¿por qué hay problemas ahora?\n\nAdán y Eva desobedecieron a Dios. Entonces entró el pecado en el mundo. Pero Dios no los dejó solos: siguió con su promesa."
+        "heading": "Punto 2: La creación",
+        "body": "Todo río tiene un comienzo. ¿Cómo vio Dios el mundo que hizo?\n\nGénesis es el primer libro de la Biblia. Cuenta que Dios hizo todo y vio que era muy bueno. Ese es el comienzo del camino: la creación."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El diluvio",
-        "body": "Más tarde el mal creció mucho. ¿Qué hizo Dios con Noé y su familia?\n\nEl diluvio fue un gran juicio por medio del agua. Noé y su familia fueron cuidados dentro del arca. El arca era un barco grande hecho por mandato de Dios."
+        "heading": "Punto 3: La caída",
+        "body": "Una pregunta con truco: si el mundo era bueno, ¿por qué hay cosas tristes?\n\nAdán y Eva desobedecieron a Dios. Así entró el pecado, que rompe la confianza con Dios. Pero Dios no los dejó solos: hizo una promesa."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La promesa y los patriarcas",
-        "body": "Imagina que Dios busca a alguien para empezar de nuevo. ¿A quién llamó, y qué le prometió?\n\nDios llamó a Abraham y prometió bendecir a su familia. Los patriarcas son los padres fundadores de Israel. Son Abraham, Isaac y Jacob."
+        "heading": "Punto 4: El diluvio",
+        "body": "Los ríos son agua que corre al mar. ¿Qué fue el diluvio en tiempos de Noé?\n\nEl mal había crecido mucho. El diluvio fue un juicio con agua. Dios cuidó a Noé en el arca, un barco grande. El camino siguió."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Una línea de cinco estaciones",
-        "body": "Si pones las cinco estaciones en fila, ¿cómo quedan? ¿Son piezas sueltas o una línea?\n\nCreación, caída, diluvio, promesa y patriarcas. No son piezas sueltas: la promesa de Dios las une. Di una frase por cada estación. Así recuerdas el hilo de Génesis."
+        "heading": "Punto 5: Abraham y los patriarcas",
+        "body": "Dios escogió a una familia para seguir su camino. ¿A quién llamó primero?\n\nDios llamó a Abraham y le prometió bendecir a su familia. Los patriarcas son los padres de Israel: Abraham, Isaac y Jacob."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un solo cauce",
+        "body": "Pon en fila: creación, caída, diluvio, promesa, patriarcas. ¿Qué las une?\n\nLas une la promesa de Dios. Es como un cauce: el camino por donde corre el Orinoco hacia el mar. No son piezas sueltas: son un solo río."
       }
     ],
-    "summary": "Génesis une creación, caída, diluvio, promesa y patriarcas en una misma línea.",
+    "summary": "Génesis une creación, caída, diluvio, promesa y patriarcas en un solo cauce, como el Orinoco.",
     "weekRecap": "Redención: creación y caída, Israel y Cristo, esperanza de la nueva tierra.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una línea con cinco estaciones, como un tren. Rotula: creación, caída, diluvio, promesa, patriarcas. En cada estación dibuja un símbolo pequeño. Escribe una frase corta debajo de cada una.",
+    "imageBandInstruction": "Dibuja un río largo con cinco paradas. Rotula: creación, caída, diluvio, promesa y patriarcas. Escribe una frase corta en cada parada.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que la Biblia cuenta una sola gran historia."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Se llama redención: Dios rescata y repara lo dañado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer conocimos la creación, la caída y la promesa."
+        "text": "Ayer viste que la Biblia es una sola"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "historia de rescate, la redención."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Cuando Dios terminó de hacer el mundo, ¿cómo lo vio?"
+        "text": "Hoy volvemos al comienzo del camino:"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Qué dice Génesis?"
+        "text": "el libro de Génesis."
       },
       {
         "index": 12,
@@ -133,15 +138,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -154,36 +159,36 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La creación empieza la historia"
+        "kind": "lesson",
+        "text": "Todo río tiene un comienzo."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo vio Dios el mundo que hizo?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Dios hizo el mundo y dijo que era bueno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Génesis es el primer libro de la Biblia."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Allí la historia empieza con un mundo bueno."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -196,8 +201,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: La creación"
       },
       {
         "index": 23,
@@ -210,29 +215,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Génesis es el primer libro de la Biblia."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Una pregunta con truco: si el mundo era bueno,"
+        "text": "Cuenta que Dios hizo todo y vio"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿por qué hay problemas ahora?"
+        "text": "que era muy bueno. Ese es el"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "comienzo del camino: la creación."
       },
       {
         "index": 28,
@@ -245,15 +250,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: La caída"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -267,35 +272,35 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Adán y Eva desobedecieron a Dios."
+        "text": "Una pregunta con truco: si el mundo era"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Entonces entró el pecado en el mundo."
+        "text": "bueno, ¿por qué hay cosas tristes?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Pero Dios no los dejó solos: siguió con su promesa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -308,50 +313,50 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La caída"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Más tarde el mal creció mucho. ¿Qué hizo Dios"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "con Noé y su familia?"
+        "text": "Adán y Eva desobedecieron a Dios."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así entró el pecado, que rompe"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "la confianza con Dios."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pero Dios no los dejó solos: hizo una"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: El diluvio"
+        "kind": "lesson",
+        "text": "promesa."
       },
       {
         "index": 45,
@@ -365,35 +370,35 @@
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "El diluvio fue un gran juicio por medio del agua."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Noé y su familia fueron cuidados dentro del arca."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "El arca era un barco grande hecho por mandato de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los ríos son agua que corre al mar."
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Qué fue el diluvio en tiempos de Noé?"
       },
       {
         "index": 51,
@@ -406,22 +411,22 @@
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Imagina que Dios busca a alguien para empezar de nuevo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "¿A quién llamó, y qué le prometió?"
+        "kind": "heading",
+        "text": "Punto 4: El diluvio"
       },
       {
         "index": 55,
@@ -434,50 +439,50 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El mal había crecido mucho."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El diluvio fue un juicio con agua."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: La promesa y los patriarcas"
+        "kind": "lesson",
+        "text": "Dios cuidó a Noé en el arca,"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un barco grande. El camino siguió."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Dios llamó a Abraham y prometió bendecir a su familia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Los patriarcas son los padres fundadores de Israel."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Son Abraham, Isaac y Jacob."
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -491,14 +496,14 @@
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Dios escogió a una familia para seguir"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "su camino. ¿A quién llamó primero?"
       },
       {
         "index": 66,
@@ -512,21 +517,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Si pones las cinco estaciones en fila, ¿cómo quedan?"
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "¿Son piezas sueltas o una línea?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Abraham y los patriarcas"
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios llamó a Abraham y le prometió"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Una línea de cinco estaciones"
+        "kind": "lesson",
+        "text": "bendecir a su familia."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los patriarcas son los padres de Israel:"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Creación, caída, diluvio, promesa y patriarcas."
+        "text": "Abraham, Isaac y Jacob."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "No son piezas sueltas: la promesa de Dios las une."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Di una frase por cada estación."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Así recuerdas el hilo de Génesis."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Pon en fila: creación, caída, diluvio,"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "promesa, patriarcas. ¿Qué las une?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué dijo Dios de lo que había hecho?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Que estaba roto",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Que era pequeño",
-        "questionId": "d2-q1"
+        "kind": "heading",
+        "text": "Punto 6: Un solo cauce"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Que no servía",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Que era bueno",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Las une la promesa de Dios."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es como un cauce: el camino por donde"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué es Génesis?",
-        "questionId": "d2-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "corre el Orinoco hacia el mar."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) El último libro",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "No son piezas sueltas: son un solo río."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) El primer libro de la Biblia",
-        "questionId": "d2-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Un salmo",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Una carta",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué entró en el mundo con la caída?",
-        "questionId": "d2-q3",
+        "text": "¿Qué es Génesis?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) La lluvia",
-        "questionId": "d2-q3"
+        "text": "A) El último libro",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) El templo",
-        "questionId": "d2-q3"
+        "text": "B) Una carta",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El pecado",
-        "questionId": "d2-q3"
+        "text": "C) Un salmo",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Un rey",
-        "questionId": "d2-q3"
+        "text": "D) El primer libro de la Biblia",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué fue el diluvio?",
-        "questionId": "d2-q4",
+        "text": "¿Cómo vio Dios el mundo que hizo?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,44 +775,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Una fiesta",
-        "questionId": "d2-q4"
+        "text": "A) Muy pequeño",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Un viaje",
-        "questionId": "d2-q4"
+        "text": "B) Muy bueno",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Una torre",
-        "questionId": "d2-q4"
+        "text": "C) Roto",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Un gran juicio por agua",
-        "questionId": "d2-q4"
+        "text": "D) Vacío",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué hicieron Adán y Eva?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Hicieron un arca",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Cruzaron un río",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Desobedecieron a Dios",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Llamaron a Noé",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué fue el diluvio?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Una fiesta",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Un viaje",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Una torre",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Un juicio con agua",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué era el arca?",
         "questionId": "d2-q5",
@@ -844,50 +926,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Una casa de piedra",
+        "text": "A) Una montaña",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Un barco grande para cuidar vida",
+        "text": "B) Un barco grande",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Un libro",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Una corona",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿A quién llamó Dios para bendecir a su familia?",
+        "text": "¿A quién llamó Dios y prometió bendecir?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,48 +980,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) A Abraham",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) A Noé",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) A Adán",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) A un profeta",
+        "text": "D) A Eva",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "¿Quiénes son los patriarcas?",
         "questionId": "d2-q7",
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Noé y Adán",
         "questionId": "d2-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Pedro y Pablo",
         "questionId": "d2-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Abraham, Isaac y Jacob",
         "questionId": "d2-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Eva y Sara",
         "questionId": "d2-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Qué une las cinco estaciones de Génesis?",
-        "questionId": "d2-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) La promesa de Dios",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Un mapa",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Un castillo",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Una ciudad",
-        "questionId": "d2-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe una frase corta por cada estación de Génesis.",
+        "text": "Escribe una frase por cada estación de",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1088,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Génesis.",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica qué es el arca y para qué sirvió.",
+        "text": "Cuenta qué hizo Dios con Noé y el arca.",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1134,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una línea con cinco estaciones y su nombre.",
+        "text": "Dibuja cinco paradas en el camino del río.",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,22 +1170,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
       },
       {
         "index": 145,
@@ -1211,7 +1199,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja el arca con una flecha hacia la promesa.",
+        "text": "Dibuja el arca y una flecha hacia la promesa.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1241,105 +1229,103 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una línea con cinco estaciones, como un tren."
+        "text": "Dibuja un río largo con cinco paradas."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula: creación, caída, diluvio, promesa, patriarcas."
+        "text": "Rotula: creación, caída, diluvio, promesa y"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "En cada estación dibuja un símbolo pequeño."
+        "text": "patriarcas. Escribe una frase corta en cada"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe una frase corta debajo de cada una."
+        "text": "parada."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué dijo Dios de lo que había hecho?",
+        "prompt": "¿Qué es Génesis?",
         "choices": [
-          "Que estaba roto",
-          "Que era pequeño",
-          "Que no servía",
-          "Que era bueno"
+          "El último libro",
+          "Una carta",
+          "Un salmo",
+          "El primer libro de la Biblia"
         ],
-        "answer": "Que era bueno",
+        "answer": "El primer libro de la Biblia",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué es Génesis?",
+        "prompt": "¿Cómo vio Dios el mundo que hizo?",
         "choices": [
-          "El último libro",
-          "El primer libro de la Biblia",
-          "Un salmo",
-          "Una carta"
+          "Muy pequeño",
+          "Muy bueno",
+          "Roto",
+          "Vacío"
         ],
-        "answer": "El primer libro de la Biblia",
+        "answer": "Muy bueno",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué entró en el mundo con la caída?",
+        "prompt": "¿Qué hicieron Adán y Eva?",
         "choices": [
-          "La lluvia",
-          "El templo",
-          "El pecado",
-          "Un rey"
+          "Hicieron un arca",
+          "Cruzaron un río",
+          "Desobedecieron a Dios",
+          "Llamaron a Noé"
         ],
-        "answer": "El pecado",
+        "answer": "Desobedecieron a Dios",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1351,13 +1337,13 @@
           "Una fiesta",
           "Un viaje",
           "Una torre",
-          "Un gran juicio por agua"
+          "Un juicio con agua"
         ],
-        "answer": "Un gran juicio por agua",
+        "answer": "Un juicio con agua",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1366,34 +1352,34 @@
         "type": "mcq",
         "prompt": "¿Qué era el arca?",
         "choices": [
-          "Una casa de piedra",
-          "Un barco grande para cuidar vida",
+          "Una montaña",
+          "Un barco grande",
           "Un libro",
           "Una corona"
         ],
-        "answer": "Un barco grande para cuidar vida",
+        "answer": "Un barco grande",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿A quién llamó Dios para bendecir a su familia?",
+        "prompt": "¿A quién llamó Dios y prometió bendecir?",
         "choices": [
           "A Abraham",
           "A Noé",
           "A Adán",
-          "A un profeta"
+          "A Eva"
         ],
         "answer": "A Abraham",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1410,68 +1396,50 @@
         "answer": "Abraham, Isaac y Jacob",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué une las cinco estaciones de Génesis?",
-        "choices": [
-          "La promesa de Dios",
-          "Un mapa",
-          "Un castillo",
-          "Una ciudad"
-        ],
-        "answer": "La promesa de Dios",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe una frase corta por cada estación de Génesis.",
+        "prompt": "Escribe una frase por cada estación de Génesis.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Explica qué es el arca y para qué sirvió.",
+        "prompt": "Cuenta qué hizo Dios con Noé y el arca.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una línea con cinco estaciones y su nombre.",
+        "prompt": "Dibuja cinco paradas en el camino del río.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja el arca con una flecha hacia la promesa.",
+        "prompt": "Dibuja el arca y una flecha hacia la promesa.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

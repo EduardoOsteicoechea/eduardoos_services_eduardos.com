@@ -1,98 +1,102 @@
 /**
- * Español · ciclo 3 · semana 2 · nivel 6 — narrativa inductiva, todo "pregunta primero".
+ * Español · ciclo 3 · semana 2 · nivel 6 — Ask First + metáfora de Venezuela.
  *
- * Tema de la semana (según el JSON vivo): narrar CUÁNDO ocurre una acción.
- * d1 intro (una palabra / dos palabras) · d2 una sola palabra · d3 haber + participio
- * · d4 elegir según las pistas de tiempo · d5 repaso y exposición.
- *
- * unit = { q: [líneas de pregunta] (omitir si la pregunta es la apertura),
- *          h: "Punto N: título", a: [líneas de respuesta], w?: líneas de espacio, c?: líneas para copiar }
+ * Tema: el verbo cuenta cuándo pasa algo.
+ * Hito: Cumaná, fundada por los españoles en 1515 (estado Sucre): un pasado que sigue vivo en el presente.
+ * d1 intro (una palabra / dos palabras) · d2 pasado cerrado y pasado que se alarga
+ * · d3 haber + participio · d4 pistas de tiempo en un cuento · d5 repaso y exposición.
  */
-const ayer = "¿Qué aprendiste ayer sobre esta misma materia?";
-
 export default [
   // ───────────────────────── DÍA 1 ─────────────────────────
   {
     key: "esp-c3-w2-d1",
-    opening: "¿Cómo cuentas si algo pasa hoy, pasó ayer o pasará mañana?",
-    repaso: null,
     units: [
       {
-        h: "Punto 1: El verbo cuenta cuándo pasa algo",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "El verbo nombra lo que alguien hace, como «cantar».",
-          "Pero también dice cuándo lo hace: ahora, ayer o mañana.",
-          "Con «yo», el final cambia: canto, canté, cantaré.",
-          "Cambiar el verbo así se llama conjugar.",
+          "La semana pasada conociste nueve clases",
+          "de palabras. Una es el verbo:",
+          "la palabra que dice qué se hace.",
+          "Hoy el verbo viaja a Cumaná contigo.",
         ],
       },
       {
         q: [
-          "Mira: «Yo canto». «Yo canté». «Yo cantaré».",
-          "¿Qué parte de «cantar» se queda igual y cuál cambia?",
+          "Los españoles fundaron Cumaná en 1515.",
+          "¿Eso pasó hoy, ayer o hace mucho?",
         ],
-        h: "Punto 2: La raíz se queda y el final cambia",
+        h: "Punto 2: El verbo dice cuándo",
         a: [
-          "La parte de adelante, «cant-», se queda igual: es la raíz.",
-          "La parte de atrás cambia: es la desinencia, el final.",
-          "«Canto» es ahora, «canté» ya pasó y «cantaré» vendrá.",
-          "Una sola palabra dice quién actúa y cuándo.",
+          "«Fundaron» cuenta que ya pasó.",
+          "«Existe» cuenta lo que pasa hoy.",
+          "El verbo dice qué pasa y cuándo pasa.",
         ],
       },
       {
         q: [
-          "Imagina que de niño cantabas siempre en el coro.",
-          "¿Cómo dirías ese pasado que duró mucho tiempo?",
+          "Cantas en Cumaná. Hoy dices «yo canto».",
+          "¿Cómo lo dices para ayer y mañana?",
         ],
-        h: "Punto 3: Cinco formas con una sola palabra",
+        h: "Punto 3: Raíz fija, final que cambia",
         a: [
-          "Una palabra: canto, cantaba, canté, cantaré, cantaría.",
-          "«Canto» es ahora; «cantaba» es un pasado que duró.",
+          "Dices «yo canté» y «yo cantaré».",
+          "La parte «cant-» no cambia: es la raíz.",
+          "El final cambia y dice cuándo.",
+        ],
+      },
+      {
+        q: [
+          "De niña cantabas en Cumaná cada tarde.",
+          "¿Cuántas formas de una palabra hay?",
+        ],
+        h: "Punto 4: Cinco formas con una palabra",
+        a: [
+          "Una palabra: canto / cantaba / canté /",
+          "cantaré / cantaría.",
+          "«Cantaba» es un pasado que se alarga.",
           "«Canté» es un pasado que ya cerró.",
-          "«Cantaré» es después y «cantaría» es algo que imaginas.",
         ],
       },
       {
         q: [
-          "Ahora mira «he cantado». ¿Cuántas palabras ves?",
-          "¿Cuál es el ayudante y cuál es la acción?",
+          "Mira «he cantado». ¿Cuántas palabras?",
+          "¿Cuál ayuda y cuál es la acción?",
         ],
-        h: "Punto 4: Dos palabras que trabajan juntas",
+        h: "Punto 5: Dos palabras con haber",
         a: [
-          "A veces el verbo usa dos palabras: «he cantado».",
-          "«He» viene de «haber» y es el ayudante.",
-          "«Cantado» es el participio: termina en -ado o -ido.",
-          "Dos palabras: haber más participio, como he cantado.",
+          "Dos palabras: haber + participio",
+          "(he cantado).",
+          "«He» es el ayudante, de «haber».",
+          "«Cantado» es el participio: la acción.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ayer fuiste al cine y volviste.",
-          "¿Dices «Ayer iba al cine» o «Ayer fui al cine»?",
+          "Ayer fuiste a Cumaná y volviste.",
+          "¿Dices «Ayer iba» o «Ayer fui»?",
         ],
-        h: "Punto 5: Elegir según el momento",
+        h: "Punto 6: Elige según el momento",
         a: [
-          "Si el viaje ya cerró, di: «Ayer fui al cine».",
-          "«Iba» sirve para un pasado que se alarga o se repite.",
-          "Antes de hablar, pregúntate: ¿ya terminó o seguía?",
-          "Esa pregunta te ayuda a elegir bien la forma.",
+          "Dices «Ayer fui a Cumaná».",
+          "El viaje ya cerró, por eso «fui».",
+          "«Iba» es un pasado que se alarga.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Cómo se llama cambiar el verbo según cuándo pasa?", o: ["Conjugar", "Copiar", "Dividir", "Rotular"] },
-        { q: "En «cantar», ¿cómo se llama la parte «cant-»?", o: ["La raíz", "La desinencia", "El participio", "El ayudante"] },
-        { q: "¿Cómo se llama la parte que cambia al final?", o: ["La desinencia", "La raíz", "El participio", "La mayúscula"] },
-        { q: "¿Cuál forma cuenta un pasado que ya cerró?", o: ["canté", "canto", "cantaré", "cantaría"] },
-        { q: "¿Cuál forma habla de algo que pasará después?", o: ["cantaré", "cantaba", "canté", "he cantado"] },
-        { q: "En «he cantado», ¿cuál es el participio?", o: ["cantado", "he", "cant-", "yo"] },
-        { q: "¿Cómo terminan los participios de la clase?", o: ["En -ado o -ido", "En -ar o -er", "En -s o -n", "En -ito"] },
-        { q: "¿Cómo dices que el viaje de ayer ya cerró?", o: ["Ayer fui al cine.", "Ayer iba al cine.", "Ayer iré al cine.", "Ayer voy al cine."] },
+        { q: "¿Qué dice el verbo, además de qué pasa?", o: ["Cuándo pasa", "De qué color es", "Cuántos hay", "Dónde queda el mapa"] },
+        { q: "¿En qué año fundaron Cumaná?", o: ["1515", "1551", "1155", "1115"] },
+        { q: "¿Cómo se llama la parte «cant-»?", o: ["La raíz", "El final", "El participio", "El ayudante"] },
+        { q: "¿Cuál forma es un pasado que cerró?", o: ["canté", "canto", "cantaré", "cantaría"] },
+        { q: "¿Cuál forma es un pasado que se alarga?", o: ["cantaba", "canté", "cantaré", "canto"] },
+        { q: "En «he cantado», ¿cuál es el ayudante?", o: ["he", "cantado", "cant-", "yo"] },
+        { q: "¿De qué verbo viene «he»?", o: ["haber", "hacer", "ir", "ser"] },
+        { q: "¿Cómo dices que el viaje cerró?", o: ["Ayer fui a Cumaná.", "Ayer iba a Cumaná.", "Ayer iré a Cumaná.", "Ayer voy a Cumaná."] },
       ],
       write: [
         "Escribe canto, canté y cantaré. Di cuándo pasa cada una.",
-        "Explica con tus palabras qué es «he cantado».",
+        "Cuenta con tus palabras qué es «he cantado».",
       ],
       schematic: [
         "Dibuja una línea del tiempo con canté, canto y cantaré.",
@@ -100,424 +104,426 @@ export default [
       ],
     },
     image: [
-      "Dibuja una línea del tiempo con ayer, hoy y mañana.",
-      "Escribe «canté», «canto» y «cantaré» en su lugar.",
-      "Dibuja una cara cantando en cada momento.",
-      "Debajo escribe «he cantado» y marca el ayudante.",
+      "Dibuja Cumaná y una línea del tiempo",
+      "con ayer, hoy y mañana.",
+      "Escribe «canté», «canto» y «cantaré»",
+      "en su lugar y marca «he cantado».",
     ],
-    summary: "El verbo cambia su final para decir cuándo pasa algo. Puede usar una palabra o dos.",
+    summary: "El verbo cuenta cuándo pasa algo, como el pasado de Cumaná que sigue vivo hoy.",
   },
 
   // ───────────────────────── DÍA 2 ─────────────────────────
   {
     key: "esp-c3-w2-d2",
-    opening: ayer,
-    repaso: [
-      "Ayer vimos que el verbo cambia para decir cuándo pasa algo.",
-      "La raíz se queda igual y el final, la desinencia, cambia.",
-      "Hay formas de una palabra y formas de dos palabras.",
-    ],
     units: [
       {
-        q: [
-          "Piensa en el verbo «terminar». Hoy yo termino la tarea.",
-          "¿Cómo dices que ayer la terminaste a las cinco?",
-        ],
-        h: "Punto 1: Lo que cerró usa «terminé»",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Dices: «Ayer terminé la tarea a las cinco».",
-          "«Terminé» cierra el hecho: ya se acabó.",
-          "Esa forma se llama pretérito: un pasado que ya cerró.",
-          "Su pista suele ser una palabra como «ayer».",
-        ],
-      },
-      {
-        q: [
-          "Imagina que cuentas tu infancia: «yo cantaba en el coro».",
-          "¿Ese pasado cerró de golpe o se alargaba?",
-        ],
-        h: "Punto 2: Lo que se alargaba usa «cantaba»",
-        a: [
-          "«Cantaba» pinta un pasado que se alarga o se repite.",
-          "Ejemplo: «Cuando era niño, cantaba en el coro».",
-          "A esa forma se le llama imperfecto.",
-          "Pinta el fondo, como el paisaje de un cuento.",
-        ],
-      },
-      {
-        q: [
-          "Sigamos. Hoy es lunes y piensas en el mapa de mañana.",
-          "¿Cómo dices que lo terminarás?",
-        ],
-        h: "Punto 3: Lo que viene usa «terminaré»",
-        a: [
-          "Dices: «Mañana terminaré el mapa».",
-          "«Terminaré» mira hacia delante: es el futuro.",
-          "«Terminaría» imagina algo que podría pasar.",
-          "Así, cada final responde a una pregunta sobre el tiempo.",
-        ],
-      },
-      {
-        q: [
-          "Los verbos «leer» y «correr» también cambian.",
-          "¿Cómo crees que suenan para ayer, antes y mañana?",
-        ],
-        h: "Punto 4: Otros verbos hacen lo mismo",
-        a: [
-          "Con «leer»: «leía» se alarga, «leí» cerró, «leeré» vendrá.",
-          "Con «correr»: corría, corrí, correré.",
+          "Ayer viste que el verbo dice cuándo.",
           "La raíz se queda y el final cambia.",
+          "Hoy volvemos a Cumaná, una ciudad",
+          "con un pasado que sigue vivo.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ayer fuiste al cine y volviste.",
-          "¿Dices «Ayer iba al cine» o «Ayer fui al cine»?",
+          "Los españoles fundaron Cumaná en 1515.",
+          "¿Ese hecho se cerró o se alargó?",
         ],
-        h: "Punto 5: Cuidado con el hecho cerrado",
+        h: "Punto 2: El pasado que cerró",
         a: [
-          "Dices: «Ayer fui al cine».",
-          "El viaje ya cerró, así que usas «fui».",
-          "«Iba» se queda para costumbres: «Iba cada sábado».",
-          "Pregúntate siempre: ¿se cerró o se alargaba?",
+          "«Fundaron» cierra el hecho: ya se acabó.",
+          "Esa forma se llama pretérito.",
+          "Su pista es «ayer» o «en 1515».",
+        ],
+      },
+      {
+        q: [
+          "Un niño vivía en Cumaná y salía a jugar.",
+          "¿Ese pasado duró un rato o mucho?",
+        ],
+        h: "Punto 3: El pasado que se alarga",
+        a: [
+          "«Vivía» pinta algo que duró mucho.",
+          "Esa forma se llama imperfecto.",
+          "Es el fondo del cuento, el paisaje.",
+        ],
+      },
+      {
+        q: [
+          "Hoy dibujo el mapa de Cumaná.",
+          "¿Cómo dices ayer y mañana?",
+        ],
+        h: "Punto 4: Una escena, tres formas",
+        a: [
+          "«Ayer dibujé el mapa»: ya lo terminé.",
+          "«Dibujaba cada tarde»: se repetía.",
+          "«Mañana dibujaré»: vendrá después.",
+        ],
+      },
+      {
+        q: [
+          "Lees sobre Cumaná. ¿Cómo dices que ayer",
+          "lo leíste y antes lo leías?",
+        ],
+        h: "Punto 5: Otros verbos hacen igual",
+        a: [
+          "Leer: «leí» cerró, «leía» se alargaba,",
+          "«leeré» vendrá.",
+          "Correr: corrí, corría, correré.",
+        ],
+      },
+      {
+        q: [
+          "Un niño de Cumaná dice: «Jugué una hora»",
+          "y «Jugaba cada tarde». ¿Cuál se repetía?",
+        ],
+        h: "Punto 6: ¿Cerró o se alargaba?",
+        a: [
+          "«Jugué una hora» cerró: tuvo final.",
+          "«Jugaba cada tarde» se repetía.",
+          "Pregúntate: ¿cerró o se alargaba?",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "Completa: «Ayer ___ la tarea a las cinco».", o: ["terminé", "terminaba", "terminaré", "terminaría"] },
-        { q: "¿Cuál forma cuenta un pasado que se alarga?", o: ["cantaba", "canté", "cantaré", "canto"] },
-        { q: "Completa: «Mañana ___ el mapa».", o: ["terminaré", "terminé", "terminaba", "termino"] },
-        { q: "¿Cómo se llama el pasado que ya cerró?", o: ["Pretérito", "Futuro", "Imperfecto", "Participio"] },
-        { q: "¿Cuál es la raíz de «corría», «corrí» y «correré»?", o: ["corr-", "-ía", "-é", "haber"] },
-        { q: "¿Cuál forma de «leer» es un pasado que ya cerró?", o: ["leí", "leía", "leeré", "leo"] },
-        { q: "¿Cómo dices que el viaje de ayer ya cerró?", o: ["Ayer fui al cine.", "Ayer iba al cine.", "Ayer iré al cine.", "Ayer voy al cine."] },
-        { q: "¿Para qué sirve «cantaba» en «Cuando era niño, cantaba»?", o: ["Pinta un pasado que se alarga", "Cierra el hecho de golpe", "Mira hacia delante", "Une dos ideas"] },
+        { q: "¿Cómo se llama el pasado que cerró?", o: ["Pretérito", "Futuro", "Imperfecto", "Participio"] },
+        { q: "¿Cómo se llama el pasado que se alarga?", o: ["Imperfecto", "Pretérito", "Futuro", "La raíz"] },
+        { q: "¿Cuál forma cierra el hecho?", o: ["fundaron", "vivía", "dibujaba", "jugaba"] },
+        { q: "¿Cuál forma pinta algo que duró?", o: ["vivía", "fundaron", "jugué", "leí"] },
+        { q: "Completa: «Mañana ___ el mapa».", o: ["dibujaré", "dibujé", "dibujaba", "dibujo"] },
+        { q: "¿Cuál forma de «leer» cerró?", o: ["leí", "leía", "leeré", "leo"] },
+        { q: "¿Cuál oración se repetía?", o: ["Jugaba cada tarde.", "Jugué una hora.", "Jugaré mañana.", "He jugado."] },
+        { q: "¿Qué pregunta te ayuda a elegir?", o: ["¿Cerró o se alargaba?", "¿Cuántas letras tiene?", "¿Es corta o larga?", "¿Rima con algo?"] },
       ],
       write: [
-        "Escribe tres oraciones con «yo»: pasado cerrado, largo y futuro.",
-        "Explica por qué se dice «Ayer fui al cine».",
+        "Escribe tres oraciones con «yo»: cerró, se alargó y vendrá.",
+        "Cuenta por qué «Fundaron Cumaná en 1515» cerró.",
       ],
       schematic: [
-        "Dibuja una línea del tiempo con terminaba, terminé y terminaré.",
-        "Dibuja una tabla de leer y correr con tres formas cada una.",
+        "Dibuja una línea con dibujé, dibujaba y dibujaré.",
+        "Dibuja una tabla de leer y correr con tres formas.",
       ],
     },
     image: [
-      "Dibuja tres escenas pequeñas: ayer, de niño y mañana.",
-      "Debajo de cada escena escribe una oración con «yo».",
-      "Usa una forma que cerró, una que se alarga y una futura.",
-      "Subraya la raíz de cada verbo con un color.",
+      "Dibuja tres escenas de Cumaná:",
+      "ayer, de niño y mañana.",
+      "Debajo escribe una oración con «yo»",
+      "y subraya la raíz de cada verbo.",
     ],
-    summary: "Con una sola palabra el verbo dice si el hecho cerró, se alargaba o vendrá después.",
+    summary: "Una palabra dice si el hecho cerró, se alargaba o vendrá, como el pasado y el hoy de Cumaná.",
   },
 
   // ───────────────────────── DÍA 3 ─────────────────────────
   {
     key: "esp-c3-w2-d3",
-    opening: ayer,
-    repaso: [
-      "Ayer profundizamos los tiempos de una sola palabra.",
-      "«Terminé» cierra el hecho y «cantaba» lo alarga.",
-      "«Terminaré» mira hacia delante.",
-    ],
     units: [
       {
-        q: [
-          "Mira: «he cantado». ¿Cuántas palabras tiene?",
-          "¿Qué trabajo crees que hace cada una?",
-        ],
-        h: "Punto 1: Dos piezas que van juntas",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "La primera pieza es «haber» conjugado: he, has, ha.",
-          "La segunda pieza es el participio: cantado, comido.",
-          "Juntas cuentan un hecho que ya se hizo.",
-          "Aquí «haber» solo ayuda; no quiere decir «existe».",
+          "Ayer viste dos pasados: «fundaron»",
+          "cerró y «vivía» se alargaba.",
+          "Hoy sumamos un pasado que llega a hoy,",
+          "como Cumaná.",
         ],
       },
       {
         q: [
-          "El participio de «cantar» es «cantado».",
-          "¿Cómo crees que será el de «comer»?",
+          "Cumaná ha llegado hasta hoy.",
+          "¿Cuántas palabras tiene «ha llegado»?",
         ],
-        h: "Punto 2: Cómo se arma el participio",
+        h: "Punto 2: Dos piezas que van juntas",
         a: [
-          "A los verbos en -ar les pones -ado: cantar, cantado.",
-          "A los verbos en -er les pones -ido: comer, comido.",
-          "Con «haber»: he comido, has comido, ha comido.",
+          "«Ha» es «haber» conjugado: la ayudante.",
+          "«Llegado» es el participio: la acción.",
+          "Juntas cuentan un hecho ya hecho.",
         ],
       },
       {
         q: [
-          "Imagina que ya comiste y te ofrecen más.",
-          "¿Cómo dices que la comida sigue contigo ahora?",
+          "Paseas por Cumaná: «he cantado».",
+          "¿Cómo armas el participio de «comer»?",
         ],
-        h: "Punto 3: «He comido» llega hasta hoy",
+        h: "Punto 3: Cómo se arma el participio",
         a: [
-          "Dices: «He comido»; el resultado llega hasta ahora.",
-          "Ya comiste, y todavía estás lleno hoy.",
-          "«He cantado» dice que ya cantaste y aún importa hoy.",
+          "Verbos en -ar: -ado. Cantar, cantado.",
+          "Verbos en -er: -ido. Comer, comido.",
+          "Con haber: he comido, has comido.",
         ],
       },
       {
         q: [
-          "Sigamos. Lee: «Cuando llegué, mi amiga había salido».",
-          "¿Qué pasó primero: llegar tú o salir ella?",
+          "Ya comiste en Cumaná y te ofrecen más.",
+          "¿Cómo dices que sigues lleno?",
         ],
-        h: "Punto 4: Había salido: antes de otro pasado",
+        h: "Punto 4: «He comido» llega hasta hoy",
+        a: [
+          "«He comido» trae el resultado hasta hoy.",
+          "Ya comiste y todavía estás lleno.",
+          "Como Cumaná: nació antes y sigue hoy.",
+        ],
+      },
+      {
+        q: [
+          "«Cuando llegué a Cumaná, mi amiga",
+          "había salido». ¿Quién se fue primero?",
+        ],
+        h: "Punto 5: «Había salido» va antes",
         a: [
           "Primero salió ella; después llegaste tú.",
-          "«Había salido» cuenta lo que pasó antes de otro pasado.",
-          "«Habré cantado» es un futuro que ya estará cumplido.",
-          "«Habría cantado» es algo que imaginas.",
+          "«Había salido» pasó antes que llegar.",
+          "Es el pasado del pasado.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿se dice «hemos comidos»",
-          "o «hemos comido»?",
+          "Una pregunta con truco:",
+          "¿«hemos comidos» o «hemos comido»?",
         ],
-        h: "Punto 5: El participio no cambia",
+        h: "Punto 6: El participio no cambia",
         a: [
           "Se dice «hemos comido».",
-          "Lo que cambia es «haber»: he, has, hemos.",
-          "El participio se queda igual con todos: comido.",
+          "Cambia «haber»: he, has, hemos.",
+          "El participio queda igual: comido.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Cuántas palabras tiene «he cantado»?", o: ["Dos", "Una", "Tres", "Ninguna"] },
-        { q: "En «he cantado», ¿cuál es el ayudante?", o: ["he", "cantado", "cant-", "-ado"] },
+        { q: "¿Cuántas palabras tiene «ha llegado»?", o: ["Dos", "Una", "Tres", "Cuatro"] },
+        { q: "En «ha llegado», ¿cuál ayuda?", o: ["ha", "llegado", "lleg-", "-ado"] },
         { q: "¿Cuál es el participio de «comer»?", o: ["comido", "comado", "comiendo", "comió"] },
         { q: "¿Cuál es el participio de «cantar»?", o: ["cantado", "cantido", "cantando", "cantó"] },
-        { q: "¿Qué cuenta «he comido»?", o: ["Un hecho cuyo resultado llega a hoy", "Un pasado muy lejano", "Algo que nunca pasó", "Una orden"] },
-        { q: "En «Cuando llegué, mi amiga había salido», ¿qué fue primero?", o: ["Salir ella", "Llegar tú", "Las dos a la vez", "Ninguna"] },
+        { q: "¿Qué cuenta «he comido»?", o: ["Un hecho que llega a hoy", "Un pasado muy lejano", "Algo que nunca pasó", "Una orden"] },
+        { q: "En «había salido», ¿qué fue primero?", o: ["Salir ella", "Llegar tú", "Las dos a la vez", "Ninguna"] },
         { q: "¿Cuál se dice bien?", o: ["Hemos comido.", "Hemos comidos.", "Hemos comida.", "Hemos comiendo."] },
-        { q: "¿Qué forma imagina algo, como una hipótesis?", o: ["habría cantado", "he cantado", "había cantado", "cantó"] },
+        { q: "En «he, has, hemos», ¿qué cambia?", o: ["La forma de haber", "El participio", "Todo", "Nada"] },
       ],
       write: [
-        "Escribe he, habías y habremos con el participio «comido».",
-        "Explica por qué se dice «hemos comido» y no «hemos comidos».",
+        "Escribe he, has y hemos con el participio «comido».",
+        "Cuenta por qué se dice «hemos comido».",
       ],
       schematic: [
-        "Dibuja «he cantado» y señala el ayudante y el participio.",
+        "Dibuja «ha llegado» y señala el ayudante y el participio.",
         "Dibuja una línea con «había salido» antes de «llegué».",
       ],
     },
     image: [
-      "Dibuja una casa con tu amiga saliendo por la puerta.",
-      "Dibújate llegando después, y escribe «Cuando llegué».",
-      "Escribe debajo «había salido» y marca el ayudante.",
-      "Añade una flecha que muestre qué pasó primero.",
+      "Dibuja una casa en Cumaná y a tu amiga",
+      "saliendo por la puerta.",
+      "Dibújate llegando después y escribe",
+      "«había salido» con una flecha de orden.",
     ],
-    summary: "Haber más participio cuenta un hecho ya hecho. El participio no cambia; cambia haber.",
+    summary: "Haber más participio cuenta un hecho que llega a hoy. Cambia haber; el participio no.",
   },
 
   // ───────────────────────── DÍA 4 ─────────────────────────
   {
     key: "esp-c3-w2-d4",
-    opening: ayer,
-    repaso: [
-      "Ayer vimos que haber más participio usa dos palabras.",
-      "Dijimos he cantado, había cantado y habré cantado.",
-      "El participio no cambia: se dice «hemos comido».",
-    ],
     units: [
       {
-        q: [
-          "Compara: «Ayer terminé» y «Ya he terminado».",
-          "¿Qué palabra de tiempo te da una pista en cada una?",
-        ],
-        h: "Punto 1: Las palabras de tiempo dan pistas",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "«Ayer» cierra el hecho: «Ayer terminé la tarea».",
-          "«Ya» trae el resultado hasta hoy: «Ya he terminado».",
-          "Palabras como ayer, ya y cuando te orientan.",
-          "Antes de conjugar, búscalas en la oración.",
+          "Ayer viste «he comido» y «había salido».",
+          "Dos palabras: haber y participio.",
+          "Hoy buscamos pistas de tiempo en un",
+          "cuento que pasa en Cumaná.",
         ],
       },
       {
         q: [
-          "Lee: «Leía cuando sonó el teléfono».",
-          "¿Cuál acción es el fondo y cuál es el golpe?",
+          "Compara «Ayer terminé»",
+          "y «Ya he terminado». ¿Cuál es la pista?",
         ],
-        h: "Punto 2: Fondo y golpe en un cuento",
+        h: "Punto 2: Las palabras de tiempo",
         a: [
-          "«Leía» es el fondo: algo que estaba en marcha.",
-          "«Sonó» es el golpe: pasó de repente y cerró.",
-          "El fondo usa una forma larga y el golpe una cerrada.",
-          "Es como un paisaje donde algo salta de pronto.",
+          "«Ayer» y «en 1515» cierran el hecho.",
+          "«Ya» trae el resultado hasta hoy.",
+          "Ayer, ya y cuando son pistas.",
         ],
       },
       {
         q: [
-          "Completa: «Cuando llegué, mi amiga ___ salido».",
-          "¿Pones «ha», «había» o «habrá»?",
+          "Lee: «Caminaba por Cumaná cuando sonó",
+          "una campana». ¿Cuál es el fondo?",
         ],
-        h: "Punto 3: Lo anterior a otro pasado",
+        h: "Punto 3: Fondo y golpe en un cuento",
         a: [
-          "Pones «había»: «Cuando llegué, mi amiga había salido».",
+          "«Caminaba» es el fondo: en marcha.",
+          "«Sonó» es el golpe: pasó de repente.",
+          "El fondo es largo; el golpe, cerrado.",
+        ],
+      },
+      {
+        q: [
+          "Quieres saber cuándo llegó tu amigo.",
+          "¿Cómo lo preguntas? ¿Y cómo lo gritas?",
+        ],
+        h: "Punto 4: Preguntar y exclamar el tiempo",
+        a: [
+          "Preguntas: «¿Cuándo llegaste a Cumaná?»",
+          "Exclamas: «¡Ya he llegado!»",
+          "Los signos se abren y se cierran.",
+        ],
+      },
+      {
+        q: [
+          "Completa: «Cuando llegué, mi amiga",
+          "___ salido». ¿«ha», «había» o «habrá»?",
+        ],
+        h: "Punto 5: Lo anterior a otro pasado",
+        a: [
+          "Pones «había»: ella ya había salido.",
           "Salir pasó antes que llegar.",
-          "Para lo anterior a otro pasado usas dos palabras.",
+          "La pista es «cuando llegué».",
         ],
       },
       {
         q: [
-          "Vas a elegir la forma de un verbo.",
-          "¿Qué te preguntarías antes de decidir?",
+          "Vas a elegir una forma.",
+          "¿Qué te preguntas antes de decidir?",
         ],
-        h: "Punto 4: Tres preguntas para elegir",
+        h: "Punto 6: Tres preguntas para elegir",
         a: [
-          "Primera: ¿el hecho cerró? Entonces usa «terminé».",
-          "Segunda: ¿el resultado sigue vivo? Usa «he terminado».",
-          "Tercera: ¿era un fondo que se alargaba? Usa «leía».",
-          "Así eliges una palabra o dos según tu cuento.",
-        ],
-      },
-      {
-        q: [
-          "Ahora tú: inventa tres oraciones sobre tu día de ayer.",
-          "Usa una forma de una palabra y una de dos.",
-        ],
-        h: "Punto 5: Un mini-relato de tres oraciones",
-        a: [
-          "Por ejemplo: «Ayer jugué en el patio».",
-          "«Jugaba cuando sonó la campana».",
-          "«Ya he guardado mis juguetes».",
-          "Cada oración tiene su razón: cerró, fondo o resultado.",
+          "¿Cerró? Usa «terminé».",
+          "¿Sigue vivo hoy? Usa «he terminado».",
+          "¿Era fondo? Usa «terminaba».",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "En «Ayer terminé», ¿qué dice la pista «ayer»?", o: ["El hecho cerró", "Sigue vivo hoy", "Es un fondo", "Es una orden"] },
-        { q: "¿Qué palabra trae el resultado hasta hoy?", o: ["Ya", "Ayer", "Cuando", "Mañana"] },
-        { q: "En «Leía cuando sonó el teléfono», ¿cuál es el fondo?", o: ["Leía", "Sonó", "Teléfono", "Cuando"] },
-        { q: "En esa misma oración, ¿cuál es el golpe?", o: ["Sonó", "Leía", "Cuando", "El"] },
-        { q: "Completa: «Cuando llegué, mi amiga ___ salido».", o: ["había", "ha", "hemos", "habrá"] },
-        { q: "¿Qué pregunta te ayuda a elegir «terminé»?", o: ["¿El hecho cerró?", "¿Cuántas letras tiene?", "¿Es una palabra larga?", "¿Cómo se escribe?"] },
-        { q: "¿Qué forma usas para un fondo que se alargaba?", o: ["leía", "leí", "leeré", "he leído"] },
-        { q: "¿Cuál oración trae un resultado que llega a hoy?", o: ["Ya he guardado mis juguetes.", "Ayer jugué en el patio.", "Jugaba cuando sonó la campana.", "Mañana jugaré."] },
+        { q: "En «Ayer terminé», ¿qué dice «ayer»?", o: ["El hecho cerró", "Sigue vivo hoy", "Es un fondo", "Es una orden"] },
+        { q: "¿Qué palabra trae el resultado a hoy?", o: ["Ya", "Ayer", "Cuando", "Mañana"] },
+        { q: "En la campana, ¿cuál verbo es el fondo?", o: ["Caminaba", "Sonó", "Campana", "Cuando"] },
+        { q: "En ese cuento, ¿cuál verbo es el golpe?", o: ["Sonó", "Caminaba", "Cuando", "Por"] },
+        { q: "Cuando llegué, ella ___ salido.", o: ["había", "ha", "hemos", "habrá"] },
+        { q: "¿Cuál pregunta está bien escrita?", o: ["¿Cuándo llegaste a Cumaná?", "Cuándo llegaste a Cumaná?", "¿Cuándo llegaste a Cumaná", "Cuándo llegaste a Cumaná"] },
+        { q: "¿Qué pregunta ayuda a elegir «terminé»?", o: ["¿Cerró el hecho?", "¿Cuántas letras tiene?", "¿Es larga la palabra?", "¿Rima con algo?"] },
+        { q: "¿Qué forma usas para un fondo?", o: ["terminaba", "terminé", "he terminado", "terminaré"] },
       ],
       write: [
-        "Escribe un mini-relato de tres oraciones sobre tu ayer.",
-        "Explica cómo eliges entre «terminé» y «he terminado».",
+        "Escribe tres oraciones sobre tu ayer: cerró, fondo y hoy.",
+        "Escribe una pregunta y una exclamación sobre el tiempo.",
       ],
       schematic: [
         "Dibuja un esquema con las tres preguntas para elegir.",
-        "Dibuja «Leía cuando sonó» con el fondo y el golpe.",
+        "Dibuja «Caminaba cuando sonó» con fondo y golpe.",
       ],
     },
     image: [
-      "Dibuja a alguien leyendo y un teléfono que suena.",
-      "Rotula «leía» en el fondo y «sonó» en el golpe.",
-      "Añade un reloj y escribe «ya he terminado».",
-      "Escribe debajo una frase con «ayer» y otra con «ya».",
+      "Dibuja a alguien caminando por Cumaná",
+      "y una campana que suena.",
+      "Rotula «caminaba» como fondo",
+      "y «sonó» como golpe.",
     ],
-    summary: "Para elegir miras las pistas: ¿cerró?, ¿sigue vivo?, ¿era fondo? Así usas una palabra o dos.",
+    summary: "Para elegir miras las pistas: ¿cerró?, ¿sigue vivo hoy?, ¿era fondo? Así cuentas bien cuándo pasa.",
   },
 
   // ───────────────────────── DÍA 5 ─────────────────────────
   {
     key: "esp-c3-w2-d5",
-    opening: ayer,
-    repaso: [
-      "Ayer aprendimos a elegir entre una palabra y dos.",
-      "Miramos ayer, ya y cuando para saber qué forma usar.",
-      "Hoy ordenamos la semana y la contamos.",
-    ],
     units: [
       {
-        q: [
-          "Sin mirar nada: ¿qué cinco formas de «cantar»",
-          "dicen cuándo pasa algo con una sola palabra?",
-        ],
-        w: 3,
-        h: "Punto 1: Las formas de una sola palabra",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Una palabra: canto, cantaba, canté, cantaré, cantaría.",
-          "«Canto» es ahora y «cantaba» es un pasado que se alarga.",
-          "«Canté» cerró, «cantaré» vendrá y «cantaría» se imagina.",
+          "Ayer buscaste pistas: ayer, ya y cuando.",
+          "Viste el fondo y el golpe de un cuento.",
+          "Hoy lo ordenas todo para contarlo,",
+          "como se cuenta la historia de Cumaná.",
         ],
       },
       {
         q: [
-          "¿Y cuándo usamos dos palabras? ¿Cuáles son?",
-          "¿Qué recuerdas de «he cantado»?",
+          "Sin mirar: ¿qué cinco formas de «cantar»",
+          "dicen cuándo con una sola palabra?",
         ],
-        h: "Punto 2: Las formas de dos palabras",
+        h: "Punto 2: Las formas de una palabra",
         a: [
-          "Dos palabras: haber más participio, como he cantado.",
-          "Cambia «haber»: he, has, hemos, había. El participio, no.",
-          "«He cantado» trae el resultado hasta hoy.",
+          "Una palabra: canto / cantaba / canté /",
+          "cantaré / cantaría.",
+          "«Canté» cerró; «cantaba» se alargó.",
         ],
       },
       {
         q: [
-          "Lee: «Ayer terminé el mapa. Ya he guardado todo.»",
-          "¿Cuál oración cerró y cuál trae el resultado a hoy?",
+          "¿Y cuándo usas dos palabras?",
+          "¿Cuáles son?",
         ],
-        h: "Punto 3: Elegir con las pistas",
+        h: "Punto 3: Las formas de dos palabras",
         a: [
-          "«Ayer terminé» cerró: «ayer» es la pista.",
-          "«Ya he guardado» trae el resultado hasta hoy.",
-          "«Leía cuando sonó» tiene fondo y golpe.",
-          "«Cuando llegué, había salido» pone uno antes del otro.",
+          "Dos palabras: haber + participio",
+          "(he cantado).",
+          "Cambia «haber»: he, has, hemos, había.",
+          "El participio queda igual.",
         ],
       },
       {
         q: [
-          "Vas a contarle a alguien lo que aprendiste.",
-          "¿Cómo empezarías para que te entienda?",
+          "Lee: «Fundaron Cumaná en 1515.",
+          "Hoy sigue allí.» ¿Cuál forma cerró?",
         ],
-        h: "Punto 4: Cómo contarlo con orden",
+        h: "Punto 4: Pasado y presente en Cumaná",
         a: [
-          "Una buena exposición tiene inicio, medio y cierre.",
-          "Inicio: «Hoy les cuento cómo decimos cuándo pasa algo».",
-          "Medio: da un ejemplo de una palabra y uno de dos.",
-          "Cierre: repite la regla y di «gracias» a quien escuchó.",
+          "«Fundaron» cerró: la pista es «en 1515».",
+          "«Sigue» habla de hoy.",
+          "«Ha llegado» une el pasado con hoy.",
         ],
       },
       {
         q: [
-          "¿Basta con repetir la lista de formas?",
-          "¿Qué debes preguntarte cuando hablas?",
+          "Vas a contarle a alguien lo aprendido.",
+          "¿Cómo empiezas para que te entienda?",
         ],
-        h: "Punto 5: Elegir bien, no solo recordar",
+        h: "Punto 5: Cómo contarlo con orden",
         a: [
-          "No basta con la lista: hay que elegir bien.",
-          "Pregúntate: ¿cerró?, ¿sigue vivo?, ¿era fondo?",
-          "Así sabes si usas una palabra o dos.",
+          "Tiene inicio, medio y cierre.",
+          "Inicio: «Hoy cuento cuándo pasa algo».",
+          "Medio: ejemplos de una y dos palabras.",
+          "Cierre: repite la regla y da gracias.",
+        ],
+      },
+      {
+        q: [
+          "Ahora cuenta tu ayer. ¿Cómo usas una",
+          "forma de cada tipo?",
+        ],
+        h: "Punto 6: Elegir bien, no solo recordar",
+        a: [
+          "«Ayer dibujé Cumaná».",
+          "«Dibujaba cuando sonó la campana».",
+          "«Ya he guardado mis lápices».",
+          "Cada una dice cuándo pasa algo.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Cuántas formas de una palabra viste con «cantar»?", o: ["Cinco", "Dos", "Tres", "Nueve"] },
-        { q: "¿Cuál forma de una palabra mira hacia el futuro?", o: ["cantaré", "canté", "cantaba", "canto"] },
-        { q: "¿De qué dos piezas se arma «he cantado»?", o: ["Haber y participio", "Raíz y desinencia", "Sustantivo y verbo", "Artículo y adjetivo"] },
-        { q: "¿Qué cambia en «he, has, hemos cantado»?", o: ["Solo haber", "Solo el participio", "Todo", "Nada"] },
-        { q: "¿Cuál es el participio de «comer»?", o: ["comido", "comí", "comeré", "comería"] },
-        { q: "¿Qué oración trae el resultado hasta hoy?", o: ["Ya he guardado todo.", "Ayer terminé el mapa.", "Leía cuando sonó.", "Mañana guardaré todo."] },
-        { q: "En «Leía cuando sonó», ¿qué palabra es el fondo?", o: ["Leía", "Sonó", "Cuando", "Ninguna"] },
-        { q: "¿Cómo se organiza una buena exposición?", o: ["Inicio, medio y cierre", "Solo un cierre", "Solo ejemplos", "Una lista sin orden"] },
+        { q: "¿Cuántas formas de una palabra viste?", o: ["Cinco", "Dos", "Tres", "Nueve"] },
+        { q: "¿Cuál forma de una palabra es futuro?", o: ["cantaré", "canté", "cantaba", "canto"] },
+        { q: "¿De qué se arma «he cantado»?", o: ["Haber y participio", "Raíz y final", "Nombre y verbo", "Artículo y adjetivo"] },
+        { q: "En «he, has, hemos», ¿qué cambia?", o: ["La forma de haber", "El participio", "Todo", "Nada"] },
+        { q: "¿Cuál es la pista de «fundaron»?", o: ["En 1515", "Hoy", "Ya", "Cuando"] },
+        { q: "¿Qué oración llega hasta hoy?", o: ["Ya he guardado mis lápices.", "Ayer dibujé Cumaná.", "Dibujaba cuando sonó.", "Mañana dibujaré."] },
+        { q: "¿Cómo se organiza una exposición?", o: ["Inicio, medio y cierre", "Solo un cierre", "Solo ejemplos", "Lista sin orden"] },
+        { q: "¿Qué forma une el pasado con hoy?", o: ["ha llegado", "fundaron", "canté", "cantaba"] },
       ],
       write: [
         "Escribe de memoria las cinco formas de «cantar».",
         "Cuenta tu ayer con una forma de una palabra y una de dos.",
       ],
       schematic: [
-        "Dibuja un esquema con las formas de una y de dos palabras.",
+        "Dibuja un esquema con formas de una y dos palabras.",
         "Dibuja una línea del tiempo con tres formas y su ejemplo.",
       ],
     },
     image: [
-      "Dibuja una línea del tiempo con ayer, ya y mañana.",
-      "Escribe una forma de «cantar» en cada momento.",
-      "Añade «he cantado» donde el resultado llega a hoy.",
-      "Revisa que cada frase diga cuándo pasa algo.",
+      "Dibuja Cumaná y una línea del tiempo",
+      "con ayer, ya y mañana.",
+      "Escribe una forma de «cantar» en cada",
+      "momento y marca «he cantado».",
     ],
-    summary: "Esta semana aprendiste a contar cuándo pasa algo con una palabra o con haber más participio.",
+    summary: "Contaste cuándo pasa algo con una palabra o con haber más participio, como el pasado vivo de Cumaná.",
   },
 ];

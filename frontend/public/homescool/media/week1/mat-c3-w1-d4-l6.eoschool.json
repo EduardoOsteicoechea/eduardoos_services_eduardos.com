@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La tabla del 9 y sus trucos",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicamos las tablas del 5 al 8.\nEl 5 termina en 0 o 5, el 6 dobla el 3 y el 8 dobla el 4.\nPara el 7 usamos suma repetida o un número vecino.\n\nMira los productos del 9: 9, 18, 27, 36, 45. ¿Qué notas en sus dígitos?\n\nLos dos dígitos suman 9: 1 + 8, 2 + 7, 3 + 6, 4 + 5. Comprueba: 9 × 7 = 63, y 6 + 3 = 9. Truco de dedos: dobla el dedo número 7 de tus diez dedos. Quedan 6 dedos a la izquierda y 3 a la derecha: 63."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste el 5, el 6, el 7 y el 8. El 6 dobla el 3 y el 8 dobla el 4, como las filas de cayos de Los Roques."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La tabla del 10 añade un cero",
-        "body": "¿Qué crees que pasa al multiplicar un número por 10?\n\nSe le añade un cero al otro factor. 10 × 8 = 80 y 10 × 9 = 90. 10 × 8 son diez grupos de ocho: 80, no 800."
+        "heading": "Punto 2: La tabla del 9",
+        "body": "Cuenta cayos de 9 en 9: 9, 18, 27, 36, 45. ¿Qué notas en los dígitos?\n\nSus dígitos suman 9: 1 + 8, 2 + 7... Y 9 × 7 = 63, porque 6 + 3 = 9. Truco: dobla el dedo 7 de tus diez. Quedan 6 dedos a un lado y 3 al otro."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La tabla del 11 repite el dígito",
-        "body": "Mira 11 × 4, 11 × 5 y 11 × 6. ¿Qué números esperas?\n\n11 × 4 = 44, 11 × 5 = 55 y 11 × 6 = 66. El dígito se repite hasta 11 × 9 = 99. Después ya no: 11 × 11 = 121."
+        "heading": "Punto 3: La tabla del 10",
+        "body": "¿Qué pasa si 10 cayos tienen 8 palmeras cada uno? ¿Cuántas hay?\n\nAñades un cero al otro factor. 10 × 8 = 80 y 10 × 9 = 90. Son diez grupos de ocho: 80, no 800."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El 12 se parte en 10 y 2",
-        "body": "Para 12 × 8, ¿cómo usarías la tabla del 10 y la del 2?\n\nParte el 12 en 10 y 2. 10 × 8 = 80 y 2 × 8 = 16. Suma las dos partes: 80 + 16 = 96. Entonces 12 × 8 = 96."
+        "heading": "Punto 4: La tabla del 11",
+        "body": "Mira 11 × 4, 11 × 5 y 11 × 6 en filas de cayos. ¿Qué números esperas?\n\n11 × 4 = 44, 11 × 5 = 55, 11 × 6 = 66. El dígito se repite hasta 11 × 9 = 99. Después ya no: 11 × 11 = 121."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: No olvides la segunda parte",
-        "body": "Un amigo dice que 12 × 8 = 80 porque 12 es casi 10. ¿Qué le responderías?\n\nQue le falta sumar 2 × 8 = 16. El 80 es solo 10 × 8. Por eso 12 × 8 = 96, no 80. Siempre suma las dos partes."
+        "heading": "Punto 5: El 12 se parte en 10 y 2",
+        "body": "Para 12 cayos con 8 palmeras, ¿cómo usas la tabla del 10 y la del 2?\n\nParte el 12 en 10 y 2. 10 × 8 = 80 y 2 × 8 = 16. Suma 80 + 16 = 96: 12 × 8 = 96."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: No olvides la segunda parte",
+        "body": "Un amigo dice que 12 × 8 = 80, porque 12 es casi 10. ¿Qué le respondes?\n\nQue le falta sumar 2 × 8 = 16. El 80 es solo 10 × 8. Por eso 12 × 8 = 96, no 80. Siempre suma las dos partes."
       }
     ],
     "summary": "El 9 suma 9, el 10 añade un cero, el 11 repite el dígito y el 12 se parte en 10 y 2.",
@@ -43,7 +48,7 @@
     "priorDayRecap": "Ayer practicaste las tablas del 5 al 8 con patrones y comprobación.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tus dos manos con los diez dedos. Tacha el dedo número 7 y cuenta los dedos de cada lado. Escribe: 6 dedos y 3 dedos forman 63, o sea 9 × 7. Rotula debajo: 9 × 7 = 63.",
+    "imageBandInstruction": "Dibuja tus dos manos con los diez dedos. Tacha el dedo 7 y cuenta cada lado. Escribe: 6 dedos y 3 dedos forman 63. Rotula debajo: 9 × 7 = 63.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicamos las tablas del 5 al 8."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El 5 termina en 0 o 5, el 6 dobla el 3 y el 8 dobla el 4."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Para el 7 usamos suma repetida o un número vecino."
+        "text": "Ayer viste el 5, el 6, el 7 y el 8."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 6 dobla el 3 y el 8 dobla el 4,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Mira los productos del 9: 9, 18, 27, 36, 45."
+        "text": "como las filas de cayos de Los Roques."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Qué notas en sus dígitos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,15 +153,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuenta cayos de 9 en 9: 9, 18, 27, 36,"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La tabla del 9 y sus trucos"
+        "kind": "lesson",
+        "text": "45. ¿Qué notas en los dígitos?"
       },
       {
         "index": 17,
@@ -170,28 +175,28 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Los dos dígitos suman 9: 1 + 8, 2 + 7, 3 + 6, 4 + 5."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Comprueba: 9 × 7 = 63, y 6 + 3 = 9."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Truco de dedos: dobla el dedo número 7 de tus diez dedos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Quedan 6 dedos a la izquierda y 3 a la derecha: 63."
+        "kind": "heading",
+        "text": "Punto 2: La tabla del 9"
       },
       {
         "index": 22,
@@ -205,28 +210,28 @@
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Sus dígitos suman 9: 1 + 8, 2 + 7..."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y 9 × 7 = 63, porque 6 + 3 = 9."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Truco: dobla el dedo 7 de tus diez."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Qué crees que pasa al multiplicar un número por 10?"
+        "text": "Quedan 6 dedos a un lado y 3 al otro."
       },
       {
         "index": 27,
@@ -239,50 +244,50 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: La tabla del 10 añade un cero"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué pasa si 10 cayos tienen 8 palmeras"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Se le añade un cero al otro factor."
+        "text": "cada uno? ¿Cuántas hay?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "10 × 8 = 80 y 10 × 9 = 90."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "10 × 8 son diez grupos de ocho: 80, no 800."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -295,8 +300,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: La tabla del 10"
       },
       {
         "index": 37,
@@ -309,22 +314,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Añades un cero al otro factor."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Mira 11 × 4, 11 × 5 y 11 × 6. ¿Qué números esperas?"
+        "text": "10 × 8 = 80 y 10 × 9 = 90."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son diez grupos de ocho: 80, no 800."
       },
       {
         "index": 41,
@@ -337,15 +342,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: La tabla del 11 repite el dígito"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,42 +364,42 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "11 × 4 = 44, 11 × 5 = 55 y 11 × 6 = 66."
+        "text": "Mira 11 × 4, 11 × 5 y 11 × 6 en filas"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "El dígito se repite hasta 11 × 9 = 99."
+        "text": "de cayos. ¿Qué números esperas?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Después ya no: 11 × 11 = 121."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: La tabla del 11"
       },
       {
         "index": 51,
@@ -408,21 +413,21 @@
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Para 12 × 8, ¿cómo usarías la tabla del 10 y la"
+        "text": "11 × 4 = 44, 11 × 5 = 55, 11 × 6 = 66."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "del 2?"
+        "text": "El dígito se repite hasta 11 × 9 = 99."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Después ya no: 11 × 11 = 121."
       },
       {
         "index": 55,
@@ -435,15 +440,15 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 4: El 12 se parte en 10 y 2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
@@ -457,28 +462,28 @@
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "Parte el 12 en 10 y 2."
+        "text": "Para 12 cayos con 8 palmeras, ¿cómo usas"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "10 × 8 = 80 y 2 × 8 = 16."
+        "text": "la tabla del 10 y la del 2?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Suma las dos partes: 80 + 16 = 96."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Entonces 12 × 8 = 96."
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -491,8 +496,8 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: El 12 se parte en 10 y 2"
       },
       {
         "index": 65,
@@ -505,22 +510,22 @@
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Parte el 12 en 10 y 2."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Un amigo dice que 12 × 8 = 80 porque 12 es casi 10."
+        "text": "10 × 8 = 80 y 2 × 8 = 16."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué le responderías?"
+        "text": "Suma 80 + 16 = 96: 12 × 8 = 96."
       },
       {
         "index": 69,
@@ -533,132 +538,120 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: No olvides la segunda parte"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un amigo dice que 12 × 8 = 80, porque"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Que le falta sumar 2 × 8 = 16."
+        "text": "12 es casi 10. ¿Qué le respondes?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "El 80 es solo 10 × 8."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Por eso 12 × 8 = 96, no 80."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Siempre suma las dos partes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: No olvides la segunda parte"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Que le falta sumar 2 × 8 = 16."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 80 es solo 10 × 8."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuánto es 9 × 7?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Por eso 12 × 8 = 96, no 80."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) 16",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Siempre suma las dos partes."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) 72",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) 63",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) 54",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué patrón tienen los productos de la tabla del 9?",
-        "questionId": "d4-q2",
+        "text": "¿Cuánto es 9 × 7?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Terminan en 0 o 5",
-        "questionId": "d4-q2"
+        "text": "A) 16",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Son siempre pares",
-        "questionId": "d4-q2"
+        "text": "B) 72",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Repiten el dígito",
-        "questionId": "d4-q2"
+        "text": "C) 63",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Sus dígitos suman 9",
-        "questionId": "d4-q2"
+        "text": "D) 54",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 10 × 9?",
-        "questionId": "d4-q3",
+        "text": "¿Qué patrón tiene el 9?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 19",
-        "questionId": "d4-q3"
+        "text": "A) Terminan en 0 o 5",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 90",
-        "questionId": "d4-q3"
+        "text": "B) Son siempre pares",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 900",
-        "questionId": "d4-q3"
+        "text": "C) Repiten el dígito",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 99",
-        "questionId": "d4-q3"
+        "text": "D) Sus dígitos suman 9",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuánto es 11 × 6?",
-        "questionId": "d4-q4",
+        "text": "¿Cuánto es 10 × 9?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +788,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) 66",
-        "questionId": "d4-q4"
+        "text": "A) 19",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) 17",
-        "questionId": "d4-q4"
+        "text": "B) 90",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) 61",
-        "questionId": "d4-q4"
+        "text": "C) 900",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) 116",
-        "questionId": "d4-q4"
+        "text": "D) 99",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuánto es 11 × 6?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) 66",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) 17",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) 61",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) 116",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Cuánto es 11 × 11?",
         "questionId": "d4-q5",
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) 111",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) 22",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) 121",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) 110",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Cómo se parte 12 × 8 para multiplicar fácil?",
+        "text": "¿Cómo se parte 12 × 8?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,48 +939,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) 10 × 8 y 2 × 8",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) 12 + 8",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) 8 + 8 + 2",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) 10 + 2 + 8",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Cuánto es 12 × 8?",
         "questionId": "d4-q7",
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) 20",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) 80",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) 86",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) 96",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "Si alguien dice que 12 × 8 = 80, ¿qué le falta?",
+        "text": "Si dicen 12 × 8 = 80, ¿qué falta?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Restar 2",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Sumar 2 × 8 = 16",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Quitar un cero",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Nada, está bien",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Explica cómo hallas 12 × 6 con la tabla del 10 y la del 2.",
+        "text": "Explica cómo hallas 12 × 6 con el 10 y el 2.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1101,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Escribe el truco de los dedos para 9 × 4.",
         "questionId": "d4-w2",
@@ -1113,30 +1137,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1150,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja tus diez dedos y marca el que doblas para 9 × 7.",
+        "text": "Dibuja tus diez dedos y marca el que doblas",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,19 +1177,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "para 9 × 7.",
         "questionId": "d4-w3"
       },
       {
@@ -1242,17 +1242,15 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1266,14 +1264,14 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Tacha el dedo número 7 y cuenta los dedos de cada lado."
+        "text": "Tacha el dedo 7 y cuenta cada lado."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe: 6 dedos y 3 dedos forman 63, o sea 9 × 7."
+        "text": "Escribe: 6 dedos y 3 dedos forman 63."
       },
       {
         "index": 156,
@@ -1303,15 +1301,15 @@
         "answer": "63",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué patrón tienen los productos de la tabla del 9?",
+        "prompt": "¿Qué patrón tiene el 9?",
         "choices": [
           "Terminan en 0 o 5",
           "Son siempre pares",
@@ -1321,8 +1319,8 @@
         "answer": "Sus dígitos suman 9",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1339,8 +1337,8 @@
         "answer": "90",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1356,9 +1354,9 @@
         ],
         "answer": "66",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1375,15 +1373,15 @@
         "answer": "121",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cómo se parte 12 × 8 para multiplicar fácil?",
+        "prompt": "¿Cómo se parte 12 × 8?",
         "choices": [
           "10 × 8 y 2 × 8",
           "12 + 8",
@@ -1393,8 +1391,8 @@
         "answer": "10 × 8 y 2 × 8",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1411,15 +1409,15 @@
         "answer": "96",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Si alguien dice que 12 × 8 = 80, ¿qué le falta?",
+        "prompt": "Si dicen 12 × 8 = 80, ¿qué falta?",
         "choices": [
           "Restar 2",
           "Sumar 2 × 8 = 16",
@@ -1429,19 +1427,19 @@
         "answer": "Sumar 2 × 8 = 16",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica cómo hallas 12 × 6 con la tabla del 10 y la del 2.",
+        "prompt": "Explica cómo hallas 12 × 6 con el 10 y el 2.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,8 +1449,8 @@
         "prompt": "Escribe el truco de los dedos para 9 × 4.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1464,8 +1462,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {

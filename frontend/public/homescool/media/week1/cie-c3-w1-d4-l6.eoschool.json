@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: El nervioso lleva mensajes",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer comparamos movimientos que decides y que pasan solos.\nEl músculo se acorta y tira del hueso.\nHueso y músculo trabajan en equipo.\n\nImagina que tocas una olla caliente. ¿Cómo se entera tu mano de que algo quema?\n\nEl tejido nervioso lleva mensajes por todo el cuerpo. Sus mensajes son eléctricos y químicos, y muy veloces. Sus caminos son el cerebro, la médula y los nervios."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que el músculo se acorta y tira del hueso. Hoy sigues la señal que le avisa: es el tejido nervioso."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Sensor, mensaje y respuesta",
-        "body": "Sigamos. Con ese mensaje en camino, ¿qué hace tu mano? ¿Quién la mueve?\n\nPrimero tu piel siente el calor y avisa. Luego el mensaje viaja por el nervio. Y el músculo responde: apartas la mano."
+        "heading": "Punto 2: El nervioso lleva mensajes",
+        "body": "De noche, un relámpago del Catatumbo brilla de pronto. ¿Cómo se entera tu cerebro?\n\nEl tejido nervioso lleva mensajes rápidos. Sus caminos son el cerebro, la médula y los nervios. Es como una señal de luz en la noche."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El camino en tres cajas",
-        "body": "Dibuja en tu mente tres cajas. ¿Cuál va primero, cuál en medio y cuál al final?\n\nPrimera caja: el estímulo, algo que sientes. Segunda caja: el mensaje viaja por el nervio. Tercera caja: el músculo hace la respuesta. Siempre va en ese orden."
+        "heading": "Punto 3: Estímulo, mensaje, respuesta",
+        "body": "El relámpago te asusta y apartas la mano del borde del bote. ¿Qué pasó primero?\n\nPrimero sientes algo: eso es el estímulo. Luego el mensaje viaja por el nervio. Y el músculo responde: apartas la mano."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El nervioso es un tejido",
-        "body": "Una pregunta con truco: ¿el nervioso es solo el cerebro, o también es un tejido del cuerpo?\n\nEs un tejido, igual que los otros tres. Está hecho de células que trabajan juntas. No solo piensa: también lleva mensajes por el cuerpo."
+        "heading": "Punto 4: El camino en tres cajas",
+        "body": "Imagina tres cajas como tres destellos. ¿Cuál va primero, cuál en medio y cuál al final?\n\nPrimera caja: el estímulo. Segunda caja: el mensaje por el nervio. Tercera caja: la respuesta del músculo. Siempre va en ese orden."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Repasamos los cuatro",
-        "body": "Antes de terminar, ¿puedes decir los cuatro tejidos con una frase corta para cada uno?\n\nEl epitelial cubre y el conectivo une. El muscular mueve y el nervioso lleva el mensaje. Con ellos clasificas lo que observas con evidencia."
+        "heading": "Punto 5: El nervioso es un tejido",
+        "body": "Una pregunta con truco: ¿el nervioso es solo el cerebro, o también es un tejido?\n\nEs un tejido, como los otros tres. Está hecho de células que trabajan juntas. No solo piensa: lleva mensajes por el cuerpo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Repasamos los cuatro",
+        "body": "Antes de que acabe la noche en el Catatumbo, ¿dices los cuatro tejidos con una frase?\n\nEl epitelial cubre y el conectivo une. El muscular mueve. El nervioso lleva el mensaje."
       }
     ],
     "summary": "El tejido nervioso lleva mensajes: sientes, el nervio avisa y el músculo responde.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Ayer comparaste movimientos voluntarios y otros más automáticos.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una mano que toca una olla caliente. Dibuja una flecha desde la piel por el nervio. Dibuja otra flecha hasta el músculo del brazo. Rotula estímulo, mensaje y respuesta.",
+    "imageBandInstruction": "Dibuja un niño en el bote y un relámpago. Dibuja una flecha del ojo por el nervio. Dibuja otra flecha hasta el músculo. Rotula estímulo, mensaje y respuesta.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,57 +91,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer comparamos movimientos que decides y que pasan solos."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El músculo se acorta y tira del hueso."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hueso y músculo trabajan en equipo."
+        "text": "Ayer viste que el músculo se acorta"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y tira del hueso. Hoy sigues la señal"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Imagina que tocas una olla caliente. ¿Cómo se entera"
+        "text": "que le avisa: es el tejido nervioso."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "tu mano de que algo quema?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -149,43 +154,43 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "De noche, un relámpago del Catatumbo"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: El nervioso lleva mensajes"
+        "kind": "lesson",
+        "text": "brilla"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de pronto. ¿Cómo se entera tu cerebro?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "El tejido nervioso lleva mensajes por todo el cuerpo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Sus mensajes son eléctricos y químicos, y muy veloces."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Sus caminos son el cerebro, la médula y los nervios."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: El nervioso lleva mensajes"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El tejido nervioso lleva mensajes rápidos."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Sigamos. Con ese mensaje en camino,"
+        "text": "Sus caminos son el cerebro,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿qué hace tu mano? ¿Quién la mueve?"
+        "text": "la médula y los nervios."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es como una señal de luz en la noche."
       },
       {
         "index": 28,
@@ -247,15 +252,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Sensor, mensaje y respuesta"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -269,35 +274,35 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Primero tu piel siente el calor y avisa."
+        "text": "El relámpago te asusta y apartas la mano"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Luego el mensaje viaja por el nervio."
+        "text": "del borde del bote. ¿Qué pasó primero?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Y el músculo responde: apartas la mano."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -310,36 +315,36 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Estímulo, mensaje, respuesta"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Dibuja en tu mente tres cajas. ¿Cuál va primero,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "cuál en medio y cuál al final?"
+        "text": "Primero sientes algo: eso es el estímulo."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego el mensaje viaja por el nervio."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y el músculo responde: apartas la mano."
       },
       {
         "index": 43,
@@ -352,43 +357,43 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: El camino en tres cajas"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Primera caja: el estímulo, algo que sientes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Segunda caja: el mensaje viaja por el nervio."
+        "text": "Imagina tres cajas como tres destellos."
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Tercera caja: el músculo hace la respuesta."
+        "text": "¿Cuál va primero, cuál en medio y cuál al"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Siempre va en ese orden."
+        "text": "final?"
       },
       {
         "index": 50,
@@ -402,14 +407,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -422,43 +427,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿el nervioso es solo el cerebro,"
+        "kind": "heading",
+        "text": "Punto 4: El camino en tres cajas"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "o también es un tejido del cuerpo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primera caja: el estímulo."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Segunda caja: el mensaje por el nervio."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tercera caja: la respuesta del músculo."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: El nervioso es un tejido"
+        "kind": "lesson",
+        "text": "Siempre va en ese orden."
       },
       {
         "index": 60,
@@ -472,35 +477,35 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Es un tejido, igual que los otros tres."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Está hecho de células que trabajan juntas."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "No solo piensa: también lleva mensajes por el cuerpo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el nervioso es solo"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "el cerebro, o también es un tejido?"
       },
       {
         "index": 66,
@@ -513,29 +518,29 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Antes de terminar, ¿puedes decir los cuatro tejidos"
+        "text": "________________________________________"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "con una frase corta para cada uno?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: El nervioso es un tejido"
       },
       {
         "index": 71,
@@ -548,43 +553,43 @@
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es un tejido, como los otros tres."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Repasamos los cuatro"
+        "kind": "lesson",
+        "text": "Está hecho de células que trabajan juntas."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No solo piensa: lleva mensajes por el cuerpo."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "El epitelial cubre y el conectivo une."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "El muscular mueve y el nervioso lleva el mensaje."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Con ellos clasificas lo que observas con evidencia."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,122 +603,98 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Antes de que acabe la noche en el"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Catatumbo,"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿dices los cuatro tejidos con una frase?"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué tejido lleva mensajes a gran velocidad?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Epitelial",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Conectivo",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Nervioso",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Repasamos los cuatro"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Muscular",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El epitelial cubre y el conectivo une."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué forma los caminos del tejido nervioso?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "El muscular mueve."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Piel y uñas",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "El nervioso lleva el mensaje."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Hueso y cartílago",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Sangre y aire",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Cerebro, médula y nervios",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "Si tocas algo caliente, ¿qué es el estímulo?",
-        "questionId": "d4-q3",
+        "text": "¿Qué tejido lleva mensajes rápidos?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Apartar la mano",
-        "questionId": "d4-q3"
+        "text": "A) Epitelial",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Sentir algo caliente",
-        "questionId": "d4-q3"
+        "text": "B) Conectivo",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Doblar el brazo",
-        "questionId": "d4-q3"
+        "text": "C) Nervioso",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Cubrir la piel",
-        "questionId": "d4-q3"
+        "text": "D) Muscular",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué hace el músculo en la respuesta?",
-        "questionId": "d4-q4",
+        "text": "¿Cuáles son caminos del nervioso?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,44 +777,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Aparta la mano",
-        "questionId": "d4-q4"
+        "text": "A) Piel y uñas",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Siente el calor",
-        "questionId": "d4-q4"
+        "text": "B) Hueso y cartílago",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Envía el mensaje",
-        "questionId": "d4-q4"
+        "text": "C) Sangre y aire",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Cubre la mano",
-        "questionId": "d4-q4"
+        "text": "D) Cerebro, médula y nervios",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es un estímulo?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Apartar la mano",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Algo que sientes",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Doblar el brazo",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Cubrir la piel",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué hace el músculo al responder?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Aparta la mano",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Siente el susto",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Envía el mensaje",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Cubre la mano",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué viaja por el nervio?",
         "questionId": "d4-q5",
@@ -846,48 +928,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) La piel",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) El hueso",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) El mensaje",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) El cartílago",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Cuál es el orden correcto?",
         "questionId": "d4-q6",
@@ -900,50 +982,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Estímulo, mensaje, respuesta",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Respuesta, mensaje, estímulo",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Mensaje, respuesta, estímulo",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Estímulo, respuesta, mensaje",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿El tejido nervioso es solo el cerebro?",
+        "text": "¿El nervioso es solo el cerebro?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Sí, solo el cerebro",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) No es un tejido",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Sí, solo los nervios",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) No, también médula y nervios",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Qué tejido mueve el cuerpo?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Epitelial",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Muscular",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Conectivo",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Nervioso",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe el camino de tocar algo caliente en tres pasos.",
+        "text": "Escribe el camino del susto en tres pasos.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Nombra los cuatro tejidos y lo que hace cada uno.",
+        "text": "Nombra los cuatro tejidos y su trabajo.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,30 +1126,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1139,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja tres cajas: estímulo, mensaje y respuesta.",
+        "text": "Dibuja tres cajas: estímulo, mensaje,",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,19 +1166,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "respuesta.",
         "questionId": "d4-w3"
       },
       {
@@ -1213,7 +1201,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja un esquema de los cuatro tejidos con flechas.",
+        "text": "Dibuja un esquema de los cuatro tejidos.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1243,58 +1231,56 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una mano que toca una olla caliente."
+        "text": "Dibuja un niño en el bote y un relámpago."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja una flecha desde la piel por el nervio."
+        "text": "Dibuja una flecha del ojo por el nervio."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja otra flecha hasta el músculo del brazo."
+        "text": "Dibuja otra flecha hasta el músculo. Rotula"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula estímulo, mensaje y respuesta."
+        "text": "estímulo, mensaje y respuesta."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué tejido lleva mensajes a gran velocidad?",
+        "prompt": "¿Qué tejido lleva mensajes rápidos?",
         "choices": [
           "Epitelial",
           "Conectivo",
@@ -1304,15 +1290,15 @@
         "answer": "Nervioso",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué forma los caminos del tejido nervioso?",
+        "prompt": "¿Cuáles son caminos del nervioso?",
         "choices": [
           "Piel y uñas",
           "Hueso y cartílago",
@@ -1322,44 +1308,44 @@
         "answer": "Cerebro, médula y nervios",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Si tocas algo caliente, ¿qué es el estímulo?",
+        "prompt": "¿Qué es un estímulo?",
         "choices": [
           "Apartar la mano",
-          "Sentir algo caliente",
+          "Algo que sientes",
           "Doblar el brazo",
           "Cubrir la piel"
         ],
-        "answer": "Sentir algo caliente",
+        "answer": "Algo que sientes",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué hace el músculo en la respuesta?",
+        "prompt": "¿Qué hace el músculo al responder?",
         "choices": [
           "Aparta la mano",
-          "Siente el calor",
+          "Siente el susto",
           "Envía el mensaje",
           "Cubre la mano"
         ],
         "answer": "Aparta la mano",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1376,8 +1362,8 @@
         "answer": "El mensaje",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1394,15 +1380,15 @@
         "answer": "Estímulo, mensaje, respuesta",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿El tejido nervioso es solo el cerebro?",
+        "prompt": "¿El nervioso es solo el cerebro?",
         "choices": [
           "Sí, solo el cerebro",
           "No es un tejido",
@@ -1412,68 +1398,50 @@
         "answer": "No, también médula y nervios",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué tejido mueve el cuerpo?",
-        "choices": [
-          "Epitelial",
-          "Muscular",
-          "Conectivo",
-          "Nervioso"
-        ],
-        "answer": "Muscular",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe el camino de tocar algo caliente en tres pasos.",
+        "prompt": "Escribe el camino del susto en tres pasos.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Nombra los cuatro tejidos y lo que hace cada uno.",
+        "prompt": "Nombra los cuatro tejidos y su trabajo.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja tres cajas: estímulo, mensaje y respuesta.",
+        "prompt": "Dibuja tres cajas: estímulo, mensaje, respuesta.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un esquema de los cuatro tejidos con flechas.",
+        "prompt": "Dibuja un esquema de los cuatro tejidos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

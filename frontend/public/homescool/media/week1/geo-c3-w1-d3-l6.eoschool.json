@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: El extremo norte",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer repasamos los cuatro vecinos de Venezuela.\nNorte, sur, este y oeste: cada lado tiene el suyo.\nEl mar Caribe es agua; los otros tres son países.\n\nImagina que caminas hasta el punto más al norte del país. ¿Cómo crees que se llama ese lugar?\n\nSe llama Cabo San Román. Es una punta de la península de Paraguaná, junto al mar. En tierra firme, es el lugar más al norte de Venezuela. Desde allí solo tendrías el mar Caribe frente a ti."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer repasaste los cuatro vecinos, cada uno en su lado del mapa. Hoy dejamos la mesa del Roraima para buscar las esquinas del país."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El extremo sur",
-        "body": "Ahora viajas hacia el sur, casi hasta tocar Brasil. ¿Qué crees que marca ese extremo?\n\nEs el nacimiento del río Ararí. El nacimiento de un río es el lugar donde empieza. Queda en el sur del país, cerca de la frontera con Brasil. Allí termina Venezuela por el sur."
+        "heading": "Punto 2: El extremo norte",
+        "body": "Dejamos el Roraima y vamos al norte. ¿Cómo se llamará el punto más al norte?\n\nSe llama Cabo San Román. Es una punta de la península de Paraguaná, junto al mar. Desde allí solo ves el mar Caribe."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El extremo este",
-        "body": "Sigamos hacia el este, cerca de Guyana. Allí se juntan dos ríos. ¿Cómo se llama un lugar donde se juntan ríos?\n\nUn lugar donde se juntan dos ríos se llama confluencia. El extremo este es la confluencia de Barima y Mururuma. Barima y Mururuma son los dos ríos que se encuentran."
+        "heading": "Punto 3: El extremo sur",
+        "body": "Bajamos al sur, hacia Brasil, el vecino del Roraima. ¿Qué marca ese extremo?\n\nEs el nacimiento del río Ararí. El nacimiento de un río es el lugar donde empieza. Queda cerca de Brasil."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El extremo oeste",
-        "body": "Y ahora hacia el oeste, cerca de Colombia. ¿Qué crees que marca ese extremo? Recuerda el extremo sur.\n\nOtra vez es un nacimiento: el del río Intermedio. Queda en el oeste, cerca de la frontera con Colombia. Así Venezuela queda enmarcada por cuatro puntos."
+        "heading": "Punto 4: El extremo este",
+        "body": "Al este, cerca de Guyana, se juntan dos ríos. ¿Cómo se llama ese lugar?\n\nUn lugar donde se juntan dos ríos se llama confluencia. El extremo este es la confluencia de Barima y Mururuma."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Un punto no es una frontera",
-        "body": "Una pregunta con truco: ¿un punto extremo es toda la frontera de Venezuela con ese lado?\n\nNo: un punto extremo es un solo lugar. La frontera es toda la línea que separa a dos países. Los cuatro puntos son como las esquinas de un marco."
+        "heading": "Punto 5: El extremo oeste",
+        "body": "Y al oeste, cerca de Colombia: ¿qué crees que marca ese extremo?\n\nOtra vez es un nacimiento: el del río Intermedio. Así cuatro puntos enmarcan Venezuela."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un punto no es una frontera",
+        "body": "Una pregunta con truco: ¿el Roraima es uno de estos cuatro puntos extremos?\n\nNo. Los cuatro puntos son otros lugares. Un punto extremo es un solo lugar, no toda la frontera. Son las esquinas de un marco."
       }
     ],
-    "summary": "Los cuatro puntos extremos marcan el marco de Venezuela, pero cada uno es un solo lugar, no toda la frontera.",
+    "summary": "Los cuatro puntos extremos son las esquinas del marco de Venezuela; cada uno es un solo lugar.",
     "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "weekRecap": "Fronteras: Caribe, Brasil, Guyana, Colombia. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "priorDayRecap": "Ayer etiquetaste las cuatro fronteras con puntos cardinales.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja el contorno de Venezuela en el recuadro. Marca cuatro puntos: uno arriba, uno abajo, uno a cada lado. Escribe junto a cada punto su nombre de hoy. Une los cuatro puntos y mira el marco del país.",
+    "imageBandInstruction": "Dibuja el contorno de Venezuela. Marca cuatro puntos, uno por extremo. Escribe el nombre junto a cada punto. Une los puntos: es el marco del país.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer repasamos los cuatro vecinos de Venezuela."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Norte, sur, este y oeste: cada lado tiene el suyo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "El mar Caribe es agua; los otros tres son países."
+        "text": "Ayer repasaste los cuatro vecinos,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cada uno en su lado del mapa."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Imagina que caminas hasta el punto más al norte del país."
+        "text": "Hoy dejamos la mesa del Roraima"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Cómo crees que se llama ese lugar?"
+        "text": "para buscar las esquinas del país."
       },
       {
         "index": 12,
@@ -135,99 +140,99 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: El extremo norte"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dejamos el Roraima y vamos al norte."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Se llama Cabo San Román."
+        "text": "¿Cómo se llamará el punto más al norte?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Es una punta de la península de Paraguaná, junto al mar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "En tierra firme, es el lugar más al norte de Venezuela."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Desde allí solo tendrías el mar Caribe frente a ti."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: El extremo norte"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Se llama Cabo San Román."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es una punta de la península"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Ahora viajas hacia el sur, casi hasta tocar Brasil."
+        "text": "de Paraguaná, junto al mar."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Qué crees que marca ese extremo?"
+        "text": "Desde allí solo ves el mar Caribe."
       },
       {
         "index": 27,
@@ -240,113 +245,113 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: El extremo sur"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Bajamos al sur, hacia Brasil, el vecino"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Es el nacimiento del río Ararí."
+        "text": "del Roraima. ¿Qué marca ese extremo?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "El nacimiento de un río es el lugar donde empieza."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Queda en el sur del país, cerca de la frontera con Brasil."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Allí termina Venezuela por el sur."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: El extremo sur"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es el nacimiento del río Ararí."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El nacimiento de un río es el lugar"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Sigamos hacia el este, cerca de Guyana. Allí se juntan"
+        "text": "donde empieza. Queda cerca de Brasil."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "dos ríos. ¿Cómo se llama un lugar donde se juntan ríos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,92 +364,92 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: El extremo este"
+        "kind": "lesson",
+        "text": "Al este, cerca de Guyana, se juntan"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "dos ríos. ¿Cómo se llama ese lugar?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Un lugar donde se juntan dos ríos se llama confluencia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "El extremo este es la confluencia de Barima y Mururuma."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Barima y Mururuma son los dos ríos que se encuentran."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El extremo este"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un lugar donde se juntan dos ríos"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "se llama confluencia. El extremo este"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Y ahora hacia el oeste, cerca de Colombia. ¿Qué crees"
+        "text": "es la confluencia de Barima y Mururuma."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "que marca ese extremo? Recuerda el extremo sur."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
@@ -457,92 +462,92 @@
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: El extremo oeste"
+        "kind": "lesson",
+        "text": "Y al oeste, cerca de Colombia: ¿qué"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "crees que marca ese extremo?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Otra vez es un nacimiento: el del río Intermedio."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Queda en el oeste, cerca de la frontera con Colombia."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Así Venezuela queda enmarcada por cuatro puntos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: El extremo oeste"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Otra vez es un nacimiento:"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el del río Intermedio."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿un punto extremo es toda"
+        "text": "Así cuatro puntos enmarcan Venezuela."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "la frontera de Venezuela con ese lado?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -555,111 +560,99 @@
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Un punto no es una frontera"
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el Roraima es"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "uno de estos cuatro puntos extremos?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "No: un punto extremo es un solo lugar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "La frontera es toda la línea que separa a dos países."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Los cuatro puntos son como las esquinas de un marco."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Un punto no es una frontera"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Los cuatro puntos son otros lugares."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un punto extremo es un solo lugar,"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuál es el punto extremo norte?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "no toda la frontera."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Río Ararí",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Son las esquinas de un marco."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Cabo San Román",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Río Intermedio",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Caracas",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -673,8 +666,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cuál es el punto extremo sur?",
-        "questionId": "d3-q2",
+        "text": "¿Cuál es el punto extremo norte?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -688,32 +681,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Cabo San Román",
-        "questionId": "d3-q2"
+        "text": "A) Nacimiento del río Ararí",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Barima y Mururuma",
-        "questionId": "d3-q2"
+        "text": "B) Cabo San Román",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) El nacimiento del río Ararí",
-        "questionId": "d3-q2"
+        "text": "C) Nacimiento del río Intermedio",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d3-q2"
+        "text": "D) Caracas",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -727,8 +720,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál es el punto extremo este?",
-        "questionId": "d3-q3",
+        "text": "¿Cuál es el punto extremo sur?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -743,31 +736,31 @@
         "line": 43,
         "kind": "option",
         "text": "A) Cabo San Román",
-        "questionId": "d3-q3"
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) El río Ararí",
-        "questionId": "d3-q3"
+        "text": "B) Barima y Mururuma",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El río Intermedio",
-        "questionId": "d3-q3"
+        "text": "C) Nacimiento del río Ararí",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La confluencia de Barima y Mururuma",
-        "questionId": "d3-q3"
+        "text": "D) El mar Caribe",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -781,8 +774,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es el punto extremo oeste?",
-        "questionId": "d3-q4",
+        "text": "¿Cuál es el punto extremo este?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -797,45 +790,92 @@
         "line": 49,
         "kind": "option",
         "text": "A) Cabo San Román",
-        "questionId": "d3-q4"
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) El nacimiento del río Intermedio",
-        "questionId": "d3-q4"
+        "text": "B) Río Ararí",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) El río Ararí",
-        "questionId": "d3-q4"
+        "text": "C) Río Intermedio",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d3-q4"
+        "text": "D) Confluencia de Barima y Mururuma",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuál es el punto extremo oeste?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Cabo San Román",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Nacimiento del río Intermedio",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Río Ararí",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Mar Caribe",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué significa confluencia?",
+        "text": "¿Qué es una confluencia?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,48 +886,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) El lugar donde se juntan dos ríos",
+        "text": "A) Donde se juntan dos ríos",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Una montaña alta",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Una ciudad grande",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Una frontera con el mar",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué es el nacimiento de un río?",
         "questionId": "d3-q6",
@@ -900,50 +940,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) El lugar donde termina",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Un puente",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) El lugar donde empieza",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Una isla",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿De qué península es una punta Cabo San Román?",
+        "text": "¿De qué península es Cabo San Román?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +994,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Paraguaná",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Paria",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Yucatán",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Florida",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Un punto extremo es toda la frontera?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) De Paraguaná",
+        "questionId": "d3-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Sí, es toda la línea",
-        "questionId": "d3-q8"
+        "text": "B) De Florida",
+        "questionId": "d3-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Sí, es un país",
-        "questionId": "d3-q8"
+        "text": "C) De Yucatán",
+        "questionId": "d3-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) No, es una ciudad",
-        "questionId": "d3-q8"
+        "text": "D) De Italia",
+        "questionId": "d3-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) No, es un solo lugar",
-        "questionId": "d3-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Explica con tus palabras qué es un punto extremo.",
+        "text": "Explica con tus palabras qué es un punto",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,6 +1046,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "extremo.",
+        "questionId": "d3-w1"
       },
       {
         "index": 131,
@@ -1081,31 +1075,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe los cuatro puntos extremos y su dirección.",
+        "text": "Escribe los cuatro puntos extremos y su",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,6 +1092,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "lado.",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 137,
@@ -1127,39 +1121,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja a Venezuela con un punto en cada extremo.",
+        "text": "Dibuja a Venezuela con un punto en cada",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,50 +1140,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "extremo.",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja dos ríos que se juntan y rotula la confluencia.",
+        "text": "Dibuja dos ríos que se juntan y rotula la",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1224,71 +1186,98 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "confluencia.",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el contorno de Venezuela en el recuadro."
+        "text": "Dibuja el contorno de Venezuela. Marca"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Marca cuatro puntos: uno arriba, uno abajo, uno a cada lado."
+        "text": "cuatro puntos, uno por extremo. Escribe el"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe junto a cada punto su nombre de hoy."
+        "text": "nombre junto a cada punto. Une los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Une los cuatro puntos y mira el marco del país."
+        "text": "puntos: es el marco del país."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
@@ -1296,16 +1285,16 @@
         "type": "mcq",
         "prompt": "¿Cuál es el punto extremo norte?",
         "choices": [
-          "Río Ararí",
+          "Nacimiento del río Ararí",
           "Cabo San Román",
-          "Río Intermedio",
+          "Nacimiento del río Intermedio",
           "Caracas"
         ],
         "answer": "Cabo San Román",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1316,14 +1305,14 @@
         "choices": [
           "Cabo San Román",
           "Barima y Mururuma",
-          "El nacimiento del río Ararí",
+          "Nacimiento del río Ararí",
           "El mar Caribe"
         ],
-        "answer": "El nacimiento del río Ararí",
+        "answer": "Nacimiento del río Ararí",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1333,15 +1322,15 @@
         "prompt": "¿Cuál es el punto extremo este?",
         "choices": [
           "Cabo San Román",
-          "El río Ararí",
-          "El río Intermedio",
-          "La confluencia de Barima y Mururuma"
+          "Río Ararí",
+          "Río Intermedio",
+          "Confluencia de Barima y Mururuma"
         ],
-        "answer": "La confluencia de Barima y Mururuma",
+        "answer": "Confluencia de Barima y Mururuma",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1351,33 +1340,33 @@
         "prompt": "¿Cuál es el punto extremo oeste?",
         "choices": [
           "Cabo San Román",
-          "El nacimiento del río Intermedio",
-          "El río Ararí",
-          "El mar Caribe"
+          "Nacimiento del río Intermedio",
+          "Río Ararí",
+          "Mar Caribe"
         ],
-        "answer": "El nacimiento del río Intermedio",
+        "answer": "Nacimiento del río Intermedio",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué significa confluencia?",
+        "prompt": "¿Qué es una confluencia?",
         "choices": [
-          "El lugar donde se juntan dos ríos",
+          "Donde se juntan dos ríos",
           "Una montaña alta",
           "Una ciudad grande",
           "Una frontera con el mar"
         ],
-        "answer": "El lugar donde se juntan dos ríos",
+        "answer": "Donde se juntan dos ríos",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1394,44 +1383,26 @@
         "answer": "El lugar donde empieza",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿De qué península es una punta Cabo San Román?",
+        "prompt": "¿De qué península es Cabo San Román?",
         "choices": [
-          "Paraguaná",
-          "Paria",
-          "Yucatán",
-          "Florida"
+          "De Paraguaná",
+          "De Florida",
+          "De Yucatán",
+          "De Italia"
         ],
-        "answer": "Paraguaná",
+        "answer": "De Paraguaná",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Un punto extremo es toda la frontera?",
-        "choices": [
-          "Sí, es toda la línea",
-          "Sí, es un país",
-          "No, es una ciudad",
-          "No, es un solo lugar"
-        ],
-        "answer": "No, es un solo lugar",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1441,19 +1412,19 @@
         "prompt": "Explica con tus palabras qué es un punto extremo.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe los cuatro puntos extremos y su dirección.",
+        "prompt": "Escribe los cuatro puntos extremos y su lado.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
@@ -1465,8 +1436,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1478,8 +1449,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

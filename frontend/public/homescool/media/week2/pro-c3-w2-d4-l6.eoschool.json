@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Qué es una conclusión",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer repetiste el experimento con cuidado.\nHiciste dos intentos y los anotaste en tu tabla.\nComparaste las mismas letras con gota y sin gota.\n\nHoy escribes una conclusión. ¿Qué crees que debe decir una buena conclusión?\n\nUna conclusión dice qué observaste. También explica la idea principal con palabras sencillas. Tu bitácora es tu guía para escribirla."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer repetiste y anotaste dos intentos en tu tabla. Comparaste las mismas letras, con gota y sin gota. Hoy cuentas lo que viste."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Elegir el mejor intento",
-        "body": "Sigamos. Mira tu tabla. ¿Cuál intento elegirías para contar lo que viste?\n\nElige el intento donde la gota quedó más redonda. Y donde la letra se vio mejor. Con ese intento contarás lo que viste."
+        "heading": "Punto 2: Qué es una conclusión",
+        "body": "Cuando vuelves de La Llovizna, cuentas lo que viste. ¿Qué dice una conclusión?\n\nUna conclusión cuenta lo que observaste. También explica por qué pasó, con palabras sencillas. Tu bitácora te ayuda a escribirla."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La explicación de la gota",
-        "body": "Imagina que tu amigo pregunta: «¿Por qué la gota agranda la letra?». ¿Qué le dirías?\n\nLa gota redonda se parece a una lente convexa. Está más abultada en el centro. La luz cambia de dirección al pasar del aire al agua. Esa es la refracción: por eso las letras se ven más grandes."
+        "heading": "Punto 3: Elegir el mejor intento",
+        "body": "Tu tabla es un álbum de La Llovizna. ¿Qué intento cuenta mejor lo que viste?\n\nElige el intento con la gota más redonda y la letra que se vio mejor. Con ese intento cuentas lo que viste."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Las dos frases",
-        "body": "Una pregunta con truco: ¿basta con escribir «funcionó»?\n\nNo. Falta contar qué viste y por qué pasó. Primera frase: «Vi que…». Segunda frase: «Creo que pasó porque…». Termínalas con datos de tu tabla."
+        "heading": "Punto 4: La explicación de la gota",
+        "body": "Tu amigo conoce La Llovizna y pregunta: «¿Por qué tu gota agranda la letra?»\n\nLa gota redonda es una lente convexa: abultada en el centro. La luz cambia de dirección al pasar del aire al agua. Eso es refracción."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Escribir tu conclusión",
-        "body": "Ahora tú: ¿cómo completarías esas dos frases con la gota redonda y la refracción?\n\n«Vi que la letra se veía más grande con la gota». «Creo que pasó por la refracción de la luz». «La gota redonda actúa como una lente convexa». Cambia las frases si tu resultado fue distinto."
+        "heading": "Punto 5: Las dos frases",
+        "body": "Cuentas tu viaje a La Llovizna. ¿Basta con decir «funcionó» de tu experimento?\n\nNo. Falta contar qué viste y por qué. Primera frase: «Vi que…». Segunda frase: «Creo que pasó porque…». Termínalas con datos de tu tabla."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Escribir tu conclusión",
+        "body": "Ahora tú: ¿cómo cerrarías tu conclusión con la gota redonda y la refracción?\n\n«Vi que la letra se veía más grande». «Creo que pasó por la refracción». «La gota redonda es una lente convexa». Cámbialas si viste algo distinto."
       }
     ],
     "summary": "Una buena conclusión cuenta qué viste y explica con la refracción por qué pasó.",
@@ -43,7 +48,7 @@
     "priorDayRecap": "Ayer repetiste el experimento y registraste dos intentos en tabla. Hoy redactas la conclusión con «Vi que…» y «Creo que pasó porque…».",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una gota redonda sobre una letra grande. Dibuja flechas de luz que entran a la gota. Haz que las flechas cambien de dirección en el agua. Rotula: aire, agua, luz y refracción.",
+    "imageBandInstruction": "Dibuja una gota redonda sobre una letra. Dibuja flechas de luz que entran a la gota. Haz que las flechas cambien de dirección. Rotula: aire, agua, luz y refracción.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer repetiste el experimento con cuidado."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Hiciste dos intentos y los anotaste en tu tabla."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Comparaste las mismas letras con gota y sin gota."
+        "text": "Ayer repetiste y anotaste dos intentos"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en tu tabla."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy escribes una conclusión. ¿Qué crees que debe"
+        "text": "Comparaste las mismas letras, con gota"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "decir una buena conclusión?"
+        "text": "y sin gota. Hoy cuentas lo que viste."
       },
       {
         "index": 12,
@@ -134,71 +139,71 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Qué es una conclusión"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuando vuelves de La Llovizna, cuentas"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Una conclusión dice qué observaste."
+        "text": "lo que viste. ¿Qué dice una conclusión?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "También explica la idea principal con palabras sencillas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Tu bitácora es tu guía para escribirla."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Qué es una conclusión"
       },
       {
         "index": 23,
@@ -212,28 +217,28 @@
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Sigamos. Mira tu tabla. ¿Cuál intento elegirías"
+        "text": "Una conclusión cuenta lo que observaste."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "para contar lo que viste?"
+        "text": "También explica por qué pasó,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con palabras sencillas."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tu bitácora te ayuda a escribirla."
       },
       {
         "index": 28,
@@ -246,36 +251,36 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Elegir el mejor intento"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "Elige el intento donde la gota quedó más redonda."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Y donde la letra se vio mejor."
+        "text": "Tu tabla es un álbum de La Llovizna."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Con ese intento contarás lo que viste."
+        "text": "¿Qué intento cuenta mejor lo que viste?"
       },
       {
         "index": 34,
@@ -289,14 +294,14 @@
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -309,78 +314,78 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Imagina que tu amigo pregunta: «¿Por qué la gota"
+        "kind": "heading",
+        "text": "Punto 3: Elegir el mejor intento"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "agranda la letra?». ¿Qué le dirías?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Elige el intento con la gota más redonda"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y la letra que se vio mejor."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con ese intento cuentas lo que viste."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: La explicación de la gota"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "La gota redonda se parece a una lente convexa."
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Está más abultada en el centro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "La luz cambia de dirección al pasar del aire al agua."
+        "text": "Tu amigo conoce La Llovizna y pregunta:"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Esa es la refracción: por eso las letras se ven más grandes."
+        "text": "«¿Por qué tu gota agranda la letra?»"
       },
       {
         "index": 49,
@@ -394,14 +399,14 @@
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -414,15 +419,15 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿basta con escribir"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "«funcionó»?"
+        "kind": "heading",
+        "text": "Punto 4: La explicación de la gota"
       },
       {
         "index": 55,
@@ -435,71 +440,71 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La gota redonda es una lente convexa:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "abultada en el centro."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Las dos frases"
+        "kind": "lesson",
+        "text": "La luz cambia de dirección al pasar"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "del aire al agua. Eso es refracción."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "No. Falta contar qué viste y por qué pasó."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Primera frase: «Vi que…»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Segunda frase: «Creo que pasó porque…»."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Termínalas con datos de tu tabla."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuentas tu viaje a La Llovizna. ¿Basta"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "con decir «funcionó» de tu experimento?"
       },
       {
         "index": 66,
@@ -512,22 +517,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Ahora tú: ¿cómo completarías esas dos frases con"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "la gota redonda y la refracción?"
+        "kind": "heading",
+        "text": "Punto 5: Las dos frases"
       },
       {
         "index": 70,
@@ -540,50 +545,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Falta contar qué viste y por qué."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Escribir tu conclusión"
+        "kind": "lesson",
+        "text": "Primera frase: «Vi que…»."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Segunda frase: «Creo que pasó porque…»."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "«Vi que la letra se veía más grande con la gota»."
+        "text": "Termínalas con datos de tu tabla."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "«Creo que pasó por la refracción de la luz»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "«La gota redonda actúa como una lente convexa»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Cambia las frases si tu resultado fue distinto."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,14 +602,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Ahora tú: ¿cómo cerrarías tu conclusión"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con la gota redonda y la refracción?"
       },
       {
         "index": 81,
@@ -617,102 +622,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué dice una conclusión?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Solo el título",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Solo los materiales",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Escribir tu conclusión"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Lo que observaste y por qué",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Solo la fecha",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "«Vi que la letra se veía más grande»."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Creo que pasó por la refracción»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué te guía para escribirla?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "«La gota redonda es una lente convexa»."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Un cuento",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Cámbialas si viste algo distinto."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Una canción",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) La suerte",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Tu bitácora",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -726,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué intento eliges para contar?",
-        "questionId": "d4-q3",
+        "text": "¿Qué cuenta una conclusión?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) El primero que hiciste",
-        "questionId": "d4-q3"
+        "text": "A) Solo el título",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Donde la gota quedó más redonda",
-        "questionId": "d4-q3"
+        "text": "B) Solo los materiales",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El más borroso",
-        "questionId": "d4-q3"
+        "text": "C) Lo que viste y por qué",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) El que no anotaste",
-        "questionId": "d4-q3"
+        "text": "D) Solo la fecha",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -780,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿A qué se parece una gota redonda?",
-        "questionId": "d4-q4",
+        "text": "¿Qué te ayuda a escribirla?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +776,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) A una lente convexa",
-        "questionId": "d4-q4"
+        "text": "A) Un cuento",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) A una pared plana",
-        "questionId": "d4-q4"
+        "text": "B) Una canción",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) A una regla",
-        "questionId": "d4-q4"
+        "text": "C) La suerte",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) A un espejo roto",
-        "questionId": "d4-q4"
+        "text": "D) Tu bitácora",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué intento eliges para contar?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) El primero que hiciste",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) El de la gota más redonda",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) El más borroso",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) El que no anotaste",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Cómo se llama el cambio de dirección de la luz?",
+        "text": "¿A qué se parece la gota redonda?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) A una lente convexa",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) A una pared plana",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) A una regla",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) A un espejo roto",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Cómo se llama ese cambio de la luz?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +927,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Bitácora",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Tabla",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Refracción",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Conclusión",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Con qué empieza la primera frase de la conclusión?",
+        "text": "¿Cómo empieza la primera frase?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +981,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) «Vi que…»",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) «Creo que pasó porque…»",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) «Nadie sabe»",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) «Gracias»",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Basta con escribir «funcionó»?",
+        "text": "¿Basta escribir «funcionó»?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,104 +1035,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Sí, es suficiente",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Sí, si es corto",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Solo los lunes",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) No, falta contar qué viste",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Por qué las letras se ven más grandes?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Crecen en el papel",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Cambia la dirección de la luz",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) El agua las infla",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) El alambre las estira",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe tus dos frases: «Vi que…» y «Creo que pasó…».",
+        "text": "Escribe tus dos frases: «Vi que…» y «Creo",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1089,40 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "que pasó…».",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
         "text": "Explica con tus palabras qué es la refracción.",
         "questionId": "d4-w2",
@@ -1115,50 +1135,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja la luz entrando a la gota y cambiando de dirección.",
+        "text": "Dibuja la luz cambiando de dirección en la",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,27 +1173,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "gota.",
         "questionId": "d4-w3"
       },
       {
@@ -1204,15 +1192,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja una lente convexa y una gota redonda al lado.",
+        "text": "Dibuja una lente convexa y una gota.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,14 +1217,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1250,16 +1238,15 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una gota redonda sobre una letra grande."
+        "text": "Dibuja una gota redonda sobre una letra."
       },
       {
         "index": 154,
@@ -1273,7 +1260,7 @@
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Haz que las flechas cambien de dirección en el agua."
+        "text": "Haz que las flechas cambien de dirección."
       },
       {
         "index": 156,
@@ -1287,31 +1274,31 @@
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué dice una conclusión?",
+        "prompt": "¿Qué cuenta una conclusión?",
         "choices": [
           "Solo el título",
           "Solo los materiales",
-          "Lo que observaste y por qué",
+          "Lo que viste y por qué",
           "Solo la fecha"
         ],
-        "answer": "Lo que observaste y por qué",
+        "answer": "Lo que viste y por qué",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué te guía para escribirla?",
+        "prompt": "¿Qué te ayuda a escribirla?",
         "choices": [
           "Un cuento",
           "Una canción",
@@ -1321,8 +1308,8 @@
         "answer": "Tu bitácora",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1332,22 +1319,22 @@
         "prompt": "¿Qué intento eliges para contar?",
         "choices": [
           "El primero que hiciste",
-          "Donde la gota quedó más redonda",
+          "El de la gota más redonda",
           "El más borroso",
           "El que no anotaste"
         ],
-        "answer": "Donde la gota quedó más redonda",
+        "answer": "El de la gota más redonda",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿A qué se parece una gota redonda?",
+        "prompt": "¿A qué se parece la gota redonda?",
         "choices": [
           "A una lente convexa",
           "A una pared plana",
@@ -1356,16 +1343,16 @@
         ],
         "answer": "A una lente convexa",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cómo se llama el cambio de dirección de la luz?",
+        "prompt": "¿Cómo se llama ese cambio de la luz?",
         "choices": [
           "Bitácora",
           "Tabla",
@@ -1375,15 +1362,15 @@
         "answer": "Refracción",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Con qué empieza la primera frase de la conclusión?",
+        "prompt": "¿Cómo empieza la primera frase?",
         "choices": [
           "«Vi que…»",
           "«Creo que pasó porque…»",
@@ -1393,15 +1380,15 @@
         "answer": "«Vi que…»",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Basta con escribir «funcionó»?",
+        "prompt": "¿Basta escribir «funcionó»?",
         "choices": [
           "Sí, es suficiente",
           "Sí, si es corto",
@@ -1411,26 +1398,8 @@
         "answer": "No, falta contar qué viste",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Por qué las letras se ven más grandes?",
-        "choices": [
-          "Crecen en el papel",
-          "Cambia la dirección de la luz",
-          "El agua las infla",
-          "El alambre las estira"
-        ],
-        "answer": "Cambia la dirección de la luz",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1440,8 +1409,8 @@
         "prompt": "Escribe tus dos frases: «Vi que…» y «Creo que pasó…».",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,34 +1420,34 @@
         "prompt": "Explica con tus palabras qué es la refracción.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja la luz entrando a la gota y cambiando de dirección.",
+        "prompt": "Dibuja la luz cambiando de dirección en la gota.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una lente convexa y una gota redonda al lado.",
+        "prompt": "Dibuja una lente convexa y una gota.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

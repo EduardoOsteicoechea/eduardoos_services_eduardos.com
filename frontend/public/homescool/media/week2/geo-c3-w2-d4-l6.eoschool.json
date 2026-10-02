@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Caracas y La Guaira",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que Los Teques es la capital de Miranda.\nY que Maracay es la capital de Aragua.\nUna queda en el cerro y la otra en el valle.\n\nSales de Caracas hacia el mar Caribe. ¿Hacia qué punto cardinal vas y qué estado encuentras?\n\nCaracas será tu punto de referencia, el centro del dibujo. La Guaira queda al norte de Caracas, hacia el mar. El norte va hacia arriba en el mapa."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer supiste que Los Teques va con Miranda, en las montañas, y Maracay con Aragua, en el valle. Hoy los ubicas en un dibujo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Caracas y Los Teques",
-        "body": "Ahora te vas hacia Los Teques. ¿Hacia qué lado de Caracas crees que queda?\n\nLos Teques queda al oeste de Caracas, cerquita. Está un poquito hacia abajo, entre las montañas."
+        "heading": "Punto 2: El punto de referencia",
+        "body": "Un croquis es un dibujo sencillo de un lugar. ¿Por dónde empiezas el tuyo?\n\nCon un punto de referencia: un lugar conocido desde donde te orientas. Como un tepuy en la Gran Sabana. Hoy será Caracas."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Hasta Maracay",
-        "body": "Sigue más lejos en esa misma dirección. ¿A qué ciudad llegas después de Los Teques?\n\nLlegas a Maracay, también hacia el oeste. Queda mucho más lejos que Los Teques. Maracay está en un valle, cerca del lago de Valencia."
+        "heading": "Punto 3: Caracas y La Guaira",
+        "body": "¿Hacia dónde queda La Guaira si sales de Caracas hacia el mar Caribe?\n\nQueda al norte de Caracas, hacia el mar. El norte va hacia arriba en el mapa. Dibuja una flecha que lo marque."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El croquis",
-        "body": "Ahora dibújalo. ¿Qué necesitas para que tu croquis le sirva a quien lo mire?\n\nUn croquis es un dibujo sencillo de un lugar. Necesita una flecha que marque el norte. Y un punto de referencia: aquí, Caracas. Pon los otros lugares alrededor, según su dirección."
+        "heading": "Punto 4: Caracas y Los Teques",
+        "body": "Ahora vas a Los Teques. ¿Hacia qué lado de Caracas queda?\n\nQueda al oeste de Caracas, cerquita, y un poco hacia el sur, entre montañas. Ponla a la izquierda de Caracas."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cada ciudad en su lugar",
-        "body": "Una pregunta con truco: ¿dónde pondrías La Guaira, arriba o abajo de Caracas?\n\nArriba, porque está al norte, junto al mar. Los Teques y Maracay van a la izquierda, hacia el oeste. Así tu croquis muestra dónde está cada capital."
+        "heading": "Punto 5: Hasta Maracay",
+        "body": "Sigue en la misma dirección. ¿Qué ciudad encuentras después de Los Teques?\n\nEncuentras Maracay, también al oeste. Queda mucho más lejos que Los Teques. Ponla más a la izquierda en el mapa."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cada ciudad en su lugar",
+        "body": "Una pregunta con truco: ¿La Guaira va a la izquierda o arriba de Caracas?\n\nVa arriba, porque está al norte. Los Teques y Maracay van a la izquierda. Así tu croquis muestra dónde está cada una."
       }
     ],
-    "summary": "Con un croquis ubicas las capitales: La Guaira al norte de Caracas, y Los Teques y Maracay hacia el oeste.",
+    "summary": "En un croquis, La Guaira va al norte de Caracas y Los Teques y Maracay hacia el oeste.",
     "memoryPhrase": "**Distrito Capital**—Caracas · **La Guaira**—La Guaira · **Miranda**—Los Teques · **Aragua**—Maracay.",
     "weekRecap": "Distrito Capital—Caracas; La Guaira—La Guaira; Miranda—Los Teques; Aragua—Maracay. Cuatro pares de la Región Central en la espiral hacia los 24 estados de Venezuela.",
     "priorDayRecap": "Miranda y Aragua. Los Teques en altura; Maracay en el valle central — pares que no se deben intercambiar.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una flecha que marque el norte. Dibuja una estrella en el centro: es Caracas. Pon La Guaira arriba, Los Teques y Maracay a la izquierda. Rotula cada ciudad con su estado.",
+    "imageBandInstruction": "Dibuja una flecha que marque el norte. Pon una estrella en el centro: Caracas. La Guaira arriba; Los Teques y Maracay a la izquierda. Dibuja un tepuy al lado.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que Los Teques es la capital de Miranda."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Y que Maracay es la capital de Aragua."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Una queda en el cerro y la otra en el valle."
+        "text": "Ayer supiste que Los Teques va con"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Miranda, en las montañas, y Maracay"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sales de Caracas hacia el mar Caribe. ¿Hacia qué punto"
+        "text": "con Aragua, en el valle. Hoy los"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "cardinal vas y qué estado encuentras?"
+        "text": "ubicas en un dibujo."
       },
       {
         "index": 12,
@@ -135,15 +140,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -156,36 +161,36 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Caracas y La Guaira"
+        "kind": "lesson",
+        "text": "Un croquis es un dibujo sencillo de un"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "lugar. ¿Por dónde empiezas el tuyo?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Caracas será tu punto de referencia, el centro del dibujo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "La Guaira queda al norte de Caracas, hacia el mar."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "El norte va hacia arriba en el mapa."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: El punto de referencia"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con un punto de referencia: un lugar"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Ahora te vas hacia Los Teques. ¿Hacia qué lado de"
+        "text": "conocido desde donde te orientas."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Caracas crees que queda?"
+        "text": "Como un tepuy en la Gran Sabana."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy será Caracas."
       },
       {
         "index": 28,
@@ -247,64 +252,64 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 2: Caracas y Los Teques"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Hacia dónde queda La Guaira si sales"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Los Teques queda al oeste de Caracas, cerquita."
+        "text": "de Caracas hacia el mar Caribe?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Está un poquito hacia abajo, entre las montañas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Caracas y La Guaira"
       },
       {
         "index": 38,
@@ -318,21 +323,21 @@
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Sigue más lejos en esa misma dirección. ¿A qué ciudad"
+        "text": "Queda al norte de Caracas, hacia el mar."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "llegas después de Los Teques?"
+        "text": "El norte va hacia arriba en el mapa."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dibuja una flecha que lo marque."
       },
       {
         "index": 42,
@@ -345,15 +350,15 @@
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Hasta Maracay"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 45,
@@ -367,42 +372,42 @@
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Llegas a Maracay, también hacia el oeste."
+        "text": "Ahora vas a Los Teques. ¿Hacia qué lado"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Queda mucho más lejos que Los Teques."
+        "text": "de Caracas queda?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Maracay está en un valle, cerca del lago de Valencia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Caracas y Los Teques"
       },
       {
         "index": 52,
@@ -416,21 +421,21 @@
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Ahora dibújalo. ¿Qué necesitas para que tu croquis"
+        "text": "Queda al oeste de Caracas, cerquita,"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "le sirva a quien lo mire?"
+        "text": "y un poco hacia el sur, entre montañas."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ponla a la izquierda de Caracas."
       },
       {
         "index": 56,
@@ -443,15 +448,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: El croquis"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -465,28 +470,28 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Un croquis es un dibujo sencillo de un lugar."
+        "text": "Sigue en la misma dirección. ¿Qué ciudad"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Necesita una flecha que marque el norte."
+        "text": "encuentras después de Los Teques?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Y un punto de referencia: aquí, Caracas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Pon los otros lugares alrededor, según su dirección."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -499,8 +504,8 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: Hasta Maracay"
       },
       {
         "index": 66,
@@ -513,22 +518,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Encuentras Maracay, también al oeste."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿dónde pondrías La Guaira,"
+        "text": "Queda mucho más lejos que Los Teques."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "arriba o abajo de Caracas?"
+        "text": "Ponla más a la izquierda en el mapa."
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cada ciudad en su lugar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿La Guaira va"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Arriba, porque está al norte, junto al mar."
+        "text": "a la izquierda o arriba de Caracas?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Los Teques y Maracay van a la izquierda, hacia el oeste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Así tu croquis muestra dónde está cada capital."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,8 +602,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Cada ciudad en su lugar"
       },
       {
         "index": 80,
@@ -611,55 +616,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Va arriba, porque está al norte."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué ciudad es el punto de referencia de hoy?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Los Teques y Maracay van a la izquierda."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Maracay",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Así tu croquis muestra dónde está cada una."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Los Teques",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Caracas",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -673,8 +666,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Hacia dónde queda La Guaira respecto a Caracas?",
-        "questionId": "d4-q2",
+        "text": "¿Qué es un croquis?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -688,32 +681,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Al sur",
-        "questionId": "d4-q2"
+        "text": "A) Un río largo",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Al este",
-        "questionId": "d4-q2"
+        "text": "B) Un tepuy",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Al oeste",
-        "questionId": "d4-q2"
+        "text": "C) Un dibujo sencillo de un lugar",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Al norte",
-        "questionId": "d4-q2"
+        "text": "D) Un estado",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -727,8 +720,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Hacia dónde queda Los Teques respecto a Caracas?",
-        "questionId": "d4-q3",
+        "text": "¿Cuál es el punto de referencia de hoy?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +735,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Al norte",
-        "questionId": "d4-q3"
+        "text": "A) Maracay",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Al oeste",
-        "questionId": "d4-q3"
+        "text": "B) Los Teques",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Al este",
-        "questionId": "d4-q3"
+        "text": "C) La Guaira",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Al mar",
-        "questionId": "d4-q3"
+        "text": "D) Caracas",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -781,8 +774,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué ciudad queda más lejos de Caracas?",
-        "questionId": "d4-q4",
+        "text": "¿Dónde queda La Guaira de Caracas?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +789,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Maracay",
-        "questionId": "d4-q4"
+        "text": "A) Al sur",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Los Teques",
-        "questionId": "d4-q4"
+        "text": "B) Al norte",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) La Guaira",
-        "questionId": "d4-q4"
+        "text": "C) Al este",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Maiquetía",
-        "questionId": "d4-q4"
+        "text": "D) Al oeste",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Dónde queda Los Teques de Caracas?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Al oeste",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Al norte",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Al este",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) En el mar",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué es un croquis?",
+        "text": "¿Qué ciudad queda más lejos de Caracas?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,50 +886,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Un río largo",
+        "text": "A) Los Teques",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Una montaña",
+        "text": "B) La Guaira",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Un dibujo sencillo de un lugar",
+        "text": "C) Maracay",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Un estado",
+        "text": "D) Maiquetía",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué marca la flecha de un croquis?",
+        "text": "¿Hacia dónde va el norte en el mapa?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,50 +940,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) El norte",
+        "text": "A) Hacia arriba",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) El tamaño",
+        "text": "B) Hacia abajo",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) La hora",
+        "text": "C) A la derecha",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) El clima",
+        "text": "D) Al centro",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué es un punto de referencia?",
+        "text": "¿Qué marca la flecha del croquis?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +994,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Un lugar lejano",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Un mar",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Un río",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) El lugar desde donde te orientas",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Hacia dónde va el norte en el mapa?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) El tamaño",
+        "questionId": "d4-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Hacia abajo",
-        "questionId": "d4-q8"
+        "text": "B) La hora",
+        "questionId": "d4-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Hacia arriba",
-        "questionId": "d4-q8"
+        "text": "C) El clima",
+        "questionId": "d4-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) A la derecha",
-        "questionId": "d4-q8"
+        "text": "D) El norte",
+        "questionId": "d4-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Al centro",
-        "questionId": "d4-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Explica cómo llegas de Caracas a Los Teques.",
+        "text": "Explica cómo llegas de Caracas a Los",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,6 +1046,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Teques.",
+        "questionId": "d4-w1"
       },
       {
         "index": 131,
@@ -1081,31 +1075,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Cuenta qué necesita un croquis para ser útil.",
+        "text": "Cuenta qué necesita un croquis para",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,6 +1092,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "orientarte.",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 137,
@@ -1127,39 +1121,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un croquis con Caracas al centro y la flecha del norte.",
+        "text": "Dibuja un croquis con Caracas al centro y el",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,50 +1140,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "norte.",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un croquis con La Guaira, Los Teques y Maracay.",
+        "text": "Dibuja La Guaira, Los Teques y Maracay en",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1224,102 +1186,111 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "su lugar.",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una flecha que marque el norte."
+        "text": "Dibuja una flecha que marque el norte. Pon"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja una estrella en el centro: es Caracas."
+        "text": "una estrella en el centro: Caracas. La"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Pon La Guaira arriba, Los Teques y Maracay a la izquierda."
+        "text": "Guaira arriba; Los Teques y Maracay a la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula cada ciudad con su estado."
+        "text": "izquierda. Dibuja un tepuy al lado."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué ciudad es el punto de referencia de hoy?",
+        "prompt": "¿Qué es un croquis?",
         "choices": [
-          "Maracay",
-          "Los Teques",
-          "Caracas",
-          "La Guaira"
+          "Un río largo",
+          "Un tepuy",
+          "Un dibujo sencillo de un lugar",
+          "Un estado"
         ],
-        "answer": "Caracas",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d4-q2",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Hacia dónde queda La Guaira respecto a Caracas?",
-        "choices": [
-          "Al sur",
-          "Al este",
-          "Al oeste",
-          "Al norte"
-        ],
-        "answer": "Al norte",
+        "answer": "Un dibujo sencillo de un lugar",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1327,17 +1298,17 @@
         }
       },
       {
-        "id": "d4-q3",
+        "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Hacia dónde queda Los Teques respecto a Caracas?",
+        "prompt": "¿Cuál es el punto de referencia de hoy?",
         "choices": [
-          "Al norte",
-          "Al oeste",
-          "Al este",
-          "Al mar"
+          "Maracay",
+          "Los Teques",
+          "La Guaira",
+          "Caracas"
         ],
-        "answer": "Al oeste",
+        "answer": "Caracas",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1345,17 +1316,17 @@
         }
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué ciudad queda más lejos de Caracas?",
+        "prompt": "¿Dónde queda La Guaira de Caracas?",
         "choices": [
-          "Maracay",
-          "Los Teques",
-          "La Guaira",
-          "Maiquetía"
+          "Al sur",
+          "Al norte",
+          "Al este",
+          "Al oeste"
         ],
-        "answer": "Maracay",
+        "answer": "Al norte",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1363,75 +1334,75 @@
         }
       },
       {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Dónde queda Los Teques de Caracas?",
+        "choices": [
+          "Al oeste",
+          "Al norte",
+          "Al este",
+          "En el mar"
+        ],
+        "answer": "Al oeste",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué es un croquis?",
+        "prompt": "¿Qué ciudad queda más lejos de Caracas?",
         "choices": [
-          "Un río largo",
-          "Una montaña",
-          "Un dibujo sencillo de un lugar",
-          "Un estado"
+          "Los Teques",
+          "La Guaira",
+          "Maracay",
+          "Maiquetía"
         ],
-        "answer": "Un dibujo sencillo de un lugar",
+        "answer": "Maracay",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué marca la flecha de un croquis?",
-        "choices": [
-          "El norte",
-          "El tamaño",
-          "La hora",
-          "El clima"
-        ],
-        "answer": "El norte",
-        "slot": {
-          "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué es un punto de referencia?",
-        "choices": [
-          "Un lugar lejano",
-          "Un mar",
-          "Un río",
-          "El lugar desde donde te orientas"
-        ],
-        "answer": "El lugar desde donde te orientas",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
         "prompt": "¿Hacia dónde va el norte en el mapa?",
         "choices": [
-          "Hacia abajo",
           "Hacia arriba",
+          "Hacia abajo",
           "A la derecha",
           "Al centro"
         ],
         "answer": "Hacia arriba",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d4-q7",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué marca la flecha del croquis?",
+        "choices": [
+          "El tamaño",
+          "La hora",
+          "El clima",
+          "El norte"
+        ],
+        "answer": "El norte",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1441,45 +1412,45 @@
         "prompt": "Explica cómo llegas de Caracas a Los Teques.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Cuenta qué necesita un croquis para ser útil.",
+        "prompt": "Cuenta qué necesita un croquis para orientarte.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un croquis con Caracas al centro y la flecha del norte.",
+        "prompt": "Dibuja un croquis con Caracas al centro y el norte.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un croquis con La Guaira, Los Teques y Maracay.",
+        "prompt": "Dibuja La Guaira, Los Teques y Maracay en su lugar.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

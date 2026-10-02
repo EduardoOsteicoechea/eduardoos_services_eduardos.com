@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Dos palabras, dos preguntas",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer contrastaste per y sine.\nPer marca el camino y sine marca lo que falta.\nHoy cierras con a/ab y de, que parecen iguales.\n\nDos palabras latinas se traducen «de». ¿Crees que preguntan lo mismo?\n\nNo: se parecen en español, pero el latín las distingue. «A/ab» pregunta: ¿desde dónde viene algo? «De» pregunta: ¿acerca de qué se habla? Por eso conviene preguntar antes de traducir."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer cruzaste con «per» y notaste lo que falta con «sine». Hoy miras dos palabras que en español se parecen: a/ab y «de»."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: A/ab marca el origen",
-        "body": "Imagina que alguien llega desde la ciudad. ¿Qué palabra usarías: a/ab o de?\n\nUsarías a/ab, porque marca de dónde viene. Ab urbe es «desde la ciudad». A silva es «desde el bosque». Suele ser «a» ante consonante y «ab» ante vocal."
+        "heading": "Punto 2: Dos palabras, dos preguntas",
+        "body": "Dos palabras latinas se traducen «de». ¿Crees que preguntan lo mismo?\n\nNo: el español las junta, el latín no. «A/ab» pregunta: ¿desde dónde viene? «De» pregunta: ¿acerca de qué se habla? Por eso preguntas antes de traducir."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: De marca el tema",
-        "body": "Ahora cuentas de qué trata un libro. ¿Qué palabra usarías?\n\nUsarías «de», porque dices acerca de qué se habla. De libro es «acerca del libro». De amicis es «acerca de los amigos». «De» marca el tema."
+        "heading": "Punto 3: A/ab marca el origen",
+        "body": "Alguien llega desde la orilla del lago. ¿Usas a/ab o «de»?\n\nUsas a/ab: marca de dónde viene algo. A ripa es «desde la orilla». Ab urbe es «desde la ciudad». Ante consonante, «a»; ante vocal, «ab»."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Una tabla de dos columnas",
-        "body": "Una pregunta con truco: ¿«ab urbe» y «de libro» responden la misma pregunta?\n\nNo: una dice de dónde viene algo. La otra dice de qué se habla. Haz una tabla de dos columnas: a/ab y de. Pon un ejemplo en cada columna sin mezclarlos."
+        "heading": "Punto 4: De marca el tema",
+        "body": "Ahora cuentas algo acerca del puente. ¿Qué palabra usas?\n\nUsas «de»: dices acerca de qué hablas. De ponte es «acerca del puente». De lacu es «acerca del lago». «De» marca el tema."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Escoger con una pregunta",
-        "body": "Sigamos. ¿Cómo dirías «desde el bosque» y «acerca de los amigos»?\n\n«Desde el bosque» es «a silva». «Acerca de los amigos» es «de amicis». Primero pregunta: ¿origen o tema? Después escoge a/ab o de."
+        "heading": "Punto 5: Dos columnas",
+        "body": "Una pregunta con truco: ¿«a ripa» y «de ponte» responden lo mismo?\n\nNo. «A ripa» dice de dónde viene algo. «De ponte» dice de qué se habla. Haz dos columnas: a/ab y de. Pon un ejemplo en cada una."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Escoge con una pregunta",
+        "body": "¿Cómo dirías «desde la ciudad» y «acerca de los amigos»?\n\n«Desde la ciudad» es «ab urbe». «Acerca de los amigos» es «de amicis». Primero pregunta: ¿origen o tema? Luego escoge a/ab o de."
       }
     ],
     "summary": "«A/ab» dice de dónde viene algo; «de» dice acerca de qué se habla.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Ayer contrastaste per (por) y sine (sin) en frases cortas.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una ciudad con un camino que sale de ella. Rotula una flecha que sale de la ciudad: ab urbe. Dibuja un libro abierto y rotula: de libro. Escribe qué pregunta responde cada rótulo.",
+    "imageBandInstruction": "Dibuja una orilla con una flecha hacia el puente. Rotula: a ripa. Dibuja un libro sobre el puente. Rotula el libro: de ponte.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer contrastaste per y sine."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Per marca el camino y sine marca lo que falta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy cierras con a/ab y de, que parecen iguales."
+        "text": "Ayer cruzaste con «per» y notaste"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "lo que falta con «sine»."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Dos palabras latinas se traducen «de». ¿Crees que"
+        "text": "Hoy miras dos palabras que en español"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "preguntan lo mismo?"
+        "text": "se parecen: a/ab y «de»."
       },
       {
         "index": 12,
@@ -135,57 +140,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Dos palabras, dos preguntas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dos palabras latinas se traducen «de»."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "No: se parecen en español, pero el latín las distingue."
+        "text": "¿Crees que preguntan lo mismo?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "«A/ab» pregunta: ¿desde dónde viene algo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "«De» pregunta: ¿acerca de qué se habla?"
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Por eso conviene preguntar antes de traducir."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Dos palabras, dos preguntas"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No: el español las junta, el latín no."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Imagina que alguien llega desde la ciudad. ¿Qué palabra"
+        "text": "«A/ab» pregunta: ¿desde dónde viene?"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "usarías: a/ab o de?"
+        "text": "«De» pregunta: ¿acerca de qué se habla?"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Por eso preguntas antes de traducir."
       },
       {
         "index": 28,
@@ -247,15 +252,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: A/ab marca el origen"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -269,49 +274,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Usarías a/ab, porque marca de dónde viene."
+        "text": "Alguien llega desde la orilla del lago."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Ab urbe es «desde la ciudad»."
+        "text": "¿Usas a/ab o «de»?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "A silva es «desde el bosque»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Suele ser «a» ante consonante y «ab» ante vocal."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: A/ab marca el origen"
       },
       {
         "index": 39,
@@ -325,70 +330,70 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Ahora cuentas de qué trata un libro. ¿Qué palabra"
+        "text": "Usas a/ab: marca de dónde viene algo."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "usarías?"
+        "text": "A ripa es «desde la orilla»."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ab urbe es «desde la ciudad»."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ante consonante, «a»; ante vocal, «ab»."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: De marca el tema"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Usarías «de», porque dices acerca de qué se habla."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "De libro es «acerca del libro»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "De amicis es «acerca de los amigos»."
+        "text": "Ahora cuentas algo acerca del puente."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "«De» marca el tema."
+        "text": "¿Qué palabra usas?"
       },
       {
         "index": 50,
@@ -402,14 +407,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -422,85 +427,85 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«ab urbe» y «de libro»"
+        "kind": "heading",
+        "text": "Punto 4: De marca el tema"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "responden la misma pregunta?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Usas «de»: dices acerca de qué hablas."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "De ponte es «acerca del puente»."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Una tabla de dos columnas"
+        "kind": "lesson",
+        "text": "De lacu es «acerca del lago»."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«De» marca el tema."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "No: una dice de dónde viene algo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "La otra dice de qué se habla."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Haz una tabla de dos columnas: a/ab y de."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Pon un ejemplo en cada columna sin mezclarlos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«a ripa» y"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "«de ponte» responden lo mismo?"
       },
       {
         "index": 66,
@@ -513,22 +518,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Sigamos. ¿Cómo dirías «desde el bosque» y"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "«acerca de los amigos»?"
+        "kind": "heading",
+        "text": "Punto 5: Dos columnas"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. «A ripa» dice de dónde viene algo."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Escoger con una pregunta"
+        "kind": "lesson",
+        "text": "«De ponte» dice de qué se habla."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Haz dos columnas: a/ab y de."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "«Desde el bosque» es «a silva»."
+        "text": "Pon un ejemplo en cada una."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "«Acerca de los amigos» es «de amicis»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Primero pregunta: ¿origen o tema?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Después escoge a/ab o de."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Cómo dirías «desde la ciudad» y"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«acerca de los amigos»?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «ab urbe»?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Acerca de la ciudad",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Sin ciudad",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Escoge con una pregunta"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Desde la ciudad",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Por la ciudad",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "«Desde la ciudad» es «ab urbe»."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Acerca de los amigos» es «de amicis»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué significa «a silva»?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Primero pregunta: ¿origen o tema?"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Acerca del bosque",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Luego escoge a/ab o de."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Sin bosque",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) En el bosque",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Desde el bosque",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué significa «de libro»?",
-        "questionId": "d4-q3",
+        "text": "¿Qué significa «a ripa»?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Sin libro",
-        "questionId": "d4-q3"
+        "text": "A) Acerca de la orilla",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Acerca del libro",
-        "questionId": "d4-q3"
+        "text": "B) Sin orilla",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Por el libro",
-        "questionId": "d4-q3"
+        "text": "C) Desde la orilla",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Con el libro",
-        "questionId": "d4-q3"
+        "text": "D) Por la orilla",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué significa «de amicis»?",
-        "questionId": "d4-q4",
+        "text": "¿Qué significa «ab urbe»?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +777,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Acerca de los amigos",
-        "questionId": "d4-q4"
+        "text": "A) Acerca de la ciudad",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Con los amigos",
-        "questionId": "d4-q4"
+        "text": "B) Sin ciudad",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Sin amigos",
-        "questionId": "d4-q4"
+        "text": "C) Por la ciudad",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Por los amigos",
-        "questionId": "d4-q4"
+        "text": "D) Desde la ciudad",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «de ponte»?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Desde el puente",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Acerca del puente",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Sin puente",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Por el puente",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué pregunta responde «a/ab»?",
+        "text": "¿Qué significa «de lacu»?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Acerca del lago",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Desde el lago",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Sin lago",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) En el lago",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué pregunta responde a/ab?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,48 +928,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) ¿Acerca de qué?",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) ¿Con quién?",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) ¿Desde dónde viene?",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) ¿Qué falta?",
+        "text": "D) ¿En dónde?",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué pregunta responde «de»?",
         "questionId": "d4-q6",
@@ -900,50 +982,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) ¿Acerca de qué se habla?",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) ¿Desde dónde viene?",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) ¿Por dónde pasa?",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) ¿Con quién está?",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cuándo usas «ab» en vez de «a»?",
+        "text": "¿Cuándo usas «ab»?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,102 +1036,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Ante una consonante",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Al final de la frase",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Nunca",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Ante una vocal",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Cómo dices «desde la ciudad» en latín?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) apud urbem",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) ab urbe",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) per urbem",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) sine urbe",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
         "text": "Escribe una frase con a/ab y otra con de.",
         "questionId": "d4-w1",
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica qué pregunta hace cada una.",
+        "text": "Cuenta qué pregunta hace cada una.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,30 +1126,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1139,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja una tabla de dos columnas: a/ab y de.",
+        "text": "Dibuja dos columnas: a/ab y de.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,14 +1164,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
       },
       {
         "index": 144,
@@ -1197,23 +1185,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una flecha desde una ciudad y rotula «ab urbe».",
+        "text": "Dibuja una flecha desde una orilla y rotula «a",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,6 +1202,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "lesson",
+        "text": "ripa».",
+        "questionId": "d4-w4"
       },
       {
         "index": 149,
@@ -1243,101 +1231,63 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "imageInstruction",
-        "text": "Dibuja una ciudad con un camino que sale de ella."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula una flecha que sale de la ciudad: ab urbe."
+        "text": "Dibuja una orilla con una flecha hacia el"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja un libro abierto y rotula: de libro."
+        "text": "puente. Rotula: a ripa. Dibuja un libro sobre"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe qué pregunta responde cada rótulo."
+        "text": "el puente. Rotula el libro: de ponte."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué significa «ab urbe»?",
+        "prompt": "¿Qué significa «a ripa»?",
         "choices": [
-          "Acerca de la ciudad",
-          "Sin ciudad",
-          "Desde la ciudad",
-          "Por la ciudad"
+          "Acerca de la orilla",
+          "Sin orilla",
+          "Desde la orilla",
+          "Por la orilla"
         ],
-        "answer": "Desde la ciudad",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d4-q2",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué significa «a silva»?",
-        "choices": [
-          "Acerca del bosque",
-          "Sin bosque",
-          "En el bosque",
-          "Desde el bosque"
-        ],
-        "answer": "Desde el bosque",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué significa «de libro»?",
-        "choices": [
-          "Sin libro",
-          "Acerca del libro",
-          "Por el libro",
-          "Con el libro"
-        ],
-        "answer": "Acerca del libro",
+        "answer": "Desde la orilla",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1345,17 +1295,17 @@
         }
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué significa «de amicis»?",
+        "prompt": "¿Qué significa «ab urbe»?",
         "choices": [
-          "Acerca de los amigos",
-          "Con los amigos",
-          "Sin amigos",
-          "Por los amigos"
+          "Acerca de la ciudad",
+          "Sin ciudad",
+          "Por la ciudad",
+          "Desde la ciudad"
         ],
-        "answer": "Acerca de los amigos",
+        "answer": "Desde la ciudad",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1363,21 +1313,57 @@
         }
       },
       {
+        "id": "d4-q3",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué significa «de ponte»?",
+        "choices": [
+          "Desde el puente",
+          "Acerca del puente",
+          "Sin puente",
+          "Por el puente"
+        ],
+        "answer": "Acerca del puente",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué significa «de lacu»?",
+        "choices": [
+          "Acerca del lago",
+          "Desde el lago",
+          "Sin lago",
+          "En el lago"
+        ],
+        "answer": "Acerca del lago",
+        "slot": {
+          "column": 3,
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué pregunta responde «a/ab»?",
+        "prompt": "¿Qué pregunta responde a/ab?",
         "choices": [
           "¿Acerca de qué?",
           "¿Con quién?",
           "¿Desde dónde viene?",
-          "¿Qué falta?"
+          "¿En dónde?"
         ],
         "answer": "¿Desde dónde viene?",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1394,15 +1380,15 @@
         "answer": "¿Acerca de qué se habla?",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuándo usas «ab» en vez de «a»?",
+        "prompt": "¿Cuándo usas «ab»?",
         "choices": [
           "Ante una consonante",
           "Al final de la frase",
@@ -1412,26 +1398,8 @@
         "answer": "Ante una vocal",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Cómo dices «desde la ciudad» en latín?",
-        "choices": [
-          "apud urbem",
-          "ab urbe",
-          "per urbem",
-          "sine urbe"
-        ],
-        "answer": "ab urbe",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1441,45 +1409,45 @@
         "prompt": "Escribe una frase con a/ab y otra con de.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica qué pregunta hace cada una.",
+        "prompt": "Cuenta qué pregunta hace cada una.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una tabla de dos columnas: a/ab y de.",
+        "prompt": "Dibuja dos columnas: a/ab y de.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una flecha desde una ciudad y rotula «ab urbe».",
+        "prompt": "Dibuja una flecha desde una orilla y rotula «a ripa».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las costillas",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que la columna es una cadena de vértebras.\nDentro de ella va la médula espinal.\nEntre las vértebras hay amortiguadores para doblarte.\n\nPon tus manos a los lados del pecho. ¿Qué huesos curvos sientes y cómo crees que se llaman?\n\nLos huesos curvos de los lados son las costillas. Rodean el pecho como una jaula. Atrás se unen a las vértebras del pecho."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que la columna es una cadena de vértebras con la médula por dentro, como la cueva del Autana. Hoy vas al pecho: la caja torácica."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El esternón",
-        "body": "Toca el centro de tu pecho, al frente. ¿Qué hueso plano sientes? ¿Está en la espalda o al frente?\n\nEs el esternón, un hueso plano en el centro del pecho. Está al frente, nunca en la espalda. Las costillas del frente se unen a él."
+        "heading": "Punto 2: Las costillas",
+        "body": "La roca rodea la cueva del Autana. ¿Qué huesos curvos rodean tu pecho? Tócalos.\n\nSon las costillas, huesos curvos que rodean el pecho como una jaula. Atrás se unen a las vértebras del pecho."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El cartílago une",
-        "body": "Toca la punta de tu nariz. Las costillas se unen al esternón con algo parecido. ¿Qué crees que es?\n\nEs cartílago, un material firme pero más flexible que el hueso. Es parecido al de la punta de la nariz. Por eso la caja puede moverse un poco al respirar."
+        "heading": "Punto 3: El esternón",
+        "body": "Toca el centro de tu pecho, al frente. ¿Qué hueso plano sientes?\n\nEs el esternón, un hueso plano en el centro del pecho, al frente. Nunca está en la espalda. Las costillas del frente se unen a él."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La caja se mueve al respirar",
-        "body": "Inhala hondo y mira tu pecho. ¿Qué pasa con la caja?\n\nAl inhalar, la caja se ensancha un poco. Al exhalar, vuelve a su lugar. Mientras se mueve, sigue protegiendo como un escudo. Los pulmones se llenan de aire dentro de ese espacio."
+        "heading": "Punto 4: El cartílago une",
+        "body": "Toca la punta de tu nariz. Algo parecido une costillas y esternón. ¿Qué será?\n\nEs el cartílago, firme pero más flexible que el hueso. Por eso la caja se mueve un poco al respirar. La roca del Autana no."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Corazón y pulmones a salvo",
-        "body": "¿Qué órganos viven dentro de esta jaula de huesos?\n\nDentro de la caja torácica están el corazón y los pulmones. Son órganos que necesitan cuidado constante. Costillas, esternón y vértebras los protegen."
+        "heading": "Punto 5: La caja se mueve al respirar",
+        "body": "Imagina el Autana y respira hondo. ¿Qué le pasa a tu caja de huesos?\n\nAl inhalar, la caja se ensancha un poco. Al exhalar, vuelve a su lugar. Los pulmones se llenan de aire adentro. Mientras se mueve, sigue protegiendo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Corazón y pulmones a salvo",
+        "body": "El Autana es un lugar sagrado para pueblos indígenas. ¿Qué guarda tu caja?\n\nDentro de la caja torácica están el corazón y los pulmones. Costillas, esternón y vértebras los protegen, y tú los cuidas con respeto."
       }
     ],
-    "summary": "La caja torácica, hecha de costillas, esternón y vértebras, protege el corazón y los pulmones.",
+    "summary": "La caja torácica, hecha de costillas, esternón y vértebras, protege el corazón y los pulmones, y se cuida con respeto.",
     "memoryPhrase": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones.",
     "weekRecap": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones. Esta semana nombramos huesos del tronco que sostienen y protegen órganos delicados.",
     "priorDayRecap": "Ayer repasaste la columna: vértebras apiladas que sostienen y protegen la médula espinal en distintas zonas de la espalda.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja el pecho como un óvalo. Rotula vértebras atrás, esternón adelante y costillas. Dibuja el corazón y los pulmones adentro. Escribe qué órganos protege la caja.",
+    "imageBandInstruction": "Dibuja el pecho como un óvalo. Rotula vértebras, esternón y costillas. Dibuja adentro corazón y pulmones. Al fondo, dibuja el Cerro Autana.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que la columna es una cadena de vértebras."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Dentro de ella va la médula espinal."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Entre las vértebras hay amortiguadores para doblarte."
+        "text": "Ayer viste que la columna es una cadena"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de vértebras con la médula por dentro,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Pon tus manos a los lados del pecho. ¿Qué huesos curvos"
+        "text": "como la cueva del Autana."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "sientes y cómo crees que se llaman?"
+        "text": "Hoy vas al pecho: la caja torácica."
       },
       {
         "index": 12,
@@ -135,15 +140,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -156,36 +161,36 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Las costillas"
+        "kind": "lesson",
+        "text": "La roca rodea la cueva del Autana. ¿Qué"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "huesos curvos rodean tu pecho? Tócalos."
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Los huesos curvos de los lados son las costillas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Rodean el pecho como una jaula."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Atrás se unen a las vértebras del pecho."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Las costillas"
       },
       {
         "index": 23,
@@ -212,22 +217,22 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son las costillas, huesos curvos"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Toca el centro de tu pecho, al frente. ¿Qué hueso plano"
+        "text": "que rodean el pecho como una jaula."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "sientes? ¿Está en la espalda o al frente?"
+        "text": "Atrás se unen a las vértebras del pecho."
       },
       {
         "index": 27,
@@ -240,15 +245,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,36 +266,36 @@
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 2: El esternón"
+        "kind": "lesson",
+        "text": "Toca el centro de tu pecho, al frente."
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué hueso plano sientes?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Es el esternón, un hueso plano en el centro del pecho."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Está al frente, nunca en la espalda."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Las costillas del frente se unen a él."
+        "text": "________________________________________"
       },
       {
         "index": 36,
@@ -303,8 +308,8 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: El esternón"
       },
       {
         "index": 38,
@@ -317,29 +322,29 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es el esternón, un hueso plano"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Toca la punta de tu nariz. Las costillas se unen al"
+        "text": "en el centro del pecho, al frente."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "esternón con algo parecido. ¿Qué crees que es?"
+        "text": "Nunca está en la espalda."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las costillas del frente se unen a él."
       },
       {
         "index": 43,
@@ -352,64 +357,64 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "heading",
-        "text": "Punto 3: El cartílago une"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Toca la punta de tu nariz. Algo parecido"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Es cartílago, un material firme pero más flexible que el hueso."
+        "text": "une costillas y esternón. ¿Qué será?"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Es parecido al de la punta de la nariz."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Por eso la caja puede moverse un poco al respirar."
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
@@ -422,43 +427,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El cartílago une"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Inhala hondo y mira tu pecho. ¿Qué pasa con la caja?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es el cartílago, firme pero más"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "flexible que el hueso."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Por eso la caja se mueve un poco"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: La caja se mueve al respirar"
+        "kind": "lesson",
+        "text": "al respirar. La roca del Autana no."
       },
       {
         "index": 60,
@@ -472,49 +477,49 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Al inhalar, la caja se ensancha un poco."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Al exhalar, vuelve a su lugar."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Mientras se mueve, sigue protegiendo como un escudo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Los pulmones se llenan de aire dentro de ese espacio."
+        "text": "Imagina el Autana y respira hondo."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué le pasa a tu caja de huesos?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
@@ -527,8 +532,8 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Qué órganos viven dentro de esta jaula de huesos?"
+        "kind": "heading",
+        "text": "Punto 5: La caja se mueve al respirar"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Al inhalar, la caja se ensancha un poco."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Al exhalar, vuelve a su lugar."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Corazón y pulmones a salvo"
+        "kind": "lesson",
+        "text": "Los pulmones se llenan de aire adentro."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mientras se mueve, sigue protegiendo."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Dentro de la caja torácica están el corazón y los pulmones."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Son órganos que necesitan cuidado constante."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Costillas, esternón y vértebras los protegen."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "El Autana es un lugar sagrado para"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "pueblos indígenas. ¿Qué guarda tu caja?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué huesos forman la caja torácica?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Cráneo y mandíbula",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Brazos y piernas",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Corazón y pulmones a salvo"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Costillas, esternón y vértebras del pecho",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Solo vértebras del cuello",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Dentro de la caja torácica están"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el corazón y los pulmones."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Cómo son las costillas?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Costillas, esternón y vértebras"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Planas y al frente",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "los protegen, y tú los cuidas con respeto."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Pequeñas y en el cuello",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Redondas y en la cabeza",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Curvas y a los lados",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cómo es el esternón?",
-        "questionId": "d4-q3",
+        "text": "¿Qué huesos forman la caja torácica?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Un hueso curvo atrás",
-        "questionId": "d4-q3"
+        "text": "A) Cráneo y mandíbula",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Un hueso plano al frente",
-        "questionId": "d4-q3"
+        "text": "B) Brazos y piernas",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Un hueso del cráneo",
-        "questionId": "d4-q3"
+        "text": "C) Costillas, esternón y vértebras",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Un hueso de la mano",
-        "questionId": "d4-q3"
+        "text": "D) Solo vértebras del cuello",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué es el cartílago?",
-        "questionId": "d4-q4",
+        "text": "¿Cómo son las costillas?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +777,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Material firme y más flexible que el hueso",
-        "questionId": "d4-q4"
+        "text": "A) Planas y al frente",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Un tipo de sangre",
-        "questionId": "d4-q4"
+        "text": "B) Pequeñas y en el cuello",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Un músculo del pecho",
-        "questionId": "d4-q4"
+        "text": "C) Redondas y en la cabeza",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Una parte del cráneo",
-        "questionId": "d4-q4"
+        "text": "D) Curvas y a los lados",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo es el esternón?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Curvo y atrás",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Plano y al frente",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Parte del cráneo",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Un hueso de la mano",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Con qué se unen las costillas al esternón?",
+        "text": "¿Qué es el cartílago?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Material firme y más flexible",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Un tipo de sangre",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Un músculo del pecho",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Una parte del cráneo",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué une costillas y esternón?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,48 +928,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Con piel",
+        "text": "A) La piel",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Con sangre",
+        "text": "B) La sangre",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Con cartílagos",
+        "text": "C) El cartílago",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Con médula",
+        "text": "D) La médula",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué pasa con la caja al inhalar?",
         "questionId": "d4-q6",
@@ -900,50 +982,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Se ensancha un poco",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Se encoge mucho",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Se rompe",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) Se vuelve cartílago",
+        "text": "D) Se vuelve roca",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué órganos protege la caja torácica?",
+        "text": "¿Qué órganos guarda la caja?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Cerebro y médula",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Piel y sangre",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Boca y nariz",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Corazón y pulmones",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "Mientras la caja se mueve, ¿qué sigue haciendo?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Dejando sin cubrir el corazón",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Protegiendo como un escudo",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Convirtiéndose en columna",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Creciendo sin parar",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe qué órganos protege la caja torácica.",
+        "text": "Escribe qué órganos guarda la caja torácica.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica qué pasa con la caja al respirar.",
+        "text": "Cuenta qué le pasa a la caja al respirar.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,30 +1126,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1139,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja la caja torácica con costillas y esternón.",
+        "text": "Dibuja la caja con costillas y esternón.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,14 +1164,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
       },
       {
         "index": 144,
@@ -1197,21 +1185,13 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
         "text": "Dibuja la caja al inhalar y al exhalar.",
         "questionId": "d4-w4",
@@ -1222,6 +1202,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
       },
       {
         "index": 149,
@@ -1235,60 +1223,57 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el pecho como un óvalo."
+        "text": "Dibuja el pecho como un óvalo. Rotula"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula vértebras atrás, esternón adelante y costillas."
+        "text": "vértebras, esternón y costillas. Dibuja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja el corazón y los pulmones adentro."
+        "text": "adentro corazón y pulmones. Al fondo,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe qué órganos protege la caja."
+        "text": "dibuja el Cerro Autana."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
@@ -1298,14 +1283,14 @@
         "choices": [
           "Cráneo y mandíbula",
           "Brazos y piernas",
-          "Costillas, esternón y vértebras del pecho",
+          "Costillas, esternón y vértebras",
           "Solo vértebras del cuello"
         ],
-        "answer": "Costillas, esternón y vértebras del pecho",
+        "answer": "Costillas, esternón y vértebras",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1322,8 +1307,8 @@
         "answer": "Curvas y a los lados",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1332,16 +1317,16 @@
         "type": "mcq",
         "prompt": "¿Cómo es el esternón?",
         "choices": [
-          "Un hueso curvo atrás",
-          "Un hueso plano al frente",
-          "Un hueso del cráneo",
+          "Curvo y atrás",
+          "Plano y al frente",
+          "Parte del cráneo",
           "Un hueso de la mano"
         ],
-        "answer": "Un hueso plano al frente",
+        "answer": "Plano y al frente",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1350,34 +1335,34 @@
         "type": "mcq",
         "prompt": "¿Qué es el cartílago?",
         "choices": [
-          "Material firme y más flexible que el hueso",
+          "Material firme y más flexible",
           "Un tipo de sangre",
           "Un músculo del pecho",
           "Una parte del cráneo"
         ],
-        "answer": "Material firme y más flexible que el hueso",
+        "answer": "Material firme y más flexible",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Con qué se unen las costillas al esternón?",
+        "prompt": "¿Qué une costillas y esternón?",
         "choices": [
-          "Con piel",
-          "Con sangre",
-          "Con cartílagos",
-          "Con médula"
+          "La piel",
+          "La sangre",
+          "El cartílago",
+          "La médula"
         ],
-        "answer": "Con cartílagos",
+        "answer": "El cartílago",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1389,20 +1374,20 @@
           "Se ensancha un poco",
           "Se encoge mucho",
           "Se rompe",
-          "Se vuelve cartílago"
+          "Se vuelve roca"
         ],
         "answer": "Se ensancha un poco",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué órganos protege la caja torácica?",
+        "prompt": "¿Qué órganos guarda la caja?",
         "choices": [
           "Cerebro y médula",
           "Piel y sangre",
@@ -1412,61 +1397,43 @@
         "answer": "Corazón y pulmones",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "Mientras la caja se mueve, ¿qué sigue haciendo?",
-        "choices": [
-          "Dejando sin cubrir el corazón",
-          "Protegiendo como un escudo",
-          "Convirtiéndose en columna",
-          "Creciendo sin parar"
-        ],
-        "answer": "Protegiendo como un escudo",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe qué órganos protege la caja torácica.",
+        "prompt": "Escribe qué órganos guarda la caja torácica.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica qué pasa con la caja al respirar.",
+        "prompt": "Cuenta qué le pasa a la caja al respirar.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja la caja torácica con costillas y esternón.",
+        "prompt": "Dibuja la caja con costillas y esternón.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
@@ -1478,8 +1445,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

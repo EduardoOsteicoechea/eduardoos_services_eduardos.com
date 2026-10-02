@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Cada hueso con su escudo",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana nombraste los huesos que sostienen y protegen.\nEl cráneo cuida el cerebro y la columna, la médula.\nLas costillas y el esternón cuidan corazón y pulmones.\n\nSin mirar nada, ¿qué huesos protegen al cerebro, a la médula, al corazón y a los pulmones?\n\nCráneo protege el cerebro · columna protege la médula · costillas + esternón protegen corazón y pulmones. Si olvidaste alguno, señálalo en tu cuerpo."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que costillas, esternón y vértebras forman la caja torácica. Guarda corazón y pulmones, como la roca del Autana rodea su cueva."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: De afuera hacia adentro",
-        "body": "En tu brazo, ¿qué capas encuentras de afuera hacia adentro: piel, músculo y hueso? ¿En qué orden?\n\nPrimero está la piel, que cubre y protege. Debajo está el músculo, que mueve el cuerpo. Más adentro está el hueso, que sostiene. Piel, músculo y hueso trabajan en equipo."
+        "heading": "Punto 2: Cada hueso con su escudo",
+        "body": "Sin mirar, ¿qué hueso cuida el cerebro, la médula, el corazón y los pulmones?\n\nCráneo protege el cerebro · columna protege la médula · costillas + esternón protegen corazón y pulmones."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Hueso y músculo, un equipo",
-        "body": "¿Por qué crees que el hueso necesita al músculo para que tu cuerpo se mueva?\n\nEl músculo se acorta y tira del hueso. Sin músculo, el hueso no se mueve solo. Sin hueso, el músculo no tendría de dónde tirar. Piensa en abrir una puerta con tu brazo."
+        "heading": "Punto 3: De afuera hacia adentro",
+        "body": "En tu brazo hay piel, músculo y hueso. ¿En qué orden, de afuera hacia adentro?\n\nPrimero la piel, que cubre y protege. Debajo está el músculo, que mueve. Más adentro, el hueso, que sostiene, como la roca sostiene al Autana."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo cuidar huesos y músculos",
-        "body": "¿Qué puedes hacer cada día para cuidar tus huesos y tus músculos?\n\nMuévete y juega: así se fortalecen músculos y huesos. Come alimentos con calcio, como la leche y el queso. Duerme bien y siéntate con la espalda derecha. Usa casco en bicicleta para cuidar tu cráneo."
+        "heading": "Punto 4: Hueso y músculo, un equipo",
+        "body": "¿Por qué el hueso necesita al músculo para que tu cuerpo se mueva?\n\nEl músculo se acorta y tira del hueso. Sin músculo, el hueso no se mueve solo. Sin hueso, no tendría de dónde tirar. La roca del Autana no se mueve; tú sí."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cómo contarlo con orden",
-        "body": "Vas a contárselo a alguien de tu casa. ¿Cómo ordenarías tu exposición?\n\nInicio: «Hoy les voy a contar qué huesos nos protegen». Medio: un hueso, el órgano que cuida y un ejemplo. Cierre: un consejo para cuidar los huesos y «gracias»."
+        "heading": "Punto 5: Cómo cuidar huesos y músculos",
+        "body": "El Autana es sagrado para pueblos indígenas. ¿Cómo cuidas tus huesos?\n\nMuévete y juega: se fortalecen huesos y músculos. Come alimentos con calcio, como leche y queso. Duerme bien, siéntate derecho y usa casco en bici."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cómo contarlo con orden",
+        "body": "Vas a contarle a tu familia tu viaje al Autana. ¿Cómo ordenarías tu exposición?\n\nInicio: «Hoy les cuento qué huesos nos protegen», con el Autana de ejemplo. Medio: un hueso y el órgano que cuida. Cierre: un consejo y «gracias»."
       }
     ],
-    "summary": "Cráneo, columna y caja torácica protegen órganos; con movimiento, calcio y descanso cuidas huesos y músculos.",
+    "summary": "Cráneo, columna y caja torácica cuidan tus órganos como la roca del Autana; con movimiento, calcio y descanso los cuidas tú.",
     "memoryPhrase": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un niño andando en bicicleta con casco. Rotula el cráneo, la columna y las costillas. Escribe qué órgano protege cada una. Añade un consejo para cuidar huesos y músculos.",
+    "imageBandInstruction": "Dibuja el Cerro Autana con su cueva. Al lado dibuja tu esqueleto y rotula: cráneo, columna y caja torácica. Escribe un consejo para cuidar tus huesos.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana nombraste los huesos que sostienen y protegen."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El cráneo cuida el cerebro y la columna, la médula."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Las costillas y el esternón cuidan corazón y pulmones."
+        "text": "Ayer viste que costillas, esternón y"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vértebras forman la caja torácica."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿qué huesos protegen al cerebro, a la"
+        "text": "Guarda corazón y pulmones, como la"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "médula, al corazón y a los pulmones?"
+        "text": "roca del Autana rodea su cueva."
       },
       {
         "index": 12,
@@ -133,15 +138,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -154,36 +159,36 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Cada hueso con su escudo"
+        "kind": "lesson",
+        "text": "Sin mirar, ¿qué hueso cuida el cerebro,"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "la médula, el corazón y los pulmones?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Cráneo protege el cerebro · columna protege la médula ·"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "costillas + esternón protegen corazón y pulmones."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Si olvidaste alguno, señálalo en tu cuerpo."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -196,8 +201,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Cada hueso con su escudo"
       },
       {
         "index": 23,
@@ -210,29 +215,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cráneo protege el cerebro ·"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "En tu brazo, ¿qué capas encuentras de afuera hacia"
+        "text": "columna protege la médula ·"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "adentro: piel, músculo y hueso? ¿En qué orden?"
+        "text": "costillas + esternón protegen"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "corazón y pulmones."
       },
       {
         "index": 28,
@@ -245,15 +250,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: De afuera hacia adentro"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -267,49 +272,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Primero está la piel, que cubre y protege."
+        "text": "En tu brazo hay piel, músculo y hueso."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Debajo está el músculo, que mueve el cuerpo."
+        "text": "¿En qué orden, de afuera hacia adentro?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Más adentro está el hueso, que sostiene."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Piel, músculo y hueso trabajan en equipo."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: De afuera hacia adentro"
       },
       {
         "index": 39,
@@ -323,28 +328,28 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Por qué crees que el hueso necesita al músculo"
+        "text": "Primero la piel, que cubre y protege."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "para que tu cuerpo se mueva?"
+        "text": "Debajo está el músculo, que mueve."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Más adentro, el hueso, que sostiene,"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como la roca sostiene al Autana."
       },
       {
         "index": 44,
@@ -357,57 +362,57 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: Hueso y músculo, un equipo"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "El músculo se acorta y tira del hueso."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Sin músculo, el hueso no se mueve solo."
+        "text": "¿Por qué el hueso necesita al músculo"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Sin hueso, el músculo no tendría de dónde tirar."
+        "text": "para que tu cuerpo se mueva?"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Piensa en abrir una puerta con tu brazo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -420,43 +425,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Hueso y músculo, un equipo"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Qué puedes hacer cada día para cuidar tus huesos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "y tus músculos?"
+        "text": "El músculo se acorta y tira del hueso."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin músculo, el hueso no se mueve solo."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin hueso, no tendría de dónde tirar."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Cómo cuidar huesos y músculos"
+        "kind": "lesson",
+        "text": "La roca del Autana no se mueve; tú sí."
       },
       {
         "index": 60,
@@ -470,49 +475,49 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Muévete y juega: así se fortalecen músculos y huesos."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Come alimentos con calcio, como la leche y el queso."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Duerme bien y siéntate con la espalda derecha."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Usa casco en bicicleta para cuidar tu cráneo."
+        "text": "El Autana es sagrado para pueblos"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "indígenas. ¿Cómo cuidas tus huesos?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
@@ -525,64 +530,64 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Vas a contárselo a alguien de tu casa."
+        "kind": "heading",
+        "text": "Punto 5: Cómo cuidar huesos y músculos"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "¿Cómo ordenarías tu exposición?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Muévete y juega: se fortalecen huesos"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y músculos. Come alimentos con calcio,"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "como leche y queso. Duerme bien,"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "siéntate derecho y usa casco en bici."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Inicio: «Hoy les voy a contar qué huesos nos protegen»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Medio: un hueso, el órgano que cuida y un ejemplo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Cierre: un consejo para cuidar los huesos y «gracias»."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Vas a contarle a tu familia tu viaje al"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Autana. ¿Cómo ordenarías tu exposición?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué hueso protege el cerebro?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) La columna",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) El esternón",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cómo contarlo con orden"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Las costillas",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) El cráneo",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Inicio: «Hoy les cuento qué huesos"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "nos protegen», con el Autana de ejemplo."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué protege la columna?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Medio: un hueso y el órgano que cuida."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) El corazón",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Cierre: un consejo y «gracias»."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) La médula espinal",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Los pulmones",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) El cerebro",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué cuidan las costillas y el esternón?",
-        "questionId": "d5-q3",
+        "text": "¿Qué hueso protege el cerebro?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Corazón y pulmones",
-        "questionId": "d5-q3"
+        "text": "A) La columna",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Cerebro y médula",
-        "questionId": "d5-q3"
+        "text": "B) El esternón",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Piel y sangre",
-        "questionId": "d5-q3"
+        "text": "C) Las costillas",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Ojos y nariz",
-        "questionId": "d5-q3"
+        "text": "D) El cráneo",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es el orden de afuera hacia adentro?",
-        "questionId": "d5-q4",
+        "text": "¿Qué protege la columna?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,44 +775,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Hueso, músculo, piel",
-        "questionId": "d5-q4"
+        "text": "A) El corazón",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Músculo, piel, hueso",
-        "questionId": "d5-q4"
+        "text": "B) La médula",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Piel, músculo, hueso",
-        "questionId": "d5-q4"
+        "text": "C) Los pulmones",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Piel, hueso, músculo",
-        "questionId": "d5-q4"
+        "text": "D) El cerebro",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué cuidan costillas y esternón?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Corazón y pulmones",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Cerebro y médula",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Piel y sangre",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Ojos y nariz",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Cuál es el orden hacia adentro?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Hueso, músculo, piel",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Músculo, piel, hueso",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Piel, músculo, hueso",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Piel, hueso, músculo",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué hace el músculo con el hueso?",
         "questionId": "d5-q5",
@@ -844,50 +926,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Tira de él para moverlo",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Lo cubre como piel",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Lo convierte en cartílago",
+        "text": "C) Lo vuelve cartílago",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Lo manda al cerebro",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué alimento con calcio cuida los huesos?",
+        "text": "¿Qué alimento con calcio cuida?",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +980,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Los dulces",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) La sal",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) El refresco",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) La leche",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Para qué sirve el casco en bicicleta?",
+        "text": "¿Para qué sirve el casco en bici?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Para fortalecer la columna",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Para cuidar el cráneo",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Para cuidar las costillas",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Para mover la mandíbula",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Cómo termina una buena exposición?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Sin decir nada",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Con un chiste",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Con un consejo y «gracias»",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Con una pregunta sin respuesta",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe de memoria qué hueso protege cada órgano.",
+        "text": "Escribe de memoria qué hueso cuida cada",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1088,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "órgano.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Cuenta dos consejos para cuidar huesos y músculos.",
+        "text": "Cuenta dos consejos para cuidar tus huesos.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1134,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema con cráneo, columna y caja torácica.",
+        "text": "Dibuja cráneo, columna y caja torácica.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,22 +1170,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 145,
@@ -1211,7 +1199,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja piel, músculo y hueso de afuera hacia adentro.",
+        "text": "Dibuja piel, músculo y hueso en orden.",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1241,52 +1229,50 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a un niño andando en bicicleta con casco."
+        "text": "Dibuja el Cerro Autana con su cueva. Al"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula el cráneo, la columna y las costillas."
+        "text": "lado dibuja tu esqueleto y rotula: cráneo,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe qué órgano protege cada una."
+        "text": "columna y caja torácica. Escribe un"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade un consejo para cuidar huesos y músculos."
+        "text": "consejo para cuidar tus huesos."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1302,8 +1288,8 @@
         "answer": "El cráneo",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1313,22 +1299,22 @@
         "prompt": "¿Qué protege la columna?",
         "choices": [
           "El corazón",
-          "La médula espinal",
+          "La médula",
           "Los pulmones",
           "El cerebro"
         ],
-        "answer": "La médula espinal",
+        "answer": "La médula",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué cuidan las costillas y el esternón?",
+        "prompt": "¿Qué cuidan costillas y esternón?",
         "choices": [
           "Corazón y pulmones",
           "Cerebro y médula",
@@ -1337,16 +1323,16 @@
         ],
         "answer": "Corazón y pulmones",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q4",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuál es el orden de afuera hacia adentro?",
+        "prompt": "¿Cuál es el orden hacia adentro?",
         "choices": [
           "Hueso, músculo, piel",
           "Músculo, piel, hueso",
@@ -1355,9 +1341,9 @@
         ],
         "answer": "Piel, músculo, hueso",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1368,21 +1354,21 @@
         "choices": [
           "Tira de él para moverlo",
           "Lo cubre como piel",
-          "Lo convierte en cartílago",
+          "Lo vuelve cartílago",
           "Lo manda al cerebro"
         ],
         "answer": "Tira de él para moverlo",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué alimento con calcio cuida los huesos?",
+        "prompt": "¿Qué alimento con calcio cuida?",
         "choices": [
           "Los dulces",
           "La sal",
@@ -1392,15 +1378,15 @@
         "answer": "La leche",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Para qué sirve el casco en bicicleta?",
+        "prompt": "¿Para qué sirve el casco en bici?",
         "choices": [
           "Para fortalecer la columna",
           "Para cuidar el cráneo",
@@ -1410,68 +1396,50 @@
         "answer": "Para cuidar el cráneo",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Cómo termina una buena exposición?",
-        "choices": [
-          "Sin decir nada",
-          "Con un chiste",
-          "Con un consejo y «gracias»",
-          "Con una pregunta sin respuesta"
-        ],
-        "answer": "Con un consejo y «gracias»",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe de memoria qué hueso protege cada órgano.",
+        "prompt": "Escribe de memoria qué hueso cuida cada órgano.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta dos consejos para cuidar huesos y músculos.",
+        "prompt": "Cuenta dos consejos para cuidar tus huesos.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con cráneo, columna y caja torácica.",
+        "prompt": "Dibuja cráneo, columna y caja torácica.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja piel, músculo y hueso de afuera hacia adentro.",
+        "prompt": "Dibuja piel, músculo y hueso en orden.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

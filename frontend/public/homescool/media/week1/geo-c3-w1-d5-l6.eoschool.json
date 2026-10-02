@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Los cuatro vecinos",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana ubicaste a Venezuela en el mapa.\nViste sus cuatro vecinos y sus cuatro puntos extremos.\nTambién conociste sus seis regiones.\n\nSin mirar nada, ¿cuáles son los cuatro vecinos de Venezuela? Dilos en orden.\n\nFronteras: Mar Caribe norte, Brasil sur, Guyana este, Colombia oeste. Si olvidaste alguno, míralo en el mapa y dilo otra vez."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer ubicaste las seis regiones en un croquis. Guayana tiene tepuyes, como el Roraima, de cima plana."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Los puntos extremos",
-        "body": "¿Y los cuatro puntos extremos? Empieza por el norte.\n\nNorte: Cabo San Román. Sur: el nacimiento del río Ararí. Este: la confluencia de Barima y Mururuma. Oeste: el nacimiento del río Intermedio."
+        "heading": "Punto 2: Los cuatro vecinos",
+        "body": "Vas a contar el viaje al Roraima. ¿Cuáles son los cuatro vecinos?\n\nFronteras: Mar Caribe norte, Brasil sur, Guyana este, Colombia oeste. Cerca del Roraima se juntan Brasil y Guyana con Venezuela."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Las seis regiones",
-        "body": "Ahora las regiones. ¿Cuál tiene montañas, cuál planicies y cuál selvas con tepuyes?\n\nRegiones: Central, Oriental, Occidental, Andes, Llanos, Guayana. Los Andes tienen montañas y los Llanos, planicies. Guayana tiene selvas y tepuyes."
+        "heading": "Punto 3: Los puntos extremos",
+        "body": "El Roraima no es una esquina del país. ¿Cuáles son los cuatro extremos?\n\nNorte: Cabo San Román. Sur: nacimiento del río Ararí. Este: confluencia de Barima y Mururuma. Oeste: nacimiento del río Intermedio."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a contarle a tu familia dónde queda Venezuela. ¿Cómo empezarías tu exposición?\n\nUna buena exposición tiene inicio, medio y cierre. Inicio: «Venezuela está rodeada por un mar y tres países». Medio: los vecinos, los extremos y las regiones. Cierre: repite lo más importante y di «gracias»."
+        "heading": "Punto 4: Las seis regiones",
+        "body": "Ahora las regiones. ¿Cuál tiene cumbres, cuál planicies y cuál tiene el Roraima?\n\nRegiones: Central, Oriental, Occidental, Andes, Llanos, Guayana. Los Andes tienen cumbres y los Llanos, planicies. Guayana tiene tepuyes."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Ubicar con el mapa",
-        "body": "¿Qué te ayuda más: aprender los nombres de memoria o ponerlos sobre un mapa?\n\nLas dos cosas ayudan, pero el mapa muestra cada lugar. Dibuja el contorno, pon la flecha del norte y rotula. No mezcles Guyana, el país, con Guayana, la región."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contar tu viaje al Roraima. ¿Qué debe tener esa exposición?\n\nExponer es contar algo con orden: inicio, medio y cierre. Inicio: «Cerca del Roraima se juntan tres países.» Medio: vecinos y regiones."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: No mezcles los nombres",
+        "body": "Una pregunta con truco: ¿«Guyana» y «Guayana» son lo mismo?\n\nNo. Guyana, con «y», es el país vecino del Roraima. Guayana, con «ua», es la región de selvas y tepuyes."
       }
     ],
-    "summary": "Venezuela se ubica por sus cuatro vecinos, sus cuatro puntos extremos y sus seis regiones.",
+    "summary": "Venezuela se ubica por sus vecinos, sus cuatro extremos y sus seis regiones; el Roraima ayuda a contarlo.",
     "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un mapa completo de Venezuela. Rotula sus cuatro vecinos y la flecha del norte. Marca los cuatro puntos extremos con una estrella. Añade un símbolo en Los Andes, Los Llanos y Guayana.",
+    "imageBandInstruction": "Dibuja un mapa completo de Venezuela. Rotula los vecinos y la flecha norte. Marca los cuatro extremos con estrellas. Dibuja el Roraima, una mesa plana.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,57 +89,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana ubicaste a Venezuela en el mapa."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Viste sus cuatro vecinos y sus cuatro puntos extremos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "También conociste sus seis regiones."
+        "text": "Ayer ubicaste las seis regiones"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en un croquis. Guayana tiene tepuyes,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿cuáles son los cuatro vecinos de Venezuela?"
+        "text": "como el Roraima, de cima plana."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Dilos en orden."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -147,15 +152,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a contar el viaje al Roraima."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Los cuatro vecinos"
+        "kind": "lesson",
+        "text": "¿Cuáles son los cuatro vecinos?"
       },
       {
         "index": 17,
@@ -169,63 +174,63 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Fronteras: Mar Caribe norte, Brasil sur,"
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Guyana este, Colombia oeste."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Si olvidaste alguno, míralo en el mapa y dilo otra vez."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Los cuatro vecinos"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Fronteras: Mar Caribe norte, Brasil sur,"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Guyana este, Colombia oeste."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Y los cuatro puntos extremos? Empieza por el norte."
+        "text": "Cerca del Roraima se juntan Brasil"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y Guyana con Venezuela."
       },
       {
         "index": 27,
@@ -238,15 +243,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Los puntos extremos"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -260,49 +265,49 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Norte: Cabo San Román."
+        "text": "El Roraima no es una esquina del país."
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Sur: el nacimiento del río Ararí."
+        "text": "¿Cuáles son los cuatro extremos?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Este: la confluencia de Barima y Mururuma."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Oeste: el nacimiento del río Intermedio."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Los puntos extremos"
       },
       {
         "index": 38,
@@ -316,28 +321,28 @@
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Ahora las regiones. ¿Cuál tiene montañas, cuál planicies"
+        "text": "Norte: Cabo San Román."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "y cuál selvas con tepuyes?"
+        "text": "Sur: nacimiento del río Ararí."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Este: confluencia de Barima y Mururuma."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Oeste: nacimiento del río Intermedio."
       },
       {
         "index": 43,
@@ -350,36 +355,36 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Las seis regiones"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Los Andes tienen montañas y los Llanos, planicies."
+        "text": "Ahora las regiones. ¿Cuál tiene cumbres,"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Guayana tiene selvas y tepuyes."
+        "text": "cuál planicies y cuál tiene el Roraima?"
       },
       {
         "index": 49,
@@ -393,14 +398,14 @@
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -413,15 +418,15 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Vas a contarle a tu familia dónde queda Venezuela."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "¿Cómo empezarías tu exposición?"
+        "kind": "heading",
+        "text": "Punto 4: Las seis regiones"
       },
       {
         "index": 55,
@@ -434,71 +439,71 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Regiones: Central, Oriental,"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Occidental, Andes, Llanos, Guayana."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "Los Andes tienen cumbres y los Llanos,"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "planicies. Guayana tiene tepuyes."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Una buena exposición tiene inicio, medio y cierre."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Inicio: «Venezuela está rodeada por un mar y tres países»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Medio: los vecinos, los extremos y las regiones."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cierre: repite lo más importante y di «gracias»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a contar tu viaje al Roraima."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Qué debe tener esa exposición?"
       },
       {
         "index": 66,
@@ -511,22 +516,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "¿Qué te ayuda más: aprender los nombres de memoria"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "o ponerlos sobre un mapa?"
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Exponer es contar algo con orden:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "inicio, medio y cierre."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Ubicar con el mapa"
+        "kind": "lesson",
+        "text": "Inicio: «Cerca del Roraima se juntan"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "tres países.» Medio: vecinos y regiones."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Las dos cosas ayudan, pero el mapa muestra cada lugar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Dibuja el contorno, pon la flecha del norte y rotula."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "No mezcles Guyana, el país, con Guayana, la región."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Una pregunta con truco: ¿«Guyana»"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y «Guayana» son lo mismo?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué queda al norte de Venezuela?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Brasil",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Guyana",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: No mezcles los nombres"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Colombia",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "No. Guyana, con «y», es el país"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vecino del Roraima."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué país queda al oeste de Venezuela?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Guayana, con «ua», es la región"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Guyana",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "de selvas y tepuyes."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Colombia",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Perú",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Chile",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál es el punto extremo norte?",
-        "questionId": "d5-q3",
+        "text": "¿Qué queda al norte de Venezuela?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Cabo San Román",
-        "questionId": "d5-q3"
+        "text": "A) Brasil",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Río Ararí",
-        "questionId": "d5-q3"
+        "text": "B) Guyana",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Río Intermedio",
-        "questionId": "d5-q3"
+        "text": "C) Colombia",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Caracas",
-        "questionId": "d5-q3"
+        "text": "D) El mar Caribe",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es el punto extremo sur?",
-        "questionId": "d5-q4",
+        "text": "¿Qué país queda al oeste?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +775,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Cabo San Román",
-        "questionId": "d5-q4"
+        "text": "A) Guyana",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Barima y Mururuma",
-        "questionId": "d5-q4"
+        "text": "B) Colombia",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) El nacimiento del río Ararí",
-        "questionId": "d5-q4"
+        "text": "C) Brasil",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d5-q4"
+        "text": "D) Perú",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuál es el extremo norte?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Cabo San Román",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Río Ararí",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Río Intermedio",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Caracas",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué región es la de las montañas?",
+        "text": "¿Cuál es el extremo sur?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Cabo San Román",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Barima y Mururuma",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Nacimiento del río Ararí",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) El mar Caribe",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué región tiene tepuyes?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,48 +926,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Los Andes",
+        "text": "A) Guayana",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Los Llanos",
+        "text": "B) Los Andes",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Guayana",
+        "text": "C) Los Llanos",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Central",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué región tiene grandes planicies?",
         "questionId": "d5-q6",
@@ -898,50 +980,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Los Andes",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Guayana",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Oriental",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Los Llanos",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cuántas regiones estudiamos en Venezuela?",
+        "text": "¿Qué partes tiene una exposición?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Dos",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Seis",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Tres",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Nueve",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Qué tiene una buena exposición?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Solo un final",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Solo dibujos",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Inicio, medio y cierre",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Ningún orden",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 130,
         "column": 3,
         "line": 26,
+        "kind": "option",
+        "text": "A) Solo un final",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) Inicio, medio y cierre",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) Solo dibujos",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) Ningún orden",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Cuenta a alguien dónde queda Venezuela, con orden.",
+        "text": "Cuenta con orden dónde queda Venezuela.",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1088,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Escribe los cuatro vecinos y los cuatro puntos extremos.",
+        "text": "Escribe los cuatro vecinos y los cuatro",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1126,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "extremos.",
         "questionId": "d5-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja a Venezuela con sus vecinos y sus cuatro extremos.",
+        "text": "Dibuja Venezuela con vecinos y cuatro",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,27 +1172,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "extremos.",
         "questionId": "d5-w3"
       },
       {
@@ -1203,15 +1191,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja un croquis con las seis regiones y sus símbolos.",
+        "text": "Dibuja un croquis con las seis regiones.",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,14 +1216,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
       },
       {
         "index": 150,
@@ -1249,9 +1237,8 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1265,28 +1252,28 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula sus cuatro vecinos y la flecha del norte."
+        "text": "Rotula los vecinos y la flecha norte. Marca"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Marca los cuatro puntos extremos con una estrella."
+        "text": "los cuatro extremos con estrellas. Dibuja el"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade un símbolo en Los Andes, Los Llanos y Guayana."
+        "text": "Roraima, una mesa plana."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1302,33 +1289,33 @@
         "answer": "El mar Caribe",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué país queda al oeste de Venezuela?",
+        "prompt": "¿Qué país queda al oeste?",
         "choices": [
           "Guyana",
           "Colombia",
-          "Perú",
-          "Chile"
+          "Brasil",
+          "Perú"
         ],
         "answer": "Colombia",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuál es el punto extremo norte?",
+        "prompt": "¿Cuál es el extremo norte?",
         "choices": [
           "Cabo San Román",
           "Río Ararí",
@@ -1337,45 +1324,45 @@
         ],
         "answer": "Cabo San Román",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q4",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuál es el punto extremo sur?",
+        "prompt": "¿Cuál es el extremo sur?",
         "choices": [
           "Cabo San Román",
           "Barima y Mururuma",
-          "El nacimiento del río Ararí",
+          "Nacimiento del río Ararí",
           "El mar Caribe"
         ],
-        "answer": "El nacimiento del río Ararí",
+        "answer": "Nacimiento del río Ararí",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué región es la de las montañas?",
+        "prompt": "¿Qué región tiene tepuyes?",
         "choices": [
+          "Guayana",
           "Los Andes",
           "Los Llanos",
-          "Guayana",
           "Central"
         ],
-        "answer": "Los Andes",
+        "answer": "Guayana",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1392,92 +1379,74 @@
         "answer": "Los Llanos",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuántas regiones estudiamos en Venezuela?",
-        "choices": [
-          "Dos",
-          "Seis",
-          "Tres",
-          "Nueve"
-        ],
-        "answer": "Seis",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué tiene una buena exposición?",
+        "prompt": "¿Qué partes tiene una exposición?",
         "choices": [
           "Solo un final",
-          "Solo dibujos",
           "Inicio, medio y cierre",
+          "Solo dibujos",
           "Ningún orden"
         ],
         "answer": "Inicio, medio y cierre",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta a alguien dónde queda Venezuela, con orden.",
+        "prompt": "Cuenta con orden dónde queda Venezuela.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe los cuatro vecinos y los cuatro puntos extremos.",
+        "prompt": "Escribe los cuatro vecinos y los cuatro extremos.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja a Venezuela con sus vecinos y sus cuatro extremos.",
+        "prompt": "Dibuja Venezuela con vecinos y cuatro extremos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un croquis con las seis regiones y sus símbolos.",
+        "prompt": "Dibuja un croquis con las seis regiones.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

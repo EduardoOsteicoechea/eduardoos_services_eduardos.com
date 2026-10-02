@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La caída",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que Dios hizo un mundo bueno.\nEl ser humano fue hecho a imagen de Dios.\nHoy vemos qué pasó cuando llegó la caída.\n\n¿Qué crees que pasó cuando Adán y Eva desobedecieron a Dios?\n\nLa caída es la desobediencia de Adán y Eva. Con ella entró el pecado y sus consecuencias. El pecado rompe la confianza y la obediencia a Dios."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que Dios hizo un mundo bueno y creó a las personas a su imagen. Hoy ves qué pasó con la caída."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Por qué hay dolor",
-        "body": "Si Dios hizo un mundo bueno, ¿por qué todavía hay dolor y desobediencia?\n\nLa caída ayuda a explicar por qué hay dolor. El mal no estuvo ahí desde el principio. Primero Dios hizo un mundo bueno."
+        "heading": "Punto 2: La caída",
+        "body": "En la sequía, el suelo de los Llanos se seca. ¿Qué se rompió con la caída?\n\nAdán y Eva desobedecieron a Dios. Esa es la caída: entró el pecado. Pecado es romper la confianza en Dios. Es como el suelo seco: algo falta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El diluvio",
-        "body": "Más tarde el mal creció muchísimo. ¿Qué crees que hizo Dios?\n\nEl diluvio fue un gran juicio por medio del agua. Muestra lo grave que es el mal. Pero también muestra la misericordia de Dios."
+        "heading": "Punto 3: Por qué hay dolor",
+        "body": "Dios hizo un mundo bueno, como los Llanos tras la lluvia. ¿Por qué hay dolor?\n\nLa caída ayuda a explicar el dolor. El mal no estuvo desde el principio. Primero Dios hizo un mundo bueno."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El arca de Noé",
-        "body": "Ahora tú: ¿cómo cuidó Dios a Noé y a su familia mientras llovía?\n\nEl arca era un barco grande que protegió la vida. Dios mandó construirla para cuidar a Noé y a su familia. Allí también estuvieron los animales."
+        "heading": "Punto 4: El diluvio",
+        "body": "En la lluvia, muchas zonas de los Llanos se inundan. ¿Qué fue el diluvio?\n\nUna inundación de los Llanos ayuda a imaginar mucha agua, pero no es igual. El diluvio fue un gran juicio de Dios y mostró lo grave que es el mal."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Justicia y misericordia",
-        "body": "Una pregunta con truco: ¿Dios es solo enojado, o solo bueno con todo?\n\nNo es solo una cosa: Dios es justo y misericordioso. Después del diluvio Dios hizo una alianza con Noé. Una alianza es un compromiso muy importante. Su señal fue el arco iris, y Dios prometió no repetir el diluvio."
+        "heading": "Punto 5: El arca de Noé",
+        "body": "Cuando el agua cubre la llanura, ¿cómo cuidó Dios a Noé y su familia?\n\nDios mandó a Noé construir un arca, un barco grande que protegió la vida. Allí estuvieron su familia y animales."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Justicia y misericordia",
+        "body": "Después de la lluvia en los Llanos llega la sequía. ¿Y después del diluvio?\n\nDios hizo una alianza con Noé, un compromiso muy importante. Su señal fue el arco iris: no habría otro diluvio que destruyera la tierra."
       }
     ],
-    "summary": "La caída trajo el pecado; el diluvio mostró el juicio y la misericordia, y el arco iris fue la señal.",
+    "summary": "La caída trajo el pecado; el diluvio mostró el juicio y Dios dio el arco iris como señal.",
     "weekRecap": "Hoy seguimos el relato de Génesis: creación, caída, diluvio, promesa y patriarcas.",
     "priorDayRecap": "Creación y bondad en profundidad. Hoy profundizamos en la creación y la bondad. Profundizar significa estudiar una idea con más detalle. Cuando Génesis repite que algo era bueno, enseña que la creación estaba como Dios.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja el arca sobre el agua con los animales dentro. Añade un arco iris en el cielo. Rotula el arca y el arco iris. Escribe debajo cómo se ve la misericordia de Dios.",
+    "imageBandInstruction": "Dibuja una llanura cubierta de agua. Pon el arca sobre el agua con animales. Añade un arco iris en el cielo. Rotula el arca y el arco iris.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que Dios hizo un mundo bueno."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El ser humano fue hecho a imagen de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy vemos qué pasó cuando llegó la caída."
+        "text": "Ayer viste que Dios hizo un mundo bueno"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y creó a las personas a su imagen."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Qué crees que pasó cuando Adán y Eva"
+        "text": "Hoy ves qué pasó con la caída."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "desobedecieron a Dios?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,15 +153,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En la sequía, el suelo de los Llanos"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La caída"
+        "kind": "lesson",
+        "text": "se seca. ¿Qué se rompió con la caída?"
       },
       {
         "index": 17,
@@ -170,21 +175,21 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "La caída es la desobediencia de Adán y Eva."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "Con ella entró el pecado y sus consecuencias."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "El pecado rompe la confianza y la obediencia a Dios."
+        "kind": "heading",
+        "text": "Punto 2: La caída"
       },
       {
         "index": 21,
@@ -198,49 +203,49 @@
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Adán y Eva desobedecieron a Dios."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Esa es la caída: entró el pecado."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pecado es romper la confianza en Dios."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Si Dios hizo un mundo bueno, ¿por qué todavía"
+        "text": "Es como el suelo seco: algo falta."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "hay dolor y desobediencia?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -253,92 +258,92 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Por qué hay dolor"
+        "kind": "lesson",
+        "text": "Dios hizo un mundo bueno, como los"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Llanos tras la lluvia. ¿Por qué hay dolor?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "La caída ayuda a explicar por qué hay dolor."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "El mal no estuvo ahí desde el principio."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Primero Dios hizo un mundo bueno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Por qué hay dolor"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La caída ayuda a explicar el dolor."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El mal no estuvo desde el principio."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Más tarde el mal creció muchísimo. ¿Qué crees"
+        "text": "Primero Dios hizo un mundo bueno."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "que hizo Dios?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -351,78 +356,78 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: El diluvio"
+        "kind": "lesson",
+        "text": "En la lluvia, muchas zonas de los Llanos"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "se inundan. ¿Qué fue el diluvio?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "El diluvio fue un gran juicio por medio del agua."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Muestra lo grave que es el mal."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Pero también muestra la misericordia de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El diluvio"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una inundación de los Llanos ayuda"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "a imaginar mucha agua, pero no es igual."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Ahora tú: ¿cómo cuidó Dios a Noé y a su familia"
+        "text": "El diluvio fue un gran juicio de Dios"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "mientras llovía?"
+        "text": "y mostró lo grave que es el mal."
       },
       {
         "index": 55,
@@ -435,50 +440,50 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: El arca de Noé"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuando el agua cubre la llanura,"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "El arca era un barco grande que protegió la vida."
+        "text": "¿cómo cuidó Dios a Noé y su familia?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Dios mandó construirla para cuidar a Noé y a su familia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Allí también estuvieron los animales."
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -491,8 +496,8 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: El arca de Noé"
       },
       {
         "index": 65,
@@ -505,22 +510,22 @@
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios mandó a Noé construir un arca,"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Dios es solo enojado,"
+        "text": "un barco grande que protegió la vida."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "o solo bueno con todo?"
+        "text": "Allí estuvieron su familia y animales."
       },
       {
         "index": 69,
@@ -533,132 +538,120 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Justicia y misericordia"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Después de la lluvia en los Llanos llega"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No es solo una cosa: Dios es justo y misericordioso."
+        "text": "la sequía. ¿Y después del diluvio?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Después del diluvio Dios hizo una alianza con Noé."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Una alianza es un compromiso muy importante."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Su señal fue el arco iris, y Dios prometió no repetir el diluvio."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Justicia y misericordia"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios hizo una alianza con Noé,"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un compromiso muy importante."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es la caída?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Su señal fue el arco iris: no habría"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Un viaje largo",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "otro diluvio que destruyera la tierra."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) La desobediencia de Adán y Eva",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Una fiesta",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Una torre",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué entró al mundo con la caída?",
-        "questionId": "d3-q2",
+        "text": "¿Qué es la caída?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) La luz",
-        "questionId": "d3-q2"
+        "text": "A) Un viaje largo",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) El arca",
-        "questionId": "d3-q2"
+        "text": "B) La desobediencia de Adán y Eva",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) El pecado",
-        "questionId": "d3-q2"
+        "text": "C) Una fiesta",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) La promesa",
-        "questionId": "d3-q2"
+        "text": "D) Una torre",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué ayuda a explicar la caída?",
-        "questionId": "d3-q3",
+        "text": "¿Qué entró con la caída?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Por qué hay estrellas",
-        "questionId": "d3-q3"
+        "text": "A) La luz",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Por qué hay mares",
-        "questionId": "d3-q3"
+        "text": "B) El arca",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Por qué hay plantas",
-        "questionId": "d3-q3"
+        "text": "C) El pecado",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Por qué hay dolor",
-        "questionId": "d3-q3"
+        "text": "D) La promesa",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué fue el diluvio?",
-        "questionId": "d3-q4",
+        "text": "¿Qué es el pecado?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Una fiesta",
-        "questionId": "d3-q4"
+        "text": "A) Un barco",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Un gran juicio por agua",
-        "questionId": "d3-q4"
+        "text": "B) Una montaña",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Una canción",
-        "questionId": "d3-q4"
+        "text": "C) Un río",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Una torre",
-        "questionId": "d3-q4"
+        "text": "D) Romper la confianza en Dios",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué ayuda a explicar la caída?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Por qué hay estrellas",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Por qué hay dolor",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Por qué hay mares",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Por qué hay plantas",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué muestra el diluvio sobre el mal?",
+        "text": "¿Qué fue el diluvio?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Lo grave que es",
+        "text": "A) Un gran juicio por agua",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Que no importa",
+        "text": "B) Una fiesta",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Que es pequeño",
+        "text": "C) Una canción",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Que no existe",
+        "text": "D) Una torre",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué era el arca?",
         "questionId": "d3-q6",
@@ -899,48 +939,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Una casa de piedra",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Un libro",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Un barco grande que protegió la vida",
+        "text": "C) Un barco grande",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Un templo",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué es una alianza?",
         "questionId": "d3-q7",
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Un compromiso muy importante",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Un juego",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Un barco",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Un castigo",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué señal puso Dios después del diluvio?",
+        "text": "¿Qué señal puso Dios?",
         "questionId": "d3-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Una torre",
         "questionId": "d3-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Un mapa",
         "questionId": "d3-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Una corona",
         "questionId": "d3-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) El arco iris",
         "questionId": "d3-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe una oración que explique qué señala el arco iris.",
+        "text": "Explica qué señala el arco iris.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1101,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Define con tus palabras caída, diluvio y arca.",
         "questionId": "d3-w2",
@@ -1113,30 +1137,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1150,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Haz dos columnas: lo que pasa tras la caída y la misericordia.",
+        "text": "Haz dos columnas: sequía y lluvia, caída y",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,19 +1177,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "arca.",
         "questionId": "d3-w3"
       },
       {
@@ -1242,45 +1242,43 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el arca sobre el agua con los animales dentro."
+        "text": "Dibuja una llanura cubierta de agua. Pon el"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Añade un arco iris en el cielo."
+        "text": "arca sobre el agua con animales. Añade un"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula el arca y el arco iris."
+        "text": "arco iris en el cielo. Rotula el arca y el arco"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe debajo cómo se ve la misericordia de Dios."
+        "text": "iris."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1303,15 +1301,15 @@
         "answer": "La desobediencia de Adán y Eva",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué entró al mundo con la caída?",
+        "prompt": "¿Qué entró con la caída?",
         "choices": [
           "La luz",
           "El arca",
@@ -1321,40 +1319,22 @@
         "answer": "El pecado",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué ayuda a explicar la caída?",
+        "prompt": "¿Qué es el pecado?",
         "choices": [
-          "Por qué hay estrellas",
-          "Por qué hay mares",
-          "Por qué hay plantas",
-          "Por qué hay dolor"
+          "Un barco",
+          "Una montaña",
+          "Un río",
+          "Romper la confianza en Dios"
         ],
-        "answer": "Por qué hay dolor",
-        "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
-        }
-      },
-      {
-        "id": "d3-q4",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué fue el diluvio?",
-        "choices": [
-          "Una fiesta",
-          "Un gran juicio por agua",
-          "Una canción",
-          "Una torre"
-        ],
-        "answer": "Un gran juicio por agua",
+        "answer": "Romper la confianza en Dios",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1362,21 +1342,39 @@
         }
       },
       {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué ayuda a explicar la caída?",
+        "choices": [
+          "Por qué hay estrellas",
+          "Por qué hay dolor",
+          "Por qué hay mares",
+          "Por qué hay plantas"
+        ],
+        "answer": "Por qué hay dolor",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué muestra el diluvio sobre el mal?",
+        "prompt": "¿Qué fue el diluvio?",
         "choices": [
-          "Lo grave que es",
-          "Que no importa",
-          "Que es pequeño",
-          "Que no existe"
+          "Un gran juicio por agua",
+          "Una fiesta",
+          "Una canción",
+          "Una torre"
         ],
-        "answer": "Lo grave que es",
+        "answer": "Un gran juicio por agua",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1387,14 +1385,14 @@
         "choices": [
           "Una casa de piedra",
           "Un libro",
-          "Un barco grande que protegió la vida",
+          "Un barco grande",
           "Un templo"
         ],
-        "answer": "Un barco grande que protegió la vida",
+        "answer": "Un barco grande",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1411,15 +1409,15 @@
         "answer": "Un compromiso muy importante",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué señal puso Dios después del diluvio?",
+        "prompt": "¿Qué señal puso Dios?",
         "choices": [
           "Una torre",
           "Un mapa",
@@ -1429,19 +1427,19 @@
         "answer": "El arco iris",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe una oración que explique qué señala el arco iris.",
+        "prompt": "Explica qué señala el arco iris.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,21 +1449,21 @@
         "prompt": "Define con tus palabras caída, diluvio y arca.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Haz dos columnas: lo que pasa tras la caída y la misericordia.",
+        "prompt": "Haz dos columnas: sequía y lluvia, caída y arca.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {

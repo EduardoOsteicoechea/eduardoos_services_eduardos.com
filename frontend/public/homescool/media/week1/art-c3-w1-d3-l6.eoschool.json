@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Horizontales y verticales",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer dibujaste objetos solo con O (redondos) e i (puntos).\nBuscaste platos, ruedas, semillas y granos de arroz.\nPusiste el círculo grande primero y el punto después.\n\nMira tu mesa. ¿Qué líneas ves en sus bordes? ¿Hacia dónde van?\n\nUna mesa usa líneas horizontales y verticales. La horizontal va de lado a lado, como el horizonte. La vertical va de arriba abajo, como un poste. Las dos son rectas: son líneas L."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer dibujaste el sol, que es una O. Y granitos de arena, que son i. Hoy llegan las rectas de las dunas."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La diagonal",
-        "body": "¿Y una rampa? ¿Va derecha, parada o inclinada?\n\nUna rampa va inclinada: es una diagonal. La diagonal no es horizontal ni vertical. Con las tres rectas puedes armar muchas cosas. Una L siempre debe quedar recta, sin curvarse."
+        "heading": "Punto 2: Horizontal y vertical",
+        "body": "Mira el horizonte y un palo clavado en la arena. ¿Hacia dónde va cada uno?\n\nEl horizonte va de lado a lado: es horizontal, como si se acostara. El palo va de arriba abajo: vertical. Las dos son rectas: son líneas L."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El ángulo",
-        "body": "Sigamos. Cuando dos rectas se encuentran, ¿qué se forma? Piensa en la esquina de una casa.\n\nDonde dos rectas se encuentran se forma un ángulo. Puedes marcar el ángulo con un arco pequeño. La esquina de una mesa o de un techo es un ángulo. Un techo se arma con dos diagonales que se juntan."
+        "heading": "Punto 3: La diagonal",
+        "body": "La subida de una duna, ¿va derecha, parada o inclinada?\n\nUna subida va inclinada: es diagonal. No es horizontal ni vertical. Sigue siendo una recta: una L."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Contar lados",
-        "body": "Dibuja un cuadrado y un triángulo. ¿Cuántos lados tiene cada uno?\n\nEl cuadrado tiene cuatro lados rectos. El triángulo tiene tres lados rectos. Una figura cerrada de lados rectos es un polígono. En estas figuras hay tantos ángulos como lados."
+        "heading": "Punto 4: El ángulo",
+        "body": "Un palo y la arena se juntan. ¿Qué se forma en esa esquina?\n\nDonde dos rectas se juntan se forma un ángulo: una esquina. Puedes marcarlo con un arquito."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Trazos firmes",
-        "body": "Una pregunta con truco: si tu línea sale temblorosa, ¿sigue siendo una L?\n\nUna L debe ser firme y tener una dirección clara. Antes de trazar, mira dónde empieza y dónde termina. Traza despacio, con la mano segura. Practica tres trazos: horizontal, vertical y diagonal."
+        "heading": "Punto 5: Contar los lados",
+        "body": "Dibuja un cuadrado y un triángulo. ¿Cuántos lados tiene cada uno?\n\nEl cuadrado tiene cuatro lados rectos. El triángulo tiene tres lados rectos. Cada lado es una L. Tiene tantos ángulos como lados."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Trazos firmes",
+        "body": "Una pregunta con truco: si tu recta sale temblorosa, ¿sigue siendo L?\n\nUna L debe ser firme y derecha. Mira dónde empieza y dónde acaba. Traza despacio, con la mano segura."
       }
     ],
-    "summary": "Las L son rectas: horizontales, verticales y diagonales. Donde se encuentran dos rectas se forma un ángulo.",
+    "summary": "Las L son rectas: horizontales, verticales y diagonales. En los Médanos de Coro, el horizonte y un palo muestran dónde se forma un ángulo.",
     "weekRecap": "OiLS: O redondos, i puntos, L rectas, S curvas. Primero la forma grande, luego el detalle.",
     "priorDayRecap": "Ayer dibujaste objetos solo con O (redondos) e i (puntos).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una mesa o una flecha usando solo líneas L. Marca dos ángulos con un arco pequeño. Usa al menos una horizontal, una vertical y una diagonal. Revisa que ninguna línea quede curva ni temblorosa.",
+    "imageBandInstruction": "Dibuja un horizonte y un palo en la arena. Añade una subida de duna con una diagonal. Marca dos ángulos con un arquito. Revisa que ninguna recta salga curva.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer dibujaste objetos solo con O (redondos) e i (puntos)."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Buscaste platos, ruedas, semillas y granos de arroz."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Pusiste el círculo grande primero y el punto después."
+        "text": "Ayer dibujaste el sol, que es una O."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y granitos de arena, que son i."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Mira tu mesa. ¿Qué líneas ves en sus bordes?"
+        "text": "Hoy llegan las rectas de las dunas."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Hacia dónde van?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,85 +153,85 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Horizontales y verticales"
+        "kind": "lesson",
+        "text": "Mira el horizonte y un palo clavado"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en la arena. ¿Hacia dónde va cada uno?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Una mesa usa líneas horizontales y verticales."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "La horizontal va de lado a lado, como el horizonte."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "La vertical va de arriba abajo, como un poste."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Las dos son rectas: son líneas L."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Horizontal y vertical"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El horizonte va de lado a lado:"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "es horizontal, como si se acostara."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Y una rampa? ¿Va derecha, parada o inclinada?"
+        "text": "El palo va de arriba abajo: vertical."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las dos son rectas: son líneas L."
       },
       {
         "index": 27,
@@ -239,15 +244,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: La diagonal"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,28 +266,28 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Una rampa va inclinada: es una diagonal."
+        "text": "La subida de una duna, ¿va derecha,"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "La diagonal no es horizontal ni vertical."
+        "text": "parada o inclinada?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Con las tres rectas puedes armar muchas cosas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Una L siempre debe quedar recta, sin curvarse."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -295,8 +300,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: La diagonal"
       },
       {
         "index": 37,
@@ -309,22 +314,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una subida va inclinada: es diagonal."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Sigamos. Cuando dos rectas se encuentran, ¿qué se forma?"
+        "text": "No es horizontal ni vertical."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Piensa en la esquina de una casa."
+        "text": "Sigue siendo una recta: una L."
       },
       {
         "index": 41,
@@ -337,197 +342,197 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: El ángulo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un palo y la arena se juntan."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Donde dos rectas se encuentran se forma un ángulo."
+        "text": "¿Qué se forma en esa esquina?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Puedes marcar el ángulo con un arco pequeño."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "La esquina de una mesa o de un techo es un ángulo."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Un techo se arma con dos diagonales que se juntan."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El ángulo"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Donde dos rectas se juntan"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "se forma un ángulo: una esquina."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Dibuja un cuadrado y un triángulo."
+        "text": "Puedes marcarlo con un arquito."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Cuántos lados tiene cada uno?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Contar lados"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dibuja un cuadrado y un triángulo."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "El cuadrado tiene cuatro lados rectos."
+        "text": "¿Cuántos lados tiene cada uno?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "El triángulo tiene tres lados rectos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Una figura cerrada de lados rectos es un polígono."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "En estas figuras hay tantos ángulos como lados."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Contar los lados"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El cuadrado tiene cuatro lados rectos."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El triángulo tiene tres lados rectos."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: si tu línea sale temblorosa,"
+        "text": "Cada lado es una L."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "¿sigue siendo una L?"
+        "text": "Tiene tantos ángulos como lados."
       },
       {
         "index": 70,
@@ -540,15 +545,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Trazos firmes"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -562,28 +567,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Una L debe ser firme y tener una dirección clara."
+        "text": "Una pregunta con truco: si tu recta"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Antes de trazar, mira dónde empieza y dónde termina."
+        "text": "sale temblorosa, ¿sigue siendo L?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Traza despacio, con la mano segura."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Practica tres trazos: horizontal, vertical y diagonal."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Trazos firmes"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una L debe ser firme y derecha."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué letra de OiLS son las líneas rectas?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Mira dónde empieza y dónde acaba."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) O",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Traza despacio, con la mano segura."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) L",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) i",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) S",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cómo es una línea horizontal?",
-        "questionId": "d3-q2",
+        "text": "¿Qué letra son las rectas?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Va de arriba abajo",
-        "questionId": "d3-q2"
+        "text": "A) O",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Va inclinada",
-        "questionId": "d3-q2"
+        "text": "B) L",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Va de lado a lado",
-        "questionId": "d3-q2"
+        "text": "C) i",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Es una curva",
-        "questionId": "d3-q2"
+        "text": "D) S",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cómo es una línea vertical?",
-        "questionId": "d3-q3",
+        "text": "¿Cómo va una línea horizontal?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Va de lado a lado",
-        "questionId": "d3-q3"
+        "text": "A) De arriba abajo",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Va inclinada",
-        "questionId": "d3-q3"
+        "text": "B) Inclinada",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Es redonda",
-        "questionId": "d3-q3"
+        "text": "C) De lado a lado",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Va de arriba abajo",
-        "questionId": "d3-q3"
+        "text": "D) Curva",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué línea usa una rampa?",
-        "questionId": "d3-q4",
+        "text": "¿Cómo va una línea vertical?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Una horizontal",
-        "questionId": "d3-q4"
+        "text": "A) De lado a lado",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Una diagonal",
-        "questionId": "d3-q4"
+        "text": "B) Inclinada",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Una vertical",
-        "questionId": "d3-q4"
+        "text": "C) Redonda",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Una espiral",
-        "questionId": "d3-q4"
+        "text": "D) De arriba abajo",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo es la subida de una duna?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Horizontal",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Diagonal",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Vertical",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Espiral",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué se forma donde dos rectas se encuentran?",
+        "text": "¿Qué se forma donde dos rectas se juntan?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Un ángulo",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Un círculo",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Un punto",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Una curva",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Cuántos lados tiene un triángulo?",
         "questionId": "d3-q6",
@@ -899,48 +939,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Cuatro",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Cinco",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Tres",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Dos",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Cuántos lados tiene un cuadrado?",
         "questionId": "d3-q7",
@@ -953,104 +993,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Cuatro",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Tres",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Cinco",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Seis",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Cómo debe quedar una línea L?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Cuatro",
+        "questionId": "d3-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Curva y suave",
-        "questionId": "d3-q8"
+        "text": "B) Tres",
+        "questionId": "d3-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Temblorosa",
-        "questionId": "d3-q8"
+        "text": "C) Cinco",
+        "questionId": "d3-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Redonda",
-        "questionId": "d3-q8"
+        "text": "D) Seis",
+        "questionId": "d3-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Recta y firme",
-        "questionId": "d3-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Escribe qué hace cada una: horizontal, vertical y diagonal.",
+        "text": "Escribe cómo va cada recta: horizontal,",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,6 +1045,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "vertical, diagonal.",
+        "questionId": "d3-w1"
       },
       {
         "index": 131,
@@ -1080,31 +1074,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Explica cómo se forma un ángulo con tus palabras.",
+        "text": "Explica con tus palabras qué es un ángulo.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1093,34 @@
         }
       },
       {
-        "index": 137,
+        "index": 135,
         "column": 3,
-        "line": 33,
+        "line": 31,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un mueble solo con rectas L y marca dos ángulos.",
+        "text": "Dibuja un palo y el horizonte; marca el",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,20 +1131,58 @@
         }
       },
       {
-        "index": 143,
+        "index": 139,
         "column": 3,
-        "line": 39,
+        "line": 35,
+        "kind": "lesson",
+        "text": "ángulo.",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w3"
       },
       {
-        "index": 144,
+        "index": 141,
         "column": 3,
-        "line": 40,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "question",
+        "text": "Dibuja un cuadrado y un triángulo; cuenta",
+        "questionId": "d3-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "lesson",
+        "text": "lados.",
+        "questionId": "d3-w4"
       },
       {
         "index": 145,
@@ -1190,7 +1190,7 @@
         "line": 41,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d3-w3"
+        "questionId": "d3-w4"
       },
       {
         "index": 146,
@@ -1198,7 +1198,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d3-w3"
+        "questionId": "d3-w4"
       },
       {
         "index": 147,
@@ -1211,89 +1211,77 @@
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "question",
-        "text": "Dibuja un cuadrado y un triángulo y cuenta sus lados.",
-        "questionId": "d3-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja un horizonte y un palo en la arena."
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una mesa o una flecha usando solo líneas L."
+        "text": "Añade una subida de duna con una"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Marca dos ángulos con un arco pequeño."
+        "text": "diagonal. Marca dos ángulos con un"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Usa al menos una horizontal, una vertical y una diagonal."
+        "text": "arquito. Revisa que ninguna recta salga"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que ninguna línea quede curva ni temblorosa."
+        "text": "curva."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS son las líneas rectas?",
+        "prompt": "¿Qué letra son las rectas?",
         "choices": [
           "O",
           "L",
@@ -1303,40 +1291,22 @@
         "answer": "L",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo es una línea horizontal?",
+        "prompt": "¿Cómo va una línea horizontal?",
         "choices": [
-          "Va de arriba abajo",
-          "Va inclinada",
-          "Va de lado a lado",
-          "Es una curva"
+          "De arriba abajo",
+          "Inclinada",
+          "De lado a lado",
+          "Curva"
         ],
-        "answer": "Va de lado a lado",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d3-q3",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Cómo es una línea vertical?",
-        "choices": [
-          "Va de lado a lado",
-          "Va inclinada",
-          "Es redonda",
-          "Va de arriba abajo"
-        ],
-        "answer": "Va de arriba abajo",
+        "answer": "De lado a lado",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1344,17 +1314,17 @@
         }
       },
       {
-        "id": "d3-q4",
+        "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué línea usa una rampa?",
+        "prompt": "¿Cómo va una línea vertical?",
         "choices": [
-          "Una horizontal",
-          "Una diagonal",
-          "Una vertical",
-          "Una espiral"
+          "De lado a lado",
+          "Inclinada",
+          "Redonda",
+          "De arriba abajo"
         ],
-        "answer": "Una diagonal",
+        "answer": "De arriba abajo",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1362,10 +1332,28 @@
         }
       },
       {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cómo es la subida de una duna?",
+        "choices": [
+          "Horizontal",
+          "Diagonal",
+          "Vertical",
+          "Espiral"
+        ],
+        "answer": "Diagonal",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué se forma donde dos rectas se encuentran?",
+        "prompt": "¿Qué se forma donde dos rectas se juntan?",
         "choices": [
           "Un ángulo",
           "Un círculo",
@@ -1375,8 +1363,8 @@
         "answer": "Un ángulo",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1393,8 +1381,8 @@
         "answer": "Tres",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1411,74 +1399,56 @@
         "answer": "Cuatro",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Cómo debe quedar una línea L?",
-        "choices": [
-          "Curva y suave",
-          "Temblorosa",
-          "Redonda",
-          "Recta y firme"
-        ],
-        "answer": "Recta y firme",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe qué hace cada una: horizontal, vertical y diagonal.",
+        "prompt": "Escribe cómo va cada recta: horizontal, vertical, diagonal.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica cómo se forma un ángulo con tus palabras.",
+        "prompt": "Explica con tus palabras qué es un ángulo.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un mueble solo con rectas L y marca dos ángulos.",
+        "prompt": "Dibuja un palo y el horizonte; marca el ángulo.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 34,
+          "index": 138
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un cuadrado y un triángulo y cuenta sus lados.",
+        "prompt": "Dibuja un cuadrado y un triángulo; cuenta lados.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 39,
+          "index": 143
         }
       }
     ]

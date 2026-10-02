@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: El epitelial es una cubierta",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que un tejido es un equipo de células parecidas.\nConocimos cuatro: epitelial, conectivo, muscular y nervioso.\nEl epitelial cubre y el conectivo une, sostiene o transporta.\n\n¿Qué parte de tu cuerpo te protege por fuera, como un abrigo?\n\nLa piel es tejido epitelial: cubre y protege tu cuerpo. Es como un abrigo que te cuida del mundo de afuera. Cubrir y proteger es el trabajo del epitelial."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que un tejido es un equipo de células y que hay cuatro tejidos. Hoy sigues de noche en el Catatumbo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El hueso sostiene",
-        "body": "Piensa en un hueso de tu brazo. ¿Qué trabajo hace por tu cuerpo?\n\nEl hueso es tejido conectivo: sostiene el cuerpo. Gracias a tus huesos puedes estar de pie. El conectivo une, sostiene o transporta."
+        "heading": "Punto 2: La piel cubre",
+        "body": "Viajas en bote hacia los relámpagos del Catatumbo y salpica el agua. ¿Qué te cubre?\n\nLa piel es tejido epitelial. Cubre y protege tu cuerpo. Es como un abrigo que te cuida del viento y del agua."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El cartílago es firme y flexible",
-        "body": "Toca la punta de tu nariz y tus orejas. ¿Son duras como un hueso o se doblan un poco?\n\nSe doblan un poco: eso es cartílago. El cartílago es firme, pero más flexible que el hueso. Es tejido conectivo, igual que el hueso. Lo encuentras en la nariz y en las orejas."
+        "heading": "Punto 3: El hueso sostiene",
+        "body": "El bote se mece, pero tú sigues de pie. ¿Qué te sostiene por dentro?\n\nEl hueso es tejido conectivo. Sostiene el cuerpo y te deja estar de pie. El conectivo une, sostiene o transporta."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La sangre transporta",
-        "body": "Una pregunta con truco: la sangre corre por tu cuerpo. ¿La pondrías con el epitelial o con el conectivo?\n\nLa sangre es tejido conectivo de transporte. Lleva materiales por todo el cuerpo. No cubre como la piel; por eso no es epitelial. Recuerda: el hueso sostiene y la sangre transporta."
+        "heading": "Punto 4: El cartílago es flexible",
+        "body": "Toca la punta de tu nariz y tus orejas. ¿Son duras como un hueso o se doblan?\n\nSe doblan un poco: eso es cartílago. Es firme, pero más flexible que el hueso. También es tejido conectivo."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Ordenar en una tabla",
-        "body": "Haz una tabla con dos columnas: epitelial y conectivo. ¿Dónde pondrías piel, hueso, cartílago y sangre?\n\nEn la columna del epitelial va la piel. En la del conectivo van hueso, cartílago y sangre. A cada ejemplo le pones su función: cubre, sostiene o transporta. Así clasificas como un científico escolar."
+        "heading": "Punto 5: La sangre transporta",
+        "body": "Una pregunta con truco: la sangre corre cuando remas. ¿Es epitelial o conectivo?\n\nLa sangre es tejido conectivo. Transporta materiales por todo el cuerpo. No cubre como la piel. El hueso sostiene y la sangre transporta."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Ordenar en una tabla",
+        "body": "Anotas lo que viste en el Catatumbo en dos columnas. ¿Dónde van piel, hueso y sangre?\n\nEn la columna epitelial va la piel. En la conectiva van hueso, cartílago y sangre. A cada ejemplo le pones su función."
       }
     ],
     "summary": "El epitelial cubre; el conectivo une: el hueso sostiene, el cartílago es flexible y la sangre transporta.",
@@ -43,7 +48,7 @@
     "weekRecap": "Cuatro tejidos: epitelial (cubre), conectivo (une), muscular (mueve), nervioso (mensaje).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una mano con piel, huesos y una gota de sangre. Rotula la piel como epitelial. Rotula el hueso y la sangre como conectivo. Añade una flecha que diga qué función hace cada uno.",
+    "imageBandInstruction": "Dibuja una mano con piel, huesos y sangre. Rotula la piel como epitelial. Rotula hueso y sangre como conectivo. Dibuja un relámpago del Catatumbo detrás.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que un tejido es un equipo de células parecidas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Conocimos cuatro: epitelial, conectivo, muscular y nervioso."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "El epitelial cubre y el conectivo une, sostiene o transporta."
+        "text": "Ayer viste que un tejido es un equipo"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de células y que hay cuatro tejidos."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Qué parte de tu cuerpo te protege por fuera,"
+        "text": "Hoy sigues de noche en el Catatumbo."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "como un abrigo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,78 +153,78 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: El epitelial es una cubierta"
+        "kind": "lesson",
+        "text": "Viajas en bote hacia los relámpagos del"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Catatumbo y salpica el agua. ¿Qué te cubre?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "La piel es tejido epitelial: cubre y protege tu cuerpo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Es como un abrigo que te cuida del mundo de afuera."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "Cubrir y proteger es el trabajo del epitelial."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La piel cubre"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La piel es tejido epitelial."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cubre y protege tu cuerpo."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Piensa en un hueso de tu brazo."
+        "text": "Es como un abrigo que te cuida"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Qué trabajo hace por tu cuerpo?"
+        "text": "del viento y del agua."
       },
       {
         "index": 26,
@@ -232,50 +237,50 @@
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: El hueso sostiene"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El bote se mece, pero tú sigues de pie."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "El hueso es tejido conectivo: sostiene el cuerpo."
+        "text": "¿Qué te sostiene por dentro?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Gracias a tus huesos puedes estar de pie."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "El conectivo une, sostiene o transporta."
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -288,8 +293,8 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: El hueso sostiene"
       },
       {
         "index": 36,
@@ -302,22 +307,22 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El hueso es tejido conectivo."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Toca la punta de tu nariz y tus orejas. ¿Son duras"
+        "text": "Sostiene el cuerpo y te deja estar de pie."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "como un hueso o se doblan un poco?"
+        "text": "El conectivo une, sostiene o transporta."
       },
       {
         "index": 40,
@@ -330,113 +335,113 @@
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: El cartílago es firme y flexible"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Toca la punta de tu nariz y tus orejas."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Se doblan un poco: eso es cartílago."
+        "text": "¿Son duras como un hueso o se doblan?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "El cartílago es firme, pero más flexible que el hueso."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Es tejido conectivo, igual que el hueso."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Lo encuentras en la nariz y en las orejas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El cartílago es flexible"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Se doblan un poco: eso es cartílago."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es firme, pero más flexible que el hueso."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Una pregunta con truco: la sangre corre por tu cuerpo."
+        "text": "También es tejido conectivo."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "¿La pondrías con el epitelial o con el conectivo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -449,43 +454,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: La sangre transporta"
+        "kind": "lesson",
+        "text": "Una pregunta con truco: la sangre corre"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cuando remas. ¿Es epitelial o conectivo?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "La sangre es tejido conectivo de transporte."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Lleva materiales por todo el cuerpo."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "No cubre como la piel; por eso no es epitelial."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Recuerda: el hueso sostiene y la sangre transporta."
+        "kind": "heading",
+        "text": "Punto 5: La sangre transporta"
       },
       {
         "index": 64,
@@ -499,166 +504,154 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "La sangre es tejido conectivo."
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Transporta materiales por todo el cuerpo."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No cubre como la piel."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Haz una tabla con dos columnas: epitelial y conectivo."
+        "text": "El hueso sostiene y la sangre transporta."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Dónde pondrías piel, hueso, cartílago y sangre?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Ordenar en una tabla"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Anotas lo que viste en el Catatumbo en dos"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "En la columna del epitelial va la piel."
+        "text": "columnas. ¿Dónde van piel, hueso y sangre?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "En la del conectivo van hueso, cartílago y sangre."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "A cada ejemplo le pones su función: cubre, sostiene o transporta."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Así clasificas como un científico escolar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Ordenar en una tabla"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En la columna epitelial va la piel."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En la conectiva van hueso, cartílago"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué tejido es la piel?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "y sangre."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Conectivo",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "A cada ejemplo le pones su función."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Muscular",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Nervioso",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Epitelial",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué función tiene el tejido epitelial?",
-        "questionId": "d2-q2",
+        "text": "¿Qué tejido es la piel?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Transportar materiales",
-        "questionId": "d2-q2"
+        "text": "A) Conectivo",
+        "questionId": "d2-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Cubrir y proteger",
-        "questionId": "d2-q2"
+        "text": "B) Muscular",
+        "questionId": "d2-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Llevar mensajes",
-        "questionId": "d2-q2"
+        "text": "C) Nervioso",
+        "questionId": "d2-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Mover el brazo",
-        "questionId": "d2-q2"
+        "text": "D) Epitelial",
+        "questionId": "d2-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué hace el hueso?",
-        "questionId": "d2-q3",
+        "text": "¿Qué hace el tejido epitelial?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Cubre la piel",
-        "questionId": "d2-q3"
+        "text": "A) Transporta",
+        "questionId": "d2-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Lleva mensajes",
-        "questionId": "d2-q3"
+        "text": "B) Cubre y protege",
+        "questionId": "d2-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Sostiene el cuerpo",
-        "questionId": "d2-q3"
+        "text": "C) Lleva mensajes",
+        "questionId": "d2-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Hace latir el corazón",
-        "questionId": "d2-q3"
+        "text": "D) Mueve el brazo",
+        "questionId": "d2-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo es el cartílago?",
-        "questionId": "d2-q4",
+        "text": "¿Qué hace el hueso?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +788,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Líquido y rojo",
-        "questionId": "d2-q4"
+        "text": "A) Cubre la piel",
+        "questionId": "d2-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Duro y sin doblarse",
-        "questionId": "d2-q4"
+        "text": "B) Lleva mensajes",
+        "questionId": "d2-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Fino y transparente",
-        "questionId": "d2-q4"
+        "text": "C) Sostiene el cuerpo",
+        "questionId": "d2-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Firme y flexible",
-        "questionId": "d2-q4"
+        "text": "D) Hace latir el corazón",
+        "questionId": "d2-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo es el cartílago?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Líquido y rojo",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Duro sin doblarse",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Fino y transparente",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Firme y flexible",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Dónde hay cartílago?",
         "questionId": "d2-q5",
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) En las uñas",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) En la nariz y las orejas",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) En el cerebro",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) En la sangre",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué tejido es la sangre?",
         "questionId": "d2-q6",
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Conectivo",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Epitelial",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Muscular",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Nervioso",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué hace la sangre en el cuerpo?",
+        "text": "¿Qué hace la sangre?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Sostiene el cuerpo",
         "questionId": "d2-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Cubre por fuera",
         "questionId": "d2-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Transporta materiales",
         "questionId": "d2-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Mueve el brazo",
         "questionId": "d2-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿En qué columna de la tabla va el hueso?",
+        "text": "¿Dónde va el hueso en la tabla?",
         "questionId": "d2-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Conectivo",
+        "text": "A) En el conectivo",
         "questionId": "d2-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Epitelial",
+        "text": "B) En el epitelial",
         "questionId": "d2-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Muscular",
+        "text": "C) En el muscular",
         "questionId": "d2-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Nervioso",
+        "text": "D) En el nervioso",
         "questionId": "d2-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe cinco ejemplos y la función de cada uno.",
+        "text": "Escribe tres ejemplos y la función de cada",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1101,40 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "uno.",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
         "text": "Explica por qué la sangre no es epitelial.",
         "questionId": "d2-w2",
@@ -1115,50 +1147,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja la tabla de epitelial y conectivo con ejemplos.",
+        "text": "Dibuja la tabla de epitelial y conectivo.",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,22 +1183,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
       },
       {
         "index": 145,
@@ -1212,7 +1212,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja una nariz y una oreja y rotula el cartílago.",
+        "text": "Dibuja una oreja y rotula el cartílago.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1242,45 +1242,43 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una mano con piel, huesos y una gota de sangre."
+        "text": "Dibuja una mano con piel, huesos y sangre."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula la piel como epitelial."
+        "text": "Rotula la piel como epitelial. Rotula hueso"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula el hueso y la sangre como conectivo."
+        "text": "y sangre como conectivo. Dibuja un"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade una flecha que diga qué función hace cada uno."
+        "text": "relámpago del Catatumbo detrás."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1303,26 +1301,26 @@
         "answer": "Epitelial",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué función tiene el tejido epitelial?",
+        "prompt": "¿Qué hace el tejido epitelial?",
         "choices": [
-          "Transportar materiales",
-          "Cubrir y proteger",
-          "Llevar mensajes",
-          "Mover el brazo"
+          "Transporta",
+          "Cubre y protege",
+          "Lleva mensajes",
+          "Mueve el brazo"
         ],
-        "answer": "Cubrir y proteger",
+        "answer": "Cubre y protege",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1339,8 +1337,8 @@
         "answer": "Sostiene el cuerpo",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1350,15 +1348,15 @@
         "prompt": "¿Cómo es el cartílago?",
         "choices": [
           "Líquido y rojo",
-          "Duro y sin doblarse",
+          "Duro sin doblarse",
           "Fino y transparente",
           "Firme y flexible"
         ],
         "answer": "Firme y flexible",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1375,8 +1373,8 @@
         "answer": "En la nariz y las orejas",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1393,15 +1391,15 @@
         "answer": "Conectivo",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué hace la sangre en el cuerpo?",
+        "prompt": "¿Qué hace la sangre?",
         "choices": [
           "Sostiene el cuerpo",
           "Cubre por fuera",
@@ -1411,37 +1409,37 @@
         "answer": "Transporta materiales",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿En qué columna de la tabla va el hueso?",
+        "prompt": "¿Dónde va el hueso en la tabla?",
         "choices": [
-          "Conectivo",
-          "Epitelial",
-          "Muscular",
-          "Nervioso"
+          "En el conectivo",
+          "En el epitelial",
+          "En el muscular",
+          "En el nervioso"
         ],
-        "answer": "Conectivo",
+        "answer": "En el conectivo",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe cinco ejemplos y la función de cada uno.",
+        "prompt": "Escribe tres ejemplos y la función de cada uno.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,28 +1449,28 @@
         "prompt": "Explica por qué la sangre no es epitelial.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja la tabla de epitelial y conectivo con ejemplos.",
+        "prompt": "Dibuja la tabla de epitelial y conectivo.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una nariz y una oreja y rotula el cartílago.",
+        "prompt": "Dibuja una oreja y rotula el cartílago.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

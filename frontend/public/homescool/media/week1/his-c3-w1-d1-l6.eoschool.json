@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Venezuela ya tenía habitantes",
-        "body": "¿Crees que Venezuela estaba vacía antes de que llegara Colón?\n\nNo, Venezuela no estaba vacía. Mucho antes de Colón vivían aquí muchos pueblos. Se les llama pueblos originarios: son los primeros habitantes. Esta semana vas a conocer a cuatro de ellos."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nYa conoces montañas, ríos y costas de Venezuela. Hoy preguntas quién vivió en esos lugares hace mucho."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Eran pueblos distintos",
-        "body": "Piensa en cómo vives tú. ¿Crees que todos esos pueblos vivían exactamente igual?\n\nNo vivían igual. Cada pueblo tenía su lugar, su lengua y sus costumbres. Por eso no se dice «los indígenas» como si fueran uno solo. Se nombra a cada pueblo por su nombre."
+        "heading": "Punto 2: Venezuela ya tenía habitantes",
+        "body": "En Sinamaica hay casas sobre el agua. ¿Venezuela estaba vacía antes de Colón?\n\nNo estaba vacía: ya había pueblos. Se llaman pueblos originarios: son los primeros habitantes del lugar."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Los cuatro nombres guía",
-        "body": "Entonces, ¿cómo se llamaban? Intenta recordar algún nombre que hayas oído.\n\nHoy conoces cuatro pueblos: Timotocuicas, Caribes, Arawacos y Wayús. Los primeros habitantes de Venezuela antes de la llegada de Colón fueron los Timotocuicas, Caribes, Arawacos y Wayús."
+        "heading": "Punto 3: Eran pueblos distintos",
+        "body": "En Sinamaica los añú viven en casas sobre el agua. ¿Vivían todos igual?\n\nNo vivían igual: cada pueblo tenía su lugar, su lengua y sus costumbres. Los palafitos de Sinamaica son casas levantadas sobre el agua con palos."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cada pueblo, su lugar",
-        "body": "Imagina un mapa con montañas, costa, selva y desierto. ¿Crees que todos vivían en el mismo sitio?\n\nLos Timotocuicas vivían en las montañas de los Andes. Los Caribes y los Arawacos vivían cerca de costas y ríos. Los Wayús viven en La Guajira, una tierra seca junto al mar."
+        "heading": "Punto 4: Los cuatro nombres guía",
+        "body": "Cada lugar tiene su nombre, como Sinamaica. ¿Qué pueblos conoces?\n\nLos primeros habitantes de Venezuela antes de la llegada de Colón fueron los Timotocuicas, Caribes, Arawacos y Wayús."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cómo lo sabemos",
-        "body": "¿Cómo crees que sabemos hoy cómo vivían? ¿Quién nos lo puede contar?\n\nLo sabemos por objetos antiguos, como vasijas de barro. También por relatos que se cuentan de padres a hijos. Estudiamos a estos pueblos con respeto: eran personas reales."
+        "heading": "Punto 5: Cada pueblo, su lugar",
+        "body": "Una casa de Sinamaica va sobre el agua. ¿Dónde vivía cada pueblo?\n\nTimotocuicas: montañas de los Andes. Caribes y Arawacos: costas y ríos. Wayús: La Guajira, seca y junto al mar."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cómo lo sabemos",
+        "body": "Un palafito se puede mirar hoy. ¿Y los pueblos de antes? ¿Cómo los conocemos?\n\nLo sabemos por objetos antiguos, como vasijas de barro, y por relatos que van de padres a hijos. Los estudiamos con respeto."
       }
     ],
-    "summary": "Venezuela ya tenía pueblos originarios distintos: Timotocuicas, Caribes, Arawacos y Wayús.",
+    "summary": "Venezuela ya tenía pueblos originarios: Timotocuicas, Caribes, Arawacos y Wayús.",
     "memoryPhrase": "«Los primeros habitantes de Venezuela antes de la llegada de Colón fueron los **Timotocuicas**, **Caribes**, **Arawacos** y **Wayús**.»",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un paisaje de Venezuela con montañas, costa y río. Escribe en cada lugar el pueblo que vivía allí. Pon una etiqueta con los cuatro nombres: Timotocuicas, Caribes, Arawacos y Wayús.",
+    "imageBandInstruction": "Dibuja la Laguna de Sinamaica con un palafito sobre el agua y palos. Al lado, dibuja montañas, costa y río. Rotula los cuatro pueblos y su lugar.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Crees que Venezuela estaba vacía antes de que llegara Colón?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Venezuela ya tenía habitantes"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,78 +89,78 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "No, Venezuela no estaba vacía."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Mucho antes de Colón vivían aquí muchos pueblos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Se les llama pueblos originarios: son los primeros habitantes."
+        "text": "Ya conoces montañas, ríos y costas"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Esta semana vas a conocer a cuatro de ellos."
+        "text": "de Venezuela. Hoy preguntas quién"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vivió en esos lugares hace mucho."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "lesson",
-        "text": "Piensa en cómo vives tú. ¿Crees que todos esos pueblos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
         "kind": "lesson",
-        "text": "vivían exactamente igual?"
+        "text": "En Sinamaica hay casas sobre el agua."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Venezuela estaba vacía antes de Colón?"
       },
       {
         "index": 17,
@@ -168,8 +173,8 @@
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
@@ -182,8 +187,8 @@
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Venezuela ya tenía habitantes"
       },
       {
         "index": 21,
@@ -196,43 +201,43 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Eran pueblos distintos"
+        "kind": "lesson",
+        "text": "No estaba vacía: ya había pueblos."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Se llaman pueblos originarios:"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "No vivían igual."
+        "text": "son los primeros habitantes del lugar."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "Cada pueblo tenía su lugar, su lengua y sus costumbres."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Por eso no se dice «los indígenas» como si fueran uno solo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "Se nombra a cada pueblo por su nombre."
+        "text": "________________________________________"
       },
       {
         "index": 28,
@@ -246,14 +251,14 @@
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "En Sinamaica los añú viven en casas"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sobre el agua. ¿Vivían todos igual?"
       },
       {
         "index": 31,
@@ -267,21 +272,21 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Entonces, ¿cómo se llamaban? Intenta recordar algún"
+        "text": "________________________________________"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "nombre que hayas oído."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Eran pueblos distintos"
       },
       {
         "index": 35,
@@ -294,71 +299,71 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No vivían igual: cada pueblo tenía"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "su lugar, su lengua y sus costumbres."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los palafitos de Sinamaica son casas"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "levantadas sobre el agua con palos."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "heading",
-        "text": "Punto 3: Los cuatro nombres guía"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Hoy conoces cuatro pueblos:"
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "Timotocuicas, Caribes, Arawacos y Wayús."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Los primeros habitantes de Venezuela antes de la llegada"
+        "text": "Cada lugar tiene su nombre, como"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "de Colón fueron los Timotocuicas, Caribes, Arawacos y Wayús."
+        "text": "Sinamaica. ¿Qué pueblos conoces?"
       },
       {
         "index": 46,
@@ -372,7 +377,7 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 48,
@@ -385,43 +390,43 @@
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Los cuatro nombres guía"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Imagina un mapa con montañas, costa, selva y desierto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "¿Crees que todos vivían en el mismo sitio?"
+        "text": "Los primeros habitantes de Venezuela"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "antes de la llegada de Colón fueron"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "los Timotocuicas, Caribes,"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Arawacos y Wayús."
       },
       {
         "index": 55,
@@ -434,15 +439,15 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 4: Cada pueblo, su lugar"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
@@ -456,42 +461,42 @@
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "Los Timotocuicas vivían en las montañas de los Andes."
+        "text": "Una casa de Sinamaica va sobre el agua."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Los Caribes y los Arawacos vivían cerca de costas y ríos."
+        "text": "¿Dónde vivía cada pueblo?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Los Wayús viven en La Guajira, una tierra seca junto al mar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cada pueblo, su lugar"
       },
       {
         "index": 65,
@@ -505,21 +510,21 @@
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "¿Cómo crees que sabemos hoy cómo vivían?"
+        "text": "Timotocuicas: montañas de los Andes."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "¿Quién nos lo puede contar?"
+        "text": "Caribes y Arawacos: costas y ríos."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Wayús: La Guajira, seca y junto al mar."
       },
       {
         "index": 69,
@@ -532,15 +537,15 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -553,111 +558,99 @@
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cómo lo sabemos"
+        "kind": "lesson",
+        "text": "Un palafito se puede mirar hoy. ¿Y los"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "pueblos de antes? ¿Cómo los conocemos?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Lo sabemos por objetos antiguos, como vasijas de barro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "También por relatos que se cuentan de padres a hijos."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Estudiamos a estos pueblos con respeto: eran personas reales."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Cómo lo sabemos"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Lo sabemos por objetos antiguos,"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como vasijas de barro, y por relatos"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué son los pueblos originarios?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "que van de padres a hijos."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Los primeros habitantes de un lugar",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Los estudiamos con respeto."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Los barcos que llegaron",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Los jefes de los españoles",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Las montañas de los Andes",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Estaba vacía Venezuela antes de Colón?",
-        "questionId": "d1-q2",
+        "text": "¿Qué son los palafitos?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Sí, estaba vacía",
-        "questionId": "d1-q2"
+        "text": "A) Casas sobre el agua con palos",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Solo había animales",
-        "questionId": "d1-q2"
+        "text": "B) Barcos grandes",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Solo vivía un pueblo",
-        "questionId": "d1-q2"
+        "text": "C) Cuevas de roca",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) No, ya había muchos pueblos",
-        "questionId": "d1-q2"
+        "text": "D) Casas en la nieve",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Vivían todos los pueblos exactamente igual?",
-        "questionId": "d1-q3",
+        "text": "¿Qué es un pueblo originario?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Sí, todos igual",
-        "questionId": "d1-q3"
+        "text": "A) Un barco español",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) No, cada uno tenía sus costumbres",
-        "questionId": "d1-q3"
+        "text": "B) Una montaña alta",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Sí, con la misma lengua",
-        "questionId": "d1-q3"
+        "text": "C) Un tipo de casa",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Sí, en el mismo sitio",
-        "questionId": "d1-q3"
+        "text": "D) Los primeros habitantes del lugar",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es uno de los cuatro pueblos de hoy?",
-        "questionId": "d1-q4",
+        "text": "¿Estaba vacía Venezuela antes de Colón?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Vikingos",
-        "questionId": "d1-q4"
+        "text": "A) Sí, estaba vacía",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Romanos",
-        "questionId": "d1-q4"
+        "text": "B) No, ya había pueblos",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Wayús",
-        "questionId": "d1-q4"
+        "text": "C) Solo había palafitos",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Egipcios",
-        "questionId": "d1-q4"
+        "text": "D) Solo vivía un pueblo",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Vivían todos los pueblos igual?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Sí, todos igual",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Sí, con la misma lengua",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) No, cada uno tenía sus costumbres",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Sí, en el mismo lugar",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Dónde vivían los Timotocuicas?",
+        "text": "¿Cuál es uno de los cuatro pueblos?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) En el desierto",
+        "text": "A) Vikingos",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) En el mar",
+        "text": "B) Romanos",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) En una isla",
+        "text": "C) Egipcios",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) En las montañas de los Andes",
+        "text": "D) Wayús",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Dónde viven los Wayús?",
+        "text": "¿Dónde vivían los Timotocuicas?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) En los Andes",
+        "text": "A) En La Guajira",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) En La Guajira",
+        "text": "B) En las montañas de los Andes",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) En el Orinoco",
+        "text": "C) En un palafito",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) En una montaña",
+        "text": "D) En una isla",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cómo sabemos hoy cómo vivían?",
+        "text": "¿Dónde viven los Wayús?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Por vasijas y relatos antiguos",
+        "text": "A) En La Guajira",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Por la televisión",
+        "text": "B) En los Andes",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Por fotos antiguas",
+        "text": "C) Sobre el agua",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Por mensajes de texto",
+        "text": "D) En una isla",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cuántos pueblos guía conoces esta semana?",
+        "text": "¿Cómo sabemos cómo vivían?",
         "questionId": "d1-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Dos",
+        "text": "A) Por la televisión",
         "questionId": "d1-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Siete",
+        "text": "B) Por fotos antiguas",
         "questionId": "d1-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Cuatro",
+        "text": "C) Por vasijas de barro y relatos",
         "questionId": "d1-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Diez",
+        "text": "D) Por mensajes de texto",
         "questionId": "d1-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe los cuatro nombres de los pueblos de hoy.",
+        "text": "Escribe los cuatro pueblos de hoy.",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica qué es un pueblo originario con tus palabras.",
+        "text": "Explica qué es un palafito con tus palabras.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,30 +1136,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1149,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un mapa sencillo y ubica los cuatro pueblos.",
+        "text": "Dibuja un mapa y ubica los cuatro pueblos.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1174,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1195,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un esquema: un pueblo, su lugar y cómo vivía.",
+        "text": "Dibuja un palafito: casa, palos y agua.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1212,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 149,
@@ -1233,53 +1233,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un paisaje de Venezuela con montañas, costa y río."
+        "text": "Dibuja la Laguna de Sinamaica con un"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe en cada lugar el pueblo que vivía allí."
+        "text": "palafito sobre el agua y palos. Al lado,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Pon una etiqueta con los cuatro nombres: Timotocuicas,"
+        "text": "dibuja montañas, costa y río. Rotula los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Caribes, Arawacos y Wayús."
+        "text": "cuatro pueblos y su lugar."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,32 +1289,14 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué son los pueblos originarios?",
+        "prompt": "¿Qué son los palafitos?",
         "choices": [
-          "Los primeros habitantes de un lugar",
-          "Los barcos que llegaron",
-          "Los jefes de los españoles",
-          "Las montañas de los Andes"
+          "Casas sobre el agua con palos",
+          "Barcos grandes",
+          "Cuevas de roca",
+          "Casas en la nieve"
         ],
-        "answer": "Los primeros habitantes de un lugar",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Estaba vacía Venezuela antes de Colón?",
-        "choices": [
-          "Sí, estaba vacía",
-          "Solo había animales",
-          "Solo vivía un pueblo",
-          "No, ya había muchos pueblos"
-        ],
-        "answer": "No, ya había muchos pueblos",
+        "answer": "Casas sobre el agua con palos",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1325,17 +1304,17 @@
         }
       },
       {
-        "id": "d1-q3",
+        "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Vivían todos los pueblos exactamente igual?",
+        "prompt": "¿Qué es un pueblo originario?",
         "choices": [
-          "Sí, todos igual",
-          "No, cada uno tenía sus costumbres",
-          "Sí, con la misma lengua",
-          "Sí, en el mismo sitio"
+          "Un barco español",
+          "Una montaña alta",
+          "Un tipo de casa",
+          "Los primeros habitantes del lugar"
         ],
-        "answer": "No, cada uno tenía sus costumbres",
+        "answer": "Los primeros habitantes del lugar",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1343,17 +1322,17 @@
         }
       },
       {
-        "id": "d1-q4",
+        "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es uno de los cuatro pueblos de hoy?",
+        "prompt": "¿Estaba vacía Venezuela antes de Colón?",
         "choices": [
-          "Vikingos",
-          "Romanos",
-          "Wayús",
-          "Egipcios"
+          "Sí, estaba vacía",
+          "No, ya había pueblos",
+          "Solo había palafitos",
+          "Solo vivía un pueblo"
         ],
-        "answer": "Wayús",
+        "answer": "No, ya había pueblos",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1361,123 +1340,141 @@
         }
       },
       {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Vivían todos los pueblos igual?",
+        "choices": [
+          "Sí, todos igual",
+          "Sí, con la misma lengua",
+          "No, cada uno tenía sus costumbres",
+          "Sí, en el mismo lugar"
+        ],
+        "answer": "No, cada uno tenía sus costumbres",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Dónde vivían los Timotocuicas?",
+        "prompt": "¿Cuál es uno de los cuatro pueblos?",
         "choices": [
-          "En el desierto",
-          "En el mar",
-          "En una isla",
-          "En las montañas de los Andes"
+          "Vikingos",
+          "Romanos",
+          "Egipcios",
+          "Wayús"
         ],
-        "answer": "En las montañas de los Andes",
+        "answer": "Wayús",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Dónde viven los Wayús?",
+        "prompt": "¿Dónde vivían los Timotocuicas?",
         "choices": [
-          "En los Andes",
           "En La Guajira",
-          "En el Orinoco",
-          "En una montaña"
+          "En las montañas de los Andes",
+          "En un palafito",
+          "En una isla"
         ],
-        "answer": "En La Guajira",
+        "answer": "En las montañas de los Andes",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo sabemos hoy cómo vivían?",
+        "prompt": "¿Dónde viven los Wayús?",
         "choices": [
-          "Por vasijas y relatos antiguos",
-          "Por la televisión",
-          "Por fotos antiguas",
-          "Por mensajes de texto"
+          "En La Guajira",
+          "En los Andes",
+          "Sobre el agua",
+          "En una isla"
         ],
-        "answer": "Por vasijas y relatos antiguos",
+        "answer": "En La Guajira",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuántos pueblos guía conoces esta semana?",
+        "prompt": "¿Cómo sabemos cómo vivían?",
         "choices": [
-          "Dos",
-          "Siete",
-          "Cuatro",
-          "Diez"
+          "Por la televisión",
+          "Por fotos antiguas",
+          "Por vasijas de barro y relatos",
+          "Por mensajes de texto"
         ],
-        "answer": "Cuatro",
+        "answer": "Por vasijas de barro y relatos",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe los cuatro nombres de los pueblos de hoy.",
+        "prompt": "Escribe los cuatro pueblos de hoy.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica qué es un pueblo originario con tus palabras.",
+        "prompt": "Explica qué es un palafito con tus palabras.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un mapa sencillo y ubica los cuatro pueblos.",
+        "prompt": "Dibuja un mapa y ubica los cuatro pueblos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un esquema: un pueblo, su lugar y cómo vivía.",
+        "prompt": "Dibuja un palafito: casa, palos y agua.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Estados y capitales",
-        "body": "¿Cómo se llama la ciudad principal de un estado?\n\nUn estado es una gran parte del país con su propio gobierno. La ciudad principal, donde está ese gobierno, es su capital. Venezuela tiene 23 estados y el Distrito Capital. Esta semana conoceremos cuatro, cada uno con su capital."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nYa viste que Venezuela tiene fronteras y regiones, como la Gran Sabana. Hoy bajas del mapa grande a los estados y a sus capitales."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Distrito Capital y Caracas",
-        "body": "Piensa en la ciudad donde funciona el gobierno de todo el país. ¿Cómo se llama?\n\nEs Caracas, la capital de Venezuela. Caracas está en el Distrito Capital. Es especial porque sirve a todo el país, no solo a su estado."
+        "heading": "Punto 2: Región y estado",
+        "body": "La Gran Sabana tiene sabanas, tepuyes y ríos. ¿Es un estado o una región?\n\nEs una región: un lugar con rasgos parecidos, como sabanas y tepuyes. Está en el estado Bolívar. Un estado es una parte del país con gobierno."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La Guaira, estado y capital",
-        "body": "Ahora imagina un estado con un puerto junto al mar. Se llama La Guaira. ¿Cómo crees que se llama su capital?\n\nLa capital del estado La Guaira se llama también La Guaira. Estado y capital tienen el mismo nombre. Es un estado de costa, frente al mar Caribe. Cerca queda Maiquetía, pero esa no es la capital."
+        "heading": "Punto 3: La capital",
+        "body": "Cada estado tiene una ciudad principal donde está su gobierno. ¿Cómo se llama?\n\nSe llama capital. Es como el tepuy más conocido de la sabana: sirve para orientarte en el mapa."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Miranda y Los Teques",
-        "body": "Hay una ciudad en las montañas llamada Los Teques. ¿De qué estado crees que es la capital?\n\nLos Teques es la capital del estado Miranda. Queda en las montañas, cerca del valle de Caracas."
+        "heading": "Punto 4: Distrito Capital y Caracas",
+        "body": "Viaja con tu dedo desde la Gran Sabana hasta la capital del país. ¿Cuál es?\n\nEs Caracas, la capital de Venezuela. Está en el Distrito Capital, que es un lugar aparte de los 23 estados."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Aragua y Maracay",
-        "body": "Más al oeste, en un valle, está Maracay. ¿De qué estado crees que es la capital?\n\nMaracay es la capital del estado Aragua. Queda en un valle del centro del país. Repite los cuatro pares así: Distrito Capital—Caracas · La Guaira—La Guaira · Miranda—Los Teques · Aragua—Maracay."
+        "heading": "Punto 5: La Guaira y La Guaira",
+        "body": "Sigue hacia el mar. Un estado se llama La Guaira. ¿Cómo se llama su capital?\n\nSu capital también es La Guaira. Estado y capital se llaman igual. Queda junto al mar Caribe."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Miranda y Aragua",
+        "body": "Tierra adentro hay dos estados más: Miranda y Aragua. ¿Y sus capitales?\n\nDistrito Capital—Caracas · La Guaira—La Guaira · Miranda—Los Teques · Aragua—Maracay."
       }
     ],
-    "summary": "Cada estado tiene una capital: Caracas, La Guaira, Los Teques y Maracay son las de esta semana.",
+    "summary": "La Gran Sabana es una región; los estados tienen capital: Caracas, La Guaira, Los Teques y Maracay.",
     "memoryPhrase": "**Distrito Capital**—Caracas · **La Guaira**—La Guaira · **Miranda**—Los Teques · **Aragua**—Maracay.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja cuatro tarjetas grandes en el recuadro. Escribe en cada una un estado y, debajo, su capital. Dibuja un símbolo pequeño para cada capital. Revisa que Los Teques y Maracay no se mezclen.",
+    "imageBandInstruction": "Dibuja una sabana con un tepuy grande. Al lado, cuatro tarjetas de estados. En cada una escribe estado y capital. Marca con una estrella a Caracas.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Cómo se llama la ciudad principal de un estado?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Estados y capitales"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Un estado es una gran parte del país con su propio gobierno."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "La ciudad principal, donde está ese gobierno, es su capital."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Venezuela tiene 23 estados y el Distrito Capital."
+        "text": "Ya viste que Venezuela tiene fronteras"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Esta semana conoceremos cuatro, cada uno con su capital."
+        "text": "y regiones, como la Gran Sabana."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy bajas del mapa grande a los"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "estados y a sus capitales."
       },
       {
         "index": 12,
@@ -133,36 +138,36 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
         "kind": "lesson",
-        "text": "Piensa en la ciudad donde funciona el gobierno de todo el país."
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "¿Cómo se llama?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Gran Sabana tiene sabanas, tepuyes"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y ríos. ¿Es un estado o una región?"
       },
       {
         "index": 18,
@@ -175,8 +180,8 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -189,43 +194,43 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Región y estado"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Distrito Capital y Caracas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es una región: un lugar con rasgos"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Es Caracas, la capital de Venezuela."
+        "text": "parecidos, como sabanas y tepuyes."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Caracas está en el Distrito Capital."
+        "text": "Está en el estado Bolívar. Un estado"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Es especial porque sirve a todo el país, no solo a su estado."
+        "text": "es una parte del país con gobierno."
       },
       {
         "index": 27,
@@ -239,14 +244,14 @@
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -260,14 +265,14 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Ahora imagina un estado con un puerto junto al mar."
+        "text": "Cada estado tiene una ciudad principal"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Se llama La Guaira. ¿Cómo crees que se llama su capital?"
+        "text": "donde está su gobierno. ¿Cómo se llama?"
       },
       {
         "index": 33,
@@ -280,8 +285,8 @@
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -294,8 +299,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La capital"
       },
       {
         "index": 37,
@@ -308,64 +313,64 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Se llama capital. Es como el tepuy"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "heading",
-        "text": "Punto 3: La Guaira, estado y capital"
+        "kind": "lesson",
+        "text": "más conocido de la sabana: sirve"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "para orientarte en el mapa."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "La capital del estado La Guaira se llama también La Guaira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Estado y capital tienen el mismo nombre."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "Es un estado de costa, frente al mar Caribe."
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "lesson",
-        "text": "Cerca queda Maiquetía, pero esa no es la capital."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viaja con tu dedo desde la Gran Sabana"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "hasta la capital del país. ¿Cuál es?"
       },
       {
         "index": 47,
@@ -378,22 +383,22 @@
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Hay una ciudad en las montañas llamada Los Teques."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "¿De qué estado crees que es la capital?"
+        "kind": "heading",
+        "text": "Punto 4: Distrito Capital y Caracas"
       },
       {
         "index": 51,
@@ -406,22 +411,22 @@
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es Caracas, la capital de Venezuela."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Está en el Distrito Capital, que es"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un lugar aparte de los 23 estados."
       },
       {
         "index": 55,
@@ -434,50 +439,50 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 4: Miranda y Los Teques"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "lesson",
-        "text": "Los Teques es la capital del estado Miranda."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "Queda en las montañas, cerca del valle de Caracas."
+        "text": "Sigue hacia el mar. Un estado se llama"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Guaira. ¿Cómo se llama su capital?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -490,36 +495,36 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Más al oeste, en un valle, está Maracay."
+        "kind": "heading",
+        "text": "Punto 5: La Guaira y La Guaira"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "¿De qué estado crees que es la capital?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Su capital también es La Guaira."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Estado y capital se llaman igual."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Queda junto al mar Caribe."
       },
       {
         "index": 69,
@@ -532,15 +537,15 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "heading",
-        "text": "Punto 5: Aragua y Maracay"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -554,110 +559,98 @@
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Maracay es la capital del estado Aragua."
+        "text": "Tierra adentro hay dos estados más:"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Queda en un valle del centro del país."
+        "text": "Miranda y Aragua. ¿Y sus capitales?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Repite los cuatro pares así:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Distrito Capital—Caracas · La Guaira—La Guaira ·"
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Miranda—Los Teques · Aragua—Maracay."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Miranda y Aragua"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Distrito Capital—Caracas ·"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Guaira—La Guaira ·"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuál es la capital del Distrito Capital?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Miranda—Los Teques ·"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Caracas",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Aragua—Maracay."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Maracay",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Los Teques",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cuál es la capital del estado La Guaira?",
-        "questionId": "d1-q2",
+        "text": "¿Qué es la Gran Sabana?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Maiquetía",
-        "questionId": "d1-q2"
+        "text": "A) Una región con tepuyes",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Caracas",
-        "questionId": "d1-q2"
+        "text": "B) Una capital",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Maracay",
-        "questionId": "d1-q2"
+        "text": "C) Un mar",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d1-q2"
+        "text": "D) Un número",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál es la capital del estado Miranda?",
-        "questionId": "d1-q3",
+        "text": "¿En qué estado está la Gran Sabana?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Maracay",
-        "questionId": "d1-q3"
+        "text": "A) Miranda",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Los Teques",
-        "questionId": "d1-q3"
+        "text": "B) Aragua",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Caracas",
-        "questionId": "d1-q3"
+        "text": "C) La Guaira",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d1-q3"
+        "text": "D) Bolívar",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es la capital del estado Aragua?",
-        "questionId": "d1-q4",
+        "text": "¿Qué es un estado?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Los Teques",
-        "questionId": "d1-q4"
+        "text": "A) Un río",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Caracas",
-        "questionId": "d1-q4"
+        "text": "B) Parte del país con gobierno",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Maracay",
-        "questionId": "d1-q4"
+        "text": "C) Un tepuy",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d1-q4"
+        "text": "D) Un mar",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es una capital?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Una montaña",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Un río",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) La ciudad principal del estado",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Una isla",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué es una capital?",
+        "text": "¿Cuál es la capital de Venezuela?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Un río muy largo",
+        "text": "A) Maracay",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Un mar",
+        "text": "B) Los Teques",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Una montaña",
+        "text": "C) La Guaira",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) La ciudad donde está el gobierno",
+        "text": "D) Caracas",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué par de estado y capital está bien escrito?",
+        "text": "¿Dónde está Caracas?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Miranda — Maracay",
+        "text": "A) Miranda",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Aragua — Maracay",
+        "text": "B) Distrito Capital",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) La Guaira — Caracas",
+        "text": "C) Aragua",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Distrito Capital — Los Teques",
+        "text": "D) Bolívar",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué estado tiene a Los Teques como capital?",
+        "text": "¿Cuál es la capital de La Guaira?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Miranda",
+        "text": "A) La Guaira",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Aragua",
+        "text": "B) Maiquetía",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Distrito Capital",
+        "text": "C) Caracas",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) La Guaira",
+        "text": "D) Maracay",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cuál es la capital de Venezuela?",
+        "text": "¿Qué par está bien dicho?",
         "questionId": "d1-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Maracay",
+        "text": "A) Miranda—Maracay",
         "questionId": "d1-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Los Teques",
+        "text": "B) Aragua—Los Teques",
         "questionId": "d1-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Caracas",
+        "text": "C) Aragua—Maracay",
         "questionId": "d1-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) La Guaira",
+        "text": "D) Miranda—Caracas",
         "questionId": "d1-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Explica qué es un estado y qué es una capital.",
+        "text": "Explica con tus palabras qué es una capital.",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Escribe los cuatro pares de estado y capital de la semana.",
+        "text": "Escribe los cuatro estados con su capital.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,30 +1136,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1149,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja cuatro tarjetas: un estado y su capital en cada una.",
+        "text": "Dibuja el estado Bolívar con la Gran Sabana.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1174,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1195,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un mapa sencillo y marca a Caracas con una estrella.",
+        "text": "Dibuja dos columnas: estado y capital.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1212,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 149,
@@ -1233,53 +1233,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja cuatro tarjetas grandes en el recuadro."
+        "text": "Dibuja una sabana con un tepuy grande. Al"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe en cada una un estado y, debajo, su capital."
+        "text": "lado, cuatro tarjetas de estados. En cada"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja un símbolo pequeño para cada capital."
+        "text": "una escribe estado y capital. Marca con"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que Los Teques y Maracay no se mezclen."
+        "text": "una estrella a Caracas."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,32 +1289,14 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital del Distrito Capital?",
+        "prompt": "¿Qué es la Gran Sabana?",
         "choices": [
-          "Caracas",
-          "Maracay",
-          "Los Teques",
-          "La Guaira"
+          "Una región con tepuyes",
+          "Una capital",
+          "Un mar",
+          "Un número"
         ],
-        "answer": "Caracas",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Cuál es la capital del estado La Guaira?",
-        "choices": [
-          "Maiquetía",
-          "Caracas",
-          "Maracay",
-          "La Guaira"
-        ],
-        "answer": "La Guaira",
+        "answer": "Una región con tepuyes",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1325,17 +1304,17 @@
         }
       },
       {
-        "id": "d1-q3",
+        "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital del estado Miranda?",
+        "prompt": "¿En qué estado está la Gran Sabana?",
         "choices": [
-          "Maracay",
-          "Los Teques",
-          "Caracas",
-          "La Guaira"
+          "Miranda",
+          "Aragua",
+          "La Guaira",
+          "Bolívar"
         ],
-        "answer": "Los Teques",
+        "answer": "Bolívar",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1343,17 +1322,17 @@
         }
       },
       {
-        "id": "d1-q4",
+        "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital del estado Aragua?",
+        "prompt": "¿Qué es un estado?",
         "choices": [
-          "Los Teques",
-          "Caracas",
-          "Maracay",
-          "La Guaira"
+          "Un río",
+          "Parte del país con gobierno",
+          "Un tepuy",
+          "Un mar"
         ],
-        "answer": "Maracay",
+        "answer": "Parte del país con gobierno",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1361,123 +1340,141 @@
         }
       },
       {
-        "id": "d1-q5",
+        "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Qué es una capital?",
         "choices": [
-          "Un río muy largo",
-          "Un mar",
           "Una montaña",
-          "La ciudad donde está el gobierno"
+          "Un río",
+          "La ciudad principal del estado",
+          "Una isla"
         ],
-        "answer": "La ciudad donde está el gobierno",
+        "answer": "La ciudad principal del estado",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 1,
+          "index": 105
         }
       },
       {
-        "id": "d1-q6",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué par de estado y capital está bien escrito?",
-        "choices": [
-          "Miranda — Maracay",
-          "Aragua — Maracay",
-          "La Guaira — Caracas",
-          "Distrito Capital — Los Teques"
-        ],
-        "answer": "Aragua — Maracay",
-        "slot": {
-          "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d1-q7",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué estado tiene a Los Teques como capital?",
-        "choices": [
-          "Miranda",
-          "Aragua",
-          "Distrito Capital",
-          "La Guaira"
-        ],
-        "answer": "Miranda",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d1-q8",
+        "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿Cuál es la capital de Venezuela?",
         "choices": [
           "Maracay",
           "Los Teques",
-          "Caracas",
-          "La Guaira"
+          "La Guaira",
+          "Caracas"
         ],
         "answer": "Caracas",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Dónde está Caracas?",
+        "choices": [
+          "Miranda",
+          "Distrito Capital",
+          "Aragua",
+          "Bolívar"
+        ],
+        "answer": "Distrito Capital",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital de La Guaira?",
+        "choices": [
+          "La Guaira",
+          "Maiquetía",
+          "Caracas",
+          "Maracay"
+        ],
+        "answer": "La Guaira",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
+        }
+      },
+      {
+        "id": "d1-q8",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué par está bien dicho?",
+        "choices": [
+          "Miranda—Maracay",
+          "Aragua—Los Teques",
+          "Aragua—Maracay",
+          "Miranda—Caracas"
+        ],
+        "answer": "Aragua—Maracay",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica qué es un estado y qué es una capital.",
+        "prompt": "Explica con tus palabras qué es una capital.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe los cuatro pares de estado y capital de la semana.",
+        "prompt": "Escribe los cuatro estados con su capital.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja cuatro tarjetas: un estado y su capital en cada una.",
+        "prompt": "Dibuja el estado Bolívar con la Gran Sabana.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un mapa sencillo y marca a Caracas con una estrella.",
+        "prompt": "Dibuja dos columnas: estado y capital.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Ut presenta la meta",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicaste «et» con nombres y acciones.\nAyer viste que «et» une cosas iguales y no dice la meta.\nHoy conocerás mejor a «ut», la palabra de la meta.\n\nEmpecemos. Cuando haces algo con un propósito, ¿qué pregunta te haces: «¿quién?» o «¿para qué?»\n\nTe preguntas «¿para qué?». La respuesta es la meta de la acción. «Ut» presenta esa meta en latín. Significa «para que» o «a fin de que»."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer practicaste «et»: une nombres o acciones, como el agua que se junta. Hoy sigues con «ut», la palabra que dice para qué se hace algo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Qué hago y para qué",
-        "body": "«Laboro» es «trabajo» y «discam» es «aprenda». ¿Qué dice «laboro ut discam»?\n\nDice «trabajo para que aprenda». En español suena natural: «trabajo para aprender». «Laboro» es lo que hago. «Ut discam» responde para qué lo hago."
+        "heading": "Punto 2: Ut presenta la meta",
+        "body": "Guri detiene el agua y da energía. ¿Preguntas «¿quién?» o «¿para qué?»\n\nPreguntas «¿para qué?». La respuesta es la meta de la acción. «Ut» presenta esa meta en latín. Significa «para que»."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Lista o meta",
-        "body": "Una pregunta con truco: ¿«trabajo y aprendo» dice lo mismo que «trabajo para aprender»?\n\nNo: «trabajo y aprendo» es una lista. «Trabajo para aprender» dice la meta. Lee las dos frases en voz alta. La segunda explica por qué trabajas."
+        "heading": "Punto 3: Qué hago y para qué",
+        "body": "«Laboro» es «trabajo» y «discam» es «que aprenda». ¿Qué dice «laboro ut discam»?\n\nDice «trabajo para que aprenda». En español: «trabajo para aprender». «Laboro» es lo que hago. «Ut discam» dice para qué."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Subrayar ut y su verbo",
-        "body": "Sigamos. Cada vez que veas «ut», ¿qué pregunta puedes escribir al margen?\n\nEscribe al margen: «¿para qué?». Subraya «ut» y el verbo que viene después. Ese verbo dice lo que se quiere lograr. Así no confundes «ut» con «et»."
+        "heading": "Punto 4: Venio ut videam",
+        "body": "Viajas a Guri a ver la represa. ¿Cómo dices «vengo para ver»?\n\nDices «venio ut videam». «Venio» es «vengo»: lo que haces. «Ut videam» es «para que vea»: la meta del viaje."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tu propia meta",
-        "body": "Ahora tú: inventa una frase en español con «para que» y señala cuál es la meta.\n\nPor ejemplo: «Leo para que aprendamos juntos». La meta es «aprendamos juntos». Lo que haces es «leo». «Para que» hace el mismo trabajo que ut."
+        "heading": "Punto 5: Lista o meta",
+        "body": "Una pregunta con truco: ¿«trabajo y aprendo» dice lo mismo que «trabajo para aprender»?\n\nNo: «trabajo y aprendo» es una lista. «Trabajo para aprender» dice la meta, como el agua que se detiene en Guri para dar energía."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Subrayar ut y su verbo",
+        "body": "Cada vez que veas «ut», ¿qué pregunta puedes escribir al margen?\n\nEscribe al margen: «¿para qué?». Subraya «ut» y el verbo que sigue. Ese verbo dice lo que se quiere lograr."
       }
     ],
-    "summary": "Ut presenta la meta de una acción y responde «¿para qué?»; no suma cosas como et.",
+    "summary": "Ut dice para qué se hace algo, como el agua que se detiene en Guri para dar energía.",
     "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
     "weekRecap": "**et** une nombres o acciones · **ut** responde «¿para qué?» · **non** niega antes del verbo. Esta semana leemos frases latinas cortas mirando primero qué pieza aparece en cada oración.",
     "priorDayRecap": "Ayer practicaste **et** uniendo nombres y acciones del mismo nivel, sin explicar meta.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un niño con un libro y una flecha hacia una estrella. Rotula al niño: laboro. Rotula la estrella: ut discam. Escribe debajo: ¿para qué?",
+    "imageBandInstruction": "Dibuja a un niño frente a la Represa de Guri. Dibuja una flecha hacia sus ojos. Rotula al niño: venio. Rotula los ojos: ut videam.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicaste «et» con nombres y acciones."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Ayer viste que «et» une cosas iguales y no dice la meta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy conocerás mejor a «ut», la palabra de la meta."
+        "text": "Ayer practicaste «et»: une nombres"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "o acciones, como el agua que se junta."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Empecemos. Cuando haces algo con un propósito, ¿qué"
+        "text": "Hoy sigues con «ut», la palabra que"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "pregunta te haces: «¿quién?» o «¿para qué?»"
+        "text": "dice para qué se hace algo."
       },
       {
         "index": 12,
@@ -135,57 +140,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Ut presenta la meta"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Guri detiene el agua y da energía."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Te preguntas «¿para qué?»."
+        "text": "¿Preguntas «¿quién?» o «¿para qué?»"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "La respuesta es la meta de la acción."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "«Ut» presenta esa meta en latín."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Significa «para que» o «a fin de que»."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Ut presenta la meta"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Preguntas «¿para qué?»."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "«Laboro» es «trabajo» y «discam» es «aprenda»."
+        "text": "La respuesta es la meta de la acción."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Qué dice «laboro ut discam»?"
+        "text": "«Ut» presenta esa meta en latín."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Significa «para que»."
       },
       {
         "index": 28,
@@ -247,15 +252,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Qué hago y para qué"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -269,42 +274,42 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Dice «trabajo para que aprenda»."
+        "text": "«Laboro» es «trabajo» y «discam» es"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "En español suena natural: «trabajo para aprender»."
+        "text": "«que aprenda». ¿Qué dice «laboro ut"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "«Laboro» es lo que hago."
+        "text": "discam»?"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "«Ut discam» responde para qué lo hago."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 38,
@@ -317,43 +322,43 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Qué hago y para qué"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«trabajo y aprendo» dice lo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "mismo que «trabajo para aprender»?"
+        "text": "Dice «trabajo para que aprenda»."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En español: «trabajo para aprender»."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Laboro» es lo que hago."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Lista o meta"
+        "kind": "lesson",
+        "text": "«Ut discam» dice para qué."
       },
       {
         "index": 45,
@@ -367,49 +372,49 @@
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "No: «trabajo y aprendo» es una lista."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "«Trabajo para aprender» dice la meta."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Lee las dos frases en voz alta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "La segunda explica por qué trabajas."
+        "text": "Viajas a Guri a ver la represa."
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo dices «vengo para ver»?"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -422,92 +427,92 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Sigamos. Cada vez que veas «ut», ¿qué pregunta puedes"
+        "kind": "heading",
+        "text": "Punto 4: Venio ut videam"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "escribir al margen?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «venio ut videam»."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Venio» es «vengo»: lo que haces."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Subrayar ut y su verbo"
+        "kind": "lesson",
+        "text": "«Ut videam» es «para que vea»:"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "la meta del viaje."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Escribe al margen: «¿para qué?»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Subraya «ut» y el verbo que viene después."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Ese verbo dice lo que se quiere lograr."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Así no confundes «ut» con «et»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«trabajo y"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "aprendo» dice lo mismo que «trabajo"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "para aprender»?"
       },
       {
         "index": 67,
@@ -521,21 +526,21 @@
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: inventa una frase en español con «para que»"
+        "text": "________________________________________"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "y señala cuál es la meta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Lista o meta"
       },
       {
         "index": 71,
@@ -548,172 +553,148 @@
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Tu propia meta"
+        "kind": "lesson",
+        "text": "No: «trabajo y aprendo» es una lista."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Trabajo para aprender» dice la meta,"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Por ejemplo: «Leo para que aprendamos juntos»."
+        "text": "como el agua que se detiene en Guri"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "La meta es «aprendamos juntos»."
+        "text": "para dar energía."
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Lo que haces es «leo»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "«Para que» hace el mismo trabajo que ut."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada vez que veas «ut», ¿qué pregunta"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "puedes escribir al margen?"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «ut» en esta lección?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Y",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Para que",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) No",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Subrayar ut y su verbo"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Pero",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe al margen: «¿para qué?»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué pregunta responde «ut»?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Subraya «ut» y el verbo que sigue."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) ¿Dónde?",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Ese verbo dice lo que se quiere lograr."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) ¿Quién?",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) ¿Para qué?",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) ¿Cuándo?",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué significa «laboro ut discam»?",
-        "questionId": "d3-q3",
+        "text": "¿Qué significa «ut»?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Trabajo y aprendo",
-        "questionId": "d3-q3"
+        "text": "A) Y",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) No trabajo",
-        "questionId": "d3-q3"
+        "text": "B) Para que",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Aprendo antes de trabajar",
-        "questionId": "d3-q3"
+        "text": "C) No",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Trabajo para aprender",
-        "questionId": "d3-q3"
+        "text": "D) Pero",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "En «laboro ut discam», ¿qué es «laboro»?",
-        "questionId": "d3-q4",
+        "text": "¿Qué pregunta responde «ut»?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +777,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) La meta",
-        "questionId": "d3-q4"
+        "text": "A) ¿Dónde?",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Lo que hago",
-        "questionId": "d3-q4"
+        "text": "B) ¿Quién?",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Una negación",
-        "questionId": "d3-q4"
+        "text": "C) ¿Para qué?",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Un nombre",
-        "questionId": "d3-q4"
+        "text": "D) ¿Cuándo?",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «laboro ut discam»?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Trabajo y aprendo",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) No trabajo",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Aprendo antes de trabajar",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Trabajo para aprender",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "En esa frase, ¿qué responde «ut discam»?",
+        "text": "En «laboro ut discam», ¿qué es «laboro»?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) La meta",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Lo que hago",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Una negación",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Un nombre",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué dice «ut videam»?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,50 +928,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Para qué trabajo",
+        "text": "A) Para que vea",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Dónde trabajo",
+        "text": "B) Y veo",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Con quién trabajo",
+        "text": "C) No veo",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Cuándo trabajo",
+        "text": "D) Con ver",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué dice «trabajo y aprendo»?",
+        "text": "¿Qué significa «venio ut videam»?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,50 +982,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
-        "text": "A) La meta de trabajar",
+        "text": "A) Vengo y veo",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
-        "text": "B) Que no trabajo",
+        "text": "B) No vengo",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) Una lista de dos acciones",
+        "text": "C) Vengo para ver",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) Que aprendo sin trabajar",
+        "text": "D) Veo sin venir",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué escribes al margen junto a «ut»?",
+        "text": "«Trabajo y aprendo» es...",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) ¿Para qué?",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) ¿Quién?",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) ¿Dónde?",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) ¿Cuándo?",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Qué palabra suma cosas iguales y no dice la meta?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) ut",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) non",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) venit",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) et",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 130,
         "column": 3,
         "line": 26,
+        "kind": "option",
+        "text": "A) Una lista",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) Una meta",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) Una negación",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) Un nombre",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe una frase con «para que» y marca la meta.",
+        "text": "Escribe una frase con «para que» sobre Guri.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,48 +1090,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Explica la diferencia entre «et» y «ut».",
         "questionId": "d3-w2",
@@ -1114,30 +1126,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1139,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja una flecha de «laboro» a «ut discam».",
+        "text": "Dibuja una flecha de «venio» a «ut videam».",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,14 +1164,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 144,
@@ -1197,23 +1185,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja dos cuadros: et como lista y ut como meta.",
+        "text": "Dibuja dos cuadros: et como lista y ut como",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,6 +1202,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "lesson",
+        "text": "meta.",
+        "questionId": "d3-w4"
       },
       {
         "index": 149,
@@ -1243,58 +1231,56 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a un niño con un libro y una flecha hacia una estrella."
+        "text": "Dibuja a un niño frente a la Represa de"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula al niño: laboro."
+        "text": "Guri. Dibuja una flecha hacia sus ojos."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula la estrella: ut discam."
+        "text": "Rotula al niño: venio. Rotula los ojos: ut"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe debajo: ¿para qué?"
+        "text": "videam."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué significa «ut» en esta lección?",
+        "prompt": "¿Qué significa «ut»?",
         "choices": [
           "Y",
           "Para que",
@@ -1304,8 +1290,8 @@
         "answer": "Para que",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1322,8 +1308,8 @@
         "answer": "¿Para qué?",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1339,9 +1325,9 @@
         ],
         "answer": "Trabajo para aprender",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1357,92 +1343,74 @@
         ],
         "answer": "Lo que hago",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En esa frase, ¿qué responde «ut discam»?",
+        "prompt": "¿Qué dice «ut videam»?",
         "choices": [
-          "Para qué trabajo",
-          "Dónde trabajo",
-          "Con quién trabajo",
-          "Cuándo trabajo"
+          "Para que vea",
+          "Y veo",
+          "No veo",
+          "Con ver"
         ],
-        "answer": "Para qué trabajo",
+        "answer": "Para que vea",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué dice «trabajo y aprendo»?",
+        "prompt": "¿Qué significa «venio ut videam»?",
         "choices": [
-          "La meta de trabajar",
-          "Que no trabajo",
-          "Una lista de dos acciones",
-          "Que aprendo sin trabajar"
+          "Vengo y veo",
+          "No vengo",
+          "Vengo para ver",
+          "Veo sin venir"
         ],
-        "answer": "Una lista de dos acciones",
+        "answer": "Vengo para ver",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué escribes al margen junto a «ut»?",
+        "prompt": "«Trabajo y aprendo» es...",
         "choices": [
-          "¿Para qué?",
-          "¿Quién?",
-          "¿Dónde?",
-          "¿Cuándo?"
+          "Una lista",
+          "Una meta",
+          "Una negación",
+          "Un nombre"
         ],
-        "answer": "¿Para qué?",
+        "answer": "Una lista",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué palabra suma cosas iguales y no dice la meta?",
-        "choices": [
-          "ut",
-          "non",
-          "venit",
-          "et"
-        ],
-        "answer": "et",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe una frase con «para que» y marca la meta.",
+        "prompt": "Escribe una frase con «para que» sobre Guri.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1452,21 +1420,21 @@
         "prompt": "Explica la diferencia entre «et» y «ut».",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja una flecha de «laboro» a «ut discam».",
+        "prompt": "Dibuja una flecha de «venio» a «ut videam».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
@@ -1478,8 +1446,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

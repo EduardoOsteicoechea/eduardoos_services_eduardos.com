@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Dios llama a Abraham",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos la caída y el diluvio.\nDios cuidó a Noé en el arca y puso el arco iris.\nHoy seguimos con el llamado a Abraham.\n\nDespués de tanto problema en el mundo, ¿a quién crees que llamó Dios y qué le prometió?\n\nDios llamó a Abraham y le hizo una promesa. La promesa es el compromiso de Dios de bendecirlo. También bendeciría a su familia y a sus descendientes."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que Dios cuidó a Noé y puso el arco iris como señal. Hoy sigues con otra promesa: Abraham."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Los patriarcas",
-        "body": "¿Sabes cómo se llama a los padres fundadores de Israel? ¿Quiénes fueron?\n\nSe llaman patriarcas. Los patriarcas son Abraham, Isaac y Jacob. La promesa de Dios pasó por esa familia."
+        "heading": "Punto 2: Dios llama a Abraham",
+        "body": "Después de la sequía llega la lluvia a los Llanos. ¿A quién llamó Dios luego?\n\nDios llamó a Abraham y le pidió que saliera de su tierra. Le prometió bendecirlo a él y a toda su familia."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La tierra prometida",
-        "body": "Imagina que Dios te promete un lugar para vivir. ¿Cómo se llama el lugar que prometió a esta familia?\n\nLa tierra prometida es Canaán. Dios prometió dar esa tierra a la familia de Abraham. Esa tierra era parte de su pacto."
+        "heading": "Punto 3: Las estrellas",
+        "body": "Abraham miró el cielo. En los Llanos el horizonte se ve lejos. ¿Qué vio?\n\nDios le mostró las estrellas. Le prometió una familia muy grande, difícil de contar como ellas."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Un mismo hilo",
-        "body": "Una pregunta con truco: ¿Génesis son cuentos sueltos o una sola historia?\n\nLa creación muestra un mundo bueno. La caída introduce el pecado. El diluvio muestra juicio y cuidado de Noé. Después Dios llama a Abraham: un mismo hilo, no piezas sueltas."
+        "heading": "Punto 4: Los patriarcas",
+        "body": "Un río lleva agua por la llanura. ¿Quiénes llevaron la promesa de Dios?\n\nLos patriarcas: Abraham, Isaac y Jacob. Son los padres fundadores de Israel. La promesa pasó de uno a otro, como el agua de un río sigue su camino."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cinco palabras en orden",
-        "body": "¿Puedes decir en orden las cinco palabras de Génesis? ¿Qué explicarías de cada una?\n\nCreación, caída, diluvio, promesa y patriarcas. Creación: Dios hizo un mundo bueno. Caída y diluvio: el pecado y el juicio. Promesa y patriarcas: Dios bendice a la familia de Abraham."
+        "heading": "Punto 5: La tierra prometida",
+        "body": "Piensa en un lugar lejano, al horizonte. ¿Qué tierra prometió Dios a Abraham?\n\nLa tierra prometida es Canaán. Dios prometió dar esa tierra a su gente. Era parte de su pacto: promesa firme."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un mismo hilo",
+        "body": "Una pregunta con truco: ¿lluvia y sequía en los Llanos son historias sueltas?\n\nNo: son partes de un mismo paisaje. En Génesis pasa igual: creación, caída, diluvio y promesa forman un mismo hilo."
       }
     ],
     "summary": "Dios llamó a Abraham y prometió bendecir a su familia: Isaac y Jacob, los patriarcas.",
@@ -43,7 +48,7 @@
     "priorDayRecap": "Caída y diluvio en profundidad. Hoy profundizamos en la caída y el diluvio. La caída ayuda a explicar por qué hay dolor y desobediencia en el mundo. El diluvio muestra la gravedad del mal y también la misericordia de.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a Abraham mirando las estrellas del cielo. Dibuja debajo a Isaac y a Jacob con su nombre. Añade una flecha que diga: la promesa de Dios. Rotula la tierra prometida: Canaán.",
+    "imageBandInstruction": "Dibuja a Abraham mirando las estrellas. Debajo escribe a Isaac y a Jacob. Añade una flecha: la promesa de Dios. Rotula la tierra prometida: Canaán.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos la caída y el diluvio."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Dios cuidó a Noé en el arca y puso el arco iris."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy seguimos con el llamado a Abraham."
+        "text": "Ayer viste que Dios cuidó a Noé"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y puso el arco iris como señal."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Después de tanto problema en el mundo, ¿a quién crees"
+        "text": "Hoy sigues con otra promesa: Abraham."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "que llamó Dios y qué le prometió?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,36 +153,36 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Dios llama a Abraham"
+        "kind": "lesson",
+        "text": "Después de la sequía llega la lluvia"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "a los Llanos. ¿A quién llamó Dios luego?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Dios llamó a Abraham y le hizo una promesa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "La promesa es el compromiso de Dios de bendecirlo."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "También bendeciría a su familia y a sus descendientes."
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -190,8 +195,8 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Dios llama a Abraham"
       },
       {
         "index": 22,
@@ -204,29 +209,29 @@
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios llamó a Abraham y le pidió"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "¿Sabes cómo se llama a los padres fundadores"
+        "text": "que saliera de su tierra."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "de Israel? ¿Quiénes fueron?"
+        "text": "Le prometió bendecirlo a él"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y a toda su familia."
       },
       {
         "index": 27,
@@ -239,15 +244,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Los patriarcas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,42 +266,42 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Se llaman patriarcas."
+        "text": "Abraham miró el cielo. En los Llanos"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Los patriarcas son Abraham, Isaac y Jacob."
+        "text": "el horizonte se ve lejos. ¿Qué vio?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "La promesa de Dios pasó por esa familia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Las estrellas"
       },
       {
         "index": 37,
@@ -310,21 +315,21 @@
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Imagina que Dios te promete un lugar para vivir."
+        "text": "Dios le mostró las estrellas."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "¿Cómo se llama el lugar que prometió a esta familia?"
+        "text": "Le prometió una familia muy grande,"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "difícil de contar como ellas."
       },
       {
         "index": 41,
@@ -337,15 +342,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: La tierra prometida"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,42 +364,42 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "La tierra prometida es Canaán."
+        "text": "Un río lleva agua por la llanura."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Dios prometió dar esa tierra a la familia de Abraham."
+        "text": "¿Quiénes llevaron la promesa de Dios?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Esa tierra era parte de su pacto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Los patriarcas"
       },
       {
         "index": 51,
@@ -408,28 +413,28 @@
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Génesis son cuentos sueltos"
+        "text": "Los patriarcas: Abraham, Isaac y Jacob."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "o una sola historia?"
+        "text": "Son los padres fundadores de Israel."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La promesa pasó de uno a otro, como"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el agua de un río sigue su camino."
       },
       {
         "index": 56,
@@ -442,64 +447,64 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 4: Un mismo hilo"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "La creación muestra un mundo bueno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "La caída introduce el pecado."
+        "text": "Piensa en un lugar lejano, al horizonte."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "El diluvio muestra juicio y cuidado de Noé."
+        "text": "¿Qué tierra prometió Dios a Abraham?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Después Dios llama a Abraham: un mismo hilo, no piezas sueltas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: La tierra prometida"
       },
       {
         "index": 66,
@@ -513,21 +518,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "¿Puedes decir en orden las cinco palabras de Génesis?"
+        "text": "La tierra prometida es Canaán."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué explicarías de cada una?"
+        "text": "Dios prometió dar esa tierra a su gente."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Era parte de su pacto: promesa firme."
       },
       {
         "index": 70,
@@ -540,15 +545,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Cinco palabras en orden"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -562,28 +567,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Creación, caída, diluvio, promesa y patriarcas."
+        "text": "Una pregunta con truco: ¿lluvia y sequía"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Creación: Dios hizo un mundo bueno."
+        "text": "en los Llanos son historias sueltas?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Caída y diluvio: el pecado y el juicio."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Promesa y patriarcas: Dios bendice a la familia de Abraham."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Un mismo hilo"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No: son partes de un mismo paisaje."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿A quién llamó Dios para hacerle una promesa?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "En Génesis pasa igual: creación, caída,"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) A Noé",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "diluvio y promesa forman un mismo hilo."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) A Adán",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) A Abraham",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) A un rey",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué prometió Dios a Abraham?",
-        "questionId": "d4-q2",
+        "text": "¿A quién llamó Dios para una promesa?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Que no tendría familia",
-        "questionId": "d4-q2"
+        "text": "A) A Noé",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Un barco",
-        "questionId": "d4-q2"
+        "text": "B) A Adán",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Una torre",
-        "questionId": "d4-q2"
+        "text": "C) A Abraham",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Bendecirlo a él y a su familia",
-        "questionId": "d4-q2"
+        "text": "D) A un rey",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cómo se llaman los padres fundadores de Israel?",
-        "questionId": "d4-q3",
+        "text": "¿Qué prometió Dios a Abraham?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Profetas",
-        "questionId": "d4-q3"
+        "text": "A) Que no tendría familia",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Patriarcas",
-        "questionId": "d4-q3"
+        "text": "B) Un barco",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Jueces",
-        "questionId": "d4-q3"
+        "text": "C) Una torre",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Ángeles",
-        "questionId": "d4-q3"
+        "text": "D) Bendecirlo a él y su familia",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Quiénes son los patriarcas?",
-        "questionId": "d4-q4",
+        "text": "¿Qué le mostró Dios a Abraham?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Abraham, Isaac y Jacob",
-        "questionId": "d4-q4"
+        "text": "A) Un arca",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Noé y Adán",
-        "questionId": "d4-q4"
+        "text": "B) Las estrellas",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Pedro y Pablo",
-        "questionId": "d4-q4"
+        "text": "C) Un río",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Eva y Sara",
-        "questionId": "d4-q4"
+        "text": "D) Una torre",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo se llama a los padres de Israel?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Patriarcas",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Profetas",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Jueces",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Ángeles",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Cuál es la tierra prometida?",
+        "text": "¿Quiénes son los patriarcas?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Egipto",
+        "text": "A) Noé y Adán",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Roma",
+        "text": "B) Pedro y Pablo",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Canaán",
+        "text": "C) Abraham, Isaac y Jacob",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Babilonia",
+        "text": "D) Eva y Sara",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué muestra la creación?",
+        "text": "¿Cuál es la tierra prometida?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Un mundo bueno",
+        "text": "A) Canaán",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Un juicio",
+        "text": "B) Egipto",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Una torre",
+        "text": "C) Roma",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Una ciudad",
+        "text": "D) Babilonia",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué introduce la caída?",
+        "text": "¿Qué es un pacto?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) La promesa",
+        "text": "A) Un barco",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) El arca",
+        "text": "B) Un río",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) El descanso",
+        "text": "C) Una torre",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) El pecado",
+        "text": "D) Una promesa firme",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué une a Génesis como un solo relato?",
+        "text": "¿Qué une las partes de Génesis?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Una lista de reglas",
+        "text": "A) Cuentos sueltos",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) La promesa de Dios",
+        "text": "B) Un mismo hilo",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Un mapa",
+        "text": "C) Una lista",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Un castillo",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe en orden: creación, caída, diluvio, promesa, patriarcas.",
+        "text": "Escribe en orden: creación, caída, diluvio,",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "promesa.",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Escribe una oración que explique cada una de las cinco.",
+        "text": "Cuenta qué le prometió Dios a Abraham.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1147,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una línea con las cinco palabras de Génesis en orden.",
+        "text": "Dibuja un árbol: Abraham, Isaac y Jacob.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,22 +1183,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
       },
       {
         "index": 145,
@@ -1212,7 +1212,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja un árbol de familia: Abraham, Isaac y Jacob.",
+        "text": "Dibuja una línea con las cuatro partes de",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1226,8 +1226,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "Génesis.",
         "questionId": "d4-w4"
       },
       {
@@ -1250,37 +1250,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a Abraham mirando las estrellas del cielo."
+        "text": "Dibuja a Abraham mirando las estrellas."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja debajo a Isaac y a Jacob con su nombre."
+        "text": "Debajo escribe a Isaac y a Jacob. Añade"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Añade una flecha que diga: la promesa de Dios."
+        "text": "una flecha: la promesa de Dios. Rotula la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula la tierra prometida: Canaán."
+        "text": "tierra prometida: Canaán."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1293,7 +1292,7 @@
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿A quién llamó Dios para hacerle una promesa?",
+        "prompt": "¿A quién llamó Dios para una promesa?",
         "choices": [
           "A Noé",
           "A Adán",
@@ -1303,8 +1302,8 @@
         "answer": "A Abraham",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1316,27 +1315,9 @@
           "Que no tendría familia",
           "Un barco",
           "Una torre",
-          "Bendecirlo a él y a su familia"
+          "Bendecirlo a él y su familia"
         ],
-        "answer": "Bendecirlo a él y a su familia",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Cómo se llaman los padres fundadores de Israel?",
-        "choices": [
-          "Profetas",
-          "Patriarcas",
-          "Jueces",
-          "Ángeles"
-        ],
-        "answer": "Patriarcas",
+        "answer": "Bendecirlo a él y su familia",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1344,17 +1325,17 @@
         }
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Quiénes son los patriarcas?",
+        "prompt": "¿Qué le mostró Dios a Abraham?",
         "choices": [
-          "Abraham, Isaac y Jacob",
-          "Noé y Adán",
-          "Pedro y Pablo",
-          "Eva y Sara"
+          "Un arca",
+          "Las estrellas",
+          "Un río",
+          "Una torre"
         ],
-        "answer": "Abraham, Isaac y Jacob",
+        "answer": "Las estrellas",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1362,117 +1343,135 @@
         }
       },
       {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Cómo se llama a los padres de Israel?",
+        "choices": [
+          "Patriarcas",
+          "Profetas",
+          "Jueces",
+          "Ángeles"
+        ],
+        "answer": "Patriarcas",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuál es la tierra prometida?",
+        "prompt": "¿Quiénes son los patriarcas?",
         "choices": [
-          "Egipto",
-          "Roma",
-          "Canaán",
-          "Babilonia"
+          "Noé y Adán",
+          "Pedro y Pablo",
+          "Abraham, Isaac y Jacob",
+          "Eva y Sara"
         ],
-        "answer": "Canaán",
+        "answer": "Abraham, Isaac y Jacob",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué muestra la creación?",
+        "prompt": "¿Cuál es la tierra prometida?",
         "choices": [
-          "Un mundo bueno",
-          "Un juicio",
-          "Una torre",
-          "Una ciudad"
+          "Canaán",
+          "Egipto",
+          "Roma",
+          "Babilonia"
         ],
-        "answer": "Un mundo bueno",
+        "answer": "Canaán",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué introduce la caída?",
+        "prompt": "¿Qué es un pacto?",
         "choices": [
-          "La promesa",
-          "El arca",
-          "El descanso",
-          "El pecado"
+          "Un barco",
+          "Un río",
+          "Una torre",
+          "Una promesa firme"
         ],
-        "answer": "El pecado",
+        "answer": "Una promesa firme",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué une a Génesis como un solo relato?",
+        "prompt": "¿Qué une las partes de Génesis?",
         "choices": [
-          "Una lista de reglas",
-          "La promesa de Dios",
-          "Un mapa",
+          "Cuentos sueltos",
+          "Un mismo hilo",
+          "Una lista",
           "Un castillo"
         ],
-        "answer": "La promesa de Dios",
+        "answer": "Un mismo hilo",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe en orden: creación, caída, diluvio, promesa, patriarcas.",
+        "prompt": "Escribe en orden: creación, caída, diluvio, promesa.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe una oración que explique cada una de las cinco.",
+        "prompt": "Cuenta qué le prometió Dios a Abraham.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una línea con las cinco palabras de Génesis en orden.",
+        "prompt": "Dibuja un árbol: Abraham, Isaac y Jacob.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un árbol de familia: Abraham, Isaac y Jacob.",
+        "prompt": "Dibuja una línea con las cuatro partes de Génesis.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

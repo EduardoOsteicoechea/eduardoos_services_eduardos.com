@@ -70,22 +70,56 @@ for (const week of weeks) {
 
     const qs = doc.quiz?.questions || [];
     const { mcq, write } = countMcqWrite(qs);
-    if (qs.length !== 12 || mcq !== 8 || write !== 4) {
+    // Up to 12 questions (8 mcq + 2 write + 2 schematic). Questions are dropped when a blank line
+    // between them does not fit, but the minimum mix is 2 selection, 1 schematic, 1 written reflection.
+    const schematic = qs.filter((q) => q.type === "write" && q.schematic).length;
+    const reflection = write - schematic;
+    if (qs.length > 12 || mcq < 2 || schematic < 1 || reflection < 1) {
       fileIssues.push({
         sev: "high",
         code: "quizCount",
-        detail: `${qs.length} total ${mcq} mcq ${write} write`,
+        detail: `${qs.length} total ${mcq} mcq ${reflection} reflection ${schematic} schematic`,
       });
     }
 
     const body = allText(doc);
     const day = doc.day;
 
-    if (day >= 2) {
-      if (!/¿Qué aprendiste ayer sobre esta misma materia\?/i.test(body)) {
-        fileIssues.push({ sev: "high", code: "ayerQuestion" });
+    // Every class opens with exactly «¿Qué aprendiste ayer?» and Punto 1 is «Repaso de ayer».
+    if (!body.includes("¿Qué aprendiste ayer?") || /sobre esta misma materia/i.test(body)) {
+      fileIssues.push({ sev: "high", code: "ayerQuestion" });
+    }
+    const pts = L.points || [];
+    if (!/^Punto 1: Repaso de ayer/i.test(pts[0]?.heading || "")) {
+      fileIssues.push({ sev: "high", code: "punto1Repaso" });
+    }
+    if (pts.length < 5 || pts.length > 7) {
+      fileIssues.push({ sev: "high", code: "puntoCount", detail: String(pts.length) });
+    }
+    pts.forEach((pt, i) => {
+      if (!new RegExp("^Punto " + (i + 1) + ": ").test(pt.heading || "")) {
+        fileIssues.push({ sev: "high", code: "puntoNumbering", detail: pt.heading });
       }
-      if (!/## Repaso/i.test(body)) fileIssues.push({ sev: "high", code: "repasoHeading" });
+    });
+    // Venezuelan metaphor: the assigned landmark must be named in the lesson text.
+    {
+      const meta = JSON.parse(fs.readFileSync(path.join(__dirname, "homescool-venezuela-metaphors.json"), "utf8"));
+      const assigned = meta["w" + doc.week]?.[doc.subject];
+      if (!assigned) fileIssues.push({ sev: "high", code: "noMetaphorAssigned" });
+      else {
+        const slotTxt = (L.slotSequence || []).map((s) => s.text || "").join("\n");
+        const hay = (body + "\n" + slotTxt).toLowerCase();
+        if (!assigned.keywords.some((k) => hay.includes(k.toLowerCase()))) {
+          fileIssues.push({ sev: "high", code: "metaphorMissing", detail: assigned.hito });
+        }
+      }
+    }
+    {
+      const sl = L.slotSequence || [];
+      const cues = sl.filter((s) => s.text === "Escribe aquí lo que aprendiste:").length;
+      const dashes = sl.filter((s) => /^_{40}$/.test(s.text || "")).length;
+      if (cues !== pts.length) fileIssues.push({ sev: "high", code: "copyCue", detail: cues + "/" + pts.length });
+      if (dashes < pts.length * 2) fileIssues.push({ sev: "high", code: "dashRows", detail: String(dashes) });
     }
 
     const slots = L.slotSequence || doc.slotSequence;
@@ -141,7 +175,10 @@ for (const week of weeks) {
       }
 
       const kImage = col3ImageLines.length;
-      const maxLessonSlots = 156 - questionSlots.length * 5 - kImage;
+      const quizInk = slots.filter((s) =>
+        ["question", "option", "answerLine"].includes(s.kind),
+      ).length;
+      const maxLessonSlots = 156 - quizInk - kImage;
       const lessonLike = slots.filter((s) =>
         ["opening", "lesson", "summary", "heading", "blank"].includes(s.kind),
       ).length;
@@ -163,10 +200,32 @@ for (const week of weeks) {
           qs.find((q) => q.id === qSlot.questionId)?.type ||
           "mcq";
         const wantKind = qType === "mcq" ? "option" : "answerLine";
-        for (let off = 1; off <= 4; off++) {
-          const follow = slots.find((s) => s.column === c && s.line === l + off);
+        // mcq: 4 options; write/schematic: 2 answer lines (8 pt pack).
+        const followCount = qType === "mcq" ? 4 : 2;
+        // Wrapped prompts continue on lesson slots that carry the same questionId.
+        let promptExtra = 0;
+        while (
+          slots.find(
+            (s) =>
+              s.column === c &&
+              s.line === l + 1 + promptExtra &&
+              s.kind === "lesson" &&
+              s.questionId === qSlot.questionId,
+          )
+        ) {
+          promptExtra++;
+        }
+        const firstFollow = l + 1 + promptExtra;
+        for (let off = 0; off < followCount; off++) {
+          const follow = slots.find((s) => s.column === c && s.line === firstFollow + off);
+          // mcq: options may wrap; only the first option row is checked here.
+          if (qType === "mcq" && off > 0) break;
           if (!follow || follow.kind !== wantKind) {
-            fileIssues.push({ sev: "high", code: "questionBlock4", detail: qSlot.questionId });
+            fileIssues.push({
+              sev: "high",
+              code: qType === "mcq" ? "questionBlock4" : "questionBlock2",
+              detail: qSlot.questionId,
+            });
             break;
           }
         }
@@ -182,10 +241,23 @@ for (const week of weeks) {
         }
         if (
           seenQuiz &&
+          !s.questionId &&
           ["opening", "lesson", "heading", "summary"].includes(s.kind) &&
           String(s.text || "").trim()
         ) {
           fileIssues.push({ sev: "high", code: "packOrderNotSequential", detail: `index=${s.index}` });
+          break;
+        }
+      }
+      // One blank line between consecutive quiz questions (not needed at the top of a column).
+      for (let oi = 1; oi < ordered.length; oi++) {
+        const s = ordered[oi];
+        if (s.kind !== "question") continue;
+        const prev = ordered[oi - 1];
+        const firstQuestion = !ordered.slice(0, oi).some((x) => x.kind === "question");
+        if (firstQuestion || s.line === 1) continue;
+        if (prev.kind !== "blank") {
+          fileIssues.push({ sev: "high", code: "quizNoGap", detail: s.questionId });
           break;
         }
       }
@@ -234,18 +306,23 @@ for (const week of weeks) {
       for (const h of slots.filter((s) => s.kind === "heading")) {
         const after = slots.find((s) => s.column === h.column && s.line === h.line + 1);
         const before = slots.find((s) => s.column === h.column && s.line === h.line - 1);
+        // Multi-line headings (8 pt wrap) may continue on the next line.
         const afterOk =
-          after && (after.kind === "blank" || after.kind === "question");
+          after &&
+          (after.kind === "blank" || after.kind === "question" || after.kind === "heading");
         const beforeOk =
           h.line === 1 ||
-          (before && (before.kind === "blank" || before.kind === "opening"));
+          (before &&
+            (before.kind === "blank" || before.kind === "opening" || before.kind === "heading"));
         if (!afterOk || !beforeOk) {
           fileIssues.push({ sev: "med", code: "headingBlankBand" });
           break;
         }
       }
 
-      const opening = slots.find((s) => s.kind === "opening");
+      // A wrapped opening spans several consecutive `opening` slots; blanks follow the last one.
+      const openings = slots.filter((s) => s.kind === "opening");
+      const opening = openings.length ? openings[openings.length - 1] : null;
       if (opening) {
         const b1 = slots.find(
           (s) => s.column === opening.column && s.line === opening.line + 1,
@@ -253,30 +330,33 @@ for (const week of weeks) {
         const b2 = slots.find(
           (s) => s.column === opening.column && s.line === opening.line + 2,
         );
-        if (!b1 || b1.kind !== "blank" || !b2 || b2.kind !== "blank") {
+        if (!b1 || b1.kind !== "blank" || !b2 || !/^_{40}$/.test(b2.text || "")) {
           fileIssues.push({ sev: "high", code: "openingTwoBlankAnswers" });
         }
       }
 
-      // Blank between consecutive question blocks (after 4 response rows).
+      // Optional blank between question blocks (mcq = 4 response rows; write = 2).
+      // At 8 pt, contiguous blocks are allowed when the lesson wrap needs the space.
       for (let qi = 0; qi < questionSlots.length - 1; qi++) {
         const q = questionSlots[qi];
         const nextQ = questionSlots[qi + 1];
-        const gapIndex = q.index + 5;
-        const gap = slots.find((s) => s.index === gapIndex);
-        if (!gap || gap.kind !== "blank" || nextQ.index !== gapIndex + 1) {
-          // Allow column-pad blanks between end of block and next question.
-          const between = slots.filter(
-            (s) => s.index > q.index + 4 && s.index < nextQ.index,
-          );
-          if (!between.some((s) => s.kind === "blank")) {
-            fileIssues.push({
-              sev: "high",
-              code: "questionBlankBetween",
-              detail: q.questionId,
-            });
-            break;
-          }
+        let end = q.index;
+        for (const s of slots) {
+          if (s.index <= q.index) continue;
+          if (s.index >= nextQ.index) break;
+          if (s.kind === "option" || s.kind === "answerLine") end = s.index;
+          else if (s.kind === "lesson" && s.questionId === q.questionId) end = s.index;
+          else break;
+        }
+        if (nextQ.index === end + 1) continue; // contiguous ok
+        const between = slots.filter((s) => s.index > end && s.index < nextQ.index);
+        if (!between.some((s) => s.kind === "blank")) {
+          fileIssues.push({
+            sev: "high",
+            code: "questionBlankBetween",
+            detail: q.questionId,
+          });
+          break;
         }
       }
 
@@ -323,7 +403,7 @@ for (const week of weeks) {
       if (genericMcqPattern(q).length) genMcq++;
     }
     if (genMcq >= 4) {
-      fileIssues.push({ sev: "high", code: "genericQuiz", detail: `${genMcq}/12` });
+      fileIssues.push({ sev: "high", code: "genericQuiz", detail: `${genMcq}/${qs.length}` });
     }
 
     const arch = path.join(dir, "archive", name.replace(".eoschool.json", ".pre-v2-20261002.eoschool.json"));

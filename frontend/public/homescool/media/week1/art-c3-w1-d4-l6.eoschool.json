@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La curva S",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicaste las líneas L rectas.\nVimos horizontales, verticales y diagonales.\nDonde se encuentran dos rectas se forma un ángulo.\n\nPiensa en una ola o en una hoja. ¿Qué tipo de línea usarías para su borde?\n\nUna línea curva y suave es una S. Una ola, una hoja o una serpiente corta usan S. La S puede ser suave, ondulada o en espiral. Las curvas le dan movimiento a tu dibujo."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer dibujaste rectas L: horizontales, verticales y diagonales. Hoy llegan las curvas de las dunas."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Combinar las letras",
-        "body": "Imagina que dibujas una serpiente. ¿Qué letras usarías para su cuerpo, su cabeza y sus ojos?\n\nEl cuerpo es una S larga. La cabeza puede ser una O. Los ojos son dos puntos: dos i. Con O, i y S ya tienes una serpiente."
+        "heading": "Punto 2: La S, la línea curva",
+        "body": "El viento mueve la arena de las dunas. ¿Qué línea dibuja su borde?\n\nEl borde de una duna es una curva. Esa línea se llama S, como la letra. Las curvas dan movimiento al dibujo."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El orden para dibujar",
-        "body": "¿Por dónde empezarías un dibujo con las cuatro letras? ¿Por lo grande o por los adornos?\n\nPrimero bloquea las formas grandes: O y L. Bloquear es dibujar lo grande, sin detalles. Después añade las curvas S. Al final pones los puntos i."
+        "heading": "Punto 3: Tipos de curva",
+        "body": "Las curvas pueden ser de muchas formas. ¿Cómo es una onda en la arena?\n\nPuede ser suave, como una duna. Puede ser ondulada, como las ondas. O puede ser espiral, como un caracol."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Primero la estructura",
-        "body": "Una pregunta con truco: ¿qué pasa si empiezas por los adornos?\n\nPierdes la forma grande y el dibujo se descuadra. La estructura OiLS es el esqueleto del dibujo. Con el esqueleto firme, los detalles se acomodan. Primero el esqueleto; después, la decoración."
+        "heading": "Punto 4: Combinar las letras",
+        "body": "Dibuja una duna, un sol y huellas. ¿Qué letra usas para cada cosa?\n\nLa duna es una S larga. El sol es una O. Las huellas son puntos: varias i. Con O, i y S ya hay un paisaje."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Nombrar lo que dibujaste",
-        "body": "Ahora tú: ¿cómo nombrarías cada letra que usaste en tu dibujo?\n\nHaz una lista al margen: O, i, L y S. Junto a cada letra, escribe qué parte del dibujo es. Por ejemplo: «S: el cuerpo de la serpiente». Así demuestras que sabes lo que dibujaste."
+        "heading": "Punto 5: Primero lo grande",
+        "body": "¿Por dónde empiezas: por las huellas o por la duna grande?\n\nPrimero bloqueas: dibujas lo grande sin detalles. Es la duna y el sol. Al final pones las huellas, las i."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Primero el esqueleto",
+        "body": "Una pregunta con truco: ¿qué pasa si empiezas por las huellas?\n\nPierdes la forma de la duna. Las formas grandes son el esqueleto. Con el esqueleto firme, los detalles se acomodan solos."
       }
     ],
-    "summary": "Con las curvas S completamos OiLS. Un buen dibujo empieza con la estructura y deja los adornos para el final.",
+    "summary": "Con las curvas S completamos OiLS. En los Médanos de Coro el viento moldea las dunas: primero va el esqueleto y los detalles al final.",
     "weekRecap": "OiLS: O redondos, i puntos, L rectas, S curvas. Primero la forma grande, luego el detalle.",
     "priorDayRecap": "Ayer practicaste líneas L rectas y ángulos claros.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una hoja, una ola o una serpiente con las cuatro letras. Primero las formas grandes, luego las curvas S, al final las i. Escribe la lista O-i-L-S al margen del dibujo. Junto a cada letra anota qué parte representa.",
+    "imageBandInstruction": "Dibuja una duna, un sol y huellas. Primero lo grande, luego las curvas S. Al final pon las huellas, las i. Rotula cada parte con su letra.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicaste las líneas L rectas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Vimos horizontales, verticales y diagonales."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Donde se encuentran dos rectas se forma un ángulo."
+        "text": "Ayer dibujaste rectas L: horizontales,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "verticales y diagonales."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Piensa en una ola o en una hoja. ¿Qué tipo de línea"
+        "text": "Hoy llegan las curvas de las dunas."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "usarías para su borde?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,99 +153,99 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: La curva S"
+        "kind": "lesson",
+        "text": "El viento mueve la arena de las dunas."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué línea dibuja su borde?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Una línea curva y suave es una S."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Una ola, una hoja o una serpiente corta usan S."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "La S puede ser suave, ondulada o en espiral."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Las curvas le dan movimiento a tu dibujo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La S, la línea curva"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El borde de una duna es una curva."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Esa línea se llama S, como la letra."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Imagina que dibujas una serpiente. ¿Qué letras usarías"
+        "text": "Las curvas dan movimiento al dibujo."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "para su cuerpo, su cabeza y sus ojos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -253,43 +258,43 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Combinar las letras"
+        "kind": "lesson",
+        "text": "Las curvas pueden ser de muchas"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "formas. ¿Cómo es una onda en la arena?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "El cuerpo es una S larga."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "La cabeza puede ser una O."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Los ojos son dos puntos: dos i."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Con O, i y S ya tienes una serpiente."
+        "kind": "heading",
+        "text": "Punto 3: Tipos de curva"
       },
       {
         "index": 36,
@@ -303,42 +308,42 @@
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Puede ser suave, como una duna."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Puede ser ondulada, como las ondas."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "O puede ser espiral, como un caracol."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "¿Por dónde empezarías un dibujo con las cuatro letras?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Por lo grande o por los adornos?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -351,43 +356,43 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: El orden para dibujar"
+        "kind": "lesson",
+        "text": "Dibuja una duna, un sol y huellas."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué letra usas para cada cosa?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Primero bloquea las formas grandes: O y L."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Bloquear es dibujar lo grande, sin detalles."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Después añade las curvas S."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Al final pones los puntos i."
+        "kind": "heading",
+        "text": "Punto 4: Combinar las letras"
       },
       {
         "index": 50,
@@ -401,264 +406,252 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "La duna es una S larga."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El sol es una O."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las huellas son puntos: varias i."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿qué pasa si empiezas"
+        "text": "Con O, i y S ya hay un paisaje."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "por los adornos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Primero la estructura"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Por dónde empiezas: por las huellas"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Pierdes la forma grande y el dibujo se descuadra."
+        "text": "o por la duna grande?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "La estructura OiLS es el esqueleto del dibujo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Con el esqueleto firme, los detalles se acomodan."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Primero el esqueleto; después, la decoración."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Primero lo grande"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero bloqueas: dibujas lo grande"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sin detalles. Es la duna y el sol."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: ¿cómo nombrarías cada letra que usaste"
+        "text": "Al final pones las huellas, las i."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "en tu dibujo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Nombrar lo que dibujaste"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿qué pasa si"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Haz una lista al margen: O, i, L y S."
+        "text": "empiezas por las huellas?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Junto a cada letra, escribe qué parte del dibujo es."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Por ejemplo: «S: el cuerpo de la serpiente»."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Así demuestras que sabes lo que dibujaste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Primero el esqueleto"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pierdes la forma de la duna."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las formas grandes son el esqueleto."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué letra de OiLS son las líneas curvas?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Con el esqueleto firme, los detalles"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) L",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "se acomodan solos."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) O",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) S",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) i",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué objeto usa una curva S?",
-        "questionId": "d4-q2",
+        "text": "¿Qué letra son las curvas?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Una mesa",
-        "questionId": "d4-q2"
+        "text": "A) L",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Una caja",
-        "questionId": "d4-q2"
+        "text": "B) O",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Un plato",
-        "questionId": "d4-q2"
+        "text": "C) S",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Una ola",
-        "questionId": "d4-q2"
+        "text": "D) i",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "En la serpiente, ¿qué letra es el cuerpo?",
-        "questionId": "d4-q3",
+        "text": "¿Qué línea usa el borde de una duna?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) i",
-        "questionId": "d4-q3"
+        "text": "A) Una recta L",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) S",
-        "questionId": "d4-q3"
+        "text": "B) Un punto i",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) L",
-        "questionId": "d4-q3"
+        "text": "C) Una O",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) O",
-        "questionId": "d4-q3"
+        "text": "D) Una curva S",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "En la serpiente, ¿qué letra son los ojos?",
-        "questionId": "d4-q4",
+        "text": "En el paisaje, ¿qué letra es la duna?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,7 +789,7 @@
         "line": 49,
         "kind": "option",
         "text": "A) i",
-        "questionId": "d4-q4"
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
@@ -804,7 +797,7 @@
         "line": 50,
         "kind": "option",
         "text": "B) S",
-        "questionId": "d4-q4"
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
@@ -812,7 +805,7 @@
         "line": 51,
         "kind": "option",
         "text": "C) L",
-        "questionId": "d4-q4"
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
@@ -820,21 +813,68 @@
         "line": 52,
         "kind": "option",
         "text": "D) O",
-        "questionId": "d4-q4"
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "En el paisaje, ¿qué letra es el sol?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) O",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) S",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) L",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) i",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué se dibuja primero en un dibujo con OiLS?",
+        "text": "¿Qué letra son las huellas?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Los puntos",
+        "text": "A) S",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Los adornos",
+        "text": "B) L",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Las formas grandes",
+        "text": "C) i",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) La sombra",
+        "text": "D) O",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué se pone al final del dibujo?",
+        "text": "¿Qué significa bloquear?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Los puntos i",
+        "text": "A) Dibujar lo grande sin detalles",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Las formas grandes",
+        "text": "B) Borrar todo",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) El esqueleto",
+        "text": "C) Pintar de color",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) El eje",
+        "text": "D) Poner puntos",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué pasa si empiezas por los adornos?",
+        "text": "¿Qué se pone al final?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) El dibujo queda firme",
+        "text": "A) La duna grande",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Se vuelve una L",
+        "text": "B) El sol",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Se borran los puntos",
+        "text": "C) El esqueleto",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Pierdes la forma grande",
+        "text": "D) Las huellas, las i",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué escribes al margen al terminar?",
+        "text": "¿Qué es el esqueleto del dibujo?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Tu nombre",
+        "text": "A) Los adornos",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) La lista O-i-L-S",
+        "text": "B) Las formas grandes",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) La fecha",
+        "text": "C) Las huellas",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Un número",
+        "text": "D) El papel",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe qué parte de tu dibujo es O, i, L y S.",
+        "text": "Escribe qué letra usaste para la duna, el sol y",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "las huellas.",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica por qué la estructura va antes que los adornos.",
+        "text": "Explica por qué el esqueleto va antes.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1147,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una serpiente y rotula su S, su O y sus dos i.",
+        "text": "Dibuja una duna con S, un sol con O y",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,27 +1185,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "huellas con i.",
         "questionId": "d4-w3"
       },
       {
@@ -1204,15 +1204,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja los pasos: formas grandes, curvas y puntos.",
+        "text": "Dibuja los pasos: lo grande, curvas y huellas.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,14 +1229,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1250,37 +1250,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una hoja, una ola o una serpiente con las cuatro letras."
+        "text": "Dibuja una duna, un sol y huellas. Primero"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Primero las formas grandes, luego las curvas S, al final las i."
+        "text": "lo grande, luego las curvas S. Al final pon"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe la lista O-i-L-S al margen del dibujo."
+        "text": "las huellas, las i. Rotula cada parte con su"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Junto a cada letra anota qué parte representa."
+        "text": "letra."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1293,7 +1292,7 @@
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS son las líneas curvas?",
+        "prompt": "¿Qué letra son las curvas?",
         "choices": [
           "L",
           "O",
@@ -1303,33 +1302,33 @@
         "answer": "S",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué objeto usa una curva S?",
+        "prompt": "¿Qué línea usa el borde de una duna?",
         "choices": [
-          "Una mesa",
-          "Una caja",
-          "Un plato",
-          "Una ola"
+          "Una recta L",
+          "Un punto i",
+          "Una O",
+          "Una curva S"
         ],
-        "answer": "Una ola",
+        "answer": "Una curva S",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "En la serpiente, ¿qué letra es el cuerpo?",
+        "prompt": "En el paisaje, ¿qué letra es la duna?",
         "choices": [
           "i",
           "S",
@@ -1339,146 +1338,146 @@
         "answer": "S",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "En la serpiente, ¿qué letra son los ojos?",
+        "prompt": "En el paisaje, ¿qué letra es el sol?",
         "choices": [
-          "i",
+          "O",
           "S",
           "L",
-          "O"
+          "i"
         ],
-        "answer": "i",
+        "answer": "O",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué se dibuja primero en un dibujo con OiLS?",
+        "prompt": "¿Qué letra son las huellas?",
         "choices": [
-          "Los puntos",
-          "Los adornos",
-          "Las formas grandes",
-          "La sombra"
+          "S",
+          "L",
+          "i",
+          "O"
         ],
-        "answer": "Las formas grandes",
+        "answer": "i",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué se pone al final del dibujo?",
+        "prompt": "¿Qué significa bloquear?",
         "choices": [
-          "Los puntos i",
-          "Las formas grandes",
-          "El esqueleto",
-          "El eje"
+          "Dibujar lo grande sin detalles",
+          "Borrar todo",
+          "Pintar de color",
+          "Poner puntos"
         ],
-        "answer": "Los puntos i",
+        "answer": "Dibujar lo grande sin detalles",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué pasa si empiezas por los adornos?",
+        "prompt": "¿Qué se pone al final?",
         "choices": [
-          "El dibujo queda firme",
-          "Se vuelve una L",
-          "Se borran los puntos",
-          "Pierdes la forma grande"
+          "La duna grande",
+          "El sol",
+          "El esqueleto",
+          "Las huellas, las i"
         ],
-        "answer": "Pierdes la forma grande",
+        "answer": "Las huellas, las i",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué escribes al margen al terminar?",
+        "prompt": "¿Qué es el esqueleto del dibujo?",
         "choices": [
-          "Tu nombre",
-          "La lista O-i-L-S",
-          "La fecha",
-          "Un número"
+          "Los adornos",
+          "Las formas grandes",
+          "Las huellas",
+          "El papel"
         ],
-        "answer": "La lista O-i-L-S",
+        "answer": "Las formas grandes",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe qué parte de tu dibujo es O, i, L y S.",
+        "prompt": "Escribe qué letra usaste para la duna, el sol y las huellas.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica por qué la estructura va antes que los adornos.",
+        "prompt": "Explica por qué el esqueleto va antes.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una serpiente y rotula su S, su O y sus dos i.",
+        "prompt": "Dibuja una duna con S, un sol con O y huellas con i.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja los pasos: formas grandes, curvas y puntos.",
+        "prompt": "Dibuja los pasos: lo grande, curvas y huellas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

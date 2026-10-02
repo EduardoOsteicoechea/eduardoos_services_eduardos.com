@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Buscar O e i en objetos",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que un dibujo se arma con piezas sencillas.\nSe llaman OiLS: O redondos, i puntos, L rectas y S curvas.\nPrimero va la forma grande y luego el detalle.\n\n¿Qué objetos de tu casa son redondos? ¿Y cuáles parecen puntitos?\n\nUn plato y una rueda son redondos: son O. Una semilla y un grano de arroz son puntitos: son i. Mirar objetos reales te enseña a ver las formas. Hoy usamos solo O e i."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste las cuatro piezas, OiLS: O redonda, i punto, L recta, S curva. Hoy buscamos O e i en los Médanos."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Primero el círculo",
-        "body": "Imagina que dibujas tres objetos solo con círculos y puntos. ¿Qué pondrías primero, el círculo o el punto?\n\nPrimero va el círculo grande, que es la forma principal. Después pones el punto, que es el detalle. Así el dibujo tiene orden y se ve claro. Con círculos y puntos puedes hacer una cara o una rueda."
+        "heading": "Punto 2: La O, círculo grande",
+        "body": "En los Médanos de Coro sale el sol. ¿Qué forma dibujas para ese sol?\n\nEl sol es un círculo: es una O. Es la forma principal del dibujo. La dibujas primero, grande y clara."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El punto es más pequeño",
-        "body": "Una pregunta con truco: ¿el punto puede ser tan grande como el círculo?\n\nNo. El punto debe ser menor que el círculo principal. Si los dos miden igual, no se sabe cuál manda. Jerarquía es saber qué es lo más importante. Lo grande manda y lo pequeño lo acompaña."
+        "heading": "Punto 3: La i, el puntito",
+        "body": "Ahora mira la arena de cerca. ¿Qué forma tiene un granito de arena?\n\nUn granito de arena es un punto. Una huella pequeña también es un punto. El punto se llama i, como la letra."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Etiquetar cada marca",
-        "body": "¿Cómo sabrías cuál es cuál si dibujas muchos objetos juntos?\n\nEscribe una «O» junto a cada redondo. Escribe una «i» junto a cada punto. Así compruebas que miraste bien. Etiquetar es ponerle nombre a cada pieza."
+        "heading": "Punto 4: El punto es más pequeño",
+        "body": "Una pregunta con truco: ¿el punto puede ser igual de grande que el sol?\n\nNo. El punto es más chico que la O. Si miden igual, no se sabe cuál manda. Lo grande manda; lo pequeño acompaña."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Un detalle mínimo",
-        "body": "Ya tienes tus tres objetos. ¿Qué detalle mínimo podrías añadir sin romper el orden?\n\nAñade un solo detalle pequeño, como un punto extra. Si añades muchos, el dibujo se llena y se confunde. Un detalle bien puesto vale más que diez apurados."
+        "heading": "Punto 5: Etiquetar cada marca",
+        "body": "¿Cómo marcas cuál es la O y cuál es la i cuando dibujas muchas?\n\nEscribe una O junto a cada círculo. Escribe una i junto a cada punto. Etiquetar es ponerle nombre a la pieza."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un detalle a la vez",
+        "body": "Ya tienes el sol y los granitos. ¿Cuántos detalles más pones?\n\nAñade un solo detalle pequeño. Si pones muchos, el dibujo se llena. Un detalle bien puesto es suficiente."
       }
     ],
-    "summary": "Hoy dibujamos con O e i: el círculo es lo grande y el punto es lo pequeño. Los etiquetamos para no confundirnos.",
+    "summary": "En los Médanos de Coro dibujamos con O e i: el sol es una O grande y los granitos de arena son puntos i. Los rotulamos para no confundirnos.",
     "weekRecap": "OiLS: O redondos, i puntos, L rectas, S curvas. Primero la forma grande, luego el detalle.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tres objetos usando solo círculos y puntos. Pon el círculo grande primero y el punto después. Etiqueta cada marca con una «O» o una «i». Revisa que cada punto sea menor que su círculo.",
+    "imageBandInstruction": "Dibuja un sol grande sobre una duna. Pon granitos de arena y huellas con i. Rotula cada marca con una O o una i. Revisa que cada punto sea más chico.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,57 +89,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que un dibujo se arma con piezas sencillas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Se llaman OiLS: O redondos, i puntos, L rectas y S curvas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Primero va la forma grande y luego el detalle."
+        "text": "Ayer viste las cuatro piezas, OiLS:"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "O redonda, i punto, L recta, S curva."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Qué objetos de tu casa son redondos?"
+        "text": "Hoy buscamos O e i en los Médanos."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Y cuáles parecen puntitos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -147,99 +152,99 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Buscar O e i en objetos"
+        "kind": "lesson",
+        "text": "En los Médanos de Coro sale el sol."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué forma dibujas para ese sol?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Un plato y una rueda son redondos: son O."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Una semilla y un grano de arroz son puntitos: son i."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Mirar objetos reales te enseña a ver las formas."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Hoy usamos solo O e i."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La O, círculo grande"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El sol es un círculo: es una O."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es la forma principal del dibujo."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Imagina que dibujas tres objetos solo con círculos y puntos."
+        "text": "La dibujas primero, grande y clara."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Qué pondrías primero, el círculo o el punto?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -252,99 +257,99 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Primero el círculo"
+        "kind": "lesson",
+        "text": "Ahora mira la arena de cerca."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué forma tiene un granito de arena?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Primero va el círculo grande, que es la forma principal."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Después pones el punto, que es el detalle."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Así el dibujo tiene orden y se ve claro."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Con círculos y puntos puedes hacer una cara o una rueda."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La i, el puntito"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un granito de arena es un punto."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una huella pequeña también es un punto."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿el punto puede ser tan grande"
+        "text": "El punto se llama i, como la letra."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "como el círculo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -357,78 +362,78 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: El punto es más pequeño"
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el punto"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "puede ser igual de grande que el sol?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "No. El punto debe ser menor que el círculo principal."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Si los dos miden igual, no se sabe cuál manda."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Jerarquía es saber qué es lo más importante."
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Lo grande manda y lo pequeño lo acompaña."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El punto es más pequeño"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. El punto es más chico que la O."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si miden igual, no se sabe cuál manda."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "¿Cómo sabrías cuál es cuál si dibujas muchos objetos juntos?"
+        "text": "Lo grande manda; lo pequeño acompaña."
       },
       {
         "index": 56,
@@ -441,148 +446,148 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Etiquetar cada marca"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo marcas cuál es la O y cuál"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe una «O» junto a cada redondo."
+        "text": "es la i cuando dibujas muchas?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Escribe una «i» junto a cada punto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Así compruebas que miraste bien."
+        "text": "________________________________________"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Etiquetar es ponerle nombre a cada pieza."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Etiquetar cada marca"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe una O junto a cada círculo."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe una i junto a cada punto."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "Ya tienes tus tres objetos. ¿Qué detalle mínimo podrías"
+        "text": "Etiquetar es ponerle nombre a la pieza."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "añadir sin romper el orden?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Un detalle mínimo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ya tienes el sol y los granitos."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Añade un solo detalle pequeño, como un punto extra."
+        "text": "¿Cuántos detalles más pones?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Si añades muchos, el dibujo se llena y se confunde."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Un detalle bien puesto vale más que diez apurados."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -595,8 +600,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Un detalle a la vez"
       },
       {
         "index": 80,
@@ -609,55 +614,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Añade un solo detalle pequeño."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué letra de OiLS es un plato o una rueda?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Si pones muchos, el dibujo se llena."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) i",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Un detalle bien puesto es suficiente."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) L",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) S",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) O",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué letra de OiLS es un grano de arroz?",
-        "questionId": "d2-q2",
+        "text": "¿Qué letra es el sol?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) O",
-        "questionId": "d2-q2"
+        "text": "A) i",
+        "questionId": "d2-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) i",
-        "questionId": "d2-q2"
+        "text": "B) L",
+        "questionId": "d2-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) L",
-        "questionId": "d2-q2"
+        "text": "C) S",
+        "questionId": "d2-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) S",
-        "questionId": "d2-q2"
+        "text": "D) O",
+        "questionId": "d2-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué se dibuja primero: el círculo o el punto?",
-        "questionId": "d2-q3",
+        "text": "¿Qué letra es un granito de arena?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) El punto",
-        "questionId": "d2-q3"
+        "text": "A) O",
+        "questionId": "d2-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) El adorno",
-        "questionId": "d2-q3"
+        "text": "B) i",
+        "questionId": "d2-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El círculo",
-        "questionId": "d2-q3"
+        "text": "C) L",
+        "questionId": "d2-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La sombra",
-        "questionId": "d2-q3"
+        "text": "D) S",
+        "questionId": "d2-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo debe ser el punto frente al círculo?",
-        "questionId": "d2-q4",
+        "text": "¿Qué va primero, la O o la i?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Igual de grande",
-        "questionId": "d2-q4"
+        "text": "A) La i",
+        "questionId": "d2-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Más grande",
-        "questionId": "d2-q4"
+        "text": "B) Las dos juntas",
+        "questionId": "d2-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Más oscuro",
-        "questionId": "d2-q4"
+        "text": "C) La O",
+        "questionId": "d2-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Más pequeño",
-        "questionId": "d2-q4"
+        "text": "D) Ninguna",
+        "questionId": "d2-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo es el punto frente a la O?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Igual de grande",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Más grande",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Más largo",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Más pequeño",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué pasa si el punto es tan grande como el círculo?",
+        "text": "Si miden igual, ¿qué pasa?",
         "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Queda perfecto",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) No se sabe cuál manda",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Se vuelve una L",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Se vuelve una S",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué letras usamos solo hoy?",
+        "text": "¿Para qué sirve etiquetar?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) O e i",
+        "text": "A) Para nombrar cada pieza",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) L y S",
+        "text": "B) Para borrar el dibujo",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) O y L",
+        "text": "C) Para pintarlo",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) i y S",
+        "text": "D) Para agrandarlo",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué es una semilla en un dibujo con OiLS?",
+        "text": "¿Qué letra va junto a un círculo?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Un círculo O",
+        "text": "A) i",
         "questionId": "d2-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Una recta L",
+        "text": "B) L",
         "questionId": "d2-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Un punto i",
+        "text": "C) O",
         "questionId": "d2-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Una curva S",
+        "text": "D) S",
         "questionId": "d2-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Para qué sirve etiquetar cada marca?",
+        "text": "¿Qué pasa si pones muchos detalles?",
         "questionId": "d2-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Para comprobar que miraste bien",
+        "text": "A) El dibujo se llena",
         "questionId": "d2-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Para borrar el dibujo",
+        "text": "B) Queda más claro",
         "questionId": "d2-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Para pintarlo de color",
+        "text": "C) Se vuelve una L",
         "questionId": "d2-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Para hacerlo más grande",
+        "text": "D) Se vuelve una O",
         "questionId": "d2-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tres objetos redondos y tres que parezcan puntos.",
+        "text": "Escribe tres cosas redondas y tres puntitos.",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué el punto debe ser menor que el círculo.",
+        "text": "Explica por qué el punto es menor que la O.",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,30 +1136,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1149,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja tres objetos con solo O e i y etiqueta cada marca.",
+        "text": "Dibuja un sol y granitos; rotula O e i.",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1174,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1195,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un círculo grande con un punto pequeño y compáralos.",
+        "text": "Dibuja una O grande y una i pequeña.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1212,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 149,
@@ -1233,53 +1233,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja tres objetos usando solo círculos y puntos."
+        "text": "Dibuja un sol grande sobre una duna. Pon"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Pon el círculo grande primero y el punto después."
+        "text": "granitos de arena y huellas con i. Rotula"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Etiqueta cada marca con una «O» o una «i»."
+        "text": "cada marca con una O o una i. Revisa que"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada punto sea menor que su círculo."
+        "text": "cada punto sea más chico."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,7 +1289,7 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS es un plato o una rueda?",
+        "prompt": "¿Qué letra es el sol?",
         "choices": [
           "i",
           "L",
@@ -1302,15 +1299,15 @@
         "answer": "O",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS es un grano de arroz?",
+        "prompt": "¿Qué letra es un granito de arena?",
         "choices": [
           "O",
           "i",
@@ -1320,40 +1317,22 @@
         "answer": "i",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué se dibuja primero: el círculo o el punto?",
+        "prompt": "¿Qué va primero, la O o la i?",
         "choices": [
-          "El punto",
-          "El adorno",
-          "El círculo",
-          "La sombra"
+          "La i",
+          "Las dos juntas",
+          "La O",
+          "Ninguna"
         ],
-        "answer": "El círculo",
-        "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
-        }
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cómo debe ser el punto frente al círculo?",
-        "choices": [
-          "Igual de grande",
-          "Más grande",
-          "Más oscuro",
-          "Más pequeño"
-        ],
-        "answer": "Más pequeño",
+        "answer": "La O",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1361,10 +1340,28 @@
         }
       },
       {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cómo es el punto frente a la O?",
+        "choices": [
+          "Igual de grande",
+          "Más grande",
+          "Más largo",
+          "Más pequeño"
+        ],
+        "answer": "Más pequeño",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué pasa si el punto es tan grande como el círculo?",
+        "prompt": "Si miden igual, ¿qué pasa?",
         "choices": [
           "Queda perfecto",
           "No se sabe cuál manda",
@@ -1374,110 +1371,110 @@
         "answer": "No se sabe cuál manda",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué letras usamos solo hoy?",
+        "prompt": "¿Para qué sirve etiquetar?",
         "choices": [
-          "O e i",
-          "L y S",
-          "O y L",
-          "i y S"
+          "Para nombrar cada pieza",
+          "Para borrar el dibujo",
+          "Para pintarlo",
+          "Para agrandarlo"
         ],
-        "answer": "O e i",
+        "answer": "Para nombrar cada pieza",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué es una semilla en un dibujo con OiLS?",
+        "prompt": "¿Qué letra va junto a un círculo?",
         "choices": [
-          "Un círculo O",
-          "Una recta L",
-          "Un punto i",
-          "Una curva S"
+          "i",
+          "L",
+          "O",
+          "S"
         ],
-        "answer": "Un punto i",
+        "answer": "O",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Para qué sirve etiquetar cada marca?",
+        "prompt": "¿Qué pasa si pones muchos detalles?",
         "choices": [
-          "Para comprobar que miraste bien",
-          "Para borrar el dibujo",
-          "Para pintarlo de color",
-          "Para hacerlo más grande"
+          "El dibujo se llena",
+          "Queda más claro",
+          "Se vuelve una L",
+          "Se vuelve una O"
         ],
-        "answer": "Para comprobar que miraste bien",
+        "answer": "El dibujo se llena",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe tres objetos redondos y tres que parezcan puntos.",
+        "prompt": "Escribe tres cosas redondas y tres puntitos.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Explica por qué el punto debe ser menor que el círculo.",
+        "prompt": "Explica por qué el punto es menor que la O.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja tres objetos con solo O e i y etiqueta cada marca.",
+        "prompt": "Dibuja un sol y granitos; rotula O e i.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja un círculo grande con un punto pequeño y compáralos.",
+        "prompt": "Dibuja una O grande y una i pequeña.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

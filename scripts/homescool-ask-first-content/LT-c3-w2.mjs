@@ -1,93 +1,107 @@
 /**
- * Línea de tiempo · ciclo 3 · semana 2 · nivel 6 — narrativa inductiva, todo "pregunta primero".
- *
- * Hitos 8–14: maravillas, Israel patriarcal, hititas, cananeos, Kush, Asiria, Babilonia, Shang.
- * Hito 8 maravillas · 9 Israel patriarcal · 10 hititas y cananeos · 11 Kush · 12 Asiria
- * · 13 Babilonia · 14 Shang. Cada nombre con su lugar en el mapa.
+ * Línea de tiempo · ciclo 3 · semana 2 · nivel 6 — formato Ask First v2.
+ * Tema: Historia en orden: maravillas y reinos antiguos (hitos 8–14).
+ * Hito de Venezuela: Panteón Nacional (Caracas): se honra la memoria de personas
+ * importantes, entre ellas Simón Bolívar. Imagen: guardar la historia en orden.
+ * Hito 8 maravillas · 9 Israel patriarcal · 10 hititas y cananeos · 11 Kush
+ * · 12 Asiria · 13 Babilonia · 14 Shang.
  */
-const ayer = "¿Qué aprendiste ayer sobre esta misma materia?";
-
 export default [
   // ───────────────────────── DÍA 1 ─────────────────────────
   {
     key: "LT-c3-w2-d1",
-    opening: "¿Cómo puedes ubicar un reino antiguo en el mapa?",
-    repaso: null,
     units: [
       {
-        h: "Punto 1: Los hitos 8 al 14",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Un hito es cada punto numerado de nuestra lista.",
-          "No siempre es un año: es un bloque de estudio.",
-          "Hoy recorremos los hitos 8 al 14.",
-          "Todos quedan lejos de Venezuela, así que usaremos el mapa.",
+          "Antes ordenaste hitos en una línea.",
+          "Hoy sigues con la lista de tu Panteón:",
+          "Hitos 8–14: maravillas, Israel",
+          "patriarcal, hititas, cananeos, Kush,",
+          "Asiria, Babilonia, Shang — cada uno",
+          "con su lugar.",
         ],
       },
       {
         q: [
-          "Imagina una obra enorme de piedra, hecha hace muchísimo",
-          "tiempo. ¿Por qué la gente sigue hablando de ella?",
+          "En Caracas está el Panteón Nacional.",
+          "¿Para qué crees que sirve ese lugar?",
         ],
-        h: "Punto 2: Hito 8, las maravillas antiguas",
+        h: "Punto 2: Un lugar de memoria",
         a: [
-          "Una maravilla antigua es una obra admirada por su",
-          "tamaño o su ingenio.",
-          "Un ejemplo es la Gran Pirámide de Guiza, en Egipto.",
+          "El Panteón Nacional está en Caracas.",
+          "Allí se honra la memoria de personas",
+          "importantes, entre ellas Simón Bolívar.",
+          "Es como guardar la historia en orden.",
         ],
       },
       {
         q: [
-          "Ahora te pregunto: Abraham, Isaac y Jacob, ¿son",
-          "edificios de piedra o son personas?",
+          "Imagina que el Panteón tiene una sala",
+          "de obras enormes. ¿Qué entraría ahí?",
         ],
-        h: "Punto 3: Hito 9, Israel patriarcal",
+        h: "Punto 3: Hito 8, las maravillas",
         a: [
-          "Son personas: son los patriarcas.",
-          "Un patriarca es un antepasado central de Israel.",
-          "Una pirámide no es patriarca, ni un patriarca es pirámide.",
+          "Una maravilla antigua es una obra",
+          "admirada por ser enorme o muy bien",
+          "pensada. Ejemplo: la Gran Pirámide",
+          "de Guiza, en Egipto.",
         ],
       },
       {
         q: [
-          "Sigamos con el mapa. ¿Dónde crees que vivían los hititas,",
-          "los cananeos y el reino de Kush?",
+          "Otra sala del Panteón: Abraham, Isaac",
+          "y Jacob. ¿Son edificios o personas?",
         ],
-        h: "Punto 4: Hitos 10 y 11, pueblos y regiones",
+        h: "Punto 4: Hito 9, los patriarcas",
         a: [
-          "Los hititas vivían en Anatolia, hoy Turquía.",
-          "Los cananeos estaban en Canaán, junto al Mediterráneo.",
-          "Kush era un reino al sur de Egipto, en África.",
-          "Un pueblo es una comunidad con costumbres y lengua propia.",
+          "Son personas: los patriarcas.",
+          "Un antepasado es alguien de la familia",
+          "de hace muchísimo tiempo. Un patriarca",
+          "es un antepasado central de Israel.",
         ],
       },
       {
         q: [
-          "Faltan tres poderes: Asiria, Babilonia y Shang.",
-          "¿Crees que los tres quedaban en el mismo lugar?",
+          "Cada sala del Panteón necesita su lugar.",
+          "¿Dónde vivían hititas, cananeos y Kush?",
         ],
-        h: "Punto 5: Hitos 12 al 14, tres poderes",
+        h: "Punto 5: Hitos 10 y 11",
         a: [
-          "Asiria y Babilonia estaban en Mesopotamia.",
-          "Mesopotamia queda entre el Tigris y el Éufrates.",
-          "Shang fue una dinastía en la antigua China.",
-          "Asiria tuvo ejército; Babilonia, ciudad y leyes.",
+          "Los hititas vivían en Anatolia, hoy",
+          "Turquía. Los cananeos, en Canaán,",
+          "junto al mar Mediterráneo. Kush era",
+          "un reino al sur de Egipto, en África.",
+        ],
+      },
+      {
+        q: [
+          "Faltan salas del Panteón: Asiria,",
+          "Babilonia y Shang. ¿Están juntas?",
+        ],
+        h: "Punto 6: Hitos 12 al 14",
+        a: [
+          "Asiria y Babilonia estaban en",
+          "Mesopotamia, entre dos ríos: el Tigris",
+          "y el Éufrates. Shang quedaba lejos,",
+          "en la antigua China.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué es un hito en nuestra lista?", o: ["Un punto numerado de estudio", "Un año del calendario", "Un río de Asia", "Un mapa de colores"] },
-        { q: "¿Qué es una maravilla antigua?", o: ["Una obra admirada por su tamaño", "Un patriarca de Israel", "Una ciudad de leyes", "Un río de Asia"] },
-        { q: "¿Dónde queda la Gran Pirámide de Guiza?", o: ["En Egipto", "En China", "En Anatolia", "En Canaán"] },
+        { q: "¿Dónde está el Panteón Nacional?", o: ["En Caracas", "En Egipto", "En Anatolia", "En China"] },
+        { q: "¿Qué se honra en el Panteón Nacional?", o: ["La memoria de personas importantes", "Solo el nombre de los ríos", "Las maravillas antiguas", "Los barcos del mar"] },
+        { q: "¿Qué es una maravilla antigua?", o: ["Una obra enorme o muy bien pensada", "Un antepasado de Israel", "Un río de Asia", "Un reino de África"] },
+        { q: "¿Dónde está la Gran Pirámide de Guiza?", o: ["En Egipto", "En China", "En Anatolia", "En Canaán"] },
         { q: "¿Qué es un patriarca?", o: ["Un antepasado central de Israel", "Un edificio de piedra", "Un reino de África", "Un tipo de mapa"] },
         { q: "¿Dónde vivían los hititas?", o: ["En Anatolia", "En Canaán", "En China", "Al sur de Egipto"] },
-        { q: "¿Dónde quedaba Kush?", o: ["Al sur de Egipto", "En Anatolia", "En Mesopotamia", "En China"] },
-        { q: "¿Dónde estaban Asiria y Babilonia?", o: ["En Mesopotamia", "En China", "En Anatolia", "Junto al Nilo"] },
-        { q: "¿Qué fue Shang?", o: ["Una dinastía de China", "Una ciudad de Mesopotamia", "Un río de Asia", "Una maravilla de Egipto"] },
+        { q: "¿Dónde estaba el reino de Kush?", o: ["Al sur de Egipto", "En Anatolia", "En Mesopotamia", "En China"] },
+        { q: "¿Qué dos ríos rodean Mesopotamia?", o: ["El Tigris y el Éufrates", "El Nilo y el Orinoco", "El Caroní y el Nilo", "El Sena y el Rin"] },
       ],
       write: [
-        "Escribe qué es una maravilla antigua y da un ejemplo.",
-        "Explica con tus palabras qué es un patriarca.",
+        "Cuenta qué se honra en el Panteón Nacional.",
+        "Escribe qué es un patriarca y da un ejemplo.",
       ],
       schematic: [
         "Dibuja una flecha con los hitos 8 y 9 y un ejemplo de cada uno.",
@@ -95,100 +109,105 @@ export default [
       ],
     },
     image: [
-      "Dibuja un mapa sencillo con cuatro cajas.",
-      "Rotula Egipto, Anatolia, Mesopotamia y China.",
-      "Escribe en cada caja un nombre de la lista de hoy.",
-      "Revisa que cada nombre esté en su región.",
+      "Dibuja un Panteón con siete salas.",
+      "Rotula en cada sala un hito del 8 al 14.",
+      "Marca en un mapa dónde queda cada una.",
+      "Revisa que cada nombre tenga su lugar.",
     ],
-    summary: "Los hitos 8 al 14 son maravillas, patriarcas, pueblos y reinos, y cada uno tiene su lugar en el mapa.",
+    summary: "El Panteón Nacional guarda la memoria en orden, y los hitos 8 al 14 también tienen cada uno su lugar en el mapa.",
   },
 
   // ───────────────────────── DÍA 2 ─────────────────────────
   {
     key: "LT-c3-w2-d2",
-    opening: ayer,
-    repaso: [
-      "Ayer vimos que los hitos 8 al 14 son temas de estudio.",
-      "El hito 8 habla de maravillas y el 9, de patriarcas.",
-      "Cada nombre de la lista tiene su lugar en el mapa.",
-    ],
     units: [
       {
-        q: [
-          "Ahora te pregunto: ¿qué hace que una obra sea una",
-          "«maravilla antigua»?",
-        ],
-        h: "Punto 1: Qué es una maravilla antigua",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Es una obra admirada por su tamaño o por su ingenio.",
-          "La Gran Pirámide de Guiza es un buen ejemplo.",
-          "Está en Egipto y es enorme y muy antigua.",
+          "Ayer viste que el hito 8 habla de",
+          "maravillas y el 9, de patriarcas.",
+          "Cada uno tiene su sala en tu Panteón.",
         ],
       },
       {
         q: [
-          "Si tuvieras que explicar por qué la pirámide es una",
-          "maravilla, ¿qué oración escribirías?",
+          "Si en el Panteón guardaras una obra",
+          "enorme, ¿qué dirías de ella?",
         ],
-        h: "Punto 2: Una oración completa",
+        h: "Punto 2: Qué es una maravilla",
         a: [
-          "Puedes escribir: «La Gran Pirámide de Guiza es una",
-          "maravilla porque es enorme y muy antigua.»",
-          "Nombra la obra y da una razón.",
+          "Dirías que es una maravilla antigua:",
+          "una obra enorme o muy bien pensada.",
+          "La Gran Pirámide de Guiza lo es.",
+          "Está en Egipto y es muy antigua.",
         ],
       },
       {
         q: [
-          "Cambiemos de hito. ¿Quiénes fueron Abraham, Isaac y",
-          "Jacob? Pista: no son piedras.",
+          "Para honrar a Simón Bolívar, ¿basta",
+          "decir «una persona importante»?",
         ],
-        h: "Punto 3: Los patriarcas",
+        h: "Punto 3: Nombre y razón",
+        a: [
+          "No basta: hay que decir el nombre",
+          "y la razón. Con una maravilla igual:",
+          "«La Gran Pirámide de Guiza es una",
+          "maravilla porque es muy antigua.»",
+        ],
+      },
+      {
+        q: [
+          "Pasemos a otra sala del Panteón.",
+          "¿Quiénes son Abraham, Isaac y Jacob?",
+        ],
+        h: "Punto 4: Los patriarcas",
         a: [
           "Son los patriarcas del hito 9.",
-          "Fueron antepasados centrales en la historia de Israel.",
+          "Fueron antepasados centrales de Israel.",
           "No son edificios: son personas.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿sirve decir solo «es un",
-          "patriarca» o «es una maravilla»?",
+          "Una pregunta con truco: ¿vale decir",
+          "solo «patriarca» o «maravilla»?",
         ],
-        h: "Punto 4: Dar nombre y razón",
+        h: "Punto 5: Patriarca con razón",
         a: [
-          "No sirve; hay que dar el nombre y explicar.",
-          "«Abraham es un patriarca: antepasado central de Israel.»",
+          "No vale. Di el nombre y la razón:",
+          "«Abraham es un patriarca: antepasado",
+          "central de Israel.»",
           "Así nadie llama patriarca a una pirámide.",
         ],
       },
       {
         q: [
-          "¿Puedes decir la lista de los hitos 8 al 14 sin mirar?",
-          "Di también la región de cada nombre.",
+          "¿Dices los hitos 8 al 14 sin mirar?",
+          "Añade el lugar de cada nombre.",
         ],
-        h: "Punto 5: La lista con sentido",
+        h: "Punto 6: La lista con su lugar",
         a: [
-          "Hitos 8–14: maravillas, Israel patriarcal, hititas,",
-          "cananeos, Kush, Asiria, Babilonia, Shang —",
-          "cada uno con su lugar.",
-          "Tras cada nombre di una palabra: Egipto, Canaán, China...",
+          "Maravillas, Israel patriarcal, hititas,",
+          "cananeos, Kush, Asiria, Babilonia,",
+          "Shang. Tras cada nombre di su lugar:",
+          "Egipto, Canaán, China...",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué es una maravilla antigua?", o: ["Una obra admirada por su ingenio", "Un patriarca de Israel", "Un reino de África", "Un río de Asia"] },
-        { q: "¿Qué es la Gran Pirámide de Guiza?", o: ["Una maravilla antigua", "Un patriarca", "Un reino de Kush", "Una dinastía"] },
-        { q: "¿Qué oración explica bien una maravilla?", o: ["Es enorme y muy antigua", "Es una maravilla", "Es un patriarca", "Es muy lejos"] },
+        { q: "¿Qué es una maravilla antigua?", o: ["Una obra enorme o muy bien pensada", "Un patriarca de Israel", "Un reino de África", "Un río de Asia"] },
+        { q: "¿Qué obra de Egipto es una maravilla?", o: ["La Gran Pirámide de Guiza", "Abraham", "Kush", "Shang"] },
+        { q: "¿Qué hay que decir para honrar bien?", o: ["El nombre y la razón", "Solo «persona»", "Solo un número", "Solo el lugar"] },
         { q: "¿Quiénes son los patriarcas del hito 9?", o: ["Abraham, Isaac y Jacob", "Asiria y Babilonia", "Hititas y cananeos", "Kush y Shang"] },
         { q: "¿Qué fueron los patriarcas?", o: ["Antepasados centrales de Israel", "Edificios de piedra", "Pueblos de China", "Ríos de Asia"] },
-        { q: "¿Por qué no basta decir «es un patriarca»?", o: ["Falta el nombre y la explicación", "Porque es muy corto", "Porque no existe", "Porque es un edificio"] },
-        { q: "¿Qué hay que decir después de cada nombre?", o: ["La región donde está", "Su peso", "Su color", "Su precio"] },
-        { q: "¿Qué hitos abarca la lista de la semana?", o: ["Del 8 al 14", "Del 1 al 7", "Del 15 al 20", "Solo el 8"] },
+        { q: "¿Qué oración tiene nombre y razón?", o: ["La Pirámide es maravilla: es antigua", "Es una maravilla", "Es un patriarca", "Es muy lejos"] },
+        { q: "¿Qué se dice después de cada nombre?", o: ["Su lugar", "Su peso", "Su color", "Su precio"] },
+        { q: "¿Qué hito habla de patriarcas?", o: ["El 9", "El 8", "El 12", "El 14"] },
       ],
       write: [
-        "Escribe una oración sobre una maravilla y por qué lo es.",
-        "Escribe una oración con un patriarca y su papel.",
+        "Escribe una oración sobre una maravilla con su razón.",
+        "Escribe una oración sobre un patriarca con su nombre y su razón.",
       ],
       schematic: [
         "Dibuja la Gran Pirámide y rotula por qué es una maravilla.",
@@ -196,100 +215,104 @@ export default [
       ],
     },
     image: [
-      "Dibuja la Gran Pirámide de Guiza.",
-      "Escribe debajo por qué es una maravilla antigua.",
-      "A un lado dibuja a un patriarca y escribe su nombre.",
-      "Revisa que cada dibujo lleve su etiqueta.",
+      "Dibuja una sala del Panteón con la",
+      "Gran Pirámide de Guiza y su razón.",
+      "En otra sala dibuja un patriarca",
+      "con su nombre y su razón.",
     ],
-    summary: "Una maravilla antigua es una obra admirada, como la Gran Pirámide, y los patriarcas son antepasados de Israel.",
+    summary: "En el Panteón se honra con nombre y razón; así también explicas una maravilla o un patriarca.",
   },
 
   // ───────────────────────── DÍA 3 ─────────────────────────
   {
     key: "LT-c3-w2-d3",
-    opening: ayer,
-    repaso: [
-      "Ayer distinguimos obras famosas de los patriarcas.",
-      "La Gran Pirámide es una maravilla; Abraham, un patriarca.",
-      "Para explicar bien hay que dar el nombre y una razón.",
-    ],
     units: [
       {
-        q: [
-          "Hoy seguimos con los pueblos. ¿Qué crees que es",
-          "un «pueblo» en la historia antigua?",
-        ],
-        h: "Punto 1: Qué es un pueblo",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Un pueblo es una comunidad con costumbres y,",
-          "muchas veces, con lengua propia.",
-          "En los hitos 10 y 11 aparecen tres nombres:",
+          "Ayer diste nombre y razón: la Gran",
+          "Pirámide es una maravilla; Abraham,",
+          "un patriarca. Hoy cuidas los nombres",
+          "de pueblos, como en el Panteón.",
+        ],
+      },
+      {
+        q: [
+          "En el Panteón cuidan cada nombre.",
+          "¿Qué será un «pueblo» antiguo?",
+        ],
+        h: "Punto 2: Qué es un pueblo",
+        a: [
+          "Un pueblo es un grupo de gente con",
+          "costumbres y, a veces, su propio idioma.",
+          "En los hitos 10 y 11 hay tres nombres:",
           "hititas, cananeos y Kush.",
         ],
       },
       {
         q: [
-          "Los hititas vivían donde hoy está Turquía.",
-          "¿Cómo se llama esa región?",
+          "Piensa en una sala del Panteón para los",
+          "hititas. ¿Qué región ubicas en el mapa?",
         ],
-        h: "Punto 2: Los hititas",
+        h: "Punto 3: Los hititas",
         a: [
-          "Esa región se llama Anatolia.",
-          "Los hititas vivieron sobre todo allí.",
+          "Pondrías Anatolia, hoy parte de Turquía.",
+          "Allí vivieron sobre todo los hititas.",
           "Anatolia no es Mesopotamia ni Canaán.",
         ],
       },
       {
         q: [
-          "Los cananeos vivían junto al mar Mediterráneo.",
-          "¿Recuerdas el nombre de su tierra?",
+          "Otra sala del Panteón: los cananeos.",
+          "Su tierra da al Mediterráneo. ¿Cuál es?",
         ],
-        h: "Punto 3: Los cananeos",
+        h: "Punto 4: Los cananeos",
         a: [
           "Su tierra se llama Canaán.",
-          "Queda en el Mediterráneo oriental.",
-          "Los cananeos no son los hititas: son otro pueblo.",
+          "Queda junto al mar Mediterráneo.",
+          "Los cananeos no son los hititas:",
+          "son otro pueblo.",
         ],
       },
       {
         q: [
-          "¿Y Kush? Si está al sur de Egipto, ¿en qué",
-          "continente lo ubicarías?",
+          "La sala de Kush queda al sur de Egipto.",
+          "¿En qué continente la ubicas?",
         ],
-        h: "Punto 4: El reino de Kush",
+        h: "Punto 5: El reino de Kush",
         a: [
           "Kush estaba en África, al sur de Egipto.",
-          "Fue un reino, no una ciudad pequeña.",
-          "No lo pongas en Asia: es un error común.",
+          "Un reino es una tierra con un rey.",
+          "No lo pongas en Asia: es un error.",
         ],
       },
       {
         q: [
-          "Hagamos un juego de memoria. Yo digo el pueblo y tú",
-          "dices la región. ¿Cómo sería con los tres?",
+          "Juego del Panteón: yo digo el pueblo",
+          "y tú la región. ¿Lo haces con los tres?",
         ],
-        h: "Punto 5: Pares para recordar",
+        h: "Punto 6: Pares para recordar",
         a: [
           "Hititas, Anatolia. Cananeos, Canaán.",
           "Kush, sur de Egipto.",
-          "Dilos en voz alta: primero el pueblo, luego la región.",
-          "Si dudas, mira el mapa y corrige.",
+          "Dilos en voz alta: primero el pueblo,",
+          "luego la región.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué es un pueblo?", o: ["Una comunidad con costumbres propias", "Un río grande", "Un tipo de mapa", "Una obra de piedra"] },
+        { q: "¿Qué es un pueblo?", o: ["Un grupo con costumbres propias", "Un río grande", "Un tipo de mapa", "Una obra de piedra"] },
         { q: "¿Dónde vivieron los hititas?", o: ["En Anatolia", "En Canaán", "En China", "En el Nilo"] },
-        { q: "¿Qué país de hoy está en Anatolia?", o: ["Turquía", "Egipto", "China", "Venezuela"] },
-        { q: "¿Cómo se llama la tierra de los cananeos?", o: ["Canaán", "Anatolia", "Mesopotamia", "Kush"] },
-        { q: "¿Dónde queda Canaán?", o: ["En el Mediterráneo oriental", "En China", "Al sur de Egipto", "En África central"] },
+        { q: "¿Qué país de hoy tiene a Anatolia?", o: ["Turquía", "Egipto", "China", "Venezuela"] },
+        { q: "¿Dónde vivían los cananeos?", o: ["En Canaán", "En Anatolia", "En Mesopotamia", "En Kush"] },
+        { q: "¿Junto a qué mar queda Canaán?", o: ["El Mediterráneo", "El Caribe", "El mar Rojo", "El mar Negro"] },
         { q: "¿Dónde estaba el reino de Kush?", o: ["Al sur de Egipto", "En Anatolia", "En Canaán", "En China"] },
         { q: "¿En qué continente estaba Kush?", o: ["En África", "En Asia", "En Europa", "En América"] },
-        { q: "¿Los hititas y los cananeos son el mismo pueblo?", o: ["No, son pueblos distintos", "Sí, son el mismo", "Sí, en Egipto", "No existieron"] },
+        { q: "¿Qué es un reino?", o: ["Una tierra con un rey", "Un río con puente", "Un mapa de colores", "Una pirámide"] },
       ],
       write: [
-        "Escribe los tres pares: pueblo y región, sin mirar.",
+        "Escribe los tres pares: pueblo y región.",
         "Explica por qué Kush no va en Asia.",
       ],
       schematic: [
@@ -298,100 +321,105 @@ export default [
       ],
     },
     image: [
-      "Dibuja un mapa esquemático con tres cajas.",
-      "Rotula Anatolia, Canaán y el sur de Egipto.",
-      "Escribe en cada caja el pueblo que va allí.",
-      "Revisa con el mapa que no mezclaste ninguno.",
+      "Dibuja tres salas del Panteón.",
+      "Rotula: Anatolia, Canaán, sur de Egipto.",
+      "Escribe en cada sala el pueblo que va.",
+      "Revisa que no mezclaste ninguno.",
     ],
-    summary: "Los hititas estaban en Anatolia, los cananeos en Canaán y Kush al sur de Egipto, cada uno en su región.",
+    summary: "En el Panteón cada nombre se cuida: hititas en Anatolia, cananeos en Canaán y Kush al sur de Egipto.",
   },
 
   // ───────────────────────── DÍA 4 ─────────────────────────
   {
     key: "LT-c3-w2-d4",
-    opening: ayer,
-    repaso: [
-      "Ayer ubicamos tres pueblos en el mapa.",
-      "Hititas en Anatolia, cananeos en Canaán, Kush al sur de Egipto.",
-      "Los pares nos ayudaron a no mezclarlos.",
-    ],
     units: [
       {
-        q: [
-          "Asiria y Babilonia compartían una región entre dos ríos.",
-          "¿Recuerdas cómo se llama y cuáles son los ríos?",
-        ],
-        h: "Punto 1: Dos poderes en Mesopotamia",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "La región se llama Mesopotamia, tierra entre ríos.",
+          "Ayer ubicaste tres nombres en el mapa:",
+          "hititas en Anatolia, cananeos en Canaán",
+          "y Kush al sur de Egipto. Hoy comparas",
+          "dos regiones del mapa antiguo.",
+        ],
+      },
+      {
+        q: [
+          "Dos salas del Panteón comparten pared:",
+          "Asiria y Babilonia. ¿Qué región es?",
+        ],
+        h: "Punto 2: Asiria y Babilonia",
+        a: [
+          "La región se llama Mesopotamia:",
+          "tierra entre ríos.",
           "Los ríos son el Tigris y el Éufrates.",
           "Asiria y Babilonia estuvieron allí.",
         ],
       },
       {
         q: [
-          "Una pista dice «ejército». ¿Qué reino crees que es:",
-          "Asiria o Babilonia?",
+          "Una pista dice «ejército». ¿Qué reino",
+          "va en esa sala: Asiria o Babilonia?",
         ],
-        h: "Punto 2: Asiria y su ejército",
+        h: "Punto 3: Asiria y su ejército",
         a: [
-          "Es Asiria: destaca por su ejército.",
-          "Es el hito 12 de nuestra lista.",
-          "Asiria está en Mesopotamia.",
+          "Es Asiria: destaca por su ejército,",
+          "un grupo grande de soldados.",
+          "Es el hito 12 de la lista.",
+          "Asiria estaba en Mesopotamia.",
         ],
       },
       {
         q: [
-          "Ahora la pista dice «leyes» y «gran ciudad».",
-          "¿Qué reino es?",
+          "Ahora la pista dice «leyes» y «ciudad».",
+          "¿Qué reino va en la sala 13?",
         ],
-        h: "Punto 3: Babilonia, ciudad y leyes",
+        h: "Punto 4: Babilonia, ciudad y leyes",
         a: [
-          "Es Babilonia: destaca por su ciudad y sus leyes.",
-          "Es el hito 13 de nuestra lista.",
-          "Babilonia también está en Mesopotamia.",
+          "Es Babilonia: destaca por su ciudad",
+          "y sus leyes, las reglas de un lugar.",
+          "Es el hito 13. Queda en Mesopotamia.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: Shang, ¿fue una ciudad de",
-          "Mesopotamia?",
+          "Pregunta con truco: la sala 14 es Shang.",
+          "¿Fue una ciudad de Mesopotamia?",
         ],
-        h: "Punto 4: Shang, una dinastía de China",
+        h: "Punto 5: Shang, dinastía de China",
         a: [
-          "No. Shang fue una dinastía de la antigua China.",
-          "Una dinastía es una familia de gobernantes seguidos.",
-          "Shang es famosa por sus gobernantes y su bronce.",
-          "Es el hito 14 de nuestra lista.",
+          "No. Shang fue una dinastía de China.",
+          "Una dinastía es una familia gobernante.",
+          "Shang es famosa por su bronce,",
+          "un metal duro. Es el hito 14.",
         ],
       },
       {
         q: [
-          "Cuenta con los dedos 12, 13 y 14. ¿Qué nombre y",
-          "qué región dices con cada dedo?",
+          "Recorre tu Panteón: salas 12, 13 y 14.",
+          "¿Qué nombre y región dices en cada una?",
         ],
-        h: "Punto 5: Contar con los dedos",
+        h: "Punto 6: Contar del 12 al 14",
         a: [
           "12 Asiria, 13 Babilonia, 14 Shang.",
-          "Asiria en Mesopotamia, Babilonia en Mesopotamia.",
-          "Shang en China.",
-          "No inviertas Asiria y Babilonia: cada una lleva su número.",
+          "Asiria y Babilonia, en Mesopotamia.",
+          "Shang, en China.",
+          "Cada nombre lleva su número.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿En qué región estaban Asiria y Babilonia?", o: ["En Mesopotamia", "En Anatolia", "En China", "En Canaán"] },
-        { q: "¿Qué ríos rodean Mesopotamia?", o: ["Tigris y Éufrates", "Nilo y Congo", "Orinoco y Caroní", "Rin y Sena"] },
+        { q: "¿Dónde estaban Asiria y Babilonia?", o: ["En Mesopotamia", "En Anatolia", "En China", "En Canaán"] },
+        { q: "¿Cuáles son los ríos de Mesopotamia?", o: ["Tigris y Éufrates", "Nilo y Congo", "Orinoco y Caroní", "Rin y Sena"] },
         { q: "¿Qué reino destaca por su ejército?", o: ["Asiria", "Babilonia", "Kush", "Shang"] },
-        { q: "¿Qué reino destaca por su ciudad y sus leyes?", o: ["Babilonia", "Asiria", "Shang", "Kush"] },
+        { q: "¿Qué es un ejército?", o: ["Un grupo grande de soldados", "Una familia gobernante", "Un río de Asia", "Una obra de piedra"] },
+        { q: "¿Qué reino destaca por ciudad y leyes?", o: ["Babilonia", "Asiria", "Shang", "Kush"] },
         { q: "¿Qué número de hito es Shang?", o: ["14", "12", "13", "9"] },
-        { q: "¿Dónde estuvo la dinastía Shang?", o: ["En la antigua China", "En Mesopotamia", "En Egipto", "En Anatolia"] },
-        { q: "¿Por qué es famosa Shang?", o: ["Por sus gobernantes y su bronce", "Por su ejército", "Por sus leyes", "Por su pirámide"] },
-        { q: "¿Qué es una dinastía?", o: ["Una familia de gobernantes seguidos", "Una ciudad de barro", "Un río de Asia", "Una obra de piedra"] },
+        { q: "¿Qué fue Shang?", o: ["Una dinastía de China", "Una ciudad de Mesopotamia", "Un río de Asia", "Una maravilla de Egipto"] },
+        { q: "¿Qué es una dinastía?", o: ["Una familia gobernante", "Un grupo de soldados", "Un río de Asia", "Una obra de piedra"] },
       ],
       write: [
-        "Completa: «Asiria en ___, Babilonia en ___, Shang en ___.»",
+        "Escribe dónde estaba cada reino: Asiria, Babilonia y Shang.",
         "Escribe una pista para Asiria y otra para Babilonia.",
       ],
       schematic: [
@@ -400,103 +428,105 @@ export default [
       ],
     },
     image: [
-      "Dibuja un mapa con dos regiones: Mesopotamia y China.",
+      "Dibuja tres salas del Panteón (12-14).",
+      "Pon Asiria y Babilonia en Mesopotamia.",
+      "Pon Shang en China con una pista.",
       "Rotula los dos ríos de Mesopotamia.",
-      "Escribe Asiria y Babilonia en Mesopotamia.",
-      "Escribe Shang en China y añade una pista de bronce.",
     ],
-    summary: "Asiria y Babilonia estaban en Mesopotamia, Shang era una dinastía de China, y cada reino tiene su pista.",
+    summary: "Asiria y Babilonia estaban en Mesopotamia, Shang era una dinastía de China, y cada sala del Panteón lleva su pista.",
   },
 
   // ───────────────────────── DÍA 5 ─────────────────────────
   {
     key: "LT-c3-w2-d5",
-    opening: ayer,
-    repaso: [
-      "Esta semana recorriste los hitos 8 al 14.",
-      "Cada nombre llevó su lugar en el mapa.",
-      "Hoy los recuerdas y se los cuentas a alguien.",
-    ],
     units: [
       {
-        q: [
-          "Sin mirar nada, ¿puedes decir los ocho temas de los",
-          "hitos 8 al 14, cada uno con su lugar?",
-        ],
-        w: 3,
-        h: "Punto 1: La lista de la semana",
+        h: "Punto 1: Repaso de ayer",
         a: [
-          "Hitos 8–14: maravillas, Israel patriarcal, hititas,",
-          "cananeos, Kush, Asiria, Babilonia, Shang —",
-          "cada uno con su lugar.",
+          "Ayer viste los hitos 12, 13 y 14.",
+          "Asiria y Babilonia: Mesopotamia.",
+          "Shang: China. Hoy cuentas la semana.",
         ],
       },
       {
         q: [
-          "¿Qué diferencia hay entre una maravilla y un patriarca?",
-          "¿Y dónde ubicas a hititas, cananeos y Kush?",
+          "Eres guía de un Panteón de la historia",
+          "antigua. ¿Qué lista dirías sin mirar?",
         ],
-        h: "Punto 2: Maravillas, patriarcas y pueblos",
+        h: "Punto 2: La lista de la semana",
         a: [
-          "La Gran Pirámide de Guiza es una maravilla de Egipto.",
-          "Abraham, Isaac y Jacob son patriarcas, personas.",
+          "Hitos 8–14: maravillas, Israel",
+          "patriarcal, hititas, cananeos, Kush,",
+          "Asiria, Babilonia, Shang — cada uno",
+          "con su lugar.",
+        ],
+      },
+      {
+        q: [
+          "En tu Panteón, ¿qué diferencia hay entre",
+          "una maravilla y un patriarca?",
+        ],
+        h: "Punto 3: Maravillas y patriarcas",
+        a: [
+          "Guiza, en Egipto, es una maravilla:",
+          "una obra enorme, no una persona.",
+          "Abraham, Isaac y Jacob son patriarcas,",
+          "antepasados centrales de Israel.",
+        ],
+      },
+      {
+        q: [
+          "Ahora el mapa: ¿dónde pones hititas,",
+          "cananeos y Kush?",
+        ],
+        h: "Punto 4: Pueblos en el mapa",
+        a: [
           "Hititas en Anatolia, cananeos en Canaán,",
-          "y Kush al sur de Egipto.",
+          "y Kush, un reino al sur de Egipto.",
+          "Así no mezclas un pueblo con otro.",
         ],
       },
       {
         q: [
-          "¿Qué reinos y qué dinastía cerraron la lista?",
+          "¿Cuáles cierran la lista del Panteón?",
           "¿Qué pista da cada uno?",
         ],
-        h: "Punto 3: Asiria, Babilonia y Shang",
+        h: "Punto 5: Asiria, Babilonia y Shang",
         a: [
           "Asiria, con su ejército, en Mesopotamia.",
-          "Babilonia, con ciudad y leyes, en Mesopotamia.",
-          "Shang, con gobernantes y bronce, en China.",
+          "Babilonia, con su ciudad y sus leyes,",
+          "también en Mesopotamia.",
+          "Shang, con su bronce, en China.",
         ],
       },
       {
         q: [
-          "Vas a contarle la semana a alguien de tu casa.",
-          "¿Cómo la contarías con orden?",
+          "El Panteón Nacional honra la memoria.",
+          "¿Cómo cuentas tú la semana con orden?",
         ],
-        h: "Punto 4: Cómo contarlo con orden",
+        h: "Punto 6: Cómo contarlo en orden",
         a: [
-          "Inicio: «Hoy les cuento los hitos 8 al 14».",
-          "Medio: un ejemplo de cada grupo, con su lugar.",
-          "Cierre: muestra el mapa y señala cada región.",
-          "Así no recitas números sin saber qué tema son.",
-        ],
-      },
-      {
-        q: [
-          "¿Basta con repetir los nombres de memoria?",
-          "¿Qué más necesitas de cada uno?",
-        ],
-        h: "Punto 5: Nombre, lugar y pista",
-        a: [
-          "No basta con la lista de palabras.",
-          "Cada nombre necesita su lugar en el mapa.",
-          "Y una pista que ayude a recordarlo.",
-          "Por ejemplo: Shang, China, bronce.",
+          "Inicio: «Hoy cuento los hitos 8 al 14».",
+          "Medio: un ejemplo de cada grupo.",
+          "Cierre: señala cada lugar en el mapa.",
+          "No basta la lista: di nombre y lugar.",
         ],
       },
     ],
     quiz: {
       mcq: [
         { q: "¿Qué hitos estudiaste esta semana?", o: ["Del 8 al 14", "Del 1 al 7", "Del 15 al 21", "Solo el 10"] },
-        { q: "¿Qué es la Gran Pirámide de Guiza?", o: ["Una maravilla antigua", "Un patriarca", "Un reino de Kush", "Una dinastía"] },
-        { q: "¿Quiénes son los patriarcas del hito 9?", o: ["Abraham, Isaac y Jacob", "Asiria y Babilonia", "Hititas y Kush", "Shang y Kush"] },
+        { q: "¿Qué es la Gran Pirámide de Guiza?", o: ["Una maravilla de Egipto", "Un patriarca", "Un reino de Kush", "Una dinastía"] },
+        { q: "¿Quiénes son los patriarcas?", o: ["Abraham, Isaac y Jacob", "Asiria y Babilonia", "Hititas y Kush", "Shang y Kush"] },
         { q: "¿Dónde vivían los hititas?", o: ["En Anatolia", "En Canaán", "En China", "En Egipto"] },
         { q: "¿Dónde queda el reino de Kush?", o: ["Al sur de Egipto", "En Mesopotamia", "En China", "En Anatolia"] },
         { q: "¿Qué reino destaca por su ejército?", o: ["Asiria", "Babilonia", "Shang", "Kush"] },
-        { q: "¿Dónde estuvo la dinastía Shang?", o: ["En la antigua China", "En Mesopotamia", "En Canaán", "En Anatolia"] },
-        { q: "¿Qué necesita cada nombre además de la lista?", o: ["Su lugar y una pista", "Un número grande", "Un color nuevo", "Un dibujo gigante"] },
+        { q: "¿Dónde estuvo la dinastía Shang?", o: ["En China", "En Mesopotamia", "En Canaán", "En Anatolia"] },
+        { q: "¿Qué hace falta al contar la semana?", o: ["Nombre y lugar", "Solo números", "Solo colores", "Solo dibujos"] },
       ],
       write: [
-        "Cuenta con tus palabras los ocho temas de la semana.",
-        "Explica por qué no basta con repetir los nombres.",
+        "Cuenta con tus palabras los hitos de la semana.",
+        "Explica por qué no basta repetir la lista.",
       ],
       schematic: [
         "Dibuja un mapa con Egipto, Anatolia, Canaán, Mesopotamia y China.",
@@ -504,11 +534,11 @@ export default [
       ],
     },
     image: [
-      "Dibuja un mapa con cinco lugares de la semana.",
-      "Rotula Egipto, Anatolia, Canaán, Mesopotamia y China.",
-      "Escribe cerca de cada lugar el nombre que va allí.",
-      "Revisa que cada nombre tenga su pista.",
+      "Dibuja tu Panteón de la historia antigua.",
+      "Haz siete salas, una por cada hito.",
+      "Escribe en cada sala el nombre y lugar.",
+      "Revisa el mapa para no mezclar nada.",
     ],
-    summary: "Los ocho temas de los hitos 8 al 14 se recuerdan mejor con su lugar en el mapa y una pista para cada uno.",
+    summary: "Como en el Panteón, la historia antigua se cuenta en orden: cada hito con su nombre, su lugar y su pista.",
   },
 ];

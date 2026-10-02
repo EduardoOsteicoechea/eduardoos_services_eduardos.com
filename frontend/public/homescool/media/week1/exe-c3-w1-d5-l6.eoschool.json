@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Exégesis y versículo",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana leímos Romanos 1:1 con mucho cuidado.\nConocimos a Pablo, siervo y apóstol.\nVimos que fue apartado para el evangelio de Dios.\n\nSin mirar nada, ¿qué es la exégesis y qué versículo leímos esta semana?\n\nExégesis es leer un texto con mucho cuidado. Leímos Romanos 1:1, el saludo de la carta. Si olvidaste algo, dilo otra vez en voz alta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer uniste lo que alumbraste: Pablo, sus títulos y el evangelio de Dios. Hoy sales de la Cueva del Guácharo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Pablo y sus títulos",
-        "body": "¿Quién escribe la carta y cómo lo sabemos? ¿Qué dos títulos se da?\n\nEscribe Pablo, y se presenta al inicio. Se llama siervo, porque pertenece a Cristo y lo sirve. Se llama apóstol: un enviado con un mensaje."
+        "heading": "Punto 2: Exégesis y versículo",
+        "body": "Sin mirar nada, ¿qué es la exégesis y qué versículo leíste?\n\nExégesis es leer un texto con cuidado. Leíste Romanos 1:1, saludo de la carta. Si olvidas algo, dilo en voz alta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La tarea de Pablo",
-        "body": "¿Qué significan «apartado» y «evangelio de Dios»?\n\nApartado es separado para una tarea especial. Evangelio es una buena noticia. Es «de Dios» porque viene de Dios."
+        "heading": "Punto 3: Pablo y sus títulos",
+        "body": "¿Quién escribe la carta y cómo lo sabes? ¿Qué dos títulos se da?\n\nEscribe Pablo y se presenta al inicio. Siervo: pertenece a Cristo y lo sirve. Apóstol: un enviado con un mensaje."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a contárselo a alguien de tu casa. ¿Cómo empezarías tu exposición?\n\nUna buena exposición tiene inicio, medio y cierre. Inicio: «Hoy les cuento cómo leer un versículo». Medio: Pablo, sus títulos y el evangelio de Dios. Cierre: lo que el texto dice, y gracias por escuchar."
+        "heading": "Punto 4: La tarea de Pablo",
+        "body": "Sales de la cueva con tu linterna. ¿Qué es «apartado»? ¿Y «evangelio»?\n\nApartado es separado para una tarea. Evangelio es una buena noticia. Es «de Dios» porque viene de Dios."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Leer sin añadir",
-        "body": "¿Qué cuidado tendrás la próxima vez que leas un versículo?\n\nPrimero mira quién habla y qué dice. No agregues ideas que el texto no dice. No quites palabras importantes, como «de Dios»."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contar tu viaje por la cueva y por Romanos 1:1. ¿Cómo empiezas?\n\nUna exposición tiene tres partes. Inicio: presentas de qué hablarás. Medio: Pablo, sus títulos y su tarea. Cierre: lo que dice el texto y gracias."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Leer sin añadir",
+        "body": "Como al caminar por la cueva, ¿qué cuidado tendrás al leer un versículo?\n\nMira quién habla y qué dice. No agregues ideas que el texto no dice. No quites palabras, como «de Dios»."
       }
     ],
-    "summary": "Esta semana leímos Romanos 1:1 con cuidado: Pablo, siervo y apóstol, apartado para el evangelio de Dios.",
+    "summary": "Leíste Romanos 1:1 con cuidado: Pablo, siervo y apóstol, apartado para el evangelio de Dios.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una carta con cuatro etiquetas. Escribe en ellas: Pablo, siervo, apóstol y apartado. Debajo escribe «evangelio de Dios» con una flecha. Revisa que cada etiqueta salga del versículo.",
+    "imageBandInstruction": "Dibuja una carta con cuatro etiquetas: Pablo, siervo, apóstol y apartado. Debajo escribe «evangelio de Dios». Revisa que todo salga del versículo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,57 +88,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana leímos Romanos 1:1 con mucho cuidado."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Conocimos a Pablo, siervo y apóstol."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Vimos que fue apartado para el evangelio de Dios."
+        "text": "Ayer uniste lo que alumbraste: Pablo,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sus títulos y el evangelio de Dios."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿qué es la exégesis y qué versículo"
+        "text": "Hoy sales de la Cueva del Guácharo."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "leímos esta semana?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -146,50 +151,50 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin mirar nada, ¿qué es la exégesis"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y qué versículo leíste?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 1: Exégesis y versículo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Exégesis es leer un texto con mucho cuidado."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Leímos Romanos 1:1, el saludo de la carta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Si olvidaste algo, dilo otra vez en voz alta."
+        "kind": "heading",
+        "text": "Punto 2: Exégesis y versículo"
       },
       {
         "index": 22,
@@ -203,42 +208,42 @@
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Exégesis es leer un texto con cuidado."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Leíste Romanos 1:1, saludo de la carta."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si olvidas algo, dilo en voz alta."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Quién escribe la carta y cómo lo sabemos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "¿Qué dos títulos se da?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -251,15 +256,15 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Quién escribe la carta y cómo lo sabes?"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 2: Pablo y sus títulos"
+        "kind": "lesson",
+        "text": "¿Qué dos títulos se da?"
       },
       {
         "index": 32,
@@ -273,56 +278,56 @@
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Escribe Pablo, y se presenta al inicio."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Se llama siervo, porque pertenece a Cristo y lo sirve."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Se llama apóstol: un enviado con un mensaje."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Pablo y sus títulos"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe Pablo y se presenta al inicio."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Siervo: pertenece a Cristo y lo sirve."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Qué significan «apartado» y «evangelio de Dios»?"
+        "text": "Apóstol: un enviado con un mensaje."
       },
       {
         "index": 41,
@@ -335,50 +340,50 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: La tarea de Pablo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sales de la cueva con tu linterna."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Apartado es separado para una tarea especial."
+        "text": "¿Qué es «apartado»? ¿Y «evangelio»?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Evangelio es una buena noticia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Es «de Dios» porque viene de Dios."
+        "text": "________________________________________"
       },
       {
         "index": 49,
@@ -391,8 +396,8 @@
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 4: La tarea de Pablo"
       },
       {
         "index": 51,
@@ -405,22 +410,22 @@
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Apartado es separado para una tarea."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Vas a contárselo a alguien de tu casa."
+        "text": "Evangelio es una buena noticia."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "¿Cómo empezarías tu exposición?"
+        "text": "Es «de Dios» porque viene de Dios."
       },
       {
         "index": 55,
@@ -433,99 +438,99 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a contar tu viaje por la cueva"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Una buena exposición tiene inicio, medio y cierre."
+        "text": "y por Romanos 1:1. ¿Cómo empiezas?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Inicio: «Hoy les cuento cómo leer un versículo»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Medio: Pablo, sus títulos y el evangelio de Dios."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cierre: lo que el texto dice, y gracias por escuchar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una exposición tiene tres partes."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Inicio: presentas de qué hablarás."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué cuidado tendrás la próxima vez que leas"
+        "text": "Medio: Pablo, sus títulos y su tarea."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "un versículo?"
+        "text": "Cierre: lo que dice el texto y gracias."
       },
       {
         "index": 70,
@@ -538,50 +543,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Leer sin añadir"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Como al caminar por la cueva, ¿qué"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Primero mira quién habla y qué dice."
+        "text": "cuidado tendrás al leer un versículo?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "No agregues ideas que el texto no dice."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "No quites palabras importantes, como «de Dios»."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -594,8 +599,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Leer sin añadir"
       },
       {
         "index": 80,
@@ -608,55 +613,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mira quién habla y qué dice."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué versículo leímos esta semana?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "No agregues ideas que el texto no dice."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Juan 3:16",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "No quites palabras, como «de Dios»."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Génesis 1:1",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Salmo 23",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Romanos 1:1",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué es la exégesis?",
-        "questionId": "d5-q2",
+        "text": "¿Qué versículo leíste esta semana?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Adivinar el futuro",
-        "questionId": "d5-q2"
+        "text": "A) Juan 3:16",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Leer con mucho cuidado un texto",
-        "questionId": "d5-q2"
+        "text": "B) Génesis 1:1",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Copiar rápido",
-        "questionId": "d5-q2"
+        "text": "C) Salmo 23",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Cantar un salmo",
-        "questionId": "d5-q2"
+        "text": "D) Romanos 1:1",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Quién se presenta al inicio de la carta?",
-        "questionId": "d5-q3",
+        "text": "¿Qué es la exégesis?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +732,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Pablo",
-        "questionId": "d5-q3"
+        "text": "A) Adivinar el futuro",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Pedro",
-        "questionId": "d5-q3"
+        "text": "B) Leer un texto con cuidado",
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Un romano",
-        "questionId": "d5-q3"
+        "text": "C) Copiar rápido",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Un profeta",
-        "questionId": "d5-q3"
+        "text": "D) Cantar un salmo",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué dos títulos se da Pablo?",
-        "questionId": "d5-q4",
+        "text": "¿Quién se presenta en la carta?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,46 +786,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Rey y juez",
-        "questionId": "d5-q4"
+        "text": "A) Pablo",
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Maestro y soldado",
-        "questionId": "d5-q4"
+        "text": "B) Pedro",
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Siervo y apóstol",
-        "questionId": "d5-q4"
+        "text": "C) Un romano",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Pastor y médico",
-        "questionId": "d5-q4"
+        "text": "D) Un profeta",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué dos títulos se da Pablo?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Rey y juez",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Maestro y soldado",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Siervo y apóstol",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Pastor y médico",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué significa «apartado»?",
+        "text": "¿Qué es «apartado»?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,50 +883,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Separado para una tarea especial",
+        "text": "A) Separado para una tarea",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Muy lejos",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Perdido",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Dormido",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué significa «evangelio»?",
+        "text": "¿Qué es «evangelio»?",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -897,50 +937,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Ley antigua",
+        "text": "A) Una ley antigua",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Mala noticia",
+        "text": "B) Una mala noticia",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Carta larga",
+        "text": "C) Una carta larga",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Buena noticia",
+        "text": "D) Una buena noticia",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué parte de una exposición va al inicio?",
+        "text": "¿Qué va al inicio de la exposición?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,50 +991,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Dar las gracias",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Presentar de qué hablarás",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Las preguntas finales",
+        "text": "C) El cierre",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) El cierre",
+        "text": "D) Las preguntas",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué debes evitar al leer un versículo?",
+        "text": "¿Qué debes evitar al leer?",
         "questionId": "d5-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Mirar quién habla",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Leer despacio",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Añadir ideas que no dice",
+        "text": "C) Agregar ideas que no dice",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Subrayar palabras",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe lo que aprendiste de Romanos 1:1 en tres frases.",
+        "text": "Cuenta Romanos 1:1 en tres frases.",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Cuenta con tus palabras qué hace un siervo y un apóstol.",
+        "text": "Cuenta qué hacen un siervo y un apóstol.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1111,30 +1135,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
       },
       {
         "index": 140,
@@ -1148,15 +1148,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un esquema con Pablo, sus títulos y su tarea.",
+        "text": "Dibuja: Pablo, sus títulos y su tarea.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,14 +1173,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 144,
@@ -1194,23 +1194,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja las tres partes de una exposición: inicio, medio y cierre.",
+        "text": "Dibuja inicio, medio y cierre.",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1219,6 +1211,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
       },
       {
         "index": 149,
@@ -1232,53 +1232,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una carta con cuatro etiquetas."
+        "text": "Dibuja una carta con cuatro etiquetas:"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe en ellas: Pablo, siervo, apóstol y apartado."
+        "text": "Pablo, siervo, apóstol y apartado. Debajo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo escribe «evangelio de Dios» con una flecha."
+        "text": "escribe «evangelio de Dios». Revisa que"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada etiqueta salga del versículo."
+        "text": "todo salga del versículo."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1291,7 +1288,7 @@
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué versículo leímos esta semana?",
+        "prompt": "¿Qué versículo leíste esta semana?",
         "choices": [
           "Juan 3:16",
           "Génesis 1:1",
@@ -1301,8 +1298,8 @@
         "answer": "Romanos 1:1",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1312,22 +1309,22 @@
         "prompt": "¿Qué es la exégesis?",
         "choices": [
           "Adivinar el futuro",
-          "Leer con mucho cuidado un texto",
+          "Leer un texto con cuidado",
           "Copiar rápido",
           "Cantar un salmo"
         ],
-        "answer": "Leer con mucho cuidado un texto",
+        "answer": "Leer un texto con cuidado",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Quién se presenta al inicio de la carta?",
+        "prompt": "¿Quién se presenta en la carta?",
         "choices": [
           "Pablo",
           "Pedro",
@@ -1337,8 +1334,8 @@
         "answer": "Pablo",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1354,129 +1351,129 @@
         ],
         "answer": "Siervo y apóstol",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «apartado»?",
+        "prompt": "¿Qué es «apartado»?",
         "choices": [
-          "Separado para una tarea especial",
+          "Separado para una tarea",
           "Muy lejos",
           "Perdido",
           "Dormido"
         ],
-        "answer": "Separado para una tarea especial",
+        "answer": "Separado para una tarea",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «evangelio»?",
+        "prompt": "¿Qué es «evangelio»?",
         "choices": [
-          "Ley antigua",
-          "Mala noticia",
-          "Carta larga",
-          "Buena noticia"
+          "Una ley antigua",
+          "Una mala noticia",
+          "Una carta larga",
+          "Una buena noticia"
         ],
-        "answer": "Buena noticia",
+        "answer": "Una buena noticia",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué parte de una exposición va al inicio?",
+        "prompt": "¿Qué va al inicio de la exposición?",
         "choices": [
           "Dar las gracias",
           "Presentar de qué hablarás",
-          "Las preguntas finales",
-          "El cierre"
+          "El cierre",
+          "Las preguntas"
         ],
         "answer": "Presentar de qué hablarás",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué debes evitar al leer un versículo?",
+        "prompt": "¿Qué debes evitar al leer?",
         "choices": [
           "Mirar quién habla",
           "Leer despacio",
-          "Añadir ideas que no dice",
+          "Agregar ideas que no dice",
           "Subrayar palabras"
         ],
-        "answer": "Añadir ideas que no dice",
+        "answer": "Agregar ideas que no dice",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe lo que aprendiste de Romanos 1:1 en tres frases.",
+        "prompt": "Cuenta Romanos 1:1 en tres frases.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta con tus palabras qué hace un siervo y un apóstol.",
+        "prompt": "Cuenta qué hacen un siervo y un apóstol.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con Pablo, sus títulos y su tarea.",
+        "prompt": "Dibuja: Pablo, sus títulos y su tarea.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja las tres partes de una exposición: inicio, medio y cierre.",
+        "prompt": "Dibuja inicio, medio y cierre.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

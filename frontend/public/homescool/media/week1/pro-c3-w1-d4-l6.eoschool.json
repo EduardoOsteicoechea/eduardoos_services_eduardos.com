@@ -14,31 +14,36 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Cerrar el experimento",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer comparaste un giro lento con uno rápido.\nAnotaste la velocidad y lo que observaste.\nAprendiste a anotar solo lo que viste de verdad.\n\nCasi terminas el experimento. ¿Qué debes tener listo para poder explicarlo mañana?\n\nDebes tener tu disco terminado y funcionando. Y tus datos anotados en la bitácora. Con eso podrás explicar qué pasó."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer probaste el disco lento y rápido. Anotaste solo lo que viste de verdad. Como cuando miras el Salto Ángel."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Planificar antes de escribir",
-        "body": "Antes de escribir una conclusión, ¿qué crees que conviene hacer primero?\n\nConviene planificar: pensar antes de escribir. Una conclusión es lo que descubriste al final. Haz un plan de tres líneas: qué hiciste, qué viste y qué crees que pasó."
+        "heading": "Punto 2: Planificar la conclusión",
+        "body": "Vas a contar tu viaje al Salto Ángel. ¿Qué haces antes de hablar?\n\nPlanificar: pensar antes de escribir. Una conclusión es lo que descubriste. Haz un plan de tres líneas: qué hiciste, qué viste y qué crees que pasó."
       },
       {
         "id": "p3",
         "heading": "Punto 3: La explicación",
-        "body": "Sigamos. Si tu disco guiñó, ¿qué ocurrió dentro de tu ojo y de tu cerebro?\n\nLa retina recibió la imagen del ojo abierto y del cerrado. El ojo guarda cada imagen por un instante. Como cambian tan rápido, el cerebro las une. Eso es la persistencia de la visión."
+        "body": "Tu disco guiñó. ¿Qué pasó dentro del ojo y del cerebro?\n\nLa retina recibió las dos imágenes. El ojo guarda cada una un instante. Como cambian rápido, el cerebro las une. Eso es la persistencia de la visión."
       },
       {
         "id": "p4",
         "heading": "Punto 4: Una conclusión completa",
-        "body": "Imagina que alguien dice: «Funcionó» y nada más. ¿Eso explica el experimento?\n\nNo. Falta contar qué viste y por qué crees que pasó. Puedes escribir: «Vi que el ojo guiñaba al girar rápido». Y seguir: «Creo que pasó porque el cerebro unió las imágenes»."
+        "body": "Decir «Salto Ángel» no explica la caída. ¿Basta decir «Funcionó»?\n\nNo. Falta contar qué viste y por qué. Escribe: «Vi que el ojo guiñaba rápido». Sigue: «Creo que pasó porque el cerebro unió las imágenes»."
       },
       {
         "id": "p5",
         "heading": "Punto 5: La ficha del experimento",
-        "body": "Ahora tú: ¿cómo contarías tu resultado usando las palabras persistencia, retina y cerebro?\n\nTu ficha tiene el propósito: ¿puede un disco guiñar? Tiene un resultado de tu tabla de datos. Y una oración que explica por qué ocurrió. Usa las palabras persistencia, retina y cerebro."
+        "body": "El Salto Ángel también se llama Kerepakupai Merú. ¿Y tu ficha?\n\nTu ficha lleva nombre: «Guiñando». Propósito: ¿puede un disco guiñar? Resultado de tu tabla de datos. Y una oración que explica por qué."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Hablar como científico",
+        "body": "¿Cómo cuentas tu resultado con las palabras de un científico?\n\nDi: «La retina guardó las imágenes. El cerebro las unió: persistencia». Usa esas palabras al contarlo, como un guía del Salto Ángel cuenta su ruta."
       }
     ],
-    "summary": "Para concluir planificas qué hiciste, qué viste y qué crees que pasó.",
+    "summary": "Para concluir planificas qué hiciste, qué viste y por qué crees que pasó. Tu experimento «Guiñando» tiene nombre, como el Salto Ángel.",
     "weekRecap": "Proyecto único: disco «Guiñando» y persistencia de la visión. Bitácora con fecha, intento y resultado.",
     "priorDayRecap": "Ayer comparaste velocidades y anotaste cuál intento funcionó mejor.",
     "layout": "letter-grid-v2",
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer comparaste un giro lento con uno rápido."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Anotaste la velocidad y lo que observaste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Aprendiste a anotar solo lo que viste de verdad."
+        "text": "Ayer probaste el disco lento y rápido."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Anotaste solo lo que viste de verdad."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Casi terminas el experimento. ¿Qué debes tener listo"
+        "text": "Como cuando miras el Salto Ángel."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "para poder explicarlo mañana?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,36 +153,36 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Cerrar el experimento"
+        "kind": "lesson",
+        "text": "Vas a contar tu viaje al Salto Ángel."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué haces antes de hablar?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Debes tener tu disco terminado y funcionando."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Y tus datos anotados en la bitácora."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Con eso podrás explicar qué pasó."
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -190,8 +195,8 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Planificar la conclusión"
       },
       {
         "index": 22,
@@ -204,29 +209,29 @@
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Planificar: pensar antes de escribir."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Antes de escribir una conclusión, ¿qué crees que"
+        "text": "Una conclusión es lo que descubriste."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "conviene hacer primero?"
+        "text": "Haz un plan de tres líneas: qué hiciste,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "qué viste y qué crees que pasó."
       },
       {
         "index": 27,
@@ -239,15 +244,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Planificar antes de escribir"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,49 +266,49 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Conviene planificar: pensar antes de escribir."
+        "text": "Tu disco guiñó. ¿Qué pasó dentro"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Una conclusión es lo que descubriste al final."
+        "text": "del ojo y del cerebro?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Haz un plan de tres líneas:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "qué hiciste, qué viste y qué crees que pasó."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La explicación"
       },
       {
         "index": 38,
@@ -317,28 +322,28 @@
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Sigamos. Si tu disco guiñó, ¿qué ocurrió dentro"
+        "text": "La retina recibió las dos imágenes."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "de tu ojo y de tu cerebro?"
+        "text": "El ojo guarda cada una un instante."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Como cambian rápido, el cerebro las une."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Eso es la persistencia de la visión."
       },
       {
         "index": 43,
@@ -351,57 +356,57 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: La explicación"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "La retina recibió la imagen del ojo abierto y del cerrado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "El ojo guarda cada imagen por un instante."
+        "text": "Decir «Salto Ángel» no explica la caída."
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Como cambian tan rápido, el cerebro las une."
+        "text": "¿Basta decir «Funcionó»?"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Eso es la persistencia de la visión."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -421,43 +426,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Imagina que alguien dice: «Funcionó» y nada más."
+        "kind": "heading",
+        "text": "Punto 4: Una conclusión completa"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Eso explica el experimento?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Falta contar qué viste y por qué."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe: «Vi que el ojo guiñaba rápido»."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sigue: «Creo que pasó porque el cerebro"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Una conclusión completa"
+        "kind": "lesson",
+        "text": "unió las imágenes»."
       },
       {
         "index": 60,
@@ -471,35 +476,35 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "No. Falta contar qué viste y por qué crees que pasó."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Puedes escribir: «Vi que el ojo guiñaba al girar rápido»."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Y seguir: «Creo que pasó porque el cerebro unió las imágenes»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El Salto Ángel también se llama"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Kerepakupai Merú. ¿Y tu ficha?"
       },
       {
         "index": 66,
@@ -512,22 +517,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Ahora tú: ¿cómo contarías tu resultado usando las"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "palabras persistencia, retina y cerebro?"
+        "kind": "heading",
+        "text": "Punto 5: La ficha del experimento"
       },
       {
         "index": 70,
@@ -540,50 +545,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tu ficha lleva nombre: «Guiñando»."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: La ficha del experimento"
+        "kind": "lesson",
+        "text": "Propósito: ¿puede un disco guiñar?"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Resultado de tu tabla de datos."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Tu ficha tiene el propósito: ¿puede un disco guiñar?"
+        "text": "Y una oración que explica por qué."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Tiene un resultado de tu tabla de datos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Y una oración que explica por qué ocurrió."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Usa las palabras persistencia, retina y cerebro."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,14 +602,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Cómo cuentas tu resultado con las"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "palabras de un científico?"
       },
       {
         "index": 81,
@@ -617,102 +622,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es una conclusión?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Los materiales del inicio",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) El título del disco",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Hablar como científico"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Lo que descubriste al final",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) La fecha de hoy",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Di: «La retina guardó las imágenes."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El cerebro las unió: persistencia»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué haces antes de escribir la conclusión?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Usa esas palabras al contarlo, como"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Cambiar de experimento",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "un guía del Salto Ángel cuenta su ruta."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Borrar la bitácora",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Girar sin mirar",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Planificar tres líneas",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -726,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué recibe las imágenes en el ojo?",
-        "questionId": "d4-q3",
+        "text": "¿Qué es una conclusión?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) La cinta",
-        "questionId": "d4-q3"
+        "text": "A) Los materiales del inicio",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) La retina",
-        "questionId": "d4-q3"
+        "text": "B) El título del disco",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El lápiz",
-        "questionId": "d4-q3"
+        "text": "C) Lo que descubriste al final",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La cartulina",
-        "questionId": "d4-q3"
+        "text": "D) La fecha de hoy",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -780,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Quién une las imágenes que cambian rápido?",
-        "questionId": "d4-q4",
+        "text": "¿Qué haces antes de concluir?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +776,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) El cerebro",
-        "questionId": "d4-q4"
+        "text": "A) Cambiar de experimento",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) La tijera",
-        "questionId": "d4-q4"
+        "text": "B) Borrar la bitácora",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) El lápiz",
-        "questionId": "d4-q4"
+        "text": "C) Girar sin mirar",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) La mano",
-        "questionId": "d4-q4"
+        "text": "D) Planificar tres líneas",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué recibe las imágenes en el ojo?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) La cinta",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) La retina",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) El lápiz",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) La cartulina",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Quién une las imágenes rápidas?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) El cerebro",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) La tijera",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) El lápiz",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) La mano",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Cómo se llama este efecto?",
         "questionId": "d4-q5",
@@ -845,50 +927,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Bitácora",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Procedimiento",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Persistencia de la visión",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Tabla",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cuál es la primera línea del plan?",
+        "text": "¿Cuál es el nombre pemón del salto?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,158 +981,50 @@
         }
       },
       {
-        "index": 113,
-        "column": 3,
-        "line": 9,
-        "kind": "option",
-        "text": "A) Qué hiciste",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 114,
-        "column": 3,
-        "line": 10,
-        "kind": "option",
-        "text": "B) Qué comerás",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 115,
-        "column": 3,
-        "line": 11,
-        "kind": "option",
-        "text": "C) Quién ganó",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 116,
-        "column": 3,
-        "line": 12,
-        "kind": "option",
-        "text": "D) Cuánto costó",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 117,
-        "column": 3,
-        "line": 13,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "question",
-        "text": "¿Qué tiene la ficha del experimento?",
-        "questionId": "d4-q7",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Solo un dibujo",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Solo la fecha",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Una lista de juegos",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Propósito, resultado y explicación",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Basta con escribir «Funcionó»?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Kerepakupai Merú",
+        "questionId": "d4-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Sí, basta",
-        "questionId": "d4-q8"
+        "text": "B) Jimmie Angel",
+        "questionId": "d4-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) No, falta contar qué viste",
-        "questionId": "d4-q8"
+        "text": "C) Auyantepui",
+        "questionId": "d4-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Sí, si es corto",
-        "questionId": "d4-q8"
+        "text": "D) Canaima",
+        "questionId": "d4-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Solo si lo dice un adulto",
-        "questionId": "d4-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Escribe tu plan de tres líneas sobre el experimento.",
+        "text": "Escribe tu plan de tres líneas sobre el",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,6 +1033,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "experimento.",
+        "questionId": "d4-w1"
       },
       {
         "index": 131,
@@ -1080,31 +1062,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe una frase que empiece con «Creo que pasó porque».",
+        "text": "Escribe una frase que empiece con «Creo",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,6 +1079,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "que pasó porque».",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 137,
@@ -1126,39 +1108,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un esquema: ojo, retina, cerebro e imagen unida.",
+        "text": "Dibuja un esquema: ojo, retina y cerebro.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,20 +1127,50 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
       },
       {
-        "index": 144,
+        "index": 141,
         "column": 3,
-        "line": 40,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "question",
+        "text": "Dibuja tu ficha con nombre, propósito y",
+        "questionId": "d4-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "lesson",
+        "text": "resultado.",
+        "questionId": "d4-w4"
       },
       {
         "index": 145,
@@ -1190,7 +1178,7 @@
         "line": 41,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w3"
+        "questionId": "d4-w4"
       },
       {
         "index": 146,
@@ -1198,7 +1186,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w3"
+        "questionId": "d4-w4"
       },
       {
         "index": 147,
@@ -1211,83 +1199,71 @@
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "question",
-        "text": "Dibuja tu ficha con propósito, resultado y explicación.",
-        "questionId": "d4-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja un ojo grande con su retina al"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un ojo grande con su retina al fondo."
+        "text": "fondo. Dibuja una flecha que lleve la"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja una flecha que lleve la imagen al cerebro."
+        "text": "imagen al cerebro. Rotula: ojo, retina,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula: ojo, retina, cerebro e imagen unida."
+        "text": "cerebro e imagen unida. Añade tu disco"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade tu disco girando al lado del ojo."
+        "text": "girando al lado del ojo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d4-q1",
@@ -1303,15 +1279,15 @@
         "answer": "Lo que descubriste al final",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué haces antes de escribir la conclusión?",
+        "prompt": "¿Qué haces antes de concluir?",
         "choices": [
           "Cambiar de experimento",
           "Borrar la bitácora",
@@ -1321,8 +1297,8 @@
         "answer": "Planificar tres líneas",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1338,16 +1314,16 @@
         ],
         "answer": "La retina",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d4-q4",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Quién une las imágenes que cambian rápido?",
+        "prompt": "¿Quién une las imágenes rápidas?",
         "choices": [
           "El cerebro",
           "La tijera",
@@ -1356,9 +1332,9 @@
         ],
         "answer": "El cerebro",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1375,62 +1351,26 @@
         "answer": "Persistencia de la visión",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuál es la primera línea del plan?",
+        "prompt": "¿Cuál es el nombre pemón del salto?",
         "choices": [
-          "Qué hiciste",
-          "Qué comerás",
-          "Quién ganó",
-          "Cuánto costó"
+          "Kerepakupai Merú",
+          "Jimmie Angel",
+          "Auyantepui",
+          "Canaima"
         ],
-        "answer": "Qué hiciste",
+        "answer": "Kerepakupai Merú",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué tiene la ficha del experimento?",
-        "choices": [
-          "Solo un dibujo",
-          "Solo la fecha",
-          "Una lista de juegos",
-          "Propósito, resultado y explicación"
-        ],
-        "answer": "Propósito, resultado y explicación",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Basta con escribir «Funcionó»?",
-        "choices": [
-          "Sí, basta",
-          "No, falta contar qué viste",
-          "Sí, si es corto",
-          "Solo si lo dice un adulto"
-        ],
-        "answer": "No, falta contar qué viste",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1440,8 +1380,8 @@
         "prompt": "Escribe tu plan de tres líneas sobre el experimento.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1451,34 +1391,34 @@
         "prompt": "Escribe una frase que empiece con «Creo que pasó porque».",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un esquema: ojo, retina, cerebro e imagen unida.",
+        "prompt": "Dibuja un esquema: ojo, retina y cerebro.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja tu ficha con propósito, resultado y explicación.",
+        "prompt": "Dibuja tu ficha con nombre, propósito y resultado.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 39,
+          "index": 143
         }
       }
     ]

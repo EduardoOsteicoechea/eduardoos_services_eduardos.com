@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las tres palabras",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana conociste tres palabras: et, ut y non.\nCada una hace un trabajo distinto en la frase.\nHoy las recuerdas y las cuentas con orden.\n\nSin mirar nada, ¿qué significa cada una: «et», «ut» y «non»?\n\nSon estas: et = y · ut = para que / meta · non = no. Si olvidaste alguna, dila otra vez en voz alta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer practicaste «non» antes del verbo, como el agua que se detiene en Guri. Hoy juntas las tres palabras y aprendes a contarlas con orden."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Tres trabajos",
-        "body": "¿Qué trabajo hace cada una dentro de la frase?\n\n«Et» une cosas iguales: nombres o acciones. «Ut» dice la meta: responde «¿para qué?». «Non» niega: va justo antes del verbo."
+        "heading": "Punto 2: Las tres palabras",
+        "body": "Sin mirar nada, ¿qué significa cada una: «et», «ut» y «non»?\n\nSon estas: et = y · ut = para que / meta · non = no. Si olvidaste alguna, dila otra vez en voz alta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Reconocer la pieza",
-        "body": "Lee «panis et aqua», «laboro ut discam» y «non venit». ¿Qué pieza aparece en cada una?\n\n«Panis et aqua» es «pan y agua»: et une nombres. «Laboro ut discam» es «trabajo para aprender»: meta. «Non venit» es «no viene»: negación. Busca primero la pieza y luego traduce."
+        "heading": "Punto 3: Los tres trabajos en Guri",
+        "body": "Guri junta el agua, la detiene y da energía. ¿Qué palabra va con cada trabajo?\n\n«Et» une, como el agua que se junta. «Non» niega: «aqua non currit». «Ut» dice para qué da energía."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a contarle esto a alguien de tu casa. ¿Cómo empezarías tu exposición?\n\nInicio: «Hoy les voy a enseñar tres palabras en latín». Medio: un ejemplo de cada una: et, ut y non. Di qué significa cada ejemplo. Cierre: repite la lista y termina con «gracias»."
+        "heading": "Punto 4: Reconocer la pieza",
+        "body": "Lee «panis et aqua», «venio ut videam» y «aqua non currit». ¿Qué pieza hay en cada una?\n\n«Panis et aqua» es «pan y agua»: et. «Venio ut videam» es «vengo para ver»: ut. «Aqua non currit» es «el agua no corre»: non. Busca primero la pieza y luego traduce."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Buscar la pieza primero",
-        "body": "Ves una frase latina corta. ¿Qué es lo primero que buscas para empezar a leerla?\n\nBusca si aparece et, ut o non. Si une dos cosas iguales, es et. Si dice para qué, es ut. Si niega la acción, es non."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contarle esto a alguien de tu casa. ¿Cómo empezarías tu exposición?\n\nInicio: «Hoy les enseño tres palabras latinas». Medio: un ejemplo de et, de ut y de non, cada uno con su significado. Cierre: repite la lista y di «gracias»."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Buscar la pieza primero",
+        "body": "Ves una frase latina corta. ¿Qué buscas primero para empezar a leerla?\n\nBusca si aparece et, ut o non. Si une dos cosas iguales, es et. Si dice para qué, es ut. Si niega la acción, es non."
       }
     ],
-    "summary": "Et une, ut dice para qué y non niega; busca primero la pieza y luego traduce.",
+    "summary": "En Guri el agua se une (et), se detiene (non) y da energía (ut); busca primero la pieza y luego traduce.",
     "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tres cajas en fila: una con et, una con ut y una con non. Dentro de cada caja dibuja un ejemplo pequeño. Escribe debajo de cada caja su significado. Escribe una frase corta que use una de las tres.",
+    "imageBandInstruction": "Dibuja la Represa de Guri con tres cajas. En una caja escribe et y su ejemplo. En otra escribe ut y su ejemplo. En la tercera escribe non y su ejemplo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana conociste tres palabras: et, ut y non."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Cada una hace un trabajo distinto en la frase."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy las recuerdas y las cuentas con orden."
+        "text": "Ayer practicaste «non» antes del verbo,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como el agua que se detiene en Guri."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿qué significa cada una:"
+        "text": "Hoy juntas las tres palabras y"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "«et», «ut» y «non»?"
+        "text": "aprendes a contarlas con orden."
       },
       {
         "index": 12,
@@ -133,15 +138,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -154,78 +159,78 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Las tres palabras"
+        "kind": "lesson",
+        "text": "Sin mirar nada, ¿qué significa cada una:"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«et», «ut» y «non»?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Son estas:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "et = y · ut = para que / meta · non = no."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Si olvidaste alguna, dila otra vez en voz alta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Las tres palabras"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son estas:"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "et = y · ut = para que / meta · non = no."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Qué trabajo hace cada una dentro de la frase?"
+        "text": "Si olvidaste alguna, dila otra vez"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en voz alta."
       },
       {
         "index": 27,
@@ -238,15 +243,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Tres trabajos"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -260,42 +265,42 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "«Et» une cosas iguales: nombres o acciones."
+        "text": "Guri junta el agua, la detiene y da energía."
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "«Ut» dice la meta: responde «¿para qué?»."
+        "text": "¿Qué palabra va con cada trabajo?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "«Non» niega: va justo antes del verbo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Los tres trabajos en Guri"
       },
       {
         "index": 37,
@@ -309,21 +314,21 @@
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Lee «panis et aqua», «laboro ut discam» y «non venit»."
+        "text": "«Et» une, como el agua que se junta."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "¿Qué pieza aparece en cada una?"
+        "text": "«Non» niega: «aqua non currit»."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Ut» dice para qué da energía."
       },
       {
         "index": 41,
@@ -336,15 +341,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Reconocer la pieza"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -358,49 +363,49 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "«Panis et aqua» es «pan y agua»: et une nombres."
+        "text": "Lee «panis et aqua», «venio ut videam»"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "«Laboro ut discam» es «trabajo para aprender»: meta."
+        "text": "y «aqua non currit». ¿Qué pieza hay en cada"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "«Non venit» es «no viene»: negación."
+        "text": "una?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Busca primero la pieza y luego traduce."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Reconocer la pieza"
       },
       {
         "index": 52,
@@ -414,77 +419,77 @@
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Vas a contarle esto a alguien de tu casa."
+        "text": "«Panis et aqua» es «pan y agua»: et."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "¿Cómo empezarías tu exposición?"
+        "text": "«Venio ut videam» es «vengo para ver»: ut."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Aqua non currit» es «el agua no corre»:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "non."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Busca primero la pieza y luego traduce."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Inicio: «Hoy les voy a enseñar tres palabras en latín»."
+        "text": "________________________________________"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Medio: un ejemplo de cada una: et, ut y non."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Di qué significa cada ejemplo."
+        "text": "Vas a contarle esto a alguien de tu casa."
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Cierre: repite la lista y termina con «gracias»."
+        "text": "¿Cómo empezarías tu exposición?"
       },
       {
         "index": 64,
@@ -498,7 +503,7 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 66,
@@ -511,43 +516,43 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Ves una frase latina corta. ¿Qué es lo primero que"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "buscas para empezar a leerla?"
+        "text": "Inicio: «Hoy les enseño tres palabras latinas»."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Medio: un ejemplo de et, de ut y de non,"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cada uno con su significado."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Buscar la pieza primero"
+        "kind": "lesson",
+        "text": "Cierre: repite la lista y di «gracias»."
       },
       {
         "index": 73,
@@ -561,49 +566,49 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Busca si aparece et, ut o non."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Si une dos cosas iguales, es et."
+        "text": "________________________________________"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Si dice para qué, es ut."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Si niega la acción, es non."
+        "text": "Ves una frase latina corta. ¿Qué buscas"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "primero para empezar a leerla?"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «et»?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "heading",
+        "text": "Punto 6: Buscar la pieza primero"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) No",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Para que",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Busca si aparece et, ut o non."
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Nunca",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Si une dos cosas iguales, es et."
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Y",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Si dice para qué, es ut."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si niega la acción, es non."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué significa «ut» en esta lección?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Y",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Para que",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) No",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Pero",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué significa «non»?",
-        "questionId": "d5-q3",
+        "text": "¿Qué significa «et»?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,31 +722,31 @@
         "line": 43,
         "kind": "option",
         "text": "A) No",
-        "questionId": "d5-q3"
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Y",
-        "questionId": "d5-q3"
+        "text": "B) Para que",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Para que",
-        "questionId": "d5-q3"
+        "text": "C) Nunca",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Con",
-        "questionId": "d5-q3"
+        "text": "D) Y",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué palabra une dos cosas iguales?",
-        "questionId": "d5-q4",
+        "text": "¿Qué significa «ut»?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +775,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) ut",
-        "questionId": "d5-q4"
+        "text": "A) Y",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) non",
-        "questionId": "d5-q4"
+        "text": "B) Para que",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) et",
-        "questionId": "d5-q4"
+        "text": "C) No",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) venit",
-        "questionId": "d5-q4"
+        "text": "D) Pero",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «non»?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) No",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Y",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Para que",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Con",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué palabra responde «¿para qué?»?",
+        "text": "¿Qué palabra une dos cosas iguales?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) ut",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) non",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) et",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) aqua",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué palabra dice para qué?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +926,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) ut",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) et",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) non",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) venit",
+        "text": "D) aqua",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué palabra niega el verbo?",
+        "text": "¿Qué palabra niega la acción?",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +980,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) et",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) ut",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) venit",
+        "text": "C) aqua",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) non",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué significa «laboro ut discam»?",
+        "text": "¿Qué significa «venio ut videam»?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,102 +1034,48 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Trabajo y aprendo",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Trabajo para aprender",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) No trabajo",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Aprendo sin trabajar",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Qué parte de la exposición termina con «gracias»?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) El inicio",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) El medio",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) El cierre",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Ninguna",
-        "questionId": "d5-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 130,
         "column": 3,
         "line": 26,
+        "kind": "option",
+        "text": "A) Vengo y veo",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) Vengo para ver",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) No vengo",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) Veo sin venir",
+        "questionId": "d5-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
         "text": "Escribe et, ut y non con su significado.",
         "questionId": "d5-w1",
@@ -1060,48 +1088,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Escribe tu exposición: inicio, medio y cierre.",
         "questionId": "d5-w2",
@@ -1112,30 +1124,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1137,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja tres cajas: et (une), ut (meta) y non (niega).",
+        "text": "Dibuja tres cajas: et une, ut meta y non niega.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1162,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 144,
@@ -1195,21 +1183,13 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
         "text": "Dibuja una frase tuya y rodea et, ut o non.",
         "questionId": "d5-w4",
@@ -1220,6 +1200,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
       },
       {
         "index": 149,
@@ -1233,60 +1221,57 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja tres cajas en fila: una con et, una con ut y una con non."
+        "text": "Dibuja la Represa de Guri con tres cajas. En"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dentro de cada caja dibuja un ejemplo pequeño."
+        "text": "una caja escribe et y su ejemplo. En otra"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe debajo de cada caja su significado."
+        "text": "escribe ut y su ejemplo. En la tercera"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe una frase corta que use una de las tres."
+        "text": "escribe non y su ejemplo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d5-q1",
@@ -1302,15 +1287,15 @@
         "answer": "Y",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «ut» en esta lección?",
+        "prompt": "¿Qué significa «ut»?",
         "choices": [
           "Y",
           "Para que",
@@ -1320,8 +1305,8 @@
         "answer": "Para que",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1337,9 +1322,9 @@
         ],
         "answer": "No",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1351,85 +1336,67 @@
           "ut",
           "non",
           "et",
-          "venit"
+          "aqua"
         ],
         "answer": "et",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué palabra responde «¿para qué?»?",
+        "prompt": "¿Qué palabra dice para qué?",
         "choices": [
           "ut",
           "et",
           "non",
-          "venit"
+          "aqua"
         ],
         "answer": "ut",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué palabra niega el verbo?",
+        "prompt": "¿Qué palabra niega la acción?",
         "choices": [
           "et",
           "ut",
-          "venit",
+          "aqua",
           "non"
         ],
         "answer": "non",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué significa «laboro ut discam»?",
+        "prompt": "¿Qué significa «venio ut videam»?",
         "choices": [
-          "Trabajo y aprendo",
-          "Trabajo para aprender",
-          "No trabajo",
-          "Aprendo sin trabajar"
+          "Vengo y veo",
+          "Vengo para ver",
+          "No vengo",
+          "Veo sin venir"
         ],
-        "answer": "Trabajo para aprender",
+        "answer": "Vengo para ver",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué parte de la exposición termina con «gracias»?",
-        "choices": [
-          "El inicio",
-          "El medio",
-          "El cierre",
-          "Ninguna"
-        ],
-        "answer": "El cierre",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1439,8 +1406,8 @@
         "prompt": "Escribe et, ut y non con su significado.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1450,21 +1417,21 @@
         "prompt": "Escribe tu exposición: inicio, medio y cierre.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja tres cajas: et (une), ut (meta) y non (niega).",
+        "prompt": "Dibuja tres cajas: et une, ut meta y non niega.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
@@ -1476,8 +1443,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

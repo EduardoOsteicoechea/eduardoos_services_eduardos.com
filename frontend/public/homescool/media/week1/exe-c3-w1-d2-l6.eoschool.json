@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Buscar quién habla",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que exégesis es leer con mucho cuidado.\nSupimos que Pablo escribe la carta y se presenta primero.\nTambién conocimos siervo, apóstol y apartado.\n\nAntes de leer un versículo, ¿cómo sabes quién habla?\n\nBusca primero a la persona que se presenta. En Romanos 1:1, el primer nombre es Pablo. El autor se presenta al inicio de la carta. Ese nombre orienta al lector."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer alumbraste Romanos 1:1 despacio, como quien entra con linterna a la cueva. Viste que Pablo escribe."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Rodear el nombre",
-        "body": "Si copias el versículo, ¿qué palabra rodearías primero con un círculo?\n\nRodea «Pablo»: es quien dice «yo escribo». Copiar despacio ayuda a no saltarse nada. Cada palabra del saludo trae información."
+        "heading": "Punto 2: Buscar quién habla",
+        "body": "En la Cueva del Guácharo hay ecos. ¿Cómo sabes quién hace cada sonido?\n\nEscuchas despacio y buscas el origen. En un versículo, buscas a quien habla. En Romanos 1:1 el primero es Pablo."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Lo que el texto dice de él",
-        "body": "Además de su nombre, ¿qué más dice el versículo sobre Pablo?\n\nDice que es siervo de Cristo. Dice que es apóstol y que fue apartado. Dice que fue apartado para el evangelio de Dios. Todo eso está escrito en el versículo."
+        "heading": "Punto 3: Rodear el nombre",
+        "body": "Copias el versículo en tu cuaderno. ¿Qué palabra rodearías primero?\n\nRodea «Pablo»: él es quien escribe. Copiar despacio ayuda a no saltarte nada, como alumbrar la cueva."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Lo que el texto no dice",
-        "body": "Una pregunta con truco: Pablo viajó por muchos lugares. ¿Lo dice Romanos 1:1?\n\nNo, ese dato no está en este versículo. Puede ser cierto, pero se lee en otros libros. La exégesis empieza por lo que está escrito. Después se pueden sumar otros datos."
+        "heading": "Punto 4: Lo que el texto dice",
+        "body": "Con la linterna ves más que un nombre. ¿Qué más dice el versículo de Pablo?\n\nDice que es siervo de Cristo, y que es apóstol, apartado para el evangelio de Dios."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tu frase sobre Pablo",
-        "body": "Ahora tú: ¿cómo dirías en una frase quién es Pablo, usando solo el versículo?\n\nPuedes decir: Pablo escribe y se presenta como siervo. Añade que es apóstol, apartado para el evangelio. Revisa que cada palabra esté en Romanos 1:1."
+        "heading": "Punto 5: Lo que el texto no dice",
+        "body": "Una pregunta con truco: Pablo viajó mucho. ¿Lo dice Romanos 1:1?\n\nNo, ese dato no está en este versículo. Puede ser cierto, pero va aparte. La exégesis empieza por lo escrito."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tu frase sobre Pablo",
+        "body": "Cuéntale a alguien quién es Pablo, usando solo el versículo. ¿Cómo?\n\nPablo se presenta como siervo y apóstol, apartado para el evangelio de Dios. Revisa que cada palabra esté escrita."
       }
     ],
-    "summary": "En Romanos 1:1 se lee primero quién habla y lo que el texto dice de Pablo, sin añadir datos de afuera.",
+    "summary": "En la cueva escuchas con atención; en Romanos 1:1 buscas quién habla y lees solo lo que el texto dice.",
     "weekRecap": "Romanos 1:1: Pablo, siervo y apóstol, apartado para el evangelio de Dios.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una hoja con el versículo copiado. Rodea el nombre «Pablo» con un círculo grande. Escribe debajo dos cosas que el texto dice de él. Marca con una X un dato que el versículo no dice.",
+    "imageBandInstruction": "Dibuja una pared de cueva con ecos. Escribe en ella el versículo copiado. Rodea «Pablo» con un círculo grande. Marca con X un dato que no dice.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,36 +89,36 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que exégesis es leer con mucho cuidado."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Supimos que Pablo escribe la carta y se presenta primero."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "También conocimos siervo, apóstol y apartado."
+        "text": "Ayer alumbraste Romanos 1:1 despacio,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como quien entra con linterna"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Antes de leer un versículo, ¿cómo sabes quién habla?"
+        "text": "a la cueva. Viste que Pablo escribe."
       },
       {
         "index": 11,
@@ -126,57 +131,57 @@
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "heading",
-        "text": "Punto 1: Buscar quién habla"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En la Cueva del Guácharo hay ecos."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "Busca primero a la persona que se presenta."
+        "text": "¿Cómo sabes quién hace cada sonido?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "En Romanos 1:1, el primer nombre es Pablo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "El autor se presenta al inicio de la carta."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Ese nombre orienta al lector."
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -189,8 +194,8 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Buscar quién habla"
       },
       {
         "index": 22,
@@ -203,22 +208,22 @@
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escuchas despacio y buscas el origen."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Si copias el versículo, ¿qué palabra rodearías primero"
+        "text": "En un versículo, buscas a quien habla."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "con un círculo?"
+        "text": "En Romanos 1:1 el primero es Pablo."
       },
       {
         "index": 26,
@@ -231,71 +236,71 @@
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Rodear el nombre"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Copias el versículo en tu cuaderno."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Rodea «Pablo»: es quien dice «yo escribo»."
+        "text": "¿Qué palabra rodearías primero?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Copiar despacio ayuda a no saltarse nada."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Cada palabra del saludo trae información."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Rodear el nombre"
       },
       {
         "index": 37,
@@ -309,21 +314,21 @@
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Además de su nombre, ¿qué más dice el versículo"
+        "text": "Rodea «Pablo»: él es quien escribe."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "sobre Pablo?"
+        "text": "Copiar despacio ayuda a no saltarte"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "nada, como alumbrar la cueva."
       },
       {
         "index": 41,
@@ -336,15 +341,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Lo que el texto dice de él"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -358,49 +363,49 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Dice que es siervo de Cristo."
+        "text": "Con la linterna ves más que un nombre."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Dice que es apóstol y que fue apartado."
+        "text": "¿Qué más dice el versículo de Pablo?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Dice que fue apartado para el evangelio de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Todo eso está escrito en el versículo."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Lo que el texto dice"
       },
       {
         "index": 52,
@@ -414,21 +419,21 @@
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Una pregunta con truco: Pablo viajó por muchos lugares."
+        "text": "Dice que es siervo de Cristo,"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "¿Lo dice Romanos 1:1?"
+        "text": "y que es apóstol, apartado"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "para el evangelio de Dios."
       },
       {
         "index": 56,
@@ -441,15 +446,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Lo que el texto no dice"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -463,28 +468,28 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "No, ese dato no está en este versículo."
+        "text": "Una pregunta con truco: Pablo viajó"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Puede ser cierto, pero se lee en otros libros."
+        "text": "mucho. ¿Lo dice Romanos 1:1?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "La exégesis empieza por lo que está escrito."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Después se pueden sumar otros datos."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -497,8 +502,8 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: Lo que el texto no dice"
       },
       {
         "index": 66,
@@ -511,22 +516,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No, ese dato no está en este versículo."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: ¿cómo dirías en una frase quién es Pablo,"
+        "text": "Puede ser cierto, pero va aparte."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "usando solo el versículo?"
+        "text": "La exégesis empieza por lo escrito."
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Tu frase sobre Pablo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuéntale a alguien quién es Pablo,"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Puedes decir: Pablo escribe y se presenta como siervo."
+        "text": "usando solo el versículo. ¿Cómo?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Añade que es apóstol, apartado para el evangelio."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Revisa que cada palabra esté en Romanos 1:1."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -595,8 +600,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Tu frase sobre Pablo"
       },
       {
         "index": 80,
@@ -609,55 +614,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pablo se presenta como siervo y apóstol,"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿A quién buscas primero para saber quién habla?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "apartado para el evangelio de Dios."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Al último lector",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Revisa que cada palabra esté escrita."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Al vecino",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) A un rey",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Al autor que se presenta",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cuál es el primer nombre en Romanos 1:1?",
-        "questionId": "d2-q2",
+        "text": "¿A quién buscas en un versículo?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Pedro",
-        "questionId": "d2-q2"
+        "text": "A) Al último lector",
+        "questionId": "d2-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Pablo",
-        "questionId": "d2-q2"
+        "text": "B) Al vecino",
+        "questionId": "d2-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Roma",
-        "questionId": "d2-q2"
+        "text": "C) A un rey",
+        "questionId": "d2-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Jesús",
-        "questionId": "d2-q2"
+        "text": "D) A quien habla",
+        "questionId": "d2-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué haces con «Pablo» al copiar el versículo?",
-        "questionId": "d2-q3",
+        "text": "¿Quién es el primero en Romanos 1:1?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Lo borras",
-        "questionId": "d2-q3"
+        "text": "A) Pedro",
+        "questionId": "d2-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Lo cambias",
-        "questionId": "d2-q3"
+        "text": "B) Pablo",
+        "questionId": "d2-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Lo rodeas con un círculo",
-        "questionId": "d2-q3"
+        "text": "C) Roma",
+        "questionId": "d2-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Lo saltas",
-        "questionId": "d2-q3"
+        "text": "D) Jesús",
+        "questionId": "d2-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué dos títulos tiene Pablo en el versículo?",
-        "questionId": "d2-q4",
+        "text": "¿Qué palabra rodeas primero?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,44 +787,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Rey y soldado",
-        "questionId": "d2-q4"
+        "text": "A) Roma",
+        "questionId": "d2-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Maestro y juez",
-        "questionId": "d2-q4"
+        "text": "B) Dios",
+        "questionId": "d2-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Pastor y médico",
-        "questionId": "d2-q4"
+        "text": "C) Pablo",
+        "questionId": "d2-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Siervo y apóstol",
-        "questionId": "d2-q4"
+        "text": "D) carta",
+        "questionId": "d2-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué dos títulos dice el versículo?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Rey y soldado",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Maestro y juez",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Pastor y médico",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Siervo y apóstol",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Para qué fue apartado Pablo?",
         "questionId": "d2-q5",
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Para ser rey",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Para el evangelio de Dios",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Para viajar solo",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Para ser soldado",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué dato NO dice Romanos 1:1 sobre Pablo?",
+        "text": "¿Qué NO dice Romanos 1:1 de Pablo?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Que viajó por muchos lugares",
+        "text": "A) Que viajó mucho",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Que es apóstol",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Que es siervo",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Que fue apartado",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Con qué empieza la exégesis?",
+        "text": "¿Por dónde empieza la exégesis?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Con una opinión",
+        "text": "A) Por una opinión",
         "questionId": "d2-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Con un rumor",
+        "text": "B) Por un rumor",
         "questionId": "d2-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Con lo que está escrito",
+        "text": "C) Por lo escrito",
         "questionId": "d2-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Con un dibujo",
+        "text": "D) Por un dibujo",
         "questionId": "d2-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Por qué no se salta el saludo?",
+        "text": "¿Qué ayuda copiar despacio?",
         "questionId": "d2-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Porque dice quién escribe",
+        "text": "A) A no saltarte nada",
         "questionId": "d2-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Porque es muy largo",
+        "text": "B) A terminar antes",
         "questionId": "d2-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Porque rima",
+        "text": "C) A borrar palabras",
         "questionId": "d2-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Porque es de otro libro",
+        "text": "D) A cambiar el texto",
         "questionId": "d2-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Copia Romanos 1:1 con tus palabras y rodea «Pablo».",
+        "text": "Copia Romanos 1:1 y rodea «Pablo».",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Escribe dos cosas que el texto dice sobre Pablo.",
+        "text": "Escribe dos cosas que el texto dice.",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,30 +1136,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
       },
       {
         "index": 140,
@@ -1149,15 +1149,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja a Pablo con tres etiquetas tomadas del versículo.",
+        "text": "Dibuja a Pablo con tres etiquetas.",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,14 +1174,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
       },
       {
         "index": 144,
@@ -1195,23 +1195,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja dos cajas: lo que el texto dice y lo que no dice.",
+        "text": "Dibuja dos cajas: dice y no dice.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1212,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 149,
@@ -1233,53 +1233,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una hoja con el versículo copiado."
+        "text": "Dibuja una pared de cueva con ecos."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rodea el nombre «Pablo» con un círculo grande."
+        "text": "Escribe en ella el versículo copiado. Rodea"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe debajo dos cosas que el texto dice de él."
+        "text": "«Pablo» con un círculo grande. Marca con"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Marca con una X un dato que el versículo no dice."
+        "text": "X un dato que no dice."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,25 +1289,25 @@
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿A quién buscas primero para saber quién habla?",
+        "prompt": "¿A quién buscas en un versículo?",
         "choices": [
           "Al último lector",
           "Al vecino",
           "A un rey",
-          "Al autor que se presenta"
+          "A quien habla"
         ],
-        "answer": "Al autor que se presenta",
+        "answer": "A quien habla",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuál es el primer nombre en Romanos 1:1?",
+        "prompt": "¿Quién es el primero en Romanos 1:1?",
         "choices": [
           "Pedro",
           "Pablo",
@@ -1320,33 +1317,33 @@
         "answer": "Pablo",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué haces con «Pablo» al copiar el versículo?",
+        "prompt": "¿Qué palabra rodeas primero?",
         "choices": [
-          "Lo borras",
-          "Lo cambias",
-          "Lo rodeas con un círculo",
-          "Lo saltas"
+          "Roma",
+          "Dios",
+          "Pablo",
+          "carta"
         ],
-        "answer": "Lo rodeas con un círculo",
+        "answer": "Pablo",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué dos títulos tiene Pablo en el versículo?",
+        "prompt": "¿Qué dos títulos dice el versículo?",
         "choices": [
           "Rey y soldado",
           "Maestro y juez",
@@ -1355,9 +1352,9 @@
         ],
         "answer": "Siervo y apóstol",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1374,110 +1371,110 @@
         "answer": "Para el evangelio de Dios",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué dato NO dice Romanos 1:1 sobre Pablo?",
+        "prompt": "¿Qué NO dice Romanos 1:1 de Pablo?",
         "choices": [
-          "Que viajó por muchos lugares",
+          "Que viajó mucho",
           "Que es apóstol",
           "Que es siervo",
           "Que fue apartado"
         ],
-        "answer": "Que viajó por muchos lugares",
+        "answer": "Que viajó mucho",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Con qué empieza la exégesis?",
+        "prompt": "¿Por dónde empieza la exégesis?",
         "choices": [
-          "Con una opinión",
-          "Con un rumor",
-          "Con lo que está escrito",
-          "Con un dibujo"
+          "Por una opinión",
+          "Por un rumor",
+          "Por lo escrito",
+          "Por un dibujo"
         ],
-        "answer": "Con lo que está escrito",
+        "answer": "Por lo escrito",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Por qué no se salta el saludo?",
+        "prompt": "¿Qué ayuda copiar despacio?",
         "choices": [
-          "Porque dice quién escribe",
-          "Porque es muy largo",
-          "Porque rima",
-          "Porque es de otro libro"
+          "A no saltarte nada",
+          "A terminar antes",
+          "A borrar palabras",
+          "A cambiar el texto"
         ],
-        "answer": "Porque dice quién escribe",
+        "answer": "A no saltarte nada",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Copia Romanos 1:1 con tus palabras y rodea «Pablo».",
+        "prompt": "Copia Romanos 1:1 y rodea «Pablo».",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe dos cosas que el texto dice sobre Pablo.",
+        "prompt": "Escribe dos cosas que el texto dice.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja a Pablo con tres etiquetas tomadas del versículo.",
+        "prompt": "Dibuja a Pablo con tres etiquetas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja dos cajas: lo que el texto dice y lo que no dice.",
+        "prompt": "Dibuja dos cajas: dice y no dice.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

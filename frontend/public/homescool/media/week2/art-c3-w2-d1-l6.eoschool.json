@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: El eje de simetría",
-        "body": "¿Crees que puedes copiar un dibujo como si fueras un espejo?\n\nUn espejo devuelve una imagen parecida a lo que tiene delante. En dibujo usamos esa idea sin necesidad de un espejo. Una hoja o una taza vista de frente tiene dos mitades parecidas. La línea que las separa se llama eje de simetría."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nLa semana pasada armaste dibujos con piezas OiLS: O, i, L y S. Hoy las llevas a la Laguna de Mucubají."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Cada forma tiene su pareja",
-        "body": "¿Y si dibujas un círculo a dos dedos del eje, a la izquierda? ¿Dónde pondrías su pareja?\n\nLa pareja va a dos dedos del eje, pero a la derecha. Debe ser del mismo tipo y del mismo tamaño. Y debe estar a la misma distancia del eje. Cuando todo coincide, hay simetría."
+        "heading": "Punto 2: El agua es un espejo",
+        "body": "Imagina la Laguna de Mucubají, quieta. ¿Qué ves dentro de su agua?\n\nVes la montaña al revés en el agua. El agua quieta es un espejo natural. El páramo, tierra alta y fría, la rodea."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Lugar y tamaño importan",
-        "body": "Una pregunta con truco: si una forma se ve más bonita grande, ¿puedes agrandarla solo en la copia?\n\nNo. En simetría, el lugar y el tamaño importan. Si cambias el tamaño, las dos mitades ya no coinciden. Primero copia igual; los adornos vienen después."
+        "heading": "Punto 3: El eje de simetría",
+        "body": "La montaña toca el agua en una línea. ¿Qué hay arriba y qué hay abajo?\n\nArriba está la montaña. Abajo está su reflejo. En dibujo, esa línea es el eje de simetría."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Doblar el papel",
-        "body": "Sigamos. ¿Cómo te ayudaría un papel doblado por la mitad?\n\nDobla el papel por la mitad y marca el pliegue. El pliegue es tu eje. Dibuja tres formas distintas a un lado del eje. Doblar sirve para comprobar si las mitades coinciden."
+        "heading": "Punto 4: Cada forma tiene su pareja",
+        "body": "Hay un círculo a dos dedos del eje. ¿Dónde queda su reflejo?\n\nQueda a dos dedos, pero al otro lado. Es del mismo tipo y del mismo tamaño. Está a la misma distancia del eje. Cuando todo coincide, hay simetría."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Primero mirar, luego dibujar",
-        "body": "¿En qué orden trabajarías para no equivocarte?\n\nPrimero mira con atención, antes de trazar. Luego traza el eje y nombra cada forma con OiLS. Por último, expresas: dibujas tu imagen con lo observado. Atención, nombrar y expresar: ese es nuestro camino."
+        "heading": "Punto 5: Lugar y tamaño importan",
+        "body": "Una pregunta con truco: ¿puedes hacer el reflejo más grande que la forma?\n\nNo. Si lo agrandas, no es un espejo. El lugar y el tamaño deben coincidir. Los adornos vienen después."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Doblar el papel",
+        "body": "En casa no hay laguna. ¿Cómo haces un espejo con una hoja de papel?\n\nDobla la hoja y marca el pliegue. El pliegue es tu eje, la línea del agua. Dibuja tres formas a un lado del eje."
       }
     ],
-    "summary": "El eje parte una figura en dos mitades. Cada forma tiene su pareja al otro lado, con el mismo tipo, tamaño y distancia.",
+    "summary": "En la Laguna de Mucubají el agua quieta es un espejo. El eje parte la imagen en dos mitades que coinciden.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un eje vertical en tu hoja. A un lado, dibuja tres formas con círculos, puntos o curvas. Marca con el dedo la distancia de cada forma al eje. Escribe al margen los nombres OiLS de tus formas.",
+    "imageBandInstruction": "Dibuja una laguna y una montaña. Traza el eje donde se tocan. Dibuja tres formas OiLS arriba. Anota la distancia de cada una al eje.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Crees que puedes copiar un dibujo como si fueras un espejo?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: El eje de simetría"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,78 +88,78 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Un espejo devuelve una imagen parecida a lo que tiene delante."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "En dibujo usamos esa idea sin necesidad de un espejo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Una hoja o una taza vista de frente tiene dos mitades parecidas."
+        "text": "La semana pasada armaste dibujos"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "La línea que las separa se llama eje de simetría."
+        "text": "con piezas OiLS: O, i, L y S."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy las llevas a la Laguna de Mucubají."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "lesson",
-        "text": "¿Y si dibujas un círculo a dos dedos del eje, a la izquierda?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
         "kind": "lesson",
-        "text": "¿Dónde pondrías su pareja?"
+        "text": "Imagina la Laguna de Mucubají, quieta."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué ves dentro de su agua?"
       },
       {
         "index": 17,
@@ -167,15 +172,15 @@
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -188,92 +193,92 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: El agua es un espejo"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Cada forma tiene su pareja"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ves la montaña al revés en el agua."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "La pareja va a dos dedos del eje, pero a la derecha."
+        "text": "El agua quieta es un espejo natural."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Debe ser del mismo tipo y del mismo tamaño."
+        "text": "El páramo, tierra alta y fría, la rodea."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Y debe estar a la misma distancia del eje."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "Cuando todo coincide, hay simetría."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La montaña toca el agua en una línea."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué hay arriba y qué hay abajo?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: si una forma se ve más bonita grande,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "¿puedes agrandarla solo en la copia?"
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -286,8 +291,8 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: El eje de simetría"
       },
       {
         "index": 36,
@@ -300,78 +305,78 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Arriba está la montaña."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Abajo está su reflejo."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En dibujo, esa línea es el eje de simetría."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "heading",
-        "text": "Punto 3: Lugar y tamaño importan"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "No. En simetría, el lugar y el tamaño importan."
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "Si cambias el tamaño, las dos mitades ya no coinciden."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Primero copia igual; los adornos vienen después."
+        "text": "Hay un círculo a dos dedos del eje."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Dónde queda su reflejo?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
@@ -384,8 +389,8 @@
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Sigamos. ¿Cómo te ayudaría un papel doblado por la mitad?"
+        "kind": "heading",
+        "text": "Punto 4: Cada forma tiene su pareja"
       },
       {
         "index": 50,
@@ -398,29 +403,29 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Queda a dos dedos, pero al otro lado."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es del mismo tipo y del mismo tamaño."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Está a la misma distancia del eje."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cuando todo coincide, hay simetría."
       },
       {
         "index": 55,
@@ -433,64 +438,64 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 4: Doblar el papel"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "lesson",
-        "text": "Dobla el papel por la mitad y marca el pliegue."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "El pliegue es tu eje."
+        "text": "Una pregunta con truco: ¿puedes hacer"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Dibuja tres formas distintas a un lado del eje."
+        "text": "el reflejo más grande que la forma?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Doblar sirve para comprobar si las mitades coinciden."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Lugar y tamaño importan"
       },
       {
         "index": 65,
@@ -504,21 +509,21 @@
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "¿En qué orden trabajarías para no equivocarte?"
+        "text": "No. Si lo agrandas, no es un espejo."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El lugar y el tamaño deben coincidir."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los adornos vienen después."
       },
       {
         "index": 69,
@@ -531,92 +536,127 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Primero mirar, luego dibujar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En casa no hay laguna. ¿Cómo haces"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Primero mira con atención, antes de trazar."
+        "text": "un espejo con una hoja de papel?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Luego traza el eje y nombra cada forma con OiLS."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Por último, expresas: dibujas tu imagen con lo observado."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Atención, nombrar y expresar: ese es nuestro camino."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Doblar el papel"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dobla la hoja y marca el pliegue."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El pliegue es tu eje, la línea del agua."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
+        "kind": "lesson",
+        "text": "Dibuja tres formas a un lado del eje."
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
         "kind": "question",
-        "text": "¿Cómo se llama la línea que parte una figura en dos?",
+        "text": "¿Cómo se llama la línea del medio?",
         "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
@@ -627,50 +667,50 @@
         }
       },
       {
-        "index": 83,
+        "index": 88,
         "column": 2,
-        "line": 31,
+        "line": 36,
         "kind": "option",
         "text": "A) Eje de simetría",
         "questionId": "d1-q1"
       },
       {
-        "index": 84,
+        "index": 89,
         "column": 2,
-        "line": 32,
+        "line": 37,
         "kind": "option",
         "text": "B) Espiral",
         "questionId": "d1-q1"
       },
       {
-        "index": 85,
+        "index": 90,
         "column": 2,
-        "line": 33,
+        "line": 38,
         "kind": "option",
         "text": "C) Diagonal",
         "questionId": "d1-q1"
       },
       {
-        "index": 86,
+        "index": 91,
         "column": 2,
-        "line": 34,
+        "line": 39,
         "kind": "option",
         "text": "D) Punto",
         "questionId": "d1-q1"
       },
       {
-        "index": 87,
+        "index": 92,
         "column": 2,
-        "line": 35,
+        "line": 40,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 88,
+        "index": 93,
         "column": 2,
-        "line": 36,
+        "line": 41,
         "kind": "question",
-        "text": "¿Qué hace un espejo con lo que tiene delante?",
+        "text": "¿Qué ves en el agua quieta?",
         "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
@@ -681,50 +721,50 @@
         }
       },
       {
-        "index": 89,
+        "index": 94,
         "column": 2,
-        "line": 37,
+        "line": 42,
         "kind": "option",
-        "text": "A) La borra",
+        "text": "A) Un puente",
         "questionId": "d1-q2"
       },
       {
-        "index": 90,
+        "index": 95,
         "column": 2,
-        "line": 38,
+        "line": 43,
         "kind": "option",
-        "text": "B) La hace más pequeña",
+        "text": "B) Solo arena",
         "questionId": "d1-q2"
       },
       {
-        "index": 91,
+        "index": 96,
         "column": 2,
-        "line": 39,
+        "line": 44,
         "kind": "option",
-        "text": "C) La pinta de color",
+        "text": "C) Nada",
         "questionId": "d1-q2"
       },
       {
-        "index": 92,
+        "index": 97,
         "column": 2,
-        "line": 40,
+        "line": 45,
         "kind": "option",
-        "text": "D) Devuelve una imagen parecida",
+        "text": "D) La montaña al revés",
         "questionId": "d1-q2"
       },
       {
-        "index": 93,
+        "index": 98,
         "column": 2,
-        "line": 41,
+        "line": 46,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 94,
+        "index": 99,
         "column": 2,
-        "line": 42,
+        "line": 47,
         "kind": "question",
-        "text": "Si un círculo está a dos dedos del eje, ¿dónde va su pareja?",
+        "text": "Un círculo está a dos dedos del eje. ¿Dónde",
         "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
@@ -735,50 +775,51 @@
         }
       },
       {
-        "index": 95,
+        "index": 100,
         "column": 2,
-        "line": 43,
+        "line": 48,
+        "kind": "lesson",
+        "text": "va su pareja?",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
         "kind": "option",
         "text": "A) A un dedo del eje",
         "questionId": "d1-q3"
       },
       {
-        "index": 96,
+        "index": 102,
         "column": 2,
-        "line": 44,
+        "line": 50,
         "kind": "option",
         "text": "B) A dos dedos, al otro lado",
         "questionId": "d1-q3"
       },
       {
-        "index": 97,
+        "index": 103,
         "column": 2,
-        "line": 45,
+        "line": 51,
         "kind": "option",
-        "text": "C) Sobre el eje",
+        "text": "C) Encima del eje",
         "questionId": "d1-q3"
       },
       {
-        "index": 98,
+        "index": 104,
         "column": 2,
-        "line": 46,
+        "line": 52,
         "kind": "option",
         "text": "D) Muy lejos del eje",
         "questionId": "d1-q3"
       },
       {
-        "index": 99,
-        "column": 2,
-        "line": 47,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 100,
-        "column": 2,
-        "line": 48,
+        "index": 105,
+        "column": 3,
+        "line": 1,
         "kind": "question",
-        "text": "¿Qué debe coincidir en dos formas pareja?",
+        "text": "¿Qué debe coincidir en las parejas?",
         "questionId": "d1-q4",
         "questionType": "mcq",
         "gutter": {
@@ -789,50 +830,50 @@
         }
       },
       {
-        "index": 101,
-        "column": 2,
-        "line": 49,
+        "index": 106,
+        "column": 3,
+        "line": 2,
         "kind": "option",
         "text": "A) Solo el color",
         "questionId": "d1-q4"
       },
       {
-        "index": 102,
-        "column": 2,
-        "line": 50,
+        "index": 107,
+        "column": 3,
+        "line": 3,
         "kind": "option",
         "text": "B) Solo el nombre",
         "questionId": "d1-q4"
       },
       {
-        "index": 103,
-        "column": 2,
-        "line": 51,
+        "index": 108,
+        "column": 3,
+        "line": 4,
         "kind": "option",
         "text": "C) Tipo, tamaño y distancia",
         "questionId": "d1-q4"
       },
       {
-        "index": 104,
-        "column": 2,
-        "line": 52,
+        "index": 109,
+        "column": 3,
+        "line": 5,
         "kind": "option",
         "text": "D) Solo la sombra",
         "questionId": "d1-q4"
       },
       {
-        "index": 105,
+        "index": 110,
         "column": 3,
-        "line": 1,
+        "line": 6,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 106,
+        "index": 111,
         "column": 3,
-        "line": 2,
+        "line": 7,
         "kind": "question",
-        "text": "¿Cambia el tamaño de una forma solo porque se ve bonita?",
+        "text": "¿Puedes agrandar solo el reflejo?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Sí, siempre",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Solo la mitad",
+        "text": "B) Solo si es bonito",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Solo con color",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) No, el tamaño importa",
+        "text": "D) No, el tamaño debe coincidir",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué marcas al doblar el papel por la mitad?",
+        "text": "¿Qué marcas al doblar la hoja?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -897,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Un punto",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) El eje",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Una espiral",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Un ángulo",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué se hace primero antes de trazar?",
+        "text": "¿Cuándo hay simetría?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,104 +992,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Mirar con atención",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Pintar",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Sombrear",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Borrar",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Para qué sirve doblar el papel al final?",
-        "questionId": "d1-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Cuando todo coincide",
+        "questionId": "d1-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Para romperlo",
-        "questionId": "d1-q8"
+        "text": "B) Cuando uno es más grande",
+        "questionId": "d1-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Para cambiar el eje",
-        "questionId": "d1-q8"
+        "text": "C) Cuando cambia el color",
+        "questionId": "d1-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Para comprobar las mitades",
-        "questionId": "d1-q8"
+        "text": "D) Cuando falta una forma",
+        "questionId": "d1-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Para pintarlo",
-        "questionId": "d1-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Explica con tus palabras qué es el eje de simetría.",
+        "text": "Explica con tus palabras qué es el eje de",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1057,6 +1044,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "simetría.",
+        "questionId": "d1-w1"
       },
       {
         "index": 131,
@@ -1078,31 +1073,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Cuenta los tres pasos: atención, nombrar y expresar.",
+        "text": "Cuenta cómo se ve la montaña en el agua",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1111,6 +1090,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "de Mucubají.",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 137,
@@ -1124,39 +1119,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un eje vertical con una forma a cada lado.",
+        "text": "Dibuja una laguna con su eje y una forma a",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,50 +1138,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "cada lado.",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una hoja con su eje y sus dos mitades.",
+        "text": "Dibuja una hoja doblada con su pliegue",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,77 +1184,104 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "como eje.",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un eje vertical en tu hoja."
+        "text": "Dibuja una laguna y una montaña. Traza el"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "A un lado, dibuja tres formas con círculos, puntos o curvas."
+        "text": "eje donde se tocan. Dibuja tres formas"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Marca con el dedo la distancia de cada forma al eje."
+        "text": "OiLS arriba. Anota la distancia de cada una"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe al margen los nombres OiLS de tus formas."
+        "text": "al eje."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se llama la línea que parte una figura en dos?",
+        "prompt": "¿Cómo se llama la línea del medio?",
         "choices": [
           "Eje de simetría",
           "Espiral",
@@ -1301,51 +1291,51 @@
         "answer": "Eje de simetría",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 35,
+          "index": 87
         }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué hace un espejo con lo que tiene delante?",
+        "prompt": "¿Qué ves en el agua quieta?",
         "choices": [
-          "La borra",
-          "La hace más pequeña",
-          "La pinta de color",
-          "Devuelve una imagen parecida"
+          "Un puente",
+          "Solo arena",
+          "Nada",
+          "La montaña al revés"
         ],
-        "answer": "Devuelve una imagen parecida",
+        "answer": "La montaña al revés",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 41,
+          "index": 93
         }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Si un círculo está a dos dedos del eje, ¿dónde va su pareja?",
+        "prompt": "Un círculo está a dos dedos del eje. ¿Dónde va su pareja?",
         "choices": [
           "A un dedo del eje",
           "A dos dedos, al otro lado",
-          "Sobre el eje",
+          "Encima del eje",
           "Muy lejos del eje"
         ],
         "answer": "A dos dedos, al otro lado",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 47,
+          "index": 99
         }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué debe coincidir en dos formas pareja?",
+        "prompt": "¿Qué debe coincidir en las parejas?",
         "choices": [
           "Solo el color",
           "Solo el nombre",
@@ -1354,34 +1344,34 @@
         ],
         "answer": "Tipo, tamaño y distancia",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cambia el tamaño de una forma solo porque se ve bonita?",
+        "prompt": "¿Puedes agrandar solo el reflejo?",
         "choices": [
           "Sí, siempre",
-          "Solo la mitad",
+          "Solo si es bonito",
           "Solo con color",
-          "No, el tamaño importa"
+          "No, el tamaño debe coincidir"
         ],
-        "answer": "No, el tamaño importa",
+        "answer": "No, el tamaño debe coincidir",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué marcas al doblar el papel por la mitad?",
+        "prompt": "¿Qué marcas al doblar la hoja?",
         "choices": [
           "Un punto",
           "El eje",
@@ -1391,44 +1381,26 @@
         "answer": "El eje",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué se hace primero antes de trazar?",
+        "prompt": "¿Cuándo hay simetría?",
         "choices": [
-          "Mirar con atención",
-          "Pintar",
-          "Sombrear",
-          "Borrar"
+          "Cuando todo coincide",
+          "Cuando uno es más grande",
+          "Cuando cambia el color",
+          "Cuando falta una forma"
         ],
-        "answer": "Mirar con atención",
+        "answer": "Cuando todo coincide",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Para qué sirve doblar el papel al final?",
-        "choices": [
-          "Para romperlo",
-          "Para cambiar el eje",
-          "Para comprobar las mitades",
-          "Para pintarlo"
-        ],
-        "answer": "Para comprobar las mitades",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1438,45 +1410,45 @@
         "prompt": "Explica con tus palabras qué es el eje de simetría.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Cuenta los tres pasos: atención, nombrar y expresar.",
+        "prompt": "Cuenta cómo se ve la montaña en el agua de Mucubají.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un eje vertical con una forma a cada lado.",
+        "prompt": "Dibuja una laguna con su eje y una forma a cada lado.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja una hoja con su eje y sus dos mitades.",
+        "prompt": "Dibuja una hoja doblada con su pliegue como eje.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

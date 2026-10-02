@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Miranda y Los Teques",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que Caracas es la capital de todo el país.\nLa Guaira es un estado junto al mar y tiene puerto.\nSu capital se llama igual que el estado: La Guaira.\n\nHay un estado llamado Miranda, muy cerca de Caracas. ¿Recuerdas cuál es su capital?\n\nLa capital de Miranda es Los Teques. Queda en las montañas, cerca del valle de Caracas. Truco: imagina «Los Teques» en lo alto de un cerro."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer seguiste a Caracas hasta el mar. Viste que La Guaira es un estado de costa, con puerto, y que su capital se llama igual: La Guaira."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Aragua y Maracay",
-        "body": "Ahora viajemos hacia el oeste, a un valle muy fértil. ¿Qué ciudad crees que encontramos allí?\n\nEs Maracay, la capital del estado Aragua. Queda en un valle del centro del país. Está cerca del lago de Valencia."
+        "heading": "Punto 2: Miranda y Los Teques",
+        "body": "Tierra adentro, cerca de Caracas, está Miranda. ¿Cuál es su capital?\n\nEs Los Teques, capital de Miranda. Queda en las montañas, cerca de Caracas. Imagínala arriba, como un tepuy."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: No las mezcles",
-        "body": "Una pregunta con truco: ¿Maracay es la capital de Miranda?\n\nNo: Maracay es la capital de Aragua. Muchos se confunden porque Maracay es muy conocida. Pregúntate siempre: ¿capital de qué estado? La capital de Miranda es Los Teques."
+        "heading": "Punto 3: Aragua y Maracay",
+        "body": "Ahora viaja al oeste, a un valle del centro del país. ¿Qué capital hay?\n\nEs Maracay, la capital del estado Aragua. Queda en un valle, abajo, como una sabana. Está cerca del lago de Valencia."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cerro y valle",
-        "body": "Mira estos dos lugares: uno en el cerro y otro en el valle. ¿Cuál va con Miranda y cuál con Aragua?\n\nLos Teques va con Miranda: está en las montañas. Maracay va con Aragua: está en el valle. Puedes decir: Miranda con Teques en el cerro, y Aragua con Maracay en el valle."
+        "heading": "Punto 4: No las mezcles",
+        "body": "Una pregunta con truco: ¿Maracay es la capital de Miranda?\n\nNo. Maracay es la capital de Aragua. La de Miranda es Los Teques. Pregúntate: ¿capital de qué estado?"
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Los cuatro pares",
-        "body": "Recita los cuatro pares de la semana sin mirar. ¿Cuántos recuerdas?\n\nDistrito Capital—Caracas · La Guaira—La Guaira · Miranda—Los Teques · Aragua—Maracay. Tápalos con la mano y dilos otra vez."
+        "heading": "Punto 5: Cerro y valle",
+        "body": "¿Cuál capital va arriba, como un tepuy, y cuál abajo, como la sabana?\n\nLos Teques va arriba, en las montañas. Maracay va abajo, en el valle. Miranda con Teques, en el cerro; Aragua con Maracay, en el valle."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Los cuatro pares",
+        "body": "Recorre la Gran Sabana con la mente. ¿Qué cuatro pares recuerdas?\n\nDistrito Capital—Caracas. La Guaira—La Guaira. Miranda—Los Teques. Aragua—Maracay. Tápalos y dilos otra vez."
       }
     ],
-    "summary": "Miranda va con Los Teques, en las montañas, y Aragua va con Maracay, en el valle. No se mezclan.",
+    "summary": "Miranda va con Los Teques, en las montañas; Aragua va con Maracay, en el valle. No se mezclan.",
     "memoryPhrase": "**Distrito Capital**—Caracas · **La Guaira**—La Guaira · **Miranda**—Los Teques · **Aragua**—Maracay.",
     "weekRecap": "Distrito Capital—Caracas; La Guaira—La Guaira; Miranda—Los Teques; Aragua—Maracay. Cuatro pares de la Región Central en la espiral hacia los 24 estados de Venezuela.",
     "priorDayRecap": "Distrito Capital y La Guaira. Caracas es capital nacional; La Guaira es capital del estado costero homónimo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja dos montañas y un valle entre ellas. Escribe Los Teques en lo alto de una montaña. Escribe Maracay en el valle, cerca de un lago. Rotula debajo el estado de cada una.",
+    "imageBandInstruction": "Dibuja un tepuy alto y una sabana abajo. En lo alto escribe Los Teques. En el valle escribe Maracay y un lago. Rotula debajo el estado de cada una.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que Caracas es la capital de todo el país."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "La Guaira es un estado junto al mar y tiene puerto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Su capital se llama igual que el estado: La Guaira."
+        "text": "Ayer seguiste a Caracas hasta el mar."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viste que La Guaira es un estado"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hay un estado llamado Miranda, muy cerca de Caracas."
+        "text": "de costa, con puerto, y que su"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Recuerdas cuál es su capital?"
+        "text": "capital se llama igual: La Guaira."
       },
       {
         "index": 12,
@@ -135,15 +140,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -156,92 +161,92 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Miranda y Los Teques"
+        "kind": "lesson",
+        "text": "Tierra adentro, cerca de Caracas, está"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Miranda. ¿Cuál es su capital?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "La capital de Miranda es Los Teques."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Queda en las montañas, cerca del valle de Caracas."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Truco: imagina «Los Teques» en lo alto de un cerro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Miranda y Los Teques"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es Los Teques, capital de Miranda."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Queda en las montañas, cerca de Caracas."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Ahora viajemos hacia el oeste, a un valle muy fértil."
+        "text": "Imagínala arriba, como un tepuy."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Qué ciudad crees que encontramos allí?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -254,71 +259,71 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Aragua y Maracay"
+        "kind": "lesson",
+        "text": "Ahora viaja al oeste, a un valle"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "del centro del país. ¿Qué capital hay?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Es Maracay, la capital del estado Aragua."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Queda en un valle del centro del país."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Está cerca del lago de Valencia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Aragua y Maracay"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es Maracay, la capital del estado Aragua."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Queda en un valle, abajo, como una sabana."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Maracay es la capital de Miranda?"
+        "text": "Está cerca del lago de Valencia."
       },
       {
         "index": 40,
@@ -331,113 +336,113 @@
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: No las mezcles"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿Maracay es"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "No: Maracay es la capital de Aragua."
+        "text": "la capital de Miranda?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Muchos se confunden porque Maracay es muy conocida."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Pregúntate siempre: ¿capital de qué estado?"
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "La capital de Miranda es Los Teques."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: No las mezcles"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Maracay es la capital de Aragua."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La de Miranda es Los Teques."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Mira estos dos lugares: uno en el cerro y otro en el valle."
+        "text": "Pregúntate: ¿capital de qué estado?"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "¿Cuál va con Miranda y cuál con Aragua?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -450,43 +455,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cerro y valle"
+        "kind": "lesson",
+        "text": "¿Cuál capital va arriba, como un tepuy,"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y cuál abajo, como la sabana?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Los Teques va con Miranda: está en las montañas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Maracay va con Aragua: está en el valle."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Puedes decir: Miranda con Teques en el cerro,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "y Aragua con Maracay en el valle."
+        "kind": "heading",
+        "text": "Punto 5: Cerro y valle"
       },
       {
         "index": 64,
@@ -500,49 +505,49 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Los Teques va arriba, en las montañas."
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Maracay va abajo, en el valle."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Miranda con Teques, en el cerro;"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Recita los cuatro pares de la semana sin mirar."
+        "text": "Aragua con Maracay, en el valle."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Cuántos recuerdas?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -555,111 +560,99 @@
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Los cuatro pares"
+        "kind": "lesson",
+        "text": "Recorre la Gran Sabana con la mente."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué cuatro pares recuerdas?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Distrito Capital—Caracas · La Guaira—La Guaira ·"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Miranda—Los Teques · Aragua—Maracay."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Tápalos con la mano y dilos otra vez."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Los cuatro pares"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Distrito Capital—Caracas."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Guaira—La Guaira."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuál es la capital del estado Miranda?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Miranda—Los Teques. Aragua—Maracay."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Maracay",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Tápalos y dilos otra vez."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Los Teques",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Caracas",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -673,8 +666,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cuál es la capital del estado Aragua?",
-        "questionId": "d3-q2",
+        "text": "¿Cuál es la capital de Miranda?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -688,24 +681,24 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Los Teques",
-        "questionId": "d3-q2"
+        "text": "A) Maracay",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Caracas",
-        "questionId": "d3-q2"
+        "text": "B) Los Teques",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Maracay",
-        "questionId": "d3-q2"
+        "text": "C) Caracas",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
@@ -713,7 +706,7 @@
         "line": 40,
         "kind": "option",
         "text": "D) La Guaira",
-        "questionId": "d3-q2"
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -727,8 +720,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Maracay es la capital de Miranda?",
-        "questionId": "d3-q3",
+        "text": "¿Cuál es la capital de Aragua?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +735,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Sí, siempre",
-        "questionId": "d3-q3"
+        "text": "A) Los Teques",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) No, es la de La Guaira",
-        "questionId": "d3-q3"
+        "text": "B) Caracas",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Sí, y la de Aragua",
-        "questionId": "d3-q3"
+        "text": "C) Maracay",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) No, es la de Aragua",
-        "questionId": "d3-q3"
+        "text": "D) La Guaira",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -781,8 +774,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué ciudad queda en las montañas cerca de Caracas?",
-        "questionId": "d3-q4",
+        "text": "¿Maracay es la capital de Miranda?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +789,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Maracay",
-        "questionId": "d3-q4"
+        "text": "A) Sí, siempre",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Los Teques",
-        "questionId": "d3-q4"
+        "text": "B) No, es la de La Guaira",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) La Guaira",
-        "questionId": "d3-q4"
+        "text": "C) Sí, y la de Aragua",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Maiquetía",
-        "questionId": "d3-q4"
+        "text": "D) No, es la de Aragua",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué ciudad queda en las montañas?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Maracay",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Los Teques",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) La Guaira",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Maiquetía",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué ciudad queda en un valle del centro del país?",
+        "text": "¿Qué ciudad queda en un valle?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,48 +886,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Maracay",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Los Teques",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) La Guaira",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Caracas",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué lago queda cerca de Maracay?",
         "questionId": "d3-q6",
@@ -900,50 +940,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) El lago Titicaca",
+        "text": "A) El lago de Maracaibo",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) El lago Victoria",
+        "text": "B) El lago Titicaca",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) El lago de Valencia",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) El lago Michigan",
+        "text": "D) El lago Victoria",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué debes preguntarte para no confundir capitales?",
+        "text": "¿Qué te preguntas para no mezclar?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,48 +994,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) ¿Capital de qué estado?",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) ¿Qué hora es?",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) ¿Qué río es?",
+        "text": "C) ¿Cuántos tepuyes hay?",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) ¿Cuántos son?",
+        "text": "D) ¿Qué río es?",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
         "text": "¿Qué estado va con Los Teques?",
         "questionId": "d3-q8",
@@ -1008,50 +1048,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Aragua",
         "questionId": "d3-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) La Guaira",
         "questionId": "d3-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Distrito Capital",
         "questionId": "d3-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Miranda",
         "questionId": "d3-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Explica cómo no mezclar Los Teques con Maracay.",
+        "text": "Explica cómo no mezclar Los Teques y",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1102,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Maracay.",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Escribe los cuatro pares de estado y capital sin mirar.",
+        "text": "Escribe los cuatro pares sin mirar.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1116,50 +1148,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un cerro con Los Teques y un valle con Maracay.",
+        "text": "Dibuja un cerro con Los Teques y un valle",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,27 +1186,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "con Maracay.",
         "questionId": "d3-w3"
       },
       {
@@ -1205,15 +1205,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja dos tarjetas: Miranda con su capital y Aragua con la suya.",
+        "text": "Dibuja dos tarjetas: Miranda y Aragua con su",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1224,19 +1232,11 @@
         }
       },
       {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
-      },
-      {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "capital.",
         "questionId": "d3-w4"
       },
       {
@@ -1260,28 +1260,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja dos montañas y un valle entre ellas."
+        "text": "Dibuja un tepuy alto y una sabana abajo. En"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe Los Teques en lo alto de una montaña."
+        "text": "lo alto escribe Los Teques. En el valle"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe Maracay en el valle, cerca de un lago."
+        "text": "escribe Maracay y un lago. Rotula debajo"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula debajo el estado de cada una."
+        "text": "el estado de cada una."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1294,7 +1294,7 @@
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital del estado Miranda?",
+        "prompt": "¿Cuál es la capital de Miranda?",
         "choices": [
           "Maracay",
           "Los Teques",
@@ -1304,15 +1304,15 @@
         "answer": "Los Teques",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital del estado Aragua?",
+        "prompt": "¿Cuál es la capital de Aragua?",
         "choices": [
           "Los Teques",
           "Caracas",
@@ -1322,8 +1322,8 @@
         "answer": "Maracay",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1340,15 +1340,15 @@
         "answer": "No, es la de Aragua",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué ciudad queda en las montañas cerca de Caracas?",
+        "prompt": "¿Qué ciudad queda en las montañas?",
         "choices": [
           "Maracay",
           "Los Teques",
@@ -1357,16 +1357,16 @@
         ],
         "answer": "Los Teques",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué ciudad queda en un valle del centro del país?",
+        "prompt": "¿Qué ciudad queda en un valle?",
         "choices": [
           "Maracay",
           "Los Teques",
@@ -1376,8 +1376,8 @@
         "answer": "Maracay",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1386,34 +1386,34 @@
         "type": "mcq",
         "prompt": "¿Qué lago queda cerca de Maracay?",
         "choices": [
+          "El lago de Maracaibo",
           "El lago Titicaca",
-          "El lago Victoria",
           "El lago de Valencia",
-          "El lago Michigan"
+          "El lago Victoria"
         ],
         "answer": "El lago de Valencia",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué debes preguntarte para no confundir capitales?",
+        "prompt": "¿Qué te preguntas para no mezclar?",
         "choices": [
           "¿Capital de qué estado?",
           "¿Qué hora es?",
-          "¿Qué río es?",
-          "¿Cuántos son?"
+          "¿Cuántos tepuyes hay?",
+          "¿Qué río es?"
         ],
         "answer": "¿Capital de qué estado?",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1430,30 +1430,30 @@
         "answer": "Miranda",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica cómo no mezclar Los Teques con Maracay.",
+        "prompt": "Explica cómo no mezclar Los Teques y Maracay.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe los cuatro pares de estado y capital sin mirar.",
+        "prompt": "Escribe los cuatro pares sin mirar.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1465,21 +1465,21 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja dos tarjetas: Miranda con su capital y Aragua con la suya.",
+        "prompt": "Dibuja dos tarjetas: Miranda y Aragua con su capital.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Recordar la semana",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana armaste el disco «Guiñando».\nAnotaste tus intentos en una tabla de tu bitácora.\nHoy vas a contárselo a alguien con orden.\n\nSin mirar nada: ¿qué hiciste esta semana en el experimento y qué descubriste?\n\nArmaste un disco con un ojo abierto y uno cerrado. Lo giraste despacio y rápido, y anotaste todo. Descubriste la persistencia de la visión."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer escribiste tu conclusión completa. Usaste retina, cerebro y persistencia. Hoy cuentas el viaje entero a otros."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Cómo contarlo con orden",
-        "body": "Si cuentas todo mezclado, ¿se entiende? ¿Qué orden usarías para contarlo?\n\nPrimero el propósito: ¿puede un disco parecer que guiña? Luego los materiales: cartulina, lápiz, cinta y tijeras. Después la observación: lo que anotaste en la tabla. Al final la explicación: la persistencia de la visión."
+        "heading": "Punto 2: Recordar la semana",
+        "body": "Sin mirar nada: ¿qué hiciste en tu experimento, de la cima a la neblina?\n\nArmaste el disco de dos ojos. Lo giraste lento y rápido, y anotaste. Y viste la persistencia de la visión."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Mostrar lo que hiciste",
-        "body": "Imagina que ya empiezas a hablar. ¿Cómo harías para que tu familia te entienda mejor?\n\nMuestra tu disco o un dibujo mientras hablas. Habla despacio y mira a quien te escucha. Ensaya dos minutos en voz alta antes de empezar. No leas solo el título del experimento."
+        "heading": "Punto 3: Cómo contarlo con orden",
+        "body": "Si cuentas todo mezclado no se entiende. ¿Qué orden seguirías, como en un viaje?\n\nPrimero el propósito: ¿guiña un disco? Luego los materiales: cartulina, lápiz, cinta y tijeras. Después, lo que viste. Al final, la explicación de por qué."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Responder con tus datos",
-        "body": "Una pregunta con truco: si alguien te pregunta algo que no sabes, ¿qué respondes?\n\nResponde con lo que anotaste en tu bitácora. No inventes una respuesta. Si no lo sabes, di: «Voy a probarlo otra vez». Escucha las preguntas con respeto."
+        "heading": "Punto 4: Mostrar lo que hiciste",
+        "body": "Hablas ante tu familia. ¿Qué haces para que te entiendan?\n\nMuestra tu disco o un dibujo. Habla despacio y mira a quien escucha. Ensaya dos minutos en voz alta. No leas solo el título."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: El cierre de tu exposición",
-        "body": "Ahora tú: ¿con qué frase terminarías para explicar por qué el disco parece guiñar?\n\nTermina diciendo: «Creo que pasó porque…». El ojo guarda cada imagen por un instante. El cerebro las une en una sola. Y al final di: «Gracias por escucharme»."
+        "heading": "Punto 5: Responder con tus datos",
+        "body": "Alguien pregunta algo que no sabes. ¿Qué respondes?\n\nResponde con lo que anotaste. No inventes una respuesta. Di: «Voy a probarlo otra vez». Un guía del Salto Ángel cuenta lo visto."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: El cierre de tu exposición",
+        "body": "Como el Salto Ángel termina en neblina, ¿con qué frase cierras tu exposición?\n\nCierra con: «Creo que pasó porque…». El ojo guarda cada imagen un instante. El cerebro las une en una sola. Y di: «Gracias por escucharme»."
       }
     ],
-    "summary": "Al exponer cuentas el propósito, los materiales, lo que viste y por qué pasó.",
+    "summary": "Al exponer cuentas el propósito, los materiales, lo que viste y por qué pasó, como un buen guía cuenta el Salto Ángel.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un niño mostrando su disco a su familia. Dibuja la bitácora abierta sobre la mesa. Rotula: propósito, materiales, observación y explicación. Añade un globo con la frase «Creo que pasó porque…».",
+    "imageBandInstruction": "Dibuja a un niño mostrando su disco. Dibuja la bitácora abierta sobre la mesa. Rotula: propósito, materiales y explicación. Añade un globo: «Creo que pasó porque…».",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,71 +67,71 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana armaste el disco «Guiñando»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
         "kind": "lesson",
-        "text": "Anotaste tus intentos en una tabla de tu bitácora."
+        "text": "Ayer escribiste tu conclusión completa."
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy vas a contárselo a alguien con orden."
+        "text": "Usaste retina, cerebro y persistencia."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy cuentas el viaje entero a otros."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "lesson",
-        "text": "Sin mirar nada: ¿qué hiciste esta semana en el"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "experimento y qué descubriste?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 13,
@@ -139,71 +144,71 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin mirar nada: ¿qué hiciste en tu"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "experimento, de la cima a la neblina?"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Recordar la semana"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Armaste un disco con un ojo abierto y uno cerrado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "Lo giraste despacio y rápido, y anotaste todo."
+        "kind": "heading",
+        "text": "Punto 2: Recordar la semana"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Descubriste la persistencia de la visión."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Armaste el disco de dos ojos."
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Lo giraste lento y rápido, y anotaste."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y viste la persistencia de la visión."
       },
       {
         "index": 24,
@@ -217,14 +222,14 @@
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Si cuentas todo mezclado, ¿se entiende? ¿Qué orden"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "usarías para contarlo?"
+        "text": "________________________________________"
       },
       {
         "index": 27,
@@ -237,78 +242,78 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si cuentas todo mezclado no se entiende."
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué orden seguirías, como en un viaje?"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Cómo contarlo con orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Primero el propósito: ¿puede un disco parecer que guiña?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Luego los materiales: cartulina, lápiz, cinta y tijeras."
+        "kind": "heading",
+        "text": "Punto 3: Cómo contarlo con orden"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Después la observación: lo que anotaste en la tabla."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Al final la explicación: la persistencia de la visión."
+        "text": "Primero el propósito: ¿guiña un disco?"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego los materiales: cartulina, lápiz,"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "cinta y tijeras. Después, lo que viste."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Al final, la explicación de por qué."
       },
       {
         "index": 39,
@@ -322,14 +327,14 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Imagina que ya empiezas a hablar. ¿Cómo harías para"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "que tu familia te entienda mejor?"
+        "text": "________________________________________"
       },
       {
         "index": 42,
@@ -342,15 +347,15 @@
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hablas ante tu familia. ¿Qué haces"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Mostrar lo que hiciste"
+        "kind": "lesson",
+        "text": "para que te entiendan?"
       },
       {
         "index": 45,
@@ -364,77 +369,77 @@
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Muestra tu disco o un dibujo mientras hablas."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Habla despacio y mira a quien te escucha."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Ensaya dos minutos en voz alta antes de empezar."
+        "kind": "heading",
+        "text": "Punto 4: Mostrar lo que hiciste"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "No leas solo el título del experimento."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Muestra tu disco o un dibujo."
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Habla despacio y mira a quien escucha."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ensaya dos minutos en voz alta."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No leas solo el título."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: si alguien te pregunta algo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "que no sabes, ¿qué respondes?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -447,43 +452,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Responder con tus datos"
+        "kind": "lesson",
+        "text": "Alguien pregunta algo que no sabes."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué respondes?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Responde con lo que anotaste en tu bitácora."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "No inventes una respuesta."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Si no lo sabes, di: «Voy a probarlo otra vez»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Escucha las preguntas con respeto."
+        "kind": "heading",
+        "text": "Punto 5: Responder con tus datos"
       },
       {
         "index": 64,
@@ -497,166 +502,154 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Responde con lo que anotaste."
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No inventes una respuesta."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Di: «Voy a probarlo otra vez»."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: ¿con qué frase terminarías para explicar"
+        "text": "Un guía del Salto Ángel cuenta lo visto."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "por qué el disco parece guiñar?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: El cierre de tu exposición"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Como el Salto Ángel termina en neblina,"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Termina diciendo: «Creo que pasó porque…»."
+        "text": "¿con qué frase cierras tu exposición?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "El ojo guarda cada imagen por un instante."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "El cerebro las une en una sola."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Y al final di: «Gracias por escucharme»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: El cierre de tu exposición"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cierra con: «Creo que pasó porque…»."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El ojo guarda cada imagen un instante."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué se cuenta primero en la exposición?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "El cerebro las une en una sola."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) El cierre",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Y di: «Gracias por escucharme»."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Las gracias",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) El precio",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) El propósito",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué materiales usaste en el disco?",
-        "questionId": "d5-q2",
+        "text": "¿Qué se cuenta primero?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Arena y agua",
-        "questionId": "d5-q2"
+        "text": "A) El cierre",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Cartulina, lápiz, cinta y tijeras",
-        "questionId": "d5-q2"
+        "text": "B) Las gracias",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Pintura y pelotas",
-        "questionId": "d5-q2"
+        "text": "C) El precio",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Hilo y piedras",
-        "questionId": "d5-q2"
+        "text": "D) El propósito",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué muestras mientras hablas?",
-        "questionId": "d5-q3",
+        "text": "¿Qué materiales usaste?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +732,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Tu disco o un dibujo",
-        "questionId": "d5-q3"
+        "text": "A) Arena y agua",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Un video del cielo",
-        "questionId": "d5-q3"
+        "text": "B) Cartulina, lápiz, cinta, tijeras",
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Una piedra",
-        "questionId": "d5-q3"
+        "text": "C) Pintura y pelotas",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Nada",
-        "questionId": "d5-q3"
+        "text": "D) Hilo y piedras",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuánto tiempo ensayas en voz alta?",
-        "questionId": "d5-q4",
+        "text": "¿Qué muestras mientras hablas?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,46 +786,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Un segundo",
-        "questionId": "d5-q4"
+        "text": "A) Tu disco o un dibujo",
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Una hora",
-        "questionId": "d5-q4"
+        "text": "B) Un video",
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Dos minutos",
-        "questionId": "d5-q4"
+        "text": "C) Una piedra",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Una semana",
-        "questionId": "d5-q4"
+        "text": "D) Nada",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuánto ensayas en voz alta?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Un segundo",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Una hora",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Dos minutos",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Una semana",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "Si no sabes una respuesta, ¿qué haces?",
+        "text": "Si no sabes algo, ¿qué haces?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,48 +883,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Dices que lo probarás otra vez",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) La inventas",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Cambias de tema",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Te vas",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿De dónde sacas tus respuestas?",
         "questionId": "d5-q6",
@@ -897,50 +937,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) De un sueño",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) De un cuento",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) De adivinar",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) De tu bitácora",
+        "text": "D) De lo que anotaste",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cómo terminas la explicación?",
+        "text": "¿Cómo cierras la exposición?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,48 +991,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Con «No sé nada»",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Con «Creo que pasó porque…»",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Con un grito",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Con «Me voy»",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
         "text": "¿Quién une las imágenes en una sola?",
         "questionId": "d5-q8",
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) La cinta",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) La mano",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) El cerebro",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) El papel",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tu exposición en cuatro líneas, en orden.",
+        "text": "Escribe tu exposición en cuatro líneas, en",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "orden.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Escribe una pregunta posible y cómo la responderías.",
+        "text": "Escribe una pregunta posible y tu respuesta.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,50 +1145,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema del orden: propósito a explicación.",
+        "text": "Dibuja el orden: propósito a explicación.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,22 +1181,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 145,
@@ -1240,45 +1240,43 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja a un niño mostrando su disco."
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a un niño mostrando su disco a su familia."
+        "text": "Dibuja la bitácora abierta sobre la mesa."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja la bitácora abierta sobre la mesa."
+        "text": "Rotula: propósito, materiales y explicación."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula: propósito, materiales, observación y explicación."
+        "text": "Añade un globo: «Creo que pasó"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade un globo con la frase «Creo que pasó porque…»."
+        "text": "porque…»."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1291,7 +1289,7 @@
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué se cuenta primero en la exposición?",
+        "prompt": "¿Qué se cuenta primero?",
         "choices": [
           "El cierre",
           "Las gracias",
@@ -1301,26 +1299,26 @@
         "answer": "El propósito",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué materiales usaste en el disco?",
+        "prompt": "¿Qué materiales usaste?",
         "choices": [
           "Arena y agua",
-          "Cartulina, lápiz, cinta y tijeras",
+          "Cartulina, lápiz, cinta, tijeras",
           "Pintura y pelotas",
           "Hilo y piedras"
         ],
-        "answer": "Cartulina, lápiz, cinta y tijeras",
+        "answer": "Cartulina, lápiz, cinta, tijeras",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1330,22 +1328,22 @@
         "prompt": "¿Qué muestras mientras hablas?",
         "choices": [
           "Tu disco o un dibujo",
-          "Un video del cielo",
+          "Un video",
           "Una piedra",
           "Nada"
         ],
         "answer": "Tu disco o un dibujo",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q4",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuánto tiempo ensayas en voz alta?",
+        "prompt": "¿Cuánto ensayas en voz alta?",
         "choices": [
           "Un segundo",
           "Una hora",
@@ -1354,16 +1352,16 @@
         ],
         "answer": "Dos minutos",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "Si no sabes una respuesta, ¿qué haces?",
+        "prompt": "Si no sabes algo, ¿qué haces?",
         "choices": [
           "Dices que lo probarás otra vez",
           "La inventas",
@@ -1373,8 +1371,8 @@
         "answer": "Dices que lo probarás otra vez",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1386,20 +1384,20 @@
           "De un sueño",
           "De un cuento",
           "De adivinar",
-          "De tu bitácora"
+          "De lo que anotaste"
         ],
-        "answer": "De tu bitácora",
+        "answer": "De lo que anotaste",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cómo terminas la explicación?",
+        "prompt": "¿Cómo cierras la exposición?",
         "choices": [
           "Con «No sé nada»",
           "Con «Creo que pasó porque…»",
@@ -1409,8 +1407,8 @@
         "answer": "Con «Creo que pasó porque…»",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1427,8 +1425,8 @@
         "answer": "El cerebro",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1438,32 +1436,32 @@
         "prompt": "Escribe tu exposición en cuatro líneas, en orden.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe una pregunta posible y cómo la responderías.",
+        "prompt": "Escribe una pregunta posible y tu respuesta.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema del orden: propósito a explicación.",
+        "prompt": "Dibuja el orden: propósito a explicación.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {

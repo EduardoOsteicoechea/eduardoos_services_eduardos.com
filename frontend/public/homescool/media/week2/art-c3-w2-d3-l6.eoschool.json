@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Nombrar es decir con precisión",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicaste la atención antes de dibujar.\nMiraste la media imagen y los espacios vacíos.\nMediste con el dedo la distancia de cada forma al eje.\n\nSi te digo «hay una forma», ¿te sirve para copiarla? ¿Qué más necesitarías saber?\n\nNombrar es decir qué forma es y dónde está. Usa el vocabulario OiLS: círculo, punto, línea, ángulo, curva. Y di dónde está respecto al eje de simetría. El eje es la línea central del dibujo."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer miraste con calma la media montaña y mediste con el dedo hasta el eje. Hoy pones esas medidas en palabras."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Una frase que sirve",
-        "body": "Prueba decir dónde está una curva. ¿Cómo lo dirías para que otra persona la dibuje igual?\n\nPor ejemplo: «Curva grande a un dedo del eje, arriba del centro». Esa frase dice la forma, el tamaño, la distancia y el lugar. Con una frase así, otra persona podría dibujarla."
+        "heading": "Punto 2: Nombrar es decir con precisión",
+        "body": "Un amigo no ve la Laguna de Mucubají. ¿Qué dirías para que dibuje la montaña?\n\nNombrar es decir qué forma es y dónde está respecto al eje. Para la forma usas OiLS: O, i, L y S."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Cambiar izquierda por derecha",
-        "body": "Ahora pasa al otro lado. ¿Qué palabra de la frase tendrías que cambiar?\n\nSolo cambias izquierda por derecha. La curva sigue siendo grande, a un dedo y arriba del centro. Solo cambia el lado: la copia queda del otro lado del eje."
+        "heading": "Punto 3: Una frase que sirve",
+        "body": "Prueba con una cumbre: ¿cómo dirías qué forma es y dónde está?\n\nPor ejemplo: «Ángulo L, a dos dedos del eje, arriba». Dice la forma, la distancia y el lugar."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Escribir antes de trazar",
-        "body": "¿Cuándo escribirías la frase: antes de trazar la copia o después?\n\nEscríbela antes de trazar la copia. Léela en voz alta mientras dibujas. Nombrar bien evita adivinar a ciegas. Quien nombra con precisión dibuja con seguridad."
+        "heading": "Punto 4: Cambiar arriba por abajo",
+        "body": "Ahora el reflejo, al otro lado del agua. ¿Qué palabra de la frase cambias?\n\nCambias arriba por abajo. La forma y la distancia son iguales. Solo cambia el lado del eje."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Lo que le falta a la frase",
-        "body": "Una pregunta con truco: ¿qué le falta a la frase «hay una forma»?\n\nLe falta el nombre OiLS: ¿círculo, punto, línea o curva? Le falta la distancia al eje: ¿a cuántos dedos? Y le falta el lugar: ¿arriba, abajo o al centro? Con esas tres cosas, tu frase ya sirve."
+        "heading": "Punto 5: Escribir antes de trazar",
+        "body": "¿Escribes la frase antes de trazar o después de dibujar?\n\nEscríbela antes de trazar la copia. Léela en voz alta mientras dibujas. Nombrar bien evita adivinar."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Lo que le falta a la frase",
+        "body": "Una pregunta con truco: ¿qué le falta a la frase «hay una forma»?\n\nLe falta el nombre: ¿O, i, L o S? Le falta la distancia: ¿cuántos dedos? Y le falta el lugar: ¿arriba o abajo?"
       }
     ],
-    "summary": "Nombrar es decir la forma, la distancia al eje y el lugar. Una buena frase guía la copia al otro lado.",
+    "summary": "Nombrar es decir la forma, la distancia al eje y el lugar. Con una buena frase, el reflejo de Mucubají se dibuja sin adivinar.",
     "weekRecap": "Atención, Nombrar y Expresar: observa la media imagen con calma, nombra formas OiLS respecto al eje de simetría y completa el espejo conservando tamaño y distancia en ambos lados.",
     "priorDayRecap": "Ayer profundizaste la atención: medir distancias al eje y listar OiLS antes de copiar la media imagen.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Elige una figura simétrica sencilla y dibuja su eje. Rotula cada forma con su nombre OiLS. Escribe tres frases: forma, distancia al eje y lugar. Todavía no dibujes la copia: primero nombra bien.",
+    "imageBandInstruction": "Dibuja el eje de una laguna con montaña. Rotula cada forma con O, i, L o S. Escribe tres frases: forma, dedos y lugar. Aún no copies: primero nombra bien.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicaste la atención antes de dibujar."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Miraste la media imagen y los espacios vacíos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Mediste con el dedo la distancia de cada forma al eje."
+        "text": "Ayer miraste con calma la media montaña"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y mediste con el dedo hasta el eje."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Si te digo «hay una forma», ¿te sirve para copiarla?"
+        "text": "Hoy pones esas medidas en palabras."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Qué más necesitarías saber?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,99 +153,99 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Nombrar es decir con precisión"
+        "kind": "lesson",
+        "text": "Un amigo no ve la Laguna de Mucubají."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué dirías para que dibuje la montaña?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Nombrar es decir qué forma es y dónde está."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Usa el vocabulario OiLS: círculo, punto, línea, ángulo, curva."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Y di dónde está respecto al eje de simetría."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "El eje es la línea central del dibujo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Nombrar es decir con precisión"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Nombrar es decir qué forma es"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y dónde está respecto al eje."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Prueba decir dónde está una curva. ¿Cómo lo dirías"
+        "text": "Para la forma usas OiLS: O, i, L y S."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "para que otra persona la dibuje igual?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -253,36 +258,36 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Una frase que sirve"
+        "kind": "lesson",
+        "text": "Prueba con una cumbre: ¿cómo dirías"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "qué forma es y dónde está?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Por ejemplo: «Curva grande a un dedo del eje, arriba del centro»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Esa frase dice la forma, el tamaño, la distancia y el lugar."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Con una frase así, otra persona podría dibujarla."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -295,8 +300,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Una frase que sirve"
       },
       {
         "index": 37,
@@ -309,22 +314,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Por ejemplo: «Ángulo L, a dos dedos"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Ahora pasa al otro lado. ¿Qué palabra de la frase"
+        "text": "del eje, arriba»."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "tendrías que cambiar?"
+        "text": "Dice la forma, la distancia y el lugar."
       },
       {
         "index": 41,
@@ -337,71 +342,71 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Cambiar izquierda por derecha"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora el reflejo, al otro lado del agua."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Solo cambias izquierda por derecha."
+        "text": "¿Qué palabra de la frase cambias?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "La curva sigue siendo grande, a un dedo y arriba del centro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Solo cambia el lado: la copia queda del otro lado del eje."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Cambiar arriba por abajo"
       },
       {
         "index": 52,
@@ -415,21 +420,21 @@
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "¿Cuándo escribirías la frase: antes de trazar la copia"
+        "text": "Cambias arriba por abajo."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "o después?"
+        "text": "La forma y la distancia son iguales."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Solo cambia el lado del eje."
       },
       {
         "index": 56,
@@ -442,15 +447,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Escribir antes de trazar"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -464,28 +469,28 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Escríbela antes de trazar la copia."
+        "text": "¿Escribes la frase antes de trazar"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Léela en voz alta mientras dibujas."
+        "text": "o después de dibujar?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Nombrar bien evita adivinar a ciegas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Quien nombra con precisión dibuja con seguridad."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -498,8 +503,8 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: Escribir antes de trazar"
       },
       {
         "index": 66,
@@ -512,22 +517,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escríbela antes de trazar la copia."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿qué le falta a la frase"
+        "text": "Léela en voz alta mientras dibujas."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "«hay una forma»?"
+        "text": "Nombrar bien evita adivinar."
       },
       {
         "index": 70,
@@ -540,15 +545,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Lo que le falta a la frase"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -562,28 +567,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Le falta el nombre OiLS: ¿círculo, punto, línea o curva?"
+        "text": "Una pregunta con truco: ¿qué le falta"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Le falta la distancia al eje: ¿a cuántos dedos?"
+        "text": "a la frase «hay una forma»?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Y le falta el lugar: ¿arriba, abajo o al centro?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Con esas tres cosas, tu frase ya sirve."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Lo que le falta a la frase"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Le falta el nombre: ¿O, i, L o S?"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es nombrar al dibujar?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Le falta la distancia: ¿cuántos dedos?"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Pintar la forma",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Y le falta el lugar: ¿arriba o abajo?"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Decir qué forma es y dónde está",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Borrar la forma",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Copiar sin mirar",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué palabras forman el vocabulario OiLS?",
-        "questionId": "d3-q2",
+        "text": "¿Qué es nombrar al dibujar?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Rojo, azul, verde",
-        "questionId": "d3-q2"
+        "text": "A) Pintar la forma",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Mesa, silla, cama",
-        "questionId": "d3-q2"
+        "text": "B) Decir qué forma es y dónde",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Círculo, punto, línea, ángulo, curva",
-        "questionId": "d3-q2"
+        "text": "C) Borrar la forma",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Arriba, abajo, centro",
-        "questionId": "d3-q2"
+        "text": "D) Copiar sin mirar",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué dice la frase «a un dedo del eje»?",
-        "questionId": "d3-q3",
+        "text": "¿Qué piezas usa OiLS?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) El color",
-        "questionId": "d3-q3"
+        "text": "A) Rojo, azul y verde",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) El nombre",
-        "questionId": "d3-q3"
+        "text": "B) Mesa, silla y cama",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) La sombra",
-        "questionId": "d3-q3"
+        "text": "C) O, i, L y S",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La distancia",
-        "questionId": "d3-q3"
+        "text": "D) Arriba, abajo y centro",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué cambias en la frase al pasar al otro lado?",
-        "questionId": "d3-q4",
+        "text": "¿Qué dice «a dos dedos del eje»?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,24 +788,24 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) La forma",
-        "questionId": "d3-q4"
+        "text": "A) El color",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Izquierda por derecha",
-        "questionId": "d3-q4"
+        "text": "B) El nombre",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) El tamaño",
-        "questionId": "d3-q4"
+        "text": "C) La sombra",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
@@ -820,19 +813,66 @@
         "line": 52,
         "kind": "option",
         "text": "D) La distancia",
-        "questionId": "d3-q4"
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué cambias al pasar al reflejo?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) La forma",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Arriba por abajo",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) El tamaño",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) La distancia",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Cuándo escribes la frase?",
         "questionId": "d3-q5",
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Antes de trazar la copia",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Después de colorear",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Al borrar",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Nunca",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué evita nombrar bien?",
         "questionId": "d3-q6",
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Mirar el eje",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Doblar el papel",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Adivinar a ciegas",
+        "text": "C) Adivinar",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Usar lápiz",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué le falta a la frase «hay una forma»?",
+        "text": "¿Qué le falta a «hay una forma»?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Nombre, distancia y lugar",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Un color",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Una sombra",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Un marco",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué es el eje de simetría?",
+        "text": "¿Qué dice «arriba» en la frase?",
         "questionId": "d3-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Una sombra",
+        "text": "A) La distancia",
         "questionId": "d3-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Un adorno",
+        "text": "B) El color",
         "questionId": "d3-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Un color",
+        "text": "C) El nombre",
         "questionId": "d3-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) La línea central del dibujo",
+        "text": "D) El lugar",
         "questionId": "d3-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tres frases que nombren forma y posición.",
+        "text": "Escribe tres frases con forma, distancia y",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "lugar.",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica por qué conviene escribir antes de trazar.",
+        "text": "Explica por qué escribes antes de trazar.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1147,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una figura con eje y rotula tres formas con su frase.",
+        "text": "Dibuja el eje de una laguna y rotula tres",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,27 +1185,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "formas.",
         "questionId": "d3-w3"
       },
       {
@@ -1204,15 +1204,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja flechas del eje a cada forma con su distancia.",
+        "text": "Dibuja flechas del eje a cada forma.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,14 +1229,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
       },
       {
         "index": 150,
@@ -1250,37 +1250,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Elige una figura simétrica sencilla y dibuja su eje."
+        "text": "Dibuja el eje de una laguna con montaña."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula cada forma con su nombre OiLS."
+        "text": "Rotula cada forma con O, i, L o S. Escribe"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe tres frases: forma, distancia al eje y lugar."
+        "text": "tres frases: forma, dedos y lugar. Aún no"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Todavía no dibujes la copia: primero nombra bien."
+        "text": "copies: primero nombra bien."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1296,29 +1295,11 @@
         "prompt": "¿Qué es nombrar al dibujar?",
         "choices": [
           "Pintar la forma",
-          "Decir qué forma es y dónde está",
+          "Decir qué forma es y dónde",
           "Borrar la forma",
           "Copiar sin mirar"
         ],
-        "answer": "Decir qué forma es y dónde está",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué palabras forman el vocabulario OiLS?",
-        "choices": [
-          "Rojo, azul, verde",
-          "Mesa, silla, cama",
-          "Círculo, punto, línea, ángulo, curva",
-          "Arriba, abajo, centro"
-        ],
-        "answer": "Círculo, punto, línea, ángulo, curva",
+        "answer": "Decir qué forma es y dónde",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1326,10 +1307,28 @@
         }
       },
       {
+        "id": "d3-q2",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Qué piezas usa OiLS?",
+        "choices": [
+          "Rojo, azul y verde",
+          "Mesa, silla y cama",
+          "O, i, L y S",
+          "Arriba, abajo y centro"
+        ],
+        "answer": "O, i, L y S",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué dice la frase «a un dedo del eje»?",
+        "prompt": "¿Qué dice «a dos dedos del eje»?",
         "choices": [
           "El color",
           "El nombre",
@@ -1339,26 +1338,26 @@
         "answer": "La distancia",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué cambias en la frase al pasar al otro lado?",
+        "prompt": "¿Qué cambias al pasar al reflejo?",
         "choices": [
           "La forma",
-          "Izquierda por derecha",
+          "Arriba por abajo",
           "El tamaño",
           "La distancia"
         ],
-        "answer": "Izquierda por derecha",
+        "answer": "Arriba por abajo",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1375,8 +1374,8 @@
         "answer": "Antes de trazar la copia",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1387,21 +1386,21 @@
         "choices": [
           "Mirar el eje",
           "Doblar el papel",
-          "Adivinar a ciegas",
+          "Adivinar",
           "Usar lápiz"
         ],
-        "answer": "Adivinar a ciegas",
+        "answer": "Adivinar",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué le falta a la frase «hay una forma»?",
+        "prompt": "¿Qué le falta a «hay una forma»?",
         "choices": [
           "Nombre, distancia y lugar",
           "Un color",
@@ -1411,74 +1410,74 @@
         "answer": "Nombre, distancia y lugar",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué es el eje de simetría?",
+        "prompt": "¿Qué dice «arriba» en la frase?",
         "choices": [
-          "Una sombra",
-          "Un adorno",
-          "Un color",
-          "La línea central del dibujo"
+          "La distancia",
+          "El color",
+          "El nombre",
+          "El lugar"
         ],
-        "answer": "La línea central del dibujo",
+        "answer": "El lugar",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe tres frases que nombren forma y posición.",
+        "prompt": "Escribe tres frases con forma, distancia y lugar.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué conviene escribir antes de trazar.",
+        "prompt": "Explica por qué escribes antes de trazar.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja una figura con eje y rotula tres formas con su frase.",
+        "prompt": "Dibuja el eje de una laguna y rotula tres formas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja flechas del eje a cada forma con su distancia.",
+        "prompt": "Dibuja flechas del eje a cada forma.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repetir para comprobar",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer buscaste una luz estable cerca de la ventana.\nAnotaste en una tabla qué viste con la A y con la O.\nRevisaste si la gota quedó redonda o aplastada.\n\nSi ves algo una sola vez, ¿ya puedes estar seguro? ¿Qué harías para comprobarlo?\n\nLo repites otra vez, con cuidado. Repetir es parte de la ciencia. Así confías en lo que viste o descubres un error."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer buscaste luz estable y anotaste en una tabla la A y la O. En La Llovizna hay muchísimas gotas. Hoy tú harás más de una."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Comparar con cuidado",
-        "body": "Sigamos. Para comparar bien, ¿qué cosas deben quedar iguales en los dos intentos?\n\nMira las mismas letras con gota y sin gota. Ponlas a la misma distancia de tu ojo y del papel. Así sabes que la diferencia viene de la gota. No cambies muchas cosas a la vez."
+        "heading": "Punto 2: Repetir para comprobar",
+        "body": "Si lo ves una sola vez, ¿estás seguro? ¿Qué harías para comprobarlo?\n\nLo repites otra vez, con cuidado. Una sola gota no hace La Llovizna; una sola prueba tampoco convence. Repetir es parte de la ciencia."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Dos intentos seguidos",
-        "body": "Imagina que haces dos gotas seguidas. ¿Cómo sabrías cuál dejó ver mejor las letras?\n\nHaz dos intentos, uno después del otro. Marca cuál gota dejó ver mejor las letras. Recopilar datos es anotar lo que observas. Eso lo haces en la tabla de tu bitácora."
+        "heading": "Punto 3: Comparar con cuidado",
+        "body": "Compararías dos fotos de La Llovizna desde el mismo sitio. ¿Y tus intentos?\n\nMira las mismas letras, con gota y sin gota. Ponlas a la misma distancia del ojo. Así la diferencia viene de la gota."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: ¿Creció o solo se movió?",
-        "body": "Una pregunta con truco: si la imagen se movió, ¿las letras crecieron?\n\nNo siempre. La imagen puede moverse sin crecer. Mira bien si cambió el tamaño aparente. Tamaño aparente es lo grande que algo se ve. Anota si cambió el tamaño o solo se movió."
+        "heading": "Punto 4: Dos intentos seguidos",
+        "body": "Imagina dos gotas de La Llovizna. ¿Cómo sabes cuál agranda mejor?\n\nHaz dos gotas tuyas, una tras otra. Marca cuál dejó ver mejor las letras. Anotar lo que observas es recopilar datos. Hazlo en tu tabla."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Ajustar una sola cosa",
-        "body": "Ahora tú: ¿qué ajustarías si la gota sale mal?\n\nAjusta solo la forma de la gota. Luego vuelve a mirar las mismas letras. Anota qué cambió con ese ajuste."
+        "heading": "Punto 5: ¿Creció o solo se movió?",
+        "body": "Una pregunta con truco: si la imagen se movió, ¿crecieron las letras?\n\nNo siempre: puede moverse sin crecer. Mira si cambió el tamaño aparente, o sea, qué tan grande se ve algo. Anota si creció o solo se movió."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Ajustar una sola cosa",
+        "body": "Si la gota sale mal, ¿cambias una cosa o cambias todo a la vez?\n\nAjusta solo la forma de la gota. Luego mira otra vez las mismas letras. Anota qué cambió con ese ajuste. Así sabes qué ajuste sirvió."
       }
     ],
-    "summary": "Repetir con cuidado te ayuda a confiar en lo que observaste y a anotar datos.",
+    "summary": "Una sola gota no basta: repites con cuidado, comparas y anotas datos para confiar en lo que viste.",
     "weekRecap": "Esta semana seguimos con: Una gota que parece lupa. Lee cada parte con calma y prueba la actividad.",
     "priorDayRecap": "Ayer continuaste la gota-lupa y anotaste en tabla letras A y O. Hoy repites pasos para comprobar la observación con dos intentos.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja dos intentos lado a lado: gota 1 y gota 2. Dibuja la letra como se ve por cada gota. Marca con una estrella la gota que se vio mejor. Rotula: gota 1, gota 2 y tamaño aparente.",
+    "imageBandInstruction": "Dibuja dos intentos: gota 1 y gota 2. Dibuja cómo se ve la letra en cada una. Marca con una estrella la mejor gota. Rotula: gota 1, gota 2 y tamaño aparente.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer buscaste una luz estable cerca de la ventana."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Anotaste en una tabla qué viste con la A y con la O."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Revisaste si la gota quedó redonda o aplastada."
+        "text": "Ayer buscaste luz estable y anotaste"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en una tabla la A y la O."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Si ves algo una sola vez, ¿ya puedes estar seguro?"
+        "text": "En La Llovizna hay muchísimas gotas."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Qué harías para comprobarlo?"
+        "text": "Hoy tú harás más de una."
       },
       {
         "index": 12,
@@ -134,71 +139,71 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Repetir para comprobar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si lo ves una sola vez, ¿estás seguro?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Lo repites otra vez, con cuidado."
+        "text": "¿Qué harías para comprobarlo?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Repetir es parte de la ciencia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Así confías en lo que viste o descubres un error."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Repetir para comprobar"
       },
       {
         "index": 23,
@@ -212,28 +217,28 @@
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Sigamos. Para comparar bien, ¿qué cosas deben quedar"
+        "text": "Lo repites otra vez, con cuidado."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "iguales en los dos intentos?"
+        "text": "Una sola gota no hace La Llovizna;"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "una sola prueba tampoco convence."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Repetir es parte de la ciencia."
       },
       {
         "index": 28,
@@ -246,57 +251,57 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Comparar con cuidado"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "Mira las mismas letras con gota y sin gota."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Ponlas a la misma distancia de tu ojo y del papel."
+        "text": "Compararías dos fotos de La Llovizna"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Así sabes que la diferencia viene de la gota."
+        "text": "desde el mismo sitio. ¿Y tus intentos?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "No cambies muchas cosas a la vez."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -309,85 +314,85 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Comparar con cuidado"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Imagina que haces dos gotas seguidas. ¿Cómo sabrías"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "cuál dejó ver mejor las letras?"
+        "text": "Mira las mismas letras, con gota"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y sin gota."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ponlas a la misma distancia del ojo."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así la diferencia viene de la gota."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Dos intentos seguidos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Haz dos intentos, uno después del otro."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Marca cuál gota dejó ver mejor las letras."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Recopilar datos es anotar lo que observas."
+        "text": "Imagina dos gotas de La Llovizna."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Eso lo haces en la tabla de tu bitácora."
+        "text": "¿Cómo sabes cuál agranda mejor?"
       },
       {
         "index": 50,
@@ -401,14 +406,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -421,43 +426,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: si la imagen se movió, ¿las"
+        "kind": "heading",
+        "text": "Punto 4: Dos intentos seguidos"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "letras crecieron?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Haz dos gotas tuyas, una tras otra."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Marca cuál dejó ver mejor las letras."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Anotar lo que observas es recopilar"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: ¿Creció o solo se movió?"
+        "kind": "lesson",
+        "text": "datos. Hazlo en tu tabla."
       },
       {
         "index": 60,
@@ -471,49 +476,49 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "No siempre. La imagen puede moverse sin crecer."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Mira bien si cambió el tamaño aparente."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Tamaño aparente es lo grande que algo se ve."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Anota si cambió el tamaño o solo se movió."
+        "text": "Una pregunta con truco: si la imagen"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "se movió, ¿crecieron las letras?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
@@ -526,8 +531,8 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Ahora tú: ¿qué ajustarías si la gota sale mal?"
+        "kind": "heading",
+        "text": "Punto 5: ¿Creció o solo se movió?"
       },
       {
         "index": 70,
@@ -540,50 +545,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No siempre: puede moverse sin crecer."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mira si cambió el tamaño aparente,"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Ajustar una sola cosa"
+        "kind": "lesson",
+        "text": "o sea, qué tan grande se ve algo."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Anota si creció o solo se movió."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Ajusta solo la forma de la gota."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Luego vuelve a mirar las mismas letras."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Anota qué cambió con ese ajuste."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,14 +602,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Si la gota sale mal, ¿cambias una cosa"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "o cambias todo a la vez?"
       },
       {
         "index": 81,
@@ -617,102 +622,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Para qué repites el experimento?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Para gastar el agua",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Para comprobar lo que viste",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Ajustar una sola cosa"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Para cambiar de tema",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Para borrar la tabla",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Ajusta solo la forma de la gota."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego mira otra vez las mismas letras."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué miras con gota y sin gota?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Anota qué cambió con ese ajuste."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Letras distintas",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Así sabes qué ajuste sirvió."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Solo colores",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Las mismas letras",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Solo la mesa",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -726,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿A qué distancia las miras?",
-        "questionId": "d3-q3",
+        "text": "¿Para qué repites el experimento?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Lejos en uno y pegada en otro",
-        "questionId": "d3-q3"
+        "text": "A) Para gastar el agua",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Con los ojos cerrados",
-        "questionId": "d3-q3"
+        "text": "B) Para comprobar lo que viste",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Desde otra habitación",
-        "questionId": "d3-q3"
+        "text": "C) Para cambiar de tema",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La misma en los dos intentos",
-        "questionId": "d3-q3"
+        "text": "D) Para borrar la tabla",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -780,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuántos intentos haces seguidos hoy?",
-        "questionId": "d3-q4",
+        "text": "¿Qué miras con gota y sin gota?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +776,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Uno",
-        "questionId": "d3-q4"
+        "text": "A) Letras distintas",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Dos",
-        "questionId": "d3-q4"
+        "text": "B) Solo colores",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Ocho",
-        "questionId": "d3-q4"
+        "text": "C) Las mismas letras",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Ninguno",
-        "questionId": "d3-q4"
+        "text": "D) Solo la mesa",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿A qué distancia las miras?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Lejos y luego pegada",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Con los ojos cerrados",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Desde otro cuarto",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Siempre a la misma",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Cuántos intentos haces seguidos?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Uno",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Dos",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Ocho",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Ninguno",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué es recopilar datos?",
         "questionId": "d3-q5",
@@ -845,48 +927,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Anotar lo que observas",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Tirar la tabla",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Adivinar",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Pintar la gota",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué es el tamaño aparente?",
         "questionId": "d3-q6",
@@ -899,48 +981,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) El peso del papel",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) El color del agua",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) Qué tan grande algo se ve",
+        "text": "C) Qué tan grande se ve algo",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) La hora del día",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "Si la imagen solo se movió, ¿qué pasó?",
         "questionId": "d3-q7",
@@ -953,104 +1035,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Puede no haber crecido",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Creció seguro",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Se rompió el agua",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Cambió el alambre",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "Si la gota sale mal, ¿qué ajustas?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Todo a la vez",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) El libro entero",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) La ventana",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Solo la forma de la gota",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe qué intento dejó ver mejor las letras y por qué.",
+        "text": "Escribe qué intento se vio mejor y por qué.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1089,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué repetir ayuda a confiar en lo que viste.",
+        "text": "Explica por qué repetir ayuda a confiar en lo",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1127,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "que viste.",
         "questionId": "d3-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una tabla con dos intentos, forma y qué viste.",
+        "text": "Dibuja una tabla con dos intentos.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,22 +1171,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 145,
@@ -1242,52 +1230,50 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja dos intentos lado a lado: gota 1 y gota 2."
+        "text": "Dibuja dos intentos: gota 1 y gota 2. Dibuja"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja la letra como se ve por cada gota."
+        "text": "cómo se ve la letra en cada una. Marca con"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Marca con una estrella la gota que se vio mejor."
+        "text": "una estrella la mejor gota. Rotula: gota 1,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula: gota 1, gota 2 y tamaño aparente."
+        "text": "gota 2 y tamaño aparente."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
@@ -1303,8 +1289,8 @@
         "answer": "Para comprobar lo que viste",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1321,8 +1307,8 @@
         "answer": "Las mismas letras",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1331,23 +1317,23 @@
         "type": "mcq",
         "prompt": "¿A qué distancia las miras?",
         "choices": [
-          "Lejos en uno y pegada en otro",
+          "Lejos y luego pegada",
           "Con los ojos cerrados",
-          "Desde otra habitación",
-          "La misma en los dos intentos"
+          "Desde otro cuarto",
+          "Siempre a la misma"
         ],
-        "answer": "La misma en los dos intentos",
+        "answer": "Siempre a la misma",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuántos intentos haces seguidos hoy?",
+        "prompt": "¿Cuántos intentos haces seguidos?",
         "choices": [
           "Uno",
           "Dos",
@@ -1356,9 +1342,9 @@
         ],
         "answer": "Dos",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1375,8 +1361,8 @@
         "answer": "Anotar lo que observas",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1387,14 +1373,14 @@
         "choices": [
           "El peso del papel",
           "El color del agua",
-          "Qué tan grande algo se ve",
+          "Qué tan grande se ve algo",
           "La hora del día"
         ],
-        "answer": "Qué tan grande algo se ve",
+        "answer": "Qué tan grande se ve algo",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1411,37 +1397,19 @@
         "answer": "Puede no haber crecido",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "Si la gota sale mal, ¿qué ajustas?",
-        "choices": [
-          "Todo a la vez",
-          "El libro entero",
-          "La ventana",
-          "Solo la forma de la gota"
-        ],
-        "answer": "Solo la forma de la gota",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe qué intento dejó ver mejor las letras y por qué.",
+        "prompt": "Escribe qué intento se vio mejor y por qué.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,21 +1419,21 @@
         "prompt": "Explica por qué repetir ayuda a confiar en lo que viste.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja una tabla con dos intentos, forma y qué viste.",
+        "prompt": "Dibuja una tabla con dos intentos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {

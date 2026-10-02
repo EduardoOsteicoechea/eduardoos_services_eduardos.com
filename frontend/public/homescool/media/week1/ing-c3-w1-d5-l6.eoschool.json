@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las tres familias",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana conociste tres familias de verbos.\nAprendiste a quitar el final y a añadir otro.\nHoy las recuerdas y se las cuentas a alguien.\n\nSin mirar nada: ¿cuáles son las tres familias de verbos y qué verbo usamos de ejemplo en cada una?\n\nFamilias del español: -ar (cantar → canto, cantas, canta), -er (comer → como, comes, come), -ir (vivir → vivo, vives, vive). Si olvidaste alguna, dila otra vez en voz alta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer recorrimos el sendero «-ir». Con «vivir», «escribir» y «abrir» usamos -o, -es y -e."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Los tres pasos",
-        "body": "¿Qué pasos sigues para conjugar cualquier verbo? Piensa en el infinitivo, la raíz y el final.\n\nPrimero mira el infinitivo y su familia. Después quita el final y guarda la raíz. Por último añade el final de yo, tú o él. Con «cantar»: «cant-» más «-o» forma «canto»."
+        "heading": "Punto 2: Los tres senderos",
+        "body": "Sin mirar: ¿cuáles son los tres senderos del Ávila y qué verbo sube por cada uno?\n\nFamilias del español: -ar (cantar → canto, cantas, canta), -er (comer → como, comes, come), -ir (vivir → vivo, vives, vive)."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Los finales de cada familia",
-        "body": "¿Qué finales tienen yo, tú y él en cada familia? ¿Cuáles se parecen y cuáles no?\n\nLa familia -ar usa -o, -as y -a. La familia -er usa -o, -es y -e. La familia -ir usa también -o, -es y -e. Solo «-ar» cambia; «-er» e «-ir» son iguales aquí."
+        "heading": "Punto 3: Los tres pasos",
+        "body": "¿Qué pasos sigues para conjugar un verbo en cualquier sendero del Ávila?\n\nPrimero mira el infinitivo y su familia. Después quita el final y guarda la raíz. Por último añade el final de yo, tú o él. Con «cantar»: «cant-» más «-o» es «canto»."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Descubre la familia",
-        "body": "Lee: «Yo hablo, tú comes y él escribe.» ¿De qué familia es cada verbo?\n\n«Hablo» viene de «hablar»: familia -ar. «Comes» viene de «comer»: familia -er. «Escribe» viene de «escribir»: familia -ir. Quita el final y vuelve al infinitivo para saberlo."
+        "heading": "Punto 4: Los finales de cada sendero",
+        "body": "¿Qué senderos se parecen y cuál es distinto en yo, tú y él?\n\nEl sendero «-ar» usa -o, -as y -a. El sendero «-er» usa -o, -es y -e. El sendero «-ir» usa también -o, -es y -e. Solo «-ar» cambia; «-er» e «-ir» se parecen."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cómo contarlo con orden",
-        "body": "Vas a contárselo a alguien de tu casa. ¿Cómo empezarías para que te entienda?\n\nUna buena exposición tiene inicio, medio y cierre. Inicio: «Hoy les cuento cómo cambian los verbos». Medio: un ejemplo de cada familia, en voz alta. Cierre: repite yo, tú y él y di «gracias»."
+        "heading": "Punto 5: Descubre el sendero",
+        "body": "Lee: «Yo hablo, tú comes y él escribe.» ¿Por cuál sendero va cada verbo?\n\n«Hablo» viene de «hablar»: sendero -ar. «Comes» viene de «comer»: sendero -er. «Escribe» viene de «escribir»: sendero -ir. Quita el final y vuelve al infinitivo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cómo contarlo con orden",
+        "body": "Cuéntale a tu familia tu subida del Ávila. ¿Cómo ordenas lo que dices?\n\nExponer es contar con orden a otros. Inicio: «Hoy les cuento los tres senderos». Medio: un verbo de cada familia, en voz alta. Cierre: repite yo, tú y él y da las gracias."
       }
     ],
-    "summary": "Hay tres familias de verbos: -ar, -er e -ir. Quitas el final y añades el de yo, tú o él.",
+    "summary": "Tres senderos llevan a la misma cima: -ar, -er e -ir. Quitas el final y añades el de yo, tú o él.",
     "memoryPhrase": "Spanish families: **-ar** (cantar → canto, cantas, canta), **-er** (comer → como, comes, come), **-ir** (vivir → vivo, vives, vive).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un árbol con tres ramas: -ar, -er e -ir. Escribe en cada rama un verbo de ejemplo. Añade bajo cada verbo yo, tú y él conjugados. Revisa que cada final corresponda a su familia.",
+    "imageBandInstruction": "Dibuja el Ávila con tres senderos hacia la misma cima. Rotula -ar, -er e -ir con un verbo y yo, tú y él conjugados en cada uno.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,57 +89,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana conociste tres familias de verbos."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Aprendiste a quitar el final y a añadir otro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy las recuerdas y se las cuentas a alguien."
+        "text": "Ayer recorrimos el sendero «-ir»."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con «vivir», «escribir» y «abrir»"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada: ¿cuáles son las tres familias de verbos"
+        "text": "usamos -o, -es y -e."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "y qué verbo usamos de ejemplo en cada una?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -147,15 +152,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin mirar: ¿cuáles son los tres senderos"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Las tres familias"
+        "kind": "lesson",
+        "text": "del Ávila y qué verbo sube por cada uno?"
       },
       {
         "index": 17,
@@ -169,28 +174,28 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Familias del español: -ar (cantar → canto, cantas, canta),"
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "-er (comer → como, comes, come),"
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "-ir (vivir → vivo, vives, vive)."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Si olvidaste alguna, dila otra vez en voz alta."
+        "kind": "heading",
+        "text": "Punto 2: Los tres senderos"
       },
       {
         "index": 22,
@@ -204,91 +209,91 @@
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Familias del español:"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "-ar (cantar → canto, cantas, canta),"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "-er (comer → como, comes, come),"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Qué pasos sigues para conjugar cualquier verbo?"
+        "text": "-ir (vivir → vivo, vives, vive)."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "Piensa en el infinitivo, la raíz y el final."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Los tres pasos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué pasos sigues para conjugar un verbo"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Primero mira el infinitivo y su familia."
+        "text": "en cualquier sendero del Ávila?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Después quita el final y guarda la raíz."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Por último añade el final de yo, tú o él."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Con «cantar»: «cant-» más «-o» forma «canto»."
+        "text": "________________________________________"
       },
       {
         "index": 36,
@@ -301,8 +306,8 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Los tres pasos"
       },
       {
         "index": 38,
@@ -315,29 +320,29 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero mira el infinitivo y su familia."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Qué finales tienen yo, tú y él en cada familia?"
+        "text": "Después quita el final y guarda la raíz."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Cuáles se parecen y cuáles no?"
+        "text": "Por último añade el final de yo, tú o él."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con «cantar»: «cant-» más «-o» es «canto»."
       },
       {
         "index": 43,
@@ -350,57 +355,57 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Los finales de cada familia"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "La familia -ar usa -o, -as y -a."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "La familia -er usa -o, -es y -e."
+        "text": "¿Qué senderos se parecen y cuál es"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "La familia -ir usa también -o, -es y -e."
+        "text": "distinto en yo, tú y él?"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Solo «-ar» cambia; «-er» e «-ir» son iguales aquí."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -420,85 +425,85 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Lee: «Yo hablo, tú comes y él escribe.»"
+        "kind": "heading",
+        "text": "Punto 4: Los finales de cada sendero"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿De qué familia es cada verbo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El sendero «-ar» usa -o, -as y -a."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El sendero «-er» usa -o, -es y -e."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Descubre la familia"
+        "kind": "lesson",
+        "text": "El sendero «-ir» usa también -o, -es y -e."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Solo «-ar» cambia; «-er» e «-ir» se parecen."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "«Hablo» viene de «hablar»: familia -ar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "«Comes» viene de «comer»: familia -er."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "«Escribe» viene de «escribir»: familia -ir."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Quita el final y vuelve al infinitivo para saberlo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Lee: «Yo hablo, tú comes y él escribe.»"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Por cuál sendero va cada verbo?"
       },
       {
         "index": 66,
@@ -511,22 +516,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Vas a contárselo a alguien de tu casa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Cómo empezarías para que te entienda?"
+        "kind": "heading",
+        "text": "Punto 5: Descubre el sendero"
       },
       {
         "index": 70,
@@ -539,50 +544,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Hablo» viene de «hablar»: sendero -ar."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "«Comes» viene de «comer»: sendero -er."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Escribe» viene de «escribir»: sendero -ir."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Una buena exposición tiene inicio, medio y cierre."
+        "text": "Quita el final y vuelve al infinitivo."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Inicio: «Hoy les cuento cómo cambian los verbos»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Medio: un ejemplo de cada familia, en voz alta."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Cierre: repite yo, tú y él y di «gracias»."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Cuéntale a tu familia tu subida del Ávila."
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo ordenas lo que dices?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuántas familias de verbos estudiaste?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Dos",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Cuatro",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cómo contarlo con orden"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Nueve",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Tres",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Exponer es contar con orden a otros."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Inicio: «Hoy les cuento los tres senderos»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué verbo es ejemplo de la familia -ar?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Medio: un verbo de cada familia, en voz alta."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) comer",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Cierre: repite yo, tú y él y da las gracias."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) cantar",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) vivir",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) escribir",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué verbo es ejemplo de la familia -er?",
-        "questionId": "d5-q3",
+        "text": "¿Cuántos senderos recorriste?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) comer",
-        "questionId": "d5-q3"
+        "text": "A) Dos",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) cantar",
-        "questionId": "d5-q3"
+        "text": "B) Cuatro",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) vivir",
-        "questionId": "d5-q3"
+        "text": "C) Nueve",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) hablar",
-        "questionId": "d5-q3"
+        "text": "D) Tres",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo se dice «vivir» con yo?",
-        "questionId": "d5-q4",
+        "text": "¿Qué verbo sube por el sendero -ar?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +775,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) vives",
-        "questionId": "d5-q4"
+        "text": "A) comer",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) vive",
-        "questionId": "d5-q4"
+        "text": "B) cantar",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) vivo",
-        "questionId": "d5-q4"
+        "text": "C) vivir",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) vivir",
-        "questionId": "d5-q4"
+        "text": "D) escribir",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué verbo sube por el sendero -er?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) comer",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) cantar",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) vivir",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) hablar",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué finales usa la familia -ar con yo, tú y él?",
+        "text": "¿Cómo se dice «vivir» con yo?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) vives",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) vive",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) vivo",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) vivir",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué finales usa el sendero -ar?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +926,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) -o, -as, -a",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) -o, -es, -e",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) -e, -es, -o",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) -a, -o, -as",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "«Escribe» viene de «escribir». ¿De qué familia es?",
+        "text": "«Escribe» viene de «escribir». ¿Qué",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,112 +980,12 @@
         }
       },
       {
-        "index": 113,
-        "column": 3,
-        "line": 9,
-        "kind": "option",
-        "text": "A) -ar",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 114,
-        "column": 3,
-        "line": 10,
-        "kind": "option",
-        "text": "B) -er",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 115,
-        "column": 3,
-        "line": 11,
-        "kind": "option",
-        "text": "C) Ninguna",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 116,
-        "column": 3,
-        "line": 12,
-        "kind": "option",
-        "text": "D) -ir",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 117,
-        "column": 3,
-        "line": 13,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "question",
-        "text": "¿Qué haces primero para conjugar un verbo?",
-        "questionId": "d5-q7",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Añadir el final",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Mirar el infinitivo y su familia",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Escribir la raíz dos veces",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Cambiar el infinitivo",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Qué familia tiene los mismos finales que «-er»?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "sendero?",
+        "questionId": "d5-q6"
       },
       {
         "index": 125,
@@ -1011,31 +993,31 @@
         "line": 21,
         "kind": "option",
         "text": "A) -ar",
-        "questionId": "d5-q8"
+        "questionId": "d5-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Ninguna",
-        "questionId": "d5-q8"
+        "text": "B) -er",
+        "questionId": "d5-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) -ir",
-        "questionId": "d5-q8"
+        "text": "C) Ninguno",
+        "questionId": "d5-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
         "kind": "option",
-        "text": "D) Todas",
-        "questionId": "d5-q8"
+        "text": "D) -ir",
+        "questionId": "d5-q6"
       },
       {
         "index": 129,
@@ -1049,7 +1031,7 @@
         "column": 3,
         "line": 26,
         "kind": "question",
-        "text": "Escribe de memoria cantar, comer y vivir con yo, tú y él.",
+        "text": "Escribe de memoria cantar, comer y vivir con",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1063,8 +1045,8 @@
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "yo, tú y él.",
         "questionId": "d5-w1"
       },
       {
@@ -1087,23 +1069,15 @@
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 135,
         "column": 3,
         "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Cuenta con tus palabras cómo se conjuga un verbo.",
+        "text": "Cuenta con tus palabras cómo se conjuga un",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,6 +1086,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "verbo.",
+        "questionId": "d5-w2"
       },
       {
         "index": 137,
@@ -1133,31 +1115,15 @@
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un esquema con las tres familias y sus finales.",
+        "text": "Dibuja un esquema con los tres senderos y",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,6 +1132,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "lesson",
+        "text": "sus finales.",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
       },
       {
         "index": 143,
@@ -1179,39 +1161,15 @@
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una oración tuya y une cada verbo con su familia.",
+        "text": "Dibuja una oración tuya y une cada verbo",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,77 +1180,97 @@
         }
       },
       {
-        "index": 149,
+        "index": 146,
         "column": 3,
-        "line": 45,
+        "line": 42,
+        "kind": "lesson",
+        "text": "con su sendero.",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "imageInstruction",
-        "text": "Dibuja un árbol con tres ramas: -ar, -er e -ir."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe en cada rama un verbo de ejemplo."
+        "text": "Dibuja el Ávila con tres senderos hacia la"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Añade bajo cada verbo yo, tú y él conjugados."
+        "text": "misma cima. Rotula -ar, -er e -ir con un"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada final corresponda a su familia."
+        "text": "verbo y yo, tú y él conjugados en cada uno."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuántas familias de verbos estudiaste?",
+        "prompt": "¿Cuántos senderos recorriste?",
         "choices": [
           "Dos",
           "Cuatro",
@@ -1302,15 +1280,15 @@
         "answer": "Tres",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q2",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué verbo es ejemplo de la familia -ar?",
+        "prompt": "¿Qué verbo sube por el sendero -ar?",
         "choices": [
           "comer",
           "cantar",
@@ -1320,15 +1298,15 @@
         "answer": "cantar",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué verbo es ejemplo de la familia -er?",
+        "prompt": "¿Qué verbo sube por el sendero -er?",
         "choices": [
           "comer",
           "cantar",
@@ -1337,9 +1315,9 @@
         ],
         "answer": "comer",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1355,16 +1333,16 @@
         ],
         "answer": "vivo",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué finales usa la familia -ar con yo, tú y él?",
+        "prompt": "¿Qué finales usa el sendero -ar?",
         "choices": [
           "-o, -as, -a",
           "-o, -es, -e",
@@ -1374,62 +1352,26 @@
         "answer": "-o, -as, -a",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "«Escribe» viene de «escribir». ¿De qué familia es?",
+        "prompt": "«Escribe» viene de «escribir». ¿Qué sendero?",
         "choices": [
           "-ar",
           "-er",
-          "Ninguna",
+          "Ninguno",
           "-ir"
         ],
         "answer": "-ir",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d5-q7",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué haces primero para conjugar un verbo?",
-        "choices": [
-          "Añadir el final",
-          "Mirar el infinitivo y su familia",
-          "Escribir la raíz dos veces",
-          "Cambiar el infinitivo"
-        ],
-        "answer": "Mirar el infinitivo y su familia",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué familia tiene los mismos finales que «-er»?",
-        "choices": [
-          "-ar",
-          "Ninguna",
-          "-ir",
-          "Todas"
-        ],
-        "answer": "-ir",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1450,34 +1392,34 @@
         "prompt": "Cuenta con tus palabras cómo se conjuga un verbo.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con las tres familias y sus finales.",
+        "prompt": "Dibuja un esquema con los tres senderos y sus finales.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja una oración tuya y une cada verbo con su familia.",
+        "prompt": "Dibuja una oración tuya y une cada verbo con su sendero.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 41,
+          "index": 145
         }
       }
     ]

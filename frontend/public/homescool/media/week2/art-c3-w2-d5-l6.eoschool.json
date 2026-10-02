@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Atención, nombrar y expresar",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana hiciste dibujos espejo paso a paso.\nUsaste atención, nombrar y expresar.\nHoy los recuerdas y aprendes a contarlos.\n\nSin mirar nada: ¿cuáles son los tres pasos que usamos para dibujar un espejo?\n\nAtención: mirar con calma la media imagen. Nombrar: decir qué forma es y dónde está. Expresar: dibujar tu imagen con lo que observaste. Si olvidaste alguno, dilo otra vez en voz alta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer dibujaste el reflejo con orden y lo comprobaste doblando la hoja. Hoy recuerdas la semana y la cuentas."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El eje de simetría",
-        "body": "¿Qué es el eje de simetría y qué hace con la figura?\n\nEl eje es una línea recta que parte la figura en dos. Las dos mitades son iguales, como en un espejo. OiLS nombra las formas: círculo, punto, línea, ángulo, curva. Cada forma tiene su pareja al otro lado del eje."
+        "heading": "Punto 2: Atención, nombrar y expresar",
+        "body": "Sin mirar la hoja: ¿cuáles son los tres pasos para dibujar un espejo?\n\nAtención: mirar con calma, sin prisa. Nombrar: decir qué forma es y dónde. Expresar: dibujar la copia con orden."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Medir antes de copiar",
-        "body": "Antes de copiar, ¿qué debes medir de cada forma?\n\nMide la distancia de cada forma al eje. La otra mitad repite el mismo tamaño y el mismo lugar. Primero la parte simétrica; los detalles, al final. No inventes adornos nuevos antes de cerrar la figura."
+        "heading": "Punto 3: El eje de simetría",
+        "body": "En Mucubají, ¿qué hace el eje con la montaña y su reflejo?\n\nEl eje parte la imagen en dos mitades. Las mitades coinciden, como en un espejo. Cada forma tiene su pareja al otro lado."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a explicarle tu dibujo espejo a alguien de tu casa. ¿Cómo lo contarías con orden?\n\nEmpieza mostrando el eje y diciendo qué dibujaste. Sigue con las formas: nómbralas y di dónde están. Explica cómo comprobaste que las mitades coinciden. Cierra contando qué fue lo más difícil y da las gracias."
+        "heading": "Punto 4: Medir antes de copiar",
+        "body": "Antes de copiar una forma, ¿qué mides? ¿Con qué lo mides?\n\nMides la distancia de la forma al eje. Lo mides con tu dedo, sin regla. La pareja repite tamaño y lugar."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: La idea central de la semana",
-        "body": "Una pregunta con truco: si puedes trazar una figura espejo con OiLS, ¿qué ya sabes hacer?\n\nYa sabes mirar con atención una media imagen. Ya sabes nombrar las formas y su lugar. Y ya sabes expresar una figura simétrica completa. Esa es la idea central de la semana."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a mostrarle tu laguna espejo a tu familia. ¿Cómo la cuentas con orden?\n\nMuestra el eje y di qué dibujaste. Nombra las formas y di dónde están. Cuenta cómo comprobaste las mitades. Cierra contando qué fue lo más difícil."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Lo que ya sabes hacer",
+        "body": "Una pregunta con truco: si ya puedes dibujar un espejo, ¿qué sabes hacer?\n\nSabes mirar con calma una media imagen. Sabes nombrar la forma y su lugar. Y sabes dibujar su pareja al otro lado."
       }
     ],
-    "summary": "En un dibujo espejo miramos con atención, nombramos cada forma y expresamos la copia con el mismo tipo, tamaño y distancia.",
+    "summary": "En un dibujo espejo, como el agua de Mucubají, miramos con atención, nombramos cada forma y expresamos la copia con el mismo tipo, tamaño y distancia.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una figura espejo con su eje de simetría. Marca con la misma letra cada pareja de formas OiLS. Escribe debajo los tres pasos: atención, nombrar, expresar. Revisa que ambas mitades coincidan antes de colorear.",
+    "imageBandInstruction": "Dibuja una laguna con su montaña y reflejo. Marca con la misma letra cada pareja. Escribe abajo: atención, nombrar, expresar. Revisa que las dos mitades coincidan.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,57 +88,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana hiciste dibujos espejo paso a paso."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Usaste atención, nombrar y expresar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy los recuerdas y aprendes a contarlos."
+        "text": "Ayer dibujaste el reflejo con orden"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y lo comprobaste doblando la hoja."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada: ¿cuáles son los tres pasos que usamos"
+        "text": "Hoy recuerdas la semana y la cuentas."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "para dibujar un espejo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -146,15 +151,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin mirar la hoja: ¿cuáles son los tres"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Atención, nombrar y expresar"
+        "kind": "lesson",
+        "text": "pasos para dibujar un espejo?"
       },
       {
         "index": 17,
@@ -168,28 +173,28 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Atención: mirar con calma la media imagen."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Nombrar: decir qué forma es y dónde está."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Expresar: dibujar tu imagen con lo que observaste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Si olvidaste alguno, dilo otra vez en voz alta."
+        "kind": "heading",
+        "text": "Punto 2: Atención, nombrar y expresar"
       },
       {
         "index": 22,
@@ -203,42 +208,42 @@
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Atención: mirar con calma, sin prisa."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Nombrar: decir qué forma es y dónde."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Expresar: dibujar la copia con orden."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Qué es el eje de simetría y qué hace con la figura?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -251,78 +256,78 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: El eje de simetría"
+        "kind": "lesson",
+        "text": "En Mucubají, ¿qué hace el eje con la"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "montaña y su reflejo?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "El eje es una línea recta que parte la figura en dos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Las dos mitades son iguales, como en un espejo."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "OiLS nombra las formas: círculo, punto, línea, ángulo, curva."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cada forma tiene su pareja al otro lado del eje."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: El eje de simetría"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El eje parte la imagen en dos mitades."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las mitades coinciden, como en un espejo."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Antes de copiar, ¿qué debes medir de cada forma?"
+        "text": "Cada forma tiene su pareja al otro lado."
       },
       {
         "index": 41,
@@ -335,197 +340,197 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Medir antes de copiar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Antes de copiar una forma, ¿qué mides?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Mide la distancia de cada forma al eje."
+        "text": "¿Con qué lo mides?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "La otra mitad repite el mismo tamaño y el mismo lugar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Primero la parte simétrica; los detalles, al final."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "No inventes adornos nuevos antes de cerrar la figura."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Medir antes de copiar"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mides la distancia de la forma al eje."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Lo mides con tu dedo, sin regla."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Vas a explicarle tu dibujo espejo a alguien de tu casa."
+        "text": "La pareja repite tamaño y lugar."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Cómo lo contarías con orden?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vas a mostrarle tu laguna espejo a tu"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Empieza mostrando el eje y diciendo qué dibujaste."
+        "text": "familia. ¿Cómo la cuentas con orden?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Sigue con las formas: nómbralas y di dónde están."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Explica cómo comprobaste que las mitades coinciden."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cierra contando qué fue lo más difícil y da las gracias."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Muestra el eje y di qué dibujaste."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Nombra las formas y di dónde están."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Una pregunta con truco: si puedes trazar una figura espejo"
+        "text": "Cuenta cómo comprobaste las mitades."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "con OiLS, ¿qué ya sabes hacer?"
+        "text": "Cierra contando qué fue lo más difícil."
       },
       {
         "index": 70,
@@ -538,15 +543,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: La idea central de la semana"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -560,28 +565,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Ya sabes mirar con atención una media imagen."
+        "text": "Una pregunta con truco: si ya puedes"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Ya sabes nombrar las formas y su lugar."
+        "text": "dibujar un espejo, ¿qué sabes hacer?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Y ya sabes expresar una figura simétrica completa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Esa es la idea central de la semana."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -594,8 +599,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Lo que ya sabes hacer"
       },
       {
         "index": 80,
@@ -608,55 +613,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sabes mirar con calma una media imagen."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuáles son los tres pasos de la semana?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Sabes nombrar la forma y su lugar."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Pintar, borrar y doblar",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Y sabes dibujar su pareja al otro lado."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Medir, cortar y pegar",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Copiar, sombrear y colorear",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Atención, nombrar y expresar",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué es atención?",
-        "questionId": "d5-q2",
+        "text": "¿Cuáles son los tres pasos?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Dibujar rápido",
-        "questionId": "d5-q2"
+        "text": "A) Pintar, borrar y doblar",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Mirar con calma la media imagen",
-        "questionId": "d5-q2"
+        "text": "B) Medir, cortar y pegar",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Pintar de color",
-        "questionId": "d5-q2"
+        "text": "C) Copiar, sombrear y colorear",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Borrar el eje",
-        "questionId": "d5-q2"
+        "text": "D) Atención, nombrar y expresar",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué es nombrar?",
-        "questionId": "d5-q3",
+        "text": "¿Qué es atención?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +732,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Decir qué forma es y dónde está",
-        "questionId": "d5-q3"
+        "text": "A) Dibujar rápido",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Mirar sin hablar",
-        "questionId": "d5-q3"
+        "text": "B) Mirar con calma",
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Doblar el papel",
-        "questionId": "d5-q3"
+        "text": "C) Pintar de color",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Cambiar el eje",
-        "questionId": "d5-q3"
+        "text": "D) Borrar el eje",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué es expresar?",
-        "questionId": "d5-q4",
+        "text": "¿Qué es nombrar?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,46 +786,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Mirar sin trazar",
-        "questionId": "d5-q4"
+        "text": "A) Decir qué forma es y dónde",
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Borrar la copia",
-        "questionId": "d5-q4"
+        "text": "B) Mirar sin hablar",
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Dibujar tu imagen con lo observado",
-        "questionId": "d5-q4"
+        "text": "C) Doblar el papel",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Medir con el dedo",
-        "questionId": "d5-q4"
+        "text": "D) Cambiar el eje",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es expresar?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Mirar sin trazar",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Borrar la copia",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Dibujar la copia con orden",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Medir con el dedo",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué hace el eje con la figura?",
+        "text": "¿Qué hace el eje con la imagen?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,50 +883,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) La parte en dos mitades",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) La pinta",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) La agranda",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) La borra",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué debes medir antes de copiar?",
+        "text": "¿Qué mides antes de copiar?",
         "questionId": "d5-q6",
         "questionType": "mcq",
         "gutter": {
@@ -897,50 +937,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) El color",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) La sombra",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) El papel",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) La distancia al eje",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué va primero: la parte simétrica o los detalles?",
+        "text": "¿Con qué mides sin regla?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,50 +991,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Los detalles",
+        "text": "A) Con un color",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) La parte simétrica",
+        "text": "B) Con tu dedo",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Las sombras",
+        "text": "C) Con una sombra",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Los adornos",
+        "text": "D) Con un borrador",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cómo empiezas a contar tu dibujo espejo?",
+        "text": "¿Qué muestras primero al contarlo?",
         "questionId": "d5-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Dando las gracias",
+        "text": "A) Los adornos",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Borrando algo",
+        "text": "B) El color",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Mostrando el eje",
+        "text": "C) El eje",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Cambiando de tema",
+        "text": "D) La sombra",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe de memoria los tres pasos para dibujar un espejo.",
+        "text": "Escribe de memoria los tres pasos del",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "espejo.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Cuenta cómo explicarías tu dibujo, de inicio a cierre.",
+        "text": "Cuenta tu dibujo espejo, de inicio a cierre.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,50 +1145,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema con atención, nombrar y expresar en orden.",
+        "text": "Dibuja los tres pasos en orden con flechas.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,22 +1181,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 145,
@@ -1210,7 +1210,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja una figura espejo con su eje y sus pares marcados.",
+        "text": "Dibuja una laguna espejo con su eje y",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1224,8 +1224,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "parejas.",
         "questionId": "d5-w4"
       },
       {
@@ -1248,37 +1248,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja una laguna con su montaña y"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una figura espejo con su eje de simetría."
+        "text": "reflejo. Marca con la misma letra cada"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Marca con la misma letra cada pareja de formas OiLS."
+        "text": "pareja. Escribe abajo: atención, nombrar,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe debajo los tres pasos: atención, nombrar, expresar."
+        "text": "expresar. Revisa que las dos mitades"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que ambas mitades coincidan antes de colorear."
+        "text": "coincidan."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1291,7 +1290,7 @@
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cuáles son los tres pasos de la semana?",
+        "prompt": "¿Cuáles son los tres pasos?",
         "choices": [
           "Pintar, borrar y doblar",
           "Medir, cortar y pegar",
@@ -1301,8 +1300,8 @@
         "answer": "Atención, nombrar y expresar",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1312,15 +1311,15 @@
         "prompt": "¿Qué es atención?",
         "choices": [
           "Dibujar rápido",
-          "Mirar con calma la media imagen",
+          "Mirar con calma",
           "Pintar de color",
           "Borrar el eje"
         ],
-        "answer": "Mirar con calma la media imagen",
+        "answer": "Mirar con calma",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1329,16 +1328,16 @@
         "type": "mcq",
         "prompt": "¿Qué es nombrar?",
         "choices": [
-          "Decir qué forma es y dónde está",
+          "Decir qué forma es y dónde",
           "Mirar sin hablar",
           "Doblar el papel",
           "Cambiar el eje"
         ],
-        "answer": "Decir qué forma es y dónde está",
+        "answer": "Decir qué forma es y dónde",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1349,21 +1348,21 @@
         "choices": [
           "Mirar sin trazar",
           "Borrar la copia",
-          "Dibujar tu imagen con lo observado",
+          "Dibujar la copia con orden",
           "Medir con el dedo"
         ],
-        "answer": "Dibujar tu imagen con lo observado",
+        "answer": "Dibujar la copia con orden",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué hace el eje con la figura?",
+        "prompt": "¿Qué hace el eje con la imagen?",
         "choices": [
           "La parte en dos mitades",
           "La pinta",
@@ -1373,15 +1372,15 @@
         "answer": "La parte en dos mitades",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d5-q6",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué debes medir antes de copiar?",
+        "prompt": "¿Qué mides antes de copiar?",
         "choices": [
           "El color",
           "La sombra",
@@ -1391,86 +1390,86 @@
         "answer": "La distancia al eje",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué va primero: la parte simétrica o los detalles?",
+        "prompt": "¿Con qué mides sin regla?",
         "choices": [
-          "Los detalles",
-          "La parte simétrica",
-          "Las sombras",
-          "Los adornos"
+          "Con un color",
+          "Con tu dedo",
+          "Con una sombra",
+          "Con un borrador"
         ],
-        "answer": "La parte simétrica",
+        "answer": "Con tu dedo",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Cómo empiezas a contar tu dibujo espejo?",
+        "prompt": "¿Qué muestras primero al contarlo?",
         "choices": [
-          "Dando las gracias",
-          "Borrando algo",
-          "Mostrando el eje",
-          "Cambiando de tema"
+          "Los adornos",
+          "El color",
+          "El eje",
+          "La sombra"
         ],
-        "answer": "Mostrando el eje",
+        "answer": "El eje",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe de memoria los tres pasos para dibujar un espejo.",
+        "prompt": "Escribe de memoria los tres pasos del espejo.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta cómo explicarías tu dibujo, de inicio a cierre.",
+        "prompt": "Cuenta tu dibujo espejo, de inicio a cierre.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con atención, nombrar y expresar en orden.",
+        "prompt": "Dibuja los tres pasos en orden con flechas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja una figura espejo con su eje y sus pares marcados.",
+        "prompt": "Dibuja una laguna espejo con su eje y parejas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

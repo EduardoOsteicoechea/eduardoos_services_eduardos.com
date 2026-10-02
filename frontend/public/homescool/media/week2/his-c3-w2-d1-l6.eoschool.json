@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Una línea del tiempo",
-        "body": "¿Cuándo crees que llegó Colón a las costas de Venezuela?\n\nUna cronología es una línea de fechas en orden. Sirve para ver qué pasó antes y qué pasó después. Hoy ordenamos dos fechas: 1498 y 1499. Fueron los primeros viajes españoles a estas costas."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nYa conociste a los primeros pueblos que vivían en esta tierra. Hoy un barco llega por mar a Paria y los encuentra en la costa."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Colón en 1498",
-        "body": "En 1492 Colón llegó al Caribe. ¿Crees que ya llegó a Venezuela en ese primer viaje?\n\nNo: en 1492 llegó a islas del Caribe. Llegó a Venezuela en su tercer viaje, en 1498. Tocó tierra firme en Paria, hacia el oriente. Tierra firme es un continente, no una isla."
+        "heading": "Punto 2: Colón llega en 1498",
+        "body": "Un barco se acerca a la costa de Paria. ¿Colón llegó a Venezuela en 1492?\n\nNo: en 1492 llegó a islas del Caribe. A Venezuela llegó en 1498, en su tercer viaje, a la zona de Paria."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La expedición de 1499",
-        "body": "Un año después, otros marinos recorrieron la costa. ¿Cuántos crees que eran y qué hacía cada uno?\n\nEn 1499 viajaron Ojeda, Vespucio y Juan de la Cosa. Una expedición es un viaje con un objetivo. Su objetivo era conocer la costa y contarlo. Ojeda guiaba, Vespucio escribía y Juan de la Cosa dibujaba."
+        "heading": "Punto 3: Tierra firme",
+        "body": "En Paria Colón pisa una costa grande. ¿Es una isla o es otra cosa?\n\nEs tierra firme: un continente. Una isla está rodeada de agua. La tierra firme sigue y sigue."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: De Paria a La Guajira",
-        "body": "Paria está al oriente. Si sigues la costa hacia el otro lado, ¿adónde llegas?\n\nLlegas a La Guajira, en el noroccidente. Entre Paria y La Guajira se extiende el litoral. El litoral es la franja de tierra junto al mar."
+        "heading": "Punto 4: La cronología",
+        "body": "Pones 1498 y 1499 en una cinta de fechas. ¿Cuál va primero?\n\nVa primero 1498, el año de Paria. Una cronología es una línea de fechas puestas en orden."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: La costa tenía habitantes",
-        "body": "Una pregunta con truco: ¿la costa estaba vacía cuando llegaron los barcos?\n\nNo estaba vacía: ya vivían pueblos originarios. Los barcos llegaron a un lugar con historia. Viajes: Colón 1498 llega a Paria; 1499 otras expediciones; ruta de Paria a La Guajira."
+        "heading": "Punto 5: La expedición de 1499",
+        "body": "Un año después de Paria zarpa otro viaje. ¿Qué crees que quieren hacer?\n\nEn 1499 viajan Ojeda, Vespucio y Juan de la Cosa. Una expedición es un viaje con un fin. Quieren conocer la costa y contarla."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: De Paria a La Guajira",
+        "body": "Paria queda en el oriente. Si sigues la costa, ¿adónde llegas?\n\nLlegas a La Guajira, en el noroccidente. Viajes: Colón 1498 llega a Paria; 1499 otras expediciones; ruta de Paria a La Guajira."
       }
     ],
-    "summary": "En 1498 Colón llegó a Paria y en 1499 otros exploradores recorrieron la costa hasta La Guajira.",
+    "summary": "En 1498 Colón llegó a Paria, en tierra firme, y en 1499 otros viajeros siguieron la costa hasta La Guajira.",
     "memoryPhrase": "Viajes: **Colón 1498** llega a Paria; **1499** otras expediciones; ruta de **Paria a La Guajira**.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una línea del tiempo con tres marcas. Escribe 1492, 1498 y 1499 en las marcas. Debajo de cada año dibuja un barco o un mapa pequeño. Rotula Paria y La Guajira.",
+    "imageBandInstruction": "Dibuja una cinta con 1498 y 1499. Dibuja un barco que llega a Paria. Rotula Paria y La Guajira en la costa. Une los dos lugares con una flecha.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Cuándo crees que llegó Colón a las costas de Venezuela?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Una línea del tiempo"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Una cronología es una línea de fechas en orden."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Sirve para ver qué pasó antes y qué pasó después."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy ordenamos dos fechas: 1498 y 1499."
+        "text": "Ya conociste a los primeros pueblos"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Fueron los primeros viajes españoles a estas costas."
+        "text": "que vivían en esta tierra."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy un barco llega por mar a Paria"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "y los encuentra en la costa."
       },
       {
         "index": 12,
@@ -133,36 +138,36 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
         "kind": "lesson",
-        "text": "En 1492 Colón llegó al Caribe. ¿Crees que ya llegó"
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "a Venezuela en ese primer viaje?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un barco se acerca a la costa de Paria."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Colón llegó a Venezuela en 1492?"
       },
       {
         "index": 18,
@@ -175,8 +180,8 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -189,92 +194,92 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Colón llega en 1498"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Colón en 1498"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No: en 1492 llegó a islas del Caribe."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "No: en 1492 llegó a islas del Caribe."
+        "text": "A Venezuela llegó en 1498,"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Llegó a Venezuela en su tercer viaje, en 1498."
+        "text": "en su tercer viaje, a la zona de Paria."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Tocó tierra firme en Paria, hacia el oriente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "Tierra firme es un continente, no una isla."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En Paria Colón pisa una costa grande."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Es una isla o es otra cosa?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Un año después, otros marinos recorrieron la costa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "¿Cuántos crees que eran y qué hacía cada uno?"
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -287,8 +292,8 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Tierra firme"
       },
       {
         "index": 36,
@@ -301,22 +306,22 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es tierra firme: un continente."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una isla está rodeada de agua."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "heading",
-        "text": "Punto 3: La expedición de 1499"
+        "kind": "lesson",
+        "text": "La tierra firme sigue y sigue."
       },
       {
         "index": 40,
@@ -330,49 +335,49 @@
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "En 1499 viajaron Ojeda, Vespucio y Juan de la Cosa."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Una expedición es un viaje con un objetivo."
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "Su objetivo era conocer la costa y contarlo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Ojeda guiaba, Vespucio escribía y Juan de la Cosa dibujaba."
+        "text": "Pones 1498 y 1499 en una cinta de fechas."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cuál va primero?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
@@ -385,36 +390,36 @@
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Paria está al oriente. Si sigues la costa hacia el otro"
+        "kind": "heading",
+        "text": "Punto 4: La cronología"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "lado, ¿adónde llegas?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Va primero 1498, el año de Paria."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una cronología es una línea"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de fechas puestas en orden."
       },
       {
         "index": 54,
@@ -427,15 +432,15 @@
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 4: De Paria a La Guajira"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -449,42 +454,42 @@
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Llegas a La Guajira, en el noroccidente."
+        "text": "Un año después de Paria zarpa otro viaje."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "Entre Paria y La Guajira se extiende el litoral."
+        "text": "¿Qué crees que quieren hacer?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "El litoral es la franja de tierra junto al mar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: La expedición de 1499"
       },
       {
         "index": 64,
@@ -498,28 +503,28 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿la costa estaba vacía cuando"
+        "text": "En 1499 viajan Ojeda, Vespucio"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "llegaron los barcos?"
+        "text": "y Juan de la Cosa."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una expedición es un viaje con un fin."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Quieren conocer la costa y contarla."
       },
       {
         "index": 69,
@@ -532,132 +537,120 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: La costa tenía habitantes"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Paria queda en el oriente. Si sigues"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No estaba vacía: ya vivían pueblos originarios."
+        "text": "la costa, ¿adónde llegas?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Los barcos llegaron a un lugar con historia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Viajes: Colón 1498 llega a Paria; 1499 otras expediciones;"
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "ruta de Paria a La Guajira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: De Paria a La Guajira"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Llegas a La Guajira, en el noroccidente."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viajes: Colón 1498 llega a Paria;"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es una cronología?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "1499 otras expediciones;"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Una línea de fechas en orden",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "ruta de Paria a La Guajira."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Un mapa de la costa",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Un barco grande",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Un relato de viaje",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿En qué viaje llegó Colón a Venezuela?",
-        "questionId": "d1-q2",
+        "text": "¿Adónde llegó Colón en 1492?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) En el primero",
-        "questionId": "d1-q2"
+        "text": "A) A islas del Caribe",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) En el segundo",
-        "questionId": "d1-q2"
+        "text": "B) A Paria",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) En el cuarto",
-        "questionId": "d1-q2"
+        "text": "C) A La Guajira",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) En el tercero",
-        "questionId": "d1-q2"
+        "text": "D) A Europa",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -726,7 +719,7 @@
         "line": 42,
         "kind": "question",
         "text": "¿En qué año llegó Colón a Paria?",
-        "questionId": "d1-q3",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,31 +734,31 @@
         "line": 43,
         "kind": "option",
         "text": "A) 1492",
-        "questionId": "d1-q3"
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 1498",
-        "questionId": "d1-q3"
+        "text": "B) 1499",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 1499",
-        "questionId": "d1-q3"
+        "text": "C) 1500",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 1500",
-        "questionId": "d1-q3"
+        "text": "D) 1498",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué es la tierra firme?",
-        "questionId": "d1-q4",
+        "text": "¿En qué viaje llegó a Paria?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Una isla pequeña",
-        "questionId": "d1-q4"
+        "text": "A) En su primer viaje",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Un barco",
-        "questionId": "d1-q4"
+        "text": "B) En su tercer viaje",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Un continente, no una isla",
-        "questionId": "d1-q4"
+        "text": "C) En su segundo viaje",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Un puerto",
-        "questionId": "d1-q4"
+        "text": "D) En su último viaje",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es la tierra firme?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Una isla pequeña",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Un barco",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Un continente",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Un puerto",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Quiénes viajaron en 1499?",
+        "text": "¿Qué es una cronología?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Solo Colón",
+        "text": "A) Un mapa de la costa",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Colón y Vespucio",
+        "text": "B) Un barco grande",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Solo Ojeda",
+        "text": "C) Un viaje largo",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Ojeda, Vespucio y Juan de la Cosa",
+        "text": "D) Fechas puestas en orden",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué es una expedición?",
+        "text": "¿Qué fecha va primero?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Un mapa viejo",
+        "text": "A) 1499",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Un viaje con un objetivo",
+        "text": "B) 1498",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Una isla",
+        "text": "C) 1500",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Un relato",
+        "text": "D) 1492 y 1499",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Dónde queda Paria?",
+        "text": "¿Qué es una expedición?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Hacia el oriente",
+        "text": "A) Un viaje con un fin",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) En el noroccidente",
+        "text": "B) Un mapa viejo",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Al sur",
+        "text": "C) Una isla",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) En el centro",
+        "text": "D) Una fecha",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué es el litoral?",
+        "text": "¿Dónde queda La Guajira?",
         "questionId": "d1-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Una montaña",
+        "text": "A) En el oriente",
         "questionId": "d1-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Un tipo de barco",
+        "text": "B) Al sur",
         "questionId": "d1-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) La franja de tierra junto al mar",
+        "text": "C) En el noroccidente",
         "questionId": "d1-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Una fecha",
+        "text": "D) En el centro",
         "questionId": "d1-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe las dos fechas de hoy y qué pasó en cada una.",
+        "text": "Escribe qué pasó en 1498 y qué pasó en",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "1499.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica qué es una cronología con tus palabras.",
+        "text": "Cuenta con tus palabras qué es una",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1146,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cronología.",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
         "kind": "question",
-        "text": "Dibuja una línea del tiempo con 1492, 1498 y 1499.",
+        "text": "Dibuja una cinta de fechas con 1492, 1498 y",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,50 +1192,42 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "1499.",
         "questionId": "d1-w3"
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
         "kind": "question",
-        "text": "Dibuja la costa con Paria al oriente y La Guajira al otro lado.",
+        "text": "Dibuja la costa con Paria en el oriente.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,22 +1236,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
-      },
-      {
-        "index": 150,
-        "column": 3,
-        "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
       },
       {
         "index": 151,
@@ -1258,28 +1258,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una línea del tiempo con tres marcas."
+        "text": "Dibuja una cinta con 1498 y 1499. Dibuja un"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe 1492, 1498 y 1499 en las marcas."
+        "text": "barco que llega a Paria. Rotula Paria y La"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo de cada año dibuja un barco o un mapa pequeño."
+        "text": "Guajira en la costa. Une los dos lugares"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula Paria y La Guajira."
+        "text": "con una flecha."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,32 +1292,14 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué es una cronología?",
+        "prompt": "¿Adónde llegó Colón en 1492?",
         "choices": [
-          "Una línea de fechas en orden",
-          "Un mapa de la costa",
-          "Un barco grande",
-          "Un relato de viaje"
+          "A islas del Caribe",
+          "A Paria",
+          "A La Guajira",
+          "A Europa"
         ],
-        "answer": "Una línea de fechas en orden",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿En qué viaje llegó Colón a Venezuela?",
-        "choices": [
-          "En el primero",
-          "En el segundo",
-          "En el cuarto",
-          "En el tercero"
-        ],
-        "answer": "En el tercero",
+        "answer": "A islas del Caribe",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1325,21 +1307,39 @@
         }
       },
       {
-        "id": "d1-q3",
+        "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
         "prompt": "¿En qué año llegó Colón a Paria?",
         "choices": [
           "1492",
-          "1498",
           "1499",
-          "1500"
+          "1500",
+          "1498"
         ],
         "answer": "1498",
         "slot": {
           "column": 2,
           "line": 42,
           "index": 94
+        }
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿En qué viaje llegó a Paria?",
+        "choices": [
+          "En su primer viaje",
+          "En su tercer viaje",
+          "En su segundo viaje",
+          "En su último viaje"
+        ],
+        "answer": "En su tercer viaje",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1350,134 +1350,134 @@
         "choices": [
           "Una isla pequeña",
           "Un barco",
-          "Un continente, no una isla",
+          "Un continente",
           "Un puerto"
         ],
-        "answer": "Un continente, no una isla",
+        "answer": "Un continente",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Quiénes viajaron en 1499?",
+        "prompt": "¿Qué es una cronología?",
         "choices": [
-          "Solo Colón",
-          "Colón y Vespucio",
-          "Solo Ojeda",
-          "Ojeda, Vespucio y Juan de la Cosa"
+          "Un mapa de la costa",
+          "Un barco grande",
+          "Un viaje largo",
+          "Fechas puestas en orden"
         ],
-        "answer": "Ojeda, Vespucio y Juan de la Cosa",
+        "answer": "Fechas puestas en orden",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué es una expedición?",
+        "prompt": "¿Qué fecha va primero?",
         "choices": [
-          "Un mapa viejo",
-          "Un viaje con un objetivo",
-          "Una isla",
-          "Un relato"
+          "1499",
+          "1498",
+          "1500",
+          "1492 y 1499"
         ],
-        "answer": "Un viaje con un objetivo",
+        "answer": "1498",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Dónde queda Paria?",
+        "prompt": "¿Qué es una expedición?",
         "choices": [
-          "Hacia el oriente",
-          "En el noroccidente",
-          "Al sur",
-          "En el centro"
+          "Un viaje con un fin",
+          "Un mapa viejo",
+          "Una isla",
+          "Una fecha"
         ],
-        "answer": "Hacia el oriente",
+        "answer": "Un viaje con un fin",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué es el litoral?",
+        "prompt": "¿Dónde queda La Guajira?",
         "choices": [
-          "Una montaña",
-          "Un tipo de barco",
-          "La franja de tierra junto al mar",
-          "Una fecha"
+          "En el oriente",
+          "Al sur",
+          "En el noroccidente",
+          "En el centro"
         ],
-        "answer": "La franja de tierra junto al mar",
+        "answer": "En el noroccidente",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe las dos fechas de hoy y qué pasó en cada una.",
+        "prompt": "Escribe qué pasó en 1498 y qué pasó en 1499.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica qué es una cronología con tus palabras.",
+        "prompt": "Cuenta con tus palabras qué es una cronología.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja una línea del tiempo con 1492, 1498 y 1499.",
+        "prompt": "Dibuja una cinta de fechas con 1492, 1498 y 1499.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 41,
+          "index": 145
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja la costa con Paria al oriente y La Guajira al otro lado.",
+        "prompt": "Dibuja la costa con Paria en el oriente.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 46,
+          "index": 150
         }
       }
     ]

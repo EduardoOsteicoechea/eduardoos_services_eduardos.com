@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Todo son grupos iguales",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicamos las tablas del 9 al 12.\nEl 9 suma 9, el 10 añade un cero y el 11 repite el dígito.\nEl 12 se parte en 10 y 2 para multiplicar fácil.\n\nHoy repasamos toda la semana. ¿Qué es multiplicar? Cuéntalo con un ejemplo.\n\nMultiplicar es juntar grupos iguales. Los factores se multiplican y dan el producto. Por ejemplo, 3 × 4 = 12. Si dudas, comprueba con una suma repetida."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste los trucos del 9 al 12: el 9 suma 9, el 10 añade un cero, el 11 repite y el 12 se parte en 10 y 2."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Trucos del 1 al 8",
-        "body": "¿Qué trucos te sirvieron para las tablas del 1 al 8?\n\nEl 1 deja el número y el 2 lo dobla. El 4 dobla el doble: 4 × 9 = 36. El 5 termina en 0 o en 5: 5 × 7 = 35. El 6 dobla el 3 y el 8 dobla el 4: 8 × 6 = 48."
+        "heading": "Punto 2: Todo son grupos iguales",
+        "body": "Hoy repasas la semana. ¿Qué es multiplicar? Cuéntalo con Los Roques.\n\nMultiplicar es juntar grupos iguales. Con 3 cayos de 4 palmeras: 3 × 4 = 12. Los factores dan el producto, el 12. Si dudas, comprueba con una suma."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Trucos del 9 al 12",
-        "body": "¿Y para las tablas del 9 al 12? ¿Qué recuerdas?\n\nEn el 9 los dígitos suman 9: 9 × 7 = 63. El 10 añade un cero: 10 × 8 = 80. El 11 repite el dígito: 11 × 6 = 66. El 12 se parte en 10 y 2: 12 × 7 = 84."
+        "heading": "Punto 3: Trucos del 1 al 8",
+        "body": "¿Qué trucos te sirvieron del 1 al 8? Piensa en filas de cayos.\n\nEl 1 deja igual y el 2 dobla. El 4 dobla el doble: 4 × 9 = 36. El 5 termina en 0 o 5: 5 × 7 = 35. El 8 dobla el 4: 8 × 6 = 48."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Un pictograma ordena datos",
-        "body": "Mario practicó 3 tablas el lunes, 2 el martes y 4 el miércoles. ¿Cómo lo mostrarías con dibujos?\n\nCon un pictograma: cada dibujo vale una tabla. Lunes: 3 dibujos. Martes: 2. Miércoles: 4. En total son 3 + 2 + 4 = 9 tablas. Un pictograma muestra datos con dibujos que se pueden contar."
+        "heading": "Punto 4: Trucos del 9 al 12",
+        "body": "¿Y del 9 al 12? ¿Qué recuerdas al contar filas grandes de cayos?\n\nEl 9 suma 9 en sus dígitos: 9 × 7 = 63. El 10 añade un cero: 10 × 8 = 80. El 11 repite el dígito: 11 × 6 = 66. El 12 se parte en 10 y 2: 12 × 7 = 84."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cómo contarlo con orden",
-        "body": "Si debes explicar cómo hallar 12 × 6 a tu familia, ¿qué dirías primero, después y al final?\n\nPrimero digo cuántos grupos hay y de cuántos. Luego parto el 12: 10 × 6 = 60 y 2 × 6 = 12. Después sumo: 60 + 12 = 72. Al final compruebo: el doble de 6 × 6 = 36 es 72."
+        "heading": "Punto 5: Un pictograma ordena datos",
+        "body": "Mario practicó 3 tablas el lunes, 2 el martes y 4 el miércoles. ¿Cómo lo ordena?\n\nCon un pictograma: un cayo por tabla. Lunes: 3 dibujos; martes: 2; miércoles: 4. Total: 3 + 2 + 4 = 9 tablas. Un pictograma muestra datos con dibujos."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cómo contarlo con orden",
+        "body": "Explica a tu familia cómo hallar 12 × 6. ¿Qué dices primero, luego y al final?\n\nPrimero: son 12 cayos con 6 palmeras. Luego: 10 × 6 = 60 y 2 × 6 = 12. Después sumo: 60 + 12 = 72. Compruebo: 6 × 6 = 36, y su doble, 72."
       }
     ],
     "summary": "Multiplicar es juntar grupos iguales, y cada tabla tiene su truco. Un pictograma ordena los datos.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un pictograma de tu semana de práctica. Usa un dibujo por cada tabla que practicaste. Rotula los días y escribe cuántos dibujos hay en total. Escribe una multiplicación que hayas aprendido.",
+    "imageBandInstruction": "Dibuja un pictograma de tu semana. Usa un cayo de Los Roques por cada tabla. Rotula los días y escribe el total de cayos. Escribe una multiplicación que aprendiste.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,57 +88,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicamos las tablas del 9 al 12."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El 9 suma 9, el 10 añade un cero y el 11 repite el dígito."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "El 12 se parte en 10 y 2 para multiplicar fácil."
+        "text": "Ayer viste los trucos del 9 al 12:"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el 9 suma 9, el 10 añade un cero,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy repasamos toda la semana. ¿Qué es multiplicar?"
+        "text": "el 11 repite y el 12 se parte en 10 y 2."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cuéntalo con un ejemplo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -146,85 +151,85 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Todo son grupos iguales"
+        "kind": "lesson",
+        "text": "Hoy repasas la semana. ¿Qué es"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "multiplicar? Cuéntalo con Los Roques."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Multiplicar es juntar grupos iguales."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Los factores se multiplican y dan el producto."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Por ejemplo, 3 × 4 = 12."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Si dudas, comprueba con una suma repetida."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Todo son grupos iguales"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Multiplicar es juntar grupos iguales."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con 3 cayos de 4 palmeras: 3 × 4 = 12."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Qué trucos te sirvieron para las tablas del 1 al 8?"
+        "text": "Los factores dan el producto, el 12."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si dudas, comprueba con una suma."
       },
       {
         "index": 27,
@@ -237,15 +242,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Trucos del 1 al 8"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -259,49 +264,49 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "El 1 deja el número y el 2 lo dobla."
+        "text": "¿Qué trucos te sirvieron del 1 al 8?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "El 4 dobla el doble: 4 × 9 = 36."
+        "text": "Piensa en filas de cayos."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "El 5 termina en 0 o en 5: 5 × 7 = 35."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "El 6 dobla el 3 y el 8 dobla el 4: 8 × 6 = 48."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Trucos del 1 al 8"
       },
       {
         "index": 38,
@@ -315,70 +320,70 @@
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "¿Y para las tablas del 9 al 12? ¿Qué recuerdas?"
+        "text": "El 1 deja igual y el 2 dobla."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 4 dobla el doble: 4 × 9 = 36."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 5 termina en 0 o 5: 5 × 7 = 35."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 8 dobla el 4: 8 × 6 = 48."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Trucos del 9 al 12"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "En el 9 los dígitos suman 9: 9 × 7 = 63."
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "El 10 añade un cero: 10 × 8 = 80."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "El 11 repite el dígito: 11 × 6 = 66."
+        "text": "¿Y del 9 al 12? ¿Qué recuerdas al"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "El 12 se parte en 10 y 2: 12 × 7 = 84."
+        "text": "contar filas grandes de cayos?"
       },
       {
         "index": 49,
@@ -392,14 +397,14 @@
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -412,15 +417,15 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Mario practicó 3 tablas el lunes, 2 el martes y 4 el"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "miércoles. ¿Cómo lo mostrarías con dibujos?"
+        "kind": "heading",
+        "text": "Punto 4: Trucos del 9 al 12"
       },
       {
         "index": 55,
@@ -433,71 +438,71 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 9 suma 9 en sus dígitos: 9 × 7 = 63."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 10 añade un cero: 10 × 8 = 80."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Un pictograma ordena datos"
+        "kind": "lesson",
+        "text": "El 11 repite el dígito: 11 × 6 = 66."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 12 se parte en 10 y 2: 12 × 7 = 84."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Con un pictograma: cada dibujo vale una tabla."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Lunes: 3 dibujos. Martes: 2. Miércoles: 4."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "En total son 3 + 2 + 4 = 9 tablas."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Un pictograma muestra datos con dibujos que se pueden contar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mario practicó 3 tablas el lunes, 2 el"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "martes y 4 el miércoles. ¿Cómo lo ordena?"
       },
       {
         "index": 66,
@@ -510,22 +515,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Si debes explicar cómo hallar 12 × 6 a tu familia,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿qué dirías primero, después y al final?"
+        "kind": "heading",
+        "text": "Punto 5: Un pictograma ordena datos"
       },
       {
         "index": 70,
@@ -538,50 +543,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con un pictograma: un cayo por tabla."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "Lunes: 3 dibujos; martes: 2; miércoles: 4."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Total: 3 + 2 + 4 = 9 tablas."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Primero digo cuántos grupos hay y de cuántos."
+        "text": "Un pictograma muestra datos con dibujos."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Luego parto el 12: 10 × 6 = 60 y 2 × 6 = 12."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Después sumo: 60 + 12 = 72."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Al final compruebo: el doble de 6 × 6 = 36 es 72."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -595,14 +600,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Explica a tu familia cómo hallar 12 × 6."
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué dices primero, luego y al final?"
       },
       {
         "index": 81,
@@ -615,102 +620,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa multiplicar?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Quitar de un grupo",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Repartir sin orden",
-        "questionId": "d5-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cómo contarlo con orden"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Ordenar números",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Juntar grupos iguales",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Primero: son 12 cayos con 6 palmeras."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego: 10 × 6 = 60 y 2 × 6 = 12."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Cuánto es 4 × 9?",
-        "questionId": "d5-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Después sumo: 60 + 12 = 72."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) 13",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Compruebo: 6 × 6 = 36, y su doble, 72."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) 36",
-        "questionId": "d5-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) 27",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) 45",
-        "questionId": "d5-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -724,8 +705,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 8 × 6?",
-        "questionId": "d5-q3",
+        "text": "¿Qué significa multiplicar?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +720,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 48",
-        "questionId": "d5-q3"
+        "text": "A) Quitar de un grupo",
+        "questionId": "d5-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 14",
-        "questionId": "d5-q3"
+        "text": "B) Repartir sin orden",
+        "questionId": "d5-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 42",
-        "questionId": "d5-q3"
+        "text": "C) Ordenar números",
+        "questionId": "d5-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 54",
-        "questionId": "d5-q3"
+        "text": "D) Juntar grupos iguales",
+        "questionId": "d5-q1"
       },
       {
         "index": 99,
@@ -778,8 +759,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuánto es 9 × 7?",
-        "questionId": "d5-q4",
+        "text": "¿Cuánto es 4 × 9?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,44 +774,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) 16",
-        "questionId": "d5-q4"
+        "text": "A) 13",
+        "questionId": "d5-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) 56",
-        "questionId": "d5-q4"
+        "text": "B) 36",
+        "questionId": "d5-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) 63",
-        "questionId": "d5-q4"
+        "text": "C) 27",
+        "questionId": "d5-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) 72",
-        "questionId": "d5-q4"
+        "text": "D) 45",
+        "questionId": "d5-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuánto es 8 × 6?",
+        "questionId": "d5-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) 48",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) 14",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) 42",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) 54",
+        "questionId": "d5-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Cuánto es 9 × 7?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) 16",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) 56",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) 63",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) 72",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Cuánto es 12 × 6?",
         "questionId": "d5-q5",
@@ -843,48 +925,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) 72",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) 18",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) 60",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) 66",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Para qué sirve un pictograma?",
         "questionId": "d5-q6",
@@ -897,158 +979,50 @@
         }
       },
       {
-        "index": 113,
-        "column": 3,
-        "line": 9,
-        "kind": "option",
-        "text": "A) Borrar números",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 114,
-        "column": 3,
-        "line": 10,
-        "kind": "option",
-        "text": "B) Evitar multiplicar",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 115,
-        "column": 3,
-        "line": 11,
-        "kind": "option",
-        "text": "C) Cambiar el orden",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 116,
-        "column": 3,
-        "line": 12,
-        "kind": "option",
-        "text": "D) Mostrar datos con dibujos",
-        "questionId": "d5-q6"
-      },
-      {
-        "index": 117,
-        "column": 3,
-        "line": 13,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "question",
-        "text": "¿Cuántas tablas son 3 + 2 + 4 dibujos?",
-        "questionId": "d5-q7",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) 8",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) 9",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) 10",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) 24",
-        "questionId": "d5-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Qué tabla se parte en 10 y 2?",
-        "questionId": "d5-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Borrar números",
+        "questionId": "d5-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) La del 11",
-        "questionId": "d5-q8"
+        "text": "B) Evitar multiplicar",
+        "questionId": "d5-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) La del 9",
-        "questionId": "d5-q8"
+        "text": "C) Cambiar el orden",
+        "questionId": "d5-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) La del 12",
-        "questionId": "d5-q8"
+        "text": "D) Mostrar datos con dibujos",
+        "questionId": "d5-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) La del 5",
-        "questionId": "d5-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Cuenta con orden cómo hallar 12 × 6, con tus palabras.",
+        "text": "Cuenta con orden cómo hallar 12 × 6, con tus",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1057,6 +1031,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "palabras.",
+        "questionId": "d5-w1"
       },
       {
         "index": 131,
@@ -1078,31 +1060,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe tres trucos de tablas y un ejemplo de cada uno.",
+        "text": "Escribe tres trucos de tablas y un ejemplo de",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1111,6 +1077,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "cada uno.",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 137,
@@ -1124,39 +1106,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un pictograma: 3 dibujos el lunes y 4 el martes.",
+        "text": "Dibuja un pictograma: 3 cayos el lunes y 4 el",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,50 +1125,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "martes.",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una tabla de dos columnas: cuenta y producto.",
+        "text": "Dibuja una tabla de dos columnas: cuenta y",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,71 +1171,98 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "producto.",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un pictograma de tu semana de práctica."
+        "text": "Dibuja un pictograma de tu semana. Usa"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Usa un dibujo por cada tabla que practicaste."
+        "text": "un cayo de Los Roques por cada tabla."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula los días y escribe cuántos dibujos hay en total."
+        "text": "Rotula los días y escribe el total de cayos."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe una multiplicación que hayas aprendido."
+        "text": "Escribe una multiplicación que aprendiste."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d5-q1",
@@ -1301,8 +1278,8 @@
         "answer": "Juntar grupos iguales",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1319,8 +1296,8 @@
         "answer": "36",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1336,9 +1313,9 @@
         ],
         "answer": "48",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1354,9 +1331,9 @@
         ],
         "answer": "63",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1373,8 +1350,8 @@
         "answer": "72",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1391,44 +1368,8 @@
         "answer": "Mostrar datos con dibujos",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d5-q7",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Cuántas tablas son 3 + 2 + 4 dibujos?",
-        "choices": [
-          "8",
-          "9",
-          "10",
-          "24"
-        ],
-        "answer": "9",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d5-q8",
-        "originDay": 5,
-        "type": "mcq",
-        "prompt": "¿Qué tabla se parte en 10 y 2?",
-        "choices": [
-          "La del 11",
-          "La del 9",
-          "La del 12",
-          "La del 5"
-        ],
-        "answer": "La del 12",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1438,8 +1379,8 @@
         "prompt": "Cuenta con orden cómo hallar 12 × 6, con tus palabras.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1449,21 +1390,21 @@
         "prompt": "Escribe tres trucos de tablas y un ejemplo de cada uno.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un pictograma: 3 dibujos el lunes y 4 el martes.",
+        "prompt": "Dibuja un pictograma: 3 cayos el lunes y 4 el martes.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1475,8 +1416,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

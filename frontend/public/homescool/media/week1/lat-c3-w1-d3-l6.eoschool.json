@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Per marca el camino",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicaste «in» y «apud».\nAyer viste que «in» dice dónde y «apud» dice con quién.\nHoy aprendes dos relaciones nuevas: camino y ausencia.\n\nImagina que viajas por un bosque. ¿Cómo crees que se dice «por el bosque»?\n\n«Per» significa «por» o «a través de». Per silvam es «por el bosque». Per mare es «por el mar». Per marca por dónde pasas o con qué medio."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer practicaste «in» y «apud». «In» dice dónde; «apud» dice con quién. Hoy cruzas el puente con «per» y notas lo que falta con «sine»."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Sine marca lo que falta",
-        "body": "Ahora el bosque se queda a oscuras. ¿Cómo dirías «sin luz»?\n\n«Sine» significa «sin». Sine luce es «sin luz». Sine nave es «sin barco». Sine dice que algo falta."
+        "heading": "Punto 2: Per marca el camino",
+        "body": "Cruzas el Lago de Maracaibo. ¿Cómo dirías «por el puente»?\n\n«Per» es «por» o «a través de». Per pontem es «por el puente». Per lacum es «por el lago». «Per» dice por dónde pasas."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Quitar el medio",
-        "body": "Compara «por el mar» y «sin barco». ¿Qué cambia si quitas el barco?\n\nPer mare es ir por el mar. Sine nave es estar sin barco. Al quitar el barco, cambió la relación."
+        "heading": "Punto 3: Sine marca lo que falta",
+        "body": "Ahora imagina que no hay puente. ¿Cómo dirías «sin puente»?\n\n«Sine» es «sin». Sine ponte es «sin puente». Sine nave es «sin barco». «Sine» dice que algo falta."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: No las confundas",
-        "body": "Una pregunta con truco: ¿«sine» puede significar «por»?\n\nNo: «sine» es «sin», nunca «por». Si algo falta, usa sine. Si hay camino o medio, usa per. Pregúntate: ¿falta algo o paso por un sitio?"
+        "heading": "Punto 4: Quitar el puente",
+        "body": "Compara «por el puente» y «sin puente». ¿Qué pasa con las dos orillas?\n\nPer pontem: pasas de una orilla a otra. Sine ponte: te falta ese camino. Al quitar el puente, cambia la relación."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tus propias frases",
-        "body": "Ahora tú: arma una frase con «per» y otra con «sine».\n\nPor ejemplo: per viam es «por el camino». Y sine aqua es «sin agua». Lee tus frases en voz alta. Marca la preposición para no perderla."
+        "heading": "Punto 5: No las confundas",
+        "body": "Una pregunta con truco: ¿«sine» puede significar «por»?\n\nNo: «sine» es «sin», nunca «por». Si hay camino o medio, usa «per». Si algo falta, usa «sine». Pregúntate: ¿paso o falta algo?"
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tus propias frases",
+        "body": "El lago se conecta con el mar. ¿Cómo dices «por el mar» y «sin luz»?\n\n«Por el mar» es «per mare». «Sin luz» es «sine luce». Léelas en voz alta. Marca la palabra corta de cada una."
       }
     ],
-    "summary": "«Per» marca por dónde pasas o con qué medio; «sine» marca lo que falta.",
+    "summary": "«Per» marca por dónde pasas, como al cruzar un puente; «sine» marca lo que falta.",
     "memoryPhrase": "**in** = en · **apud** = con · **per** = por · **sine** = sin · **a/ab** = de · **de** = de.",
     "weekRecap": "in = en · apud = con · per = por · sine = sin · a/ab = de · de = de. Relaciones de lugar, compañía, camino y origen.",
     "priorDayRecap": "Ayer practicaste in (en) y apud (con) en mini-frases.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un bosque con un sendero y una lámpara apagada. Rotula el sendero: per silvam. Rotula la lámpara apagada: sine luce. Escribe al lado qué significa cada rótulo.",
+    "imageBandInstruction": "Dibuja dos orillas con un puente. Rotula el puente: per pontem. Dibuja dos orillas sin puente: sine ponte. Escribe qué significa cada rótulo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicaste «in» y «apud»."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Ayer viste que «in» dice dónde y «apud» dice con quién."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy aprendes dos relaciones nuevas: camino y ausencia."
+        "text": "Ayer practicaste «in» y «apud»."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«In» dice dónde; «apud» dice con quién."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Imagina que viajas por un bosque. ¿Cómo crees que se"
+        "text": "Hoy cruzas el puente con «per»"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "dice «por el bosque»?"
+        "text": "y notas lo que falta con «sine»."
       },
       {
         "index": 12,
@@ -135,57 +140,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Per marca el camino"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cruzas el Lago de Maracaibo. ¿Cómo"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "«Per» significa «por» o «a través de»."
+        "text": "dirías «por el puente»?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Per silvam es «por el bosque»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Per mare es «por el mar»."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Per marca por dónde pasas o con qué medio."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Per marca el camino"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Per» es «por» o «a través de»."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Ahora el bosque se queda a oscuras. ¿Cómo dirías"
+        "text": "Per pontem es «por el puente»."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "«sin luz»?"
+        "text": "Per lacum es «por el lago»."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Per» dice por dónde pasas."
       },
       {
         "index": 28,
@@ -247,15 +252,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Sine marca lo que falta"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -269,49 +274,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "«Sine» significa «sin»."
+        "text": "Ahora imagina que no hay puente."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Sine luce es «sin luz»."
+        "text": "¿Cómo dirías «sin puente»?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Sine nave es «sin barco»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Sine dice que algo falta."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Sine marca lo que falta"
       },
       {
         "index": 39,
@@ -325,28 +330,28 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Compara «por el mar» y «sin barco». ¿Qué cambia"
+        "text": "«Sine» es «sin»."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "si quitas el barco?"
+        "text": "Sine ponte es «sin puente»."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sine nave es «sin barco»."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sine» dice que algo falta."
       },
       {
         "index": 44,
@@ -359,36 +364,36 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: Quitar el medio"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Per mare es ir por el mar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Sine nave es estar sin barco."
+        "text": "Compara «por el puente» y «sin puente»."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Al quitar el barco, cambió la relación."
+        "text": "¿Qué pasa con las dos orillas?"
       },
       {
         "index": 50,
@@ -402,14 +407,14 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -422,8 +427,8 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«sine» puede significar «por»?"
+        "kind": "heading",
+        "text": "Punto 4: Quitar el puente"
       },
       {
         "index": 55,
@@ -436,22 +441,22 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Per pontem: pasas de una orilla a otra."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sine ponte: te falta ese camino."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: No las confundas"
+        "kind": "lesson",
+        "text": "Al quitar el puente, cambia la relación."
       },
       {
         "index": 59,
@@ -465,70 +470,70 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "No: «sine» es «sin», nunca «por»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Si algo falta, usa sine."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Si hay camino o medio, usa per."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Pregúntate: ¿falta algo o paso por un sitio?"
+        "text": "Una pregunta con truco: ¿«sine» puede"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "significar «por»?"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Ahora tú: arma una frase con «per» y otra con «sine»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: No las confundas"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No: «sine» es «sin», nunca «por»."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Tus propias frases"
+        "kind": "lesson",
+        "text": "Si hay camino o medio, usa «per»."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si algo falta, usa «sine»."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Por ejemplo: per viam es «por el camino»."
+        "text": "Pregúntate: ¿paso o falta algo?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Y sine aqua es «sin agua»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Lee tus frases en voz alta."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Marca la preposición para no perderla."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "El lago se conecta con el mar. ¿Cómo"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "dices «por el mar» y «sin luz»?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «per silvam»?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Sin bosque",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Por el bosque",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Tus propias frases"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) En el bosque",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Con el bosque",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "«Por el mar» es «per mare»."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sin luz» es «sine luce»."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué significa «sine luce»?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Léelas en voz alta."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Con luz",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Marca la palabra corta de cada una."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) En la luz",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Sin luz",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Por la luz",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué significa «per mare»?",
-        "questionId": "d3-q3",
+        "text": "¿Qué significa «per pontem»?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Sin mar",
-        "questionId": "d3-q3"
+        "text": "A) Sin puente",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) En el mar",
-        "questionId": "d3-q3"
+        "text": "B) Por el puente",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Con el mar",
-        "questionId": "d3-q3"
+        "text": "C) En el puente",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Por el mar",
-        "questionId": "d3-q3"
+        "text": "D) Con el puente",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué significa «sine nave»?",
-        "questionId": "d3-q4",
+        "text": "¿Qué significa «sine ponte»?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +777,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Con barco",
-        "questionId": "d3-q4"
+        "text": "A) Por el puente",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Sin barco",
-        "questionId": "d3-q4"
+        "text": "B) En el puente",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Por el barco",
-        "questionId": "d3-q4"
+        "text": "C) Sin puente",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) En el barco",
-        "questionId": "d3-q4"
+        "text": "D) Con el puente",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «per lacum»?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Sin lago",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) En el lago",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Con el lago",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Por el lago",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué relación marca «per»?",
+        "text": "¿Qué significa «sine nave»?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Con barco",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Sin barco",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Por el barco",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) En el barco",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Qué marca «per»?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,50 +928,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Camino o medio",
+        "text": "A) Por dónde pasas",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Ausencia",
+        "text": "B) Algo que falta",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Compañía",
+        "text": "C) Con quién estás",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Origen",
+        "text": "D) Desde dónde vienes",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué relación marca «sine»?",
+        "text": "¿Qué marca «sine»?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,50 +982,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
-        "text": "A) Camino",
+        "text": "A) Por dónde pasas",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
-        "text": "B) Lugar",
+        "text": "B) Con quién estás",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
-        "text": "C) Ausencia: algo falta",
+        "text": "C) Algo que falta",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
-        "text": "D) Tema",
+        "text": "D) Desde dónde vienes",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Cómo dices «por el camino» en latín?",
+        "text": "¿Cómo se dice «por el mar»?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) per viam",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) sine via",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) apud viam",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) ab via",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Cómo dices «sin agua» en latín?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) per aquam",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) in aqua",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) apud aquam",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) sine aqua",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 130,
         "column": 3,
         "line": 26,
+        "kind": "option",
+        "text": "A) per mare",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) sine mare",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) in mare",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) apud mare",
+        "questionId": "d3-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe dos frases con «por» y dos con «sin».",
+        "text": "Escribe dos frases con «por» y dos con",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1090,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "«sin».",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica cuándo usas per y cuándo sine.",
+        "text": "Cuenta cuándo usas per y cuándo sine.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1116,50 +1136,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un barco en el mar y rotula «per mare».",
+        "text": "Dibuja un puente y rotula «per pontem».",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,22 +1172,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 145,
@@ -1213,7 +1201,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja un mar sin barco y rotula «sine nave».",
+        "text": "Dibuja dos orillas sin puente y rotula «sine",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1227,8 +1215,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "ponte».",
         "questionId": "d3-w4"
       },
       {
@@ -1251,97 +1239,96 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un bosque con un sendero y una lámpara apagada."
+        "text": "Dibuja dos orillas con un puente. Rotula el"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula el sendero: per silvam."
+        "text": "puente: per pontem. Dibuja dos orillas sin"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula la lámpara apagada: sine luce."
+        "text": "puente: sine ponte. Escribe qué significa"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe al lado qué significa cada rótulo."
+        "text": "cada rótulo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué significa «per silvam»?",
+        "prompt": "¿Qué significa «per pontem»?",
         "choices": [
-          "Sin bosque",
-          "Por el bosque",
-          "En el bosque",
-          "Con el bosque"
+          "Sin puente",
+          "Por el puente",
+          "En el puente",
+          "Con el puente"
         ],
-        "answer": "Por el bosque",
+        "answer": "Por el puente",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué significa «sine luce»?",
+        "prompt": "¿Qué significa «sine ponte»?",
         "choices": [
-          "Con luz",
-          "En la luz",
-          "Sin luz",
-          "Por la luz"
+          "Por el puente",
+          "En el puente",
+          "Sin puente",
+          "Con el puente"
         ],
-        "answer": "Sin luz",
+        "answer": "Sin puente",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué significa «per mare»?",
+        "prompt": "¿Qué significa «per lacum»?",
         "choices": [
-          "Sin mar",
-          "En el mar",
-          "Con el mar",
-          "Por el mar"
+          "Sin lago",
+          "En el lago",
+          "Con el lago",
+          "Por el lago"
         ],
-        "answer": "Por el mar",
+        "answer": "Por el lago",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1357,81 +1344,63 @@
         ],
         "answer": "Sin barco",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué relación marca «per»?",
+        "prompt": "¿Qué marca «per»?",
         "choices": [
-          "Camino o medio",
-          "Ausencia",
-          "Compañía",
-          "Origen"
+          "Por dónde pasas",
+          "Algo que falta",
+          "Con quién estás",
+          "Desde dónde vienes"
         ],
-        "answer": "Camino o medio",
+        "answer": "Por dónde pasas",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué relación marca «sine»?",
+        "prompt": "¿Qué marca «sine»?",
         "choices": [
-          "Camino",
-          "Lugar",
-          "Ausencia: algo falta",
-          "Tema"
+          "Por dónde pasas",
+          "Con quién estás",
+          "Algo que falta",
+          "Desde dónde vienes"
         ],
-        "answer": "Ausencia: algo falta",
+        "answer": "Algo que falta",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo dices «por el camino» en latín?",
+        "prompt": "¿Cómo se dice «por el mar»?",
         "choices": [
-          "per viam",
-          "sine via",
-          "apud viam",
-          "ab via"
+          "per mare",
+          "sine mare",
+          "in mare",
+          "apud mare"
         ],
-        "answer": "per viam",
+        "answer": "per mare",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Cómo dices «sin agua» en latín?",
-        "choices": [
-          "per aquam",
-          "in aqua",
-          "apud aquam",
-          "sine aqua"
-        ],
-        "answer": "sine aqua",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1441,39 +1410,39 @@
         "prompt": "Escribe dos frases con «por» y dos con «sin».",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica cuándo usas per y cuándo sine.",
+        "prompt": "Cuenta cuándo usas per y cuándo sine.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un barco en el mar y rotula «per mare».",
+        "prompt": "Dibuja un puente y rotula «per pontem».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un mar sin barco y rotula «sine nave».",
+        "prompt": "Dibuja dos orillas sin puente y rotula «sine ponte».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

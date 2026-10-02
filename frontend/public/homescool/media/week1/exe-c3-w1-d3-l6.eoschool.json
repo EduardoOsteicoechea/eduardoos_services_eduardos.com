@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Siervo",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer copiamos el versículo y rodeamos el nombre Pablo.\nVimos que el texto dice más cosas de él.\nHoy miramos con calma sus dos títulos.\n\nPablo se llama «siervo». ¿A quién crees que sirve?\n\nSiervo es quien pertenece a su señor y lo sirve. Pablo sirve a Cristo. Él mismo se presenta así en el saludo. Esta palabra habla de su relación con Cristo."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer entraste a la Cueva del Guácharo con tu linterna y copiaste el versículo. Hoy alumbras «siervo» y «apóstol»."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Apóstol",
-        "body": "¿Y qué crees que hace un apóstol?\n\nApóstol es un enviado con un mensaje. Se parece a un mensajero que lleva noticias. Pablo fue enviado para anunciar el mensaje de Jesús. Esta palabra habla de su misión."
+        "heading": "Punto 2: Siervo",
+        "body": "Pablo se llama «siervo». ¿A quién crees que pertenece y sirve?\n\nSiervo es quien pertenece a su señor y lo sirve. Pablo sirve a Cristo. Habla de su relación con Cristo."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Dos columnas",
-        "body": "Imagina dos columnas en tu cuaderno. ¿Qué pondrías en la de «siervo» y qué en la de «apóstol»?\n\nSiervo: pertenece y sirve. Apóstol: enviado y mensajero. Las dos palabras no dicen lo mismo. Juntas muestran su relación y su misión."
+        "heading": "Punto 3: Apóstol",
+        "body": "¿Qué hace un apóstol? Piensa en alguien que lleva un aviso a otra gente.\n\nApóstol es un enviado con un mensaje. Pablo fue enviado a contar el mensaje de Jesús. Habla de su misión."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: No son adornos",
-        "body": "Una pregunta con truco: ¿«siervo» y «apóstol» son solo apodos bonitos, como un adorno?\n\nNo. Cada título explica algo de Pablo. Siervo dice a quién pertenece. Apóstol dice para qué fue enviado. Si quitas uno, falta una parte de la frase."
+        "heading": "Punto 4: Dos columnas",
+        "body": "Dos linternas alumbran cosas distintas. ¿Qué alumbra «siervo» y qué «apóstol»?\n\nSiervo: pertenece y sirve a Cristo. Apóstol: enviado, lleva un mensaje. Juntas muestran su relación y misión."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Una oración con ambos",
-        "body": "Ahora tú: ¿cómo usarías las dos palabras en una sola oración?\n\nPablo es siervo porque sirve a Cristo. Y es apóstol porque fue enviado con un mensaje. Comprueba que las dos palabras estén en el versículo."
+        "heading": "Punto 5: No son adornos",
+        "body": "Una pregunta con truco: ¿son «siervo» y «apóstol» solo apodos bonitos?\n\nNo. Cada título explica algo de Pablo. Siervo dice a quién pertenece; apóstol, para qué fue enviado."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Una oración con ambos",
+        "body": "Si tu linterna alumbra las dos palabras, ¿cómo las dices en una oración?\n\nPablo es siervo porque sirve a Cristo y es apóstol porque fue enviado con un mensaje."
       }
     ],
     "summary": "Pablo es siervo, porque pertenece y sirve a Cristo, y apóstol, porque fue enviado con un mensaje.",
@@ -43,7 +48,7 @@
     "priorDayRecap": "Ayer copiaste Romanos 1:1 y marcaste el nombre Pablo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a una persona sirviendo y a otra con un mensaje. Rotula la primera «siervo» y la segunda «apóstol». Escribe debajo qué significa cada palabra. Añade una oración con las dos palabras.",
+    "imageBandInstruction": "Dibuja dos linternas en una cueva. Una alumbra «siervo» y su significado. La otra alumbra «apóstol» y el suyo. Escribe debajo una oración con ambas.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,36 +90,36 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer copiamos el versículo y rodeamos el nombre Pablo."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Vimos que el texto dice más cosas de él."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy miramos con calma sus dos títulos."
+        "text": "Ayer entraste a la Cueva del Guácharo"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con tu linterna y copiaste el versículo."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Pablo se llama «siervo». ¿A quién crees que sirve?"
+        "text": "Hoy alumbras «siervo» y «apóstol»."
       },
       {
         "index": 11,
@@ -127,57 +132,57 @@
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "heading",
-        "text": "Punto 1: Siervo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pablo se llama «siervo». ¿A quién"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "Siervo es quien pertenece a su señor y lo sirve."
+        "text": "crees que pertenece y sirve?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Pablo sirve a Cristo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Él mismo se presenta así en el saludo."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Esta palabra habla de su relación con Cristo."
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -190,8 +195,8 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Siervo"
       },
       {
         "index": 22,
@@ -204,22 +209,22 @@
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Siervo es quien pertenece a su señor"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "¿Y qué crees que hace un apóstol?"
+        "text": "y lo sirve. Pablo sirve a Cristo."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Habla de su relación con Cristo."
       },
       {
         "index": 26,
@@ -232,15 +237,15 @@
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "heading",
-        "text": "Punto 2: Apóstol"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -254,49 +259,49 @@
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "Apóstol es un enviado con un mensaje."
+        "text": "¿Qué hace un apóstol? Piensa en alguien"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Se parece a un mensajero que lleva noticias."
+        "text": "que lleva un aviso a otra gente."
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Pablo fue enviado para anunciar el mensaje de Jesús."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Esta palabra habla de su misión."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Apóstol"
       },
       {
         "index": 37,
@@ -310,21 +315,21 @@
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Imagina dos columnas en tu cuaderno. ¿Qué pondrías"
+        "text": "Apóstol es un enviado con un mensaje."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "en la de «siervo» y qué en la de «apóstol»?"
+        "text": "Pablo fue enviado a contar el mensaje"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de Jesús. Habla de su misión."
       },
       {
         "index": 41,
@@ -337,15 +342,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Dos columnas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,49 +364,49 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Siervo: pertenece y sirve."
+        "text": "Dos linternas alumbran cosas distintas."
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Apóstol: enviado y mensajero."
+        "text": "¿Qué alumbra «siervo» y qué «apóstol»?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Las dos palabras no dicen lo mismo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Juntas muestran su relación y su misión."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Dos columnas"
       },
       {
         "index": 52,
@@ -415,21 +420,21 @@
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«siervo» y «apóstol» son solo"
+        "text": "Siervo: pertenece y sirve a Cristo."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "apodos bonitos, como un adorno?"
+        "text": "Apóstol: enviado, lleva un mensaje."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Juntas muestran su relación y misión."
       },
       {
         "index": 56,
@@ -442,15 +447,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: No son adornos"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -464,28 +469,28 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "No. Cada título explica algo de Pablo."
+        "text": "Una pregunta con truco: ¿son «siervo» y"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Siervo dice a quién pertenece."
+        "text": "«apóstol» solo apodos bonitos?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Apóstol dice para qué fue enviado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Si quitas uno, falta una parte de la frase."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -498,8 +503,8 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: No son adornos"
       },
       {
         "index": 66,
@@ -512,22 +517,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Cada título explica algo de Pablo."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Ahora tú: ¿cómo usarías las dos palabras"
+        "text": "Siervo dice a quién pertenece;"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "en una sola oración?"
+        "text": "apóstol, para qué fue enviado."
       },
       {
         "index": 70,
@@ -540,50 +545,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Una oración con ambos"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si tu linterna alumbra las dos palabras,"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Pablo es siervo porque sirve a Cristo."
+        "text": "¿cómo las dices en una oración?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Y es apóstol porque fue enviado con un mensaje."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Comprueba que las dos palabras estén en el versículo."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Una oración con ambos"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pablo es siervo porque sirve a Cristo"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué quiere decir «siervo»?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "y es apóstol porque fue enviado"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Manda sobre todos",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "con un mensaje."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Pertenece a su señor y lo sirve",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Escribe cartas",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Vive en Roma",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿A quién sirve Pablo?",
-        "questionId": "d3-q2",
+        "text": "¿Qué quiere decir «siervo»?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) A un rey de Roma",
-        "questionId": "d3-q2"
+        "text": "A) Manda sobre todos",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) A un vecino",
-        "questionId": "d3-q2"
+        "text": "B) Pertenece y sirve a su señor",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) A Cristo",
-        "questionId": "d3-q2"
+        "text": "C) Escribe cartas",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) A nadie",
-        "questionId": "d3-q2"
+        "text": "D) Vive en Roma",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué quiere decir «apóstol»?",
-        "questionId": "d3-q3",
+        "text": "¿A quién sirve Pablo?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Un vecino de Roma",
-        "questionId": "d3-q3"
+        "text": "A) A un rey",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Un soldado",
-        "questionId": "d3-q3"
+        "text": "B) A un vecino",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Un juez",
-        "questionId": "d3-q3"
+        "text": "C) A Cristo",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Un enviado con un mensaje",
-        "questionId": "d3-q3"
+        "text": "D) A nadie",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué palabra habla de la relación de Pablo con Cristo?",
-        "questionId": "d3-q4",
+        "text": "¿Qué quiere decir «apóstol»?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Apóstol",
-        "questionId": "d3-q4"
+        "text": "A) Un vecino de Roma",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Siervo",
-        "questionId": "d3-q4"
+        "text": "B) Un soldado",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Carta",
-        "questionId": "d3-q4"
+        "text": "C) Un juez",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Roma",
-        "questionId": "d3-q4"
+        "text": "D) Un enviado con un mensaje",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué título habla de su relación?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Apóstol",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Siervo",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Carta",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Roma",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué palabra habla de la misión de Pablo?",
+        "text": "¿Qué título habla de su misión?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Apóstol",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Siervo",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Saludo",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Cuaderno",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Los dos títulos dicen lo mismo?",
         "questionId": "d3-q6",
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Sí, son idénticos",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Ninguno dice nada",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) No, cada uno dice algo distinto",
+        "text": "C) No, dicen cosas distintas",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Son nombres de ciudades",
+        "text": "D) Son ciudades",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué pasa si quitas uno de los títulos?",
+        "text": "¿Qué dice «siervo» de Pablo?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,48 +993,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Falta una parte de la frase",
+        "text": "A) A quién pertenece",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) No cambia nada",
+        "text": "B) Para qué fue enviado",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Se acaba la carta",
+        "text": "C) Dónde vive",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Cambia el autor",
+        "text": "D) Qué come",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
         "text": "¿Los títulos son solo adornos?",
         "questionId": "d3-q8",
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Sí, son apodos",
         "questionId": "d3-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Sí, no significan nada",
         "questionId": "d3-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Solo en Roma",
         "questionId": "d3-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) No, explican algo de Pablo",
         "questionId": "d3-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe una oración que use «siervo» y «apóstol».",
+        "text": "Escribe una oración con ambas palabras.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué los títulos no son solo adornos.",
+        "text": "Explica por qué no son adornos.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,30 +1137,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1150,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja dos columnas: siervo y apóstol, con sus significados.",
+        "text": "Dibuja dos columnas: siervo y apóstol.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,14 +1175,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 144,
@@ -1196,23 +1196,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja a un mensajero con una carta y rotula «apóstol».",
+        "text": "Dibuja un mensajero con una carta.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,6 +1213,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 149,
@@ -1234,53 +1234,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a una persona sirviendo y a otra con un mensaje."
+        "text": "Dibuja dos linternas en una cueva. Una"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula la primera «siervo» y la segunda «apóstol»."
+        "text": "alumbra «siervo» y su significado. La otra"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe debajo qué significa cada palabra."
+        "text": "alumbra «apóstol» y el suyo. Escribe"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade una oración con las dos palabras."
+        "text": "debajo una oración con ambas."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1296,15 +1293,15 @@
         "prompt": "¿Qué quiere decir «siervo»?",
         "choices": [
           "Manda sobre todos",
-          "Pertenece a su señor y lo sirve",
+          "Pertenece y sirve a su señor",
           "Escribe cartas",
           "Vive en Roma"
         ],
-        "answer": "Pertenece a su señor y lo sirve",
+        "answer": "Pertenece y sirve a su señor",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1313,7 +1310,7 @@
         "type": "mcq",
         "prompt": "¿A quién sirve Pablo?",
         "choices": [
-          "A un rey de Roma",
+          "A un rey",
           "A un vecino",
           "A Cristo",
           "A nadie"
@@ -1321,8 +1318,8 @@
         "answer": "A Cristo",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1339,15 +1336,15 @@
         "answer": "Un enviado con un mensaje",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué palabra habla de la relación de Pablo con Cristo?",
+        "prompt": "¿Qué título habla de su relación?",
         "choices": [
           "Apóstol",
           "Siervo",
@@ -1356,16 +1353,16 @@
         ],
         "answer": "Siervo",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué palabra habla de la misión de Pablo?",
+        "prompt": "¿Qué título habla de su misión?",
         "choices": [
           "Apóstol",
           "Siervo",
@@ -1375,8 +1372,8 @@
         "answer": "Apóstol",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1387,32 +1384,32 @@
         "choices": [
           "Sí, son idénticos",
           "Ninguno dice nada",
-          "No, cada uno dice algo distinto",
-          "Son nombres de ciudades"
+          "No, dicen cosas distintas",
+          "Son ciudades"
         ],
-        "answer": "No, cada uno dice algo distinto",
+        "answer": "No, dicen cosas distintas",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué pasa si quitas uno de los títulos?",
+        "prompt": "¿Qué dice «siervo» de Pablo?",
         "choices": [
-          "Falta una parte de la frase",
-          "No cambia nada",
-          "Se acaba la carta",
-          "Cambia el autor"
+          "A quién pertenece",
+          "Para qué fue enviado",
+          "Dónde vive",
+          "Qué come"
         ],
-        "answer": "Falta una parte de la frase",
+        "answer": "A quién pertenece",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1429,56 +1426,56 @@
         "answer": "No, explican algo de Pablo",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe una oración que use «siervo» y «apóstol».",
+        "prompt": "Escribe una oración con ambas palabras.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué los títulos no son solo adornos.",
+        "prompt": "Explica por qué no son adornos.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja dos columnas: siervo y apóstol, con sus significados.",
+        "prompt": "Dibuja dos columnas: siervo y apóstol.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja a un mensajero con una carta y rotula «apóstol».",
+        "prompt": "Dibuja un mensajero con una carta.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

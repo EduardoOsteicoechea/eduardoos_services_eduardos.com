@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Apartado",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer explicamos siervo y apóstol con dos columnas.\nSiervo es quien pertenece a su señor y lo sirve.\nApóstol es un enviado con un mensaje.\n\nPablo fue «apartado». Si apartas un juguete para un regalo, ¿qué haces con él?\n\nApartar es separar algo para un fin especial. Pablo fue separado para una tarea. Esa tarea es el evangelio de Dios."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer alumbraste «siervo» y «apóstol» dentro de la Cueva del Guácharo. Hoy sigues con otras dos palabras."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Evangelio",
-        "body": "¿Qué es para ti una buena noticia? ¿Cómo suena entonces la palabra «evangelio»?\n\nEvangelio quiere decir buena noticia. Pablo fue apartado para esa buena noticia. Es un mensaje que se cuenta a los demás."
+        "heading": "Punto 2: Apartado",
+        "body": "Guardas una linterna para la cueva. ¿Qué quiere decir «apartado»?\n\nApartar es separar algo para un fin. Pablo fue separado para una tarea: el evangelio de Dios."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: De Dios",
-        "body": "Si alguien resume diciendo solo «el evangelio», ¿qué palabras le faltan?\n\nLe faltan las palabras «de Dios». Dicen de dónde viene la buena noticia. Viene de Dios; Pablo no la inventó. Por eso no las quitamos al resumir."
+        "heading": "Punto 3: Evangelio",
+        "body": "Sales de la cueva con una buena noticia. ¿Qué palabra usarías para contarla?\n\nEvangelio quiere decir buena noticia. Pablo fue apartado para esa noticia. Es un mensaje que se cuenta a otros."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Una frase de la semana",
-        "body": "Junta toda la semana: ¿qué frase armarías sobre Pablo?\n\nPablo, siervo y apóstol, apartado para el evangelio de Dios. Esa frase usa solo lo que dice el versículo. Cada palabra se puede comprobar en el texto."
+        "heading": "Punto 4: De Dios",
+        "body": "Si alguien dice solo «el evangelio», ¿qué palabras le faltan?\n\nLe faltan las palabras «de Dios». Dicen de dónde viene la noticia. Viene de Dios; Pablo no la inventó."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Texto y opinión",
-        "body": "Una pregunta con truco: ¿«Pablo era muy valiente» cabe en tu frase de Romanos 1:1?\n\nNo cabe, porque el versículo no lo dice. Puede ser una buena idea, pero va aparte. Primero escribimos lo que el texto dice. Después podemos añadir lo que pensamos."
+        "heading": "Punto 5: Una frase de la semana",
+        "body": "Junta lo que alumbraste esta semana. ¿Qué frase armarías sobre Pablo?\n\n«Pablo, siervo y apóstol, apartado para el evangelio de Dios.» Cada palabra se comprueba en el texto."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Texto y opinión",
+        "body": "Una pregunta con truco: ¿«Pablo era muy valiente» cabe en Romanos 1:1?\n\nNo cabe: el versículo no lo dice. Puede ser buena idea, pero va aparte. Primero lo escrito, luego tu opinión."
       }
     ],
     "summary": "Pablo fue apartado para el evangelio de Dios: una buena noticia que viene de Dios, no de Pablo.",
@@ -43,7 +48,7 @@
     "priorDayRecap": "Ayer explicaste siervo y apóstol con columnas de sinónimos.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a Pablo con una carta y una luz que sale de ella. Rotula «apartado» y «evangelio de Dios». Escribe tu frase de la semana en una cinta. Revisa que cada palabra esté en el versículo.",
+    "imageBandInstruction": "Dibuja una salida de cueva con luz. Rotula «apartado» y «evangelio de Dios». Escribe tu frase en una cinta. Revisa que cada palabra salga del texto.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer explicamos siervo y apóstol con dos columnas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Siervo es quien pertenece a su señor y lo sirve."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Apóstol es un enviado con un mensaje."
+        "text": "Ayer alumbraste «siervo» y «apóstol»"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "dentro de la Cueva del Guácharo."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Pablo fue «apartado». Si apartas un juguete para"
+        "text": "Hoy sigues con otras dos palabras."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "un regalo, ¿qué haces con él?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,15 +153,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Guardas una linterna para la cueva."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Apartado"
+        "kind": "lesson",
+        "text": "¿Qué quiere decir «apartado»?"
       },
       {
         "index": 17,
@@ -170,77 +175,77 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Apartar es separar algo para un fin especial."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Pablo fue separado para una tarea."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Esa tarea es el evangelio de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Apartado"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Apartar es separar algo para un fin."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pablo fue separado para una tarea:"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "¿Qué es para ti una buena noticia?"
+        "text": "el evangelio de Dios."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Cómo suena entonces la palabra «evangelio»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -253,36 +258,36 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Evangelio"
+        "kind": "lesson",
+        "text": "Sales de la cueva con una buena noticia."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué palabra usarías para contarla?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Evangelio quiere decir buena noticia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Pablo fue apartado para esa buena noticia."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Es un mensaje que se cuenta a los demás."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -295,8 +300,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Evangelio"
       },
       {
         "index": 37,
@@ -309,22 +314,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Evangelio quiere decir buena noticia."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Si alguien resume diciendo solo «el evangelio»,"
+        "text": "Pablo fue apartado para esa noticia."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿qué palabras le faltan?"
+        "text": "Es un mensaje que se cuenta a otros."
       },
       {
         "index": 41,
@@ -337,57 +342,57 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: De Dios"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si alguien dice solo «el evangelio»,"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Le faltan las palabras «de Dios»."
+        "text": "¿qué palabras le faltan?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Dicen de dónde viene la buena noticia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Viene de Dios; Pablo no la inventó."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Por eso no las quitamos al resumir."
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -400,8 +405,8 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 4: De Dios"
       },
       {
         "index": 52,
@@ -414,22 +419,22 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Le faltan las palabras «de Dios»."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Junta toda la semana: ¿qué frase armarías sobre Pablo?"
+        "text": "Dicen de dónde viene la noticia."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viene de Dios; Pablo no la inventó."
       },
       {
         "index": 56,
@@ -442,15 +447,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Una frase de la semana"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -464,42 +469,42 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Pablo, siervo y apóstol, apartado para el evangelio de Dios."
+        "text": "Junta lo que alumbraste esta semana."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Esa frase usa solo lo que dice el versículo."
+        "text": "¿Qué frase armarías sobre Pablo?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Cada palabra se puede comprobar en el texto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Una frase de la semana"
       },
       {
         "index": 66,
@@ -513,21 +518,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«Pablo era muy valiente»"
+        "text": "«Pablo, siervo y apóstol,"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "cabe en tu frase de Romanos 1:1?"
+        "text": "apartado para el evangelio de Dios.»"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada palabra se comprueba en el texto."
       },
       {
         "index": 70,
@@ -540,15 +545,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Texto y opinión"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -562,28 +567,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No cabe, porque el versículo no lo dice."
+        "text": "Una pregunta con truco: ¿«Pablo era"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Puede ser una buena idea, pero va aparte."
+        "text": "muy valiente» cabe en Romanos 1:1?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Primero escribimos lo que el texto dice."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Después podemos añadir lo que pensamos."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Texto y opinión"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No cabe: el versículo no lo dice."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «apartado»?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Puede ser buena idea, pero va aparte."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Muy lejos",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Primero lo escrito, luego tu opinión."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Perdido",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Separado para un fin especial",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Castigado",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Para qué fue apartado Pablo?",
-        "questionId": "d4-q2",
+        "text": "¿Qué significa «apartado»?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Para ser rey",
-        "questionId": "d4-q2"
+        "text": "A) Muy lejos",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Para ser soldado",
-        "questionId": "d4-q2"
+        "text": "B) Perdido",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Para vivir solo",
-        "questionId": "d4-q2"
+        "text": "C) Separado para un fin",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Para el evangelio de Dios",
-        "questionId": "d4-q2"
+        "text": "D) Castigado",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué quiere decir «evangelio»?",
-        "questionId": "d4-q3",
+        "text": "¿Para qué fue apartado Pablo?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Ley antigua",
-        "questionId": "d4-q3"
+        "text": "A) Para ser rey",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Buena noticia",
-        "questionId": "d4-q3"
+        "text": "B) Para ser soldado",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Carta larga",
-        "questionId": "d4-q3"
+        "text": "C) Para vivir solo",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Canción",
-        "questionId": "d4-q3"
+        "text": "D) Para el evangelio de Dios",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué dicen las palabras «de Dios»?",
-        "questionId": "d4-q4",
+        "text": "¿Qué quiere decir «evangelio»?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +788,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) De dónde viene la buena noticia",
-        "questionId": "d4-q4"
+        "text": "A) Ley antigua",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Dónde vive Pablo",
-        "questionId": "d4-q4"
+        "text": "B) Buena noticia",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Cuándo se escribió",
-        "questionId": "d4-q4"
+        "text": "C) Carta larga",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Quién la copió",
-        "questionId": "d4-q4"
+        "text": "D) Canción",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué dicen las palabras «de Dios»?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) De dónde viene la noticia",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Dónde vive Pablo",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Cuándo se escribió",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Quién la copió",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Quién inventó el evangelio de Dios?",
         "questionId": "d4-q5",
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Pablo",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Un romano",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Nadie: viene de Dios",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Un niño",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué debe usar tu frase de síntesis?",
+        "text": "¿Qué usa tu frase de la semana?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) Solo lo que dice el versículo",
+        "text": "A) Palabras que están en el texto",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Todo lo que imagines",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Datos de otros libros",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Rumores",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿«Pablo era muy valiente» está en Romanos 1:1?",
+        "text": "¿Dice Romanos 1:1 que era valiente?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Sí, al inicio",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Sí, al final",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Solo en Roma",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) No, el versículo no lo dice",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué va primero al leer?",
+        "text": "¿Qué va primero: texto u opinión?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Lo que opinamos",
+        "text": "A) Mi opinión",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Lo que el texto dice",
+        "text": "B) Lo escrito",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Un dibujo",
+        "text": "C) Un rumor",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Un resumen ajeno",
+        "text": "D) Un dibujo",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tu frase de la semana sobre Pablo.",
+        "text": "Escribe tu frase de la semana.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué no quitamos «de Dios» al resumir.",
+        "text": "Explica por qué no quitas «de Dios».",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,30 +1137,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1150,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un esquema: apartado, evangelio y de Dios.",
+        "text": "Dibuja: apartado, evangelio y de Dios.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,14 +1175,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
       },
       {
         "index": 144,
@@ -1196,23 +1196,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja dos cajas: lo que dice el texto y mi opinión.",
+        "text": "Dibuja dos cajas: texto y opinión.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,6 +1213,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
       },
       {
         "index": 149,
@@ -1234,53 +1234,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a Pablo con una carta y una luz que sale de ella."
+        "text": "Dibuja una salida de cueva con luz. Rotula"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula «apartado» y «evangelio de Dios»."
+        "text": "«apartado» y «evangelio de Dios». Escribe"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe tu frase de la semana en una cinta."
+        "text": "tu frase en una cinta. Revisa que cada"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada palabra esté en el versículo."
+        "text": "palabra salga del texto."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1297,14 +1294,14 @@
         "choices": [
           "Muy lejos",
           "Perdido",
-          "Separado para un fin especial",
+          "Separado para un fin",
           "Castigado"
         ],
-        "answer": "Separado para un fin especial",
+        "answer": "Separado para un fin",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1321,8 +1318,8 @@
         "answer": "Para el evangelio de Dios",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1339,8 +1336,8 @@
         "answer": "Buena noticia",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1349,16 +1346,16 @@
         "type": "mcq",
         "prompt": "¿Qué dicen las palabras «de Dios»?",
         "choices": [
-          "De dónde viene la buena noticia",
+          "De dónde viene la noticia",
           "Dónde vive Pablo",
           "Cuándo se escribió",
           "Quién la copió"
         ],
-        "answer": "De dónde viene la buena noticia",
+        "answer": "De dónde viene la noticia",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1375,33 +1372,33 @@
         "answer": "Nadie: viene de Dios",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué debe usar tu frase de síntesis?",
+        "prompt": "¿Qué usa tu frase de la semana?",
         "choices": [
-          "Solo lo que dice el versículo",
+          "Palabras que están en el texto",
           "Todo lo que imagines",
           "Datos de otros libros",
           "Rumores"
         ],
-        "answer": "Solo lo que dice el versículo",
+        "answer": "Palabras que están en el texto",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿«Pablo era muy valiente» está en Romanos 1:1?",
+        "prompt": "¿Dice Romanos 1:1 que era valiente?",
         "choices": [
           "Sí, al inicio",
           "Sí, al final",
@@ -1411,74 +1408,74 @@
         "answer": "No, el versículo no lo dice",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué va primero al leer?",
+        "prompt": "¿Qué va primero: texto u opinión?",
         "choices": [
-          "Lo que opinamos",
-          "Lo que el texto dice",
-          "Un dibujo",
-          "Un resumen ajeno"
+          "Mi opinión",
+          "Lo escrito",
+          "Un rumor",
+          "Un dibujo"
         ],
-        "answer": "Lo que el texto dice",
+        "answer": "Lo escrito",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe tu frase de la semana sobre Pablo.",
+        "prompt": "Escribe tu frase de la semana.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica por qué no quitamos «de Dios» al resumir.",
+        "prompt": "Explica por qué no quitas «de Dios».",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un esquema: apartado, evangelio y de Dios.",
+        "prompt": "Dibuja: apartado, evangelio y de Dios.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja dos cajas: lo que dice el texto y mi opinión.",
+        "prompt": "Dibuja dos cajas: texto y opinión.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Revisar el disco",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer supiste que un experimento es una prueba con orden.\nConociste el disco «Guiñando»: ojo abierto y ojo cerrado.\nAprendiste que el cerebro une imágenes que cambian rápido.\n\nPiensa un momento: tu disco ya está armado. ¿Qué revisarías antes de girarlo?\n\nRevisa que los dos ojos queden centrados, uno detrás del otro. Revisa que la cartulina esté firme y no se doble. Revisa que la cinta deje girar el lápiz con suavidad. Si algo falla, corrígelo y prueba otra vez."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer armaste el disco que parece guiñar. El cerebro une imágenes que cambian. De lejos, el Salto Ángel también engaña."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Un intento que falla también enseña",
-        "body": "Imagina que giras el disco y no ves el guiño. ¿Eso significa que el experimento salió mal?\n\nNo. Un intento que falla también te enseña algo. Te dice qué debes mejorar en el disco. Cambia una sola cosa y vuelve a probar. Así sabrás qué cambio sirvió."
+        "heading": "Punto 2: Revisar el disco",
+        "body": "Un explorador revisa su mochila antes de ir a Canaima. ¿Y tú, antes de girar?\n\nQue los dos ojos queden uno tras otro. Que la cartulina esté firme, sin doblar. Que el lápiz gire suave con la cinta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La bitácora",
-        "body": "Sigamos. ¿Cómo harías para no olvidar lo que probaste en cada intento?\n\nLo anotas en la bitácora, el cuaderno de tu experimento. Arriba escribes la fecha de hoy. Cada vez que pruebas, anotas qué intento fue. También escribes qué pasó: si se vio el guiño o no."
+        "heading": "Punto 3: Un intento que falla enseña",
+        "body": "Giras el disco y no ves el guiño. ¿Fue un fracaso o aprendiste algo?\n\nAprendiste algo: dices qué mejorar. Cambia una sola cosa y prueba otra vez. Como acercarte al Salto Ángel: ves más."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Una tabla para ordenar",
-        "body": "¿Y cómo ordenarías esas notas para leerlas fácil? Piensa en filas y columnas.\n\nUna tabla tiene filas y columnas, como una cuadrícula. Una columna dice «Intento» y la otra dice «Resultado». Cada fila es una prueba: intento 1, intento 2, intento 3. En el resultado escribe «sí se vio el guiño» o «no»."
+        "heading": "Punto 4: La bitácora",
+        "body": "Un viajero al Salto Ángel anota su ruta. ¿Qué anotarías de cada intento tuyo?\n\nLo anotas en la bitácora, el cuaderno de tu experimento. Arriba, la fecha. Luego cada intento y qué pasó: si se vio el guiño o no."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Un solo experimento esta semana",
-        "body": "Una pregunta con truco: ¿puedes empezar hoy otro experimento distinto con otros materiales?\n\nNo. Esta semana hacemos un solo experimento. Seguimos con «Guiñando» hasta entenderlo bien. Un buen científico profundiza antes de cambiar de tema."
+        "heading": "Punto 5: Una tabla para ordenar",
+        "body": "Tienes muchas notas. ¿Cómo las pones en orden, con filas y columnas?\n\nUna tabla es una cuadrícula de filas y columnas. Una dice «Intento», otra dice «Resultado». Cada fila es una prueba: «sí se vio» o «no»."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un solo experimento",
+        "body": "Una pregunta con truco: ¿empezamos hoy otro experimento con otros materiales?\n\nNo. Esta semana hacemos uno solo. El Salto Ángel cae desde una sola cima, el Auyantepui. Tú sigues con tu disco."
       }
     ],
-    "summary": "En la bitácora anotas la fecha, cada intento y su resultado en una tabla.",
+    "summary": "En la bitácora anotas la fecha y cada intento en una tabla, como un viajero que anota su ruta al Salto Ángel.",
     "weekRecap": "Proyecto único: disco «Guiñando» y persistencia de la visión. Bitácora con fecha, intento y resultado.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tu disco por la cara del ojo abierto. Marca una cruz en el centro para alinear bien. Dibuja al lado una tabla con tres filas de intentos. Rotula las columnas: Intento y Resultado.",
+    "imageBandInstruction": "Dibuja tu disco por la cara del ojo abierto. Marca una cruz en el centro para alinear. Dibuja una tabla con tres filas de intentos. Rotula las columnas: Intento y Resultado.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,57 +89,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer supiste que un experimento es una prueba con orden."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Conociste el disco «Guiñando»: ojo abierto y ojo cerrado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Aprendiste que el cerebro une imágenes que cambian rápido."
+        "text": "Ayer armaste el disco que parece guiñar."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El cerebro une imágenes que cambian."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Piensa un momento: tu disco ya está armado. ¿Qué"
+        "text": "De lejos, el Salto Ángel también engaña."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "revisarías antes de girarlo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -147,99 +152,99 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Revisar el disco"
+        "kind": "lesson",
+        "text": "Un explorador revisa su mochila antes"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de ir a Canaima. ¿Y tú, antes de girar?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Revisa que los dos ojos queden centrados, uno detrás del otro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Revisa que la cartulina esté firme y no se doble."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Revisa que la cinta deje girar el lápiz con suavidad."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Si algo falla, corrígelo y prueba otra vez."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Revisar el disco"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Que los dos ojos queden uno tras otro."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Que la cartulina esté firme, sin doblar."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Imagina que giras el disco y no ves el guiño. ¿Eso"
+        "text": "Que el lápiz gire suave con la cinta."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "significa que el experimento salió mal?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -252,43 +257,43 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Un intento que falla también enseña"
+        "kind": "lesson",
+        "text": "Giras el disco y no ves el guiño. ¿Fue"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un fracaso o aprendiste algo?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "No. Un intento que falla también te enseña algo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Te dice qué debes mejorar en el disco."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Cambia una sola cosa y vuelve a probar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Así sabrás qué cambio sirvió."
+        "kind": "heading",
+        "text": "Punto 3: Un intento que falla enseña"
       },
       {
         "index": 36,
@@ -302,42 +307,42 @@
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Aprendiste algo: dices qué mejorar."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cambia una sola cosa y prueba otra vez."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Como acercarte al Salto Ángel: ves más."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Sigamos. ¿Cómo harías para no olvidar lo que probaste"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "en cada intento?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -350,15 +355,15 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un viajero al Salto Ángel anota su ruta."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: La bitácora"
+        "kind": "lesson",
+        "text": "¿Qué anotarías de cada intento tuyo?"
       },
       {
         "index": 46,
@@ -372,77 +377,77 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Lo anotas en la bitácora, el cuaderno de tu experimento."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Arriba escribes la fecha de hoy."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Cada vez que pruebas, anotas qué intento fue."
+        "kind": "heading",
+        "text": "Punto 4: La bitácora"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "También escribes qué pasó: si se vio el guiño o no."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Lo anotas en la bitácora, el cuaderno"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "de tu experimento. Arriba, la fecha."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego cada intento y qué pasó:"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "si se vio el guiño o no."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Y cómo ordenarías esas notas para leerlas fácil?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "Piensa en filas y columnas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
@@ -455,43 +460,43 @@
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Una tabla para ordenar"
+        "kind": "lesson",
+        "text": "Tienes muchas notas. ¿Cómo las pones"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en orden, con filas y columnas?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Una tabla tiene filas y columnas, como una cuadrícula."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Una columna dice «Intento» y la otra dice «Resultado»."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cada fila es una prueba: intento 1, intento 2, intento 3."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "En el resultado escribe «sí se vio el guiño» o «no»."
+        "kind": "heading",
+        "text": "Punto 5: Una tabla para ordenar"
       },
       {
         "index": 65,
@@ -505,84 +510,84 @@
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Una tabla es una cuadrícula de filas"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y columnas. Una dice «Intento»,"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "otra dice «Resultado». Cada fila es"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿puedes empezar hoy otro"
+        "text": "una prueba: «sí se vio» o «no»."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "experimento distinto con otros materiales?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Un solo experimento esta semana"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿empezamos hoy"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "No. Esta semana hacemos un solo experimento."
+        "text": "otro experimento con otros materiales?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Seguimos con «Guiñando» hasta entenderlo bien."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Un buen científico profundiza antes de cambiar de tema."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -595,8 +600,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Un solo experimento"
       },
       {
         "index": 80,
@@ -609,55 +614,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Esta semana hacemos uno solo."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué revisas antes de girar el disco?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "El Salto Ángel cae desde una sola cima,"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) El color del lápiz",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "el Auyantepui. Tú sigues con tu disco."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) La hora del día",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) El peso de la cinta",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Que los ojos estén centrados",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué es la bitácora?",
-        "questionId": "d2-q2",
+        "text": "¿Qué revisas antes de girar el disco?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Un tipo de tijera",
-        "questionId": "d2-q2"
+        "text": "A) El color del lápiz",
+        "questionId": "d2-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) El cuaderno del experimento",
-        "questionId": "d2-q2"
+        "text": "B) La hora del día",
+        "questionId": "d2-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Un disco de cartulina",
-        "questionId": "d2-q2"
+        "text": "C) El peso de la cinta",
+        "questionId": "d2-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Una luz especial",
-        "questionId": "d2-q2"
+        "text": "D) Que los ojos queden alineados",
+        "questionId": "d2-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué se escribe arriba en la bitácora?",
-        "questionId": "d2-q3",
+        "text": "¿Qué es la bitácora?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Tu color favorito",
-        "questionId": "d2-q3"
+        "text": "A) Un tipo de tijera",
+        "questionId": "d2-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) El precio de la cartulina",
-        "questionId": "d2-q3"
+        "text": "B) El cuaderno del experimento",
+        "questionId": "d2-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) La fecha de hoy",
-        "questionId": "d2-q3"
+        "text": "C) Un disco de cartulina",
+        "questionId": "d2-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) El nombre del lápiz",
-        "questionId": "d2-q3"
+        "text": "D) Una luz especial",
+        "questionId": "d2-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué columnas tiene nuestra tabla?",
-        "questionId": "d2-q4",
+        "text": "¿Qué escribes arriba en la bitácora?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Fecha y lugar",
-        "questionId": "d2-q4"
+        "text": "A) Tu color favorito",
+        "questionId": "d2-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Color y tamaño",
-        "questionId": "d2-q4"
+        "text": "B) El precio",
+        "questionId": "d2-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Peso y precio",
-        "questionId": "d2-q4"
+        "text": "C) La fecha",
+        "questionId": "d2-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Intento y resultado",
-        "questionId": "d2-q4"
+        "text": "D) El nombre del lápiz",
+        "questionId": "d2-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué columnas tiene la tabla?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Fecha y lugar",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Color y tamaño",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Peso y precio",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Intento y resultado",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "Si falla un intento, ¿qué haces?",
+        "text": "Si un intento falla, ¿qué haces?",
         "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Botas todo y empiezas otro",
+        "text": "A) Lo borro todo",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Cambias una sola cosa y pruebas",
+        "text": "B) Cambio una sola cosa y pruebo",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Dejas de anotar",
+        "text": "C) Dejo de anotar",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Cambias cinco cosas",
+        "text": "D) Cambio cinco cosas",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Cuántos experimentos hacemos esta semana?",
+        "text": "¿Cuántos experimentos hacemos?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Uno solo",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Cinco distintos",
+        "text": "B) Cinco",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Uno por día",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Ninguno",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué anotas en la columna Resultado?",
+        "text": "¿Un intento fallido sirve de algo?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) La fecha de ayer",
+        "text": "A) No, no sirve",
         "questionId": "d2-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) El nombre del niño",
+        "text": "B) Solo si es el primero",
         "questionId": "d2-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Si se vio el guiño o no",
+        "text": "C) Sí, dice qué mejorar",
         "questionId": "d2-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) El precio del disco",
+        "text": "D) Solo si te ríes",
         "questionId": "d2-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Un intento que falla sirve de algo?",
+        "text": "¿Desde qué cima cae el Salto Ángel?",
         "questionId": "d2-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Sí, dice qué mejorar",
+        "text": "A) El Auyantepui",
         "questionId": "d2-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) No, no sirve",
+        "text": "B) El Pico Bolívar",
         "questionId": "d2-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Solo si te ríes",
+        "text": "C) El Ávila",
         "questionId": "d2-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Solo si es el primero",
+        "text": "D) El Roraima",
         "questionId": "d2-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tres líneas: qué hiciste, qué viste y qué falta.",
+        "text": "Escribe tres líneas: qué hiciste, viste y falta.",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica para qué sirve una tabla en tu bitácora.",
+        "text": "Explica para qué sirve una tabla en tu",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1138,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "bitácora.",
         "questionId": "d2-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja una tabla con las columnas Intento y Resultado.",
+        "text": "Dibuja una tabla con Intento y Resultado.",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,22 +1182,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
       },
       {
         "index": 145,
@@ -1211,7 +1211,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja tu disco y marca si los ojos quedan centrados.",
+        "text": "Dibuja tu disco y marca si los ojos se alinean.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1241,17 +1241,15 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1265,14 +1263,14 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Marca una cruz en el centro para alinear bien."
+        "text": "Marca una cruz en el centro para alinear."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja al lado una tabla con tres filas de intentos."
+        "text": "Dibuja una tabla con tres filas de intentos."
       },
       {
         "index": 156,
@@ -1297,13 +1295,13 @@
           "El color del lápiz",
           "La hora del día",
           "El peso de la cinta",
-          "Que los ojos estén centrados"
+          "Que los ojos queden alineados"
         ],
-        "answer": "Que los ojos estén centrados",
+        "answer": "Que los ojos queden alineados",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1320,33 +1318,33 @@
         "answer": "El cuaderno del experimento",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué se escribe arriba en la bitácora?",
+        "prompt": "¿Qué escribes arriba en la bitácora?",
         "choices": [
           "Tu color favorito",
-          "El precio de la cartulina",
-          "La fecha de hoy",
+          "El precio",
+          "La fecha",
           "El nombre del lápiz"
         ],
-        "answer": "La fecha de hoy",
+        "answer": "La fecha",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué columnas tiene nuestra tabla?",
+        "prompt": "¿Qué columnas tiene la tabla?",
         "choices": [
           "Fecha y lugar",
           "Color y tamaño",
@@ -1355,92 +1353,92 @@
         ],
         "answer": "Intento y resultado",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Si falla un intento, ¿qué haces?",
+        "prompt": "Si un intento falla, ¿qué haces?",
         "choices": [
-          "Botas todo y empiezas otro",
-          "Cambias una sola cosa y pruebas",
-          "Dejas de anotar",
-          "Cambias cinco cosas"
+          "Lo borro todo",
+          "Cambio una sola cosa y pruebo",
+          "Dejo de anotar",
+          "Cambio cinco cosas"
         ],
-        "answer": "Cambias una sola cosa y pruebas",
+        "answer": "Cambio una sola cosa y pruebo",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuántos experimentos hacemos esta semana?",
+        "prompt": "¿Cuántos experimentos hacemos?",
         "choices": [
           "Uno solo",
-          "Cinco distintos",
+          "Cinco",
           "Uno por día",
           "Ninguno"
         ],
         "answer": "Uno solo",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué anotas en la columna Resultado?",
+        "prompt": "¿Un intento fallido sirve de algo?",
         "choices": [
-          "La fecha de ayer",
-          "El nombre del niño",
-          "Si se vio el guiño o no",
-          "El precio del disco"
+          "No, no sirve",
+          "Solo si es el primero",
+          "Sí, dice qué mejorar",
+          "Solo si te ríes"
         ],
-        "answer": "Si se vio el guiño o no",
+        "answer": "Sí, dice qué mejorar",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-q8",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Un intento que falla sirve de algo?",
+        "prompt": "¿Desde qué cima cae el Salto Ángel?",
         "choices": [
-          "Sí, dice qué mejorar",
-          "No, no sirve",
-          "Solo si te ríes",
-          "Solo si es el primero"
+          "El Auyantepui",
+          "El Pico Bolívar",
+          "El Ávila",
+          "El Roraima"
         ],
-        "answer": "Sí, dice qué mejorar",
+        "answer": "El Auyantepui",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe tres líneas: qué hiciste, qué viste y qué falta.",
+        "prompt": "Escribe tres líneas: qué hiciste, viste y falta.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1450,28 +1448,28 @@
         "prompt": "Explica para qué sirve una tabla en tu bitácora.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una tabla con las columnas Intento y Resultado.",
+        "prompt": "Dibuja una tabla con Intento y Resultado.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja tu disco y marca si los ojos quedan centrados.",
+        "prompt": "Dibuja tu disco y marca si los ojos se alinean.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

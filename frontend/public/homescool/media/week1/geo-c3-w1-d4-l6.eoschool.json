@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las seis regiones",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer ubicamos los cuatro puntos extremos de Venezuela.\nAl norte, Cabo San Román; al sur, el río Ararí.\nAl este, Barima y Mururuma; al oeste, el río Intermedio.\n\n¿Recuerdas cuántas regiones estudiamos de Venezuela y cómo se llaman?\n\nRegiones: Central, Oriental, Occidental, Andes, Llanos, Guayana. Cada región agrupa varios estados con rasgos parecidos. Un estado es una parte política del país; una región es una parte más grande."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer ubicaste los cuatro extremos que enmarcan a Venezuela. Hoy volvemos al Roraima para mirar qué hay adentro del país."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Los Andes, las montañas",
-        "body": "Piensa en montañas muy altas, con aire fresco. ¿Cuál de las seis regiones crees que las tiene?\n\nLos Andes son la región de las montañas. Allí está el Pico Bolívar, la montaña más alta de Venezuela. En las alturas el aire es más fresco que en la costa."
+        "heading": "Punto 2: Las seis regiones",
+        "body": "Venezuela es grande, más que el Roraima. ¿En cuántas regiones se divide?\n\nRegiones: Central, Oriental, Occidental, Andes, Llanos, Guayana. Una región agrupa varios estados. Un estado es una parte política."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Los Llanos, las planicies",
-        "body": "Ahora piensa en un terreno casi plano, con ríos y pasto. ¿Qué región será?\n\nSon los Llanos, grandes planicies. Una planicie es un terreno casi plano. Por los Llanos corren muchos ríos."
+        "heading": "Punto 3: Los Andes, las cumbres",
+        "body": "Piensa en cumbres altas y aire fresco. ¿Qué región las tiene?\n\nLos Andes son la región de montañas. Allí está el Pico Bolívar, el más alto de Venezuela. El Roraima es distinto: cima plana."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Guayana, selvas y tepuyes",
-        "body": "Y si te hablo de selvas y de montañas con la cima plana, llamadas tepuyes, ¿qué región es? Cuidado con el nombre.\n\nEs Guayana, con «ua», la región de Venezuela. Allí hay selvas y tepuyes, montañas de cima plana. Guyana, con «y», es el país vecino del este."
+        "heading": "Punto 4: Los Llanos, las planicies",
+        "body": "El Roraima se alza como una mesa. ¿Y qué región es casi plana, con ríos?\n\nSon los Llanos, grandes planicies. Una planicie es un terreno casi plano. Por los Llanos corren muchos ríos."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Un croquis de las regiones",
-        "body": "Quieres dibujar un croquis para ubicar las otras tres regiones. ¿Desde dónde empezarías?\n\nUn croquis es un dibujo sencillo, hecho a mano, de un lugar. Empieza con un punto de referencia, como Caracas. La región Central queda cerca de Caracas. Oriental va hacia el este y Occidental hacia el oeste."
+        "heading": "Punto 5: Guayana, selvas y tepuyes",
+        "body": "Hay selvas y tepuyes, como el Roraima. ¿Qué región es? Cuidado con el nombre.\n\nEs Guayana, con «ua», la región. Allí hay selvas y tepuyes, montañas de cima plana, como el Roraima. Guyana, con «y», es el país vecino."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Un croquis de las regiones",
+        "body": "Quieres dibujar un croquis, con el Roraima incluido. ¿Desde dónde empiezas?\n\nUn croquis es un dibujo hecho a mano. Empieza en Caracas, tu referencia. Oriental queda al este de Caracas. Occidental queda al oeste."
       }
     ],
-    "summary": "Los Andes tienen montañas, los Llanos planicies y Guayana selvas con tepuyes. Un croquis ayuda a ubicarlos.",
+    "summary": "Los Andes tienen cumbres, los Llanos planicies y Guayana selvas con tepuyes como el Roraima.",
     "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "weekRecap": "Fronteras: Caribe, Brasil, Guyana, Colombia. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "priorDayRecap": "Ayer distinguiste punto extremo y frontera completa.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un croquis sencillo de Venezuela. Marca a Caracas como tu punto de referencia. Dibuja un símbolo: una montaña, una llanura y una selva. Rotula Los Andes, Los Llanos y Guayana.",
+    "imageBandInstruction": "Dibuja un croquis sencillo de Venezuela. Marca Caracas como punto de referencia. Dibuja una montaña, una llanura y una selva. Pon el Roraima, mesa plana, en Guayana.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer ubicamos los cuatro puntos extremos de Venezuela."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Al norte, Cabo San Román; al sur, el río Ararí."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Al este, Barima y Mururuma; al oeste, el río Intermedio."
+        "text": "Ayer ubicaste los cuatro extremos"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "que enmarcan a Venezuela."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Recuerdas cuántas regiones estudiamos de Venezuela"
+        "text": "Hoy volvemos al Roraima para mirar"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "y cómo se llaman?"
+        "text": "qué hay adentro del país."
       },
       {
         "index": 12,
@@ -135,57 +140,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Las seis regiones"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Venezuela es grande, más que el Roraima."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana."
+        "text": "¿En cuántas regiones se divide?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Cada región agrupa varios estados con rasgos parecidos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Un estado es una parte política del país;"
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "una región es una parte más grande."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -198,8 +203,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Las seis regiones"
       },
       {
         "index": 23,
@@ -212,29 +217,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Regiones: Central, Oriental,"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Piensa en montañas muy altas, con aire fresco."
+        "text": "Occidental, Andes, Llanos, Guayana."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Cuál de las seis regiones crees que las tiene?"
+        "text": "Una región agrupa varios estados."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un estado es una parte política."
       },
       {
         "index": 28,
@@ -247,15 +252,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Los Andes, las montañas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -269,35 +274,35 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Los Andes son la región de las montañas."
+        "text": "Piensa en cumbres altas y aire fresco."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Allí está el Pico Bolívar, la montaña más alta de Venezuela."
+        "text": "¿Qué región las tiene?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "En las alturas el aire es más fresco que en la costa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -310,120 +315,120 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Los Andes, las cumbres"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Ahora piensa en un terreno casi plano, con ríos y pasto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Qué región será?"
+        "text": "Los Andes son la región de montañas."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Allí está el Pico Bolívar,"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el más alto de Venezuela."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El Roraima es distinto: cima plana."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Los Llanos, las planicies"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Son los Llanos, grandes planicies."
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Una planicie es un terreno casi plano."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Por los Llanos corren muchos ríos."
+        "text": "El Roraima se alza como una mesa."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Y qué región es casi plana, con ríos?"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Y si te hablo de selvas y de montañas con la cima plana,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "llamadas tepuyes, ¿qué región es? Cuidado con el nombre."
+        "kind": "heading",
+        "text": "Punto 4: Los Llanos, las planicies"
       },
       {
         "index": 55,
@@ -436,22 +441,22 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son los Llanos, grandes planicies."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una planicie es un terreno casi plano."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Guayana, selvas y tepuyes"
+        "kind": "lesson",
+        "text": "Por los Llanos corren muchos ríos."
       },
       {
         "index": 59,
@@ -465,35 +470,35 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Es Guayana, con «ua», la región de Venezuela."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Allí hay selvas y tepuyes, montañas de cima plana."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Guyana, con «y», es el país vecino del este."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hay selvas y tepuyes, como el Roraima."
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Qué región es? Cuidado con el nombre."
       },
       {
         "index": 65,
@@ -506,29 +511,29 @@
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Quieres dibujar un croquis para ubicar las otras tres"
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "regiones. ¿Desde dónde empezarías?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Guayana, selvas y tepuyes"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es Guayana, con «ua», la región."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Un croquis de las regiones"
+        "kind": "lesson",
+        "text": "Allí hay selvas y tepuyes,"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "montañas de cima plana, como el Roraima."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Un croquis es un dibujo sencillo, hecho a mano, de un lugar."
+        "text": "Guyana, con «y», es el país vecino."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Empieza con un punto de referencia, como Caracas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "La región Central queda cerca de Caracas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Oriental va hacia el este y Occidental hacia el oeste."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Quieres dibujar un croquis, con el"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Roraima incluido. ¿Desde dónde empiezas?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuántas regiones estudiamos en Venezuela?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Dos",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Tres",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Un croquis de las regiones"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Seis",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Nueve",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Un croquis es un dibujo hecho a mano."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Empieza en Caracas, tu referencia."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué región es la de las montañas?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Oriental queda al este de Caracas."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Los Llanos",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Occidental queda al oeste."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Guayana",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Central",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Los Andes",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál es la montaña más alta de Venezuela?",
-        "questionId": "d4-q3",
+        "text": "¿Cuántas regiones tiene Venezuela?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Cabo San Román",
-        "questionId": "d4-q3"
+        "text": "A) Dos",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Pico Bolívar",
-        "questionId": "d4-q3"
+        "text": "B) Tres",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Río Ararí",
-        "questionId": "d4-q3"
+        "text": "C) Seis",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Caracas",
-        "questionId": "d4-q3"
+        "text": "D) Nueve",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué región tiene grandes planicies?",
-        "questionId": "d4-q4",
+        "text": "¿Qué región tiene montañas altas?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -797,43 +778,144 @@
         "line": 49,
         "kind": "option",
         "text": "A) Los Llanos",
-        "questionId": "d4-q4"
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Los Andes",
-        "questionId": "d4-q4"
+        "text": "B) Guayana",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Guayana",
-        "questionId": "d4-q4"
+        "text": "C) Central",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Oriental",
-        "questionId": "d4-q4"
+        "text": "D) Los Andes",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuál es el pico más alto del país?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Cabo San Román",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Pico Bolívar",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Río Ararí",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Caracas",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué región tiene grandes planicies?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Los Llanos",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Los Andes",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Guayana",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Oriental",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué región tiene selvas y tepuyes?",
         "questionId": "d4-q5",
@@ -846,50 +928,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Los Andes",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Central",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Guayana",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Occidental",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué es un tepuy?",
+        "text": "¿Cómo es la cima del Roraima?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,158 +982,50 @@
         }
       },
       {
-        "index": 113,
-        "column": 3,
-        "line": 9,
-        "kind": "option",
-        "text": "A) Una montaña de cima plana",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 114,
-        "column": 3,
-        "line": 10,
-        "kind": "option",
-        "text": "B) Un río",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 115,
-        "column": 3,
-        "line": 11,
-        "kind": "option",
-        "text": "C) Una isla",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 116,
-        "column": 3,
-        "line": 12,
-        "kind": "option",
-        "text": "D) Una planicie",
-        "questionId": "d4-q6"
-      },
-      {
-        "index": 117,
-        "column": 3,
-        "line": 13,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "question",
-        "text": "¿Qué es un croquis?",
-        "questionId": "d4-q7",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Un río muy largo",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Una región",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Una montaña",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Un dibujo sencillo de un lugar",
-        "questionId": "d4-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Qué región queda cerca de Caracas?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Plana, como una mesa",
+        "questionId": "d4-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Guayana",
-        "questionId": "d4-q8"
+        "text": "B) Puntiaguda",
+        "questionId": "d4-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Central",
-        "questionId": "d4-q8"
+        "text": "C) Redonda",
+        "questionId": "d4-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Los Llanos",
-        "questionId": "d4-q8"
+        "text": "D) Cubierta de nieve",
+        "questionId": "d4-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Los Andes",
-        "questionId": "d4-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Explica la diferencia entre Guyana y Guayana.",
+        "text": "Explica la diferencia entre Guyana y",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,6 +1034,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Guayana.",
+        "questionId": "d4-w1"
       },
       {
         "index": 131,
@@ -1081,31 +1063,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe las seis regiones con una palabra para cada una.",
+        "text": "Escribe las seis regiones de Venezuela.",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1116,50 +1082,34 @@
         }
       },
       {
-        "index": 137,
+        "index": 135,
         "column": 3,
-        "line": 33,
+        "line": 31,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un croquis de Venezuela dividido en seis regiones.",
+        "text": "Dibuja un croquis de Venezuela con seis",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,20 +1120,58 @@
         }
       },
       {
-        "index": 143,
+        "index": 139,
         "column": 3,
-        "line": 39,
+        "line": 35,
+        "kind": "lesson",
+        "text": "regiones.",
+        "questionId": "d4-w3"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
       },
       {
-        "index": 144,
+        "index": 141,
         "column": 3,
-        "line": 40,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "question",
+        "text": "Dibuja un símbolo para Andes, Llanos y",
+        "questionId": "d4-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Guayana.",
+        "questionId": "d4-w4"
       },
       {
         "index": 145,
@@ -1191,7 +1179,7 @@
         "line": 41,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w3"
+        "questionId": "d4-w4"
       },
       {
         "index": 146,
@@ -1199,7 +1187,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d4-w3"
+        "questionId": "d4-w4"
       },
       {
         "index": 147,
@@ -1212,89 +1200,77 @@
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "question",
-        "text": "Dibuja un símbolo para Los Andes, Los Llanos y Guayana.",
-        "questionId": "d4-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja un croquis sencillo de Venezuela."
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un croquis sencillo de Venezuela."
+        "text": "Marca Caracas como punto de referencia."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Marca a Caracas como tu punto de referencia."
+        "text": "Dibuja una montaña, una llanura y una"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja un símbolo: una montaña, una llanura y una selva."
+        "text": "selva. Pon el Roraima, mesa plana, en"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula Los Andes, Los Llanos y Guayana."
+        "text": "Guayana."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuántas regiones estudiamos en Venezuela?",
+        "prompt": "¿Cuántas regiones tiene Venezuela?",
         "choices": [
           "Dos",
           "Tres",
@@ -1304,15 +1280,15 @@
         "answer": "Seis",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué región es la de las montañas?",
+        "prompt": "¿Qué región tiene montañas altas?",
         "choices": [
           "Los Llanos",
           "Guayana",
@@ -1322,15 +1298,15 @@
         "answer": "Los Andes",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuál es la montaña más alta de Venezuela?",
+        "prompt": "¿Cuál es el pico más alto del país?",
         "choices": [
           "Cabo San Román",
           "Pico Bolívar",
@@ -1339,9 +1315,9 @@
         ],
         "answer": "Pico Bolívar",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1357,9 +1333,9 @@
         ],
         "answer": "Los Llanos",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1376,62 +1352,26 @@
         "answer": "Guayana",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué es un tepuy?",
+        "prompt": "¿Cómo es la cima del Roraima?",
         "choices": [
-          "Una montaña de cima plana",
-          "Un río",
-          "Una isla",
-          "Una planicie"
+          "Plana, como una mesa",
+          "Puntiaguda",
+          "Redonda",
+          "Cubierta de nieve"
         ],
-        "answer": "Una montaña de cima plana",
+        "answer": "Plana, como una mesa",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d4-q7",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué es un croquis?",
-        "choices": [
-          "Un río muy largo",
-          "Una región",
-          "Una montaña",
-          "Un dibujo sencillo de un lugar"
-        ],
-        "answer": "Un dibujo sencillo de un lugar",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué región queda cerca de Caracas?",
-        "choices": [
-          "Guayana",
-          "Central",
-          "Los Llanos",
-          "Los Andes"
-        ],
-        "answer": "Central",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1441,45 +1381,45 @@
         "prompt": "Explica la diferencia entre Guyana y Guayana.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe las seis regiones con una palabra para cada una.",
+        "prompt": "Escribe las seis regiones de Venezuela.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un croquis de Venezuela dividido en seis regiones.",
+        "prompt": "Dibuja un croquis de Venezuela con seis regiones.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 34,
+          "index": 138
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un símbolo para Los Andes, Los Llanos y Guayana.",
+        "prompt": "Dibuja un símbolo para Andes, Llanos y Guayana.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 39,
+          "index": 143
         }
       }
     ]

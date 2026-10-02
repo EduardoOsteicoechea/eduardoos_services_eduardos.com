@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: El verbo cuenta cuándo pasa algo",
-        "body": "¿Cómo cuentas si algo pasa hoy, pasó ayer o pasará mañana?\n\nEl verbo nombra lo que alguien hace, como «cantar». Pero también dice cuándo lo hace: ahora, ayer o mañana. Con «yo», el final cambia: canto, canté, cantaré. Cambiar el verbo así se llama conjugar."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nLa semana pasada conociste nueve clases de palabras. Una es el verbo: la palabra que dice qué se hace. Hoy el verbo viaja a Cumaná contigo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La raíz se queda y el final cambia",
-        "body": "Mira: «Yo canto». «Yo canté». «Yo cantaré». ¿Qué parte de «cantar» se queda igual y cuál cambia?\n\nLa parte de adelante, «cant-», se queda igual: es la raíz. La parte de atrás cambia: es la desinencia, el final. «Canto» es ahora, «canté» ya pasó y «cantaré» vendrá. Una sola palabra dice quién actúa y cuándo."
+        "heading": "Punto 2: El verbo dice cuándo",
+        "body": "Los españoles fundaron Cumaná en 1515. ¿Eso pasó hoy, ayer o hace mucho?\n\n«Fundaron» cuenta que ya pasó. «Existe» cuenta lo que pasa hoy. El verbo dice qué pasa y cuándo pasa."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Cinco formas con una sola palabra",
-        "body": "Imagina que de niño cantabas siempre en el coro. ¿Cómo dirías ese pasado que duró mucho tiempo?\n\nUna palabra: canto, cantaba, canté, cantaré, cantaría. «Canto» es ahora; «cantaba» es un pasado que duró. «Canté» es un pasado que ya cerró. «Cantaré» es después y «cantaría» es algo que imaginas."
+        "heading": "Punto 3: Raíz fija, final que cambia",
+        "body": "Cantas en Cumaná. Hoy dices «yo canto». ¿Cómo lo dices para ayer y mañana?\n\nDices «yo canté» y «yo cantaré». La parte «cant-» no cambia: es la raíz. El final cambia y dice cuándo."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Dos palabras que trabajan juntas",
-        "body": "Ahora mira «he cantado». ¿Cuántas palabras ves? ¿Cuál es el ayudante y cuál es la acción?\n\nA veces el verbo usa dos palabras: «he cantado». «He» viene de «haber» y es el ayudante. «Cantado» es el participio: termina en -ado o -ido. Dos palabras: haber más participio, como he cantado."
+        "heading": "Punto 4: Cinco formas con una palabra",
+        "body": "De niña cantabas en Cumaná cada tarde. ¿Cuántas formas de una palabra hay?\n\nUna palabra: canto / cantaba / canté / cantaré / cantaría. «Cantaba» es un pasado que se alarga. «Canté» es un pasado que ya cerró."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Elegir según el momento",
-        "body": "Una pregunta con truco: ayer fuiste al cine y volviste. ¿Dices «Ayer iba al cine» o «Ayer fui al cine»?\n\nSi el viaje ya cerró, di: «Ayer fui al cine». «Iba» sirve para un pasado que se alarga o se repite. Antes de hablar, pregúntate: ¿ya terminó o seguía? Esa pregunta te ayuda a elegir bien la forma."
+        "heading": "Punto 5: Dos palabras con haber",
+        "body": "Mira «he cantado». ¿Cuántas palabras? ¿Cuál ayuda y cuál es la acción?\n\nDos palabras: haber + participio (he cantado). «He» es el ayudante, de «haber». «Cantado» es el participio: la acción."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Elige según el momento",
+        "body": "Ayer fuiste a Cumaná y volviste. ¿Dices «Ayer iba» o «Ayer fui»?\n\nDices «Ayer fui a Cumaná». El viaje ya cerró, por eso «fui». «Iba» es un pasado que se alarga."
       }
     ],
-    "summary": "El verbo cambia su final para decir cuándo pasa algo. Puede usar una palabra o dos.",
+    "summary": "El verbo cuenta cuándo pasa algo, como el pasado de Cumaná que sigue vivo hoy.",
     "memoryPhrase": "Una palabra: **canto / cantaba / canté / cantaré / cantaría**. Dos palabras: **haber** + participio (**he cantado**).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una línea del tiempo con ayer, hoy y mañana. Escribe «canté», «canto» y «cantaré» en su lugar. Dibuja una cara cantando en cada momento. Debajo escribe «he cantado» y marca el ayudante.",
+    "imageBandInstruction": "Dibuja Cumaná y una línea del tiempo con ayer, hoy y mañana. Escribe «canté», «canto» y «cantaré» en su lugar y marca «he cantado».",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Cómo cuentas si algo pasa hoy, pasó ayer o pasará mañana?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: El verbo cuenta cuándo pasa algo"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,43 +89,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "El verbo nombra lo que alguien hace, como «cantar»."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Pero también dice cuándo lo hace: ahora, ayer o mañana."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Con «yo», el final cambia: canto, canté, cantaré."
+        "text": "La semana pasada conociste nueve clases"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Cambiar el verbo así se llama conjugar."
+        "text": "de palabras. Una es el verbo:"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "la palabra que dice qué se hace."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Hoy el verbo viaja a Cumaná contigo."
       },
       {
         "index": 12,
@@ -133,36 +138,36 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
         "kind": "lesson",
-        "text": "Mira: «Yo canto». «Yo canté». «Yo cantaré»."
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "¿Qué parte de «cantar» se queda igual y cuál cambia?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los españoles fundaron Cumaná en 1515."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Eso pasó hoy, ayer o hace mucho?"
       },
       {
         "index": 18,
@@ -175,8 +180,8 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -190,7 +195,7 @@
         "column": 1,
         "line": 21,
         "kind": "heading",
-        "text": "Punto 2: La raíz se queda y el final cambia"
+        "text": "Punto 2: El verbo dice cuándo"
       },
       {
         "index": 22,
@@ -204,42 +209,42 @@
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "La parte de adelante, «cant-», se queda igual: es la raíz."
+        "text": "«Fundaron» cuenta que ya pasó."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "La parte de atrás cambia: es la desinencia, el final."
+        "text": "«Existe» cuenta lo que pasa hoy."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "«Canto» es ahora, «canté» ya pasó y «cantaré» vendrá."
+        "text": "El verbo dice qué pasa y cuándo pasa."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Una sola palabra dice quién actúa y cuándo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -252,29 +257,29 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cantas en Cumaná. Hoy dices «yo canto»."
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Imagina que de niño cantabas siempre en el coro."
+        "text": "¿Cómo lo dices para ayer y mañana?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "¿Cómo dirías ese pasado que duró mucho tiempo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -287,8 +292,8 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Raíz fija, final que cambia"
       },
       {
         "index": 36,
@@ -301,64 +306,64 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «yo canté» y «yo cantaré»."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Cinco formas con una sola palabra"
+        "kind": "lesson",
+        "text": "La parte «cant-» no cambia: es la raíz."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El final cambia y dice cuándo."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Una palabra: canto, cantaba, canté, cantaré, cantaría."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "«Canto» es ahora; «cantaba» es un pasado que duró."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "«Canté» es un pasado que ya cerró."
+        "text": "________________________________________"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "«Cantaré» es después y «cantaría» es algo que imaginas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "De niña cantabas en Cumaná cada tarde."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿Cuántas formas de una palabra hay?"
       },
       {
         "index": 46,
@@ -371,22 +376,22 @@
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Ahora mira «he cantado». ¿Cuántas palabras ves?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "¿Cuál es el ayudante y cuál es la acción?"
+        "kind": "heading",
+        "text": "Punto 4: Cinco formas con una palabra"
       },
       {
         "index": 50,
@@ -399,71 +404,71 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una palabra: canto / cantaba / canté /"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cantaré / cantaría."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Cantaba» es un pasado que se alarga."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Canté» es un pasado que ya cerró."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "heading",
-        "text": "Punto 4: Dos palabras que trabajan juntas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "A veces el verbo usa dos palabras: «he cantado»."
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "lesson",
-        "text": "«He» viene de «haber» y es el ayudante."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "«Cantado» es el participio: termina en -ado o -ido."
+        "text": "Mira «he cantado». ¿Cuántas palabras?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Dos palabras: haber más participio, como he cantado."
+        "text": "¿Cuál ayuda y cuál es la acción?"
       },
       {
         "index": 61,
@@ -477,7 +482,7 @@
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -490,43 +495,43 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Dos palabras con haber"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ayer fuiste al cine y volviste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "¿Dices «Ayer iba al cine» o «Ayer fui al cine»?"
+        "text": "Dos palabras: haber + participio"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "(he cantado)."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«He» es el ayudante, de «haber»."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Cantado» es el participio: la acción."
       },
       {
         "index": 70,
@@ -539,15 +544,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Elegir según el momento"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -561,28 +566,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Si el viaje ya cerró, di: «Ayer fui al cine»."
+        "text": "Ayer fuiste a Cumaná y volviste."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "«Iba» sirve para un pasado que se alarga o se repite."
+        "text": "¿Dices «Ayer iba» o «Ayer fui»?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Antes de hablar, pregúntate: ¿ya terminó o seguía?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Esa pregunta te ayuda a elegir bien la forma."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -595,8 +600,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Elige según el momento"
       },
       {
         "index": 80,
@@ -609,55 +614,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «Ayer fui a Cumaná»."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cómo se llama cambiar el verbo según cuándo pasa?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "El viaje ya cerró, por eso «fui»."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Conjugar",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "«Iba» es un pasado que se alarga."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Copiar",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Dividir",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Rotular",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "En «cantar», ¿cómo se llama la parte «cant-»?",
-        "questionId": "d1-q2",
+        "text": "¿Qué dice el verbo, además de qué pasa?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) La desinencia",
-        "questionId": "d1-q2"
+        "text": "A) Cuándo pasa",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) El participio",
-        "questionId": "d1-q2"
+        "text": "B) De qué color es",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) El ayudante",
-        "questionId": "d1-q2"
+        "text": "C) Cuántos hay",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) La raíz",
-        "questionId": "d1-q2"
+        "text": "D) Dónde queda el mapa",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cómo se llama la parte que cambia al final?",
-        "questionId": "d1-q3",
+        "text": "¿En qué año fundaron Cumaná?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) La raíz",
-        "questionId": "d1-q3"
+        "text": "A) 1551",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) La desinencia",
-        "questionId": "d1-q3"
+        "text": "B) 1155",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El participio",
-        "questionId": "d1-q3"
+        "text": "C) 1115",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La mayúscula",
-        "questionId": "d1-q3"
+        "text": "D) 1515",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál forma cuenta un pasado que ya cerró?",
-        "questionId": "d1-q4",
+        "text": "¿Cómo se llama la parte «cant-»?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +787,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) canto",
-        "questionId": "d1-q4"
+        "text": "A) El final",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) cantaré",
-        "questionId": "d1-q4"
+        "text": "B) La raíz",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) canté",
-        "questionId": "d1-q4"
+        "text": "C) El participio",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) cantaría",
-        "questionId": "d1-q4"
+        "text": "D) El ayudante",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuál forma es un pasado que cerró?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) canto",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) cantaré",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) canté",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) cantaría",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Cuál forma habla de algo que pasará después?",
+        "text": "¿Cuál forma es un pasado que se alarga?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,50 +884,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) cantaba",
+        "text": "A) canté",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) canté",
+        "text": "B) cantaré",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) he cantado",
+        "text": "C) canto",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) cantaré",
+        "text": "D) cantaba",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "En «he cantado», ¿cuál es el participio?",
+        "text": "En «he cantado», ¿cuál es el ayudante?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) he",
+        "text": "A) cantado",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) cantado",
+        "text": "B) he",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) cant-",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) yo",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cómo terminan los participios de la clase?",
+        "text": "¿De qué verbo viene «he»?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,104 +992,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) En -ado o -ido",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) En -ar o -er",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) En -s o -n",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) En -ito",
-        "questionId": "d1-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Cómo dices que el viaje de ayer ya cerró?",
-        "questionId": "d1-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) haber",
+        "questionId": "d1-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Ayer iba al cine.",
-        "questionId": "d1-q8"
+        "text": "B) hacer",
+        "questionId": "d1-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Ayer iré al cine.",
-        "questionId": "d1-q8"
+        "text": "C) ir",
+        "questionId": "d1-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Ayer fui al cine.",
-        "questionId": "d1-q8"
+        "text": "D) ser",
+        "questionId": "d1-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Ayer voy al cine.",
-        "questionId": "d1-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Escribe canto, canté y cantaré. Di cuándo pasa cada una.",
+        "text": "Escribe canto, canté y cantaré. Di cuándo",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1058,6 +1044,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "pasa cada una.",
+        "questionId": "d1-w1"
       },
       {
         "index": 131,
@@ -1079,31 +1073,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Explica con tus palabras qué es «he cantado».",
+        "text": "Cuenta con tus palabras qué es «he",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1112,6 +1090,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "cantado».",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 137,
@@ -1125,39 +1119,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja una línea del tiempo con canté, canto y cantaré.",
+        "text": "Dibuja una línea del tiempo con canté, canto",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,50 +1138,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "y cantaré.",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja «he cantado» y señala el ayudante y el participio.",
+        "text": "Dibuja «he cantado» y señala el ayudante y",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,102 +1184,111 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "el participio.",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una línea del tiempo con ayer, hoy y mañana."
+        "text": "Dibuja Cumaná y una línea del tiempo con"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe «canté», «canto» y «cantaré» en su lugar."
+        "text": "ayer, hoy y mañana. Escribe «canté»,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Dibuja una cara cantando en cada momento."
+        "text": "«canto» y «cantaré» en su lugar y marca"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Debajo escribe «he cantado» y marca el ayudante."
+        "text": "«he cantado»."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se llama cambiar el verbo según cuándo pasa?",
+        "prompt": "¿Qué dice el verbo, además de qué pasa?",
         "choices": [
-          "Conjugar",
-          "Copiar",
-          "Dividir",
-          "Rotular"
+          "Cuándo pasa",
+          "De qué color es",
+          "Cuántos hay",
+          "Dónde queda el mapa"
         ],
-        "answer": "Conjugar",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "En «cantar», ¿cómo se llama la parte «cant-»?",
-        "choices": [
-          "La desinencia",
-          "El participio",
-          "El ayudante",
-          "La raíz"
-        ],
-        "answer": "La raíz",
+        "answer": "Cuándo pasa",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1325,17 +1296,17 @@
         }
       },
       {
-        "id": "d1-q3",
+        "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se llama la parte que cambia al final?",
+        "prompt": "¿En qué año fundaron Cumaná?",
         "choices": [
-          "La raíz",
-          "La desinencia",
-          "El participio",
-          "La mayúscula"
+          "1551",
+          "1155",
+          "1115",
+          "1515"
         ],
-        "answer": "La desinencia",
+        "answer": "1515",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1343,10 +1314,28 @@
         }
       },
       {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cómo se llama la parte «cant-»?",
+        "choices": [
+          "El final",
+          "La raíz",
+          "El participio",
+          "El ayudante"
+        ],
+        "answer": "La raíz",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál forma cuenta un pasado que ya cerró?",
+        "prompt": "¿Cuál forma es un pasado que cerró?",
         "choices": [
           "canto",
           "cantaré",
@@ -1355,81 +1344,63 @@
         ],
         "answer": "canté",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál forma habla de algo que pasará después?",
+        "prompt": "¿Cuál forma es un pasado que se alarga?",
         "choices": [
-          "cantaba",
           "canté",
-          "he cantado",
-          "cantaré"
+          "cantaré",
+          "canto",
+          "cantaba"
         ],
-        "answer": "cantaré",
+        "answer": "cantaba",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "En «he cantado», ¿cuál es el participio?",
+        "prompt": "En «he cantado», ¿cuál es el ayudante?",
         "choices": [
-          "he",
           "cantado",
+          "he",
           "cant-",
           "yo"
         ],
-        "answer": "cantado",
+        "answer": "he",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo terminan los participios de la clase?",
+        "prompt": "¿De qué verbo viene «he»?",
         "choices": [
-          "En -ado o -ido",
-          "En -ar o -er",
-          "En -s o -n",
-          "En -ito"
+          "haber",
+          "hacer",
+          "ir",
+          "ser"
         ],
-        "answer": "En -ado o -ido",
+        "answer": "haber",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Cómo dices que el viaje de ayer ya cerró?",
-        "choices": [
-          "Ayer iba al cine.",
-          "Ayer iré al cine.",
-          "Ayer fui al cine.",
-          "Ayer voy al cine."
-        ],
-        "answer": "Ayer fui al cine.",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1439,19 +1410,19 @@
         "prompt": "Escribe canto, canté y cantaré. Di cuándo pasa cada una.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica con tus palabras qué es «he cantado».",
+        "prompt": "Cuenta con tus palabras qué es «he cantado».",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
@@ -1463,8 +1434,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
@@ -1476,8 +1447,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

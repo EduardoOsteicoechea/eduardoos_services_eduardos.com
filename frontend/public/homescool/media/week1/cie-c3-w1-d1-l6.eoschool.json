@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Un tejido es un equipo de células",
-        "body": "¿Crees que tu piel y tu músculo están hechos de lo mismo?\n\nTu cuerpo está hecho de células muy pequeñas. Un tejido es un grupo de células parecidas. Esas células trabajan juntas, como un equipo. En ciencias, «tejido» no es tela: es un equipo de células. Hay cuatro tejidos: epitelial, conectivo, muscular y nervioso."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nYa sabes que tu cuerpo salta, siente y se protege. Hoy lo miramos como en una noche del Relámpago del Catatumbo."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Epitelial y conectivo",
-        "body": "Piensa en tu piel y en tu hueso. Uno cubre el cuerpo y el otro lo sostiene. ¿Cómo crees que se llaman esos equipos?\n\nEl tejido epitelial cubre y protege: la piel es epitelial. El tejido conectivo une, sostiene o transporta. El hueso, el cartílago y la sangre son tejido conectivo. El hueso sostiene y la sangre transporta."
+        "heading": "Punto 2: Un tejido es un equipo",
+        "body": "Estás de noche junto al lago del Catatumbo. ¿De qué crees que está hecho tu cuerpo?\n\nTu cuerpo está hecho de células. Son partes muy pequeñas. Un tejido es un grupo de células parecidas que trabajan juntas."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El tejido muscular",
-        "body": "Doblas el brazo y, a la vez, tu corazón late. ¿Cuál de los dos movimientos decides tú?\n\nEl tejido muscular mueve el cuerpo al contraerse. Doblar el brazo lo decides tú: es un movimiento voluntario. El corazón late sin que lo ordenes tú. Cuando el músculo se acorta, tira del hueso."
+        "heading": "Punto 3: Epitelial y conectivo",
+        "body": "Sopla el viento sobre el lago. ¿Qué te cubre? ¿Y qué te mantiene derecho en el bote?\n\nEl tejido epitelial cubre y protege. La piel es epitelial. El conectivo une, sostiene o transporta: hueso, cartílago y sangre."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El tejido nervioso",
-        "body": "Tocas algo caliente y apartas la mano de golpe. ¿Quién avisó a tu músculo que se moviera?\n\nEl tejido nervioso lleva mensajes rápidos por el cuerpo. Sus caminos son el cerebro, la médula y los nervios. Siente, decide y responde: así se mueve el músculo."
+        "heading": "Punto 4: El tejido muscular",
+        "body": "Remas hacia los relámpagos. ¿Quién mueve tus brazos? ¿Y quién hace latir tu corazón?\n\nEl tejido muscular mueve el cuerpo al contraerse, es decir, al acortarse. Remar lo decides tú. El corazón late sin que lo ordenes."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Los cuatro tejidos",
-        "body": "Ya conoces los cuatro equipos. ¿Recuerdas cómo se llaman y qué hace cada uno?\n\nCuatro tejidos: epitelial (cubre), conectivo (une), muscular (mueve), nervioso (mensaje). Dilos en voz alta, uno por uno."
+        "heading": "Punto 5: El tejido nervioso",
+        "body": "Brilla un relámpago y cierras los ojos. ¿Quién avisó a tu cuerpo tan rápido?\n\nEl tejido nervioso lleva mensajes rápidos. Sus caminos: cerebro, médula y nervios. Es como una señal de luz de noche."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Los cuatro tejidos",
+        "body": "En esa noche del Catatumbo, tus cuatro tejidos trabajan. ¿Recuerdas sus nombres?\n\nCuatro tejidos: epitelial (cubre), conectivo (une), muscular (mueve), nervioso (mensaje). Dilos en voz alta, uno por uno."
       }
     ],
     "summary": "Un tejido es un equipo de células. Los cuatro tejidos cubren, unen, mueven y llevan mensajes.",
     "memoryPhrase": "Cuatro tejidos: **epitelial** (cubre), **conectivo** (une), **muscular** (mueve), **nervioso** (mensaje).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un niño que corre y se rasca el brazo. Rotula la piel, un hueso, un músculo y un nervio. Debajo de cada rótulo escribe el nombre de su tejido. Añade una flecha que muestre el mensaje del nervio.",
+    "imageBandInstruction": "Dibuja un niño en un bote de noche. Rotula piel, hueso, músculo y nervio. Escribe el tejido de cada rótulo. Dibuja un relámpago del Catatumbo al fondo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Crees que tu piel y tu músculo están hechos de lo mismo?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,15 +68,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Un tejido es un equipo de células"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -84,85 +89,85 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Tu cuerpo está hecho de células muy pequeñas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Un tejido es un grupo de células parecidas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Esas células trabajan juntas, como un equipo."
+        "text": "Ya sabes que tu cuerpo salta, siente"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "En ciencias, «tejido» no es tela: es un equipo de células."
+        "text": "y se protege. Hoy lo miramos como"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hay cuatro tejidos: epitelial, conectivo, muscular y nervioso."
+        "text": "en una noche del Relámpago del"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Catatumbo."
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Piensa en tu piel y en tu hueso. Uno cubre el cuerpo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "y el otro lo sostiene. ¿Cómo crees que se llaman esos equipos?"
+        "text": "Estás de noche junto al lago del Catatumbo."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿De qué crees que está hecho tu cuerpo?"
       },
       {
         "index": 18,
@@ -175,15 +180,15 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -196,64 +201,64 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Un tejido es un equipo"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "heading",
-        "text": "Punto 2: Epitelial y conectivo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tu cuerpo está hecho de células."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "El tejido epitelial cubre y protege: la piel es epitelial."
+        "text": "Son partes muy pequeñas."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "El tejido conectivo une, sostiene o transporta."
+        "text": "Un tejido es un grupo de células"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "El hueso, el cartílago y la sangre son tejido conectivo."
+        "text": "parecidas que trabajan juntas."
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "lesson",
-        "text": "El hueso sostiene y la sangre transporta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -266,36 +271,36 @@
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sopla el viento sobre el lago. ¿Qué te cubre?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Doblas el brazo y, a la vez, tu corazón late."
+        "text": "¿Y qué te mantiene derecho en el bote?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "¿Cuál de los dos movimientos decides tú?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -308,8 +313,8 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Epitelial y conectivo"
       },
       {
         "index": 39,
@@ -322,92 +327,92 @@
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "heading",
-        "text": "Punto 3: El tejido muscular"
+        "kind": "lesson",
+        "text": "El tejido epitelial cubre y protege."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La piel es epitelial."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "El tejido muscular mueve el cuerpo al contraerse."
+        "text": "El conectivo une, sostiene o transporta:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "Doblar el brazo lo decides tú: es un movimiento voluntario."
+        "text": "hueso, cartílago y sangre."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "lesson",
-        "text": "El corazón late sin que lo ordenes tú."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Cuando el músculo se acorta, tira del hueso."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Remas hacia los relámpagos. ¿Quién mueve"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "tus brazos? ¿Y quién hace latir tu corazón?"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Tocas algo caliente y apartas la mano de golpe."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "¿Quién avisó a tu músculo que se moviera?"
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -420,8 +425,8 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El tejido muscular"
       },
       {
         "index": 55,
@@ -434,92 +439,92 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El tejido muscular mueve el cuerpo"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 4: El tejido nervioso"
+        "kind": "lesson",
+        "text": "al contraerse, es decir, al acortarse."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Remar lo decides tú."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "El tejido nervioso lleva mensajes rápidos por el cuerpo."
+        "text": "El corazón late sin que lo ordenes."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Sus caminos son el cerebro, la médula y los nervios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Siente, decide y responde: así se mueve el músculo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Brilla un relámpago y cierras los ojos."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Quién avisó a tu cuerpo tan rápido?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Ya conoces los cuatro equipos. ¿Recuerdas cómo se"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "llaman y qué hace cada uno?"
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 69,
@@ -532,8 +537,8 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: El tejido nervioso"
       },
       {
         "index": 71,
@@ -546,43 +551,43 @@
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El tejido nervioso lleva mensajes rápidos."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Los cuatro tejidos"
+        "kind": "lesson",
+        "text": "Sus caminos: cerebro, médula y nervios."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es como una señal de luz de noche."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cuatro tejidos: epitelial (cubre), conectivo (une),"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "muscular (mueve), nervioso (mensaje)."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Dilos en voz alta, uno por uno."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,14 +601,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "En esa noche del Catatumbo, tus cuatro"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "tejidos trabajan. ¿Recuerdas sus nombres?"
       },
       {
         "index": 81,
@@ -616,102 +621,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es un tejido?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Un grupo de células parecidas",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Un trozo de tela",
-        "questionId": "d1-q1"
+        "kind": "heading",
+        "text": "Punto 6: Los cuatro tejidos"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Un hueso largo",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Un mensaje nervioso",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Cuatro tejidos: epitelial (cubre),"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "conectivo (une), muscular (mueve),"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué tejido cubre y protege el cuerpo?",
-        "questionId": "d1-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "nervioso (mensaje)."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Conectivo",
-        "questionId": "d1-q2"
+        "kind": "lesson",
+        "text": "Dilos en voz alta, uno por uno."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Muscular",
-        "questionId": "d1-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Nervioso",
-        "questionId": "d1-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Epitelial",
-        "questionId": "d1-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -725,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál de estos es tejido conectivo?",
-        "questionId": "d1-q3",
+        "text": "¿Qué es un tejido?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) La piel",
-        "questionId": "d1-q3"
+        "text": "A) Un grupo de células parecidas",
+        "questionId": "d1-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) La sangre",
-        "questionId": "d1-q3"
+        "text": "B) Un trozo de tela",
+        "questionId": "d1-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) El nervio",
-        "questionId": "d1-q3"
+        "text": "C) Un hueso largo",
+        "questionId": "d1-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) El músculo del brazo",
-        "questionId": "d1-q3"
+        "text": "D) Un relámpago",
+        "questionId": "d1-q1"
       },
       {
         "index": 99,
@@ -779,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuál es un movimiento voluntario?",
-        "questionId": "d1-q4",
+        "text": "¿Qué tejido cubre y protege?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,46 +775,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Latir del corazón",
-        "questionId": "d1-q4"
+        "text": "A) Conectivo",
+        "questionId": "d1-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Cubrir la piel",
-        "questionId": "d1-q4"
+        "text": "B) Muscular",
+        "questionId": "d1-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Doblar el brazo",
-        "questionId": "d1-q4"
+        "text": "C) Nervioso",
+        "questionId": "d1-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Transportar sangre",
-        "questionId": "d1-q4"
+        "text": "D) Epitelial",
+        "questionId": "d1-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cuál es tejido conectivo?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) La piel",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) La sangre",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) El nervio",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) El corazón",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué hace el músculo cuando se acorta?",
+        "text": "¿Qué hace un músculo al contraerse?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Se hace tela",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Cubre la piel",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Se acorta",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Envía mensajes",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Cuál movimiento decides tú?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,48 +926,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Cubre la piel",
+        "text": "A) Latir del corazón",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Transporta sangre",
+        "text": "B) Cubrir la piel",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Envía mensajes",
+        "text": "C) Transportar sangre",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Tira del hueso",
+        "text": "D) Remar",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué tejido lleva mensajes rápidos?",
         "questionId": "d1-q6",
@@ -898,50 +980,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Epitelial",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Nervioso",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Conectivo",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Muscular",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué forma los caminos del tejido nervioso?",
+        "text": "¿Cuáles son caminos del nervioso?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,104 +1034,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Cerebro, médula y nervios",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Piel y uñas",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Hueso y cartílago",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Sangre y aire",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Qué tejido sostiene y transporta?",
-        "questionId": "d1-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Epitelial",
-        "questionId": "d1-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Muscular",
-        "questionId": "d1-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Conectivo",
-        "questionId": "d1-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Nervioso",
-        "questionId": "d1-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe qué hace cada uno de los cuatro tejidos.",
+        "text": "Escribe qué hace cada uno de los cuatro",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1088,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "tejidos.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica con tus palabras qué es un tejido.",
+        "text": "Cuenta con tus palabras qué es un tejido.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1134,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema con los cuatro tejidos y su trabajo.",
+        "text": "Dibuja un esquema de los cuatro tejidos.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,22 +1170,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
       },
       {
         "index": 145,
@@ -1211,7 +1199,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja el camino: mensaje, nervio, músculo y movimiento.",
+        "text": "Dibuja el camino del aviso: relámpago, ojo,",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1225,8 +1213,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "nervio.",
         "questionId": "d1-w4"
       },
       {
@@ -1249,44 +1237,43 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a un niño que corre y se rasca el brazo."
+        "text": "Dibuja un niño en un bote de noche. Rotula"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula la piel, un hueso, un músculo y un nervio."
+        "text": "piel, hueso, músculo y nervio. Escribe el"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo de cada rótulo escribe el nombre de su tejido."
+        "text": "tejido de cada rótulo. Dibuja un relámpago"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade una flecha que muestre el mensaje del nervio."
+        "text": "del Catatumbo al fondo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d1-q1",
@@ -1297,20 +1284,20 @@
           "Un grupo de células parecidas",
           "Un trozo de tela",
           "Un hueso largo",
-          "Un mensaje nervioso"
+          "Un relámpago"
         ],
         "answer": "Un grupo de células parecidas",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué tejido cubre y protege el cuerpo?",
+        "prompt": "¿Qué tejido cubre y protege?",
         "choices": [
           "Conectivo",
           "Muscular",
@@ -1320,62 +1307,62 @@
         "answer": "Epitelial",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál de estos es tejido conectivo?",
+        "prompt": "¿Cuál es tejido conectivo?",
         "choices": [
           "La piel",
           "La sangre",
           "El nervio",
-          "El músculo del brazo"
+          "El corazón"
         ],
         "answer": "La sangre",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuál es un movimiento voluntario?",
+        "prompt": "¿Qué hace un músculo al contraerse?",
         "choices": [
-          "Latir del corazón",
-          "Cubrir la piel",
-          "Doblar el brazo",
-          "Transportar sangre"
+          "Se hace tela",
+          "Cubre la piel",
+          "Se acorta",
+          "Envía mensajes"
         ],
-        "answer": "Doblar el brazo",
+        "answer": "Se acorta",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué hace el músculo cuando se acorta?",
+        "prompt": "¿Cuál movimiento decides tú?",
         "choices": [
-          "Cubre la piel",
-          "Transporta sangre",
-          "Envía mensajes",
-          "Tira del hueso"
+          "Latir del corazón",
+          "Cubrir la piel",
+          "Transportar sangre",
+          "Remar"
         ],
-        "answer": "Tira del hueso",
+        "answer": "Remar",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1392,15 +1379,15 @@
         "answer": "Nervioso",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué forma los caminos del tejido nervioso?",
+        "prompt": "¿Cuáles son caminos del nervioso?",
         "choices": [
           "Cerebro, médula y nervios",
           "Piel y uñas",
@@ -1410,26 +1397,8 @@
         "answer": "Cerebro, médula y nervios",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d1-q8",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué tejido sostiene y transporta?",
-        "choices": [
-          "Epitelial",
-          "Muscular",
-          "Conectivo",
-          "Nervioso"
-        ],
-        "answer": "Conectivo",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1439,39 +1408,39 @@
         "prompt": "Escribe qué hace cada uno de los cuatro tejidos.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica con tus palabras qué es un tejido.",
+        "prompt": "Cuenta con tus palabras qué es un tejido.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un esquema con los cuatro tejidos y su trabajo.",
+        "prompt": "Dibuja un esquema de los cuatro tejidos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja el camino: mensaje, nervio, músculo y movimiento.",
+        "prompt": "Dibuja el camino del aviso: relámpago, ojo, nervio.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

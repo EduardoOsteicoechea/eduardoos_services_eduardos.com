@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La lista de la semana",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana recorriste los hitos 8 al 14.\nCada nombre llevó su lugar en el mapa.\nHoy los recuerdas y se los cuentas a alguien.\n\nSin mirar nada, ¿puedes decir los ocho temas de los hitos 8 al 14, cada uno con su lugar?\n\nHitos 8–14: maravillas, Israel patriarcal, hititas, cananeos, Kush, Asiria, Babilonia, Shang — cada uno con su lugar."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste los hitos 12, 13 y 14. Asiria y Babilonia: Mesopotamia. Shang: China. Hoy cuentas la semana."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Maravillas, patriarcas y pueblos",
-        "body": "¿Qué diferencia hay entre una maravilla y un patriarca? ¿Y dónde ubicas a hititas, cananeos y Kush?\n\nLa Gran Pirámide de Guiza es una maravilla de Egipto. Abraham, Isaac y Jacob son patriarcas, personas. Hititas en Anatolia, cananeos en Canaán, y Kush al sur de Egipto."
+        "heading": "Punto 2: La lista de la semana",
+        "body": "Eres guía de un Panteón de la historia antigua. ¿Qué lista dirías sin mirar?\n\nHitos 8–14: maravillas, Israel patriarcal, hititas, cananeos, Kush, Asiria, Babilonia, Shang — cada uno con su lugar."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Asiria, Babilonia y Shang",
-        "body": "¿Qué reinos y qué dinastía cerraron la lista? ¿Qué pista da cada uno?\n\nAsiria, con su ejército, en Mesopotamia. Babilonia, con ciudad y leyes, en Mesopotamia. Shang, con gobernantes y bronce, en China."
+        "heading": "Punto 3: Maravillas y patriarcas",
+        "body": "En tu Panteón, ¿qué diferencia hay entre una maravilla y un patriarca?\n\nGuiza, en Egipto, es una maravilla: una obra enorme, no una persona. Abraham, Isaac y Jacob son patriarcas, antepasados centrales de Israel."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a contarle la semana a alguien de tu casa. ¿Cómo la contarías con orden?\n\nInicio: «Hoy les cuento los hitos 8 al 14». Medio: un ejemplo de cada grupo, con su lugar. Cierre: muestra el mapa y señala cada región. Así no recitas números sin saber qué tema son."
+        "heading": "Punto 4: Pueblos en el mapa",
+        "body": "Ahora el mapa: ¿dónde pones hititas, cananeos y Kush?\n\nHititas en Anatolia, cananeos en Canaán, y Kush, un reino al sur de Egipto. Así no mezclas un pueblo con otro."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Nombre, lugar y pista",
-        "body": "¿Basta con repetir los nombres de memoria? ¿Qué más necesitas de cada uno?\n\nNo basta con la lista de palabras. Cada nombre necesita su lugar en el mapa. Y una pista que ayude a recordarlo. Por ejemplo: Shang, China, bronce."
+        "heading": "Punto 5: Asiria, Babilonia y Shang",
+        "body": "¿Cuáles cierran la lista del Panteón? ¿Qué pista da cada uno?\n\nAsiria, con su ejército, en Mesopotamia. Babilonia, con su ciudad y sus leyes, también en Mesopotamia. Shang, con su bronce, en China."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cómo contarlo en orden",
+        "body": "El Panteón Nacional honra la memoria. ¿Cómo cuentas tú la semana con orden?\n\nInicio: «Hoy cuento los hitos 8 al 14». Medio: un ejemplo de cada grupo. Cierre: señala cada lugar en el mapa. No basta la lista: di nombre y lugar."
       }
     ],
-    "summary": "Los ocho temas de los hitos 8 al 14 se recuerdan mejor con su lugar en el mapa y una pista para cada uno.",
+    "summary": "Como en el Panteón, la historia antigua se cuenta en orden: cada hito con su nombre, su lugar y su pista.",
     "memoryPhrase": "Hitos 8–14: maravillas, Israel patriarcal, hititas, cananeos, Kush, Asiria, Babilonia, Shang — cada uno con su **lugar**.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un mapa con cinco lugares de la semana. Rotula Egipto, Anatolia, Canaán, Mesopotamia y China. Escribe cerca de cada lugar el nombre que va allí. Revisa que cada nombre tenga su pista.",
+    "imageBandInstruction": "Dibuja tu Panteón de la historia antigua. Haz siete salas, una por cada hito. Escribe en cada sala el nombre y lugar. Revisa el mapa para no mezclar nada.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,71 +68,71 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana recorriste los hitos 8 al 14."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
         "kind": "lesson",
-        "text": "Cada nombre llevó su lugar en el mapa."
+        "text": "Ayer viste los hitos 12, 13 y 14."
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy los recuerdas y se los cuentas a alguien."
+        "text": "Asiria y Babilonia: Mesopotamia."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Shang: China. Hoy cuentas la semana."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "lesson",
-        "text": "Sin mirar nada, ¿puedes decir los ocho temas de los"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "hitos 8 al 14, cada uno con su lugar?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 13,
@@ -140,99 +145,99 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Eres guía de un Panteón de la historia"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "antigua. ¿Qué lista dirías sin mirar?"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La lista de la semana"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Hitos 8–14: maravillas, Israel patriarcal, hititas,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "cananeos, Kush, Asiria, Babilonia, Shang —"
+        "kind": "heading",
+        "text": "Punto 2: La lista de la semana"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "cada uno con su lugar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hitos 8–14: maravillas, Israel"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "patriarcal, hititas, cananeos, Kush,"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Asiria, Babilonia, Shang — cada uno"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con su lugar."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "¿Qué diferencia hay entre una maravilla y un patriarca?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Y dónde ubicas a hititas, cananeos y Kush?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 28,
@@ -245,15 +250,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En tu Panteón, ¿qué diferencia hay entre"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Maravillas, patriarcas y pueblos"
+        "kind": "lesson",
+        "text": "una maravilla y un patriarca?"
       },
       {
         "index": 31,
@@ -267,77 +272,77 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "La Gran Pirámide de Guiza es una maravilla de Egipto."
+        "text": "________________________________________"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Abraham, Isaac y Jacob son patriarcas, personas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Hititas en Anatolia, cananeos en Canaán,"
+        "kind": "heading",
+        "text": "Punto 3: Maravillas y patriarcas"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "y Kush al sur de Egipto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Guiza, en Egipto, es una maravilla:"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "una obra enorme, no una persona."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Abraham, Isaac y Jacob son patriarcas,"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "antepasados centrales de Israel."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "¿Qué reinos y qué dinastía cerraron la lista?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Qué pista da cada uno?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -350,15 +355,15 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora el mapa: ¿dónde pones hititas,"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: Asiria, Babilonia y Shang"
+        "kind": "lesson",
+        "text": "cananeos y Kush?"
       },
       {
         "index": 46,
@@ -372,21 +377,21 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Asiria, con su ejército, en Mesopotamia."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Babilonia, con ciudad y leyes, en Mesopotamia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Shang, con gobernantes y bronce, en China."
+        "kind": "heading",
+        "text": "Punto 4: Pueblos en el mapa"
       },
       {
         "index": 50,
@@ -400,42 +405,42 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Hititas en Anatolia, cananeos en Canaán,"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y Kush, un reino al sur de Egipto."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así no mezclas un pueblo con otro."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Vas a contarle la semana a alguien de tu casa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "¿Cómo la contarías con orden?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -448,43 +453,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "¿Cuáles cierran la lista del Panteón?"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué pista da cada uno?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Inicio: «Hoy les cuento los hitos 8 al 14»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Medio: un ejemplo de cada grupo, con su lugar."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Cierre: muestra el mapa y señala cada región."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Así no recitas números sin saber qué tema son."
+        "kind": "heading",
+        "text": "Punto 5: Asiria, Babilonia y Shang"
       },
       {
         "index": 64,
@@ -498,166 +503,154 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Asiria, con su ejército, en Mesopotamia."
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Babilonia, con su ciudad y sus leyes,"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "también en Mesopotamia."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Basta con repetir los nombres de memoria?"
+        "text": "Shang, con su bronce, en China."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Qué más necesitas de cada uno?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Nombre, lugar y pista"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El Panteón Nacional honra la memoria."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No basta con la lista de palabras."
+        "text": "¿Cómo cuentas tú la semana con orden?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cada nombre necesita su lugar en el mapa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Y una pista que ayude a recordarlo."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Por ejemplo: Shang, China, bronce."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Cómo contarlo en orden"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Inicio: «Hoy cuento los hitos 8 al 14»."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Medio: un ejemplo de cada grupo."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué hitos estudiaste esta semana?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Cierre: señala cada lugar en el mapa."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Del 1 al 7",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "No basta la lista: di nombre y lugar."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Del 15 al 21",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Solo el 10",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Del 8 al 14",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué es la Gran Pirámide de Guiza?",
-        "questionId": "d5-q2",
+        "text": "¿Qué hitos estudiaste esta semana?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Un patriarca",
-        "questionId": "d5-q2"
+        "text": "A) Del 1 al 7",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Una maravilla antigua",
-        "questionId": "d5-q2"
+        "text": "B) Del 15 al 21",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Un reino de Kush",
-        "questionId": "d5-q2"
+        "text": "C) Solo el 10",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Una dinastía",
-        "questionId": "d5-q2"
+        "text": "D) Del 8 al 14",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Quiénes son los patriarcas del hito 9?",
-        "questionId": "d5-q3",
+        "text": "¿Qué es la Gran Pirámide de Guiza?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Abraham, Isaac y Jacob",
-        "questionId": "d5-q3"
+        "text": "A) Un patriarca",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Asiria y Babilonia",
-        "questionId": "d5-q3"
+        "text": "B) Una maravilla de Egipto",
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Hititas y Kush",
-        "questionId": "d5-q3"
+        "text": "C) Un reino de Kush",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Shang y Kush",
-        "questionId": "d5-q3"
+        "text": "D) Una dinastía",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Dónde vivían los hititas?",
-        "questionId": "d5-q4",
+        "text": "¿Quiénes son los patriarcas?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -794,44 +787,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) En Canaán",
-        "questionId": "d5-q4"
+        "text": "A) Abraham, Isaac y Jacob",
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) En China",
-        "questionId": "d5-q4"
+        "text": "B) Asiria y Babilonia",
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) En Anatolia",
-        "questionId": "d5-q4"
+        "text": "C) Hititas y Kush",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) En Egipto",
-        "questionId": "d5-q4"
+        "text": "D) Shang y Kush",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Dónde vivían los hititas?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) En Canaán",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) En China",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) En Anatolia",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) En Egipto",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Dónde queda el reino de Kush?",
         "questionId": "d5-q5",
@@ -844,48 +884,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Al sur de Egipto",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) En Mesopotamia",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) En China",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) En Anatolia",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué reino destaca por su ejército?",
         "questionId": "d5-q6",
@@ -898,48 +938,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Babilonia",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Shang",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Kush",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Asiria",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Dónde estuvo la dinastía Shang?",
         "questionId": "d5-q7",
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) En Mesopotamia",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) En la antigua China",
+        "text": "B) En China",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) En Canaán",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) En Anatolia",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué necesita cada nombre además de la lista?",
+        "text": "¿Qué hace falta al contar la semana?",
         "questionId": "d5-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Un número grande",
+        "text": "A) Solo números",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Un color nuevo",
+        "text": "B) Solo colores",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Su lugar y una pista",
+        "text": "C) Nombre y lugar",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Un dibujo gigante",
+        "text": "D) Solo dibujos",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Cuenta con tus palabras los ocho temas de la semana.",
+        "text": "Cuenta con tus palabras los hitos de la",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "semana.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica por qué no basta con repetir los nombres.",
+        "text": "Explica por qué no basta repetir la lista.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1146,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un mapa con Egipto, Anatolia, Canaán, Mesopotamia y China.",
+        "text": "Dibuja un mapa con Egipto, Anatolia,",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,27 +1184,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "Canaán, Mesopotamia y China.",
         "questionId": "d5-w3"
       },
       {
@@ -1203,15 +1203,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja una tabla: nombre, lugar y pista de cada tema.",
+        "text": "Dibuja una tabla: nombre, lugar y pista de",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,19 +1230,11 @@
         }
       },
       {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
-      },
-      {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "cada tema.",
         "questionId": "d5-w4"
       },
       {
@@ -1258,28 +1258,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un mapa con cinco lugares de la semana."
+        "text": "Dibuja tu Panteón de la historia antigua."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula Egipto, Anatolia, Canaán, Mesopotamia y China."
+        "text": "Haz siete salas, una por cada hito. Escribe"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe cerca de cada lugar el nombre que va allí."
+        "text": "en cada sala el nombre y lugar. Revisa el"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada nombre tenga su pista."
+        "text": "mapa para no mezclar nada."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1302,8 +1302,8 @@
         "answer": "Del 8 al 14",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1313,22 +1313,22 @@
         "prompt": "¿Qué es la Gran Pirámide de Guiza?",
         "choices": [
           "Un patriarca",
-          "Una maravilla antigua",
+          "Una maravilla de Egipto",
           "Un reino de Kush",
           "Una dinastía"
         ],
-        "answer": "Una maravilla antigua",
+        "answer": "Una maravilla de Egipto",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d5-q3",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Quiénes son los patriarcas del hito 9?",
+        "prompt": "¿Quiénes son los patriarcas?",
         "choices": [
           "Abraham, Isaac y Jacob",
           "Asiria y Babilonia",
@@ -1338,8 +1338,8 @@
         "answer": "Abraham, Isaac y Jacob",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1355,9 +1355,9 @@
         ],
         "answer": "En Anatolia",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1374,8 +1374,8 @@
         "answer": "Al sur de Egipto",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1392,8 +1392,8 @@
         "answer": "Asiria",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1403,55 +1403,55 @@
         "prompt": "¿Dónde estuvo la dinastía Shang?",
         "choices": [
           "En Mesopotamia",
-          "En la antigua China",
+          "En China",
           "En Canaán",
           "En Anatolia"
         ],
-        "answer": "En la antigua China",
+        "answer": "En China",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué necesita cada nombre además de la lista?",
+        "prompt": "¿Qué hace falta al contar la semana?",
         "choices": [
-          "Un número grande",
-          "Un color nuevo",
-          "Su lugar y una pista",
-          "Un dibujo gigante"
+          "Solo números",
+          "Solo colores",
+          "Nombre y lugar",
+          "Solo dibujos"
         ],
-        "answer": "Su lugar y una pista",
+        "answer": "Nombre y lugar",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta con tus palabras los ocho temas de la semana.",
+        "prompt": "Cuenta con tus palabras los hitos de la semana.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Explica por qué no basta con repetir los nombres.",
+        "prompt": "Explica por qué no basta repetir la lista.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1463,8 +1463,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
@@ -1476,8 +1476,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

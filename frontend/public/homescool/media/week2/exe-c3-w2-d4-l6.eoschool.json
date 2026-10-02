@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Escribir la promesa",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer hablamos de los profetas.\nSon mensajeros que hablan de parte de Dios.\nDios prometió el evangelio por medio de ellos.\n\nUna promesa hablada se puede olvidar fácil. ¿Cómo se guarda mejor una promesa?\n\nEscrita, la promesa queda guardada. Pablo dice que está en las santas Escrituras. Son los escritos sagrados de la Biblia."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que los profetas son mensajeros de Dios. Isaías, Jeremías y Miqueas lo fueron. Hoy buscamos dónde quedó guardada la promesa, como el Acta."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El Antiguo Testamento",
-        "body": "Cuando Pablo dice «Escrituras», ¿en qué libros crees que piensa?\n\nPiensa sobre todo en el Antiguo Testamento. Allí ya estaba escrita la promesa. El evangelio está unido a lo que Dios ya había dicho. No depende de un rumor ni de una idea nueva."
+        "heading": "Punto 2: Escribir la promesa",
+        "body": "El Acta del 5 de julio de 1811 se firmó. ¿Por qué dejar una promesa por escrito?\n\nEscrita, la promesa queda guardada. Una promesa hablada se olvida fácil. Pablo dice que la de Dios está escrita."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Por qué importa",
-        "body": "¿Por qué importa que la promesa esté escrita?\n\nSe puede leer una y otra vez. Se puede comprobar y enseñar a otros. No depende de lo que alguien recuerde."
+        "heading": "Punto 3: Las santas Escrituras",
+        "body": "Pablo dice «Escrituras». ¿En qué libros crees que piensa?\n\nSon los escritos sagrados de la Biblia. Piensa sobre todo en el Antiguo Testamento. Allí ya estaba la promesa."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cada versículo dice lo suyo",
-        "body": "Una pregunta con truco: ¿Romanos 1:2 repite lo que dijo Romanos 1:1?\n\nNo. Romanos 1:1 presentó a Pablo. Romanos 1:2 une el evangelio con las Escrituras. Cada versículo aporta algo distinto. Hoy nos quedamos con lo que dice el segundo."
+        "heading": "Punto 4: Por qué importa",
+        "body": "Si se perdiera el Acta de 1811, ¿qué pasaría con recordar la promesa?\n\nCostaría recordarla y comprobarla. Lo escrito se lee una y otra vez. Así se enseña a otros, sin olvidar."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Romanos 1:2 con tus palabras",
-        "body": "Ahora tú: si reescribes Romanos 1:2 con tus palabras, ¿qué tres palabras no pueden faltar?\n\nNo pueden faltar evangelio, profetas y Escrituras. Por ejemplo: Dios prometió el evangelio antes. Lo anunció por sus profetas y quedó en las Escrituras. Comprueba que no añadiste ideas ajenas."
+        "heading": "Punto 5: Cada versículo dice lo suyo",
+        "body": "Una pregunta con truco: ¿Romanos 1:2 repite lo que dijo Romanos 1:1?\n\nNo. Romanos 1:1 presentó a Pablo. Romanos 1:2 une el evangelio con las Escrituras. Cada uno aporta algo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Romanos 1:2 con tus palabras",
+        "body": "Contar de 1811 a Carabobo pide fechas. Y Romanos 1:2, ¿qué tres palabras?\n\nNo pueden faltar evangelio, profetas y Escrituras. Por ejemplo: Dios prometió el evangelio antes y quedó escrito. Comprueba que no añadiste ideas ajenas."
       }
     ],
-    "summary": "La promesa del evangelio quedó escrita en las santas Escrituras, sobre todo en el Antiguo Testamento.",
+    "summary": "La promesa del evangelio quedó escrita en las santas Escrituras, como el Acta de 1811 quedó firmada.",
     "weekRecap": "Hoy leímos Romanos 1:2: Dios anunció antes el evangelio por sus profetas y en las Escrituras.",
     "priorDayRecap": "«Por sus profetas» en profundidad. Hoy profundizamos en la frase por medio de sus profetas. La exégesis es la explicación cuidadosa de un versículo. Romanos 1:2 dice que el evangelio fue prometido de antemano por medio.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un libro grande abierto con la palabra «Escrituras». Escribe dentro «promesa del evangelio». Añade una flecha que venga de los profetas. Rotula «Antiguo Testamento» junto al libro.",
+    "imageBandInstruction": "Dibuja un libro grande abierto con la palabra «Escrituras» y «promesa del evangelio». Añade una flecha desde los profetas. A un lado dibuja el Acta de 1811.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer hablamos de los profetas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Son mensajeros que hablan de parte de Dios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Dios prometió el evangelio por medio de ellos."
+        "text": "Ayer viste que los profetas son"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "mensajeros de Dios. Isaías, Jeremías y"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Una promesa hablada se puede olvidar fácil."
+        "text": "Miqueas lo fueron. Hoy buscamos dónde"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Cómo se guarda mejor una promesa?"
+        "text": "quedó guardada la promesa, como el Acta."
       },
       {
         "index": 12,
@@ -134,71 +139,71 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Escribir la promesa"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El Acta del 5 de julio de 1811 se firmó."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Escrita, la promesa queda guardada."
+        "text": "¿Por qué dejar una promesa por escrito?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Pablo dice que está en las santas Escrituras."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Son los escritos sagrados de la Biblia."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Escribir la promesa"
       },
       {
         "index": 23,
@@ -212,21 +217,21 @@
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Cuando Pablo dice «Escrituras», ¿en qué libros"
+        "text": "Escrita, la promesa queda guardada."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "crees que piensa?"
+        "text": "Una promesa hablada se olvida fácil."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Pablo dice que la de Dios está escrita."
       },
       {
         "index": 27,
@@ -239,15 +244,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: El Antiguo Testamento"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,28 +266,28 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Piensa sobre todo en el Antiguo Testamento."
+        "text": "Pablo dice «Escrituras». ¿En qué libros"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Allí ya estaba escrita la promesa."
+        "text": "crees que piensa?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "El evangelio está unido a lo que Dios ya había dicho."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "No depende de un rumor ni de una idea nueva."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -295,8 +300,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Las santas Escrituras"
       },
       {
         "index": 37,
@@ -309,22 +314,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son los escritos sagrados de la Biblia."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "¿Por qué importa que la promesa esté escrita?"
+        "text": "Piensa sobre todo en el Antiguo"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Testamento. Allí ya estaba la promesa."
       },
       {
         "index": 41,
@@ -337,15 +342,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Por qué importa"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,42 +364,42 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Se puede leer una y otra vez."
+        "text": "Si se perdiera el Acta de 1811, ¿qué"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Se puede comprobar y enseñar a otros."
+        "text": "pasaría con recordar la promesa?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "No depende de lo que alguien recuerde."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Por qué importa"
       },
       {
         "index": 51,
@@ -408,21 +413,21 @@
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Romanos 1:2 repite lo que dijo"
+        "text": "Costaría recordarla y comprobarla."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Romanos 1:1?"
+        "text": "Lo escrito se lee una y otra vez."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así se enseña a otros, sin olvidar."
       },
       {
         "index": 55,
@@ -435,15 +440,15 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 4: Cada versículo dice lo suyo"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
@@ -457,28 +462,28 @@
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "No. Romanos 1:1 presentó a Pablo."
+        "text": "Una pregunta con truco: ¿Romanos 1:2"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Romanos 1:2 une el evangelio con las Escrituras."
+        "text": "repite lo que dijo Romanos 1:1?"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Cada versículo aporta algo distinto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy nos quedamos con lo que dice el segundo."
+        "text": "________________________________________"
       },
       {
         "index": 63,
@@ -491,8 +496,8 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: Cada versículo dice lo suyo"
       },
       {
         "index": 65,
@@ -505,22 +510,22 @@
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Romanos 1:1 presentó a Pablo."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Ahora tú: si reescribes Romanos 1:2 con tus palabras,"
+        "text": "Romanos 1:2 une el evangelio con"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿qué tres palabras no pueden faltar?"
+        "text": "las Escrituras. Cada uno aporta algo."
       },
       {
         "index": 69,
@@ -533,132 +538,120 @@
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Romanos 1:2 con tus palabras"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Contar de 1811 a Carabobo pide fechas."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "No pueden faltar evangelio, profetas y Escrituras."
+        "text": "Y Romanos 1:2, ¿qué tres palabras?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Por ejemplo: Dios prometió el evangelio antes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Lo anunció por sus profetas y quedó en las Escrituras."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Comprueba que no añadiste ideas ajenas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Romanos 1:2 con tus palabras"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No pueden faltar evangelio, profetas"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y Escrituras. Por ejemplo: Dios prometió"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cómo queda mejor guardada una promesa?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "el evangelio antes y quedó escrito."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Solo hablada",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Comprueba que no añadiste ideas ajenas."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Olvidada",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Escrita",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Escondida",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Dónde dice Pablo que está la promesa?",
-        "questionId": "d4-q2",
+        "text": "¿Cómo se guarda mejor una promesa?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) En un mapa",
-        "questionId": "d4-q2"
+        "text": "A) Solo hablada",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) En una canción",
-        "questionId": "d4-q2"
+        "text": "B) Olvidada",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) En un rumor",
-        "questionId": "d4-q2"
+        "text": "C) Escrita",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) En las santas Escrituras",
-        "questionId": "d4-q2"
+        "text": "D) Escondida",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué son las santas Escrituras?",
-        "questionId": "d4-q3",
+        "text": "¿Qué se firmó el 5 de julio de 1811?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Cartas de Roma",
-        "questionId": "d4-q3"
+        "text": "A) Un mapa",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Los escritos sagrados de la Biblia",
-        "questionId": "d4-q3"
+        "text": "B) Una canción",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Cuentos nuevos",
-        "questionId": "d4-q3"
+        "text": "C) Un rumor",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Notas de clase",
-        "questionId": "d4-q3"
+        "text": "D) El Acta de Independencia",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿En qué piensa Pablo sobre todo?",
-        "questionId": "d4-q4",
+        "text": "¿Dónde dice Pablo que está la promesa?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) En el Antiguo Testamento",
-        "questionId": "d4-q4"
+        "text": "A) En un mapa",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) En un periódico",
-        "questionId": "d4-q4"
+        "text": "B) En las santas Escrituras",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) En una carta nueva",
-        "questionId": "d4-q4"
+        "text": "C) En una canción",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) En un diario",
-        "questionId": "d4-q4"
+        "text": "D) En un rumor",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué son las santas Escrituras?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Escritos sagrados de la Biblia",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Cartas de Roma",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Cuentos nuevos",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Notas de clase",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿De qué depende el evangelio?",
+        "text": "¿En qué piensa Pablo sobre todo?",
         "questionId": "d4-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) De un rumor",
+        "text": "A) En un periódico",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) De una idea nueva",
+        "text": "B) En una carta nueva",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) De lo que Dios ya había dicho",
+        "text": "C) En el Antiguo Testamento",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) De la memoria de alguien",
+        "text": "D) En un diario",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Por qué importa que la promesa esté escrita?",
+        "text": "¿Por qué importa que esté escrita?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Se puede leer y comprobar",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) Para que nadie la lea",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) Para olvidarla",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Para cambiarla",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué une Romanos 1:2 con el evangelio?",
+        "text": "¿Qué presentó Romanos 1:1?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Los soldados",
+        "text": "A) A Isaías",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) El viaje",
+        "text": "B) A Bolívar",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Un mapa",
+        "text": "C) A Roma",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Las Escrituras",
+        "text": "D) A Pablo",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué tres palabras no pueden faltar al reescribirlo?",
+        "text": "¿Qué tres palabras no pueden faltar?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Roma, viaje y carta",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Evangelio, profetas y Escrituras",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Siervo, rey y juez",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Pablo, mapa y río",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Reescribe Romanos 1:2 con tus palabras en una oración.",
+        "text": "Reescribe Romanos 1:2 con tus palabras.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1101,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué importa que la promesa esté escrita.",
+        "text": "Explica por qué importa dejar la promesa",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1139,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "escrita.",
         "questionId": "d4-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema: promesa, profetas y Escrituras.",
+        "text": "Dibuja un esquema: promesa, profetas,",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,27 +1185,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "Escrituras.",
         "questionId": "d4-w3"
       },
       {
@@ -1204,15 +1204,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja dos versículos y rotula qué dice cada uno.",
+        "text": "Dibuja dos versículos y qué dice cada uno.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,14 +1229,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1250,37 +1250,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un libro grande abierto con la palabra «Escrituras»."
+        "text": "Dibuja un libro grande abierto con la"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe dentro «promesa del evangelio»."
+        "text": "palabra «Escrituras» y «promesa del"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Añade una flecha que venga de los profetas."
+        "text": "evangelio». Añade una flecha desde los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula «Antiguo Testamento» junto al libro."
+        "text": "profetas. A un lado dibuja el Acta de 1811."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1293,7 +1292,7 @@
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cómo queda mejor guardada una promesa?",
+        "prompt": "¿Cómo se guarda mejor una promesa?",
         "choices": [
           "Solo hablada",
           "Olvidada",
@@ -1303,40 +1302,22 @@
         "answer": "Escrita",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Dónde dice Pablo que está la promesa?",
+        "prompt": "¿Qué se firmó el 5 de julio de 1811?",
         "choices": [
-          "En un mapa",
-          "En una canción",
-          "En un rumor",
-          "En las santas Escrituras"
+          "Un mapa",
+          "Una canción",
+          "Un rumor",
+          "El Acta de Independencia"
         ],
-        "answer": "En las santas Escrituras",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué son las santas Escrituras?",
-        "choices": [
-          "Cartas de Roma",
-          "Los escritos sagrados de la Biblia",
-          "Cuentos nuevos",
-          "Notas de clase"
-        ],
-        "answer": "Los escritos sagrados de la Biblia",
+        "answer": "El Acta de Independencia",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1344,17 +1325,17 @@
         }
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿En qué piensa Pablo sobre todo?",
+        "prompt": "¿Dónde dice Pablo que está la promesa?",
         "choices": [
-          "En el Antiguo Testamento",
-          "En un periódico",
-          "En una carta nueva",
-          "En un diario"
+          "En un mapa",
+          "En las santas Escrituras",
+          "En una canción",
+          "En un rumor"
         ],
-        "answer": "En el Antiguo Testamento",
+        "answer": "En las santas Escrituras",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1362,28 +1343,46 @@
         }
       },
       {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Qué son las santas Escrituras?",
+        "choices": [
+          "Escritos sagrados de la Biblia",
+          "Cartas de Roma",
+          "Cuentos nuevos",
+          "Notas de clase"
+        ],
+        "answer": "Escritos sagrados de la Biblia",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d4-q5",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿De qué depende el evangelio?",
+        "prompt": "¿En qué piensa Pablo sobre todo?",
         "choices": [
-          "De un rumor",
-          "De una idea nueva",
-          "De lo que Dios ya había dicho",
-          "De la memoria de alguien"
+          "En un periódico",
+          "En una carta nueva",
+          "En el Antiguo Testamento",
+          "En un diario"
         ],
-        "answer": "De lo que Dios ya había dicho",
+        "answer": "En el Antiguo Testamento",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Por qué importa que la promesa esté escrita?",
+        "prompt": "¿Por qué importa que esté escrita?",
         "choices": [
           "Se puede leer y comprobar",
           "Para que nadie la lea",
@@ -1393,33 +1392,33 @@
         "answer": "Se puede leer y comprobar",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué une Romanos 1:2 con el evangelio?",
+        "prompt": "¿Qué presentó Romanos 1:1?",
         "choices": [
-          "Los soldados",
-          "El viaje",
-          "Un mapa",
-          "Las Escrituras"
+          "A Isaías",
+          "A Bolívar",
+          "A Roma",
+          "A Pablo"
         ],
-        "answer": "Las Escrituras",
+        "answer": "A Pablo",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué tres palabras no pueden faltar al reescribirlo?",
+        "prompt": "¿Qué tres palabras no pueden faltar?",
         "choices": [
           "Roma, viaje y carta",
           "Evangelio, profetas y Escrituras",
@@ -1429,56 +1428,56 @@
         "answer": "Evangelio, profetas y Escrituras",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Reescribe Romanos 1:2 con tus palabras en una oración.",
+        "prompt": "Reescribe Romanos 1:2 con tus palabras.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d4-w2",
         "originDay": 4,
         "type": "write",
-        "prompt": "Explica por qué importa que la promesa esté escrita.",
+        "prompt": "Explica por qué importa dejar la promesa escrita.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un esquema: promesa, profetas y Escrituras.",
+        "prompt": "Dibuja un esquema: promesa, profetas, Escrituras.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja dos versículos y rotula qué dice cada uno.",
+        "prompt": "Dibuja dos versículos y qué dice cada uno.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La Guajira",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer viste a Caribes y Arawacos junto al agua.\nUsaban canoas y los Arawacos sembraban yuca.\nConociste la tradición oral y los petroglifos.\n\nImagina un lugar con mucho sol, poco agua y mucho viento. ¿Quién crees que vive ahí y de qué vive?\n\nEse lugar existe: se llama La Guajira. Está en el noroccidente de Venezuela, junto al mar. Es una tierra seca y con mucho viento. Allí viven los Wayús, también llamados wayúu."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste canoas, yuca y petroglifos, como las canoas de Sinamaica. Hoy conoces un pueblo de tierra seca."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Pastores del desierto",
-        "body": "En un lugar seco hay poca hierba. ¿Qué animales crees que se pueden criar allí?\n\nLos Wayús crían cabras y ovejas. Cuidar animales se llama pastoreo. Esos animales llegaron con los españoles. Los Wayús los hicieron parte de su vida."
+        "heading": "Punto 2: La Guajira",
+        "body": "Los añú viven con el agua de la laguna. ¿Quién vive donde hay sol y poca agua?\n\nEse lugar existe: se llama La Guajira. Está en el noroccidente, junto al mar. Es seca y con mucho viento. Allí viven los Wayús, o wayúu."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El chinchorro",
-        "body": "Si no tienes cama, ¿cómo podrías dormir? Pista: es algo que se cuelga.\n\nLos Wayús tejen chinchorros, camas que se cuelgan. Un chinchorro es una hamaca tejida a mano. Tejer es entrelazar hilos para hacer una tela. Cada tejido lleva diseños con significado."
+        "heading": "Punto 3: Pastores del desierto",
+        "body": "Con poca hierba, ¿qué animales crees que se pueden criar?\n\nLos Wayús crían cabras y ovejas. Cuidar animales se llama pastoreo. Los trajeron los españoles. Los Wayús los hicieron parte de su vida."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Defender su tierra",
-        "body": "¿Crees que los Wayús aceptaron que otros mandaran en su tierra?\n\nLos Wayús defendieron su territorio por mucho tiempo. Eso se llama resistencia: no rendirse ante lo que se impone. Sus familias se organizaban en clanes, con líderes propios. Los líderes ayudaban a decidir y a resolver problemas."
+        "heading": "Punto 4: El chinchorro",
+        "body": "Si no tienes cama, ¿cómo podrías dormir? Pista: es algo que se cuelga.\n\nLos Wayús tejen chinchorros: hamacas hechas a mano para dormir. Tejer es entrelazar hilos y hacer tela. Cada diseño tejido tiene significado."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Una memoria viva",
-        "body": "¿Esa cultura se quedó en el pasado o sigue viva hoy?\n\nSigue viva: los Wayús hablan su idioma y tejen hoy. Su idioma se llama wayuunaiki. Cuando una cultura continúa, tiene memoria viva. Algunas cosas cambiaron, pero su identidad sigue."
+        "heading": "Punto 5: Defender su tierra",
+        "body": "¿Crees que los Wayús aceptaron que otros mandaran en su tierra?\n\nLos Wayús defendieron su territorio por mucho tiempo. Eso es resistencia: no rendirse ante lo que se impone. Sus familias se organizaban en clanes."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Una memoria viva",
+        "body": "Los palafitos de Sinamaica se ven hoy. ¿La cultura wayúu quedó en el pasado?\n\nSigue viva: los Wayús hablan su idioma y tejen hoy. Se llama wayuunaiki. Como los palafitos, que se ven hoy, una cultura que sigue es memoria viva."
       }
     ],
     "summary": "Los Wayús viven en La Guajira, crían cabras, tejen chinchorros y defendieron su tierra. Su cultura sigue viva.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Ayer comparaste Caribes y Arawacos en costa, ríos e intercambio.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja La Guajira: sol, viento, cabras y mar. Dibuja un chinchorro colgado entre dos postes. Rotula los nombres: La Guajira, cabras y chinchorro. Añade un diseño tejido con colores.",
+    "imageBandInstruction": "Dibuja La Guajira: sol, viento y cabras. Dibuja un chinchorro entre dos postes. Rotula: La Guajira, cabras y chinchorro. Al lado, dibuja un palafito: Sinamaica.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,57 +91,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer viste a Caribes y Arawacos junto al agua."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Usaban canoas y los Arawacos sembraban yuca."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Conociste la tradición oral y los petroglifos."
+        "text": "Ayer viste canoas, yuca y petroglifos,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "como las canoas de Sinamaica."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Imagina un lugar con mucho sol, poco agua y mucho viento."
+        "text": "Hoy conoces un pueblo de tierra seca."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Quién crees que vive ahí y de qué vive?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -149,85 +154,85 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: La Guajira"
+        "kind": "lesson",
+        "text": "Los añú viven con el agua de la laguna."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Quién vive donde hay sol y poca agua?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Ese lugar existe: se llama La Guajira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Está en el noroccidente de Venezuela, junto al mar."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Es una tierra seca y con mucho viento."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Allí viven los Wayús, también llamados wayúu."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La Guajira"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ese lugar existe: se llama La Guajira."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Está en el noroccidente, junto al mar."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "En un lugar seco hay poca hierba. ¿Qué animales"
+        "text": "Es seca y con mucho viento."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "crees que se pueden criar allí?"
+        "text": "Allí viven los Wayús, o wayúu."
       },
       {
         "index": 27,
@@ -240,57 +245,57 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Pastores del desierto"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con poca hierba, ¿qué animales crees"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Los Wayús crían cabras y ovejas."
+        "text": "que se pueden criar?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Cuidar animales se llama pastoreo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Esos animales llegaron con los españoles."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Los Wayús los hicieron parte de su vida."
+        "text": "________________________________________"
       },
       {
         "index": 36,
@@ -303,8 +308,8 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Pastores del desierto"
       },
       {
         "index": 38,
@@ -317,29 +322,29 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los Wayús crían cabras y ovejas."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Si no tienes cama, ¿cómo podrías dormir?"
+        "text": "Cuidar animales se llama pastoreo."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "Pista: es algo que se cuelga."
+        "text": "Los trajeron los españoles. Los Wayús"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "los hicieron parte de su vida."
       },
       {
         "index": 43,
@@ -352,15 +357,15 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: El chinchorro"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
@@ -374,42 +379,42 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Los Wayús tejen chinchorros, camas que se cuelgan."
+        "text": "Si no tienes cama, ¿cómo podrías dormir?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Un chinchorro es una hamaca tejida a mano."
+        "text": "Pista: es algo que se cuelga."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Tejer es entrelazar hilos para hacer una tela."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "Cada tejido lleva diseños con significado."
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
@@ -422,43 +427,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El chinchorro"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "¿Crees que los Wayús aceptaron que otros mandaran"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "en su tierra?"
+        "text": "Los Wayús tejen chinchorros:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "hamacas hechas a mano para dormir."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tejer es entrelazar hilos y hacer tela."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Defender su tierra"
+        "kind": "lesson",
+        "text": "Cada diseño tejido tiene significado."
       },
       {
         "index": 60,
@@ -472,49 +477,49 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Los Wayús defendieron su territorio por mucho tiempo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Eso se llama resistencia: no rendirse ante lo que se impone."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Sus familias se organizaban en clanes, con líderes propios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Los líderes ayudaban a decidir y a resolver problemas."
+        "text": "¿Crees que los Wayús aceptaron que otros"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "mandaran en su tierra?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
@@ -527,8 +532,8 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Esa cultura se quedó en el pasado o sigue viva hoy?"
+        "kind": "heading",
+        "text": "Punto 5: Defender su tierra"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los Wayús defendieron su territorio"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Una memoria viva"
+        "kind": "lesson",
+        "text": "por mucho tiempo. Eso es resistencia:"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "no rendirse ante lo que se impone."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Sigue viva: los Wayús hablan su idioma y tejen hoy."
+        "text": "Sus familias se organizaban en clanes."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Su idioma se llama wayuunaiki."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Cuando una cultura continúa, tiene memoria viva."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Algunas cosas cambiaron, pero su identidad sigue."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Los palafitos de Sinamaica se ven hoy."
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿La cultura wayúu quedó en el pasado?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Dónde viven los Wayús?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) En los Andes",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) En un río",
-        "questionId": "d4-q1"
+        "kind": "heading",
+        "text": "Punto 6: Una memoria viva"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) En La Guajira",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) En una isla",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Sigue viva: los Wayús hablan su idioma"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y tejen hoy. Se llama wayuunaiki."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Cómo es La Guajira?",
-        "questionId": "d4-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Como los palafitos, que se ven hoy,"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Fría y con nieve",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "una cultura que sigue es memoria viva."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Llena de selva",
-        "questionId": "d4-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Siempre inundada",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Seca y con mucho viento",
-        "questionId": "d4-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué es el pastoreo?",
-        "questionId": "d4-q3",
+        "text": "¿Dónde viven los Wayús?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Dibujar mapas",
-        "questionId": "d4-q3"
+        "text": "A) En los Andes",
+        "questionId": "d4-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Cuidar animales",
-        "questionId": "d4-q3"
+        "text": "B) En un río",
+        "questionId": "d4-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Navegar en canoa",
-        "questionId": "d4-q3"
+        "text": "C) En La Guajira",
+        "questionId": "d4-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Cambiar cosas",
-        "questionId": "d4-q3"
+        "text": "D) Sobre la laguna",
+        "questionId": "d4-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué es un chinchorro?",
-        "questionId": "d4-q4",
+        "text": "¿Cómo es La Guajira?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,44 +777,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Una hamaca tejida a mano",
-        "questionId": "d4-q4"
+        "text": "A) Fría y con nieve",
+        "questionId": "d4-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Una canoa",
-        "questionId": "d4-q4"
+        "text": "B) Llena de selva",
+        "questionId": "d4-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Un tipo de mapa",
-        "questionId": "d4-q4"
+        "text": "C) Siempre inundada",
+        "questionId": "d4-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Un jefe",
-        "questionId": "d4-q4"
+        "text": "D) Seca y con mucho viento",
+        "questionId": "d4-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es el pastoreo?",
+        "questionId": "d4-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Dibujar mapas",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Cuidar animales",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Navegar en canoa",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Cambiar cosas",
+        "questionId": "d4-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué es un chinchorro?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Una hamaca hecha a mano",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Una canoa",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Un tipo de mapa",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Un jefe",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué significa tejer?",
         "questionId": "d4-q5",
@@ -846,50 +928,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
         "text": "A) Grabar en una roca",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Navegar la costa",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Entrelazar hilos para hacer tela",
+        "text": "C) Entrelazar hilos y hacer tela",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Sembrar yuca",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué hicieron los Wayús para proteger su tierra?",
+        "text": "¿Qué hicieron los Wayús con su tierra?",
         "questionId": "d4-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,48 +982,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) La defendieron mucho tiempo",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) La abandonaron",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Nunca se opusieron",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Se hicieron navegantes",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "¿Cómo se llama el idioma de los Wayús?",
         "questionId": "d4-q7",
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Latín",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Inglés",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Francés",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Wayuunaiki",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Qué es la memoria viva?",
-        "questionId": "d4-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Un libro antiguo",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Cuando una cultura continúa hoy",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Un dibujo en piedra",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Una canoa",
-        "questionId": "d4-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe tres cosas que hacen los Wayús en La Guajira.",
+        "text": "Escribe tres cosas que hacen los Wayús.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica qué es la resistencia con tus palabras.",
+        "text": "Explica qué es la resistencia con tus",
         "questionId": "d4-w2",
         "questionType": "write",
         "gutter": {
@@ -1116,50 +1128,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "palabras.",
         "questionId": "d4-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema: La Guajira, cabras, chinchorro e idioma.",
+        "text": "Dibuja un esquema: La Guajira, cabras y",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,27 +1174,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "chinchorro.",
         "questionId": "d4-w3"
       },
       {
@@ -1205,15 +1193,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja un chinchorro colgado y rotula sus partes.",
+        "text": "Dibuja un chinchorro colgado y sus partes.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,14 +1218,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1251,44 +1239,43 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja La Guajira: sol, viento, cabras y mar."
+        "text": "Dibuja La Guajira: sol, viento y cabras."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja un chinchorro colgado entre dos postes."
+        "text": "Dibuja un chinchorro entre dos postes."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula los nombres: La Guajira, cabras y chinchorro."
+        "text": "Rotula: La Guajira, cabras y chinchorro. Al"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade un diseño tejido con colores."
+        "text": "lado, dibuja un palafito: Sinamaica."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d4-q1",
@@ -1299,13 +1286,13 @@
           "En los Andes",
           "En un río",
           "En La Guajira",
-          "En una isla"
+          "Sobre la laguna"
         ],
         "answer": "En La Guajira",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1322,8 +1309,8 @@
         "answer": "Seca y con mucho viento",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1339,9 +1326,9 @@
         ],
         "answer": "Cuidar animales",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1350,16 +1337,16 @@
         "type": "mcq",
         "prompt": "¿Qué es un chinchorro?",
         "choices": [
-          "Una hamaca tejida a mano",
+          "Una hamaca hecha a mano",
           "Una canoa",
           "Un tipo de mapa",
           "Un jefe"
         ],
-        "answer": "Una hamaca tejida a mano",
+        "answer": "Una hamaca hecha a mano",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1370,21 +1357,21 @@
         "choices": [
           "Grabar en una roca",
           "Navegar la costa",
-          "Entrelazar hilos para hacer tela",
+          "Entrelazar hilos y hacer tela",
           "Sembrar yuca"
         ],
-        "answer": "Entrelazar hilos para hacer tela",
+        "answer": "Entrelazar hilos y hacer tela",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q6",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué hicieron los Wayús para proteger su tierra?",
+        "prompt": "¿Qué hicieron los Wayús con su tierra?",
         "choices": [
           "La defendieron mucho tiempo",
           "La abandonaron",
@@ -1394,8 +1381,8 @@
         "answer": "La defendieron mucho tiempo",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1412,37 +1399,19 @@
         "answer": "Wayuunaiki",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d4-q8",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué es la memoria viva?",
-        "choices": [
-          "Un libro antiguo",
-          "Cuando una cultura continúa hoy",
-          "Un dibujo en piedra",
-          "Una canoa"
-        ],
-        "answer": "Cuando una cultura continúa hoy",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe tres cosas que hacen los Wayús en La Guajira.",
+        "prompt": "Escribe tres cosas que hacen los Wayús.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1452,34 +1421,34 @@
         "prompt": "Explica qué es la resistencia con tus palabras.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un esquema: La Guajira, cabras, chinchorro e idioma.",
+        "prompt": "Dibuja un esquema: La Guajira, cabras y chinchorro.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un chinchorro colgado y rotula sus partes.",
+        "prompt": "Dibuja un chinchorro colgado y sus partes.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

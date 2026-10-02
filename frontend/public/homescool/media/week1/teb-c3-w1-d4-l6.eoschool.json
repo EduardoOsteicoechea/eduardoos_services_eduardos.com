@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La historia tiene una meta",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer uniste Israel, Cristo y el evangelio con flechas.\nIsrael recibió la promesa y Cristo la cumplió.\nEl evangelio anuncia esa buena noticia.\n\n¿Crees que la historia termina con Jesús, o todavía falta una meta final?\n\nLa Biblia nos dice hacia dónde camina la historia. La meta final se llama consumación. Consumación significa llegar al final que Dios prometió."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer uniste Israel, Cristo y evangelio: promesa, cumplimiento y buena noticia. Hoy el río se acerca a su final y miramos hacia dónde va la historia."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Restauración",
-        "body": "¿Qué cosas tristes del mundo te gustaría que Dios arreglara?\n\nRestauración es reparar lo que estaba dañado. La Biblia promete que Dios renovará todo. No solo arregla una parte: renueva su creación."
+        "heading": "Punto 2: Una meta final",
+        "body": "Todo río va hacia un final. ¿La historia de la Biblia hacia dónde camina?\n\nCamina hacia una meta: la consumación. Es llegar al final que Dios prometió. El Orinoco termina en un delta, donde el río se abre al Atlántico."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La nueva tierra",
-        "body": "Imagina un lugar sin lágrimas y sin muerte. ¿Cómo crees que sería vivir allí?\n\nLa Biblia habla de un cielo nuevo y una tierra nueva. Allí Dios vivirá con su pueblo. No habrá muerte ni llanto, y habrá justicia. Esa es la esperanza que da la nueva tierra."
+        "heading": "Punto 3: Restauración",
+        "body": "El río termina su viaje en el mar. ¿Qué le pasará a lo dañado al final?\n\nRestauración es reparar lo dañado. La Biblia promete que Dios renovará toda su creación, no solo una parte."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Un mundo renovado",
-        "body": "Una pregunta con truco: ¿la esperanza es escapar del mundo, o que el mundo sea renovado?\n\nLa esperanza mira hacia una creación renovada. No es solo huir del mundo. Dios quiere reparar lo que hizo y lo ama."
+        "heading": "Punto 4: La nueva tierra",
+        "body": "Imagina llegar al final del camino: un lugar sin lágrimas. ¿Cómo sería?\n\nLa Biblia habla de un cielo nuevo y una tierra nueva. Dios vivirá allí con su pueblo. No habrá muerte ni llanto, y habrá justicia."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Un puente de tres oraciones",
-        "body": "Ya casi cerramos la semana. ¿Cómo explicarías en tres oraciones toda la historia?\n\nPrimera: todo empezó con la creación. Segunda: el evangelio anuncia a Cristo. Tercera: la historia camina hacia la nueva tierra. Si dices redención y restauración, cerraste la semana."
+        "heading": "Punto 5: Un mundo renovado",
+        "body": "Una pregunta con truco: ¿la esperanza es escapar del mundo o renovarlo?\n\nLa esperanza mira una creación nueva. No es solo huir del mundo. Dios quiere reparar lo que él ama."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tres frases",
+        "body": "Cuenta el río entero: nacimiento, curso y mar. ¿Cómo lo dirías con Dios?\n\nPrincipio: Dios creó un mundo bueno. Curso: Israel y Cristo traen el rescate. Final: la nueva tierra. Eso es redención."
       }
     ],
-    "summary": "La historia camina hacia la nueva tierra, donde Dios renueva todo y no hay muerte ni llanto.",
+    "summary": "Como el Orinoco llega al mar, la historia llega a la nueva tierra, donde Dios renueva todo.",
     "weekRecap": "Redención: creación y caída, Israel y Cristo, esperanza de la nueva tierra.",
     "priorDayRecap": "Ayer uniste Israel, Cristo y evangelio en un esquema de flechas.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un puente largo sobre un río. En el primer pilar escribe creación. En el segundo pilar escribe evangelio. Al final del puente dibuja la nueva tierra.",
+    "imageBandInstruction": "Dibuja el Orinoco llegando a su delta. En el nacimiento escribe creación. En el curso escribe Israel y Cristo. En el delta dibuja la nueva tierra.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer uniste Israel, Cristo y el evangelio con flechas."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Israel recibió la promesa y Cristo la cumplió."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "El evangelio anuncia esa buena noticia."
+        "text": "Ayer uniste Israel, Cristo y evangelio:"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "promesa, cumplimiento y buena noticia."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Crees que la historia termina con Jesús,"
+        "text": "Hoy el río se acerca a su final"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "o todavía falta una meta final?"
+        "text": "y miramos hacia dónde va la historia."
       },
       {
         "index": 12,
@@ -134,50 +139,50 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: La historia tiene una meta"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Todo río va hacia un final. ¿La historia"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "La Biblia nos dice hacia dónde camina la historia."
+        "text": "de la Biblia hacia dónde camina?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "La meta final se llama consumación."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Consumación significa llegar al final que Dios prometió."
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -190,8 +195,8 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: Una meta final"
       },
       {
         "index": 22,
@@ -204,29 +209,29 @@
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Camina hacia una meta: la consumación."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "¿Qué cosas tristes del mundo te gustaría"
+        "text": "Es llegar al final que Dios prometió."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "que Dios arreglara?"
+        "text": "El Orinoco termina en un delta,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "donde el río se abre al Atlántico."
       },
       {
         "index": 27,
@@ -239,15 +244,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: Restauración"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -261,42 +266,42 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Restauración es reparar lo que estaba dañado."
+        "text": "El río termina su viaje en el mar."
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "La Biblia promete que Dios renovará todo."
+        "text": "¿Qué le pasará a lo dañado al final?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "No solo arregla una parte: renueva su creación."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Restauración"
       },
       {
         "index": 37,
@@ -310,21 +315,21 @@
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Imagina un lugar sin lágrimas y sin muerte."
+        "text": "Restauración es reparar lo dañado."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "¿Cómo crees que sería vivir allí?"
+        "text": "La Biblia promete que Dios renovará"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "toda su creación, no solo una parte."
       },
       {
         "index": 41,
@@ -337,15 +342,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: La nueva tierra"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -359,28 +364,28 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "La Biblia habla de un cielo nuevo y una tierra nueva."
+        "text": "Imagina llegar al final del camino: un"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Allí Dios vivirá con su pueblo."
+        "text": "lugar sin lágrimas. ¿Cómo sería?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "No habrá muerte ni llanto, y habrá justicia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Esa es la esperanza que da la nueva tierra."
+        "text": "________________________________________"
       },
       {
         "index": 49,
@@ -393,8 +398,8 @@
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 4: La nueva tierra"
       },
       {
         "index": 51,
@@ -407,29 +412,29 @@
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Biblia habla de un cielo nuevo"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿la esperanza es escapar"
+        "text": "y una tierra nueva. Dios vivirá allí"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "del mundo, o que el mundo sea renovado?"
+        "text": "con su pueblo. No habrá muerte ni"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "llanto, y habrá justicia."
       },
       {
         "index": 56,
@@ -442,15 +447,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Un mundo renovado"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -464,42 +469,42 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "La esperanza mira hacia una creación renovada."
+        "text": "Una pregunta con truco: ¿la esperanza es"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "No es solo huir del mundo."
+        "text": "escapar del mundo o renovarlo?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Dios quiere reparar lo que hizo y lo ama."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Un mundo renovado"
       },
       {
         "index": 66,
@@ -513,21 +518,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Ya casi cerramos la semana. ¿Cómo explicarías"
+        "text": "La esperanza mira una creación nueva."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "en tres oraciones toda la historia?"
+        "text": "No es solo huir del mundo."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios quiere reparar lo que él ama."
       },
       {
         "index": 70,
@@ -540,15 +545,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Un puente de tres oraciones"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -562,28 +567,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Primera: todo empezó con la creación."
+        "text": "Cuenta el río entero: nacimiento, curso"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Segunda: el evangelio anuncia a Cristo."
+        "text": "y mar. ¿Cómo lo dirías con Dios?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Tercera: la historia camina hacia la nueva tierra."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Si dices redención y restauración, cerraste la semana."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Tres frases"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Principio: Dios creó un mundo bueno."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cómo se llama la meta final de la historia?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Curso: Israel y Cristo traen el rescate."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Caída",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Final: la nueva tierra. Eso es redención."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Creación",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Consumación",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Pacto",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué es la restauración?",
-        "questionId": "d4-q2",
+        "text": "¿Cómo se llama la meta final?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Empezar un diluvio",
-        "questionId": "d4-q2"
+        "text": "A) Caída",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Perder una promesa",
-        "questionId": "d4-q2"
+        "text": "B) Creación",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Escribir un libro",
-        "questionId": "d4-q2"
+        "text": "C) Consumación",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Reparar lo que estaba dañado",
-        "questionId": "d4-q2"
+        "text": "D) Pacto",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué dice la Biblia que Dios hará con el mundo?",
-        "questionId": "d4-q3",
+        "text": "¿Qué es la restauración?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Lo olvidará",
-        "questionId": "d4-q3"
+        "text": "A) Empezar un diluvio",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Lo renovará",
-        "questionId": "d4-q3"
+        "text": "B) Perder una promesa",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Lo dejará igual",
-        "questionId": "d4-q3"
+        "text": "C) Escribir un libro",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Lo esconderá",
-        "questionId": "d4-q3"
+        "text": "D) Reparar lo dañado",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué nombra la esperanza final?",
-        "questionId": "d4-q4",
+        "text": "¿Qué hará Dios con su creación?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,44 +788,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) La nueva tierra",
-        "questionId": "d4-q4"
+        "text": "A) La olvidará",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) El arca",
-        "questionId": "d4-q4"
+        "text": "B) La renovará",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Egipto",
-        "questionId": "d4-q4"
+        "text": "C) La dejará igual",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Un templo viejo",
-        "questionId": "d4-q4"
+        "text": "D) La esconderá",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Dónde termina el Orinoco?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) En un delta junto al Atlántico",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) En una montaña",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) En una cueva",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) En un puente",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Qué no habrá en la nueva tierra?",
         "questionId": "d4-q5",
@@ -845,48 +885,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Justicia",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Dios",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Muerte ni llanto",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Personas",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Con quién vivirá Dios allí?",
         "questionId": "d4-q6",
@@ -899,48 +939,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) Con su pueblo",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Solo con los ángeles",
+        "text": "B) Con nadie",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) Con nadie",
+        "text": "C) Solo con reyes",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) Solo con reyes",
+        "text": "D) Solo con ángeles",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué mira la esperanza bíblica?",
         "questionId": "d4-q7",
@@ -953,50 +993,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Solo huir del mundo",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Volver al diluvio",
+        "text": "B) El diluvio",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Olvidar la historia",
+        "text": "C) Olvidar todo",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Una creación renovada",
+        "text": "D) Una creación nueva",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Con qué idea empieza el puente de tres oraciones?",
+        "text": "¿Cómo empieza el resumen en tres frases?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1007,50 +1047,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Con la nueva tierra",
+        "text": "A) La nueva tierra",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Con la creación",
+        "text": "B) Dios creó un mundo bueno",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Con el diluvio",
+        "text": "C) El diluvio",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Con el templo",
+        "text": "D) Una cueva",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe tu puente de tres oraciones sobre la historia.",
+        "text": "Escribe tu resumen del río en tres frases.",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,48 +1101,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Explica qué esperas de la nueva tierra.",
         "questionId": "d4-w2",
@@ -1113,30 +1137,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
       },
       {
         "index": 140,
@@ -1150,15 +1150,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un puente con creación, evangelio y nueva tierra.",
+        "text": "Dibuja un río con principio, curso y final.",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1167,14 +1175,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
       },
       {
         "index": 144,
@@ -1196,23 +1196,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una escena de la nueva tierra con una etiqueta.",
+        "text": "Dibuja la nueva tierra con una etiqueta.",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,6 +1213,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w4"
       },
       {
         "index": 149,
@@ -1234,53 +1234,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un puente largo sobre un río."
+        "text": "Dibuja el Orinoco llegando a su delta. En el"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "En el primer pilar escribe creación."
+        "text": "nacimiento escribe creación. En el curso"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "En el segundo pilar escribe evangelio."
+        "text": "escribe Israel y Cristo. En el delta dibuja la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Al final del puente dibuja la nueva tierra."
+        "text": "nueva tierra."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1293,7 +1290,7 @@
         "id": "d4-q1",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cómo se llama la meta final de la historia?",
+        "prompt": "¿Cómo se llama la meta final?",
         "choices": [
           "Caída",
           "Creación",
@@ -1303,8 +1300,8 @@
         "answer": "Consumación",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1316,27 +1313,9 @@
           "Empezar un diluvio",
           "Perder una promesa",
           "Escribir un libro",
-          "Reparar lo que estaba dañado"
+          "Reparar lo dañado"
         ],
-        "answer": "Reparar lo que estaba dañado",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d4-q3",
-        "originDay": 4,
-        "type": "mcq",
-        "prompt": "¿Qué dice la Biblia que Dios hará con el mundo?",
-        "choices": [
-          "Lo olvidará",
-          "Lo renovará",
-          "Lo dejará igual",
-          "Lo esconderá"
-        ],
-        "answer": "Lo renovará",
+        "answer": "Reparar lo dañado",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1344,21 +1323,39 @@
         }
       },
       {
-        "id": "d4-q4",
+        "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué nombra la esperanza final?",
+        "prompt": "¿Qué hará Dios con su creación?",
         "choices": [
-          "La nueva tierra",
-          "El arca",
-          "Egipto",
-          "Un templo viejo"
+          "La olvidará",
+          "La renovará",
+          "La dejará igual",
+          "La esconderá"
         ],
-        "answer": "La nueva tierra",
+        "answer": "La renovará",
         "slot": {
           "column": 2,
           "line": 48,
           "index": 100
+        }
+      },
+      {
+        "id": "d4-q4",
+        "originDay": 4,
+        "type": "mcq",
+        "prompt": "¿Dónde termina el Orinoco?",
+        "choices": [
+          "En un delta junto al Atlántico",
+          "En una montaña",
+          "En una cueva",
+          "En un puente"
+        ],
+        "answer": "En un delta junto al Atlántico",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1375,8 +1372,8 @@
         "answer": "Muerte ni llanto",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1386,15 +1383,15 @@
         "prompt": "¿Con quién vivirá Dios allí?",
         "choices": [
           "Con su pueblo",
-          "Solo con los ángeles",
           "Con nadie",
-          "Solo con reyes"
+          "Solo con reyes",
+          "Solo con ángeles"
         ],
         "answer": "Con su pueblo",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1404,44 +1401,44 @@
         "prompt": "¿Qué mira la esperanza bíblica?",
         "choices": [
           "Solo huir del mundo",
-          "Volver al diluvio",
-          "Olvidar la historia",
-          "Una creación renovada"
+          "El diluvio",
+          "Olvidar todo",
+          "Una creación nueva"
         ],
-        "answer": "Una creación renovada",
+        "answer": "Una creación nueva",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Con qué idea empieza el puente de tres oraciones?",
+        "prompt": "¿Cómo empieza el resumen en tres frases?",
         "choices": [
-          "Con la nueva tierra",
-          "Con la creación",
-          "Con el diluvio",
-          "Con el templo"
+          "La nueva tierra",
+          "Dios creó un mundo bueno",
+          "El diluvio",
+          "Una cueva"
         ],
-        "answer": "Con la creación",
+        "answer": "Dios creó un mundo bueno",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe tu puente de tres oraciones sobre la historia.",
+        "prompt": "Escribe tu resumen del río en tres frases.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1451,34 +1448,34 @@
         "prompt": "Explica qué esperas de la nueva tierra.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d4-w3",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja un puente con creación, evangelio y nueva tierra.",
+        "prompt": "Dibuja un río con principio, curso y final.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una escena de la nueva tierra con una etiqueta.",
+        "prompt": "Dibuja la nueva tierra con una etiqueta.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

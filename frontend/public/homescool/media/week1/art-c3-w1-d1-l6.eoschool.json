@@ -14,34 +14,39 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Mirar por piezas",
-        "body": "¿Crees que un dibujo difícil se arma con piezas sencillas?\n\nUn buen dibujo empieza por mirar, no por dibujar. Mona Brookes enseñó a ver un dibujo como piezas sencillas. Esas piezas se llaman OiLS: una letra para cada tipo. Primero las formas grandes; después, los detalles."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nSeguro has dibujado casas y soles. Todo eso se arma con piezas sencillas. Hoy las buscamos en los Médanos de Coro."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: O de redondo, i de punto",
-        "body": "Mira una flor. ¿Con qué formas la dibujarías si solo pudieras usar redondos y puntitos?\n\nLa «O» es una forma redonda, como un círculo. La «i» es un punto o una marca pequeña. Una flor es un círculo grande (O) con un punto al centro (i). Primero va lo grande y luego lo pequeño."
+        "heading": "Punto 2: La O, la forma redonda",
+        "body": "Imagina el sol sobre los Médanos. ¿Qué forma tiene ese sol?\n\nEl sol es una forma redonda. Esa forma se llama O, como la letra. Una O puede ser grande o chiquita."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: L de línea recta",
-        "body": "Sigamos. Piensa en la esquina de una casa. ¿Qué clase de líneas se encuentran ahí?\n\nLa «L» son las líneas rectas. Pueden ser horizontales, verticales o diagonales. Donde dos rectas se encuentran se forma un ángulo. Una casa se arma con rectas y ángulos."
+        "heading": "Punto 3: La i, el punto",
+        "body": "Mira la arena de cerca. ¿Cómo dibujas un granito de arena o una huella?\n\nUn granito de arena es un punto. El punto se llama i, como la letra. Una huella chiquita también es una i."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: S de línea curva",
-        "body": "¿Y el cuello de un cisne? ¿Es recto o hace otra cosa?\n\nLa «S» son las líneas curvas. Pueden ser suaves, onduladas o en espiral. El cuello de un cisne y el borde de una hoja usan S. Las curvas le dan movimiento al dibujo."
+        "heading": "Punto 4: La L, la línea recta",
+        "body": "¿Cómo dibujas el horizonte detrás de las dunas? ¿Es recto o curvo?\n\nEl horizonte es una línea recta. Las rectas se llaman L, como la letra. Van acostadas, paradas o inclinadas."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Las cuatro letras juntas",
-        "body": "Una pregunta con truco: ¿conviene dibujar un objeto usando solo curvas o solo rectas?\n\nEs mejor usar las cuatro letras: O, i, L y S. Una flor tiene O e i; su tallo puede ser L o S. Dibuja primero la forma grande y luego los detalles. Toda la semana practicaremos cada letra con calma."
+        "heading": "Punto 5: La S, la línea curva",
+        "body": "El viento mueve la arena y la deja con ondas. ¿Qué línea dibuja ondas?\n\nLas ondas de la arena son curvas. Las curvas se llaman S, como la letra. También pueden ser suaves o en espiral."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Primero lo grande",
+        "body": "Una pregunta con truco: ¿dibujas primero la huella o la duna entera?\n\nPrimero va lo grande: la duna. Después los detalles, como una huella. Así el dibujo queda en orden."
       }
     ],
-    "summary": "Un dibujo se arma con piezas sencillas: O redondos, i puntos, L rectas y S curvas. Primero lo grande y luego el detalle.",
+    "summary": "Un dibujo se arma con piezas sencillas: O redondas, i puntos, L rectas y S curvas. Primero va lo grande, como las dunas de los Médanos de Coro.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una flor o un pez usando primero O e i. Señala cada forma con su letra: O para redondos, i para puntos. Añade una línea L o una curva S para el tallo o la cola. Revisa que lo grande esté antes que los detalles.",
+    "imageBandInstruction": "Dibuja los Médanos de Coro: duna y sol. Usa S para la duna y O para el sol. Añade huellas con i y un palo con L. Revisa que lo grande vaya primero.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -49,7 +54,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Crees que un dibujo difícil se arma con piezas sencillas?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -62,15 +67,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Punto 1: Mirar por piezas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -83,78 +88,78 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Un buen dibujo empieza por mirar, no por dibujar."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Mona Brookes enseñó a ver un dibujo como piezas sencillas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Esas piezas se llaman OiLS: una letra para cada tipo."
+        "text": "Seguro has dibujado casas y soles."
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Primero las formas grandes; después, los detalles."
+        "text": "Todo eso se arma con piezas sencillas."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy las buscamos en los Médanos de Coro."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "lesson",
-        "text": "Mira una flor. ¿Con qué formas la dibujarías si solo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
         "kind": "lesson",
-        "text": "pudieras usar redondos y puntitos?"
+        "text": "Imagina el sol sobre los Médanos."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué forma tiene ese sol?"
       },
       {
         "index": 17,
@@ -167,15 +172,15 @@
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
@@ -188,99 +193,99 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La O, la forma redonda"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: O de redondo, i de punto"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El sol es una forma redonda."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "La «O» es una forma redonda, como un círculo."
+        "text": "Esa forma se llama O, como la letra."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "La «i» es un punto o una marca pequeña."
+        "text": "Una O puede ser grande o chiquita."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Una flor es un círculo grande (O) con un punto al centro (i)."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "Primero va lo grande y luego lo pequeño."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mira la arena de cerca. ¿Cómo dibujas"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un granito de arena o una huella?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Sigamos. Piensa en la esquina de una casa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "¿Qué clase de líneas se encuentran ahí?"
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -293,8 +298,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La i, el punto"
       },
       {
         "index": 37,
@@ -307,64 +312,64 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un granito de arena es un punto."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "heading",
-        "text": "Punto 3: L de línea recta"
+        "kind": "lesson",
+        "text": "El punto se llama i, como la letra."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una huella chiquita también es una i."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "La «L» son las líneas rectas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Pueden ser horizontales, verticales o diagonales."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "Donde dos rectas se encuentran se forma un ángulo."
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "lesson",
-        "text": "Una casa se arma con rectas y ángulos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo dibujas el horizonte detrás"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "de las dunas? ¿Es recto o curvo?"
       },
       {
         "index": 47,
@@ -377,15 +382,15 @@
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "¿Y el cuello de un cisne? ¿Es recto o hace otra cosa?"
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -398,8 +403,8 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: La L, la línea recta"
       },
       {
         "index": 52,
@@ -412,22 +417,22 @@
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El horizonte es una línea recta."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las rectas se llaman L, como la letra."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "heading",
-        "text": "Punto 4: S de línea curva"
+        "kind": "lesson",
+        "text": "Van acostadas, paradas o inclinadas."
       },
       {
         "index": 56,
@@ -441,49 +446,49 @@
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "La «S» son las líneas curvas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Pueden ser suaves, onduladas o en espiral."
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "El cuello de un cisne y el borde de una hoja usan S."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Las curvas le dan movimiento al dibujo."
+        "text": "El viento mueve la arena y la deja"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con ondas. ¿Qué línea dibuja ondas?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -496,36 +501,36 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿conviene dibujar un objeto"
+        "kind": "heading",
+        "text": "Punto 5: La S, la línea curva"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "usando solo curvas o solo rectas?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las ondas de la arena son curvas."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las curvas se llaman S, como la letra."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "También pueden ser suaves o en espiral."
       },
       {
         "index": 70,
@@ -538,15 +543,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Las cuatro letras juntas"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -560,28 +565,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Es mejor usar las cuatro letras: O, i, L y S."
+        "text": "Una pregunta con truco: ¿dibujas"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Una flor tiene O e i; su tallo puede ser L o S."
+        "text": "primero la huella o la duna entera?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Dibuja primero la forma grande y luego los detalles."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Toda la semana practicaremos cada letra con calma."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -594,8 +599,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Primero lo grande"
       },
       {
         "index": 80,
@@ -608,55 +613,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero va lo grande: la duna."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué forma representa la letra «O» en OiLS?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Después los detalles, como una huella."
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Las formas redondas",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Así el dibujo queda en orden."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Los puntos",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Las líneas rectas",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Las curvas",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -670,8 +663,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué representa la «i» en OiLS?",
-        "questionId": "d1-q2",
+        "text": "¿Qué es la O en OiLS?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -685,32 +678,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Un círculo grande",
-        "questionId": "d1-q2"
+        "text": "A) Una forma redonda",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Una línea recta",
-        "questionId": "d1-q2"
+        "text": "B) Un punto",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Una curva larga",
-        "questionId": "d1-q2"
+        "text": "C) Una recta",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Un punto o marca pequeña",
-        "questionId": "d1-q2"
+        "text": "D) Una curva",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -724,8 +717,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué letra de OiLS son las líneas rectas?",
-        "questionId": "d1-q3",
+        "text": "¿Qué es la i en OiLS?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -739,32 +732,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) S",
-        "questionId": "d1-q3"
+        "text": "A) Un círculo",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) L",
-        "questionId": "d1-q3"
+        "text": "B) Una recta",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) O",
-        "questionId": "d1-q3"
+        "text": "C) Una curva",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) i",
-        "questionId": "d1-q3"
+        "text": "D) Un punto",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -778,8 +771,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué letra de OiLS son las líneas curvas?",
-        "questionId": "d1-q4",
+        "text": "¿Qué letra son las rectas?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -793,46 +786,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) L",
-        "questionId": "d1-q4"
+        "text": "A) S",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) i",
-        "questionId": "d1-q4"
+        "text": "B) L",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) S",
-        "questionId": "d1-q4"
+        "text": "C) O",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) O",
-        "questionId": "d1-q4"
+        "text": "D) i",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué letra son las curvas?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) L",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) i",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) S",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) O",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué se forma donde dos rectas se encuentran?",
+        "text": "¿Qué línea es el horizonte?",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -843,50 +883,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Un punto",
+        "text": "A) Una curva",
         "questionId": "d1-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Una espiral",
+        "text": "B) Un punto",
         "questionId": "d1-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Un círculo",
         "questionId": "d1-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Un ángulo",
+        "text": "D) Una recta",
         "questionId": "d1-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué se dibuja primero en un dibujo con OiLS?",
+        "text": "¿Qué forma tienen las ondas?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -897,50 +937,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) El detalle pequeño",
+        "text": "A) Rectas",
         "questionId": "d1-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) La forma grande",
+        "text": "B) Curvas",
         "questionId": "d1-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) El adorno",
+        "text": "C) Puntos",
         "questionId": "d1-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) La sombra",
+        "text": "D) Círculos",
         "questionId": "d1-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cómo se arma una flor sencilla con OiLS?",
+        "text": "¿Qué es un granito de arena al dibujar?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -951,50 +991,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Círculo grande y punto al centro",
+        "text": "A) Un punto i",
         "questionId": "d1-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Solo rectas",
+        "text": "B) Una O",
         "questionId": "d1-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Solo curvas largas",
+        "text": "C) Una L",
         "questionId": "d1-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Solo puntos",
+        "text": "D) Una S",
         "questionId": "d1-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué usa el cuello de un cisne?",
+        "text": "¿Qué se dibuja primero?",
         "questionId": "d1-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1005,50 +1045,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Una línea L",
+        "text": "A) El detalle",
         "questionId": "d1-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
-        "text": "B) Un punto i",
+        "text": "B) La huella",
         "questionId": "d1-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
-        "text": "C) Una curva S",
+        "text": "C) Lo grande",
         "questionId": "d1-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
-        "text": "D) Un ángulo",
+        "text": "D) La sombra",
         "questionId": "d1-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe qué significa cada letra de OiLS con tus palabras.",
+        "text": "Escribe qué significa cada letra de OiLS.",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,50 +1099,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué se dibuja primero lo grande y luego lo pequeño.",
+        "text": "Cuenta por qué va primero lo grande.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1111,30 +1135,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
       },
       {
         "index": 140,
@@ -1148,15 +1148,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja un cuadro con las cuatro letras: O, i, L y S.",
+        "text": "Dibuja un cuadro con O, i, L y S.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1165,14 +1173,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
       },
       {
         "index": 144,
@@ -1194,23 +1194,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una flor y señala su círculo O y su punto i.",
+        "text": "Dibuja una duna con un sol y una huella.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1219,6 +1211,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 149,
@@ -1232,53 +1232,50 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una flor o un pez usando primero O e i."
+        "text": "Dibuja los Médanos de Coro: duna y sol."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Señala cada forma con su letra: O para redondos, i para puntos."
+        "text": "Usa S para la duna y O para el sol. Añade"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Añade una línea L o una curva S para el tallo o la cola."
+        "text": "huellas con i y un palo con L. Revisa que lo"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que lo grande esté antes que los detalles."
+        "text": "grande vaya primero."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1291,32 +1288,14 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué forma representa la letra «O» en OiLS?",
+        "prompt": "¿Qué es la O en OiLS?",
         "choices": [
-          "Las formas redondas",
-          "Los puntos",
-          "Las líneas rectas",
-          "Las curvas"
+          "Una forma redonda",
+          "Un punto",
+          "Una recta",
+          "Una curva"
         ],
-        "answer": "Las formas redondas",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d1-q2",
-        "originDay": 1,
-        "type": "mcq",
-        "prompt": "¿Qué representa la «i» en OiLS?",
-        "choices": [
-          "Un círculo grande",
-          "Una línea recta",
-          "Una curva larga",
-          "Un punto o marca pequeña"
-        ],
-        "answer": "Un punto o marca pequeña",
+        "answer": "Una forma redonda",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1324,10 +1303,28 @@
         }
       },
       {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué es la i en OiLS?",
+        "choices": [
+          "Un círculo",
+          "Una recta",
+          "Una curva",
+          "Un punto"
+        ],
+        "answer": "Un punto",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS son las líneas rectas?",
+        "prompt": "¿Qué letra son las rectas?",
         "choices": [
           "S",
           "L",
@@ -1337,15 +1334,15 @@
         "answer": "L",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué letra de OiLS son las líneas curvas?",
+        "prompt": "¿Qué letra son las curvas?",
         "choices": [
           "L",
           "i",
@@ -1354,129 +1351,129 @@
         ],
         "answer": "S",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué se forma donde dos rectas se encuentran?",
+        "prompt": "¿Qué línea es el horizonte?",
         "choices": [
+          "Una curva",
           "Un punto",
-          "Una espiral",
           "Un círculo",
-          "Un ángulo"
+          "Una recta"
         ],
-        "answer": "Un ángulo",
+        "answer": "Una recta",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué se dibuja primero en un dibujo con OiLS?",
+        "prompt": "¿Qué forma tienen las ondas?",
         "choices": [
-          "El detalle pequeño",
-          "La forma grande",
-          "El adorno",
-          "La sombra"
+          "Rectas",
+          "Curvas",
+          "Puntos",
+          "Círculos"
         ],
-        "answer": "La forma grande",
+        "answer": "Curvas",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se arma una flor sencilla con OiLS?",
+        "prompt": "¿Qué es un granito de arena al dibujar?",
         "choices": [
-          "Círculo grande y punto al centro",
-          "Solo rectas",
-          "Solo curvas largas",
-          "Solo puntos"
+          "Un punto i",
+          "Una O",
+          "Una L",
+          "Una S"
         ],
-        "answer": "Círculo grande y punto al centro",
+        "answer": "Un punto i",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué usa el cuello de un cisne?",
+        "prompt": "¿Qué se dibuja primero?",
         "choices": [
-          "Una línea L",
-          "Un punto i",
-          "Una curva S",
-          "Un ángulo"
+          "El detalle",
+          "La huella",
+          "Lo grande",
+          "La sombra"
         ],
-        "answer": "Una curva S",
+        "answer": "Lo grande",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe qué significa cada letra de OiLS con tus palabras.",
+        "prompt": "Escribe qué significa cada letra de OiLS.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Explica por qué se dibuja primero lo grande y luego lo pequeño.",
+        "prompt": "Cuenta por qué va primero lo grande.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un cuadro con las cuatro letras: O, i, L y S.",
+        "prompt": "Dibuja un cuadro con O, i, L y S.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja una flor y señala su círculo O y su punto i.",
+        "prompt": "Dibuja una duna con un sol y una huella.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

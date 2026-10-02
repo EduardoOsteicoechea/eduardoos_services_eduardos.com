@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: La columna es una cadena",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer miramos el cráneo, la caja de huesos de la cabeza.\nSu cúpula fija protege el cerebro.\nLa mandíbula se mueve para hablar y masticar.\n\nTe agachas a recoger un lápiz. ¿Tu espalda es un palo rígido o puede doblarse? ¿Por qué?\n\nLa columna no es un palo largo. Es una cadena de vértebras apiladas. Sostiene el cuerpo erguido. Por eso tu espalda se dobla y vuelve a enderezarse."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste el cráneo, caja de huesos que cuida el cerebro. La mandíbula se mueve para hablar y masticar. Hoy sigues hacia la espalda."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La médula espinal",
-        "body": "Dentro de esa cadena hay un camino. ¿Qué crees que viaja por ahí?\n\nDentro de la columna va la médula espinal. Es el cable de mensajes entre cerebro y músculos. La columna la protege, como un tubo de huesos."
+        "heading": "Punto 2: La columna es una cadena",
+        "body": "Una roca del Autana no se dobla. Y tu espalda al recoger un lápiz, ¿sí?\n\nEl Autana es roca: no se dobla. Tu columna es una cadena de vértebras apiladas: te sostiene erguido, pero se dobla y se endereza."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Cuello, pecho y espalda baja",
-        "body": "Gira la cabeza a un lado. ¿Qué vértebras te dejan hacerlo: las del cuello o las de la espalda baja?\n\nLas vértebras del cuello son más pequeñas. Gracias a ellas giras la cabeza. Las del pecho forman la espalda de la caja torácica. Las de abajo son más grandes y cargan peso al caminar."
+        "heading": "Punto 3: La médula espinal",
+        "body": "Una cueva atraviesa el Cerro Autana. ¿Qué viaja por dentro de tu columna?\n\nPor dentro va la médula espinal. Es como la cueva que cruza el Autana, pero es un cable de mensajes entre el cerebro y los músculos."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Amortiguadores entre vértebras",
-        "body": "Entre un hueso y otro de la columna hay algo blando. ¿Para qué crees que sirve?\n\nEntre las vértebras hay amortiguadores. Ayudan a doblarte sin aplastar los nervios. Por eso puedes inclinarte y volver erguido."
+        "heading": "Punto 4: Cuello, pecho y espalda baja",
+        "body": "Gira la cabeza. ¿Qué vértebras te dejan hacerlo: las del cuello o las de abajo?\n\nLas vértebras del cuello son pequeñas. Gracias a ellas giras la cabeza. Las de abajo son más grandes: cargan peso, como la base del Autana."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cambian según su lugar",
-        "body": "Una pregunta con truco: ¿todas las vértebras son iguales?\n\nNo: cambian de forma según su lugar. Las del cuello son pequeñas y las de abajo, grandes. Todas juntas protegen la médula espinal."
+        "heading": "Punto 5: Amortiguadores entre vértebras",
+        "body": "Una roca no tiene piezas blandas. Entre las vértebras sí hay algo. ¿Para qué?\n\nEntre las vértebras hay amortiguadores. Te dejan doblarte sin aplastar los nervios. Por eso vuelves erguido, no rígido como una roca."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cambian según su lugar",
+        "body": "Una pregunta con truco: ¿todas las vértebras son iguales?\n\nNo: cambian según su lugar. Las del cuello son pequeñas y las de abajo, grandes. Todas juntas protegen la médula, como la roca rodea su cueva."
       }
     ],
-    "summary": "La columna es una cadena de vértebras que sostiene el cuerpo y protege la médula espinal.",
+    "summary": "La columna es una cadena de vértebras que sostiene el cuerpo y guarda la médula, como el Autana guarda su cueva.",
     "memoryPhrase": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones.",
     "weekRecap": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones. Esta semana nombramos huesos del tronco que sostienen y protegen órganos delicados.",
     "priorDayRecap": "Ayer profundizaste el cráneo: cúpula fija que protege el cerebro y mandíbula móvil para hablar y masticar.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un niño agachado a recoger un lápiz. Dibuja su columna como una cadena de vértebras. Rotula cuello, pecho y espalda baja. Pinta la médula espinal por dentro de la columna.",
+    "imageBandInstruction": "Dibuja a un niño que se agacha por un lápiz. Dibuja su columna como cadena de vértebras. Pinta la médula por dentro, como la cueva del Autana. Rotula cuello y espalda.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer miramos el cráneo, la caja de huesos de la cabeza."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Su cúpula fija protege el cerebro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "La mandíbula se mueve para hablar y masticar."
+        "text": "Ayer viste el cráneo, caja de huesos"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "que cuida el cerebro. La mandíbula"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Te agachas a recoger un lápiz. ¿Tu espalda es un palo"
+        "text": "se mueve para hablar y masticar."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "rígido o puede doblarse? ¿Por qué?"
+        "text": "Hoy sigues hacia la espalda."
       },
       {
         "index": 12,
@@ -135,15 +140,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -156,85 +161,85 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: La columna es una cadena"
+        "kind": "lesson",
+        "text": "Una roca del Autana no se dobla."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y tu espalda al recoger un lápiz, ¿sí?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "La columna no es un palo largo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Es una cadena de vértebras apiladas."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Sostiene el cuerpo erguido."
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Por eso tu espalda se dobla y vuelve a enderezarse."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La columna es una cadena"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El Autana es roca: no se dobla."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tu columna es una cadena de vértebras"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Dentro de esa cadena hay un camino."
+        "text": "apiladas: te sostiene erguido,"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "¿Qué crees que viaja por ahí?"
+        "text": "pero se dobla y se endereza."
       },
       {
         "index": 28,
@@ -247,71 +252,71 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 2: La médula espinal"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una cueva atraviesa el Cerro Autana."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Dentro de la columna va la médula espinal."
+        "text": "¿Qué viaja por dentro de tu columna?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Es el cable de mensajes entre cerebro y músculos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "La columna la protege, como un tubo de huesos."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: La médula espinal"
       },
       {
         "index": 39,
@@ -325,28 +330,28 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Gira la cabeza a un lado. ¿Qué vértebras te dejan"
+        "text": "Por dentro va la médula espinal."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "hacerlo: las del cuello o las de la espalda baja?"
+        "text": "Es como la cueva que cruza el Autana,"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "pero es un cable de mensajes entre"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el cerebro y los músculos."
       },
       {
         "index": 44,
@@ -359,57 +364,57 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: Cuello, pecho y espalda baja"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Las vértebras del cuello son más pequeñas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Gracias a ellas giras la cabeza."
+        "text": "Gira la cabeza. ¿Qué vértebras te dejan"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "Las del pecho forman la espalda de la caja torácica."
+        "text": "hacerlo: las del cuello o las de abajo?"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Las de abajo son más grandes y cargan peso al caminar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -422,99 +427,99 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Cuello, pecho y espalda baja"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Entre un hueso y otro de la columna hay algo blando."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "¿Para qué crees que sirve?"
+        "text": "Las vértebras del cuello son pequeñas."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Gracias a ellas giras la cabeza."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las de abajo son más grandes:"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cargan peso, como la base del Autana."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "heading",
-        "text": "Punto 4: Amortiguadores entre vértebras"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Entre las vértebras hay amortiguadores."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Ayudan a doblarte sin aplastar los nervios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Por eso puedes inclinarte y volver erguido."
+        "text": "Una roca no tiene piezas blandas. Entre"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "las vértebras sí hay algo. ¿Para qué?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
@@ -527,8 +532,8 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿todas las vértebras son iguales?"
+        "kind": "heading",
+        "text": "Punto 5: Amortiguadores entre vértebras"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Entre las vértebras hay amortiguadores."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Te dejan doblarte sin aplastar"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cambian según su lugar"
+        "kind": "lesson",
+        "text": "los nervios. Por eso vuelves erguido,"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "no rígido como una roca."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "No: cambian de forma según su lugar."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Las del cuello son pequeñas y las de abajo, grandes."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Todas juntas protegen la médula espinal."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Una pregunta con truco: ¿todas las"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vértebras son iguales?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué es la columna vertebral?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Un solo hueso largo",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Una cadena de vértebras",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cambian según su lugar"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Una parte del cráneo",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Un músculo de la espalda",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "No: cambian según su lugar."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Las del cuello son pequeñas y las de"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué protege la columna?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "abajo, grandes. Todas juntas protegen"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) El cerebro",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "la médula, como la roca rodea su cueva."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) El corazón",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) La médula espinal",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Los pulmones",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué es la médula espinal?",
-        "questionId": "d3-q3",
+        "text": "¿Qué es la columna vertebral?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Un hueso del cuello",
-        "questionId": "d3-q3"
+        "text": "A) Un solo hueso largo",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Un amortiguador",
-        "questionId": "d3-q3"
+        "text": "B) Una cadena de vértebras apiladas",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Una costilla",
-        "questionId": "d3-q3"
+        "text": "C) Una parte del cráneo",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Cable de mensajes cerebro-músculos",
-        "questionId": "d3-q3"
+        "text": "D) Un músculo de la espalda",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué vértebras te dejan girar la cabeza?",
-        "questionId": "d3-q4",
+        "text": "¿Qué va por dentro de la columna?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,44 +777,145 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Las de abajo",
-        "questionId": "d3-q4"
+        "text": "A) El cerebro",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Las del cuello",
-        "questionId": "d3-q4"
+        "text": "B) El corazón",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Las del pecho",
-        "questionId": "d3-q4"
+        "text": "C) La médula espinal",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Ninguna",
-        "questionId": "d3-q4"
+        "text": "D) Los pulmones",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es la médula espinal?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Un hueso del cuello",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Un amortiguador",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Una costilla",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Cable de mensajes cerebro-músculos",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué vértebras giran la cabeza?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Las de abajo",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Las del cuello",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Las del pecho",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Ninguna",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué hacen las vértebras de abajo?",
         "questionId": "d3-q5",
@@ -846,48 +928,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Cargan peso al caminar",
+        "text": "A) Cargan peso",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Giran la cabeza",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Protegen el cerebro",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Abren la boca",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué hay entre las vértebras?",
         "questionId": "d3-q6",
@@ -900,48 +982,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Músculos del brazo",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Piel",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Amortiguadores",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Cerebro",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "¿Qué permiten los amortiguadores?",
         "questionId": "d3-q7",
@@ -954,102 +1036,48 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Doblarte sin aplastar los nervios",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Respirar hondo",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Masticar pan",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Crecer el cráneo",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
-        "kind": "question",
-        "text": "¿Son iguales todas las vértebras?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Sí, todas iguales",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Sí, son círculos",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Solo en el cuello",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) No, cambian según su lugar",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
         "text": "Escribe cómo la columna protege la médula.",
         "questionId": "d3-w1",
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué la espalda se dobla sin romperse.",
+        "text": "Explica por qué tu espalda se dobla y la roca",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1116,50 +1128,42 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "no.",
         "questionId": "d3-w2"
       },
       {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja tres vértebras apiladas con la médula dentro.",
+        "text": "Dibuja tres vértebras con la médula dentro.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,22 +1172,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 145,
@@ -1213,7 +1201,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja cuello, pecho y espalda baja con sus rótulos.",
+        "text": "Dibuja cuello, pecho y espalda baja con",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1227,8 +1215,8 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "rótulos.",
         "questionId": "d3-w4"
       },
       {
@@ -1251,44 +1239,43 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja a un niño que se agacha por un"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a un niño agachado a recoger un lápiz."
+        "text": "lápiz. Dibuja su columna como cadena de"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja su columna como una cadena de vértebras."
+        "text": "vértebras. Pinta la médula por dentro,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula cuello, pecho y espalda baja."
+        "text": "como la cueva del Autana. Rotula cuello y"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Pinta la médula espinal por dentro de la columna."
+        "text": "espalda."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
@@ -1297,22 +1284,22 @@
         "prompt": "¿Qué es la columna vertebral?",
         "choices": [
           "Un solo hueso largo",
-          "Una cadena de vértebras",
+          "Una cadena de vértebras apiladas",
           "Una parte del cráneo",
           "Un músculo de la espalda"
         ],
-        "answer": "Una cadena de vértebras",
+        "answer": "Una cadena de vértebras apiladas",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué protege la columna?",
+        "prompt": "¿Qué va por dentro de la columna?",
         "choices": [
           "El cerebro",
           "El corazón",
@@ -1322,8 +1309,8 @@
         "answer": "La médula espinal",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1339,16 +1326,16 @@
         ],
         "answer": "Cable de mensajes cerebro-músculos",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué vértebras te dejan girar la cabeza?",
+        "prompt": "¿Qué vértebras giran la cabeza?",
         "choices": [
           "Las de abajo",
           "Las del cuello",
@@ -1357,9 +1344,9 @@
         ],
         "answer": "Las del cuello",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1368,16 +1355,16 @@
         "type": "mcq",
         "prompt": "¿Qué hacen las vértebras de abajo?",
         "choices": [
-          "Cargan peso al caminar",
+          "Cargan peso",
           "Giran la cabeza",
           "Protegen el cerebro",
           "Abren la boca"
         ],
-        "answer": "Cargan peso al caminar",
+        "answer": "Cargan peso",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1394,8 +1381,8 @@
         "answer": "Amortiguadores",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1412,26 +1399,8 @@
         "answer": "Doblarte sin aplastar los nervios",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Son iguales todas las vértebras?",
-        "choices": [
-          "Sí, todas iguales",
-          "Sí, son círculos",
-          "Solo en el cuello",
-          "No, cambian según su lugar"
-        ],
-        "answer": "No, cambian según su lugar",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1441,39 +1410,39 @@
         "prompt": "Escribe cómo la columna protege la médula.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué la espalda se dobla sin romperse.",
+        "prompt": "Explica por qué tu espalda se dobla y la roca no.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja tres vértebras apiladas con la médula dentro.",
+        "prompt": "Dibuja tres vértebras con la médula dentro.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja cuello, pecho y espalda baja con sus rótulos.",
+        "prompt": "Dibuja cuello, pecho y espalda baja con rótulos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

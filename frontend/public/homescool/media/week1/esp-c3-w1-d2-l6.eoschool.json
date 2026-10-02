@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Sustantivos comunes y propios",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos que cada palabra tiene su propio trabajo.\nEl sustantivo nombra y el verbo dice lo que alguien hace.\nEl pronombre ocupa el lugar de un nombre.\n\nAhora te pregunto: «ciudad» y «Barquisimeto» nombran lugares. ¿Son iguales o se escriben de forma distinta?\n\n«Ciudad» es un sustantivo común: sirve para cualquier ciudad. «Barquisimeto» es un sustantivo propio: es una ciudad concreta. Los nombres propios siempre empiezan con mayúscula. Tu nombre y el de tu calle también son propios."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que cada palabra tiene su propio trabajo, como cada explorador en la Sierra Nevada."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Las palabras se ponen de acuerdo",
-        "body": "Imagina que llegan más casas. ¿Cómo dirías ahora «una casa bonita» en plural?\n\nSe dice «unas casas bonitas». Si hay varias casas, todas las palabras pasan a plural. «Unas», «casas» y «bonitas» dicen lo mismo: son varias. A eso se le llama concordar."
+        "heading": "Punto 2: Nombre común y nombre propio",
+        "body": "«Montaña» y «Pico Bolívar» nombran montañas. ¿Son iguales los dos?\n\n«Montaña» es un nombre común: sirve para cualquier montaña. «Pico Bolívar» es un nombre propio: es una montaña concreta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El verbo cambia según quién actúa",
-        "body": "Mira: «yo canto». Si canta tu amiga, ¿cómo lo dices? ¿Y si cantas tú?\n\nSe dice: yo canto, tú cantas, ella canta. El final del verbo cambia según quién hace la acción. La parte de adelante, «cant-», siempre se queda igual. Con «bailar» pasa igual: bailo, bailas, baila."
+        "heading": "Punto 3: Las palabras se ponen de acuerdo",
+        "body": "Si llegan muchos frailejones al valle, ¿cómo dices «el frailejón alto»?\n\nDices «los frailejones altos». Si hay varios, todas las palabras pasan a plural y se ponen de acuerdo."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El pronombre evita repetir",
-        "body": "Un problema: «Sofía pinta un árbol. Sofía regala el árbol.» Suena repetido. ¿Cómo lo arreglarías?\n\nPuedes decir: «Sofía pinta un árbol. Ella lo regala.» «Ella» ocupa el lugar de Sofía. «Lo» ocupa el lugar del árbol. Los pronombres nos ayudan a no repetir nombres."
+        "heading": "Punto 4: El verbo cambia",
+        "body": "Mira: «yo subo». Si sube tu amiga, ¿cómo lo dices? ¿Y si subes tú?\n\nDices: yo subo, tú subes, ella sube. El final cambia según quién sube. La parte «sub-» se queda igual."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cuidado con las palabras cortas",
-        "body": "Una pregunta con truco: «ser» y «estar», ¿son sustantivos o verbos?\n\nSon verbos, aunque sean cortos. «Soy» y «está» dicen quién es alguien o cómo está. Un sustantivo nombra; un verbo cuenta lo que pasa o es."
+        "heading": "Punto 5: El pronombre evita repetir",
+        "body": "«Sofía sube. Sofía mira la nieve.» Suena repetido. ¿Cómo lo arreglas?\n\nDices: «Sofía sube. Ella la mira.» «Ella» ocupa el lugar de Sofía, como un compañero que la reemplaza."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cuidado con las palabras cortas",
+        "body": "Una pregunta con truco: «ser» y «estar», ¿son nombres o son verbos?\n\nSon verbos, aunque sean cortos. «Soy andino» y «estoy en la cima» dicen quién eres y dónde estás."
       }
     ],
-    "summary": "El sustantivo nombra, el verbo dice qué pasa y el pronombre ocupa el lugar de un nombre.",
+    "summary": "En la Sierra Nevada cada palabra tiene su trabajo: nombrar, actuar o reemplazar.",
     "memoryPhrase": "**Sustantivo**, **pronombre**, **verbo**, **adverbio**, **conjunción**, **interjección**, **preposición**, **adjetivo**, **artículo**.",
     "weekRecap": "Nueve categorías: sustantivo, pronombre, verbo, adverbio, conjunción, interjección, preposición, adjetivo, artículo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a tu familia haciendo algo en casa. Escribe el nombre propio de cada persona. Rotula tres verbos que muestren qué hace cada uno. Usa «él» o «ella» para no repetir un nombre.",
+    "imageBandInstruction": "Dibuja una montaña con tres cumbres. En cada cumbre escribe una palabra distinta: un nombre, un verbo y un pronombre. Revisa que cada palabra haga su trabajo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,57 +90,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos que cada palabra tiene su propio trabajo."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "El sustantivo nombra y el verbo dice lo que alguien hace."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "El pronombre ocupa el lugar de un nombre."
+        "text": "Ayer viste que cada palabra tiene"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "su propio trabajo, como cada"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Ahora te pregunto: «ciudad» y «Barquisimeto» nombran lugares."
+        "text": "explorador en la Sierra Nevada."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Son iguales o se escriben de forma distinta?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -148,85 +153,85 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Sustantivos comunes y propios"
+        "kind": "lesson",
+        "text": "«Montaña» y «Pico Bolívar» nombran"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "montañas. ¿Son iguales los dos?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "«Ciudad» es un sustantivo común: sirve para cualquier ciudad."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "«Barquisimeto» es un sustantivo propio: es una ciudad concreta."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Los nombres propios siempre empiezan con mayúscula."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Tu nombre y el de tu calle también son propios."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Nombre común y nombre propio"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Montaña» es un nombre común:"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sirve para cualquier montaña."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Imagina que llegan más casas. ¿Cómo dirías ahora"
+        "text": "«Pico Bolívar» es un nombre propio:"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "«una casa bonita» en plural?"
+        "text": "es una montaña concreta."
       },
       {
         "index": 27,
@@ -239,57 +244,57 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Las palabras se ponen de acuerdo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si llegan muchos frailejones al valle,"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Se dice «unas casas bonitas»."
+        "text": "¿cómo dices «el frailejón alto»?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Si hay varias casas, todas las palabras pasan a plural."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "«Unas», «casas» y «bonitas» dicen lo mismo: son varias."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "A eso se le llama concordar."
+        "text": "________________________________________"
       },
       {
         "index": 36,
@@ -302,8 +307,8 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: Las palabras se ponen de acuerdo"
       },
       {
         "index": 38,
@@ -316,22 +321,22 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «los frailejones altos»."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Mira: «yo canto». Si canta tu amiga, ¿cómo lo dices?"
+        "text": "Si hay varios, todas las palabras"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Y si cantas tú?"
+        "text": "pasan a plural y se ponen de acuerdo."
       },
       {
         "index": 42,
@@ -344,246 +349,246 @@
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: El verbo cambia según quién actúa"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mira: «yo subo». Si sube tu amiga,"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Se dice: yo canto, tú cantas, ella canta."
+        "text": "¿cómo lo dices? ¿Y si subes tú?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "El final del verbo cambia según quién hace la acción."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "La parte de adelante, «cant-», siempre se queda igual."
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Con «bailar» pasa igual: bailo, bailas, baila."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El verbo cambia"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices: yo subo, tú subes, ella sube."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El final cambia según quién sube."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "Un problema: «Sofía pinta un árbol. Sofía regala el árbol.»"
+        "text": "La parte «sub-» se queda igual."
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "Suena repetido. ¿Cómo lo arreglarías?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: El pronombre evita repetir"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sofía sube. Sofía mira la nieve.»"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Puedes decir: «Sofía pinta un árbol. Ella lo regala.»"
+        "text": "Suena repetido. ¿Cómo lo arreglas?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "«Ella» ocupa el lugar de Sofía."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "«Lo» ocupa el lugar del árbol."
+        "text": "________________________________________"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Los pronombres nos ayudan a no repetir nombres."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: El pronombre evita repetir"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices: «Sofía sube. Ella la mira.»"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Ella» ocupa el lugar de Sofía,"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "Una pregunta con truco: «ser» y «estar», ¿son"
+        "text": "como un compañero que la reemplaza."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "sustantivos o verbos?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cuidado con las palabras cortas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: «ser» y «estar»,"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Son verbos, aunque sean cortos."
+        "text": "¿son nombres o son verbos?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "«Soy» y «está» dicen quién es alguien o cómo está."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Un sustantivo nombra; un verbo cuenta lo que pasa o es."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -596,8 +601,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Cuidado con las palabras cortas"
       },
       {
         "index": 80,
@@ -610,55 +615,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son verbos, aunque sean cortos."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuál de estas palabras es un sustantivo propio?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "«Soy andino» y «estoy en la cima»"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) ciudad",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "dicen quién eres y dónde estás."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) cantar",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) ella",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Barquisimeto",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -672,8 +665,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cómo se dice «una casa bonita» en plural?",
-        "questionId": "d2-q2",
+        "text": "¿Cuál es un nombre propio?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -687,32 +680,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) una casas bonita",
-        "questionId": "d2-q2"
+        "text": "A) montaña",
+        "questionId": "d2-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) unas casas bonitas",
-        "questionId": "d2-q2"
+        "text": "B) laguna",
+        "questionId": "d2-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) unas casa bonitas",
-        "questionId": "d2-q2"
+        "text": "C) nieve",
+        "questionId": "d2-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) una casa bonitas",
-        "questionId": "d2-q2"
+        "text": "D) Pico Bolívar",
+        "questionId": "d2-q1"
       },
       {
         "index": 93,
@@ -726,8 +719,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "Completa: «yo canto», «tú ___», «ella canta».",
-        "questionId": "d2-q3",
+        "text": "¿Cuál es un nombre común?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +734,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) canto",
-        "questionId": "d2-q3"
+        "text": "A) Pico Bolívar",
+        "questionId": "d2-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) cantan",
-        "questionId": "d2-q3"
+        "text": "B) montaña",
+        "questionId": "d2-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) cantas",
-        "questionId": "d2-q3"
+        "text": "C) Mérida",
+        "questionId": "d2-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) cantamos",
-        "questionId": "d2-q3"
+        "text": "D) Sofía",
+        "questionId": "d2-q2"
       },
       {
         "index": 99,
@@ -780,8 +773,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué hace un pronombre como «lo» o «ella»?",
-        "questionId": "d2-q4",
+        "text": "«El frailejón alto», ¿cómo va en plural?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +788,93 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Dice cómo es una cosa",
-        "questionId": "d2-q4"
+        "text": "A) los frailejón alto",
+        "questionId": "d2-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Une dos ideas",
-        "questionId": "d2-q4"
+        "text": "B) el frailejones altos",
+        "questionId": "d2-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Muestra una emoción",
-        "questionId": "d2-q4"
+        "text": "C) los frailejones altos",
+        "questionId": "d2-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Ocupa el lugar de un nombre",
-        "questionId": "d2-q4"
+        "text": "D) los frailejones alto",
+        "questionId": "d2-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Si hay varios, ¿qué pasa con las palabras?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Solo cambia el nombre",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Ninguna cambia",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Solo cambia el adjetivo",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Todas pasan a plural",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Qué clase de palabra es «ser»?",
+        "text": "¿Qué parte del verbo «subo» no cambia?",
         "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,50 +885,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
-        "text": "A) Un sustantivo",
+        "text": "A) -o",
         "questionId": "d2-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
-        "text": "B) Un verbo",
+        "text": "B) sub-",
         "questionId": "d2-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
-        "text": "C) Un pronombre",
+        "text": "C) yo",
         "questionId": "d2-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
-        "text": "D) Un adjetivo",
+        "text": "D) -es",
         "questionId": "d2-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "En «Ella lo regala», ¿a quién sustituye «ella»?",
+        "text": "¿Cómo dices «ella» con el verbo subir?",
         "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
@@ -899,50 +939,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) A Sofía",
+        "text": "A) ella sube",
         "questionId": "d2-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
-        "text": "B) Al árbol",
+        "text": "B) ella subo",
         "questionId": "d2-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
-        "text": "C) A pinta",
+        "text": "C) ella subes",
         "questionId": "d2-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
-        "text": "D) A regala",
+        "text": "D) ella subimos",
         "questionId": "d2-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Con qué letra empieza un sustantivo propio?",
+        "text": "¿Qué palabra ocupa el lugar de Sofía?",
         "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,104 +993,50 @@
         }
       },
       {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Con minúscula",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Con un número",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Con mayúscula",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Con una tilde",
-        "questionId": "d2-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "¿Cuál de estas oraciones usa un pronombre?",
-        "questionId": "d2-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Nieve",
+        "questionId": "d2-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Ella lo regala.",
-        "questionId": "d2-q8"
+        "text": "B) Monte",
+        "questionId": "d2-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Sofía pinta un árbol.",
-        "questionId": "d2-q8"
+        "text": "C) Ella",
+        "questionId": "d2-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) La casa bonita.",
-        "questionId": "d2-q8"
+        "text": "D) Sube",
+        "questionId": "d2-q7"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Un perro pequeño.",
-        "questionId": "d2-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Escribe un sustantivo común y uno propio de tu barrio.",
+        "text": "Escribe un nombre común y uno propio de",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1059,6 +1045,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "tu barrio.",
+        "questionId": "d2-w1"
       },
       {
         "index": 131,
@@ -1080,31 +1074,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Explica por qué «unas casas bonitas» está bien escrito.",
+        "text": "Cuenta con tus palabras para qué sirve un",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1113,6 +1091,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "pronombre.",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 137,
@@ -1126,39 +1120,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja un esquema: yo, tú y ella con el verbo «cantar».",
+        "text": "Dibuja dos columnas: nombre común y",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,50 +1139,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "nombre propio.",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja dos columnas: sustantivo común y sustantivo propio.",
+        "text": "Dibuja un esquema: yo, tú y ella con el verbo",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1223,102 +1185,111 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "subir.",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a tu familia haciendo algo en casa."
+        "text": "Dibuja una montaña con tres cumbres. En"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe el nombre propio de cada persona."
+        "text": "cada cumbre escribe una palabra distinta:"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula tres verbos que muestren qué hace cada uno."
+        "text": "un nombre, un verbo y un pronombre."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Usa «él» o «ella» para no repetir un nombre."
+        "text": "Revisa que cada palabra haga su trabajo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuál de estas palabras es un sustantivo propio?",
+        "prompt": "¿Cuál es un nombre propio?",
         "choices": [
-          "ciudad",
-          "cantar",
-          "ella",
-          "Barquisimeto"
+          "montaña",
+          "laguna",
+          "nieve",
+          "Pico Bolívar"
         ],
-        "answer": "Barquisimeto",
-        "slot": {
-          "column": 2,
-          "line": 30,
-          "index": 82
-        }
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cómo se dice «una casa bonita» en plural?",
-        "choices": [
-          "una casas bonita",
-          "unas casas bonitas",
-          "unas casa bonitas",
-          "una casa bonitas"
-        ],
-        "answer": "unas casas bonitas",
+        "answer": "Pico Bolívar",
         "slot": {
           "column": 2,
           "line": 36,
@@ -1326,17 +1297,17 @@
         }
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Completa: «yo canto», «tú ___», «ella canta».",
+        "prompt": "¿Cuál es un nombre común?",
         "choices": [
-          "canto",
-          "cantan",
-          "cantas",
-          "cantamos"
+          "Pico Bolívar",
+          "montaña",
+          "Mérida",
+          "Sofía"
         ],
-        "answer": "cantas",
+        "answer": "montaña",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1344,17 +1315,17 @@
         }
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué hace un pronombre como «lo» o «ella»?",
+        "prompt": "«El frailejón alto», ¿cómo va en plural?",
         "choices": [
-          "Dice cómo es una cosa",
-          "Une dos ideas",
-          "Muestra una emoción",
-          "Ocupa el lugar de un nombre"
+          "los frailejón alto",
+          "el frailejones altos",
+          "los frailejones altos",
+          "los frailejones alto"
         ],
-        "answer": "Ocupa el lugar de un nombre",
+        "answer": "los frailejones altos",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1362,123 +1333,123 @@
         }
       },
       {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Si hay varios, ¿qué pasa con las palabras?",
+        "choices": [
+          "Solo cambia el nombre",
+          "Ninguna cambia",
+          "Solo cambia el adjetivo",
+          "Todas pasan a plural"
+        ],
+        "answer": "Todas pasan a plural",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
         "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué clase de palabra es «ser»?",
+        "prompt": "¿Qué parte del verbo «subo» no cambia?",
         "choices": [
-          "Un sustantivo",
-          "Un verbo",
-          "Un pronombre",
-          "Un adjetivo"
+          "-o",
+          "sub-",
+          "yo",
+          "-es"
         ],
-        "answer": "Un verbo",
+        "answer": "sub-",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "En «Ella lo regala», ¿a quién sustituye «ella»?",
+        "prompt": "¿Cómo dices «ella» con el verbo subir?",
         "choices": [
-          "A Sofía",
-          "Al árbol",
-          "A pinta",
-          "A regala"
+          "ella sube",
+          "ella subo",
+          "ella subes",
+          "ella subimos"
         ],
-        "answer": "A Sofía",
+        "answer": "ella sube",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Con qué letra empieza un sustantivo propio?",
+        "prompt": "¿Qué palabra ocupa el lugar de Sofía?",
         "choices": [
-          "Con minúscula",
-          "Con un número",
-          "Con mayúscula",
-          "Con una tilde"
+          "Nieve",
+          "Monte",
+          "Ella",
+          "Sube"
         ],
-        "answer": "Con mayúscula",
+        "answer": "Ella",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cuál de estas oraciones usa un pronombre?",
-        "choices": [
-          "Ella lo regala.",
-          "Sofía pinta un árbol.",
-          "La casa bonita.",
-          "Un perro pequeño."
-        ],
-        "answer": "Ella lo regala.",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe un sustantivo común y uno propio de tu barrio.",
+        "prompt": "Escribe un nombre común y uno propio de tu barrio.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Explica por qué «unas casas bonitas» está bien escrito.",
+        "prompt": "Cuenta con tus palabras para qué sirve un pronombre.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja un esquema: yo, tú y ella con el verbo «cantar».",
+        "prompt": "Dibuja dos columnas: nombre común y nombre propio.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja dos columnas: sustantivo común y sustantivo propio.",
+        "prompt": "Dibuja un esquema: yo, tú y ella con el verbo subir.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]

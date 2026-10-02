@@ -14,36 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: De una familia a un pueblo",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer ordenaste las estaciones de Génesis.\nDios llamó a Abraham y prometió bendecir a su familia.\nEsa promesa es el hilo que llega hasta hoy.\n\n¿Qué crees que pasó con la familia de Abraham con el paso del tiempo?\n\nJacob también recibió el nombre de Israel. Sus descendientes crecieron y fueron el pueblo de Israel. Dios los sacó de Egipto y les dio su ley en el Sinaí. Israel recibió pactos y promesas."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer recorriste Génesis: creación, caída, diluvio, promesa y patriarcas. Hoy el río sigue su curso con los descendientes de Abraham."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Los profetas apuntan hacia adelante",
-        "body": "Alguien habla de parte de Dios al pueblo. ¿Cómo se llama esa persona y qué dice?\n\nSe llama profeta: habla de parte de Dios. Los profetas llamaban al pueblo a volver a Dios. También anunciaban que Dios rescataría a su pueblo. Sus palabras apuntaban hacia adelante."
+        "heading": "Punto 2: De una familia a un pueblo",
+        "body": "Los afluentes se juntan en el Orinoco. ¿Qué pasó con la familia de Abraham?\n\nLa familia de Abraham creció. Jacob también se llamó Israel, y su familia fue el pueblo de Israel. Dios los sacó de Egipto y les dio su ley."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Cristo cumple la promesa",
-        "body": "Sigamos. ¿Quién llegó para cumplir esas promesas? ¿De qué pueblo nació?\n\nJesús nació dentro del pueblo de Israel. Él es el Cristo, el Rescatador prometido. El evangelio anuncia a Jesús y lo que hizo. Su vida, muerte y resurrección son la buena noticia."
+        "heading": "Punto 3: Los profetas",
+        "body": "Un río largo necesita señales de rumbo. ¿Quién hablaba de parte de Dios?\n\nSe llaman profetas: hablan de parte de Dios. Llamaban al pueblo a volver a Dios y anunciaban un rescate. Sus palabras miraban hacia adelante."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La historia los une",
-        "body": "Una pregunta con truco: ¿el evangelio empieza de la nada con Jesús, sin el Antiguo Testamento?\n\nNo. El Antiguo Testamento prepara el camino. No borres a Israel cuando hables de Cristo. La promesa llega a su cumplimiento en Jesús."
+        "heading": "Punto 4: Cristo cumple la promesa",
+        "body": "Muchas promesas buscan quién las cumpla. ¿Quién llegó, y de qué pueblo nació?\n\nJesús nació dentro del pueblo de Israel. Él es el Cristo: el enviado que Dios había prometido. Es como si todas las promesas se juntaran en él."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tres cajas con flechas",
-        "body": "Imagina tres cajas: Israel, Cristo y evangelio. ¿Cómo las unirías con flechas?\n\nIsrael recibe la promesa. Cristo cumple la promesa. El evangelio anuncia ese cumplimiento al mundo. Léelo en voz alta: promesa, cumplimiento y noticia."
+        "heading": "Punto 5: El evangelio",
+        "body": "Una pregunta con truco: ¿el evangelio empieza de la nada con Jesús?\n\nNo. El Antiguo Testamento preparó el camino. Evangelio significa buena noticia: Jesús vivió, murió y resucitó para rescatar."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Tres paradas unidas",
+        "body": "Imagina tres paradas del río: Israel, Cristo y evangelio. ¿Cómo las unes?\n\nIsrael recibe la promesa. Cristo la cumple. El evangelio anuncia ese cumplimiento al mundo, río abajo, hasta el mar."
       }
     ],
-    "summary": "Israel recibe la promesa, Cristo la cumple y el evangelio la anuncia.",
+    "summary": "Israel recibe la promesa, Cristo la cumple y el evangelio la anuncia, como un río que sigue su curso.",
     "weekRecap": "Redención: creación y caída, Israel y Cristo, esperanza de la nueva tierra.",
     "priorDayRecap": "Ayer ordenaste creación, caída, promesa y patriarcas.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tres cajas en fila: Israel, Cristo, evangelio. Une las cajas con dos flechas grandes. Sobre la primera flecha escribe promesa. Sobre la segunda escribe cumplimiento y buena noticia.",
+    "imageBandInstruction": "Dibuja tres paradas en un río largo. Escribe Israel, Cristo y evangelio. Sobre cada parada escribe una palabra: promesa, cumplimiento y buena noticia.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -51,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -64,15 +69,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -85,43 +90,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer ordenaste las estaciones de Génesis."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Dios llamó a Abraham y prometió bendecir a su familia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Esa promesa es el hilo que llega hasta hoy."
+        "text": "Ayer recorriste Génesis: creación, caída,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "diluvio, promesa y patriarcas."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "¿Qué crees que pasó con la familia de Abraham"
+        "text": "Hoy el río sigue su curso con los"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "con el paso del tiempo?"
+        "text": "descendientes de Abraham."
       },
       {
         "index": 12,
@@ -134,57 +139,57 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: De una familia a un pueblo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los afluentes se juntan en el Orinoco."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "Jacob también recibió el nombre de Israel."
+        "text": "¿Qué pasó con la familia de Abraham?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "Sus descendientes crecieron y fueron el pueblo de Israel."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Dios los sacó de Egipto y les dio su ley en el Sinaí."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "Israel recibió pactos y promesas."
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -197,8 +202,8 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 2: De una familia a un pueblo"
       },
       {
         "index": 23,
@@ -211,29 +216,29 @@
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La familia de Abraham creció."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Alguien habla de parte de Dios al pueblo."
+        "text": "Jacob también se llamó Israel,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Cómo se llama esa persona y qué dice?"
+        "text": "y su familia fue el pueblo de Israel."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios los sacó de Egipto y les dio su ley."
       },
       {
         "index": 28,
@@ -246,15 +251,15 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Los profetas apuntan hacia adelante"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -268,49 +273,49 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Se llama profeta: habla de parte de Dios."
+        "text": "Un río largo necesita señales de rumbo."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Los profetas llamaban al pueblo a volver a Dios."
+        "text": "¿Quién hablaba de parte de Dios?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "También anunciaban que Dios rescataría a su pueblo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Sus palabras apuntaban hacia adelante."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Los profetas"
       },
       {
         "index": 39,
@@ -324,28 +329,28 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Sigamos. ¿Quién llegó para cumplir esas promesas?"
+        "text": "Se llaman profetas: hablan de parte"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿De qué pueblo nació?"
+        "text": "de Dios. Llamaban al pueblo a volver"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "a Dios y anunciaban un rescate."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sus palabras miraban hacia adelante."
       },
       {
         "index": 44,
@@ -358,57 +363,57 @@
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: Cristo cumple la promesa"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "Jesús nació dentro del pueblo de Israel."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Él es el Cristo, el Rescatador prometido."
+        "text": "Muchas promesas buscan quién las cumpla."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "El evangelio anuncia a Jesús y lo que hizo."
+        "text": "¿Quién llegó, y de qué pueblo nació?"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Su vida, muerte y resurrección son la buena noticia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 53,
@@ -421,43 +426,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Cristo cumple la promesa"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿el evangelio empieza de la nada"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "con Jesús, sin el Antiguo Testamento?"
+        "text": "Jesús nació dentro del pueblo de Israel."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Él es el Cristo: el enviado que"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios había prometido. Es como si"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: La historia los une"
+        "kind": "lesson",
+        "text": "todas las promesas se juntaran en él."
       },
       {
         "index": 60,
@@ -471,35 +476,35 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "No. El Antiguo Testamento prepara el camino."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "No borres a Israel cuando hables de Cristo."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "La promesa llega a su cumplimiento en Jesús."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el evangelio"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "empieza de la nada con Jesús?"
       },
       {
         "index": 66,
@@ -512,22 +517,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Imagina tres cajas: Israel, Cristo y evangelio."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Cómo las unirías con flechas?"
+        "kind": "heading",
+        "text": "Punto 5: El evangelio"
       },
       {
         "index": 70,
@@ -540,50 +545,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. El Antiguo Testamento preparó"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Tres cajas con flechas"
+        "kind": "lesson",
+        "text": "el camino. Evangelio significa"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "buena noticia: Jesús vivió, murió"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Israel recibe la promesa."
+        "text": "y resucitó para rescatar."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cristo cumple la promesa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "El evangelio anuncia ese cumplimiento al mundo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Léelo en voz alta: promesa, cumplimiento y noticia."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,14 +602,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Imagina tres paradas del río: Israel,"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cristo y evangelio. ¿Cómo las unes?"
       },
       {
         "index": 81,
@@ -617,102 +622,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué nombre recibió también Jacob?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Noé",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Israel",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Tres paradas unidas"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Moisés",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Pedro",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Israel recibe la promesa."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cristo la cumple."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿De dónde sacó Dios a su pueblo?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "El evangelio anuncia ese cumplimiento"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) De Babilonia",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "al mundo, río abajo, hasta el mar."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) De Roma",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) De Egipto",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) De Canaán",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -726,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué hace un profeta?",
-        "questionId": "d3-q3",
+        "text": "¿Qué nombre tuvo también Jacob?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -741,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Construye barcos",
-        "questionId": "d3-q3"
+        "text": "A) Noé",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Gobierna ciudades",
-        "questionId": "d3-q3"
+        "text": "B) Israel",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Escribe mapas",
-        "questionId": "d3-q3"
+        "text": "C) Moisés",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Habla de parte de Dios",
-        "questionId": "d3-q3"
+        "text": "D) Pedro",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -780,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué anunciaban los profetas?",
-        "questionId": "d3-q4",
+        "text": "¿De dónde sacó Dios al pueblo?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,46 +776,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Que no habría promesas",
-        "questionId": "d3-q4"
+        "text": "A) De Roma",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Que Dios rescataría a su pueblo",
-        "questionId": "d3-q4"
+        "text": "B) De Babilonia",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Que el mundo no tenía fin",
-        "questionId": "d3-q4"
+        "text": "C) De Egipto",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Que Israel olvidaría a Dios",
-        "questionId": "d3-q4"
+        "text": "D) Del Orinoco",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué hace un profeta?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Construye barcos",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Gobierna ciudades",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Dibuja mapas",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Habla de parte de Dios",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Quién cumple las promesas de Dios?",
+        "text": "¿Qué anunciaban los profetas?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Que no habría promesas",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Que vendría un rescate",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Que el pueblo olvidaría",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Que no hay Dios",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Quién es el Cristo?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -845,48 +927,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Cristo",
+        "text": "A) El enviado prometido por Dios",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) Un rey cualquiera",
+        "text": "B) Un profeta antiguo",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
-        "text": "C) Un profeta",
+        "text": "C) Un rey de Egipto",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) Un patriarca",
+        "text": "D) Un afluente",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Qué significa evangelio?",
         "questionId": "d3-q6",
@@ -899,50 +981,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Ley antigua",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Lista de reglas",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Buena noticia",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Libro de mapas",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué prepara el camino para el evangelio?",
+        "text": "¿Qué preparó el camino del evangelio?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -953,104 +1035,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) El Antiguo Testamento",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
-        "text": "B) Un viaje por mar",
+        "text": "B) Un castillo",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
-        "text": "C) Un castillo",
+        "text": "C) Un barco",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Nada",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿Qué recibe Israel en la flecha de las tres cajas?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) El cumplimiento",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) La nueva tierra",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) El arca",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) La promesa",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe una frase de Israel, otra de Cristo y otra del evangelio.",
+        "text": "Escribe una frase de Israel, una de Cristo y",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1061,50 +1089,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "una del evangelio.",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Explica por qué no debemos olvidar a Israel al hablar de Cristo.",
+        "text": "Explica qué preparó el Antiguo Testamento.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1115,50 +1135,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja tres cajas unidas con flechas: promesa y cumplimiento.",
+        "text": "Dibuja tres paradas unidas: Israel, Cristo y",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1169,27 +1173,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "evangelio.",
         "questionId": "d3-w3"
       },
       {
@@ -1204,15 +1192,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja un camino que va de Abraham a Jesús.",
+        "text": "Dibuja afluentes que llegan a un río grande.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1221,14 +1217,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
       },
       {
         "index": 150,
@@ -1250,50 +1238,49 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja tres cajas en fila: Israel, Cristo, evangelio."
+        "text": "Dibuja tres paradas en un río largo. Escribe"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Une las cajas con dos flechas grandes."
+        "text": "Israel, Cristo y evangelio. Sobre cada"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Sobre la primera flecha escribe promesa."
+        "text": "parada escribe una palabra: promesa,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Sobre la segunda escribe cumplimiento y buena noticia."
+        "text": "cumplimiento y buena noticia."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué nombre recibió también Jacob?",
+        "prompt": "¿Qué nombre tuvo también Jacob?",
         "choices": [
           "Noé",
           "Israel",
@@ -1303,26 +1290,26 @@
         "answer": "Israel",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿De dónde sacó Dios a su pueblo?",
+        "prompt": "¿De dónde sacó Dios al pueblo?",
         "choices": [
-          "De Babilonia",
           "De Roma",
+          "De Babilonia",
           "De Egipto",
-          "De Canaán"
+          "Del Orinoco"
         ],
         "answer": "De Egipto",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1333,14 +1320,14 @@
         "choices": [
           "Construye barcos",
           "Gobierna ciudades",
-          "Escribe mapas",
+          "Dibuja mapas",
           "Habla de parte de Dios"
         ],
         "answer": "Habla de parte de Dios",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1350,33 +1337,33 @@
         "prompt": "¿Qué anunciaban los profetas?",
         "choices": [
           "Que no habría promesas",
-          "Que Dios rescataría a su pueblo",
-          "Que el mundo no tenía fin",
-          "Que Israel olvidaría a Dios"
+          "Que vendría un rescate",
+          "Que el pueblo olvidaría",
+          "Que no hay Dios"
         ],
-        "answer": "Que Dios rescataría a su pueblo",
+        "answer": "Que vendría un rescate",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Quién cumple las promesas de Dios?",
+        "prompt": "¿Quién es el Cristo?",
         "choices": [
-          "Cristo",
-          "Un rey cualquiera",
-          "Un profeta",
-          "Un patriarca"
+          "El enviado prometido por Dios",
+          "Un profeta antiguo",
+          "Un rey de Egipto",
+          "Un afluente"
         ],
-        "answer": "Cristo",
+        "answer": "El enviado prometido por Dios",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1393,92 +1380,74 @@
         "answer": "Buena noticia",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué prepara el camino para el evangelio?",
+        "prompt": "¿Qué preparó el camino del evangelio?",
         "choices": [
           "El Antiguo Testamento",
-          "Un viaje por mar",
           "Un castillo",
+          "Un barco",
           "Nada"
         ],
         "answer": "El Antiguo Testamento",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Qué recibe Israel en la flecha de las tres cajas?",
-        "choices": [
-          "El cumplimiento",
-          "La nueva tierra",
-          "El arca",
-          "La promesa"
-        ],
-        "answer": "La promesa",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe una frase de Israel, otra de Cristo y otra del evangelio.",
+        "prompt": "Escribe una frase de Israel, una de Cristo y una del evangelio.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué no debemos olvidar a Israel al hablar de Cristo.",
+        "prompt": "Explica qué preparó el Antiguo Testamento.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja tres cajas unidas con flechas: promesa y cumplimiento.",
+        "prompt": "Dibuja tres paradas unidas: Israel, Cristo y evangelio.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un camino que va de Abraham a Jesús.",
+        "prompt": "Dibuja afluentes que llegan a un río grande.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

@@ -14,35 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Dos fechas",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nEsta semana ordenaste los primeros viajes a Venezuela.\nViste dos fechas, tres exploradores y una ruta.\nHoy lo recuerdas y lo cuentas con orden.\n\nSin mirar nada, ¿qué pasó en 1498 y qué pasó en 1499?\n\nViajes: Colón 1498 llega a Paria; 1499 otras expediciones; ruta de Paria a La Guajira. 1498: Colón llegó a tierra firme, en Paria. 1499: Ojeda, Vespucio y Juan de la Cosa exploraron la costa."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer seguiste la costa en el mapa: Paria en el oriente y La Guajira en el noroccidente. Hoy cuentas todo el viaje con orden."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Tres tareas",
-        "body": "¿Cuál era la tarea de cada explorador de 1499?\n\nOjeda lideró: decidía el rumbo y las paradas. Vespucio escribió relatos de lo que veía. Juan de la Cosa fue cartógrafo: dibujó mapas."
+        "heading": "Punto 2: Dos fechas",
+        "body": "Sin mirar nada, ¿qué pasó en Paria en 1498 y qué pasó en 1499?\n\nViajes: Colón 1498 llega a Paria; 1499 otras expediciones; ruta de Paria a La Guajira. Así se resumen los dos viajes."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La ruta en el mapa",
-        "body": "Mira la ruta de punta a punta. ¿Dónde empieza, dónde termina y hacia dónde queda cada punto?\n\nEmpieza en Paria, que está en el oriente. Termina en La Guajira, en el noroccidente. Entre los dos extremos se extiende el litoral."
+        "heading": "Punto 3: Tres tareas",
+        "body": "En 1499 iba un equipo. ¿Cuál era la tarea de cada explorador?\n\nOjeda lideró: decidía el rumbo. Vespucio escribió relatos del viaje. Juan de la Cosa dibujó mapas."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Cómo contarlo con orden",
-        "body": "Vas a explicarle esto a alguien de tu casa. ¿Cómo empezarías y cómo lo terminarías?\n\nPrimero di las fechas: agosto de 1498 y el año 1499. Después nombra a las personas y lo que hizo cada una. Luego señala la ruta en un mapa. Al final recuerda a los pueblos que ya vivían allí."
+        "heading": "Punto 4: La ruta en el mapa",
+        "body": "Mira la ruta en el mapa. ¿Dónde empieza y dónde termina?\n\nEmpieza en Paria, en el oriente. Termina en La Guajira, en el noroccidente. Entre las dos se extiende el litoral."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Fecha, personas y mapa",
-        "body": "¿Basta con decir años y nombres? ¿Qué más hace falta para explicarlo bien?\n\nNo basta: hay que unir fecha, personas y mapa. Así sabes qué pasó, quién lo hizo y dónde ocurrió. Una explicación así se entiende y se recuerda."
+        "heading": "Punto 5: Cómo contarlo con orden",
+        "body": "Vas a contárselo a alguien de tu casa. ¿Con qué empiezas y cómo terminas?\n\nPrimero di las fechas: 1498 y 1499. Luego nombra a las personas y lo que hizo cada una. Después señala la ruta en el mapa."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Fecha, personas y mapa",
+        "body": "¿Basta con decir años y nombres? ¿Qué más falta para explicarlo bien?\n\nNo basta: une fecha, personas y mapa. Así sabes qué pasó, quién y dónde. Y recuerda que en Paria ya vivían pueblos originarios."
       }
     ],
-    "summary": "En 1498 llegó Colón a Paria y en 1499 tres exploradores recorrieron la costa hasta La Guajira.",
+    "summary": "En 1498 Colón llegó a Paria y en 1499 tres exploradores recorrieron la costa hasta La Guajira.",
     "memoryPhrase": "Viajes: **Colón 1498** llega a Paria; **1499** otras expediciones; ruta de **Paria a La Guajira**.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una línea del tiempo con 1498 y 1499. Dibuja la costa con Paria y La Guajira marcadas. Rotula a Colón, Ojeda, Vespucio y Juan de la Cosa. Revisa que cada nombre esté en su año.",
+    "imageBandInstruction": "Dibuja una cinta con 1498 y 1499. Dibuja la costa con Paria y La Guajira. Rotula a Colón, Ojeda, Vespucio y De la Cosa. Revisa que cada nombre esté en su año.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -50,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -63,57 +68,57 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Esta semana ordenaste los primeros viajes a Venezuela."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
         "kind": "lesson",
-        "text": "Viste dos fechas, tres exploradores y una ruta."
+        "text": "Ayer seguiste la costa en el mapa:"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy lo recuerdas y lo cuentas con orden."
+        "text": "Paria en el oriente y La Guajira"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en el noroccidente."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Sin mirar nada, ¿qué pasó en 1498 y qué pasó en 1499?"
+        "text": "Hoy cuentas todo el viaje con orden."
       },
       {
         "index": 11,
@@ -126,15 +131,15 @@
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -147,15 +152,15 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sin mirar nada, ¿qué pasó en Paria"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Dos fechas"
+        "kind": "lesson",
+        "text": "en 1498 y qué pasó en 1499?"
       },
       {
         "index": 17,
@@ -169,77 +174,77 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "Viajes: Colón 1498 llega a Paria; 1499 otras expediciones;"
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "ruta de Paria a La Guajira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "1498: Colón llegó a tierra firme, en Paria."
+        "kind": "heading",
+        "text": "Punto 2: Dos fechas"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "1499: Ojeda, Vespucio y Juan de la Cosa exploraron la costa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viajes: Colón 1498 llega a Paria;"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "1499 otras expediciones;"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "ruta de Paria a La Guajira."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así se resumen los dos viajes."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "¿Cuál era la tarea de cada explorador de 1499?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -252,92 +257,92 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Tres tareas"
+        "kind": "lesson",
+        "text": "En 1499 iba un equipo. ¿Cuál era"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "la tarea de cada explorador?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Ojeda lideró: decidía el rumbo y las paradas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Vespucio escribió relatos de lo que veía."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Juan de la Cosa fue cartógrafo: dibujó mapas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Tres tareas"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ojeda lideró: decidía el rumbo."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Vespucio escribió relatos del viaje."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Mira la ruta de punta a punta. ¿Dónde empieza, dónde"
+        "text": "Juan de la Cosa dibujó mapas."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "termina y hacia dónde queda cada punto?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 43,
@@ -350,92 +355,92 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: La ruta en el mapa"
+        "kind": "lesson",
+        "text": "Mira la ruta en el mapa. ¿Dónde empieza"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y dónde termina?"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Empieza en Paria, que está en el oriente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Termina en La Guajira, en el noroccidente."
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Entre los dos extremos se extiende el litoral."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: La ruta en el mapa"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Empieza en Paria, en el oriente."
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Termina en La Guajira, en el noroccidente."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "Vas a explicarle esto a alguien de tu casa. ¿Cómo"
+        "text": "Entre las dos se extiende el litoral."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "empezarías y cómo lo terminarías?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 57,
@@ -448,43 +453,43 @@
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Cómo contarlo con orden"
+        "kind": "lesson",
+        "text": "Vas a contárselo a alguien de tu casa."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Con qué empiezas y cómo terminas?"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Primero di las fechas: agosto de 1498 y el año 1499."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Después nombra a las personas y lo que hizo cada una."
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Luego señala la ruta en un mapa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Al final recuerda a los pueblos que ya vivían allí."
+        "kind": "heading",
+        "text": "Punto 5: Cómo contarlo con orden"
       },
       {
         "index": 64,
@@ -498,49 +503,49 @@
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Primero di las fechas: 1498 y 1499."
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego nombra a las personas"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y lo que hizo cada una."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Basta con decir años y nombres?"
+        "text": "Después señala la ruta en el mapa."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "¿Qué más hace falta para explicarlo bien?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -553,111 +558,99 @@
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Fecha, personas y mapa"
+        "kind": "lesson",
+        "text": "¿Basta con decir años y nombres?"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué más falta para explicarlo bien?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "No basta: hay que unir fecha, personas y mapa."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Así sabes qué pasó, quién lo hizo y dónde ocurrió."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Una explicación así se entiende y se recuerda."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Fecha, personas y mapa"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No basta: une fecha, personas y mapa."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Así sabes qué pasó, quién y dónde."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué pasó en 1498?",
-        "questionId": "d5-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Y recuerda que en Paria ya vivían"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Salió la expedición de 1499",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "pueblos originarios."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Vespucio dibujó un mapa",
-        "questionId": "d5-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Ojeda llegó a La Guajira",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Colón llegó a tierra firme, en Paria",
-        "questionId": "d5-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -671,8 +664,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué hizo Alonso de Ojeda?",
-        "questionId": "d5-q2",
+        "text": "¿Qué pasó en Paria en 1498?",
+        "questionId": "d5-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -686,32 +679,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Dibujó mapas",
-        "questionId": "d5-q2"
+        "text": "A) Salió la expedición de 1499",
+        "questionId": "d5-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Lideró la expedición",
-        "questionId": "d5-q2"
+        "text": "B) Vespucio dibujó un mapa",
+        "questionId": "d5-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Escribió relatos",
-        "questionId": "d5-q2"
+        "text": "C) Ojeda llegó a La Guajira",
+        "questionId": "d5-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) Pescó",
-        "questionId": "d5-q2"
+        "text": "D) Llegó Colón",
+        "questionId": "d5-q1"
       },
       {
         "index": 93,
@@ -725,8 +718,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué hizo Américo Vespucio?",
-        "questionId": "d5-q3",
+        "text": "¿Qué hizo Alonso de Ojeda?",
+        "questionId": "d5-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -740,32 +733,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Escribió relatos",
-        "questionId": "d5-q3"
+        "text": "A) Dibujó mapas",
+        "questionId": "d5-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Dibujó mapas",
-        "questionId": "d5-q3"
+        "text": "B) Lideró la expedición",
+        "questionId": "d5-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Lideró la expedición",
-        "questionId": "d5-q3"
+        "text": "C) Escribió relatos",
+        "questionId": "d5-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Sembró yuca",
-        "questionId": "d5-q3"
+        "text": "D) Pescó",
+        "questionId": "d5-q2"
       },
       {
         "index": 99,
@@ -779,8 +772,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué hizo Juan de la Cosa?",
-        "questionId": "d5-q4",
+        "text": "¿Qué hizo Américo Vespucio?",
+        "questionId": "d5-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -795,45 +788,92 @@
         "line": 49,
         "kind": "option",
         "text": "A) Escribió relatos",
-        "questionId": "d5-q4"
+        "questionId": "d5-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Lideró la expedición",
-        "questionId": "d5-q4"
+        "text": "B) Dibujó mapas",
+        "questionId": "d5-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Dibujó mapas",
-        "questionId": "d5-q4"
+        "text": "C) Lideró la expedición",
+        "questionId": "d5-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Hizo trueque",
-        "questionId": "d5-q4"
+        "text": "D) Sembró yuca",
+        "questionId": "d5-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué hizo Juan de la Cosa?",
+        "questionId": "d5-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Escribió relatos",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Lideró la expedición",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Dibujó mapas",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Hizo trueque",
+        "questionId": "d5-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "¿Dónde empieza la ruta en el mapa?",
+        "text": "¿Dónde empieza la ruta?",
         "questionId": "d5-q5",
         "questionType": "mcq",
         "gutter": {
@@ -844,48 +884,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) En Paria",
         "questionId": "d5-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) En La Guajira",
         "questionId": "d5-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) En los Andes",
         "questionId": "d5-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) En el mar abierto",
         "questionId": "d5-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Dónde termina la ruta?",
         "questionId": "d5-q6",
@@ -898,50 +938,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) En Paria",
         "questionId": "d5-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) En los Andes",
         "questionId": "d5-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) En una isla",
         "questionId": "d5-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) En La Guajira",
         "questionId": "d5-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué hay que unir para explicar bien?",
+        "text": "¿Qué unes para explicarlo bien?",
         "questionId": "d5-q7",
         "questionType": "mcq",
         "gutter": {
@@ -952,50 +992,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
         "text": "A) Solo nombres",
         "questionId": "d5-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
         "text": "B) Fecha, personas y mapa",
         "questionId": "d5-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
         "text": "C) Solo años",
         "questionId": "d5-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
         "text": "D) Solo dibujos",
         "questionId": "d5-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Quiénes ya vivían en la costa?",
+        "text": "¿Quiénes vivían ya en la costa?",
         "questionId": "d5-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1006,50 +1046,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) Nadie",
         "questionId": "d5-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Solo exploradores",
         "questionId": "d5-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Pueblos originarios",
         "questionId": "d5-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Solo Colón",
         "questionId": "d5-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe de memoria las dos fechas y qué pasó en cada una.",
+        "text": "Escribe las dos fechas y qué pasó en cada",
         "questionId": "d5-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,50 +1100,42 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "una.",
+        "questionId": "d5-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d5-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
-        "text": "Cuenta con tus palabras la ruta de Paria a La Guajira.",
+        "text": "Cuenta la ruta de Paria a La Guajira.",
         "questionId": "d5-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,50 +1146,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d5-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un esquema con fecha, personas y mapa.",
+        "text": "Dibuja un esquema: fecha, personas y mapa.",
         "questionId": "d5-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1166,22 +1182,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w3"
       },
       {
         "index": 145,
@@ -1211,7 +1211,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja la ruta con Paria, La Guajira y los tres exploradores.",
+        "text": "Dibuja la ruta con los tres exploradores.",
         "questionId": "d5-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1241,45 +1241,43 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d5-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una línea del tiempo con 1498 y 1499."
+        "text": "Dibuja una cinta con 1498 y 1499. Dibuja la"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja la costa con Paria y La Guajira marcadas."
+        "text": "costa con Paria y La Guajira. Rotula a"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula a Colón, Ojeda, Vespucio y Juan de la Cosa."
+        "text": "Colón, Ojeda, Vespucio y De la Cosa. Revisa"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada nombre esté en su año."
+        "text": "que cada nombre esté en su año."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1292,18 +1290,18 @@
         "id": "d5-q1",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué pasó en 1498?",
+        "prompt": "¿Qué pasó en Paria en 1498?",
         "choices": [
           "Salió la expedición de 1499",
           "Vespucio dibujó un mapa",
           "Ojeda llegó a La Guajira",
-          "Colón llegó a tierra firme, en Paria"
+          "Llegó Colón"
         ],
-        "answer": "Colón llegó a tierra firme, en Paria",
+        "answer": "Llegó Colón",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1320,8 +1318,8 @@
         "answer": "Lideró la expedición",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1338,8 +1336,8 @@
         "answer": "Escribió relatos",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1355,16 +1353,16 @@
         ],
         "answer": "Dibujó mapas",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d5-q5",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Dónde empieza la ruta en el mapa?",
+        "prompt": "¿Dónde empieza la ruta?",
         "choices": [
           "En Paria",
           "En La Guajira",
@@ -1374,8 +1372,8 @@
         "answer": "En Paria",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1392,15 +1390,15 @@
         "answer": "En La Guajira",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d5-q7",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Qué hay que unir para explicar bien?",
+        "prompt": "¿Qué unes para explicarlo bien?",
         "choices": [
           "Solo nombres",
           "Fecha, personas y mapa",
@@ -1410,15 +1408,15 @@
         "answer": "Fecha, personas y mapa",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d5-q8",
         "originDay": 5,
         "type": "mcq",
-        "prompt": "¿Quiénes ya vivían en la costa?",
+        "prompt": "¿Quiénes vivían ya en la costa?",
         "choices": [
           "Nadie",
           "Solo exploradores",
@@ -1428,50 +1426,50 @@
         "answer": "Pueblos originarios",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d5-w1",
         "originDay": 5,
         "type": "write",
-        "prompt": "Escribe de memoria las dos fechas y qué pasó en cada una.",
+        "prompt": "Escribe las dos fechas y qué pasó en cada una.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d5-w2",
         "originDay": 5,
         "type": "write",
-        "prompt": "Cuenta con tus palabras la ruta de Paria a La Guajira.",
+        "prompt": "Cuenta la ruta de Paria a La Guajira.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d5-w3",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja un esquema con fecha, personas y mapa.",
+        "prompt": "Dibuja un esquema: fecha, personas y mapa.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d5-w4",
         "originDay": 5,
         "type": "write",
-        "prompt": "Dibuja la ruta con Paria, La Guajira y los tres exploradores.",
+        "prompt": "Dibuja la ruta con los tres exploradores.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

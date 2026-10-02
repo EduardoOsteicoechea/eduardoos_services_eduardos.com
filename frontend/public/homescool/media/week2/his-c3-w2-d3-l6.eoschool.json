@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Un equipo de exploradores",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer repasaste la llegada de Colón en agosto de 1498.\nLlegó a tierra firme, en Paria.\nY recordaste que la costa ya tenía pueblos originarios.\n\nPiensa en un viaje largo en barco. ¿Qué personas harían falta y qué haría cada una?\n\nEn 1499 viajó un equipo de tres exploradores. Fueron Alonso de Ojeda, Américo Vespucio y Juan de la Cosa. Cada uno tenía una tarea distinta."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer escribiste un titular con quién, cuándo y dónde: Colón, 1498, Paria. Hoy pasa un año y la costa de Paria ve llegar otros barcos."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Ojeda, el líder",
-        "body": "¿Quién crees que decidía el rumbo y las paradas?\n\nAlonso de Ojeda lideró la expedición. Liderar quiere decir guiar y tomar decisiones. Decidía el rumbo del barco y dónde detenerse."
+        "heading": "Punto 2: Un equipo de tres",
+        "body": "Es 1499 y sale un nuevo viaje hacia Paria. ¿Qué personas harían falta?\n\nViaja un equipo de tres exploradores: Alonso de Ojeda, Américo Vespucio y Juan de la Cosa. Cada uno tiene una tarea distinta."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Vespucio, el relator",
-        "body": "¿Cómo se cuenta con palabras lo que se ve en un viaje?\n\nAmérico Vespucio escribió relatos del viaje. Un relato cuenta lo que pasó, paso a paso. Describía el mar, la tierra y las personas que veía. Según se cuenta, vio casas sobre el agua y pensó en Venecia."
+        "heading": "Punto 3: Ojeda, el líder",
+        "body": "En el barco, ¿quién decide el rumbo y dónde parar?\n\nLo decide Alonso de Ojeda, el líder. Liderar es guiar y tomar decisiones. Él elige el rumbo y las paradas."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Juan de la Cosa, el cartógrafo",
-        "body": "¿Y cómo guardarías lo recorrido para que otros no se pierdan?\n\nJuan de la Cosa fue cartógrafo: dibujaba mapas. Un mapa muestra la costa que se recorrió. Su mapa y el relato de Vespucio se completan."
+        "heading": "Punto 4: Vespucio, el relator",
+        "body": "Ves la costa de Paria por primera vez. ¿Cómo se la cuentas a otros?\n\nAmérico Vespucio escribió relatos. Un relato cuenta lo que viste, paso a paso. Según se cuenta, vio casas sobre el agua."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cuidado con Colón",
-        "body": "Una pregunta con truco: ¿Colón viajó en 1499 con ese equipo?\n\nNo: Colón corresponde al viaje de 1498. En 1499 viajaron Ojeda, Vespucio y Juan de la Cosa. Ellos exploraron la costa desde Paria hasta La Guajira."
+        "heading": "Punto 5: Juan de la Cosa, el cartógrafo",
+        "body": "¿Cómo guardas la costa para que otros barcos no se pierdan?\n\nJuan de la Cosa era cartógrafo: dibujaba mapas. Su mapa muestra la costa recorrida. Se completa con el relato de Vespucio."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cuidado con Colón",
+        "body": "Una pregunta con truco: ¿Colón iba en el barco de 1499?\n\nNo: Colón es el viaje de 1498. En 1499 van Ojeda, Vespucio y Juan de la Cosa. Exploran de Paria a La Guajira."
       }
     ],
     "summary": "En 1499 Ojeda lideró, Vespucio escribió relatos y Juan de la Cosa dibujó mapas de la costa.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Una fecha para ubicar la historia. El 3 de agosto de 1498 ancla la semana: tierra firme, pueblos originarios y fuentes que combinan relato y mapa.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un timón, un cuaderno y un mapa. Escribe debajo de cada uno el nombre del explorador. Rotula su tarea: líder, relator o cartógrafo. Añade el año 1499 en una esquina.",
+    "imageBandInstruction": "Dibuja un timón, un cuaderno y un mapa. Escribe bajo cada uno su explorador. Rotula su tarea: líder, relator, cartógrafo. Dibuja el barco cerca de Paria en 1499.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer repasaste la llegada de Colón en agosto de 1498."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Llegó a tierra firme, en Paria."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Y recordaste que la costa ya tenía pueblos originarios."
+        "text": "Ayer escribiste un titular con quién,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cuándo y dónde: Colón, 1498, Paria."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Piensa en un viaje largo en barco. ¿Qué personas harían"
+        "text": "Hoy pasa un año y la costa de Paria"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "falta y qué haría cada una?"
+        "text": "ve llegar otros barcos."
       },
       {
         "index": 12,
@@ -135,15 +140,15 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
@@ -156,85 +161,85 @@
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 1: Un equipo de exploradores"
+        "kind": "lesson",
+        "text": "Es 1499 y sale un nuevo viaje hacia"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Paria. ¿Qué personas harían falta?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "En 1499 viajó un equipo de tres exploradores."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "Fueron Alonso de Ojeda, Américo Vespucio"
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
         "kind": "lesson",
-        "text": "y Juan de la Cosa."
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "Cada uno tenía una tarea distinta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Un equipo de tres"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Viaja un equipo de tres exploradores:"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Alonso de Ojeda, Américo Vespucio"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Quién crees que decidía el rumbo y las paradas?"
+        "text": "y Juan de la Cosa."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada uno tiene una tarea distinta."
       },
       {
         "index": 28,
@@ -247,71 +252,71 @@
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 2: Ojeda, el líder"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En el barco, ¿quién decide el rumbo"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Alonso de Ojeda lideró la expedición."
+        "text": "y dónde parar?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "Liderar quiere decir guiar y tomar decisiones."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "Decidía el rumbo del barco y dónde detenerse."
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: Ojeda, el líder"
       },
       {
         "index": 39,
@@ -325,21 +330,21 @@
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "¿Cómo se cuenta con palabras lo que se ve en un viaje?"
+        "text": "Lo decide Alonso de Ojeda, el líder."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Liderar es guiar y tomar decisiones."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Él elige el rumbo y las paradas."
       },
       {
         "index": 43,
@@ -352,57 +357,57 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Vespucio, el relator"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "lesson",
-        "text": "Américo Vespucio escribió relatos del viaje."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Un relato cuenta lo que pasó, paso a paso."
+        "text": "Ves la costa de Paria por primera vez."
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Describía el mar, la tierra y las personas que veía."
+        "text": "¿Cómo se la cuentas a otros?"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Según se cuenta, vio casas sobre el agua y pensó en Venecia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "________________________________________"
       },
       {
         "index": 52,
@@ -422,43 +427,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "¿Y cómo guardarías lo recorrido para que otros"
+        "kind": "heading",
+        "text": "Punto 4: Vespucio, el relator"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "no se pierdan?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Américo Vespucio escribió relatos."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un relato cuenta lo que viste,"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "paso a paso."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: Juan de la Cosa, el cartógrafo"
+        "kind": "lesson",
+        "text": "Según se cuenta, vio casas sobre el agua."
       },
       {
         "index": 60,
@@ -472,35 +477,35 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Juan de la Cosa fue cartógrafo: dibujaba mapas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Un mapa muestra la costa que se recorrió."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Su mapa y el relato de Vespucio se completan."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo guardas la costa para que otros"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "barcos no se pierdan?"
       },
       {
         "index": 66,
@@ -513,22 +518,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Colón viajó en 1499 con"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "ese equipo?"
+        "kind": "heading",
+        "text": "Punto 5: Juan de la Cosa, el cartógrafo"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Juan de la Cosa era cartógrafo:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "dibujaba mapas."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 5: Cuidado con Colón"
+        "kind": "lesson",
+        "text": "Su mapa muestra la costa recorrida."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Se completa con el relato de Vespucio."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "No: Colón corresponde al viaje de 1498."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "En 1499 viajaron Ojeda, Vespucio y Juan de la Cosa."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Ellos exploraron la costa desde Paria hasta La Guajira."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Una pregunta con truco: ¿Colón iba"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "en el barco de 1499?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Cuántos exploradores formaban el equipo de 1499?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Uno",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Tres",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cuidado con Colón"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Cinco",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Diez",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "No: Colón es el viaje de 1498."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En 1499 van Ojeda, Vespucio"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Quién lideró la expedición de 1499?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "y Juan de la Cosa."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Américo Vespucio",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Exploran de Paria a La Guajira."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Juan de la Cosa",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Alonso de Ojeda",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Cristóbal Colón",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué quiere decir «liderar»?",
-        "questionId": "d3-q3",
+        "text": "¿Cuántos exploradores iban en 1499?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Dibujar mapas",
-        "questionId": "d3-q3"
+        "text": "A) Uno",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Escribir cartas",
-        "questionId": "d3-q3"
+        "text": "B) Tres",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Pescar",
-        "questionId": "d3-q3"
+        "text": "C) Cinco",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Guiar y tomar decisiones",
-        "questionId": "d3-q3"
+        "text": "D) Diez",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Quién escribió relatos del viaje?",
-        "questionId": "d3-q4",
+        "text": "¿Quién lideró la expedición?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,24 +777,24 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Alonso de Ojeda",
-        "questionId": "d3-q4"
+        "text": "A) Américo Vespucio",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Américo Vespucio",
-        "questionId": "d3-q4"
+        "text": "B) Juan de la Cosa",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Juan de la Cosa",
-        "questionId": "d3-q4"
+        "text": "C) Alonso de Ojeda",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
@@ -821,19 +802,120 @@
         "line": 52,
         "kind": "option",
         "text": "D) Cristóbal Colón",
-        "questionId": "d3-q4"
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué es liderar?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Dibujar mapas",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Escribir cartas",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Pescar",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Guiar y tomar decisiones",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Quién escribió relatos?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Alonso de Ojeda",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Américo Vespucio",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Juan de la Cosa",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Cristóbal Colón",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué es un relato?",
         "questionId": "d3-q5",
@@ -846,48 +928,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) Contar lo que pasó, paso a paso",
+        "text": "A) Contar lo que viste",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
         "text": "B) Un dibujo de la costa",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) Una isla",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
         "text": "D) Un barco",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
         "text": "¿Quién fue el cartógrafo?",
         "questionId": "d3-q6",
@@ -900,48 +982,48 @@
         }
       },
       {
-        "index": 113,
+        "index": 124,
         "column": 3,
-        "line": 9,
+        "line": 20,
         "kind": "option",
         "text": "A) Alonso de Ojeda",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 125,
         "column": 3,
-        "line": 10,
+        "line": 21,
         "kind": "option",
         "text": "B) Américo Vespucio",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 126,
         "column": 3,
-        "line": 11,
+        "line": 22,
         "kind": "option",
         "text": "C) Juan de la Cosa",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 127,
         "column": 3,
-        "line": 12,
+        "line": 23,
         "kind": "option",
         "text": "D) Cristóbal Colón",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 128,
         "column": 3,
-        "line": 13,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 129,
         "column": 3,
-        "line": 14,
+        "line": 25,
         "kind": "question",
         "text": "¿Qué hace un cartógrafo?",
         "questionId": "d3-q7",
@@ -954,104 +1036,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 130,
         "column": 3,
-        "line": 15,
+        "line": 26,
         "kind": "option",
         "text": "A) Dibuja mapas",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 131,
         "column": 3,
-        "line": 16,
+        "line": 27,
         "kind": "option",
         "text": "B) Escribe relatos",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 132,
         "column": 3,
-        "line": 17,
+        "line": 28,
         "kind": "option",
         "text": "C) Dirige el barco",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 133,
         "column": 3,
-        "line": 18,
+        "line": 29,
         "kind": "option",
         "text": "D) Cultiva yuca",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 134,
         "column": 3,
-        "line": 19,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 135,
         "column": 3,
-        "line": 20,
+        "line": 31,
         "kind": "question",
-        "text": "¿A qué viaje corresponde Colón?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 125,
-        "column": 3,
-        "line": 21,
-        "kind": "option",
-        "text": "A) Al de 1499",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 126,
-        "column": 3,
-        "line": 22,
-        "kind": "option",
-        "text": "B) Al de 1500",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 127,
-        "column": 3,
-        "line": 23,
-        "kind": "option",
-        "text": "C) Al de 1600",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 128,
-        "column": 3,
-        "line": 24,
-        "kind": "option",
-        "text": "D) Al de 1498",
-        "questionId": "d3-q8"
-      },
-      {
-        "index": 129,
-        "column": 3,
-        "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "question",
-        "text": "Escribe el nombre de cada explorador y su tarea.",
+        "text": "Escribe cada explorador y su tarea.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,50 +1090,34 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
-        "text": "Explica por qué Colón no iba en la expedición de 1499.",
+        "text": "Explica por qué Colón no iba en 1499.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,30 +1126,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1139,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja tres iconos: timón, cuaderno y mapa.",
+        "text": "Dibuja un timón, un cuaderno y un mapa.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,14 +1164,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 144,
@@ -1197,23 +1185,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un esquema que una cada explorador con su tarea.",
+        "text": "Une cada dibujo con su explorador.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,6 +1202,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 149,
@@ -1235,25 +1223,22 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
@@ -1267,34 +1252,34 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe debajo de cada uno el nombre del explorador."
+        "text": "Escribe bajo cada uno su explorador."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula su tarea: líder, relator o cartógrafo."
+        "text": "Rotula su tarea: líder, relator, cartógrafo."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Añade el año 1499 en una esquina."
+        "text": "Dibuja el barco cerca de Paria en 1499."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuántos exploradores formaban el equipo de 1499?",
+        "prompt": "¿Cuántos exploradores iban en 1499?",
         "choices": [
           "Uno",
           "Tres",
@@ -1304,15 +1289,15 @@
         "answer": "Tres",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Quién lideró la expedición de 1499?",
+        "prompt": "¿Quién lideró la expedición?",
         "choices": [
           "Américo Vespucio",
           "Juan de la Cosa",
@@ -1322,15 +1307,15 @@
         "answer": "Alonso de Ojeda",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué quiere decir «liderar»?",
+        "prompt": "¿Qué es liderar?",
         "choices": [
           "Dibujar mapas",
           "Escribir cartas",
@@ -1339,16 +1324,16 @@
         ],
         "answer": "Guiar y tomar decisiones",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Quién escribió relatos del viaje?",
+        "prompt": "¿Quién escribió relatos?",
         "choices": [
           "Alonso de Ojeda",
           "Américo Vespucio",
@@ -1357,9 +1342,9 @@
         ],
         "answer": "Américo Vespucio",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1368,16 +1353,16 @@
         "type": "mcq",
         "prompt": "¿Qué es un relato?",
         "choices": [
-          "Contar lo que pasó, paso a paso",
+          "Contar lo que viste",
           "Un dibujo de la costa",
           "Una isla",
           "Un barco"
         ],
-        "answer": "Contar lo que pasó, paso a paso",
+        "answer": "Contar lo que viste",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1394,8 +1379,8 @@
         "answer": "Juan de la Cosa",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1412,74 +1397,56 @@
         "answer": "Dibuja mapas",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿A qué viaje corresponde Colón?",
-        "choices": [
-          "Al de 1499",
-          "Al de 1500",
-          "Al de 1600",
-          "Al de 1498"
-        ],
-        "answer": "Al de 1498",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe el nombre de cada explorador y su tarea.",
+        "prompt": "Escribe cada explorador y su tarea.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué Colón no iba en la expedición de 1499.",
+        "prompt": "Explica por qué Colón no iba en 1499.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja tres iconos: timón, cuaderno y mapa.",
+        "prompt": "Dibuja un timón, un cuaderno y un mapa.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un esquema que una cada explorador con su tarea.",
+        "prompt": "Une cada dibujo con su explorador.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

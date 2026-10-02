@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Las dos piezas",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer vimos las cinco formas de una sola palabra.\nSon canto, cantaba, canté, cantaré y cantaría.\nHoy veremos las que llevan dos palabras.\n\nMira «he cantado». ¿Cuántas piezas tiene? ¿Cuál crees que cambia y cuál se queda?\n\nLa primera pieza es «haber»: he, has, ha, hemos, han. La segunda es el participio: «cantado». El participio termina en -ado o en -ido. En inglés se parece a «I have sung»."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer practicaste las cinco formas de una palabra con «cantar». Hoy el verbo sube en dos tramos, como el teleférico de Mérida."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El participio",
-        "body": "Busca el participio de «cantar», «comer» y «vivir». ¿Cómo termina cada uno?\n\nSe dice: cantado, comido y vivido. Los verbos «-ar» hacen -ado. Los verbos «-er» e «-ir» hacen -ido. Subraya el participio y lo reconocerás rápido."
+        "heading": "Punto 2: Las dos piezas",
+        "body": "«He cantado» sube en dos tramos. ¿Cuál es el primero y cuál el segundo?\n\nEl primero es «haber»: he, has, ha, hemos, han. Es la ayudante. El segundo es el participio: «cantado». En inglés se parece a «I have sung»."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Solo cambia la ayudante",
-        "body": "Sigamos. Si usas siempre «cantado» y cambias solo la ayudante, ¿qué pasa? Prueba con he, había, habré y habría.\n\n«He cantado»: ya pasó y todavía importa ahora. «Había cantado»: ya estaba hecho antes de otro pasado. «Habré cantado»: estará hecho en un momento del futuro. «Habría cantado»: lo habría hecho, pero no pasó. El participio «cantado» no cambia."
+        "heading": "Punto 3: El participio",
+        "body": "Busca el segundo tramo de «cantar», «comer» y «vivir». ¿Cómo terminan?\n\nDices cantado, comido y vivido. Los verbos -ar hacen -ado. Los verbos -er e -ir hacen -ido."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El participio no lleva -s",
-        "body": "Una pregunta con truco: si todos comieron, ¿se dice «han comido» o «han comidos»?\n\nSe dice «han comido». El participio no lleva -s por ser muchos. Solo cambia «haber»: he, has, ha, hemos, han. Revisa siempre que el participio quede igual."
+        "heading": "Punto 4: Solo cambia la ayudante",
+        "body": "Deja «cantado» quieto y cambia la ayudante: he, había, habré. ¿Qué pasa?\n\n«He cantado»: pasó y aún importa. «Había cantado»: estaba hecho antes. «Habré cantado»: estará hecho después. «Cantado» nunca cambia."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Una palabra o dos",
-        "body": "Compara «ayer comí» con «ya he comido». ¿Dicen lo mismo de la comida? ¿Qué cambia?\n\nLas dos hablan de comer, pero con sentido distinto. «Ayer comí»: una palabra, y el pasado se cerró. «Ya he comido»: dos palabras, y el resultado sigue vivo. Escribe tu propio par de frases para practicar."
+        "heading": "Punto 5: El participio no lleva -s",
+        "body": "Pregunta con truco: si todos comieron, ¿«han comido» o «han comidos»?\n\nDices «han comido». El participio no lleva -s si son muchos. Revisa que el participio quede igual."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Una palabra o dos",
+        "body": "Llegas arriba. Compara «ayer subí» con «ya he subido». ¿Qué cambia?\n\n«Ayer subí»: una palabra, ya cerró. «Ya he subido»: dos palabras; el resultado sigue vivo."
       }
     ],
     "summary": "Las formas de dos palabras unen «haber» con un participio: he cantado, había comido.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Deepen: one-word times. We stayed on one-word times only (no haber): verb = action; conjugate = change for who and when; stem and ending build each form.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja dos piezas de rompecabezas que se unen. Escribe «he» en una y «cantado» en la otra. Debajo escribe «he comido» y «he vivido». Subraya el participio en cada frase.",
+    "imageBandInstruction": "Dibuja el teleférico con dos tramos. Escribe «he» en uno y «cantado» en otro. Abajo escribe «he comido» y «he vivido». Subraya el participio en cada frase.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,43 +91,43 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer vimos las cinco formas de una sola palabra."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Son canto, cantaba, canté, cantaré y cantaría."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy veremos las que llevan dos palabras."
+        "text": "Ayer practicaste las cinco formas"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de una palabra con «cantar»."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Mira «he cantado». ¿Cuántas piezas tiene?"
+        "text": "Hoy el verbo sube en dos tramos,"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "¿Cuál crees que cambia y cuál se queda?"
+        "text": "como el teleférico de Mérida."
       },
       {
         "index": 12,
@@ -135,99 +140,99 @@
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Las dos piezas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«He cantado» sube en dos tramos."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "La primera pieza es «haber»: he, has, ha, hemos, han."
+        "text": "¿Cuál es el primero y cuál el segundo?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "La segunda es el participio: «cantado»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "El participio termina en -ado o en -ido."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "En inglés se parece a «I have sung»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Las dos piezas"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El primero es «haber»: he, has, ha,"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "hemos, han. Es la ayudante."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Busca el participio de «cantar», «comer» y «vivir»."
+        "text": "El segundo es el participio: «cantado»."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "¿Cómo termina cada uno?"
+        "text": "En inglés se parece a «I have sung»."
       },
       {
         "index": 27,
@@ -240,15 +245,15 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "heading",
-        "text": "Punto 2: El participio"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -262,28 +267,28 @@
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "Se dice: cantado, comido y vivido."
+        "text": "Busca el segundo tramo de «cantar»,"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Los verbos «-ar» hacen -ado."
+        "text": "«comer» y «vivir». ¿Cómo terminan?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "Los verbos «-er» e «-ir» hacen -ido."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "Subraya el participio y lo reconocerás rápido."
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -296,8 +301,8 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: El participio"
       },
       {
         "index": 37,
@@ -310,22 +315,22 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices cantado, comido y vivido."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "Sigamos. Si usas siempre «cantado» y cambias solo la"
+        "text": "Los verbos -ar hacen -ado."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "ayudante, ¿qué pasa? Prueba con he, había, habré y habría."
+        "text": "Los verbos -er e -ir hacen -ido."
       },
       {
         "index": 41,
@@ -338,15 +343,15 @@
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "heading",
-        "text": "Punto 3: Solo cambia la ayudante"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
@@ -360,77 +365,77 @@
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "«He cantado»: ya pasó y todavía importa ahora."
+        "text": "Deja «cantado» quieto y cambia la"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "«Había cantado»: ya estaba hecho antes de otro pasado."
+        "text": "ayudante: he, había, habré. ¿Qué pasa?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "«Habré cantado»: estará hecho en un momento del futuro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "«Habría cantado»: lo habría hecho, pero no pasó."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "El participio «cantado» no cambia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Solo cambia la ayudante"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«He cantado»: pasó y aún importa."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Había cantado»: estaba hecho antes."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Una pregunta con truco: si todos comieron, ¿se dice"
+        "text": "«Habré cantado»: estará hecho después."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "«han comido» o «han comidos»?"
+        "text": "«Cantado» nunca cambia."
       },
       {
         "index": 56,
@@ -443,15 +448,15 @@
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: El participio no lleva -s"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 59,
@@ -465,28 +470,28 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Se dice «han comido»."
+        "text": "Pregunta con truco: si todos comieron,"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "El participio no lleva -s por ser muchos."
+        "text": "¿«han comido» o «han comidos»?"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "Solo cambia «haber»: he, has, ha, hemos, han."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
         "kind": "lesson",
-        "text": "Revisa siempre que el participio quede igual."
+        "text": "________________________________________"
       },
       {
         "index": 64,
@@ -499,8 +504,8 @@
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 5: El participio no lleva -s"
       },
       {
         "index": 66,
@@ -513,22 +518,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «han comido»."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "Compara «ayer comí» con «ya he comido»."
+        "text": "El participio no lleva -s si son muchos."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "¿Dicen lo mismo de la comida? ¿Qué cambia?"
+        "text": "Revisa que el participio quede igual."
       },
       {
         "index": 70,
@@ -541,15 +546,15 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Una palabra o dos"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 73,
@@ -563,28 +568,28 @@
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Las dos hablan de comer, pero con sentido distinto."
+        "text": "Llegas arriba. Compara «ayer subí» con"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "«Ayer comí»: una palabra, y el pasado se cerró."
+        "text": "«ya he subido». ¿Qué cambia?"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "«Ya he comido»: dos palabras, y el resultado sigue vivo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "Escribe tu propio par de frases para practicar."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -597,8 +602,8 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 6: Una palabra o dos"
       },
       {
         "index": 80,
@@ -611,55 +616,43 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Ayer subí»: una palabra, ya cerró."
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué dos piezas tiene «he cantado»?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "«Ya he subido»: dos palabras;"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Raíz y final",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "el resultado sigue vivo."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Haber y participio",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) Verbo y nombre",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Dos raíces",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -673,8 +666,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Cuál es el participio de «comer»?",
-        "questionId": "d3-q2",
+        "text": "¿Qué dos piezas tiene «he cantado»?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -688,32 +681,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) comer",
-        "questionId": "d3-q2"
+        "text": "A) Raíz y final",
+        "questionId": "d3-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) como",
-        "questionId": "d3-q2"
+        "text": "B) Haber y participio",
+        "questionId": "d3-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) comido",
-        "questionId": "d3-q2"
+        "text": "C) Verbo y nombre",
+        "questionId": "d3-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) comiendo",
-        "questionId": "d3-q2"
+        "text": "D) Dos raíces",
+        "questionId": "d3-q1"
       },
       {
         "index": 93,
@@ -727,8 +720,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuál es el participio de «cantar»?",
-        "questionId": "d3-q3",
+        "text": "¿Cuál es el participio de «comer»?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +735,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) cantaba",
-        "questionId": "d3-q3"
+        "text": "A) comer",
+        "questionId": "d3-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) cantar",
-        "questionId": "d3-q3"
+        "text": "B) como",
+        "questionId": "d3-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) canto",
-        "questionId": "d3-q3"
+        "text": "C) comido",
+        "questionId": "d3-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) cantado",
-        "questionId": "d3-q3"
+        "text": "D) comiendo",
+        "questionId": "d3-q2"
       },
       {
         "index": 99,
@@ -781,8 +774,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo termina el participio de «vivir»?",
-        "questionId": "d3-q4",
+        "text": "¿Cuál es el participio de «cantar»?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,44 +789,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) -ado",
-        "questionId": "d3-q4"
+        "text": "A) cantaba",
+        "questionId": "d3-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) -ido",
-        "questionId": "d3-q4"
+        "text": "B) cantar",
+        "questionId": "d3-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) -ando",
-        "questionId": "d3-q4"
+        "text": "C) canto",
+        "questionId": "d3-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) -ar",
-        "questionId": "d3-q4"
+        "text": "D) cantado",
+        "questionId": "d3-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Cómo termina el participio de «vivir»?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) -ado",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) -ido",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) -ando",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) -ar",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Cuál frase está bien escrita?",
         "questionId": "d3-q5",
@@ -846,50 +886,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Han comido.",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Han comidos.",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Han comer.",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Han comiendo.",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
-        "text": "¿Qué pieza cambia en he, has, ha, hemos, han?",
+        "text": "¿Qué pieza cambia: he, has, ha, han?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,50 +940,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
         "text": "A) El participio",
         "questionId": "d3-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) La raíz",
         "questionId": "d3-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) La ayudante haber",
         "questionId": "d3-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) Nada",
         "questionId": "d3-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué frase deja el resultado vivo ahora?",
+        "text": "¿Qué frase deja el resultado vivo?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,50 +994,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Ya he comido.",
+        "text": "A) Ya he subido.",
         "questionId": "d3-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Ayer comí.",
+        "text": "B) Ayer subí.",
         "questionId": "d3-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Comeré mañana.",
+        "text": "C) Subiré mañana.",
         "questionId": "d3-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Comería.",
+        "text": "D) Subiría.",
         "questionId": "d3-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "¿Qué forma dice «ya estaba hecho antes»?",
+        "text": "¿Qué forma dice «estaba hecho antes»?",
         "questionId": "d3-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1008,50 +1048,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
         "text": "A) he cantado",
         "questionId": "d3-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) habré cantado",
         "questionId": "d3-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) cantaré",
         "questionId": "d3-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) había cantado",
         "questionId": "d3-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe he, has y ha con el participio «cantado».",
+        "text": "Escribe he, has y ha con «cantado».",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,48 +1102,32 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 132,
+        "index": 137,
         "column": 3,
-        "line": 28,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w1"
       },
       {
-        "index": 133,
+        "index": 138,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 34,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 139,
         "column": 3,
-        "line": 32,
+        "line": 35,
         "kind": "question",
         "text": "Explica con tus palabras qué es el participio.",
         "questionId": "d3-w2",
@@ -1114,30 +1138,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
       },
       {
         "index": 140,
@@ -1151,15 +1151,23 @@
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
         "kind": "question",
-        "text": "Dibuja dos piezas que se unen: haber y participio.",
+        "text": "Dibuja dos tramos: haber y participio.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1168,14 +1176,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
       },
       {
         "index": 144,
@@ -1197,23 +1197,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja una tabla con cantado, comido y vivido.",
+        "text": "Dibuja una tabla: cantado, comido, vivido.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,6 +1214,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 149,
@@ -1235,46 +1235,43 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja dos piezas de rompecabezas que se unen."
+        "text": "Dibuja el teleférico con dos tramos. Escribe"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe «he» en una y «cantado» en la otra."
+        "text": "«he» en uno y «cantado» en otro. Abajo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo escribe «he comido» y «he vivido»."
+        "text": "escribe «he comido» y «he vivido»."
       },
       {
         "index": 156,
@@ -1304,8 +1301,8 @@
         "answer": "Haber y participio",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
@@ -1322,8 +1319,8 @@
         "answer": "comido",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1340,8 +1337,8 @@
         "answer": "cantado",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1357,9 +1354,9 @@
         ],
         "answer": "-ido",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1376,15 +1373,15 @@
         "answer": "Han comido.",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué pieza cambia en he, has, ha, hemos, han?",
+        "prompt": "¿Qué pieza cambia: he, has, ha, han?",
         "choices": [
           "El participio",
           "La raíz",
@@ -1394,33 +1391,33 @@
         "answer": "La ayudante haber",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué frase deja el resultado vivo ahora?",
+        "prompt": "¿Qué frase deja el resultado vivo?",
         "choices": [
-          "Ya he comido.",
-          "Ayer comí.",
-          "Comeré mañana.",
-          "Comería."
+          "Ya he subido.",
+          "Ayer subí.",
+          "Subiré mañana.",
+          "Subiría."
         ],
-        "answer": "Ya he comido.",
+        "answer": "Ya he subido.",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q8",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué forma dice «ya estaba hecho antes»?",
+        "prompt": "¿Qué forma dice «estaba hecho antes»?",
         "choices": [
           "he cantado",
           "habré cantado",
@@ -1430,19 +1427,19 @@
         "answer": "había cantado",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe he, has y ha con el participio «cantado».",
+        "prompt": "Escribe he, has y ha con «cantado».",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1452,34 +1449,34 @@
         "prompt": "Explica con tus palabras qué es el participio.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja dos piezas que se unen: haber y participio.",
+        "prompt": "Dibuja dos tramos: haber y participio.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja una tabla con cantado, comido y vivido.",
+        "prompt": "Dibuja una tabla: cantado, comido, vivido.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

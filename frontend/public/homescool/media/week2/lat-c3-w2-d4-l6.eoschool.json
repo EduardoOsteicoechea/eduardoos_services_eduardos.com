@@ -14,37 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Non da vuelta al sentido",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer practicaste «ut» con la pregunta «¿para qué?».\nAyer viste que «ut» presenta la meta de la acción.\nHoy practicas «non», la palabra que dice que no.\n\n«Canto» significa «yo canto». ¿Cómo dirías «yo no canto»? (Pista: «non» significa «no».)\n\nDirías «non canto». «Non» va justo antes del verbo. El verbo no cambia de forma. Solo «non» da vuelta al sentido."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer practicaste «ut» con la pregunta «¿para qué?». Dice la meta, como la energía de Guri. Hoy practicas «non», la palabra que dice que no."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Afirmar y negar",
-        "body": "«Venit» es «viene». ¿En qué se diferencian «venit» y «non venit»?\n\n«Venit» afirma: viene. «Non venit» niega: no viene. La acción es la misma. Cambia solo si ocurre o no ocurre."
+        "heading": "Punto 2: Non da vuelta al sentido",
+        "body": "«Currit» es «corre». Guri detiene el agua. ¿Cómo dices «el agua no corre»?\n\nDices «aqua non currit». «Non» va justo antes del verbo. El verbo no cambia de forma. Solo «non» da vuelta al sentido."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Non va antes del verbo",
-        "body": "Una pregunta con truco: ¿«non» puede ir al final de la frase, lejos del verbo?\n\nMejor no: «non» va justo antes del verbo. «Non laborat» es «no trabaja». Si lo alejas, cuesta saber qué niegas. Una sola «non» basta: repetirla confunde."
+        "heading": "Punto 3: Afirmar y negar",
+        "body": "«Venit» es «viene». ¿En qué se diferencian «venit» y «non venit»?\n\n«Venit» afirma: viene. «Non venit» niega: no viene. La acción es la misma. Cambia si ocurre o no ocurre."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Una tabla de tres filas",
-        "body": "Ahora tú: haz una tabla de tres filas. ¿Cómo queda con «canto», «non canto» y «non venit»?\n\nFila 1: «canto» es «yo canto». Fila 2: «non canto» es «yo no canto». Fila 3: «non venit» es «no viene». Compara las filas y traduce cada una."
+        "heading": "Punto 4: Non va antes del verbo",
+        "body": "Una pregunta con truco: ¿«non» puede ir al final de la frase, lejos del verbo?\n\nMejor no: «non» va justo antes del verbo. «Non laborat» es «no trabaja». Si lo alejas, cuesta saber qué niegas."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Revisar la traducción",
-        "body": "¿Cómo compruebas que tu traducción de «non venit» no suene afirmativa?\n\nBusca «non» antes del verbo. Si ves «non venit», debe sonar «no viene». Si suena «viene», revisa otra vez. Lee en voz alta y escucha el «no» antes de la acción."
+        "heading": "Punto 5: Una tabla de tres filas",
+        "body": "Ahora tú: haz una tabla de tres filas con «aqua currit», «aqua non currit», «non venit».\n\nFila 1: «aqua currit»: el agua corre. Fila 2: «aqua non currit»: no corre. Fila 3: «non venit»: no viene."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Revisar la traducción",
+        "body": "¿Cómo compruebas que tu traducción de «aqua non currit» no suene afirmativa?\n\nBusca «non» antes del verbo. Si tu frase dice «el agua corre», revisa otra vez. Escucha el «no» antes de la acción."
       }
     ],
-    "summary": "Non niega: va justo antes del verbo y convierte «viene» en «no viene».",
+    "summary": "Non niega: va justo antes del verbo y convierte «el agua corre» en «el agua no corre».",
     "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
     "weekRecap": "**et** une nombres o acciones · **ut** responde «¿para qué?» · **non** niega antes del verbo. Esta semana leemos frases latinas cortas mirando primero qué pieza aparece en cada oración.",
     "priorDayRecap": "Ayer practicaste **ut** señalando meta con la pregunta «¿para qué?» después de la acción principal.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un semáforo con luz verde y luz roja. Rotula la luz verde: venit. Rotula la luz roja: non venit. Escribe al lado qué significa cada rótulo.",
+    "imageBandInstruction": "Dibuja la Represa de Guri con el agua detenida. Rotula el río que corre: aqua currit. Rotula el agua detenida: aqua non currit. Escribe al lado qué significa cada rótulo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,78 +70,78 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer practicaste «ut» con la pregunta «¿para qué?»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
         "kind": "lesson",
-        "text": "Ayer viste que «ut» presenta la meta de la acción."
+        "text": "Ayer practicaste «ut» con la pregunta"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Hoy practicas «non», la palabra que dice que no."
+        "text": "«¿para qué?». Dice la meta, como la"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "energía de Guri. Hoy practicas «non»,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "«Canto» significa «yo canto». ¿Cómo dirías «yo no canto»?"
+        "text": "la palabra que dice que no."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "(Pista: «non» significa «no».)"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -149,43 +154,43 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Non da vuelta al sentido"
+        "kind": "lesson",
+        "text": "«Currit» es «corre». Guri detiene el agua."
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo dices «el agua no corre»?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Dirías «non canto»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "«Non» va justo antes del verbo."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "El verbo no cambia de forma."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Solo «non» da vuelta al sentido."
+        "kind": "heading",
+        "text": "Punto 2: Non da vuelta al sentido"
       },
       {
         "index": 21,
@@ -199,49 +204,49 @@
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Dices «aqua non currit»."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Non» va justo antes del verbo."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El verbo no cambia de forma."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "«Venit» es «viene». ¿En qué se diferencian «venit»"
+        "text": "Solo «non» da vuelta al sentido."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "y «non venit»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
@@ -254,43 +259,43 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: Afirmar y negar"
+        "kind": "lesson",
+        "text": "«Venit» es «viene». ¿En qué se diferencian"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«venit» y «non venit»?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "«Venit» afirma: viene."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "«Non venit» niega: no viene."
+        "text": "________________________________________"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "La acción es la misma."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "Cambia solo si ocurre o no ocurre."
+        "kind": "heading",
+        "text": "Punto 3: Afirmar y negar"
       },
       {
         "index": 36,
@@ -304,362 +309,350 @@
         "column": 1,
         "line": 37,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "«Venit» afirma: viene."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Non venit» niega: no viene."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La acción es la misma."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«non» puede ir al final de la"
+        "text": "Cambia si ocurre o no ocurre."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "frase, lejos del verbo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "heading",
-        "text": "Punto 3: Non va antes del verbo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«non» puede ir"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Mejor no: «non» va justo antes del verbo."
+        "text": "al final de la frase, lejos del verbo?"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "«Non laborat» es «no trabaja»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Si lo alejas, cuesta saber qué niegas."
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "Una sola «non» basta: repetirla confunde."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: Non va antes del verbo"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Mejor no: «non» va justo antes del verbo."
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Non laborat» es «no trabaja»."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "Ahora tú: haz una tabla de tres filas. ¿Cómo queda con"
+        "text": "Si lo alejas, cuesta saber qué niegas."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "«canto», «non canto» y «non venit»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 4: Una tabla de tres filas"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora tú: haz una tabla de tres filas con"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Fila 1: «canto» es «yo canto»."
+        "text": "«aqua currit», «aqua non currit», «non venit»."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "Fila 2: «non canto» es «yo no canto»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "Fila 3: «non venit» es «no viene»."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Compara las filas y traduce cada una."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Una tabla de tres filas"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Fila 1: «aqua currit»: el agua corre."
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Fila 2: «aqua non currit»: no corre."
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Cómo compruebas que tu traducción de «non venit» no"
+        "text": "Fila 3: «non venit»: no viene."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "suene afirmativa?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Revisar la traducción"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo compruebas que tu traducción de"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Busca «non» antes del verbo."
+        "text": "«aqua non currit» no suene afirmativa?"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Si ves «non venit», debe sonar «no viene»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Si suena «viene», revisa otra vez."
+        "text": "________________________________________"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "Lee en voz alta y escucha el «no» antes de la acción."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Revisar la traducción"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Busca «non» antes del verbo."
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si tu frase dice «el agua corre»,"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "¿Qué significa «non»?",
-        "questionId": "d4-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "revisa otra vez. Escucha el «no»"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) Y",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "antes de la acción."
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) Para que",
-        "questionId": "d4-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) No",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) Con",
-        "questionId": "d4-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 87,
@@ -673,8 +666,8 @@
         "column": 2,
         "line": 36,
         "kind": "question",
-        "text": "¿Qué significa «non venit»?",
-        "questionId": "d4-q2",
+        "text": "¿Qué significa «non»?",
+        "questionId": "d4-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -688,32 +681,32 @@
         "column": 2,
         "line": 37,
         "kind": "option",
-        "text": "A) Viene",
-        "questionId": "d4-q2"
+        "text": "A) Y",
+        "questionId": "d4-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "option",
-        "text": "B) Viene y ve",
-        "questionId": "d4-q2"
+        "text": "B) Para que",
+        "questionId": "d4-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "option",
-        "text": "C) Viene para ver",
-        "questionId": "d4-q2"
+        "text": "C) No",
+        "questionId": "d4-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "option",
-        "text": "D) No viene",
-        "questionId": "d4-q2"
+        "text": "D) Con",
+        "questionId": "d4-q1"
       },
       {
         "index": 93,
@@ -727,8 +720,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué significa «non canto»?",
-        "questionId": "d4-q3",
+        "text": "¿Qué significa «aqua non currit»?",
+        "questionId": "d4-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +735,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Yo canto",
-        "questionId": "d4-q3"
+        "text": "A) El agua corre",
+        "questionId": "d4-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Yo no canto",
-        "questionId": "d4-q3"
+        "text": "B) Agua y luz",
+        "questionId": "d4-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Tú no cantas",
-        "questionId": "d4-q3"
+        "text": "C) Agua para correr",
+        "questionId": "d4-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Canto para que",
-        "questionId": "d4-q3"
+        "text": "D) El agua no corre",
+        "questionId": "d4-q2"
       },
       {
         "index": 99,
@@ -781,8 +774,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué significa «non laborat»?",
-        "questionId": "d4-q4",
+        "text": "¿Qué significa «non venit»?",
+        "questionId": "d4-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,44 +789,91 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) No trabaja",
-        "questionId": "d4-q4"
+        "text": "A) Viene",
+        "questionId": "d4-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Trabaja",
-        "questionId": "d4-q4"
+        "text": "B) No viene",
+        "questionId": "d4-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Trabajo para aprender",
-        "questionId": "d4-q4"
+        "text": "C) Viene y ve",
+        "questionId": "d4-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Trabaja y ríe",
-        "questionId": "d4-q4"
+        "text": "D) Viene para ver",
+        "questionId": "d4-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué significa «non laborat»?",
+        "questionId": "d4-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) No trabaja",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Trabaja",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Trabajo para aprender",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Trabaja y ríe",
+        "questionId": "d4-q4"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
         "text": "¿Dónde va «non»?",
         "questionId": "d4-q5",
@@ -846,48 +886,48 @@
         }
       },
       {
-        "index": 107,
+        "index": 112,
         "column": 3,
-        "line": 3,
+        "line": 8,
         "kind": "option",
         "text": "A) Al final",
         "questionId": "d4-q5"
       },
       {
-        "index": 108,
+        "index": 113,
         "column": 3,
-        "line": 4,
+        "line": 9,
         "kind": "option",
         "text": "B) Después del nombre",
         "questionId": "d4-q5"
       },
       {
-        "index": 109,
+        "index": 114,
         "column": 3,
-        "line": 5,
+        "line": 10,
         "kind": "option",
         "text": "C) Justo antes del verbo",
         "questionId": "d4-q5"
       },
       {
-        "index": 110,
+        "index": 115,
         "column": 3,
-        "line": 6,
+        "line": 11,
         "kind": "option",
         "text": "D) Lejos del verbo",
         "questionId": "d4-q5"
       },
       {
-        "index": 111,
+        "index": 116,
         "column": 3,
-        "line": 7,
+        "line": 12,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 117,
         "column": 3,
-        "line": 8,
+        "line": 13,
         "kind": "question",
         "text": "¿Qué cambia entre «venit» y «non venit»?",
         "questionId": "d4-q6",
@@ -900,50 +940,50 @@
         }
       },
       {
-        "index": 113,
+        "index": 118,
         "column": 3,
-        "line": 9,
+        "line": 14,
         "kind": "option",
-        "text": "A) La acción no ocurre",
+        "text": "A) Si la acción ocurre",
         "questionId": "d4-q6"
       },
       {
-        "index": 114,
+        "index": 119,
         "column": 3,
-        "line": 10,
+        "line": 15,
         "kind": "option",
         "text": "B) El verbo",
         "questionId": "d4-q6"
       },
       {
-        "index": 115,
+        "index": 120,
         "column": 3,
-        "line": 11,
+        "line": 16,
         "kind": "option",
         "text": "C) El nombre",
         "questionId": "d4-q6"
       },
       {
-        "index": 116,
+        "index": 121,
         "column": 3,
-        "line": 12,
+        "line": 17,
         "kind": "option",
         "text": "D) La meta",
         "questionId": "d4-q6"
       },
       {
-        "index": 117,
+        "index": 122,
         "column": 3,
-        "line": 13,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 118,
+        "index": 123,
         "column": 3,
-        "line": 14,
+        "line": 19,
         "kind": "question",
-        "text": "¿Cuántas «non» bastan para negar un verbo?",
+        "text": "¿Qué dice «aqua currit»?",
         "questionId": "d4-q7",
         "questionType": "mcq",
         "gutter": {
@@ -954,50 +994,50 @@
         }
       },
       {
-        "index": 119,
+        "index": 124,
         "column": 3,
-        "line": 15,
+        "line": 20,
         "kind": "option",
-        "text": "A) Dos",
+        "text": "A) El agua no corre",
         "questionId": "d4-q7"
       },
       {
-        "index": 120,
+        "index": 125,
         "column": 3,
-        "line": 16,
+        "line": 21,
         "kind": "option",
-        "text": "B) Tres",
+        "text": "B) El agua y la luz",
         "questionId": "d4-q7"
       },
       {
-        "index": 121,
+        "index": 126,
         "column": 3,
-        "line": 17,
+        "line": 22,
         "kind": "option",
-        "text": "C) Ninguna",
+        "text": "C) Para que corra",
         "questionId": "d4-q7"
       },
       {
-        "index": 122,
+        "index": 127,
         "column": 3,
-        "line": 18,
+        "line": 23,
         "kind": "option",
-        "text": "D) Una",
+        "text": "D) El agua corre",
         "questionId": "d4-q7"
       },
       {
-        "index": 123,
+        "index": 128,
         "column": 3,
-        "line": 19,
+        "line": 24,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 124,
+        "index": 129,
         "column": 3,
-        "line": 20,
+        "line": 25,
         "kind": "question",
-        "text": "Si «non venit» suena «viene», ¿qué haces?",
+        "text": "Si tu frase dice «el agua corre», ¿qué haces?",
         "questionId": "d4-q8",
         "questionType": "mcq",
         "gutter": {
@@ -1008,50 +1048,50 @@
         }
       },
       {
-        "index": 125,
+        "index": 130,
         "column": 3,
-        "line": 21,
+        "line": 26,
         "kind": "option",
-        "text": "A) Lo dejas así",
+        "text": "A) La dejas así",
         "questionId": "d4-q8"
       },
       {
-        "index": 126,
+        "index": 131,
         "column": 3,
-        "line": 22,
+        "line": 27,
         "kind": "option",
         "text": "B) Revisas dónde está «non»",
         "questionId": "d4-q8"
       },
       {
-        "index": 127,
+        "index": 132,
         "column": 3,
-        "line": 23,
+        "line": 28,
         "kind": "option",
         "text": "C) Quitas «non»",
         "questionId": "d4-q8"
       },
       {
-        "index": 128,
+        "index": 133,
         "column": 3,
-        "line": 24,
+        "line": 29,
         "kind": "option",
         "text": "D) Cambias el verbo",
         "questionId": "d4-q8"
       },
       {
-        "index": 129,
+        "index": 134,
         "column": 3,
-        "line": 25,
+        "line": 30,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 130,
+        "index": 135,
         "column": 3,
-        "line": 26,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe una tabla: afirmación, con «non» y traducción.",
+        "text": "Escribe la tabla de tres filas con su",
         "questionId": "d4-w1",
         "questionType": "write",
         "gutter": {
@@ -1062,48 +1102,40 @@
         }
       },
       {
-        "index": 131,
+        "index": 136,
         "column": 3,
-        "line": 27,
+        "line": 32,
+        "kind": "lesson",
+        "text": "traducción.",
+        "questionId": "d4-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 132,
+        "index": 138,
         "column": 3,
-        "line": 28,
+        "line": 34,
         "kind": "answerLine",
         "text": "",
         "questionId": "d4-w1"
       },
       {
-        "index": 133,
+        "index": 139,
         "column": 3,
-        "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 134,
-        "column": 3,
-        "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
+        "line": 35,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 136,
+        "index": 140,
         "column": 3,
-        "line": 32,
+        "line": 36,
         "kind": "question",
         "text": "Explica por qué «non» va antes del verbo.",
         "questionId": "d4-w2",
@@ -1116,50 +1148,34 @@
         }
       },
       {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w2"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
       },
       {
         "index": 142,
         "column": 3,
         "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja un semáforo: verde «venit», rojo «non venit».",
+        "text": "Dibuja un semáforo: verde «venit», rojo «non",
         "questionId": "d4-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,27 +1186,11 @@
         }
       },
       {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w3"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "venit».",
         "questionId": "d4-w3"
       },
       {
@@ -1205,15 +1205,23 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d4-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja una flecha de «non» al verbo que niega.",
+        "text": "Dibuja una flecha de «non» al verbo «currit».",
         "questionId": "d4-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1222,14 +1230,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
       },
       {
         "index": 150,
@@ -1251,37 +1251,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d4-w4"
+        "kind": "imageInstruction",
+        "text": "Dibuja la Represa de Guri con el agua"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un semáforo con luz verde y luz roja."
+        "text": "detenida. Rotula el río que corre: aqua"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula la luz verde: venit."
+        "text": "currit. Rotula el agua detenida: aqua non"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula la luz roja: non venit."
+        "text": "currit. Escribe al lado qué significa cada"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe al lado qué significa cada rótulo."
+        "text": "rótulo."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1304,44 +1303,44 @@
         "answer": "No",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d4-q2",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué significa «non venit»?",
+        "prompt": "¿Qué significa «aqua non currit»?",
         "choices": [
-          "Viene",
-          "Viene y ve",
-          "Viene para ver",
-          "No viene"
+          "El agua corre",
+          "Agua y luz",
+          "Agua para correr",
+          "El agua no corre"
         ],
-        "answer": "No viene",
+        "answer": "El agua no corre",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d4-q3",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Qué significa «non canto»?",
+        "prompt": "¿Qué significa «non venit»?",
         "choices": [
-          "Yo canto",
-          "Yo no canto",
-          "Tú no cantas",
-          "Canto para que"
+          "Viene",
+          "No viene",
+          "Viene y ve",
+          "Viene para ver"
         ],
-        "answer": "Yo no canto",
+        "answer": "No viene",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1357,9 +1356,9 @@
         ],
         "answer": "No trabaja",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1376,8 +1375,8 @@
         "answer": "Justo antes del verbo",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1386,43 +1385,43 @@
         "type": "mcq",
         "prompt": "¿Qué cambia entre «venit» y «non venit»?",
         "choices": [
-          "La acción no ocurre",
+          "Si la acción ocurre",
           "El verbo",
           "El nombre",
           "La meta"
         ],
-        "answer": "La acción no ocurre",
+        "answer": "Si la acción ocurre",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d4-q7",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "¿Cuántas «non» bastan para negar un verbo?",
+        "prompt": "¿Qué dice «aqua currit»?",
         "choices": [
-          "Dos",
-          "Tres",
-          "Ninguna",
-          "Una"
+          "El agua no corre",
+          "El agua y la luz",
+          "Para que corra",
+          "El agua corre"
         ],
-        "answer": "Una",
+        "answer": "El agua corre",
         "slot": {
           "column": 3,
-          "line": 14,
-          "index": 118
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d4-q8",
         "originDay": 4,
         "type": "mcq",
-        "prompt": "Si «non venit» suena «viene», ¿qué haces?",
+        "prompt": "Si tu frase dice «el agua corre», ¿qué haces?",
         "choices": [
-          "Lo dejas así",
+          "La dejas así",
           "Revisas dónde está «non»",
           "Quitas «non»",
           "Cambias el verbo"
@@ -1430,19 +1429,19 @@
         "answer": "Revisas dónde está «non»",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d4-w1",
         "originDay": 4,
         "type": "write",
-        "prompt": "Escribe una tabla: afirmación, con «non» y traducción.",
+        "prompt": "Escribe la tabla de tres filas con su traducción.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1452,8 +1451,8 @@
         "prompt": "Explica por qué «non» va antes del verbo.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1465,21 +1464,21 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 40,
+          "index": 144
         }
       },
       {
         "id": "d4-w4",
         "originDay": 4,
         "type": "write",
-        "prompt": "Dibuja una flecha de «non» al verbo que niega.",
+        "prompt": "Dibuja una flecha de «non» al verbo «currit».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 45,
+          "index": 149
         }
       }
     ]

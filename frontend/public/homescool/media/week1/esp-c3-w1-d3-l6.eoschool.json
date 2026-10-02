@@ -14,28 +14,33 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Artículo y adjetivo acompañan",
-        "body": "¿Qué aprendiste ayer sobre esta misma materia?\n\n## Repaso\nAyer clasificamos sustantivos, verbos y pronombres.\nPreguntamos: ¿quién o qué? y ¿qué hace?\nCon esas preguntas encontramos cada clase de palabra.\n\nAhora te pregunto: tienes la palabra «casa». ¿Qué dos palabras le pondrías para decir cuál es y cómo es?\n\nPor ejemplo: «la casa antigua». «La» es un artículo: dice cuál casa es. «Antigua» es un adjetivo: dice cómo es la casa. Los dos van junto al sustantivo y lo acompañan."
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nAyer viste que el sustantivo nombra, el verbo actúa y el pronombre reemplaza. Hoy describes lo que ves en la sierra."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El orden de las palabras",
-        "body": "Ahora ordena estas palabras para formar una oración: «pequeño / el / perro / ladra / fuerte».\n\nLa oración queda: «El perro pequeño ladra fuerte.» El artículo va antes del sustantivo: «el perro». El adjetivo va junto al sustantivo: «perro pequeño». «Fuerte» cuenta cómo ladra el perro."
+        "heading": "Punto 2: Artículo y adjetivo acompañan",
+        "body": "Ves un pico en la neblina. ¿Qué dos palabras dicen cuál es y cómo es?\n\nDices «el pico alto». «El» es un artículo: dice cuál pico. «Alto» es un adjetivo: dice cómo es. Los dos van junto al sustantivo."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: El adverbio cambia el detalle",
-        "body": "Compara «corre despacio» con «corre rápido». ¿Qué palabra cambió y cuál se quedó igual?\n\nEl verbo «corre» se queda igual. Lo que cambia es el adverbio: dice cómo corre. El adverbio dice cómo, cuándo o dónde pasa algo: «despacio», «ayer», «cerca»."
+        "heading": "Punto 3: El orden de las palabras",
+        "body": "Un equipo sube la Sierra Nevada. Ordena: «sube / equipo / el / despacio».\n\nSale: «El equipo sube despacio.» El artículo va antes del sustantivo. El verbo dice qué hace el equipo, y «despacio» cuenta cómo sube."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La palabra «muy»",
-        "body": "Y si digo «una casa muy grande», ¿qué hace «muy»?\n\n«Muy» es un adverbio: hace más fuerte a «grande». También puede ir con otro adverbio: «muy bien». Y hay adverbios como «casi»: «casi siempre»."
+        "heading": "Punto 4: El adverbio cambia el detalle",
+        "body": "Compara «sube despacio» y «sube rápido». ¿Qué palabra cambió y cuál no?\n\nEl verbo «sube» se queda igual. Cambia el adverbio: dice cómo sube. También dice cuándo o dónde: «ayer», «hoy», «cerca», «arriba»."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cada palabra en su lugar",
-        "body": "Una duda: ¿se dice «niño rápidamente» o «niño rápido»?\n\nSe dice «niño rápido». «Rápido» es un adjetivo y describe al niño. «Rápidamente» es un adverbio y va con el verbo: «corre rápidamente»."
+        "heading": "Punto 5: La palabra «muy»",
+        "body": "Y si digo «la laguna muy fría», ¿qué hace la palabra «muy»?\n\n«Muy» es un adverbio: hace más fuerte a «fría», como en «muy fría». También acompaña a otro adverbio: «muy despacio»."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Cada palabra en su lugar",
+        "body": "Con truco: ¿se dice «equipo rápido» o «equipo rápidamente»?\n\nSe dice «equipo rápido». «Rápido» es un adjetivo: describe al equipo. «Rápidamente» es un adverbio y va con el verbo: «sube rápidamente»."
       }
     ],
     "summary": "El artículo y el adjetivo acompañan al sustantivo; el adverbio dice cómo, cuándo o dónde pasa algo.",
@@ -44,7 +49,7 @@
     "priorDayRecap": "Ayer clasificaste sustantivos, verbos y pronombres en un texto breve.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un animal que se mueve muy rápido o muy despacio. Escribe su artículo y un adjetivo que lo describa. Añade un adverbio que diga cómo se mueve. Revisa que cada etiqueta diga qué clase de palabra es.",
+    "imageBandInstruction": "Dibuja un equipo subiendo la Sierra Nevada. Escribe un artículo y un adjetivo del pico. Añade un adverbio que diga cómo sube. Rotula cada palabra con su clase.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -52,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer sobre esta misma materia?"
+        "text": "¿Qué aprendiste ayer?"
       },
       {
         "index": 2,
@@ -65,15 +70,15 @@
         "index": 3,
         "column": 1,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "heading",
-        "text": "Repaso"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
@@ -86,57 +91,57 @@
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "lesson",
-        "text": "Ayer clasificamos sustantivos, verbos y pronombres."
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Preguntamos: ¿quién o qué? y ¿qué hace?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Con esas preguntas encontramos cada clase de palabra."
+        "text": "Ayer viste que el sustantivo nombra,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "el verbo actúa y el pronombre reemplaza."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Ahora te pregunto: tienes la palabra «casa». ¿Qué dos"
+        "text": "Hoy describes lo que ves en la sierra."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "palabras le pondrías para decir cuál es y cómo es?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -149,85 +154,85 @@
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "heading",
-        "text": "Punto 1: Artículo y adjetivo acompañan"
+        "kind": "lesson",
+        "text": "Ves un pico en la neblina. ¿Qué dos"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "palabras dicen cuál es y cómo es?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "Por ejemplo: «la casa antigua»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "«La» es un artículo: dice cuál casa es."
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
         "kind": "lesson",
-        "text": "«Antigua» es un adjetivo: dice cómo es la casa."
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "Los dos van junto al sustantivo y lo acompañan."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Artículo y adjetivo acompañan"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dices «el pico alto»."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«El» es un artículo: dice cuál pico."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Ahora ordena estas palabras para formar una oración:"
+        "text": "«Alto» es un adjetivo: dice cómo es."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "«pequeño / el / perro / ladra / fuerte»."
+        "text": "Los dos van junto al sustantivo."
       },
       {
         "index": 27,
@@ -240,57 +245,57 @@
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "heading",
-        "text": "Punto 2: El orden de las palabras"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un equipo sube la Sierra Nevada. Ordena:"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "La oración queda: «El perro pequeño ladra fuerte.»"
+        "text": "«sube / equipo / el / despacio»."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "El artículo va antes del sustantivo: «el perro»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "El adjetivo va junto al sustantivo: «perro pequeño»."
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "«Fuerte» cuenta cómo ladra el perro."
+        "text": "________________________________________"
       },
       {
         "index": 36,
@@ -303,8 +308,8 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "heading",
+        "text": "Punto 3: El orden de las palabras"
       },
       {
         "index": 38,
@@ -317,29 +322,29 @@
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sale: «El equipo sube despacio.»"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Compara «corre despacio» con «corre rápido»."
+        "text": "El artículo va antes del sustantivo."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "¿Qué palabra cambió y cuál se quedó igual?"
+        "text": "El verbo dice qué hace el equipo,"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y «despacio» cuenta cómo sube."
       },
       {
         "index": 43,
@@ -352,15 +357,15 @@
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "heading",
-        "text": "Punto 3: El adverbio cambia el detalle"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
@@ -374,42 +379,42 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "El verbo «corre» se queda igual."
+        "text": "Compara «sube despacio» y «sube rápido»."
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Lo que cambia es el adverbio: dice cómo corre."
+        "text": "¿Qué palabra cambió y cuál no?"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "El adverbio dice cómo, cuándo o dónde pasa algo:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
         "kind": "lesson",
-        "text": "«despacio», «ayer», «cerca»."
+        "text": "________________________________________"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
@@ -422,43 +427,43 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 4: El adverbio cambia el detalle"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Y si digo «una casa muy grande», ¿qué hace «muy»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El verbo «sube» se queda igual."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cambia el adverbio: dice cómo sube."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "También dice cuándo o dónde:"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "heading",
-        "text": "Punto 4: La palabra «muy»"
+        "kind": "lesson",
+        "text": "«ayer», «hoy», «cerca», «arriba»."
       },
       {
         "index": 60,
@@ -472,35 +477,35 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "«Muy» es un adverbio: hace más fuerte a «grande»."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "También puede ir con otro adverbio: «muy bien»."
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Y hay adverbios como «casi»: «casi siempre»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Y si digo «la laguna muy fría»,"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "¿qué hace la palabra «muy»?"
       },
       {
         "index": 66,
@@ -513,22 +518,22 @@
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Una duda: ¿se dice «niño rápidamente» o «niño rápido»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: La palabra «muy»"
       },
       {
         "index": 70,
@@ -541,50 +546,50 @@
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Muy» es un adverbio: hace más fuerte"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 5: Cada palabra en su lugar"
+        "kind": "lesson",
+        "text": "a «fría», como en «muy fría»."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "También acompaña a otro adverbio:"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "Se dice «niño rápido»."
+        "text": "«muy despacio»."
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "«Rápido» es un adjetivo y describe al niño."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "«Rápidamente» es un adverbio y va con el verbo:"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "«corre rápidamente»."
+        "text": "________________________________________"
       },
       {
         "index": 78,
@@ -598,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Cópiala aquí:"
+        "text": "Con truco: ¿se dice «equipo rápido» o"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«equipo rápidamente»?"
       },
       {
         "index": 81,
@@ -618,102 +623,78 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "question",
-        "text": "En «la casa antigua», ¿cuál es el artículo?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "option",
-        "text": "A) casa",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "option",
-        "text": "B) la",
-        "questionId": "d3-q1"
+        "kind": "heading",
+        "text": "Punto 6: Cada palabra en su lugar"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "option",
-        "text": "C) antigua",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "option",
-        "text": "D) en",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Se dice «equipo rápido»."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Rápido» es un adjetivo: describe al equipo."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "En «la casa antigua», ¿cuál es el adjetivo?",
-        "questionId": "d3-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "«Rápidamente» es un adverbio"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) la",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "y va con el verbo: «sube rápidamente»."
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) casa",
-        "questionId": "d3-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) antigua",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) y",
-        "questionId": "d3-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -727,8 +708,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué dice un adjetivo?",
-        "questionId": "d3-q3",
+        "text": "En «el pico alto», ¿cuál es el artículo?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -742,32 +723,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Qué hace el sustantivo",
-        "questionId": "d3-q3"
+        "text": "A) pico",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Quién habla",
-        "questionId": "d3-q3"
+        "text": "B) el",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Dónde termina la oración",
-        "questionId": "d3-q3"
+        "text": "C) alto",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Cómo es el sustantivo",
-        "questionId": "d3-q3"
+        "text": "D) en",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -781,8 +762,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo se ordena «pequeño / el / perro / ladra / fuerte»?",
-        "questionId": "d3-q4",
+        "text": "En «el pico alto», ¿cuál es el adjetivo?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -796,46 +777,147 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Pequeño el perro fuerte ladra.",
-        "questionId": "d3-q4"
+        "text": "A) el",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) El perro pequeño ladra fuerte.",
-        "questionId": "d3-q4"
+        "text": "B) pico",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Ladra fuerte el pequeño perro.",
-        "questionId": "d3-q4"
+        "text": "C) alto",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Perro el ladra pequeño fuerte.",
-        "questionId": "d3-q4"
+        "text": "D) en",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "¿Qué dice un adjetivo?",
+        "questionId": "d3-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 106,
         "column": 3,
         "line": 2,
+        "kind": "option",
+        "text": "A) Qué hace el sustantivo",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Quién habla",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Dónde termina la oración",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Cómo es el sustantivo",
+        "questionId": "d3-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
         "kind": "question",
-        "text": "En «corre despacio», ¿cuál es el adverbio?",
+        "text": "¿Cuál oración está bien ordenada?",
+        "questionId": "d3-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Sube el despacio equipo.",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) El equipo sube despacio.",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Equipo el despacio sube.",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Despacio sube equipo el.",
+        "questionId": "d3-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "En «sube rápido», ¿cuál es el adverbio?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -846,50 +928,50 @@
         }
       },
       {
-        "index": 107,
+        "index": 118,
         "column": 3,
-        "line": 3,
+        "line": 14,
         "kind": "option",
-        "text": "A) despacio",
+        "text": "A) rápido",
         "questionId": "d3-q5"
       },
       {
-        "index": 108,
+        "index": 119,
         "column": 3,
-        "line": 4,
+        "line": 15,
         "kind": "option",
-        "text": "B) corre",
+        "text": "B) sube",
         "questionId": "d3-q5"
       },
       {
-        "index": 109,
+        "index": 120,
         "column": 3,
-        "line": 5,
+        "line": 16,
         "kind": "option",
         "text": "C) el",
         "questionId": "d3-q5"
       },
       {
-        "index": 110,
+        "index": 121,
         "column": 3,
-        "line": 6,
+        "line": 17,
         "kind": "option",
-        "text": "D) niño",
+        "text": "D) equipo",
         "questionId": "d3-q5"
       },
       {
-        "index": 111,
+        "index": 122,
         "column": 3,
-        "line": 7,
+        "line": 18,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 112,
+        "index": 123,
         "column": 3,
-        "line": 8,
+        "line": 19,
         "kind": "question",
-        "text": "¿Qué dice el adverbio «ayer»?",
+        "text": "¿Qué clase de palabra es «hoy»?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -900,158 +982,50 @@
         }
       },
       {
-        "index": 113,
-        "column": 3,
-        "line": 9,
-        "kind": "option",
-        "text": "A) Cómo es una cosa",
-        "questionId": "d3-q6"
-      },
-      {
-        "index": 114,
-        "column": 3,
-        "line": 10,
-        "kind": "option",
-        "text": "B) Quién actúa",
-        "questionId": "d3-q6"
-      },
-      {
-        "index": 115,
-        "column": 3,
-        "line": 11,
-        "kind": "option",
-        "text": "C) Cuándo pasó algo",
-        "questionId": "d3-q6"
-      },
-      {
-        "index": 116,
-        "column": 3,
-        "line": 12,
-        "kind": "option",
-        "text": "D) Cuántos son",
-        "questionId": "d3-q6"
-      },
-      {
-        "index": 117,
-        "column": 3,
-        "line": 13,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 118,
-        "column": 3,
-        "line": 14,
-        "kind": "question",
-        "text": "¿Cuál frase está bien dicha?",
-        "questionId": "d3-q7",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 119,
-        "column": 3,
-        "line": 15,
-        "kind": "option",
-        "text": "A) Corre rápidamente.",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 120,
-        "column": 3,
-        "line": 16,
-        "kind": "option",
-        "text": "B) Niño rápidamente.",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 121,
-        "column": 3,
-        "line": 17,
-        "kind": "option",
-        "text": "C) Rápidamente casa.",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 122,
-        "column": 3,
-        "line": 18,
-        "kind": "option",
-        "text": "D) Corre casa.",
-        "questionId": "d3-q7"
-      },
-      {
-        "index": 123,
-        "column": 3,
-        "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
         "index": 124,
         "column": 3,
         "line": 20,
-        "kind": "question",
-        "text": "En «corre despacio» y «corre rápido», ¿qué cambia?",
-        "questionId": "d3-q8",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "option",
+        "text": "A) Adjetivo",
+        "questionId": "d3-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) El verbo",
-        "questionId": "d3-q8"
+        "text": "B) Artículo",
+        "questionId": "d3-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) El sustantivo",
-        "questionId": "d3-q8"
+        "text": "C) Adverbio",
+        "questionId": "d3-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) El artículo",
-        "questionId": "d3-q8"
+        "text": "D) Verbo",
+        "questionId": "d3-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) El adverbio",
-        "questionId": "d3-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "Describe tu mochila con un artículo y un adjetivo.",
+        "text": "Describe tu mochila con un artículo y un",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1060,6 +1034,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "lesson",
+        "text": "adjetivo.",
+        "questionId": "d3-w1"
       },
       {
         "index": 131,
@@ -1081,31 +1063,15 @@
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe dos oraciones gemelas que cambien un adverbio.",
+        "text": "Escribe dos oraciones que cambien un",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1114,6 +1080,22 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "adverbio.",
+        "questionId": "d3-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 137,
@@ -1127,39 +1109,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
         "kind": "question",
-        "text": "Dibuja «el perro pequeño ladra fuerte» y rotula cada palabra.",
+        "text": "Dibuja «el equipo sube despacio» y rotula",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1170,50 +1128,42 @@
         }
       },
       {
-        "index": 143,
+        "index": 140,
         "column": 3,
-        "line": 39,
+        "line": 36,
+        "kind": "lesson",
+        "text": "cada palabra.",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w3"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 147,
-        "column": 3,
-        "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja un esquema: artículo, adjetivo y adverbio con ejemplos.",
+        "text": "Dibuja un esquema: artículo, adjetivo y",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1224,106 +1174,133 @@
         }
       },
       {
-        "index": 149,
+        "index": 145,
         "column": 3,
-        "line": 45,
+        "line": 41,
+        "kind": "lesson",
+        "text": "adverbio.",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w4"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un animal que se mueve muy rápido o muy despacio."
+        "text": "Dibuja un equipo subiendo la Sierra"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe su artículo y un adjetivo que lo describa."
+        "text": "Nevada. Escribe un artículo y un adjetivo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Añade un adverbio que diga cómo se mueve."
+        "text": "del pico. Añade un adverbio que diga cómo"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Revisa que cada etiqueta diga qué clase de palabra es."
+        "text": "sube. Rotula cada palabra con su clase."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En «la casa antigua», ¿cuál es el artículo?",
+        "prompt": "En «el pico alto», ¿cuál es el artículo?",
         "choices": [
-          "casa",
-          "la",
-          "antigua",
+          "pico",
+          "el",
+          "alto",
           "en"
         ],
-        "answer": "la",
+        "answer": "el",
         "slot": {
           "column": 2,
-          "line": 30,
-          "index": 82
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En «la casa antigua», ¿cuál es el adjetivo?",
+        "prompt": "En «el pico alto», ¿cuál es el adjetivo?",
         "choices": [
-          "la",
-          "casa",
-          "antigua",
-          "y"
+          "el",
+          "pico",
+          "alto",
+          "en"
         ],
-        "answer": "antigua",
+        "answer": "alto",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1339,99 +1316,63 @@
         ],
         "answer": "Cómo es el sustantivo",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo se ordena «pequeño / el / perro / ladra / fuerte»?",
+        "prompt": "¿Cuál oración está bien ordenada?",
         "choices": [
-          "Pequeño el perro fuerte ladra.",
-          "El perro pequeño ladra fuerte.",
-          "Ladra fuerte el pequeño perro.",
-          "Perro el ladra pequeño fuerte."
+          "Sube el despacio equipo.",
+          "El equipo sube despacio.",
+          "Equipo el despacio sube.",
+          "Despacio sube equipo el."
         ],
-        "answer": "El perro pequeño ladra fuerte.",
+        "answer": "El equipo sube despacio.",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "En «corre despacio», ¿cuál es el adverbio?",
+        "prompt": "En «sube rápido», ¿cuál es el adverbio?",
         "choices": [
-          "despacio",
-          "corre",
+          "rápido",
+          "sube",
           "el",
-          "niño"
+          "equipo"
         ],
-        "answer": "despacio",
+        "answer": "rápido",
         "slot": {
           "column": 3,
-          "line": 2,
-          "index": 106
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué dice el adverbio «ayer»?",
+        "prompt": "¿Qué clase de palabra es «hoy»?",
         "choices": [
-          "Cómo es una cosa",
-          "Quién actúa",
-          "Cuándo pasó algo",
-          "Cuántos son"
+          "Adjetivo",
+          "Artículo",
+          "Adverbio",
+          "Verbo"
         ],
-        "answer": "Cuándo pasó algo",
+        "answer": "Adverbio",
         "slot": {
           "column": 3,
-          "line": 8,
-          "index": 112
-        }
-      },
-      {
-        "id": "d3-q7",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Cuál frase está bien dicha?",
-        "choices": [
-          "Corre rápidamente.",
-          "Niño rápidamente.",
-          "Rápidamente casa.",
-          "Corre casa."
-        ],
-        "answer": "Corre rápidamente.",
-        "slot": {
-          "column": 3,
-          "line": 14,
-          "index": 118
-        }
-      },
-      {
-        "id": "d3-q8",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "En «corre despacio» y «corre rápido», ¿qué cambia?",
-        "choices": [
-          "El verbo",
-          "El sustantivo",
-          "El artículo",
-          "El adverbio"
-        ],
-        "answer": "El adverbio",
-        "slot": {
-          "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1441,45 +1382,45 @@
         "prompt": "Describe tu mochila con un artículo y un adjetivo.",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe dos oraciones gemelas que cambien un adverbio.",
+        "prompt": "Escribe dos oraciones que cambien un adverbio.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja «el perro pequeño ladra fuerte» y rotula cada palabra.",
+        "prompt": "Dibuja «el equipo sube despacio» y rotula cada palabra.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 38,
-          "index": 142
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un esquema: artículo, adjetivo y adverbio con ejemplos.",
+        "prompt": "Dibuja un esquema: artículo, adjetivo y adverbio.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 40,
+          "index": 144
         }
       }
     ]
