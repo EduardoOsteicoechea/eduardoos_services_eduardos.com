@@ -875,10 +875,11 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
 
   /* Compact type scale (0.89× prior Letter sizes) to free vertical room. */
   --hc-fs: 0.89;
-  --hc-fs-body: calc(0.3cm * var(--hc-fs));
-  --hc-fs-heading: calc(0.35cm * var(--hc-fs));
-  --hc-fs-class-no: calc(0.5cm * var(--hc-fs));
-  --hc-lh-heading: calc(0.4cm * var(--hc-fs));
+  /* Minimum body ink 6mm (cambio 5); headings stay slightly larger. */
+  --hc-fs-body: 0.6cm;
+  --hc-fs-heading: 0.65cm;
+  --hc-fs-class-no: calc(0.9cm * var(--hc-fs));
+  --hc-lh-heading: 0.75cm;
   --hc-fs-label: calc(0.62rem * var(--hc-fs));
   --hc-fs-sub: calc(0.72rem * var(--hc-fs));
   --hc-fs-badge: calc(0.75rem * var(--hc-fs));
@@ -2357,6 +2358,14 @@ html[data-page="homescool-workspace"][data-homescool-dhs-collapsed="true"] .home
   border: 0.08rem solid var(--hc-blue);
   background: transparent;
   margin-top: 0.1rem;
+}
+
+.homescool-letter__practice-hint {
+  margin: 0.1cm 0 0;
+  font-size: var(--hc-fs-body);
+  line-height: 1.25;
+  color: var(--hc-navy);
+  font-style: italic;
 }
 
 .homescool-letter__practice-copy {

@@ -52,11 +52,11 @@ describe("homescool-mat-tables", () => {
       lesson: { kind: "intro", points: [], summary: "" },
       quiz: { questionCount: 0, questions: [] },
     } as EoschoolDocument;
-    expect(subjectClassNumber("mat")).toBe(5);
+    expect(subjectClassNumber("mat")).toBe(7);
     const pages = renderMatTablesPages(doc);
     expect(pages[0]?.querySelector(".homescool-mat__class-no")).toBeNull();
     expect(pages[0]?.querySelector(".homescool-mat__heading")?.textContent).toBe(
-      "5 - Matemáticas - Tablas de multiplicar",
+      "7 - Matemáticas - Tablas de multiplicar",
     );
   });
 });
@@ -68,17 +68,23 @@ describe("homescool-subjects", () => {
     expect(subjectDisplayName("teb")).toBe("Teología bíblica");
   });
 
-  it("pauses teb and exe and numbers active subjects 1–10", () => {
-    expect(isHomescoolSubjectPaused("teb")).toBe(true);
-    expect(isHomescoolSubjectPaused("exe")).toBe(true);
-    expect(isHomescoolSubjectPaused("mat")).toBe(false);
-    expect(HOMESCOOL_SUBJECTS_ACTIVE).not.toContain("teb");
-    expect(HOMESCOOL_SUBJECTS_ACTIVE).not.toContain("exe");
-    expect(HOMESCOOL_SUBJECTS_ACTIVE[0]).toBe("pro");
-    expect(subjectClassNumber("pro")).toBe(1);
-    expect(subjectClassNumber("mat")).toBe(5);
-    expect(subjectClassNumber("LT")).toBe(7);
-    expect(subjectClassNumber("geo")).toBe(8);
+  it("numbers subjects 1–12 in canonical menu order (teb…pro)", () => {
+    expect(isHomescoolSubjectPaused("teb")).toBe(false);
+    expect(isHomescoolSubjectPaused("exe")).toBe(false);
+    expect(HOMESCOOL_SUBJECTS_ACTIVE[0]).toBe("teb");
+    expect(HOMESCOOL_SUBJECTS_ACTIVE[HOMESCOOL_SUBJECTS_ACTIVE.length - 1]).toBe("pro");
+    expect(subjectClassNumber("teb")).toBe(1);
+    expect(subjectClassNumber("exe")).toBe(2);
+    expect(subjectClassNumber("LT")).toBe(3);
+    expect(subjectClassNumber("his")).toBe(4);
+    expect(subjectClassNumber("geo")).toBe(5);
+    expect(subjectClassNumber("art")).toBe(6);
+    expect(subjectClassNumber("mat")).toBe(7);
+    expect(subjectClassNumber("esp")).toBe(8);
+    expect(subjectClassNumber("ing")).toBe(9);
+    expect(subjectClassNumber("lat")).toBe(10);
+    expect(subjectClassNumber("cie")).toBe(11);
+    expect(subjectClassNumber("pro")).toBe(12);
     expect(subjectChipText("geo")).toBe("geo");
     expect(subjectChipText("LT")).toBe("LinT");
   });

@@ -1,39 +1,39 @@
 /**
- * Canonical Homescool subject order and class numbers (active menu 1–10).
- * `teb` and `exe` stay paused and are not numbered in the UI.
+ * Canonical Homescool subject order and class numbers (menu 1–12).
+ * Order matches `cambios/1_orden_de_clases` and homescool-materials.mdc.
  */
 
 export const HOMESCOOL_SUBJECTS = [
-  "pro",
+  "teb",
+  "exe",
+  "LT",
+  "his",
+  "geo",
+  "art",
+  "mat",
   "esp",
   "ing",
   "lat",
-  "mat",
-  "his",
-  "LT",
-  "geo",
   "cie",
-  "art",
-  "teb",
-  "exe",
+  "pro",
 ] as const;
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
 
-/** Class numbers on active menu chips and letter headers. */
+/** Class numbers on menu chips and letter headers. */
 export const HOMESCOOL_SUBJECT_CLASS_NO: Record<HomescoolSubject, number> = {
-  pro: 1,
-  esp: 2,
-  ing: 3,
-  lat: 4,
-  mat: 5,
-  his: 6,
-  LT: 7,
-  geo: 8,
-  cie: 9,
-  art: 10,
-  teb: 0,
-  exe: 0,
+  teb: 1,
+  exe: 2,
+  LT: 3,
+  his: 4,
+  geo: 5,
+  art: 6,
+  mat: 7,
+  esp: 8,
+  ing: 9,
+  lat: 10,
+  cie: 11,
+  pro: 12,
 };
 
 /** Short labels on DHS subject chips (e.g. `ing`, `LinT`). */
@@ -69,10 +69,10 @@ export const HOMESCOOL_SUBJECT_LABELS: Record<HomescoolSubject, string> = {
 };
 
 /**
- * Paused subjects: hidden from Homescool menu; do not generate new cell JSON
- * or Mongo upserts for these until the user re-enables them.
+ * No subjects paused: full menu 1–12 (teb…pro).
+ * Keep the array for callers that filter; leave empty until a future pause.
  */
-export const HOMESCOOL_SUBJECTS_PAUSED = ["teb", "exe"] as const;
+export const HOMESCOOL_SUBJECTS_PAUSED = [] as const;
 
 export type HomescoolPausedSubject = (typeof HOMESCOOL_SUBJECTS_PAUSED)[number];
 

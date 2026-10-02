@@ -571,6 +571,88 @@ describe("renderEoschoolPages pagination", () => {
     ).toBe(false);
   });
 
+  it("shuffles MCQ choices so the answer is not always printed as A", () => {
+    const doc = baseDoc({
+      day: 1,
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [{ id: "p1", heading: "Uno", body: "Idea.\n\nExplora breve.\n\nPráctica: hazlo.\n\nError común: fallo." }],
+        summary: "S.",
+      },
+      quiz: {
+        questionCount: 4,
+        questions: [
+          {
+            id: "shuffle-a",
+            originDay: 1,
+            type: "mcq",
+            prompt: "Q1?",
+            choices: ["RIGHT", "w1", "w2", "w3"],
+            answer: "RIGHT",
+          },
+          {
+            id: "shuffle-b",
+            originDay: 1,
+            type: "mcq",
+            prompt: "Q2?",
+            choices: ["RIGHT", "w1", "w2", "w3"],
+            answer: "RIGHT",
+          },
+          {
+            id: "shuffle-c",
+            originDay: 1,
+            type: "mcq",
+            prompt: "Q3?",
+            choices: ["RIGHT", "w1", "w2", "w3"],
+            answer: "RIGHT",
+          },
+          {
+            id: "shuffle-d",
+            originDay: 1,
+            type: "mcq",
+            prompt: "Q4?",
+            choices: ["RIGHT", "w1", "w2", "w3"],
+            answer: "RIGHT",
+          },
+        ],
+      },
+    });
+    const pages = renderEoschoolPages(doc);
+    const marks = [...pages.flatMap((p) => [...p.querySelectorAll(".homescool-letter__q")])].map((q) => {
+      const texts = [...q.querySelectorAll(".homescool-letter__choice-text")].map((n) => n.textContent);
+      return texts.indexOf("RIGHT");
+    });
+    expect(marks.every((i) => i >= 0)).toBe(true);
+    // Source order always puts RIGHT at A; at least one printed sheet must move it.
+    expect(marks.some((i) => i !== 0)).toBe(true);
+  });
+
+  it("adds reverse-side practice hint and check mark", () => {
+    const doc = baseDoc({
+      day: 1,
+      lesson: {
+        kind: "intro",
+        focusPoint: null,
+        points: [
+          {
+            id: "p1",
+            heading: "Uno",
+            body: "Idea central.\n\nExplora.\n\nPráctica: escribe un ejemplo.\n\nError común: saltar el paso.",
+          },
+        ],
+        summary: "S.",
+      },
+      quiz: { questionCount: 0, questions: [] },
+    });
+    const pages = renderEoschoolPages(doc);
+    const practice = pages
+      .flatMap((p) => [...p.querySelectorAll(".homescool-letter__box--practice")])
+      .at(0);
+    expect(practice?.querySelector(".homescool-letter__practice-mark")).toBeTruthy();
+    expect(practice?.querySelector(".homescool-letter__practice-hint")?.textContent).toMatch(/reverso/i);
+  });
+
   it("resolves week-1 practice illustrations by subject convention", () => {
     const doc = baseDoc({
       subject: "geo",

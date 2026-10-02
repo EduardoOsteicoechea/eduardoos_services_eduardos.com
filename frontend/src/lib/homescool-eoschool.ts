@@ -1000,6 +1000,13 @@ function renderParaBlock(p: RichPara): HTMLElement {
     row.append(mark);
     const copy = el("div", "homescool-letter__practice-copy");
     appendBodyWithSubtitles(copy, p.text);
+    copy.append(
+      el(
+        "p",
+        "homescool-letter__practice-hint",
+        "Si hace falta, completa la práctica en el reverso de la hoja.",
+      ),
+    );
     row.append(copy);
     box.append(row);
     box.append(buildPracticeWorkspace(p.text));
@@ -1278,7 +1285,9 @@ function buildWriteLines(): HTMLElement {
 
 function buildMcqChoices(q: EoschoolQuestion): HTMLElement {
   const letters = ["A", "B", "C", "D", "E", "F"];
-  const choices = q.choices?.filter((c) => String(c).trim()) ?? [];
+  const raw = q.choices?.filter((c) => String(c).trim()) ?? [];
+  // Seeded shuffle so the printed key is not always A (cambio 7).
+  const choices = stableShuffle(raw, `mcq:${q.id || ""}:${q.prompt || ""}:${raw.join("\u001f")}`);
   const ul = el("ul", "homescool-letter__choices-list");
   choices.forEach((c, idx) => {
     const opt = document.createElement("li");
